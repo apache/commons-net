@@ -25,6 +25,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
+import org.apache.commons.net.io.CopyStreamEvent;
 import org.apache.commons.net.io.FromNetASCIIInputStream;
 import org.apache.commons.net.io.ToNetASCIIOutputStream;
 import org.apache.commons.net.io.Util;
@@ -370,7 +371,9 @@ public class FTPClient extends FTP
         // Treat everything else as binary for now
         try
         {
-            Util.copyStream(local, output);
+            Util.copyStream(local, output, Util.DEFAULT_COPY_BUFFER_SIZE,
+                            CopyStreamEvent.UNKNOWN_STREAM_SIZE, null,
+                            false);
         }
         catch (IOException e)
         {
@@ -1266,7 +1269,9 @@ public class FTPClient extends FTP
         // Treat everything else as binary for now
         try
         {
-            Util.copyStream(input, local);
+            Util.copyStream(input, local, Util.DEFAULT_COPY_BUFFER_SIZE,
+                            CopyStreamEvent.UNKNOWN_STREAM_SIZE, null,
+                            false);
         }
         catch (IOException e)
         {
