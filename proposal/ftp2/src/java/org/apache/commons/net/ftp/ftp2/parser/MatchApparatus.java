@@ -55,11 +55,10 @@ package org.apache.commons.net.ftp.ftp2.parser;
  */
 
 import org.apache.oro.text.regex.Pattern;
+import org.apache.oro.text.regex.MalformedPatternException;
 import org.apache.oro.text.regex.Perl5Matcher;
 import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.MatchResult;
-import org.apache.commons.net.ftp.FTPFileListParser;
-import org.apache.commons.net.ftp.FTPFile;
 
 /**
  * This class is based on the logic of Winston Ojeda's ListParser.  It uses
@@ -68,41 +67,38 @@ import org.apache.commons.net.ftp.FTPFile;
  * It is also designed to encapsulate access to the oro.text.regex
  * classes in one place.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: MatchApparatus.java,v 1.1 2002/04/29 03:55:32 brekke Exp $
+ * @version $Id: MatchApparatus.java,v 1.2 2002/04/30 13:59:42 brekke Exp $
  */
 abstract class MatchApparatus
 {
-    MatchApparatus()
-    {
-        this.prefix = "[" + getClass().getName() + "] ";
-    }
-
     private String prefix;
-    private boolean initialized = false;
-    private Perl5Compiler compiler = null;
     private Pattern pattern = null;
     private Perl5Matcher matcher = null;
     private MatchResult result = null;
-
-    private void initialize()
+    
+    /**
+     * The constructor for a MatchApparatus object.
+     * 
+     * @param regex  The regular expression with which this object is initialized.
+     * 
+     * @exception IllegalArgumentException
+     * Thrown if the regular expression is unparseable.  Should not be seen in normal
+     * conditions.  It it is seen, this is a sign that a subclass has been created with
+     * a bad regular expression.   Since the parser must be created before use, this 
+     * means that any bad parser subclasses created from this will bomb very quickly,
+     * leading to easy detection.  
+     */
+    MatchApparatus(String regex) 
     {
-        if (!initialized)
-        {
-            compiler = new Perl5Compiler();
-            matcher = new Perl5Matcher();
-            String regex = getRegEx();
-            try
-            {
-                pattern = compiler.compile(regex);
-                initialized = true;
-            }
-            catch (Exception e)
-            {
-                System.out.println(prefix +
-                                   "Unable to compile regular expression: [" + regex + "]" );
-            }
+        try {
+            this.prefix = "[" + getClass().getName() + "] ";
+            this.matcher = new Perl5Matcher();
+            this.pattern = new Perl5Compiler().compile(regex);
+        }  catch (MalformedPatternException e) {
+            throw new IllegalArgumentException ("Unparseable regex supplied:  " + regex);
         }
     }
+
 
     /**
      * Convenience method delegates to the internal MatchResult's matches()
@@ -113,7 +109,6 @@ abstract class MatchApparatus
      */
     public boolean matches(String s)
     {
-        initialize();
         if (matcher.matches(s.trim(), this.pattern))
         {
             this.result = matcher.getMatch();
@@ -152,27 +147,20 @@ abstract class MatchApparatus
         return this.result.group(matchnum);
     }
 
-
     /**
-     * Each derived class must define this function so that it returns a 
-     * properly formatted regular expression string which will be used to do
-     * the pattern matching.
-     *
-     * @return the string to be used to build the regular expression pattern
-     * for matching
+     * For debugging purposes - returns a string shows each match group by number.
+     * 
+     * @return a string shows each match group by number.
      */
-    protected abstract String getRegEx();
-
-
-    /**
-     * For debugging purposes - shows each match group by number.
-     */
-    public void showGroups()
+    public String getGroupsAsString()
     {
+        StringBuffer b = new StringBuffer();
         for (int i = 1; i <= this.result.groups(); i++)
         {
-            System.out.println("" + i + ") " + this.result.group(i));
+            b.append(i).append(") ").append(this.result.group(i))
+                .append(System.getProperty("line.separator"));
         }
+        return b.toString() ;
 
     }
 }

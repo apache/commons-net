@@ -63,29 +63,49 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * DefaultFTPListParser, but adapted to use regular expressions and to fit the
  * new FTPFileEntryParser interface.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: UnixFTPEntryParser.java,v 1.1 2002/04/29 03:55:32 brekke Exp $
+ * @version $Id: UnixFTPEntryParser.java,v 1.2 2002/04/30 13:59:42 brekke Exp $
  */
 public class UnixFTPEntryParser
             extends MatchApparatus implements FTPFileEntryParser
 {
-    private static final String months =
+    private static final String MONTHS =
         "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)";
-    private static final String regEx =
+    private static final String REGEX =
         "([bcdlf])"
         + "(((r|-)(w|-)(x|-))((r|-)(w|-)(x|-))((r|-)(w|-)(x|-)))\\s*"
         + "(\\d*)\\s*"
         + "(\\S*)\\s*"
         + "(\\S*)\\s*"
         + "(\\d*)\\s*"
-        + months + "\\s*"
+        + MONTHS + "\\s*"
         + "((?:[012]\\d*)|(?:3[01]))\\s*"
         + "((\\d\\d\\d\\d)|((?:[01]\\d)|(?:2[0123])):([012345]\\d))\\s"
         + "(\\S*)(\\s*.*)";
-    public String getRegEx()
+
+    
+    /**
+     * The sole constructor for a UnixFTPEntryParser object.
+     * 
+     * @exception IllegalArgumentException
+     * Thrown if the regular expression is unparseable.  Should not be seen under 
+     * normal conditions.  It it is seen, this is a sign that <code>REGEX</code> is 
+     * not a valid regular expression.
+     */
+    public UnixFTPEntryParser() 
     {
-        return this.regEx;
+        super(REGEX);
     }
 
+    /**
+     * Parses a line of a unix (standard) FTP server file listing and converts 
+     * it into a usable format in the form of an <code> FTPFile </code> 
+     * instance.  If the file listing line doesn't describe a file, 
+     * <code> null </code> is returned, otherwise a <code> FTPFile </code> 
+     * instance representing the files in the directory is returned.
+     * <p>
+     * @param listEntry A line of text from the file listing
+     * @return An FTPFile instance corresponding to the supplied entry
+     */
     public FTPFile parseFTPEntry(String entry)
     {
 
@@ -168,7 +188,7 @@ public class UnixFTPEntryParser
 
             try
             {
-                int pos = months.indexOf(mo);
+                int pos = MONTHS.indexOf(mo);
                 int month = pos / 4;
 
                 if (null != yr)

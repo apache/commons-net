@@ -65,7 +65,7 @@ import java.util.Vector;
  * be receieved as an array of any requested number of entries or all of them.
  *
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: FTPFileIterator.java,v 1.1 2002/04/29 03:55:31 brekke Exp $
+ * @version $Id: FTPFileIterator.java,v 1.2 2002/04/30 13:59:42 brekke Exp $
  * @see org.apache.commons.net.ftp.ftp2.FTPFileList
  */
 public class FTPFileIterator
@@ -114,7 +114,7 @@ public class FTPFileIterator
         FTPFile entry = null;
         for (int iter = 0; iter < this.rawlines.size(); iter++)
         {
-            String line = (String)this.rawlines.elementAt(iter);
+            String line = (String) this.rawlines.elementAt(iter);
             entry = parseFTPEntry(line);
             if (null != entry)
             {
@@ -194,7 +194,7 @@ public class FTPFileIterator
         for (int i = 0, e = this.firstGoodEntry + this.itemptr ;
                 i < _howMany; i++, e++)
         {
-            output[i] = parseFTPEntry((String)this.rawlines.elementAt(e));
+            output[i] = parseFTPEntry((String) this.rawlines.elementAt(e));
             this.itemptr++;
 
         }
@@ -269,16 +269,16 @@ public class FTPFileIterator
      */
     public FTPFile[] getPrevious(int howMany)
     {
-        int _howMany = howMany;
+        int how_many = howMany;
         // can't retreat further than we've come.
-        if (_howMany > this.itemptr)
+        if (how_many > this.itemptr)
         {
-            _howMany = this.itemptr;
+            how_many = this.itemptr;
         }
-        FTPFile[] output = new FTPFile[_howMany];
-        for (int i = _howMany, e = this.firstGoodEntry + this.itemptr; i > 0;)
+        FTPFile[] output = new FTPFile[how_many];
+        for (int i = how_many, e = this.firstGoodEntry + this.itemptr; i > 0; )
         {
-            output[--i] = parseFTPEntry((String)this.rawlines.elementAt(--e));
+            output[--i] = parseFTPEntry((String) this.rawlines.elementAt(--e));
             this.itemptr--;
         }
         return output;

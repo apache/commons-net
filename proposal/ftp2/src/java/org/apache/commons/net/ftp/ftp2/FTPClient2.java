@@ -59,7 +59,6 @@ import java.net.Socket;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPCommand;
 import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 import org.apache.commons.net.ftp.ftp2.parser.UnixFTPEntryParser;
 
 /**
@@ -74,11 +73,14 @@ import org.apache.commons.net.ftp.ftp2.parser.UnixFTPEntryParser;
  * way.
  *
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: FTPClient2.java,v 1.1 2002/04/29 03:55:31 brekke Exp $
+ * @version $Id: FTPClient2.java,v 1.2 2002/04/30 13:59:42 brekke Exp $
  */
 public class FTPClient2 extends FTPClient
 {
     private FTPFileEntryParser __fileEntryParser;
+    /**
+     * The only constructor for this class.
+     */
     public FTPClient2()
     {
         super();
@@ -187,8 +189,8 @@ public class FTPClient2 extends FTPClient
      * capable of providing parsed FTPFile objects, one for each file containing
      * information contained in the given path in the format determined by the 
      * <code> parser </code> parameter.   Null will be returned if a 
-     * data connection cannot be opened.  If the current working directory contains
-     * no files, an empty array will be the return.
+     * data connection cannot be opened.  If the current working directory
+     * contains no files, an empty array will be the return.
      * @exception FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
@@ -214,7 +216,7 @@ public class FTPClient2 extends FTPClient
      * using glob expressions because the return format for glob listings
      * differs from server to server and will likely cause this method to fail.
      * <p>
-     * @param pathname  The file or directory to list.
+     * @param basedir The file or directory to list.
      * @return An iteratable object that holds the raw information and is 
      * capable of providing parsed FTPFile objects, one for each file containing
      * information contained in the given path in the format determined by the 
@@ -306,7 +308,9 @@ public class FTPClient2 extends FTPClient
         FTPFile[] results;
 
         if ((socket = __openDataConnection(FTPCommand.LIST, pathname)) == null)
+        {
             return null;
+        }
 
         FTPFileList list =
             FTPFileList.create(socket.getInputStream(), parser);

@@ -78,7 +78,8 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * <LI>You might want to check if you are truly in a NT System</LI>
  *   <dd><B>String am_I_NT =  FTPClientObj.getSystemName()</B>
  *    <dd>parse am_I_NT to find out
- * <LI>Call listFiles passing the newly created parser and a filename or a mask to look for </LI>
+ * <LI>Call listFiles passing the newly created parser and a filename or a 
+ * mask to look for </LI>
  *   <dd>FTPClientObj.listFiles(parser,filename);
  * <LI>You'll get back the list as an array of FTPFiles like this
  *   <dd>FTPFile[] myNTFiles = FTPClientObj.listFiles(parser,filename);  (or)
@@ -98,13 +99,13 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  *
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: NTFTPEntryParser.java,v 1.1 2002/04/29 03:55:32 brekke Exp $
+ * @version $Id: NTFTPEntryParser.java,v 1.2 2002/04/30 13:59:42 brekke Exp $
  * @see org.apache.commons.net.ftp.FTPFileListParser
  */
 public class NTFTPEntryParser
             extends MatchApparatus implements FTPFileEntryParser
 {
-    private static final String regEx =
+    private static final String REGEX =
         "((?:0[1-9])|(?:1[0-2]))-" +
         "((?:0[1-9])|(?:[1-2]\\d)|(?:3[0-1]))-" +
         "(\\d\\d)\\s*" +
@@ -115,11 +116,30 @@ public class NTFTPEntryParser
         "([0-9]+)?\\s*" +
         "(\\S.*)";
 
-    protected String getRegEx()
+    /**
+     * The sole constructor for an NTFTPEntryParser object.
+     * 
+     * @exception IllegalArgumentException
+     * Thrown if the regular expression is unparseable.  Should not be seen under 
+     * normal conditions.  It it is seen, this is a sign that <code>REGEX</code> is 
+     * not a valid regular expression.
+     */
+    public NTFTPEntryParser() 
     {
-        return (regEx);
+        super(REGEX);
     }
 
+
+    /**
+     * Parses a line of an NT FTP server file listing and converts it into a
+     * usable format in the form of an <code> FTPFile </code> instance.  If the
+     * file listing line doesn't describe a file, <code> null </code> is
+     * returned, otherwise a <code> FTPFile </code> instance representing the
+     * files in the directory is returned.
+     * <p>
+     * @param listEntry A line of text from the file listing
+     * @return An FTPFile instance corresponding to the supplied entry
+     */
     public FTPFile parseFTPEntry(String entry)
     {
         FTPFile f = new FTPFile();
@@ -154,7 +174,9 @@ public class NTFTPEntryParser
             // be sooooo dead anyways who cares.
             // SMC - IS NT's directory date REALLY still not Y2K-compliant?
             if (year > 2080)
+            {
                 year -= 100;
+            }
 
             Calendar cal = Calendar.getInstance();
             //set the calendar

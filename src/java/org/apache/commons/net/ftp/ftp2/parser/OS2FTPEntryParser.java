@@ -78,7 +78,8 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * <LI>You might want to check if you are truly in a OS2 System</LI>
  *   <dd><B>String am_I_OS2 =  FTPClientObj.getSystemName()</B>
  *    <dd>parse am_I_OS2 to find out
- * <LI>Call listFiles passing the newly created parser and a filename or a mask to look for </LI>
+ * <LI>Call listFiles passing the newly created parser and a filename or a mask 
+ * to look for </LI>
  *   <dd>FTPClientObj.listFiles(parser,filename);
  * <LI>You'll get back the list as an array of FTPFiles like this
  *   <dd>FTPFile[] myOS2Files = FTPClientObj.listFiles(parser,filename);  (or)
@@ -90,23 +91,21 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * object. The only thing not implemented at this time is the file
  * permissions, but I can do it if there is a real need for it.
  * <P>
- * !NOTE/WARNING!:Before you pass the parser to listFiles, make sure you are in the
- * directory that you need to be. This parser will return the filtered
+ * !NOTE/WARNING!:Before you pass the parser to listFiles, make sure you are 
+ * in the directory that you need to be. This parser will return the filtered
  * files from the directory it is in. This becomes specially crucial if your
  * goal is to delete the output of the parser.
  * <P>
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: OS2FTPEntryParser.java,v 1.1 2002/04/29 03:55:32 brekke Exp $
+ * @version $Id: OS2FTPEntryParser.java,v 1.2 2002/04/30 13:59:42 brekke Exp $
  * @see org.apache.commons.net.ftp.FTPFileListParser
  */
 public class OS2FTPEntryParser
             extends MatchApparatus implements FTPFileEntryParser
 
 {
-    private String prefix = "[" + getClass().getName() + "] ";
-
-    private static final String regEx =
+    private static final String REGEX =
         "(\\s+|[0-9]+)\\s*" +
         "(\\s+|[A-Z]+)\\s*" +
         "(DIR|\\s+)\\s*" +
@@ -116,17 +115,44 @@ public class OS2FTPEntryParser
         "(?:([0-1]\\d)|(?:2[0-3])):" +
         "([0-5]\\d)\\s*" +
         "(\\S.*)";
-
-    public OS2FTPEntryParser()
-    {}
-
-
-    protected String getRegEx()
+    
+    /**
+     * The sole constructor for a OS2FTPEntryParser object.
+     * 
+     * @exception IllegalArgumentException
+     * Thrown if the regular expression is unparseable.  Should not be seen under 
+     * normal conditions.  It it is seen, this is a sign that <code>REGEX</code> is 
+     * not a valid regular * expression.
+     */
+    public OS2FTPEntryParser() 
     {
-        return (regEx);
+        super(REGEX);
     }
 
 
+    /**
+     * Returns the properly formatted regular expression string used to do
+     * the pattern matching for an OS2 FTP system.
+     *
+     * @return the string used to build the regular expression pattern
+     * for matching
+     */
+    protected String getRegEx()
+    {
+        return REGEX;
+    }
+
+
+    /**
+     * Parses a line of an OS2 FTP server file listing and converts it into a
+     * usable format in the form of an <code> FTPFile </code> instance.  If the
+     * file listing line doesn't describe a file, <code> null </code> is
+     * returned, otherwise a <code> FTPFile </code> instance representing the
+     * files in the directory is returned.
+     * <p>
+     * @param listEntry A line of text from the file listing
+     * @return An FTPFile instance corresponding to the supplied entry
+     */
     public FTPFile parseFTPEntry(String entry)
     {
 
@@ -145,9 +171,13 @@ public class OS2FTPEntryParser
 
             //is it a DIR or a file
             if (dirString.trim().equals("DIR") || attrib.trim().equals("DIR"))
+            {
                 f.setType(FTPFile.DIRECTORY_TYPE);
+            }
             else
+            {
                 f.setType(FTPFile.FILE_TYPE);
+            }
 
             Calendar cal = Calendar.getInstance();
 
@@ -162,8 +192,10 @@ public class OS2FTPEntryParser
             // Y2K stuff? this will break again in 2080 but I will
             // be sooooo dead anyways who cares.
             // SMC - IS OS2's directory date REALLY still not Y2K-compliant?
-            if (year > 2080)
+            if (year > 2080) 
+            {
                 year -= 100;
+            }
 
             //set the calendar
             cal.set(Calendar.SECOND, 0);

@@ -58,10 +58,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Enumeration;
 import java.util.Vector;
 import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 
 /**
  * FTPFileList.java
@@ -79,14 +77,23 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * which required a bigger memory hit.
  *
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: FTPFileList.java,v 1.1 2002/04/29 03:55:32 brekke Exp $
+ * @version $Id: FTPFileList.java,v 1.2 2002/04/30 13:59:42 brekke Exp $
  * @see FTPClient2#listFiles
  * @see FTPClient2#createFileList
  */
 public class FTPFileList
 {
+    /**
+     * storage for the raw lines of input read from the FTP server
+     */
     private Vector lines = null;
+    /**
+     * the FTPFileEntryParser assigned to be used with this lister
+     */
     private FTPFileEntryParser parser;
+    /**
+     * private status code for an empty directory
+     */
     private static final int EMPTY_DIR = -2;
 
     /**
@@ -103,7 +110,7 @@ public class FTPFileList
     }
 
     /**
-     * The only way to create an <code> FTPFileList</code> object.  Invokes 
+     * The only way to create an <code>FTPFileList</code> object.  Invokes
      * the private constructor and then reads the stream  supplied stream to
      * build the intermediate array of "lines" which will later be parsed
      * into <code>FTPFile</code> object.
@@ -112,29 +119,29 @@ public class FTPFileList
      * the output of the LIST command was returned
      * @param parser the default <code>FTPFileEntryParser</code> to be used
      * by this object.  This may later be changed using the init() method.
-     * @param sleepInterval - amount of time in milliseconds to sleep
-     *                        between lines read.
+     * 
      * @return the <code>FTPFileList</code> created, with an initialized
      * of unparsed lines of output.  Will be null if the listing cannot
      * be read from the stream.
+     * @exception IOException
+     *                   Thrown on any failure to read from the socket.
      */
     public static FTPFileList create( InputStream stream,
                                       FTPFileEntryParser parser)
+            throws IOException
     {
-        try
-        {
-            FTPFileList list = new FTPFileList(parser);
-            list.readStream(stream);
-            return list;
+        FTPFileList list = new FTPFileList(parser);
+        list.readStream(stream);
+        return list;
+    } 
 
-        }
-        catch (IOException e)
-        {
-            System.out.println("IOException " + e.getMessage());
-            return null;
-        }
-    }
-
+    /**
+     * internal method for reading the input into the <code>lines</code> vector.
+     * 
+     * @param stream The socket stream on which the input will be read.
+     * 
+     * @exception IOException
+     */
     private void readStream(InputStream stream) throws IOException
     {
         BufferedReader reader =
@@ -150,29 +157,46 @@ public class FTPFileList
         reader.close();
     }
 
+    /**
+     * Accessor for this object's default parser.
+     * 
+     * @return this object's default parser.
+     */
     FTPFileEntryParser getParser()
     {
         return this.parser;
     }
 
+    /**
+     * Package private accessor for the collection of raw input lines.
+     * 
+     * @return vector containing all the raw input lines returned from the FTP server
+     */
     Vector getLines()
     {
         return this.lines;
     }
 
+    /**
+     * create an iterator over this list using the parser with which this list was
+     * initally created
+     * 
+     * @return an iterator over this list using the list's default parser.
+     */
     public FTPFileIterator iterator()
     {
         return new FTPFileIterator(this);
     }
+    /**
+     * create an iterator over this list using the supplied parser 
+     * 
+     * @return an iterator over this list using the supplied parser.
+     */
     public FTPFileIterator iterator(FTPFileEntryParser parser)
     {
         return new FTPFileIterator(this, parser);
     }
 
-    private FTPFile parseFTPEntry(String entry)
-    {
-        return this.parser.parseFTPEntry(entry);
-    }
 
     /**
      * returns an array of FTPFile objects for all the files in the directory 
