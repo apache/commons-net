@@ -1,4 +1,4 @@
-package org.apache.commons.io;
+package org.apache.commons.net.io;
 
 /* ====================================================================
  * The Apache Software License, Version 1.1
@@ -63,7 +63,7 @@ import java.io.IOException;
  * responsible for the failure of a copy operation.
  * @see Util
  * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
- * @version $Id: CopyStreamException.java,v 1.4 2003/01/26 00:21:41 dfs Exp $
+ * @version $Id: CopyStreamException.java,v 1.5 2003/01/26 03:56:14 brekke Exp $
  */
 public class CopyStreamException extends IOException
 {

@@ -1,4 +1,4 @@
-package org.apache.commons.io;
+package org.apache.commons.net.io;
 
 /* ====================================================================
  * The Apache Software License, Version 1.1
@@ -55,7 +55,7 @@ package org.apache.commons.io;
  */
 
 import java.util.Enumeration;
-import org.apache.commons.util.ListenerList;
+import org.apache.commons.net.util.ListenerList;
 
 /**
  * The CopyStreamAdapter will relay CopyStreamEvents to a list of listeners
@@ -73,7 +73,7 @@ import org.apache.commons.util.ListenerList;
  * @see CopyStreamListener
  * @see Util
  * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
- * @version $Id: CopyStreamAdapter.java,v 1.4 2003/01/26 00:21:41 dfs Exp $
+ * @version $Id: CopyStreamAdapter.java,v 1.5 2003/01/26 03:56:14 brekke Exp $
  */
 public class CopyStreamAdapter implements CopyStreamListener
 {

@@ -1,4 +1,4 @@
-package org.apache.commons.io;
+package org.apache.commons.net.io;
 
 /* ====================================================================
  * The Apache Software License, Version 1.1
@@ -71,7 +71,7 @@ import java.io.Reader;
  * local line separator format, truncates the end of message indicator,
  * and ensures you cannot read past the end of the message.
  * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
- * @version $Id: DotTerminatedMessageReader.java,v 1.4 2003/01/26 00:21:41 dfs Exp $
+ * @version $Id: DotTerminatedMessageReader.java,v 1.5 2003/01/26 03:56:14 brekke Exp $
  */
 public final class DotTerminatedMessageReader extends Reader
 {

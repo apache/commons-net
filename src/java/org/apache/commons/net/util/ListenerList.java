@@ -1,4 +1,4 @@
-package org.apache.commons.util;
+package org.apache.commons.net.util;
 
 /* ====================================================================
  * The Apache Software License, Version 1.1
