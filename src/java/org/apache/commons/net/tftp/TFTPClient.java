@@ -228,6 +228,12 @@ _receivePacket:
                 {
                     hostPort = received.getPort();
                     ack.setPort(hostPort);
+                    if(!host.equals(received.getAddress()))
+                    {
+                        host = received.getAddress();
+                        ack.setAddress(host);
+                        sent.setAddress(host);
+                    }
                 }
 
                 // Comply with RFC 783 indication that an error acknowledgement
