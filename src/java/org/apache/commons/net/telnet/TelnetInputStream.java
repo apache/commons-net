@@ -265,11 +265,9 @@ _mainSwitch:
                     __queue.notify();
                     try
                     {
-                        //System.out.println("READ WAIT");
                         __readIsWaiting = true;
                         __queue.wait();
                         __readIsWaiting = false;
-                        //System.out.println("READ END WAIT");
                     }
                     catch (InterruptedException e)
                     {
@@ -384,23 +382,15 @@ _mainSwitch:
         synchronized (__queue)
         {
             __hasReachedEOF = true;
+            __isClosed = true;
+
             if (__thread.isAlive())
             {
-                __isClosed = true;
                 __thread.interrupt();
             }
+
             __queue.notifyAll();
         }
-        /*
-        while(__thread.isAlive()) {
-          __thread.interrupt();
-          try {
-        __thread.join();
-          } catch(InterruptedException e) {
-        // If this happens, we just continue to loop
-          }
-    }
-        */
     }
 
     public void run()
@@ -422,12 +412,10 @@ _outerLoop:
                     synchronized (__queue)
                     {
                         __ioException = e;
-                        __queue.notify();
+                        __queue.notifyAll();
                         try
                         {
-                            //System.out.println("THREAD WAIT B");
-                            __queue.wait();
-                            //System.out.println("THREAD END WAIT B");
+                            __queue.wait(100);
                         }
                         catch (InterruptedException interrupted)
                         {
@@ -448,9 +436,7 @@ _outerLoop:
                         __queue.notify();
                         try
                         {
-                            //System.out.println("THREAD WAIT");
                             __queue.wait();
-                            //System.out.println("THREAD END WAIT");
                         }
                         catch (InterruptedException e)
                         {
@@ -462,7 +448,6 @@ _outerLoop:
                     // Need to do this in case we're not full, but block on a read
                     if (__readIsWaiting)
                     {
-                        //System.out.println("NOTIFY");
                         __queue.notify();
                     }
 
