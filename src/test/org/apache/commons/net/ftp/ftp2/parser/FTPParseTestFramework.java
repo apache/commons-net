@@ -60,18 +60,25 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: FTPParseTestFramework.java,v 1.2 2002/08/06 20:32:04 brekke Exp $
+ * @version $Id: FTPParseTestFramework.java,v 1.3 2002/08/07 18:26:19 brekke Exp $
  */
 public abstract class FTPParseTestFramework extends TestCase
 {
-
     private FTPFileEntryParser parser = null;
 
+    /**
+     * @see junit.framework.TestCase#TestCase(String)
+     */
     public FTPParseTestFramework(String name)
     {
         super(name);
     }
 
+    /**
+     * Method testBadListing.
+     * Tests that parser provided failures actually fail.
+     * @throws Exception
+     */
     public void testBadListing() throws Exception
     {
 
@@ -86,6 +93,11 @@ public abstract class FTPParseTestFramework extends TestCase
         }
     }
 
+    /**
+     * Method testGoodListing.
+     * Test that parser provided listings pass.
+     * @throws Exception
+     */
     public void testGoodListing() throws Exception
     {
 
@@ -100,10 +112,44 @@ public abstract class FTPParseTestFramework extends TestCase
         }
     }
 
+    /**
+     * Method getBadListing.
+     * Implementors must provide a listing that contains failures.
+     * @return String[]
+     */
     protected abstract String[] getBadListing();
-    protected abstract String[] getGoodListing();
-    protected abstract FTPFileEntryParser getParser();
 
+    /**
+     * Method getGoodListing.
+     * Implementors must provide a listing that passes.
+     * @return String[]
+     */
+    protected abstract String[] getGoodListing();
+
+    /**
+     * Method getParser.
+     * Provide the parser to use for testing.
+     * @return FTPFileEntryParser
+     */
+    protected abstract FTPFileEntryParser getParser();
+    
+    /**
+     * Method testParseFieldsOnDirectory.
+     * Provide a test to show that fields on a directory entry are parsed correctly.
+     * @throws Exception
+     */
+    public abstract void testParseFieldsOnDirectory() throws Exception;
+    
+    /**
+     * Method testParseFieldsOnFile.
+     * Provide a test to show that fields on a file entry are parsed correctly.
+     * @throws Exception
+     */
+    public abstract void testParseFieldsOnFile() throws Exception;
+
+    /**
+     * @see junit.framework.TestCase#setUp()
+     */
     protected void setUp() throws Exception
     {
         super.setUp();

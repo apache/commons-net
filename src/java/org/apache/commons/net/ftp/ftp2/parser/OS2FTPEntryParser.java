@@ -98,7 +98,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * <P>
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: OS2FTPEntryParser.java,v 1.3 2002/05/03 14:52:30 brekke Exp $
+ * @version $Id: OS2FTPEntryParser.java,v 1.4 2002/08/07 18:26:18 brekke Exp $
  * @see org.apache.commons.net.ftp.FTPFileListParser
  */
 public class OS2FTPEntryParser
@@ -170,7 +170,7 @@ public class OS2FTPEntryParser
 
 
             //convert all the calendar stuff to ints
-            int month = new Integer(mo).intValue();
+            int month = new Integer(mo).intValue()-1;
             int day = new Integer(da).intValue();
             int year = new Integer(yr).intValue() + 2000;
             int hour = new Integer(hr).intValue();

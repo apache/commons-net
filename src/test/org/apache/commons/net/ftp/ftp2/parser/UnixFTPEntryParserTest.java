@@ -61,7 +61,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@stevecoh1@attbi.com">Steve Cohen</a>
- * @versionn $Id: UnixFTPEntryParserTest.java,v 1.2 2002/08/06 20:32:05 brekke Exp $
+ * @versionn $Id: UnixFTPEntryParserTest.java,v 1.3 2002/08/07 18:26:19 brekke Exp $
  */
 public class UnixFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -102,26 +102,41 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework
         "-rw-r--r--   1 500      500       2040000 Aug  5 07:31 testRemoteUPVCopyNIX"       
     };
 
+    /**
+     * @see junit.framework.TestCase#TestCase(String)
+     */
     public UnixFTPEntryParserTest(String name)
     {
         super(name);
     }
 
+    /**
+     * @see org.apache.commons.net.ftp.ftp2.parser.FTPParseTestFramework#getBadListing()
+     */
     protected String[] getBadListing()
     {
         return(badsamples);
     }
     
+    /**
+     * @see org.apache.commons.net.ftp.ftp2.parser.FTPParseTestFramework#getGoodListing()
+     */
     protected String[] getGoodListing()
     {
         return(goodsamples);
     }
     
+    /**
+     * @see org.apache.commons.net.ftp.ftp2.parser.FTPParseTestFramework#getParser()
+     */
     protected FTPFileEntryParser getParser() 
     {
         return(new UnixFTPEntryParser());
     }
     
+    /**
+     * @see org.apache.commons.net.ftp.ftp2.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
+     */
     public void testParseFieldsOnDirectory() throws Exception
     {
         FTPFile f = getParser().parseFTPEntry("drwxr-xr-x   2 user     group         4096 Mar  2 15:13 zxbox");
@@ -144,6 +159,11 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework
                      f.getTimestamp().getTime().toString());
     }
 
+    /**
+     * Method checkPermissions.
+     * Verify that the persmissions were properly set.
+     * @param f
+     */
     private void checkPermissions(FTPFile f)
     {
         assertTrue("Should have user read permission.", 
@@ -175,6 +195,9 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework
                                    FTPFile.EXECUTE_PERMISSION));
     }
 
+    /**
+     * @see org.apache.commons.net.ftp.ftp2.parser.FTPParseTestFramework#testParseFieldsOnFile()
+     */
     public void testParseFieldsOnFile() throws Exception
     {
         FTPFile f = getParser().parseFTPEntry("-rwxr-xr-x   2 user     group         4096 Mar  2 15:13 zxbox");
@@ -197,6 +220,10 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework
                      f.getTimestamp().getTime().toString());
     }
     
+    /**
+     * Method suite.
+     * @return TestSuite
+     */
     public static TestSuite suite()
     {
         return(new TestSuite(UnixFTPEntryParserTest.class));

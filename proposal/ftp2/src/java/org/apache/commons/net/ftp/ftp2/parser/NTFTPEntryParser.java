@@ -99,7 +99,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  *
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: NTFTPEntryParser.java,v 1.3 2002/05/03 14:52:30 brekke Exp $
+ * @version $Id: NTFTPEntryParser.java,v 1.4 2002/08/07 18:26:18 brekke Exp $
  * @see org.apache.commons.net.ftp.FTPFileListParser
  */
 public class NTFTPEntryParser
@@ -112,7 +112,7 @@ public class NTFTPEntryParser
         "((?:0[1-9])|(?:1[012])):" +
         "([0-5]\\d)\\s*" +
         "([AP])M\\s*" +
-        "(<DIR>\\s*)?" +
+        "(<DIR>)?\\s*" +
         "([0-9]+)?\\s*" +
         "(\\S.*)";
 
@@ -164,9 +164,9 @@ public class NTFTPEntryParser
             }
             f.setName(name);
             //convert all the calendar stuff to ints
-            int month = new Integer(mo).intValue();
+            int month = new Integer(mo).intValue()-1;
             int day = new Integer(da).intValue();
-            int year = new Integer(yr).intValue() + 2000;
+            int year = new Integer(yr).intValue()+2000;
             int hour = new Integer(hr).intValue();
             int minutes = new Integer(min).intValue();
 

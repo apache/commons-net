@@ -61,7 +61,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: VMSFTPEntryParserTest.java,v 1.2 2002/08/06 20:32:05 brekke Exp $
+ * @version $Id: VMSFTPEntryParserTest.java,v 1.3 2002/08/07 18:26:19 brekke Exp $
  */
 public class VMSFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -91,12 +91,18 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         "AA.;2                  152/153        13-FEB-1997 08:13:43  [GROUP,OWNER]    (RWED,RWED,RWED,RE)"
     };
 
+    /**
+     * @see junit.framework.TestCase#TestCase(String)
+     */
     public VMSFTPEntryParserTest(String name)
     {
         super(name);
     }
 
-    public void testParseFieldsOnDirecotry()
+    /**
+     * @see org.apache.commons.net.ftp.ftp2.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
+     */
+    public void testParseFieldsOnDirectory() throws Exception
     {
 
         FTPFile dir = getParser().parseFTPEntry("DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)");
@@ -115,7 +121,10 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         checkPermisions(dir);
     }
 
-    public void testParseFieldsOnFile()
+    /**
+     * @see org.apache.commons.net.ftp.ftp2.parser.FTPParseTestFramework#testParseFieldsOnFile()
+     */
+    public void testParseFieldsOnFile() throws Exception
     {
         FTPFile file = getParser().parseFTPEntry("1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)");
         assertTrue("Should be a file.", 
@@ -133,24 +142,38 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         checkPermisions(file);
     }
 
+    /**
+     * @see org.apache.commons.net.ftp.ftp2.parser.FTPParseTestFramework#getBadListing()
+     */
     protected String[] getBadListing()
     {
 
         return (badsamples);
     }
 
+    /**
+     * @see org.apache.commons.net.ftp.ftp2.parser.FTPParseTestFramework#getGoodListing()
+     */
     protected String[] getGoodListing()
     {
 
         return (goodsamples);
     }
 
+    /**
+     * @see org.apache.commons.net.ftp.ftp2.parser.FTPParseTestFramework#getParser()
+     */
     protected FTPFileEntryParser getParser()
     {
 
         return (new VMSFTPEntryParser());
     }
 
+    /**
+     * Method checkPermisions.
+     * Verify that the VMS parser does NOT  set the permissions.
+     * @param dir
+     */
     private void checkPermisions(FTPFile dir)
     {
         assertTrue("Owner should not have read permission.", 
@@ -182,6 +205,10 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
                                       FTPFile.EXECUTE_PERMISSION));
     }
     
+    /**
+     * Method suite.
+     * @return TestSuite
+     */
     public static TestSuite suite()
     {
         return(new TestSuite(VMSFTPEntryParserTest.class));
