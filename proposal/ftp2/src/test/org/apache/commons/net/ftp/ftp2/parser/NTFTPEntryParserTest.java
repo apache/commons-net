@@ -61,7 +61,7 @@ import junit.framework.TestSuite;
 
 /**
  * @author <a href="mailto:scohen@stevecoh1@attbi.com">Steve Cohen</a>
- * @versionn $Id: NTFTPEntryParserTest.java,v 1.3 2002/08/07 18:26:19 brekke Exp $
+ * @versionn $Id: NTFTPEntryParserTest.java,v 1.4 2002/10/09 05:11:19 brekke Exp $
  */
 public class NTFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -137,8 +137,8 @@ public class NTFTPEntryParserTest extends FTPParseTestFramework
     {
         FTPFile dir = getParser().parseFTPEntry("12-05-96  05:03PM       <DIR>          absoft2");
         assertNotNull("Could not parse entry.", dir);
-        assertEquals("Thu Dec 05 17:03:00 CST 1996", 
-                     dir.getTimestamp().getTime().toString());
+        assertEquals("Thu Dec 05 17:03:00 1996", 
+                     df.format(dir.getTimestamp().getTime()));
         assertTrue("Should have been a directory.", 
                    dir.isDirectory());
         assertEquals("absoft2", dir.getName());
@@ -152,8 +152,8 @@ public class NTFTPEntryParserTest extends FTPParseTestFramework
     {
         FTPFile f = getParser().parseFTPEntry("05-22-97  08:08AM                  828 AUTOEXEC.BAK");
         assertNotNull("Could not parse entry.", f);
-        assertEquals("Thu May 22 08:08:00 CDT 1997", 
-                     f.getTimestamp().getTime().toString());
+        assertEquals("Thu May 22 08:08:00 1997", 
+                     df.format(f.getTimestamp().getTime()));
         assertTrue("Should have been a file.", 
                    f.isFile());
         assertEquals("AUTOEXEC.BAK", f.getName());

@@ -63,7 +63,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 /**
  * Tests the EnterpriseUnixFTPEntryParser
  * 
- * @version $Id: EnterpriseUnixFTPEntryParserTest.java,v 1.1 2002/08/15 17:47:44 brekke Exp $
+ * @version $Id: EnterpriseUnixFTPEntryParserTest.java,v 1.2 2002/10/09 05:11:19 brekke Exp $
  * @author <a href="mailto:Winston.Ojeda@qg.com">Winston Ojeda</a>
  */
 public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
@@ -144,8 +144,8 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
                      file.getUser());
         assertEquals("18128", 
                      file.getGroup());
-        assertEquals("Mon Aug 12 13:56:00 CDT 2002", 
-                     file.getTimestamp().getTime().toString());
+        assertEquals("Mon Aug 12 13:56:00 2002", 
+                     df.format(file.getTimestamp().getTime()));
         checkPermisions(file);
     }
 

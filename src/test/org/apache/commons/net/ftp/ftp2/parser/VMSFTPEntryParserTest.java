@@ -61,7 +61,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: VMSFTPEntryParserTest.java,v 1.3 2002/08/07 18:26:19 brekke Exp $
+ * @version $Id: VMSFTPEntryParserTest.java,v 1.4 2002/10/09 05:11:19 brekke Exp $
  */
 public class VMSFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -112,8 +112,8 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
                      dir.getName());
         assertEquals(512, 
                      dir.getSize());
-        assertEquals("Tue Jun 02 07:32:04 CDT 1998", 
-                     dir.getTimestamp().getTime().toString());
+        assertEquals("Tue Jun 02 07:32:04 1998", 
+                     df.format(dir.getTimestamp().getTime()));
         assertEquals("GROUP", 
                      dir.getGroup());
         assertEquals("OWNER", 
@@ -133,8 +133,8 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
                      file.getName());
         assertEquals(9 * 512, 
                      file.getSize());
-        assertEquals("Tue Jun 02 07:32:04 CDT 1998", 
-                     file.getTimestamp().getTime().toString());
+        assertEquals("Tue Jun 02 07:32:04 1998", 
+                     df.format(file.getTimestamp().getTime()));
         assertEquals("GROUP", 
                      file.getGroup());
         assertEquals("OWNER", 

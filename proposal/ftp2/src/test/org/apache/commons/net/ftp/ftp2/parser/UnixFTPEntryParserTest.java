@@ -61,7 +61,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@stevecoh1@attbi.com">Steve Cohen</a>
- * @versionn $Id: UnixFTPEntryParserTest.java,v 1.4 2002/08/08 20:01:41 brekke Exp $
+ * @versionn $Id: UnixFTPEntryParserTest.java,v 1.5 2002/10/09 05:11:19 brekke Exp $
  */
 public class UnixFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -156,8 +156,8 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework
                      f.getName());
         assertEquals(4096, 
                      f.getSize());
-        assertEquals("Sat Mar 02 15:13:00 CST 2002", 
-                     f.getTimestamp().getTime().toString());
+        assertEquals("Sat Mar 02 15:13:00 2002", 
+                     df.format(f.getTimestamp().getTime()));
     }
 
     /**
@@ -217,8 +217,8 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework
                      f.getName());
         assertEquals(4096, 
                      f.getSize());
-        assertEquals("Sat Mar 02 15:13:00 CST 2002", 
-                     f.getTimestamp().getTime().toString());
+        assertEquals("Sat Mar 02 15:13:00 2002", 
+                     df.format(f.getTimestamp().getTime()));
     }
     
     /**

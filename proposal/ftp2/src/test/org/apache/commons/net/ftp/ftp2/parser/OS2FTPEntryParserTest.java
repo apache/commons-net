@@ -60,7 +60,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: OS2FTPEntryParserTest.java,v 1.3 2002/08/07 18:26:19 brekke Exp $
+ * @version $Id: OS2FTPEntryParserTest.java,v 1.4 2002/10/09 05:11:19 brekke Exp $
  */
 public class OS2FTPEntryParserTest extends FTPParseTestFramework
 {
@@ -121,8 +121,8 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
                    dir.isDirectory());
         assertEquals(0,dir.getSize());
         assertEquals("PC", dir.getName());
-        assertEquals("Fri Nov 28 09:42:00 CST 1997", 
-                     dir.getTimestamp().getTime().toString());
+        assertEquals("Fri Nov 28 09:42:00 1997", 
+                     df.format(dir.getTimestamp().getTime()));
     }
 
     /**
@@ -136,8 +136,8 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
                    file.isFile());
         assertEquals(149473,file.getSize());
         assertEquals("POPUPLOG.OS2", file.getName());
-        assertEquals("Tue Nov 17 16:07:00 CST 1998", 
-                     file.getTimestamp().getTime().toString());           
+        assertEquals("Tue Nov 17 16:07:00 1998", 
+                     df.format(file.getTimestamp().getTime()));           
     }
 
     /**

@@ -55,17 +55,19 @@ package org.apache.commons.net.ftp.ftp2.parser;
  */
 import junit.framework.TestCase;
 
+import java.text.SimpleDateFormat;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: FTPParseTestFramework.java,v 1.3 2002/08/07 18:26:19 brekke Exp $
+ * @version $Id: FTPParseTestFramework.java,v 1.4 2002/10/09 05:11:19 brekke Exp $
  */
 public abstract class FTPParseTestFramework extends TestCase
 {
     private FTPFileEntryParser parser = null;
-
+    protected SimpleDateFormat df = null;
+    
     /**
      * @see junit.framework.TestCase#TestCase(String)
      */
@@ -154,5 +156,6 @@ public abstract class FTPParseTestFramework extends TestCase
     {
         super.setUp();
         parser = getParser();
+        df = new SimpleDateFormat("EEE MMM dd kk:mm:ss yyyy");
     }
 }
