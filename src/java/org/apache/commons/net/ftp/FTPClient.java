@@ -258,6 +258,7 @@ public class FTPClient extends FTP
     private boolean __remoteVerificationEnabled;
     private long __restartOffset;
     private FTPFileEntryParserFactory __parserFactory;
+    private int __bufferSize;
 
     // __systemName is a cached value that should not be referenced directly
     // except when assigned in getSystemName and __initDefaults.
@@ -297,6 +298,7 @@ public class FTPClient extends FTP
         __restartOffset      = 0;
         __systemName         = null;
         __entryParser        = null;
+        __bufferSize 		 = Util.DEFAULT_COPY_BUFFER_SIZE;
     }
 
     private String __parsePathname(String reply)
@@ -367,16 +369,15 @@ public class FTPClient extends FTP
         if ((socket = _openDataConnection_(command, remote)) == null)
             return false;
 
-        // TODO: Buffer size may have to be adjustable in future to tune
-        // performance.
         output = new BufferedOutputStream(socket.getOutputStream(),
-                                          Util.DEFAULT_COPY_BUFFER_SIZE);
+                                          getBufferSize()
+                                          );
         if (__fileType == ASCII_FILE_TYPE)
             output = new ToNetASCIIOutputStream(output);
         // Treat everything else as binary for now
         try
         {
-            Util.copyStream(local, output, Util.DEFAULT_COPY_BUFFER_SIZE,
+            Util.copyStream(local, output, getBufferSize(),
                             CopyStreamEvent.UNKNOWN_STREAM_SIZE, null,
                             false);
         }
@@ -414,7 +415,7 @@ public class FTPClient extends FTP
           // own if they want to wrap the SocketOutputStream we return
           // for file types other than ASCII.
           output = new BufferedOutputStream(output,
-                                            Util.DEFAULT_COPY_BUFFER_SIZE);
+                                            getBufferSize());
           output = new ToNetASCIIOutputStream(output);
 
         }
@@ -1265,16 +1266,14 @@ public class FTPClient extends FTP
         if ((socket = _openDataConnection_(FTPCommand.RETR, remote)) == null)
             return false;
 
-        // TODO: Buffer size may have to be adjustable in future to tune
-        // performance.
         input = new BufferedInputStream(socket.getInputStream(),
-                                        Util.DEFAULT_COPY_BUFFER_SIZE);
+                                        getBufferSize());
         if (__fileType == ASCII_FILE_TYPE)
           input = new FromNetASCIIInputStream(input);
         // Treat everything else as binary for now
         try
         {
-            Util.copyStream(input, local, Util.DEFAULT_COPY_BUFFER_SIZE,
+            Util.copyStream(input, local, getBufferSize(),
                             CopyStreamEvent.UNKNOWN_STREAM_SIZE, null,
                             false);
         }
@@ -1334,7 +1333,7 @@ public class FTPClient extends FTP
           // own if they want to wrap the SocketInputStream we return
           // for file types other than ASCII.
           input = new BufferedInputStream(input,
-                                          Util.DEFAULT_COPY_BUFFER_SIZE);
+                                          getBufferSize());
           input = new FromNetASCIIInputStream(input);
         }
         return new org.apache.commons.net.io.SocketInputStream(socket, input);
@@ -2599,7 +2598,26 @@ public class FTPClient extends FTP
 
         completePendingCommand();
         return list;
-    }}
+    }
+    
+    /**
+     * Set the internal buffer size.
+     *  
+     * @param bufSize The size of the buffer
+     */
+    public void setBufferSize(int bufSize) {
+    	__bufferSize = bufSize;
+    }
+    
+    /**
+     * Retrieve the current internal buffer size.
+     * @return The current buffer size.
+     */
+    public int getBufferSize() {
+    	return __bufferSize;
+    }
+    
+}
 
 /* Emacs configuration
  * Local variables:        **
