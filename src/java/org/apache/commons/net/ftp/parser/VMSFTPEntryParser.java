@@ -54,24 +54,15 @@ package org.apache.commons.net.ftp.parser;
  * <http://www.apache.org/>.
  */
 
-import java.util.Calendar;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.StringTokenizer;
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import org.apache.oro.text.regex.Pattern;
-import org.apache.oro.text.regex.Perl5Compiler;
-import org.apache.oro.text.regex.Util;
-import org.apache.oro.text.regex.MalformedPatternException;
+import java.util.Calendar;
+import java.util.StringTokenizer;
 
 import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPFileList;
 import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
+import org.apache.commons.net.ftp.FTPFileList;
 
 /**
  * Implementation FTPFileEntryParser and FTPFileListParser for VMS Systems.
@@ -90,7 +81,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.16 2004/01/10 23:38:21 scohen Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.17 2004/01/16 02:15:37 scohen Exp $
  * 
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory

@@ -71,7 +71,6 @@ import org.apache.commons.net.io.Util;
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory;
 import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
-import org.apache.commons.net.ftp.parser.ParserInitializationException;
 
 /***
  * FTPClient encapsulates all the functionality necessary to store and

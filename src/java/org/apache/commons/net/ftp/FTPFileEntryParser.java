@@ -56,7 +56,6 @@ package org.apache.commons.net.ftp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * FTPFileEntryParser defines the interface for parsing a single FTP file
@@ -130,7 +129,7 @@ import java.io.InputStream;
  * </pre>
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileEntryParser.java,v 1.14 2004/01/10 23:19:52 scohen Exp $
+ * @version $Id: FTPFileEntryParser.java,v 1.15 2004/01/16 02:15:37 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFile
  * @see org.apache.commons.net.ftp.FTPClient#createFileList
  */

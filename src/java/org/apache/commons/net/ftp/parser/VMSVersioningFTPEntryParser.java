@@ -54,25 +54,15 @@ package org.apache.commons.net.ftp.parser;
  * <http://www.apache.org/>.
  */
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.ListIterator;
-import java.util.StringTokenizer;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
-import org.apache.oro.text.regex.Pattern;
-import org.apache.oro.text.regex.Perl5Matcher;
-import org.apache.oro.text.regex.Perl5Compiler;
-import org.apache.oro.text.regex.MatchResult;
-import org.apache.oro.text.regex.Util;
-import org.apache.oro.text.regex.MalformedPatternException;
-
-import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileList;
+import org.apache.oro.text.regex.MalformedPatternException;
+import org.apache.oro.text.regex.MatchResult;
+import org.apache.oro.text.regex.Pattern;
+import org.apache.oro.text.regex.Perl5Compiler;
+import org.apache.oro.text.regex.Perl5Matcher;
 
 /**
  * Special implementation VMSFTPEntryParser with versioning turned on.
@@ -89,7 +79,7 @@ import org.apache.commons.net.ftp.FTPFileList;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSVersioningFTPEntryParser.java,v 1.3 2004/01/10 23:19:52 scohen Exp $
+ * @version $Id: VMSVersioningFTPEntryParser.java,v 1.4 2004/01/16 02:15:37 scohen Exp $
  * 
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
