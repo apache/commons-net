@@ -61,10 +61,13 @@
    <p>
     Jakarta Commons Net started as a commercial Java library called
     NetComponents, originally developed by ORO, Inc. in the early
-    days of Java.  After its 1.3.8 release, the source code was
+    days of Java.  After its 1.3.8 release in 1998, the source code was
     donated to the Apache Software Foundation and made available under
     the Apache License.  Since then, many programmers have contributed
-    to the continued development of Jakarta Commons Net.
+    to the continued development of Jakarta Commons Net.  The current
+    version numbering scheme bears no relation to the old.  In other
+    words, Jakarta Commons Net 1.0 succeeded and supplanted
+    NetComponents 1.3.8.
    </p>
    </section>
 
