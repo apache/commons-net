@@ -58,6 +58,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 
 /***
@@ -181,7 +182,8 @@ public class FingerClient extends SocketClient
         __query.append(username);
         __query.append(SocketClient.NETASCII_EOL);
 
-        output = new DataOutputStream(_output_);
+        output = 
+          new DataOutputStream(new BufferedOutputStream(_output_, 1024));
         output.writeBytes(__query.toString());
         output.flush();
 
