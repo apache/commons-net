@@ -64,7 +64,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 /**
  * Tests the EnterpriseUnixFTPEntryParser
  * 
- * @version $Id: EnterpriseUnixFTPEntryParserTest.java,v 1.3 2003/08/05 20:06:38 dfs Exp $
+ * @version $Id: EnterpriseUnixFTPEntryParserTest.java,v 1.4 2003/08/25 22:29:49 dfs Exp $
  * @author <a href="mailto:Winston.Ojeda@qg.com">Winston Ojeda</a>
  */
 public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
@@ -83,6 +83,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
         "-rw-r--r--   1ftp       nogroup    126552 Jan 22  2001 zxJDBC-1.2.4.zip", 
         "-rw-r--r--   1 root     root       111325 Apr -7 18:79 zxJDBC-2.0.1b1.tar.gz", 
         "drwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox", 
+        "drwxr-xr-x 1 usernameftp 512 Jan 29 23:32 prog",
         "drwxr-xr-x   2 root     root         4096 Aug 24  2001 zxjdbc", 
         "drwxr-xr-x   2 root     root         4096 Jan  4 00:03 zziplib", 
         "drwxr-xr-x   2 root     99           4096 Feb 23  2001 zzplayer", 

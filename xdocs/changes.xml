@@ -7,6 +7,28 @@
 
   <body>
     <release version="1.0.1" date="In CVS">
+<!-- Pending resubmission of patch.
+      <action dev="dfs" type="add">
+        Rory Winston &lt;Rory.Winston@telewest.co.uk&gt; provided
+        patches to add the following extended NNTP commands to
+        NNTPClient: XOVER, AUTHINFO USER, AUTHINFO PASS, and
+        LIST ACTIVE.
+      </action>
+-->
+      <action dev="dfs" type="fix">
+        Applied variation of fix suggested by Matthieu Recouly
+        &lt;matthieu.recouly@laposte.net&gt; so that
+        UnixFTPEntryParser may handle listings of the form
+        <pre>
+        drwxr-xr-x 1 usernameftp 512 Jan 29 23:32 prog
+        </pre>
+        where the space between user name and group is omitted.
+      </action>
+      <action dev="dfs" type="fix">
+        Applied patch from Stephane Este-Gracias
+        &lt;sestegra@free.fr&gt; that fixes the parsing of
+        VMS listings by VMSFTPEntryParser..
+      </action>
       <action dev="brekke" type="fix">
         If the buffer queue run full, the run() method sometimes hangs forever.
         Changed wait() to wait(100) as with other changes in TelnetInputStream.
