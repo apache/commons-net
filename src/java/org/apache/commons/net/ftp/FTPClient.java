@@ -2640,9 +2640,12 @@ implements Configurable
 
 
     /** 
-     * Implementation of the {@link org.apache.commons.net.ftp.Configurable Configurable} interface. 
+     * Implementation of the {@link Configurable Configurable} interface. 
      * In the case of this class, configuring merely makes the config object available for the
      * factory methods that construct parsers.
+     * @param config {@link FTPClientConfig FTPClientConfig} object used to 
+     * provide non-standard configurations to the parser.
+     * @since 1.4
      */
     public void configure(FTPClientConfig config) {
     	this.__configuration = config;
