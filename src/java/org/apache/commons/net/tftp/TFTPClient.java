@@ -347,9 +347,8 @@ _receivePacket:
 
 
     /***
-     * Same as calling
-     * <code> receiveFile(filename, mode, output, host, TFTP.DEFAULT_PORT)
-     * </code> <p>
+     * Same as calling receiveFile(filename, mode, output, host, TFTP.DEFAULT_PORT).
+     * 
      * @param filename The name of the file to receive.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
      * @param output   The OutputStream to which the file should be written.
@@ -365,9 +364,8 @@ _receivePacket:
     }
 
     /***
-     * Same as calling
-     * <code> receiveFile(filename, mode, output, hostname, TFTP.DEFAULT_PORT)
-     * </code> <p>
+     * Same as calling receiveFile(filename, mode, output, hostname, TFTP.DEFAULT_PORT).
+     * 
      * @param filename The name of the file to receive.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
      * @param output   The OutputStream to which the file should be written.
@@ -580,9 +578,8 @@ _receivePacket:
 
 
     /***
-     * Same as calling 
-     * <code> sendFile(filename, mode, input, host, TFTP.DEFAULT_PORT); </code>
-     * <p>
+     * Same as calling sendFile(filename, mode, input, host, TFTP.DEFAULT_PORT).
+     * 
      * @param filename The name the remote server should use when creating
      *        the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
@@ -601,9 +598,8 @@ _receivePacket:
     }
 
     /***
-     * Same as calling 
-     * <code> sendFile(filename, mode, input, hostname, TFTP.DEFAULT_PORT);
-     * </code> <p>
+     * Same as calling sendFile(filename, mode, input, hostname, TFTP.DEFAULT_PORT).
+     * 
      * @param filename The name the remote server should use when creating
      *        the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).

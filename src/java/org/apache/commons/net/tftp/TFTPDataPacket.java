@@ -194,13 +194,14 @@ public final class TFTPDataPacket extends TFTPPacket
     }
 
     /***
+     * Creates a UDP datagram containing all the TFTP
+     * data packet data in the proper format.   
      * This is a method exposed to the programmer in case he
      * wants to implement his own TFTP client instead of using
      * the <a href="org.apache.commons.net.tftp.TFTPClient.html#_top_">TFTPClient</a> 
      * class.
      * Under normal circumstances, you should not have a need to call this
-     * method.  It creates a UDP datagram containing all the TFTP
-     * data packet data in the proper format.
+     * method.  
      * <p>
      * @return A UDP datagram containing the TFTP data packet.
      ***/

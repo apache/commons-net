@@ -2,11 +2,11 @@
 <project name="Jakarta Commons/Net">
 
   <title>Jakarta Commons/Net</title>
-  <logo href="/images/logo.jpg">Jakarta Commons/Net</logo>
 
   <body>
     <menu name="Development">
       <item name="Coding Specifications"   href="/code-standards.html"/>
     </menu>
   </body>
+
 </project>

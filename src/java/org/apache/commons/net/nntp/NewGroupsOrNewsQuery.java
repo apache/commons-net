@@ -57,7 +57,7 @@ package org.apache.commons.net.nntp;
 import java.util.Calendar;
 
 /***
- * The NewGroupsOrNewsQuery class is used to issue NNTP NEWGROUPS and
+ * The NewGroupsOrNewsQuery class.  This is used to issue NNTP NEWGROUPS and
  * NEWNEWS queries, implemented by
  * <a href="org.apache.commons.net.nntp.NNTPClient.html#listNewNewsgroups">
  * listNewNewsGroups </a> and

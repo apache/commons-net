@@ -59,11 +59,9 @@ import java.util.Enumeration;
 import java.util.EventListener;
 import java.util.Vector;
 
-/***
- * <p>
- * <p>
+/**
  * @author Daniel F. Savarese
- ***/
+ */
 
 public class ListenerList implements Serializable
 {

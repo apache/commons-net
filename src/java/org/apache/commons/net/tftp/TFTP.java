@@ -265,7 +265,7 @@ public class TFTP extends DatagramSocketClient
 
 
     /***
-     * Initializes the internal buffers used by
+     * Initializes the internal buffers. Buffers are used by
      * <a href="#bufferedSend"> bufferedSend() </a> and 
      * <a href="#bufferedReceive"> bufferedReceive() </a>.  This
      * method must be called before calling either one of those two

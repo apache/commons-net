@@ -91,37 +91,42 @@ public abstract class TFTPPacket
     static final int MIN_PACKET_SIZE = 4;
 
     /***
+     * This is the actual TFTP spec
+     * identifier and is equal to 1.   
      * Identifier returned by <a href="#getType">getType()</a>
-     * indicating a read request packet.  This is the actual TFTP spec
-     * identifier and is equal to 1.
+     * indicating a read request packet.  
      ***/
     public static final int READ_REQUEST = 1;
 
     /***
+     * This is the actual TFTP spec
+     * identifier and is equal to 2.   
      * Identifier returned by <a href="#getType">getType()</a>
-     * indicating a write request packet.  This is the actual TFTP spec
-     * identifier and is equal to 2.
+     * indicating a write request packet.  
      ***/
     public static final int WRITE_REQUEST = 2;
 
     /***
-     * Identifier returned by <a href="#getType">getType()</a>
-     * indicating a data packet.  This is the actual TFTP spec
+     * This is the actual TFTP spec
      * identifier and is equal to 3.
+     * Identifier returned by <a href="#getType">getType()</a>
+     * indicating a data packet.  
      ***/
     public static final int DATA = 3;
 
     /***
-     * Identifier returned by <a href="#getType">getType()</a>
-     * indicating an acknowledgement packet.  This is the actual TFTP spec
+     * This is the actual TFTP spec
      * identifier and is equal to 4.
+     * Identifier returned by <a href="#getType">getType()</a>
+     * indicating an acknowledgement packet.  
      ***/
     public static final int ACKNOWLEDGEMENT = 4;
 
     /***
-     * Identifier returned by <a href="#getType">getType()</a>
-     * indicating an error packet.  This is the actual TFTP spec
+     * This is the actual TFTP spec
      * identifier and is equal to 5.
+     * Identifier returned by <a href="#getType">getType()</a>
+     * indicating an error packet.  
      ***/
     public static final int ERROR = 5;
 
@@ -220,13 +225,14 @@ public abstract class TFTPPacket
     abstract DatagramPacket _newDatagram(DatagramPacket datagram, byte[] data);
 
     /***
+     * Creates a UDP datagram containing all the TFTP packet
+     * data in the proper format.
      * This is an abstract method, exposed to the programmer in case he
      * wants to implement his own TFTP client instead of using
      * the <a href="org.apache.commons.net.tftp.TFTPClient.html#_top_">TFTPClient</a>
      * class.
      * Under normal circumstances, you should not have a need to call this
-     * method.  It creates a UDP datagram containing all the TFTP packet
-     * data in the proper format.
+     * method.  
      * <p>
      * @return A UDP datagram containing the TFTP packet.
      ***/

@@ -62,8 +62,8 @@ package org.apache.commons.net.telnet;
  * <p>
  * <p>
  * @author Daniel F. Savarese
- * @see Telnet
- * @see TelnetClient
+ * @see org.apache.commons.net.telnet.Telnet
+ * @see org.apache.commons.net.telnet.TelnetClient
  ***/
 
 public class TelnetOption

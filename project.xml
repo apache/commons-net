@@ -8,6 +8,7 @@
   <organization>
     <name>Apache Software Foundation</name>
     <url>http://jakarta.apache.org/</url>
+    <logo>/images/jakarta-logo-blue.gif</logo>
   </organization>
   <inceptionYear>1997</inceptionYear>
   <package>org.apache.commons</package>
@@ -71,19 +72,23 @@
       <organization/>
     </developer>
     <developer>
-      <name>Winston Ojeda</name>
-      <id/>
-      <email>Winston.Ojeda@qg.com</email>
-      <organization>Quad/Graphics, Inc.</organization>
-    </developer>
-    <developer>
       <name>Daniel F. Savarese</name>
       <id>savarese</id>
       <email>savarese@apache.org</email>
       <organization>savarese.org</organization>
     </developer>
   </developers>
+
+  <contributors>
+   <contributor>
+      <name>Winston Ojeda</name>
+      <id/>
+      <email>Winston.Ojeda@qg.com</email>
+      <organization>Quad/Graphics, Inc.</organization>
+    </contributor>
+  </contributors>
   
+
   <dependencies>
     <dependency>
       <id>oro</id>
@@ -112,11 +117,6 @@
         <include>**/*Test.java</include>
       </includes>
     </unitTest>
-    
-    <!-- pre b5 -->
-    <unitTestPatterns>
-      <unitTestPattern>include = **/*Test.java</unitTestPattern>
-    </unitTestPatterns>
     
     <integrationUnitTestSourceDirectory/>
     <integrationUnitTestPatterns/>

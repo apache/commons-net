@@ -54,15 +54,13 @@ package org.apache.commons.net.telnet;
  * <http://www.apache.org/>.
  */
 
-/***
+/**
  * The TelnetCommand class cannot be instantiated and only serves as a
  * storehouse for telnet command constants.
- * <p>
- * <p>
  * @author Daniel F. Savarese
- * @see Telnet
- * @see TelnetClient
- ***/
+ * @see org.apache.commons.net.telnet.Telnet
+ * @see org.apache.commons.net.telnet.TelnetClient
+ */
 
 public final class TelnetCommand
 {

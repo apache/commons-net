@@ -59,14 +59,9 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import org.apache.commons.net.SocketClient;
 
-/***
- *
- * <p>
- *
- * <p>
- * <p>
+/**
  * @author Daniel F. Savarese
- ***/
+ */
 
 class Telnet extends SocketClient
 {

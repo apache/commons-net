@@ -103,8 +103,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * <P>
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.3 2002/05/03 14:52:30 brekke Exp $
- * @see org.apache.commons.net.ftp.FTPFileFTPEntryParser
+ * @version $Id: VMSFTPEntryParser.java,v 1.4 2002/08/06 15:23:37 brekke Exp $
  */
 public class VMSFTPEntryParser
             extends MatchApparatus implements FTPFileEntryParser
