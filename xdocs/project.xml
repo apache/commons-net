@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Jakarta Commons/Net" href="http://jakarta.apache.org/commons/net/">
+
+  <title>Jakarta Commons/Net</title>
+  <logo href="/images/logo.jpg">Jakarta Commons/Net</logo>
+
+  <body>
+    <menu name="Development">
+      <item name="Coding Specifications"   href="/code-standards.html"/>
+    </menu>
+  </body>
+</project>
