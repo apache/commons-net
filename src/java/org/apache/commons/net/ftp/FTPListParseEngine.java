@@ -96,7 +96,7 @@ import java.util.ListIterator;
  *    FTPClient f=FTPClient();
  *    f.connect(server);
  *    f.login(username, password);
- *    FTPListParseEngine engine = f.initiateListParsing(directory, parser);
+ *    FTPListParseEngine engine = f.initiateListParsing(directory);
  * 
  *    while (engine.hasNext()) {
  *       FTPFile[] files = engine.getNext(25);  // "page size" you want
@@ -104,6 +104,7 @@ import java.util.ListIterator;
  *       //expensive FTPFile objects not created until needed.
  *    }
  * </pre>
+ * @version
  */
 public class FTPListParseEngine {
 	private List entries = new LinkedList();

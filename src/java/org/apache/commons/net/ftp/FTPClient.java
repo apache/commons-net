@@ -201,8 +201,49 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
  * specification that it cannot be interpreted in a useful manner despite
  * attempts to be as lenient as possible.
  * <p>
+ * Listing API Examples
+ * Both paged and unpaged examples of directory listings are available, 
+ * as follows:
  * <p>
- * @author Daniel F. Savarese
+ * Unpaged (whole list) access, using a parser accessible by auto-detect:
+ * <pre>
+ *    FTPClient f=FTPClient();
+ *    f.connect(server);
+ *    f.login(username, password);
+ *    FTPFile[] files = listFiles(directory);
+ * </pre>
+ * <p>
+ * Paged access, using a parser not accessible by auto-detect.  The class
+ * defined in the first parameter of initateListParsing should be derived
+ * from org.apache.commons.net.FTPFileEntryParser:
+ * <pre>
+ *    FTPClient f=FTPClient();
+ *    f.connect(server);
+ *    f.login(username, password);
+ *    FTPListParseEngine engine = 
+ *       f.initiateListParsing("com.whatever.YourOwnParser", directory);
+ * 
+ *    while (engine.hasNext()) {
+ *       FTPFile[] files = engine.getNext(25);  // "page size" you want
+ *       //do whatever you want with these files, display them, etc.
+ *       //expensive FTPFile objects not created until needed.
+ *    }
+ * </pre>
+ * <p>
+ * Paged access, using a parser accessible by auto-detect:
+ * <pre>
+ *    FTPClient f=FTPClient();
+ *    f.connect(server);
+ *    f.login(username, password);
+ *    FTPListParseEngine engine = f.initiateListParsing(directory);
+ * 
+ *    while (engine.hasNext()) {
+ *       FTPFile[] files = engine.getNext(25);  // "page size" you want
+ *       //do whatever you want with these files, display them, etc.
+ *       //expensive FTPFile objects not created until needed.
+ *    }
+ * </pre>
+ * <p> * @author Daniel F. Savarese
  * @see FTP
  * @see FTPConnectionClosedException
  * @see FTPFileEntryParser
