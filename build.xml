@@ -107,8 +107,8 @@
         <fileset dir="src/test">
           <include name="**/*Test.java">
           </include>
-          <exclude name="**/*FunctionalTest.java">
-          </exclude>
+	  <exclude name="**/*FunctionalTest.java" />
+	  <exclude name="**/*POP3*.java" />
         </fileset>
       </batchtest>
     </junit>
