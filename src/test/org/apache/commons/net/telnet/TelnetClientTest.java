@@ -67,7 +67,7 @@ import java.io.PipedOutputStream;
  * <p>
  * @author Bruno D'Avanzo
  ***/
-public class TelnetClientTest extends TestCase
+public class TelnetClientTest extends TestCase implements TelnetNotificationHandler
 {
     protected TelnetTestSimpleServer server1;
     protected TelnetTestSimpleServer server2;
@@ -75,6 +75,10 @@ public class TelnetClientTest extends TestCase
     protected TelnetClient tc1;
     protected TelnetClient tc2;
     protected TelnetClient tc3;
+    protected int numdo = 0;
+    protected int numdont = 0;
+    protected int numwill = 0;
+    protected int numwont = 0;
 
     /***
      * main for running the test.
@@ -92,7 +96,7 @@ public class TelnetClientTest extends TestCase
         server1 = new TelnetTestSimpleServer(3333);
         server2 = new TelnetTestSimpleServer(3334);
         server3 = new TelnetTestSimpleServer(3335);
-        
+
         tc1 = new TelnetClient();
         tc2 = new TelnetClient();
         tc3 = new TelnetClient("ANSI");
@@ -423,6 +427,80 @@ public class TelnetClientTest extends TestCase
     }
 
     /***
+     * test of option negotiation notification
+     ***/
+    public void testNotification() throws Exception
+    {
+        byte buffread1[] = new byte[6];
+        byte send1[] =
+        {
+            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO, (byte)15,
+            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WILL, (byte)15,
+        };
+
+        byte buffread2[] = new byte[9];
+        byte send2[] =
+        {
+            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO, (byte)TelnetOption.TERMINAL_TYPE,
+            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DONT, (byte)TelnetOption.ECHO,
+            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO, (byte)TelnetOption.SUPPRESS_GO_AHEAD,
+            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WONT, (byte)TelnetOption.SUPPRESS_GO_AHEAD
+        };
+
+        byte buffread2b[] = new byte[11];
+        byte send2b[] =
+        {
+            (byte)TelnetCommand.IAC, (byte)TelnetCommand.SB, (byte)TelnetOption.TERMINAL_TYPE,
+            (byte)1, (byte)TelnetCommand.IAC, (byte)TelnetCommand.SE,
+        };
+
+        openConnections();
+
+        numdo = 0;
+        numdont = 0;
+        numwill = 0;
+        numwont = 0;
+        tc2.registerNotifHandler(this);
+
+        InputStream is1 = server1.getInputStream();
+        OutputStream os1 = server1.getOutputStream();
+        is1.skip(is1.available());
+        os1.write(send1);
+        os1.flush();
+        Thread.sleep(500);
+        if(is1.available() > 0)
+        {
+            is1.read(buffread1);
+        }
+
+        InputStream is2 = server2.getInputStream();
+        OutputStream os2 = server2.getOutputStream();
+        Thread.sleep(500);
+        is2.skip(is2.available());
+        os2.write(send2);
+        os2.flush();
+        Thread.sleep(500);
+        if(is2.available() > 0)
+        {
+            is2.read(buffread2);
+                Thread.sleep(1000);
+                if(is2.available() > 0)
+                {
+                    is2.read(buffread2b);
+                }
+        }
+
+
+        closeConnections();
+
+        assertTrue(numdo == 2);
+        assertTrue(numdont == 1);
+        assertTrue(numwont == 1);
+        assertTrue(numwill == 0);
+    }
+
+
+    /***
      * protocol compliance test in case of option handler removal
      ***/
     public void testDeleteOptionHandler() throws Exception
@@ -640,6 +718,36 @@ public class TelnetClientTest extends TestCase
                     result = false;
             }
             return(result);
+        }
+    }
+
+    /***
+     * Callback method called when TelnetClient receives an option
+     * negotiation command.
+     * <p>
+     * @param negotiation_code - type of negotiation command received
+     * (RECEIVED_DO, RECEIVED_DONT, RECEIVED_WILL, RECEIVED_WONT)
+     * <p>
+     * @param option_code - code of the option negotiated
+     * <p>
+     ***/
+    public void receivedNegotiation(int negotiation_code, int option_code)
+    {
+        if(negotiation_code == TelnetNotificationHandler.RECEIVED_DO)
+        {
+            numdo++;
+        }
+        else if(negotiation_code == TelnetNotificationHandler.RECEIVED_DONT)
+        {
+            numdont++;
+        }
+        else if(negotiation_code == TelnetNotificationHandler.RECEIVED_WILL)
+        {
+            numwill++;
+        }
+        else if(negotiation_code == TelnetNotificationHandler.RECEIVED_WONT)
+        {
+            numwont++;
         }
     }
 

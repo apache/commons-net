@@ -286,4 +286,24 @@ public class TelnetClient extends Telnet
         super._stopSpyStream();
     }
     /* Code Section added for supporting spystreams (end)*/
+
+    /***
+     * Registers a notification handler to which will be sent
+     * notifications of received telnet option negotiation commands.
+     * <p>
+     * @param notifhand - TelnetNotificationHandler to be registered
+     ***/
+    public void registerNotifHandler(TelnetNotificationHandler  notifhand)
+    {
+        super.registerNotifHandler(notifhand);
+    }
+
+    /***
+     * Unregisters the current notification handler.
+     * <p>
+     ***/
+    public void unregisterNotifHandler()
+    {
+        super.unregisterNotifHandler();
+    }
 }

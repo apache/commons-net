@@ -59,6 +59,7 @@ import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import org.apache.commons.net.telnet.TelnetClient;
+import org.apache.commons.net.telnet.TelnetNotificationHandler;
 import org.apache.commons.net.telnet.SimpleOptionHandler;
 import org.apache.commons.net.telnet.EchoOptionHandler;
 import org.apache.commons.net.telnet.TerminalTypeOptionHandler;
@@ -82,7 +83,7 @@ import java.util.StringTokenizer;
  * <p>
  * @author Bruno D'Avanzo
  ***/
-public class TelnetClientExample implements Runnable
+public class TelnetClientExample implements Runnable, TelnetNotificationHandler
 {
     static TelnetClient tc = null;
 
@@ -149,6 +150,7 @@ public class TelnetClientExample implements Runnable
 
 
                 Thread reader = new Thread (new TelnetClientExample());
+                tc.registerNotifHandler(new TelnetClientExample());
                 System.out.println("TelnetClientExample");
                 System.out.println("Type AYT to send an AYT telnet command");
                 System.out.println("Type OPT to print a report of status of options (0-24)");
@@ -296,6 +298,38 @@ public class TelnetClientExample implements Runnable
         }
     }
 
+
+    /***
+     * Callback method called when TelnetClient receives an option
+     * negotiation command.
+     * <p>
+     * @param negotiation_code - type of negotiation command received
+     * (RECEIVED_DO, RECEIVED_DONT, RECEIVED_WILL, RECEIVED_WONT)
+     * <p>
+     * @param option_code - code of the option negotiated
+     * <p>
+     ***/
+    public void receivedNegotiation(int negotiation_code, int option_code)
+    {
+        String command = null;
+        if(negotiation_code == TelnetNotificationHandler.RECEIVED_DO)
+        {
+            command = "DO";
+        }
+        else if(negotiation_code == TelnetNotificationHandler.RECEIVED_DONT)
+        {
+            command = "DONT";
+        }
+        else if(negotiation_code == TelnetNotificationHandler.RECEIVED_WILL)
+        {
+            command = "WILL";
+        }
+        else if(negotiation_code == TelnetNotificationHandler.RECEIVED_WONT)
+        {
+            command = "WONT";
+        }
+        System.out.println("Received " + command + " for option code " + option_code);
+   }
 
     /***
      * Reader thread.

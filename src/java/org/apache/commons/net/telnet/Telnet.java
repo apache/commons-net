@@ -163,6 +163,11 @@ class Telnet extends SocketClient
      * The stream on which to spy
      ***/
     private OutputStream spyStream = null;
+
+    /***
+     * The notification handler
+     ***/
+    private TelnetNotificationHandler __notifhand = null;
     /***
      * Empty Constructor
      ***/
@@ -451,7 +456,16 @@ class Telnet extends SocketClient
             System.err.println("RECEIVED DO: "
                 + TelnetOption.getOption(option));
         }
+
+        if (__notifhand != null)
+        {
+            __notifhand.receivedNegotiation(
+                TelnetNotificationHandler.RECEIVED_DO,
+                option);
+        }
+
         boolean acceptNewState = false;
+
 
         /* open TelnetOptionHandler functionality (start)*/
         if (optionHandlers[option] != null)
@@ -540,6 +554,12 @@ class Telnet extends SocketClient
             System.err.println("RECEIVED DONT: "
                 + TelnetOption.getOption(option));
         }
+        if (__notifhand != null)
+        {
+            __notifhand.receivedNegotiation(
+                TelnetNotificationHandler.RECEIVED_DONT,
+                option);
+        }
         if (_willResponse[option] > 0)
         {
             --_willResponse[option];
@@ -588,6 +608,14 @@ class Telnet extends SocketClient
             System.err.println("RECEIVED WILL: "
                 + TelnetOption.getOption(option));
         }
+
+        if (__notifhand != null)
+        {
+            __notifhand.receivedNegotiation(
+                TelnetNotificationHandler.RECEIVED_WILL,
+                option);
+        }
+
         boolean acceptNewState = false;
 
         /* open TelnetOptionHandler functionality (start)*/
@@ -647,6 +675,14 @@ class Telnet extends SocketClient
             System.err.println("RECEIVED WONT: "
                 + TelnetOption.getOption(option));
         }
+
+        if (__notifhand != null)
+        {
+            __notifhand.receivedNegotiation(
+                TelnetNotificationHandler.RECEIVED_WONT,
+                option);
+        }
+
         if (_doResponse[option] > 0)
         {
             --_doResponse[option];
@@ -1313,4 +1349,24 @@ class Telnet extends SocketClient
         }
     }
     /* Code Section added for supporting spystreams (end)*/
+
+    /***
+     * Registers a notification handler to which will be sent
+     * notifications of received telnet option negotiation commands.
+     * <p>
+     * @param notifhand - TelnetNotificationHandler to be registered
+     ***/
+    public void registerNotifHandler(TelnetNotificationHandler  notifhand)
+    {
+        __notifhand = notifhand;
+    }
+
+    /***
+     * Unregisters the current notification handler.
+     * <p>
+     ***/
+    public void unregisterNotifHandler()
+    {
+        __notifhand = null;
+    }
 }
