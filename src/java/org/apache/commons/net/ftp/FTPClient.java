@@ -2334,7 +2334,7 @@ public class FTPClient extends FTP
         }
 
         FTPFileList list =
-            FTPFileList.create(socket.getInputStream(), parser);
+            parser.createFTPFileList(socket.getInputStream());
 
         socket.close();
 

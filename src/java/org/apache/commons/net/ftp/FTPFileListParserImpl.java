@@ -137,11 +137,18 @@ public abstract class FTPFileListParserImpl
      ***/
     public FTPFile[] parseFileList(InputStream listStream) throws IOException 
     {
-        FTPFileList ffl = FTPFileList.create(listStream, this);
+        FTPFileList ffl = createFTPFileList(listStream);
         return ffl.getFiles();
 
     }
 
+    public FTPFileList createFTPFileList(InputStream stream)
+        throws IOException
+    {
+        DefaultFTPFileList list = new DefaultFTPFileList(this);
+        list.readStream(stream);
+        return list;
+    }
 
 
     /**

@@ -130,7 +130,7 @@ import java.io.InputStream;
  * </pre>
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileEntryParser.java,v 1.11 2004/01/06 22:24:24 dfs Exp $
+ * @version $Id: FTPFileEntryParser.java,v 1.12 2004/01/09 09:07:03 dfs Exp $
  * @see org.apache.commons.net.ftp.FTPFile
  * @see org.apache.commons.net.ftp.FTPClient#createFileList
  */
@@ -161,4 +161,29 @@ public interface FTPFileEntryParser
      * @exception IOException thrown on any IO Error reading from the reader.
      */
     String readNextEntry(BufferedReader reader) throws IOException;
+
+    /**
+     * Creates an <code>FTPFileList</code> object from a stream containing
+     * a file listing.
+     *
+     * @param stream The input stream created by reading the socket on which 
+     * the output of the LIST command was returned
+     * 
+     * @return the <code>FTPFileList</code> created.
+     * Will be null if the listing cannot be read from the stream.
+     * @exception IOException
+     *                   Thrown on any failure to read from the stream.
+     */
+    public FTPFileList createFTPFileList(InputStream stream)
+        throws IOException;
+
 }
+
+
+/* Emacs configuration
+ * Local variables:        **
+ * mode:             java  **
+ * c-basic-offset:   4     **
+ * indent-tabs-mode: nil   **
+ * End:                    **
+ */

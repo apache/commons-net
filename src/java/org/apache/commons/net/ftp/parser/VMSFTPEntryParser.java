@@ -70,6 +70,9 @@ import org.apache.oro.text.regex.Util;
 import org.apache.oro.text.regex.MalformedPatternException;
 
 import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPFileIterator;
+import org.apache.commons.net.ftp.FTPFileList;
+import org.apache.commons.net.ftp.DefaultFTPFileList;
 import org.apache.commons.net.ftp.FTPFileListParserImpl;
 
 /**
@@ -84,12 +87,139 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.11 2004/01/05 23:56:49 scohen Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.12 2004/01/09 09:07:03 dfs Exp $
  * 
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class VMSFTPEntryParser extends FTPFileListParserImpl
 {
+    private static class DuplicateFilteringFileIterator extends FTPFileIterator
+    {
+        FTPFile[] files;
+        int current;
+
+        public DuplicateFilteringFileIterator(FTPFileIterator iterator) {
+            FTPFile[] tempFiles = iterator.getFiles();
+            Hashtable filesHash = new Hashtable();
+            String fileName;
+
+
+            for (int index = 0; index < tempFiles.length; index++) {
+                fileName = tempFiles[index].getName();
+
+                if (!filesHash.containsKey(fileName)) {
+                    filesHash.put(fileName, (FTPFile) tempFiles[index]);
+                }
+            }
+
+            files = new FTPFile[filesHash.size()];
+
+            Enumeration e = filesHash.keys();
+            int index = 0;
+
+            while (e.hasMoreElements()) {
+                FTPFile ftpf = (FTPFile) filesHash.get(e.nextElement());
+                files[index++] = ftpf;
+            }
+
+            current = 0;
+        }
+            
+        public FTPFile[] getFiles() {
+            FTPFile[] result = new FTPFile[files.length];
+            System.arraycopy(files, 0, result, 0, result.length);
+            return result;
+        }
+
+        public FTPFile[] getNext(int quantityRequested) {
+            FTPFile[] result;
+            int remaining;
+
+            remaining = files.length - current;
+
+            if(quantityRequested > remaining)
+                quantityRequested = remaining;
+            else if(quantityRequested < 0)
+                quantityRequested = 0;
+            else if(quantityRequested == 0) {
+                // interpret a 0 as meaning all remaining items.
+                // ask Steve if this is what he intended.
+                quantityRequested = remaining;
+            }
+
+            result = new FTPFile[quantityRequested];
+            System.arraycopy(files, current, result, 0, result.length);
+            current+=quantityRequested;
+
+            return result;
+        }
+
+        public boolean hasNext() {
+            return (current < files.length && files.length > 0);
+        }
+
+        public FTPFile next() {
+            FTPFile result = null;
+
+            if(hasNext()) {
+                result = files[current];
+                ++current;
+            }
+
+            return result;
+        }
+
+        public FTPFile[] getPrevious(int quantityRequested) {
+            FTPFile[] result;
+            int start = 0;
+
+            if(quantityRequested > current)
+                quantityRequested = current;
+            else if(quantityRequested < 0)
+                quantityRequested = 0;
+            else if(quantityRequested == 0) {
+                // interpret a 0 as meaning all items between 0 and current.
+                // ask Steve if this is what he intended.
+                quantityRequested = current;
+            } else
+                start = current - quantityRequested;
+
+            result = new FTPFile[quantityRequested];
+            System.arraycopy(files, start, result, 0, result.length);
+            current = start;
+
+            return result;
+        }
+
+        public boolean hasPrevious() {
+            return (current > 0 && files.length > 0);
+        }
+
+        public FTPFile previous() {
+            FTPFile result = null;
+
+            if(hasPrevious()) {
+                --current;
+                result = files[current];
+            }
+
+            return result;
+        }
+    }
+
+
+    private class DuplicateFilteringFileList extends DefaultFTPFileList {
+
+        public DuplicateFilteringFileList() {
+            super(VMSFTPEntryParser.this);
+        }
+
+        public FTPFileIterator iterator() {
+            return new DuplicateFilteringFileIterator(super.iterator());
+        }
+    }
+
+
     /**
      * settable option of whether or not to include versioning information 
      * with the file list.
@@ -181,9 +311,17 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
      * @exception IOException  If an I/O error occurs reading the listStream.
      ***/
     public FTPFile[] parseFileList(InputStream listStream) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(listStream));
+        return createFTPFileList(listStream).getFiles();
+    }
+
+
+    public FTPFileList createFTPFileList(InputStream listStream)
+        throws IOException
+    {
+        FTPFileList list;
+        BufferedReader reader =
+            new BufferedReader(new InputStreamReader(listStream));
         String listing = null;
-        FTPFile[] files;
 
         String line = reader.readLine();
         while (line != null) {
@@ -205,31 +343,17 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
 
         byte[] bytes = listing.getBytes();
         ByteArrayInputStream listingStream = new ByteArrayInputStream(bytes);
-        
-        if (versioning) {
-            files = super.parseFileList(listingStream);
-        } else {
-            FTPFile[] tempFiles = super.parseFileList(listingStream);
-            Hashtable filesHash = new Hashtable();
-            String fileName;
-            
-            for (int index = 0; index < tempFiles.length; index++) {
-                fileName = tempFiles[index].getName();
-                if (!filesHash.containsKey(fileName)) {
-                    filesHash.put(fileName, (FTPFile) tempFiles[index]);
-                }
-            }
-            files = new FTPFile[filesHash.size()];
-            Enumeration e = filesHash.keys();
-            int index = 0;
-            while (e.hasMoreElements()) {
-                FTPFile ftpf = (FTPFile) filesHash.get(e.nextElement());
-                files[index++] = ftpf;
-            }
-            
+
+        if(versioning)
+            list = super.createFTPFileList(listingStream);
+        else {
+            DefaultFTPFileList dlist;
+            dlist = new DuplicateFilteringFileList();
+            dlist.readStream(listingStream);
+            list = dlist;
         }
-        
-        return files;
+
+        return list;
     }
 
 
