@@ -13,11 +13,291 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<project default="jar:jar" xmlns:j="jelly:core">
+<project default="jar:jar" 
+  xmlns:maven="jelly:maven"
+  xmlns:j="jelly:core" 
+  xmlns:define="jelly:define"
+  xmlns:doc="doc" 
+  xmlns:license="license"
+  xmlns:util="jelly:util"
+  xmlns:ant="jelly:ant"
+>
 
   <goal name="test:functional">
     <j:set var="testmatch" value="*FunctionalTest"/>
     <attainGoal name="test:match"/>
   </goal>
-  	
+
+
+  <!-- ########## BEGIN patch ############################################# -->
+
+  <!-- patched maven-jar-plugin-1.3 & maven-dist-plugin-1.3 to include NOTICE.txt -->
+  <!-- remove this when a new maven release includes this feature -->
+
+  <goal name="jar:jar"
+        description="Create the deliverable jar file."
+        prereqs="test:test">
+    <ant:available property="maven.jar.manifest.available" 
+      file="${maven.jar.manifest}"/>
+
+    <!-- See http://java.sun.com/j2se/1.3/docs/guide/jar/jar.html -->
+    <!-- See http://java.sun.com/j2se/1.4.1/docs/guide/jar/jar.html -->
+    <ant:jar
+      jarfile="${maven.build.dir}/${maven.final.name}.jar"
+      basedir="${maven.build.dest}"
+      index="${maven.jar.index}"
+      compress="${maven.jar.compress}"
+      excludes="${maven.jar.excludes}"> 
+      
+      <j:if test="${maven.jar.manifest.available}">
+        <ant:setProperty name="manifest" value="${maven.jar.manifest}" />
+      </j:if>
+
+      <j:set var="licenseFileName"><license:fileName/></j:set>
+      <util:file name="${licenseFileName}" var="licenseFile"/>
+      <ant:metainf dir="${licenseFile.canonicalFile.parent}">
+        <ant:include name="LICENSE.txt"/>
+        <ant:include name="NOTICE.txt"/>
+      </ant:metainf>
+      <ant:manifest>
+        <ant:attribute name="Built-By" value="${user.name}"/>
+        <ant:attribute name="Created-By" value="Apache Jakarta Maven"/>
+        <ant:attribute name="Package" value="${pom.package}"/>
+        <ant:attribute name="Build-Jdk" value="${java.version}"/>
+        <!-- added supplementary entries -->
+        <ant:attribute name="Extension-Name" value="${pom.artifactId}"/>
+        <ant:attribute name="Specification-Version" value="${pom.specificationVersion}"/>
+        <ant:attribute name="Specification-Vendor" value="${pom.organization.name}"/>
+        <ant:attribute name="Specification-Title" value="${pom.shortDescription}"/>
+        <ant:attribute name="Implementation-Version" value="${pom.currentVersion}"/>
+        <ant:attribute name="Implementation-Vendor" value="${pom.organization.name}"/>
+        <ant:attribute name="Implementation-Vendor-Id" value="${pom.organization.identifier}"/>
+        <j:set var="mainclass" value="${pom.getPluginContext('maven-java-plugin').getVariable('maven.jar.mainclass')}"/>
+        <j:if test="${!empty(mainclass)}">
+            <ant:attribute name="Main-Class" value="${mainclass}"/>
+        </j:if>
+        
+        <j:if test="${maven.jar.manifest.extensions.add == 'true'}">
+          <j:set var="extensionList" value=""/>
+          <j:forEach var="artifact" items="${pom.artifacts}">
+            <j:set var="dep" value="${artifact.dependency}"/>
+            <j:set var="extensionList" value="${extensionList} ${dep.artifactId}"/>
+          </j:forEach>
+
+		  <j:if test="${extensionList.length() != 0}">        
+            <j:set var="extensionList" value="${extensionList.substring(1)}"/>
+            <ant:attribute name="Extension-List" value="${extensionList}"/>
+          </j:if>
+
+          <j:forEach var="artifact" items="${pom.artifacts}">
+            <j:set var="dep" value="${artifact.dependency}"/>
+	        <ant:attribute name="${dep.artifactId}-Extension-Name" value="${dep.artifactId}"/>
+            <ant:attribute name="${dep.artifactId}-Implementation-Version" value="${dep.version}"/>
+            <ant:attribute name="${dep.artifactId}-Implementation-URL" value="http://www.ibiblio.org/maven${artifact.urlPath}"/>
+          </j:forEach>        
+        </j:if>
+
+        <j:if test="${context.getVariable('maven.jar.manifest.attributes.list') != null}">
+            <util:tokenize var="attributeList" delim="," trim="true">${maven.jar.manifest.attributes.list}</util:tokenize>
+            <j:forEach var="attribute" items="${attributeList}">
+                <j:set var="name" value="maven.jar.manifest.attribute.${attribute}"/>
+                <j:set var="value" value="${context.findVariable(name)}"/>
+                <ant:attribute name="${attribute}" value="${value}"/>
+            </j:forEach>
+        </j:if>
+
+        <j:if test="${context.getVariable('maven.jar.manifest.groups.list') != null}">
+            <util:tokenize var="groupList" delim="," trim="true">${maven.jar.manifest.groups.list}</util:tokenize>
+            <j:forEach var="group" items="${groupList}">
+                <j:set var="nameVar" value="maven.jar.manifest.${group}.name"/>
+                <j:set var="groupName" value="${context.findVariable(nameVar)}"/>
+                <j:set var="attributeListVar" value="maven.jar.manifest.${group}.attributes.list"/>
+                <j:set var="groupAttributes" value="${context.findVariable(attributeListVar)}"/>
+                <util:tokenize var="attributeList" delim="," trim="true">${groupAttributes}</util:tokenize>
+                <ant:section name="${groupName}">
+                    <j:forEach var="attribute" items="${attributeList}">
+                        <j:set var="name" value="maven.jar.manifest.${group}.attribute.${attribute}"/>
+                        <j:set var="value" value="${context.findVariable(name)}"/>
+                        <ant:attribute name="${attribute}" value="${value}"/>
+                    </j:forEach>
+                </ant:section>
+            </j:forEach>
+         </j:if>
+      </ant:manifest>
+    </ant:jar>
+  </goal>
+
+
+  <ant:property name="maven.dist.assembly.dir"
+    value="${maven.build.dir}/${maven.final.name}"/>
+  <ant:property name="maven.dist.bin.archive.dir"
+    value="${maven.dist.assembly.dir}/bin"/>
+  <ant:property name="maven.dist.src.archive.dir"
+    value="${maven.dist.assembly.dir}/src"/>
+  <ant:property name="maven.dist.bin.assembly.dir"
+    value="${maven.dist.assembly.dir}/bin/${maven.final.name}"/>
+  <ant:property name="maven.dist.src.assembly.dir"
+    value="${maven.dist.assembly.dir}/src/${maven.final.name}"/>
+  <ant:property name="maven.dist.dir"
+    value="${maven.build.dir}/distributions"/>
+
+  <goal
+    name="dist:prepare-bin-filesystem"
+    prereqs="xdoc:init, jar:jar, javadoc:generate"
+    description="Builds the binary distribution file system.">
+    
+    <!--
+    
+    This is the directory where everything is copied to so that it can
+    be archived.
+    
+    -->
+    
+    <ant:delete dir="${maven.dist.bin.assembly.dir}"/>
+    <ant:mkdir dir="${maven.dist.bin.assembly.dir}"/>
+
+    <ant:echo>
+      +-------------------------------------------------------+
+      | C R E A T I N G  B I N A R Y  D I S T R I B U T I O N |
+      +-------------------------------------------------------+
+    </ant:echo>
+
+    <ant:copy todir="${maven.dist.bin.assembly.dir}">
+      <ant:fileset dir=".">
+        <ant:include name="README.txt"/>
+        <ant:include name="LICENSE*"/>
+        <ant:include name="NOTICE*"/>
+      </ant:fileset>
+    </ant:copy>
+
+    <!-- Copy Jars -->
+    <ant:copy todir="${maven.dist.bin.assembly.dir}">
+      <ant:fileset dir="${maven.build.dir}">
+        <ant:include name="${maven.final.name}.jar"/>
+      </ant:fileset>
+    </ant:copy>
+
+    <!-- Copy documentation -->
+    <j:set var="docsDest" value="${maven.docs.dest}"/>
+    <ant:copy todir="${maven.dist.bin.assembly.dir}/docs">
+      <ant:fileset dir="${docsDest}">
+        <ant:include name="**"/>
+      </ant:fileset>
+    </ant:copy>
+  </goal>
+
+  <goal
+    name="dist:prepare-src-filesystem"
+    description="Builds the source distribution file system.">
+
+    <!-- S O U R C E  D I S T R I B U T I O N -->
+
+    <ant:delete dir="${maven.dist.src.assembly.dir}" />
+    <ant:mkdir dir="${maven.dist.src.assembly.dir}" />
+
+    <ant:echo>
+      +-------------------------------------------------------+
+      | C R E A T I N G  S O U R C E  D I S T R I B U T I O N |
+      +-------------------------------------------------------+
+    </ant:echo>
+
+    <ant:copy todir="${maven.dist.src.assembly.dir}">
+      <ant:fileset dir=".">
+        <ant:include name="README.txt"/>
+        <ant:include name="LICENSE*"/>
+        <ant:include name="NOTICE*"/>
+        <ant:include name="project.properties"/>
+        <ant:include name="maven.xml"/>
+        <ant:include name="project.xml"/>
+      </ant:fileset>
+    </ant:copy>
+
+    <ant:available property="maven.dist.build.xml.avail"
+               file="${basedir}/build.xml"/>
+
+    <j:choose>
+      <j:when test="${maven.dist.build.xml.avail}">
+        <ant:copy todir="${maven.dist.src.assembly.dir}" file="build.xml"/>
+      </j:when>
+      <j:otherwise>
+        <attainGoal name="ant:generate-build"/>
+        <ant:move 
+          file="build.xml"
+          tofile="${maven.dist.src.assembly.dir}/build.xml"/>
+      </j:otherwise>
+    </j:choose>
+
+    <!-- Copy Source -->
+    <ant:copy todir="${maven.dist.src.assembly.dir}/src">
+      <ant:fileset dir="${maven.src.dir}" />
+    </ant:copy>
+  </goal>
+
+  <goal name="dist"
+    prereqs="dist:build"
+    description="Build a complete distribution.">
+  </goal>
+        
+  <goal
+    name="dist:build"
+    prereqs="dist:build-bin,dist:build-src"
+    description="Build a complete distribution.">
+  </goal>
+
+  <goal
+    name="dist:build-setup"
+    description="Set up directories for a distribution build">
+    <ant:delete dir="${maven.dist.dir}"/>
+    <ant:mkdir dir="${maven.dist.dir}"/>
+  </goal>
+
+  <goal
+    name="dist:build-bin"
+    prereqs="dist:build-setup,dist:prepare-bin-filesystem"
+    description="Build the binary distribution.">
+
+    <!-- Create a tar.gz file -->
+    <ant:tar longfile="gnu" tarfile="${maven.dist.dir}/${maven.final.name}.tar">
+      <ant:tarfileset dir="${maven.dist.bin.archive.dir}"/>
+    </ant:tar>
+
+    <ant:gzip 
+      zipfile="${maven.dist.dir}/${maven.final.name}.tar.gz"
+      src="${maven.dist.dir}/${maven.final.name}.tar"
+    />
+    
+    <ant:delete file="${maven.dist.dir}/${maven.final.name}.tar"/>
+
+    <!-- Create a zip file -->
+    <ant:zip zipfile="${maven.dist.dir}/${maven.final.name}.zip">
+      <ant:zipfileset dir="${maven.dist.bin.archive.dir}"/>
+    </ant:zip>
+  </goal>
+
+  <goal
+    name="dist:build-src"
+    prereqs="dist:build-setup,dist:prepare-src-filesystem"
+    description="Build the source distribution.">
+ 
+    <!-- Create a tar.gz file -->
+    <ant:tar longfile="gnu" tarfile="${maven.dist.dir}/${maven.final.name}-src.tar">
+      <ant:tarfileset dir="${maven.dist.src.archive.dir}"/>
+    </ant:tar>
+
+    <ant:gzip 
+      zipfile="${maven.dist.dir}/${maven.final.name}-src.tar.gz" 
+      src="${maven.dist.dir}/${maven.final.name}-src.tar"
+    />
+    
+    <ant:delete file="${maven.dist.dir}/${maven.final.name}-src.tar"/>
+
+    <!-- Create a zip file -->
+    <ant:zip zipfile="${maven.dist.dir}/${maven.final.name}-src.zip">
+      <ant:zipfileset dir="${maven.dist.src.archive.dir}"/>
+    </ant:zip>
+
+  </goal>
+
+  <!-- ########## END patch ############################################# -->
+
 </project>
