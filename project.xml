@@ -66,12 +66,6 @@
       <organization>Quad/Graphics, Inc.</organization>
     </developer>
     <developer>
-      <name>Steve Cohen</name>
-      <id/>
-      <email>stevecoh1@attbi.com</email>
-      <organization/>
-    </developer>
-    <developer>
       <name>Daniel F. Savarese</name>
       <id>savarese</id>
       <email>savarese@apache.org</email>
@@ -82,13 +76,15 @@
   <contributors>
    <contributor>
       <name>Winston Ojeda</name>
-      <id/>
       <email>Winston.Ojeda@qg.com</email>
       <organization>Quad/Graphics, Inc.</organization>
     </contributor>
+    <contributor>
+      <name>Steve Cohen</name>
+      <email>stevecoh1@attbi.com</email>
+    </contributor>
   </contributors>
   
-
   <dependencies>
     <dependency>
       <id>oro</id>

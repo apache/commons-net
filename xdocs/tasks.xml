@@ -14,16 +14,9 @@
             Convert code to specified coding standards.  Checkstyle report provided.
           </li>
           <li>
-            Evaluate options for integrating FTPClient2/parsing into FTPClient while maintaining (deprecated) 
-            old interface.
-          </li>
-          <li>
             Clean out any classes that don't belong in this project.  Probably classes from
             org.apache.commons.util and org.apache.commons.io could be moved to their corresponding
             commons projects.
-          </li>
-          <li>
-            Create proposal documents for the project.
           </li>
           <li>
             DefaultFTPFileLister doesn't work with every FTP server. 
@@ -39,6 +32,12 @@
             regular expression rather than create a completely new 
             hand-parsed FTPFileLister implementation. ( Partially implemented
             by Steve Cohen )
+            This partial implementation has some problems since it assumes
+            that the ftp server is returning one line for each entry.
+            Some ftp servers return two lines for each entry which makes the
+            current implementation unusable with those ftp servers.  One
+            possible solution is to use the regular expression to parse the 
+            entries instead of assuming each line is one entry. 
           </li>
           <li>
             Make buffer size settable for FTP data transfers using 
