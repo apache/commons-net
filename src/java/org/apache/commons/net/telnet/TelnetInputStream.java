@@ -60,9 +60,8 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         __receiveState = _STATE_DATA;
         __isClosed = true;
         __hasReachedEOF = false;
-        // Make it 1025, because when full, one slot will go unused, and we
-        // want a 1024 byte buffer just to have a round number (base 2 that is)
-        //__queue         = new int[1025];
+        // Make it 2049, because when full, one slot will go unused, and we
+        // want a 2048 byte buffer just to have a round number (base 2 that is)
         __queue = new int[2049];
         __queueHead = 0;
         __queueTail = 0;
@@ -407,8 +406,11 @@ _mainSwitch:
 
                     --__bytesAvailable;
 
-		    // Need to explicitly notify()
-		    __queue.notify();
+		    // Need to explicitly notify() so available() works properly
+		    if(__bytesAvailable == 0 && __threaded) {
+			    __queue.notify();
+		    }
+		    
                     return ch;
                 }
             }
