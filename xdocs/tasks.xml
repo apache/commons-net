@@ -20,27 +20,6 @@
             commons projects.
           </li>
           <li>
-            DefaultFTPFileLister doesn't work with every FTP server. 
-            Some Microsoft and VMS FTP servers foil it. It is also 
-            wasteful of memory in that it parses the listing into a
-            complete set of FTPFile instances when it could store the 
-            listing and just parse the listing on demand through an 
-            iterator. An FTPFileListParser implementation should be 
-            created that is backed by the original listing and iterates 
-            through it using a regular expression. Regular expressions 
-            could be installed based on FTP server system id's, so when 
-            a user runs across an unsupported server, he can register a 
-            regular expression rather than create a completely new 
-            hand-parsed FTPFileLister implementation. ( Partially implemented
-            by Steve Cohen )
-            This partial implementation has some problems since it assumes
-            that the ftp server is returning one line for each entry.
-            Some ftp servers return two lines for each entry which makes the
-            current implementation unusable with those ftp servers.  One
-            possible solution is to use the regular expression to parse the 
-            entries instead of assuming each line is one entry. 
-          </li>
-          <li>
             Make buffer size settable for FTP data transfers using 
             retrieveFile(). retrieveFile() uses Util.copyStream and a 
             1024 byte buffer which is too small for some applications 
