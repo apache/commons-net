@@ -31,7 +31,7 @@ import java.io.PipedOutputStream;
 public class TelnetClientTest 
 extends TestCase implements TelnetNotificationHandler
 {
-    private static final int CONNECTIONS = 5;
+    private static final int CONNECTIONS = 4;
     protected TelnetTestSimpleServer[] servers =
         new TelnetTestSimpleServer[CONNECTIONS];
     protected TelnetClient[] clients = 
@@ -62,10 +62,12 @@ extends TestCase implements TelnetNotificationHandler
                servers[socket] = new TelnetTestSimpleServer(port);
                switch (socket) {
                		case 0:
-                        clients[socket] = new TelnetClient();
+               		    clients[socket] = new TelnetClient();
+                        // redundant but makes code clearer.
+                        clients[socket].setReaderThread(true);
                		    break;
                		case 1:
-                        clients[socket] = new TelnetClient();
+               		    clients[socket] = new TelnetClient();
                         TerminalTypeOptionHandler ttopt = 
                             new TerminalTypeOptionHandler("VT100", false, false, true, false);
                         EchoOptionHandler echoopt = 
@@ -84,12 +86,10 @@ extends TestCase implements TelnetNotificationHandler
                         clients[socket] = new TelnetClient();
                         clients[socket].setReaderThread(false);
                		    break;
-               		case 4:
-                        clients[socket] = new TelnetClient();
-                        clients[socket].setReaderThread(true);
-               		    break;
                }
                clients[socket].connect("127.0.0.1", port);
+               
+               // only increment socket number on success
                socket++;
                System.err.println("opened client-server connection on port " + port);
            } catch (IOException e) {
@@ -761,8 +761,8 @@ extends TestCase implements TelnetNotificationHandler
                 negotiation1_ok = true;
         }
 
-        InputStream is2 = servers[4].getInputStream();
-        OutputStream os2 = servers[4].getOutputStream();
+        InputStream is2 = servers[0].getInputStream();
+        OutputStream os2 = servers[0].getOutputStream();
         Thread.sleep(1000);
         is2.skip(is2.available());
         os2.write(send1);
@@ -777,7 +777,7 @@ extends TestCase implements TelnetNotificationHandler
         }
 
         assertTrue(!clients[3].getReaderThread());
-        assertTrue(clients[4].getReaderThread());
+        assertTrue(clients[0].getReaderThread());
         assertTrue(read_ok);
         assertTrue(negotiation1_ok);
         assertTrue(negotiation2_ok);
