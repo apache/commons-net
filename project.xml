@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 
 <project>
-  <version>2</version>
+  <pomVersion>3</pomVersion>
   <name>Jakarta Commons/Net</name>
   <id>commons-net</id>
   <currentVersion>1.0.0-dev</currentVersion>
@@ -16,37 +16,38 @@
   
   <shortDescription>Jakarta Commons/Net</shortDescription>
   
-   <description>
-      This is an Internet protocol suite Java library originally 
-      developed by ORO, Inc. This version supports Finger, Whois, 
-      TFTP, Telnet, POP3, FTP, NNTP, SMTP, and some miscellaneous 
-      protocols like Time and Echo as well as BSD R command support. 
-      The purpose of the library is to provide fundamental protocol 
-      access, not higher-level abstractions. Therefore, some of the 
-      design violates object-oriented design principles. Our philosophy 
-      is to make the global functionality of a protocal accesible (e.g., 
-      TFTP send file and receive file) when possible, but also provide 
-      access to the fundamental protocols where applicable so that the 
-      programmer may construct his own custom implementations (e.g, the 
-      TFTP packet classes and the TFTP packet send and receive methods are 
-      exposed). NetComponents was originally a commercial product, but after 
-      ORO dissolved, it was continued to be made available for those who 
-      found it useful. However, no updates have been made since version 
-      1.3.8, released in 1998. Now that certain contract obligations have 
-      expired, it is possible to make the source code freely available under 
-      the The Apache Software License.
+  <description>
+    This is an Internet protocol suite Java library originally 
+    developed by ORO, Inc. This version supports Finger, Whois, 
+    TFTP, Telnet, POP3, FTP, NNTP, SMTP, and some miscellaneous 
+    protocols like Time and Echo as well as BSD R command support. 
+    The purpose of the library is to provide fundamental protocol 
+    access, not higher-level abstractions. Therefore, some of the 
+    design violates object-oriented design principles. Our philosophy 
+    is to make the global functionality of a protocal accesible (e.g., 
+    TFTP send file and receive file) when possible, but also provide 
+    access to the fundamental protocols where applicable so that the 
+    programmer may construct his own custom implementations (e.g, the 
+    TFTP packet classes and the TFTP packet send and receive methods 
+    are exposed). NetComponents was originally a commercial product, 
+    but after ORO dissolved, it was continued to be made available for 
+    those who found it useful. However, no updates have been made since 
+    version 1.3.8, released in 1998. Now that certain contract obligations 
+    have expired, it is possible to make the source code freely available 
+    under the The Apache Software License.
   </description>
   
   <url>http://jakarta.apache.org/commons/sandbox/net/</url>
-  <cvsWebUrl>http://cvs.apache.org/viewcvs/jakarta-commons-sandbox/net/</cvsWebUrl>
   <issueTrackingUrl>http://nagoya.apache.org/bugzilla/</issueTrackingUrl>
-  
   <siteAddress>jakarta.apache.org</siteAddress>
-  <siteDirectory>/www/jakarta.apache.org/commons/sandbox/net/</siteDirectory>
+  <siteDirectory>/www/jakarta.apache.org/commons/sandbox/net/</siteDirectory> 
+  <distributionDirectory/>
 
-  <cvsRoot>:pserver:anoncvs@cvs.apache.org:/home/cvspublic</cvsRoot>
-  <cvsModule>jakarta-commons-sandbox/net</cvsModule>
-  
+  <repository>
+    <connection>scm:cvs:pserver:anoncvs@cvs.apache.org:/home/cvspublic:jakarta-commons-sandbox/net</connection>
+    <url>http://cvs.apache.org/viewcvs/jakarta-commons-sandbox/net/</url>
+  </repository>
+
   <mailingLists>
     <mailingList>
       <name>Commons Developer List</name>
@@ -65,13 +66,13 @@
     </developer>
     <developer>
       <name>Steve Cohen</name>
-      <id></id>
+      <id/>
       <email>stevecoh1@attbi.com</email>
-      <organization></organization>
+      <organization/>
     </developer>
     <developer>
       <name>Winston Ojeda</name>
-      <id></id>
+      <id/>
       <email>Winston.Ojeda@qg.com</email>
       <organization>Quad/Graphics, Inc.</organization>
     </developer>
@@ -82,35 +83,32 @@
       <organization>savarese.org</organization>
     </developer>
   </developers>
-
-  <dependencies>  
+  
+  <dependencies>
     <dependency>
-      <name>oro</name>
+      <id>oro</id>
       <version>2.0.6</version>
       <url>http://jakarta.apache.org/oro/</url>
     </dependency>
   </dependencies>
   
   <build>
-  
-    <sourceDirectories>
-      <sourceDirectory>src/java</sourceDirectory>
-    </sourceDirectories>
-  
+
+    <nagEmailAddress>commons-dev@jakarta.apache.org</nagEmailAddress>
+
+    <sourceDirectory>src/java</sourceDirectory>
+ 
     <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
     
     <unitTestPatterns>
       <unitTestPattern>include = **/*Test.java</unitTestPattern>
     </unitTestPatterns>
-
+    
     <integrationUnitTestSourceDirectory/>
     <integrationUnitTestPatterns/>
-
-    <aspectSourceDirectories/>
     
     <jarResources/>
     <jars/>
   
-  </build>
-
+</build>
 </project>
