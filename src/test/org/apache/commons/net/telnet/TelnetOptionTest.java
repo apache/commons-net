@@ -55,70 +55,41 @@ package org.apache.commons.net.telnet;
  * <http://www.apache.org/>.
  */
 
+import junit.framework.TestCase;
+
 /***
  * JUnit test class for SimpleOptionHandler
  * <p>
  * @author Bruno D'Avanzo
  ***/
-public class SimpleOptionHandlerTest extends TelnetOptionHandlerTestAbstract
+public class TelnetOptionTest extends TestCase
 {
     /***
      * main for running the test.
      ***/
     public static void main(String args[])
     {
-        junit.textui.TestRunner.run(SimpleOptionHandlerTest.class);
+        junit.textui.TestRunner.run(TelnetOptionTest.class);
     }
 
     /***
-     * setUp for the test.
+     * test of the isValidOption method.
      ***/
-    protected void setUp()
+    public void testisValidOption()
     {
-        opthand1 = new SimpleOptionHandler(4);
-        opthand2 = new SimpleOptionHandler(8, true, true, true, true);
-        opthand3 = new SimpleOptionHandler(91, false, false, false, false);
+        assertTrue(TelnetOption.isValidOption(0));
+        assertTrue(TelnetOption.isValidOption(91));
+        assertTrue(TelnetOption.isValidOption(255));
+        assertTrue(!TelnetOption.isValidOption(256));
     }
 
     /***
-     * test of the constructors.
+     * test of the getOption method.
      ***/
-    public void testConstructors()
+    public void testGetOption()
     {
-        assertEquals(opthand1.getOptionCode(), 4);
-        assertEquals(opthand2.getOptionCode(), 8);
-        assertEquals(opthand3.getOptionCode(), 91);
-        super.testConstructors();
-    }
-
-    /***
-     * test of client-driven subnegotiation.
-     * Checks that no subnegotiation is made.
-     ***/
-    public void testStartSubnegotiation()
-    {
-
-        int resp1[] = opthand1.startSubnegotiationLocal();
-        int resp2[] = opthand1.startSubnegotiationRemote();
-
-        assertEquals(resp1, null);
-        assertEquals(resp2, null);
-    }
-
-    /***
-     * test of server-driven subnegotiation.
-     * Checks that no subnegotiation is made.
-     ***/
-    public void testAnswerSubnegotiation()
-    {
-        int subn[] =
-        {
-            TelnetCommand.IAC, TelnetCommand.SB, 4,
-            1, TelnetCommand.IAC, TelnetCommand.SE,
-        };
-
-        int resp1[] = opthand1.answerSubnegotiation(subn, subn.length);
-
-        assertEquals(resp1, null);
+        assertEquals(TelnetOption.getOption(0), "BINARY");
+        assertEquals(TelnetOption.getOption(91), "UNASSIGNED");
+        assertEquals(TelnetOption.getOption(255), "Extended-Options-List");
     }
 }

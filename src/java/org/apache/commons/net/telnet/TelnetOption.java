@@ -154,7 +154,7 @@ public class TelnetOption
     public static int EXTENDED_OPTIONS_LIST = 255;
 
     private static int __FIRST_OPTION = BINARY;
-    private static int __LAST_OPTION = NEW_ENVIRONMENT_VARIABLES;
+    private static int __LAST_OPTION = EXTENDED_OPTIONS_LIST;
 
     private static final String __optionString[] = {
                 "BINARY", "ECHO", "RCP", "SUPPRESS GO AHEAD", "NAME", "STATUS",
@@ -164,7 +164,31 @@ public class TelnetOption
                 "SEND LOCATION", "TERMINAL TYPE", "END OF RECORD", "TACACS UID",
                 "OUTPUT MARKING", "TTYLOC", "3270 REGIME", "X.3 PAD", "NAWS", "TSPEED",
                 "LFLOW", "LINEMODE", "XDISPLOC", "OLD-ENVIRON", "AUTHENTICATION",
-                "ENCRYPT", "NEW-ENVIRON"
+                "ENCRYPT", "NEW-ENVIRON", "TN3270E", "XAUTH", "CHARSET", "RSP",
+                "Com Port Control", "Suppress Local Echo", "Start TLS",
+                "KERMIT", "SEND-URL", "FORWARD_X", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "", "", "TELOPT PRAGMA LOGON", "TELOPT SSPI LOGON",
+                "TELOPT PRAGMA HEARTBEAT", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "Extended-Options-List"
             };
 
 
@@ -177,7 +201,14 @@ public class TelnetOption
      ***/
     public static final String getOption(int code)
     {
-        return __optionString[code];
+        if(__optionString[code].length() == 0)
+        {
+            return "UNASSIGNED";
+        }
+        else
+        {
+            return __optionString[code];
+        }
     }
 
 
