@@ -467,6 +467,11 @@ public class FTPClient extends FTP
             __parsePassiveModeReply((String)_replyLines.elementAt(0));
 
             socket = _socketFactory_.createSocket(__passiveHost, __passivePort);
+            if ((__restartOffset > 0) && !restart(__restartOffset))
+            {
+                socket.close();
+                return null;
+            }
 
             if (!FTPReply.isPositivePreliminary(sendCommand(command, arg)))
             {
