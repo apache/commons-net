@@ -192,8 +192,8 @@ public abstract class TFTPRequestPacket extends TFTPPacket
         datagram.setAddress(_address);
         datagram.setPort(_port);
         datagram.setData(data);
-        datagram.setLength(fileLength + modeLength + 4);
-
+        datagram.setLength(fileLength + modeLength + 3);
+        
         return datagram;
     }
 
