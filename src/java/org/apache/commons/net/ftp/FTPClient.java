@@ -2215,35 +2215,48 @@ public class FTPClient extends FTP
         return null;
     }
     /**
-     * Using the supplied key, and the pluggable parser factory defined by
-     * the system property <code>ftp.entry.parser.factory</code> obtain a list
-     * of file information for the current working directory or for just a 
+     * Using the supplied <code>parserKey</code>, and the pluggable parser
+     * factory defined by the system property
+     * <code>ftp.entry.parser.factory</code>, obtain a list
+     * of file information for the current working directory or for just a
      * single file.
      * <p>
-     * Under the DefaultFTPFileEntryParserFactory, which is used unless a 
-     * different factory has been specified in the system properties, the key 
-     * can be either a recognized System type for which a parser has been 
+     * If <code>key</code> is null, this object will try to autodetect
+     * the system-type/parser-type by calling the SYST command.
+     * <p>
+     * Under the DefaultFTPFileEntryParserFactory, which is used unless a
+     * different factory has been specified in the system properties, the key
+     * can be either a recognized System type for which a parser has been
      * defined, or the fully qualified class name of a class that implements
      * org.apache.commons.net.ftp.FTPFileEntryParser.
      * <p>
      * This information is obtained through the LIST command.  The contents of
-     * the returned array is determined by the<code> FTPFileEntryParser </code> 
+     * the returned array is determined by the<code> FTPFileEntryParser </code>
      * used.
      * <p>
-     * Since the server may or may not expand glob expressions, using them 
+     * Since the server may or may not expand glob expressions, using them
      * is not recommended and may well cause this method to fail.
      * <p>
      * 
      * @param parserKey This is a "handle" which the parser factory used
      *                  must be able to resolve into a class implementing
      *                  FTPFileEntryParser.
-     *                  
+     *                  <p>
      *                  In the DefaultFTPFileEntryParserFactory, this
      *                  may either be a specific key identifying a server type,
      *                  which is used to identify a parser type,
      *                  or the fully qualified class name of the parser.  See
      *                  DefaultFTPFileEntryParserFactory.createFileEntryParser
      *                  for full details.
+     *                  <p>
+     *                  If this parameter is null, will attempt to generate a key
+     *                  by running the SYST command.  This should cause no problem
+     *                  with the functionality implemented in the
+     *                  DefaultFTPFileEntryParserFactory, but may not map so well
+     *                  to an alternative user-created factory.  If that is the
+     *                  case, calling this routine with a null parameter and a
+     *                  custom parser factory may not be advisable.
+     *                  <p>
      * @param pathname  The file or directory to list.
      * 
      * @return The list of file information contained in the given path in
@@ -2288,6 +2301,12 @@ public class FTPClient extends FTP
                 "Unable to instantiate parser factory", e);
         }
 
+        // if a null parserKey is supplied, autodetect by calling
+        // the SYST command and use that to choose the parser.
+        if (null == parserKey) {
+            parserKey = getSystemName();
+        }
+
         FTPFileEntryParser parser = 
             factory.createFileEntryParser(parserKey);
         FTPFileList list = createFileList(pathname, parser);
@@ -2296,33 +2315,44 @@ public class FTPClient extends FTP
 
 
     /**
-     * Using the supplied key, and the pluggable parser factory defined by
-     * the system property <code>ftp.entry.parser.factory</code>, obtain a 
+     * Using the supplied <code>parserKey</code>, and the pluggable parser 
+     * factory defined by the system property 
+     * <code>ftp.entry.parser.factory</code>, obtain a
      * list of file information for the current working directory.
      * <p>
-     * Under the DefaultFTPFileEntryParserFactory, which is used unless a 
-     * different factory has been specified in the system properties, the key 
-     * can be either a recognized System type for which a parser has been 
+     * If <code>parserKey</code> is null, this object will try to autodetect
+     * the system-type/parser-type by calling the SYST command.
+     * <p>
+     * Under the DefaultFTPFileEntryParserFactory, which is used unless a
+     * different factory has been specified in the system properties, the key
+     * can be either a recognized System type for which a parser has been
      * defined, or the fully qualified class name of a class that implements
      * org.apache.commons.net.ftp.FTPFileEntryParser.
      * <p>
      * This information is obtained through the LIST command.  The contents of
-     * the returned array is determined by the<code> FTPFileEntryParser </code> 
+     * the returned array is determined by the<code> FTPFileEntryParser </code>
      * used.
      * <p>
      * 
      * @param parserKey This is a "handle" which the parser factory used
      *                  must be able to resolve into a class implementing
      *                  FTPFileEntryParser.
-     *                  
+     *                  <p>
      *                  In the DefaultFTPFileEntryParserFactory, this
      *                  may either be a specific key identifying a server type,
      *                  which is used to identify a parser type,
      *                  or the fully qualified class name of the parser.  See
      *                  DefaultFTPFileEntryParserFactory.createFileEntryParser
      *                  for full details.
-     * @param pathname  The file or directory to list.
-     * 
+     *                  <p>
+     *                  If this parameter is null, will attempt to generate a key
+     *                  by running the SYST command.  This should cause no problem
+     *                  with the functionality implemented in the
+     *                  DefaultFTPFileEntryParserFactory, but may not map so well
+     *                  to an alternative user-created factory.  If that is the
+     *                  case, calling this routine with a null parameter and a
+     *                  custom parser factory may not be advisable.
+     *                  <p>
      * @return The list of file information contained in the given path in
      *         the format determined by the parser represented by the
      *         <code> parserKey </code> parameter.
