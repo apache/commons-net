@@ -7,7 +7,16 @@
   </properties>
 
   <body>
-    <section name="Tasks">
+    <section name="Pre-1.2 Tasks">
+      <p>
+        <ul>
+          <li>VMS parser issue</li>
+          <li>Review of the NTP/SNTP code</li>
+          <li>Scan the bug list</li>
+        </ul>
+      </p> 
+    </section>
+    <section name="Wishlist">
       <p>
         <ul>
           <li>Add programmer and acceptance tests.</li>

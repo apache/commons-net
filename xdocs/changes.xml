@@ -33,7 +33,6 @@
       </action>
     </release>
     <release version="1.1.0" date="October 23, 2003">
-      </action>
       <action dev="dfs" type="add">
         Rory Winston &lt;Rory.Winston@telewest.co.uk&gt; provided
         patches to add the following extended NNTP commands to
