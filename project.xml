@@ -85,28 +85,28 @@
       <organization>Quad/Graphics, Inc.</organization>
     </developer>
     <developer>
-      <name>Daniel F. Savarese</name>
-      <id>dfs</id>
-      <email>dfs@apache.org</email>
-      <organization>savarese.org</organization>
-    </developer>
-    <developer>
       <name>Steve Cohen</name>
       <id>scohen</id>
       <email>scohen@apache.org</email>
       <organization>Sportvision, Inc.</organization>
     </developer>
+    <developer>
+      <name>Daniel F. Savarese</name>
+      <id>dfs</id>
+      <email>dfs@apache.org</email>
+      <organization>savarese.org</organization>
+    </developer>
   </developers>
 
   <contributors>
+    <contributor>
+      <name>Tapan Karecha</name>
+      <email>tapan@india.hp.com</email>
+    </contributor>
    <contributor>
       <name>Winston Ojeda</name>
       <email>Winston.Ojeda@qg.com</email>
       <organization>Quad/Graphics, Inc.</organization>
-    </contributor>
-    <contributor>
-      <name>Tapan Karecha</name>
-      <email>tapan@india.hp.com</email>
     </contributor>
   </contributors>
   
@@ -134,15 +134,16 @@
   </build>
 
   <reports>
-    <report>maven-jdepend-plugin</report>
-    <report>maven-checkstyle-plugin</report>
+    <report>maven-tasklist-plugin</report>
+    <report>maven-changes-plugin</report>
     <report>maven-changelog-plugin</report>
     <report>maven-file-activity-plugin</report>
     <report>maven-developer-activity-plugin</report>
     <report>maven-javadoc-plugin</report>
     <report>maven-jxr-plugin</report>
     <report>maven-junit-report-plugin</report>
-    <report>maven-tasklist-plugin</report>
+    <report>maven-jdepend-plugin</report>
+    <report>maven-checkstyle-plugin</report>
   </reports>
 
 </project>
