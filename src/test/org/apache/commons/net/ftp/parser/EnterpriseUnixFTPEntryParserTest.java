@@ -54,7 +54,6 @@ package org.apache.commons.net.ftp.parser;
  * <http://www.apache.org/>.
  */
 
-
 import java.util.Calendar;
 
 import junit.framework.TestSuite;
@@ -65,7 +64,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 /**
  * Tests the EnterpriseUnixFTPEntryParser
  * 
- * @version $Id: EnterpriseUnixFTPEntryParserTest.java,v 1.2 2003/08/05 18:13:06 brekke Exp $
+ * @version $Id: EnterpriseUnixFTPEntryParserTest.java,v 1.3 2003/08/05 20:06:38 dfs Exp $
  * @author <a href="mailto:Winston.Ojeda@qg.com">Winston Ojeda</a>
  */
 public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
@@ -136,6 +135,9 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     public void testParseFieldsOnFile() throws Exception
     {
         FTPFile file = getParser().parseFTPEntry("-C--E-----FTP B QUA1I1      18128       41 Aug 12 13:56 QUADTEST");
+        Calendar today  = Calendar.getInstance();
+        int year        = today.get(Calendar.YEAR);
+
         assertTrue("Should be a file.", 
                    file.isFile());
         assertEquals("QUADTEST", 
@@ -146,11 +148,18 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
                      file.getUser());
         assertEquals("18128", 
                      file.getGroup());
+
+        if(today.get(Calendar.MONTH) < Calendar.AUGUST)
+            --year;
+
         Calendar timestamp = file.getTimestamp();
+        assertEquals(year, timestamp.get(Calendar.YEAR));
         assertEquals(Calendar.AUGUST, timestamp.get(Calendar.MONTH));
         assertEquals(12, timestamp.get(Calendar.DAY_OF_MONTH));
         assertEquals(13, timestamp.get(Calendar.HOUR_OF_DAY));
-        assertEquals(56, timestamp.get(Calendar.MINUTE));         
+        assertEquals(56, timestamp.get(Calendar.MINUTE));
+        assertEquals(0, timestamp.get(Calendar.SECOND));
+
         checkPermisions(file);
     }
 
@@ -218,3 +227,11 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
                                       FTPFile.EXECUTE_PERMISSION));
     }
 }
+
+/* Emacs configuration
+ * Local variables:        **
+ * mode:             java  **
+ * c-basic-offset:   4     **
+ * indent-tabs-mode: nil   **
+ * End:                    **
+ */
