@@ -109,7 +109,7 @@
     <!-- maven b5 onwards -->
     <unitTest>
       <includes>
-        <include>**/Test*.java</include>
+        <include>**/*Test.java</include>
       </includes>
     </unitTest>
     
