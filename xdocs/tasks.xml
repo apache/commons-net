@@ -11,20 +11,11 @@
       <p>
         <ul>
           <li>
-            Convert code to specified coding standards.  Use checkstyle once
-            it is integrated into Maven.
+            Convert code to specified coding standards.  Checkstyle report provided.
           </li>
           <li>
-            Evaluate/Integrate existing file list parsing patch from Steve Cohen.
-            <ul>
-              <li>
-                <a href="http://groups.yahoo.com/group/devel-netcomponents/files/NetComponents-1.3.8a-src.tar.gz">
-                Patch</a>
-              </li>
-              <li>
-                <a href="http://groups.yahoo.com/group/devel-netcomponents/message/85">Description</a>
-              </li>
-            </ul>
+            Evaluate options for integrating FTPClient2/parsing into FTPClient while maintaining (deprecated) 
+            old interface.
           </li>
           <li>
             Clean out any classes that don't belong in this project.  Probably classes from
@@ -47,7 +38,7 @@
             a user runs across an unsupported server, he can register a 
             regular expression rather than create a completely new 
             hand-parsed FTPFileLister implementation. ( Partially implemented
-            by patch listed above )
+            by Steve Cohen )
           </li>
           <li>
             Make buffer size settable for FTP data transfers using 

@@ -58,14 +58,34 @@
       <organization>Quad/Graphics, Inc.</organization>
     </developer>
     <developer>
+      <name>Steve Cohen</name>
+      <id></id>
+      <email>stevecoh1@attbi.com</email>
+      <organization></organization>
+    </developer>
+    <developer>
+      <name>Winston Ojeda</name>
+      <id></id>
+      <email>Winston.Ojeda@qg.com</email>
+      <organization>Quad/Graphics, Inc.</organization>
+    </developer>
+    <developer>
       <name>Daniel F. Savarese</name>
       <id>savarese</id>
       <email>savarese@apache.org</email>
       <organization>savarese.org</organization>
     </developer>
   </developers>
-  
-  <dependencies/>
+
+  <dependencies>  
+    <dependency>
+      <name>jakarta-oro</name>
+      <type>required</type>
+      <version>2.0.6</version>
+      <jar>jakarta-oro-2.0.6.jar</jar>
+      <url>http://jakarta.apache.org/oro/</url>
+    </dependency>
+  </dependencies>
   
   <build>
   

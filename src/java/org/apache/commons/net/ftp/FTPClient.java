@@ -337,7 +337,7 @@ public class FTPClient extends FTP
 
 
     // null arg if no arg
-    private Socket __openDataConnection(int command, String arg)
+    protected Socket __openDataConnection(int command, String arg)
     throws IOException
     {
         Socket socket;
