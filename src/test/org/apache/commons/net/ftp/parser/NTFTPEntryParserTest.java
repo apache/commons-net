@@ -61,7 +61,7 @@ import junit.framework.TestSuite;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @versionn $Id: NTFTPEntryParserTest.java,v 1.5 2004/01/02 03:39:07 scohen Exp $
+ * @versionn $Id: NTFTPEntryParserTest.java,v 1.6 2004/01/17 21:04:21 scohen Exp $
  */
 public class NTFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -75,7 +75,8 @@ public class NTFTPEntryParserTest extends FTPParseTestFramework
                 "01-22-98  01:52PM                  795 AUTOEXEC.BAT",
                 "05-13-97  01:46PM                  828 AUTOEXEC.DOS",
                 "12-03-96  06:38AM                  403 AUTOTOOL.LOG",
-                "01-20-97  03:48PM       <DIR>          bin",
+                "12-03-96  06:38AM       <DIR>          123xyz",
+				"01-20-97  03:48PM       <DIR>          bin",
 
             };
 
@@ -88,6 +89,9 @@ public class NTFTPEntryParserTest extends FTPParseTestFramework
                 "     0           DIR   05-12-97   16:52  Maintenance Desktop",
 
             };
+    private static final String directoryBeginningWithNumber =
+    	"12-03-96  06:38AM       <DIR>          123xyz";
+	
 
     /**
      * @see junit.framework.TestCase#TestCase(String)
@@ -159,4 +163,39 @@ public class NTFTPEntryParserTest extends FTPParseTestFramework
         assertEquals("AUTOEXEC.BAK", f.getName());
         assertEquals(828, f.getSize());   
     }
+
+    /* (non-Javadoc)
+	 * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testGoodListing()
+	 */
+	public void testGoodListing() throws Exception {
+		String[] goodsamples = getGoodListing();
+		for (int i = 0; i < goodsamples.length; i++)
+		{
+
+			String test = goodsamples[i];
+			FTPFile f = getParser().parseFTPEntry(test);
+			assertNotNull("Failed to parse " + test, 
+					f);
+			if (test.indexOf("<DIR>") >= 0) {
+				assertEquals("directory.type", 
+						FTPFile.DIRECTORY_TYPE, f.getType());
+			} else {
+				assertEquals("file.type", 
+						FTPFile.FILE_TYPE, f.getType());
+			}
+		}
+		
+	}
+	
+
+	/**
+	 * test condition reported as bug 20259.
+	 * directory with name beginning with a numeric character
+	 * was not parsing correctly
+	 * @throws Exception
+	 */
+	public void testDirectoryBeginningWithNumber() throws Exception {
+		FTPFile f = getParser().parseFTPEntry(directoryBeginningWithNumber);
+		assertEquals("name", "123xyz", f.getName());
+	}
 }
