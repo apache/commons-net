@@ -146,7 +146,7 @@
     </property>
     <property name="title" value="Jakarta Commons Net 1.3.0-dev API">
     </property>
-    <javadoc use="true" private="true" destdir="${javadocdir}" author="true" version="true" sourcepath="src/java" packagenames="org.apache.commons.net.*">
+    <javadoc use="true" private="false" destdir="${javadocdir}" author="true" version="true" sourcepath="src/java" packagenames="org.apache.commons.net.*">
       <classpath>
         <path refid="build.classpath">
         </path>
