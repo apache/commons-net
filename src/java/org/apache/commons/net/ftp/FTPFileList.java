@@ -76,9 +76,8 @@ import java.util.Vector;
  * which required a bigger memory hit.
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileList.java,v 1.2 2003/03/02 19:36:43 scohen Exp $
- * @see FTPClient2#listFiles
- * @see FTPClient2#createFileList
+ * @version $Id: FTPFileList.java,v 1.3 2003/03/03 03:42:05 scohen Exp $
+ * @see org.apache.commons.net.ftp.FTPClient#createFileList
  */
 public class FTPFileList
 {

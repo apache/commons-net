@@ -65,9 +65,9 @@ import java.io.IOException;
  * if necessary, subclass FTPFile.
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileEntryParser.java,v 1.2 2003/03/02 19:36:43 scohen Exp $
+ * @version $Id: FTPFileEntryParser.java,v 1.3 2003/03/03 03:42:05 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFile
- * @see FTPClient2#listFiles
+ * @see org.apache.commons.net.ftp.FTPClient#createFileList
  */
 public interface FTPFileEntryParser
 {
