@@ -90,6 +90,12 @@
       <version>2.0.6</version>
       <url>http://jakarta.apache.org/oro/</url>
     </dependency>
+
+    <dependency>
+      <id>junit</id>
+      <version>3.7</version>
+    </dependency>
+    
   </dependencies>
   
   <build>
@@ -100,6 +106,14 @@
  
     <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
     
+    <!-- maven b5 onwards -->
+    <unitTest>
+      <includes>
+        <include>**/Test*.java</include>
+      </includes>
+    </unitTest>
+    
+    <!-- pre b5 -->
     <unitTestPatterns>
       <unitTestPattern>include = **/*Test.java</unitTestPattern>
     </unitTestPatterns>
