@@ -54,9 +54,10 @@ package examples;
  * <http://www.apache.org/>.
  */
 
-import java.io.*;
-
-import org.apache.commons.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import org.apache.commons.io.Util;
 
 /***
  * This is a utility class providing a reader/writer capability required
@@ -70,56 +71,71 @@ import org.apache.commons.io.*;
  * <p>
  ***/
 
-public final class IOUtil {
+public final class IOUtil
+{
 
-  public static final void readWrite(final InputStream remoteInput,
-				     final OutputStream remoteOutput,
-				     final InputStream localInput,
-				     final OutputStream localOutput)
-  {
-    Thread reader, writer;
+    public static final void readWrite(final InputStream remoteInput,
+                                       final OutputStream remoteOutput,
+                                       final InputStream localInput,
+                                       final OutputStream localOutput)
+    {
+        Thread reader, writer;
 
-    reader = new Thread() {
-      public void run() {
-	int ch;
+        reader = new Thread()
+                 {
+                     public void run()
+                     {
+                         int ch;
 
-	try {
-	  while(!interrupted() && (ch = localInput.read()) != -1) {
-	    remoteOutput.write(ch);
-	    remoteOutput.flush();
-	  }
-	} catch(IOException e) {
-	  //e.printStackTrace();
-	}
-      }
-    };
-
-
-    writer = new Thread() {
-      public void run() {
-	try {
-	  Util.copyStream(remoteInput, localOutput);
-	} catch(IOException e) {
-	  e.printStackTrace();
-	  System.exit(1);
-	}
-      }
-    };
+                         try
+                         {
+                             while (!interrupted() && (ch = localInput.read()) != -1)
+                             {
+                                 remoteOutput.write(ch);
+                                 remoteOutput.flush();
+                             }
+                         }
+                         catch (IOException e)
+                         {
+                             //e.printStackTrace();
+                         }
+                     }
+                 }
+                 ;
 
 
-    writer.setPriority(Thread.currentThread().getPriority() + 1);
+        writer = new Thread()
+                 {
+                     public void run()
+                     {
+                         try
+                         {
+                             Util.copyStream(remoteInput, localOutput);
+                         }
+                         catch (IOException e)
+                         {
+                             e.printStackTrace();
+                             System.exit(1);
+                         }
+                     }
+                 };
 
-    writer.start();
-    reader.setDaemon(true);
-    reader.start();
 
-    try {
-      writer.join();
-      reader.interrupt();
-    } catch(InterruptedException e) {
+        writer.setPriority(Thread.currentThread().getPriority() + 1);
 
+        writer.start();
+        reader.setDaemon(true);
+        reader.start();
+
+        try
+        {
+            writer.join();
+            reader.interrupt();
+        }
+        catch (InterruptedException e)
+        {
+        }
     }
-  }
 
 }
 

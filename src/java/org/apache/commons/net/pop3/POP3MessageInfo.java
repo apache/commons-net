@@ -54,10 +54,6 @@ package org.apache.commons.net.pop3;
  * <http://www.apache.org/>.
  */
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-
 /***
  * POP3MessageInfo is used to return information about messages stored on
  * a POP3 server.  Its fields are used to mean slightly different things
@@ -80,40 +76,44 @@ import java.util.*;
  * @author Daniel F. Savarese
  ***/
 
-public final class POP3MessageInfo {
-  public int number;
-  public int size;
-  public String identifier;
+public final class POP3MessageInfo
+{
+    public int number;
+    public int size;
+    public String identifier;
 
-  /***
-   * Creates a POP3MessageInfo instance with <code>number</code> and
-   * <code> size </code> set to 0, and <code>identifier</code> set to
-   * null.
-   ***/
-  public POP3MessageInfo() {
-    number = size = 0;
-    identifier = null;
-  }
+    /***
+     * Creates a POP3MessageInfo instance with <code>number</code> and
+     * <code> size </code> set to 0, and <code>identifier</code> set to
+     * null.
+     ***/
+    public POP3MessageInfo()
+    {
+        number = size = 0;
+        identifier = null;
+    }
 
-  /***
-   * Creates a POP3MessageInfo instance with <code>number</code> set
-   * to <code> num </code>, <code> size </code> set to <code> octets </code>,
-   * and <code>identifier</code> set to null.
-   ***/
-  public POP3MessageInfo(int num, int octets) {
-    number     = num;
-    size       = octets;
-    identifier = null;
-  }
+    /***
+     * Creates a POP3MessageInfo instance with <code>number</code> set
+     * to <code> num </code>, <code> size </code> set to <code> octets </code>,
+     * and <code>identifier</code> set to null.
+     ***/
+    public POP3MessageInfo(int num, int octets)
+    {
+        number = num;
+        size = octets;
+        identifier = null;
+    }
 
-  /***
-   * Creates a POP3MessageInfo instance with <code>number</code> set
-   * to <code> num </code>, <code> size </code> undefined,
-   * and <code>identifier</code> set to <code>uid</code>.
-   ***/
-  public POP3MessageInfo(int num, String uid) {
-    number     = num;
-    size       = -1;
-    identifier = uid;
-  }
+    /***
+     * Creates a POP3MessageInfo instance with <code>number</code> set
+     * to <code> num </code>, <code> size </code> undefined,
+     * and <code>identifier</code> set to <code>uid</code>.
+     ***/
+    public POP3MessageInfo(int num, String uid)
+    {
+        number = num;
+        size = -1;
+        identifier = uid;
+    }
 }

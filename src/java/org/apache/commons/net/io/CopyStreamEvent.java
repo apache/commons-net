@@ -54,7 +54,7 @@ package org.apache.commons.io;
  * <http://www.apache.org/>.
  */
 
-import java.util.*;
+import java.util.EventObject;
 
 /***
  * A CopyStreamEvent is triggered after every write performed by a
@@ -69,57 +69,67 @@ import java.util.*;
  * @author Daniel F. Savarese
  ***/
 
-public class CopyStreamEvent extends EventObject {
-  public static final long UNKNOWN_STREAM_SIZE = -1;
+public class CopyStreamEvent extends EventObject
+{
+    public static final long UNKNOWN_STREAM_SIZE = -1;
 
-  private int __bytesTransferred;
-  private long __totalBytesTransferred, __streamSize;
+    private int __bytesTransferred;
+    private long __totalBytesTransferred, __streamSize;
 
-  /***
-   * Creates a new CopyStreamEvent instance.
-   * <p>
-   * @param source  The source of the event.
-   * @param totalBytesTransferred The total number of bytes transferred so
-   *   far during a copy operation.
-   * @param bytesTransferred  The number of bytes transferred during the
-   *        write that triggered the CopyStreamEvent.
-   * @param streamSize  The number of bytes in the stream being copied.
-   *          This may be set to <code>UNKNOWN_STREAM_SIZE</code> if the
-   *          size is unknown.
-   ***/
-  public CopyStreamEvent(Object source, long totalBytesTransferred,
-			 int bytesTransferred, long streamSize)
-  {
-    super(source);
-    __bytesTransferred = bytesTransferred;
-    __totalBytesTransferred = totalBytesTransferred;
-  }
+    /***
+     * Creates a new CopyStreamEvent instance.
+     * <p>
+     * @param source  The source of the event.
+     * @param totalBytesTransferred The total number of bytes transferred so
+     *   far during a copy operation.
+     * @param bytesTransferred  The number of bytes transferred during the
+     *        write that triggered the CopyStreamEvent.
+     * @param streamSize  The number of bytes in the stream being copied.
+     *          This may be set to <code>UNKNOWN_STREAM_SIZE</code> if the
+     *          size is unknown.
+     ***/
+    public CopyStreamEvent(Object source, long totalBytesTransferred,
+                           int bytesTransferred, long streamSize)
+    {
+        super(source);
+        __bytesTransferred = bytesTransferred;
+        __totalBytesTransferred = totalBytesTransferred;
+    }
 
-  /***
-   * Returns the number of bytes transferred by the write that triggered
-   * the event.
-   * <p>
-   * @return The number of bytes transferred by the write that triggered
-   * the vent.
-   ***/
-  public int getBytesTransferred() { return __bytesTransferred; }
+    /***
+     * Returns the number of bytes transferred by the write that triggered
+     * the event.
+     * <p>
+     * @return The number of bytes transferred by the write that triggered
+     * the vent.
+     ***/
+    public int getBytesTransferred()
+    {
+        return __bytesTransferred;
+    }
 
-  /***
-   * Returns the total number of bytes transferred so far by the copy
-   * operation.
-   * <p>
-   * @return The total number of bytes transferred so far by the copy
-   * operation.
-   ***/
-  public long getTotalBytesTransferred() { return __totalBytesTransferred; }
+    /***
+     * Returns the total number of bytes transferred so far by the copy
+     * operation.
+     * <p>
+     * @return The total number of bytes transferred so far by the copy
+     * operation.
+     ***/
+    public long getTotalBytesTransferred()
+    {
+        return __totalBytesTransferred;
+    }
 
-  /***
-   * Returns the size of the stream being copied.
-   * This may be set to <code>UNKNOWN_STREAM_SIZE</code> if the
-   * size is unknown.
-   * <p>
-   * @return The size of the stream being copied.
-   ***/
-  public long getStreamSize() { return __streamSize; }
+    /***
+     * Returns the size of the stream being copied.
+     * This may be set to <code>UNKNOWN_STREAM_SIZE</code> if the
+     * size is unknown.
+     * <p>
+     * @return The size of the stream being copied.
+     ***/
+    public long getStreamSize()
+    {
+        return __streamSize;
+    }
 
 }

@@ -54,9 +54,9 @@ package examples;
  * <http://www.apache.org/>.
  */
 
-import java.io.*;
-
-import org.apache.commons.net.*;
+import java.io.PrintWriter;
+import org.apache.commons.net.ProtocolCommandEvent;
+import org.apache.commons.net.ProtocolCommandListener;
 
 /***
  * This is a support class for some of the example programs.  It is
@@ -65,20 +65,24 @@ import org.apache.commons.net.*;
  * <p>
  ***/
 
-public class PrintCommandListener implements ProtocolCommandListener {
-  private PrintWriter __writer;
+public class PrintCommandListener implements ProtocolCommandListener
+{
+    private PrintWriter __writer;
 
-  public PrintCommandListener(PrintWriter writer) {
-    __writer = writer;
-  }
+    public PrintCommandListener(PrintWriter writer)
+    {
+        __writer = writer;
+    }
 
-  public void protocolCommandSent(ProtocolCommandEvent event) {
-    __writer.print(event.getMessage());
-    __writer.flush();
-  }
+    public void protocolCommandSent(ProtocolCommandEvent event)
+    {
+        __writer.print(event.getMessage());
+        __writer.flush();
+    }
 
-  public void protocolReplyReceived(ProtocolCommandEvent event) {
-    __writer.print(event.getMessage());
-    __writer.flush();
-  }
+    public void protocolReplyReceived(ProtocolCommandEvent event)
+    {
+        __writer.print(event.getMessage());
+        __writer.flush();
+    }
 }

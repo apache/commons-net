@@ -54,7 +54,7 @@ package org.apache.commons.net;
  * <http://www.apache.org/>.
  */
 
-import java.io.*;
+import java.io.IOException;
 
 /***
  * This exception is used to indicate that the reply from a server
@@ -70,20 +70,23 @@ import java.io.*;
  * @author Daniel F. Savarese
  ***/
 
-public class MalformedServerReplyException extends IOException {
+public class MalformedServerReplyException extends IOException
+{
 
-  /*** Constructs a MalformedServerReplyException with no message ***/
-  public MalformedServerReplyException() {
-    super();
-  }
+    /*** Constructs a MalformedServerReplyException with no message ***/
+    public MalformedServerReplyException()
+    {
+        super();
+    }
 
-  /*** 
-   * Constructs a MalformedServerReplyException with a specified message.
-   * <p>
-   * @param message  The message explaining the reason for the exception.
-   ***/
-  public MalformedServerReplyException(String message) {
-    super(message);
-  }
+    /***
+     * Constructs a MalformedServerReplyException with a specified message.
+     * <p>
+     * @param message  The message explaining the reason for the exception.
+     ***/
+    public MalformedServerReplyException(String message)
+    {
+        super(message);
+    }
 
 }

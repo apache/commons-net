@@ -54,10 +54,8 @@ package examples;
  * <http://www.apache.org/>.
  */
 
-import java.io.*;
-
-import org.apache.commons.net.bsd.*;
-
+import java.io.IOException;
+import org.apache.commons.net.bsd.RExecClient;
 
 /***
  * This is an example program demonstrating how to use the RExecClient class.
@@ -74,59 +72,73 @@ import org.apache.commons.net.bsd.*;
  ***/
 
 // This class requires the IOUtil support class!
-public final class rexec {
+public final class rexec
+{
 
-  public static final void main(String[] args) {
-    String server, username, password, command;
-    RExecClient client;
+    public static final void main(String[] args)
+    {
+        String server, username, password, command;
+        RExecClient client;
 
-    if(args.length != 4) {
-      System.err.println(
-		 "Usage: rexec <hostname> <username> <password> <command>");
-      System.exit(1);
-      return; // so compiler can do proper flow control analysis
+        if (args.length != 4)
+        {
+            System.err.println(
+                "Usage: rexec <hostname> <username> <password> <command>");
+            System.exit(1);
+            return ; // so compiler can do proper flow control analysis
+        }
+
+        client = new RExecClient();
+
+        server = args[0];
+        username = args[1];
+        password = args[2];
+        command = args[3];
+
+        try
+        {
+            client.connect(server);
+        }
+        catch (IOException e)
+        {
+            System.err.println("Could not connect to server.");
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        try
+        {
+            client.rexec(username, password, command);
+        }
+        catch (IOException e)
+        {
+            try
+            {
+                client.disconnect();
+            }
+            catch (IOException f)
+            {}
+            e.printStackTrace();
+            System.err.println("Could not execute command.");
+            System.exit(1);
+        }
+
+
+        IOUtil.readWrite(client.getInputStream(), client.getOutputStream(),
+                         System.in, System.out);
+
+        try
+        {
+            client.disconnect();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        System.exit(0);
     }
-
-    client = new RExecClient();
-
-    server   = args[0];
-    username = args[1];
-    password = args[2];
-    command  = args[3];
-
-    try {
-      client.connect(server);
-    } catch(IOException e) {
-      System.err.println("Could not connect to server.");
-      e.printStackTrace();
-      System.exit(1);
-    }
-
-    try {
-      client.rexec(username, password, command);
-    } catch(IOException e) {
-      try {
-	client.disconnect();
-      } catch(IOException f) {
-      }
-      e.printStackTrace();
-      System.err.println("Could not execute command.");
-      System.exit(1);
-    }
-
-
-    IOUtil.readWrite(client.getInputStream(), client.getOutputStream(),
-		     System.in, System.out);
-
-    try {
-      client.disconnect();
-    } catch(IOException e) {
-      e.printStackTrace();
-      System.exit(1);
-    }
-
-    System.exit(0);
-  }
 
 }
 

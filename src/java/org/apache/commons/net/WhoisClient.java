@@ -54,8 +54,8 @@ package org.apache.commons.net;
  * <http://www.apache.org/>.
  */
 
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 /***
  * The WhoisClient class implements the client side of the Internet Whois
@@ -84,55 +84,61 @@ import java.net.*;
  * @author Daniel F. Savarese
  ***/
 
-public final class WhoisClient extends FingerClient {
-  /***
-   * The default whois host to query.  It is set to whois.internic.net.
-   ***/
-  public static final String DEFAULT_HOST = "whois.internic.net";
+public final class WhoisClient extends FingerClient
+{
+    /***
+     * The default whois host to query.  It is set to whois.internic.net.
+     ***/
+    public static final String DEFAULT_HOST = "whois.internic.net";
 
-  /***
-   * The default whois port.  It is set to 43 according to RFC 954.
-   ***/
-  public static final int DEFAULT_PORT   = 43;
-
-
-  /***
-   * The default whois constructor.    Initializes the
-   * default port to <code> DEFAULT_PORT </code>.
-   ***/
-  public WhoisClient() { setDefaultPort(DEFAULT_PORT); }
-
-  /***
-   * Queries the connected whois server for information regarding
-   * the given handle.  It is up to the programmer to be familiar with the
-   * handle syntax of the whois server.  You must first connect to a whois
-   * server before calling this method, and you should disconnect afterward.
-   * <p>
-   * @param handle  The handle to lookup.
-   * @return The result of the whois query.
-   * @exception IOException  If an I/O error occurs during the operation.
-   ***/
-  public String query(String handle) throws IOException {
-    return query(false, handle);
-  }
+    /***
+     * The default whois port.  It is set to 43 according to RFC 954.
+     ***/
+    public static final int DEFAULT_PORT = 43;
 
 
-  /***
-   * Queries the connected whois server for information regarding
-   * the given handle and returns the InputStream of the network connection.
-   * It is up to the programmer to be familiar with the handle syntax
-   * of the whois server.  You must first connect to a finger server before
-   * calling this method, and you should disconnect after finishing reading
-   * the stream.
-   * <p>
-   * @param handle  The handle to lookup.
-   * @return The InputStream of the network connection of the whois query.
-   *         Can be read to obtain whois results.
-   * @exception IOException  If an I/O error occurs during the operation.
-   ***/
-  public InputStream getInputStream(String handle) throws IOException {
-    return getInputStream(false, handle);
-  }
+    /***
+     * The default whois constructor.    Initializes the
+     * default port to <code> DEFAULT_PORT </code>.
+     ***/
+    public WhoisClient()
+    {
+        setDefaultPort(DEFAULT_PORT);
+    }
+
+    /***
+     * Queries the connected whois server for information regarding
+     * the given handle.  It is up to the programmer to be familiar with the
+     * handle syntax of the whois server.  You must first connect to a whois
+     * server before calling this method, and you should disconnect afterward.
+     * <p>
+     * @param handle  The handle to lookup.
+     * @return The result of the whois query.
+     * @exception IOException  If an I/O error occurs during the operation.
+     ***/
+    public String query(String handle) throws IOException
+    {
+        return query(false, handle);
+    }
+
+
+    /***
+     * Queries the connected whois server for information regarding
+     * the given handle and returns the InputStream of the network connection.
+     * It is up to the programmer to be familiar with the handle syntax
+     * of the whois server.  You must first connect to a finger server before
+     * calling this method, and you should disconnect after finishing reading
+     * the stream.
+     * <p>
+     * @param handle  The handle to lookup.
+     * @return The InputStream of the network connection of the whois query.
+     *         Can be read to obtain whois results.
+     * @exception IOException  If an I/O error occurs during the operation.
+     ***/
+    public InputStream getInputStream(String handle) throws IOException
+    {
+        return getInputStream(false, handle);
+    }
 
 }
 

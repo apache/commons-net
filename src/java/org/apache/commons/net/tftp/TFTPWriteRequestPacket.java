@@ -54,7 +54,8 @@ package org.apache.commons.net.tftp;
  * <http://www.apache.org/>.
  */
 
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
 
 /***
  * A class derived from TFTPRequestPacket definiing a TFTP write request
@@ -79,34 +80,37 @@ import java.net.*;
  * @see TFTP
  ***/
 
-public final class TFTPWriteRequestPacket extends TFTPRequestPacket {
+public final class TFTPWriteRequestPacket extends TFTPRequestPacket
+{
 
-  /***
-   * Creates a write request packet to be sent to a host at a 
-   * given port with a filename and transfer mode request.
-   * <p>
-   * @param destination  The host to which the packet is going to be sent.
-   * @param port  The port to which the packet is going to be sent.
-   * @param filename The requested filename.
-   * @param mode The requested transfer mode.  This should be on of the TFTP
-   *        class MODE constants (e.g., TFTP.NETASCII_MODE).
-   ***/
-  public TFTPWriteRequestPacket(InetAddress destination, int port,
-				String filename, int mode) {
-    super(destination, port, TFTPPacket.WRITE_REQUEST, filename, mode);
-  }
+    /***
+     * Creates a write request packet to be sent to a host at a 
+     * given port with a filename and transfer mode request.
+     * <p>
+     * @param destination  The host to which the packet is going to be sent.
+     * @param port  The port to which the packet is going to be sent.
+     * @param filename The requested filename.
+     * @param mode The requested transfer mode.  This should be on of the TFTP
+     *        class MODE constants (e.g., TFTP.NETASCII_MODE).
+     ***/
+    public TFTPWriteRequestPacket(InetAddress destination, int port,
+                                  String filename, int mode)
+    {
+        super(destination, port, TFTPPacket.WRITE_REQUEST, filename, mode);
+    }
 
-  /***
-   * Creates a write request packet of based on a received
-   * datagram and assumes the datagram has already been identified as a
-   * write request.  Assumes the datagram is at least length 4, else an
-   * ArrayIndexOutOfBoundsException may be thrown.
-   * <p>
-   * @param datagram  The datagram containing the received request.
-   * @throws TFTPPacketException  If the datagram isn't a valid TFTP
-   *         request packet.
-   ***/
-  TFTPWriteRequestPacket(DatagramPacket datagram) throws TFTPPacketException {
-    super(TFTPPacket.WRITE_REQUEST, datagram);
-  }
+    /***
+     * Creates a write request packet of based on a received
+     * datagram and assumes the datagram has already been identified as a
+     * write request.  Assumes the datagram is at least length 4, else an
+     * ArrayIndexOutOfBoundsException may be thrown.
+     * <p>
+     * @param datagram  The datagram containing the received request.
+     * @throws TFTPPacketException  If the datagram isn't a valid TFTP
+     *         request packet.
+     ***/
+    TFTPWriteRequestPacket(DatagramPacket datagram) throws TFTPPacketException
+    {
+        super(TFTPPacket.WRITE_REQUEST, datagram);
+    }
 }

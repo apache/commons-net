@@ -54,8 +54,9 @@ package org.apache.commons.net;
  * <http://www.apache.org/>.
  */
 
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
 
 /***
  * The CharGenUDPClient class is a UDP implementation of a client for the
@@ -85,74 +86,79 @@ import java.net.*;
  * @see CharGenTCPClient
  ***/
 
-public final class CharGenUDPClient extends DatagramSocketClient {
-  /*** The systat port value of 11 according to RFC 866. ***/
-  public static final int SYSTAT_PORT       = 11;
-  /*** The netstat port value of 19. ***/
-  public static final int NETSTAT_PORT      = 15;
-  /*** The quote of the day port value of 17 according to RFC 865. ***/
-  public static final int QUOTE_OF_DAY_PORT = 17;
-  /*** The character generator port value of 19 according to RFC 864. ***/
-  public static final int CHARGEN_PORT      = 19;
-  /*** The default chargen port.  It is set to 19 according to RFC 864. ***/
-  public static final int DEFAULT_PORT      = 19;
+public final class CharGenUDPClient extends DatagramSocketClient
+{
+    /*** The systat port value of 11 according to RFC 866. ***/
+    public static final int SYSTAT_PORT = 11;
+    /*** The netstat port value of 19. ***/
+    public static final int NETSTAT_PORT = 15;
+    /*** The quote of the day port value of 17 according to RFC 865. ***/
+    public static final int QUOTE_OF_DAY_PORT = 17;
+    /*** The character generator port value of 19 according to RFC 864. ***/
+    public static final int CHARGEN_PORT = 19;
+    /*** The default chargen port.  It is set to 19 according to RFC 864. ***/
+    public static final int DEFAULT_PORT = 19;
 
-  private byte[] __receiveData;
-  private DatagramPacket __receivePacket;
-  private DatagramPacket __sendPacket;
+    private byte[] __receiveData;
+    private DatagramPacket __receivePacket;
+    private DatagramPacket __sendPacket;
 
-  /***
-   * The default CharGenUDPClient constructor.  It initializes some internal
-   * data structures for sending and receiving the necessary datagrams for
-   * the chargen and related protocols.
-   ***/
-  public CharGenUDPClient() {
-    // CharGen return packets have a maximum length of 512
-    __receiveData   = new byte[512];
-    __receivePacket = new DatagramPacket(__receiveData, 512);
-    __sendPacket    = new DatagramPacket(new byte[0], 0);
-  }
+    /***
+     * The default CharGenUDPClient constructor.  It initializes some internal
+     * data structures for sending and receiving the necessary datagrams for
+     * the chargen and related protocols.
+     ***/
+    public CharGenUDPClient()
+    {
+        // CharGen return packets have a maximum length of 512
+        __receiveData = new byte[512];
+        __receivePacket = new DatagramPacket(__receiveData, 512);
+        __sendPacket = new DatagramPacket(new byte[0], 0);
+    }
 
 
-  /***
-   * Sends the data initiation datagram.  This data in the packet is ignored
-   * by the server, and merely serves to signal that the server should send
-   * its reply.
-   * <p>
-   * @param host The address of the server.
-   * @param port The port of the service.
-   * @exception IOException If an error occurs while sending the datagram.
-   ***/
-  public void send(InetAddress host, int port) throws IOException {
-    __sendPacket.setAddress(host);
-    __sendPacket.setPort(port);
-    _socket_.send(__sendPacket);
-  }
+    /***
+     * Sends the data initiation datagram.  This data in the packet is ignored
+     * by the server, and merely serves to signal that the server should send
+     * its reply.
+     * <p>
+     * @param host The address of the server.
+     * @param port The port of the service.
+     * @exception IOException If an error occurs while sending the datagram.
+     ***/
+    public void send(InetAddress host, int port) throws IOException
+    {
+        __sendPacket.setAddress(host);
+        __sendPacket.setPort(port);
+        _socket_.send(__sendPacket);
+    }
 
-  /*** Same as <code>send(host, CharGenUDPClient.DEFAULT_PORT);</code> ***/
-  public void send(InetAddress host)  throws IOException {
-    send(host, DEFAULT_PORT);
-  }
+    /*** Same as <code>send(host, CharGenUDPClient.DEFAULT_PORT);</code> ***/
+    public void send(InetAddress host) throws IOException
+    {
+        send(host, DEFAULT_PORT);
+    }
 
-  /***
-   * Receive the reply data from the server.  This will always be 512 bytes
-   * or less.  Chargen and quote of the day only return one packet.  Netstat
-   * and systat require multiple calls to receive() with timeout detection.
-   * <p>
-   * @return The reply data from the server.
-   * @exception IOException If an error occurs while receiving the datagram.
-   ***/
-  public byte[] receive() throws IOException {
-    int length;
-    byte[] result;
+    /***
+     * Receive the reply data from the server.  This will always be 512 bytes
+     * or less.  Chargen and quote of the day only return one packet.  Netstat
+     * and systat require multiple calls to receive() with timeout detection.
+     * <p>
+     * @return The reply data from the server.
+     * @exception IOException If an error occurs while receiving the datagram.
+     ***/
+    public byte[] receive() throws IOException
+    {
+        int length;
+        byte[] result;
 
-    _socket_.receive(__receivePacket);
+        _socket_.receive(__receivePacket);
 
-    result = new byte[length = __receivePacket.getLength()];
-    System.arraycopy(__receiveData, 0, result, 0, length);
+        result = new byte[length = __receivePacket.getLength()];
+        System.arraycopy(__receiveData, 0, result, 0, length);
 
-    return result;
-  }
+        return result;
+    }
 
 }
 

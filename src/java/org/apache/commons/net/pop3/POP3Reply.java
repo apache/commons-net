@@ -54,10 +54,6 @@ package org.apache.commons.net.pop3;
  * <http://www.apache.org/>.
  */
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-
 /***
  * POP3Reply stores POP3 reply code constants.
  * <p>
@@ -65,13 +61,15 @@ import java.util.*;
  * @author Daniel F. Savarese
  ***/
 
-public final class POP3Reply {
-  /*** The reply code indicating success of an operation. ***/
-  public static int OK    = 0;
+public final class POP3Reply
+{
+    /*** The reply code indicating success of an operation. ***/
+    public static int OK = 0;
 
-  /*** The reply code indicating failure of an operation. ***/
-  public static int ERROR = 1;
+    /*** The reply code indicating failure of an operation. ***/
+    public static int ERROR = 1;
 
-  // Cannot be instantiated.
-  private POP3Reply() {}
+    // Cannot be instantiated.
+    private POP3Reply()
+    {}
 }

@@ -54,10 +54,9 @@ package examples;
  * <http://www.apache.org/>.
  */
 
-import java.io.*;
-
-import org.apache.commons.net.nntp.*;
-import org.apache.commons.io.*;
+import java.io.IOException;
+import org.apache.commons.net.nntp.NNTPClient;
+import org.apache.commons.net.nntp.NewsgroupInfo;
 
 /***
  * This is a trivial example using the NNTP package to approximate the
@@ -68,45 +67,59 @@ import org.apache.commons.io.*;
  * <p>
  ***/
 
-public final class newsgroups {
+public final class newsgroups
+{
 
-  public final static void main(String[] args) {
-    NNTPClient client;
-    NewsgroupInfo[] list;
+    public final static void main(String[] args)
+    {
+        NNTPClient client;
+        NewsgroupInfo[] list;
 
-    if(args.length < 1) {
-      System.err.println("Usage: newsgroups newsserver");
-      System.exit(1);
+        if (args.length < 1)
+        {
+            System.err.println("Usage: newsgroups newsserver");
+            System.exit(1);
+        }
+
+        client = new NNTPClient();
+
+        try
+        {
+            client.connect(args[0]);
+
+            list = client.listNewsgroups();
+
+            if (list != null)
+            {
+                for (int i = 0; i < list.length; i++)
+                    System.out.println(list[i].getNewsgroup());
+            }
+            else
+            {
+                System.err.println("LIST command failed.");
+                System.err.println("Server reply: " + client.getReplyString());
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if (client.isConnected())
+                    client.disconnect();
+            }
+            catch (IOException e)
+            {
+                System.err.println("Error disconnecting from server.");
+                e.printStackTrace();
+                System.exit(1);
+            }
+        }
+
     }
-
-    client = new NNTPClient();
-
-    try {
-      client.connect(args[0]);
-
-      list = client.listNewsgroups();
-
-      if(list != null) {
-	for(int i=0; i < list.length; i++)
-	  System.out.println(list[i].getNewsgroup());
-      } else {
-	System.err.println("LIST command failed.");
-	System.err.println("Server reply: " + client.getReplyString());
-      }
-    } catch(IOException e) {
-      e.printStackTrace();
-    } finally {
-      try {
-	if(client.isConnected())
-	  client.disconnect();
-      } catch(IOException e) {
-	System.err.println("Error disconnecting from server.");
-	e.printStackTrace();
-	System.exit(1);
-      }
-    }
-
-  }
 
 }
 

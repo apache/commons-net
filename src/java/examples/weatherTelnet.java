@@ -54,10 +54,8 @@ package examples;
  * <http://www.apache.org/>.
  */
 
-import java.io.*;
-
-import org.apache.commons.net.telnet.*;
-import org.apache.commons.io.*;
+import java.io.IOException;
+import org.apache.commons.net.telnet.TelnetClient;
 
 /***
  * This is an example of a trivial use of the TelnetClient class.
@@ -74,32 +72,40 @@ import org.apache.commons.io.*;
  ***/
 
 // This class requires the IOUtil support class!
-public final class weatherTelnet {
+public final class weatherTelnet
+{
 
-  public final static void main(String[] args) {
-    TelnetClient telnet;
+    public final static void main(String[] args)
+    {
+        TelnetClient telnet;
 
-    telnet = new TelnetClient();
+        telnet = new TelnetClient();
 
-    try {
-      telnet.connect("rainmaker.wunderground.com", 3000);
-    } catch(IOException e) {
-      e.printStackTrace();
-      System.exit(1);
+        try
+        {
+            telnet.connect("rainmaker.wunderground.com", 3000);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        IOUtil.readWrite(telnet.getInputStream(), telnet.getOutputStream(),
+                         System.in, System.out);
+
+        try
+        {
+            telnet.disconnect();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        System.exit(0);
     }
-
-    IOUtil.readWrite(telnet.getInputStream(), telnet.getOutputStream(),
-		     System.in, System.out);
-
-    try {
-      telnet.disconnect();
-    } catch(IOException e) {
-      e.printStackTrace();
-      System.exit(1);
-    }
-
-    System.exit(0);
-  }
 
 }
 

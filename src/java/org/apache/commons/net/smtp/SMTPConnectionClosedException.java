@@ -54,7 +54,7 @@ package org.apache.commons.net.smtp;
  * <http://www.apache.org/>.
  */
 
-import java.io.*;
+import java.io.IOException;
 
 /***
  * SMTPConnectionClosedException is used to indicate the premature or
@@ -71,20 +71,23 @@ import java.io.*;
  * @see SMTPClient
  ***/
 
-public final class SMTPConnectionClosedException extends IOException {
+public final class SMTPConnectionClosedException extends IOException
+{
 
-  /*** Constructs a SMTPConnectionClosedException with no message ***/
-  public SMTPConnectionClosedException() {
-    super();
-  }
+    /*** Constructs a SMTPConnectionClosedException with no message ***/
+    public SMTPConnectionClosedException()
+    {
+        super();
+    }
 
-  /*** 
-   * Constructs a SMTPConnectionClosedException with a specified message.
-   * <p>
-   * @param message  The message explaining the reason for the exception.
-   ***/
-  public SMTPConnectionClosedException(String message) {
-    super(message);
-  }
+    /***
+     * Constructs a SMTPConnectionClosedException with a specified message.
+     * <p>
+     * @param message  The message explaining the reason for the exception.
+     ***/
+    public SMTPConnectionClosedException(String message)
+    {
+        super(message);
+    }
 
 }

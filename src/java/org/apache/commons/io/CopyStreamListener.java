@@ -54,8 +54,7 @@ package org.apache.commons.io;
  * <http://www.apache.org/>.
  */
 
-import java.util.*;
-
+import java.util.EventListener;
 
 /***
  * The CopyStreamListener class can accept CopyStreamEvents to keep track
@@ -78,35 +77,36 @@ import java.util.*;
  * @author Daniel F. Savarese
  ***/
 
-public interface CopyStreamListener extends EventListener {
+public interface CopyStreamListener extends EventListener
+{
 
-  /***
-   * This method is invoked by a CopyStreamEvent source after copying
-   * a block of bytes from a stream.  The CopyStreamEvent will contain
-   * the total number of bytes transferred so far and the number of bytes
-   * transferred in the last write.
-   * <p>
-   * @param event The CopyStreamEvent fired by the copying of a block of
-   *              bytes.
-   ***/
-  public void bytesTransferred(CopyStreamEvent event);
+    /***
+     * This method is invoked by a CopyStreamEvent source after copying
+     * a block of bytes from a stream.  The CopyStreamEvent will contain
+     * the total number of bytes transferred so far and the number of bytes
+     * transferred in the last write.
+     * <p>
+     * @param event The CopyStreamEvent fired by the copying of a block of
+     *              bytes.
+     ***/
+    public void bytesTransferred(CopyStreamEvent event);
 
 
-  /***
-   * This method is not part of the JavaBeans model and is used by the
-   * static methods in the org.apache.commons.io.Util class for efficiency.
-   * It is invoked after a block of bytes to inform the listener of the
-   * transfer.
-   * <p>
-   * @param totalBytesTransferred  The total number of bytes transferred
-   *         so far by the copy operation.
-   * @param bytesTransferred  The number of bytes copied by the most recent
-   *          write.
-   * @param streamSize The number of bytes in the stream being copied.
-   *        This may be equal to CopyStreamEvent.UNKNOWN_STREAM_SIZE if
-   *        the size is unknown.
-   ***/
-  public void bytesTransferred(long totalBytesTransferred,
-			       int bytesTransferred,
-			       long streamSize);
+    /***
+     * This method is not part of the JavaBeans model and is used by the
+     * static methods in the org.apache.commons.io.Util class for efficiency.
+     * It is invoked after a block of bytes to inform the listener of the
+     * transfer.
+     * <p>
+     * @param totalBytesTransferred  The total number of bytes transferred
+     *         so far by the copy operation.
+     * @param bytesTransferred  The number of bytes copied by the most recent
+     *          write.
+     * @param streamSize The number of bytes in the stream being copied.
+     *        This may be equal to CopyStreamEvent.UNKNOWN_STREAM_SIZE if
+     *        the size is unknown.
+     ***/
+    public void bytesTransferred(long totalBytesTransferred,
+                                 int bytesTransferred,
+                                 long streamSize);
 }

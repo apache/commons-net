@@ -54,7 +54,8 @@ package org.apache.commons.net.smtp;
  * <http://www.apache.org/>.
  */
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Vector;
 
 /***
  * A class used to represent forward and reverse relay paths.  The
@@ -67,65 +68,71 @@ import java.util.*;
  * @see SMTPClient
  ***/
 
-public final class RelayPath {
-  Vector _path;
-  String _emailAddress;
+public final class RelayPath
+{
+    Vector _path;
+    String _emailAddress;
 
-  /*** 
-   * Create a relay path with the specified email address as the ultimate
-   * destination.
-   * <p>
-   * @param emailAddress The destination email address.
-   ***/
-  public RelayPath(String emailAddress) {
-    _path = new Vector();
-    _emailAddress = emailAddress;
-  }
-
-  /***
-   * Add a mail relay host to the relay path.  Hosts are added left to
-   * right.  For example, the following will create the path
-   * <code><b> &lt @bar.com,@foo.com:foobar@foo.com &gt </b></code>
-   * <pre>
-   * path = new RelayPath("foobar@foo.com");
-   * path.addRelay("bar.com");
-   * path.addRelay("foo.com");
-   * </pre>
-   * <p>
-   * @param hostname The host to add to the relay path.
-   ***/
-  public void addRelay(String hostname) {
-    _path.addElement(hostname);
-  }
-
-  /***
-   * Return the properly formatted string representation of the relay path.
-   * <p>
-   * @return The properly formatted string representation of the relay path.
-   ***/
-  public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    Enumeration hosts;
-
-    buffer.append('<');
-
-    hosts = _path.elements();
-
-    if(hosts.hasMoreElements()) {
-      buffer.append('@');
-      buffer.append((String)hosts.nextElement());
-
-      while(hosts.hasMoreElements()) {
-	buffer.append(",@");
-	buffer.append((String)hosts.nextElement());
-      }
-      buffer.append(':');
+    /***
+     * Create a relay path with the specified email address as the ultimate
+     * destination.
+     * <p>
+     * @param emailAddress The destination email address.
+     ***/
+    public RelayPath(String emailAddress)
+    {
+        _path = new Vector();
+        _emailAddress = emailAddress;
     }
 
-    buffer.append(_emailAddress);
-    buffer.append('>');
+    /***
+     * Add a mail relay host to the relay path.  Hosts are added left to
+     * right.  For example, the following will create the path
+     * <code><b> &lt @bar.com,@foo.com:foobar@foo.com &gt </b></code>
+     * <pre>
+     * path = new RelayPath("foobar@foo.com");
+     * path.addRelay("bar.com");
+     * path.addRelay("foo.com");
+     * </pre>
+     * <p>
+     * @param hostname The host to add to the relay path.
+     ***/
+    public void addRelay(String hostname)
+    {
+        _path.addElement(hostname);
+    }
 
-    return buffer.toString();
-  }
+    /***
+     * Return the properly formatted string representation of the relay path.
+     * <p>
+     * @return The properly formatted string representation of the relay path.
+     ***/
+    public String toString()
+    {
+        StringBuffer buffer = new StringBuffer();
+        Enumeration hosts;
+
+        buffer.append('<');
+
+        hosts = _path.elements();
+
+        if (hosts.hasMoreElements())
+        {
+            buffer.append('@');
+            buffer.append((String)hosts.nextElement());
+
+            while (hosts.hasMoreElements())
+            {
+                buffer.append(",@");
+                buffer.append((String)hosts.nextElement());
+            }
+            buffer.append(':');
+        }
+
+        buffer.append(_emailAddress);
+        buffer.append('>');
+
+        return buffer.toString();
+    }
 
 }

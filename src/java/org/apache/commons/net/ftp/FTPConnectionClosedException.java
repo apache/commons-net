@@ -54,7 +54,7 @@ package org.apache.commons.net.ftp;
  * <http://www.apache.org/>.
  */
 
-import java.io.*;
+import java.io.IOException;
 
 /***
  * FTPConnectionClosedException is used to indicate the premature or
@@ -71,20 +71,23 @@ import java.io.*;
  * @see FTPClient
  ***/
 
-public class FTPConnectionClosedException extends IOException {
+public class FTPConnectionClosedException extends IOException
+{
 
-  /*** Constructs a FTPConnectionClosedException with no message ***/
-  public FTPConnectionClosedException() {
-    super();
-  }
+    /*** Constructs a FTPConnectionClosedException with no message ***/
+    public FTPConnectionClosedException()
+    {
+        super();
+    }
 
-  /*** 
-   * Constructs a FTPConnectionClosedException with a specified message.
-   * <p>
-   * @param message  The message explaining the reason for the exception.
-   ***/
-  public FTPConnectionClosedException(String message) {
-    super(message);
-  }
+    /***
+     * Constructs a FTPConnectionClosedException with a specified message.
+     * <p>
+     * @param message  The message explaining the reason for the exception.
+     ***/
+    public FTPConnectionClosedException(String message)
+    {
+        super(message);
+    }
 
 }

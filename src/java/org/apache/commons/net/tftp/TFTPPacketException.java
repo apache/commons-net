@@ -73,19 +73,22 @@ package org.apache.commons.net.tftp;
  * @see TFTP
  ***/
 
-public class TFTPPacketException extends Exception {
+public class TFTPPacketException extends Exception
+{
 
-  /***
-   * Simply calls the corresponding constructor of its superclass.
-   ***/
-  public TFTPPacketException() {
-    super();
-  }
+    /***
+     * Simply calls the corresponding constructor of its superclass.
+     ***/
+    public TFTPPacketException()
+    {
+        super();
+    }
 
-  /***
-   * Simply calls the corresponding constructor of its superclass.
-   ***/
-  public TFTPPacketException(String message) {
-    super(message);
-  }
+    /***
+     * Simply calls the corresponding constructor of its superclass.
+     ***/
+    public TFTPPacketException(String message)
+    {
+        super(message);
+    }
 }

@@ -54,10 +54,12 @@ package org.apache.commons.net.telnet;
  * <http://www.apache.org/>.
  */
 
-import java.net.*;
-import java.io.*;
-
-import org.apache.commons.io.*;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import org.apache.commons.io.FromNetASCIIInputStream;
+import org.apache.commons.io.ToNetASCIIOutputStream;
 
 /***
  * The TelnetClient class implements the simple network virtual
@@ -83,77 +85,93 @@ import org.apache.commons.io.*;
  * @author Daniel F. Savarese
  ***/
 
-public class TelnetClient extends Telnet {
-  private InputStream  __input;
-  private OutputStream __output;
+public class TelnetClient extends Telnet
+{
+    private InputStream __input;
+    private OutputStream __output;
 
-  /***
-   * Default TelnetClient constructor.
-   ***/
-  public TelnetClient() {
-    __input = null;
-    __output = null;
-  }
+    /***
+     * Default TelnetClient constructor.
+     ***/
+    public TelnetClient()
+    {
+        __input = null;
+        __output = null;
+    }
 
-  void _flushOutputStream() throws IOException { _output_.flush(); }
-  void _closeOutputStream() throws IOException { _output_.close(); }
+    void _flushOutputStream() throws IOException
+    {
+        _output_.flush();
+    }
+    void _closeOutputStream() throws IOException
+    {
+        _output_.close();
+    }
 
-  /***
-   * Handles special connection requirements.
-   * <p>
-   * @exception IOException  If an error occurs during connection setup.
-   ***/
-  protected void _connectAction_() throws IOException {
-    super._connectAction_();
-    InputStream input;
-    TelnetInputStream tmp;
+    /***
+     * Handles special connection requirements.
+     * <p>
+     * @exception IOException  If an error occurs during connection setup.
+     ***/
+    protected void _connectAction_() throws IOException
+    {
+        super._connectAction_();
+        InputStream input;
+        TelnetInputStream tmp;
 
-    if(FromNetASCIIInputStream.isConversionRequired())
-      input = new FromNetASCIIInputStream(_input_);
-    else
-      input = _input_;
+        if (FromNetASCIIInputStream.isConversionRequired())
+            input = new FromNetASCIIInputStream(_input_);
+        else
+            input = _input_;
 
 
-    tmp = new TelnetInputStream(input, this);
-    tmp._start();
-    // __input CANNOT refer to the TelnetInputStream.  We run into
-    // blocking problems when some classes use TelnetInputStream, so
-    // we wrap it with a BufferedInputStream which we know is safe.
-    // This blocking behavior requires further investigation, but right
-    // now it looks like classes like InputStreamReader are not implemented
-    // in a safe manner.
-    __input = new BufferedInputStream(tmp);
-    __output = new ToNetASCIIOutputStream(new TelnetOutputStream(this));
-  }
+        tmp = new TelnetInputStream(input, this);
+        tmp._start();
+        // __input CANNOT refer to the TelnetInputStream.  We run into
+        // blocking problems when some classes use TelnetInputStream, so
+        // we wrap it with a BufferedInputStream which we know is safe.
+        // This blocking behavior requires further investigation, but right
+        // now it looks like classes like InputStreamReader are not implemented
+        // in a safe manner.
+        __input = new BufferedInputStream(tmp);
+        __output = new ToNetASCIIOutputStream(new TelnetOutputStream(this));
+    }
 
-  /***
-   * Disconnects the telnet session, closing the input and output streams
-   * as well as the socket.  If you have references to the
-   * input and output streams of the telnet connection, you should not
-   * close them yourself, but rather call disconnect to properly close
-   * the connection.
-   ***/
-  public void disconnect() throws IOException {
-    __input.close();
-    __output.close();
-    super.disconnect();
-  }
+    /***
+     * Disconnects the telnet session, closing the input and output streams
+     * as well as the socket.  If you have references to the
+     * input and output streams of the telnet connection, you should not
+     * close them yourself, but rather call disconnect to properly close
+     * the connection.
+     ***/
+    public void disconnect() throws IOException
+    {
+        __input.close();
+        __output.close();
+        super.disconnect();
+    }
 
-  /***
-   * Returns the telnet connection output stream.  You should not close the
-   * stream when you finish with it.  Rather, you should call
-   * <a href="#disconnect"> disconnect </a>.
-   * <p>
-   * @return The telnet connection output stream.
-   ***/
-  public OutputStream getOutputStream() { return __output; }
+    /***
+     * Returns the telnet connection output stream.  You should not close the
+     * stream when you finish with it.  Rather, you should call
+     * <a href="#disconnect"> disconnect </a>.
+     * <p>
+     * @return The telnet connection output stream.
+     ***/
+    public OutputStream getOutputStream()
+    {
+        return __output;
+    }
 
-  /***
-   * Returns the telnet connection input stream.  You should not close the
-   * stream when you finish with it.  Rather, you should call
-   * <a href="#disconnect"> disconnect </a>.
-   * <p>
-   * @return The telnet connection input stream.
-   ***/
-  public InputStream  getInputStream()  { return __input; }
+    /***
+     * Returns the telnet connection input stream.  You should not close the
+     * stream when you finish with it.  Rather, you should call
+     * <a href="#disconnect"> disconnect </a>.
+     * <p>
+     * @return The telnet connection input stream.
+     ***/
+    public InputStream getInputStream()
+    {
+        return __input;
+    }
 }

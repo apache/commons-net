@@ -54,8 +54,8 @@ package org.apache.commons.net;
  * <http://www.apache.org/>.
  */
 
-import java.util.*;
-
+import java.io.Serializable;
+import java.util.Enumeration;
 import org.apache.commons.util.ListenerList;
 
 /***
@@ -70,101 +70,112 @@ import org.apache.commons.util.ListenerList;
  * @author Daniel F. Savarese
  ***/
 
-public class ProtocolCommandSupport implements java.io.Serializable {
-  private Object __source;
-  private ListenerList __listeners;
+public class ProtocolCommandSupport implements Serializable
+{
+    private Object __source;
+    private ListenerList __listeners;
 
-  /***
-   * Creates a ProtocolCommandSupport instant using the indicated source
-   * as the source of fired ProtocolCommandEvents.
-   * <p>
-   * @param source  The source to use for all generated ProtocolCommandEvents.
-   ***/
-  public ProtocolCommandSupport(Object source) {
-    __listeners = new ListenerList();
-    __source = source;
-  }
-
-
-  /***
-   * Fires a ProtocolCommandEvent signalling the sending of a command to all
-   * registered listeners, invoking their
-   * <a href="org.apache.commons.net.ProtocolCommandListener.html#protocolCommandSent">
-   * protocolCommandSent() </a> methods.
-   * <p>
-   * @param command The string representation of the command type sent, not
-   *      including the arguments (e.g., "STAT" or "GET").
-   * @param message The entire command string verbatim as sent to the server,
-   *        including all arguments.
-   ***/
-  public void fireCommandSent(String command, String message){
-    Enumeration enum;
-    ProtocolCommandEvent event;
-    ProtocolCommandListener listener;
-
-    enum = __listeners.getListeners();
-
-    event = new ProtocolCommandEvent(__source, command, message);
-
-    while(enum.hasMoreElements()) {
-      listener = (ProtocolCommandListener)enum.nextElement();
-      listener.protocolCommandSent(event);
+    /***
+     * Creates a ProtocolCommandSupport instant using the indicated source
+     * as the source of fired ProtocolCommandEvents.
+     * <p>
+     * @param source  The source to use for all generated ProtocolCommandEvents.
+     ***/
+    public ProtocolCommandSupport(Object source)
+    {
+        __listeners = new ListenerList();
+        __source = source;
     }
-  }
 
-  /***
-   * Fires a ProtocolCommandEvent signalling the reception of a command reply
-   * to all registered listeners, invoking their
-   * <a href="org.apache.commons.net.ProtocolCommandListener.html#protocolReplyReceived">
-   * protocolReplyReceived() </a> methods.
-   * <p>
-   * @param replyCode The integer code indicating the natureof the reply.
-   *   This will be the protocol integer value for protocols
-   *   that use integer reply codes, or the reply class constant
-   *   corresponding to the reply for protocols like POP3 that use
-   *   strings like OK rather than integer codes (i.e., POP3Repy.OK).
-   * @param message The entire reply as received from the server.
-   ***/
-  public void fireReplyReceived(int replyCode, String message){
-    Enumeration enum;
-    ProtocolCommandEvent event;
-    ProtocolCommandListener listener;
 
-    enum = __listeners.getListeners();
+    /***
+     * Fires a ProtocolCommandEvent signalling the sending of a command to all
+     * registered listeners, invoking their
+     * <a href="org.apache.commons.net.ProtocolCommandListener.html#protocolCommandSent">
+     * protocolCommandSent() </a> methods.
+     * <p>
+     * @param command The string representation of the command type sent, not
+     *      including the arguments (e.g., "STAT" or "GET").
+     * @param message The entire command string verbatim as sent to the server,
+     *        including all arguments.
+     ***/
+    public void fireCommandSent(String command, String message)
+    {
+        Enumeration enum;
+        ProtocolCommandEvent event;
+        ProtocolCommandListener listener;
 
-    event = new ProtocolCommandEvent(__source, replyCode, message);
+        enum = __listeners.getListeners();
 
-    while(enum.hasMoreElements()) {
-      listener = (ProtocolCommandListener)enum.nextElement();
-      listener.protocolReplyReceived(event);
+        event = new ProtocolCommandEvent(__source, command, message);
+
+        while (enum.hasMoreElements())
+        {
+            listener = (ProtocolCommandListener)enum.nextElement();
+            listener.protocolCommandSent(event);
+        }
     }
-  }
 
-  /***
-   * Adds a ProtocolCommandListener.
-   * <p>
-   * @param listener  The ProtocolCommandListener to add.
-   ***/
-  public void addProtocolCommandListener(ProtocolCommandListener listener){
-    __listeners.addListener(listener);
-  }
+    /***
+     * Fires a ProtocolCommandEvent signalling the reception of a command reply
+     * to all registered listeners, invoking their
+     * <a href="org.apache.commons.net.ProtocolCommandListener.html#protocolReplyReceived">
+     * protocolReplyReceived() </a> methods.
+     * <p>
+     * @param replyCode The integer code indicating the natureof the reply.
+     *   This will be the protocol integer value for protocols
+     *   that use integer reply codes, or the reply class constant
+     *   corresponding to the reply for protocols like POP3 that use
+     *   strings like OK rather than integer codes (i.e., POP3Repy.OK).
+     * @param message The entire reply as received from the server.
+     ***/
+    public void fireReplyReceived(int replyCode, String message)
+    {
+        Enumeration enum;
+        ProtocolCommandEvent event;
+        ProtocolCommandListener listener;
 
-  /***
-   * Removes a ProtocolCommandListener.
-   * <p>
-   * @param listener  The ProtocolCommandListener to remove.
-   ***/
-  public void removeProtocolCommandListener(ProtocolCommandListener listener){
-    __listeners.removeListener(listener);
-  }
+        enum = __listeners.getListeners();
+
+        event = new ProtocolCommandEvent(__source, replyCode, message);
+
+        while (enum.hasMoreElements())
+        {
+            listener = (ProtocolCommandListener)enum.nextElement();
+            listener.protocolReplyReceived(event);
+        }
+    }
+
+    /***
+     * Adds a ProtocolCommandListener.
+     * <p>
+     * @param listener  The ProtocolCommandListener to add.
+     ***/
+    public void addProtocolCommandListener(ProtocolCommandListener listener)
+    {
+        __listeners.addListener(listener);
+    }
+
+    /***
+     * Removes a ProtocolCommandListener.
+     * <p>
+     * @param listener  The ProtocolCommandListener to remove.
+     ***/
+    public void removeProtocolCommandListener(ProtocolCommandListener listener)
+    {
+        __listeners.removeListener(listener);
+    }
 
 
-  /***
-   * Returns the number of ProtocolCommandListeners currently registered.
-   * <p>
-   * @return The number of ProtocolCommandListeners currently registered.
-   ***/
-  public int getListenerCount() { return __listeners.getListenerCount(); }
+    /***
+     * Returns the number of ProtocolCommandListeners currently registered.
+     * <p>
+     * @return The number of ProtocolCommandListeners currently registered.
+     ***/
+    public int getListenerCount()
+    {
+        return __listeners.getListenerCount();
+    }
 
 }
 

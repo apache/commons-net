@@ -54,10 +54,8 @@ package examples;
  * <http://www.apache.org/>.
  */
 
-import java.io.*;
-
-import org.apache.commons.net.bsd.*;
-
+import java.io.IOException;
+import org.apache.commons.net.bsd.RCommandClient;
 
 /***
  * This is an example program demonstrating how to use the RCommandClient
@@ -78,59 +76,73 @@ import org.apache.commons.net.bsd.*;
  ***/
 
 // This class requires the IOUtil support class!
-public final class rshell {
+public final class rshell
+{
 
-  public static final void main(String[] args) {
-    String server, localuser, remoteuser, command;
-    RCommandClient client;
+    public static final void main(String[] args)
+    {
+        String server, localuser, remoteuser, command;
+        RCommandClient client;
 
-    if(args.length != 4) {
-      System.err.println(
-	 "Usage: rshell <hostname> <localuser> <remoteuser> <command>");
-      System.exit(1);
-      return; // so compiler can do proper flow control analysis
+        if (args.length != 4)
+        {
+            System.err.println(
+                "Usage: rshell <hostname> <localuser> <remoteuser> <command>");
+            System.exit(1);
+            return ; // so compiler can do proper flow control analysis
+        }
+
+        client = new RCommandClient();
+
+        server = args[0];
+        localuser = args[1];
+        remoteuser = args[2];
+        command = args[3];
+
+        try
+        {
+            client.connect(server);
+        }
+        catch (IOException e)
+        {
+            System.err.println("Could not connect to server.");
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        try
+        {
+            client.rcommand(localuser, remoteuser, command);
+        }
+        catch (IOException e)
+        {
+            try
+            {
+                client.disconnect();
+            }
+            catch (IOException f)
+            {}
+            e.printStackTrace();
+            System.err.println("Could not execute command.");
+            System.exit(1);
+        }
+
+
+        IOUtil.readWrite(client.getInputStream(), client.getOutputStream(),
+                         System.in, System.out);
+
+        try
+        {
+            client.disconnect();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        System.exit(0);
     }
-
-    client = new RCommandClient();
-
-    server   = args[0];
-    localuser = args[1];
-    remoteuser = args[2];
-    command  = args[3];
-
-    try {
-      client.connect(server);
-    } catch(IOException e) {
-      System.err.println("Could not connect to server.");
-      e.printStackTrace();
-      System.exit(1);
-    }
-
-    try {
-      client.rcommand(localuser, remoteuser, command);
-    } catch(IOException e) {
-      try {
-	client.disconnect();
-      } catch(IOException f) {
-      }
-      e.printStackTrace();
-      System.err.println("Could not execute command.");
-      System.exit(1);
-    }
-
-
-    IOUtil.readWrite(client.getInputStream(), client.getOutputStream(),
-		     System.in, System.out);
-
-    try {
-      client.disconnect();
-    } catch(IOException e) {
-      e.printStackTrace();
-      System.exit(1);
-    }
-
-    System.exit(0);
-  }
 
 }
 

@@ -54,7 +54,8 @@ package org.apache.commons.net.tftp;
  * <http://www.apache.org/>.
  */
 
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
 
 /***
  * TFTPPacket is an abstract class encapsulating the functionality common
@@ -80,180 +81,198 @@ import java.net.*;
  * @see TFTP
  ***/
 
-public abstract class TFTPPacket {
-  /***
-   * The minimum size of a packet.  This is 4 bytes.  It is enough
-   * to store the opcode and blocknumber or other required data
-   * depending on the packet type.
-   ***/
-  static final int MIN_PACKET_SIZE = 4;
+public abstract class TFTPPacket
+{
+    /***
+     * The minimum size of a packet.  This is 4 bytes.  It is enough
+     * to store the opcode and blocknumber or other required data
+     * depending on the packet type.
+     ***/
+    static final int MIN_PACKET_SIZE = 4;
 
-  /***
-   * Identifier returned by <a href="#getType">getType()</a>
-   * indicating a read request packet.  This is the actual TFTP spec
-   * identifier and is equal to 1.
-   ***/
-  public static final int READ_REQUEST    = 1;
+    /***
+     * Identifier returned by <a href="#getType">getType()</a>
+     * indicating a read request packet.  This is the actual TFTP spec
+     * identifier and is equal to 1.
+     ***/
+    public static final int READ_REQUEST = 1;
 
-  /***
-   * Identifier returned by <a href="#getType">getType()</a>
-   * indicating a write request packet.  This is the actual TFTP spec
-   * identifier and is equal to 2.
-   ***/
-  public static final int WRITE_REQUEST   = 2;
+    /***
+     * Identifier returned by <a href="#getType">getType()</a>
+     * indicating a write request packet.  This is the actual TFTP spec
+     * identifier and is equal to 2.
+     ***/
+    public static final int WRITE_REQUEST = 2;
 
-  /***
-   * Identifier returned by <a href="#getType">getType()</a>
-   * indicating a data packet.  This is the actual TFTP spec
-   * identifier and is equal to 3.
-   ***/
-  public static final int DATA            = 3;
+    /***
+     * Identifier returned by <a href="#getType">getType()</a>
+     * indicating a data packet.  This is the actual TFTP spec
+     * identifier and is equal to 3.
+     ***/
+    public static final int DATA = 3;
 
-  /***
-   * Identifier returned by <a href="#getType">getType()</a>
-   * indicating an acknowledgement packet.  This is the actual TFTP spec
-   * identifier and is equal to 4.
-   ***/
-  public static final int ACKNOWLEDGEMENT = 4;
+    /***
+     * Identifier returned by <a href="#getType">getType()</a>
+     * indicating an acknowledgement packet.  This is the actual TFTP spec
+     * identifier and is equal to 4.
+     ***/
+    public static final int ACKNOWLEDGEMENT = 4;
 
-  /***
-   * Identifier returned by <a href="#getType">getType()</a>
-   * indicating an error packet.  This is the actual TFTP spec
-   * identifier and is equal to 5.
-   ***/
-  public static final int ERROR           = 5;
+    /***
+     * Identifier returned by <a href="#getType">getType()</a>
+     * indicating an error packet.  This is the actual TFTP spec
+     * identifier and is equal to 5.
+     ***/
+    public static final int ERROR = 5;
 
-  /***
-   * The TFTP data packet maximum segment size in bytes.  This is 512
-   * and is useful for those familiar with the TFTP protocol who want
-   * to use the <a href="org.apache.commons.net.tftp.TFTP.html#_top_">TFTP</a>
-   * class methods to implement their own TFTP servers or clients.
-   ***/
-  public static final int SEGMENT_SIZE    = 512;
+    /***
+     * The TFTP data packet maximum segment size in bytes.  This is 512
+     * and is useful for those familiar with the TFTP protocol who want
+     * to use the <a href="org.apache.commons.net.tftp.TFTP.html#_top_">TFTP</a>
+     * class methods to implement their own TFTP servers or clients.
+     ***/
+    public static final int SEGMENT_SIZE = 512;
 
-  /*** The type of packet. ***/
-  int _type;
+    /*** The type of packet. ***/
+    int _type;
 
-  /*** The port the packet came from or is going to. ***/
-  int _port;
+    /*** The port the packet came from or is going to. ***/
+    int _port;
 
-  /*** The host the packet is going to be sent or where it came from. ***/
-  InetAddress _address;
+    /*** The host the packet is going to be sent or where it came from. ***/
+    InetAddress _address;
 
-  /***
-   * When you receive a datagram that you expect to be a TFTP packet, you use
-   * this factory method to create the proper TFTPPacket object
-   * encapsulating the data contained in that datagram.  This method is the
-   * only way you can instantiate a TFTPPacket derived class from a
-   * datagram.
-   * <p>
-   * @param datagram  The datagram containing a TFTP packet.
-   * @return The TFTPPacket object corresponding to the datagram.
-   * @exception TFTPPacketException  If the datagram does not contain a valid
-   *             TFTP packet.
-   ***/
-  public final static TFTPPacket newTFTPPacket(DatagramPacket datagram)
-       throws TFTPPacketException
-  {
-    byte[] data;
-    TFTPPacket packet = null;
+    /***
+     * When you receive a datagram that you expect to be a TFTP packet, you use
+     * this factory method to create the proper TFTPPacket object
+     * encapsulating the data contained in that datagram.  This method is the
+     * only way you can instantiate a TFTPPacket derived class from a
+     * datagram.
+     * <p>
+     * @param datagram  The datagram containing a TFTP packet.
+     * @return The TFTPPacket object corresponding to the datagram.
+     * @exception TFTPPacketException  If the datagram does not contain a valid
+     *             TFTP packet.
+     ***/
+    public final static TFTPPacket newTFTPPacket(DatagramPacket datagram)
+    throws TFTPPacketException
+    {
+        byte[] data;
+        TFTPPacket packet = null;
 
-    if(datagram.getLength() < MIN_PACKET_SIZE)
-      throw new TFTPPacketException(
-			"Bad packet. Datagram data length is too short.");
+        if (datagram.getLength() < MIN_PACKET_SIZE)
+            throw new TFTPPacketException(
+                "Bad packet. Datagram data length is too short.");
 
-    data = datagram.getData();
+        data = datagram.getData();
 
-    switch(data[1]) {
-    case READ_REQUEST:
-      packet = new TFTPReadRequestPacket(datagram);
-      break;
-    case WRITE_REQUEST:
-      packet = new TFTPWriteRequestPacket(datagram);
-      break;
-    case DATA:
-      packet = new TFTPDataPacket(datagram);
-      break;
-    case ACKNOWLEDGEMENT:
-      packet = new TFTPAckPacket(datagram);
-      break;
-    case ERROR:
-      packet = new TFTPErrorPacket(datagram);
-      break;
-    default:
-      throw new TFTPPacketException(
-			    "Bad packet.  Invalid TFTP operator code.");
+        switch (data[1])
+        {
+        case READ_REQUEST:
+            packet = new TFTPReadRequestPacket(datagram);
+            break;
+        case WRITE_REQUEST:
+            packet = new TFTPWriteRequestPacket(datagram);
+            break;
+        case DATA:
+            packet = new TFTPDataPacket(datagram);
+            break;
+        case ACKNOWLEDGEMENT:
+            packet = new TFTPAckPacket(datagram);
+            break;
+        case ERROR:
+            packet = new TFTPErrorPacket(datagram);
+            break;
+        default:
+            throw new TFTPPacketException(
+                "Bad packet.  Invalid TFTP operator code.");
+        }
+
+        return packet;
     }
 
-    return packet;
-  }
+    /***
+     * This constructor is not visible outside of the package.  It is used
+     * by subclasses within the package to initialize base data.
+     * <p>
+     * @param type The type of the packet.
+     * @param address The host the packet came from or is going to be sent.
+     * @param port The port the packet came from or is going to be sent.
+     **/
+    TFTPPacket(int type, InetAddress address, int port)
+    {
+        _type = type;
+        _address = address;
+        _port = port;
+    }
 
-  /***
-   * This constructor is not visible outside of the package.  It is used
-   * by subclasses within the package to initialize base data.
-   * <p>
-   * @param type The type of the packet.
-   * @param address The host the packet came from or is going to be sent.
-   * @param port The port the packet came from or is going to be sent.
-   **/ 
-  TFTPPacket(int type, InetAddress address, int port) {
-    _type    = type;
-    _address = address;
-    _port    = port;
-  }
+    /***
+     * This is an abstract method only available within the package for
+     * implementing efficient datagram transport by elminating buffering.
+     * It takes a datagram as an argument, and a byte buffer in which 
+     * to store the raw datagram data.  Inside the method, the data
+     * should be set as the datagram's data and the datagram returned.
+     * <p>
+     * @param datagram  The datagram to create.
+     * @param data The buffer to store the packet and to use in the datagram.
+     * @return The datagram argument.
+     ***/
+    abstract DatagramPacket _newDatagram(DatagramPacket datagram, byte[] data);
 
-  /***
-   * This is an abstract method only available within the package for
-   * implementing efficient datagram transport by elminating buffering.
-   * It takes a datagram as an argument, and a byte buffer in which 
-   * to store the raw datagram data.  Inside the method, the data
-   * should be set as the datagram's data and the datagram returned.
-   * <p>
-   * @param datagram  The datagram to create.
-   * @param data The buffer to store the packet and to use in the datagram.
-   * @return The datagram argument.
-   ***/
-  abstract DatagramPacket _newDatagram(DatagramPacket datagram, byte[] data);
+    /***
+     * This is an abstract method, exposed to the programmer in case he
+     * wants to implement his own TFTP client instead of using
+     * the <a href="org.apache.commons.net.tftp.TFTPClient.html#_top_">TFTPClient</a>
+     * class.
+     * Under normal circumstances, you should not have a need to call this
+     * method.  It creates a UDP datagram containing all the TFTP packet
+     * data in the proper format.
+     * <p>
+     * @return A UDP datagram containing the TFTP packet.
+     ***/
+    public abstract DatagramPacket newDatagram();
 
-  /***
-   * This is an abstract method, exposed to the programmer in case he
-   * wants to implement his own TFTP client instead of using
-   * the <a href="org.apache.commons.net.tftp.TFTPClient.html#_top_">TFTPClient</a>
-   * class.
-   * Under normal circumstances, you should not have a need to call this
-   * method.  It creates a UDP datagram containing all the TFTP packet
-   * data in the proper format.
-   * <p>
-   * @return A UDP datagram containing the TFTP packet.
-   ***/
-  public abstract DatagramPacket newDatagram();
+    /***
+     * Returns the type of the packet.
+     * <p>
+     * @return The type of the packet.
+     ***/
+    public final int getType()
+    {
+        return _type;
+    }
 
-  /***
-   * Returns the type of the packet.
-   * <p>
-   * @return The type of the packet.
-   ***/
-  public final int getType() { return _type; }
+    /***
+     * Returns the address of the host where the packet is going to be sent
+     * or where it came from.
+     * <p>
+     * @return The type of the packet.
+     ***/
+    public final InetAddress getAddress()
+    {
+        return _address;
+    }
 
-  /***
-   * Returns the address of the host where the packet is going to be sent
-   * or where it came from.
-   * <p>
-   * @return The type of the packet.
-   ***/
-  public final InetAddress getAddress() { return _address; }
+    /***
+     * Returns the port where the packet is going to be sent
+     * or where it came from.
+     * <p>
+     * @return The port where the packet came from or where it is going.
+     ***/
+    public final int getPort()
+    {
+        return _port;
+    }
 
-  /***
-   * Returns the port where the packet is going to be sent
-   * or where it came from.
-   * <p>
-   * @return The port where the packet came from or where it is going.
-   ***/
-  public final int getPort() { return _port; }
+    /*** Sets the port where the packet is going to be sent. ***/
+    public final void setPort(int port)
+    {
+        _port = port;
+    }
 
-  /*** Sets the port where the packet is going to be sent. ***/
-  public final void setPort(int port) { _port = port; }
-
-  /*** Sets the host address where the packet is going to be sent. ***/
-  public final void setAddress(InetAddress address) { _address = address; }
+    /*** Sets the host address where the packet is going to be sent. ***/
+    public final void setAddress(InetAddress address)
+    {
+        _address = address;
+    }
 }

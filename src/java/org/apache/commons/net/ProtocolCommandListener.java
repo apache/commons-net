@@ -54,8 +54,7 @@ package org.apache.commons.net;
  * <http://www.apache.org/>.
  */
 
-import java.util.*;
-
+import java.util.EventListener;
 
 /***
  * There exists a large class of IETF protocols that work by sending an
@@ -77,22 +76,23 @@ import java.util.*;
  * @author Daniel F. Savarese
  ***/
 
-public interface ProtocolCommandListener extends EventListener {
+public interface ProtocolCommandListener extends EventListener
+{
 
-  /***
-   * This method is invoked by a ProtocolCommandEvent source after
-   * sending a protocol command to a server.
-   * <p>
-   * @param event The ProtocolCommandEvent fired.
-   ***/
-  public void protocolCommandSent(ProtocolCommandEvent event);
+    /***
+     * This method is invoked by a ProtocolCommandEvent source after
+     * sending a protocol command to a server.
+     * <p>
+     * @param event The ProtocolCommandEvent fired.
+     ***/
+    public void protocolCommandSent(ProtocolCommandEvent event);
 
-  /***
-   * This method is invoked by a ProtocolCommandEvent source after
-   * receiving a reply from a server.
-   * <p>
-   * @param event The ProtocolCommandEvent fired.
-   ***/
-  public void protocolReplyReceived(ProtocolCommandEvent event);
+    /***
+     * This method is invoked by a ProtocolCommandEvent source after
+     * receiving a reply from a server.
+     * <p>
+     * @param event The ProtocolCommandEvent fired.
+     ***/
+    public void protocolReplyReceived(ProtocolCommandEvent event);
 
 }
