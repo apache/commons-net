@@ -21,6 +21,14 @@
   </properties>
 
   <body>
+    <release version="1.2.2" date="June 25, 2004" description="fix release">
+      <action dev="scohen" type="fix">
+      	fixed bug in the way FTPClient.listFiles worked when a directory was not
+      	specified.  Current directory was not being 'remembered'.  This was most 
+      	problematic in the dependent ftp task of Ant.
+      </action>
+    </release>	
+
     <release version="1.2.1" date="May 6, 2004" description="fix release">
       <action dev="scohen" type="fix">
       	changed code that rendered package uncompilable under JDK 1.2
