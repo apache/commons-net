@@ -25,7 +25,7 @@ import org.apache.commons.net.ftp.FTPFile;
  * DefaultFTPListParser, but adapted to use regular expressions and to fit the
  * new FTPFileEntryParser interface.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: UnixFTPEntryParser.java,v 1.18 2004/07/28 05:01:47 dfs Exp $
+ * @version $Id: UnixFTPEntryParser.java,v 1.19 2004/09/14 01:47:17 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
@@ -65,7 +65,7 @@ public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
         + "(\\d+)\\s+"
         + MONTHS + "\\s+"
         + "((?:[0-9])|(?:[0-2][0-9])|(?:3[0-1]))\\s+"
-        + "((\\d\\d\\d\\d)|((?:[01]\\d)|(?:2[0123])|(?:[1-9])):([012345]\\d))\\s+"
+        + "((\\d\\d\\d\\d)|((?:[01]\\d)|(?:2[0123])|(?:\\d)):([012345]\\d))\\s+"
         + "(\\S+)(\\s*.*)";
 
 

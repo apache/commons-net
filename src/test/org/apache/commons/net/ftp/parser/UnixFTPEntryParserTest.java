@@ -24,7 +24,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: UnixFTPEntryParserTest.java,v 1.14 2004/07/29 11:38:36 scohen Exp $
+ * @version $Id: UnixFTPEntryParserTest.java,v 1.15 2004/09/14 01:47:17 scohen Exp $
  */
 public class UnixFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -68,7 +68,8 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework
         "-rw-r--r-T   1 500      500             0 Mar 25 08:20 testSticky",
         "-rwxr-xr-t   1 500      500             0 Mar 25 08:21 testStickyExec",
         "-rwSr-Sr--   1 500      500             0 Mar 25 08:22 testSuid",
-        "-rwsr-sr--   1 500      500             0 Mar 25 08:23 testSuidExec",
+		"-rwsr-sr--   1 500      500             0 Mar 25 08:23 testSuidExec",
+		"-rwsr-sr--   1 500      500             0 Mar 25 0:23 testSuidExec2",
 		"-rw-r--r--   1 1        3518644 May 25 12:12 std"
     };
 
