@@ -65,9 +65,14 @@ import java.io.IOException;
  * case you would create your own implementation of FTPFileEntryParser and
  * if necessary, subclass FTPFile.
  * <p>
- * Here is an example showing how to use one of the classes that
- * implement this interface.  In the following example <code>parser </code> 
- * is an object (in the package <code>org.apache.commons.net.ftp.parser</code>)
+ * Here are some examples showing how to use one of the classes that
+ * implement this interface.  
+ * <p>
+ * The first example shows how to get an <b>iterable</b> list of files in which the 
+ * more expensive <code>FTPFile</code> objects are not created until needed.  This
+ * is suitable for paged displays.   It requires that a parser object be created
+ * beforehand: <code>parser</code> is an object (in the package 
+ * <code>org.apache.commons.net.ftp.parser</code>)
  * implementing this inteface.
  * 
  * <pre>
@@ -84,8 +89,45 @@ import java.io.IOException;
  *    }
  * </pre>
  * 
+ * The second example uses the newer <code>FTPClient.getFileList()</code>
+ * API to pull the whole list from the <code>subfolder</code>in one call, 
+ * attempting to automatically detect the parser type.  The null parameter
+ * indicates that autodection should be used.
+ * 
+ * <pre>
+ *    FTPClient f=FTPClient();
+ *    f.connect(server);
+ *    f.login(username, password);
+ *    FTPFile[] files = f.getFileList(null, "subfolder");
+ * </pre>
+ * 
+ * The third example uses the newer <code>FTPClient.getFileList()</code>
+ * API to pull the whole list from the current working directory in one call, 
+ * but specifying by classname the parser to be used.  For this particular
+ * parser class, this approach is necessary since there is no way to 
+ * autodetect this server type.
+ * 
+ * <pre>
+ *    FTPClient f=FTPClient();
+ *    f.connect(server);
+ *    f.login(username, password);
+ *    FTPFile[] files = f.getFileList(
+ *      "org.apache.commons.net.ftp.parser.EnterpriseUnixFTPFileEntryParser");
+ * </pre>
+ *
+ * The fourth example uses the newer <code>FTPClient.getFileList()</code>
+ * API to pull a single file listing in an arbitrary directory in one call, 
+ * specifying by KEY the parser to be used, in this case, VMS.  
+ * 
+ * <pre>
+ *    FTPClient f=FTPClient();
+ *    f.connect(server);
+ *    f.login(username, password);
+ *    FTPFile[] files = f.getFileList("VMS", "subfolder/foo.java");
+ * </pre>
+ *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileEntryParser.java,v 1.7 2004/01/02 03:39:04 scohen Exp $
+ * @version $Id: FTPFileEntryParser.java,v 1.8 2004/01/03 17:55:22 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFile
  * @see org.apache.commons.net.ftp.FTPClient#createFileList
  */
