@@ -15,7 +15,7 @@
   </property>
   <property name="javadocdir" value="dist/docs/api">
   </property>
-  <property name="final.name" value="commons-net-1.0.0-dev">
+  <property name="final.name" value="commons-net-1.0.1-dev">
   </property>
   <target name="init" description="o Initializes some properties">
     <mkdir dir="${libdir}">
@@ -41,7 +41,7 @@
       </classpath>
     </javac>
   </target>
-  <target name="jar" description="o Create the jar" depends="compile">
+  <target name="jar" description="o Create the jar" depends="compile,test">
     <jar jarfile="target/${final.name}.jar" excludes="**/package.html" basedir="${classesdir}">
     </jar>
   </target>
@@ -120,7 +120,7 @@
     </tstamp>
     <property name="copyright" value="Copyright &amp;copy;  Apache Software Foundation. All Rights Reserved.">
     </property>
-    <property name="title" value="Jakarta Commons/Net 1.0.0-dev API">
+    <property name="title" value="Jakarta Commons/Net 1.0.1-dev API">
     </property>
     <javadoc use="true" private="true" destdir="${javadocdir}" author="true" version="true" sourcepath="src/java" packagenames="org.apache.commons.net.*">
       <classpath>
@@ -134,6 +134,8 @@
     </javadoc>
   </target>
   <target name="get-deps" unless="noget" depends="init">
+    <get dest="${libdir}/oro-2.0.7.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/oro/jars/oro-2.0.7.jar">
+    </get>
     <get dest="${libdir}/junit-3.8.1.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/junit/jars/junit-3.8.1.jar">
     </get>
     <get dest="${libdir}/ant-1.5.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/ant/jars/ant-1.5.jar">

@@ -110,7 +110,12 @@
     </contributor>
   </contributors>
   
-  <dependencies/>
+  <dependencies>
+     <dependency>
+        <id>oro</id>
+        <version>2.0.7</version>
+      </dependency>
+  </dependencies>
   
   <build>
 
