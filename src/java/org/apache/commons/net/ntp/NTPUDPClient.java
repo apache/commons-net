@@ -33,7 +33,7 @@ import org.apache.commons.net.DatagramSocketClient;
  * connectionless protocol and the Network Time Protocol is stateless.
  *
  * @author Jason Mathews, MITRE Corp
- * @version $Revision: 1.1 $ $Date: 2004/09/27 11:21:21 $
+ * @version $Revision$ $Date$
  ***/
 
 public final class NTPUDPClient extends DatagramSocketClient

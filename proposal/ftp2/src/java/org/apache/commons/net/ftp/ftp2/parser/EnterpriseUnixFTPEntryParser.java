@@ -22,7 +22,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 
 /**
  * Parser for the Connect Enterprise Unix FTP Server From Sterling Commerce.  
- * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.6 2004/06/29 04:54:29 dfs Exp $
+ * @version $Id$
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  */
 public class EnterpriseUnixFTPEntryParser extends MatchApparatus

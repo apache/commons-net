@@ -40,7 +40,7 @@ import org.apache.oro.text.regex.Perl5Matcher;
  *
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSVersioningFTPEntryParser.java,v 1.10 2005/01/02 03:17:50 scohen Exp $
+ * @version $Id$
  *
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */

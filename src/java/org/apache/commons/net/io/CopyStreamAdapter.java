@@ -34,7 +34,7 @@ import org.apache.commons.net.util.ListenerList;
  * @see CopyStreamListener
  * @see Util
  * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
- * @version $Id: CopyStreamAdapter.java,v 1.10 2004/06/29 04:54:31 dfs Exp $
+ * @version $Id$
  */
 public class CopyStreamAdapter implements CopyStreamListener
 {

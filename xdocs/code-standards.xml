@@ -141,7 +141,7 @@ preferred Javadoc format is:
 </p>
 
 <source><![CDATA[
-@version $Id: code-standards.xml,v 1.4 2004/02/29 10:27:29 scolebourne Exp $
+@version $Id$
 ]]></source>
 
 <p>

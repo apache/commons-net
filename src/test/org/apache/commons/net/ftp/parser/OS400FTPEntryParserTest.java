@@ -22,7 +22,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 import java.util.Calendar;
 
 /**
- * @version $Id: OS400FTPEntryParserTest.java,v 1.4 2004/07/29 11:38:36 scohen Exp $
+ * @version $Id$
  */
 
 public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework

@@ -24,7 +24,7 @@ import org.apache.commons.net.ftp.FTPFile;
  *
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: OS2FTPEntryParser.java,v 1.14 2005/01/02 03:17:50 scohen Exp $
+ * @version $Id$
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class OS2FTPEntryParser extends ConfigurableFTPFileEntryParserImpl

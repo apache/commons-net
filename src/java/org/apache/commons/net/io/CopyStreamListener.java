@@ -36,7 +36,7 @@ import java.util.EventListener;
  * @see CopyStreamAdapter
  * @see Util
  * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
- * @version $Id: CopyStreamListener.java,v 1.10 2004/06/29 04:54:31 dfs Exp $
+ * @version $Id$
  */
 public interface CopyStreamListener extends EventListener
 {

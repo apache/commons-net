@@ -26,7 +26,7 @@ import java.util.Vector;
  * be receieved as an array of any requested number of entries or all of them.
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileIterator.java,v 1.9 2004/06/29 04:54:29 dfs Exp $
+ * @version $Id$
  * @see org.apache.commons.net.ftp.ftp2.FTPFileList
  */
 public class FTPFileIterator

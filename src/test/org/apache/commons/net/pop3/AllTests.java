@@ -21,7 +21,7 @@ import junit.framework.TestSuite;
 
 /** 
  * @author <a href="mailto:commons-dev@apache.org">[Net]</a>
- * @version $Id: AllTests.java,v 1.1 2004/09/02 15:44:26 rwinston Exp $
+ * @version $Id$
  *
  * The POP3* tests all presume the existence of the following parameters:
  *   mailserver: localhost (running on the default port 110)

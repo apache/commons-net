@@ -27,7 +27,7 @@ import org.apache.commons.net.ftp.FTPFile;
  * DefaultFTPParserFactory by classname.  It will not be chosen
  * by the autodetection scheme.
  * </B>
- * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.13 2004/11/23 12:52:20 rwinston Exp $
+ * @version $Id$
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory

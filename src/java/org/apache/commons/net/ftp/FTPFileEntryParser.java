@@ -90,7 +90,7 @@ import java.util.List;
  * </pre>
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileEntryParser.java,v 1.20 2004/06/29 02:16:33 dfs Exp $
+ * @version $Id$
  * @see org.apache.commons.net.ftp.FTPFile
  * @see org.apache.commons.net.ftp.FTPClient#createFileList
  */

@@ -38,7 +38,7 @@ import org.apache.commons.net.ftp.FTPFile;
  * which required a bigger memory hit.
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileList.java,v 1.9 2004/06/29 04:54:29 dfs Exp $
+ * @version $Id$
  * @see FTPClient2#listFiles
  * @see FTPClient2#createFileList
  */

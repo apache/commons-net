@@ -21,7 +21,7 @@ import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 
 /**
- * @version $Id: OS400FTPEntryParser.java,v 1.6 2005/01/02 03:17:50 scohen Exp $
+ * @version $Id$
  */
 
 public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl

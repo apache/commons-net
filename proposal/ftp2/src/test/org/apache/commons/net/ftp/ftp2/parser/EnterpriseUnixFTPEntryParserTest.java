@@ -23,7 +23,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 /**
  * Tests the EnterpriseUnixFTPEntryParser
  * 
- * @version $Id: EnterpriseUnixFTPEntryParserTest.java,v 1.7 2004/06/29 04:54:29 dfs Exp $
+ * @version $Id$
  * @author <a href="mailto:Winston.Ojeda@qg.com">Winston Ojeda</a>
  */
 public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework

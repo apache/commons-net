@@ -24,7 +24,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * the day and month fields being the transposed.
  * 
  * @author <a href="mailto:bretts@bml.uk.com">Brett Smith</a>
- * @version $Id: AIXFTPEntryParser.java,v 1.5 2004/06/29 04:54:29 dfs Exp $
+ * @version $Id$
  */
 public class AIXFTPEntryParser
   extends MatchApparatus implements FTPFileEntryParser

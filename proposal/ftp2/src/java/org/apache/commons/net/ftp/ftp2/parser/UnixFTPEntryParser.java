@@ -24,7 +24,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * DefaultFTPListParser, but adapted to use regular expressions and to fit the
  * new FTPFileEntryParser interface.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: UnixFTPEntryParser.java,v 1.10 2004/06/29 04:54:29 dfs Exp $
+ * @version $Id$
  */
 public class UnixFTPEntryParser
             extends MatchApparatus implements FTPFileEntryParser

@@ -22,7 +22,7 @@ import junit.framework.TestSuite;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @versionn $Id: NTFTPEntryParserTest.java,v 1.11 2004/06/29 04:54:29 dfs Exp $
+ * @versionn $Id$
  */
 public class NTFTPEntryParserTest extends FTPParseTestFramework
 {

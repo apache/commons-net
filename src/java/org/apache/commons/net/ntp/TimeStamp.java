@@ -38,7 +38,7 @@ import java.text.DateFormat;
  * </p>
  *
  * @author Jason Mathews, MITRE Corp
- * @version $Revision: 1.1 $ $Date: 2004/09/27 11:21:21 $
+ * @version $Revision$ $Date$
  * @see java.util.Date
  */
 public class TimeStamp implements java.io.Serializable, Comparable

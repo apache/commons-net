@@ -24,7 +24,7 @@ import java.util.ArrayList;
  *
  * @author Jason Mathews, MITRE Corp
  *
- * @version $Revision: 1.1 $ $Date: 2004/09/27 11:21:21 $
+ * @version $Revision$ $Date$
  */
 public class TimeInfo {
 

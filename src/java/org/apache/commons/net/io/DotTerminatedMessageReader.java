@@ -32,7 +32,7 @@ import java.io.Reader;
  * local line separator format, truncates the end of message indicator,
  * and ensures you cannot read past the end of the message.
  * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
- * @version $Id: DotTerminatedMessageReader.java,v 1.11 2004/06/29 04:54:31 dfs Exp $
+ * @version $Id$
  */
 public final class DotTerminatedMessageReader extends Reader
 {

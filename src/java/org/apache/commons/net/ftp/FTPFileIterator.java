@@ -23,7 +23,7 @@ import java.util.List;
  * be receieved as an array of any requested number of entries or all of them.
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileIterator.java,v 1.12 2004/04/21 23:30:33 scohen Exp $
+ * @version $Id$
  * @see org.apache.commons.net.ftp.FTPFileList
  * @see org.apache.commons.net.ftp.FTPFileEntryParser
  * @see org.apache.commons.net.ftp.FTPListParseEngine

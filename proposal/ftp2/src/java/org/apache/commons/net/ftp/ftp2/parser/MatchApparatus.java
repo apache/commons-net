@@ -29,7 +29,7 @@ import org.apache.oro.text.regex.MatchResult;
  * It is also designed to encapsulate access to the oro.text.regex
  * classes in one place.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: MatchApparatus.java,v 1.9 2004/06/29 04:54:29 dfs Exp $
+ * @version $Id$
  */
 abstract class MatchApparatus
 {

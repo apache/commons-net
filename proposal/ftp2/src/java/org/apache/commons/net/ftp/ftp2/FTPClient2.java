@@ -34,7 +34,7 @@ import org.apache.commons.net.ftp.ftp2.parser.UnixFTPEntryParser;
  * way.
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPClient2.java,v 1.9 2004/06/29 04:54:29 dfs Exp $
+ * @version $Id$
  */
 public class FTPClient2 extends FTPClient
 {

@@ -64,7 +64,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * <P>
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.12 2004/06/29 04:54:29 dfs Exp $
+ * @version $Id$
  */
 public class VMSFTPEntryParser
             extends MatchApparatus implements FTPFileEntryParser
