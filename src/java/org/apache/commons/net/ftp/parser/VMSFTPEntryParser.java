@@ -1,5 +1,5 @@
 /*
- * Copyright 2001-2004 The Apache Software Foundation
+ * Copyright 2001-2005 The Apache Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,10 @@ package org.apache.commons.net.ftp.parser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Calendar;
+import java.text.ParseException;
 import java.util.StringTokenizer;
 
+import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPListParseEngine;
 
@@ -40,21 +41,16 @@ import org.apache.commons.net.ftp.FTPListParseEngine;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.25 2004/11/23 12:52:20 rwinston Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.26 2005/01/02 03:17:50 scohen Exp $
  *
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
  */
-public class VMSFTPEntryParser extends RegexFTPFileEntryParserImpl
+public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 {
 
-
-    /**
-     * months abbreviations looked for by this parser.  Also used
-     * to determine <b>which</b> month has been matched by the parser.
-     */
-    private static final String MONTHS =
-        "(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)";
+    private static final String DEFAULT_DATE_FORMAT 
+		= "d-MMM-yyyy HH:mm:ss"; //9-NOV-2001 12:30:24
 
     /**
      * this is the regular expression used by this parser.
@@ -62,10 +58,7 @@ public class VMSFTPEntryParser extends RegexFTPFileEntryParserImpl
     private static final String REGEX =
         "(.*;[0-9]+)\\s*"
         + "(\\d+)/\\d+\\s*"
-        + "(\\d{1,2})-"
-        + MONTHS
-        + "-([0-9]{4})\\s*"
-        + "((?:[01]\\d)|(?:2[0-3])):([012345]\\d):([012345]\\d)\\s*"
+        +"(\\S+)\\s+(\\S+)\\s+"
         + "\\[(([0-9$A-Za-z_]+)|([0-9$A-Za-z_]+),([0-9$a-zA-Z_]+))\\]?\\s*"
         + "\\([a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*\\)";
 
@@ -81,8 +74,27 @@ public class VMSFTPEntryParser extends RegexFTPFileEntryParserImpl
      */
     public VMSFTPEntryParser()
     {
-        super(REGEX);
+        this(null);
     }
+
+    /**
+     * This constructor allows the creation of a VMSFTPEntryParser object with
+     * something other than the default configuration.
+     *
+     * @param config The {@link FTPClientConfig configuration} object used to 
+     * configure this parser.
+     * @exception IllegalArgumentException
+     * Thrown if the regular expression is unparseable.  Should not be seen
+     * under normal conditions.  It it is seen, this is a sign that
+     * <code>REGEX</code> is  not a valid regular expression.
+     * @since 1.4
+     */
+    public VMSFTPEntryParser(FTPClientConfig config)
+    {
+        super(REGEX);
+        configure(config);
+    }
+
 
 
     /***
@@ -128,13 +140,18 @@ public class VMSFTPEntryParser extends RegexFTPFileEntryParserImpl
             f.setRawListing(entry);
             String name = group(1);
             String size = group(2);
-            String day = group(3);
-            String mo = group(4);
-            String yr = group(5);
-            String hr = group(6);
-            String min = group(7);
-            String sec = group(8);
-            String owner = group(9);
+        	String datestr = group(3)+" "+group(4);
+            String owner = group(5);
+            try
+            {
+                f.setTimestamp(super.parseTimestamp(datestr));
+            }
+            catch (ParseException e)
+            {
+            	return null;  // this is a parsing failure too.
+            }
+
+
             String grp;
             String user;
             StringTokenizer t = new StringTokenizer(owner, ",");
@@ -175,20 +192,6 @@ public class VMSFTPEntryParser extends RegexFTPFileEntryParserImpl
             //for us humans and added to the FTPFile array
             long sizeInBytes = Long.parseLong(size) * longBlock;
             f.setSize(sizeInBytes);
-
-            //set the date
-            Calendar cal = Calendar.getInstance();
-
-            cal.clear();
-
-            cal.set(Calendar.DATE, new Integer(day).intValue());
-            cal.set(Calendar.MONTH, MONTHS.indexOf(mo) / 4);
-            cal.set(Calendar.YEAR, new Integer(yr).intValue());
-            cal.set(Calendar.HOUR_OF_DAY, new Integer(hr).intValue());
-            cal.set(Calendar.MINUTE, new Integer(min).intValue());
-            cal.set(Calendar.SECOND, new Integer(sec).intValue());
-	    cal.set(Calendar.MILLISECOND, 0);
-            f.setTimestamp(cal);
 
             f.setGroup(grp);
             f.setUser(user);
@@ -238,6 +241,20 @@ public class VMSFTPEntryParser extends RegexFTPFileEntryParserImpl
     protected boolean isVersioning() {
         return false;
     }
+    
+    /**
+     * Defines a default configuration to be used when this class is
+     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
+     * parameter being specified.
+     * @return the default configuration for this parser.
+     */
+   protected FTPClientConfig getDefaultConfiguration() {
+        return new FTPClientConfig(
+                FTPClientConfig.SYST_VMS,
+                DEFAULT_DATE_FORMAT,
+                null, null, null, null);
+    }
+
 
 }
 

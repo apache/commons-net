@@ -1,5 +1,5 @@
 /*
- * Copyright 2001-2004 The Apache Software Foundation
+ * Copyright 2001-2005 The Apache Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.oro.text.regex.MalformedPatternException;
 import org.apache.oro.text.regex.MatchResult;
 import org.apache.oro.text.regex.Pattern;
@@ -38,9 +39,8 @@ import org.apache.oro.text.regex.Perl5Matcher;
  * <P>
  *
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
- * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSVersioningFTPEntryParser.java,v 1.9 2004/06/29 04:54:30 dfs Exp $
+ * @version $Id: VMSVersioningFTPEntryParser.java,v 1.10 2005/01/02 03:17:50 scohen Exp $
  *
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
@@ -63,7 +63,25 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
      */
     public VMSVersioningFTPEntryParser()
     {
+        this(null);
+    }
+
+    /**
+     * This constructor allows the creation of a VMSVersioningFTPEntryParser 
+     * object with something other than the default configuration.
+     *
+     * @param config The {@link FTPClientConfig configuration} object used to 
+     * configure this parser.
+     * @exception IllegalArgumentException
+     * Thrown if the regular expression is unparseable.  Should not be seen
+     * under normal conditions.  It it is seen, this is a sign that
+     * <code>REGEX</code> is  not a valid regular expression.
+     * @since 1.4
+     */
+    public VMSVersioningFTPEntryParser(FTPClientConfig config)
+    {
         super();
+        configure(config);
         try
         {
             _preparse_matcher_ = new Perl5Matcher();
@@ -75,7 +93,8 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
                 "Unparseable regex supplied:  " + PRE_PARSE_REGEX);
         }
 
-    }
+   }
+
 
 
     private class NameVersion {

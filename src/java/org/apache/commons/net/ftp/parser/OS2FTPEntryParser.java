@@ -1,5 +1,5 @@
 /*
- * Copyright 2001-2004 The Apache Software Foundation
+ * Copyright 2001-2005 The Apache Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.parser;
-import java.util.Calendar;
+import java.text.ParseException;
+
+import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 
 /**
@@ -22,12 +24,15 @@ import org.apache.commons.net.ftp.FTPFile;
  *
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: OS2FTPEntryParser.java,v 1.13 2004/11/23 12:52:20 rwinston Exp $
+ * @version $Id: OS2FTPEntryParser.java,v 1.14 2005/01/02 03:17:50 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
-public class OS2FTPEntryParser extends RegexFTPFileEntryParserImpl
+public class OS2FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 
 {
+	
+    private static final String DEFAULT_DATE_FORMAT 
+		= "MM-dd-yy HH:mm"; //11-09-01 12:30
     /**
      * this is the regular expression used by this parser.
      */
@@ -35,15 +40,11 @@ public class OS2FTPEntryParser extends RegexFTPFileEntryParserImpl
         "(\\s+|[0-9]+)\\s*"
         + "(\\s+|[A-Z]+)\\s*"
         + "(DIR|\\s+)\\s*"
-        + "((?:0[1-9])|(?:1[0-2]))-"
-        + "((?:0[1-9])|(?:[1-2]\\d)|(?:3[0-1]))-"
-        + "(\\d\\d)\\s*"
-        + "(?:([0-1]\\d)|(?:2[0-3])):"
-        + "([0-5]\\d)\\s*"
+        + "(\\S+)\\s+(\\S+)\\s+" /* date stuff */
         + "(\\S.*)";
 
     /**
-     * The sole constructor for a OS2FTPEntryParser object.
+     * The default constructor for a OS2FTPEntryParser object.
      *
      * @exception IllegalArgumentException
      * Thrown if the regular expression is unparseable.  Should not be seen
@@ -52,9 +53,26 @@ public class OS2FTPEntryParser extends RegexFTPFileEntryParserImpl
      */
     public OS2FTPEntryParser()
     {
-        super(REGEX);
+        this(null);
     }
 
+    /**
+     * This constructor allows the creation of an OS2FTPEntryParser object 
+     * with something other than the default configuration.
+     *
+     * @param config The {@link FTPClientConfig configuration} object used to 
+     * configure this parser.
+     * @exception IllegalArgumentException
+     * Thrown if the regular expression is unparseable.  Should not be seen
+     * under normal conditions.  It it is seen, this is a sign that
+     * <code>REGEX</code> is  not a valid regular expression.
+     * @since 1.4
+     */
+     public OS2FTPEntryParser(FTPClientConfig config)
+    {
+        super(REGEX);
+        configure(config);
+    }
 
     /**
      * Parses a line of an OS2 FTP server file listing and converts it into a
@@ -75,12 +93,17 @@ public class OS2FTPEntryParser extends RegexFTPFileEntryParserImpl
             String size = group(1);
             String attrib = group(2);
             String dirString = group(3);
-            String mo = group(4);
-            String da = group(5);
-            String yr = group(6);
-            String hr = group(7);
-            String min = group(8);
-            String name = group(9);
+        	String datestr = group(4)+" "+group(5);
+            String name = group(6);
+            try
+            {
+                f.setTimestamp(super.parseTimestamp(datestr));
+            }
+            catch (ParseException e)
+            {
+            	return null;  // this is a parsing failure too.
+            }
+
 
             //is it a DIR or a file
             if (dirString.trim().equals("DIR") || attrib.trim().equals("DIR"))
@@ -92,33 +115,6 @@ public class OS2FTPEntryParser extends RegexFTPFileEntryParserImpl
                 f.setType(FTPFile.FILE_TYPE);
             }
 
-            Calendar cal = Calendar.getInstance();
-
-
-            //convert all the calendar stuff to ints
-            int month = new Integer(mo).intValue() - 1;
-            int day = new Integer(da).intValue();
-            int year = new Integer(yr).intValue() + 2000;
-            int hour = new Integer(hr).intValue();
-            int minutes = new Integer(min).intValue();
-
-            // Y2K stuff? this will break again in 2080 but I will
-            // be sooooo dead anyways who cares.
-            // SMC - IS OS2's directory date REALLY still not Y2K-compliant?
-            if (year > 2080)
-            {
-                year -= 100;
-            }
-
-            //set the calendar
-	    cal.set(Calendar.MILLISECOND, 0);
-            cal.set(Calendar.SECOND, 0);
-            cal.set(Calendar.MINUTE, minutes);
-            cal.set(Calendar.HOUR_OF_DAY, hour);
-            cal.set(Calendar.YEAR, year);
-            cal.set(Calendar.DATE, day);
-            cal.set(Calendar.MONTH, month);
-            f.setTimestamp(cal);
 
             //set the name
             f.setName(name.trim());
@@ -131,4 +127,18 @@ public class OS2FTPEntryParser extends RegexFTPFileEntryParserImpl
         return null;
 
     }
+
+    /**
+     * Defines a default configuration to be used when this class is
+     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
+     * parameter being specified.
+     * @return the default configuration for this parser.
+     */
+    protected FTPClientConfig getDefaultConfiguration() {
+        return new FTPClientConfig(
+                FTPClientConfig.SYST_OS2,
+                DEFAULT_DATE_FORMAT,
+                null, null, null, null);
+    }
+
 }

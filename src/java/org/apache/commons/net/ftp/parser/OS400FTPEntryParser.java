@@ -1,5 +1,5 @@
 /*
- * Copyright 2004 The Apache Software Foundation
+ * Copyright 2004-2005 The Apache Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,28 +15,61 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import java.text.ParseException;
+
+import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 
-import java.util.Calendar;
-
 /**
- * @version $Id: OS400FTPEntryParser.java,v 1.5 2004/11/23 12:52:20 rwinston Exp $
+ * @version $Id: OS400FTPEntryParser.java,v 1.6 2005/01/02 03:17:50 scohen Exp $
  */
 
-public class OS400FTPEntryParser extends RegexFTPFileEntryParserImpl
+public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 {
-    private static final String REGEX =
+    private static final String DEFAULT_DATE_FORMAT 
+		= "yy/MM/dd HH:mm:ss"; //01/11/09 12:30:24
+    
+
+
+	private static final String REGEX =
         "(\\S+)\\s+"                // user
         + "(\\d+)\\s+"              // size
-        + "(\\d\\d)/(\\d\\d)/(\\d\\d)\\s+" // year/month/day
-        + "([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\s+" // hour:minutes:seconds
+        + "(\\S+)\\s+(\\S+)\\s+"    // date stuff 
         + "(\\*\\S+)\\s+"               // *STMF/*DIR
         + "(\\S+/?)\\s*";               // filename
 
+    
+    /**
+     * The default constructor for a OS400FTPEntryParser object.
+     *
+     * @exception IllegalArgumentException
+     * Thrown if the regular expression is unparseable.  Should not be seen
+     * under normal conditions.  It it is seen, this is a sign that
+     * <code>REGEX</code> is  not a valid regular expression.
+     */
     public OS400FTPEntryParser()
     {
-        super(REGEX);
+        this(null);
     }
+
+    /**
+     * This constructor allows the creation of an OS400FTPEntryParser object 
+     * with something other than the default configuration.
+     *
+     * @param config The {@link FTPClientConfig configuration} object used to 
+     * configure this parser.
+     * @exception IllegalArgumentException
+     * Thrown if the regular expression is unparseable.  Should not be seen
+     * under normal conditions.  It it is seen, this is a sign that
+     * <code>REGEX</code> is  not a valid regular expression.
+     * @since 1.4
+     */
+    public OS400FTPEntryParser(FTPClientConfig config)
+    {
+        super(REGEX);
+        configure(config);
+    }
+
 
     public FTPFile parseFTPEntry(String entry)
     {
@@ -49,14 +82,19 @@ public class OS400FTPEntryParser extends RegexFTPFileEntryParserImpl
         {
             String usr = group(1);
             String filesize = group(2);
-            String yr = group(3);
-            String mo = group(4);
-            String da = group(5);
-            String hr = group(6);
-            String min = group(7);
-            String sec = group(8);
-            String typeStr = group(9);
-            String name = group(10);
+        	String datestr = group(3)+" "+group(4);
+            String typeStr = group(5);
+            String name = group(6);
+            
+            try
+            {
+                file.setTimestamp(super.parseTimestamp(datestr));
+            }
+            catch (ParseException e)
+            {
+            	return null;  // this is a parsing failure too.
+            }
+
 
             if (typeStr.equalsIgnoreCase("*STMF"))
             {
@@ -84,39 +122,6 @@ public class OS400FTPEntryParser extends RegexFTPFileEntryParserImpl
                 // intentionally do nothing
             }
 
-            Calendar cal = Calendar.getInstance();
-	    cal.set(Calendar.MILLISECOND, 0);
-            cal.set(Calendar.SECOND, 0);
-            cal.set(Calendar.MINUTE, 0);
-            cal.set(Calendar.HOUR_OF_DAY, 0);
-
-            try
-            {
-                int year = Integer.parseInt(yr, 10);
-                if (year < 70)
-                {
-                    year += 2000;
-                }
-                else
-                {
-                    year += 1900;
-                }
-
-                cal.set(Calendar.YEAR, year);
-                cal.set(Calendar.MONTH, Integer.parseInt(mo, 10)-1);
-                cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(da, 10));
-
-                cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hr, 10));
-                cal.set(Calendar.MINUTE, Integer.parseInt(min, 10));
-                cal.set(Calendar.SECOND, Integer.parseInt(sec, 10));
-
-                file.setTimestamp(cal);
-            }
-            catch (NumberFormatException e)
-            {
-                // do nothing, date will be uninitialized
-            }
-
             if (name.endsWith("/"))
             {
                 name = name.substring(0, name.length() - 1);
@@ -133,4 +138,18 @@ public class OS400FTPEntryParser extends RegexFTPFileEntryParserImpl
         }
         return null;
     }
+
+    /**
+     * Defines a default configuration to be used when this class is
+     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
+     * parameter being specified.
+     * @return the default configuration for this parser.
+     */
+    protected FTPClientConfig getDefaultConfiguration() {
+        return new FTPClientConfig(
+                FTPClientConfig.SYST_OS400,
+                DEFAULT_DATE_FORMAT,
+                null, null, null, null);
+    }
+
 }

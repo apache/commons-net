@@ -21,6 +21,7 @@ public class AllTests {
         TestSuite suite =
             new TestSuite("Test for org.apache.commons.net.ftp.parser");
         //$JUnit-BEGIN$
+        suite.addTest(FTPTimestampParserImplTest.suite());
         suite.addTest(OS2FTPEntryParserTest.suite());
         suite.addTest(VMSFTPEntryParserTest.suite());
         suite.addTest(UnixFTPEntryParserTest.suite());

@@ -1,5 +1,5 @@
 /*
- * Copyright 2001-2004 The Apache Software Foundation
+ * Copyright 2001-2005 The Apache Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: OS2FTPEntryParserTest.java,v 1.9 2004/07/29 11:38:36 scohen Exp $
+ * @version $Id: OS2FTPEntryParserTest.java,v 1.10 2005/01/02 03:17:50 scohen Exp $
  */
 public class OS2FTPEntryParserTest extends FTPParseTestFramework
 {
@@ -32,7 +32,6 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
         "                 DIR   12-30-97   12:32  jbrekke",
         "     0    rsa    DIR   11-25-97   09:42  junk",
         "     0           dir   05-12-97   16:44  LANGUAGE",
-        "     0           DIR   05-19-2000 12:56  local",
         "     0           DIR   13-05-97   25:49  MPTN",
         "587823    RSA    DIR   Jan-08-97   13:58  OS2KRNL",
         " 33280      A          1997-02-03  13:49  OS2LDR",
@@ -51,7 +50,8 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
         " 33280      A          02-09-97   13:49  OS2LDR",
         "     0           DIR   11-28-97   09:42  PC",
         "149473      A          11-17-98   16:07  POPUPLOG.OS2",
-        "     0           DIR   05-12-97   16:44  PSFONTS"
+        "     0           DIR   05-12-97   16:44  PSFONTS",
+        "     0           DIR   05-19-2000 12:56  local",
     };
 
     /**
@@ -125,7 +125,9 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
      */
     protected FTPFileEntryParser getParser()
     {
-
-        return (new OS2FTPEntryParser());
+        ConfigurableFTPFileEntryParserImpl parser =
+            new OS2FTPEntryParser();
+        parser.configure(null);
+        return parser;
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2001-2004 The Apache Software Foundation
+ * Copyright 2001-2005 The Apache Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.parser;
-import java.util.Calendar;
+import java.text.ParseException;
+
+import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 
 /**
@@ -24,18 +26,23 @@ import org.apache.commons.net.ftp.FTPFile;
  * This class is based on the logic of Daniel Savarese's
  * DefaultFTPListParser, but adapted to use regular expressions and to fit the
  * new FTPFileEntryParser interface.
- * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: UnixFTPEntryParser.java,v 1.20 2004/11/23 12:52:20 rwinston Exp $
+ * @version $Id: UnixFTPEntryParser.java,v 1.21 2005/01/02 03:17:50 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
-public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
+public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 {
     /**
      * months abbreviations looked for by this parser.  Also used
      * to determine which month is matched by the parser
      */
-    private static final String MONTHS =
+    private static final String DEFAULT_MONTHS =
         "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)";
+    
+    static final String DEFAULT_DATE_FORMAT 
+		= "MMM d yyyy"; //Nov 9 2001
+    
+    static final String DEFAULT_RECENT_DATE_FORMAT 
+		= "MMM d HH:mm"; //Nov 9 20:06
 
     /**
      * this is the regular expression used by this parser.
@@ -63,14 +70,12 @@ public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
         + "(\\S+)\\s+"
         + "(?:(\\S+)\\s+)?"
         + "(\\d+)\\s+"
-        + MONTHS + "\\s+"
-        + "((?:[0-9])|(?:[0-2][0-9])|(?:3[0-1]))\\s+"
-        + "((\\d\\d\\d\\d)|((?:[01]\\d)|(?:2[0123])|(?:\\d)):([012345]\\d))\\s+"
+		+ "(\\S+)\\s+(\\S+)\\s+(\\S+)\\s+" /*the three parts of the date in any order*/
         + "(\\S+)(\\s*.*)";
 
 
     /**
-     * The sole constructor for a UnixFTPEntryParser object.
+     * The default constructor for a UnixFTPEntryParser object.
      *
      * @exception IllegalArgumentException
      * Thrown if the regular expression is unparseable.  Should not be seen
@@ -79,8 +84,27 @@ public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
      */
     public UnixFTPEntryParser()
     {
-        super(REGEX);
+        this(null);
     }
+
+    /**
+     * This constructor allows the creation of a UnixFTPEntryParser object with
+     * something other than the default configuration.
+     *
+     * @param config The {@link FTPClientConfig configuration} object used to 
+     * configure this parser.
+     * @exception IllegalArgumentException
+     * Thrown if the regular expression is unparseable.  Should not be seen
+     * under normal conditions.  It it is seen, this is a sign that
+     * <code>REGEX</code> is  not a valid regular expression.
+     * @since 1.4
+     */
+    public UnixFTPEntryParser(FTPClientConfig config)
+    {
+        super(REGEX);
+        configure(config);
+    }
+
 
     /**
      * Parses a line of a unix (standard) FTP server file listing and converts
@@ -92,9 +116,7 @@ public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
      * @param entry A line of text from the file listing
      * @return An FTPFile instance corresponding to the supplied entry
      */
-    public FTPFile parseFTPEntry(String entry)
-    {
-
+	public FTPFile parseFTPEntry(String entry) {
         FTPFile file = new FTPFile();
         file.setRawListing(entry);
         int type;
@@ -107,14 +129,20 @@ public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
             String usr = group(16);
             String grp = group(17);
             String filesize = group(18);
-            String mo = group(19);
-            String da = group(20);
-            String yr = group(22);
-            String hr = group(23);
-            String min = group(24);
-            String name = group(25);
-            String endtoken = group(26);
+            String datestr = group(19) + " " + group(20) + " " + group(21);
+            String name = group(22);
+            String endtoken = group(23);
 
+            try
+            {
+                file.setTimestamp(super.parseTimestamp(datestr));
+            }
+            catch (ParseException e)
+            {
+            	return null;  // this is a parsing failure too.
+            }
+            
+            
             // bcdlfmpSs-
             switch (typeStr.charAt(0))
             {
@@ -181,46 +209,7 @@ public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
             {
                 // intentionally do nothing
             }
-
-            Calendar cal = Calendar.getInstance();
-	    cal.set(Calendar.MILLISECOND, 0);
-            cal.set(Calendar.SECOND, 0);
-            cal.set(Calendar.MINUTE, 0);
-            cal.set(Calendar.HOUR_OF_DAY, 0);
-
-            try
-            {
-                int pos = MONTHS.indexOf(mo);
-                int month = pos / 4;
-
-                if (null != yr)
-                {
-                    // it's a year
-                    cal.set(Calendar.YEAR, Integer.parseInt(yr));
-                }
-                else
-                {
-                    // it must be  hour/minute or we wouldn't have matched
-                    int year = cal.get(Calendar.YEAR);
-                    // if the month we're reading is greater than now, it must
-                    // be last year
-                    if (cal.get(Calendar.MONTH) < month)
-                    {
-                        year--;
-                    }
-                    cal.set(Calendar.YEAR, year);
-                    cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hr));
-                    cal.set(Calendar.MINUTE, Integer.parseInt(min));
-                }
-                cal.set(Calendar.MONTH, month);
-
-                cal.set(Calendar.DATE, Integer.parseInt(da));
-                file.setTimestamp(cal);
-            }
-            catch (NumberFormatException e)
-            {
-                // do nothing, date will be uninitialized
-            }
+            
             if (null == endtoken)
             {
                 file.setName(name);
@@ -254,5 +243,20 @@ public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
             return file;
         }
         return null;
+	}
+
+    /**
+     * Defines a default configuration to be used when this class is
+     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
+     * parameter being specified.
+     * @return the default configuration for this parser.
+     */
+    protected FTPClientConfig getDefaultConfiguration() {
+        return new FTPClientConfig(
+                FTPClientConfig.SYST_UNIX,
+                DEFAULT_DATE_FORMAT,
+                DEFAULT_RECENT_DATE_FORMAT,
+                null, null, null);
     }
+
 }

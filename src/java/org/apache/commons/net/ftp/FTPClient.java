@@ -1,5 +1,5 @@
 /*
- * Copyright 2001-2004 The Apache Software Foundation
+ * Copyright 2001-2005 The Apache Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -222,7 +222,12 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
  * @see org.apache.commons.net.MalformedServerReplyException
  ***/
 
+/**
+ * To change the template for this generated type comment go to
+ * Window - Preferences - Java - Code Style - Code Templates - Comments
+ */
 public class FTPClient extends FTP
+implements Configurable
 {
     /***
      * A constant indicating the FTP session is expecting all transfers
@@ -271,6 +276,8 @@ public class FTPClient extends FTP
     // __entryParser is a cached value that should not be referenced directly
     // except when assigned in listFiles(String, String) and __initDefaults.
     private FTPFileEntryParser __entryParser;
+    
+    private FTPClientConfig __configuration;
 
     /***
      * Default FTPClient constructor.  Creates a new FTPClient instance
@@ -300,11 +307,12 @@ public class FTPClient extends FTP
         __fileFormat         = FTP.NON_PRINT_TEXT_FORMAT;
         __fileTransferMode   = FTP.STREAM_TRANSFER_MODE;
         __restartOffset      = 0;
+        __configuration      = null;
         __systemName         = null;
         __entryParser        = null;
         __bufferSize 		 = Util.DEFAULT_COPY_BUFFER_SIZE;
     }
-
+    
     private String __parsePathname(String reply)
     {
         int begin, end;
@@ -2315,15 +2323,24 @@ public class FTPClient extends FTP
             String parserKey, String pathname)
     throws IOException
     {
-        // if a null parserKey is supplied, autodetect by calling
-        // the SYST command and use that to choose the parser.
-        if (null == parserKey) {
-            parserKey = getSystemName();
-        }
-
         // We cache the value to avoid creation of a new object every
         // time a file listing is generated.
         if(__entryParser == null) {
+            // if a null parserKey is supplied, check the
+        	// configuration to see if one was specified there.
+            if (null == parserKey) {
+            	if (null != __configuration) {
+            	    __entryParser = 
+            	        __parserFactory.createFileEntryParser(__configuration);
+            	} else {
+                    // if a parserKey hasn't been supplied, and a configuration
+            	    // hasn't been supplied, then autodetect by calling
+                    // the SYST command and use that to choose the parser.
+                    parserKey = getSystemName();
+            	    
+            	}
+            }
+          
             __entryParser =  __parserFactory.createFileEntryParser(parserKey);
         }
 
@@ -2619,6 +2636,16 @@ public class FTPClient extends FTP
      */
     public int getBufferSize() {
     	return __bufferSize;
+    }
+
+
+    /** 
+     * Implementation of the {@link org.apache.commons.net.ftp.Configurable Configurable} interface. 
+     * In the case of this class, configuring merely makes the config object available for the
+     * factory methods that construct parsers.
+     */
+    public void configure(FTPClientConfig config) {
+    	this.__configuration = config;
     }
     
 }

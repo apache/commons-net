@@ -1,5 +1,5 @@
 /*
- * Copyright 2001-2004 The Apache Software Foundation
+ * Copyright 2001-2005 The Apache Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,14 +27,13 @@ import org.apache.commons.net.ftp.FTPListParseEngine;
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParserTest.java,v 1.16 2004/06/29 04:54:32 dfs Exp $
+ * @version $Id: VMSFTPEntryParserTest.java,v 1.17 2005/01/02 03:17:50 scohen Exp $
  */
 public class VMSFTPEntryParserTest extends FTPParseTestFramework
 {
     private static final String[] badsamples =
     {
 
-        "1-JUN.LIS;1              9/9           2-jun-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
         "1-JUN.LIS;2              9/9           JUN-2-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)",
         "1-JUN.LIS;2              a/9           2-JUN-98 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)",
         "DATA.DIR; 1              1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (,RWED,RWED,RE)",
@@ -62,7 +61,8 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         "UNXTEMP.COM;7            1/15         15-AUG-1996 14:10:38  [POSTWARE,LP]    (RWE,RWE,RWE,RE)",
         "UNZIP_AND_ATTACH_FILES.COM;12\r\n                        14/15         24-JUL-2002 14:35:40  [TRANSLATED]    (RWE,RWE,RWE,RE)",
         "UNZIP_AND_ATTACH_FILES.SAV;1\r\n                        14/15         17-JAN-2002 11:13:53  [POSTWARE,LP]    (RWE,RWED,RWE,RE)",
-        "FREEWARE40.DIR;1        27/36         16-FEB-1999 10:01:46  [AP_HTTPD,APACHE$WWW                               (RWE,RWE,RE,RE)"
+        "FREEWARE40.DIR;1        27/36         16-FEB-1999 10:01:46  [AP_HTTPD,APACHE$WWW                               (RWE,RWE,RE,RE)",
+        "1-JUN.LIS;1              9/9           2-jun-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
     };
 
     private static final String fullListing = "Directory USER1:[TEMP]\r\n\r\n"+
@@ -89,6 +89,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     public void testWholeListParse() throws IOException
     {
         VMSFTPEntryParser parser = new VMSFTPEntryParser();
+        parser.configure(null);
         FTPListParseEngine engine = new FTPListParseEngine(parser);
         engine.readServerList(
                 new ByteArrayInputStream(fullListing.getBytes()));
@@ -109,6 +110,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     {
 
         VMSFTPEntryParser parser = new VMSVersioningFTPEntryParser();
+        parser.configure(null);
         FTPListParseEngine engine = new FTPListParseEngine(parser);
         engine.readServerList(
                 new ByteArrayInputStream(fullListing.getBytes()));
@@ -236,8 +238,17 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
      */
     protected FTPFileEntryParser getParser()
     {
-
-        return (new VMSFTPEntryParser());
+        ConfigurableFTPFileEntryParserImpl parser =
+            new VMSFTPEntryParser();
+        parser.configure(null);
+        return parser;
+    }
+    protected FTPFileEntryParser getVersioningParser()
+    {
+        ConfigurableFTPFileEntryParserImpl parser =
+            new VMSVersioningFTPEntryParser();
+        parser.configure(null);
+        return parser;
     }
 
     /**

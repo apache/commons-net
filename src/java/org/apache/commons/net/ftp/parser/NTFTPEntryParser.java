@@ -1,5 +1,5 @@
 /*
- * Copyright 2001-2004 The Apache Software Foundation
+ * Copyright 2001-2005 The Apache Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.parser;
-import java.util.Calendar;
+import java.text.ParseException;
+
+import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 
 /**
@@ -22,21 +24,21 @@ import org.apache.commons.net.ftp.FTPFile;
  *
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: NTFTPEntryParser.java,v 1.18 2004/11/23 12:52:20 rwinston Exp $
+ * @version $Id: NTFTPEntryParser.java,v 1.19 2005/01/02 03:17:50 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
-public class NTFTPEntryParser extends RegexFTPFileEntryParserImpl
+public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 {
+	
+    private static final String DEFAULT_DATE_FORMAT 
+		= "MM-dd-yy hh:mma"; //11-09-01 12:30PM
+
+
     /**
      * this is the regular expression used by this parser.
      */
     private static final String REGEX =
-        "((?:0[1-9])|(?:1[0-2]))-"
-        + "((?:0[1-9])|(?:[1-2]\\d)|(?:3[0-1]))-"
-        + "(\\d\\d)\\s*"
-        + "((?:0[1-9])|(?:1[012])):"
-        + "([0-5]\\d)\\s*"
-        + "([AP])M\\s*"
+        "(\\S+)\\s+(\\S+)\\s+"
         + "(<DIR>)?\\s*"
         + "([0-9]+)?\\s+"
         + "(\\S.*)";
@@ -51,9 +53,26 @@ public class NTFTPEntryParser extends RegexFTPFileEntryParserImpl
      */
     public NTFTPEntryParser()
     {
-        super(REGEX);
+        this(null);
     }
 
+    /**
+     * This constructor allows the creation of an NTFTPEntryParser object 
+     * with something other than the default configuration.
+     *
+     * @param config The {@link FTPClientConfig configuration} object used to 
+     * configure this parser.
+     * @exception IllegalArgumentException
+     * Thrown if the regular expression is unparseable.  Should not be seen
+     * under normal conditions.  It it is seen, this is a sign that
+     * <code>REGEX</code> is  not a valid regular expression.
+     * @since 1.4
+     */
+     public NTFTPEntryParser(FTPClientConfig config)
+    {
+        super(REGEX);
+        configure(config);
+    }
 
     /**
      * Parses a line of an NT FTP server file listing and converts it into a
@@ -72,66 +91,25 @@ public class NTFTPEntryParser extends RegexFTPFileEntryParserImpl
 
         if (matches(entry))
         {
-            String mo = group(1);
-            String da = group(2);
-            String yr = group(3);
-            String hr = group(4);
-            String min = group(5);
-            String ampm = group(6);
-            String dirString = group(7);
-            String size = group(8);
-            String name = group(9);
+        	String datestr = group(1)+" "+group(2);
+            String dirString = group(3);
+            String size = group(4);
+            String name = group(5);
+            try
+            {
+                f.setTimestamp(super.parseTimestamp(datestr));
+            }
+            catch (ParseException e)
+            {
+            	return null;  // this is a parsing failure too.
+            }
+
             if (null == name || name.equals(".") || name.equals(".."))
             {
                 return (null);
             }
             f.setName(name);
-            //convert all the calendar stuff to ints
-            int month = new Integer(mo).intValue() - 1;
-            int day = new Integer(da).intValue();
-            int year = new Integer(yr).intValue() + 2000;
-            int hour = new Integer(hr).intValue();
-            int minutes = new Integer(min).intValue();
 
-            // Y2K stuff? this will break again in 2080 but I will
-            // be sooooo dead anyways who cares.
-            // SMC - IS NT's directory date REALLY still not Y2K-compliant?
-            if (year > 2080)
-            {
-                year -= 100;
-            }
-
-            Calendar cal = Calendar.getInstance();
-            cal.clear();
-
-            //set the calendar
-            cal.set(Calendar.YEAR, year);
-            cal.set(Calendar.DATE, day);
-            cal.set(Calendar.MONTH, month);
-            int ap = Calendar.AM;
-            if ("P".equals(ampm))
-            {
-                ap = Calendar.PM;
-                if (hour != 12) {
-                    hour += 12;
-                }
-            } else if (hour == 12) {
-                hour = 0;
-            }
-
-	    cal.set(Calendar.MILLISECOND, 0);
-            cal.set(Calendar.SECOND, 0);
-            cal.set(Calendar.MINUTE, minutes);
-
-            // Using Calendar.HOUR_OF_DAY instead of Calendar.HOUR
-            // since the latter has proven to be unreliable.
-            // see bug 27085
-
-            //          cal.set(Calendar.AM_PM, ap);
-            cal.set(Calendar.HOUR_OF_DAY, hour);
-
-            cal.getTime().getTime();
-            f.setTimestamp(cal);
 
             if ("<DIR>".equals(dirString))
             {
@@ -150,4 +128,18 @@ public class NTFTPEntryParser extends RegexFTPFileEntryParserImpl
         }
         return null;
     }
+    
+    /**
+     * Defines a default configuration to be used when this class is
+     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
+     * parameter being specified.
+     * @return the default configuration for this parser.
+     */
+   public FTPClientConfig getDefaultConfiguration() {
+        return new FTPClientConfig(
+                FTPClientConfig.SYST_NT,
+                DEFAULT_DATE_FORMAT,
+                null, null, null, null);
+    }
+
 }

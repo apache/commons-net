@@ -1,5 +1,5 @@
 /*
- * Copyright 2004 The Apache Software Foundation
+ * Copyright 2004-2005 The Apache Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,10 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import org.apache.commons.net.ftp.Configurable;
+import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
+
 
 /**
  * This is the default implementation of the
@@ -30,7 +33,9 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 public class DefaultFTPFileEntryParserFactory
     implements FTPFileEntryParserFactory
 {
-    /**
+	private FTPClientConfig config = null;
+
+	/**
      * This default implementation of the FTPFileEntryParserFactory
      * interface works according to the following logic:
      * First it attempts to interpret the supplied key as a fully
@@ -70,10 +75,11 @@ public class DefaultFTPFileEntryParserFactory
     public FTPFileEntryParser createFileEntryParser(String key)
     {
         Class parserClass = null;
+        FTPFileEntryParser parser = null;
         try
         {
             parserClass = Class.forName(key);
-            return (FTPFileEntryParser) parserClass.newInstance();
+            parser = (FTPFileEntryParser) parserClass.newInstance();
         }
         catch (ClassNotFoundException e)
         {
@@ -82,25 +88,25 @@ public class DefaultFTPFileEntryParserFactory
             {
                 ukey = key.toUpperCase();
             }
-            if (ukey.indexOf("UNIX") >= 0)
+            if (ukey.indexOf(FTPClientConfig.SYST_UNIX) >= 0)
             {
-                return createUnixFTPEntryParser();
+                parser = createUnixFTPEntryParser();
             }
-            else if (ukey.indexOf("VMS") >= 0)
+            else if (ukey.indexOf(FTPClientConfig.SYST_VMS) >= 0)
             {
-                return createVMSVersioningFTPEntryParser();
+                parser = createVMSVersioningFTPEntryParser();
             }
-            else if (ukey.indexOf("WINDOWS") >= 0)
+            else if (ukey.indexOf(FTPClientConfig.SYST_NT) >= 0)
             {
-                return createNTFTPEntryParser();
+                parser = createNTFTPEntryParser();
             }
-            else if (ukey.indexOf("OS/2") >= 0)
+            else if (ukey.indexOf(FTPClientConfig.SYST_OS2) >= 0)
             {
-                return createOS2FTPEntryParser();
+                parser = createOS2FTPEntryParser();
             }
-            else if (ukey.indexOf("OS/400") >= 0)
+            else if (ukey.indexOf(FTPClientConfig.SYST_OS400) >= 0)
             {
-                return createOS400FTPEntryParser();
+                parser = createOS400FTPEntryParser();
             }
             else
             {
@@ -110,46 +116,96 @@ public class DefaultFTPFileEntryParserFactory
         catch (ClassCastException e)
         {
             throw new ParserInitializationException(parserClass.getName()
-                                                    + " does not implement the interface "
-                                                    + "org.apache.commons.net.ftp.FTPFileEntryParser.", e);
+                + " does not implement the interface "
+                + "org.apache.commons.net.ftp.FTPFileEntryParser.", e);
         }
         catch (Throwable e)
         {
             throw new ParserInitializationException("Error initializing parser", e);
         }
+
+        if (parser instanceof Configurable) {
+            ((Configurable)parser).configure(this.config);
+        }    
+        return parser;
     }
+    
+    /**
+     * <p>Implementation extracts a key from the supplied 
+     * {@link  FTPClientConfig FTPClientConfig}
+     * parameter and creates an object implementing the
+     * interface FTPFileEntryParser and uses the supplied configuration
+     * to configure it.
+     * </p><p>
+     * Note that this method will generally not be called in scenarios
+     * that call for autodetection of parser type but rather, for situations
+     * where the user knows that the server uses a non-default configuration
+     * and knows what that configuration is.
+     * </p>
+     * @param config  A {@link  FTPClientConfig FTPClientConfig}  
+     * used to configure the parser created
+     *
+     * @return the @link  FTPFileEntryParser FTPFileEntryParser} so created.
+     * @exception ParserInitializationException
+     *                   Thrown on any exception in instantiation
+     * @since 1.4
+     */
+	public FTPFileEntryParser createFileEntryParser(FTPClientConfig config) 
+	throws ParserInitializationException 
+	{
+	    this.config = config;
+		String key = config.getServerSystemKey();
+		return createFileEntryParser(key);
+	}
+
 
     public FTPFileEntryParser createUnixFTPEntryParser()
     {
-        return new UnixFTPEntryParser();
+        return (FTPFileEntryParser) new UnixFTPEntryParser();
     }
 
     public FTPFileEntryParser createVMSVersioningFTPEntryParser()
     {
-        return new VMSVersioningFTPEntryParser();
+        return (FTPFileEntryParser) new VMSVersioningFTPEntryParser();
     }
 
     public FTPFileEntryParser createNTFTPEntryParser()
     {
-        return new CompositeFileEntryParser(new FTPFileEntryParser[]
-            {
-                new NTFTPEntryParser(),
-                new UnixFTPEntryParser()
-            });
+    	if (config != null && FTPClientConfig.SYST_NT.equals(
+    	        config.getServerSystemKey())) 
+    	{
+            return new NTFTPEntryParser();
+    	} else {
+            return new CompositeFileEntryParser(new FTPFileEntryParser[]
+	   	        {
+	   	            new NTFTPEntryParser(),
+	   	            new UnixFTPEntryParser()
+	   	        });
+    	}
     }
-
-    public FTPFileEntryParser createOS2FTPEntryParser()
+    
+     public FTPFileEntryParser createOS2FTPEntryParser()
     {
-        return new OS2FTPEntryParser();
+        return (FTPFileEntryParser) new OS2FTPEntryParser();
     }
 
     public FTPFileEntryParser createOS400FTPEntryParser()
     {
-        return new CompositeFileEntryParser(new FTPFileEntryParser[]
-        {
-            new OS400FTPEntryParser(),
-            new UnixFTPEntryParser()
-        });
+    	if (config != null && 
+    	        FTPClientConfig.SYST_OS400.equals(config.getServerSystemKey())) 
+    	{
+            return new OS400FTPEntryParser();
+    	} else {
+	        return new CompositeFileEntryParser(new FTPFileEntryParser[]
+	            {
+	                new OS400FTPEntryParser(),
+	                new UnixFTPEntryParser()
+	            });
+    	}
     }
+
+
+
+	
 }
 

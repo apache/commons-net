@@ -1,5 +1,5 @@
 /*
- * Copyright 2001-2004 The Apache Software Foundation
+ * Copyright 2001-2005 The Apache Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: NTFTPEntryParserTest.java,v 1.15 2004/07/29 11:38:36 scohen Exp $
+ * @version $Id: NTFTPEntryParserTest.java,v 1.16 2005/01/02 03:17:50 scohen Exp $
  */
 public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
 {
@@ -40,6 +40,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
             "12-03-96  06:38AM                  403 AUTOTOOL.LOG",
             "12-03-96  06:38AM       <DIR>          123xyz",
             "01-20-97  03:48PM       <DIR>          bin",
+            "05-26-1995  10:57AM               143712 $LDR$",
     },
     {
             "-rw-r--r--   1 root     root       111325 Apr 27  2001 zxJDBC-2.0.1b1.tar.gz",
@@ -52,7 +53,6 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
     private static final String[][] badsamples =
         {
             {
-                "05-26-1995  10:57AM               143712 $LDR$",
                 "20-05-97  03:31PM                  681 .bash_history",
                 "drwxr-xr-x   2 root     99           4096 Feb 23 30:01 zzplayer",
                 "12-05-96  17:03         <DIR>          absoft2",
@@ -61,7 +61,6 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
                 "     0           DIR   05-12-97   16:52  Maintenance Desktop",
             },
             {
-                "05-26-1995  10:57AM               143712 $LDR$",
                 "20-05-97  03:31PM                  681 .bash_history",
                 "drwxr-xr-x   2 root     99           4096Feb 23 30:01 zzplayer",
                 "12-05-96  17:03         <DIR>          absoft2",
@@ -104,10 +103,11 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
      */
     protected FTPFileEntryParser getParser()
     {
-        return new CompositeFileEntryParser(new FTPFileEntryParser[]
+       return new CompositeFileEntryParser(new FTPFileEntryParser[]
         {
             new NTFTPEntryParser(),
             new UnixFTPEntryParser()
+
         });
     }
 
