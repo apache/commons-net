@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.ftp2;
+
 import java.io.IOException;
 import java.net.Socket;
 import org.apache.commons.net.ftp.FTPClient;
@@ -33,7 +34,7 @@ import org.apache.commons.net.ftp.ftp2.parser.UnixFTPEntryParser;
  * way.
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPClient2.java,v 1.8 2004/02/29 10:23:18 scolebourne Exp $
+ * @version $Id: FTPClient2.java,v 1.9 2004/06/29 04:54:29 dfs Exp $
  */
 public class FTPClient2 extends FTPClient
 {

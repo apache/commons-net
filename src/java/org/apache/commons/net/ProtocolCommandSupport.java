@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net;
+
 import java.io.Serializable;
 import java.util.Enumeration;
 import org.apache.commons.net.util.ListenerList;
@@ -51,8 +52,8 @@ public class ProtocolCommandSupport implements Serializable
     /***
      * Fires a ProtocolCommandEvent signalling the sending of a command to all
      * registered listeners, invoking their
-     * <a href="org.apache.commons.net.ProtocolCommandListener.html#protocolCommandSent">
-     * protocolCommandSent() </a> methods.
+     * {@link org.apache.commons.net.ProtocolCommandListener#protocolCommandSent protocolCommandSent() }
+     *  methods.
      * <p>
      * @param command The string representation of the command type sent, not
      *      including the arguments (e.g., "STAT" or "GET").
@@ -79,8 +80,8 @@ public class ProtocolCommandSupport implements Serializable
     /***
      * Fires a ProtocolCommandEvent signalling the reception of a command reply
      * to all registered listeners, invoking their
-     * <a href="org.apache.commons.net.ProtocolCommandListener.html#protocolReplyReceived">
-     * protocolReplyReceived() </a> methods.
+     * {@link org.apache.commons.net.ProtocolCommandListener#protocolReplyReceived protocolReplyReceived() }
+     *  methods.
      * <p>
      * @param replyCode The integer code indicating the natureof the reply.
      *   This will be the protocol integer value for protocols

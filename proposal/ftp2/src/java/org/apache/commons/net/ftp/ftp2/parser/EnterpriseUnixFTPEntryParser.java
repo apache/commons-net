@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.ftp2.parser;
+
 import java.util.Calendar;
 
 import org.apache.commons.net.ftp.FTPFile;
@@ -21,7 +22,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 
 /**
  * Parser for the Connect Enterprise Unix FTP Server From Sterling Commerce.  
- * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.5 2004/02/29 10:23:18 scolebourne Exp $
+ * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.6 2004/06/29 04:54:29 dfs Exp $
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  */
 public class EnterpriseUnixFTPEntryParser extends MatchApparatus

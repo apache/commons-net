@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.ftp2;
+
 import org.apache.commons.net.ftp.FTPFile;
 import java.util.Vector;
 
@@ -25,7 +26,7 @@ import java.util.Vector;
  * be receieved as an array of any requested number of entries or all of them.
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileIterator.java,v 1.8 2004/02/29 10:23:18 scolebourne Exp $
+ * @version $Id: FTPFileIterator.java,v 1.9 2004/06/29 04:54:29 dfs Exp $
  * @see org.apache.commons.net.ftp.ftp2.FTPFileList
  */
 public class FTPFileIterator

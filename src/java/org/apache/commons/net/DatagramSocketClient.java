@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net;
+
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
@@ -29,8 +30,8 @@ import java.net.SocketException;
  * especially useful for adding things like proxy support as well as better
  * support for applets.  For
  * example, you could create a
- * <a href="org.apache.commons.net.DatagramSocketFactory.html">
- * DatagramSocketFactory </a> that
+ * {@link org.apache.commons.net.DatagramSocketFactory}
+ *  that
  * requests browser security capabilities before creating a socket.
  * All classes derived from DatagramSocketClient should use the
  * {@link #_socketFactory_  _socketFactory_ } member variable to

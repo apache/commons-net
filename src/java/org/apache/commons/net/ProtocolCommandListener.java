@@ -22,8 +22,7 @@ import java.util.EventListener;
  * ASCII text reply.  For debugging and other purposes, it is extremely
  * useful to log or keep track of the contents of the protocol messages.
  * The ProtocolCommandListener interface coupled with the
- * <a href="org.apache.commons.net.ProtocolCommandEvent.html"> ProtocolCommandEvent
- * </a> class facilitate this process.
+ * {@link ProtocolCommandEvent} class facilitate this process.
  * <p>
  * To receive ProtocolCommandEvents, you merely implement the
  * ProtocolCommandListener interface and register the class as a listener

@@ -20,10 +20,10 @@ import java.util.Calendar;
 /***
  * The NewGroupsOrNewsQuery class.  This is used to issue NNTP NEWGROUPS and
  * NEWNEWS queries, implemented by
- * <a href="org.apache.commons.net.nntp.NNTPClient.html#listNewNewsgroups">
- * listNewNewsGroups </a> and
- * <a href="org.apache.commons.net.nntp.NNTPClient.html#listNewNews">
- * listNewNews </a> respectively.  It prevents you from having to format
+ * {@link org.apache.commons.net.nntp.NNTPClient#listNewNewsgroups listNewNewsGroups }
+ *  and
+ * {@link org.apache.commons.net.nntp.NNTPClient#listNewNews listNewNews }
+ *  respectively.  It prevents you from having to format
  * date, time, distribution, and newgroup arguments.
  * <p>
  * You might use the class as follows:

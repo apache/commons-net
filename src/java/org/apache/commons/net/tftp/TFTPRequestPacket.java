@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 package org.apache.commons.net.tftp;
+
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 
 /***
  * An abstract class derived from TFTPPacket definiing a TFTP Request
  * packet type.  It is subclassed by the
- * <a href="org.apache.commons.net.tftp.TFTPReadRequestPacket.html#_top_">
- * TFTPReadRequestPacket</a>  and
- * <a href="org.apache.commons.net.tftp.TFTPWriteRequestPacket.html#_top_">
- * TFTPWriteRequestPacket</a> classes.
+ * {@link org.apache.commons.net.tftp.TFTPReadRequestPacket}
+ *   and
+ * {@link org.apache.commons.net.tftp.TFTPWriteRequestPacket}
+ *  classes.
  * <p>
  * Details regarding the TFTP protocol and the format of TFTP packets can
  * be found in RFC 783.  But the point of these classes is to keep you

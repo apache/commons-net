@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.ftp2.parser;
+
 import java.util.Calendar;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
@@ -58,7 +59,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * <P>
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: OS2FTPEntryParser.java,v 1.10 2004/02/29 10:23:18 scolebourne Exp $
+ * @version $Id: OS2FTPEntryParser.java,v 1.11 2004/06/29 04:54:29 dfs Exp $
  * @see org.apache.commons.net.ftp.FTPFileListParser
  */
 public class OS2FTPEntryParser

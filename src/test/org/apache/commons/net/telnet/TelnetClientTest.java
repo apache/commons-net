@@ -788,7 +788,8 @@ extends TestCase implements TelnetNotificationHandler
         catch (Exception e)
         {
         }
-    }    /***
+    }
+    /***
      * closes all the connections (ReaderThread test)
      ***/
     protected void closeConnReaderThread()

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.parser;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
@@ -26,7 +27,7 @@ import org.apache.commons.net.ftp.FTPListParseEngine;
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParserTest.java,v 1.15 2004/04/22 00:48:07 scohen Exp $
+ * @version $Id: VMSFTPEntryParserTest.java,v 1.16 2004/06/29 04:54:32 dfs Exp $
  */
 public class VMSFTPEntryParserTest extends FTPParseTestFramework
 {

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.telnet;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.InputStream;

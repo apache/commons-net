@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.io;
+
 import java.util.Enumeration;
 import org.apache.commons.net.util.ListenerList;
 
@@ -33,7 +34,7 @@ import org.apache.commons.net.util.ListenerList;
  * @see CopyStreamListener
  * @see Util
  * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
- * @version $Id: CopyStreamAdapter.java,v 1.9 2004/02/29 10:26:55 scolebourne Exp $
+ * @version $Id: CopyStreamAdapter.java,v 1.10 2004/06/29 04:54:31 dfs Exp $
  */
 public class CopyStreamAdapter implements CopyStreamListener
 {

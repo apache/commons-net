@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.parser;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -39,7 +40,7 @@ import org.apache.oro.text.regex.Perl5Matcher;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSVersioningFTPEntryParser.java,v 1.8 2004/04/22 00:48:07 scohen Exp $
+ * @version $Id: VMSVersioningFTPEntryParser.java,v 1.9 2004/06/29 04:54:30 dfs Exp $
  *
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */

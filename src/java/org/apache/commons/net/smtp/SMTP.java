@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.smtp;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -43,18 +44,18 @@ import org.apache.commons.net.SocketClient;
  * You should keep in mind that the SMTP server may choose to prematurely
  * close a connection for various reasons.  The SMTP class will detect a
  * premature SMTP server connection closing when it receives a
- * <a href="org.apache.commons.net.smtp.SMTPReply.html#SERVICE_NOT_AVAILABLE">
- * SMTPReply.SERVICE_NOT_AVAILABLE </a> response to a command.
+ * {@link org.apache.commons.net.smtp.SMTPReply#SERVICE_NOT_AVAILABLE SMTPReply.SERVICE_NOT_AVAILABLE }
+ *  response to a command.
  * When that occurs, the SMTP class method encountering that reply will throw
- * an <a href="org.apache.commons.net.smtp.SMTPConnectionClosedException.html">
- * SMTPConnectionClosedException </a>.
+ * an {@link org.apache.commons.net.smtp.SMTPConnectionClosedException}
+ * .
  * <code>SMTPConectionClosedException</code>
  * is a subclass of <code> IOException </code> and therefore need not be
  * caught separately, but if you are going to catch it separately, its
  * catch block must appear before the more general <code> IOException </code>
  * catch block.  When you encounter an
- * <a href="org.apache.commons.net.smtp.SMTPConnectionClosedException.html">
- * SMTPConnectionClosedException </a>, you must disconnect the connection with
+ * {@link org.apache.commons.net.smtp.SMTPConnectionClosedException}
+ * , you must disconnect the connection with
  * {@link org.apache.commons.net.SocketClient#disconnect  disconnect() }
  * to properly clean up the system resources used by SMTP.  Before
  * disconnecting, you may check the
@@ -66,8 +67,8 @@ import org.apache.commons.net.SocketClient;
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
  * can also throw a
- * <a href="org.apache.commons.net.MalformedServerReplyException.html">
- * MalformedServerReplyException </a>, which is a subclass
+ * {@link org.apache.commons.net.MalformedServerReplyException}
+ * , which is a subclass
  * of IOException.  A MalformedServerReplyException will be thrown when
  * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite

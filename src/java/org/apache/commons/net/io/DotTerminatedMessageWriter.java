@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.io;
+
 import java.io.IOException;
 import java.io.Writer;
 

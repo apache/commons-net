@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net;
+
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
@@ -23,8 +24,8 @@ import java.net.SocketException;
  * programmer to control the creation of datagram sockets and
  * provide his own DatagramSocket implementations for use by all
  * classes derived from
- * <a href="org.apache.commons.net.DatagramSocketClient.html">
- * DatagramSocketClient </a>.
+ * {@link org.apache.commons.net.DatagramSocketClient}
+ * .
  * This allows you to provide your own DatagramSocket implementations and
  * to perform security checks or browser capability requests before
  * creating a DatagramSocket.

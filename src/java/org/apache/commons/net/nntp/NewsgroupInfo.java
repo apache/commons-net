@@ -18,12 +18,12 @@ package org.apache.commons.net.nntp;
 /***
  * NewsgroupInfo stores information pertaining to a newsgroup returned by
  * the NNTP GROUP, LIST, and NEWGROUPS commands, implemented by
- * <a href="org.apache.commons.net.nntp.NNTPClient.html#selectNewsgroup">
- * selectNewsgroup </a>,
- * <a href="org.apache.commons.net.nntp.NNTPClient.html#listNewsgroups">
- * listNewsgroups </a>, and
- * <a href="org.apache.commons.net.nntp.NNTPClient.html#listNewNewsgroups">
- * listNewNewsgroups </a> respectively.
+ * {@link org.apache.commons.net.nntp.NNTPClient#selectNewsgroup selectNewsgroup }
+ * ,
+ * {@link org.apache.commons.net.nntp.NNTPClient#listNewsgroups listNewsgroups }
+ * , and
+ * {@link org.apache.commons.net.nntp.NNTPClient#listNewNewsgroups listNewNewsgroups }
+ *  respectively.
  * <p>
  * <p>
  * @author Daniel F. Savarese

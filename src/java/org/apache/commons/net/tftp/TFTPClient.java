@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.tftp;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InterruptedIOException;
@@ -36,8 +37,8 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
  * {@link #sendFile  sendFile() }, and
  * {@link #receiveFile  receiveFile() } methods.  Additionally, the
  * {@link #setMaxTimeouts  setMaxTimeouts() } and
- * <a href="org.apache.commons.net.DatagramSocketClient.html#setDefaultTimeout">
- * setDefaultTimeout() </a> methods may be of importance for performance
+ * {@link org.apache.commons.net.DatagramSocketClient#setDefaultTimeout setDefaultTimeout() }
+ *  methods may be of importance for performance
  * tuning.
  * <p>
  * Details regarding the TFTP protocol and the format of TFTP packets can

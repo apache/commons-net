@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.smtp;
+
 import java.util.Enumeration;
 import java.util.Vector;
 

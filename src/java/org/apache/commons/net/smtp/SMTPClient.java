@@ -81,18 +81,18 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  * You should keep in mind that the SMTP server may choose to prematurely
  * close a connection for various reasons.  The SMTPClient class will detect a
  * premature SMTP server connection closing when it receives a
- * <a href="org.apache.commons.net.smtp.SMTPReply.html#SERVICE_NOT_AVAILABLE">
- * SMTPReply.SERVICE_NOT_AVAILABLE </a> response to a command.
+ * {@link org.apache.commons.net.smtp.SMTPReply#SERVICE_NOT_AVAILABLE SMTPReply.SERVICE_NOT_AVAILABLE }
+ *  response to a command.
  * When that occurs, the method encountering that reply will throw
- * an <a href="org.apache.commons.net.smtp.SMTPConnectionClosedException.html">
- * SMTPConnectionClosedException </a>.
+ * an {@link org.apache.commons.net.smtp.SMTPConnectionClosedException}
+ * .
  * <code>SMTPConectionClosedException</code>
  * is a subclass of <code> IOException </code> and therefore need not be
  * caught separately, but if you are going to catch it separately, its
  * catch block must appear before the more general <code> IOException </code>
  * catch block.  When you encounter an
- * <a href="org.apache.commons.net.smtp.SMTPConnectionClosedException.html">
- * SMTPConnectionClosedException </a>, you must disconnect the connection with
+ * {@link org.apache.commons.net.smtp.SMTPConnectionClosedException}
+ * , you must disconnect the connection with
  * {@link #disconnect  disconnect() } to properly clean up the
  * system resources used by SMTPClient.  Before disconnecting, you may check
  * the last reply code and text with
@@ -104,8 +104,8 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
  * can also throw a
- * <a href="org.apache.commons.net.MalformedServerReplyException.html">
- * MalformedServerReplyException </a>, which is a subclass
+ * {@link org.apache.commons.net.MalformedServerReplyException}
+ * , which is a subclass
  * of IOException.  A MalformedServerReplyException will be thrown when
  * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite
@@ -358,8 +358,8 @@ public class SMTPClient extends SMTP
      * A convenience method for sending short messages.  This method fetches
      * the Writer returned by {@link #sendMessageData  sendMessageData() }
      * and writes the specified String to it.  After writing the message,
-     * this method calls <a href="#completePendingCommand">
-     * completePendingCommand() </a> to finalize the transaction and returns
+     * this method calls {@link #completePendingCommand completePendingCommand() }
+     *  to finalize the transaction and returns
      * its success or failure.
      * <p>
      * @param message  The short email message to send.

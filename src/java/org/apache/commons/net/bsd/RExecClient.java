@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.bsd;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
@@ -179,8 +180,8 @@ public class RExecClient extends SocketClient
      * from the remote server, an IOException will be thrown.  This serves as
      * a simple protection against possible hijacking of the error stream by
      * an attacker monitoring the rexec() negotiation.  You may disable this
-     * behavior with <a href="#setRemoteVerificationEnabled">
-     * setRemoteVerificationEnabled()</a>.
+     * behavior with {@link #setRemoteVerificationEnabled setRemoteVerificationEnabled()}
+     * .
      * <p>
      * @param username  The account name on the server through which to execute
      *                  the command.

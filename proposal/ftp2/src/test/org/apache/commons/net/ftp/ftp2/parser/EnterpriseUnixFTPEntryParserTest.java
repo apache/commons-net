@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.ftp2.parser;
+
 import junit.framework.TestSuite;
 
 import org.apache.commons.net.ftp.FTPFile;
@@ -22,7 +23,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 /**
  * Tests the EnterpriseUnixFTPEntryParser
  * 
- * @version $Id: EnterpriseUnixFTPEntryParserTest.java,v 1.6 2004/02/29 10:23:18 scolebourne Exp $
+ * @version $Id: EnterpriseUnixFTPEntryParserTest.java,v 1.7 2004/06/29 04:54:29 dfs Exp $
  * @author <a href="mailto:Winston.Ojeda@qg.com">Winston Ojeda</a>
  */
 public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.parser;
+
 import java.util.Calendar;
 
 import junit.framework.TestSuite;
@@ -23,7 +24,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: UnixFTPEntryParserTest.java,v 1.12 2004/05/28 23:00:28 scohen Exp $
+ * @version $Id: UnixFTPEntryParserTest.java,v 1.13 2004/06/29 04:54:32 dfs Exp $
  */
 public class UnixFTPEntryParserTest extends FTPParseTestFramework
 {

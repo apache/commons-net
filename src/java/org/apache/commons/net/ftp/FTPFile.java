@@ -24,12 +24,12 @@ import java.util.Calendar;
  * extract all the information that can be represented by FTPFile, or
  * it may even be possible to extract more information.  In cases where
  * more information can be extracted, you will want to subclass FTPFile
- * and implement your own <a href="org.apache.commons.net.ftp.FTPFileListParser.html">
- * FTPFileListParser </a> to extract the information.
+ * and implement your own {@link org.apache.commons.net.ftp.FTPFileListParser}
+ *  to extract the information.
  * However, most FTP servers return file information in a format that
  * can be completely parsed by
- * <a href="org.apache.commons.net.ftp.DefaultFTPFileListParser.html">
- * DefaultFTPFileListParser </a> and stored in FTPFile.
+ * {@link org.apache.commons.net.ftp.DefaultFTPFileListParser}
+ *  and stored in FTPFile.
  * <p>
  * <p>
  * @author Daniel F. Savarese

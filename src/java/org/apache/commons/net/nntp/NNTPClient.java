@@ -37,8 +37,8 @@ import org.apache.commons.net.MalformedServerReplyException;
  * {@link org.apache.commons.net.nntp.NNTP#disconnect  disconnect() }
  * after you're completely finished interacting with the server.
  * Remember that the
- * <a href="org.apache.commons.net.nntp.NNTP.html#isAllowedToPost">
- * isAllowedToPost()</a> method is defined in
+ * {@link org.apache.commons.net.nntp.NNTP#isAllowedToPost isAllowedToPost()}
+ *  method is defined in
  * {@link org.apache.commons.net.nntp.NNTP}.
  * <p>
  * You should keep in mind that the NNTP server may choose to prematurely
@@ -46,18 +46,18 @@ import org.apache.commons.net.MalformedServerReplyException;
  * given time period or if the server is being shutdown by the operator or
  * some other reason.  The NNTP class will detect a
  * premature NNTP server connection closing when it receives a
- * <a href="org.apache.commons.net.nntp.NNTPReply.html#SERVICE_DISCONTINUED">
- * NNTPReply.SERVICE_DISCONTINUED </a> response to a command.
+ * {@link org.apache.commons.net.nntp.NNTPReply#SERVICE_DISCONTINUED NNTPReply.SERVICE_DISCONTINUED }
+ *  response to a command.
  * When that occurs, the NNTP class method encountering that reply will throw
- * an <a href="org.apache.commons.net.nntp.NNTPConnectionClosedException.html">
- * NNTPConnectionClosedException </a>.
+ * an {@link org.apache.commons.net.nntp.NNTPConnectionClosedException}
+ * .
  * <code>NNTPConectionClosedException</code>
  * is a subclass of <code> IOException </code> and therefore need not be
  * caught separately, but if you are going to catch it separately, its
  * catch block must appear before the more general <code> IOException </code>
  * catch block.  When you encounter an
- * <a href="org.apache.commons.net.nntp.NNTPConnectionClosedException.html">
- * NNTPConnectionClosedException </a>, you must disconnect the connection with
+ * {@link org.apache.commons.net.nntp.NNTPConnectionClosedException}
+ * , you must disconnect the connection with
  * {@link org.apache.commons.net.nntp.NNTP#disconnect  disconnect() }
  *  to properly clean up the
  * system resources used by NNTP.  Before disconnecting, you may check the
@@ -68,8 +68,8 @@ import org.apache.commons.net.MalformedServerReplyException;
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
  * can also throw a
- * <a href="org.apache.commons.net.MalformedServerReplyException.html">
- * MalformedServerReplyException </a>, which is a subclass
+ * {@link org.apache.commons.net.MalformedServerReplyException}
+ * , which is a subclass
  * of IOException.  A MalformedServerReplyException will be thrown when
  * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite
@@ -1069,8 +1069,8 @@ public class NNTPClient extends NNTP
      * Post an article to the NNTP server.  This method returns a
      * DotTerminatedMessageWriter instance to which the article can be
      * written.  Null is returned if the posting attempt fails.  You
-     * should check <a href="org.apache.commons.nntp.NNTP.html#isAllowedToPost">
-     * isAllowedToPost() </a> before trying to post.  However, a posting
+     * should check {@link NNTP#isAllowedToPost isAllowedToPost() }
+     *  before trying to post.  However, a posting
      * attempt can fail due to malformed headers.
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any
@@ -1167,7 +1167,7 @@ public class NNTPClient extends NNTP
     /***
      * Private implementation of XOVER functionality.
      *
-     * See <a href="org.apache.commons.nntp.NNTP.html#xover">
+     * See {@link NNTP#xover}
      * for legal agument formats. Alternatively, read RFC 2980 :-)
      * <p>
      * @param articleRange
@@ -1217,7 +1217,7 @@ public class NNTPClient extends NNTP
     /***
      * Private implementation of XHDR functionality.
      *
-     * See <a href="org.apache.commons.nntp.NNTP.html#xhdr">
+     * See {@link NNTP#xhdr}
      * for legal agument formats. Alternatively, read RFC 1036.
      * <p>
      * @param header

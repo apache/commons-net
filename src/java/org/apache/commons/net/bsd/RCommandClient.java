@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.bsd;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.BindException;
@@ -56,25 +57,25 @@ import org.apache.commons.net.io.SocketInputStream;
  * fetch the connection's input, output, and optionally error streams.
  * Interaction with the remote command is controlled entirely through the
  * I/O streams.  Once you have finished processing the streams, you should
- * invoke <a href="org.apache.commons.net.bsd.RExecClient.html#disconnect">
- * disconnect() </a> to clean up properly.
+ * invoke {@link org.apache.commons.net.bsd.RExecClient#disconnect disconnect() }
+ *  to clean up properly.
  * <p>
  * By default the standard output and standard error streams of the
  * remote process are transmitted over the same connection, readable
  * from the input stream returned by
- * <a href="org.apache.commons.net.bsd.RExecClient.html#getInputStream">
- * getInputStream() </a>.  However, it is
+ * {@link org.apache.commons.net.bsd.RExecClient#getInputStream getInputStream() }
+ * .  However, it is
  * possible to tell the rshd daemon to return the standard error
  * stream over a separate connection, readable from the input stream
- * returned by <a href="org.apache.commons.net.bsd.RExecClient.html#getErrorStream">
- * getErrorStream() </a>.  You
+ * returned by {@link org.apache.commons.net.bsd.RExecClient#getErrorStream getErrorStream() }
+ * .  You
  * can specify that a separate connection should be created for standard
  * error by setting the boolean <code> separateErrorStream </code>
  * parameter of {@link #rcommand  rcommand() } to <code> true </code>.
  * The standard input of the remote process can be written to through
  * the output stream returned by
- * <a href="org.apache.commons.net.bsd.RExecClient.html#getOutputStream">
- * getOutputSream() </a>.
+ * {@link org.apache.commons.net.bsd.RExecClient#getOutputStream getOutputSream() }
+ * .
  * <p>
  * <p>
  * @author Daniel F. Savarese
@@ -354,8 +355,8 @@ public class RCommandClient extends RExecClient
      * a simple protection against possible hijacking of the error stream by
      * an attacker monitoring the rexec() negotiation.  You may disable this
      * behavior with
-     * <a href="org.apache.commons.net.bsd.RExecClient.html#setRemoteVerificationEnabled">
-     * setRemoteVerificationEnabled()</a>.
+     * {@link org.apache.commons.net.bsd.RExecClient#setRemoteVerificationEnabled setRemoteVerificationEnabled()}
+     * .
      * <p>
      * @param localUsername  The user account on the local machine that is
      *        requesting the command execution.

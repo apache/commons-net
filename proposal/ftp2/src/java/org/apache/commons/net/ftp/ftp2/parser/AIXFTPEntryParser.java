@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.ftp2.parser;
+
 import java.util.Calendar;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
@@ -23,7 +24,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * the day and month fields being the transposed.
  * 
  * @author <a href="mailto:bretts@bml.uk.com">Brett Smith</a>
- * @version $Id: AIXFTPEntryParser.java,v 1.4 2004/02/29 10:23:18 scolebourne Exp $
+ * @version $Id: AIXFTPEntryParser.java,v 1.5 2004/06/29 04:54:29 dfs Exp $
  */
 public class AIXFTPEntryParser
   extends MatchApparatus implements FTPFileEntryParser

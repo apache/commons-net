@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.telnet;
+
 import junit.framework.TestCase;
 
 /***

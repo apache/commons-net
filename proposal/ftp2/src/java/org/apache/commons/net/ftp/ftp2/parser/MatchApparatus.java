@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.ftp2.parser;
+
 import org.apache.oro.text.regex.Pattern;
 import org.apache.oro.text.regex.MalformedPatternException;
 import org.apache.oro.text.regex.PatternMatcher;
@@ -28,7 +29,7 @@ import org.apache.oro.text.regex.MatchResult;
  * It is also designed to encapsulate access to the oro.text.regex
  * classes in one place.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: MatchApparatus.java,v 1.8 2004/02/29 10:23:18 scolebourne Exp $
+ * @version $Id: MatchApparatus.java,v 1.9 2004/06/29 04:54:29 dfs Exp $
  */
 abstract class MatchApparatus
 {

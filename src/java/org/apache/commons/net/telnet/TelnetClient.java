@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.telnet;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;

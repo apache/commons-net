@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.ftp2.parser;
+
 import java.util.Calendar;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
@@ -63,7 +64,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * <P>
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.11 2004/02/29 10:23:18 scolebourne Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.12 2004/06/29 04:54:29 dfs Exp $
  */
 public class VMSFTPEntryParser
             extends MatchApparatus implements FTPFileEntryParser

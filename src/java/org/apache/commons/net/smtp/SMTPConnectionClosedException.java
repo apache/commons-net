@@ -20,8 +20,8 @@ import java.io.IOException;
 /***
  * SMTPConnectionClosedException is used to indicate the premature or
  * unexpected closing of an SMTP connection resulting from a
- * <a href="org.apache.commons.net.smtp.SMTPReply.html#SERVICE_NOT_AVAILABLE">
- * SMTPReply.SERVICE_NOT_AVAILABLE </a> response (SMTP reply code 421) to a
+ * {@link org.apache.commons.net.smtp.SMTPReply#SERVICE_NOT_AVAILABLE SMTPReply.SERVICE_NOT_AVAILABLE }
+ *  response (SMTP reply code 421) to a
  * failed SMTP command.  This exception is derived from IOException and
  * therefore may be caught either as an IOException or specifically as an
  * SMTPConnectionClosedException.

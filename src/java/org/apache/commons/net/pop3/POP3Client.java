@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.pop3;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.security.MessageDigest;
@@ -31,8 +32,8 @@ import org.apache.commons.net.io.DotTerminatedMessageReader;
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
  * can also throw a
- * <a href="org.apache.commons.net.MalformedServerReplyException.html">
- * MalformedServerReplyException </a>, which is a subclass
+ * {@link org.apache.commons.net.MalformedServerReplyException}
+ * , which is a subclass
  * of IOException.  A MalformedServerReplyException will be thrown when
  * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite
@@ -112,10 +113,10 @@ public class POP3Client extends POP3
      * {@link org.apache.commons.net.SocketClient#connect  connect }
      * before attempting to login.  A login attempt is only valid if
      * the client is in the
-     * <a href="org.apache.commons.net.pop3.POP3.html#AUTHORIZATION_STATE">
-     * AUTHORIZATION_STATE </a>.  After logging in, the client enters the
-     * <a href="org.apache.commons.net.pop3.POP3.html#TRANSACTION_STATE">
-     * TRANSACTION_STATE </a>.
+     * {@link org.apache.commons.net.pop3.POP3#AUTHORIZATION_STATE AUTHORIZATION_STATE }
+     * .  After logging in, the client enters the
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * .
      * <p>
      * @param username  The account name being logged in to.
      * @param password  The plain text password of the account.
@@ -147,17 +148,17 @@ public class POP3Client extends POP3
      * produced in the greeting banner varies from server to server, it is
      * not possible to consistently extract the information.  Therefore,
      * after connecting to the server, you must call
-     * <a href="org.apache.commons.net.pop3.POP3.html#getReplyString">
-     * getReplyString </a> and parse out the timestamp information yourself.
+     * {@link org.apache.commons.net.pop3.POP3#getReplyString getReplyString }
+     *  and parse out the timestamp information yourself.
      * <p>
      * You must first connect to the server with
      * {@link org.apache.commons.net.SocketClient#connect  connect }
      * before attempting to login.  A login attempt is only valid if
      * the client is in the
-     * <a href="org.apache.commons.net.pop3.POP3.html#AUTHORIZATION_STATE">
-     * AUTHORIZATION_STATE </a>.  After logging in, the client enters the
-     * <a href="org.apache.commons.net.pop3.POP3.html#TRANSACTION_STATE">
-     * TRANSACTION_STATE </a>.  After connecting, you must parse out the
+     * {@link org.apache.commons.net.pop3.POP3#AUTHORIZATION_STATE AUTHORIZATION_STATE }
+     * .  After logging in, the client enters the
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * .  After connecting, you must parse out the
      * server specific information to use as a timestamp, and pass that
      * information to this method.  The secret is a shared secret known
      * to you and the server.  See RFC 1939 for more details regarding
@@ -212,10 +213,10 @@ public class POP3Client extends POP3
      * {@link org.apache.commons.net.pop3.POP3#disconnect  disconnect }.
      * A logout attempt is valid in any state.  If
      * the client is in the
-     * <a href="org.apache.commons.net.pop3.POP3.html#TRANSACTION_STATE">
-     * TRANSACTION_STATE </a>, it enters the
-     * <a href="org.apache.commons.net.pop3.POP3.html#UPDATE_STATE">
-     * UPDATE_STATE </a> on a successful logout.
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * , it enters the
+     * {@link org.apache.commons.net.pop3.POP3#UPDATE_STATE UPDATE_STATE }
+     *  on a successful logout.
      * <p>
      * @return True if the logout attempt was successful, false if not.
      * @exception IOException If a network I/O error occurs in the process
@@ -235,8 +236,8 @@ public class POP3Client extends POP3
      * a connection alive since most POP3 servers will timeout after 10
      * minutes of inactivity.  A noop attempt will only succeed if
      * the client is in the
-     * <a href="org.apache.commons.net.pop3.POP3.html#TRANSACTION_STATE">
-     * TRANSACTION_STATE </a>.
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * .
      * <p>
      * @return True if the noop attempt was successful, false if not.
      * @exception IOException If a network I/O error occurs in the process of
@@ -257,8 +258,8 @@ public class POP3Client extends POP3
      * for deletion are only deleted by the server on
      * {@link #logout  logout }.
      * A delete attempt can only succeed if the client is in the
-     * <a href="org.apache.commons.net.pop3.POP3.html#TRANSACTION_STATE">
-     * TRANSACTION_STATE </a>.
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * .
      * <p>
      * @param messageId  The message number to delete.
      * @return True if the deletion attempt was successful, false if not.
@@ -278,8 +279,8 @@ public class POP3Client extends POP3
      * Reset the POP3 session.  This is useful for undoing any message
      * deletions that may have been performed.  A reset attempt can only
      * succeed if the client is in the
-     * <a href="org.apache.commons.net.pop3.POP3.html#TRANSACTION_STATE">
-     * TRANSACTION_STATE </a>.
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * .
      * <p>
      * @return True if the reset attempt was successful, false if not.
      * @exception IOException If a network I/O error occurs in the process of
@@ -295,8 +296,8 @@ public class POP3Client extends POP3
     /***
      * Get the mailbox status.  A status attempt can only
      * succeed if the client is in the
-     * <a href="org.apache.commons.net.pop3.POP3.html#TRANSACTION_STATE">
-     * TRANSACTION_STATE </a>.  Returns a POP3MessageInfo instance
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * .  Returns a POP3MessageInfo instance
      * containing the number of messages in the mailbox and the total
      * size of the messages in bytes.  Returns null if the status the
      * attempt fails.
@@ -320,8 +321,8 @@ public class POP3Client extends POP3
     /***
      * List an individual message.  A list attempt can only
      * succeed if the client is in the
-     * <a href="org.apache.commons.net.pop3.POP3.html#TRANSACTION_STATE">
-     * TRANSACTION_STATE </a>.  Returns a POP3MessageInfo instance
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * .  Returns a POP3MessageInfo instance
      * containing the number of the listed message and the
      * size of the message in bytes.  Returns null if the list
      * attempt fails (e.g., if the specified message number does
@@ -348,8 +349,8 @@ public class POP3Client extends POP3
     /***
      * List all messages.  A list attempt can only
      * succeed if the client is in the
-     * <a href="org.apache.commons.net.pop3.POP3.html#TRANSACTION_STATE">
-     * TRANSACTION_STATE </a>.  Returns an array of POP3MessageInfo instances,
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * .  Returns an array of POP3MessageInfo instances,
      * each containing the number of a message and its size in bytes.
      * If there are no messages, this method returns a zero length array.
      * If the list attempt fails, it returns null.
@@ -391,8 +392,8 @@ public class POP3Client extends POP3
     /***
      * List the unique identifier for a message.  A list attempt can only
      * succeed if the client is in the
-     * <a href="org.apache.commons.net.pop3.POP3.html#TRANSACTION_STATE">
-     * TRANSACTION_STATE </a>.  Returns a POP3MessageInfo instance
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * .  Returns a POP3MessageInfo instance
      * containing the number of the listed message and the
      * unique identifier for that message.  Returns null if the list
      * attempt fails  (e.g., if the specified message number does
@@ -420,8 +421,8 @@ public class POP3Client extends POP3
     /***
      * List the unique identifiers for all messages.  A list attempt can only
      * succeed if the client is in the
-     * <a href="org.apache.commons.net.pop3.POP3.html#TRANSACTION_STATE">
-     * TRANSACTION_STATE </a>.  Returns an array of POP3MessageInfo instances,
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * .  Returns an array of POP3MessageInfo instances,
      * each containing the number of a message and its unique identifier.
      * If there are no messages, this method returns a zero length array.
      * If the list attempt fails, it returns null.
@@ -464,8 +465,8 @@ public class POP3Client extends POP3
     /***
      * Retrieve a message from the POP3 server.  A retrieve message attempt
      * can only succeed if the client is in the
-     * <a href="org.apache.commons.net.pop3.POP3.html#TRANSACTION_STATE">
-     * TRANSACTION_STATE </a>.  Returns a DotTerminatedMessageReader instance
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * .  Returns a DotTerminatedMessageReader instance
      * from which the entire message can be read.
      * Returns null if the retrieval attempt fails  (e.g., if the specified
      * message number does not exist).
@@ -504,8 +505,8 @@ public class POP3Client extends POP3
      * Retrieve only the specified top number of lines of a message from the
      * POP3 server.  A retrieve top lines attempt
      * can only succeed if the client is in the
-     * <a href="org.apache.commons.net.pop3.POP3.html#TRANSACTION_STATE">
-     * TRANSACTION_STATE </a>.  Returns a DotTerminatedMessageReader instance
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * .  Returns a DotTerminatedMessageReader instance
      * from which the specified top number of lines of the message can be
      * read.
      * Returns null if the retrieval attempt fails  (e.g., if the specified

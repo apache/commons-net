@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.tftp;
+
 import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.net.DatagramPacket;
@@ -27,8 +28,8 @@ import org.apache.commons.net.DatagramSocketClient;
  * the {@link org.apache.commons.net.DatagramSocketClient#open  open() },
  * and {@link org.apache.commons.net.DatagramSocketClient#close  close() },
  * methods. Additionally,the a
- * <a href="org.apache.commons.net.DatagramSocketClient.html#setDefaultTimeout">
- * setDefaultTimeout() </a> method may be of importance for performance tuning.
+ * {@link org.apache.commons.net.DatagramSocketClient#setDefaultTimeout setDefaultTimeout() }
+ *  method may be of importance for performance tuning.
  * <p>
  * Details regarding the TFTP protocol and the format of TFTP packets can
  * be found in RFC 783.  But the point of these classes is to keep you

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.pop3;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.EOFException;
@@ -37,8 +38,8 @@ import org.apache.commons.net.SocketClient;
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
  * can also throw a
- * <a href="org.apache.commons.net.MalformedServerReplyException.html">
- * MalformedServerReplyException </a>, which is a subclass
+ * {@link org.apache.commons.net.MalformedServerReplyException}
+ * , which is a subclass
  * of IOException.  A MalformedServerReplyException will be thrown when
  * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite

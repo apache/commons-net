@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.ftp2.parser;
+
 import junit.framework.TestCase;
 
 import java.text.SimpleDateFormat;
@@ -23,7 +24,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPParseTestFramework.java,v 1.10 2004/02/29 10:23:18 scolebourne Exp $
+ * @version $Id: FTPParseTestFramework.java,v 1.11 2004/06/29 04:54:29 dfs Exp $
  */
 public abstract class FTPParseTestFramework extends TestCase
 {

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.bsd;
+
 import java.io.IOException;
 
 /***
@@ -37,22 +38,22 @@ import java.io.IOException;
  * fetch the connection's input and output streams.
  * Interaction with the remote command is controlled entirely through the
  * I/O streams.  Once you have finished processing the streams, you should
- * invoke <a href="org.apache.commons.net.bsd.RExecClient.html#disconnect">
- * disconnect() </a> to clean up properly.
+ * invoke {@link org.apache.commons.net.bsd.RExecClient#disconnect disconnect() }
+ *  to clean up properly.
  * <p>
  * The standard output and standard error streams of the
  * remote process are transmitted over the same connection, readable
  * from the input stream returned by
- * <a href="org.apache.commons.net.bsd.RExecClient.html#getInputStream">
- * getInputStream() </a>.  Unlike RExecClient and RCommandClient, it is
+ * {@link org.apache.commons.net.bsd.RExecClient#getInputStream getInputStream() }
+ * .  Unlike RExecClient and RCommandClient, it is
  * not possible to tell the rlogind daemon to return the standard error
  * stream over a separate connection.
- * <a href="org.apache.commons.net.bsd.RExecClient.html#getErrorStream">
- * getErrorStream() </a> will always return null.
+ * {@link org.apache.commons.net.bsd.RExecClient#getErrorStream getErrorStream() }
+ *  will always return null.
  * The standard input of the remote process can be written to through
  * the output stream returned by
- * <a href="org.apache.commons.net.bsd.RExecClient.html#getOutputStream">
- * getOutputSream() </a>.
+ * {@link org.apache.commons.net.bsd.RExecClient#getOutputStream getOutputSream() }
+ * .
  * <p>
  * <p>
  * @author Daniel F. Savarese

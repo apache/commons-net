@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.ftp2;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,7 +38,7 @@ import org.apache.commons.net.ftp.FTPFile;
  * which required a bigger memory hit.
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileList.java,v 1.8 2004/02/29 10:23:18 scolebourne Exp $
+ * @version $Id: FTPFileList.java,v 1.9 2004/06/29 04:54:29 dfs Exp $
  * @see FTPClient2#listFiles
  * @see FTPClient2#createFileList
  */

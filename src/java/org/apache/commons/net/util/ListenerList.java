@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.util;
+
 import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.EventListener;

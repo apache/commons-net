@@ -53,17 +53,17 @@ import org.apache.commons.net.telnet.TelnetClient;
  * close a connection if the client has been idle for longer than a
  * given time period (usually 900 seconds).  The FTP class will detect a
  * premature FTP server connection closing when it receives a
- * <a href="org.apache.commons.net.ftp.FTPReply.html#SERVICE_NOT_AVAILABLE">
- * FTPReply.SERVICE_NOT_AVAILABLE </a> response to a command.
+ * {@link org.apache.commons.net.ftp.FTPReply#SERVICE_NOT_AVAILABLE FTPReply.SERVICE_NOT_AVAILABLE }
+ *  response to a command.
  * When that occurs, the FTP class method encountering that reply will throw
- * an <a href="org.apache.commons.net.ftp.FTPConnectionClosedException.html">
- * FTPConnectionClosedException </a>.  <code>FTPConectionClosedException</code>
+ * an {@link org.apache.commons.net.ftp.FTPConnectionClosedException}
+ * .  <code>FTPConectionClosedException</code>
  * is a subclass of <code> IOException </code> and therefore need not be
  * caught separately, but if you are going to catch it separately, its
  * catch block must appear before the more general <code> IOException </code>
  * catch block.  When you encounter an
- * <a href="org.apache.commons.net.ftp.FTPConnectionClosedException.html">
- * FTPConnectionClosedException </a>, you must disconnect the connection with
+ * {@link org.apache.commons.net.ftp.FTPConnectionClosedException}
+ * , you must disconnect the connection with
  * {@link #disconnect  disconnect() } to properly clean up the
  * system resources used by FTP.  Before disconnecting, you may check the
  * last reply code and text with
@@ -76,8 +76,8 @@ import org.apache.commons.net.telnet.TelnetClient;
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
  * can also throw a
- * <a href="org.apache.commons.net.MalformedServerReplyException.html">
- * MalformedServerReplyException </a>, which is a subclass
+ * {@link org.apache.commons.net.MalformedServerReplyException}
+ * , which is a subclass
  * of IOException.  A MalformedServerReplyException will be thrown when
  * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite
@@ -886,8 +886,8 @@ public class FTP extends TelnetClient
      * A convenience method to send the FTP RETR command to the server,
      * receive the reply, and return the reply code.  Remember, it is up
      * to you to manage the data connection.  If you don't need this low
-     * level of access, use <a href="org.apache.commons.net.ftp.FTPClient.html">
-     * FTPClient</a>, which will handle all low level details for you.
+     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
+     * , which will handle all low level details for you.
      * <p>
      * @param pathname  The pathname of the file to retrieve.
      * @return The reply code received from the server.
@@ -908,8 +908,8 @@ public class FTP extends TelnetClient
      * A convenience method to send the FTP STOR command to the server,
      * receive the reply, and return the reply code.  Remember, it is up
      * to you to manage the data connection.  If you don't need this low
-     * level of access, use <a href="org.apache.commons.net.ftp.FTPClient.html">
-     * FTPClient</a>, which will handle all low level details for you.
+     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
+     * , which will handle all low level details for you.
      * <p>
      * @param pathname  The pathname to use for the file when stored at
      *                  the remote end of the transfer.
@@ -931,8 +931,8 @@ public class FTP extends TelnetClient
      * A convenience method to send the FTP STOU command to the server,
      * receive the reply, and return the reply code.  Remember, it is up
      * to you to manage the data connection.  If you don't need this low
-     * level of access, use <a href="org.apache.commons.net.ftp.FTPClient.html">
-     * FTPClient</a>, which will handle all low level details for you.
+     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
+     * , which will handle all low level details for you.
      * <p>
      * @return The reply code received from the server.
      * @exception FTPConnectionClosedException
@@ -952,8 +952,8 @@ public class FTP extends TelnetClient
      * A convenience method to send the FTP STOU command to the server,
      * receive the reply, and return the reply code.  Remember, it is up
      * to you to manage the data connection.  If you don't need this low
-     * level of access, use <a href="org.apache.commons.net.ftp.FTPClient.html">
-     * FTPClient</a>, which will handle all low level details for you.
+     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
+     * , which will handle all low level details for you.
      * @param pathname  The base pathname to use for the file when stored at
      *                  the remote end of the transfer.  Some FTP servers
      *                  require this.
@@ -975,8 +975,8 @@ public class FTP extends TelnetClient
      * A convenience method to send the FTP APPE command to the server,
      * receive the reply, and return the reply code.  Remember, it is up
      * to you to manage the data connection.  If you don't need this low
-     * level of access, use <a href="org.apache.commons.net.ftp.FTPClient.html">
-     * FTPClient</a>, which will handle all low level details for you.
+     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
+     * , which will handle all low level details for you.
      * <p>
      * @param pathname  The pathname to use for the file when stored at
      *                  the remote end of the transfer.
@@ -1170,8 +1170,8 @@ public class FTP extends TelnetClient
      * A convenience method to send the FTP LIST command to the server,
      * receive the reply, and return the reply code.  Remember, it is up
      * to you to manage the data connection.  If you don't need this low
-     * level of access, use <a href="org.apache.commons.net.ftp.FTPClient.html">
-     * FTPClient</a>, which will handle all low level details for you.
+     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
+     * , which will handle all low level details for you.
      * <p>
      * @return The reply code received from the server.
      * @exception FTPConnectionClosedException
@@ -1191,8 +1191,8 @@ public class FTP extends TelnetClient
      * A convenience method to send the FTP LIST command to the server,
      * receive the reply, and return the reply code.  Remember, it is up
      * to you to manage the data connection.  If you don't need this low
-     * level of access, use <a href="org.apache.commons.net.ftp.FTPClient.html">
-     * FTPClient</a>, which will handle all low level details for you.
+     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
+     * , which will handle all low level details for you.
      * <p>
      * @param pathname  The pathname to list.
      * @return The reply code received from the server.
@@ -1213,8 +1213,8 @@ public class FTP extends TelnetClient
      * A convenience method to send the FTP NLST command to the server,
      * receive the reply, and return the reply code.  Remember, it is up
      * to you to manage the data connection.  If you don't need this low
-     * level of access, use <a href="org.apache.commons.net.ftp.FTPClient.html">
-     * FTPClient</a>, which will handle all low level details for you.
+     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
+     * , which will handle all low level details for you.
      * <p>
      * @return The reply code received from the server.
      * @exception FTPConnectionClosedException
@@ -1234,8 +1234,8 @@ public class FTP extends TelnetClient
      * A convenience method to send the FTP NLST command to the server,
      * receive the reply, and return the reply code.  Remember, it is up
      * to you to manage the data connection.  If you don't need this low
-     * level of access, use <a href="org.apache.commons.net.ftp.FTPClient.html">
-     * FTPClient</a>, which will handle all low level details for you.
+     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
+     * , which will handle all low level details for you.
      * <p>
      * @param pathname  The pathname to list.
      * @return The reply code received from the server.
