@@ -21,11 +21,24 @@
   </properties>
 
   <body>
-    <release version="1.2.0-dev" date="In CVS">
+    <release version="1.2.0-rc1" date="April 19, 2004">
+      <action dev="scohen" type="fix">
+      	Mario Ivankovits &lt;mario@ops.co.at&gt; added
+      	functionality supporting correct handling of the &quot;dirstyle&quot; 
+      	attribute of NT and OS400 servers that allows them to mimic Unix ftp servers.
+      	and a bug fix affecting handling of sticky and suid bits on Unix FTP servers.
+      </action>
+      <action dev="scohen" type="add">
+      	Mario Ivankovits &lt;mario@ops.co.at&gt; added parser for OS400.
+      </action>
+	  <action dev="jbrekke,scohen" type="fix">
+	  	Added a functional junit test testing list parsing against real servers 
+	  	and fix several	bugs found through this test.
+	  </action>
       <action dev="dfs" type="add">
         Ted Wise &lt;ctwise@bellsouth.net&gt; provided a
         <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=24078">
-        patche</a> to add the XHDR extended NNTP command.
+        patch</a> to add the XHDR extended NNTP command.
       </action>
       <action dev="scohen,dfs" type="update">
         Deprecated FTPFileListParser interface, DefaultFTPFileListParser
@@ -42,6 +55,7 @@
         autodetection.
       </action>
     </release>
+    
     <release version="1.1.1" date="TBD">
       <action dev="scohen" type="fix">
         Removed all JDK 1.1 incompatibilities that had been introduced
@@ -52,6 +66,7 @@
         and later.
       </action>
     </release>
+
     <release version="1.1.0" date="October 23, 2003">
       <action dev="dfs" type="add">
         Rory Winston &lt;Rory.Winston@telewest.co.uk&gt; provided
@@ -71,6 +86,7 @@
         drwxr-xr-x 1 usernameftp 512 Jan 29 23:32 prog
         </pre>
       </action>
+
       <action dev="dfs" type="fix">
         Applied variation of fix suggested by Matthieu Recouly
         &lt;matthieu.recouly@laposte.net&gt; so that
