@@ -269,12 +269,13 @@ public class FTPClient extends FTP
     private void __initDefaults()
     {
         __dataConnectionMode = ACTIVE_LOCAL_DATA_CONNECTION_MODE;
-        __passiveHost = null;
-        __passivePort = -1;
-        __fileType = FTP.ASCII_FILE_TYPE;
-        __fileStructure = FTP.FILE_STRUCTURE;
-        __fileFormat = FTP.NON_PRINT_TEXT_FORMAT;
-        __fileTransferMode = FTP.STREAM_TRANSFER_MODE;
+        __passiveHost        = null;
+        __passivePort        = -1;
+        __fileType           = FTP.ASCII_FILE_TYPE;
+        __fileStructure      = FTP.FILE_STRUCTURE;
+        __fileFormat         = FTP.NON_PRINT_TEXT_FORMAT;
+        __fileTransferMode   = FTP.STREAM_TRANSFER_MODE;
+        __restartOffset      = 0;
     }
 
     private String __parsePathname(String reply)
