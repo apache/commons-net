@@ -109,6 +109,11 @@ public class POP3 extends SocketClient
     static final String _OK = "+OK";
     static final String _ERROR = "-ERR";
 
+    // We have to ensure that the protocol communication is in ASCII
+    // but we use ISO-8859-1 just in case 8-bit characters cross
+    // the wire.
+    private static final String __DEFAULT_ENCODING = "ISO-8859-1";
+
     private int __popState;
     private BufferedWriter __writer;
     private StringBuffer __commandBuffer;
@@ -173,8 +178,12 @@ public class POP3 extends SocketClient
     protected void _connectAction_() throws IOException
     {
         super._connectAction_();
-        _reader = new BufferedReader(new InputStreamReader(_input_));
-        __writer = new BufferedWriter(new OutputStreamWriter(_output_));
+        _reader =
+          new BufferedReader(new InputStreamReader(_input_,
+                                                   __DEFAULT_ENCODING));
+        __writer =
+          new BufferedWriter(new OutputStreamWriter(_output_,
+                                                    __DEFAULT_ENCODING));
         __getReply();
         setState(AUTHORIZATION_STATE);
     }

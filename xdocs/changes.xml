@@ -16,6 +16,18 @@
       </action>
 -->
       <action dev="dfs" type="fix">
+        Changed connection hooks for FTP, SMTP, POP3, and NNTP classes
+        to force use of an 8-bit US-ASCII superset (ISO-8859-1) for
+        protocol communication.  This was necessary because
+        InputStreamReader and OutputStreamWriter use the default
+        client-side character set encoding.  fasselin@ca.ibm.com
+        reported failure of SMTP on OS/390 which has EBCDIC as the
+        native character set.
+        <pre>
+        drwxr-xr-x 1 usernameftp 512 Jan 29 23:32 prog
+        </pre>
+      </action>
+      <action dev="dfs" type="fix">
         Applied variation of fix suggested by Matthieu Recouly
         &lt;matthieu.recouly@laposte.net&gt; so that
         UnixFTPEntryParser may handle listings of the form

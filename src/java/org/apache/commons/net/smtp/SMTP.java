@@ -125,6 +125,11 @@ public class SMTP extends SocketClient
     /*** The default SMTP port (25). ***/
     public static final int DEFAULT_PORT = 25;
 
+    // We have to ensure that the protocol communication is in ASCII
+    // but we use ISO-8859-1 just in case 8-bit characters cross
+    // the wire.
+    private static final String __DEFAULT_ENCODING = "ISO-8859-1";
+
     private StringBuffer __commandBuffer;
 
     BufferedReader _reader;
@@ -258,9 +263,11 @@ public class SMTP extends SocketClient
     {
         super._connectAction_();
         _reader =
-            new BufferedReader(new InputStreamReader(_input_));
+            new BufferedReader(new InputStreamReader(_input_,
+                                                     __DEFAULT_ENCODING));
         _writer =
-            new BufferedWriter(new OutputStreamWriter(_output_));
+            new BufferedWriter(new OutputStreamWriter(_output_,
+                                                      __DEFAULT_ENCODING));
         __getReply();
     }
 
@@ -781,3 +788,11 @@ public class SMTP extends SocketClient
     }
 
 }
+
+/* Emacs configuration
+ * Local variables:        **
+ * mode:             java  **
+ * c-basic-offset:   4     **
+ * indent-tabs-mode: nil   **
+ * End:                    **
+ */

@@ -120,6 +120,11 @@ public class NNTP extends SocketClient
     /*** The default NNTP port.  Its value is 119 according to RFC 977. ***/
     public static final int DEFAULT_PORT = 119;
 
+    // We have to ensure that the protocol communication is in ASCII
+    // but we use ISO-8859-1 just in case 8-bit characters cross
+    // the wire.
+    private static final String __DEFAULT_ENCODING = "ISO-8859-1";
+
     private StringBuffer __commandBuffer;
 
     boolean _isAllowedToPost;
@@ -204,9 +209,11 @@ public class NNTP extends SocketClient
     {
         super._connectAction_();
         _reader_ =
-            new BufferedReader(new InputStreamReader(_input_));
+            new BufferedReader(new InputStreamReader(_input_,
+                                                     __DEFAULT_ENCODING));
         _writer_ =
-            new BufferedWriter(new OutputStreamWriter(_output_));
+            new BufferedWriter(new OutputStreamWriter(_output_,
+                                                      __DEFAULT_ENCODING));
         __getReply();
 
         _isAllowedToPost = (_replyCode == NNTPReply.SERVER_READY_POSTING_ALLOWED);

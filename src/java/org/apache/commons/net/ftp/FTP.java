@@ -244,6 +244,10 @@ public class FTP extends TelnetClient
      ***/
     public static final int COMPRESSED_TRANSFER_MODE = 12;
 
+    // We have to ensure that the protocol communication is in ASCII
+    // but we use ISO-8859-1 just in case 8-bit characters cross
+    // the wire.
+    private static final String __DEFAULT_ENCODING = "ISO-8859-1";
     private static final String __modes = "ABILNTCFRPSBC";
 
     private StringBuffer __commandBuffer;
@@ -349,9 +353,11 @@ public class FTP extends TelnetClient
     {
         super._connectAction_();
         _controlInput =
-            new BufferedReader(new InputStreamReader(getInputStream()));
+            new BufferedReader(new InputStreamReader(getInputStream(),
+                                                     __DEFAULT_ENCODING));
         _controlOutput =
-            new BufferedWriter(new OutputStreamWriter(getOutputStream()));
+            new BufferedWriter(new OutputStreamWriter(getOutputStream(),
+                                                      __DEFAULT_ENCODING));
         __getReply();
         // If we received code 120, we have to fetch completion reply.
         if (FTPReply.isPositivePreliminary(_replyCode))
