@@ -25,11 +25,11 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  * through an SMTP server.  This class takes care of all
  * low level details of interacting with an SMTP server and provides
  * a convenient higher level interface.  As with all classes derived
- * from <a href="org.apache.commons.net.SocketClient.html"> SocketClient </a>,
+ * from {@link org.apache.commons.net.SocketClient},
  * you must first connect to the server with
- * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
+ * {@link org.apache.commons.net.SocketClient#connect  connect }
  * before doing anything, and finally
- * <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
+ * {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
  * after you're completely finished interacting with the server.
  * Then you need to check the SMTP reply code to see if the connection
  * was successful.  For example:
@@ -75,7 +75,7 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  * containing the higher level data produced by the SMTP command, or null if a
  * reply resulted in an error condition or failure.  If you want to access
  * the exact SMTP reply code causing a success or failure, you must call
- * <a href="org.apache.commons.net.smtp.SMTP.html#getReplyCode"> getReplyCode </a> after
+ * {@link org.apache.commons.net.smtp.SMTP#getReplyCode  getReplyCode } after
  * a success or failure.
  * <p>
  * You should keep in mind that the SMTP server may choose to prematurely
@@ -93,13 +93,13 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  * catch block.  When you encounter an
  * <a href="org.apache.commons.net.smtp.SMTPConnectionClosedException.html">
  * SMTPConnectionClosedException </a>, you must disconnect the connection with
- * <a href="#disconnect"> disconnect() </a> to properly clean up the
+ * {@link #disconnect  disconnect() } to properly clean up the
  * system resources used by SMTPClient.  Before disconnecting, you may check
  * the last reply code and text with
- * <a href="org.apache.commons.net.smtp.SMTP.html#getReplyCode"> getReplyCode </a>,
- * <a href="org.apache.commons.net.smtp.SMTP.html#getReplyString"> getReplyString </a>,
+ * {@link org.apache.commons.net.smtp.SMTP#getReplyCode  getReplyCode },
+ * {@link org.apache.commons.net.smtp.SMTP#getReplyString  getReplyString },
  * and
- * <a href="org.apache.commons.net.smtp.SMTP.html#getReplyStrings">getReplyStrings</a>.
+ * {@link org.apache.commons.net.smtp.SMTP#getReplyStrings getReplyStrings}.
  * <p>
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
@@ -130,7 +130,7 @@ public class SMTPClient extends SMTP
 
 
     /***
-     * At least one SMTPClient method (<a href="#sendMessage"> sendMessage </a>)
+     * At least one SMTPClient method ({@link #sendMessageData  sendMessageData })
      * does not complete the entire sequence of SMTP commands to complete a
      * transaction.  These types of commands require some action by the
      * programmer after the reception of a positive intermediate command.
@@ -321,7 +321,7 @@ public class SMTPClient extends SMTP
      * do not follow these requirements your program will not work properly.
      * <p>
      * You can use the provided
-     * <a href="org.apache.commons.net.smtp.SimpleSMTPHeader.html"> SimpleSMTPHeader </a>
+     * {@link org.apache.commons.net.smtp.SimpleSMTPHeader}
      * class to construct a bare minimum header.
      * To construct more complicated headers you should
      * refer to RFC 822.  When the Java Mail API is finalized, you will be
@@ -331,7 +331,7 @@ public class SMTPClient extends SMTP
      * you have to worry about is writing the header and the message.
      * <p>
      * Upon closing the returned Writer, you need to call
-     * <a href="#completePendingCommand"> completePendingCommand() </a>
+     * {@link #completePendingCommand  completePendingCommand() }
      * to finalize the transaction and verify its success or failure from
      * the server reply.
      * <p>
@@ -356,7 +356,7 @@ public class SMTPClient extends SMTP
 
     /***
      * A convenience method for sending short messages.  This method fetches
-     * the Writer returned by <a href="#sendMessageData"> sendMessageData() </a>
+     * the Writer returned by {@link #sendMessageData  sendMessageData() }
      * and writes the specified String to it.  After writing the message,
      * this method calls <a href="#completePendingCommand">
      * completePendingCommand() </a> to finalize the transaction and returns
@@ -392,9 +392,9 @@ public class SMTPClient extends SMTP
      * A convenience method for a sending short email without having to
      * explicitly set the sender and recipient(s).  This method
      * sets the sender and recipient using
-     * <a href="#setSender"> setSender </a> and
-     * <a href="#addRecipient"> addRecipient </a>, and then sends the
-     * message using <a href="#sendShortMessageData"> sendShortMessageData </a>.
+     * {@link #setSender  setSender } and
+     * {@link #addRecipient  addRecipient }, and then sends the
+     * message using {@link #sendShortMessageData  sendShortMessageData }.
      * <p>
      * @param sender  The email address of the sender.
      * @param recipient  The email address of the recipient.
@@ -427,9 +427,9 @@ public class SMTPClient extends SMTP
      * A convenience method for a sending short email without having to
      * explicitly set the sender and recipient(s).  This method
      * sets the sender and recipients using
-     * <a href="#setSender"> setSender </a> and
-     * <a href="#addRecipient"> addRecipient </a>, and then sends the
-     * message using <a href="#sendShortMessageData"> sendShortMessageData </a>.
+     * {@link #setSender  setSender } and
+     * {@link #addRecipient  addRecipient }, and then sends the
+     * message using {@link #sendShortMessageData  sendShortMessageData }.
      * <p>
      * @param sender  The email address of the sender.
      * @param recipients  An array of recipient email addresses.

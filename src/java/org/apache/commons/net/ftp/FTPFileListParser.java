@@ -20,7 +20,7 @@ import java.io.InputStream;
 /***
  * FTPFileListParser defines the interface for parsing FTP file listings
  * and converting that information into an array of
- * <a href="org.apache.commons.net.ftp.FTPFile.html"> FTPFile </a> instances.
+ * {@link org.apache.commons.net.ftp.FTPFile} instances.
  * Sometimes you will want to parse unusual listing formats, in which
  * case you would create your own implementation of FTPFileListParser and
  * if necessary, subclass FTPFile.

@@ -23,7 +23,7 @@ import java.net.SocketException;
  * of client objects accessing datagram sockets.  It is meant to be
  * subclassed to avoid having to rewrite the same code over and over again
  * to open a socket, close a socket, set timeouts, etc.  Of special note
- * is the <a href="#setDatagramSocketFactory"> setDatagramSocketFactory </a>
+ * is the {@link #setDatagramSocketFactory  setDatagramSocketFactory }
  * method, which allows you to control the type of DatagramSocket the
  * DatagramSocketClient creates for network communications.  This is
  * especially useful for adding things like proxy support as well as better
@@ -33,7 +33,7 @@ import java.net.SocketException;
  * DatagramSocketFactory </a> that
  * requests browser security capabilities before creating a socket.
  * All classes derived from DatagramSocketClient should use the
- * <a href="#_socketFactory_"> _socketFactory_ </a> member variable to
+ * {@link #_socketFactory_  _socketFactory_ } member variable to
  * create DatagramSocket instances rather than instantiating
  * them by directly invoking a constructor.  By honoring this contract
  * you guarantee that a user will always be able to provide his own
@@ -83,7 +83,7 @@ public abstract class DatagramSocketClient
     /***
      * Opens a DatagramSocket on the local host at the first available port.
      * Also sets the timeout on the socket to the default timeout set
-     * by <a href="#setDefaultTimeout"> setDefaultTimeout() </a>.
+     * by {@link #setDefaultTimeout  setDefaultTimeout() }.
      * <p>
      * _isOpen_ is set to true after calling this method and _socket_
      * is set to the newly opened socket.
@@ -102,7 +102,7 @@ public abstract class DatagramSocketClient
     /***
      * Opens a DatagramSocket on the local host at a specified port.
      * Also sets the timeout on the socket to the default timeout set
-     * by <a href="#setDefaultTimeout"> setDefaultTimeout() </a>.
+     * by {@link #setDefaultTimeout  setDefaultTimeout() }.
      * <p>
      * _isOpen_ is set to true after calling this method and _socket_
      * is set to the newly opened socket.
@@ -123,7 +123,7 @@ public abstract class DatagramSocketClient
      * Opens a DatagramSocket at the specified address on the local host
      * at a specified port.
      * Also sets the timeout on the socket to the default timeout set
-     * by <a href="#setDefaultTimeout"> setDefaultTimeout() </a>.
+     * by {@link #setDefaultTimeout  setDefaultTimeout() }.
      * <p>
      * _isOpen_ is set to true after calling this method and _socket_
      * is set to the newly opened socket.
@@ -145,7 +145,7 @@ public abstract class DatagramSocketClient
     /***
      * Closes the DatagramSocket used for the connection.
      * You should call this method after you've finished using the class
-     * instance and also before you call <a href="#open">open() </a>
+     * instance and also before you call {@link #open open() }
      * again.   _isOpen_ is set to false and  _socket_ is set to null.
      * If you call this method when the client socket is not open,
      * a NullPointerException is thrown.
@@ -172,8 +172,8 @@ public abstract class DatagramSocketClient
     /***
      * Set the default timeout in milliseconds to use when opening a socket.
      * After a call to open, the timeout for the socket is set using this value.
-     * This method should be used prior to a call to <a href="#open">open()</a>
-     * and should not be confused with <a href="#setSoTimeout">setSoTimeout()</a>
+     * This method should be used prior to a call to {@link #open open()}
+     * and should not be confused with {@link #setSoTimeout setSoTimeout()}
      * which operates on the currently open socket.  _timeout_ contains
      * the new timeout value.
      * <p>
@@ -202,7 +202,7 @@ public abstract class DatagramSocketClient
     /***
      * Set the timeout in milliseconds of a currently open connection.
      * Only call this method after a connection has been opened
-     * by <a href="#open">open()</a>.
+     * by {@link #open open()}.
      * <p>
      * @param timeout  The timeout in milliseconds to use for the currently
      *                 open datagram socket connection.

@@ -20,12 +20,12 @@ package org.apache.commons.net.tftp;
  * a TFTP packet.  It is not declared final so that it may be subclassed
  * to identify more specific errors.  You would only want to do this if
  * you were building your own TFTP client or server on top of the
- * <a href="org.apache.commons.net.tftp.TFTP.html#_top_">TFTP</a>
+ * {@link org.apache.commons.net.tftp.TFTP}
  * class if you
  * wanted more functionality than the
- * <a href="org.apache.commons.net.tftp.TFTPClient.html#receiveFile">receiveFile()</a>
+ * {@link org.apache.commons.net.tftp.TFTPClient#receiveFile receiveFile()}
  * and
- * <a href="org.apache.commons.net.tftp.TFTPClient.html#sendFile">sendFile()</a>
+ * {@link org.apache.commons.net.tftp.TFTPClient#sendFile sendFile()}
  * methods provide.
  * <p>
  * <p>

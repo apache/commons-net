@@ -18,21 +18,21 @@ import java.io.IOException;
 
 /***
  * RLoginClient is very similar to
- * <a href="org.apache.commons.net.bsd.RCommandClient.html"> RCommandClient </a>,
+ * {@link org.apache.commons.net.bsd.RCommandClient},
  * from which it is derived, and uses the rcmd() facility implemented
  * in RCommandClient to implement the functionality of the rlogin command that
  * first appeared in 4.2BSD Unix.  rlogin is a command used to login to
  * a remote machine from a trusted host, sometimes without issuing a
  * password.  The trust relationship is the same as described in
  * the documentation for
- * <a href="org.apache.commons.net.bsd.RCommandClient.html"> RCommandClient </a>.
+ * {@link org.apache.commons.net.bsd.RCommandClient}.
  * <p>
  * As with virtually all of the client classes in org.apache.commons.net, this
  * class derives from SocketClient.  But it relies on the connection
  * methods defined  in RcommandClient which ensure that the local Socket
  * will originate from an acceptable rshell port.  The way to use
  * RLoginClient is to first connect
- * to the server, call the <a href="#rlogin"> rlogin() </a> method,
+ * to the server, call the {@link #rlogin  rlogin() } method,
  * and then
  * fetch the connection's input and output streams.
  * Interaction with the remote command is controlled entirely through the
@@ -87,7 +87,7 @@ public class RLoginClient extends RCommandClient
      * standard output.  You will typically be able to detect
      * the termination of the remote login shell after reaching end of file
      * on its standard output (accessible through
-     * <a href="#getInputStream"> getInputStream() </a>.  Disconnecting
+     * {@link #getInputStream  getInputStream() }.  Disconnecting
      * from the server or closing the process streams before reaching
      * end of file will terminate the remote login shell in most cases.
      * <p>

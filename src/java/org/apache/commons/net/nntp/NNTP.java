@@ -29,7 +29,7 @@ import org.apache.commons.net.SocketClient;
  * The NNTP class is not meant to be used by itself and is provided
  * only so that you may easily implement your own NNTP client if
  * you so desire.  If you have no need to perform your own implementation,
- * you should use <a href="org.apache.commons.net.nntp.NNTPClient.html">NNTPClient</a>.
+ * you should use {@link org.apache.commons.net.nntp.NNTPClient}.
  * The NNTP class is made public to provide access to various NNTP constants
  * and to make it easier for adventurous programmers (or those with special
  * needs) to interact with the NNTP protocol and implement their own clients.
@@ -53,11 +53,11 @@ import org.apache.commons.net.SocketClient;
  * catch block.  When you encounter an
  * <a href="org.apache.commons.net.nntp.NNTPConnectionClosedException.html">
  * NNTPConnectionClosedException </a>, you must disconnect the connection with
- * <a href="#disconnect"> disconnect() </a> to properly clean up the
+ * {@link #disconnect  disconnect() } to properly clean up the
  * system resources used by NNTP.  Before disconnecting, you may check the
  * last reply code and text with
- * <a href="#getReplyCode"> getReplyCode </a> and
- * <a href="#getReplyString"> getReplyString </a>.
+ * {@link #getReplyCode  getReplyCode } and
+ * {@link #getReplyString  getReplyString }.
  * <p>
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
@@ -184,7 +184,7 @@ public class NNTP extends SocketClient
 
     /***
      * Adds a ProtocolCommandListener.  Delegates this task to
-     * <a href="#_commandSupport_"> _commandSupport_ </a>.
+     * {@link #_commandSupport_  _commandSupport_ }.
      * <p>
      * @param listener  The ProtocolCommandListener to add.
      ***/
@@ -195,7 +195,7 @@ public class NNTP extends SocketClient
 
     /***
      * Removes a ProtocolCommandListener.  Delegates this task to
-     * <a href="#_commandSupport_"> _commandSupport_ </a>.
+     * {@link #_commandSupport_  _commandSupport_ }.
      * <p>
      * @param listener  The ProtocolCommandListener to remove.
      ***/
@@ -239,7 +239,7 @@ public class NNTP extends SocketClient
      * Sends an NNTP command to the server, waits for a reply and returns the
      * numerical response code.  After invocation, for more detailed
      * information, the actual reply text can be accessed by calling
-     * <a href="#getReplyString"> getReplyString </a>.
+     * {@link #getReplyString  getReplyString }.
      * <p>
      * @param command  The text representation of the  NNTP command to send.
      * @param args The arguments to the NNTP command.  If this parameter is
@@ -283,7 +283,7 @@ public class NNTP extends SocketClient
      * Sends an NNTP command to the server, waits for a reply and returns the
      * numerical response code.  After invocation, for more detailed
      * information, the actual reply text can be accessed by calling
-     * <a href="#getReplyString"> getReplyString </a>.
+     * {@link #getReplyString  getReplyString }.
      * <p>
      * @param command  The NNTPCommand constant corresponding to the NNTP command
      *                 to send.
@@ -310,7 +310,7 @@ public class NNTP extends SocketClient
      * Sends an NNTP command with no arguments to the server, waits for a
      * reply and returns the numerical response code.  After invocation, for
      * more detailed information, the actual reply text can be accessed by
-     * calling <a href="#getReplyString"> getReplyString </a>.
+     * calling {@link #getReplyString  getReplyString }.
      * <p>
      * @param command  The text representation of the  NNTP command to send.
      * @return The integer value of the NNTP reply code returned by the server
@@ -334,7 +334,7 @@ public class NNTP extends SocketClient
      * Sends an NNTP command with no arguments to the server, waits for a
      * reply and returns the numerical response code.  After invocation, for
      * more detailed information, the actual reply text can be accessed by
-     * calling <a href="#getReplyString"> getReplyString </a>.
+     * calling {@link #getReplyString  getReplyString }.
      * <p>
      * @param command  The NNTPCommand constant corresponding to the NNTP command
      *                 to send.
@@ -371,7 +371,7 @@ public class NNTP extends SocketClient
     /***
      * Fetches a reply from the NNTP server and returns the integer reply
      * code.  After calling this method, the actual reply text can be accessed
-     * from <a href="#getReplyString"> getReplyString </a>.  Only use this
+     * from {@link #getReplyString  getReplyString }.  Only use this
      * method if you are implementing your own NNTP client or if you need to
      * fetch a secondary response from the NNTP server.
      * <p>

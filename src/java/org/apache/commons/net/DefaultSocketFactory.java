@@ -24,7 +24,7 @@ import java.net.UnknownHostException;
  * DefaultSocketFactory implements the SocketFactory interface by
  * simply wrapping the java.net.Socket and java.net.ServerSocket
  * constructors.  It is the default SocketFactory used by
- * <a href="org.apache.commons.net.SocketClient.html"> SocketClient </a>
+ * {@link org.apache.commons.net.SocketClient}
  * implementations.
  * <p>
  * <p>

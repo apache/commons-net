@@ -30,13 +30,13 @@ import org.apache.commons.net.io.ToNetASCIIOutputStream;
  * <p>
  * The class can be used by first connecting to a server using the
  * SocketClient
- * <a href="org.apache.commons.net.SocketClient.html#connect">connect</a>
+ * {@link org.apache.commons.net.SocketClient#connect connect}
  * method.  Then an InputStream and OutputStream for sending and
  * receiving data over the Telnet connection can be obtained by
- * using the <a href="#getInputStream"> getInputStream() </a> and
- * <a href="#getOutputStream"> getOutputStream() </a> methods.
+ * using the {@link #getInputStream  getInputStream() } and
+ * {@link #getOutputStream  getOutputStream() } methods.
  * When you finish using the streams, you must call
- * <a href="#disconnect"> disconnect </a> rather than simply
+ * {@link #disconnect  disconnect } rather than simply
  * closing the streams.
  * <p>
  * <p>
@@ -129,7 +129,7 @@ public class TelnetClient extends Telnet
     /***
      * Returns the telnet connection output stream.  You should not close the
      * stream when you finish with it.  Rather, you should call
-     * <a href="#disconnect"> disconnect </a>.
+     * {@link #disconnect  disconnect }.
      * <p>
      * @return The telnet connection output stream.
      ***/
@@ -141,7 +141,7 @@ public class TelnetClient extends Telnet
     /***
      * Returns the telnet connection input stream.  You should not close the
      * stream when you finish with it.  Rather, you should call
-     * <a href="#disconnect"> disconnect </a>.
+     * {@link #disconnect  disconnect }.
      * <p>
      * @return The telnet connection input stream.
      ***/

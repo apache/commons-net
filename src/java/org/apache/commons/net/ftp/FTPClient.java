@@ -37,11 +37,11 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
  * retrieve files from an FTP server.  This class takes care of all
  * low level details of interacting with an FTP server and provides
  * a convenient higher level interface.  As with all classes derived
- * from <a href="org.apache.commons.net.SocketClient.html"> SocketClient </a>,
+ * from {@link org.apache.commons.net.SocketClient},
  * you must first connect to the server with
- * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
+ * {@link org.apache.commons.net.SocketClient#connect  connect }
  * before doing anything, and finally
- * <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
+ * {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
  * after you're completely finished interacting with the server.
  * Then you need to check the FTP reply code to see if the connection
  * was successful.  For example:
@@ -85,7 +85,7 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
  * containing the higher level data produced by the FTP command, or null if a
  * reply resulted in an error condition or failure.  If you want to access
  * the exact FTP reply code causing a success or failure, you must call
- * <a href="org.apache.commons.net.ftp.FTP.html#getReplyCode"> getReplyCode </a> after
+ * {@link org.apache.commons.net.ftp.FTP#getReplyCode  getReplyCode } after
  * a success or failure.
  * <p>
  * The default settings for FTPClient are for it to use
@@ -101,7 +101,7 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
  * must create your own filter InputStreams and OutputStreams and wrap
  * them around the streams returned or required by the FTPClient methods.
  * FTPClient uses the NetASCII filter streams in
- * <a href="Package-org.apache.commons.net.io.html"> org.apache.commons.net.io </a> to provide
+ * {@link org.apache.commons.net.io} to provide
  * transparent handling of ASCII files.  We will consider incorporating
  * EBCDIC support if there is enough demand.
  * <p>
@@ -123,7 +123,7 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
  * party (host and port).  If a data connection is initiated by an unexpected
  * party, the command will close the socket and throw an IOException.  You
  * may disable this behavior with
- * <a href="#setRemoteVerificationEnabled">setRemoteVerificationEnabled()</a>.
+ * {@link #setRemoteVerificationEnabled setRemoteVerificationEnabled()}.
  * <p>
  * You should keep in mind that the FTP server may choose to prematurely
  * close a connection if the client has been idle for longer than a
@@ -141,13 +141,13 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
  * catch block.  When you encounter an
  * <a href="org.apache.commons.net.ftp.FTPConnectionClosedException.html">
  * FTPConnectionClosedException </a>, you must disconnect the connection with
- * <a href="#disconnect"> disconnect() </a> to properly clean up the
+ * {@link #disconnect  disconnect() } to properly clean up the
  * system resources used by FTPClient.  Before disconnecting, you may check the
  * last reply code and text with
- * <a href="org.apache.commons.net.ftp.FTP.html#getReplyCode"> getReplyCode </a>,
- * <a href="org.apache.commons.net.ftp.FTP.html#getReplyString"> getReplyString </a>,
+ * {@link org.apache.commons.net.ftp.FTP#getReplyCode  getReplyCode },
+ * {@link org.apache.commons.net.ftp.FTP#getReplyString  getReplyString },
  * and
- * <a href="org.apache.commons.net.ftp.FTP.html#getReplyStrings"> getReplyStrings</a>.
+ * {@link org.apache.commons.net.ftp.FTP#getReplyStrings  getReplyStrings}.
  * You may avoid server disconnections while the client is idle by
  * periodicaly sending NOOP commands to the server.
  * <p>
@@ -792,7 +792,7 @@ public class FTPClient extends FTP
      * data transfers.  The FTPClient will stay in
      * <code> PASSIVE_LOCAL_DATA_CONNECTION_MODE </code> until the
      * mode is changed by calling some other method such as
-     * <a href="#enterLocalActiveMode"> enterLocalActiveMode() </a>
+     * {@link #enterLocalActiveMode  enterLocalActiveMode() }
      ***/
     public void enterLocalPassiveMode()
     {
@@ -813,7 +813,7 @@ public class FTPClient extends FTP
      * before EVERY server to server transfer attempt.  The FTPClient will
      * NOT automatically continue to issue PORT commands.  You also
      * must remember to call
-     * <a href="#enterLocalActiveMode"> enterLocalActiveMode() </a> if you
+     * {@link #enterLocalActiveMode  enterLocalActiveMode() } if you
      * wish to return to the normal data connection mode.
      * <p>
      * @param host The passive mode server accepting connections for data
@@ -851,7 +851,7 @@ public class FTPClient extends FTP
      * before EVERY server to server transfer attempt.  The FTPClient will
      * NOT automatically continue to issue PASV commands.  You also
      * must remember to call
-     * <a href="#enterLocalActiveMode"> enterLocalActiveMode() </a> if you
+     * {@link #enterLocalActiveMode  enterLocalActiveMode() } if you
      * wish to return to the normal data connection mode.
      * <p>
      * @return True if successfully completed, false if not.
@@ -879,10 +879,10 @@ public class FTPClient extends FTP
      * by the server when entering passive mode.  If not in passive mode,
      * returns null.  This method only returns a valid value AFTER a
      * data connection has been opened after a call to
-     * <a href="#enterLocalPassiveMode">enterLocalPassiveMode()</a>.
+     * {@link #enterLocalPassiveMode enterLocalPassiveMode()}.
      * This is because FTPClient sends a PASV command to the server only
      * just before opening a data connection, and not when you call
-     * <a href="#enterLocalPassiveMode">enterLocalPassiveMode()</a>.
+     * {@link #enterLocalPassiveMode enterLocalPassiveMode()}.
      * <p>
      * @return The passive host name if in passive mode, otherwise null.
      ***/
@@ -895,10 +895,10 @@ public class FTPClient extends FTP
      * If in passive mode, returns the data port of the passive host.
      * This method only returns a valid value AFTER a
      * data connection has been opened after a call to
-     * <a href="#enterLocalPassiveMode">enterLocalPassiveMode()</a>.
+     * {@link #enterLocalPassiveMode enterLocalPassiveMode()}.
      * This is because FTPClient sends a PASV command to the server only
      * just before opening a data connection, and not when you call
-     * <a href="#enterLocalPassiveMode">enterLocalPassiveMode()</a>.
+     * {@link #enterLocalPassiveMode enterLocalPassiveMode()}.
      * <p>
      * @return The data port of the passive server.  If not in passive
      *         mode, undefined.
@@ -1290,7 +1290,7 @@ public class FTPClient extends FTP
      * finish reading from it.  The InputStream itself will take care of
      * closing the parent data connection socket upon being closed.  To
      * finalize the file transfer you must call
-     * <a href="#completePendingCommand"> completePendingCommand </a> and
+     * {@link #completePendingCommand  completePendingCommand } and
      * check its return value to verify success.
      * <p>
      * @param remote  The name of the remote file.
@@ -1370,7 +1370,7 @@ public class FTPClient extends FTP
      * OutputStream when you finish writing to it.  The OutputStream itself
      * will take care of closing the parent data connection socket upon being
      * closed.  To finalize the file transfer you must call
-     * <a href="#completePendingCommand"> completePendingCommand </a> and
+     * {@link #completePendingCommand  completePendingCommand } and
      * check its return value to verify success.
      * <p>
      * @param remote  The name to give the remote file.
@@ -1430,7 +1430,7 @@ public class FTPClient extends FTP
      * OutputStream when you finish writing to it.  The OutputStream itself
      * will take care of closing the parent data connection socket upon being
      * closed.  To finalize the file transfer you must call
-     * <a href="#completePendingCommand"> completePendingCommand </a> and
+     * {@link #completePendingCommand  completePendingCommand } and
      * check its return value to verify success.
      * <p>
      * @param remote  The name of the remote file.
@@ -1493,7 +1493,7 @@ public class FTPClient extends FTP
      * OutputStream when you finish writing to it.  The OutputStream itself
      * will take care of closing the parent data connection socket upon being
      * closed.  To finalize the file transfer you must call
-     * <a href="#completePendingCommand"> completePendingCommand </a> and
+     * {@link #completePendingCommand  completePendingCommand } and
      * check its return value to verify success.
      * <p>
      * @param remote  The name on which to base the unique name given to
@@ -1553,7 +1553,7 @@ public class FTPClient extends FTP
      * OutputStream when you finish writing to it.  The OutputStream itself
      * will take care of closing the parent data connection socket upon being
      * closed.  To finalize the file transfer you must call
-     * <a href="#completePendingCommand"> completePendingCommand </a> and
+     * {@link #completePendingCommand  completePendingCommand } and
      * check its return value to verify success.
      * <p>
      * @return An OutputStream through which the remote file can be written.  If

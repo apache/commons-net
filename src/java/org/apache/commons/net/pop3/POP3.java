@@ -32,7 +32,7 @@ import org.apache.commons.net.SocketClient;
  * The POP3 class is not meant to be used by itself and is provided
  * only so that you may easily implement your own POP3 client if
  * you so desire.  If you have no need to perform your own implementation,
- * you should use <a href="org.apache.commons.net.pop3.POP3Client.html">POP3Client</a>.
+ * you should use {@link org.apache.commons.net.pop3.POP3Client}.
  * <p>
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
@@ -151,7 +151,7 @@ public class POP3 extends SocketClient
 
     /***
      * Adds a ProtocolCommandListener.  Delegates this task to
-     * <a href="#_commandSupport_"> _commandSupport_ </a>.
+     * {@link #_commandSupport_  _commandSupport_ }.
      * <p>
      * @param listener  The ProtocolCommandListener to add.
      ***/
@@ -162,7 +162,7 @@ public class POP3 extends SocketClient
 
     /***
      * Removes a ProtocolCommandListener.  Delegates this task to
-     * <a href="#_commandSupport_"> _commandSupport_ </a>.
+     * {@link #_commandSupport_  _commandSupport_ }.
      * <p>
      * @param listener  The ProtocolCommandListener to remove.
      ***/
@@ -307,10 +307,10 @@ public class POP3 extends SocketClient
      * sent to the server.  The lines have end of lines truncated.  If
      * the reply is a single line, but its format ndicates it should be
      * a multiline reply, then you must call
-     * <a href="#getAdditionalReply"> getAdditionalReply() </a> to
+     * {@link #getAdditionalReply  getAdditionalReply() } to
      * fetch the rest of the reply, and then call <code>getReplyStrings</code>
      * again.  You only have to worry about this if you are implementing
-     * your own client using the <a href="#sendComand"> sendCommand </a> methods.
+     * your own client using the {@link #sendCommand  sendCommand } methods.
      * <p>
      * @return The last server response.
      ***/
@@ -327,10 +327,10 @@ public class POP3 extends SocketClient
      * The value is a single string containing all the reply lines including
      * newlines.  If the reply is a single line, but its format ndicates it
      * should be a multiline reply, then you must call
-     * <a href="#getAdditionalReply"> getAdditionalReply() </a> to
+     * {@link #getAdditionalReply  getAdditionalReply() } to
      * fetch the rest of the reply, and then call <code>getReplyString</code>
      * again.  You only have to worry about this if you are implementing
-     * your own client using the <a href="#sendComand"> sendCommand </a> methods.
+     * your own client using the {@link #sendCommand  sendCommand } methods.
      * <p>
      * @return The last server response.
      ***/

@@ -30,16 +30,16 @@ import org.apache.commons.net.MalformedServerReplyException;
 /***
  * NNTPClient encapsulates all the functionality necessary to post and
  * retrieve articles from an NNTP server.  As with all classes derived
- * from <a href="org.apache.commons.net.SocketClient.html"> SocketClient </a>,
+ * from {@link org.apache.commons.net.SocketClient},
  * you must first connect to the server with
- * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
+ * {@link org.apache.commons.net.SocketClient#connect  connect }
  * before doing anything, and finally
- * <a href="org.apache.commons.net.nntp.NNTP.html#disconnect"> disconnect() </a>
+ * {@link org.apache.commons.net.nntp.NNTP#disconnect  disconnect() }
  * after you're completely finished interacting with the server.
  * Remember that the
  * <a href="org.apache.commons.net.nntp.NNTP.html#isAllowedToPost">
  * isAllowedToPost()</a> method is defined in
- * <a href="org.apache.commons.net.nntp.NNTP.html"> NNTP </a>.
+ * {@link org.apache.commons.net.nntp.NNTP}.
  * <p>
  * You should keep in mind that the NNTP server may choose to prematurely
  * close a connection if the client has been idle for longer than a
@@ -58,12 +58,12 @@ import org.apache.commons.net.MalformedServerReplyException;
  * catch block.  When you encounter an
  * <a href="org.apache.commons.net.nntp.NNTPConnectionClosedException.html">
  * NNTPConnectionClosedException </a>, you must disconnect the connection with
- * <a href="org.apache.commons.net.nntp.NNTP.html#disconnect"> disconnect() </a>
+ * {@link org.apache.commons.net.nntp.NNTP#disconnect  disconnect() }
  *  to properly clean up the
  * system resources used by NNTP.  Before disconnecting, you may check the
  * last reply code and text with
- * <a href="org.apache.commons.net.nntp.NNTP.html#getReplyCode"> getReplyCode </a> and
- * <a href="org.apache.commons.net.nntp.NNTP.html#getReplyString"> getReplyString </a>.
+ * {@link org.apache.commons.net.nntp.NNTP#getReplyCode  getReplyCode } and
+ * {@link org.apache.commons.net.nntp.NNTP#getReplyString  getReplyString }.
  * <p>
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
@@ -1083,7 +1083,7 @@ public class NNTPClient extends NNTP
      * <p>
      * Different NNTP servers will require different header formats, but
      * you can use the provided
-     * <a href="org.apache.commons.net.nntp.SimpleNNTPHeader.html"> SimpleNNTPHeader </a>
+     * {@link org.apache.commons.net.nntp.SimpleNNTPHeader}
      * class to construct the bare minimum acceptable header for most
      * news readers.  To construct more complicated headers you should
      * refer to RFC 822.  When the Java Mail API is finalized, you will be
@@ -1093,7 +1093,7 @@ public class NNTPClient extends NNTP
      * you have to worry about is writing the header and the message.
      * <p>
      * Upon closing the returned Writer, you need to call
-     * <a href="#completePendingCommand"> completePendingCommand() </a>
+     * {@link #completePendingCommand  completePendingCommand() }
      * to finalize the posting and verify its success or failure from
      * the server reply.
      * <p>

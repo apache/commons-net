@@ -33,25 +33,25 @@ import java.io.OutputStream;
  * As with virtually all of the client classes in org.apache.commons.net, this
  * class derives from SocketClient, inheriting its connection methods.
  * The way to use RExecClient is to first connect
- * to the server, call the <a href="#rexec"> rexec() </a> method, and then
+ * to the server, call the {@link #rexec  rexec() } method, and then
  * fetch the connection's input, output, and optionally error streams.
  * Interaction with the remote command is controlled entirely through the
  * I/O streams.  Once you have finished processing the streams, you should
- * invoke <a href="#disconnect"> disconnect() </a> to clean up properly.
+ * invoke {@link #disconnect  disconnect() } to clean up properly.
  * <p>
  * By default the standard output and standard error streams of the
  * remote process are transmitted over the same connection, readable
  * from the input stream returned by
- * <a href="#getInputStream"> getInputStream() </a>.  However, it is
+ * {@link #getInputStream  getInputStream() }.  However, it is
  * possible to tell the rexecd daemon to return the standard error
  * stream over a separate connection, readable from the input stream
- * returned by <a href="#getErrorStream"> getErrorStream() </a>.  You
+ * returned by {@link #getErrorStream  getErrorStream() }.  You
  * can specify that a separate connection should be created for standard
  * error by setting the boolean <code> separateErrorStream </code>
- * parameter of <a href="#rexec"> rexec() </a> to <code> true </code>.
+ * parameter of {@link #rexec  rexec() } to <code> true </code>.
  * The standard input of the remote process can be written to through
  * the output stream returned by
- * <a href="#getOutputStream"> getOutputSream() </a>.
+ * {@link #getOutputStream  getOutputSream() }.
  * <p>
  * <p>
  * @author Daniel F. Savarese
@@ -167,7 +167,7 @@ public class RExecClient extends SocketClient
      * output, and error streams.  You will typically be able to detect
      * the termination of the remote process after reaching end of file
      * on its standard output (accessible through
-     * <a href="#getInputStream"> getInputStream() </a>.    Disconnecting
+     * {@link #getInputStream  getInputStream() }.    Disconnecting
      * from the server or closing the process streams before reaching
      * end of file will not necessarily terminate the remote process.
      * <p>

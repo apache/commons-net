@@ -18,8 +18,8 @@ import org.apache.commons.net.ftp.parser.UnixFTPEntryParser;
 
 /**
  * DefaultFTPFileListParser is the default implementation of
- * <a href="org.apache.commons.net.ftp.FTPFileListParser.html"> FTPFileListParser </a>
- * used by <a href="org.apache.commons.net.ftp.FTPClient.html"> FTPClient </a>
+ * {@link org.apache.commons.net.ftp.FTPFileListParser}
+ * used by {@link org.apache.commons.net.ftp.FTPClient}
  * to parse file listings.
  * Sometimes you will want to parse unusual listing formats, in which
  * case you would create your own implementation of FTPFileListParser and

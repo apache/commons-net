@@ -109,7 +109,7 @@ public class POP3Client extends POP3
     /***
      * Login to the POP3 server with the given username and password.  You
      * must first connect to the server with
-     * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
+     * {@link org.apache.commons.net.SocketClient#connect  connect }
      * before attempting to login.  A login attempt is only valid if
      * the client is in the
      * <a href="org.apache.commons.net.pop3.POP3.html#AUTHORIZATION_STATE">
@@ -151,7 +151,7 @@ public class POP3Client extends POP3
      * getReplyString </a> and parse out the timestamp information yourself.
      * <p>
      * You must first connect to the server with
-     * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
+     * {@link org.apache.commons.net.SocketClient#connect  connect }
      * before attempting to login.  A login attempt is only valid if
      * the client is in the
      * <a href="org.apache.commons.net.pop3.POP3.html#AUTHORIZATION_STATE">
@@ -209,7 +209,7 @@ public class POP3Client extends POP3
     /***
      * Logout of the POP3 server.  To fully disconnect from the server
      * you must call
-     * <a href="org.apache.commons.net.pop3.POP3.html#disconnect"> disconnect </a>.
+     * {@link org.apache.commons.net.pop3.POP3#disconnect  disconnect }.
      * A logout attempt is valid in any state.  If
      * the client is in the
      * <a href="org.apache.commons.net.pop3.POP3.html#TRANSACTION_STATE">
@@ -253,9 +253,9 @@ public class POP3Client extends POP3
     /***
      * Delete a message from the POP3 server.  The message is only marked
      * for deletion by the server.  If you decide to unmark the message, you
-     * must issuse a <a href="#reset"> reset </a> command.  Messages marked
+     * must issuse a {@link #reset  reset } command.  Messages marked
      * for deletion are only deleted by the server on
-     * <a href="#logout"> logout </a>.
+     * {@link #logout  logout }.
      * A delete attempt can only succeed if the client is in the
      * <a href="org.apache.commons.net.pop3.POP3.html#TRANSACTION_STATE">
      * TRANSACTION_STATE </a>.

@@ -27,15 +27,15 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
 /***
  * The TFTPClient class encapsulates all the aspects of the TFTP protocol
  * necessary to receive and send files through TFTP.  It is derived from
- * the <a href="org.apache.commons.net.tftp.TFTP.html"> TFTP class </a> because
+ * the {@link org.apache.commons.net.tftp.TFTP} because
  * it is more convenient than using aggregation, and as a result exposes
  * the same set of methods to allow you to deal with the TFTP protocol
  * directly.  However, almost every user should only be concerend with the
- * the <a href="org.apache.commons.net.DatagramSocketClient.html#open"> open() </a>,
- * <a href="org.apache.commons.net.DatagramSocketClient.html#close"> close() </a>,
- * <a href="#sendFile"> sendFile() </a>, and
- * <a href="#receiveFile"> receiveFile() </a> methods.  Additionally, the
- * <a href="#setMaxTimeouts"> setMaxTimeouts() </a> and
+ * the {@link org.apache.commons.net.DatagramSocketClient#open  open() },
+ * {@link org.apache.commons.net.DatagramSocketClient#close  close() },
+ * {@link #sendFile  sendFile() }, and
+ * {@link #receiveFile  receiveFile() } methods.  Additionally, the
+ * {@link #setMaxTimeouts  setMaxTimeouts() } and
  * <a href="org.apache.commons.net.DatagramSocketClient.html#setDefaultTimeout">
  * setDefaultTimeout() </a> methods may be of importance for performance
  * tuning.
@@ -107,7 +107,7 @@ public class TFTPClient extends TFTP
      * Requests a named file from a remote host, writes the
      * file to an OutputStream, closes the connection, and returns the number
      * of bytes read.  A local UDP socket must first be created by
-     * <a href="org.apache.commons.net.DatagramSocketClient.html#open">open()</a> before
+     * {@link org.apache.commons.net.DatagramSocketClient#open open()} before
      * invoking this method.  This method will not close the OutputStream
      * containing the file; you must close it after the method invocation.
      * <p>
@@ -281,7 +281,7 @@ _receivePacket:
      * Requests a named file from a remote host, writes the
      * file to an OutputStream, closes the connection, and returns the number
      * of bytes read.  A local UDP socket must first be created by
-     * <a href="org.apache.commons.net.DatagramSocketClient.html#open">open()</a> before
+     * {@link org.apache.commons.net.DatagramSocketClient#open open()} before
      * invoking this method.  This method will not close the OutputStream
      * containing the file; you must close it after the method invocation.
      * <p>
@@ -344,7 +344,7 @@ _receivePacket:
      * Requests to send a file to a remote host, reads the file from an
      * InputStream, sends the file to the remote host, and closes the
      * connection.  A local UDP socket must first be created by
-     * <a href="org.apache.commons.net.DatagramSocketClient.html#open">open()</a> before
+     * {@link org.apache.commons.net.DatagramSocketClient#open open()} before
      * invoking this method.  This method will not close the InputStream
      * containing the file; you must close it after the method invocation.
      * <p>
@@ -511,7 +511,7 @@ _receivePacket:
      * Requests to send a file to a remote host, reads the file from an
      * InputStream, sends the file to the remote host, and closes the
      * connection.  A local UDP socket must first be created by
-     * <a href="org.apache.commons.net.DatagramSocketClient.html#open">open()</a> before
+     * {@link org.apache.commons.net.DatagramSocketClient#open open()} before
      * invoking this method.  This method will not close the InputStream
      * containing the file; you must close it after the method invocation.
      * <p>

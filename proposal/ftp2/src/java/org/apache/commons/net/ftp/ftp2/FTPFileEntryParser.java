@@ -19,13 +19,13 @@ import org.apache.commons.net.ftp.FTPFile;
 /**
  * FTPFileEntryParser defines the interface for parsing a single FTP file
  * listing and converting that information into an 
- * <a href="org.apache.commons.net.ftp.FTPFile.html"> FTPFile </a> instance.
+ * {@link org.apache.commons.net.ftp.FTPFile} instance.
  * Sometimes you will want to parse unusual listing formats, in which
  * case you would create your own implementation of FTPFileEntryParser and
  * if necessary, subclass FTPFile.
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileEntryParser.java,v 1.8 2004/02/29 10:23:18 scolebourne Exp $
+ * @version $Id: FTPFileEntryParser.java,v 1.9 2004/06/29 02:16:32 dfs Exp $
  * @see org.apache.commons.net.ftp.FTPFile
  * @see FTPClient2#listFiles
  */

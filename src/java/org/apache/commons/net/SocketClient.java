@@ -26,15 +26,15 @@ import java.net.SocketException;
  * client objects accessing sockets.  It is meant to be
  * subclassed to avoid having to rewrite the same code over and over again
  * to open a socket, close a socket, set timeouts, etc.  Of special note
- * is the <a href="#setSocketFactory"> setSocketFactory </a>
+ * is the {@link #setSocketFactory  setSocketFactory }
  * method, which allows you to control the type of Socket the SocketClient
  * creates for initiating network connections.  This is especially useful
  * for adding SSL or proxy support as well as better support for applets.  For
  * example, you could create a
- * <a href="org.apache.commons.net.SocketFactory.html"> SocketFactory </a> that
+ * {@link org.apache.commons.net.SocketFactory} that
  * requests browser security capabilities before creating a socket.
  * All classes derived from SocketClient should use the
- * <a href="#_socketFactory_"> _socketFactory_ </a> member variable to
+ * {@link #_socketFactory_  _socketFactory_ } member variable to
  * create Socket and ServerSocket instances rather than instanting
  * them by directly invoking a constructor.  By honoring this contract
  * you guarantee that a user will always be able to provide his own
@@ -82,7 +82,7 @@ public abstract class SocketClient
      * Default constructor for SocketClient.  Initializes
      * _socket_ to null, _timeout_ to 0, _defaultPort to 0,
      * _isConnected_ to false, and _socketFactory_ to a shared instance of
-     * <a href="org.apache.commons.net.DefaultSocketFactory.html">DefaultSocketFactory </a>.
+     * {@link org.apache.commons.net.DefaultSocketFactory}.
      */
     public SocketClient()
     {
@@ -104,7 +104,7 @@ public abstract class SocketClient
      * connect() method after opening a socket is to call this method.
      * <p>
      * This method sets the timeout on the just opened socket to the default
-     * timeout set by <a href="#setDefaultTimeout"> setDefaultTimeout() </a>,
+     * timeout set by {@link #setDefaultTimeout  setDefaultTimeout() },
      * sets _input_ and _output_ to the socket's InputStream and OutputStream
      * respectively, and sets _isConnected_ to true.
      * <p>
@@ -124,7 +124,7 @@ public abstract class SocketClient
     /**
      * Opens a Socket connected to a remote host at the specified port and
      * originating from the current host at a system assigned port.
-     * Before returning, <a href="#_connectAction_"> _connectAction_() </a>
+     * Before returning, {@link #_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
      * <p>
      * @param host  The remote host.
@@ -144,7 +144,7 @@ public abstract class SocketClient
     /**
      * Opens a Socket connected to a remote host at the specified port and
      * originating from the current host at a system assigned port.
-     * Before returning, <a href="#_connectAction_"> _connectAction_() </a>
+     * Before returning, {@link #_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
      * <p>
      * @param hostname  The name of the remote host.
@@ -166,7 +166,7 @@ public abstract class SocketClient
     /**
      * Opens a Socket connected to a remote host at the specified port and
      * originating from the specified local address and port.
-     * Before returning, <a href="#_connectAction_"> _connectAction_() </a>
+     * Before returning, {@link #_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
      * <p>
      * @param host  The remote host.
@@ -190,7 +190,7 @@ public abstract class SocketClient
     /**
      * Opens a Socket connected to a remote host at the specified port and
      * originating from the specified local address and port.
-     * Before returning, <a href="#_connectAction_"> _connectAction_() </a>
+     * Before returning, {@link #_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
      * <p>
      * @param hostname  The name of the remote host.
@@ -216,7 +216,7 @@ public abstract class SocketClient
     /**
      * Opens a Socket connected to a remote host at the current default port
      * and originating from the current host at a system assigned port.
-     * Before returning, <a href="#_connectAction_"> _connectAction_() </a>
+     * Before returning, {@link #_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
      * <p>
      * @param host  The remote host.
@@ -234,7 +234,7 @@ public abstract class SocketClient
     /**
      * Opens a Socket connected to a remote host at the current default
      * port and originating from the current host at a system assigned port.
-     * Before returning, <a href="#_connectAction_"> _connectAction_() </a>
+     * Before returning, {@link #_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
      * <p>
      * @param hostname  The name of the remote host.
@@ -254,7 +254,7 @@ public abstract class SocketClient
      * Disconnects the socket connection.
      * You should call this method after you've finished using the class
      * instance and also before you call
-     * <a href="#connect">connect() </a>
+     * {@link #connect connect() }
      * again.  _isConnected_ is set to false, _socket_ is set to null,
      * _input_ is set to null, and _output_ is set to null.
      * <p>
@@ -286,7 +286,7 @@ public abstract class SocketClient
 
     /**
      * Sets the default port the SocketClient should connect to when a port
-     * is not specified.  The <a href="#_defaultPort_"> _defaultPort_ </a>
+     * is not specified.  The {@link #_defaultPort_  _defaultPort_ }
      * variable stores this value.  If never set, the default port is equal
      * to zero.
      * <p>
@@ -299,7 +299,7 @@ public abstract class SocketClient
 
     /**
      * Returns the current value of the default port (stored in
-     * <a href="#_defaultPort_"> _defaultPort_ </a>).
+     * {@link #_defaultPort_  _defaultPort_ }).
      * <p>
      * @return The current value of the default port.
      */
@@ -312,8 +312,8 @@ public abstract class SocketClient
     /**
      * Set the default timeout in milliseconds to use when opening a socket.
      * This value is only used previous to a call to
-     * <a href="#connect">connect()</a>
-     * and should not be confused with <a href="#setSoTimeout">setSoTimeout()</a>
+     * {@link #connect connect()}
+     * and should not be confused with {@link #setSoTimeout setSoTimeout()}
      * which operates on an the currently opened socket.  _timeout_ contains
      * the new timeout value.
      * <p>
@@ -342,7 +342,7 @@ public abstract class SocketClient
     /**
      * Set the timeout in milliseconds of a currently open connection.
      * Only call this method after a connection has been opened
-     * by <a href="#connect">connect()</a>.
+     * by {@link #connect connect()}.
      * <p>
      * @param timeout  The timeout in milliseconds to use for the currently
      *                 open socket connection.

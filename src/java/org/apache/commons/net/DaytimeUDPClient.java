@@ -22,13 +22,13 @@ import java.net.InetAddress;
  * The DaytimeUDPClient class is a UDP implementation of a client for the
  * Daytime protocol described in RFC 867.  To use the class, merely
  * open a local datagram socket with
- * <a href="org.apache.commons.net.DatagramSocketClient.html#open"> open </a>
- * and call <a href="#getTime"> getTime </a> to retrieve the daytime
+ * {@link org.apache.commons.net.DatagramSocketClient#open  open }
+ * and call {@link #getTime  getTime } to retrieve the daytime
  * string, then
- * call <a href="org.apache.commons.net.DatagramSocketClient.html#close"> close </a>
+ * call {@link org.apache.commons.net.DatagramSocketClient#close  close }
  * to close the connection properly.  Unlike
- * <a href="org.apache.commons.net.DaytimeTCPClient.html"> DaytimeTCPClient </a>,
- * successive calls to <a href="#getTime"> getTime </a> are permitted
+ * {@link org.apache.commons.net.DaytimeTCPClient},
+ * successive calls to {@link #getTime  getTime } are permitted
  * without re-establishing a connection.  That is because UDP is a
  * connectionless protocol and the Daytime protocol is stateless.
  * <p>

@@ -29,10 +29,10 @@ import java.net.InetAddress;
  * from having to worry about the internals.  Additionally, only very
  * few people should have to care about any of the TFTPPacket classes
  * or derived classes.  Almost all users should only be concerned with the
- * <a href="org.apache.commons.net.tftp.TFTPClient.html#_top_">TFTPClient</a> class
- * <a href="org.apache.commons.net.tftp.TFTPClient.html#receiveFile">receiveFile()</a>
+ * {@link org.apache.commons.net.tftp.TFTPClient} class
+ * {@link org.apache.commons.net.tftp.TFTPClient#receiveFile receiveFile()}
  * and
- * <a href="org.apache.commons.net.tftp.TFTPClient.html#sendFile">sendFile()</a>
+ * {@link org.apache.commons.net.tftp.TFTPClient#sendFile sendFile()}
  * methods.
  * <p>
  * <p>
@@ -53,7 +53,7 @@ public abstract class TFTPPacket
     /***
      * This is the actual TFTP spec
      * identifier and is equal to 1.
-     * Identifier returned by <a href="#getType">getType()</a>
+     * Identifier returned by {@link #getType getType()}
      * indicating a read request packet.
      ***/
     public static final int READ_REQUEST = 1;
@@ -61,7 +61,7 @@ public abstract class TFTPPacket
     /***
      * This is the actual TFTP spec
      * identifier and is equal to 2.
-     * Identifier returned by <a href="#getType">getType()</a>
+     * Identifier returned by {@link #getType getType()}
      * indicating a write request packet.
      ***/
     public static final int WRITE_REQUEST = 2;
@@ -69,7 +69,7 @@ public abstract class TFTPPacket
     /***
      * This is the actual TFTP spec
      * identifier and is equal to 3.
-     * Identifier returned by <a href="#getType">getType()</a>
+     * Identifier returned by {@link #getType getType()}
      * indicating a data packet.
      ***/
     public static final int DATA = 3;
@@ -77,7 +77,7 @@ public abstract class TFTPPacket
     /***
      * This is the actual TFTP spec
      * identifier and is equal to 4.
-     * Identifier returned by <a href="#getType">getType()</a>
+     * Identifier returned by {@link #getType getType()}
      * indicating an acknowledgement packet.
      ***/
     public static final int ACKNOWLEDGEMENT = 4;
@@ -85,7 +85,7 @@ public abstract class TFTPPacket
     /***
      * This is the actual TFTP spec
      * identifier and is equal to 5.
-     * Identifier returned by <a href="#getType">getType()</a>
+     * Identifier returned by {@link #getType getType()}
      * indicating an error packet.
      ***/
     public static final int ERROR = 5;
@@ -93,7 +93,7 @@ public abstract class TFTPPacket
     /***
      * The TFTP data packet maximum segment size in bytes.  This is 512
      * and is useful for those familiar with the TFTP protocol who want
-     * to use the <a href="org.apache.commons.net.tftp.TFTP.html#_top_">TFTP</a>
+     * to use the {@link org.apache.commons.net.tftp.TFTP}
      * class methods to implement their own TFTP servers or clients.
      ***/
     public static final int SEGMENT_SIZE = 512;
@@ -189,7 +189,7 @@ public abstract class TFTPPacket
      * data in the proper format.
      * This is an abstract method, exposed to the programmer in case he
      * wants to implement his own TFTP client instead of using
-     * the <a href="org.apache.commons.net.tftp.TFTPClient.html#_top_">TFTPClient</a>
+     * the {@link org.apache.commons.net.tftp.TFTPClient}
      * class.
      * Under normal circumstances, you should not have a need to call this
      * method.

@@ -26,7 +26,7 @@ import org.apache.commons.net.io.SocketInputStream;
 
 /***
  * RCommandClient is very similar to
- * <a href="org.apache.commons.net.bsd.RExecClient.html"> RExecClient </a>,
+ * {@link org.apache.commons.net.bsd.RExecClient},
  * from which it is derived, and implements the rcmd() facility that
  * first appeared in 4.2BSD Unix.  rcmd() is the facility used by the rsh
  * (rshell) and other commands to execute a command on another machine
@@ -51,7 +51,7 @@ import org.apache.commons.net.io.SocketInputStream;
  * class derives from SocketClient.  But it overrides most of its connection
  * methods so that the local Socket will originate from an acceptable
  * rshell port.  The way to use RCommandClient is to first connect
- * to the server, call the <a href="#rcommand"> rcommand() </a> method,
+ * to the server, call the {@link #rcommand  rcommand() } method,
  * and then
  * fetch the connection's input, output, and optionally error streams.
  * Interaction with the remote command is controlled entirely through the
@@ -70,7 +70,7 @@ import org.apache.commons.net.io.SocketInputStream;
  * getErrorStream() </a>.  You
  * can specify that a separate connection should be created for standard
  * error by setting the boolean <code> separateErrorStream </code>
- * parameter of <a href="#rcommand"> rcommand() </a> to <code> true </code>.
+ * parameter of {@link #rcommand  rcommand() } to <code> true </code>.
  * The standard input of the remote process can be written to through
  * the output stream returned by
  * <a href="org.apache.commons.net.bsd.RExecClient.html#getOutputStream">
@@ -162,7 +162,7 @@ public class RCommandClient extends RExecClient
      * Opens a Socket connected to a remote host at the specified port and
      * originating from the specified local address using a port in a range
      * acceptable to the BSD rshell daemon.
-     * Before returning, <a href="org.apache.commons.net.SocketClient.html#_connectAction_"> _connectAction_() </a>
+     * Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
      * <p>
      * @param host  The remote host.
@@ -207,7 +207,7 @@ public class RCommandClient extends RExecClient
      * Opens a Socket connected to a remote host at the specified port and
      * originating from the current host at a port in a range acceptable
      * to the BSD rshell daemon.
-     * Before returning, <a href="org.apache.commons.net.SocketClient.html#_connectAction_"> _connectAction_() </a>
+     * Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
      * <p>
      * @param host  The remote host.
@@ -229,7 +229,7 @@ public class RCommandClient extends RExecClient
      * Opens a Socket connected to a remote host at the specified port and
      * originating from the current host at a port in a range acceptable
      * to the BSD rshell daemon.
-     * Before returning, <a href="org.apache.commons.net.SocketClient.html#_connectAction_"> _connectAction_() </a>
+     * Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
      * <p>
      * @param hostname  The name of the remote host.
@@ -252,7 +252,7 @@ public class RCommandClient extends RExecClient
      * Opens a Socket connected to a remote host at the specified port and
      * originating from the specified local address using a port in a range
      * acceptable to the BSD rshell daemon.
-     * Before returning, <a href="org.apache.commons.net.SocketClient.html#_connectAction_"> _connectAction_() </a>
+     * Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
      * <p>
      * @param hostname  The remote host.
@@ -277,7 +277,7 @@ public class RCommandClient extends RExecClient
      * local port must lie between <code> MIN_CLIENT_PORT </code> and
      * <code> MAX_CLIENT_PORT </code> or an IllegalArgumentException will
      * be thrown.
-     * Before returning, <a href="org.apache.commons.net.SocketClient.html#_connectAction_"> _connectAction_() </a>
+     * Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
      * <p>
      * @param host  The remote host.
@@ -307,7 +307,7 @@ public class RCommandClient extends RExecClient
      * local port must lie between <code> MIN_CLIENT_PORT </code> and
      * <code> MAX_CLIENT_PORT </code> or an IllegalArgumentException will
      * be thrown.
-     * Before returning, <a href="org.apache.commons.net.SocketClient.html#_connectAction_"> _connectAction_() </a>
+     * Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
      * <p>
      * @param hostname  The name of the remote host.
@@ -339,7 +339,7 @@ public class RCommandClient extends RExecClient
      * output, and error streams.  You will typically be able to detect
      * the termination of the remote process after reaching end of file
      * on its standard output (accessible through
-     * <a href="#getInputStream"> getInputStream() </a>.  Disconnecting
+     * {@link #getInputStream  getInputStream() }.  Disconnecting
      * from the server or closing the process streams before reaching
      * end of file will not necessarily terminate the remote process.
      * <p>

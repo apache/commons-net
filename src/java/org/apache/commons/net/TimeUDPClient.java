@@ -23,14 +23,14 @@ import java.util.Date;
  * The TimeUDPClient class is a UDP implementation of a client for the
  * Time protocol described in RFC 868.  To use the class, merely
  * open a local datagram socket with
- * <a href="org.apache.commons.net.DatagramSocketClient.html#open"> open </a>
- * and call <a href="#getTime"> getTime </a> or
- * <a href="#getTime"> getDate </a> to retrieve the time. Then call
- * <a href="org.apache.commons.net.DatagramSocketClient.html#close"> close </a>
+ * {@link org.apache.commons.net.DatagramSocketClient#open  open }
+ * and call {@link #getTime  getTime } or
+ * {@link #getTime  getDate } to retrieve the time. Then call
+ * {@link org.apache.commons.net.DatagramSocketClient#close  close }
  * to close the connection properly.  Unlike
- * <a href="org.apache.commons.net.TimeTCPClient.html"> TimeTCPClient </a>,
- * successive calls to <a href="#getTime"> getTime </a> or
- * <a href="#getDate"> getDate </a> are permitted
+ * {@link org.apache.commons.net.TimeTCPClient},
+ * successive calls to {@link #getTime  getTime } or
+ * {@link #getDate  getDate } are permitted
  * without re-establishing a connection.  That is because UDP is a
  * connectionless protocol and the Time protocol is stateless.
  * <p>

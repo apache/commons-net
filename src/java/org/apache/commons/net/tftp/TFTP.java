@@ -24,8 +24,8 @@ import org.apache.commons.net.DatagramSocketClient;
  * The TFTP class exposes a set of methods to allow you to deal with the TFTP
  * protocol directly, in case you want to write your own TFTP client or
  * server.  However, almost every user should only be concerend with
- * the <a href="org.apache.commons.net.DatagramSocketClient.html#open"> open() </a>,
- * and <a href="org.apache.commons.net.DatagramSocketClient.html#close"> close() </a>,
+ * the {@link org.apache.commons.net.DatagramSocketClient#open  open() },
+ * and {@link org.apache.commons.net.DatagramSocketClient#close  close() },
  * methods. Additionally,the a
  * <a href="org.apache.commons.net.DatagramSocketClient.html#setDefaultTimeout">
  * setDefaultTimeout() </a> method may be of importance for performance tuning.
@@ -166,7 +166,7 @@ public class TFTP extends DatagramSocketClient
     /***
      * This is a special method to perform a more efficient packet receive.
      * It should only be used after calling
-     * <a href="#beginBufferedOps"> beginBufferedOps() </a>.  beginBufferedOps()
+     * {@link #beginBufferedOps  beginBufferedOps() }.  beginBufferedOps()
      * initializes a set of buffers used internally that prevent the new
      * allocation of a DatagramPacket and byte array for each send and receive.
      * To use these buffers you must call the bufferedReceive() and
@@ -203,7 +203,7 @@ public class TFTP extends DatagramSocketClient
     /***
      * This is a special method to perform a more efficient packet send.
      * It should only be used after calling
-     * <a href="#beginBufferedOps"> beginBufferedOps() </a>.  beginBufferedOps()
+     * {@link #beginBufferedOps  beginBufferedOps() }.  beginBufferedOps()
      * initializes a set of buffers used internally that prevent the new
      * allocation of a DatagramPacket and byte array for each send and receive.
      * To use these buffers you must call the bufferedReceive() and
@@ -226,11 +226,11 @@ public class TFTP extends DatagramSocketClient
 
     /***
      * Initializes the internal buffers. Buffers are used by
-     * <a href="#bufferedSend"> bufferedSend() </a> and
-     * <a href="#bufferedReceive"> bufferedReceive() </a>.  This
+     * {@link #bufferedSend  bufferedSend() } and
+     * {@link #bufferedReceive  bufferedReceive() }.  This
      * method must be called before calling either one of those two
      * methods.  When you finish using buffered operations, you must
-     * call <a href="#endBufferedOps"> endBufferedOps() </a>.
+     * call {@link #endBufferedOps  endBufferedOps() }.
      ***/
     public final void beginBufferedOps()
     {

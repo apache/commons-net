@@ -28,10 +28,10 @@ import java.io.InputStream;
  * <p>
  * To use the CharGenTCPClient class, just establish a
  * connection with
- * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
- * and call <a href="#getInputStream"> getInputStream() </a> to access
+ * {@link org.apache.commons.net.SocketClient#connect  connect }
+ * and call {@link #getInputStream  getInputStream() } to access
  * the data.  Don't close the input stream when you're done with it.  Rather,
- * call <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
+ * call {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
  * to clean up properly.
  * <p>
  * <p>
@@ -65,7 +65,7 @@ public final class CharGenTCPClient extends SocketClient
      * Returns an InputStream from which the server generated data can be
      * read.  You should NOT close the InputStream when you're finished
      * reading from it.  Rather, you should call
-     * <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
+     * {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
      * to clean up properly.
      * <p>
      * @return An InputStream from which the server generated data can be read.

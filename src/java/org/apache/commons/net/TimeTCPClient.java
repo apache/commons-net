@@ -22,10 +22,10 @@ import java.io.DataInputStream;
  * The TimeTCPClient class is a TCP implementation of a client for the
  * Time protocol described in RFC 868.  To use the class, merely
  * establish a connection with
- * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
- * and call either <a href="#getTime"> getTime() </a> or
- * <a href="#getDate"> getDate() </a> to retrieve the time, then
- * call <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
+ * {@link org.apache.commons.net.SocketClient#connect  connect }
+ * and call either {@link #getTime  getTime() } or
+ * {@link #getDate  getDate() } to retrieve the time, then
+ * call {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
  * to close the connection properly.
  * <p>
  * <p>
@@ -63,10 +63,10 @@ public final class TimeTCPClient extends SocketClient
      * <p>
      * The server will have closed the connection at this point, so you should
      * call
-     * <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
+     * {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
      * after calling this method.  To retrieve another time, you must
      * initiate another connection with
-     * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
+     * {@link org.apache.commons.net.SocketClient#connect  connect }
      * before calling <code> getTime() </code> again.
      * <p>
      * @return The time value retrieved from the server.
@@ -85,10 +85,10 @@ public final class TimeTCPClient extends SocketClient
      * <p>
      * The server will have closed the connection at this point, so you should
      * call
-     * <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
+     * {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
      * after calling this method.  To retrieve another time, you must
      * initiate another connection with
-     * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
+     * {@link org.apache.commons.net.SocketClient#connect  connect }
      * before calling <code> getDate() </code> again.
      * <p>
      * @return A Date value containing the time retrieved from the server

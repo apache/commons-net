@@ -22,11 +22,11 @@ import java.net.InetAddress;
  * The EchoUDPClient class is a UDP implementation of a client for the
  * Echo protocol described in RFC 862.  To use the class,
  * just open a local UDP port
- * with <a href="org.apache.commons.net.DatagramSocketClient.html#open"> open </a>
- * and call <a href="#send"> send </a> to send datagrams to the server,
- * then call <a href="#receive"> receive </a> to receive echoes.
+ * with {@link org.apache.commons.net.DatagramSocketClient#open  open }
+ * and call {@link #send  send } to send datagrams to the server,
+ * then call {@link #receive  receive } to receive echoes.
  * After you're done echoing data, call
- * <a href="org.apache.commons.net.DatagramSocketClient.html#close"> close() </a>
+ * {@link org.apache.commons.net.DatagramSocketClient#close  close() }
  * to clean up properly.
  * <p>
  * <p>

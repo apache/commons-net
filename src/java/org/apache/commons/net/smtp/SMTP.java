@@ -31,7 +31,7 @@ import org.apache.commons.net.SocketClient;
  * own SMTP client.  To derive the full benefits of the SMTP class requires
  * some knowledge of the FTP protocol defined in RFC 821.  However, there
  * is no reason why you should have to use the SMTP class.  The
- * <a href="org.apache.commons.net.smtp.SMTPClient.html"> SMTPClient </a> class,
+ * {@link org.apache.commons.net.smtp.SMTPClient} class,
  * derived from SMTP,
  * implements all the functionality required of an SMTP client.  The
  * SMTP class is made public to provide access to various SMTP constants
@@ -55,13 +55,13 @@ import org.apache.commons.net.SocketClient;
  * catch block.  When you encounter an
  * <a href="org.apache.commons.net.smtp.SMTPConnectionClosedException.html">
  * SMTPConnectionClosedException </a>, you must disconnect the connection with
- * <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect() </a>
+ * {@link org.apache.commons.net.SocketClient#disconnect  disconnect() }
  * to properly clean up the system resources used by SMTP.  Before
  * disconnecting, you may check the
  * last reply code and text with
- * <a href="#getReplyCode"> getReplyCode </a>,
- * <a href="#getReplyString"> getReplyString </a>,
- * and <a href="#getReplyStrings"> getReplyStrings</a>.
+ * {@link #getReplyCode  getReplyCode },
+ * {@link #getReplyString  getReplyString },
+ * and {@link #getReplyStrings  getReplyStrings}.
  * <p>
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
@@ -234,7 +234,7 @@ public class SMTP extends SocketClient
 
     /***
      * Adds a ProtocolCommandListener.  Delegates this task to
-     * <a href="#_commandSupport_"> _commandSupport_ </a>.
+     * {@link #_commandSupport_  _commandSupport_ }.
      * <p>
      * @param listener  The ProtocolCommandListener to add.
      ***/
@@ -245,7 +245,7 @@ public class SMTP extends SocketClient
 
     /***
      * Removes a ProtocolCommandListener.  Delegates this task to
-     * <a href="#_commandSupport_"> _commandSupport_ </a>.
+     * {@link #_commandSupport_  _commandSupport_ }.
      * <p>
      * @param listener  The ProtocolCommandListener to remove.
      ***/
@@ -278,8 +278,8 @@ public class SMTP extends SocketClient
      * Sends an SMTP command to the server, waits for a reply and returns the
      * numerical response code.  After invocation, for more detailed
      * information, the actual reply text can be accessed by calling
-     * <a href="#getReplyString"> getReplyString </a> or
-     * <a href="#getReplyStrings"> getReplyStrings </a>.
+     * {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.
      * <p>
      * @param command  The text representation of the  SMTP command to send.
      * @param args The arguments to the SMTP command.  If this parameter is
@@ -304,8 +304,8 @@ public class SMTP extends SocketClient
      * Sends an SMTP command to the server, waits for a reply and returns the
      * numerical response code.  After invocation, for more detailed
      * information, the actual reply text can be accessed by calling
-     * <a href="#getReplyString"> getReplyString </a> or
-     * <a href="#getReplyStrings"> getReplyStrings </a>.
+     * {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.
      * <p>
      * @param command  The SMTPCommand constant corresponding to the SMTP command
      *                 to send.
@@ -331,8 +331,8 @@ public class SMTP extends SocketClient
      * Sends an SMTP command with no arguments to the server, waits for a
      * reply and returns the numerical response code.  After invocation, for
      * more detailed information, the actual reply text can be accessed by
-     * calling <a href="#getReplyString"> getReplyString </a> or
-     * <a href="#getReplyStrings"> getReplyStrings </a>.
+     * calling {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.
      * <p>
      * @param command  The text representation of the  SMTP command to send.
      * @return The integer value of the SMTP reply code returned by the server
@@ -355,8 +355,8 @@ public class SMTP extends SocketClient
      * Sends an SMTP command with no arguments to the server, waits for a
      * reply and returns the numerical response code.  After invocation, for
      * more detailed information, the actual reply text can be accessed by
-     * calling <a href="#getReplyString"> getReplyString </a> or
-     * <a href="#getReplyStrings"> getReplyStrings </a>.
+     * calling {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.
      * <p>
      * @param command  The SMTPCommand constant corresponding to the SMTP command
      *                 to send.
@@ -392,8 +392,8 @@ public class SMTP extends SocketClient
     /***
      * Fetches a reply from the SMTP server and returns the integer reply
      * code.  After calling this method, the actual reply text can be accessed
-     * from either  calling <a href="#getReplyString"> getReplyString </a> or
-     * <a href="#getReplyStrings"> getReplyStrings </a>.  Only use this
+     * from either  calling {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.  Only use this
      * method if you are implementing your own SMTP client or if you need to
      * fetch a secondary response from the SMTP server.
      * <p>

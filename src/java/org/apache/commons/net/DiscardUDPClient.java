@@ -22,10 +22,10 @@ import java.net.InetAddress;
  * The DiscardUDPClient class is a UDP implementation of a client for the
  * Discard protocol described in RFC 863.  To use the class,
  * just open a local UDP port
- * with <a href="org.apache.commons.net.DatagramSocketClient.html#open"> open </a>
- * and call <a href="#send"> send </a> to send datagrams to the server
+ * with {@link org.apache.commons.net.DatagramSocketClient#open  open }
+ * and call {@link #send  send } to send datagrams to the server
  * After you're done sending discard data, call
- * <a href="org.apache.commons.net.DatagramSocketClient.html#close"> close() </a>
+ * {@link org.apache.commons.net.DatagramSocketClient#close  close() }
  * to clean up properly.
  * <p>
  * <p>

@@ -26,10 +26,10 @@ import java.net.InetAddress;
  * from having to worry about the internals.  Additionally, only very
  * few people should have to care about any of the TFTPPacket classes
  * or derived classes.  Almost all users should only be concerned with the
- * <a href="org.apache.commons.net.tftp.TFTPClient.html#_top_">TFTPClient</a> class
- * <a href="org.apache.commons.net.tftp.TFTPClient.html#receiveFile">receiveFile()</a>
+ * {@link org.apache.commons.net.tftp.TFTPClient} class
+ * {@link org.apache.commons.net.tftp.TFTPClient#receiveFile receiveFile()}
  * and
- * <a href="org.apache.commons.net.tftp.TFTPClient.html#sendFile">sendFile()</a>
+ * {@link org.apache.commons.net.tftp.TFTPClient#sendFile sendFile()}
  * methods.
  * <p>
  * <p>

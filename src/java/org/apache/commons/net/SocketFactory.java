@@ -24,7 +24,7 @@ import java.net.UnknownHostException;
  * The SocketFactory interface provides a means for the programmer to
  * control the creation of sockets and provide his own Socket
  * implementations for use by all classes derived from
- * <a href="org.apache.commons.net.SocketClient.html"> SocketClient </a>.
+ * {@link org.apache.commons.net.SocketClient}.
  * This allows you to provide your own Socket implementations and
  * to perform security checks or browser capability requests before
  * creating a Socket.

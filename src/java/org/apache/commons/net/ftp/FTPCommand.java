@@ -20,7 +20,7 @@ package org.apache.commons.net.ftp;
  * the meaning of the codes, familiarity with RFC 959 is assumed.
  * The mnemonic constant names are transcriptions from the code descriptions
  * of RFC 959.  For those who think in terms of the actual FTP commands,
- * a set of constants such as <a href="#USER"> USER </a> are provided
+ * a set of constants such as {@link #USER  USER } are provided
  * where the constant name is the same as the FTP command.
  * <p>
  * <p>

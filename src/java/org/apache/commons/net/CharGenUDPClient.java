@@ -31,14 +31,14 @@ import java.net.InetAddress;
  * been sent.
  * <p>
  * To use the CharGenUDPClient class, just open a local UDP port
- * with <a href="org.apache.commons.net.DatagramSocketClient.html#open"> open </a>
- * and call <a href="#send"> send </a> to send the datagram that will
+ * with {@link org.apache.commons.net.DatagramSocketClient#open  open }
+ * and call {@link #send  send } to send the datagram that will
  * initiate the data reply.  For chargen or quote of the day, just
- * call <a href="#recieve"> receive </a>, and you're done.  For netstat and
+ * call {@link #receive  receive }, and you're done.  For netstat and
  * systat, call receive in a while loop, and catch a SocketException and
  * InterruptedIOException to detect a timeout (don't forget to set the
  * timeout duration beforehand).  Don't forget to call
- * <a href="org.apache.commons.net.DatagramSocketClient.html#close"> close() </a>
+ * {@link org.apache.commons.net.DatagramSocketClient#close  close() }
  * to clean up properly.
  * <p>
  * <p>

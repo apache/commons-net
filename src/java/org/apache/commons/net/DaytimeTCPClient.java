@@ -22,10 +22,10 @@ import java.io.InputStreamReader;
  * The DaytimeTCPClient class is a TCP implementation of a client for the
  * Daytime protocol described in RFC 867.  To use the class, merely
  * establish a connection with
- * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
- * and call <a href="#getTime"> getTime() </a> to retrieve the daytime
+ * {@link org.apache.commons.net.SocketClient#connect  connect }
+ * and call {@link #getTime  getTime() } to retrieve the daytime
  * string, then
- * call <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
+ * call {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
  * to close the connection properly.
  * <p>
  * <p>
@@ -55,10 +55,10 @@ public final class DaytimeTCPClient extends SocketClient
      * Retrieves the time string from the server and returns it.  The
      * server will have closed the connection at this point, so you should
      * call
-     * <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
+     * {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
      * after calling this method.  To retrieve another time, you must
      * initiate another connection with
-     * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
+     * {@link org.apache.commons.net.SocketClient#connect  connect }
      * before calling <code> getTime() </code> again.
      * <p>
      * @return The time string retrieved from the server.

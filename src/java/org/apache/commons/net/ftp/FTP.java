@@ -40,7 +40,7 @@ import org.apache.commons.net.telnet.TelnetClient;
  * To derive the full benefits of the FTP class requires some knowledge
  * of the FTP protocol defined in RFC 959.  However, there is no reason
  * why you should have to use the FTP class.  The
- * <a href="org.apache.commons.net.ftp.FTPClient.html"> FTPClient </a> class,
+ * {@link org.apache.commons.net.ftp.FTPClient} class,
  * derived from FTP,
  * implements all the functionality required of an FTP client.  The
  * FTP class is made public to provide access to various FTP constants
@@ -64,12 +64,12 @@ import org.apache.commons.net.telnet.TelnetClient;
  * catch block.  When you encounter an
  * <a href="org.apache.commons.net.ftp.FTPConnectionClosedException.html">
  * FTPConnectionClosedException </a>, you must disconnect the connection with
- * <a href="#disconnect"> disconnect() </a> to properly clean up the
+ * {@link #disconnect  disconnect() } to properly clean up the
  * system resources used by FTP.  Before disconnecting, you may check the
  * last reply code and text with
- * <a href="#getReplyCode"> getReplyCode </a>,
- * <a href="#getReplyString"> getReplyString </a>,
- * and <a href="#getReplyStrings"> getReplyStrings</a>.
+ * {@link #getReplyCode  getReplyCode },
+ * {@link #getReplyString  getReplyString },
+ * and {@link #getReplyStrings  getReplyStrings}.
  * You may avoid server disconnections while the client is idle by
  * periodicaly sending NOOP commands to the server.
  * <p>
@@ -327,7 +327,7 @@ public class FTP extends TelnetClient
 
     /***
      * Adds a ProtocolCommandListener.  Delegates this task to
-     * <a href="#_commandSupport_"> _commandSupport_ </a>.
+     * {@link #_commandSupport_  _commandSupport_ }.
      * <p>
      * @param listener  The ProtocolCommandListener to add.
      ***/
@@ -338,7 +338,7 @@ public class FTP extends TelnetClient
 
     /***
      * Removes a ProtocolCommandListener.  Delegates this task to
-     * <a href="#_commandSupport_"> _commandSupport_ </a>.
+     * {@link #_commandSupport_  _commandSupport_ }.
      * <p>
      * @param listener  The ProtocolCommandListener to remove.
      ***/
@@ -371,8 +371,8 @@ public class FTP extends TelnetClient
      * Sends an FTP command to the server, waits for a reply and returns the
      * numerical response code.  After invocation, for more detailed
      * information, the actual reply text can be accessed by calling
-     * <a href="#getReplyString"> getReplyString </a> or
-     * <a href="#getReplyStrings"> getReplyStrings </a>.
+     * {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.
      * <p>
      * @param command  The text representation of the  FTP command to send.
      * @param args The arguments to the FTP command.  If this parameter is
@@ -416,8 +416,8 @@ public class FTP extends TelnetClient
      * Sends an FTP command to the server, waits for a reply and returns the
      * numerical response code.  After invocation, for more detailed
      * information, the actual reply text can be accessed by calling
-     * <a href="#getReplyString"> getReplyString </a> or
-     * <a href="#getReplyStrings"> getReplyStrings </a>.
+     * {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.
      * <p>
      * @param command  The FTPCommand constant corresponding to the FTP command
      *                 to send.
@@ -443,8 +443,8 @@ public class FTP extends TelnetClient
      * Sends an FTP command with no arguments to the server, waits for a
      * reply and returns the numerical response code.  After invocation, for
      * more detailed information, the actual reply text can be accessed by
-     * calling <a href="#getReplyString"> getReplyString </a> or
-     * <a href="#getReplyStrings"> getReplyStrings </a>.
+     * calling {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.
      * <p>
      * @param command  The text representation of the  FTP command to send.
      * @return The integer value of the FTP reply code returned by the server
@@ -467,8 +467,8 @@ public class FTP extends TelnetClient
      * Sends an FTP command with no arguments to the server, waits for a
      * reply and returns the numerical response code.  After invocation, for
      * more detailed information, the actual reply text can be accessed by
-     * calling <a href="#getReplyString"> getReplyString </a> or
-     * <a href="#getReplyStrings"> getReplyStrings </a>.
+     * calling {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.
      * <p>
      * @param command  The FTPCommand constant corresponding to the FTP command
      *                 to send.
@@ -504,8 +504,8 @@ public class FTP extends TelnetClient
     /***
      * Fetches a reply from the FTP server and returns the integer reply
      * code.  After calling this method, the actual reply text can be accessed
-     * from either  calling <a href="#getReplyString"> getReplyString </a> or
-     * <a href="#getReplyStrings"> getReplyStrings </a>.  Only use this
+     * from either  calling {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.  Only use this
      * method if you are implementing your own FTP client or if you need to
      * fetch a secondary response from the FTP server.
      * <p>

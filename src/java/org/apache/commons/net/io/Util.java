@@ -34,8 +34,8 @@ import java.io.Writer;
 public final class Util
 {
     /***
-     * The default buffer size used by <a href="#copyStream"> copyStream </a>
-     * and <a href="#copyReader"> copyReader </a>. It's value is 1024.
+     * The default buffer size used by {@link #copyStream  copyStream }
+     * and {@link #copyReader  copyReader }. It's value is 1024.
      ***/
     public static final int DEFAULT_COPY_BUFFER_SIZE = 1024;
 
