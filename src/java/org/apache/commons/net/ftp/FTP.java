@@ -207,7 +207,14 @@ public class FTP extends TelnetClient
     // We have to ensure that the protocol communication is in ASCII
     // but we use ISO-8859-1 just in case 8-bit characters cross
     // the wire.
-    private static final String __DEFAULT_ENCODING = "ISO-8859-1";
+    /**
+     * The default character encoding used for communicating over an
+     * FTP control connection.  The default encoding is an
+     * ASCII-compatible encoding.  Some FTP servers expect other
+     * encodings.  You can change the encoding used by an FTP instance
+     * with {@link setControlEncoding}.
+     */
+    public static final String DEFAULT_CONTROL_ENCODING = "ISO-8859-1";
     private static final String __modes = "ABILNTCFRPSBC";
 
     private StringBuffer __commandBuffer;
@@ -218,6 +225,7 @@ public class FTP extends TelnetClient
     Vector _replyLines;
     boolean _newReplyString;
     String _replyString;
+    String _controlEncoding;
 
     /***
      * A ProtocolCommandSupport object used to manage the registering of
@@ -238,6 +246,7 @@ public class FTP extends TelnetClient
         _newReplyString = false;
         _replyString = null;
         _commandSupport_ = new ProtocolCommandSupport(this);
+        _controlEncoding = DEFAULT_CONTROL_ENCODING;
     }
 
     private void __getReply() throws IOException
@@ -314,14 +323,36 @@ public class FTP extends TelnetClient
         super._connectAction_();
         _controlInput =
             new BufferedReader(new InputStreamReader(getInputStream(),
-                                                     __DEFAULT_ENCODING));
+                                                     getControlEncoding()));
         _controlOutput =
             new BufferedWriter(new OutputStreamWriter(getOutputStream(),
-                                                      __DEFAULT_ENCODING));
+                                                      getControlEncoding()));
         __getReply();
         // If we received code 120, we have to fetch completion reply.
         if (FTPReply.isPositivePreliminary(_replyCode))
             __getReply();
+    }
+
+
+    /**
+     * Sets the character encoding used by the FTP control connection.
+     * Some FTP servers require that commands be issued in a non-ASCII
+     * encoding like UTF-8 so that filenames with multi-byte character
+     * representations (e.g, Big 8) can be specified.
+     *
+     * @param encoding The new character encoding for the control connection.
+     */
+    public void setControlEncoding(String encoding) {
+        _controlEncoding = encoding;
+    }
+
+
+    /**
+     * @return The character encoding used to communicate over the
+     * control connection.
+     */
+    public String getControlEncoding() {
+        return _controlEncoding;
     }
 
 
@@ -1382,3 +1413,11 @@ public class FTP extends TelnetClient
     }
 
 }
+
+/* Emacs configuration
+ * Local variables:        **
+ * mode:             java  **
+ * c-basic-offset:   4     **
+ * indent-tabs-mode: nil   **
+ * End:                    **
+ */
