@@ -121,8 +121,18 @@
     <integrationUnitTestSourceDirectory/>
     <integrationUnitTestPatterns/>
     
-    <jarResources/>
-    <jars/>
+    <!-- J A R  R E S O U R C E S -->
+    <!-- Resources that are packaged up inside the JAR file -->
+    <resources>
+      <includes>
+        <include>**/*.properties</include>
+      </includes>
+    </resources>
+
+    <jarResources>
+      <jarResource>**/*.properties</jarResource>
+    </jarResources>
+    <jars></jars>
   
 </build>
 </project>
