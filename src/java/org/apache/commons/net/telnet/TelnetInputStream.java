@@ -70,7 +70,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         __ioException = null;
         __readIsWaiting = false;
         __threaded = false;
-        if(__threaded)
+        if(readerThread)
             __thread = new Thread(this);
         else
             __thread = null;
