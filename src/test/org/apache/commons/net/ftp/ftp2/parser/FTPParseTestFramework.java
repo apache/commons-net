@@ -56,12 +56,13 @@ package org.apache.commons.net.ftp.ftp2.parser;
 import junit.framework.TestCase;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: FTPParseTestFramework.java,v 1.4 2002/10/09 05:11:19 brekke Exp $
+ * @version $Id: FTPParseTestFramework.java,v 1.5 2002/10/09 12:40:04 brekke Exp $
  */
 public abstract class FTPParseTestFramework extends TestCase
 {
@@ -156,6 +157,6 @@ public abstract class FTPParseTestFramework extends TestCase
     {
         super.setUp();
         parser = getParser();
-        df = new SimpleDateFormat("EEE MMM dd kk:mm:ss yyyy");
+        df = new SimpleDateFormat("EEE MMM dd kk:mm:ss yyyy", Locale.US);
     }
 }
