@@ -212,7 +212,7 @@ public class FTP extends TelnetClient
      * FTP control connection.  The default encoding is an
      * ASCII-compatible encoding.  Some FTP servers expect other
      * encodings.  You can change the encoding used by an FTP instance
-     * with {@link setControlEncoding}.
+     * with {@link #setControlEncoding setControlEncoding}.
      */
     public static final String DEFAULT_CONTROL_ENCODING = "ISO-8859-1";
     private static final String __modes = "ABILNTCFRPSBC";
