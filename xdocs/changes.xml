@@ -7,17 +7,26 @@
 
   <body>
     <release version="1.0" date="in CVS">
-      <action dev="brekke" type="add">
-        Various site updates including this changes doc and publish date information.
+      <action dev="dfs" type="fix" due-to-email="joev@atg.com">
+      Fixed typo in NNTP.removeProtocolCommandListener() method name.  It
+      was missing an L.
       </action>
-      <action dev="dfs" type="fix" due-to="Tapan Karecha" due-to-email="tapan@india.hp.com">
-        Patch for restarting FTP file transfers.  The offset was not being sent immediately 
-        before the data transfer command on account.  The bug was apparently introduced in 
-        NetComponents when it was decided to always send a PORT command before each data 
+      <action dev="brekke" type="add">
+        Various site updates including this changes doc and publish
+        date information.
+      </action>
+      <action dev="dfs" type="fix" due-to="Tapan Karecha"
+       due-to-email="tapan@india.hp.com">
+        Patch for restarting FTP file transfers.  The offset was not
+        being sent immediately before the data transfer command on
+        account.  The bug was apparently introduced in NetComponents
+        when it was decided to always send a PORT command before each data 
         transfer to avoid socket reuse problems on Windows.
       </action>
-      <action dev="dfs" type="fix" due-to="Tapan Karecha" due-to-email="tapan@india.hp.com">
-        Applied a fix for potential deadlock in TelnetInputStream by changing a wait() to a wait(100).
+      <action dev="dfs" type="fix" due-to="Tapan Karecha"
+       due-to-email="tapan@india.hp.com">
+        Applied a fix for potential deadlock in TelnetInputStream by
+        changing a wait() to a wait(100).
       </action>
       <action dev="dfs" type="update">
         FTP examples now use passive ftp connections.
