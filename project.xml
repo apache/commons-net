@@ -46,7 +46,7 @@
       <name>Commons Developer List</name>
       <subscribe>mailto:commons-dev-subscribe@jakarta.apache.org</subscribe>
       <unsubscribe>mailto:commons-dev-unsubscribe@jakarta.apache.org</unsubscribe>
-      <archive>http://nagoya.apache.org:8080/eyebrowse/SummarizeList?listName=commons-dev@jakarta.apache.org</archive>
+      <archive>http://nagoya.apache.org/eyebrowse/SummarizeList?listName=commons-dev@jakarta.apache.org</archive>
     </mailingList>
   </mailingLists>
   
