@@ -61,7 +61,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@stevecoh1@attbi.com">Steve Cohen</a>
- * @versionn $Id: UnixFTPEntryParserTest.java,v 1.3 2002/08/07 18:26:19 brekke Exp $
+ * @versionn $Id: UnixFTPEntryParserTest.java,v 1.4 2002/08/08 20:01:41 brekke Exp $
  */
 public class UnixFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -82,13 +82,14 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework
 
     private static final String[] goodsamples = 
     {
+        "-rw-r--r--   1 500      500            21 Aug  8 14:14 JB3-TES1.gz",       
         "-rwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox", 
         "drwxr-xr-x   2 root     root         4096 Aug 24  2001 zxjdbc", 
         "drwxr-xr-x   2 root     root         4096 Jan  4 00:03 zziplib", 
         "drwxr-xr-x   2 root     99           4096 Feb 23  2001 zzplayer", 
         "drwxr-xr-x   2 root     root         4096 Aug  6  2001 zztpp", 
         "lrw-r--r--   1 14       14          80284 Aug 22  2000 zxJDBC-1.2.3.tar.gz", 
-        "srw-r--r--   1 14       staff      119926 Aug 22  2000 zxJDBC-1.2.3.zip", 
+        "frw-r--r--   1 14       staff      119926 Aug 22  2000 zxJDBC-1.2.3.zip", 
         "crw-r--r--   1 ftp      nogroup     83853 Jan 22  2001 zxJDBC-1.2.4.tar.gz", 
         "brw-r--r--   1 ftp      nogroup    126552 Jan 22  2001 zxJDBC-1.2.4.zip", 
         "-rw-r--r--   1 root     root       111325 Apr 27  2001 zxJDBC-2.0.1b1.tar.gz", 

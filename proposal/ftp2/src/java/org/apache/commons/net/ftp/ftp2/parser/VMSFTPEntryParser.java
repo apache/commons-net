@@ -103,7 +103,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * <P>
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.5 2002/08/06 20:32:04 brekke Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.6 2002/08/08 20:01:41 brekke Exp $
  */
 public class VMSFTPEntryParser
             extends MatchApparatus implements FTPFileEntryParser
@@ -111,8 +111,8 @@ public class VMSFTPEntryParser
     private String prefix = "[" + getClass().getName() + "] ";
     private boolean versioning;
 
-    // This is how a VMS LIST output really looks
-    /*
+    /* This is how a VMS LIST output really looks
+    
           "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
           "1-JUN.LIS;2              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
           "DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",

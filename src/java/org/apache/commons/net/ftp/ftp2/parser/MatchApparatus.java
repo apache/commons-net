@@ -56,6 +56,7 @@ package org.apache.commons.net.ftp.ftp2.parser;
 
 import org.apache.oro.text.regex.Pattern;
 import org.apache.oro.text.regex.MalformedPatternException;
+import org.apache.oro.text.regex.PatternMatcher;
 import org.apache.oro.text.regex.Perl5Matcher;
 import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.MatchResult;
@@ -67,13 +68,13 @@ import org.apache.oro.text.regex.MatchResult;
  * It is also designed to encapsulate access to the oro.text.regex
  * classes in one place.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: MatchApparatus.java,v 1.3 2002/05/03 14:52:30 brekke Exp $
+ * @version $Id: MatchApparatus.java,v 1.4 2002/08/08 20:01:41 brekke Exp $
  */
 abstract class MatchApparatus
 {
     private String prefix;
     private Pattern pattern = null;
-    private Perl5Matcher matcher = null;
+    private PatternMatcher matcher = null;
     private MatchResult result = null;
     
     /**
@@ -114,6 +115,7 @@ abstract class MatchApparatus
      */
     public boolean matches(String s)
     {
+        result = null;
         if (matcher.matches(s.trim(), this.pattern))
         {
             this.result = matcher.getMatch();
