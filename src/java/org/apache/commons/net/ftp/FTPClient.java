@@ -2384,6 +2384,6 @@ public class FTPClient extends FTP
     public FTPFile[] getFileList(String parserKey) 
     throws IOException, ParserInitializationException
     {
-        return getFileList(parserKey, "");
+        return getFileList(parserKey, ".");
     }
 }
