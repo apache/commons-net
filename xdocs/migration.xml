@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<document>
+
+  <properties>
+    <title>Jakarta Commons/Net Migration How-to</title>
+    <author email="brekke@apache.org">Jeffrey D. Brekke</author>
+  </properties>
+
+  <body>
+    
+<section name="Migration How-To">
+<p>
+This how-to lists the migration steps for moving between versions of Commons/Net.
+</p>
+</section>
+
+<section name="NetComponents 1.3.8  to  Commons/Net 1.0.0">
+<p>
+This version is a drop in replacement for NetComponents.  Only package names have changed.
+</p>
+<OL>
+  <LI>Change all occurances of <tt>com.oroinc.net.*</tt> to <tt>org.apache.commons.net.*</tt></LI>
+  <LI>Change all occurances of <tt>com.oroinc.io.*</tt> to <tt>org.apache.commons.net.io.*</tt></LI>
+  <LI>Change all occurances of <tt>com.oroinc.util.*</tt> to <tt>org.apache.commons.net.util.*</tt></LI>
+</OL>
+</section>
+
+
+</body>
+</document>
