@@ -63,6 +63,7 @@ public final class FTPReply
     public static final int CODE_502 = 502;
     public static final int CODE_503 = 503;
     public static final int CODE_504 = 504;
+    public static final int CODE_521 = 521;
     public static final int CODE_530 = 530;
     public static final int CODE_532 = 532;
     public static final int CODE_550 = 550;
