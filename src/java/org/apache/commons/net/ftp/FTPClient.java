@@ -62,6 +62,7 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
  *        System.err.println("FTP server refused connection.");
  *        System.exit(1);
  *      }
+ *       ftp.disconnect();
  *    } catch(IOException e) {
  *      if(ftp.isConnected()) {
  *        try {
