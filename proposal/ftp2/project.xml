@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<project>
+  <pomVersion>3</pomVersion>
+  <name>Jakarta Commons/Net FTP Proposal</name>
+  <id>commons-net-ftp2</id>
+  <currentVersion>SNAPSHOT</currentVersion>
+  <organization/>
+  <package>org.apache.commons.net.ftp.ftp2</package>
+  
+  <shortDescription>Jakarta Commons/Net FTP Proposal</shortDescription>
+  
+  <description/>
+  
+  <url>http://jakarta.apache.org/commons/sandbox/net/</url>
+  <issueTrackingUrl/>
+  <siteAddress/>
+  <siteDirectory/>
+  <distributionDirectory/>
+
+  <repository>
+    <connection>scm:cvs:pserver:anoncvs@cvs.apache.org:/home/cvspublic:jakarta-commons-sandbox/net/proposal/ftp2</connection>
+    <url>http://cvs.apache.org/viewcvs/jakarta-commons-sandbox/net/proposal/ftp2</url>
+  </repository>
+
+  <mailingLists/>
+
+  <developers/>
+  
+  <dependencies>
+    <dependency>
+      <id>oro</id>
+      <version>2.0.6</version>
+      <url>http://jakarta.apache.org/oro/</url>
+    </dependency>
+
+    <dependency>
+      <id>commons-net</id>
+      <version>SNAPSHOT</version>
+    </dependency>
+    
+  </dependencies>
+  
+  <build>
+
+    <sourceDirectory>src/java</sourceDirectory>
+    <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
+    
+    <unitTest>
+      <includes>
+        <include>**/*Test.java</include>
+      </includes>
+    </unitTest>
+    
+  </build>
+</project>
