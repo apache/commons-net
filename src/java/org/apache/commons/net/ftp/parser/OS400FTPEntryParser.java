@@ -20,7 +20,7 @@ import org.apache.commons.net.ftp.FTPFile;
 import java.util.Calendar;
 
 /**
- * @version $Id: OS400FTPEntryParser.java,v 1.4 2004/07/28 05:01:47 dfs Exp $
+ * @version $Id: OS400FTPEntryParser.java,v 1.5 2004/11/23 12:52:20 rwinston Exp $
  */
 
 public class OS400FTPEntryParser extends RegexFTPFileEntryParserImpl
@@ -85,6 +85,7 @@ public class OS400FTPEntryParser extends RegexFTPFileEntryParserImpl
             }
 
             Calendar cal = Calendar.getInstance();
+	    cal.set(Calendar.MILLISECOND, 0);
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MINUTE, 0);
             cal.set(Calendar.HOUR_OF_DAY, 0);

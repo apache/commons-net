@@ -25,7 +25,7 @@ import org.apache.commons.net.ftp.FTPFile;
  * DefaultFTPListParser, but adapted to use regular expressions and to fit the
  * new FTPFileEntryParser interface.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: UnixFTPEntryParser.java,v 1.19 2004/09/14 01:47:17 scohen Exp $
+ * @version $Id: UnixFTPEntryParser.java,v 1.20 2004/11/23 12:52:20 rwinston Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
@@ -183,6 +183,7 @@ public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
             }
 
             Calendar cal = Calendar.getInstance();
+	    cal.set(Calendar.MILLISECOND, 0);
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MINUTE, 0);
             cal.set(Calendar.HOUR_OF_DAY, 0);

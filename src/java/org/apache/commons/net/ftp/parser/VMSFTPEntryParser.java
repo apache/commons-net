@@ -40,7 +40,7 @@ import org.apache.commons.net.ftp.FTPListParseEngine;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.24 2004/07/28 05:01:47 dfs Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.25 2004/11/23 12:52:20 rwinston Exp $
  *
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
@@ -187,6 +187,7 @@ public class VMSFTPEntryParser extends RegexFTPFileEntryParserImpl
             cal.set(Calendar.HOUR_OF_DAY, new Integer(hr).intValue());
             cal.set(Calendar.MINUTE, new Integer(min).intValue());
             cal.set(Calendar.SECOND, new Integer(sec).intValue());
+	    cal.set(Calendar.MILLISECOND, 0);
             f.setTimestamp(cal);
 
             f.setGroup(grp);

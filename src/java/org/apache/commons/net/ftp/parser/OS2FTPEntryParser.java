@@ -22,7 +22,7 @@ import org.apache.commons.net.ftp.FTPFile;
  *
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: OS2FTPEntryParser.java,v 1.12 2004/07/28 05:01:47 dfs Exp $
+ * @version $Id: OS2FTPEntryParser.java,v 1.13 2004/11/23 12:52:20 rwinston Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class OS2FTPEntryParser extends RegexFTPFileEntryParserImpl
@@ -111,6 +111,7 @@ public class OS2FTPEntryParser extends RegexFTPFileEntryParserImpl
             }
 
             //set the calendar
+	    cal.set(Calendar.MILLISECOND, 0);
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MINUTE, minutes);
             cal.set(Calendar.HOUR_OF_DAY, hour);

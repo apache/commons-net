@@ -27,7 +27,7 @@ import org.apache.commons.net.ftp.FTPFile;
  * DefaultFTPParserFactory by classname.  It will not be chosen
  * by the autodetection scheme.
  * </B>
- * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.12 2004/07/28 05:01:47 dfs Exp $
+ * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.13 2004/11/23 12:52:20 rwinston Exp $
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
@@ -109,6 +109,7 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
             }
 
             Calendar cal = Calendar.getInstance();
+	    cal.set(Calendar.MILLISECOND, 0);
             cal.set(Calendar.SECOND,
                     0);
             cal.set(Calendar.MINUTE,
