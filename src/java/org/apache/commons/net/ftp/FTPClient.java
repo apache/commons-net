@@ -2077,6 +2077,9 @@ implements Configurable
      * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
      * @see org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory
      * @see org.apache.commons.net.ftp.FTPFileEntryParser
+     * @deprecated use {@link  #listFiles()  listFiles()} or 
+     * {@link  #listFiles(String)  listFiles(String)} instead and specify the
+     * parser Key in an {@link  #FTPClientConfig  FTPClientConfig} object instead.
      */
     public FTPFile[] listFiles(String parserKey, String pathname)
     throws IOException
@@ -2132,7 +2135,10 @@ implements Configurable
     throws IOException
     {
         String key = null;
-        return listFiles(key, pathname);
+        FTPListParseEngine engine =
+            initiateListParsing(key, pathname);
+        return engine.getFiles();
+
     }
     /**
      * Using the default system autodetect mechanism, obtain a

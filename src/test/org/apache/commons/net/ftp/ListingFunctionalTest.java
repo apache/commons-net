@@ -27,7 +27,7 @@ import junit.framework.TestSuite;
 /**
  * A functional test suite for checking that site listings work.
  * @author <a href="mailto:brekke@apache.org">Jeffrey D. Brekke</a>
- * @version $Id: ListingFunctionalTest.java,v 1.6 2004/04/21 23:30:33 scohen Exp $
+ * @version $Id$
  */
 public class ListingFunctionalTest extends TestCase
 {
@@ -248,7 +248,9 @@ public class ListingFunctionalTest extends TestCase
     public void testListFiles()
         throws IOException
     {
-        List files = Arrays.asList(client.listFiles(validParserKey, validPath));
+        FTPClientConfig config = new FTPClientConfig(validParserKey);
+        client.configure(config);
+        List files = Arrays.asList(client.listFiles(validPath));
 
         assertTrue(files.toString(),
                    findByName(files, validFilename));
@@ -271,7 +273,10 @@ public class ListingFunctionalTest extends TestCase
     public void testListFilesWithIncorrectParser()
         throws IOException
     {
-        FTPFile[] files = client.listFiles(invalidParserKey, validPath);
+        FTPClientConfig config = new FTPClientConfig(invalidParserKey);
+        client.configure(config);
+
+        FTPFile[] files = client.listFiles(validPath);
 
         assertEquals(0, files.length);
     }
