@@ -76,8 +76,8 @@
 	   <p>
 		   For more info, see the JavaDoc, or look at some of the following articles:
 		   <ul>
-			   <li><a href="http://www.informit.com/guides/content.asp?g=java&seqNum=40">http://www.informit.com/guides/content.asp?g=java&seqNum=40</a>
-				   <li><a href="http://www.onjava.com/pub/a/onjava/2003/06/25/commons.html?page=3">http://www.onjava.com/pub/a/onjava/2003/06/25/commons.html?page=3</a>
+			   <li><a href="http://www.informit.com/guides/content.asp?g=java&amp;seqNum=40">http://www.informit.com/guides/content.asp?g=java&amp;seqNum=40</a></li>
+				   <li><a href="http://www.onjava.com/pub/a/onjava/2003/06/25/commons.html?page=3">http://www.onjava.com/pub/a/onjava/2003/06/25/commons.html?page=3</a></li>
 				   </ul>
 				   </p>
    </section>
