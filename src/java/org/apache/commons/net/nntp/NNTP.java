@@ -215,7 +215,7 @@ public class NNTP extends SocketClient
      * <p>
      * @param listener  The ProtocolCommandListener to remove.
      ***/
-    public void removeProtocolCommandistener(ProtocolCommandListener listener)
+    public void removeProtocolCommandListener(ProtocolCommandListener listener)
     {
         _commandSupport_.removeProtocolCommandListener(listener);
     }
