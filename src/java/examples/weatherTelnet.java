@@ -64,8 +64,7 @@ import org.apache.commons.net.telnet.TelnetClient;
  * with the server via standard input.  You could use this example to
  * connect to any telnet server, but it is obviously not general purpose
  * because it reads from standard input a line at a time, making it
- * inconvenient for use with a remote interactive shell (you would use the
- * terminal emulator in NetComponents Pro for that).  The TelnetClient
+ * inconvenient for use with a remote interactive shell.  The TelnetClient
  * class used by itself is mostly intended for automating access to telnet
  * resources rather than interactive use.
  * <p>

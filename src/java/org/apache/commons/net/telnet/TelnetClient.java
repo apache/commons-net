@@ -66,9 +66,7 @@ import org.apache.commons.io.ToNetASCIIOutputStream;
  * terminal (NVT) for the Telnet protocol according to RFC 854.  It
  * does not implement any of the extra Telnet options because it
  * is meant to be used within a Java program providing automated
- * access to Telnet accessible resources.  A telnet client implementing
- * extra options and meant for use with a terminal emulator can be
- * found in <b>NetComponents Pro <sup><font size=-1>TM</font></sup></b>
+ * access to Telnet accessible resources.
  * <p>
  * The class can be used by first connecting to a server using the
  * SocketClient
