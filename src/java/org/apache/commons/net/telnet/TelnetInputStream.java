@@ -72,8 +72,8 @@ import java.io.InterruptedIOException;
 final class TelnetInputStream extends BufferedInputStream implements Runnable
 {
     static final int _STATE_DATA = 0, _STATE_IAC = 1, _STATE_WILL = 2,
-                                   _STATE_WONT = 3, _STATE_DO = 4, _STATE_DONT = 5, _STATE_SB = 6,
-                                                                _STATE_SE = 7, _STATE_CR = 8;
+                     _STATE_WONT = 3, _STATE_DO = 4, _STATE_DONT = 5,
+                     _STATE_SB = 6, _STATE_SE = 7, _STATE_CR = 8;
 
     private boolean __hasReachedEOF, __isClosed;
     private boolean __readIsWaiting;
