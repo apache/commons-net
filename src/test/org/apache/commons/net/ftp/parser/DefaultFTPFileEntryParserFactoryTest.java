@@ -58,6 +58,9 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
         parser = factory.createFileEntryParser("OS/2");
         assertTrue(parser instanceof OS2FTPEntryParser);
 
+        parser = factory.createFileEntryParser("OS/400");
+        assertTrue(parser instanceof OS400FTPEntryParser);
+        
         try {
             parser = factory.createFileEntryParser("OS2FTPFileEntryParser");
             fail("Exception should have been thrown. \"OS2FTPFileEntryParser\" is not a recognized key");
