@@ -2020,6 +2020,90 @@ public class FTPClient extends FTP
         return listFiles(__fileListParser);
     }
 
+    /**
+     * Using a programmer specified <code> FTPFileEntryParser </code>, 
+     * initialize an object containing a raw file information for the 
+     * current working directory.  This information is obtained through 
+     * the LIST command.  This object is then capable of being iterated to 
+     * return a sequence of FTPFile objects with information filled in by the
+     * <code> FTPFileEntryParser </code> used.
+     * The server may or may not expand glob expressions.  You should avoid
+     * using glob expressions because the return format for glob listings
+     * differs from server to server and will likely cause this method to fail.
+     * <p>
+     * @param parser The <code> FTPFileEntryParser </code> that should be
+     *         used to parse each server file listing.   
+     * @return An iteratable object that holds the raw information and is 
+     * capable of providing parsed FTPFile objects, one for each file containing
+     * information contained in the given path in the format determined by the 
+     * <code> parser </code> parameter.   Null will be returned if a 
+     * data connection cannot be opened.  If the current working directory 
+     * contains no files, an empty array will be the return.
+     * @exception FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     * @see FTPFileList
+     */
+    public FTPFileList createFileList(FTPFileEntryParser parser)
+    throws IOException
+    {
+        return createFileList(null, parser);
+    }
+
+    /**
+     * Using a programmer specified <code> FTPFileEntryParser </code>, 
+     * initialize an object containing a raw file information for a directory 
+     * or information for a single file.  This information is obtained through 
+     * the LIST command.  This object is then capable of being iterated to 
+     * return a sequence of FTPFile objects with information filled in by the
+     * <code> FTPFileEntryParser </code> used.
+     * The server may or may not expand glob expressions.  You should avoid
+     * using glob expressions because the return format for glob listings
+     * differs from server to server and will likely cause this method to fail.
+     * <p>
+     * @param parser The <code> FTPFileEntryParser </code> that should be
+     *         used to parse each server file listing.   
+     * @param pathname  The file or directory to list.
+     * @return An iteratable object that holds the raw information and is 
+     * capable of providing parsed FTPFile objects, one for each file containing
+     * information contained in the given path in the format determined by the 
+     * <code> parser </code> parameter.  Null will be returned if a 
+     * data connection cannot be opened.  If the supplied path contains
+     * no files, an empty array will be the return.
+     * @exception FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     * @see FTPFileList
+     */
+    public FTPFileList createFileList(String pathname,
+                                      FTPFileEntryParser parser)
+    throws IOException
+    {
+        Socket socket;
+        FTPFile[] results;
+
+        if ((socket = __openDataConnection(FTPCommand.LIST, pathname)) == null)
+        {
+            return null;
+        }
+
+        FTPFileList list =
+            FTPFileList.create(socket.getInputStream(), parser);
+
+        socket.close();
+
+        completePendingCommand();
+
+        return list;
+    }
 
     /***
      * Issue the FTP STAT command to the server.
