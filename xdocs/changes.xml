@@ -7,6 +7,10 @@
 
   <body>
     <release version="1.0.1" date="In CVS">
+      <action dev="brekke" type="add">
+        Added terminal option support to the telnet client with tests.
+        From Bruno D'Avanzo ( b.davanzo@inwind.it ).
+      </action>
       <action dev="scohen" type="add">
         New parsers merged with mainline with support for old list parsers.
       </action>
