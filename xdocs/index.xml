@@ -51,7 +51,7 @@
        <li>TFTP</li>
        <li>Finger</li>
        <li>Whois</li> 
-       <li>rlogin, BSD R commands</li>
+       <li>rexec/rcmd/rlogin</li>
        <li>Time (rdate) and Daytime</li>
        <li>Echo</li>
        <li>Discard</li>
