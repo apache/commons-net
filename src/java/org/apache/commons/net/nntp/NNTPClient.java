@@ -959,6 +959,22 @@ public class NNTPClient extends NNTP
 
         return __readNewsgroupListing();
     }
+    
+    /**
+     * An overloaded listNewsgroups() command that allows us to
+     * specify with a pattern what groups we want to list. Wraps the
+     * LIST ACTIVE command.
+     * <p>
+     * @param wildmat a pseudo-regex pattern (cf. RFC 2980)
+     * @return
+     * @throws IOException
+     */
+    public NewsgroupInfo[] listNewsgroups(String wildmat) throws IOException 
+    {
+        if(!NNTPReply.isPositiveCompletion(listActive(wildmat)))
+            return null;
+        return __readNewsgroupListing();
+    }
 
 
     /***
@@ -1120,6 +1136,7 @@ public class NNTPClient extends NNTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
+
     public Writer postArticle() throws IOException
     {
         if (!NNTPReply.isPositiveIntermediate(post()))
@@ -1151,5 +1168,92 @@ public class NNTPClient extends NNTP
     {
         return NNTPReply.isPositiveCompletion(quit());
     }
+    
 
+    /**
+     * Log into a news server by sending the AUTHINFO USER/AUTHINFO
+     * PASS command sequence. This is usually sent in response to a
+     * 480 reply code from the NNTP server.
+     * <p>
+     * @param username a valid username
+     * @param password the corresponding password
+     * @return True for successful login, false for a failure
+     * @throws IOException
+     */
+    public boolean authenticate(String username, String password)
+	throws IOException 
+    {
+        int replyCode = authinfoUser(username);
+		
+        if (replyCode == NNTPReply.MORE_AUTH_INFO_REQUIRED) 
+            {
+                replyCode = authinfoPass(password);
+			
+                if (replyCode == NNTPReply.AUTHENTICATION_ACCEPTED) 
+                    {
+                        _isAllowedToPost = true;
+                        return true;
+                    }
+            }
+        return false;
+    }
+			
+    /***
+     * Private implementation of XOVER functionality.  
+     * 
+     * See <a href="org.apache.commons.nntp.NNTP.html#xover">
+     * for legal agument formats. Alternatively, read RFC 2980 :-) 
+     * <p>
+     * @param articleRange
+     * @return Returns a DotTerminatedMessageReader if successful, null
+     *         otherwise
+     * @exception IOException
+     */
+    private Reader __retrieveArticleInfo(String articleRange)
+        throws IOException 
+    {
+        if (!NNTPReply.isPositiveCompletion(xover(articleRange)))
+            return null;
+
+        return new DotTerminatedMessageReader(_reader_);
+    }
+			
+    /**
+     * Return article headers for a specified post.
+     * <p>
+     * @param articleNumber the article to retrieve headers for
+     * @return a DotTerminatedReader if successful, null otherwise
+     * @throws IOException
+     */
+    public Reader retrieveArticleInfo(int articleNumber) throws IOException 
+    {
+        return __retrieveArticleInfo(new Integer(articleNumber).toString());
+    }
+			
+    /**
+     * Return article headers for all articles between lowArticleNumber
+     * and highArticleNumber, inclusively.
+     * <p>
+     * @param lowArticleNumber 
+     * @param highArticleNumber 
+     * @return a DotTerminatedReader if successful, null otherwise
+     * @throws IOException
+     */
+    public Reader retrieveArticleInfo(int lowArticleNumber,
+                                      int highArticleNumber)
+        throws IOException 
+    {
+        return
+            __retrieveArticleInfo(new String(lowArticleNumber + "-" + 
+                                             highArticleNumber));
+    }
 }
+
+
+/* Emacs configuration
+ * Local variables:        **
+ * mode:             java  **
+ * c-basic-offset:   4     **
+ * indent-tabs-mode: nil   **
+ * End:                    **
+ */

@@ -933,5 +933,93 @@ public class NNTP extends SocketClient
     {
         return sendCommand(NNTPCommand.QUIT);
     }
+     
+    /***
+     * A convenience method to send the AUTHINFO USER command to the server, 
+     *  receive the reply, and return the reply code. (See RFC 2980)
+     * <p>
+     * @param username A valid username.
+     * @return The reply code received from the server. The server should
+     *          return a 381 or 281 for this command. 
+     * @exception NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     ***/
+    public int authinfoUser(String username) throws IOException {
+        String userParameter = "USER " + username;
+        return sendCommand(NNTPCommand.AUTHINFO, userParameter);
+    }
 
+    /***
+     * A convenience method to send the AUTHINFO PASS command to the server, 
+     * receive the reply, and return the reply code.  If this step is
+     * required, it should immediately follow the AUTHINFO USER command
+     * (See RFC 2980)
+     * <p>
+     * @param password a valid password.
+     * @return The reply code received from the server. The server should
+     *         return a	281 or 502 for this command. 
+     * @exception NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     ***/
+    public int authinfoPass(String password) throws IOException {
+        String passParameter = "PASS " + password;
+        return sendCommand(NNTPCommand.AUTHINFO, passParameter);
+    }
+		
+    /***
+     * A convenience method to send the NNTP XOVER command to the server,
+     * receive the reply, and return the reply code.
+     * <p>
+     * @param selectedArticles a String representation of the range of
+     * article headers required. This may be an article number, or a
+     * range of article numbers in the form "XXXX-YYYY", where XXXX
+     * and YYYY are valid article numbers in the current group.  It
+     * also may be of the form "XXX-", meaning "return XXX and all
+     * following articles" In this revision, the last format is not
+     * possible (yet).
+     * @return The reply code received from the server.
+     * @exception NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     ***/
+    public int xover(String selectedArticles) throws IOException {
+        return sendCommand(NNTPCommand.XOVER, selectedArticles);
+    }
+		
+    /**
+     * A convenience wrapper for the extended LIST command that takes
+     * an argument, allowing us to selectively list multiple groups.
+     * <p>
+     * @param wildmat A wildmat (pseudo-regex) pattern. See RFC 2980 for
+     *                details.
+     * @return the reply code received from the server.
+     * @throws IOException
+     */
+    public int listActive(String wildmat) throws IOException {
+        StringBuffer command = new StringBuffer("ACTIVE ");
+        command.append(wildmat);
+        return sendCommand(NNTPCommand.LIST, command.toString());
+    }	
 }
+
+/* Emacs configuration
+ * Local variables:        **
+ * mode:             java  **
+ * c-basic-offset:   4     **
+ * indent-tabs-mode: nil   **
+ * End:                    **
+ */

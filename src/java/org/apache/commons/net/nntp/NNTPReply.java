@@ -85,9 +85,12 @@ public final class NNTPReply
     public static final int CODE_231 = 231;
     public static final int CODE_235 = 235;
     public static final int CODE_240 = 240;
+    public static final int CODE_281 = 281;
     public static final int CODE_335 = 335;
     public static final int CODE_340 = 340;
+    public static final int CODE_381 = 381;
     public static final int CODE_400 = 400;
+    public static final int CODE_408 = 408;
     public static final int CODE_411 = 411;
     public static final int CODE_412 = 412;
     public static final int CODE_420 = 420;
@@ -100,45 +103,51 @@ public final class NNTPReply
     public static final int CODE_437 = 437;
     public static final int CODE_440 = 440;
     public static final int CODE_441 = 441;
+    public static final int CODE_482 = 482;
     public static final int CODE_500 = 500;
     public static final int CODE_501 = 501;
     public static final int CODE_502 = 502;
     public static final int CODE_503 = 503;
 
-    public static final int HELP_TEXT_FOLLOWS = CODE_100;
-    public static final int DEBUG_OUTPUT = CODE_199;
-    public static final int SERVER_READY_POSTING_ALLOWED = CODE_200;
+    public static final int HELP_TEXT_FOLLOWS                = CODE_100;
+    public static final int DEBUG_OUTPUT                     = CODE_199;
+    public static final int SERVER_READY_POSTING_ALLOWED     = CODE_200;
     public static final int SERVER_READY_POSTING_NOT_ALLOWED = CODE_201;
-    public static final int SLAVE_STATUS_NOTED = CODE_202;
-    public static final int CLOSING_CONNECTION = CODE_205;
-    public static final int GROUP_SELECTED = CODE_211;
+    public static final int SLAVE_STATUS_NOTED               = CODE_202;
+    public static final int CLOSING_CONNECTION               = CODE_205;
+    public static final int GROUP_SELECTED                   = CODE_211;
     public static final int ARTICLE_RETRIEVED_HEAD_AND_BODY_FOLLOW = CODE_220;
     public static final int ARTICLE_RETRIEVED_HEAD_FOLLOWS = CODE_221;
     public static final int ARTICLE_RETRIEVED_BODY_FOLLOWS = CODE_222;
-    public static final int ARTICLE_RETRIEVED_REQUEST_TEXT_SEPARATELY = CODE_223;
+    public static final int 
+      ARTICLE_RETRIEVED_REQUEST_TEXT_SEPARATELY = CODE_223;
     public static final int ARTICLE_LIST_BY_MESSAGE_ID_FOLLOWS = CODE_230;
-    public static final int NEW_NEWSGROUP_LIST_FOLLOWS = CODE_231;
-    public static final int ARTICLE_TRANSFERRED_OK = CODE_235;
-    public static final int ARTICLE_POSTED_OK = CODE_240;
-    public static final int SEND_ARTICLE_TO_TRANSFER = CODE_335;
-    public static final int SEND_ARTICLE_TO_POST = CODE_340;
-    public static final int SERVICE_DISCONTINUED = CODE_400;
-    public static final int NO_SUCH_NEWSGROUP = CODE_411;
-    public static final int NO_NEWSGROUP_SELECTED = CODE_412;
-    public static final int NO_CURRENT_ARTICLE_SELECTED = CODE_420;
-    public static final int NO_NEXT_ARTICLE = CODE_421;
-    public static final int NO_PREVIOUS_ARTICLE = CODE_422;
-    public static final int NO_SUCH_ARTICLE_NUMBER = CODE_423;
-    public static final int NO_SUCH_ARTICLE_FOUND = CODE_430;
-    public static final int ARTICLE_NOT_WANTED = CODE_435;
-    public static final int TRANSFER_FAILED = CODE_436;
-    public static final int ARTICLE_REJECTED = CODE_437;
-    public static final int POSTING_NOT_ALLOWED = CODE_440;
-    public static final int POSTING_FAILED = CODE_441;
-    public static final int COMMAND_NOT_RECOGNIZED = CODE_500;
-    public static final int COMMAND_SYNTAX_ERROR = CODE_501;
-    public static final int PERMISSION_DENIED = CODE_502;
-    public static final int PROGRAM_FAULT = CODE_503;
+    public static final int NEW_NEWSGROUP_LIST_FOLLOWS         = CODE_231;
+    public static final int ARTICLE_TRANSFERRED_OK             = CODE_235;
+    public static final int ARTICLE_POSTED_OK                  = CODE_240;
+    public static final int AUTHENTICATION_ACCEPTED            = CODE_281;
+    public static final int SEND_ARTICLE_TO_TRANSFER           = CODE_335;
+    public static final int SEND_ARTICLE_TO_POST               = CODE_340;
+    public static final int MORE_AUTH_INFO_REQUIRED            = CODE_381;
+    public static final int SERVICE_DISCONTINUED               = CODE_400;
+    public static final int NO_SUCH_NEWSGROUP                  = CODE_411;
+    public static final int AUTHENTICATION_REQUIRED            = CODE_408;
+    public static final int NO_NEWSGROUP_SELECTED              = CODE_412;
+    public static final int NO_CURRENT_ARTICLE_SELECTED        = CODE_420;
+    public static final int NO_NEXT_ARTICLE                    = CODE_421;
+    public static final int NO_PREVIOUS_ARTICLE                = CODE_422;
+    public static final int NO_SUCH_ARTICLE_NUMBER             = CODE_423;
+    public static final int NO_SUCH_ARTICLE_FOUND              = CODE_430;
+    public static final int ARTICLE_NOT_WANTED                 = CODE_435;
+    public static final int TRANSFER_FAILED                    = CODE_436;
+    public static final int ARTICLE_REJECTED                   = CODE_437;
+    public static final int POSTING_NOT_ALLOWED                = CODE_440;
+    public static final int POSTING_FAILED                     = CODE_441;
+    public static final int AUTHENTICATION_REJECTED            = CODE_482;
+    public static final int COMMAND_NOT_RECOGNIZED             = CODE_500;
+    public static final int COMMAND_SYNTAX_ERROR               = CODE_501;
+    public static final int PERMISSION_DENIED                  = CODE_502;
+    public static final int PROGRAM_FAULT                      = CODE_503;
 
     // Cannot be instantiated
 
@@ -227,3 +236,11 @@ public final class NNTPReply
     }
 
 }
+
+/* Emacs configuration
+ * Local variables:        **
+ * mode:             java  **
+ * c-basic-offset:   4     **
+ * indent-tabs-mode: nil   **
+ * End:                    **
+ */

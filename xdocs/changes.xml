@@ -7,14 +7,12 @@
 
   <body>
     <release version="1.0.1" date="In CVS">
-<!-- Pending resubmission of patch.
       <action dev="dfs" type="add">
         Rory Winston &lt;Rory.Winston@telewest.co.uk&gt; provided
         patches to add the following extended NNTP commands to
         NNTPClient: XOVER, AUTHINFO USER, AUTHINFO PASS, and
         LIST ACTIVE.
       </action>
--->
       <action dev="dfs" type="fix">
         Changed connection hooks for FTP, SMTP, POP3, and NNTP classes
         to force use of an 8-bit US-ASCII superset (ISO-8859-1) for

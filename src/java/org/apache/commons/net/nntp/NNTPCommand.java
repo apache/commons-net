@@ -58,38 +58,39 @@ package org.apache.commons.net.nntp;
  * NNTPCommand stores a set of constants for NNTP command codes.  To interpret
  * the meaning of the codes, familiarity with RFC 977 is assumed.
  * <p>
- * <p>
  * @author Daniel F. Savarese
  ***/
 
 public final class NNTPCommand
 {
 
-    public static final int ARTICLE = 0;
-    public static final int BODY = 1;
-    public static final int GROUP = 2;
-    public static final int HEAD = 3;
-    public static final int HELP = 4;
-    public static final int IHAVE = 5;
-    public static final int LAST = 6;
-    public static final int LIST = 7;
+    public static final int ARTICLE   = 0;
+    public static final int BODY      = 1;
+    public static final int GROUP     = 2;
+    public static final int HEAD      = 3;
+    public static final int HELP      = 4;
+    public static final int IHAVE     = 5;
+    public static final int LAST      = 6;
+    public static final int LIST      = 7;
     public static final int NEWGROUPS = 8;
-    public static final int NEWNEWS = 9;
-    public static final int NEXT = 10;
-    public static final int POST = 11;
-    public static final int QUIT = 12;
-    public static final int SLAVE = 13;
-    public static final int STAT = 14;
-
+    public static final int NEWNEWS   = 9;
+    public static final int NEXT      = 10;
+    public static final int POST      = 11;
+    public static final int QUIT      = 12;
+    public static final int SLAVE     = 13;
+    public static final int STAT      = 14;
+    public static final int AUTHINFO  = 15;
+    public static final int XOVER     = 16;
 
     // Cannot be instantiated
     private NNTPCommand()
     {}
 
     static final String[] _commands = {
-                                          "ARTICLE", "BODY", "GROUP", "HEAD", "HELP", "IHAVE", "LAST", "LIST",
-                                          "NEWGROUPS", "NEWNEWS", "NEXT", "POST", "QUIT", "SLAVE", "STAT"
-                                      };
+        "ARTICLE", "BODY", "GROUP", "HEAD", "HELP", "IHAVE", "LAST", "LIST",
+        "NEWGROUPS", "NEWNEWS", "NEXT", "POST", "QUIT", "SLAVE", "STAT",
+        "AUTHINFO", "XOVER"
+    };
 
 
     /***
@@ -106,3 +107,11 @@ public final class NNTPCommand
     }
 
 }
+
+/* Emacs configuration
+ * Local variables:        **
+ * mode:             java  **
+ * c-basic-offset:   4     **
+ * indent-tabs-mode: nil   **
+ * End:                    **
+ */
