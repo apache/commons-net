@@ -87,11 +87,11 @@ preserve legibility.
 
 <p>
 In Emacs-speak, this translates to the following command:
+</p>
 
 <source><![CDATA[
 (setq-default tab-width 4 indent-tabs-mode nil)
 ]]></source>
-</p>
 
 <p>
 4. Unix linefeeds for all .java source code files. Other platform specific
@@ -125,7 +125,7 @@ preferred Javadoc format is:
 </p>
 
 <source><![CDATA[
-@version $Id: code-standards.xml,v 1.1 2002/04/07 03:04:15 brekke Exp $
+@version $Id: code-standards.xml,v 1.2 2002/04/07 03:14:54 brekke Exp $
 ]]></source>
 
 <p>
