@@ -77,7 +77,7 @@ import org.apache.commons.net.ftp.FTPFile;
  * which required a bigger memory hit.
  *
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: FTPFileList.java,v 1.2 2002/04/30 13:59:42 brekke Exp $
+ * @version $Id: FTPFileList.java,v 1.3 2002/05/03 14:52:29 brekke Exp $
  * @see FTPClient2#listFiles
  * @see FTPClient2#createFileList
  */
@@ -170,7 +170,8 @@ public class FTPFileList
     /**
      * Package private accessor for the collection of raw input lines.
      * 
-     * @return vector containing all the raw input lines returned from the FTP server
+     * @return vector containing all the raw input lines returned from the FTP 
+     * server
      */
     Vector getLines()
     {
@@ -178,8 +179,8 @@ public class FTPFileList
     }
 
     /**
-     * create an iterator over this list using the parser with which this list was
-     * initally created
+     * create an iterator over this list using the parser with which this list 
+     * was initally created
      * 
      * @return an iterator over this list using the list's default parser.
      */
@@ -188,7 +189,10 @@ public class FTPFileList
         return new FTPFileIterator(this);
     }
     /**
-     * create an iterator over this list using the supplied parser 
+     * create an iterator over this list using the supplied parser
+     * 
+     * @param parser The user-supplied parser with which the list is to be 
+     * iterated, may be different from this list's default parser.
      * 
      * @return an iterator over this list using the supplied parser.
      */

@@ -73,18 +73,18 @@ import org.apache.commons.net.ftp.ftp2.parser.UnixFTPEntryParser;
  * way.
  *
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: FTPClient2.java,v 1.2 2002/04/30 13:59:42 brekke Exp $
+ * @version $Id: FTPClient2.java,v 1.3 2002/05/03 14:52:29 brekke Exp $
  */
 public class FTPClient2 extends FTPClient
 {
-    private FTPFileEntryParser __fileEntryParser;
+    private FTPFileEntryParser defaultParser;
     /**
      * The only constructor for this class.
      */
     public FTPClient2()
     {
         super();
-        __fileEntryParser = new UnixFTPEntryParser();
+        this.defaultParser = new UnixFTPEntryParser();
     }
     
     /**
@@ -146,7 +146,7 @@ public class FTPClient2 extends FTPClient
      */
     public FTPFile[] listFiles(String pathname) throws IOException
     {
-        return listFiles(__fileEntryParser, pathname);
+        return listFiles(this.defaultParser, pathname);
     }
     
     /**
@@ -170,7 +170,7 @@ public class FTPClient2 extends FTPClient
      */
     public FTPFile[] listFiles() throws IOException
     {
-        return listFiles(__fileEntryParser, null);
+        return listFiles(this.defaultParser, null);
     }
 
     /**
@@ -184,7 +184,6 @@ public class FTPClient2 extends FTPClient
      * using glob expressions because the return format for glob listings
      * differs from server to server and will likely cause this method to fail.
      * <p>
-     * @param pathname  The file or directory to list.
      * @return An iteratable object that holds the raw information and is 
      * capable of providing parsed FTPFile objects, one for each file containing
      * information contained in the given path in the format determined by the 
@@ -202,7 +201,7 @@ public class FTPClient2 extends FTPClient
      */
     public FTPFileList createFileList() throws IOException
     {
-        return createFileList(null, this.__fileEntryParser);
+        return createFileList(null, this.defaultParser);
     }
 
     /**
@@ -234,7 +233,7 @@ public class FTPClient2 extends FTPClient
      */
     public FTPFileList createFileList(String basedir) throws IOException
     {
-        return createFileList(basedir, this.__fileEntryParser);
+        return createFileList(basedir, this.defaultParser);
     }
 
     /**

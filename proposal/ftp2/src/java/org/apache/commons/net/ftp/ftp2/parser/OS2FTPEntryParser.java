@@ -98,7 +98,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * <P>
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: OS2FTPEntryParser.java,v 1.2 2002/04/30 13:59:42 brekke Exp $
+ * @version $Id: OS2FTPEntryParser.java,v 1.3 2002/05/03 14:52:30 brekke Exp $
  * @see org.apache.commons.net.ftp.FTPFileListParser
  */
 public class OS2FTPEntryParser
@@ -120,26 +120,13 @@ public class OS2FTPEntryParser
      * The sole constructor for a OS2FTPEntryParser object.
      * 
      * @exception IllegalArgumentException
-     * Thrown if the regular expression is unparseable.  Should not be seen under 
-     * normal conditions.  It it is seen, this is a sign that <code>REGEX</code> is 
-     * not a valid regular * expression.
+     * Thrown if the regular expression is unparseable.  Should not be seen 
+     * under normal conditions.  It it is seen, this is a sign that 
+     * <code>REGEX</code> is  not a valid regular expression.
      */
     public OS2FTPEntryParser() 
     {
         super(REGEX);
-    }
-
-
-    /**
-     * Returns the properly formatted regular expression string used to do
-     * the pattern matching for an OS2 FTP system.
-     *
-     * @return the string used to build the regular expression pattern
-     * for matching
-     */
-    protected String getRegEx()
-    {
-        return REGEX;
     }
 
 
@@ -150,7 +137,7 @@ public class OS2FTPEntryParser
      * returned, otherwise a <code> FTPFile </code> instance representing the
      * files in the directory is returned.
      * <p>
-     * @param listEntry A line of text from the file listing
+     * @param entry A line of text from the file listing
      * @return An FTPFile instance corresponding to the supplied entry
      */
     public FTPFile parseFTPEntry(String entry)

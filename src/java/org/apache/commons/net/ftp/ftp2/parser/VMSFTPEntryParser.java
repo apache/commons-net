@@ -103,7 +103,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * <P>
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.2 2002/04/30 13:59:42 brekke Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.3 2002/05/03 14:52:30 brekke Exp $
  * @see org.apache.commons.net.ftp.FTPFileFTPEntryParser
  */
 public class VMSFTPEntryParser
@@ -137,9 +137,9 @@ public class VMSFTPEntryParser
      * <code>versioning</code> member false
      * 
      * @exception IllegalArgumentException
-     * Thrown if the regular expression is unparseable.  Should not be seen under
-     * normal conditions.  It it is seen, this is a sign that <code>REGEX</code> is
-     * not a valid regular expression.
+     * Thrown if the regular expression is unparseable.  Should not be seen 
+     * under normal conditions.  It it is seen, this is a sign that 
+     * <code>REGEX</code> is  not a valid regular expression.
      */
     public VMSFTPEntryParser()
     {
@@ -153,9 +153,9 @@ public class VMSFTPEntryParser
      * @param versioning Value to which versioning is to be set.
      * 
      * @exception IllegalArgumentException
-     * Thrown if the regular expression is unparseable.  Should not be seen under
-     * normal conditions.  It it is seen, this is a sign that <code>REGEX</code> is
-     * not a valid regular expression.
+     * Thrown if the regular expression is unparseable.  Should not be seen 
+     * under normal conditions.  It it is seen, this is a sign that 
+     * <code>REGEX</code> is  not a valid regular expression.
      */
     public VMSFTPEntryParser(boolean versioning)
     {
@@ -163,21 +163,6 @@ public class VMSFTPEntryParser
         this.versioning = versioning;
     }
 
-
-
-    /**
-     * Returns the properly formatted regular expression string used to do
-     * the pattern matching for a VMS FTP system.
-     *
-     * @return the string used to build the regular expression pattern
-     * for matching
-     */
-    protected String getRegEx()
-    {
-        return REGEX;
-    }
-
-    
     /**
      * Parses a line of a VMS FTP server file listing and converts it into a
      * usable format in the form of an <code> FTPFile </code> instance.  If the
@@ -185,7 +170,7 @@ public class VMSFTPEntryParser
      * returned, otherwise a <code> FTPFile </code> instance representing the
      * files in the directory is returned.
      * <p>
-     * @param listEntry A line of text from the file listing
+     * @param entry A line of text from the file listing
      * @return An FTPFile instance corresponding to the supplied entry
      */
     public FTPFile parseFTPEntry(String entry)
@@ -214,7 +199,9 @@ public class VMSFTPEntryParser
             if (name.lastIndexOf(".DIR") != -1) 
             {
                 f.setType(FTPFile.DIRECTORY_TYPE);
-            } else {
+            } 
+            else 
+            {
                 f.setType(FTPFile.FILE_TYPE);
             }
             //set FTPFile name
@@ -222,7 +209,9 @@ public class VMSFTPEntryParser
             if (versioning) 
             {
                 f.setName(name);
-            } else {
+            } 
+            else 
+            {
                 name = name.substring(0, name.lastIndexOf(";"));
                 f.setName(name);
             }

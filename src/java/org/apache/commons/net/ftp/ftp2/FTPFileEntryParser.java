@@ -65,7 +65,7 @@ import org.apache.commons.net.ftp.FTPFile;
  * if necessary, subclass FTPFile.
  *
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: FTPFileEntryParser.java,v 1.2 2002/04/30 13:59:42 brekke Exp $
+ * @version $Id: FTPFileEntryParser.java,v 1.3 2002/05/03 14:52:29 brekke Exp $
  * @see org.apache.commons.net.ftp.FTPFile
  * @see FTPClient2#listFiles
  */

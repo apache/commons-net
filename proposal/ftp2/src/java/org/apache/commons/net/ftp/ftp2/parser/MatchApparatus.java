@@ -67,7 +67,7 @@ import org.apache.oro.text.regex.MatchResult;
  * It is also designed to encapsulate access to the oro.text.regex
  * classes in one place.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: MatchApparatus.java,v 1.2 2002/04/30 13:59:42 brekke Exp $
+ * @version $Id: MatchApparatus.java,v 1.3 2002/05/03 14:52:30 brekke Exp $
  */
 abstract class MatchApparatus
 {
@@ -79,23 +79,28 @@ abstract class MatchApparatus
     /**
      * The constructor for a MatchApparatus object.
      * 
-     * @param regex  The regular expression with which this object is initialized.
+     * @param regex  The regular expression with which this object is 
+     * initialized.
      * 
      * @exception IllegalArgumentException
-     * Thrown if the regular expression is unparseable.  Should not be seen in normal
-     * conditions.  It it is seen, this is a sign that a subclass has been created with
-     * a bad regular expression.   Since the parser must be created before use, this 
-     * means that any bad parser subclasses created from this will bomb very quickly,
-     * leading to easy detection.  
+     * Thrown if the regular expression is unparseable.  Should not be seen in 
+     * normal conditions.  It it is seen, this is a sign that a subclass has 
+     * been created with a bad regular expression.   Since the parser must be 
+     * created before use, this means that any bad parser subclasses created 
+     * from this will bomb very quickly,  leading to easy detection.  
      */
     MatchApparatus(String regex) 
     {
-        try {
+        try 
+        {
             this.prefix = "[" + getClass().getName() + "] ";
             this.matcher = new Perl5Matcher();
             this.pattern = new Perl5Compiler().compile(regex);
-        }  catch (MalformedPatternException e) {
-            throw new IllegalArgumentException ("Unparseable regex supplied:  " + regex);
+        } 
+        catch (MalformedPatternException e) 
+        {
+            throw new IllegalArgumentException (
+                "Unparseable regex supplied:  " + regex);
         }
     }
 
@@ -148,7 +153,8 @@ abstract class MatchApparatus
     }
 
     /**
-     * For debugging purposes - returns a string shows each match group by number.
+     * For debugging purposes - returns a string shows each match group by 
+     * number.
      * 
      * @return a string shows each match group by number.
      */

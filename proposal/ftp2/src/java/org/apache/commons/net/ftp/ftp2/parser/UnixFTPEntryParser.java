@@ -63,7 +63,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * DefaultFTPListParser, but adapted to use regular expressions and to fit the
  * new FTPFileEntryParser interface.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: UnixFTPEntryParser.java,v 1.2 2002/04/30 13:59:42 brekke Exp $
+ * @version $Id: UnixFTPEntryParser.java,v 1.3 2002/05/03 14:52:30 brekke Exp $
  */
 public class UnixFTPEntryParser
             extends MatchApparatus implements FTPFileEntryParser
@@ -87,9 +87,9 @@ public class UnixFTPEntryParser
      * The sole constructor for a UnixFTPEntryParser object.
      * 
      * @exception IllegalArgumentException
-     * Thrown if the regular expression is unparseable.  Should not be seen under 
-     * normal conditions.  It it is seen, this is a sign that <code>REGEX</code> is 
-     * not a valid regular expression.
+     * Thrown if the regular expression is unparseable.  Should not be seen 
+     * under normal conditions.  It it is seen, this is a sign that 
+     * <code>REGEX</code> is  not a valid regular expression.
      */
     public UnixFTPEntryParser() 
     {
@@ -103,7 +103,7 @@ public class UnixFTPEntryParser
      * <code> null </code> is returned, otherwise a <code> FTPFile </code> 
      * instance representing the files in the directory is returned.
      * <p>
-     * @param listEntry A line of text from the file listing
+     * @param entry A line of text from the file listing
      * @return An FTPFile instance corresponding to the supplied entry
      */
     public FTPFile parseFTPEntry(String entry)

@@ -65,7 +65,7 @@ import java.util.Vector;
  * be receieved as an array of any requested number of entries or all of them.
  *
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: FTPFileIterator.java,v 1.2 2002/04/30 13:59:42 brekke Exp $
+ * @version $Id: FTPFileIterator.java,v 1.3 2002/05/03 14:52:29 brekke Exp $
  * @see org.apache.commons.net.ftp.ftp2.FTPFileList
  */
 public class FTPFileIterator
@@ -149,24 +149,27 @@ public class FTPFileIterator
     }
 
     /**
-     * Returns an array of at most <code>howMany</code> FTPFile objects
-     * starting at this iterator's current position  within its associated
-     * list. If fewer than <code>howMany</code> such elements are available,
-     * the returned array will have a length equal to the number of entries
-     * at and after after the current position.  If no such entries
-     * are found, this array will have a length of 0.
-     *
-     * After this method is called the current position is advanced by either
-     * <code>howMany</code> or the number of entries available after the
-     * iterator, whichever is fewer.
-     * @param howMany the maximum number of entries we want to get.  A 0
+     * Returns an array of at most <code>quantityRequested</code> FTPFile 
+     * objects starting at this iterator's current position  within its 
+     * associated list. If fewer than <code>quantityRequested</code> such 
+     * elements are available, the returned array will have a length equal 
+     * to the number of entries at and after after the current position.  
+     * If no such entries are found, this array will have a length of 0.
+     * 
+     * After this method is called the current position is advanced by 
+     * either <code>quantityRequested</code> or the number of entries 
+     * available after the iterator, whichever is fewer.
+     * 
+     * @param quantityRequested
+     * the maximum number of entries we want to get.  A 0
      * passed here is a signal to get ALL the entries.
-     * @return  an array of at most <code>howMany</code> FTPFile objects
-     * starting at the current position of this iterator within its list
-     * and at least the number of elements which  exist in the list at and
-     * after its current position.
+     * 
+     * @return an array of at most <code>quantityRequested</code> FTPFile 
+     * objects starting at the current position of this iterator within its 
+     * list and at least the number of elements which  exist in the list at 
+     * and after its current position.
      */
-    public FTPFile[] getNext(int howMany)
+    public FTPFile[] getNext(int quantityRequested)
     {
 
         // if we haven't gotten past the initial junk do so.
@@ -184,15 +187,15 @@ public class FTPFileIterator
         // now that we know the maximum we can possibly get,
         // resolve a 0 request to ask for that many.
 
-        int _howMany = (howMany == 0) ? max : howMany;
-        _howMany = (_howMany + this.itemptr < this.rawlines.size())
-                   ? _howMany
+        int howMany = (quantityRequested == 0) ? max : quantityRequested;
+        howMany = (howMany + this.itemptr < this.rawlines.size())
+                   ? howMany
                    : this.rawlines.size() - this.itemptr;
 
-        FTPFile[] output = new FTPFile[_howMany];
+        FTPFile[] output = new FTPFile[howMany];
 
         for (int i = 0, e = this.firstGoodEntry + this.itemptr ;
-                i < _howMany; i++, e++)
+                i < howMany; i++, e++)
         {
             output[i] = parseFTPEntry((String) this.rawlines.elementAt(e));
             this.itemptr++;
@@ -249,34 +252,35 @@ public class FTPFileIterator
     }
 
     /**
-     * Returns an array of at most <code>howMany</code> FTPFile objects
-     * starting at the position preceding this iterator's current position
-     * within its associated list. If fewer than <code>howMany</code> such
-     * elements are available, the returned array will have a length
-     * equal to the number of entries after the iterator.  If no such entries
-     * are found, this array will have a length of 0.  The entries will be
-     * ordered in the same order as the list, not reversed.
+     * Returns an array of at most <code>quantityRequested</code> FTPFile 
+     * objects starting at the position preceding this iterator's current 
+     * position within its associated list. If fewer than 
+     * <code>quantityRequested</code> such elements are available, the 
+     * returned array will have a length equal to the number of entries after
+     * the iterator.  If no such entries are found, this array will have a 
+     * length of 0.  The entries will be ordered in the same order as the 
+     * list, not reversed.
      *
-     * After this method is called the current position is moved back by either
-     * <code>howMany</code> or the number of entries available before the
-     * current position, whichever is fewer.
-     * @param howMany the maximum number of entries we want to get.  A 0
-     * passed here is a signal to get ALL the entries.
-     * @return  an array of at most <code>howMany</code> FTPFile objects
-     * starting at the position preceding the current position of this
-     * iterator within its list and at least the number of elements which
+     * After this method is called the current position is moved back by 
+     * either <code>quantityRequested</code> or the number of entries 
+     * available before the current position, whichever is fewer.
+     * @param quantityRequested the maximum number of entries we want to get.  
+     * A 0 passed here is a signal to get ALL the entries.
+     * @return  an array of at most <code>quantityRequested</code> FTPFile 
+     * objects starting at the position preceding the current position of 
+     * this iterator within its list and at least the number of elements which
      * exist in the list prior to its current position.
      */
-    public FTPFile[] getPrevious(int howMany)
+    public FTPFile[] getPrevious(int quantityRequested)
     {
-        int how_many = howMany;
-        // can't retreat further than we've come.
-        if (how_many > this.itemptr)
+        int howMany = quantityRequested;
+        // can't retreat further than we've previously advanced
+        if (howMany > this.itemptr)
         {
-            how_many = this.itemptr;
+            howMany = this.itemptr;
         }
-        FTPFile[] output = new FTPFile[how_many];
-        for (int i = how_many, e = this.firstGoodEntry + this.itemptr; i > 0; )
+        FTPFile[] output = new FTPFile[howMany];
+        for (int i = howMany, e = this.firstGoodEntry + this.itemptr; i > 0; )
         {
             output[--i] = parseFTPEntry((String) this.rawlines.elementAt(--e));
             this.itemptr--;
