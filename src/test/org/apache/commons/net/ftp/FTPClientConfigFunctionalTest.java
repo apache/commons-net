@@ -37,6 +37,14 @@ import java.util.TreeSet;
  * contains observations for more than 24 hours of data.  Since the server
  * has its clock set to GMT this is an excellent functional test for any
  * machine in a different time zone. 
+ * 
+ * Noteworthy is the fact that the ftp routines in some web browsers don't 
+ * work as well as this.  They can't, since they have no way of knowing the 
+ * server's time zone.  Depending on the local machine's position relative 
+ * to GMT and the time of day, the browsers may decide that a timestamp 
+ * would be in the  future if given the current year, so they assume the 
+ * year to be  last year.  This illustrates the value of FTPClientConfig's 
+ * time zone functionality.
  */
 
 public class FTPClientConfigFunctionalTest extends TestCase {
