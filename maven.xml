@@ -1,5 +1,8 @@
-<project default="java:jar" xmlns:j="jelly:core">
+<project default="jar:jar" xmlns:j="jelly:core">
 
-  <!-- we can customize the Maven build here -->
+  <goal name="test:functional">
+    <j:set var="testmatch" value="*FunctionalTest"/>
+    <attainGoal name="test:match"/>
+  </goal>
   	
 </project>
