@@ -12,10 +12,7 @@
 <section name="Nightly Builds">
 
 <p>
-Gump currently is providing nightly builds of Commons/Net.
-The jars are located under the jakarta-commons-sandbox directory.
-
-You may find the list of nightly builds <a href="http://gump.covalent.net/jars/">here</a>.
+You will find the list of nightly builds <a href=" http://jakarta.apache.org/builds/jakarta-commons/nightly/commons-net/">here</a>.
 </p>
 
 </section>

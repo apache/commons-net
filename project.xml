@@ -38,15 +38,15 @@
     under the The Apache Software License.
   </description>
   
-  <url>http://jakarta.apache.org/commons/sandbox/net/</url>
+  <url>http://jakarta.apache.org/commons/net/</url>
   <issueTrackingUrl>http://nagoya.apache.org/bugzilla/</issueTrackingUrl>
   <siteAddress>jakarta.apache.org</siteAddress>
-  <siteDirectory>/www/jakarta.apache.org/commons/sandbox/net/</siteDirectory> 
+  <siteDirectory>/www/jakarta.apache.org/commons/net/</siteDirectory> 
   <distributionDirectory/>
 
   <repository>
-    <connection>scm:cvs:pserver:anoncvs@cvs.apache.org:/home/cvspublic:jakarta-commons-sandbox/net</connection>
-    <url>http://cvs.apache.org/viewcvs/jakarta-commons-sandbox/net/</url>
+    <connection>scm:cvs:pserver:anoncvs@cvs.apache.org:/home/cvspublic:jakarta-commons/net</connection>
+    <url>http://cvs.apache.org/viewcvs/jakarta-commons/net/</url>
   </repository>
 
   <versions>
@@ -58,6 +58,12 @@
   </versions>
 
   <mailingLists>
+    <mailingList>
+      <name>Commons User List</name>
+      <subscribe>mailto:commons-user-subscribe@jakarta.apache.org</subscribe>
+      <unsubscribe>mailto:commons-user-unsubscribe@jakarta.apache.org</unsubscribe>
+      <archive>http://nagoya.apache.org/eyebrowse/SummarizeList?listName=commons-user@jakarta.apache.org</archive>
+    </mailingList>
     <mailingList>
       <name>Commons Developer List</name>
       <subscribe>mailto:commons-dev-subscribe@jakarta.apache.org</subscribe>
