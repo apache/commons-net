@@ -21,7 +21,7 @@
   </properties>
 
   <body>
-    <release version="1.2.0-rc1" date="April 19, 2004">
+    <release version="1.2.0" date="April 30, 2004">
       <action dev="scohen" type="fix">
       	Mario Ivankovits &lt;mario@ops.co.at&gt; added
       	functionality supporting correct handling of the &quot;dirstyle&quot; 
