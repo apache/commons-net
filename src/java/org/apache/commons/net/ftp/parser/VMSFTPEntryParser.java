@@ -71,7 +71,7 @@ import org.apache.oro.text.regex.MalformedPatternException;
 
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileList;
-import org.apache.commons.net.ftp.FTPFileListParserImpl;
+import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
 
 /**
  * Implementation FTPFileEntryParser and FTPFileListParser for VMS Systems.
@@ -85,11 +85,11 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.14 2004/01/10 15:36:40 scohen Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.15 2004/01/10 16:01:49 scohen Exp $
  * 
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
-public class VMSFTPEntryParser extends FTPFileListParserImpl
+public class VMSFTPEntryParser extends FTPFileEntryParserImpl
 {
 
 

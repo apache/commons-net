@@ -73,7 +73,6 @@ import org.apache.oro.text.regex.MalformedPatternException;
 
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileList;
-import org.apache.commons.net.ftp.FTPFileListParserImpl;
 
 /**
  * Special implementation VMSFTPEntryParser with versioning turned on.
@@ -90,7 +89,7 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSVersioningFTPEntryParser.java,v 1.1 2004/01/10 15:36:40 scohen Exp $
+ * @version $Id: VMSVersioningFTPEntryParser.java,v 1.2 2004/01/10 16:01:49 scohen Exp $
  * 
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */

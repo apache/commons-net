@@ -56,17 +56,17 @@ package org.apache.commons.net.ftp.parser;
 import java.util.Calendar;
 
 import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPFileListParserImpl;
+import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
 
 /**
  * Parser for the Connect Enterprise Unix FTP Server From Sterling Commerce.  
  * Here is a sample of the sort of output line this parser processes:
  *  "-C--E-----FTP B QUA1I1      18128       41 Aug 12 13:56 QUADTEST"
- * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.6 2004/01/02 03:39:05 scohen Exp $
+ * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.7 2004/01/10 16:01:48 scohen Exp $
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
-public class EnterpriseUnixFTPEntryParser extends FTPFileListParserImpl
+public class EnterpriseUnixFTPEntryParser extends FTPFileEntryParserImpl
 {
 
     /**

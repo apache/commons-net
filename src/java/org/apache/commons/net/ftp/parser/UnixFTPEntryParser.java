@@ -56,7 +56,7 @@ package org.apache.commons.net.ftp.parser;
 
 import java.util.Calendar;
 import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPFileListParserImpl;
+import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
 
 /**
  * Implementation FTPFileEntryParser and FTPFileListParser for standard 
@@ -66,10 +66,10 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * DefaultFTPListParser, but adapted to use regular expressions and to fit the
  * new FTPFileEntryParser interface.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: UnixFTPEntryParser.java,v 1.7 2004/01/05 23:56:49 scohen Exp $
+ * @version $Id: UnixFTPEntryParser.java,v 1.8 2004/01/10 16:01:49 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
-public class UnixFTPEntryParser extends FTPFileListParserImpl
+public class UnixFTPEntryParser extends FTPFileEntryParserImpl
 {
     /**
      * months abbreviations looked for by this parser.  Also used

@@ -74,8 +74,8 @@ import org.apache.oro.text.regex.MatchResult;
  * 
  * @author Steve Cohen <scohen@apache.org>
  */
-public abstract class FTPFileListParserImpl 
-    implements FTPFileListParser, FTPFileEntryParser
+public abstract class FTPFileEntryParserImpl 
+    implements FTPFileEntryParser, FTPFileListParser
 {
     /**
      * internal pattern the matcher tries to match, representing a file 
@@ -108,7 +108,7 @@ public abstract class FTPFileListParserImpl
      * created before use, this means that any bad parser subclasses created 
      * from this will bomb very quickly,  leading to easy detection.  
      */
-    public FTPFileListParserImpl(String regex) 
+    public FTPFileEntryParserImpl(String regex) 
     {
         try 
         {
