@@ -2029,6 +2029,10 @@ public class FTPClient extends FTP
      * @return The list of file information contained in the given path in
      *         the format determined by the parser represented by the
      *         <code> parserKey </code> parameter.
+     *         <p><b> 
+     * 		   NOTE:</b> This array may contain null members if any of the 
+     *         individual file listings failed to parse.  The caller should 
+     *         check each entry for null before referencing it.
      * @exception FTPConnectionClosedException
      *                   If the FTP server prematurely closes the connection
      *                   as a result of the client being idle or some other
@@ -2119,7 +2123,11 @@ public class FTPClient extends FTP
      * used.
      * <p>
      * @return The list of file information contained in the current directory
-     *         in the format determined by the autodetection mechanism
+     *         in the format determined by the autodetection mechanism.  
+     *         <p><b> 
+     * 		   NOTE:</b> This array may contain null members if any of the 
+     *         individual file listings failed to parse.  The caller should 
+     *         check each entry for null before referencing it.
      * @exception FTPConnectionClosedException
      *                   If the FTP server prematurely closes the connection
      *                   as a result of the client being idle or some other
@@ -2406,6 +2414,10 @@ public class FTPClient extends FTP
      * @param pathname  The file or directory to list.
      * @return The list of file information contained in the given path in
      *         the format determined by the <code> parser </code> parameter.
+     *         <p><b> 
+     * 		   NOTE:</b> This array may contain null members if any of the 
+     *         individual file listings failed to parse.  The caller should 
+     *         check each entry for null before referencing it.
      * @exception FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
@@ -2416,6 +2428,10 @@ public class FTPClient extends FTP
      *
      * @return The list of file information contained in the given path in
      *         the format determined by<code> parserKey </code>parameter.
+     *         <p><b> 
+     * 		   NOTE:</b> This array may contain null members if any of the 
+     *         individual file listings failed to parse.  The caller should 
+     *         check each entry for null before referencing it.
      *
      * @exception IOException
      * @since 5 Jan 2004
@@ -2453,6 +2469,10 @@ public class FTPClient extends FTP
      *
      * @return The list of file information contained in the given path in
      *         the format determined by the <code> parser </code> parameter.
+     *         <p><b> 
+     * 		   NOTE:</b> This array may contain null members if any of the 
+     *         individual file listings failed to parse.  The caller should 
+     *         check each entry for null before referencing it.
      * @exception FTPConnectionClosedException
      *                   If the FTP server prematurely closes the connection as a result
      *                   of the client being idle or some other reason causing the server

@@ -68,7 +68,7 @@ import java.util.ListIterator;
  * <p>
  * For unpaged access, simply use FTPClient.listFiles().  That method
  * uses this class transparently.
- * @version $Id: FTPListParseEngine.java,v 1.7 2004/04/22 00:48:07 scohen Exp $
+ * @version $Id: FTPListParseEngine.java,v 1.8 2004/09/15 02:24:04 scohen Exp $
  */
 public class FTPListParseEngine {
     private List entries = new LinkedList();
@@ -147,6 +147,10 @@ public class FTPListParseEngine {
      * objects starting at the current position of this iterator within its
      * list and at least the number of elements which  exist in the list at
      * and after its current position.
+     * <p><b> 
+     * NOTE:</b> This array may contain null members if any of the 
+     * individual file listings failed to parse.  The caller should 
+     * check each entry for null before referencing it.
      */
     public FTPFile[] getNext(int quantityRequested) {
         List tmpResults = new LinkedList();
@@ -182,6 +186,10 @@ public class FTPListParseEngine {
      * list and at least the number of elements which  exist in the list at
      * and after its current position.  This array will be in the same order
      * as the underlying list (not reversed).
+     * <p><b> 
+     * NOTE:</b> This array may contain null members if any of the 
+     * individual file listings failed to parse.  The caller should 
+     * check each entry for null before referencing it.
      */
     public FTPFile[] getPrevious(int quantityRequested) {
         List tmpResults = new LinkedList();
@@ -201,6 +209,10 @@ public class FTPListParseEngine {
      *
      * @return an array of FTPFile objects containing the whole list of
      *         files returned by the server as read by this object's parser.
+     * <p><b> 
+     * NOTE:</b> This array may contain null members if any of the 
+     * individual file listings failed to parse.  The caller should 
+     * check each entry for null before referencing it.
      * @exception IOException
      */
     public FTPFile[] getFiles()
