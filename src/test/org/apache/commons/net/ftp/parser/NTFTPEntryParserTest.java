@@ -21,7 +21,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: NTFTPEntryParserTest.java,v 1.10 2004/04/16 01:52:24 scohen Exp $
+ * @version $Id: NTFTPEntryParserTest.java,v 1.11 2004/04/16 02:08:00 scohen Exp $
  */
 public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
 {
@@ -131,7 +131,15 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         assertTrue("Should have been a directory.", 
                    dir.isDirectory());
         assertEquals("absoft2", dir.getName());
-        assertEquals(0, dir.getSize());       
+        assertEquals(0, dir.getSize());
+        
+        dir = getParser().parseFTPEntry("12-03-96  06:38AM       <DIR>          123456");
+        assertNotNull("Could not parse entry.", dir);
+        assertTrue("Should have been a directory.", 
+        		dir.isDirectory());
+        assertEquals("123456", dir.getName());
+        assertEquals(0, dir.getSize());
+        
     }
 
     /**
