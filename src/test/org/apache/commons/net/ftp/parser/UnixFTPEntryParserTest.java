@@ -54,17 +54,16 @@ package org.apache.commons.net.ftp.parser;
  * <http://www.apache.org/>.
  */
 
+import java.util.Calendar;
+
 import junit.framework.TestSuite;
 
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
-import java.util.Calendar;
-import java.util.Date;
-
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @versionn $Id: UnixFTPEntryParserTest.java,v 1.3 2003/03/02 19:47:00 scohen Exp $
+ * @versionn $Id: UnixFTPEntryParserTest.java,v 1.4 2003/03/03 15:25:56 brekke Exp $
  */
 public class UnixFTPEntryParserTest extends FTPParseTestFramework
 {

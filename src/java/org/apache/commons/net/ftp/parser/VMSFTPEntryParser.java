@@ -55,13 +55,15 @@ package org.apache.commons.net.ftp.parser;
  */
 
 import java.util.Calendar;
+import java.io.BufferedReader;
+import java.io.IOException;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileListParserImpl;
 
 /**
  * This Class uses the FTPEntryParser class to validate the input string.
- * It also requires the NetComponents library version 1.3.7 or later
- * and the OROMatcher library for the regualar expressions stuff.
+ * It also requires the Commons/Net library version 1.0.0 or later
+ * and the Jakarta/ORO library for the regualar expressions stuff.
  *
  *
  * <P><B>USAGE:</B></P>
@@ -103,7 +105,7 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * <P>
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.2 2003/03/02 19:36:44 scohen Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.3 2003/03/03 15:25:56 brekke Exp $
  */
 public class VMSFTPEntryParser extends FTPFileListParserImpl
 {
@@ -241,5 +243,21 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
             return f;
         }
         return null;
+    }
+
+    public String readNextEntry(BufferedReader reader) throws IOException
+    {
+        String line = reader.readLine();
+        StringBuffer entry = new StringBuffer();
+        while (line != null)
+        {
+            entry.append(line);
+            if (line.trim().endsWith(")"))
+            {
+                break;
+            }
+            line = reader.readLine();
+        }
+        return (entry.length()==0  ? null : entry.toString());
     }
 }
