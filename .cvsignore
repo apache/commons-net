@@ -1,3 +1,9 @@
 .project
+.classpath
+.checkstyle
 target
 dist
+build
+*.ser
+*.log
+*.$$$
