@@ -2143,7 +2143,7 @@ public class FTPClient extends FTP
     public FTPFile[] listFiles()
     throws IOException
     {
-        return listFiles("");
+        return listFiles((String) null);
     }
 
     /**
@@ -2182,7 +2182,7 @@ public class FTPClient extends FTP
     public FTPListParseEngine initiateListParsing()
     throws IOException
     {
-        return initiateListParsing("");
+        return initiateListParsing((String) null);
     }
 
     /**
