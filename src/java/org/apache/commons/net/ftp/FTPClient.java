@@ -1945,7 +1945,7 @@ public class FTPClient extends FTP
             return null;
 
         reader =
-            new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            new BufferedReader(new InputStreamReader(socket.getInputStream(), getControlEncoding()));
 
         results = new Vector();
         while ((line = reader.readLine()) != null)
@@ -2359,7 +2359,7 @@ public class FTPClient extends FTP
         }
 
 
-        engine.readServerList(socket.getInputStream());
+        engine.readServerList(socket.getInputStream(), getControlEncoding());
 
         socket.close();
 
@@ -2454,7 +2454,7 @@ public class FTPClient extends FTP
         if ((socket = _openDataConnection_(FTPCommand.LIST, pathname)) == null)
             return new FTPFile[0];
 
-        results = parser.parseFileList(socket.getInputStream());
+        results = parser.parseFileList(socket.getInputStream(), getControlEncoding());
 
         socket.close();
 

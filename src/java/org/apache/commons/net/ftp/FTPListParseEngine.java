@@ -68,7 +68,7 @@ import java.util.ListIterator;
  * <p>
  * For unpaged access, simply use FTPClient.listFiles().  That method
  * uses this class transparently.
- * @version $Id: FTPListParseEngine.java,v 1.8 2004/09/15 02:24:04 scohen Exp $
+ * @version $Id: FTPListParseEngine.java,v 1.9 2004/12/03 14:47:46 rwinston Exp $
  */
 public class FTPListParseEngine {
     private List entries = new LinkedList();
@@ -91,14 +91,34 @@ public class FTPListParseEngine {
      * @exception IOException
      *                   thrown on any failure to read from the sever.
      */
-    public void readServerList(InputStream stream)
+    public void readServerList(InputStream stream, String encoding)
     throws IOException
     {
         this.entries = new LinkedList();
-        readStream(stream);
+        readStream(stream, encoding);
         this.parser.preParse(this.entries);
         resetIterator();
     }
+    
+    /**
+	 * handle the iniitial reading and preparsing of the list returned by
+	 * the server.  After this method has completed, this object will contain
+	 * a list of unparsed entries (Strings) each referring to a unique file
+	 * on the server.
+	 *
+	 * @param stream input stream provided by the server socket.
+	 *
+	 * @exception IOException
+	 *                   thrown on any failure to read from the sever.
+	 *
+	 * @deprecated The version of this method which takes an encoding should be used.
+	*/
+	public void readServerList(InputStream stream)
+	throws IOException
+	{
+		readServerList(stream, null);
+	}
+	
 
 
     /**
@@ -114,11 +134,18 @@ public class FTPListParseEngine {
      * @exception IOException
      *                   thrown on any failure to read the stream
      */
-    private void readStream(InputStream stream) throws IOException
+    private void readStream(InputStream stream, String encoding) throws IOException
     {
-        BufferedReader reader =
-            new BufferedReader(new InputStreamReader(stream));
-
+    	BufferedReader reader;
+    	if (encoding == null)
+    	{
+    		reader = new BufferedReader(new InputStreamReader(stream));
+    	}
+    	else
+    	{
+    		reader = new BufferedReader(new InputStreamReader(stream, encoding));
+    	}
+    	
         String line = this.parser.readNextEntry(reader);
 
         while (line != null)

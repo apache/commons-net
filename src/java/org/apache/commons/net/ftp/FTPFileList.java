@@ -36,7 +36,7 @@ import java.util.List;
  * which required a bigger memory hit.
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileList.java,v 1.13 2004/04/21 23:30:33 scohen Exp $
+ * @version $Id: FTPFileList.java,v 1.14 2004/12/03 14:47:46 rwinston Exp $
  * @see org.apache.commons.net.ftp.FTPClient#createFileList
  * @see org.apache.commons.net.ftp.FTPFileIterator
  * @see org.apache.commons.net.ftp.FTPFileEntryParser
@@ -65,13 +65,43 @@ public class FTPFileList
      *
      * @param parser a <code>FTPFileEntryParser</code> value that knows
      * how to parse the entries returned by a particular FTP site.
+     * @param encoding The encoding to use.
      */
-    private FTPFileList (FTPFileEntryParser parser)
+    private FTPFileList (FTPFileEntryParser parser, String encoding)
     {
         this.parser = parser;
         this.lines = new LinkedList();
     }
 
+    /**
+     * The only way to create an <code>FTPFileList</code> object.  Invokes
+     * the private constructor and then reads the stream  supplied stream to
+     * build the intermediate array of "lines" which will later be parsed
+     * into <code>FTPFile</code> object.
+     *
+     * @param stream The input stream created by reading the socket on which
+     * the output of the LIST command was returned
+     * @param parser the default <code>FTPFileEntryParser</code> to be used
+     * by this object.  This may later be changed using the init() method.
+     * @param encoding The encoding to use
+     *
+     * @return the <code>FTPFileList</code> created, with an initialized
+     * of unparsed lines of output.  Will be null if the listing cannot
+     * be read from the stream.
+     * @exception IOException
+     *                   Thrown on any failure to read from the socket.
+     */
+    public static FTPFileList create(InputStream stream,
+                                      FTPFileEntryParser parser,
+									  String encoding)
+            throws IOException
+    {
+        FTPFileList list = new FTPFileList(parser, encoding);
+        list.readStream(stream, encoding);
+        parser.preParse(list.lines);
+        return list;
+    }
+    
     /**
      * The only way to create an <code>FTPFileList</code> object.  Invokes
      * the private constructor and then reads the stream  supplied stream to
@@ -88,28 +118,29 @@ public class FTPFileList
      * be read from the stream.
      * @exception IOException
      *                   Thrown on any failure to read from the socket.
-     */
-    public static FTPFileList create(InputStream stream,
-                                      FTPFileEntryParser parser)
-            throws IOException
+     *
+     * @deprecated The version of this method which takes an encoding should be used.
+    */
+    public static FTPFileList create(InputStream stream, 
+    								  FTPFileEntryParser parser)
+    	throws IOException
     {
-        FTPFileList list = new FTPFileList(parser);
-        list.readStream(stream);
-        parser.preParse(list.lines);
-        return list;
+    	return create(stream, parser, null);
     }
+    
+    
 
     /**
      * internal method for reading the input into the <code>lines</code> vector.
      *
      * @param stream The socket stream on which the input will be read.
+     * @param encoding The encoding to use.
      *
      * @exception IOException thrown on any failure to read the stream
      */
-    public void readStream(InputStream stream) throws IOException
+    public void readStream(InputStream stream, String encoding) throws IOException
     {
-        BufferedReader reader =
-            new BufferedReader(new InputStreamReader(stream));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, encoding));
 
         String line = this.parser.readNextEntry(reader);
 
@@ -120,6 +151,21 @@ public class FTPFileList
         }
         reader.close();
     }
+    
+    /**
+	 * internal method for reading the input into the <code>lines</code> vector.
+	 *
+	 * @param stream The socket stream on which the input will be read.
+	 *
+	 * @exception IOException thrown on any failure to read the stream
+	 *
+	 * @deprecated The version of this method which takes an encoding should be used.
+	*/
+	public void readStream(InputStream stream) throws IOException
+	{
+	 readStream(stream, null);
+	}
+	 
 
     /**
      * Accessor for this object's default parser.
@@ -177,6 +223,8 @@ public class FTPFileList
     {
         return iterator().getFiles();
     }
+    
+
 
 }
 
