@@ -124,11 +124,11 @@ public class POP3 extends SocketClient
             MalformedServerReplyException(
                 "Received invalid POP3 protocol response from server.");
 
-        if (_commandSupport_.getListenerCount() > 0)
-            _commandSupport_.fireReplyReceived(_replyCode, getReplyString());
-
         _replyLines.addElement(line);
         _lastReplyLine = line;
+
+        if (_commandSupport_.getListenerCount() > 0)
+            _commandSupport_.fireReplyReceived(_replyCode, getReplyString());
     }
 
 
