@@ -15,7 +15,7 @@ This how-to lists the migration steps for moving between versions of Commons/Net
 </p>
 </section>
 
-<section name="NetComponents 1.3.8  to  Commons/Net 1.0.0">
+<section name="NetComponents 1.3.8  to  Commons/Net">
 <p>
 This version is a drop in replacement for NetComponents.  Only package names have changed.
 </p>
