@@ -99,21 +99,24 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  *
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: NTFTPEntryParser.java,v 1.2 2003/03/02 19:36:44 scohen Exp $
+ * @version $Id: NTFTPEntryParser.java,v 1.3 2003/03/06 03:28:36 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileListParser
  */
 public class NTFTPEntryParser extends FTPFileListParserImpl
 {
+    /**
+     * this is the regular expression used by this parser.
+     */
     private static final String REGEX =
-        "((?:0[1-9])|(?:1[0-2]))-" +
-        "((?:0[1-9])|(?:[1-2]\\d)|(?:3[0-1]))-" +
-        "(\\d\\d)\\s*" +
-        "((?:0[1-9])|(?:1[012])):" +
-        "([0-5]\\d)\\s*" +
-        "([AP])M\\s*" +
-        "(<DIR>)?\\s*" +
-        "([0-9]+)?\\s*" +
-        "(\\S.*)";
+        "((?:0[1-9])|(?:1[0-2]))-" 
+        + "((?:0[1-9])|(?:[1-2]\\d)|(?:3[0-1]))-" 
+        + "(\\d\\d)\\s*" 
+        + "((?:0[1-9])|(?:1[012])):" 
+        + "([0-5]\\d)\\s*" 
+        + "([AP])M\\s*" 
+        + "(<DIR>)?\\s*" 
+        + "([0-9]+)?\\s*" 
+        + "(\\S.*)";
 
     /**
      * The sole constructor for an NTFTPEntryParser object.

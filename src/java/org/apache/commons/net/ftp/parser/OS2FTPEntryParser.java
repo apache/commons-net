@@ -98,22 +98,25 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * <P>
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: OS2FTPEntryParser.java,v 1.2 2003/03/02 19:36:44 scohen Exp $
+ * @version $Id: OS2FTPEntryParser.java,v 1.3 2003/03/06 03:28:36 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileListParser
  */
 public class OS2FTPEntryParser extends FTPFileListParserImpl
 
 {
+    /**
+     * this is the regular expression used by this parser.
+     */
     private static final String REGEX =
-        "(\\s+|[0-9]+)\\s*" +
-        "(\\s+|[A-Z]+)\\s*" +
-        "(DIR|\\s+)\\s*" +
-        "((?:0[1-9])|(?:1[0-2]))-" +
-        "((?:0[1-9])|(?:[1-2]\\d)|(?:3[0-1]))-" +
-        "(\\d\\d)\\s*" +
-        "(?:([0-1]\\d)|(?:2[0-3])):" +
-        "([0-5]\\d)\\s*" +
-        "(\\S.*)";
+        "(\\s+|[0-9]+)\\s*" 
+        + "(\\s+|[A-Z]+)\\s*" 
+        + "(DIR|\\s+)\\s*" 
+        + "((?:0[1-9])|(?:1[0-2]))-" 
+        + "((?:0[1-9])|(?:[1-2]\\d)|(?:3[0-1]))-" 
+        + "(\\d\\d)\\s*" 
+        + "(?:([0-1]\\d)|(?:2[0-3])):" 
+        + "([0-5]\\d)\\s*" 
+        + "(\\S.*)";
     
     /**
      * The sole constructor for a OS2FTPEntryParser object.

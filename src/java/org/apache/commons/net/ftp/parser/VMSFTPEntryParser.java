@@ -103,33 +103,44 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * files from the directory it is in. This becomes crucial specialy if your
  * goal is to delete the output of the parser.
  * <P>
+ * This is a sample of VMS LIST output
+ *   
+ *  "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
+ *  "1-JUN.LIS;2              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
+ *  "DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
+ * <P>
+ * 
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.3 2003/03/03 15:25:56 brekke Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.4 2003/03/06 03:28:36 scohen Exp $
  */
 public class VMSFTPEntryParser extends FTPFileListParserImpl
 {
-    private String prefix = "[" + getClass().getName() + "] ";
+    /**
+     * settable option of whether or not to include versioning information 
+     * with the file list.
+     */
     private boolean versioning;
 
-    /* This is how a VMS LIST output really looks
-    
-          "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
-          "1-JUN.LIS;2              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
-          "DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
-    */
+    /**
+     * months abbreviations looked for by this parser.  Also used
+     * to determine <b>which</b> month has been matched by the parser.
+     */
     private static final String MONTHS =
         "(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)";
 
+    /**
+     * this is the regular expression used by this parser.
+     */
     private static final String REGEX =
-        "(.*;[0-9]+)\\s*" +
-        "(\\d+)/\\d+\\s*" +
-        "(\\d{1,2})-" +
-        MONTHS +
-        "-([0-9]{4})\\s*" +
-        "((?:[01]\\d)|(?:2[0-3])):([012345]\\d):([012345]\\d)\\s*" +
-        "\\[([0-9$A-Za-z_]+),([0-9$a-zA-Z_]+)\\]\\s*" +
-        "(\\([a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*\\))";
+        "(.*;[0-9]+)\\s*" 
+        + "(\\d+)/\\d+\\s*" 
+        + "(\\d{1,2})-" 
+        + MONTHS 
+        + "-([0-9]{4})\\s*"
+        + "((?:[01]\\d)|(?:2[0-3])):([012345]\\d):([012345]\\d)\\s*"
+        + "\\[([0-9$A-Za-z_]+),([0-9$a-zA-Z_]+)\\]\\s*" 
+        + "(\\([a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*\\))";
 
 
     /**
@@ -245,6 +256,19 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
         return null;
     }
 
+    /**
+     * Reads the next entry using the supplied BufferedReader object up to
+     * whatever delemits one entry from the next.   This parser cannot use
+     * the default implementation of simply calling BufferedReader.readLine(),
+     * because one entry may span multiple lines.
+     *
+     * @param reader The BufferedReader object from which entries are to be 
+     * read.
+     *
+     * @return A string representing the next ftp entry or null if none found.
+     * @exception IOException thrown on any IO Error reading from the reader.
+     */
+    
     public String readNextEntry(BufferedReader reader) throws IOException
     {
         String line = reader.readLine();
@@ -258,6 +282,6 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
             }
             line = reader.readLine();
         }
-        return (entry.length()==0  ? null : entry.toString());
+        return (entry.length() == 0  ? null : entry.toString());
     }
 }

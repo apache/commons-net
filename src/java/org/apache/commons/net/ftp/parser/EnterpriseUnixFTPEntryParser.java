@@ -60,21 +60,37 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
 
 /**
  * Parser for the Connect Enterprise Unix FTP Server From Sterling Commerce.  
- * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.1 2003/03/02 18:18:24 scohen Exp $
+ * Here is a sample of the sort of output line this parser processes:
+ *  "-C--E-----FTP B QUA1I1      18128       41 Aug 12 13:56 QUADTEST"
+ * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.2 2003/03/06 03:28:35 scohen Exp $
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  */
 public class EnterpriseUnixFTPEntryParser extends FTPFileListParserImpl
 {
 
-    // sample output line
-    //"-C--E-----FTP B QUA1I1      18128       41 Aug 12 13:56 QUADTEST"
-    private static final String MONTHS = "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)";
+    /**
+     * months abbreviations looked for by this parser.  Also used
+     * to determine <b>which</b> month has been matched by the parser.
+     */
+    private static final String MONTHS = 
+        "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)";
+
+    /**
+     * this is the regular expression used by this parser.
+     */
     private static final String REGEX = 
-        "(([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z]))" + 
-         "(\\S*)\\s*" + "(\\S+)\\s*" + "(\\S*)\\s*" + "(\\d*)\\s*" + 
-         "(\\d*)\\s*" + MONTHS + "\\s*" + "((?:[012]\\d*)|(?:3[01]))\\s*" + 
-         "((\\d\\d\\d\\d)|((?:[01]\\d)|(?:2[0123])):([012345]\\d))\\s" + 
-         "(\\S*)(\\s*.*)";
+        "(([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])"
+        + "([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z]))"
+        + "(\\S*)\\s*" 
+        + "(\\S+)\\s*" 
+        + "(\\S*)\\s*" 
+        + "(\\d*)\\s*" 
+        + "(\\d*)\\s*" 
+        + MONTHS 
+        + "\\s*" 
+        + "((?:[012]\\d*)|(?:3[01]))\\s*" 
+        + "((\\d\\d\\d\\d)|((?:[01]\\d)|(?:2[0123])):([012345]\\d))\\s" 
+        + "(\\S*)(\\s*.*)";
 
     /**
      * The sole constructor for a EnterpriseUnixFTPEntryParser object.

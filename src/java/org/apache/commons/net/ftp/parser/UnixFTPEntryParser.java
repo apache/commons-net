@@ -63,12 +63,20 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * DefaultFTPListParser, but adapted to use regular expressions and to fit the
  * new FTPFileEntryParser interface.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: UnixFTPEntryParser.java,v 1.1 2003/03/02 18:18:24 scohen Exp $
+ * @version $Id: UnixFTPEntryParser.java,v 1.2 2003/03/06 03:28:36 scohen Exp $
  */
 public class UnixFTPEntryParser extends FTPFileListParserImpl
 {
+    /**
+     * months abbreviations looked for by this parser.  Also used
+     * to determine which month is matched by the parser
+     */
     private static final String MONTHS =
         "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)";
+    
+    /**
+     * this is the regular expression used by this parser.
+     */
     private static final String REGEX =
         "([bcdlf-])"
         + "(((r|-)(w|-)(x|-))((r|-)(w|-)(x|-))((r|-)(w|-)(x|-)))\\s+"
