@@ -7,8 +7,33 @@
 
   <body>
     <release version="1.2.0-dev" date="In CVS">
+      <action dev="scohen,dfs" type="update">
+        Deprecated FTPFileListParser interface, DefaultFTPFileListParser
+        class, and the FTPClient.listFiles methods that accepted an
+        FTPFileListParser parameter.  These deprecated classes and methods
+        will be removed in version 2.0.
+      </action>
+      <action dev="scohen" type="add">
+        Added org.apache.commons.net.parser.FTPFileEntryParserFactory
+        interface and a default implementation:
+        DefaultFTPFileEntryParserFactory.  This addition facilitates the
+        autodetection of which FTPFileEntryParser to use to generate
+        listings.  FTPClient.listFiles methods were added that implement
+        autodetection.
+      </action>
+    </release>
+    <release version="1.1.1" date="TBD">
+      <action dev="scohen" type="fix">
+        Removed all JDK 1.1 incompatibilities that had been introduced
+        unintentionally in previous versions.  Release 1.1.1 is the last 
+        JDK 1.1 compatible release.  Any future 1.1.x maintenance releases
+        will remain JDK !.1 compatible, but version 1.2 may break
+        compatibility and will be guaranteed to work with only J2SE 1.2
+        and later.
+      </action>
     </release>
     <release version="1.1.0" date="October 23, 2003">
+      </action>
       <action dev="dfs" type="add">
         Rory Winston &lt;Rory.Winston@telewest.co.uk&gt; provided
         patches to add the following extended NNTP commands to
