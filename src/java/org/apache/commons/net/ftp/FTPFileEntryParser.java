@@ -3,7 +3,7 @@ package org.apache.commons.net.ftp;
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -85,7 +85,7 @@ import java.io.IOException;
  * </pre>
  * 
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileEntryParser.java,v 1.5 2003/12/30 04:04:11 scohen Exp $
+ * @version $Id: FTPFileEntryParser.java,v 1.6 2004/01/01 21:04:20 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFile
  * @see org.apache.commons.net.ftp.FTPClient#createFileList
  */

@@ -3,7 +3,7 @@ package org.apache.commons.net.ftp.ftp2.parser;
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -68,7 +68,7 @@ import org.apache.oro.text.regex.MatchResult;
  * It is also designed to encapsulate access to the oro.text.regex
  * classes in one place.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: MatchApparatus.java,v 1.5 2003/01/26 00:21:44 dfs Exp $
+ * @version $Id: MatchApparatus.java,v 1.6 2004/01/01 21:04:18 scohen Exp $
  */
 abstract class MatchApparatus
 {

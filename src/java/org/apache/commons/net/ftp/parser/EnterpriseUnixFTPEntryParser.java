@@ -3,7 +3,7 @@ package org.apache.commons.net.ftp.parser;
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -62,7 +62,7 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * Parser for the Connect Enterprise Unix FTP Server From Sterling Commerce.  
  * Here is a sample of the sort of output line this parser processes:
  *  "-C--E-----FTP B QUA1I1      18128       41 Aug 12 13:56 QUADTEST"
- * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.4 2003/12/30 03:58:52 scohen Exp $
+ * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.5 2004/01/01 21:04:20 scohen Exp $
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */

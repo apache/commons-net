@@ -3,7 +3,7 @@ package org.apache.commons.net.io;
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -73,7 +73,7 @@ import org.apache.commons.net.util.ListenerList;
  * @see CopyStreamListener
  * @see Util
  * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
- * @version $Id: CopyStreamAdapter.java,v 1.6 2003/01/26 04:33:32 brekke Exp $
+ * @version $Id: CopyStreamAdapter.java,v 1.7 2004/01/01 21:04:20 scohen Exp $
  */
 public class CopyStreamAdapter implements CopyStreamListener
 {

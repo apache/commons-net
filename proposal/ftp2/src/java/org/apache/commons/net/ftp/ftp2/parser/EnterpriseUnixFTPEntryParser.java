@@ -3,7 +3,7 @@ package org.apache.commons.net.ftp.ftp2.parser;
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -60,7 +60,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 
 /**
  * Parser for the Connect Enterprise Unix FTP Server From Sterling Commerce.  
- * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.2 2003/01/26 00:21:43 dfs Exp $
+ * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.3 2004/01/01 21:04:18 scohen Exp $
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  */
 public class EnterpriseUnixFTPEntryParser extends MatchApparatus

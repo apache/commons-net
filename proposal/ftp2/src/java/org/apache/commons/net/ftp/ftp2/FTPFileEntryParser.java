@@ -3,7 +3,7 @@ package org.apache.commons.net.ftp.ftp2;
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -65,7 +65,7 @@ import org.apache.commons.net.ftp.FTPFile;
  * if necessary, subclass FTPFile.
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileEntryParser.java,v 1.5 2003/03/02 19:36:43 scohen Exp $
+ * @version $Id: FTPFileEntryParser.java,v 1.6 2004/01/01 21:04:18 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFile
  * @see FTPClient2#listFiles
  */
