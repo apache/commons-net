@@ -2021,31 +2021,52 @@ public class FTPClient extends FTP
     }
 
     /**
-     * Using a programmer specified <code> FTPFileEntryParser </code>, 
-     * initialize an object containing a raw file information for the 
-     * current working directory.  This information is obtained through 
-     * the LIST command.  This object is then capable of being iterated to 
+     * Using a programmer specified <code> FTPFileEntryParser </code>,
+     * initialize an object containing a raw file information for the
+     * current working directory.  This information is obtained through
+     * the LIST command.  This object is then capable of being iterated to
      * return a sequence of FTPFile objects with information filled in by the
      * <code> FTPFileEntryParser </code> used.
+     * <p>
      * The server may or may not expand glob expressions.  You should avoid
      * using glob expressions because the return format for glob listings
      * differs from server to server and will likely cause this method to fail.
      * <p>
+     * This method differs from using the listFiles() methods in that
+     * expensive FTPFile objects are not created until needed which may be
+     * an advantage on large lists.
+     * 
      * @param parser The <code> FTPFileEntryParser </code> that should be
-     *         used to parse each server file listing.   
-     * @return An iteratable object that holds the raw information and is 
-     * capable of providing parsed FTPFile objects, one for each file containing
-     * information contained in the given path in the format determined by the 
-     * <code> parser </code> parameter.   Null will be returned if a 
-     * data connection cannot be opened.  If the current working directory 
-     * contains no files, an empty array will be the return.
+     *               used to parse each server file listing.
+     * 
+     * @return An iteratable object that holds the raw information and is
+     *         capable of providing parsed FTPFile objects, one for each file containing
+     *         information contained in the given path in the format determined by the
+     *         <code> parser </code> parameter.   Null will be returned if a
+     *         data connection cannot be opened.  If the current working directory
+     *         contains no files, an empty array will be the return.
+     * @example <pre>
+     *    FTPClient f=FTPClient();
+     *    f.connect(server);
+     *    f.login(username, password);
+     *    FTPFileList list = createFTPFileList(directory, parser);
+     *    FTPFileIterator iter = list.iterator();
+     * 
+     *    while (iter.hasNext()) {
+     *       FTPFile[] files = iter.getNext(25);  // "page size" you want
+     *       //do whatever you want with these files, display them, etc.
+     *       //expensive FTPFile objects not created until needed.
+     *    }
+     * </pre>
+     * 
      * @exception FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
-     *      command to the server or receiving a reply from the server.
+     *                   If the FTP server prematurely closes the connection as a result
+     *                   of the client being idle or some other reason causing the server
+     *                   to send FTP reply code 421.  This exception may be caught either
+     *                   as an IOException or independently as itself.
+     * @exception IOException
+     *                   If an I/O error occurs while either sending a
+     *                   command to the server or receiving a reply from the server.
      * @see FTPFileList
      */
     public FTPFileList createFileList(FTPFileEntryParser parser)

@@ -88,6 +88,6 @@ public interface FTPFileListParser
      *     the directory.
      * @exception IOException  If an I/O error occurs reading the listStream.
      ***/
-    public FTPFile[] parseFileList(InputStream listStream) throws IOException;
+    FTPFile[] parseFileList(InputStream listStream) throws IOException;
 
 }

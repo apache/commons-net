@@ -62,19 +62,45 @@ import java.util.Vector;
  * Elements may be retrieved one at at time using the hasNext() - next()
  * syntax familiar from Java 2 collections.  Alternatively, entries may
  * be receieved as an array of any requested number of entries or all of them.
- *
+ * 
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileIterator.java,v 1.3 2003/03/03 03:42:05 scohen Exp $
+ * @version $Id: FTPFileIterator.java,v 1.4 2003/03/06 12:38:42 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileList
+ * @see org.apache.commons.net.ftp.FTPFileEntryParser
  */
 public class FTPFileIterator
 {
+    /**
+     * a vector of strings, each representing a possibly valid ftp file
+     * entry
+     */
     private Vector rawlines;
+    
+    /**
+     * the parser to which this iterator delegates its parsing duties
+     */
     private FTPFileEntryParser parser;
 
+    /**
+     * constant shorthand for the situation where the raw listing has not 
+     * yet been scanned
+     */
     private static final int UNINIT = -1;
+    
+    /**
+     * constant shorthand for the situation where the raw listing has been 
+     * scanned and found to have no valid entry.
+     */
     private static final int DIREMPTY = -2;
+    
+    /**
+     * this iterator's current position within <code>rawlines</code>.
+     */
     private int itemptr = 0;
+    
+    /**
+     * number within <code>rawlines</code> of the first valid file entry.
+     */
     private int firstGoodEntry = UNINIT;
 
     /**
@@ -84,7 +110,7 @@ public class FTPFileIterator
      *
      * @param rawlist the FTPFileList to be iterated
      */
-    FTPFileIterator ( FTPFileList rawlist )
+    FTPFileIterator (FTPFileList rawlist)
     {
         this(rawlist, rawlist.getParser());
     }
@@ -97,17 +123,35 @@ public class FTPFileIterator
      * @param rawlist the FTPFileList to be iterated
      * @param parser the system specific parser for raw FTP entries.
      */
-    FTPFileIterator ( FTPFileList rawlist, FTPFileEntryParser parser )
+    FTPFileIterator (FTPFileList rawlist, FTPFileEntryParser parser)
     {
         this.rawlines = rawlist.getLines();
         this.parser = parser;
     }
 
+    /**
+     * Delegates to this object's parser member the job of parsing an
+     * entry.
+     * 
+     * @param entry  A string containing one entry, as determined by the 
+     * parser's getNextEntry() method.
+     * 
+     * @return an FTPFile object representing this entry or null if it can't be 
+     *         parsed as a file
+     */
     private FTPFile parseFTPEntry(String entry)
     {
         return this.parser.parseFTPEntry(entry);
     }
 
+    /**
+     * Skips over any introductory lines and stuff in the listing that does
+     * not represent files, returning the line number of the first entry
+     * that does represent a file.
+     * 
+     * @return the line number within <code>rawlines</code> of the first good 
+     * entry in the array or DIREMPTY if there are no good entries.
+     */
     private int getFirstGoodEntry()
     {
         FTPFile entry = null;
@@ -123,12 +167,18 @@ public class FTPFileIterator
         return DIREMPTY;
     }
 
+    /**
+     * resets iterator to the beginning of the list.
+     */
     private void init()
     {
         this.itemptr = 0;
         this.firstGoodEntry = UNINIT;
     }
 
+    /**
+     * shorthand for an empty return value.
+     */
     private static final FTPFile[] EMPTY = new FTPFile[0];
 
     /**
@@ -279,7 +329,7 @@ public class FTPFileIterator
             howMany = this.itemptr;
         }
         FTPFile[] output = new FTPFile[howMany];
-        for (int i = howMany, e = this.firstGoodEntry + this.itemptr; i > 0; )
+        for (int i = howMany, e = this.firstGoodEntry + this.itemptr; i > 0;)
         {
             output[--i] = parseFTPEntry((String) this.rawlines.elementAt(--e));
             this.itemptr--;

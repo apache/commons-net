@@ -1,6 +1,4 @@
 package org.apache.commons.net.ftp;
-import java.io.BufferedReader;
-import java.io.IOException;
 
 /* ====================================================================
  * The Apache Software License, Version 1.1
@@ -56,6 +54,9 @@ import java.io.IOException;
  * <http://www.apache.org/>.
  */
 
+import java.io.BufferedReader;
+import java.io.IOException;
+
 /**
  * FTPFileEntryParser defines the interface for parsing a single FTP file
  * listing and converting that information into an 
@@ -65,7 +66,7 @@ import java.io.IOException;
  * if necessary, subclass FTPFile.
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileEntryParser.java,v 1.3 2003/03/03 03:42:05 scohen Exp $
+ * @version $Id: FTPFileEntryParser.java,v 1.4 2003/03/06 12:38:42 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFile
  * @see org.apache.commons.net.ftp.FTPClient#createFileList
  */
@@ -81,7 +82,7 @@ public interface FTPFileEntryParser
      * @param listEntry A line of text from the file listing
      * @return An FTPFile instance corresponding to the supplied entry
      */
-    public FTPFile parseFTPEntry(String listEntry);
+    FTPFile parseFTPEntry(String listEntry);
 
     /**
      * Reads the next entry using the supplied BufferedReader object up to 
@@ -89,10 +90,11 @@ public interface FTPFileEntryParser
      * this for the particular ftp system being parsed.  In many but not all 
      * cases, this can be defined simply by calling BufferedReader.readLine().
      * 
-     * @param reader The BufferedReader object from which entries are to be read.
+     * @param reader The BufferedReader object from which entries are to be 
+     * read.
      * 
      * @return A string representing the next ftp entry or null if none found.
      * @exception IOException thrown on any IO Error reading from the reader.
      */
-    public String readNextEntry(BufferedReader reader) throws IOException;
+    String readNextEntry(BufferedReader reader) throws IOException;
 }

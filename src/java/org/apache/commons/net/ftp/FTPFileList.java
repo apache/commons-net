@@ -62,22 +62,24 @@ import java.util.Vector;
 
 /**
  * FTPFileList.java
- * This class encapsulates a listing of files from an FTP server.  It is 
+ * This class encapsulates a listing of files from an FTP server.  It is
  * initialized with an input stream which is read and the input split into
  * lines, each of which (after some possible initial verbiage) represents
  * a file on the FTP server.  A parser is also supplied, which is used to
  * iterate through the internal list of lines parsing each into an FTPFile
- * object which is returned to the caller of the iteration methods.  This 
+ * object which is returned to the caller of the iteration methods.  This
  * parser may be replaced with another, allowing the same list to be parsed
- * with different parsers. 
- * Parsing takes place on an as-needed basis, basically, the first time a 
- * position is iterated over.  This happens at the time of iteration, not 
- * prior to it as the older <code>(FTPClient.listFiles()</code> methods did, 
+ * with different parsers.
+ * Parsing takes place on an as-needed basis, basically, the first time a
+ * position is iterated over.  This happens at the time of iteration, not
+ * prior to it as the older <code>(FTPClient.listFiles()</code> methods did,
  * which required a bigger memory hit.
- *
+ * 
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileList.java,v 1.3 2003/03/03 03:42:05 scohen Exp $
+ * @version $Id: FTPFileList.java,v 1.4 2003/03/06 12:38:42 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPClient#createFileList
+ * @see org.apache.commons.net.ftp.FTPFileIterator
+ * @see org.apache.commons.net.ftp.FTPFileEntryParser
  */
 public class FTPFileList
 {
@@ -124,7 +126,7 @@ public class FTPFileList
      * @exception IOException
      *                   Thrown on any failure to read from the socket.
      */
-    public static FTPFileList create( InputStream stream,
+    public static FTPFileList create(InputStream stream,
                                       FTPFileEntryParser parser)
             throws IOException
     {
@@ -138,7 +140,7 @@ public class FTPFileList
      * 
      * @param stream The socket stream on which the input will be read.
      * 
-     * @exception IOException
+     * @exception IOException thrown on any failure to read the stream
      */
     private void readStream(InputStream stream) throws IOException
     {

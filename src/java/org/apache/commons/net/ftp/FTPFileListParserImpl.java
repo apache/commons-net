@@ -65,12 +65,28 @@ import org.apache.oro.text.regex.Perl5Matcher;
 import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.MatchResult;
 
+/**
+ * This abstract class implements both the older FTPFileListParser and
+ * newer FTPFileEntryParser interfaces with default functionality.
+ * All the classes in the parser subpackage inherit from this.
+ * 
+ * @author Steve Cohen <scohen@apache.org>
+ */
 public abstract class FTPFileListParserImpl 
     implements FTPFileListParser, FTPFileEntryParser
 {
-    private String prefix;
+    /**
+     * internal pattern the matcher tries to match, representing a file 
+     * entry
+     */
     private Pattern pattern = null;
+    /**
+     * internal PatternMatcher object used by the parser
+     */
     private PatternMatcher matcher = null;
+    /**
+     * internal match result used by the parser
+     */
     private MatchResult result = null;
     
     /**
@@ -90,7 +106,6 @@ public abstract class FTPFileListParserImpl
     {
         try 
         {
-            this.prefix = "[" + getClass().getName() + "] ";
             this.matcher = new Perl5Matcher();
             this.pattern = new Perl5Compiler().compile(regex);
         } 
@@ -116,7 +131,8 @@ public abstract class FTPFileListParserImpl
      *     the directory.
      * @exception IOException  If an I/O error occurs reading the listStream.
      ***/
-    public FTPFile[] parseFileList(InputStream listStream) throws IOException {
+    public FTPFile[] parseFileList(InputStream listStream) throws IOException 
+    {
         FTPFileList ffl = FTPFileList.create(listStream, this);
         return ffl.getFiles();
 
@@ -158,10 +174,13 @@ public abstract class FTPFileListParserImpl
 
     /**
      * Convenience method delegates to the internal MatchResult's group()
-     * method.  
-     *
+     * method.
+     * 
+     * @param matchnum match group number to be retrieved
+     * 
      * @return the content of the <code>matchnum'th<code> group of the internal
-     * match or null if this method is called without a match having been made.
+     *         match or null if this method is called without a match having 
+     *         been made.
      */
     public String group(int matchnum)
     {
@@ -195,12 +214,14 @@ public abstract class FTPFileListParserImpl
      * whatever delemits one entry from the next.  This default implementation
      * simply calls BufferedReader.readLine().
      *
-     * @param reader The BufferedReader object from which entries are to be read.
+     * @param reader The BufferedReader object from which entries are to be 
+     * read.
      *
      * @return A string representing the next ftp entry or null if none found.
      * @exception IOException thrown on any IO Error reading from the reader.
      */
-    public String readNextEntry(BufferedReader reader) throws IOException {
+    public String readNextEntry(BufferedReader reader) throws IOException 
+    {
         return reader.readLine();
     }
 }
