@@ -55,6 +55,7 @@ package org.apache.commons.net.ftp.parser;
  */
  
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 import junit.framework.TestSuite;
 
@@ -64,7 +65,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParserTest.java,v 1.5 2003/07/29 02:35:35 dfs Exp $
+ * @version $Id: VMSFTPEntryParserTest.java,v 1.6 2003/08/05 18:56:42 brekke Exp $
  */
 public class VMSFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -78,12 +79,13 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         "120196.TXT;1           118/126        14-APR-1997 12:45:27 PM  [GROUP,OWNER]    (RWED,,RWED,RE)", 
         "30CHARBAR.TXT;1         11/18          2-JUN-1998 08:38:42  [GROUP-1,OWNER]    (RWED,RWED,RWED,RE)", 
         "A.;2                    18/18          1-JUL-1998 08:43:20  [GROUP,OWNER]    (RWED2,RWED,RWED,RE)", 
-        "AA.;2                  152/153        13-FED-1997 08:13:43  [GROUP,OWNER]    (RWED,RWED,RWED,RE)"
+        "AA.;2                  152/153        13-FED-1997 08:13:43  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
+        "Directory USER1:[TEMP]\r\n\r\n",
+        "\r\nTotal 14 files"
     };
     
     private static final String[] goodsamples = 
-    {
-		"Directory USER1:[TEMP]\r\n\r\n",
+    {		
         "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)", 
         "1-JUN.LIS;3              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)", 
         "1-JUN.LIS;2              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)", 
@@ -97,19 +99,36 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         "UNXMERGE.COM;15          1/15         20-AUG-1996 13:59:50  [POSTWARE,LP]    (RWE,RWE,RWE,RE)",
         "UNXTEMP.COM;7            1/15         15-AUG-1996 14:10:38  [POSTWARE,LP]    (RWE,RWE,RWE,RE)",
         "UNZIP_AND_ATTACH_FILES.COM;12\r\n                        14/15         24-JUL-2002 14:35:40  [TRANSLATED]    (RWE,RWE,RWE,RE)",
-        "UNZIP_AND_ATTACH_FILES.SAV;1\r\n                        14/15         17-JAN-2002 11:13:53  [POSTWARE,LP]    (RWE,RWED,RWE,RE)",
-		"\r\nTotal 14 files"        
+        "UNZIP_AND_ATTACH_FILES.SAV;1\r\n                        14/15         17-JAN-2002 11:13:53  [POSTWARE,LP]    (RWE,RWED,RWE,RE)"        
     };
-
+    
+    private static final String fullListing = "Directory USER1:[TEMP]\r\n\r\n"+
+    "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)\r\n"+ 
+    "2-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)\r\n"+ 
+    "3-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)\r\n"+
+    "\r\nTotal 3 files"; 
+    
     /**
      * @see junit.framework.TestCase#TestCase(String)
      */
     public VMSFTPEntryParserTest(String name)
     {
         super(name);
-    }
+    }  
 
-    
+    /**
+     * Test the legacy interface for parsing file lists.
+     * @throws IOException
+     */
+    public void testParseFileList() throws IOException
+    {        
+        VMSFTPEntryParser parser = new VMSFTPEntryParser();
+        FTPFile[] files = parser.parseFileList(new ByteArrayInputStream(fullListing.getBytes()));
+        assertEquals(3, files.length);
+        assertEquals(files[0].getName(), "2-JUN.LIS", files[0].getName());
+        assertEquals(files[1].getName(), "3-JUN.LIS", files[1].getName());
+        assertEquals(files[2].getName(), "1-JUN.LIS", files[2].getName());        
+    }
 
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
@@ -256,36 +275,5 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     public static TestSuite suite()
     {
         return(new TestSuite(VMSFTPEntryParserTest.class));
-    }       
-	
-	public void testBadListing() throws Exception {
-		super.testBadListing();
-	}
-
-	public void testGoodListing() throws Exception {
-		String[] goodsamples = getGoodListing();
-        String listing = "";
-           
-        for (int i = 0; i < goodsamples.length; i++) {
-            listing += goodsamples[i] + "\r\n";    
-        }
-        
-        byte[] bytes = listing.getBytes();
-        ByteArrayInputStream listingStream = new ByteArrayInputStream(bytes);
-        
-        FTPFile[] files = new VMSFTPEntryParser(true).parseFileList(listingStream);
-
-        System.out.println(files.length);
-        for (int index = 0; index < files.length; index++) {
-            System.out.println(files[index].getName());
-        }
-        
-        listingStream.reset();
-        files = new VMSFTPEntryParser(false).parseFileList(listingStream);
-        
-        System.out.println(files.length);
-        for (int index = 0; index < files.length; index++) {
-            System.out.println(files[index].getName());
-        }
-	}
+    }
 }
