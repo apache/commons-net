@@ -102,8 +102,8 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * goal is to delete the output of the parser.
  * <P>
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
- * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.7 2003/01/26 00:21:44 dfs Exp $
+ * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
+ * @version $Id: VMSFTPEntryParser.java,v 1.8 2003/03/02 19:36:43 scohen Exp $
  */
 public class VMSFTPEntryParser
             extends MatchApparatus implements FTPFileEntryParser

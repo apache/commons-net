@@ -63,8 +63,8 @@ import java.util.Vector;
  * syntax familiar from Java 2 collections.  Alternatively, entries may
  * be receieved as an array of any requested number of entries or all of them.
  *
- * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: FTPFileIterator.java,v 1.1 2003/03/02 18:15:24 scohen Exp $
+ * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
+ * @version $Id: FTPFileIterator.java,v 1.2 2003/03/02 19:36:43 scohen Exp $
  * @see org.apache.commons.net.ftp.ftp2.FTPFileList
  */
 public class FTPFileIterator

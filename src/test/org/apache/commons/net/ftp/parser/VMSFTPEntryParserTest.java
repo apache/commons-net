@@ -60,8 +60,8 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
- * @author <a href="mailto:scohen@stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: VMSFTPEntryParserTest.java,v 1.1 2003/03/02 18:27:41 scohen Exp $
+ * @author <a href="mailto:scohen@scohen@apache.org">Steve Cohen</a>
+ * @version $Id: VMSFTPEntryParserTest.java,v 1.2 2003/03/02 19:36:44 scohen Exp $
  */
 public class VMSFTPEntryParserTest extends FTPParseTestFramework
 {

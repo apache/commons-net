@@ -72,8 +72,8 @@ import org.apache.commons.net.ftp.ftp2.parser.UnixFTPEntryParser;
  * fairly  clear line between the old and the new; it's less confusing that 
  * way.
  *
- * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: FTPClient2.java,v 1.4 2003/01/26 00:21:43 dfs Exp $
+ * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
+ * @version $Id: FTPClient2.java,v 1.5 2003/03/02 19:36:43 scohen Exp $
  */
 public class FTPClient2 extends FTPClient
 {

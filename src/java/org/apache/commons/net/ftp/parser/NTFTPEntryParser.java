@@ -98,8 +98,8 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * <P>
  *
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
- * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: NTFTPEntryParser.java,v 1.1 2003/03/02 18:18:24 scohen Exp $
+ * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
+ * @version $Id: NTFTPEntryParser.java,v 1.2 2003/03/02 19:36:44 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileListParser
  */
 public class NTFTPEntryParser extends FTPFileListParserImpl
