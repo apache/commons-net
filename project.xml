@@ -90,6 +90,12 @@
       <email>dfs@apache.org</email>
       <organization>savarese.org</organization>
     </developer>
+    <developer>
+      <name>Steve Cohen</name>
+      <id>scohen</id>
+      <email>scohen@apache.org</email>
+      <organization>Sportvision, Inc.</organization>
+    </developer>
   </developers>
 
   <contributors>
@@ -97,10 +103,6 @@
       <name>Winston Ojeda</name>
       <email>Winston.Ojeda@qg.com</email>
       <organization>Quad/Graphics, Inc.</organization>
-    </contributor>
-    <contributor>
-      <name>Steve Cohen</name>
-      <email>stevecoh1@attbi.com</email>
     </contributor>
     <contributor>
       <name>Tapan Karecha</name>
