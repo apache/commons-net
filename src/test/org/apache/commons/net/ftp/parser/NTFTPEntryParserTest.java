@@ -15,13 +15,15 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import java.util.Calendar;
+
 import junit.framework.TestSuite;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: NTFTPEntryParserTest.java,v 1.11 2004/04/16 02:08:00 scohen Exp $
+ * @version $Id: NTFTPEntryParserTest.java,v 1.12 2004/04/16 03:30:13 scohen Exp $
  */
 public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
 {
@@ -154,7 +156,25 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         assertTrue("Should have been a file.", 
                    f.isFile());
         assertEquals("AUTOEXEC.BAK", f.getName());
-        assertEquals(828, f.getSize());   
+        assertEquals(828, f.getSize()); 
+        
+        // test an NT-unix style listing that does NOT have a leading zero  
+        // on the hour.
+        
+        f = getParser().parseFTPEntry(
+        		"-rw-rw-r--   1 mqm        mqm          17707 Mar 12  3:33 killmq.sh.log");
+        assertNotNull("Could not parse entry.", f);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(f.getTimestamp().getTime());
+        assertEquals("hour", 3, cal.get(Calendar.HOUR));
+        assertTrue("Should have been a file.", 
+        		f.isFile());
+        assertEquals(17707, f.getSize()); 
+        
+
+
+
+		
     }
 
 
