@@ -36,7 +36,9 @@ public class DefaultFTPFileEntryParserFactory
      * First it attempts to interpret the supplied key as a fully
      * qualified classname of a class implementing the
      * FTPFileEntryParser interface.  If that succeeds, a parser
-     * object of this class is instantiated and is returned.
+     * object of this class is instantiated and is returned; 
+     * otherwise it attempts to interpret the key as an identirier
+     * commonly used by the FTP SYST command to identify systems.
      * <p/>
      * If <code>key</code> is not recognized as a fully qualified
      * classname known to the system, this method will then attempt
@@ -57,6 +59,7 @@ public class DefaultFTPFileEntryParserFactory
      *               <li><code>unix</code></li>
      *               <li><code>windows</code></li>
      *               <li><code>os/2</code></li>
+     *               <li><code>os/400</code></li>
      *               <li><code>vms</code></li>
      *               </ul>
      * @return the FTPFileEntryParser corresponding to the supplied key.
