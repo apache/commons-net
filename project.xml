@@ -83,6 +83,10 @@
       <name>Steve Cohen</name>
       <email>stevecoh1@attbi.com</email>
     </contributor>
+    <contributor>
+      <name>Tapan Karecha</name>
+      <email>tapan@india.hp.com</email>
+    </contributor>
   </contributors>
   
   <dependencies>
@@ -94,7 +98,8 @@
 
     <dependency>
       <id>junit</id>
-      <version>3.7</version>
+      <version>3.8.1</version>
+      <url>http://junit.org/</url>
     </dependency>
     
   </dependencies>
