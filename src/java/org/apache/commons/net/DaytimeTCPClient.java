@@ -57,7 +57,7 @@ public final class DaytimeTCPClient extends SocketClient
      * call
      * <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
      * after calling this method.  To retrieve another time, you must
-     * initiate another connection with 
+     * initiate another connection with
      * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
      * before calling <code> getTime() </code> again.
      * <p>

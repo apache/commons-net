@@ -19,10 +19,10 @@ import java.net.InetAddress;
 import java.net.SocketException;
 
 /***
- * DefaultDatagramSocketFactory implements the DatagramSocketFactory 
+ * DefaultDatagramSocketFactory implements the DatagramSocketFactory
  * interface by simply wrapping the java.net.DatagramSocket
  * constructors.  It is the default DatagramSocketFactory used by
- * <a href="org.apache.commons.net.DatagramSocketClient.html"> 
+ * <a href="org.apache.commons.net.DatagramSocketClient.html">
  * DatagramSocketClient </a> implementations.
  * <p>
  * <p>

@@ -30,17 +30,17 @@ import org.apache.commons.net.SocketClient;
 
 /***
  * The POP3 class is not meant to be used by itself and is provided
- * only so that you may easily implement your own POP3 client if 
+ * only so that you may easily implement your own POP3 client if
  * you so desire.  If you have no need to perform your own implementation,
  * you should use <a href="org.apache.commons.net.pop3.POP3Client.html">POP3Client</a>.
  * <p>
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
- * can also throw a 
+ * can also throw a
  * <a href="org.apache.commons.net.MalformedServerReplyException.html">
  * MalformedServerReplyException </a>, which is a subclass
  * of IOException.  A MalformedServerReplyException will be thrown when
- * the reply received from the server deviates enough from the protocol 
+ * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite
  * attempts to be as lenient as possible.
  * <p>
@@ -132,7 +132,7 @@ public class POP3 extends SocketClient
 
 
     /***
-     * Performs connection initialization and sets state to 
+     * Performs connection initialization and sets state to
      * <code> AUTHORIZATION_STATE </code>.
      ***/
     protected void _connectAction_() throws IOException

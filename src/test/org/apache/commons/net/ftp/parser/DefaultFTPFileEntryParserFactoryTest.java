@@ -22,18 +22,18 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 public class DefaultFTPFileEntryParserFactoryTest extends TestCase
 {
     public void testDefaultParserFactory() throws Exception {
-        DefaultFTPFileEntryParserFactory factory = 
+        DefaultFTPFileEntryParserFactory factory =
             new DefaultFTPFileEntryParserFactory();
 
         FTPFileEntryParser parser = factory.createFileEntryParser("unix");
         assertTrue(parser instanceof UnixFTPEntryParser);
-        
+
         parser = factory.createFileEntryParser("UNIX");
         assertTrue(parser instanceof UnixFTPEntryParser);
 
         parser = factory.createFileEntryParser("Unix");
         assertTrue(parser instanceof UnixFTPEntryParser);
-        
+
         parser = factory.createFileEntryParser("EnterpriseUnix");
         assertTrue(parser instanceof UnixFTPEntryParser);
         assertFalse(parser instanceof EnterpriseUnixFTPEntryParser);
@@ -41,7 +41,7 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
         // works because contains the expression "Unix"
         parser = factory.createFileEntryParser("UnixFTPEntryParser");
         assertTrue(parser instanceof UnixFTPEntryParser);
-        
+
         try {
             parser = factory.createFileEntryParser("NT");
             fail("Exception should have been thrown. \"NT\" is not a recognized key");
@@ -51,7 +51,7 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
 
         parser = factory.createFileEntryParser("WindowsNT");
         assertTrue(parser instanceof CompositeFileEntryParser);
-        
+
         parser = factory.createFileEntryParser("ThigaVMSaMaJig");
         assertTrue(parser instanceof VMSFTPEntryParser);
 
@@ -60,18 +60,18 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
 
         parser = factory.createFileEntryParser("OS/400");
         assertTrue(parser instanceof CompositeFileEntryParser);
-        
+
         try {
             parser = factory.createFileEntryParser("OS2FTPFileEntryParser");
             fail("Exception should have been thrown. \"OS2FTPFileEntryParser\" is not a recognized key");
         } catch (ParserInitializationException pie) {
             assertNull(pie.getRootCause());
         }
-        
+
         parser = factory.createFileEntryParser(
             "org.apache.commons.net.ftp.parser.OS2FTPEntryParser");
         assertTrue(parser instanceof OS2FTPEntryParser);
-        
+
         try {
             parser = factory.createFileEntryParser(
                 "org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory");

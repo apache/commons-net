@@ -19,15 +19,15 @@ import java.util.Calendar;
 import org.apache.commons.net.ftp.FTPFile;
 
 /**
- * Parser for the Connect Enterprise Unix FTP Server From Sterling Commerce.  
+ * Parser for the Connect Enterprise Unix FTP Server From Sterling Commerce.
  * Here is a sample of the sort of output line this parser processes:
  *  "-C--E-----FTP B QUA1I1      18128       41 Aug 12 13:56 QUADTEST"
  * <P><B>
- * Note: EnterpriseUnixFTPEntryParser can only be instantiated through the 
+ * Note: EnterpriseUnixFTPEntryParser can only be instantiated through the
  * DefaultFTPParserFactory by classname.  It will not be chosen
  * by the autodetection scheme.
  * </B>
- * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.10 2004/04/06 04:40:57 scohen Exp $
+ * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.11 2004/04/21 23:30:33 scohen Exp $
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
@@ -39,29 +39,29 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
      * months abbreviations looked for by this parser.  Also used
      * to determine <b>which</b> month has been matched by the parser.
      */
-    private static final String MONTHS = 
+    private static final String MONTHS =
         "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)";
 
     /**
      * this is the regular expression used by this parser.
      */
-    private static final String REGEX = 
+    private static final String REGEX =
         "(([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])"
         + "([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z]))"
-        + "(\\S*)\\s*" 
-        + "(\\S+)\\s*" 
-        + "(\\S*)\\s*" 
-        + "(\\d*)\\s*" 
-        + "(\\d*)\\s*" 
-        + MONTHS 
-        + "\\s*" 
-        + "((?:[012]\\d*)|(?:3[01]))\\s*" 
-        + "((\\d\\d\\d\\d)|((?:[01]\\d)|(?:2[0123])):([012345]\\d))\\s" 
+        + "(\\S*)\\s*"
+        + "(\\S+)\\s*"
+        + "(\\S*)\\s*"
+        + "(\\d*)\\s*"
+        + "(\\d*)\\s*"
+        + MONTHS
+        + "\\s*"
+        + "((?:[012]\\d*)|(?:3[01]))\\s*"
+        + "((\\d\\d\\d\\d)|((?:[01]\\d)|(?:2[0123])):([012345]\\d))\\s"
         + "(\\S*)(\\s*.*)";
 
     /**
      * The sole constructor for a EnterpriseUnixFTPEntryParser object.
-     * 
+     *
      */
     public EnterpriseUnixFTPEntryParser()
     {
@@ -74,7 +74,7 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
      * the file listing line doesn't describe a file,  <code> null </code> is
      * returned, otherwise a <code> FTPFile </code>  instance representing the
      * files in the directory is returned.
-     * 
+     *
      * @param entry A line of text from the file listing
      * @return An FTPFile instance corresponding to the supplied entry
      */
@@ -109,11 +109,11 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
             }
 
             Calendar cal = Calendar.getInstance();
-            cal.set(Calendar.SECOND, 
+            cal.set(Calendar.SECOND,
                     0);
-            cal.set(Calendar.MINUTE, 
+            cal.set(Calendar.MINUTE,
                     0);
-            cal.set(Calendar.HOUR_OF_DAY, 
+            cal.set(Calendar.HOUR_OF_DAY,
                     0);
             try
             {
@@ -123,7 +123,7 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
                 if (yr != null)
                 {
                     // it's a year
-                    cal.set(Calendar.YEAR, 
+                    cal.set(Calendar.YEAR,
                             Integer.parseInt(yr));
                 }
                 else
@@ -137,16 +137,16 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
                     {
                         year--;
                     }
-                    cal.set(Calendar.YEAR, 
+                    cal.set(Calendar.YEAR,
                             year);
-                    cal.set(Calendar.HOUR_OF_DAY, 
+                    cal.set(Calendar.HOUR_OF_DAY,
                             Integer.parseInt(hr));
-                    cal.set(Calendar.MINUTE, 
+                    cal.set(Calendar.MINUTE,
                             Integer.parseInt(min));
                 }
-                cal.set(Calendar.MONTH, 
+                cal.set(Calendar.MONTH,
                         month);
-                cal.set(Calendar.DATE, 
+                cal.set(Calendar.DATE,
                         Integer.parseInt(da));
                 file.setTimestamp(cal);
             }

@@ -18,14 +18,14 @@ import java.util.Calendar;
 import org.apache.commons.net.ftp.FTPFile;
 
 /**
- * Implementation FTPFileEntryParser and FTPFileListParser for standard 
+ * Implementation FTPFileEntryParser and FTPFileListParser for standard
  * Unix Systems.
- * 
+ *
  * This class is based on the logic of Daniel Savarese's
  * DefaultFTPListParser, but adapted to use regular expressions and to fit the
  * new FTPFileEntryParser interface.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: UnixFTPEntryParser.java,v 1.13 2004/04/16 03:30:13 scohen Exp $
+ * @version $Id: UnixFTPEntryParser.java,v 1.14 2004/04/21 23:30:33 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
@@ -36,7 +36,7 @@ public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
      */
     private static final String MONTHS =
         "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)";
-    
+
     /**
      * this is the regular expression used by this parser.
 	 *
@@ -68,25 +68,25 @@ public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
         + "((\\d\\d\\d\\d)|((?:[01]\\d)|(?:2[0123])|(?:[1-9])):([012345]\\d))\\s+"
         + "(\\S+)(\\s*.*)";
 
-    
+
     /**
      * The sole constructor for a UnixFTPEntryParser object.
-     * 
+     *
      * @exception IllegalArgumentException
-     * Thrown if the regular expression is unparseable.  Should not be seen 
-     * under normal conditions.  It it is seen, this is a sign that 
+     * Thrown if the regular expression is unparseable.  Should not be seen
+     * under normal conditions.  It it is seen, this is a sign that
      * <code>REGEX</code> is  not a valid regular expression.
      */
-    public UnixFTPEntryParser() 
+    public UnixFTPEntryParser()
     {
         super(REGEX);
     }
 
     /**
-     * Parses a line of a unix (standard) FTP server file listing and converts 
-     * it into a usable format in the form of an <code> FTPFile </code> 
-     * instance.  If the file listing line doesn't describe a file, 
-     * <code> null </code> is returned, otherwise a <code> FTPFile </code> 
+     * Parses a line of a unix (standard) FTP server file listing and converts
+     * it into a usable format in the form of an <code> FTPFile </code>
+     * instance.  If the file listing line doesn't describe a file,
+     * <code> null </code> is returned, otherwise a <code> FTPFile </code>
      * instance representing the files in the directory is returned.
      * <p>
      * @param entry A line of text from the file listing
@@ -132,7 +132,7 @@ public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
             }
 
             file.setType(type);
-           
+
             int g = 4;
             for (int access = 0; access < 3; access++, g += 4)
             {

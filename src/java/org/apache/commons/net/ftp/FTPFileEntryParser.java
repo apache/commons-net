@@ -27,61 +27,61 @@ import java.util.List;
  * if necessary, subclass FTPFile.
  * <p>
  * Here are some examples showing how to use one of the classes that
- * implement this interface.  
+ * implement this interface.
  * <p>
- * The first example shows how to get an <b>iterable</b> list of files in which the 
+ * The first example shows how to get an <b>iterable</b> list of files in which the
  * more expensive <code>FTPFile</code> objects are not created until needed.  This
  * is suitable for paged displays.   It requires that a parser object be created
- * beforehand: <code>parser</code> is an object (in the package 
+ * beforehand: <code>parser</code> is an object (in the package
  * <code>org.apache.commons.net.ftp.parser</code>)
  * implementing this inteface.
- * 
+ *
  * <pre>
  *    FTPClient f=FTPClient();
  *    f.connect(server);
  *    f.login(username, password);
  *    FTPFileList list = f.createFileList(directory, parser);
  *    FTPFileIterator iter = list.iterator();
- * 
+ *
  *    while (iter.hasNext()) {
  *       FTPFile[] files = iter.getNext(25);  // "page size" you want
  *       //do whatever you want with these files, display them, etc.
  *       //expensive FTPFile objects not created until needed.
  *    }
  * </pre>
- * 
+ *
  * The second example uses the revised <code>FTPClient.listFiles()</code>
- * API to pull the whole list from the subfolder <code>subfolder</code> in 
- * one call, attempting to automatically detect the parser type.  This 
- * method, without a parserKey parameter, indicates that autodection should 
+ * API to pull the whole list from the subfolder <code>subfolder</code> in
+ * one call, attempting to automatically detect the parser type.  This
+ * method, without a parserKey parameter, indicates that autodection should
  * be used.
- * 
+ *
  * <pre>
  *    FTPClient f=FTPClient();
  *    f.connect(server);
  *    f.login(username, password);
  *    FTPFile[] files = f.listFiles("subfolder");
  * </pre>
- * 
+ *
  * The third example uses the revised <code>FTPClient.listFiles()</code>>
- * API to pull the whole list from the current working directory in one call, 
+ * API to pull the whole list from the current working directory in one call,
  * but specifying by classname the parser to be used.  For this particular
- * parser class, this approach is necessary since there is no way to 
+ * parser class, this approach is necessary since there is no way to
  * autodetect this server type.
- * 
+ *
  * <pre>
  *    FTPClient f=FTPClient();
  *    f.connect(server);
  *    f.login(username, password);
  *    FTPFile[] files = f.listFiles(
- *      "org.apache.commons.net.ftp.parser.EnterpriseUnixFTPFileEntryParser", 
+ *      "org.apache.commons.net.ftp.parser.EnterpriseUnixFTPFileEntryParser",
  *      ".");
  * </pre>
  *
  * The fourth example uses the revised <code>FTPClient.listFiles()</code>
- * API to pull a single file listing in an arbitrary directory in one call, 
- * specifying by KEY the parser to be used, in this case, VMS.  
- * 
+ * API to pull a single file listing in an arbitrary directory in one call,
+ * specifying by KEY the parser to be used, in this case, VMS.
+ *
  * <pre>
  *    FTPClient f=FTPClient();
  *    f.connect(server);
@@ -90,7 +90,7 @@ import java.util.List;
  * </pre>
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileEntryParser.java,v 1.18 2004/04/06 13:31:59 brekke Exp $
+ * @version $Id: FTPFileEntryParser.java,v 1.19 2004/04/21 23:30:33 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFile
  * @see org.apache.commons.net.ftp.FTPClient#createFileList
  */
@@ -109,30 +109,30 @@ public interface FTPFileEntryParser
     FTPFile parseFTPEntry(String listEntry);
 
     /**
-     * Reads the next entry using the supplied BufferedReader object up to 
+     * Reads the next entry using the supplied BufferedReader object up to
      * whatever delemits one entry from the next.  Implementors must define
-     * this for the particular ftp system being parsed.  In many but not all 
+     * this for the particular ftp system being parsed.  In many but not all
      * cases, this can be defined simply by calling BufferedReader.readLine().
-     * 
-     * @param reader The BufferedReader object from which entries are to be 
+     *
+     * @param reader The BufferedReader object from which entries are to be
      * read.
-     * 
+     *
      * @return A string representing the next ftp entry or null if none found.
      * @exception IOException thrown on any IO Error reading from the reader.
      */
     String readNextEntry(BufferedReader reader) throws IOException;
 
-    
+
     /**
      * This method is a hook for those implementors (such as
      * VMSVersioningFTPEntryParser, and possibly others) which need to
      * perform some action upon the FTPFileList after it has been created
      * from the server stream, but before any clients see the list.
-     * 
+     *
      * The default implementation can be a no-op.
-     * 
+     *
      * @param original Original list after it has been created from the server stream
-     * 
+     *
      * @return Original list as processed by this method.
      */
     List preParse(List original);

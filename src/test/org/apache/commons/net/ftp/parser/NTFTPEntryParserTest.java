@@ -23,12 +23,12 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: NTFTPEntryParserTest.java,v 1.12 2004/04/16 03:30:13 scohen Exp $
+ * @version $Id: NTFTPEntryParserTest.java,v 1.13 2004/04/21 23:30:33 scohen Exp $
  */
 public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
 {
 
-    private static final String [][] goodsamples = { 
+    private static final String [][] goodsamples = {
     {
             "05-26-95  10:57AM               143712 $LDR$",
             "05-20-97  03:31PM                  681 .bash_history",
@@ -42,13 +42,13 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
 			"01-20-97  03:48PM       <DIR>          bin",
 	},
 	{
-			"-rw-r--r--   1 root     root       111325 Apr 27  2001 zxJDBC-2.0.1b1.tar.gz", 
+			"-rw-r--r--   1 root     root       111325 Apr 27  2001 zxJDBC-2.0.1b1.tar.gz",
 			"-rw-r--r--   1 root     root       190144 Apr 27  2001 zxJDBC-2.0.1b1.zip",
 			"-rwxr-xr-x   2 500      500           166 Nov  2  2001 73131-testtes1.afp",
 			"-rw-r--r--   1 500      500           166 Nov  9  2001 73131-testtes1.AFP",
     	}
     };
-    
+
     private static final String[][] badsamples =
         {
             {
@@ -73,7 +73,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
 
     private static final String directoryBeginningWithNumber =
     	"12-03-96  06:38AM       <DIR>          123xyz";
-	
+
 
     /**
      * @see junit.framework.TestCase#TestCase(String)
@@ -90,7 +90,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
     {
         return goodsamples;
     }
-    
+
     /**
      * @see org.apache.commons.net.ftp.parser.CompositeFTPParseTestFramework#getBadListings()
      */
@@ -110,7 +110,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
 			new UnixFTPEntryParser()
 		});
     }
-    
+
     /**
      * Method suite.
      *
@@ -120,7 +120,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
     {
         return(new TestSuite(NTFTPEntryParserTest.class));
     }
-    
+
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
      */
@@ -128,20 +128,20 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
     {
         FTPFile dir = getParser().parseFTPEntry("12-05-96  05:03PM       <DIR>          absoft2");
         assertNotNull("Could not parse entry.", dir);
-        assertEquals("Thu Dec 05 17:03:00 1996", 
+        assertEquals("Thu Dec 05 17:03:00 1996",
                      df.format(dir.getTimestamp().getTime()));
-        assertTrue("Should have been a directory.", 
+        assertTrue("Should have been a directory.",
                    dir.isDirectory());
         assertEquals("absoft2", dir.getName());
         assertEquals(0, dir.getSize());
-        
+
         dir = getParser().parseFTPEntry("12-03-96  06:38AM       <DIR>          123456");
         assertNotNull("Could not parse entry.", dir);
-        assertTrue("Should have been a directory.", 
+        assertTrue("Should have been a directory.",
         		dir.isDirectory());
         assertEquals("123456", dir.getName());
         assertEquals(0, dir.getSize());
-        
+
     }
 
     /**
@@ -151,30 +151,30 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
     {
         FTPFile f = getParser().parseFTPEntry("05-22-97  12:08AM                  828 AUTOEXEC.BAK");
         assertNotNull("Could not parse entry.", f);
-        assertEquals("Thu May 22 00:08:00 1997", 
+        assertEquals("Thu May 22 00:08:00 1997",
                      df.format(f.getTimestamp().getTime()));
-        assertTrue("Should have been a file.", 
+        assertTrue("Should have been a file.",
                    f.isFile());
         assertEquals("AUTOEXEC.BAK", f.getName());
-        assertEquals(828, f.getSize()); 
-        
-        // test an NT-unix style listing that does NOT have a leading zero  
+        assertEquals(828, f.getSize());
+
+        // test an NT-unix style listing that does NOT have a leading zero
         // on the hour.
-        
+
         f = getParser().parseFTPEntry(
         		"-rw-rw-r--   1 mqm        mqm          17707 Mar 12  3:33 killmq.sh.log");
         assertNotNull("Could not parse entry.", f);
         Calendar cal = Calendar.getInstance();
         cal.setTime(f.getTimestamp().getTime());
         assertEquals("hour", 3, cal.get(Calendar.HOUR));
-        assertTrue("Should have been a file.", 
+        assertTrue("Should have been a file.",
         		f.isFile());
-        assertEquals(17707, f.getSize()); 
-        
+        assertEquals(17707, f.getSize());
 
 
 
-		
+
+
     }
 
 
@@ -182,11 +182,11 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
     {
         if (test.indexOf("<DIR>") >= 0)
 		{
-					assertEquals("directory.type", 
+					assertEquals("directory.type",
 							FTPFile.DIRECTORY_TYPE, f.getType());
 				}
 	}
-	
+
 	/**
 	 * test condition reported as bug 20259.
 	 * directory with name beginning with a numeric character

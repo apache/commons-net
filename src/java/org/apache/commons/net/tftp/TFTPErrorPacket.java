@@ -133,7 +133,7 @@ public final class TFTPErrorPacket extends TFTPPacket
     /***
      * This is a method only available within the package for
      * implementing efficient datagram transport by elminating buffering.
-     * It takes a datagram as an argument, and a byte buffer in which 
+     * It takes a datagram as an argument, and a byte buffer in which
      * to store the raw datagram data.  Inside the method, the data
      * is set as the datagram's data and the datagram returned.
      * <p>
@@ -170,10 +170,10 @@ public final class TFTPErrorPacket extends TFTPPacket
      * error packet data in the proper format.
      * This is a method exposed to the programmer in case he
      * wants to implement his own TFTP client instead of using
-     * the <a href="org.apache.commons.net.tftp.TFTPClient.html#_top_">TFTPClient</a> 
+     * the <a href="org.apache.commons.net.tftp.TFTPClient.html#_top_">TFTPClient</a>
      * class.
      * Under normal circumstances, you should not have a need to call this
-     * method.  
+     * method.
      * <p>
      * @return A UDP datagram containing the TFTP error packet.
      ***/

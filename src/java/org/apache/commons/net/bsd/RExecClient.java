@@ -47,10 +47,10 @@ import java.io.OutputStream;
  * stream over a separate connection, readable from the input stream
  * returned by <a href="#getErrorStream"> getErrorStream() </a>.  You
  * can specify that a separate connection should be created for standard
- * error by setting the boolean <code> separateErrorStream </code> 
+ * error by setting the boolean <code> separateErrorStream </code>
  * parameter of <a href="#rexec"> rexec() </a> to <code> true </code>.
  * The standard input of the remote process can be written to through
- * the output stream returned by 
+ * the output stream returned by
  * <a href="#getOutputStream"> getOutputSream() </a>.
  * <p>
  * <p>
@@ -178,7 +178,7 @@ public class RExecClient extends SocketClient
      * connection for this error stream.  If the connection does not originate
      * from the remote server, an IOException will be thrown.  This serves as
      * a simple protection against possible hijacking of the error stream by
-     * an attacker monitoring the rexec() negotiation.  You may disable this 
+     * an attacker monitoring the rexec() negotiation.  You may disable this
      * behavior with <a href="#setRemoteVerificationEnabled">
      * setRemoteVerificationEnabled()</a>.
      * <p>
@@ -260,7 +260,7 @@ public class RExecClient extends SocketClient
     /***
      * Enable or disable verification that the remote host connecting to
      * create a separate error stream is the same as the host to which
-     * the standard out stream is connected.  The default is for verification 
+     * the standard out stream is connected.  The default is for verification
      * to be enabled.  You may set this value at any time, whether the
      * client is currently connected or not.
      * <p>

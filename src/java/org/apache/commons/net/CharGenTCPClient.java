@@ -64,7 +64,7 @@ public final class CharGenTCPClient extends SocketClient
     /***
      * Returns an InputStream from which the server generated data can be
      * read.  You should NOT close the InputStream when you're finished
-     * reading from it.  Rather, you should call 
+     * reading from it.  Rather, you should call
      * <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
      * to clean up properly.
      * <p>

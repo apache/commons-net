@@ -18,24 +18,24 @@ package org.apache.commons.net.ftp.parser;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
- * This is the default implementation of the 
- * FTPFileEntryParserFactory interface.  This is the 
+ * This is the default implementation of the
+ * FTPFileEntryParserFactory interface.  This is the
  * implementation that will be used by
  * org.apache.commons.net.ftp.FTPClient.listFiles()
  * if no other implementation has been specified.
- * 
+ *
  * @see org.apache.commons.net.ftp.FTPClient#listFiles
  * @see org.apache.commons.net.ftp.FTPClient#setParserFactory
  */
-public class DefaultFTPFileEntryParserFactory 
-    implements FTPFileEntryParserFactory 
+public class DefaultFTPFileEntryParserFactory
+    implements FTPFileEntryParserFactory
 {
     /**
      * This default implementation of the FTPFileEntryParserFactory
      * interface works according to the following logic:
      * First it attempts to interpret the supplied key as a fully
      * qualified classname of a class implementing the
-     * FTPFileEntryParser interface.  If that succeeds, a parser 
+     * FTPFileEntryParser interface.  If that succeeds, a parser
      * object of this class is instantiated and is returned.
      * <p/>
      * If <code>key</code> is not recognized as a fully qualified
@@ -44,8 +44,8 @@ public class DefaultFTPFileEntryParserFactory
      * the known parsers.  This comparison is <b>case-insensitive</b>.
      * The intent here is where possible, to select as keys strings
      * which are returned by the SYST command on the systems which
-     * the corresponding parser successfully parses.  This enables 
-     * this factory to be used in the auto-detection system. 
+     * the corresponding parser successfully parses.  This enables
+     * this factory to be used in the auto-detection system.
      * <p/>
      *
      * @param key    should be a fully qualified classname corresponding to
@@ -64,7 +64,7 @@ public class DefaultFTPFileEntryParserFactory
      *                   the supplied key into an FTPFileEntryParser.
      * @see FTPFileEntryParser
      */
-    public FTPFileEntryParser createFileEntryParser(String key) 
+    public FTPFileEntryParser createFileEntryParser(String key)
     {
         Class parserClass = null;
         try

@@ -23,13 +23,13 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPParseTestFramework.java,v 1.7 2004/04/16 01:52:24 scohen Exp $
+ * @version $Id: FTPParseTestFramework.java,v 1.8 2004/04/21 23:30:33 scohen Exp $
  */
 public abstract class FTPParseTestFramework extends TestCase
 {
     private FTPFileEntryParser parser = null;
     protected SimpleDateFormat df = null;
-    
+
     /**
      * @see junit.framework.TestCase#TestCase(String)
      */
@@ -52,7 +52,7 @@ public abstract class FTPParseTestFramework extends TestCase
 
             String test = badsamples[i];
             FTPFile f = parser.parseFTPEntry(test);
-            assertNull("Should have Failed to parse " + test, 
+            assertNull("Should have Failed to parse " + test,
                        f);
 
             doAdditionalBadTests(test, f);
@@ -73,7 +73,7 @@ public abstract class FTPParseTestFramework extends TestCase
 
             String test = goodsamples[i];
             FTPFile f = parser.parseFTPEntry(test);
-            assertNotNull("Failed to parse " + test, 
+            assertNotNull("Failed to parse " + test,
                           f);
 
             doAdditionalGoodTests(test, f);
@@ -120,14 +120,14 @@ public abstract class FTPParseTestFramework extends TestCase
      * @return FTPFileEntryParser
      */
     protected abstract FTPFileEntryParser getParser();
-    
+
     /**
      * Method testParseFieldsOnDirectory.
      * Provide a test to show that fields on a directory entry are parsed correctly.
      * @throws Exception
      */
     public abstract void testParseFieldsOnDirectory() throws Exception;
-    
+
     /**
      * Method testParseFieldsOnFile.
      * Provide a test to show that fields on a file entry are parsed correctly.

@@ -65,11 +65,11 @@ import org.apache.commons.net.SocketClient;
  * <p>
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
- * can also throw a 
+ * can also throw a
  * <a href="org.apache.commons.net.MalformedServerReplyException.html">
  * MalformedServerReplyException </a>, which is a subclass
  * of IOException.  A MalformedServerReplyException will be thrown when
- * the reply received from the server deviates enough from the protocol 
+ * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite
  * attempts to be as lenient as possible.
  * <p>
@@ -156,7 +156,7 @@ public class SMTP extends SocketClient
     private void __getReply() throws IOException
     {
         int length;
-        
+
         _newReplyString = true;
         _replyLines.setSize(0);
 
@@ -278,7 +278,7 @@ public class SMTP extends SocketClient
      * Sends an SMTP command to the server, waits for a reply and returns the
      * numerical response code.  After invocation, for more detailed
      * information, the actual reply text can be accessed by calling
-     * <a href="#getReplyString"> getReplyString </a> or 
+     * <a href="#getReplyString"> getReplyString </a> or
      * <a href="#getReplyStrings"> getReplyStrings </a>.
      * <p>
      * @param command  The text representation of the  SMTP command to send.
@@ -304,7 +304,7 @@ public class SMTP extends SocketClient
      * Sends an SMTP command to the server, waits for a reply and returns the
      * numerical response code.  After invocation, for more detailed
      * information, the actual reply text can be accessed by calling
-     * <a href="#getReplyString"> getReplyString </a> or 
+     * <a href="#getReplyString"> getReplyString </a> or
      * <a href="#getReplyStrings"> getReplyStrings </a>.
      * <p>
      * @param command  The SMTPCommand constant corresponding to the SMTP command
@@ -331,7 +331,7 @@ public class SMTP extends SocketClient
      * Sends an SMTP command with no arguments to the server, waits for a
      * reply and returns the numerical response code.  After invocation, for
      * more detailed information, the actual reply text can be accessed by
-     * calling <a href="#getReplyString"> getReplyString </a> or 
+     * calling <a href="#getReplyString"> getReplyString </a> or
      * <a href="#getReplyStrings"> getReplyStrings </a>.
      * <p>
      * @param command  The text representation of the  SMTP command to send.
@@ -355,7 +355,7 @@ public class SMTP extends SocketClient
      * Sends an SMTP command with no arguments to the server, waits for a
      * reply and returns the numerical response code.  After invocation, for
      * more detailed information, the actual reply text can be accessed by
-     * calling <a href="#getReplyString"> getReplyString </a> or 
+     * calling <a href="#getReplyString"> getReplyString </a> or
      * <a href="#getReplyStrings"> getReplyStrings </a>.
      * <p>
      * @param command  The SMTPCommand constant corresponding to the SMTP command
@@ -392,7 +392,7 @@ public class SMTP extends SocketClient
     /***
      * Fetches a reply from the SMTP server and returns the integer reply
      * code.  After calling this method, the actual reply text can be accessed
-     * from either  calling <a href="#getReplyString"> getReplyString </a> or 
+     * from either  calling <a href="#getReplyString"> getReplyString </a> or
      * <a href="#getReplyStrings"> getReplyStrings </a>.  Only use this
      * method if you are implementing your own SMTP client or if you need to
      * fetch a secondary response from the SMTP server.

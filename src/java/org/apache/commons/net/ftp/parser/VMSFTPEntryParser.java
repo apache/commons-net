@@ -26,22 +26,22 @@ import org.apache.commons.net.ftp.FTPListParseEngine;
 /**
  * Implementation FTPFileEntryParser and FTPFileListParser for VMS Systems.
  * This is a sample of VMS LIST output
- *   
+ *
  *  "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
  *  "1-JUN.LIS;2              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
  *  "DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
  * <P><B>
- * Note: VMSFTPEntryParser can only be instantiated through the 
+ * Note: VMSFTPEntryParser can only be instantiated through the
  * DefaultFTPParserFactory by classname.  It will not be chosen
  * by the autodetection scheme.
  * </B>
  * <P>
- * 
+ *
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.21 2004/04/06 04:40:57 scohen Exp $
- * 
+ * @version $Id: VMSFTPEntryParser.java,v 1.22 2004/04/21 23:30:33 scohen Exp $
+ *
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
  */
@@ -60,23 +60,23 @@ public class VMSFTPEntryParser extends RegexFTPFileEntryParserImpl
      * this is the regular expression used by this parser.
      */
     private static final String REGEX =
-        "(.*;[0-9]+)\\s*" 
-        + "(\\d+)/\\d+\\s*" 
-        + "(\\d{1,2})-" 
-        + MONTHS 
+        "(.*;[0-9]+)\\s*"
+        + "(\\d+)/\\d+\\s*"
+        + "(\\d{1,2})-"
+        + MONTHS
         + "-([0-9]{4})\\s*"
         + "((?:[01]\\d)|(?:2[0-3])):([012345]\\d):([012345]\\d)\\s*"
-        + "\\[(([0-9$A-Za-z_]+)|([0-9$A-Za-z_]+),([0-9$a-zA-Z_]+))\\]?\\s*" 
+        + "\\[(([0-9$A-Za-z_]+)|([0-9$A-Za-z_]+),([0-9$a-zA-Z_]+))\\]?\\s*"
         + "\\([a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*\\)";
 
 
 
     /**
-     * Constructor for a VMSFTPEntryParser object.   
-     * 
+     * Constructor for a VMSFTPEntryParser object.
+     *
      * @exception IllegalArgumentException
-     * Thrown if the regular expression is unparseable.  Should not be seen 
-     * under normal conditions.  It it is seen, this is a sign that 
+     * Thrown if the regular expression is unparseable.  Should not be seen
+     * under normal conditions.  It it is seen, this is a sign that
      * <code>REGEX</code> is  not a valid regular expression.
      */
     public VMSFTPEntryParser()
@@ -151,22 +151,22 @@ public class VMSFTPEntryParser extends RegexFTPFileEntryParserImpl
                     grp  = null;
                     user = null;
             }
-            
-            if (name.lastIndexOf(".DIR") != -1) 
+
+            if (name.lastIndexOf(".DIR") != -1)
             {
                 f.setType(FTPFile.DIRECTORY_TYPE);
-            } 
-            else 
+            }
+            else
             {
                 f.setType(FTPFile.FILE_TYPE);
             }
             //set FTPFile name
             //Check also for versions to be returned or not
-            if (isVersioning()) 
+            if (isVersioning())
             {
                 f.setName(name);
-            } 
-            else 
+            }
+            else
             {
                 name = name.substring(0, name.lastIndexOf(";"));
                 f.setName(name);
@@ -193,8 +193,8 @@ public class VMSFTPEntryParser extends RegexFTPFileEntryParserImpl
             f.setGroup(grp);
             f.setUser(user);
             //set group and owner
-            //Since I don't need the persmissions on this file (RWED), I'll 
-            //leave that for further development. 'Cause it will be a bit 
+            //Since I don't need the persmissions on this file (RWED), I'll
+            //leave that for further development. 'Cause it will be a bit
             //elaborate to do it right with VMSes World, Global and so forth.
             return f;
         }
@@ -208,7 +208,7 @@ public class VMSFTPEntryParser extends RegexFTPFileEntryParserImpl
      * the default implementation of simply calling BufferedReader.readLine(),
      * because one entry may span multiple lines.
      *
-     * @param reader The BufferedReader object from which entries are to be 
+     * @param reader The BufferedReader object from which entries are to be
      * read.
      *
      * @return A string representing the next ftp entry or null if none found.

@@ -26,7 +26,7 @@ import org.apache.commons.net.ftp.FTPReply;
  * This is an example program demonstrating how to use the FTPClient class.
  * This program arranges a server to server file transfer that transfers
  * a file from host1 to host2.  Keep in mind, this program might only work
- * if host2 is the same as the host you run it on (for security reasons, 
+ * if host2 is the same as the host you run it on (for security reasons,
  * some ftp servers only allow PORT commands to be issued with a host
  * argument equal to the client host).
  * <p>

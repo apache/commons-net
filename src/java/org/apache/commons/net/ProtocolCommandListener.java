@@ -27,7 +27,7 @@ import java.util.EventListener;
  * <p>
  * To receive ProtocolCommandEvents, you merely implement the
  * ProtocolCommandListener interface and register the class as a listener
- * with a ProtocolCommandEvent source such as 
+ * with a ProtocolCommandEvent source such as
  * <a href="org.apache.commons.net.ftp.FTPClient.html"> FTPClient </a>.
  * <p>
  * <p>

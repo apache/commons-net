@@ -56,11 +56,11 @@ public final class TimeUDPClient extends DatagramSocketClient
 
     /***
      * Retrieves the time from the specified server and port and
-     * returns it. The time is the number of seconds since 
+     * returns it. The time is the number of seconds since
      * 00:00 (midnight) 1 January 1900 GMT, as specified by RFC 868.
      * This method reads the raw 32-bit big-endian
      * unsigned integer from the server, converts it to a Java long, and
-     * returns the value.  
+     * returns the value.
      * <p>
      * @param host The address of the server.
      * @param port The port of the service.

@@ -21,7 +21,7 @@ package org.apache.commons.net.pop3;
  * depending on the information being returned.
  * <p>
  * In response to a status command, <code> number </code>
- * contains the number of messages in the mailbox, <code> size </code> 
+ * contains the number of messages in the mailbox, <code> size </code>
  * contains the size of the mailbox in bytes, and <code> identifier </code>
  * is null.
  * <p>

@@ -44,7 +44,7 @@ public final class TFTPWriteRequestPacket extends TFTPRequestPacket
 {
 
     /***
-     * Creates a write request packet to be sent to a host at a 
+     * Creates a write request packet to be sent to a host at a
      * given port with a filename and transfer mode request.
      * <p>
      * @param destination  The host to which the packet is going to be sent.

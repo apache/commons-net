@@ -348,7 +348,7 @@ public class FTPFile implements Serializable
      * <p>
      * @param access The access group (one of the <code> _ACCESS </code>
      *               constants)
-     * @param permission The access permission (one of the 
+     * @param permission The access permission (one of the
      *               <code> _PERMISSION </code> constants)
      * @param value  True if permission is allowed, false if not.
      ***/
@@ -365,7 +365,7 @@ public class FTPFile implements Serializable
      * <p>
      * @param access The access group (one of the <code> _ACCESS </code>
      *               constants)
-     * @param permission The access permission (one of the 
+     * @param permission The access permission (one of the
      *               <code> _PERMISSION </code> constants)
      ***/
     public boolean hasPermission(int access, int permission)

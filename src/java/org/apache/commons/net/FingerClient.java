@@ -30,7 +30,7 @@ import java.io.DataOutputStream;
  * Here's a sample use:
  * <pre>
  *    FingerClient finger;
- * 
+ *
  *    finger = new FingerClient();
  *
  *    try {
@@ -142,7 +142,7 @@ public class FingerClient extends SocketClient
         __query.append(username);
         __query.append(SocketClient.NETASCII_EOL);
 
-        output = 
+        output =
           new DataOutputStream(new BufferedOutputStream(_output_, 1024));
         output.writeBytes(__query.toString());
         output.flush();

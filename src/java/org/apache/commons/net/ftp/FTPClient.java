@@ -38,7 +38,7 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
  * low level details of interacting with an FTP server and provides
  * a convenient higher level interface.  As with all classes derived
  * from <a href="org.apache.commons.net.SocketClient.html"> SocketClient </a>,
- * you must first connect to the server with 
+ * you must first connect to the server with
  * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
  * before doing anything, and finally
  * <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
@@ -94,7 +94,7 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
  * <code> FTP.STREAM_TRANSFER_MODE </code>, and
  * <code> FTP.FILE_STRUCTURE </code>.  The only file types directly supported
  * are <code> FTP.ASCII_FILE_TYPE </code> and
- * <code> FTP.IMAGE_FILE_TYPE </code> (which is the same as 
+ * <code> FTP.IMAGE_FILE_TYPE </code> (which is the same as
  * <code> FTP.BINARY_FILE_TYPE </code>).  Because there are at lest 4
  * different EBCDIC encodings, we have opted not to provide direct support
  * for EBCDIC.  To transfer EBCDIC and other unsupported file types you
@@ -153,16 +153,16 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
  * <p>
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
- * can also throw a 
+ * can also throw a
  * <a href="org.apache.commons.net.MalformedServerReplyException.html">
  * MalformedServerReplyException </a>, which is a subclass
  * of IOException.  A MalformedServerReplyException will be thrown when
- * the reply received from the server deviates enough from the protocol 
+ * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite
  * attempts to be as lenient as possible.
  * <p>
  * Listing API Examples
- * Both paged and unpaged examples of directory listings are available, 
+ * Both paged and unpaged examples of directory listings are available,
  * as follows:
  * <p>
  * Unpaged (whole list) access, using a parser accessible by auto-detect:
@@ -180,9 +180,9 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
  *    FTPClient f=FTPClient();
  *    f.connect(server);
  *    f.login(username, password);
- *    FTPListParseEngine engine = 
+ *    FTPListParseEngine engine =
  *       f.initiateListParsing("com.whatever.YourOwnParser", directory);
- * 
+ *
  *    while (engine.hasNext()) {
  *       FTPFile[] files = engine.getNext(25);  // "page size" you want
  *       //do whatever you want with these files, display them, etc.
@@ -196,7 +196,7 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
  *    f.connect(server);
  *    f.login(username, password);
  *    FTPListParseEngine engine = f.initiateListParsing(directory);
- * 
+ *
  *    while (engine.hasNext()) {
  *       FTPFile[] files = engine.getNext(25);  // "page size" you want
  *       //do whatever you want with these files, display them, etc.
@@ -232,7 +232,7 @@ public class FTPClient extends FTP
     /***
      * A constant indicating the FTP session is expecting all transfers
      * to occur between the client (local) and server and that the server
-     * is in passive mode, requiring the client to connect to the 
+     * is in passive mode, requiring the client to connect to the
      * server's data port to initiate a transfer.
      ***/
     public static final int PASSIVE_LOCAL_DATA_CONNECTION_MODE = 2;
@@ -263,10 +263,10 @@ public class FTPClient extends FTP
 
     /***
      * Default FTPClient constructor.  Creates a new FTPClient instance
-     * with the data connection mode set to 
+     * with the data connection mode set to
      * <code> ACTIVE_LOCAL_DATA_CONNECTION_MODE </code>, the file type
      * set to <code> FTP.ASCII_FILE_TYPE </code>, the
-     * file format set to <code> FTP.NON_PRINT_TEXT_FORMAT </code>, 
+     * file format set to <code> FTP.NON_PRINT_TEXT_FORMAT </code>,
      * the file structure set to <code> FTP.FILE_STRUCTURE </code>, and
      * the transfer mode set to <code> FTP.STREAM_TRANSFER_MODE </code>.
      ***/
@@ -408,7 +408,7 @@ public class FTPClient extends FTP
           output = new BufferedOutputStream(output,
                                             Util.DEFAULT_COPY_BUFFER_SIZE);
           output = new ToNetASCIIOutputStream(output);
-          
+
         }
         return new org.apache.commons.net.io.SocketOutputStream(socket, output);
     }
@@ -539,10 +539,10 @@ public class FTPClient extends FTP
 
     /**
      * set the factory used for parser creation to the supplied factory object.
-     * 
+     *
      * @param parserFactory
      *               factory object used to create FTPFileEntryParsers
-     * 
+     *
      * @see org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory
      * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
      */
@@ -783,7 +783,7 @@ public class FTPClient extends FTP
 
 
     /***
-     * Set the current data connection mode to 
+     * Set the current data connection mode to
      * <code> PASSIVE_LOCAL_DATA_CONNECTION_MODE </code>.  Use this
      * method only for data transfers between the client and server.
      * This method causes a PASV command to be issued to the server
@@ -842,7 +842,7 @@ public class FTPClient extends FTP
     }
 
     /***
-     * Set the current data connection mode to 
+     * Set the current data connection mode to
      * <code> PASSIVE_REMOTE_DATA_CONNECTION_MODE </code>.  Use this
      * method only for server to server data transfers.
      * This method issues a PASV command to the server, telling it to
@@ -923,7 +923,7 @@ public class FTPClient extends FTP
 
 
     /***
-     * Sets the file type to be transferred.  This should be one of 
+     * Sets the file type to be transferred.  This should be one of
      * <code> FTP.ASCII_FILE_TYPE </code>, <code> FTP.IMAGE_FILE_TYPE </code>,
      * etc.  The file type only needs to be set when you want to change the
      * type.  After changing it, the new type stays in effect until you change
@@ -1185,7 +1185,7 @@ public class FTPClient extends FTP
      * the completion reply from the server and verify the success of the
      * entire transaction.
      * <p>
-     * For example, 
+     * For example,
      * <pre>
      * InputStream input;
      * OutputStream output;
@@ -2016,11 +2016,11 @@ public class FTPClient extends FTP
      *                  case, calling this routine with a null parameter and a
      *                  custom parser factory may not be advisable.
      *                  <p>
-     * @param pathname  The file or directory to list.  Since the server may 
+     * @param pathname  The file or directory to list.  Since the server may
      *                  or may not expand glob expressions, using them here
-     *                  is not recommended and may well cause this method to 
+     *                  is not recommended and may well cause this method to
      *                  fail.
-     * 
+     *
      * @return The list of file information contained in the given path in
      *         the format determined by the parser represented by the
      *         <code> parserKey </code> parameter.
@@ -2052,7 +2052,7 @@ public class FTPClient extends FTP
     public FTPFile[] listFiles(String parserKey, String pathname)
     throws IOException
     {
-        FTPListParseEngine engine = 
+        FTPListParseEngine engine =
         	initiateListParsing(parserKey, pathname);
         return engine.getFiles();
     }
@@ -2067,11 +2067,11 @@ public class FTPClient extends FTP
      * the returned array is determined by the<code> FTPFileEntryParser </code>
      * used.
      * <p>
-     * @param pathname  The file or directory to list.  Since the server may 
+     * @param pathname  The file or directory to list.  Since the server may
      *                  or may not expand glob expressions, using them here
-     *                  is not recommended and may well cause this method to 
+     *                  is not recommended and may well cause this method to
      *                  fail.
-     * 
+     *
      * @return The list of file information contained in the given path in
      *         the format determined by the autodetection mechanism
      * @exception FTPConnectionClosedException
@@ -2099,8 +2099,8 @@ public class FTPClient extends FTP
      * @see org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory
      * @see org.apache.commons.net.ftp.FTPFileEntryParser
      */
-    public FTPFile[] listFiles(String pathname) 
-    throws IOException    
+    public FTPFile[] listFiles(String pathname)
+    throws IOException
     {
         String key = null;
         return listFiles(key, pathname);
@@ -2140,32 +2140,32 @@ public class FTPClient extends FTP
      * @see org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory
      * @see org.apache.commons.net.ftp.FTPFileEntryParser
      */
-    public FTPFile[] listFiles() 
-    throws IOException    
+    public FTPFile[] listFiles()
+    throws IOException
     {
         return listFiles("");
     }
 
     /**
-     * Using the default autodetect mechanism, initialize an FTPListParseEngine 
-     * object containing a raw file information for the current working 
+     * Using the default autodetect mechanism, initialize an FTPListParseEngine
+     * object containing a raw file information for the current working
      * directory on the server
-     * This information is obtained through the LIST command.  This object 
-     * is then capable of being iterated to return a sequence of FTPFile 
+     * This information is obtained through the LIST command.  This object
+     * is then capable of being iterated to return a sequence of FTPFile
      * objects with information filled in by the
      * <code> FTPFileEntryParser </code> used.
      * <p>
      * This method differs from using the listFiles() methods in that
      * expensive FTPFile objects are not created until needed which may be
      * an advantage on large lists.
-     * 
-     * @return A FTPListParseEngine object that holds the raw information and 
-     * is capable of providing parsed FTPFile objects, one for each file 
-     * containing information contained in the given path in the format 
-     * determined by the <code> parser </code> parameter.   Null will be 
-     * returned if a data connection cannot be opened.  If the current working 
+     *
+     * @return A FTPListParseEngine object that holds the raw information and
+     * is capable of providing parsed FTPFile objects, one for each file
+     * containing information contained in the given path in the format
+     * determined by the <code> parser </code> parameter.   Null will be
+     * returned if a data connection cannot be opened.  If the current working
      * directory contains no files, an empty array will be the return.
-     * 
+     *
      * @exception FTPConnectionClosedException
      *                   If the FTP server prematurely closes the connection as a result
      *                   of the client being idle or some other reason causing the server
@@ -2178,18 +2178,18 @@ public class FTPClient extends FTP
      *                   Thrown if the autodetect mechanism cannot
      *                   resolve the type of system we are connected with.
      * @see FTPListParseEngine
-     */    
+     */
     public FTPListParseEngine initiateListParsing()
 	throws IOException
 	{
     	return initiateListParsing("");
     }
-	
+
     /**
-     * Using the default autodetect mechanism, initialize an FTPListParseEngine 
-     * object containing a raw file information for the supplied directory.  
-     * This information is obtained through the LIST command.  This object 
-     * is then capable of being iterated to return a sequence of FTPFile 
+     * Using the default autodetect mechanism, initialize an FTPListParseEngine
+     * object containing a raw file information for the supplied directory.
+     * This information is obtained through the LIST command.  This object
+     * is then capable of being iterated to return a sequence of FTPFile
      * objects with information filled in by the
      * <code> FTPFileEntryParser </code> used.
      * <p>
@@ -2206,21 +2206,21 @@ public class FTPClient extends FTP
 	 *    f.connect(server);
 	 *    f.login(username, password);
 	 *    FTPListParseEngine engine = f.initiateListParsing(directory);
-	 * 
+	 *
 	 *    while (engine.hasNext()) {
 	 *       FTPFile[] files = engine.getNext(25);  // "page size" you want
 	 *       //do whatever you want with these files, display them, etc.
 	 *       //expensive FTPFile objects not created until needed.
 	 *    }
 	 * </pre>
-     * 
-     * @return A FTPListParseEngine object that holds the raw information and 
-     * is capable of providing parsed FTPFile objects, one for each file 
-     * containing information contained in the given path in the format 
-     * determined by the <code> parser </code> parameter.   Null will be 
-     * returned if a data connection cannot be opened.  If the current working 
+     *
+     * @return A FTPListParseEngine object that holds the raw information and
+     * is capable of providing parsed FTPFile objects, one for each file
+     * containing information contained in the given path in the format
+     * determined by the <code> parser </code> parameter.   Null will be
+     * returned if a data connection cannot be opened.  If the current working
      * directory contains no files, an empty array will be the return.
-     * 
+     *
      * @exception FTPConnectionClosedException
      *                   If the FTP server prematurely closes the connection as a result
      *                   of the client being idle or some other reason causing the server
@@ -2233,7 +2233,7 @@ public class FTPClient extends FTP
      *                   Thrown if the autodetect mechanism cannot
      *                   resolve the type of system we are connected with.
      * @see FTPListParseEngine
-     */    
+     */
     public FTPListParseEngine initiateListParsing(
     		String pathname)
 	throws IOException
@@ -2243,10 +2243,10 @@ public class FTPClient extends FTP
     }
 
 	/**
-	 * Using the supplied parser key, initialize an FTPListParseEngine 
-	 * object containing a raw file information for the supplied directory.  
-	 * This information is obtained through the LIST command.  This object 
-	 * is then capable of being iterated to return a sequence of FTPFile 
+	 * Using the supplied parser key, initialize an FTPListParseEngine
+	 * object containing a raw file information for the supplied directory.
+	 * This information is obtained through the LIST command.  This object
+	 * is then capable of being iterated to return a sequence of FTPFile
 	 * objects with information filled in by the
 	 * <code> FTPFileEntryParser </code> used.
 	 * <p>
@@ -2257,18 +2257,18 @@ public class FTPClient extends FTP
 	 * This method differs from using the listFiles() methods in that
 	 * expensive FTPFile objects are not created until needed which may be
 	 * an advantage on large lists.
-	 * 
+	 *
 	 * @param parserKey A string representing a designated code or fully-qualified
      * class name of an  <code> FTPFileEntryParser </code> that should be
 	 *               used to parse each server file listing.
-	 * 
-	 * @return A FTPListParseEngine object that holds the raw information and 
-	 * is capable of providing parsed FTPFile objects, one for each file 
-	 * containing information contained in the given path in the format 
-	 * determined by the <code> parser </code> parameter.   Null will be 
-	 * returned if a data connection cannot be opened.  If the current working 
+	 *
+	 * @return A FTPListParseEngine object that holds the raw information and
+	 * is capable of providing parsed FTPFile objects, one for each file
+	 * containing information contained in the given path in the format
+	 * determined by the <code> parser </code> parameter.   Null will be
+	 * returned if a data connection cannot be opened.  If the current working
 	 * directory contains no files, an empty array will be the return.
-	 * 
+	 *
 	 * @exception FTPConnectionClosedException
 	 *                   If the FTP server prematurely closes the connection as a result
 	 *                   of the client being idle or some other reason causing the server
@@ -2289,7 +2289,7 @@ public class FTPClient extends FTP
      *                   mapping to such a parser or if class loader
      *                   security issues prevent its being loaded.
 	 * @see FTPListParseEngine
-	 */    
+	 */
 	public FTPListParseEngine initiateListParsing(
     		String parserKey, String pathname)
 	throws IOException
@@ -2305,16 +2305,16 @@ public class FTPClient extends FTP
     	if(__entryParser == null) {
     		__entryParser =  __parserFactory.createFileEntryParser(parserKey);
     	}
-    	
-    	return initiateListParsing(__entryParser, pathname); 
-    	
+
+    	return initiateListParsing(__entryParser, pathname);
+
     }
-	
-    
+
+
     /**
-     * private method through which all listFiles() and 
+     * private method through which all listFiles() and
      * initiateListParsing methods pass once a parser is determined.
-     * 
+     *
      * @exception FTPConnectionClosedException
      *                   If the FTP server prematurely closes the connection as a result
      *                   of the client being idle or some other reason causing the server
@@ -2336,8 +2336,8 @@ public class FTPClient extends FTP
     	{
     		return engine;
     	}
-    	
-    	
+
+
      	engine.readServerList(socket.getInputStream());
 
     	socket.close();
@@ -2345,7 +2345,7 @@ public class FTPClient extends FTP
     	completePendingCommand();
     	return engine;
     }
-    
+
     /***
      * Issue the FTP STAT command to the server.
      * <p>
@@ -2408,10 +2408,10 @@ public class FTPClient extends FTP
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     * 
+     *
      * @return The list of file information contained in the given path in
      *         the format determined by<code> parserKey </code>parameter.
-     *         
+     *
      * @exception IOException
      * @since 5 Jan 2004
      * @deprecated use listFiles(String parserKey, String pathname) instead
@@ -2442,10 +2442,10 @@ public class FTPClient extends FTP
      * The contents of the array returned is determined by the
      * <code> FTPFileListParser </code> used.
      * <p>
-     * 
+     *
      * @param parser The <code> FTPFileListParser </code> that should be
      *               used to parse the server file listing.
-     * 
+     *
      * @return The list of file information contained in the given path in
      *         the format determined by the <code> parser </code> parameter.
      * @exception FTPConnectionClosedException
@@ -2481,10 +2481,10 @@ public class FTPClient extends FTP
      * This method differs from using the listFiles() methods in that
      * expensive FTPFile objects are not created until needed which may be
      * an advantage on large lists.
-     * 
+     *
      * @param parser The <code> FTPFileEntryParser </code> that should be
      *               used to parse each server file listing.
-     * 
+     *
      * @return An iteratable object that holds the raw information and is
      *         capable of providing parsed FTPFile objects, one for each file containing
      *         information contained in the given path in the format determined by the
@@ -2497,14 +2497,14 @@ public class FTPClient extends FTP
      *    f.login(username, password);
      *    FTPFileList list = f.createFileList(directory, parser);
      *    FTPFileIterator iter = list.iterator();
-     * 
+     *
      *    while (iter.hasNext()) {
      *       FTPFile[] files = iter.getNext(25);  // "page size" you want
      *       //do whatever you want with these files, display them, etc.
      *       //expensive FTPFile objects not created until needed.
      *    }
      * </pre>
-     * 
+     *
      * @exception FTPConnectionClosedException
      *                   If the FTP server prematurely closes the connection as a result
      *                   of the client being idle or some other reason causing the server
@@ -2522,10 +2522,10 @@ public class FTPClient extends FTP
     }
 
     /**
-     * Using a programmer specified <code> FTPFileEntryParser </code>, 
-     * initialize an object containing a raw file information for a directory 
-     * or information for a single file.  This information is obtained through 
-     * the LIST command.  This object is then capable of being iterated to 
+     * Using a programmer specified <code> FTPFileEntryParser </code>,
+     * initialize an object containing a raw file information for a directory
+     * or information for a single file.  This information is obtained through
+     * the LIST command.  This object is then capable of being iterated to
      * return a sequence of FTPFile objects with information filled in by the
      * <code> FTPFileEntryParser </code> used.
      * The server may or may not expand glob expressions.  You should avoid
@@ -2533,12 +2533,12 @@ public class FTPClient extends FTP
      * differs from server to server and will likely cause this method to fail.
      * <p>
      * @param parser The <code> FTPFileEntryParser </code> that should be
-     *         used to parse each server file listing.   
+     *         used to parse each server file listing.
      * @param pathname  The file or directory to list.
-     * @return An iteratable object that holds the raw information and is 
+     * @return An iteratable object that holds the raw information and is
      * capable of providing parsed FTPFile objects, one for each file containing
-     * information contained in the given path in the format determined by the 
-     * <code> parser </code> parameter.  Null will be returned if a 
+     * information contained in the given path in the format determined by the
+     * <code> parser </code> parameter.  Null will be returned if a
      * data connection cannot be opened.  If the supplied path contains
      * no files, an empty array will be the return.
      * @exception FTPConnectionClosedException
@@ -2548,7 +2548,7 @@ public class FTPClient extends FTP
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     * @deprecated - use initiateListParsing(String, FTPFileEntryParser) 
+     * @deprecated - use initiateListParsing(String, FTPFileEntryParser)
      * method instead.
      * @see FTPFileList
      */

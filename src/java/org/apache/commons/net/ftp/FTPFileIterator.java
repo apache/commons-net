@@ -21,45 +21,45 @@ import java.util.List;
  * Elements may be retrieved one at at time using the hasNext() - next()
  * syntax familiar from Java 2 collections.  Alternatively, entries may
  * be receieved as an array of any requested number of entries or all of them.
- * 
+ *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileIterator.java,v 1.11 2004/04/06 13:31:59 brekke Exp $
+ * @version $Id: FTPFileIterator.java,v 1.12 2004/04/21 23:30:33 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileList
  * @see org.apache.commons.net.ftp.FTPFileEntryParser
  * @see org.apache.commons.net.ftp.FTPListParseEngine
- * @deprecated This class is deprecated as of version 1.2 and will be 
+ * @deprecated This class is deprecated as of version 1.2 and will be
  * removed in version 2.0 - use FTPFileParseEngine instead
  */
-public class FTPFileIterator 
+public class FTPFileIterator
 {
     /**
      * a vector of strings, each representing a possibly valid ftp file
      * entry
      */
     private List rawlines;
-    
+
     /**
      * the parser to which this iterator delegates its parsing duties
      */
     private FTPFileEntryParser parser;
 
     /**
-     * constant shorthand for the situation where the raw listing has not 
+     * constant shorthand for the situation where the raw listing has not
      * yet been scanned
      */
     private static final int UNINIT = -1;
-    
+
     /**
-     * constant shorthand for the situation where the raw listing has been 
+     * constant shorthand for the situation where the raw listing has been
      * scanned and found to have no valid entry.
      */
     private static final int DIREMPTY = -2;
-    
+
     /**
      * this iterator's current position within <code>rawlines</code>.
      */
     private int itemptr = 0;
-    
+
     /**
      * number within <code>rawlines</code> of the first valid file entry.
      */
@@ -95,11 +95,11 @@ public class FTPFileIterator
     /**
      * Delegates to this object's parser member the job of parsing an
      * entry.
-     * 
-     * @param entry  A string containing one entry, as determined by the 
+     *
+     * @param entry  A string containing one entry, as determined by the
      * parser's getNextEntry() method.
-     * 
-     * @return an FTPFile object representing this entry or null if it can't be 
+     *
+     * @return an FTPFile object representing this entry or null if it can't be
      *         parsed as a file
      */
     private FTPFile parseFTPEntry(String entry)
@@ -111,8 +111,8 @@ public class FTPFileIterator
      * Skips over any introductory lines and stuff in the listing that does
      * not represent files, returning the line number of the first entry
      * that does represent a file.
-     * 
-     * @return the line number within <code>rawlines</code> of the first good 
+     *
+     * @return the line number within <code>rawlines</code> of the first good
      * entry in the array or DIREMPTY if there are no good entries.
      */
     private int getFirstGoodEntry()
@@ -161,24 +161,24 @@ public class FTPFileIterator
     }
 
     /**
-     * Returns an array of at most <code>quantityRequested</code> FTPFile 
-     * objects starting at this iterator's current position  within its 
-     * associated list. If fewer than <code>quantityRequested</code> such 
-     * elements are available, the returned array will have a length equal 
-     * to the number of entries at and after after the current position.  
+     * Returns an array of at most <code>quantityRequested</code> FTPFile
+     * objects starting at this iterator's current position  within its
+     * associated list. If fewer than <code>quantityRequested</code> such
+     * elements are available, the returned array will have a length equal
+     * to the number of entries at and after after the current position.
      * If no such entries are found, this array will have a length of 0.
-     * 
-     * After this method is called the current position is advanced by 
-     * either <code>quantityRequested</code> or the number of entries 
+     *
+     * After this method is called the current position is advanced by
+     * either <code>quantityRequested</code> or the number of entries
      * available after the iterator, whichever is fewer.
-     * 
+     *
      * @param quantityRequested
      * the maximum number of entries we want to get.  A 0
      * passed here is a signal to get ALL the entries.
-     * 
-     * @return an array of at most <code>quantityRequested</code> FTPFile 
-     * objects starting at the current position of this iterator within its 
-     * list and at least the number of elements which  exist in the list at 
+     *
+     * @return an array of at most <code>quantityRequested</code> FTPFile
+     * objects starting at the current position of this iterator within its
+     * list and at least the number of elements which  exist in the list at
      * and after its current position.
      */
     public FTPFile[] getNext(int quantityRequested)
@@ -263,22 +263,22 @@ public class FTPFileIterator
     }
 
     /**
-     * Returns an array of at most <code>quantityRequested</code> FTPFile 
-     * objects starting at the position preceding this iterator's current 
-     * position within its associated list. If fewer than 
-     * <code>quantityRequested</code> such elements are available, the 
+     * Returns an array of at most <code>quantityRequested</code> FTPFile
+     * objects starting at the position preceding this iterator's current
+     * position within its associated list. If fewer than
+     * <code>quantityRequested</code> such elements are available, the
      * returned array will have a length equal to the number of entries after
-     * the iterator.  If no such entries are found, this array will have a 
-     * length of 0.  The entries will be ordered in the same order as the 
+     * the iterator.  If no such entries are found, this array will have a
+     * length of 0.  The entries will be ordered in the same order as the
      * list, not reversed.
      *
-     * After this method is called the current position is moved back by 
-     * either <code>quantityRequested</code> or the number of entries 
+     * After this method is called the current position is moved back by
+     * either <code>quantityRequested</code> or the number of entries
      * available before the current position, whichever is fewer.
-     * @param quantityRequested the maximum number of entries we want to get.  
+     * @param quantityRequested the maximum number of entries we want to get.
      * A 0 passed here is a signal to get ALL the entries.
-     * @return  an array of at most <code>quantityRequested</code> FTPFile 
-     * objects starting at the position preceding the current position of 
+     * @return  an array of at most <code>quantityRequested</code> FTPFile
+     * objects starting at the position preceding the current position of
      * this iterator within its list and at least the number of elements which
      * exist in the list prior to its current position.
      */

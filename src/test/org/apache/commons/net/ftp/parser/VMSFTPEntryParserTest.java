@@ -26,67 +26,67 @@ import org.apache.commons.net.ftp.FTPListParseEngine;
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParserTest.java,v 1.13 2004/02/29 10:26:53 scolebourne Exp $
+ * @version $Id: VMSFTPEntryParserTest.java,v 1.14 2004/04/21 23:30:33 scohen Exp $
  */
 public class VMSFTPEntryParserTest extends FTPParseTestFramework
 {
-    private static final String[] badsamples = 
+    private static final String[] badsamples =
     {
 
-        "1-JUN.LIS;1              9/9           2-jun-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)", 
-        "1-JUN.LIS;2              9/9           JUN-2-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)", 
-        "1-JUN.LIS;2              a/9           2-JUN-98 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)", 
-        "DATA.DIR; 1              1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (,RWED,RWED,RE)", 
-        "120196.TXT;1           118/126        14-APR-1997 12:45:27 PM  [GROUP,OWNER]    (RWED,,RWED,RE)", 
-        "30CHARBAR.TXT;1         11/18          2-JUN-1998 08:38:42  [GROUP-1,OWNER]    (RWED,RWED,RWED,RE)", 
-        "A.;2                    18/18          1-JUL-1998 08:43:20  [GROUP,OWNER]    (RWED2,RWED,RWED,RE)", 
+        "1-JUN.LIS;1              9/9           2-jun-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
+        "1-JUN.LIS;2              9/9           JUN-2-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)",
+        "1-JUN.LIS;2              a/9           2-JUN-98 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)",
+        "DATA.DIR; 1              1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (,RWED,RWED,RE)",
+        "120196.TXT;1           118/126        14-APR-1997 12:45:27 PM  [GROUP,OWNER]    (RWED,,RWED,RE)",
+        "30CHARBAR.TXT;1         11/18          2-JUN-1998 08:38:42  [GROUP-1,OWNER]    (RWED,RWED,RWED,RE)",
+        "A.;2                    18/18          1-JUL-1998 08:43:20  [GROUP,OWNER]    (RWED2,RWED,RWED,RE)",
         "AA.;2                  152/153        13-FED-1997 08:13:43  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
         "Directory USER1:[TEMP]\r\n\r\n",
         "\r\nTotal 14 files"
     };
-    
-    private static final String[] goodsamples = 
-    {		
-        "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)", 
-        "1-JUN.LIS;3              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)", 
-        "1-JUN.LIS;2              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)", 
-        "DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [TRANSLATED]     (,RWED,RWED,RE)", 
-        "120196.TXT;1           118/126        14-APR-1997 12:45:27  [GROUP,OWNER]    (RWED,,RWED,RE)", 
-        "30CHARBAR.TXT;1         11/18          2-JUN-1998 08:38:42  [GROUP,OWNER]    (RWED,RWED,RWED,RE)", 
-        "A.;2                    18/18          1-JUL-1998 08:43:20  [GROUP,OWNER]    (RWED,RWED,RWED,RE)", 
+
+    private static final String[] goodsamples =
+    {
+        "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
+        "1-JUN.LIS;3              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)",
+        "1-JUN.LIS;2              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)",
+        "DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [TRANSLATED]     (,RWED,RWED,RE)",
+        "120196.TXT;1           118/126        14-APR-1997 12:45:27  [GROUP,OWNER]    (RWED,,RWED,RE)",
+        "30CHARBAR.TXT;1         11/18          2-JUN-1998 08:38:42  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
+        "A.;2                    18/18          1-JUL-1998 08:43:20  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
         "AA.;2                  152/153        13-FEB-1997 08:13:43  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
         "UCX$REXECD_STARTUP.LOG;1098\r\n                         4/15         24-FEB-2003 13:17:24  [POSTWARE,LP]    (RWED,RWED,RE,)",
         "UNARCHIVE.COM;1          2/15          7-JUL-1997 16:37:45  [POSTWARE,LP]    (RWE,RWE,RWE,RE)",
         "UNXMERGE.COM;15          1/15         20-AUG-1996 13:59:50  [POSTWARE,LP]    (RWE,RWE,RWE,RE)",
         "UNXTEMP.COM;7            1/15         15-AUG-1996 14:10:38  [POSTWARE,LP]    (RWE,RWE,RWE,RE)",
         "UNZIP_AND_ATTACH_FILES.COM;12\r\n                        14/15         24-JUL-2002 14:35:40  [TRANSLATED]    (RWE,RWE,RWE,RE)",
-        "UNZIP_AND_ATTACH_FILES.SAV;1\r\n                        14/15         17-JAN-2002 11:13:53  [POSTWARE,LP]    (RWE,RWED,RWE,RE)",       
+        "UNZIP_AND_ATTACH_FILES.SAV;1\r\n                        14/15         17-JAN-2002 11:13:53  [POSTWARE,LP]    (RWE,RWED,RWE,RE)",
         "FREEWARE40.DIR;1        27/36         16-FEB-1999 10:01:46  [AP_HTTPD,APACHE$WWW                               (RWE,RWE,RE,RE)"
     };
-    
+
     private static final String fullListing = "Directory USER1:[TEMP]\r\n\r\n"+
-    "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)\r\n"+ 
-    "2-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)\r\n"+ 
+    "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)\r\n"+
+    "2-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)\r\n"+
     "3-JUN.LIS;1              9/9           3-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)\r\n"+
     "3-JUN.LIS;4              9/9           7-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)\r\n"+
     "3-JUN.LIS;2              9/9           4-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)\r\n"+
     "3-JUN.LIS;3              9/9           6-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)\r\n"+
-    "\r\nTotal 6 files"; 
-    
+    "\r\nTotal 6 files";
+
     /**
      * @see junit.framework.TestCase#TestCase(String)
      */
     public VMSFTPEntryParserTest(String name)
     {
         super(name);
-    }  
+    }
 
     /**
      * Test the parsing of the whole list.
      * @throws IOException
      */
     public void testWholeListParse() throws IOException
-    {        
+    {
         VMSFTPEntryParser parser = new VMSFTPEntryParser();
         FTPListParseEngine engine = new FTPListParseEngine(parser);
         engine.readServerList(
@@ -105,7 +105,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
      * @throws IOException
      */
     public void testWholeListParseWithVersioning() throws IOException
-    {        
+    {
 
         VMSFTPEntryParser parser = new VMSVersioningFTPEntryParser();
         FTPListParseEngine engine = new FTPListParseEngine(parser);
@@ -118,7 +118,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         assertFileInListing(files, "3-JUN.LIS;4");
         assertFileNotInListing(files, "3-JUN.LIS;1");
         assertFileNotInListing(files, "3-JUN.LIS");
-        
+
     }
 
     public void assertFileInListing(FTPFile[] listing, String name) {
@@ -144,33 +144,33 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     {
 
         FTPFile dir = getParser().parseFTPEntry("DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)");
-        assertTrue("Should be a directory.", 
+        assertTrue("Should be a directory.",
                    dir.isDirectory());
-        assertEquals("DATA.DIR", 
+        assertEquals("DATA.DIR",
                      dir.getName());
-        assertEquals(512, 
+        assertEquals(512,
                      dir.getSize());
-        assertEquals("Tue Jun 02 07:32:04 1998", 
+        assertEquals("Tue Jun 02 07:32:04 1998",
                      df.format(dir.getTimestamp().getTime()));
-        assertEquals("GROUP", 
+        assertEquals("GROUP",
                      dir.getGroup());
-        assertEquals("OWNER", 
+        assertEquals("OWNER",
                      dir.getUser());
         checkPermisions(dir);
-        
-        
+
+
         dir = getParser().parseFTPEntry("DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [TRANSLATED]    (RWED,RWED,RWED,RE)");
-        assertTrue("Should be a directory.", 
+        assertTrue("Should be a directory.",
                            dir.isDirectory());
-        assertEquals("DATA.DIR", 
+        assertEquals("DATA.DIR",
                              dir.getName());
-        assertEquals(512, 
+        assertEquals(512,
                              dir.getSize());
-        assertEquals("Tue Jun 02 07:32:04 1998", 
+        assertEquals("Tue Jun 02 07:32:04 1998",
                              df.format(dir.getTimestamp().getTime()));
-        assertEquals(null, 
+        assertEquals(null,
                      dir.getGroup());
-        assertEquals("TRANSLATED", 
+        assertEquals("TRANSLATED",
                      dir.getUser());
         checkPermisions(dir);
     }
@@ -181,33 +181,33 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     public void testParseFieldsOnFile() throws Exception
     {
         FTPFile file = getParser().parseFTPEntry("1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)");
-        assertTrue("Should be a file.", 
+        assertTrue("Should be a file.",
                    file.isFile());
-        assertEquals("1-JUN.LIS", 
+        assertEquals("1-JUN.LIS",
                      file.getName());
-        assertEquals(9 * 512, 
+        assertEquals(9 * 512,
                      file.getSize());
-        assertEquals("Tue Jun 02 07:32:04 1998", 
+        assertEquals("Tue Jun 02 07:32:04 1998",
                      df.format(file.getTimestamp().getTime()));
-        assertEquals("GROUP", 
+        assertEquals("GROUP",
                      file.getGroup());
-        assertEquals("OWNER", 
+        assertEquals("OWNER",
                      file.getUser());
         checkPermisions(file);
-        
-        
+
+
         file = getParser().parseFTPEntry("1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [TRANSLATED]    (RWED,RWED,RWED,RE)");
-        assertTrue("Should be a file.", 
+        assertTrue("Should be a file.",
                    file.isFile());
-        assertEquals("1-JUN.LIS", 
+        assertEquals("1-JUN.LIS",
                      file.getName());
-        assertEquals(9 * 512, 
+        assertEquals(9 * 512,
                      file.getSize());
-        assertEquals("Tue Jun 02 07:32:04 1998", 
+        assertEquals("Tue Jun 02 07:32:04 1998",
                      df.format(file.getTimestamp().getTime()));
-        assertEquals(null, 
+        assertEquals(null,
                      file.getGroup());
-        assertEquals("TRANSLATED", 
+        assertEquals("TRANSLATED",
                      file.getUser());
         checkPermisions(file);
     }
@@ -246,35 +246,35 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
      */
     private void checkPermisions(FTPFile dir)
     {
-        assertTrue("Owner should not have read permission.", 
-                   !dir.hasPermission(FTPFile.USER_ACCESS, 
+        assertTrue("Owner should not have read permission.",
+                   !dir.hasPermission(FTPFile.USER_ACCESS,
                                       FTPFile.READ_PERMISSION));
-        assertTrue("Owner should not have write permission.", 
-                   !dir.hasPermission(FTPFile.USER_ACCESS, 
+        assertTrue("Owner should not have write permission.",
+                   !dir.hasPermission(FTPFile.USER_ACCESS,
                                       FTPFile.WRITE_PERMISSION));
-        assertTrue("Owner should not have execute permission.", 
-                   !dir.hasPermission(FTPFile.USER_ACCESS, 
+        assertTrue("Owner should not have execute permission.",
+                   !dir.hasPermission(FTPFile.USER_ACCESS,
                                       FTPFile.EXECUTE_PERMISSION));
-        assertTrue("Group should not have read permission.", 
-                   !dir.hasPermission(FTPFile.GROUP_ACCESS, 
+        assertTrue("Group should not have read permission.",
+                   !dir.hasPermission(FTPFile.GROUP_ACCESS,
                                       FTPFile.READ_PERMISSION));
-        assertTrue("Group should not have write permission.", 
-                   !dir.hasPermission(FTPFile.GROUP_ACCESS, 
+        assertTrue("Group should not have write permission.",
+                   !dir.hasPermission(FTPFile.GROUP_ACCESS,
                                       FTPFile.WRITE_PERMISSION));
-        assertTrue("Group should not have execute permission.", 
-                   !dir.hasPermission(FTPFile.GROUP_ACCESS, 
+        assertTrue("Group should not have execute permission.",
+                   !dir.hasPermission(FTPFile.GROUP_ACCESS,
                                       FTPFile.EXECUTE_PERMISSION));
-        assertTrue("World should not have read permission.", 
-                   !dir.hasPermission(FTPFile.WORLD_ACCESS, 
+        assertTrue("World should not have read permission.",
+                   !dir.hasPermission(FTPFile.WORLD_ACCESS,
                                       FTPFile.READ_PERMISSION));
-        assertTrue("World should not have write permission.", 
-                   !dir.hasPermission(FTPFile.WORLD_ACCESS, 
+        assertTrue("World should not have write permission.",
+                   !dir.hasPermission(FTPFile.WORLD_ACCESS,
                                       FTPFile.WRITE_PERMISSION));
-        assertTrue("World should not have execute permission.", 
-                   !dir.hasPermission(FTPFile.WORLD_ACCESS, 
+        assertTrue("World should not have execute permission.",
+                   !dir.hasPermission(FTPFile.WORLD_ACCESS,
                                       FTPFile.EXECUTE_PERMISSION));
     }
-    
+
     /**
      * Method suite.
      * @return TestSuite

@@ -22,7 +22,7 @@ import java.io.OutputStream;
  * This class wraps an output stream, replacing all occurrences
  * of &lt;CR&gt;&lt;LF&gt; (carriage return followed by a linefeed),
  * which is the NETASCII standard for representing a newline, with the
- * local line separator representation.  You would use this class to 
+ * local line separator representation.  You would use this class to
  * implement ASCII file transfers requiring conversion from NETASCII.
  * <p>
  * Because of the translation process, a call to <code>flush()</code> will

@@ -29,7 +29,7 @@ import java.io.InputStream;
  * @author Daniel F. Savarese
  * @see FTPFile
  * @see FTPClient#listFiles
- * @deprecated This interface is deprecated as of version 1.2 and will be 
+ * @deprecated This interface is deprecated as of version 1.2 and will be
  * removed in version 2.0 -- use FTPFileEntryParser instead.
  ***/
 

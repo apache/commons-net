@@ -52,17 +52,17 @@ public abstract class TFTPPacket
 
     /***
      * This is the actual TFTP spec
-     * identifier and is equal to 1.   
+     * identifier and is equal to 1.
      * Identifier returned by <a href="#getType">getType()</a>
-     * indicating a read request packet.  
+     * indicating a read request packet.
      ***/
     public static final int READ_REQUEST = 1;
 
     /***
      * This is the actual TFTP spec
-     * identifier and is equal to 2.   
+     * identifier and is equal to 2.
      * Identifier returned by <a href="#getType">getType()</a>
-     * indicating a write request packet.  
+     * indicating a write request packet.
      ***/
     public static final int WRITE_REQUEST = 2;
 
@@ -70,7 +70,7 @@ public abstract class TFTPPacket
      * This is the actual TFTP spec
      * identifier and is equal to 3.
      * Identifier returned by <a href="#getType">getType()</a>
-     * indicating a data packet.  
+     * indicating a data packet.
      ***/
     public static final int DATA = 3;
 
@@ -78,7 +78,7 @@ public abstract class TFTPPacket
      * This is the actual TFTP spec
      * identifier and is equal to 4.
      * Identifier returned by <a href="#getType">getType()</a>
-     * indicating an acknowledgement packet.  
+     * indicating an acknowledgement packet.
      ***/
     public static final int ACKNOWLEDGEMENT = 4;
 
@@ -86,7 +86,7 @@ public abstract class TFTPPacket
      * This is the actual TFTP spec
      * identifier and is equal to 5.
      * Identifier returned by <a href="#getType">getType()</a>
-     * indicating an error packet.  
+     * indicating an error packet.
      ***/
     public static final int ERROR = 5;
 
@@ -174,7 +174,7 @@ public abstract class TFTPPacket
     /***
      * This is an abstract method only available within the package for
      * implementing efficient datagram transport by elminating buffering.
-     * It takes a datagram as an argument, and a byte buffer in which 
+     * It takes a datagram as an argument, and a byte buffer in which
      * to store the raw datagram data.  Inside the method, the data
      * should be set as the datagram's data and the datagram returned.
      * <p>
@@ -192,7 +192,7 @@ public abstract class TFTPPacket
      * the <a href="org.apache.commons.net.tftp.TFTPClient.html#_top_">TFTPClient</a>
      * class.
      * Under normal circumstances, you should not have a need to call this
-     * method.  
+     * method.
      * <p>
      * @return A UDP datagram containing the TFTP packet.
      ***/

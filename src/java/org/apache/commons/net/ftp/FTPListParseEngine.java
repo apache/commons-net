@@ -29,25 +29,25 @@ import java.util.ListIterator;
  * This class handles the entire process of parsing a listing of
  * file entries from the server.
  * <p>
- * This object defines a two-part parsing mechanism.  
+ * This object defines a two-part parsing mechanism.
  * <p>
- * The first part is comprised of reading the raw input into an internal 
- * list of strings.  Every item in this list corresponds to an actual 
- * file.  All extraneous matter emitted by the server will have been 
- * removed by the end of this phase.  This is accomplished in conjunction 
- * with the FTPFileEntryParser associated with this engine, by calling 
- * its methods <code>readNextEntry()</code> - which handles the issue of 
- * what delimits one entry from another, usually but not always a line 
- * feed and <code>preParse()</code> - which handles removal of 
+ * The first part is comprised of reading the raw input into an internal
+ * list of strings.  Every item in this list corresponds to an actual
+ * file.  All extraneous matter emitted by the server will have been
+ * removed by the end of this phase.  This is accomplished in conjunction
+ * with the FTPFileEntryParser associated with this engine, by calling
+ * its methods <code>readNextEntry()</code> - which handles the issue of
+ * what delimits one entry from another, usually but not always a line
+ * feed and <code>preParse()</code> - which handles removal of
  * extraneous matter such as the preliminary lines of a listing, removal
  * of duplicates on versioning systems, etc.
  * <p>
  * The second part is composed of the actual parsing, again in conjunction
  * with the particular parser used by this engine.  This is controlled
  * by an iterator over the internal list of strings.  This may be done
- * either in block mode, by calling the <code>getNext()</code> and 
+ * either in block mode, by calling the <code>getNext()</code> and
  * <code>getPrevious()</code> methods to provide "paged" output of less
- * than the whole list at one time, or by calling the 
+ * than the whole list at one time, or by calling the
  * <code>getFiles()</code> method to return the entire list.
  * <p>
  * Examples:
@@ -58,7 +58,7 @@ import java.util.ListIterator;
  *    f.connect(server);
  *    f.login(username, password);
  *    FTPListParseEngine engine = f.initiateListParsing(directory);
- * 
+ *
  *    while (engine.hasNext()) {
  *       FTPFile[] files = engine.getNext(25);  // "page size" you want
  *       //do whatever you want with these files, display them, etc.
@@ -68,26 +68,26 @@ import java.util.ListIterator;
  * <p>
  * For unpaged access, simply use FTPClient.listFiles().  That method
  * uses this class transparently.
- * @version $Id: FTPListParseEngine.java,v 1.5 2004/02/29 10:26:55 scolebourne Exp $
+ * @version $Id: FTPListParseEngine.java,v 1.6 2004/04/21 23:30:33 scohen Exp $
  */
 public class FTPListParseEngine {
 	private List entries = new LinkedList();
-	private ListIterator _internalIterator = entries.listIterator(); 
-	
+	private ListIterator _internalIterator = entries.listIterator();
+
 	FTPFileEntryParser parser = null;
-	
+
 	public FTPListParseEngine(FTPFileEntryParser parser) {
 		this.parser = parser;
 	}
-	
+
     /**
      * handle the iniitial reading and preparsing of the list returned by
      * the server.  After this method has completed, this object will contain
      * a list of unparsed entries (Strings) each referring to a unique file
      * on the server.
-     * 
+     *
      * @param stream input stream provided by the server socket.
-     * 
+     *
      * @exception IOException
      *                   thrown on any failure to read from the sever.
      */
@@ -98,19 +98,19 @@ public class FTPListParseEngine {
 		readStream(stream);
         this.parser.preParse(this.entries);
 		resetIterator();
-	} 
-	
-	
+	}
+
+
     /**
      * Internal method for reading the input into the <code>entries</code> list.
-     * After this method has completed, <code>entries</code> will contain a 
-     * collection of entries (as defined by 
+     * After this method has completed, <code>entries</code> will contain a
+     * collection of entries (as defined by
      * <code>FTPFileEntryParser.readNextEntry()</code>), but this may contain
-     * various non-entry preliminary lines from the server output, duplicates, 
+     * various non-entry preliminary lines from the server output, duplicates,
      * and other data that will not be part of the final listing.
-     * 
+     *
      * @param stream The socket stream on which the input will be read.
-     * 
+     *
      * @exception IOException
      *                   thrown on any failure to read the stream
      */
@@ -128,24 +128,24 @@ public class FTPListParseEngine {
 		}
 		reader.close();
 	}
-	
+
     /**
-     * Returns an array of at most <code>quantityRequested</code> FTPFile 
+     * Returns an array of at most <code>quantityRequested</code> FTPFile
      * objects starting at this object's internal iterator's current position.
-     * If fewer than <code>quantityRequested</code> such 
-     * elements are available, the returned array will have a length equal 
-     * to the number of entries at and after after the current position.  
+     * If fewer than <code>quantityRequested</code> such
+     * elements are available, the returned array will have a length equal
+     * to the number of entries at and after after the current position.
      * If no such entries are found, this array will have a length of 0.
-     * 
-     * After this method is called this object's internal iterator is advanced 
-     * by a number of positions equal to the size of the array returned. 
-     * 
+     *
+     * After this method is called this object's internal iterator is advanced
+     * by a number of positions equal to the size of the array returned.
+     *
      * @param quantityRequested
-     * the maximum number of entries we want to get.  
-     * 
-     * @return an array of at most <code>quantityRequested</code> FTPFile 
-     * objects starting at the current position of this iterator within its 
-     * list and at least the number of elements which  exist in the list at 
+     * the maximum number of entries we want to get.
+     *
+     * @return an array of at most <code>quantityRequested</code> FTPFile
+     * objects starting at the current position of this iterator within its
+     * list and at least the number of elements which  exist in the list at
      * and after its current position.
      */
 	public FTPFile[] getNext(int quantityRequested) {
@@ -158,28 +158,28 @@ public class FTPListParseEngine {
 			count--;
 		}
 		return (FTPFile[]) tmpResults.toArray(new FTPFile[0]);
-		
+
 	}
-	
+
     /**
-     * Returns an array of at most <code>quantityRequested</code> FTPFile 
+     * Returns an array of at most <code>quantityRequested</code> FTPFile
      * objects starting at this object's internal iterator's current position,
      * and working back toward the beginning.
-     * 
-     * If fewer than <code>quantityRequested</code> such 
-     * elements are available, the returned array will have a length equal 
-     * to the number of entries at and after after the current position.  
+     *
+     * If fewer than <code>quantityRequested</code> such
+     * elements are available, the returned array will have a length equal
+     * to the number of entries at and after after the current position.
      * If no such entries are found, this array will have a length of 0.
-     * 
-     * After this method is called this object's internal iterator is moved 
-     * back by a number of positions equal to the size of the array returned. 
-     * 
+     *
+     * After this method is called this object's internal iterator is moved
+     * back by a number of positions equal to the size of the array returned.
+     *
      * @param quantityRequested
-     * the maximum number of entries we want to get.  
-     * 
-     * @return an array of at most <code>quantityRequested</code> FTPFile 
-     * objects starting at the current position of this iterator within its 
-     * list and at least the number of elements which  exist in the list at 
+     * the maximum number of entries we want to get.
+     *
+     * @return an array of at most <code>quantityRequested</code> FTPFile
+     * objects starting at the current position of this iterator within its
+     * list and at least the number of elements which  exist in the list at
      * and after its current position.  This array will be in the same order
      * as the underlying list (not reversed).
      */
@@ -198,12 +198,12 @@ public class FTPListParseEngine {
     /**
      * Returns an array of FTPFile objects containing the whole list of
      * files returned by the server as read by this object's parser.
-     * 
+     *
      * @return an array of FTPFile objects containing the whole list of
      *         files returned by the server as read by this object's parser.
      * @exception IOException
      */
-	public FTPFile[] getFiles() 
+	public FTPFile[] getFiles()
 	throws IOException
 	{
 		List tmpResults = new LinkedList();
@@ -214,31 +214,31 @@ public class FTPListParseEngine {
 			tmpResults.add(temp);
 		}
 		return (FTPFile[]) tmpResults.toArray(new FTPFile[0]);
-		
+
 	}
-	
+
     /**
      * convenience method to allow clients to know whether this object's
      * internal iterator's current position is at the end of the list.
-     * 
-     * @return true if internal iterator is not at end of list, false 
+     *
+     * @return true if internal iterator is not at end of list, false
      * otherwise.
      */
 	public boolean hasNext() {
 		return _internalIterator.hasNext();
 	}
-	
+
     /**
      * convenience method to allow clients to know whether this object's
      * internal iterator's current position is at the beginning of the list.
-     * 
+     *
      * @return true if internal iterator is not at beginning of list, false
      * otherwise.
      */
 	public boolean hasPrevious() {
 		return _internalIterator.hasPrevious();
 	}
-	
+
     /**
      * resets this object's internal iterator to the beginning of the list.
      */

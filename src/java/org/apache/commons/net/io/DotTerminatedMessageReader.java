@@ -20,7 +20,7 @@ import java.io.Reader;
 
 /**
  * DotTerminatedMessageReader is a class used to read messages from a
- * server that are terminated by a single dot followed by a 
+ * server that are terminated by a single dot followed by a
  * &lt;CR&gt;&lt;LF&gt;
  * sequence and with double dots appearing at the begining of lines which
  * do not signal end of message yet start with a dot.  Various Internet
@@ -31,7 +31,7 @@ import java.io.Reader;
  * local line separator format, truncates the end of message indicator,
  * and ensures you cannot read past the end of the message.
  * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
- * @version $Id: DotTerminatedMessageReader.java,v 1.9 2004/02/29 10:26:55 scolebourne Exp $
+ * @version $Id: DotTerminatedMessageReader.java,v 1.10 2004/04/21 23:30:34 scohen Exp $
  */
 public final class DotTerminatedMessageReader extends Reader
 {
@@ -235,7 +235,7 @@ public final class DotTerminatedMessageReader extends Reader
 
     /**
      * Closes the message for reading.  This doesn't actually close the
-     * underlying stream.  The underlying stream may still be used for 
+     * underlying stream.  The underlying stream may still be used for
      * communicating with the server and therefore is not closed.
      * <p>
      * If the end of the message has not yet been reached, this method

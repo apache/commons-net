@@ -48,7 +48,7 @@ public final class Util
      * Copies the contents of an InputStream to an OutputStream using a
      * copy buffer of a given size and notifies the provided
      * CopyStreamListener of the progress of the copy operation by calling
-     * its bytesTransferred(long, int) method after each write to the 
+     * its bytesTransferred(long, int) method after each write to the
      * destination.  If you wish to notify more than one listener you should
      * use a CopyStreamAdapter as the listener and register the additional
      * listeners with the CopyStreamAdapter.
@@ -167,11 +167,11 @@ public final class Util
      * Copies the contents of a Reader to a Writer using a
      * copy buffer of a given size and notifies the provided
      * CopyStreamListener of the progress of the copy operation by calling
-     * its bytesTransferred(long, int) method after each write to the 
+     * its bytesTransferred(long, int) method after each write to the
      * destination.  If you wish to notify more than one listener you should
      * use a CopyStreamAdapter as the listener and register the additional
      * listeners with the CopyStreamAdapter.
-     * <p> 
+     * <p>
      * The contents of the Reader are
      * read until its end is reached, but neither the source nor the
      * destination are closed.  You must do this yourself outside of the

@@ -19,7 +19,7 @@ import java.net.InetAddress;
 
 /***
  * An abstract class derived from TFTPPacket definiing a TFTP Request
- * packet type.  It is subclassed by the 
+ * packet type.  It is subclassed by the
  * <a href="org.apache.commons.net.tftp.TFTPReadRequestPacket.html#_top_">
  * TFTPReadRequestPacket</a>  and
  * <a href="org.apache.commons.net.tftp.TFTPWriteRequestPacket.html#_top_">
@@ -71,7 +71,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
     String _filename;
 
     /***
-     * Creates a request packet of a given type to be sent to a host at a 
+     * Creates a request packet of a given type to be sent to a host at a
      * given port with a filename and transfer mode request.
      * <p>
      * @param destination  The host to which the packet is going to be sent.
@@ -166,7 +166,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
     /***
      * This is a method only available within the package for
      * implementing efficient datagram transport by elminating buffering.
-     * It takes a datagram as an argument, and a byte buffer in which 
+     * It takes a datagram as an argument, and a byte buffer in which
      * to store the raw datagram data.  Inside the method, the data
      * is set as the datagram's data and the datagram returned.
      * <p>
@@ -201,9 +201,9 @@ public abstract class TFTPRequestPacket extends TFTPPacket
      * request packet data in the proper format.
      * This is a method exposed to the programmer in case he
      * wants to implement his own TFTP client instead of using
-     * the <a href="org.apache.commons.net.tftp.TFTPClient.html#_top_">TFTPClient</a> 
+     * the <a href="org.apache.commons.net.tftp.TFTPClient.html#_top_">TFTPClient</a>
      * class.  Under normal circumstances, you should not have a need to call
-     * this method.  
+     * this method.
      * <p>
      * @return A UDP datagram containing the TFTP request packet.
      ***/

@@ -25,9 +25,9 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * A functional test suite for checking that site listings work.  
+ * A functional test suite for checking that site listings work.
  * @author <a href="mailto:brekke@apache.org">Jeffrey D. Brekke</a>
- * @version $Id: ListingFunctionalTest.java,v 1.5 2004/04/06 13:31:59 brekke Exp $
+ * @version $Id: ListingFunctionalTest.java,v 1.6 2004/04/21 23:30:33 scohen Exp $
  */
 public class ListingFunctionalTest extends TestCase
 {
@@ -40,7 +40,7 @@ public class ListingFunctionalTest extends TestCase
 
     public static final Test suite()
     {
-        String[][] testData = 
+        String[][] testData =
             {
                 {
                     "ftp.ibiblio.org", "unix", "vms",
@@ -54,7 +54,7 @@ public class ListingFunctionalTest extends TestCase
                 {
                     "h71000.www7.hp.com", "vms", "windows",
                     "[.HA!]", "ACLOCAL.M4;1",
-					
+
                     "[.FREEWARE50.XTERM]"
                 }
             };
@@ -83,7 +83,7 @@ public class ListingFunctionalTest extends TestCase
 
         return allSuites;
     }
-    
+
     private FTPClient client;
     private String hostName;
     private String invalidParserKey;

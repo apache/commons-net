@@ -21,7 +21,7 @@ import java.io.OutputStream;
  * Discard protocol described in RFC 863.  To use the class, merely
  * establish a connection with
  * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
- * and call <a href="#getOutputStream"> getOutputStream() </a> to 
+ * and call <a href="#getOutputStream"> getOutputStream() </a> to
  * retrieve the discard output stream.  Don't close the output stream
  * when you're done writing to it.  Rather, call
  * <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
@@ -49,7 +49,7 @@ public class DiscardTCPClient extends SocketClient
     /***
      * Returns an OutputStream through which you may write data to the server.
      * You should NOT close the OutputStream when you're finished
-     * reading from it.  Rather, you should call 
+     * reading from it.  Rather, you should call
      * <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
      * to clean up properly.
      * <p>

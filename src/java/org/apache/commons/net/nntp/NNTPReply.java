@@ -80,7 +80,7 @@ public final class NNTPReply
     public static final int ARTICLE_RETRIEVED_HEAD_AND_BODY_FOLLOW = CODE_220;
     public static final int ARTICLE_RETRIEVED_HEAD_FOLLOWS = CODE_221;
     public static final int ARTICLE_RETRIEVED_BODY_FOLLOWS = CODE_222;
-    public static final int 
+    public static final int
       ARTICLE_RETRIEVED_REQUEST_TEXT_SEPARATELY = CODE_223;
     public static final int ARTICLE_LIST_BY_MESSAGE_ID_FOLLOWS = CODE_230;
     public static final int NEW_NEWSGROUP_LIST_FOLLOWS         = CODE_231;

@@ -34,15 +34,15 @@ public class ExtendedNNTPOps {
         private String subject;
         private String date;
         private String articleId;
-		
+
         private String from;
         private StringBuffer header;
-		
-        public Article() 
+
+        public Article()
         {
             header = new StringBuffer();
         }
-			
+
         public void addHeaderField(String name, String val) {
             header.append(name);
             header.append(": ");
@@ -53,55 +53,55 @@ public class ExtendedNNTPOps {
         public String getArticleId() {
             return articleId;
         }
-		
+
         public int getArticleNumber() {
             return articleNumber;
         }
-		
+
         public String getDate() {
             return date;
         }
-		
+
         public String getFrom() {
             return from;
         }
-		
+
         public String getSubject() {
             return subject;
         }
-	
+
         public void setArticleId(String string) {
             articleId = string;
         }
-		
+
         public void setArticleNumber(int i) {
             articleNumber = i;
         }
-		
+
         public void setDate(String string) {
             date = string;
         }
-		
+
         public void setFrom(String string) {
             from = string;
         }
-				
+
         public void setSubject(String string) {
             subject = string;
         }
     }
 
     NNTPClient client;
-	
+
     public ExtendedNNTPOps() {
         client = new NNTPClient();
         client.addProtocolCommandListener(new PrintCommandListener(
                                           new PrintWriter(System.out)));
     }
-	
+
     private Article[] getArticleInfo(int lowArticleNumber,
                                      int highArticleNumber)
-        throws IOException 
+        throws IOException
     {
         Reader reader = null;
         Article[] articles = new Article[0];
@@ -134,18 +134,18 @@ public class ExtendedNNTPOps {
         } else {
             return null;
         }
-			
+
         return articles;
     }
-		
-    private String readerToString(Reader reader) 
+
+    private String readerToString(Reader reader)
     {
         String temp;
         StringBuffer sb = null;
         BufferedReader bufReader = new BufferedReader(reader);
-			
+
         sb = new StringBuffer();
-        try 
+        try
             {
                 temp = bufReader.readLine();
                 while (temp != null) {
@@ -156,26 +156,26 @@ public class ExtendedNNTPOps {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-			
+
         return sb.toString();
     }
 
     public void demo(String host, String user, String password) {
         try {
             client.connect(host);
-		
+
             // AUTHINFO USER/AUTHINFO PASS
             boolean success = client.authenticate(user, password);
-            if(success) 
+            if(success)
 		{
                     System.out.println("Authentication succeeded");
 		}
-            else 
+            else
 		{
-                    System.out.println("Authentication failed, error =" + 
+                    System.out.println("Authentication failed, error =" +
                                        client.getReplyString());
 		}
-	
+
 	    // XOVER
 	    NewsgroupInfo testGroup = new NewsgroupInfo();
             client.selectNewsgroup("alt.test", testGroup);
@@ -183,20 +183,20 @@ public class ExtendedNNTPOps {
             int highArticleNumber = testGroup.getLastArticle();
 	    Article[] articles =
                 getArticleInfo(lowArticleNumber, highArticleNumber);
-	    
+
 	    for(int i =0; i < articles.length; ++i)
                 {
-                    System.out.println(articles[i].getSubject());	
+                    System.out.println(articles[i].getSubject());
                 }
-	    
-	    // LIST ACTIVE 
+
+	    // LIST ACTIVE
 	    NewsgroupInfo[] fanGroups = client.listNewsgroups("alt.fan.*");
 	    for(int i = 0; i < fanGroups.length; ++i)
                 {
                     System.out.println(fanGroups[i].getNewsgroup());
                 }
-	    
-	    
+
+
         }
         catch(IOException e) {
             e.printStackTrace();
@@ -215,7 +215,7 @@ public class ExtendedNNTPOps {
         ops = new ExtendedNNTPOps();
         ops.demo(args[0], args[1], args[2]);
     }
-	
+
 }
 
 /* Emacs configuration

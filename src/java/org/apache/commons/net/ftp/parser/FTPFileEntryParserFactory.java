@@ -25,16 +25,16 @@ public interface FTPFileEntryParserFactory
      * Implementation should be a method that decodes the
      * supplied key and creates an object implementing the
      * interface FTPFileEntryParser.
-     * 
+     *
      * @param key    A string that somehow identifies an
      *               FTPFileEntryParser to be created.
-     * 
+     *
      * @return the FTPFileEntryParser created.
      * @exception ParserInitializationException
      *                   Thrown on any exception in instantiation
      * @see org.apache.commons.net.ftp.parser.ParserInitializationException
      */
-    public FTPFileEntryParser createFileEntryParser(String key) 
+    public FTPFileEntryParser createFileEntryParser(String key)
         throws ParserInitializationException;
 
 }

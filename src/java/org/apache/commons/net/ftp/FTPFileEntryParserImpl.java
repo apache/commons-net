@@ -24,10 +24,10 @@ import java.util.List;
  * This abstract class implements both the older FTPFileListParser and
  * newer FTPFileEntryParser interfaces with default functionality.
  * All the classes in the parser subpackage inherit from this.
- * 
+ *
  * @author Steve Cohen <scohen@apache.org>
  */
-public abstract class FTPFileEntryParserImpl 
+public abstract class FTPFileEntryParserImpl
     implements FTPFileEntryParser, FTPFileListParser
 {
     /**
@@ -36,7 +36,7 @@ public abstract class FTPFileEntryParserImpl
     public FTPFileEntryParserImpl()
         {
     }
-    
+
 
     /***
      * Parses an FTP server file listing and converts it into a usable format
@@ -52,7 +52,7 @@ public abstract class FTPFileEntryParserImpl
      *     the directory.
      * @exception java.io.IOException  If an I/O error occurs reading the listStream.
      ***/
-    public FTPFile[] parseFileList(InputStream listStream) throws IOException 
+    public FTPFile[] parseFileList(InputStream listStream) throws IOException
     {
         FTPFileList ffl = FTPFileList.create(listStream, this);
         return ffl.getFiles();
@@ -64,13 +64,13 @@ public abstract class FTPFileEntryParserImpl
      * whatever delemits one entry from the next.  This default implementation
      * simply calls BufferedReader.readLine().
      *
-     * @param reader The BufferedReader object from which entries are to be 
+     * @param reader The BufferedReader object from which entries are to be
      * read.
      *
      * @return A string representing the next ftp entry or null if none found.
      * @exception java.io.IOException thrown on any IO Error reading from the reader.
      */
-    public String readNextEntry(BufferedReader reader) throws IOException 
+    public String readNextEntry(BufferedReader reader) throws IOException
     {
         return reader.readLine();
     }
@@ -86,7 +86,7 @@ public abstract class FTPFileEntryParserImpl
      *
      * @return <code>original</code> unmodified.
      */
-     public List preParse(List original) { 
+     public List preParse(List original) {
      	 Iterator it = original.iterator();
      	 while (it.hasNext()){
      	 	String entry = (String) it.next();
@@ -96,8 +96,8 @@ public abstract class FTPFileEntryParserImpl
      	 		break;
      	 	}
      	 }
-         return original;                                
-     } 
+         return original;
+     }
 }
 
 /* Emacs configuration

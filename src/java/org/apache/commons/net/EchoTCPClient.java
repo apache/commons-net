@@ -21,7 +21,7 @@ import java.io.InputStream;
  * Echo protocol described in RFC 862.  To use the class, merely
  * establish a connection with
  * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
- * and call <a href="#getOutputStream"> getOutputStream() </a> to 
+ * and call <a href="#getOutputStream"> getOutputStream() </a> to
  * retrieve the echo output stream and
  * <a href="org.apache.commons.net.DiscardTCPClient.html#getInputStream">
  * getInputStream() </a> to get the echo input stream.
@@ -52,7 +52,7 @@ public final class EchoTCPClient extends DiscardTCPClient
     /***
      * Returns an InputStream from which you may read echoed data from
      * the server.  You should NOT close the InputStream when you're finished
-     * reading from it.  Rather, you should call 
+     * reading from it.  Rather, you should call
      * <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
      * to clean up properly.
      * <p>

@@ -26,7 +26,7 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  * low level details of interacting with an SMTP server and provides
  * a convenient higher level interface.  As with all classes derived
  * from <a href="org.apache.commons.net.SocketClient.html"> SocketClient </a>,
- * you must first connect to the server with 
+ * you must first connect to the server with
  * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
  * before doing anything, and finally
  * <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
@@ -85,7 +85,7 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  * SMTPReply.SERVICE_NOT_AVAILABLE </a> response to a command.
  * When that occurs, the method encountering that reply will throw
  * an <a href="org.apache.commons.net.smtp.SMTPConnectionClosedException.html">
- * SMTPConnectionClosedException </a>. 
+ * SMTPConnectionClosedException </a>.
  * <code>SMTPConectionClosedException</code>
  * is a subclass of <code> IOException </code> and therefore need not be
  * caught separately, but if you are going to catch it separately, its
@@ -103,11 +103,11 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  * <p>
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
- * can also throw a 
+ * can also throw a
  * <a href="org.apache.commons.net.MalformedServerReplyException.html">
  * MalformedServerReplyException </a>, which is a subclass
  * of IOException.  A MalformedServerReplyException will be thrown when
- * the reply received from the server deviates enough from the protocol 
+ * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite
  * attempts to be as lenient as possible.
  * <p>
@@ -125,7 +125,7 @@ public class SMTPClient extends SMTP
 
     /*
      * Default SMTPClient constructor.  Creates a new SMTPClient instance.
-     */ 
+     */
     //public SMTPClient() {  }
 
 
@@ -135,16 +135,16 @@ public class SMTPClient extends SMTP
      * transaction.  These types of commands require some action by the
      * programmer after the reception of a positive intermediate command.
      * After the programmer's code completes its actions, it must call this
-     * method to receive the completion reply from the server and verify the 
+     * method to receive the completion reply from the server and verify the
      * success of the entire transaction.
      * <p>
-     * For example, 
+     * For example,
      * <pre>
      * writer = client.sendMessage();
      * if(writer == null) // failure
      *   return false;
      * header =
-     *  new SimpleSMTPHeader("foobar@foo.com", "foo@foobar.com", "Re: Foo"); 
+     *  new SimpleSMTPHeader("foobar@foo.com", "foo@foobar.com", "Re: Foo");
      * writer.write(header.toString());
      * writer.write("This is just a test");
      * writer.close();
@@ -390,7 +390,7 @@ public class SMTPClient extends SMTP
 
     /***
      * A convenience method for a sending short email without having to
-     * explicitly set the sender and recipient(s).  This method 
+     * explicitly set the sender and recipient(s).  This method
      * sets the sender and recipient using
      * <a href="#setSender"> setSender </a> and
      * <a href="#addRecipient"> addRecipient </a>, and then sends the
@@ -425,7 +425,7 @@ public class SMTPClient extends SMTP
 
     /***
      * A convenience method for a sending short email without having to
-     * explicitly set the sender and recipient(s).  This method 
+     * explicitly set the sender and recipient(s).  This method
      * sets the sender and recipients using
      * <a href="#setSender"> setSender </a> and
      * <a href="#addRecipient"> addRecipient </a>, and then sends the
@@ -487,7 +487,7 @@ public class SMTPClient extends SMTP
 
     /***
      * Aborts the current mail transaction, resetting all server stored
-     * sender, recipient, and mail data, cleaing all buffers and tables.  
+     * sender, recipient, and mail data, cleaing all buffers and tables.
      * <p>
      * @return True if successfully completed, false if not.
      * @exception SMTPConnectionClosedException

@@ -34,17 +34,17 @@ import java.util.List;
  * position is iterated over.  This happens at the time of iteration, not
  * prior to it as the older <code>(FTPClient.listFiles()</code> methods did,
  * which required a bigger memory hit.
- * 
+ *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileList.java,v 1.12 2004/04/06 13:31:59 brekke Exp $
+ * @version $Id: FTPFileList.java,v 1.13 2004/04/21 23:30:33 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPClient#createFileList
  * @see org.apache.commons.net.ftp.FTPFileIterator
  * @see org.apache.commons.net.ftp.FTPFileEntryParser
  * @see org.apache.commons.net.ftp.FTPListParseEngine
- * @deprecated This class is deprecated as of version 1.2 and will be 
+ * @deprecated This class is deprecated as of version 1.2 and will be
  * removed in version 2.0 -- use FTPFileParseEngine instead.
  */
-public class FTPFileList 
+public class FTPFileList
 {
     /**
      * storage for the raw lines of input read from the FTP server
@@ -78,11 +78,11 @@ public class FTPFileList
      * build the intermediate array of "lines" which will later be parsed
      * into <code>FTPFile</code> object.
      *
-     * @param stream The input stream created by reading the socket on which 
+     * @param stream The input stream created by reading the socket on which
      * the output of the LIST command was returned
      * @param parser the default <code>FTPFileEntryParser</code> to be used
      * by this object.  This may later be changed using the init() method.
-     * 
+     *
      * @return the <code>FTPFileList</code> created, with an initialized
      * of unparsed lines of output.  Will be null if the listing cannot
      * be read from the stream.
@@ -97,13 +97,13 @@ public class FTPFileList
         list.readStream(stream);
         parser.preParse(list.lines);
         return list;
-    } 
+    }
 
     /**
      * internal method for reading the input into the <code>lines</code> vector.
-     * 
+     *
      * @param stream The socket stream on which the input will be read.
-     * 
+     *
      * @exception IOException thrown on any failure to read the stream
      */
     public void readStream(InputStream stream) throws IOException
@@ -123,7 +123,7 @@ public class FTPFileList
 
     /**
      * Accessor for this object's default parser.
-     * 
+     *
      * @return this object's default parser.
      */
     FTPFileEntryParser getParser()
@@ -133,8 +133,8 @@ public class FTPFileList
 
     /**
      * Package private accessor for the collection of raw input lines.
-     * 
-     * @return vector containing all the raw input lines returned from the FTP 
+     *
+     * @return vector containing all the raw input lines returned from the FTP
      * server
      */
     List getLines()
@@ -143,9 +143,9 @@ public class FTPFileList
     }
 
     /**
-     * create an iterator over this list using the parser with which this list 
+     * create an iterator over this list using the parser with which this list
      * was initally created
-     * 
+     *
      * @return an iterator over this list using the list's default parser.
      */
     public FTPFileIterator iterator()
@@ -154,10 +154,10 @@ public class FTPFileList
     }
     /**
      * create an iterator over this list using the supplied parser
-     * 
-     * @param parser The user-supplied parser with which the list is to be 
+     *
+     * @param parser The user-supplied parser with which the list is to be
      * iterated, may be different from this list's default parser.
-     * 
+     *
      * @return an iterator over this list using the supplied parser.
      */
     public FTPFileIterator iterator(FTPFileEntryParser parser)
@@ -167,10 +167,10 @@ public class FTPFileList
 
 
     /**
-     * returns an array of FTPFile objects for all the files in the directory 
+     * returns an array of FTPFile objects for all the files in the directory
      * listing
      *
-     * @return  an array of FTPFile objects for all the files in the directory 
+     * @return  an array of FTPFile objects for all the files in the directory
      * listinge
      */
     public FTPFile[] getFiles()

@@ -50,13 +50,13 @@ public class CompositeFileEntryParser extends FTPFileEntryParserImpl
             {
                 return matched;
             }
-        } 
+        }
         else
         {
             for (int iterParser=0; iterParser < ftpFileEntryParsers.length; iterParser++)
             {
                 FTPFileEntryParser ftpFileEntryParser = ftpFileEntryParsers[iterParser];
-	
+
                 FTPFile matched = ftpFileEntryParser.parseFTPEntry(listEntry);
                 if (matched != null)
                 {

@@ -21,35 +21,35 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: OS2FTPEntryParserTest.java,v 1.6 2004/02/29 10:26:53 scolebourne Exp $
+ * @version $Id: OS2FTPEntryParserTest.java,v 1.7 2004/04/21 23:30:33 scohen Exp $
  */
 public class OS2FTPEntryParserTest extends FTPParseTestFramework
 {
 
-    private static final String[] badsamples = 
+    private static final String[] badsamples =
     {
-        "                 DIR   12-30-97   12:32  jbrekke", 
-        "     0    rsa    DIR   11-25-97   09:42  junk", 
-        "     0           dir   05-12-97   16:44  LANGUAGE", 
-        "     0           DIR   05-19-2000 12:56  local", 
-        "     0           DIR   13-05-97   25:49  MPTN", 
-        "587823    RSA    DIR   Jan-08-97   13:58  OS2KRNL", 
-        " 33280      A          1997-02-03  13:49  OS2LDR", 
-        "12-05-96  05:03PM       <DIR>          absoft2", 
+        "                 DIR   12-30-97   12:32  jbrekke",
+        "     0    rsa    DIR   11-25-97   09:42  junk",
+        "     0           dir   05-12-97   16:44  LANGUAGE",
+        "     0           DIR   05-19-2000 12:56  local",
+        "     0           DIR   13-05-97   25:49  MPTN",
+        "587823    RSA    DIR   Jan-08-97   13:58  OS2KRNL",
+        " 33280      A          1997-02-03  13:49  OS2LDR",
+        "12-05-96  05:03PM       <DIR>          absoft2",
         "11-14-97  04:21PM                  953 AUDITOR3.INI"
     };
-    private static final String[] goodsamples = 
+    private static final String[] goodsamples =
     {
-        "     0           DIR   12-30-97   12:32  jbrekke", 
-        "     0           DIR   11-25-97   09:42  junk", 
-        "     0           DIR   05-12-97   16:44  LANGUAGE", 
-        "     0           DIR   05-19-97   12:56  local", 
-        "     0           DIR   05-12-97   16:52  Maintenance Desktop", 
-        "     0           DIR   05-13-97   10:49  MPTN", 
-        "587823    RSA    DIR   01-08-97   13:58  OS2KRNL", 
-        " 33280      A          02-09-97   13:49  OS2LDR", 
-        "     0           DIR   11-28-97   09:42  PC", 
-        "149473      A          11-17-98   16:07  POPUPLOG.OS2", 
+        "     0           DIR   12-30-97   12:32  jbrekke",
+        "     0           DIR   11-25-97   09:42  junk",
+        "     0           DIR   05-12-97   16:44  LANGUAGE",
+        "     0           DIR   05-19-97   12:56  local",
+        "     0           DIR   05-12-97   16:52  Maintenance Desktop",
+        "     0           DIR   05-13-97   10:49  MPTN",
+        "587823    RSA    DIR   01-08-97   13:58  OS2KRNL",
+        " 33280      A          02-09-97   13:49  OS2LDR",
+        "     0           DIR   11-28-97   09:42  PC",
+        "149473      A          11-17-98   16:07  POPUPLOG.OS2",
         "     0           DIR   05-12-97   16:44  PSFONTS"
     };
 
@@ -74,31 +74,31 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
      */
-    public void testParseFieldsOnDirectory() throws Exception    
+    public void testParseFieldsOnDirectory() throws Exception
     {
         FTPFile dir = getParser().parseFTPEntry("     0           DIR   11-28-97   09:42  PC");
         assertNotNull("Could not parse entry.", dir);
-        assertTrue("Should have been a directory.", 
+        assertTrue("Should have been a directory.",
                    dir.isDirectory());
         assertEquals(0,dir.getSize());
         assertEquals("PC", dir.getName());
-        assertEquals("Fri Nov 28 09:42:00 1997", 
+        assertEquals("Fri Nov 28 09:42:00 1997",
                      df.format(dir.getTimestamp().getTime()));
     }
 
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
      */
-    public void testParseFieldsOnFile() throws Exception 
+    public void testParseFieldsOnFile() throws Exception
     {
         FTPFile file = getParser().parseFTPEntry("149473      A          11-17-98   16:07  POPUPLOG.OS2");
         assertNotNull("Could not parse entry.", file);
-        assertTrue("Should have been a file.", 
+        assertTrue("Should have been a file.",
                    file.isFile());
         assertEquals(149473,file.getSize());
         assertEquals("POPUPLOG.OS2", file.getName());
-        assertEquals("Tue Nov 17 16:07:00 1998", 
-                     df.format(file.getTimestamp().getTime()));           
+        assertEquals("Tue Nov 17 16:07:00 1998",
+                     df.format(file.getTimestamp().getTime()));
     }
 
     /**

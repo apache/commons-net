@@ -19,10 +19,10 @@ import org.apache.commons.net.ftp.FTPFile;
 
 /**
  * Implementation of FTPFileEntryParser and FTPFileListParser for NT Systems.
- * 
+ *
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: NTFTPEntryParser.java,v 1.14 2004/04/06 13:31:59 brekke Exp $
+ * @version $Id: NTFTPEntryParser.java,v 1.15 2004/04/21 23:30:33 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class NTFTPEntryParser extends RegexFTPFileEntryParserImpl
@@ -31,25 +31,25 @@ public class NTFTPEntryParser extends RegexFTPFileEntryParserImpl
      * this is the regular expression used by this parser.
      */
     private static final String REGEX =
-        "((?:0[1-9])|(?:1[0-2]))-" 
-        + "((?:0[1-9])|(?:[1-2]\\d)|(?:3[0-1]))-" 
-        + "(\\d\\d)\\s*" 
-        + "((?:0[1-9])|(?:1[012])):" 
-        + "([0-5]\\d)\\s*" 
-        + "([AP])M\\s*" 
-        + "(<DIR>)?\\s*" 
-        + "([0-9]+)?\\s+" 
+        "((?:0[1-9])|(?:1[0-2]))-"
+        + "((?:0[1-9])|(?:[1-2]\\d)|(?:3[0-1]))-"
+        + "(\\d\\d)\\s*"
+        + "((?:0[1-9])|(?:1[012])):"
+        + "([0-5]\\d)\\s*"
+        + "([AP])M\\s*"
+        + "(<DIR>)?\\s*"
+        + "([0-9]+)?\\s+"
         + "(\\S.*)";
 
     /**
      * The sole constructor for an NTFTPEntryParser object.
-     * 
+     *
      * @exception IllegalArgumentException
-     * Thrown if the regular expression is unparseable.  Should not be seen 
-     * under normal conditions.  It it is seen, this is a sign that 
+     * Thrown if the regular expression is unparseable.  Should not be seen
+     * under normal conditions.  It it is seen, this is a sign that
      * <code>REGEX</code> is  not a valid regular expression.
      */
-    public NTFTPEntryParser() 
+    public NTFTPEntryParser()
     {
         super(REGEX);
     }
@@ -69,7 +69,7 @@ public class NTFTPEntryParser extends RegexFTPFileEntryParserImpl
     {
         FTPFile f = new FTPFile();
         f.setRawListing(entry);
-        
+
         if (matches(entry))
         {
             String mo = group(1);
@@ -103,7 +103,7 @@ public class NTFTPEntryParser extends RegexFTPFileEntryParserImpl
 
             Calendar cal = Calendar.getInstance();
             cal.clear();
-            
+
             //set the calendar
             cal.set(Calendar.YEAR, year);
             cal.set(Calendar.DATE, day);
@@ -122,13 +122,13 @@ public class NTFTPEntryParser extends RegexFTPFileEntryParserImpl
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MINUTE, minutes);
 
-            // Using Calendar.HOUR_OF_DAY instead of Calendar.HOUR			
+            // Using Calendar.HOUR_OF_DAY instead of Calendar.HOUR
             // since the latter has proven to be unreliable.
             // see bug 27085
-            
+
             //          cal.set(Calendar.AM_PM, ap);
             cal.set(Calendar.HOUR_OF_DAY, hour);
-            
+
             cal.getTimeInMillis();
             f.setTimestamp(cal);
 

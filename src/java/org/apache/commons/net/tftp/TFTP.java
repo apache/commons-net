@@ -81,7 +81,7 @@ public class TFTP extends DatagramSocketClient
     public static final int DEFAULT_PORT = 69;
 
     /***
-     * The size to use for TFTP packet buffers.  Its 4 plus the 
+     * The size to use for TFTP packet buffers.  Its 4 plus the
      * TFTPPacket.SEGMENT_SIZE, i.e. 516.
      ***/
     static final int PACKET_SIZE = TFTPPacket.SEGMENT_SIZE + 4;
@@ -169,10 +169,10 @@ public class TFTP extends DatagramSocketClient
      * <a href="#beginBufferedOps"> beginBufferedOps() </a>.  beginBufferedOps()
      * initializes a set of buffers used internally that prevent the new
      * allocation of a DatagramPacket and byte array for each send and receive.
-     * To use these buffers you must call the bufferedReceive() and 
+     * To use these buffers you must call the bufferedReceive() and
      * bufferedSend() methods instead of send() and receive().  You must
      * also be certain that you don't manipulate the resulting packet in
-     * such a way that it interferes with future buffered operations.  
+     * such a way that it interferes with future buffered operations.
      * For example, a TFTPDataPacket received with bufferedReceive() will
      * have a reference to the internal byte buffer.  You must finish using
      * this data before calling bufferedReceive() again, or else the data
@@ -206,10 +206,10 @@ public class TFTP extends DatagramSocketClient
      * <a href="#beginBufferedOps"> beginBufferedOps() </a>.  beginBufferedOps()
      * initializes a set of buffers used internally that prevent the new
      * allocation of a DatagramPacket and byte array for each send and receive.
-     * To use these buffers you must call the bufferedReceive() and 
+     * To use these buffers you must call the bufferedReceive() and
      * bufferedSend() methods instead of send() and receive().  You must
      * also be certain that you don't manipulate the resulting packet in
-     * such a way that it interferes with future buffered operations.  
+     * such a way that it interferes with future buffered operations.
      * For example, a TFTPDataPacket received with bufferedReceive() will
      * have a reference to the internal byte buffer.  You must finish using
      * this data before calling bufferedReceive() again, or else the data
@@ -226,7 +226,7 @@ public class TFTP extends DatagramSocketClient
 
     /***
      * Initializes the internal buffers. Buffers are used by
-     * <a href="#bufferedSend"> bufferedSend() </a> and 
+     * <a href="#bufferedSend"> bufferedSend() </a> and
      * <a href="#bufferedReceive"> bufferedReceive() </a>.  This
      * method must be called before calling either one of those two
      * methods.  When you finish using buffered operations, you must

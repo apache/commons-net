@@ -28,19 +28,19 @@ import org.apache.oro.text.regex.Perl5Matcher;
  * Special implementation VMSFTPEntryParser with versioning turned on.
  * This parser removes all duplicates and only leaves the version with the highest
  * version number for each filename.
- * 
+ *
  * This is a sample of VMS LIST output
- *   
+ *
  *  "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
  *  "1-JUN.LIS;2              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
  *  "DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
  * <P>
- * 
+ *
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSVersioningFTPEntryParser.java,v 1.6 2004/02/29 10:26:56 scolebourne Exp $
- * 
+ * @version $Id: VMSVersioningFTPEntryParser.java,v 1.7 2004/04/21 23:30:33 scohen Exp $
+ *
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
@@ -49,26 +49,26 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
     private Perl5Matcher _preparse_matcher_;
     private Pattern _preparse_pattern_;
     private static final String PRE_PARSE_REGEX =
-        "(.*);([0-9]+)\\s*.*"; 
+        "(.*);([0-9]+)\\s*.*";
 
     /**
-     * Constructor for a VMSFTPEntryParser object.  Sets the versioning member 
+     * Constructor for a VMSFTPEntryParser object.  Sets the versioning member
      * to the supplied value.
-     *  
+     *
      * @exception IllegalArgumentException
-     * Thrown if the regular expression is unparseable.  Should not be seen 
-     * under normal conditions.  It it is seen, this is a sign that 
+     * Thrown if the regular expression is unparseable.  Should not be seen
+     * under normal conditions.  It it is seen, this is a sign that
      * <code>REGEX</code> is  not a valid regular expression.
      */
     public VMSVersioningFTPEntryParser()
     {
         super();
-        try 
+        try
         {
             _preparse_matcher_ = new Perl5Matcher();
             _preparse_pattern_ = new Perl5Compiler().compile(PRE_PARSE_REGEX);
-        } 
-        catch (MalformedPatternException e) 
+        }
+        catch (MalformedPatternException e)
         {
             throw new IllegalArgumentException (
                 "Unparseable regex supplied:  " + PRE_PARSE_REGEX);
@@ -116,7 +116,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
                 }
                 existingEntries.put(name, nv);
             }
-            
+
         }
         // we've now removed all entries less than with less than the largest
         // version number for each name that were listed after the largest.
@@ -137,7 +137,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
                     }
                 }
             }
-            
+
         }
         return original;
     }

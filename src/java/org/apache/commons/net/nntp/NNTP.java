@@ -27,7 +27,7 @@ import org.apache.commons.net.SocketClient;
 
 /***
  * The NNTP class is not meant to be used by itself and is provided
- * only so that you may easily implement your own NNTP client if 
+ * only so that you may easily implement your own NNTP client if
  * you so desire.  If you have no need to perform your own implementation,
  * you should use <a href="org.apache.commons.net.nntp.NNTPClient.html">NNTPClient</a>.
  * The NNTP class is made public to provide access to various NNTP constants
@@ -61,11 +61,11 @@ import org.apache.commons.net.SocketClient;
  * <p>
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
- * can also throw a 
+ * can also throw a
  * <a href="org.apache.commons.net.MalformedServerReplyException.html">
  * MalformedServerReplyException </a>, which is a subclass
  * of IOException.  A MalformedServerReplyException will be thrown when
- * the reply received from the server deviates enough from the protocol 
+ * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite
  * attempts to be as lenient as possible.
  * <p>
@@ -382,7 +382,7 @@ public class NNTP extends SocketClient
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while 
+     * @exception IOException  If an I/O error occurs while
      *      receiving the server reply.
      ***/
     public int getReply() throws IOException
@@ -896,14 +896,14 @@ public class NNTP extends SocketClient
     {
         return sendCommand(NNTPCommand.QUIT);
     }
-     
+
     /***
-     * A convenience method to send the AUTHINFO USER command to the server, 
+     * A convenience method to send the AUTHINFO USER command to the server,
      *  receive the reply, and return the reply code. (See RFC 2980)
      * <p>
      * @param username A valid username.
      * @return The reply code received from the server. The server should
-     *          return a 381 or 281 for this command. 
+     *          return a 381 or 281 for this command.
      * @exception NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
@@ -918,14 +918,14 @@ public class NNTP extends SocketClient
     }
 
     /***
-     * A convenience method to send the AUTHINFO PASS command to the server, 
+     * A convenience method to send the AUTHINFO PASS command to the server,
      * receive the reply, and return the reply code.  If this step is
      * required, it should immediately follow the AUTHINFO USER command
      * (See RFC 2980)
      * <p>
      * @param password a valid password.
      * @return The reply code received from the server. The server should
-     *         return a 281 or 502 for this command. 
+     *         return a 281 or 502 for this command.
      * @exception NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
@@ -962,12 +962,12 @@ public class NNTP extends SocketClient
     public int xover(String selectedArticles) throws IOException {
         return sendCommand(NNTPCommand.XOVER, selectedArticles);
     }
-                
+
     /***
      * A convenience method to send the NNTP XHDR command to the server,
      * receive the reply, and return the reply code.
      * <p>
-     * @param header a String naming a header line (e.g., "subject").  See 
+     * @param header a String naming a header line (e.g., "subject").  See
      * RFC-1036 for a list of valid header lines.
      * @param selectedArticles a String representation of the range of
      * article headers required. This may be an article number, or a
@@ -991,7 +991,7 @@ public class NNTP extends SocketClient
         command.append(selectedArticles);
         return sendCommand(NNTPCommand.XHDR, command.toString());
     }
-                
+
     /**
      * A convenience wrapper for the extended LIST command that takes
      * an argument, allowing us to selectively list multiple groups.
@@ -1005,7 +1005,7 @@ public class NNTP extends SocketClient
         StringBuffer command = new StringBuffer("ACTIVE ");
         command.append(wildmat);
         return sendCommand(NNTPCommand.LIST, command.toString());
-    }   
+    }
 }
 
 /* Emacs configuration

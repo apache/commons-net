@@ -19,10 +19,10 @@ import org.apache.commons.net.ftp.FTPFile;
 
 /**
  * Implementation of FTPFileEntryParser and FTPFileListParser for OS2 Systems.
- * 
+ *
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: OS2FTPEntryParser.java,v 1.10 2004/04/06 04:40:57 scohen Exp $
+ * @version $Id: OS2FTPEntryParser.java,v 1.11 2004/04/21 23:30:33 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class OS2FTPEntryParser extends RegexFTPFileEntryParserImpl
@@ -32,25 +32,25 @@ public class OS2FTPEntryParser extends RegexFTPFileEntryParserImpl
      * this is the regular expression used by this parser.
      */
     private static final String REGEX =
-        "(\\s+|[0-9]+)\\s*" 
-        + "(\\s+|[A-Z]+)\\s*" 
-        + "(DIR|\\s+)\\s*" 
-        + "((?:0[1-9])|(?:1[0-2]))-" 
-        + "((?:0[1-9])|(?:[1-2]\\d)|(?:3[0-1]))-" 
-        + "(\\d\\d)\\s*" 
-        + "(?:([0-1]\\d)|(?:2[0-3])):" 
-        + "([0-5]\\d)\\s*" 
+        "(\\s+|[0-9]+)\\s*"
+        + "(\\s+|[A-Z]+)\\s*"
+        + "(DIR|\\s+)\\s*"
+        + "((?:0[1-9])|(?:1[0-2]))-"
+        + "((?:0[1-9])|(?:[1-2]\\d)|(?:3[0-1]))-"
+        + "(\\d\\d)\\s*"
+        + "(?:([0-1]\\d)|(?:2[0-3])):"
+        + "([0-5]\\d)\\s*"
         + "(\\S.*)";
-    
+
     /**
      * The sole constructor for a OS2FTPEntryParser object.
-     * 
+     *
      * @exception IllegalArgumentException
-     * Thrown if the regular expression is unparseable.  Should not be seen 
-     * under normal conditions.  It it is seen, this is a sign that 
+     * Thrown if the regular expression is unparseable.  Should not be seen
+     * under normal conditions.  It it is seen, this is a sign that
      * <code>REGEX</code> is  not a valid regular expression.
      */
-    public OS2FTPEntryParser() 
+    public OS2FTPEntryParser()
     {
         super(REGEX);
     }
@@ -105,7 +105,7 @@ public class OS2FTPEntryParser extends RegexFTPFileEntryParserImpl
             // Y2K stuff? this will break again in 2080 but I will
             // be sooooo dead anyways who cares.
             // SMC - IS OS2's directory date REALLY still not Y2K-compliant?
-            if (year > 2080) 
+            if (year > 2080)
             {
                 year -= 100;
             }

@@ -29,8 +29,8 @@ package org.apache.commons.net.smtp;
  * writer = client.sendMessageData();
  * if(writer == null) // failure
  *   return false;
- * header = 
- *    new SimpleSMTPHeader("foobar@foo.com", "foo@bar.com" "Just testing"); 
+ * header =
+ *    new SimpleSMTPHeader("foobar@foo.com", "foo@bar.com" "Just testing");
  * header.addCC("bar@foo.com");
  * header.addHeaderField("Organization", "Foobar, Inc.");
  * writer.write(header.toString());
@@ -58,7 +58,7 @@ public class SimpleSMTPHeader
      *              should be the sender's email address.
      * @param to    The value of the <code>To:</code> header field.  This
      *              should be the recipient's email address.
-     * @param subject  The value of the <code>Subject:</code> header field. 
+     * @param subject  The value of the <code>Subject:</code> header field.
      *              This should be the subject of the message.
      ***/
     public SimpleSMTPHeader(String from, String to, String subject)

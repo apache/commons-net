@@ -28,7 +28,7 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
  * The TFTPClient class encapsulates all the aspects of the TFTP protocol
  * necessary to receive and send files through TFTP.  It is derived from
  * the <a href="org.apache.commons.net.tftp.TFTP.html"> TFTP class </a> because
- * it is more convenient than using aggregation, and as a result exposes 
+ * it is more convenient than using aggregation, and as a result exposes
  * the same set of methods to allow you to deal with the TFTP protocol
  * directly.  However, almost every user should only be concerend with the
  * the <a href="org.apache.commons.net.DatagramSocketClient.html#open"> open() </a>,
@@ -305,7 +305,7 @@ _receivePacket:
 
     /***
      * Same as calling receiveFile(filename, mode, output, host, TFTP.DEFAULT_PORT).
-     * 
+     *
      * @param filename The name of the file to receive.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
      * @param output   The OutputStream to which the file should be written.
@@ -322,7 +322,7 @@ _receivePacket:
 
     /***
      * Same as calling receiveFile(filename, mode, output, hostname, TFTP.DEFAULT_PORT).
-     * 
+     *
      * @param filename The name of the file to receive.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
      * @param output   The OutputStream to which the file should be written.
@@ -534,7 +534,7 @@ _receivePacket:
 
     /***
      * Same as calling sendFile(filename, mode, input, host, TFTP.DEFAULT_PORT).
-     * 
+     *
      * @param filename The name the remote server should use when creating
      *        the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
@@ -552,7 +552,7 @@ _receivePacket:
 
     /***
      * Same as calling sendFile(filename, mode, input, hostname, TFTP.DEFAULT_PORT).
-     * 
+     *
      * @param filename The name the remote server should use when creating
      *        the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).

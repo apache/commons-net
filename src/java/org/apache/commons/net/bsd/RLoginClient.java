@@ -30,14 +30,14 @@ import java.io.IOException;
  * As with virtually all of the client classes in org.apache.commons.net, this
  * class derives from SocketClient.  But it relies on the connection
  * methods defined  in RcommandClient which ensure that the local Socket
- * will originate from an acceptable rshell port.  The way to use 
+ * will originate from an acceptable rshell port.  The way to use
  * RLoginClient is to first connect
  * to the server, call the <a href="#rlogin"> rlogin() </a> method,
  * and then
  * fetch the connection's input and output streams.
  * Interaction with the remote command is controlled entirely through the
  * I/O streams.  Once you have finished processing the streams, you should
- * invoke <a href="org.apache.commons.net.bsd.RExecClient.html#disconnect"> 
+ * invoke <a href="org.apache.commons.net.bsd.RExecClient.html#disconnect">
  * disconnect() </a> to clean up properly.
  * <p>
  * The standard output and standard error streams of the
@@ -50,8 +50,8 @@ import java.io.IOException;
  * <a href="org.apache.commons.net.bsd.RExecClient.html#getErrorStream">
  * getErrorStream() </a> will always return null.
  * The standard input of the remote process can be written to through
- * the output stream returned by 
- * <a href="org.apache.commons.net.bsd.RExecClient.html#getOutputStream"> 
+ * the output stream returned by
+ * <a href="org.apache.commons.net.bsd.RExecClient.html#getOutputStream">
  * getOutputSream() </a>.
  * <p>
  * <p>
@@ -64,7 +64,7 @@ import java.io.IOException;
 public class RLoginClient extends RCommandClient
 {
     /***
-     * The default rlogin port.  Set to 513 in BSD Unix and according 
+     * The default rlogin port.  Set to 513 in BSD Unix and according
      * to RFC 1282.
      ***/
     public static final int DEFAULT_PORT = 513;

@@ -75,11 +75,11 @@ import org.apache.commons.net.telnet.TelnetClient;
  * <p>
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
- * can also throw a 
+ * can also throw a
  * <a href="org.apache.commons.net.MalformedServerReplyException.html">
  * MalformedServerReplyException </a>, which is a subclass
  * of IOException.  A MalformedServerReplyException will be thrown when
- * the reply received from the server deviates enough from the protocol 
+ * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite
  * attempts to be as lenient as possible.
  * <p>
@@ -371,7 +371,7 @@ public class FTP extends TelnetClient
      * Sends an FTP command to the server, waits for a reply and returns the
      * numerical response code.  After invocation, for more detailed
      * information, the actual reply text can be accessed by calling
-     * <a href="#getReplyString"> getReplyString </a> or 
+     * <a href="#getReplyString"> getReplyString </a> or
      * <a href="#getReplyStrings"> getReplyStrings </a>.
      * <p>
      * @param command  The text representation of the  FTP command to send.
@@ -416,7 +416,7 @@ public class FTP extends TelnetClient
      * Sends an FTP command to the server, waits for a reply and returns the
      * numerical response code.  After invocation, for more detailed
      * information, the actual reply text can be accessed by calling
-     * <a href="#getReplyString"> getReplyString </a> or 
+     * <a href="#getReplyString"> getReplyString </a> or
      * <a href="#getReplyStrings"> getReplyStrings </a>.
      * <p>
      * @param command  The FTPCommand constant corresponding to the FTP command
@@ -443,7 +443,7 @@ public class FTP extends TelnetClient
      * Sends an FTP command with no arguments to the server, waits for a
      * reply and returns the numerical response code.  After invocation, for
      * more detailed information, the actual reply text can be accessed by
-     * calling <a href="#getReplyString"> getReplyString </a> or 
+     * calling <a href="#getReplyString"> getReplyString </a> or
      * <a href="#getReplyStrings"> getReplyStrings </a>.
      * <p>
      * @param command  The text representation of the  FTP command to send.
@@ -467,7 +467,7 @@ public class FTP extends TelnetClient
      * Sends an FTP command with no arguments to the server, waits for a
      * reply and returns the numerical response code.  After invocation, for
      * more detailed information, the actual reply text can be accessed by
-     * calling <a href="#getReplyString"> getReplyString </a> or 
+     * calling <a href="#getReplyString"> getReplyString </a> or
      * <a href="#getReplyStrings"> getReplyStrings </a>.
      * <p>
      * @param command  The FTPCommand constant corresponding to the FTP command
@@ -504,7 +504,7 @@ public class FTP extends TelnetClient
     /***
      * Fetches a reply from the FTP server and returns the integer reply
      * code.  After calling this method, the actual reply text can be accessed
-     * from either  calling <a href="#getReplyString"> getReplyString </a> or 
+     * from either  calling <a href="#getReplyString"> getReplyString </a> or
      * <a href="#getReplyStrings"> getReplyStrings </a>.  Only use this
      * method if you are implementing your own FTP client or if you need to
      * fetch a secondary response from the FTP server.
@@ -953,7 +953,7 @@ public class FTP extends TelnetClient
      * receive the reply, and return the reply code.  Remember, it is up
      * to you to manage the data connection.  If you don't need this low
      * level of access, use <a href="org.apache.commons.net.ftp.FTPClient.html">
-     * FTPClient</a>, which will handle all low level details for you. 
+     * FTPClient</a>, which will handle all low level details for you.
      * @param pathname  The base pathname to use for the file when stored at
      *                  the remote end of the transfer.  Some FTP servers
      *                  require this.

@@ -23,7 +23,7 @@ import java.io.DataInputStream;
  * Time protocol described in RFC 868.  To use the class, merely
  * establish a connection with
  * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
- * and call either <a href="#getTime"> getTime() </a> or  
+ * and call either <a href="#getTime"> getTime() </a> or
  * <a href="#getDate"> getDate() </a> to retrieve the time, then
  * call <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
  * to close the connection properly.
@@ -59,13 +59,13 @@ public final class TimeTCPClient extends SocketClient
      * is the number of seconds since 00:00 (midnight) 1 January 1900 GMT,
      * as specified by RFC 868.  This method reads the raw 32-bit big-endian
      * unsigned integer from the server, converts it to a Java long, and
-     * returns the value.  
+     * returns the value.
      * <p>
      * The server will have closed the connection at this point, so you should
      * call
      * <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
      * after calling this method.  To retrieve another time, you must
-     * initiate another connection with 
+     * initiate another connection with
      * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
      * before calling <code> getTime() </code> again.
      * <p>
@@ -87,7 +87,7 @@ public final class TimeTCPClient extends SocketClient
      * call
      * <a href="org.apache.commons.net.SocketClient.html#disconnect"> disconnect </a>
      * after calling this method.  To retrieve another time, you must
-     * initiate another connection with 
+     * initiate another connection with
      * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
      * before calling <code> getDate() </code> again.
      * <p>

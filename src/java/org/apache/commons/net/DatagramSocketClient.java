@@ -23,7 +23,7 @@ import java.net.SocketException;
  * of client objects accessing datagram sockets.  It is meant to be
  * subclassed to avoid having to rewrite the same code over and over again
  * to open a socket, close a socket, set timeouts, etc.  Of special note
- * is the <a href="#setDatagramSocketFactory"> setDatagramSocketFactory </a> 
+ * is the <a href="#setDatagramSocketFactory"> setDatagramSocketFactory </a>
  * method, which allows you to control the type of DatagramSocket the
  * DatagramSocketClient creates for network communications.  This is
  * especially useful for adding things like proxy support as well as better

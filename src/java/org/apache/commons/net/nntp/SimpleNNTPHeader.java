@@ -29,7 +29,7 @@ package org.apache.commons.net.nntp;
  * writer = client.postArticle();
  * if(writer == null) // failure
  *   return false;
- * header = new SimpleNNTPHeader("foobar@foo.com", "Just testing"); 
+ * header = new SimpleNNTPHeader("foobar@foo.com", "Just testing");
  * header.addNewsgroup("alt.test");
  * header.addHeaderField("Organization", "Foobar, Inc.");
  * writer.write(header.toString());
@@ -57,7 +57,7 @@ public class SimpleNNTPHeader
      * <p>
      * @param from  The value of the <code>From:</code> header field.  This
      *              should be the article poster's email address.
-     * @param subject  The value of the <code>Subject:</code> header field. 
+     * @param subject  The value of the <code>Subject:</code> header field.
      *              This should be the subject of the article.
      ***/
     public SimpleNNTPHeader(String from, String subject)

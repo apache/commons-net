@@ -30,11 +30,11 @@ import org.apache.commons.net.io.DotTerminatedMessageReader;
  * <p>
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
- * can also throw a 
+ * can also throw a
  * <a href="org.apache.commons.net.MalformedServerReplyException.html">
  * MalformedServerReplyException </a>, which is a subclass
  * of IOException.  A MalformedServerReplyException will be thrown when
- * the reply received from the server deviates enough from the protocol 
+ * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite
  * attempts to be as lenient as possible.
  * <p>
@@ -170,7 +170,7 @@ public class POP3Client extends POP3
      * @return True if the login attempt was successful, false if not.
      * @exception IOException If a network I/O error occurs in the process of
      *            logging in.
-     * @exception NoSuchAlgorithmException If the MD5 encryption algorithm 
+     * @exception NoSuchAlgorithmException If the MD5 encryption algorithm
      *      cannot be instantiated by the Java runtime system.
      ***/
     public boolean login(String username, String timestamp, String secret)
@@ -298,7 +298,7 @@ public class POP3Client extends POP3
      * <a href="org.apache.commons.net.pop3.POP3.html#TRANSACTION_STATE">
      * TRANSACTION_STATE </a>.  Returns a POP3MessageInfo instance
      * containing the number of messages in the mailbox and the total
-     * size of the messages in bytes.  Returns null if the status the 
+     * size of the messages in bytes.  Returns null if the status the
      * attempt fails.
      * <p>
      * @return A POP3MessageInfo instance containing the number of
@@ -501,7 +501,7 @@ public class POP3Client extends POP3
 
 
     /***
-     * Retrieve only the specified top number of lines of a message from the 
+     * Retrieve only the specified top number of lines of a message from the
      * POP3 server.  A retrieve top lines attempt
      * can only succeed if the client is in the
      * <a href="org.apache.commons.net.pop3.POP3.html#TRANSACTION_STATE">

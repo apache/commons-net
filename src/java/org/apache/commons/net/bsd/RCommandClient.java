@@ -41,7 +41,7 @@ import org.apache.commons.net.io.SocketInputStream;
  * ports on Unix systems, and can only be bound by a
  * process running with root permissions (to accomplish this rsh, rlogin,
  * and related commands usualy have the suid bit set).  Therefore, on a
- * Unix system, you will only be able to successfully use the RCommandClient 
+ * Unix system, you will only be able to successfully use the RCommandClient
  * class if the process runs as root.  However, there is no such restriction
  * on Windows95 and some other systems.  The security risks are obvious.
  * However, when carefully used, rcmd() can be very useful when used behind
@@ -56,7 +56,7 @@ import org.apache.commons.net.io.SocketInputStream;
  * fetch the connection's input, output, and optionally error streams.
  * Interaction with the remote command is controlled entirely through the
  * I/O streams.  Once you have finished processing the streams, you should
- * invoke <a href="org.apache.commons.net.bsd.RExecClient.html#disconnect"> 
+ * invoke <a href="org.apache.commons.net.bsd.RExecClient.html#disconnect">
  * disconnect() </a> to clean up properly.
  * <p>
  * By default the standard output and standard error streams of the
@@ -69,11 +69,11 @@ import org.apache.commons.net.io.SocketInputStream;
  * returned by <a href="org.apache.commons.net.bsd.RExecClient.html#getErrorStream">
  * getErrorStream() </a>.  You
  * can specify that a separate connection should be created for standard
- * error by setting the boolean <code> separateErrorStream </code> 
+ * error by setting the boolean <code> separateErrorStream </code>
  * parameter of <a href="#rcommand"> rcommand() </a> to <code> true </code>.
  * The standard input of the remote process can be written to through
- * the output stream returned by 
- * <a href="org.apache.commons.net.bsd.RExecClient.html#getOutputStream"> 
+ * the output stream returned by
+ * <a href="org.apache.commons.net.bsd.RExecClient.html#getOutputStream">
  * getOutputSream() </a>.
  * <p>
  * <p>
@@ -352,7 +352,7 @@ public class RCommandClient extends RExecClient
      * connection for this error stream.  If the connection does not originate
      * from the remote server, an IOException will be thrown.  This serves as
      * a simple protection against possible hijacking of the error stream by
-     * an attacker monitoring the rexec() negotiation.  You may disable this 
+     * an attacker monitoring the rexec() negotiation.  You may disable this
      * behavior with
      * <a href="org.apache.commons.net.bsd.RExecClient.html#setRemoteVerificationEnabled">
      * setRemoteVerificationEnabled()</a>.

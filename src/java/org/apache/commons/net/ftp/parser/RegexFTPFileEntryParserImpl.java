@@ -29,13 +29,13 @@ import org.apache.oro.text.regex.Perl5Matcher;
  * All the classes in the parser subpackage inherit from this.
  *
  * This is the base for all regular based FTPFileEntryParser
- * 
+ *
  * @author Steve Cohen <scohen@apache.org>
  */
 public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
 {
     /**
-     * internal pattern the matcher tries to match, representing a file 
+     * internal pattern the matcher tries to match, representing a file
      * entry
      */
     private Pattern pattern = null;
@@ -51,19 +51,19 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      */
     protected PatternMatcher _matcher_ = null;
 
-    
+
     /**
      * The constructor for a RegexFTPFileEntryParserImpl object.
-     * 
-     * @param regex  The regular expression with which this object is 
+     *
+     * @param regex  The regular expression with which this object is
      * initialized.
-     * 
+     *
      * @exception IllegalArgumentException
-     * Thrown if the regular expression is unparseable.  Should not be seen in 
-     * normal conditions.  It it is seen, this is a sign that a subclass has 
-     * been created with a bad regular expression.   Since the parser must be 
-     * created before use, this means that any bad parser subclasses created 
-     * from this will bomb very quickly,  leading to easy detection.  
+     * Thrown if the regular expression is unparseable.  Should not be seen in
+     * normal conditions.  It it is seen, this is a sign that a subclass has
+     * been created with a bad regular expression.   Since the parser must be
+     * created before use, this means that any bad parser subclasses created
+     * from this will bomb very quickly,  leading to easy detection.
      */
     public RegexFTPFileEntryParserImpl(String regex)
     {
@@ -73,15 +73,15 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
         {
             _matcher_ = new Perl5Matcher();
             pattern   = new Perl5Compiler().compile(regex);
-        } 
-        catch (MalformedPatternException e) 
+        }
+        catch (MalformedPatternException e)
         {
             throw new IllegalArgumentException (
                                                 "Unparseable regex supplied:  " + regex);
         }
     }
 
- 
+
     /**
      * Convenience method delegates to the internal MatchResult's matches()
      * method.
@@ -117,11 +117,11 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
     /**
      * Convenience method delegates to the internal MatchResult's group()
      * method.
-     * 
+     *
      * @param matchnum match group number to be retrieved
-     * 
+     *
      * @return the content of the <code>matchnum'th<code> group of the internal
-     *         match or null if this method is called without a match having 
+     *         match or null if this method is called without a match having
      *         been made.
      */
     public String group(int matchnum)
@@ -134,9 +134,9 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
     }
 
     /**
-     * For debugging purposes - returns a string shows each match group by 
+     * For debugging purposes - returns a string shows each match group by
      * number.
-     * 
+     *
      * @return a string shows each match group by number.
      */
     public String getGroupsAsString()

@@ -22,7 +22,7 @@ import java.util.EventObject;
  * ASCII text reply.  For debugging and other purposes, it is extremely
  * useful to log or keep track of the contents of the protocol messages.
  * The ProtocolCommandEvent class coupled with the
- * <a href="org.apache.commons.net.ProtocolCommandListener.html"> 
+ * <a href="org.apache.commons.net.ProtocolCommandListener.html">
  * ProtocolCommandListener </a> interface facilitate this process.
  * <p>
  * <p>

@@ -107,7 +107,7 @@ public class DefaultSocketFactory implements SocketFactory
      * Creates a ServerSocket bound to a specified port.  A port
      * of 0 will create the ServerSocket on a system-determined free port.
      * <p>
-     * @param port  The port on which to listen, or 0 to use any free port. 
+     * @param port  The port on which to listen, or 0 to use any free port.
      * @return A ServerSocket that will listen on a specified port.
      * @exception IOException If an I/O error occurs while creating
      *                        the ServerSocket.
@@ -122,7 +122,7 @@ public class DefaultSocketFactory implements SocketFactory
      * maximum queue length for incoming connections.  A port of 0 will
      * create the ServerSocket on a system-determined free port.
      * <p>
-     * @param port  The port on which to listen, or 0 to use any free port. 
+     * @param port  The port on which to listen, or 0 to use any free port.
      * @param backlog  The maximum length of the queue for incoming connections.
      * @return A ServerSocket that will listen on a specified port.
      * @exception IOException If an I/O error occurs while creating
@@ -140,7 +140,7 @@ public class DefaultSocketFactory implements SocketFactory
      * A port of 0 will
      * create the ServerSocket on a system-determined free port.
      * <p>
-     * @param port  The port on which to listen, or 0 to use any free port. 
+     * @param port  The port on which to listen, or 0 to use any free port.
      * @param backlog  The maximum length of the queue for incoming connections.
      * @param bindAddr  The local address to which the ServerSocket should bind.
      * @return A ServerSocket that will listen on a specified port.

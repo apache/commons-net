@@ -31,12 +31,12 @@ import org.apache.commons.net.MalformedServerReplyException;
  * NNTPClient encapsulates all the functionality necessary to post and
  * retrieve articles from an NNTP server.  As with all classes derived
  * from <a href="org.apache.commons.net.SocketClient.html"> SocketClient </a>,
- * you must first connect to the server with 
+ * you must first connect to the server with
  * <a href="org.apache.commons.net.SocketClient.html#connect"> connect </a>
  * before doing anything, and finally
  * <a href="org.apache.commons.net.nntp.NNTP.html#disconnect"> disconnect() </a>
  * after you're completely finished interacting with the server.
- * Remember that the 
+ * Remember that the
  * <a href="org.apache.commons.net.nntp.NNTP.html#isAllowedToPost">
  * isAllowedToPost()</a> method is defined in
  * <a href="org.apache.commons.net.nntp.NNTP.html"> NNTP </a>.
@@ -67,11 +67,11 @@ import org.apache.commons.net.MalformedServerReplyException;
  * <p>
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
- * can also throw a 
+ * can also throw a
  * <a href="org.apache.commons.net.MalformedServerReplyException.html">
  * MalformedServerReplyException </a>, which is a subclass
  * of IOException.  A MalformedServerReplyException will be thrown when
- * the reply received from the server deviates enough from the protocol 
+ * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite
  * attempts to be as lenient as possible.
  * <p>
@@ -324,7 +324,7 @@ public class NNTPClient extends NNTP
      * you do not follow these requirements, your program will not work
      * properly.
      * <p>
-     * @param articleId  The unique article identifier of the article to 
+     * @param articleId  The unique article identifier of the article to
      *     retrieve.  If this parameter is null, the currently selected
      *     article is retrieved.
      * @param pointer    A parameter through which to return the article's
@@ -383,7 +383,7 @@ public class NNTPClient extends NNTP
      * you do not follow these requirements, your program will not work
      * properly.
      * <p>
-     * @param articleNumber  The number of the the article to 
+     * @param articleNumber  The number of the the article to
      *     retrieve.
      * @param pointer    A parameter through which to return the article's
      *   number and unique id.  The articleId field cannot always be trusted
@@ -775,7 +775,7 @@ public class NNTPClient extends NNTP
      * on the server.  Use this command to select an article before retrieving
      * it, or to obtain an article's unique identifier given its number.
      * <p>
-     * @param articleNumber The number of the article to select from the 
+     * @param articleNumber The number of the article to select from the
      *       currently selected newsgroup.
      * @param pointer    A parameter through which to return the article's
      *   number and unique id.  Although the articleId field cannot always
@@ -922,7 +922,7 @@ public class NNTPClient extends NNTP
 
         return __readNewsgroupListing();
     }
-    
+
     /**
      * An overloaded listNewsgroups() command that allows us to
      * specify with a pattern what groups we want to list. Wraps the
@@ -930,12 +930,12 @@ public class NNTPClient extends NNTP
      * <p>
      * @param wildmat a pseudo-regex pattern (cf. RFC 2980)
      * @return An array of NewsgroupInfo instances containing the information
-     *    for each newsgroup served by the NNTP server corresponding to the 
-     *    supplied pattern.   If no such newsgroups are served, a zero length 
+     *    for each newsgroup served by the NNTP server corresponding to the
+     *    supplied pattern.   If no such newsgroups are served, a zero length
      *    array will be returned.  If the command fails, null will be returned.
      * @throws IOException
      */
-    public NewsgroupInfo[] listNewsgroups(String wildmat) throws IOException 
+    public NewsgroupInfo[] listNewsgroups(String wildmat) throws IOException
     {
         if(!NNTPReply.isPositiveCompletion(listActive(wildmat)))
             return null;
@@ -946,7 +946,7 @@ public class NNTPClient extends NNTP
     /***
      * List all new newsgroups added to the NNTP server since a particular
      * date subject to the conditions of the specified query.  If no new
-     * newsgroups were added, a zero length array will be returned.  If the 
+     * newsgroups were added, a zero length array will be returned.  If the
      * command fails, null will be returned.
      * <p>
      * @param query  The query restricting how to search for new newsgroups.
@@ -977,7 +977,7 @@ public class NNTPClient extends NNTP
     /***
      * List all new articles added to the NNTP server since a particular
      * date subject to the conditions of the specified query.  If no new
-     * new news is found, a zero length array will be returned.  If the 
+     * new news is found, a zero length array will be returned.  If the
      * command fails, null will be returned.  You must add at least one
      * newsgroup to the query, else the command will fail.  Each String
      * in the returned array is a unique message identifier including the
@@ -1042,7 +1042,7 @@ public class NNTPClient extends NNTP
      * writer = client.postArticle();
      * if(writer == null) // failure
      *   return false;
-     * header = new SimpleNNTPHeader("foobar@foo.com", "Just testing"); 
+     * header = new SimpleNNTPHeader("foobar@foo.com", "Just testing");
      * header.addNewsgroup("alt.test");
      * writer.write(header.toString());
      * writer.write("This is just a test");
@@ -1134,7 +1134,7 @@ public class NNTPClient extends NNTP
     {
         return NNTPReply.isPositiveCompletion(quit());
     }
-    
+
 
     /**
      * Log into a news server by sending the AUTHINFO USER/AUTHINFO
@@ -1147,15 +1147,15 @@ public class NNTPClient extends NNTP
      * @throws IOException
      */
     public boolean authenticate(String username, String password)
-        throws IOException 
+        throws IOException
     {
         int replyCode = authinfoUser(username);
 
-        if (replyCode == NNTPReply.MORE_AUTH_INFO_REQUIRED) 
+        if (replyCode == NNTPReply.MORE_AUTH_INFO_REQUIRED)
             {
                 replyCode = authinfoPass(password);
-                        
-                if (replyCode == NNTPReply.AUTHENTICATION_ACCEPTED) 
+
+                if (replyCode == NNTPReply.AUTHENTICATION_ACCEPTED)
                     {
                         _isAllowedToPost = true;
                         return true;
@@ -1165,10 +1165,10 @@ public class NNTPClient extends NNTP
     }
 
     /***
-     * Private implementation of XOVER functionality.  
-     * 
+     * Private implementation of XOVER functionality.
+     *
      * See <a href="org.apache.commons.nntp.NNTP.html#xover">
-     * for legal agument formats. Alternatively, read RFC 2980 :-) 
+     * for legal agument formats. Alternatively, read RFC 2980 :-)
      * <p>
      * @param articleRange
      * @return Returns a DotTerminatedMessageReader if successful, null
@@ -1176,7 +1176,7 @@ public class NNTPClient extends NNTP
      * @exception IOException
      */
     private Reader __retrieveArticleInfo(String articleRange)
-        throws IOException 
+        throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(xover(articleRange)))
             return null;
@@ -1191,7 +1191,7 @@ public class NNTPClient extends NNTP
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException
      */
-    public Reader retrieveArticleInfo(int articleNumber) throws IOException 
+    public Reader retrieveArticleInfo(int articleNumber) throws IOException
     {
         return __retrieveArticleInfo(Integer.toString(articleNumber));
     }
@@ -1200,25 +1200,25 @@ public class NNTPClient extends NNTP
      * Return article headers for all articles between lowArticleNumber
      * and highArticleNumber, inclusively.
      * <p>
-     * @param lowArticleNumber 
-     * @param highArticleNumber 
+     * @param lowArticleNumber
+     * @param highArticleNumber
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException
      */
     public Reader retrieveArticleInfo(int lowArticleNumber,
                                       int highArticleNumber)
-        throws IOException 
+        throws IOException
     {
         return
-            __retrieveArticleInfo(new String(lowArticleNumber + "-" + 
+            __retrieveArticleInfo(new String(lowArticleNumber + "-" +
                                              highArticleNumber));
     }
 
     /***
-     * Private implementation of XHDR functionality.  
-     * 
+     * Private implementation of XHDR functionality.
+     *
      * See <a href="org.apache.commons.nntp.NNTP.html#xhdr">
-     * for legal agument formats. Alternatively, read RFC 1036. 
+     * for legal agument formats. Alternatively, read RFC 1036.
      * <p>
      * @param header
      * @param articleRange
@@ -1227,14 +1227,14 @@ public class NNTPClient extends NNTP
      * @exception IOException
      */
     private Reader __retrieveHeader(String header, String articleRange)
-        throws IOException 
+        throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(xhdr(header, articleRange)))
             return null;
 
         return new DotTerminatedMessageReader(_reader_);
     }
-                        
+
     /**
      * Return an article header for a specified post.
      * <p>
@@ -1244,28 +1244,28 @@ public class NNTPClient extends NNTP
      * @throws IOException
      */
     public Reader retrieveHeader(String header, int articleNumber)
-        throws IOException 
+        throws IOException
     {
         return __retrieveHeader(header, Integer.toString(articleNumber));
     }
-                        
+
     /**
      * Return an article header for all articles between lowArticleNumber
      * and highArticleNumber, inclusively.
      * <p>
      * @param header
-     * @param lowArticleNumber 
-     * @param highArticleNumber 
+     * @param lowArticleNumber
+     * @param highArticleNumber
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException
      */
     public Reader retrieveHeader(String header, int lowArticleNumber,
                                  int highArticleNumber)
-        throws IOException 
+        throws IOException
     {
         return
             __retrieveHeader(header,
-                             new String(lowArticleNumber + "-" + 
+                             new String(lowArticleNumber + "-" +
                                         highArticleNumber));
     }
 }

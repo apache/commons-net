@@ -22,7 +22,7 @@ import java.io.PushbackInputStream;
  * This class wraps an input stream, replacing all occurrences
  * of &lt;CR&gt;&lt;LF&gt; (carriage return followed by a linefeed),
  * which is the NETASCII standard for representing a newline, with the
- * local line separator representation.  You would use this class to 
+ * local line separator representation.  You would use this class to
  * implement ASCII file transfers requiring conversion from NETASCII.
  * <p>
  * <p>
@@ -187,7 +187,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      * Returns the number of bytes that can be read without blocking EXCEPT
      * when newline conversions have to be made somewhere within the
      * available block of bytes.  In other words, you really should not
-     * rely on the value returned by this method if you are trying to avoid 
+     * rely on the value returned by this method if you are trying to avoid
      * blocking.
      ***/
     public int available() throws IOException
