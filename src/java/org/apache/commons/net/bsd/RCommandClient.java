@@ -61,8 +61,8 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+
 import org.apache.commons.net.io.SocketInputStream;
-import org.apache.commons.net.SocketClient;
 
 /***
  * RCommandClient is very similar to
