@@ -36,7 +36,7 @@ import java.util.List;
  * which required a bigger memory hit.
  * 
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileList.java,v 1.11 2004/02/29 10:26:55 scolebourne Exp $
+ * @version $Id: FTPFileList.java,v 1.12 2004/04/06 13:31:59 brekke Exp $
  * @see org.apache.commons.net.ftp.FTPClient#createFileList
  * @see org.apache.commons.net.ftp.FTPFileIterator
  * @see org.apache.commons.net.ftp.FTPFileEntryParser

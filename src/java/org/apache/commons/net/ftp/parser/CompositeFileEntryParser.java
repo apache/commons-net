@@ -30,41 +30,41 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
  */
 public class CompositeFileEntryParser extends FTPFileEntryParserImpl
 {
-	private final FTPFileEntryParser[] ftpFileEntryParsers;
-	private FTPFileEntryParser cachedFtpFileEntryParser;
+    private final FTPFileEntryParser[] ftpFileEntryParsers;
+    private FTPFileEntryParser cachedFtpFileEntryParser;
 
-	public CompositeFileEntryParser(FTPFileEntryParser[] ftpFileEntryParsers)
-	{
-		super();
+    public CompositeFileEntryParser(FTPFileEntryParser[] ftpFileEntryParsers)
+    {
+        super();
 
-		this.cachedFtpFileEntryParser = null;
-		this.ftpFileEntryParsers = ftpFileEntryParsers;
-	}
+        this.cachedFtpFileEntryParser = null;
+        this.ftpFileEntryParsers = ftpFileEntryParsers;
+    }
 
-	public FTPFile parseFTPEntry(String listEntry)
-	{
+    public FTPFile parseFTPEntry(String listEntry)
+    {
         if (cachedFtpFileEntryParser != null)
-		{
-			FTPFile matched = cachedFtpFileEntryParser.parseFTPEntry(listEntry);
-			if (matched != null)
-			{
-				return matched;
-			}
-		} 
-		else
-		{
-			for (int iterParser=0; iterParser < ftpFileEntryParsers.length; iterParser++)
-			{
-				FTPFileEntryParser ftpFileEntryParser = ftpFileEntryParsers[iterParser];
+        {
+            FTPFile matched = cachedFtpFileEntryParser.parseFTPEntry(listEntry);
+            if (matched != null)
+            {
+                return matched;
+            }
+        } 
+        else
+        {
+            for (int iterParser=0; iterParser < ftpFileEntryParsers.length; iterParser++)
+            {
+                FTPFileEntryParser ftpFileEntryParser = ftpFileEntryParsers[iterParser];
 	
-				FTPFile matched = ftpFileEntryParser.parseFTPEntry(listEntry);
-				if (matched != null)
-				{
-					cachedFtpFileEntryParser = ftpFileEntryParser;
-					return matched;
-				}
-			}
-		}
+                FTPFile matched = ftpFileEntryParser.parseFTPEntry(listEntry);
+                if (matched != null)
+                {
+                    cachedFtpFileEntryParser = ftpFileEntryParser;
+                    return matched;
+                }
+            }
+        }
         return null;
-	}
+    }
 }

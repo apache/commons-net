@@ -67,7 +67,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      */
     public RegexFTPFileEntryParserImpl(String regex)
     {
-		super();
+        super();
 
         try
         {
@@ -77,7 +77,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
         catch (MalformedPatternException e) 
         {
             throw new IllegalArgumentException (
-                "Unparseable regex supplied:  " + regex);
+                                                "Unparseable regex supplied:  " + regex);
         }
     }
 

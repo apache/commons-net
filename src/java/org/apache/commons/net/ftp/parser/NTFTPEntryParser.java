@@ -22,7 +22,7 @@ import org.apache.commons.net.ftp.FTPFile;
  * 
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: NTFTPEntryParser.java,v 1.13 2004/04/06 04:40:57 scohen Exp $
+ * @version $Id: NTFTPEntryParser.java,v 1.14 2004/04/06 13:31:59 brekke Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class NTFTPEntryParser extends RegexFTPFileEntryParserImpl
@@ -113,10 +113,10 @@ public class NTFTPEntryParser extends RegexFTPFileEntryParserImpl
             {
                 ap = Calendar.PM;
                 if (hour != 12) {
-                	hour += 12;
+                    hour += 12;
                 }
             } else if (hour == 12) {
-           		hour = 0;
+                hour = 0;
             }
 
             cal.set(Calendar.SECOND, 0);
@@ -126,7 +126,7 @@ public class NTFTPEntryParser extends RegexFTPFileEntryParserImpl
             // since the latter has proven to be unreliable.
             // see bug 27085
             
-//          cal.set(Calendar.AM_PM, ap);
+            //          cal.set(Calendar.AM_PM, ap);
             cal.set(Calendar.HOUR_OF_DAY, hour);
             
             cal.getTimeInMillis();

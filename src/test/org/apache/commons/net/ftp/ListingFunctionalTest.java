@@ -27,7 +27,7 @@ import junit.framework.TestSuite;
 /**
  * A functional test suite for checking that site listings work.  
  * @author <a href="mailto:brekke@apache.org">Jeffrey D. Brekke</a>
- * @version $Id: ListingFunctionalTest.java,v 1.4 2004/04/06 04:40:57 scohen Exp $
+ * @version $Id: ListingFunctionalTest.java,v 1.5 2004/04/06 13:31:59 brekke Exp $
  */
 public class ListingFunctionalTest extends TestCase
 {

@@ -19,7 +19,8 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 /**
  * The interface describes a factory for creating FTPFileEntryParsers
  */
-public interface FTPFileEntryParserFactory {
+public interface FTPFileEntryParserFactory
+{
     /**
      * Implementation should be a method that decodes the
      * supplied key and creates an object implementing the
@@ -35,6 +36,5 @@ public interface FTPFileEntryParserFactory {
      */
     public FTPFileEntryParser createFileEntryParser(String key) 
         throws ParserInitializationException;
-
 
 }
