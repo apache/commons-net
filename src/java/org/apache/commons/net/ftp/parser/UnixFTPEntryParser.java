@@ -25,7 +25,7 @@ import org.apache.commons.net.ftp.FTPFile;
  * DefaultFTPListParser, but adapted to use regular expressions and to fit the
  * new FTPFileEntryParser interface.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: UnixFTPEntryParser.java,v 1.16 2004/04/22 03:27:19 scohen Exp $
+ * @version $Id: UnixFTPEntryParser.java,v 1.17 2004/06/22 02:30:33 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
@@ -57,7 +57,7 @@ public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
      *        state)
      */
     private static final String REGEX =
-        "([bcdlf-])"
+        "([bcdlfmpSs-])"
         + "(((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-])))\\s+"
         + "(\\d+)\\s+"
         + "(\\S+)\\s+"
@@ -115,6 +115,7 @@ public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
             String name = group(25);
             String endtoken = group(26);
 
+            // bcdlfmpSs-
             switch (typeStr.charAt(0))
             {
             case 'd':
@@ -127,8 +128,12 @@ public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
             case 'c':
                 isDevice = true;
                 // break; - fall through
+            case 'f':
+            case '-':
+            	type = FTPFile.FILE_TYPE;
+            	break;
             default:
-                type = FTPFile.FILE_TYPE;
+                type = FTPFile.UNKNOWN_TYPE;
             }
 
             file.setType(type);
