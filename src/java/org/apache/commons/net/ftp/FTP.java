@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.InetAddress;
+import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.Vector;
 import org.apache.commons.net.MalformedServerReplyException;
@@ -432,8 +433,22 @@ public class FTP extends TelnetClient
         }
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
-        _controlOutput.write(message = __commandBuffer.toString());
+        try{
+	    _controlOutput.write(message = __commandBuffer.toString());
         _controlOutput.flush();
+        }
+        catch (SocketException e)
+        {
+            if (!isConnected() || _socket_ == null || !_socket_.isConnected())
+            {
+                throw new FTPConnectionClosedException("Connection unexpectedly closed.");
+            }
+            else
+            {
+                throw e;
+            }
+        }
+	
 
         if (_commandSupport_.getListenerCount() > 0)
             _commandSupport_.fireCommandSent(command, message);
