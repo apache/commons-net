@@ -253,9 +253,13 @@ public class FTPClient extends FTP
     private long __restartOffset;
     private FTPFileEntryParserFactory __parserFactory;
 
-    // __systemName is a cached values that should not be referenced directly
+    // __systemName is a cached value that should not be referenced directly
     // except when assigned in getSystemName and __initDefaults.
     private String __systemName;
+
+    // __entryParser is a cached value that should not be referenced directly
+    // except when assigned in listFiles(String, String) and __initDefaults.
+    private FTPFileEntryParser __entryParser;
 
     /***
      * Default FTPClient constructor.  Creates a new FTPClient instance
@@ -286,6 +290,7 @@ public class FTPClient extends FTP
         __fileTransferMode   = FTP.STREAM_TRANSFER_MODE;
         __restartOffset      = 0;
         __systemName         = null;
+        __entryParser        = null;
     }
 
     private String __parsePathname(String reply)
@@ -2054,9 +2059,11 @@ public class FTPClient extends FTP
             parserKey = getSystemName();
         }
 
-        FTPFileEntryParser parser = 
-          __parserFactory.createFileEntryParser(parserKey);
-        FTPFileList list = createFileList(pathname, parser);
+        // We cache the value to avoid creation of a new object every
+        // time a file listing is generated.
+        if(__entryParser == null)
+            __entryParser =  __parserFactory.createFileEntryParser(parserKey);
+        FTPFileList list = createFileList(pathname, __entryParser);
         return list.getFiles();
     }
 
