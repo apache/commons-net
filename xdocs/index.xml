@@ -26,21 +26,22 @@
  
    <section name="Jakarta Commons Net">
    <p>
-     This is an Internet protocol suite Java library originally developed by ORO, Inc.  
-     The purpose of the library is to provide fundamental protocol 
-     access, not higher-level abstractions. Therefore, some of the 
-     design violates object-oriented design principles. Our philosophy 
-     is to make the global functionality of a protocal accesible (e.g., 
-     TFTP send file and receive file) when possible, but also provide 
-     access to the fundamental protocols where applicable so that the 
-     programmer may construct his own custom implementations (e.g, the 
-     TFTP packet classes and the TFTP packet send and receive methods 
-     are exposed). 
+     Jakarta Commons Net implements the client side of many basic
+     Internet protocols.  The purpose of the library is to provide
+     fundamental protocol access, not higher-level
+     abstractions. Therefore, some of the design violates
+     object-oriented design principles. Our philosophy is to make the
+     global functionality of a protocol accessible (e.g., TFTP send
+     file and receive file) when possible, but also provide access to
+     the fundamental protocols where applicable so that the programmer
+     may construct his own custom implementations (e.g, the TFTP
+     packet classes and the TFTP packet send and receive methods are
+     exposed).
    </p>
    </section>
    <section name="Features">
    <p>
-     Supported protocols include:
+     Supported protocols are:
      <ul>
        <li>Finger</li>
        <li>Whois</li> 
@@ -58,12 +59,12 @@
    </section>
    <section name="Background">
    <p>
-    NetComponents was originally a commercial product, 
-    but after ORO dissolved, it was continued to be made available for 
-    those who found it useful. However, no updates have been made since 
-    version 1.3.8, released in 1998. Now that certain contract obligations 
-    have expired, it is possible to make the source code freely available 
-    under the The Apache Software License.
+    Jakarta Commons Net started as a commercial Java library called
+    NetComponents, originally developed by ORO, Inc. in the early
+    days of Java.  After its 1.3.8 release, the source code was
+    donated to the Apache Software Foundation and made available under
+    the Apache License.  Since then, many programmers have contributed
+    to the continued development of Jakarta Commons Net.
    </p>
    </section>
 
