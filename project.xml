@@ -4,7 +4,7 @@
   <pomVersion>3</pomVersion>
   <name>Jakarta Commons/Net</name>
   <id>commons-net</id>
-  <currentVersion>1.1.0-dev</currentVersion>
+  <currentVersion>1.2.0-dev</currentVersion>
   <organization>
     <name>Apache Software Foundation</name>
     <url>http://jakarta.apache.org/</url>

@@ -6,7 +6,7 @@
   </properties>
 
   <body>
-    <release version="1.1.0-dev" date="In CVS">
+    <release version="1.2.0-dev" date="In CVS">
     </release>
     <release version="1.1.0" date="October 23, 2003">
       <action dev="dfs" type="add">
