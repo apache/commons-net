@@ -63,8 +63,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * @author <a href="mailto:scohen@scohen@apache.org">Steve Cohen</a>
- * @versionn $Id: UnixFTPEntryParserTest.java,v 1.2 2003/03/02 19:36:44 scohen Exp $
+ * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
+ * @versionn $Id: UnixFTPEntryParserTest.java,v 1.3 2003/03/02 19:47:00 scohen Exp $
  */
 public class UnixFTPEntryParserTest extends FTPParseTestFramework
 {

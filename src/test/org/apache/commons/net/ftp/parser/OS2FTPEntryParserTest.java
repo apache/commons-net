@@ -59,8 +59,8 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
- * @author <a href="mailto:scohen@scohen@apache.org">Steve Cohen</a>
- * @version $Id: OS2FTPEntryParserTest.java,v 1.2 2003/03/02 19:36:44 scohen Exp $
+ * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
+ * @version $Id: OS2FTPEntryParserTest.java,v 1.3 2003/03/02 19:47:00 scohen Exp $
  */
 public class OS2FTPEntryParserTest extends FTPParseTestFramework
 {
