@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project basedir="." name="commons-net" default="jar">
+
+  <property file="build.properties"/>
   
   <property name="defaulttargetdir" value="target"></property> 
   <property name="classesdir" value="target/classes"></property>
@@ -14,6 +16,10 @@
 
     <condition property="noget">
       <equals arg2="only" arg1="${build.sysclasspath}"></equals>
+    </condition>
+
+    <condition property="useproxy">
+      <equals arg1="${proxy.use}" arg2="on" />
     </condition>
   </target>
     
@@ -142,10 +148,17 @@
  
   </target>
 
-  <target name="get-deps" depends="init" unless="noget">
+  <!-- Allow get to work with a proxy -->
+  <target name="setproxy"  if="useproxy" depends="init">
+    <taskdef name="setproxy"
+      classname="org.apache.tools.ant.taskdefs.optional.net.SetProxy" />
+    <setproxy proxyhost="${proxy.host}" proxyport="${proxy.port}"/>
+  </target>
+
+  <target name="get-deps" depends="setproxy,init" unless="noget">
   
     <mkdir dir="lib"></mkdir>
-    
+
     <get usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/oro/jars/oro-2.0.6.jar" dest="lib/oro-2.0.6.jar"></get>
     <get usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/junit/jars/junit-3.7.jar" dest="lib/junit-3.7.jar"></get>
   
