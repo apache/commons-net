@@ -54,6 +54,8 @@ package org.apache.commons.net.ftp.parser;
  * <http://www.apache.org/>.
  */
  
+import java.io.ByteArrayInputStream;
+
 import junit.framework.TestSuite;
 
 import org.apache.commons.net.ftp.FTPFile;
@@ -61,7 +63,8 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: VMSFTPEntryParserTest.java,v 1.4 2003/03/03 15:25:56 brekke Exp $
+ * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
+ * @version $Id: VMSFTPEntryParserTest.java,v 1.5 2003/07/29 02:35:35 dfs Exp $
  */
 public class VMSFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -80,11 +83,11 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     
     private static final String[] goodsamples = 
     {
-
+		"Directory USER1:[TEMP]\r\n\r\n",
         "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)", 
+        "1-JUN.LIS;3              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)", 
         "1-JUN.LIS;2              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)", 
-        "1-JUN.LIS;2              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)", 
-        "DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (,RWED,RWED,RE)", 
+        "DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [TRANSLATED]     (,RWED,RWED,RE)", 
         "120196.TXT;1           118/126        14-APR-1997 12:45:27  [GROUP,OWNER]    (RWED,,RWED,RE)", 
         "30CHARBAR.TXT;1         11/18          2-JUN-1998 08:38:42  [GROUP,OWNER]    (RWED,RWED,RWED,RE)", 
         "A.;2                    18/18          1-JUL-1998 08:43:20  [GROUP,OWNER]    (RWED,RWED,RWED,RE)", 
@@ -93,8 +96,9 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         "UNARCHIVE.COM;1          2/15          7-JUL-1997 16:37:45  [POSTWARE,LP]    (RWE,RWE,RWE,RE)",
         "UNXMERGE.COM;15          1/15         20-AUG-1996 13:59:50  [POSTWARE,LP]    (RWE,RWE,RWE,RE)",
         "UNXTEMP.COM;7            1/15         15-AUG-1996 14:10:38  [POSTWARE,LP]    (RWE,RWE,RWE,RE)",
-        "UNZIP_AND_ATTACH_FILES.COM;12\r\n                        14/15         24-JUL-2002 14:35:40  [POSTWARE,LP]    (RWE,RWE,RWE,RE)",
-        "UNZIP_AND_ATTACH_FILES.SAV;1\r\n                        14/15         17-JAN-2002 11:13:53  [POSTWARE,LP]    (RWE,RWED,RWE,RE)"        
+        "UNZIP_AND_ATTACH_FILES.COM;12\r\n                        14/15         24-JUL-2002 14:35:40  [TRANSLATED]    (RWE,RWE,RWE,RE)",
+        "UNZIP_AND_ATTACH_FILES.SAV;1\r\n                        14/15         17-JAN-2002 11:13:53  [POSTWARE,LP]    (RWE,RWED,RWE,RE)",
+		"\r\nTotal 14 files"        
     };
 
     /**
@@ -127,6 +131,22 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         assertEquals("OWNER", 
                      dir.getUser());
         checkPermisions(dir);
+        
+        
+        dir = getParser().parseFTPEntry("DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [TRANSLATED]    (RWED,RWED,RWED,RE)");
+        assertTrue("Should be a directory.", 
+                           dir.isDirectory());
+        assertEquals("DATA.DIR", 
+                             dir.getName());
+        assertEquals(512, 
+                             dir.getSize());
+        assertEquals("Tue Jun 02 07:32:04 1998", 
+                             df.format(dir.getTimestamp().getTime()));
+        assertEquals(null, 
+                     dir.getGroup());
+        assertEquals("TRANSLATED", 
+                     dir.getUser());
+        checkPermisions(dir);
     }
 
     /**
@@ -146,6 +166,22 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         assertEquals("GROUP", 
                      file.getGroup());
         assertEquals("OWNER", 
+                     file.getUser());
+        checkPermisions(file);
+        
+        
+        file = getParser().parseFTPEntry("1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [TRANSLATED]    (RWED,RWED,RWED,RE)");
+        assertTrue("Should be a file.", 
+                   file.isFile());
+        assertEquals("1-JUN.LIS", 
+                     file.getName());
+        assertEquals(9 * 512, 
+                     file.getSize());
+        assertEquals("Tue Jun 02 07:32:04 1998", 
+                     df.format(file.getTimestamp().getTime()));
+        assertEquals(null, 
+                     file.getGroup());
+        assertEquals("TRANSLATED", 
                      file.getUser());
         checkPermisions(file);
     }
@@ -221,4 +257,35 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     {
         return(new TestSuite(VMSFTPEntryParserTest.class));
     }       
+	
+	public void testBadListing() throws Exception {
+		super.testBadListing();
+	}
+
+	public void testGoodListing() throws Exception {
+		String[] goodsamples = getGoodListing();
+        String listing = "";
+           
+        for (int i = 0; i < goodsamples.length; i++) {
+            listing += goodsamples[i] + "\r\n";    
+        }
+        
+        byte[] bytes = listing.getBytes();
+        ByteArrayInputStream listingStream = new ByteArrayInputStream(bytes);
+        
+        FTPFile[] files = new VMSFTPEntryParser(true).parseFileList(listingStream);
+
+        System.out.println(files.length);
+        for (int index = 0; index < files.length; index++) {
+            System.out.println(files[index].getName());
+        }
+        
+        listingStream.reset();
+        files = new VMSFTPEntryParser(false).parseFileList(listingStream);
+        
+        System.out.println(files.length);
+        for (int index = 0; index < files.length; index++) {
+            System.out.println(files[index].getName());
+        }
+	}
 }

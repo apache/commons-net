@@ -55,8 +55,13 @@ package org.apache.commons.net.ftp.parser;
  */
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileListParserImpl;
 
@@ -112,7 +117,8 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * 
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.5 2003/05/18 04:03:17 brekke Exp $
+ * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
+ * @version $Id: VMSFTPEntryParser.java,v 1.6 2003/07/29 02:35:34 dfs Exp $
  */
 public class VMSFTPEntryParser extends FTPFileListParserImpl
 {
@@ -139,8 +145,8 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
         + MONTHS 
         + "-([0-9]{4})\\s*"
         + "((?:[01]\\d)|(?:2[0-3])):([012345]\\d):([012345]\\d)\\s*"
-        + "\\[([0-9$A-Za-z_]+),([0-9$a-zA-Z_]+)\\]\\s*" 
-        + "(\\([a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*\\))";
+        + "\\[(([0-9$A-Za-z_]+)|([0-9$A-Za-z_]+),([0-9$a-zA-Z_]+))\\]\\s*" 
+        + "\\([a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*\\)";
 
 
     /**
@@ -156,7 +162,8 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
     {
         this(false);
     }
-    
+
+
     /**
      * Constructor for a VMSFTPEntryParser object.  Sets the versioning member 
      * to the supplied value.
@@ -173,6 +180,68 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
         super(REGEX);
         this.versioning = versioning;
     }
+
+
+    /***
+     * Parses an FTP server file listing and converts it into a usable format
+     * in the form of an array of <code> FTPFile </code> instances.  If the
+     * file list contains no files, <code> null </code> should be
+     * returned, otherwise an array of <code> FTPFile </code> instances
+     * representing the files in the directory is returned.
+     * <p>
+     * @param listStream The InputStream from which the file list should be
+     *        read.
+     * @return The list of file information contained in the given path.  null
+     *     if the list could not be obtained or if there are no files in
+     *     the directory.
+     * @exception IOException  If an I/O error occurs reading the listStream.
+     ***/
+    public FTPFile[] parseFileList(InputStream listStream) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(listStream));
+        String listing = null;
+        FTPFile[] files;
+
+        String line = reader.readLine();
+        while (line != null) {
+            if ((line.trim().equals("")) ||
+                (line.startsWith("Directory")) ||
+                (line.startsWith("Total"))
+               ) {
+                line = reader.readLine();
+                continue;
+            }
+            if (listing == null) {
+                listing = line;
+            } else {
+                listing += "\r\n" + line;
+            }
+            line = reader.readLine();
+        }
+        reader.close();
+
+        byte[] bytes = listing.getBytes();
+        ByteArrayInputStream listingStream = new ByteArrayInputStream(bytes);
+        
+        if (versioning) {
+            files = super.parseFileList(listingStream);
+        } else {
+            FTPFile[] tempFiles = super.parseFileList(listingStream);
+            HashMap filesHash = new HashMap();
+            String fileName;
+            
+            for (int index = 0; index < tempFiles.length; index++) {
+                fileName = tempFiles[index].getName();
+                if (!filesHash.containsKey(fileName)) {
+                    filesHash.put(fileName, (FTPFile) tempFiles[index]);
+                }
+            }
+            
+            files = (FTPFile[]) filesHash.values().toArray(new FTPFile[0]);
+        }
+        
+        return files;
+    }
+
 
     /**
      * Parses a line of a VMS FTP server file listing and converts it into a
@@ -201,9 +270,25 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
             String hr = group(6);
             String min = group(7);
             String sec = group(8);
-            String grp = group(9);
-            String owner = group(10);
+            String owner = group(9);
+            String[] array = owner.split(",");
+            String grp;
+            String user;
 
+            switch (array.length) {
+                case 1:
+                    grp = null;
+                    user = array[0];
+                    break;
+                case 2:
+                    grp = array[0];
+                    user = array[1];
+                    break;
+                default:
+                    grp = null;
+                    user = null;
+            }
+            
             if (name.lastIndexOf(".DIR") != -1) 
             {
                 f.setType(FTPFile.DIRECTORY_TYPE);
@@ -243,7 +328,7 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
             f.setTimestamp(cal);
 
             f.setGroup(grp);
-            f.setUser(owner);
+            f.setUser(user);
             //set group and owner
             //Since I don't need the persmissions on this file (RWED), I'll 
             //leave that for further development. 'Cause it will be a bit 
@@ -252,6 +337,7 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
         }
         return null;
     }
+
 
     /**
      * Reads the next entry using the supplied BufferedReader object up to
@@ -265,7 +351,6 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
      * @return A string representing the next ftp entry or null if none found.
      * @exception IOException thrown on any IO Error reading from the reader.
      */
-    
     public String readNextEntry(BufferedReader reader) throws IOException
     {
         String line = reader.readLine();
@@ -279,6 +364,6 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
             }
             line = reader.readLine();
         }
-        return (entry.length() == 0  ? null : entry.toString());
+        return (entry.length() == 0 ? null : entry.toString());
     }
 }
