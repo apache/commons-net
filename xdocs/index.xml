@@ -71,7 +71,15 @@
     NetComponents 1.3.8.
    </p>
    </section>
-
+   <section name="Further Information">
+	   <p>
+		   For more info, see the JavaDoc, or look at some of the following articles:
+		   <ul>
+			   <li><a href="http://www.informit.com/guides/content.asp?g=java&seqNum=40">http://www.informit.com/guides/content.asp?g=java&seqNum=40</a>
+				   <li><a href="http://www.onjava.com/pub/a/onjava/2003/06/25/commons.html?page=3">http://www.onjava.com/pub/a/onjava/2003/06/25/commons.html?page=3</a>
+				   </ul>
+				   </p>
+   </section>
 </body>
 </document>
 
