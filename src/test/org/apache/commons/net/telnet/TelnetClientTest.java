@@ -15,6 +15,8 @@
  */
 package org.apache.commons.net.telnet;
 import junit.framework.TestCase;
+
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PipedInputStream;
@@ -29,12 +31,12 @@ import java.io.PipedOutputStream;
 public class TelnetClientTest 
 extends TestCase implements TelnetNotificationHandler
 {
-    protected TelnetTestSimpleServer server1;
-    protected TelnetTestSimpleServer server2;
-    protected TelnetTestSimpleServer server3;
-    protected TelnetClient tc1;
-    protected TelnetClient tc2;
-    protected TelnetClient tc3;
+    private static final int CONNECTIONS = 5;
+    protected TelnetTestSimpleServer[] servers =
+        new TelnetTestSimpleServer[CONNECTIONS];
+    protected TelnetClient[] clients = 
+        new TelnetClient[CONNECTIONS];
+    
     protected int numdo = 0;
     protected int numdont = 0;
     protected int numwill = 0;
@@ -51,48 +53,86 @@ extends TestCase implements TelnetNotificationHandler
     /***
      * open connections needed for the tests for the test.
      ***/
-    protected void openConnections() throws Exception
+    protected void setUp() throws Exception 
     {
-        server1 = new TelnetTestSimpleServer(3333);
-        server2 = new TelnetTestSimpleServer(3334);
-        server3 = new TelnetTestSimpleServer(3335);
+        super.setUp();
+        for (int port = 3333, socket = 0; socket < CONNECTIONS && port < 4000; port++) 
+        {
+           try {
+               servers[socket] = new TelnetTestSimpleServer(port);
+               switch (socket) {
+               		case 0:
+                        clients[socket] = new TelnetClient();
+               		    break;
+               		case 1:
+                        clients[socket] = new TelnetClient();
+                        TerminalTypeOptionHandler ttopt = 
+                            new TerminalTypeOptionHandler("VT100", false, false, true, false);
+                        EchoOptionHandler echoopt = 
+                            new EchoOptionHandler(true, false, true, false);
+                        SuppressGAOptionHandler gaopt = 
+                            new SuppressGAOptionHandler(true, true, true, true);
 
-        tc1 = new TelnetClient();
-        tc2 = new TelnetClient();
-        tc3 = new TelnetClient("ANSI");
-
-        TerminalTypeOptionHandler ttopt = 
-            new TerminalTypeOptionHandler("VT100", false, false, true, false);
-        EchoOptionHandler echoopt = 
-            new EchoOptionHandler(true, false, true, false);
-        SuppressGAOptionHandler gaopt = 
-            new SuppressGAOptionHandler(true, true, true, true);
-
-        tc2.addOptionHandler(ttopt);
-        tc2.addOptionHandler(echoopt);
-        tc2.addOptionHandler(gaopt);
-
-        tc1.connect("127.0.0.1", 3333);
-        tc2.connect("127.0.0.1", 3334);
-        tc3.connect("127.0.0.1", 3335);
-        Thread.sleep(1000);
+                        clients[socket].addOptionHandler(ttopt);
+                        clients[socket].addOptionHandler(echoopt);
+                        clients[socket].addOptionHandler(gaopt);
+               		    break;
+               		case 2:
+                        clients[socket] = new TelnetClient("ANSI");
+               		    break;
+               		case 3:
+                        clients[socket] = new TelnetClient();
+                        clients[socket].setReaderThread(false);
+               		    break;
+               		case 4:
+                        clients[socket] = new TelnetClient();
+                        clients[socket].setReaderThread(true);
+               		    break;
+               }
+               clients[socket].connect("127.0.0.1", port);
+               socket++;
+               System.err.println("opened client-server connection on port " + port);
+           } catch (IOException e) {
+               closeConnection(servers[socket], clients[socket]);
+               System.err.println("failed to open client-server connection on port " + port);
+           }
+       }
+       Thread.sleep(1000);
     }
-    /***
-     * open connections (ReaderThread test).
-     ***/
-    protected void openConnReaderThread() throws Exception
-    {
-        server1 = new TelnetTestSimpleServer(3333);
-        server2 = new TelnetTestSimpleServer(3334);
-
-        tc1 = new TelnetClient();
-        tc1.setReaderThread(false);
-        tc2 = new TelnetClient();
-        tc2.setReaderThread(true);
-
-        tc1.connect("127.0.0.1", 3333);
-        tc2.connect("127.0.0.1", 3334);
-        Thread.sleep(1000);
+    
+    /* 
+     * @throws java.lang.Exception
+     */
+    protected void tearDown() throws Exception {
+        for (int i = CONNECTIONS - 1; i >= 0; i--) {
+            closeConnection(servers[i], clients[i]);
+        }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ie) {
+            //do nothing
+        }
+        super.tearDown();
+    }
+  
+    protected void closeConnection(TelnetTestSimpleServer server, TelnetClient client) {
+        int port = 0;
+        if (client != null) 
+            port = client.getRemotePort();
+        if (server != null) {
+            server.disconnect();
+            server.stop();
+        }
+        try {
+            if (client != null) {
+                client.disconnect();
+            }
+            System.err.println("closed client-server connection on port " + port);
+        } catch (IOException e) {
+            System.err.println("failed to close client-server connection on port " + port);
+            System.err.println("ERROR in closeConnection(), "+ e.getMessage());
+        }
+        
     }
 
     /***
@@ -117,12 +157,10 @@ extends TestCase implements TelnetNotificationHandler
             (byte) TelnetOption.SUPPRESS_GO_AHEAD,
         };
 
-        openConnections();
-
         SimpleOptionHandler hand = new SimpleOptionHandler(550);
         try
         {
-            tc1.addOptionHandler(hand);
+            clients[0].addOptionHandler(hand);
         }
         catch (Exception e)
         {
@@ -131,14 +169,14 @@ extends TestCase implements TelnetNotificationHandler
 
         try
         {
-            tc2.addOptionHandler(hand);
+            clients[1].addOptionHandler(hand);
         }
         catch (Exception e)
         {
             add_invalid_ok2 = true;
         }
 
-        InputStream is1 = server1.getInputStream();
+        InputStream is1 = servers[0].getInputStream();
         Thread.sleep(1000);
         if(is1.available() == 0)
         {
@@ -146,7 +184,7 @@ extends TestCase implements TelnetNotificationHandler
         }
 
         Thread.sleep(1000);
-        InputStream is2 = server2.getInputStream();
+        InputStream is2 = servers[1].getInputStream();
         if(is2.available() == 9)
         {
             is2.read(buffread2);
@@ -156,24 +194,23 @@ extends TestCase implements TelnetNotificationHandler
                  init2_ok = true;
         }
 
-        InputStream is3 = server3.getInputStream();
+        InputStream is3 = servers[2].getInputStream();
         Thread.sleep(1000);
         if(is3.available() == 0)
         {
             connect3_ok = true;
         }
 
-        closeConnections();
 
         assertTrue(connect1_ok);
         assertTrue(connect2_ok);
         assertTrue(connect3_ok);
-        assertTrue(!tc1.getLocalOptionState(TelnetOption.ECHO));
-        assertTrue(!tc1.getRemoteOptionState(TelnetOption.ECHO));
-        assertTrue(!tc2.getLocalOptionState(TelnetOption.ECHO));
-        assertTrue(!tc2.getRemoteOptionState(TelnetOption.ECHO));
-        assertTrue(!tc3.getLocalOptionState(TelnetOption.TERMINAL_TYPE));
-        assertTrue(!tc3.getRemoteOptionState(TelnetOption.TERMINAL_TYPE));
+        assertTrue(!clients[0].getLocalOptionState(TelnetOption.ECHO));
+        assertTrue(!clients[0].getRemoteOptionState(TelnetOption.ECHO));
+        assertTrue(!clients[1].getLocalOptionState(TelnetOption.ECHO));
+        assertTrue(!clients[1].getRemoteOptionState(TelnetOption.ECHO));
+        assertTrue(!clients[2].getLocalOptionState(TelnetOption.TERMINAL_TYPE));
+        assertTrue(!clients[2].getRemoteOptionState(TelnetOption.TERMINAL_TYPE));
         assertTrue(init2_ok);
         assertTrue(add_invalid_ok1);
         assertTrue(add_invalid_ok2);
@@ -267,10 +304,9 @@ extends TestCase implements TelnetNotificationHandler
             (byte) TelnetCommand.IAC, (byte) TelnetCommand.SE,
         };
 
-        openConnections();
 
-        InputStream is1 = server1.getInputStream();
-        OutputStream os1 = server1.getOutputStream();
+        InputStream is1 = servers[0].getInputStream();
+        OutputStream os1 = servers[0].getOutputStream();
         is1.skip(is1.available());
         os1.write(send1);
         os1.flush();
@@ -283,8 +319,8 @@ extends TestCase implements TelnetNotificationHandler
                 negotiation1_ok = true;
         }
 
-        InputStream is2 = server2.getInputStream();
-        OutputStream os2 = server2.getOutputStream();
+        InputStream is2 = servers[1].getInputStream();
+        OutputStream os2 = servers[1].getOutputStream();
         Thread.sleep(1000);
         is2.skip(is2.available());
         os2.write(send2);
@@ -313,8 +349,8 @@ extends TestCase implements TelnetNotificationHandler
             }
         }
 
-        InputStream is3 = server3.getInputStream();
-        OutputStream os3 = server3.getOutputStream();
+        InputStream is3 = servers[2].getInputStream();
+        OutputStream os3 = servers[2].getOutputStream();
         Thread.sleep(1000);
         is3.skip(is3.available());
         os3.write(send3);
@@ -342,21 +378,19 @@ extends TestCase implements TelnetNotificationHandler
             }
         }
 
-        closeConnections();
-
         assertTrue(negotiation1_ok);
         assertTrue(negotiation2_ok);
         assertTrue(negotiation3_ok);
-        assertTrue(!tc1.getLocalOptionState(15));
-        assertTrue(!tc1.getRemoteOptionState(15));
-        assertTrue(!tc1.getLocalOptionState(TelnetOption.TERMINAL_TYPE));
-        assertTrue(!tc2.getLocalOptionState(TelnetOption.ECHO));
-        assertTrue(!tc2.getRemoteOptionState(TelnetOption.ECHO));
-        assertTrue(tc2.getLocalOptionState(TelnetOption.SUPPRESS_GO_AHEAD));
-        assertTrue(!tc2.getRemoteOptionState(TelnetOption.SUPPRESS_GO_AHEAD));
-        assertTrue(tc2.getLocalOptionState(TelnetOption.TERMINAL_TYPE));
-        assertTrue(tc3.getLocalOptionState(TelnetOption.TERMINAL_TYPE));
-        assertTrue(!tc2.getLocalOptionState(TelnetOption.ECHO));
+        assertTrue(!clients[0].getLocalOptionState(15));
+        assertTrue(!clients[0].getRemoteOptionState(15));
+        assertTrue(!clients[0].getLocalOptionState(TelnetOption.TERMINAL_TYPE));
+        assertTrue(!clients[1].getLocalOptionState(TelnetOption.ECHO));
+        assertTrue(!clients[1].getRemoteOptionState(TelnetOption.ECHO));
+        assertTrue(clients[1].getLocalOptionState(TelnetOption.SUPPRESS_GO_AHEAD));
+        assertTrue(!clients[1].getRemoteOptionState(TelnetOption.SUPPRESS_GO_AHEAD));
+        assertTrue(clients[1].getLocalOptionState(TelnetOption.TERMINAL_TYPE));
+        assertTrue(clients[2].getLocalOptionState(TelnetOption.TERMINAL_TYPE));
+        assertTrue(!clients[1].getLocalOptionState(TelnetOption.ECHO));
     }
 
 
@@ -397,10 +431,9 @@ extends TestCase implements TelnetNotificationHandler
             (byte) TelnetOption.ECHO,
         };
 
-        openConnections();
 
-        InputStream is = server2.getInputStream();
-        OutputStream os = server2.getOutputStream();
+        InputStream is = servers[1].getInputStream();
+        OutputStream os = servers[1].getOutputStream();
         Thread.sleep(1000);
         is.skip(is.available());
         os.write(send);
@@ -428,10 +461,8 @@ extends TestCase implements TelnetNotificationHandler
             }
         }
 
-        closeConnections();
-
         assertTrue(negotiation1_ok);
-        assertTrue(!tc2.getLocalOptionState(TelnetOption.ECHO));
+        assertTrue(!clients[1].getLocalOptionState(TelnetOption.ECHO));
     }
 
     /***
@@ -461,16 +492,15 @@ extends TestCase implements TelnetNotificationHandler
 
         byte buffread2b[] = new byte[11];
 
-        openConnections();
 
         numdo = 0;
         numdont = 0;
         numwill = 0;
         numwont = 0;
-        tc2.registerNotifHandler(this);
+        clients[1].registerNotifHandler(this);
 
-        InputStream is1 = server1.getInputStream();
-        OutputStream os1 = server1.getOutputStream();
+        InputStream is1 = servers[0].getInputStream();
+        OutputStream os1 = servers[0].getOutputStream();
         is1.skip(is1.available());
         os1.write(send1);
         os1.flush();
@@ -480,8 +510,8 @@ extends TestCase implements TelnetNotificationHandler
             is1.read(buffread1);
         }
 
-        InputStream is2 = server2.getInputStream();
-        OutputStream os2 = server2.getOutputStream();
+        InputStream is2 = servers[1].getInputStream();
+        OutputStream os2 = servers[1].getOutputStream();
         Thread.sleep(500);
         is2.skip(is2.available());
         os2.write(send2);
@@ -497,8 +527,6 @@ extends TestCase implements TelnetNotificationHandler
                 }
         }
 
-
-        closeConnections();
 
         assertTrue(numdo == 2);
         assertTrue(numdont == 1);
@@ -535,10 +563,8 @@ extends TestCase implements TelnetNotificationHandler
             (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
 
-        openConnections();
-
-        InputStream is = server2.getInputStream();
-        OutputStream os = server2.getOutputStream();
+        InputStream is = servers[1].getInputStream();
+        OutputStream os = servers[1].getOutputStream();
         Thread.sleep(1000);
         is.skip(is.available());
         os.write(send);
@@ -546,7 +572,7 @@ extends TestCase implements TelnetNotificationHandler
         Thread.sleep(1000);
         if(is.available() == 0)
         {
-            tc2.deleteOptionHandler(TelnetOption.SUPPRESS_GO_AHEAD);
+            clients[1].deleteOptionHandler(TelnetOption.SUPPRESS_GO_AHEAD);
             Thread.sleep(1000);
             if(is.available() == 6)
             {
@@ -558,7 +584,7 @@ extends TestCase implements TelnetNotificationHandler
 
         try
         {
-            tc2.deleteOptionHandler(TelnetOption.SUPPRESS_GO_AHEAD);
+            clients[1].deleteOptionHandler(TelnetOption.SUPPRESS_GO_AHEAD);
         }
         catch (Exception e)
         {
@@ -567,21 +593,19 @@ extends TestCase implements TelnetNotificationHandler
 
         try
         {
-            tc2.deleteOptionHandler(550);
+            clients[1].deleteOptionHandler(550);
         }
         catch (Exception e)
         {
             remove_invalid_ok2 = true;
         }
 
-        closeConnections();
-
         assertTrue(remove_ok);
         assertTrue(remove_invalid_ok1);
         assertTrue(remove_invalid_ok2);
-        assertTrue(tc2.getLocalOptionState(TelnetOption.ECHO));
-        assertTrue(!tc2.getLocalOptionState(TelnetOption.SUPPRESS_GO_AHEAD));
-        assertTrue(!tc2.getLocalOptionState(TelnetOption.SUPPRESS_GO_AHEAD));
+        assertTrue(clients[1].getLocalOptionState(TelnetOption.ECHO));
+        assertTrue(!clients[1].getLocalOptionState(TelnetOption.SUPPRESS_GO_AHEAD));
+        assertTrue(!clients[1].getLocalOptionState(TelnetOption.SUPPRESS_GO_AHEAD));
     }
 
 
@@ -602,14 +626,13 @@ extends TestCase implements TelnetNotificationHandler
         inputs[0] = new String (AYT);
         outputs[0] = new String (response);
 
-        openConnections();
 
-        OutputStream os = server3.getOutputStream();
-        InputStream is = server3.getInputStream();
+        OutputStream os = servers[2].getOutputStream();
+        InputStream is = servers[2].getInputStream();
         TelnetTestResponder tr = 
             new TelnetTestResponder(is, os, inputs, outputs, 30000);
         assertNotNull(tr);
-        boolean res1 = tc3.sendAYT(2000);
+        boolean res1 = clients[2].sendAYT(2000);
 
         if(res1 == true)
             ayt_true_ok=true;
@@ -617,12 +640,11 @@ extends TestCase implements TelnetNotificationHandler
         Thread.sleep(1000);
         is.skip(is.available());
 
-        boolean res2 = tc3.sendAYT(2000);
+        boolean res2 = clients[2].sendAYT(2000);
 
         if(res2 == false)
             ayt_false_ok=true;
 
-        closeConnections();
 
         assertTrue(ayt_true_ok);
         assertTrue(ayt_false_ok);
@@ -641,15 +663,14 @@ extends TestCase implements TelnetNotificationHandler
         byte expected2[] = 
         	{ (byte) 't', (byte) 'e', (byte) 's', (byte) 't', (byte) '2' };
 
-        openConnections();
 
         PipedOutputStream po = new PipedOutputStream();
         PipedInputStream pi = new PipedInputStream(po);
 
-        OutputStream os = server1.getOutputStream();
-        OutputStream ostc = tc1.getOutputStream();
+        OutputStream os = servers[0].getOutputStream();
+        OutputStream ostc = clients[0].getOutputStream();
 
-        tc1.registerSpyStream(po);
+        clients[0].registerSpyStream(po);
 
         os.write("test1".getBytes());
         os.flush();
@@ -676,7 +697,7 @@ extends TestCase implements TelnetNotificationHandler
                 test2spy_ok = true;
         }
 
-        tc1.stopSpyStream();
+        clients[0].stopSpyStream();
         os.write("test1".getBytes());
         os.flush();
         ostc.write("test2".getBytes());
@@ -687,7 +708,6 @@ extends TestCase implements TelnetNotificationHandler
             stopspy_ok = true;
         }
 
-        closeConnections();
 
         assertTrue(test1spy_ok);
         assertTrue(test2spy_ok);
@@ -715,17 +735,15 @@ extends TestCase implements TelnetNotificationHandler
         };
 
 
-        openConnReaderThread();
-
-        InputStream is1 = server1.getInputStream();
-        OutputStream os1 = server1.getOutputStream();
+        InputStream is1 = servers[3].getInputStream();
+        OutputStream os1 = servers[3].getOutputStream();
         is1.skip(is1.available());
         os1.write(send1);
         os1.flush();
         os1.write("A".getBytes());
         os1.flush();
         Thread.sleep(1000);
-        InputStream instr = tc1.getInputStream();
+        InputStream instr = clients[3].getInputStream();
         byte[] buff = new byte[4];
         int ret_read = 0;
 
@@ -743,8 +761,8 @@ extends TestCase implements TelnetNotificationHandler
                 negotiation1_ok = true;
         }
 
-        InputStream is2 = server2.getInputStream();
-        OutputStream os2 = server2.getOutputStream();
+        InputStream is2 = servers[4].getInputStream();
+        OutputStream os2 = servers[4].getOutputStream();
         Thread.sleep(1000);
         is2.skip(is2.available());
         os2.write(send1);
@@ -758,56 +776,13 @@ extends TestCase implements TelnetNotificationHandler
                 negotiation2_ok = true;
         }
 
-        closeConnReaderThread();
-
-        assertTrue(!tc1.getReaderThread());
-        assertTrue(tc2.getReaderThread());
+        assertTrue(!clients[3].getReaderThread());
+        assertTrue(clients[4].getReaderThread());
         assertTrue(read_ok);
         assertTrue(negotiation1_ok);
         assertTrue(negotiation2_ok);
     }
 
-    /***
-     * closes all the connections
-     ***/
-    protected void closeConnections()
-    {
-        try
-        {
-            server1.disconnect();
-            server1.stop();
-            tc1.disconnect();
-            server2.disconnect();
-            server2.stop();
-            tc2.disconnect();
-            server3.disconnect();
-            server3.stop();
-            tc3.disconnect();
-            Thread.sleep(1000);
-        }
-        catch (Exception e)
-        {
-        }
-    }
-    /***
-     * closes all the connections (ReaderThread test)
-     ***/
-    protected void closeConnReaderThread()
-    {
-        try
-        {
-            server1.disconnect();
-            server1.stop();
-            tc1.disconnect();
-            server2.disconnect();
-            server2.stop();
-            tc2.disconnect();
-            Thread.sleep(1000);
-        }
-        catch (Exception e)
-        {
-        }
-    }
 
     /***
      * Helper method. compares two arrays of int
