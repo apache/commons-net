@@ -8,6 +8,16 @@
   <body>
     <release version="1.2.0-dev" date="In CVS">
     </release>
+    <release version="1.1.1" date="TBD">
+      <action dev="scohen" type="fix">
+        Removed all JDK 1.1 incompatibilities that had been introduced
+        unintentionally in previous versions.  Release 1.1.1 is the last 
+        JDK 1.1 compatible release.  Any future 1.1.x maintenance releases
+        will remain JDK !.1 compatible, but version 1.2 may break
+        compatibility and will be guaranteed to work with only J2SE 1.2
+        and later. Also fixed bug with NTFTPEntryParser (20259).  
+      </action>
+    </release>
     <release version="1.1.0" date="October 23, 2003">
       <action dev="dfs" type="add">
         Rory Winston &lt;Rory.Winston@telewest.co.uk&gt; provided
