@@ -1,3 +1,5 @@
+package examples;
+
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -54,7 +56,7 @@
 
 import java.io.*;
 
-import com.oroinc.io.*;
+import org.apache.commons.io.*;
 
 /***
  * This is a utility class providing a reader/writer capability required

@@ -1,3 +1,5 @@
+package examples;
+
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -55,7 +57,7 @@
 import java.io.*;
 import java.net.*;
 
-import com.oroinc.net.*;
+import org.apache.commons.net.*;
 
 /***
  * This is an example program demonstrating how to use the EchoTCPClient

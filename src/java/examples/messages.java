@@ -1,3 +1,5 @@
+package examples;
+
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -54,7 +56,7 @@
 
 import java.io.*;
 
-import com.oroinc.net.pop3.*;
+import org.apache.commons.net.pop3.*;
 
 /***
  * This is an example program demonstrating how to use the POP3Client class.

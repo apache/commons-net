@@ -1,3 +1,5 @@
+package examples;
+
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -54,8 +56,8 @@
 
 import java.io.*;
 
-import com.oroinc.net.telnet.*;
-import com.oroinc.io.*;
+import org.apache.commons.net.telnet.*;
+import org.apache.commons.io.*;
 
 /***
  * This is an example of a trivial use of the TelnetClient class.

@@ -1,3 +1,5 @@
+package examples;
+
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -54,7 +56,7 @@
 
 import java.io.*;
 
-import com.oroinc.net.*;
+import org.apache.commons.net.*;
 
 /***
  * This is a support class for some of the example programs.  It is

@@ -1,3 +1,5 @@
+package examples;
+
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -55,7 +57,7 @@
 import java.io.*;
 import java.net.*;
 
-import com.oroinc.net.tftp.*;
+import org.apache.commons.net.tftp.*;
 
 /***
  * This is an example of a simple Java tftp client using NetComponents.
