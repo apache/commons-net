@@ -130,7 +130,7 @@ import java.io.InputStream;
  * </pre>
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileEntryParser.java,v 1.10 2004/01/06 19:53:58 dfs Exp $
+ * @version $Id: FTPFileEntryParser.java,v 1.11 2004/01/06 22:24:24 dfs Exp $
  * @see org.apache.commons.net.ftp.FTPFile
  * @see org.apache.commons.net.ftp.FTPClient#createFileList
  */
@@ -161,20 +161,4 @@ public interface FTPFileEntryParser
      * @exception IOException thrown on any IO Error reading from the reader.
      */
     String readNextEntry(BufferedReader reader) throws IOException;
-
-    /***
-     * Parses an FTP server file listing and converts it into a usable format
-     * in the form of an array of <code> FTPFile </code> instances.  If the
-     * file list contains no files, <code> null </code> should be
-     * returned, otherwise an array of <code> FTPFile </code> instances
-     * representing the files in the directory is returned.
-     * <p>
-     * @param listStream The InputStream from which the file list should be
-     *        read.
-     * @return The list of file information contained in the given path.  null
-     *     if the list could not be obtained or if there are no files in
-     *     the directory.
-     * @exception IOException  If an I/O error occurs reading the listStream.
-     ***/
-    FTPFile[] parseFileList(InputStream listStream) throws IOException;
 }
