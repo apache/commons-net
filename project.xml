@@ -31,9 +31,9 @@
      NetComponents was originally a commercial product, but after ORO
      dissolved, it was continued to be made available for those who found
      it useful.  However, no updates have been made since version 1.3.8,
-     released in 1998.  Yet the library continues to be very popular.  Now
-     that certain contract obligations have expired, it is possible to make
-     the source code freely available under the LGPL.
+     released in 1998.  Now that certain contract obligations have expired, 
+     it is possible to make the source code freely available under the 
+     The Apache Software License.
   </description>
 
   <url>http://jakarta.apache.org/commons/</url>
@@ -54,10 +54,10 @@
   <developers>
 
     <developer>
-      <name>Jeff Brekke</name>
+      <name>Jeffrey D. Brekke</name>
       <id>brekke</id>
-      <email>brekke@apache.org</email>
-      <organization></organization>
+      <email>Jeff.Brekke@qg.com</email>
+      <organization>Quad/Graphics, Inc.</organization>
     </developer>
 
     <developer>
