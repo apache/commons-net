@@ -55,6 +55,8 @@ package org.apache.commons.net.ftp.parser;
  */
 
 
+import java.util.Calendar;
+
 import junit.framework.TestSuite;
 
 import org.apache.commons.net.ftp.FTPFile;
@@ -63,7 +65,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 /**
  * Tests the EnterpriseUnixFTPEntryParser
  * 
- * @version $Id: EnterpriseUnixFTPEntryParserTest.java,v 1.1 2003/03/02 18:27:41 scohen Exp $
+ * @version $Id: EnterpriseUnixFTPEntryParserTest.java,v 1.2 2003/08/05 18:13:06 brekke Exp $
  * @author <a href="mailto:Winston.Ojeda@qg.com">Winston Ojeda</a>
  */
 public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
@@ -144,8 +146,11 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
                      file.getUser());
         assertEquals("18128", 
                      file.getGroup());
-        assertEquals("Mon Aug 12 13:56:00 2002", 
-                     df.format(file.getTimestamp().getTime()));
+        Calendar timestamp = file.getTimestamp();
+        assertEquals(Calendar.AUGUST, timestamp.get(Calendar.MONTH));
+        assertEquals(12, timestamp.get(Calendar.DAY_OF_MONTH));
+        assertEquals(13, timestamp.get(Calendar.HOUR_OF_DAY));
+        assertEquals(56, timestamp.get(Calendar.MINUTE));         
         checkPermisions(file);
     }
 
