@@ -22,7 +22,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.TimeZone;
 import java.util.TreeSet;
 
 /*
@@ -143,7 +142,7 @@ public class FTPClientConfigFunctionalTest extends TestCase {
         
         // test that notwithstanding any time zone differences, the newest file
         // is older than now.
-        assertTrue(lastfile.getTimestamp().getTime().before(now);
+        assertTrue(lastfile.getTimestamp().getTime().before(now));
         Calendar first = firstfile.getTimestamp();
 
         // test that the oldest is less than two days older than the newest 
