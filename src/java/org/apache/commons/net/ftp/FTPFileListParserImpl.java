@@ -80,14 +80,18 @@ public abstract class FTPFileListParserImpl
      * entry
      */
     private Pattern pattern = null;
-    /**
-     * internal PatternMatcher object used by the parser
-     */
-    private PatternMatcher matcher = null;
+
     /**
      * internal match result used by the parser
      */
     private MatchResult result = null;
+
+    /**
+     * Internal PatternMatcher object used by the parser.  It has protected
+     * scope in case subclasses want to make use of it for their own purposes.
+     */
+    protected PatternMatcher _matcher_ = null;
+
     
     /**
      * The constructor for a MatchApparatus object.
@@ -106,8 +110,8 @@ public abstract class FTPFileListParserImpl
     {
         try 
         {
-            this.matcher = new Perl5Matcher();
-            this.pattern = new Perl5Compiler().compile(regex);
+            _matcher_ = new Perl5Matcher();
+            pattern   = new Perl5Compiler().compile(regex);
         } 
         catch (MalformedPatternException e) 
         {
@@ -150,9 +154,9 @@ public abstract class FTPFileListParserImpl
     public boolean matches(String s)
     {
         this.result = null;
-        if (matcher.matches(s.trim(), this.pattern))
+        if (_matcher_.matches(s.trim(), this.pattern))
         {
-            this.result = matcher.getMatch();
+            this.result = _matcher_.getMatch();
         }
         return null != this.result;
     }
@@ -225,3 +229,11 @@ public abstract class FTPFileListParserImpl
         return reader.readLine();
     }
 }
+
+/* Emacs configuration
+ * Local variables:        **
+ * mode:             java  **
+ * c-basic-offset:   4     **
+ * indent-tabs-mode: nil   **
+ * End:                    **
+ */
