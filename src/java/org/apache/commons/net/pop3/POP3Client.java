@@ -366,7 +366,7 @@ public class POP3Client extends POP3
     public POP3MessageInfo[] listMessages() throws IOException
     {
         POP3MessageInfo[] messages;
-        Enumeration enum;
+        Enumeration en;
         int line;
 
         if (getState() != TRANSACTION_STATE)
@@ -377,14 +377,14 @@ public class POP3Client extends POP3
 
         // This could be a zero length array if no messages present
         messages = new POP3MessageInfo[_replyLines.size() - 2];
-        enum = _replyLines.elements();
+        en = _replyLines.elements();
 
         // Skip first line
-        enum.nextElement();
+        en.nextElement();
 
         // Fetch lines.
         for (line = 0; line < messages.length; line++)
-            messages[line] = __parseStatus((String)enum.nextElement());
+            messages[line] = __parseStatus((String)en.nextElement());
 
         return messages;
     }
@@ -438,7 +438,7 @@ public class POP3Client extends POP3
     public POP3MessageInfo[] listUniqueIdentifiers() throws IOException
     {
         POP3MessageInfo[] messages;
-        Enumeration enum;
+        Enumeration en;
         int line;
 
         if (getState() != TRANSACTION_STATE)
@@ -449,14 +449,14 @@ public class POP3Client extends POP3
 
         // This could be a zero length array if no messages present
         messages = new POP3MessageInfo[_replyLines.size() - 2];
-        enum = _replyLines.elements();
+        en = _replyLines.elements();
 
         // Skip first line
-        enum.nextElement();
+        en.nextElement();
 
         // Fetch lines.
         for (line = 0; line < messages.length; line++)
-            messages[line] = __parseUID((String)enum.nextElement());
+            messages[line] = __parseUID((String)en.nextElement());
 
         return messages;
     }

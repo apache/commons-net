@@ -48,7 +48,7 @@ public final class mail
         Writer writer;
         SimpleSMTPHeader header;
         SMTPClient client;
-        Enumeration enum;
+        Enumeration en;
 
         if (args.length < 1)
         {
@@ -127,10 +127,10 @@ public final class mail
             client.setSender(sender);
             client.addRecipient(recipient);
 
-            enum = ccList.elements();
+            en = ccList.elements();
 
-            while (enum.hasMoreElements())
-                client.addRecipient((String)enum.nextElement());
+            while (en.hasMoreElements())
+                client.addRecipient((String)en.nextElement());
 
             writer = client.sendMessageData();
 

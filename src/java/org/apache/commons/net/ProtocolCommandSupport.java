@@ -62,17 +62,17 @@ public class ProtocolCommandSupport implements Serializable
      ***/
     public void fireCommandSent(String command, String message)
     {
-        Enumeration enum;
+        Enumeration en;
         ProtocolCommandEvent event;
         ProtocolCommandListener listener;
 
-        enum = __listeners.getListeners();
+        en = __listeners.getListeners();
 
         event = new ProtocolCommandEvent(__source, command, message);
 
-        while (enum.hasMoreElements())
+        while (en.hasMoreElements())
         {
-            listener = (ProtocolCommandListener)enum.nextElement();
+            listener = (ProtocolCommandListener)en.nextElement();
             listener.protocolCommandSent(event);
         }
     }
@@ -92,17 +92,17 @@ public class ProtocolCommandSupport implements Serializable
      ***/
     public void fireReplyReceived(int replyCode, String message)
     {
-        Enumeration enum;
+        Enumeration en;
         ProtocolCommandEvent event;
         ProtocolCommandListener listener;
 
-        enum = __listeners.getListeners();
+        en = __listeners.getListeners();
 
         event = new ProtocolCommandEvent(__source, replyCode, message);
 
-        while (enum.hasMoreElements())
+        while (en.hasMoreElements())
         {
-            listener = (ProtocolCommandListener)enum.nextElement();
+            listener = (ProtocolCommandListener)en.nextElement();
             listener.protocolReplyReceived(event);
         }
     }

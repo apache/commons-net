@@ -438,17 +438,17 @@ public class SMTP extends SocketClient
      ***/
     public String getReplyString()
     {
-        Enumeration enum;
+        Enumeration en;
         StringBuffer buffer;
 
         if (!_newReplyString)
             return _replyString;
 
         buffer = new StringBuffer(256);
-        enum = _replyLines.elements();
-        while (enum.hasMoreElements())
+        en = _replyLines.elements();
+        while (en.hasMoreElements())
         {
-            buffer.append((String)enum.nextElement());
+            buffer.append((String)en.nextElement());
             buffer.append(SocketClient.NETASCII_EOL);
         }
 
