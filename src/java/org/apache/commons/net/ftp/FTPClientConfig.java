@@ -59,7 +59,8 @@ import java.util.TreeMap;
  * <pre>
  *    FTPClient f=FTPClient();
  *    FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
- * 	  conf.setServerLanguageCode("fr");
+ *    conf.setServerLanguageCode("fr");
+ *    f.configure(conf);
  *    f.connect(server);
  *    f.login(username, password);
  *    FTPFile[] files = listFiles(directory);
@@ -72,10 +73,11 @@ import java.util.TreeMap;
  * <pre>
  *    FTPClient f=FTPClient();
  *    FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
- * 	  conf.setServerLanguageCode("da");
- * 	  conf.setDefaultDateFormat("d MMM yyyy");
- *    conf.setRecentDateFormat("d MMM HH:mm"); 
- * 	  conf.setTimeZoneId("Europe/Copenhagen");
+ *    conf.setServerLanguageCode("da");
+ *    conf.setDefaultDateFormat("d MMM yyyy");
+ *    conf.setRecentDateFormat("d MMM HH:mm");
+ *    conf.setTimeZoneId("Europe/Copenhagen");
+ *    f.configure(conf);
  *    f.connect(server);
  *    f.login(username, password);
  *    FTPListParseEngine engine =
@@ -95,8 +97,9 @@ import java.util.TreeMap;
  * <pre>
  *    FTPClient f=FTPClient();
  *    FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_VMS);
- * 	  conf.setShortMonthNames(
- * 		"jan|feb|mar|apr|ma&#xED;|j&#xFA;n|j&#xFA;l|&#xE1;g&#xFA;|sep|okt|n&#xF3;v|des");
+ *    conf.setShortMonthNames(
+ *        "jan|feb|mar|apr|ma&#xED;|j&#xFA;n|j&#xFA;l|&#xE1;g&#xFA;|sep|okt|n&#xF3;v|des");
+ *    f.configure(conf);
  *    f.connect(server);
  *    f.login(username, password);
  *    FTPFile[] files = listFiles(directory);
@@ -109,7 +112,8 @@ import java.util.TreeMap;
  * <pre>
  *    FTPClient f=FTPClient();
  *    FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_NT);
- * 	  conf.setTimeZoneId("America/Denver");
+ *    conf.setTimeZoneId("America/Denver");
+ *    f.configure(conf);
  *    f.connect(server);
  *    f.login(username, password);
  *    FTPFile[] files = listFiles(directory);
@@ -120,7 +124,8 @@ import java.util.TreeMap;
  * <pre>
  *    FTPClient f=FTPClient();
  *    FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
- * 	  conf.setTimeZoneId("America/Denver");
+ *    conf.setTimeZoneId("America/Denver");
+ *    f.configure(conf);
  *    f.connect(server);
  *    f.login(username, password);
  *    FTPFile[] files = listFiles(directory);
