@@ -492,7 +492,7 @@ _outerLoop:
                         __queue.notify();
                         try
                         {
-                            __queue.wait();
+                            __queue.wait(100);
                         }
                         catch (InterruptedException e)
                         {

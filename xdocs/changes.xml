@@ -8,6 +8,11 @@
   <body>
     <release version="1.0.1" date="In CVS">
       <action dev="brekke" type="fix">
+        If the buffer queue run full, the run() method sometimes hangs forever.
+        Changed wait() to wait(100) as with other changes in TelnetInputStream.
+        Fix submitted From: J. Matysiak ( j.matysiak@cenit.de ).
+      </action>
+      <action dev="brekke" type="fix">
         FTP.smnt(String dir) was not passing on the dir to the SMNT command as an argument.
       </action>
       <action dev="brekke" type="add">
