@@ -59,14 +59,33 @@ import java.io.IOException;
 
 /**
  * FTPFileEntryParser defines the interface for parsing a single FTP file
- * listing and converting that information into an 
+ * listing and converting that information into an
  * <a href="org.apache.commons.net.ftp.FTPFile.html"> FTPFile </a> instance.
  * Sometimes you will want to parse unusual listing formats, in which
  * case you would create your own implementation of FTPFileEntryParser and
  * if necessary, subclass FTPFile.
- *
+ * <p>
+ * Here is an example showing how to use one of the classes that
+ * implement this interface.  In the following example <code>parser </code> 
+ * is an object (in the package <code>org.apache.commons.net.ftp.parser</code>)
+ * implementing this inteface.
+ * 
+ * <pre>
+ *    FTPClient f=FTPClient();
+ *    f.connect(server);
+ *    f.login(username, password);
+ *    FTPFileList list = createFTPFileList(directory, parser);
+ *    FTPFileIterator iter = list.iterator();
+ * 
+ *    while (iter.hasNext()) {
+ *       FTPFile[] files = iter.getNext(25);  // "page size" you want
+ *       //do whatever you want with these files, display them, etc.
+ *       //expensive FTPFile objects not created until needed.
+ *    }
+ * </pre>
+ * 
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileEntryParser.java,v 1.4 2003/03/06 12:38:42 scohen Exp $
+ * @version $Id: FTPFileEntryParser.java,v 1.5 2003/12/30 04:04:11 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFile
  * @see org.apache.commons.net.ftp.FTPClient#createFileList
  */
