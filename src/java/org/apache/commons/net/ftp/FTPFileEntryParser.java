@@ -80,7 +80,7 @@ import java.io.InputStream;
  *    FTPClient f=FTPClient();
  *    f.connect(server);
  *    f.login(username, password);
- *    FTPFileList list = createFTPFileList(directory, parser);
+ *    FTPFileList list = f.createFileList(directory, parser);
  *    FTPFileIterator iter = list.iterator();
  * 
  *    while (iter.hasNext()) {
@@ -130,7 +130,7 @@ import java.io.InputStream;
  * </pre>
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileEntryParser.java,v 1.12 2004/01/09 09:07:03 dfs Exp $
+ * @version $Id: FTPFileEntryParser.java,v 1.13 2004/01/10 15:36:40 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFile
  * @see org.apache.commons.net.ftp.FTPClient#createFileList
  */
@@ -162,20 +162,21 @@ public interface FTPFileEntryParser
      */
     String readNextEntry(BufferedReader reader) throws IOException;
 
+    
     /**
-     * Creates an <code>FTPFileList</code> object from a stream containing
-     * a file listing.
-     *
-     * @param stream The input stream created by reading the socket on which 
-     * the output of the LIST command was returned
+     * This method is a hook for those implementers (such as 
+     * VMSVersioningFTPEntryParser, and possibly others) which return
+     * multiple files with the same name to remove the duplicates.
      * 
-     * @return the <code>FTPFileList</code> created.
-     * Will be null if the listing cannot be read from the stream.
-     * @exception IOException
-     *                   Thrown on any failure to read from the stream.
+     * Implementations for systems that do not allow duplicates will
+     * implement a NO-OP here.
+     * 
+     * @param original Original list which may contain duplicates
+     * 
+     * @return Original list purged of duplicates
      */
-    public FTPFileList createFTPFileList(InputStream stream)
-        throws IOException;
+    FTPFileList removeDuplicates(FTPFileList original);
+
 
 }
 

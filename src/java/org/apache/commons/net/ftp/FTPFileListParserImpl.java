@@ -58,6 +58,8 @@ import java.io.InputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import java.util.ListIterator;
+
 import org.apache.oro.text.regex.Pattern;
 import org.apache.oro.text.regex.MalformedPatternException;
 import org.apache.oro.text.regex.PatternMatcher;
@@ -137,20 +139,12 @@ public abstract class FTPFileListParserImpl
      ***/
     public FTPFile[] parseFileList(InputStream listStream) throws IOException 
     {
-        FTPFileList ffl = createFTPFileList(listStream);
+        FTPFileList ffl = FTPFileList.create(listStream, this);
         return ffl.getFiles();
 
     }
 
-    public FTPFileList createFTPFileList(InputStream stream)
-        throws IOException
-    {
-        DefaultFTPFileList list = new DefaultFTPFileList(this);
-        list.readStream(stream);
-        return list;
-    }
-
-
+ 
     /**
      * Convenience method delegates to the internal MatchResult's matches()
      * method.
@@ -234,6 +228,35 @@ public abstract class FTPFileListParserImpl
     public String readNextEntry(BufferedReader reader) throws IOException 
     {
         return reader.readLine();
+    }
+    /**
+     * Implement hook provided for those implementers (such as
+     * VMSVersioningFTPEntryParser, and possibly others) which return
+     * multiple files with the same name to remove the duplicates by
+     * defining a no-op method which simply returns the original
+     * FTPFileList.  This method should not be overridden except in 
+     * parsers that really have to remove duplicates.
+     *
+     * @param original Original list 
+     *
+     * @return Original list
+     */
+    public FTPFileList removeDuplicates(FTPFileList original) {
+        return original;
+    }
+
+    /**
+     * return a ListIterator to the internal Vector of lines of <code>list</code>, 
+     * used in purging duplicates.
+     * 
+     * This method could go away if FTPFileEntryParser were moved down into the 
+     * parser package.
+     * 
+     * @return a ListIterator to the internal Vector of lines, used in purging
+     *         duplicates.
+     */
+    protected ListIterator getInternalIteratorForFtpFileList(FTPFileList list) {
+        return list.getInternalIterator();
     }
 }
 

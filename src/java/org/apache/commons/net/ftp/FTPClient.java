@@ -2268,7 +2268,7 @@ public class FTPClient extends FTP
      *    FTPClient f=FTPClient();
      *    f.connect(server);
      *    f.login(username, password);
-     *    FTPFileList list = createFTPFileList(directory, parser);
+     *    FTPFileList list = f.createFileList(directory, parser);
      *    FTPFileIterator iter = list.iterator();
      * 
      *    while (iter.hasNext()) {
@@ -2333,13 +2333,13 @@ public class FTPClient extends FTP
             return null;
         }
 
-        FTPFileList list =
-            parser.createFTPFileList(socket.getInputStream());
+        FTPFileList list = FTPFileList.create(socket.getInputStream(), parser);
 
         socket.close();
 
         completePendingCommand();
 
+//        return parser.removeDuplicates(list);
         return list;
     }
 

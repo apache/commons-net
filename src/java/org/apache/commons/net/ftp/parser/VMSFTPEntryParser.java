@@ -70,9 +70,7 @@ import org.apache.oro.text.regex.Util;
 import org.apache.oro.text.regex.MalformedPatternException;
 
 import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPFileIterator;
 import org.apache.commons.net.ftp.FTPFileList;
-import org.apache.commons.net.ftp.DefaultFTPFileList;
 import org.apache.commons.net.ftp.FTPFileListParserImpl;
 
 /**
@@ -87,144 +85,13 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.13 2004/01/09 16:35:36 dfs Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.14 2004/01/10 15:36:40 scohen Exp $
  * 
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class VMSFTPEntryParser extends FTPFileListParserImpl
 {
-    private static class DuplicateFilteringFileIterator extends FTPFileIterator
-    {
-        FTPFile[] files;
-        int next;
 
-        public DuplicateFilteringFileIterator(FTPFileIterator iterator) {
-            FTPFile[] tempFiles = iterator.getFiles();
-            Hashtable filesHash = new Hashtable();
-            String fileName;
-
-
-            for (int index = 0; index < tempFiles.length; index++) {
-                fileName = tempFiles[index].getName();
-
-                if (!filesHash.containsKey(fileName)) {
-                    filesHash.put(fileName, (FTPFile) tempFiles[index]);
-                }
-            }
-
-            files = new FTPFile[filesHash.size()];
-
-            Enumeration e = filesHash.keys();
-            int index = 0;
-
-            while (e.hasMoreElements()) {
-                FTPFile ftpf = (FTPFile) filesHash.get(e.nextElement());
-                files[index++] = ftpf;
-            }
-
-            next = 0;
-        }
-            
-        public FTPFile[] getFiles() {
-            FTPFile[] result = new FTPFile[files.length];
-            System.arraycopy(files, 0, result, 0, result.length);
-            return result;
-        }
-
-        public FTPFile[] getNext(int quantityRequested) {
-            FTPFile[] result;
-            int remaining;
-
-            remaining = files.length - next;
-
-            if(quantityRequested > remaining)
-                quantityRequested = remaining;
-            else if(quantityRequested < 0)
-                quantityRequested = 0;
-            else if(quantityRequested == 0) {
-                // interpret a 0 as meaning all remaining items.
-                // ask Steve if this is what he intended.
-                quantityRequested = remaining;
-            }
-
-            result = new FTPFile[quantityRequested];
-            System.arraycopy(files, next, result, 0, result.length);
-            next+=quantityRequested;
-
-            return result;
-        }
-
-        public boolean hasNext() {
-            return (next < files.length && files.length > 0);
-        }
-
-        public FTPFile next() {
-            FTPFile result = null;
-
-            if(hasNext()) {
-                result = files[next];
-                ++next;
-            }
-
-            return result;
-        }
-
-        public FTPFile[] getPrevious(int quantityRequested) {
-            FTPFile[] result;
-            int start = 0;
-
-            if(quantityRequested > next)
-                quantityRequested = next;
-            else if(quantityRequested < 0)
-                quantityRequested = 0;
-            else if(quantityRequested == 0) {
-                // interpret a 0 as meaning all items between 0 and next.
-                // ask Steve if this is what he intended.
-                quantityRequested = next;
-            } else
-                start = next - quantityRequested;
-
-            result = new FTPFile[quantityRequested];
-            System.arraycopy(files, start, result, 0, result.length);
-            next = start;
-
-            return result;
-        }
-
-        public boolean hasPrevious() {
-            return (next > 0 && files.length > 0);
-        }
-
-        public FTPFile previous() {
-            FTPFile result = null;
-
-            if(hasPrevious()) {
-                --next;
-                result = files[next];
-            }
-
-            return result;
-        }
-    }
-
-
-    private class DuplicateFilteringFileList extends DefaultFTPFileList {
-
-        public DuplicateFilteringFileList() {
-            super(VMSFTPEntryParser.this);
-        }
-
-        public FTPFileIterator iterator() {
-            return new DuplicateFilteringFileIterator(super.iterator());
-        }
-    }
-
-
-    /**
-     * settable option of whether or not to include versioning information 
-     * with the file list.
-     */
-    private boolean versioning;
 
     /**
      * months abbreviations looked for by this parser.  Also used
@@ -247,25 +114,9 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
         + "\\([a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*\\)";
 
 
-    /** Pattern for splitting owner listing. */
-    private static final Pattern OWNER_SPLIT_PATTERN;
-
-    static {
-        Perl5Compiler compiler = new Perl5Compiler();
-
-        try {
-            OWNER_SPLIT_PATTERN =
-                compiler.compile(",", Perl5Compiler.READ_ONLY_MASK);
-        } catch(MalformedPatternException mpe) {
-            throw new IllegalStateException(
-                "Pattern compilation failed in VMSFTPEntryParser " +
-                "static initialization block.");
-        }
-    }
 
     /**
-     * Convenience Constructor for a VMSFTPEntryParser object.  Sets the 
-     * <code>versioning</code> member false
+     * Constructor for a VMSFTPEntryParser object.   
      * 
      * @exception IllegalArgumentException
      * Thrown if the regular expression is unparseable.  Should not be seen 
@@ -274,25 +125,7 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
      */
     public VMSFTPEntryParser()
     {
-        this(false);
-    }
-
-
-    /**
-     * Constructor for a VMSFTPEntryParser object.  Sets the versioning member 
-     * to the supplied value.
-     *  
-     * @param versioning Value to which versioning is to be set.
-     * 
-     * @exception IllegalArgumentException
-     * Thrown if the regular expression is unparseable.  Should not be seen 
-     * under normal conditions.  It it is seen, this is a sign that 
-     * <code>REGEX</code> is  not a valid regular expression.
-     */
-    public VMSFTPEntryParser(boolean versioning)
-    {
         super(REGEX);
-        this.versioning = versioning;
     }
 
 
@@ -311,50 +144,9 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
      * @exception IOException  If an I/O error occurs reading the listStream.
      ***/
     public FTPFile[] parseFileList(InputStream listStream) throws IOException {
-        return createFTPFileList(listStream).getFiles();
+        return FTPFileList.create(listStream, this).getFiles();
     }
 
-
-    public FTPFileList createFTPFileList(InputStream listStream)
-        throws IOException
-    {
-        FTPFileList list;
-        BufferedReader reader =
-            new BufferedReader(new InputStreamReader(listStream));
-        String listing = null;
-
-        String line = reader.readLine();
-        while (line != null) {
-            if ((line.trim().equals("")) ||
-                (line.startsWith("Directory")) ||
-                (line.startsWith("Total"))
-               ) {
-                line = reader.readLine();
-                continue;
-            }
-            if (listing == null) {
-                listing = line;
-            } else {
-                listing += "\r\n" + line;
-            }
-            line = reader.readLine();
-        }
-        reader.close();
-
-        byte[] bytes = listing.getBytes();
-        ByteArrayInputStream listingStream = new ByteArrayInputStream(bytes);
-
-        if(versioning)
-            list = super.createFTPFileList(listingStream);
-        else {
-            DefaultFTPFileList dlist;
-            dlist = new DuplicateFilteringFileList();
-            dlist.readStream(listingStream);
-            list = dlist;
-        }
-
-        return list;
-    }
 
 
     /**
@@ -412,7 +204,7 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
             }
             //set FTPFile name
             //Check also for versions to be returned or not
-            if (versioning) 
+            if (isVersioning()) 
             {
                 f.setName(name);
             } 
@@ -470,6 +262,11 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
         StringBuffer entry = new StringBuffer();
         while (line != null)
         {
+            if (line.startsWith("Directory") || line.startsWith("Total")) {
+                line = reader.readLine();
+                continue;
+            }
+
             entry.append(line);
             if (line.trim().endsWith(")"))
             {
@@ -479,6 +276,11 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
         }
         return (entry.length() == 0 ? null : entry.toString());
     }
+
+    protected boolean isVersioning() {
+        return false;
+    }
+
 }
 
 /* Emacs configuration

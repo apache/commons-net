@@ -60,12 +60,13 @@ import java.io.IOException;
 import junit.framework.TestSuite;
 
 import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPFileList;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParserTest.java,v 1.9 2004/01/02 03:39:07 scohen Exp $
+ * @version $Id: VMSFTPEntryParserTest.java,v 1.10 2004/01/10 15:36:41 scohen Exp $
  */
 public class VMSFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -105,8 +106,11 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     private static final String fullListing = "Directory USER1:[TEMP]\r\n\r\n"+
     "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)\r\n"+ 
     "2-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)\r\n"+ 
-    "3-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)\r\n"+
-    "\r\nTotal 3 files"; 
+    "3-JUN.LIS;1              9/9           3-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)\r\n"+
+    "3-JUN.LIS;4              9/9           7-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)\r\n"+
+    "3-JUN.LIS;2              9/9           4-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)\r\n"+
+    "3-JUN.LIS;3              9/9           6-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)\r\n"+
+    "\r\nTotal 6 files"; 
     
     /**
      * @see junit.framework.TestCase#TestCase(String)
@@ -117,18 +121,39 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     }  
 
     /**
-     * Test the legacy interface for parsing file lists.
+     * Test the parsing of the whole list.
      * @throws IOException
      */
-    public void testParseFileList() throws IOException
+    public void testWholeListParse() throws IOException
     {        
         VMSFTPEntryParser parser = new VMSFTPEntryParser();
-        FTPFile[] files = parser.parseFileList(new ByteArrayInputStream(fullListing.getBytes()));
-        assertEquals(3, files.length);
-        assertFileInListing(files, "1-JUN.LIS");
+        FTPFile[] files = FTPFileList.create(
+            new ByteArrayInputStream(fullListing.getBytes()), parser).getFiles();
+        assertEquals(6, files.length);
         assertFileInListing(files, "2-JUN.LIS");
         assertFileInListing(files, "3-JUN.LIS");
+        assertFileInListing(files, "1-JUN.LIS");
         assertFileNotInListing(files, "1-JUN.LIS;1");
+
+    }
+
+    /**
+     * Test the parsing of the whole list.
+     * @throws IOException
+     */
+    public void testWholeListParseWithVersioning() throws IOException
+    {        
+
+        VMSFTPEntryParser parser = new VMSVersioningFTPEntryParser();
+        FTPFile[] files = FTPFileList.create(
+            new ByteArrayInputStream(fullListing.getBytes()), parser).getFiles();
+        assertEquals(3, files.length);
+        assertFileInListing(files, "1-JUN.LIS;1");
+        assertFileInListing(files, "2-JUN.LIS;1");
+        assertFileInListing(files, "3-JUN.LIS;4");
+        assertFileNotInListing(files, "3-JUN.LIS;1");
+        assertFileNotInListing(files, "3-JUN.LIS");
+        
     }
 
     public void assertFileInListing(FTPFile[] listing, String name) {
