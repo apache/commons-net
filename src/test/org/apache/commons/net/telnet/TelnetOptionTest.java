@@ -58,7 +58,7 @@ package org.apache.commons.net.telnet;
 import junit.framework.TestCase;
 
 /***
- * JUnit test class for SimpleOptionHandler
+ * JUnit test class for TelnetOption
  * <p>
  * @author Bruno D'Avanzo
  ***/
