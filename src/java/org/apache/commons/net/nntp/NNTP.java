@@ -123,10 +123,22 @@ public class NNTP extends SocketClient
     private StringBuffer __commandBuffer;
 
     boolean _isAllowedToPost;
-    BufferedWriter _writer;
-    BufferedReader _reader;
     int _replyCode;
     String _replyString;
+
+    /**
+     * Wraps {@link SocketClient#_input_}
+     * to communicate with server.  Initialized by {@link #_connectAction_}.
+     * All server reads should be done through this variable.
+     */
+    protected BufferedReader _reader_;
+
+    /**
+     * Wraps {@link SocketClient#_output_}
+     * to communicate with server.  Initialized by {@link #_connectAction_}.
+     * All server reads should be done through this variable.
+     */
+    protected BufferedWriter _writer_;
 
     /***
      * A ProtocolCommandSupport object used to manage the registering of
@@ -144,15 +156,15 @@ public class NNTP extends SocketClient
         setDefaultPort(DEFAULT_PORT);
         __commandBuffer = new StringBuffer();
         _replyString = null;
-        _reader = null;
-        _writer = null;
+        _reader_ = null;
+        _writer_ = null;
         _isAllowedToPost = false;
         _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
     private void __getReply() throws IOException
     {
-        _replyString = _reader.readLine();
+        _replyString = _reader_.readLine();
 
         if (_replyString == null)
             throw new NNTPConnectionClosedException(
@@ -184,14 +196,16 @@ public class NNTP extends SocketClient
 
     /***
      * Initiates control connections and gets initial reply, determining
-     * if the client is allowed to post to the server.
+     * if the client is allowed to post to the server.  Initializes
+     * {@link #_reader_} and {@link #_writer_} to wrap
+     * {@link SocketClient#_input_} and {@link SocketClient#_output_}.
      ***/
     protected void _connectAction_() throws IOException
     {
         super._connectAction_();
-        _reader =
+        _reader_ =
             new BufferedReader(new InputStreamReader(_input_));
-        _writer =
+        _writer_ =
             new BufferedWriter(new OutputStreamWriter(_output_));
         __getReply();
 
@@ -231,8 +245,8 @@ public class NNTP extends SocketClient
     public void disconnect() throws IOException
     {
         super.disconnect();
-        _reader = null;
-        _writer = null;
+        _reader_ = null;
+        _writer_ = null;
         _replyString = null;
         _isAllowedToPost = false;
     }
@@ -284,8 +298,8 @@ public class NNTP extends SocketClient
         }
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
-        _writer.write(message = __commandBuffer.toString());
-        _writer.flush();
+        _writer_.write(message = __commandBuffer.toString());
+        _writer_.flush();
 
         if (_commandSupport_.getListenerCount() > 0)
             _commandSupport_.fireCommandSent(command, message);
