@@ -59,11 +59,14 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileListParserImpl;
 
 /**
+ * Implementation FTPFileEntryParser and FTPFileListParser for standard Unix Systems
+ * 
  * This class is based on the logic of Daniel Savarese's
  * DefaultFTPListParser, but adapted to use regular expressions and to fit the
  * new FTPFileEntryParser interface.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: UnixFTPEntryParser.java,v 1.3 2003/08/25 22:29:49 dfs Exp $
+ * @version $Id: UnixFTPEntryParser.java,v 1.4 2003/12/30 03:58:52 scohen Exp $
+ * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class UnixFTPEntryParser extends FTPFileListParserImpl
 {

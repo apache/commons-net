@@ -59,47 +59,12 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileListParserImpl;
 
 /**
- * This Class uses the ListParser class to validate the input string.
- * It also requires the NetComponents library version 1.3.7 or later
- * and the OROMatcher library for the regualar expressions stuff.
- *
- *
- * <P><B>USAGE:</B></P>
- * <LI>Create an instance of OS2FTPEntryParser</LI>
- *   <dd>OS2FTPEntryParser parser = new OS2FTPEntryParser();
- * <LI>Create an instance of FTPClient</LI>
- *   <dd>FTPClient FTPClientObj = new FTPClient();
- * <LI>Connect to the NODE </LI>
- *   <dd>FTPClientObj.connect();
- * <LI>Login to the NODE </LI>
- *   <dd>FTPClientObj.login(username,password);
- * <LI>Switch directories if you have to</LI>
- *   <dd>FTPClientObj.changeWorkingDirectory(thePath);
- * <LI>You might want to check if you are truly in a OS2 System</LI>
- *   <dd><B>String am_I_OS2 =  FTPClientObj.getSystemName()</B>
- *    <dd>parse am_I_OS2 to find out
- * <LI>Call listFiles passing the newly created parser and a filename or a mask 
- * to look for </LI>
- *   <dd>FTPClientObj.listFiles(parser,filename);
- * <LI>You'll get back the list as an array of FTPFiles like this
- *   <dd>FTPFile[] myOS2Files = FTPClientObj.listFiles(parser,filename);  (or)
- *    <dd>FTPFile[] myOS2Files = FTPClientObj.listFiles(parser);
- * <P>
- * That's all there is to it.
- * <P>
- * Each FTPFile object is populated just like any other FTPFile
- * object. The only thing not implemented at this time is the file
- * permissions, but I can do it if there is a real need for it.
- * <P>
- * !NOTE/WARNING!:Before you pass the parser to listFiles, make sure you are 
- * in the directory that you need to be. This parser will return the filtered
- * files from the directory it is in. This becomes specially crucial if your
- * goal is to delete the output of the parser.
- * <P>
- * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
+ * Implementation of FTPFileEntryParser and FTPFileListParser for OS2 Systems
+ * 
+ * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: OS2FTPEntryParser.java,v 1.3 2003/03/06 03:28:36 scohen Exp $
- * @see org.apache.commons.net.ftp.FTPFileListParser
+ * @version $Id: OS2FTPEntryParser.java,v 1.4 2003/12/30 03:58:52 scohen Exp $
+ * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class OS2FTPEntryParser extends FTPFileListParserImpl
 

@@ -72,48 +72,7 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileListParserImpl;
 
 /**
- * This Class uses the FTPEntryParser class to validate the input string.
- * It also requires the Commons/Net library version 1.0.0 or later
- * and the Jakarta/ORO library for the regualar expressions stuff.
- *
- *
- * <P><B>USAGE:</B></P>
- * <LI>Create an instance of VMSFTPEntryParser</LI>
- *   <dd>VMSFTPEntryParser parser = new VMSFTPEntryParser(boolean);
- *  <dd><code>True</code>  = returns all versions of a file with the respective 
- * ;#
- *  <dd><code>False</code> = only the last version will return <B>(Default)</B>
- * <LI>Create an instance of FTPClient</LI>
- *   <dd>FTPClient FTPClientObj = new FTPClient();
- * <LI>Connect to the NODE </LI>
- *   <dd>FTPClientObj.connect();
- * <LI>Login to the NODE </LI>
- *   <dd>FTPClientObj.login(username,password);
- * <LI>Switch directories if you have to</LI>
- *   <dd>FTPClientObj.changeWorkingDirectory(thePath);
- * <LI>You might want to check if you are truly in a VMS System</LI>
- *   <dd>And how do I do that you ask? easy...  VMS is such a wonderful OS 
- * that when we do   <dd><B>String am_I_VMS =  FTPClientObj.getSystemName()</B>
- *   <dd>it returns NULL, while everyone else returns the FTP servername
- * <LI>Call listFiles passing the newly created parser and a filename or a mask
- *  to look for </LI> <dd>FTPClientObj.listFiles(parser,filename);
- * <LI>You'll get back the list as an array of FTPFile objects like this
- *   <dd>FTPFile[] myVMSFiles = FTPClientObj.listFiles(parser,filename);  (or)
- *    <dd>FTPFile[] myVMSFiles = FTPClientObj.listFiles(parser);
- *    <dd>If <code>filename</code> is a filename and versioning is OFF, the 
- * version <dd>you requested will come back without the ;#
- * <P>
- * That's all there is to it.
- * <P>
- * Each FTPFile object is populated just like any other FTPFile
- * object. The only thing not implemented at this time is the file
- * permissions, but I can do it if there is a real need for it.
- * <P>
- * !NOTE/WARNING!:Before you pass the parser to listFiles, make sure you are
- * in the directory that you need to be. This parser will return the filtered
- * files from the directory it is in. This becomes crucial specialy if your
- * goal is to delete the output of the parser.
- * <P>
+ * Implementation FTPFileEntryParser and FTPFileListParser for VMS Systems
  * This is a sample of VMS LIST output
  *   
  *  "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
@@ -124,7 +83,9 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.7 2003/08/05 18:10:38 dfs Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.8 2003/12/30 03:58:52 scohen Exp $
+ * 
+ * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class VMSFTPEntryParser extends FTPFileListParserImpl
 {
