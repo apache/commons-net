@@ -128,23 +128,29 @@ __main:
             if (binaryTransfer)
                 ftp.setFileType(FTP.BINARY_FILE_TYPE);
 
-        // Use passive mode as default because most of us are
-        // behind firewalls these days.
-        ftp.enterLocalPassiveMode();
+            // Use passive mode as default because most of us are
+            // behind firewalls these days.
+            ftp.enterLocalPassiveMode();
 
             if (storeFile)
             {
                 InputStream input;
 
                 input = new FileInputStream(local);
+
                 ftp.storeFile(remote, input);
+
+                input.close();
             }
             else
             {
                 OutputStream output;
 
                 output = new FileOutputStream(local);
+
                 ftp.retrieveFile(remote, output);
+
+                output.close();
             }
 
             ftp.logout();
