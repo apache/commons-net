@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<document>
+
+  <properties>
+    <title>Jakarta Commons/Net Download</title>
+    <author email="brekke@apache.org">Jeffrey D. Brekke</author>
+  </properties>
+
+  <body>
+    
+<section name="Nightly Builds">
+
+<p>
+Gump currently is providing nightly builds of Commons/Net.
+The jars are located under the jakarta-commons-sandbox directory.
+
+You may find the list of nightly builds <a href="http://gump.covalent.net/jars/">here</a>.
+</p>
+
+</section>
+
+</body>
+</document>

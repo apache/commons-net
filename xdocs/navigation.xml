@@ -5,8 +5,9 @@
 
   <body>
     <menu name="Development">
-      <item name="Proposal"   href="/proposal.html"/>
-      <item name="Coding Specifications"   href="/code-standards.html"/>
+      <item name="Proposal"              href="/proposal.html"/>
+      <item name="Coding Specifications" href="/code-standards.html"/>
+      <item name="Download"              href="/download.html"/>
     </menu>
   </body>
 
