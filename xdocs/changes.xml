@@ -6,7 +6,10 @@
   </properties>
 
   <body>
-    <release version="1.0.1" date="In CVS">
+    <release version="1.1.0" date="In CVS">
+      <action dev="brekke" type="add">
+        Cut a release canidate 1 for v1.1.0!
+      </action>
       <action dev="dfs" type="add">
         Rory Winston &lt;Rory.Winston@telewest.co.uk&gt; provided
         patches to add the following extended NNTP commands to

@@ -10,13 +10,16 @@
   <body>
 
 <section name="Release Builds">
-
 <p>
-You can download <a href="http://jakarta.apache.org/site/binindex.cgi">binary</a> or <a href="http://jakarta.apache.org/site/sourceindex.cgi">source</a> releases.
+You can download release candidate 1 for v1.1.0 from <a href="http://jakarta.apache.org/~brekke/commons-net-1.1.0-rc1.jar">here</a>.
 </p>
 
-</section>
+<p>
+You can download <a href="http://jakarta.apache.org/site/binindex.cgi">binary</a> or <a href="http://jakarta.apache.org/site/sourceindex.cgi">source</a> production releases.
+</p>
     
+</section>
+
 <section name="Nightly Builds">
 
 <p>

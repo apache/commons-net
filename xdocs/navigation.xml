@@ -13,7 +13,6 @@
     <menu name="Development">
       <item name="To-Do List" href="/tasks.html"/>
       <item name="Coding Specifications" href="/code-standards.html"/>
-      <item name="Original Proposal"     href="/proposal.html"/>
     </menu>
 
   </body>
