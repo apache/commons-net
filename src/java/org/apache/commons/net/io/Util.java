@@ -115,7 +115,8 @@ public final class Util
                 }
 
                 dest.write(buffer, 0, bytes);
-                dest.flush();
+                if(flush)
+                  dest.flush();
                 total += bytes;
                 if (listener != null)
                     listener.bytesTransferred(total, bytes, streamSize);
