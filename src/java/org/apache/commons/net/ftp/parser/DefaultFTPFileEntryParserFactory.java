@@ -118,7 +118,7 @@ implements FTPFileEntryParserFactory
             if (ukey.indexOf("UNIX") >= 0) {
                 return new UnixFTPEntryParser();
             } else if (ukey.indexOf("VMS") >= 0) {
-                return new VMSFTPEntryParser();
+                return new VMSVersioningFTPEntryParser();
             } else if (ukey.indexOf("WINDOWS") >= 0) {
                 return new NTFTPEntryParser();
             } else if (ukey.indexOf("OS/2") >= 0) {

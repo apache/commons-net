@@ -80,14 +80,20 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
  *  "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
  *  "1-JUN.LIS;2              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
  *  "DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
+ * <P><B>
+ * Note: VMSFTPEntryParser can only be instantiated through the 
+ * DefaultFTPParserFactory by classname.  It will not be chosen
+ * by the autodetection scheme.
+ * </B>
  * <P>
  * 
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.15 2004/01/10 16:01:49 scohen Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.16 2004/01/10 23:38:21 scohen Exp $
  * 
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
+ * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
  */
 public class VMSFTPEntryParser extends FTPFileEntryParserImpl
 {
