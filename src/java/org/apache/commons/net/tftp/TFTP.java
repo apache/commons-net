@@ -255,7 +255,7 @@ public class TFTP extends DatagramSocketClient
      * this data before calling bufferedReceive() again, or else the data
      * will be overwritten by the the call.
      * <p>
-     * @param TFTPPacket  The TFTP packet to send.
+     * @param packet  The TFTP packet to send.
      * @exception IOException  If some  I/O error occurs.
      ***/
     public final void bufferedSend(TFTPPacket packet) throws IOException
@@ -297,7 +297,7 @@ public class TFTP extends DatagramSocketClient
     /***
      * Sends a TFTP packet to its destination.
      * <p>
-     * @param TFTPPacket  The TFTP packet to send.
+     * @param packet  The TFTP packet to send.
      * @exception IOException  If some  I/O error occurs.
      ***/
     public final void send(TFTPPacket packet) throws IOException

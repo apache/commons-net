@@ -73,7 +73,9 @@ import org.apache.commons.net.ftp.parser.UnixFTPEntryParser;
  * @see FTPFile
  * @see FTPClient#listFiles
  * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
- * @deprecated use autodetect mechanism in DefaultFTPFileEntryParserFactory instead
+ * @deprecated This class is deprecated as of version 1.2 and will be 
+ * removed in version 2.0 -- use the autodetect mechanism in 
+ * DefaultFTPFileEntryParserFactory instead.
  */
 public final class DefaultFTPFileListParser extends UnixFTPEntryParser
 {

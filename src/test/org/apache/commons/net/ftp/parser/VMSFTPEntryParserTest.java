@@ -60,13 +60,13 @@ import java.io.IOException;
 import junit.framework.TestSuite;
 
 import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPFileList;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
+import org.apache.commons.net.ftp.FTPListParseEngine;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParserTest.java,v 1.10 2004/01/10 15:36:41 scohen Exp $
+ * @version $Id: VMSFTPEntryParserTest.java,v 1.11 2004/01/17 17:20:26 scohen Exp $
  */
 public class VMSFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -127,8 +127,10 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     public void testWholeListParse() throws IOException
     {        
         VMSFTPEntryParser parser = new VMSFTPEntryParser();
-        FTPFile[] files = FTPFileList.create(
-            new ByteArrayInputStream(fullListing.getBytes()), parser).getFiles();
+        FTPListParseEngine engine = new FTPListParseEngine(parser);
+        engine.readServerList(
+        		new ByteArrayInputStream(fullListing.getBytes()));
+        FTPFile[] files = engine.getFiles();
         assertEquals(6, files.length);
         assertFileInListing(files, "2-JUN.LIS");
         assertFileInListing(files, "3-JUN.LIS");
@@ -145,8 +147,10 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     {        
 
         VMSFTPEntryParser parser = new VMSVersioningFTPEntryParser();
-        FTPFile[] files = FTPFileList.create(
-            new ByteArrayInputStream(fullListing.getBytes()), parser).getFiles();
+        FTPListParseEngine engine = new FTPListParseEngine(parser);
+        engine.readServerList(
+        		new ByteArrayInputStream(fullListing.getBytes()));
+        FTPFile[] files = engine.getFiles();
         assertEquals(3, files.length);
         assertFileInListing(files, "1-JUN.LIS;1");
         assertFileInListing(files, "2-JUN.LIS;1");

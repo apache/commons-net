@@ -196,7 +196,7 @@ public class TelnetOption
      * Returns the string representation of the telnet protocol option
      * corresponding to the given option code.
      * <p>
-     * @param The option code of the telnet protocol option
+     * @param code The option code of the telnet protocol option
      * @return The string representation of the telnet protocol option.
      ***/
     public static final String getOption(int code)

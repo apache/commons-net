@@ -54,7 +54,7 @@ package org.apache.commons.net.ftp;
  * <http://www.apache.org/>.
  */
 
-import java.util.Vector;
+import java.util.List;
 
 /**
  * This class implements a bidirectional iterator over an FTPFileList.
@@ -63,17 +63,20 @@ import java.util.Vector;
  * be receieved as an array of any requested number of entries or all of them.
  * 
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileIterator.java,v 1.8 2004/01/10 15:36:40 scohen Exp $
+ * @version $Id: FTPFileIterator.java,v 1.9 2004/01/17 17:20:26 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileList
  * @see org.apache.commons.net.ftp.FTPFileEntryParser
+ * @see org.apache.commons.net.ftp.FTPListParseEngine
+ * @deprecated This class is deprecated as of version 1.2 and will be 
+ * removed in version 2.0 - use FTPFileParseEngine instead
  */
-class FTPFileIterator 
+public class FTPFileIterator 
 {
     /**
      * a vector of strings, each representing a possibly valid ftp file
      * entry
      */
-    private Vector rawlines;
+    private List rawlines;
     
     /**
      * the parser to which this iterator delegates its parsing duties
@@ -157,7 +160,7 @@ class FTPFileIterator
         FTPFile entry = null;
         for (int iter = 0; iter < this.rawlines.size(); iter++)
         {
-            String line = (String) this.rawlines.elementAt(iter);
+            String line = (String) this.rawlines.get(iter);
             entry = parseFTPEntry(line);
             if (null != entry)
             {
@@ -246,7 +249,7 @@ class FTPFileIterator
         for (int i = 0, e = this.firstGoodEntry + this.itemptr ;
                 i < howMany; i++, e++)
         {
-            output[i] = parseFTPEntry((String) this.rawlines.elementAt(e));
+            output[i] = parseFTPEntry((String) this.rawlines.get(e));
             this.itemptr++;
         }
         return output;
@@ -330,7 +333,7 @@ class FTPFileIterator
         FTPFile[] output = new FTPFile[howMany];
         for (int i = howMany, e = this.firstGoodEntry + this.itemptr; i > 0;)
         {
-            output[--i] = parseFTPEntry((String) this.rawlines.elementAt(--e));
+            output[--i] = parseFTPEntry((String) this.rawlines.get(--e));
             this.itemptr--;
         }
         return output;

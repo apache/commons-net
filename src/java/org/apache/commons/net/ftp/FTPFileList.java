@@ -58,8 +58,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ListIterator;
-import java.util.Vector;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This class encapsulates a listing of files from an FTP server.  It is
@@ -76,17 +76,20 @@ import java.util.Vector;
  * which required a bigger memory hit.
  * 
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileList.java,v 1.9 2004/01/10 23:19:52 scohen Exp $
+ * @version $Id: FTPFileList.java,v 1.10 2004/01/17 17:20:26 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPClient#createFileList
  * @see org.apache.commons.net.ftp.FTPFileIterator
  * @see org.apache.commons.net.ftp.FTPFileEntryParser
+ * @see org.apache.commons.net.ftp.FTPListParseEngine
+ * @deprecated This class is deprecated as of version 1.2 and will be 
+ * removed in version 2.0 -- use FTPFileParseEngine instead.
  */
 public class FTPFileList 
 {
     /**
      * storage for the raw lines of input read from the FTP server
      */
-    private Vector lines = null;
+    private LinkedList lines = null;
     /**
      * the FTPFileEntryParser assigned to be used with this lister
      */
@@ -106,7 +109,7 @@ public class FTPFileList
     private FTPFileList (FTPFileEntryParser parser)
     {
         this.parser = parser;
-        this.lines = new Vector();
+        this.lines = new LinkedList();
     }
 
     /**
@@ -132,7 +135,8 @@ public class FTPFileList
     {
         FTPFileList list = new FTPFileList(parser);
         list.readStream(stream);
-        return parser.preParse(list);
+        parser.preParse(list.lines);
+        return list;
     } 
 
     /**
@@ -151,7 +155,7 @@ public class FTPFileList
 
         while (line != null)
         {
-            this.lines.addElement(line);
+            this.lines.add(line);
             line = this.parser.readNextEntry(reader);
         }
         reader.close();
@@ -173,7 +177,7 @@ public class FTPFileList
      * @return vector containing all the raw input lines returned from the FTP 
      * server
      */
-    Vector getLines()
+    List getLines()
     {
         return this.lines;
     }
@@ -214,16 +218,6 @@ public class FTPFileList
         return iterator().getFiles();
     }
 
-    /**
-     * return a ListIterator to the internal Vector of lines, used in purging
-     * duplicates.
-     * 
-     * @return a ListIterator to the internal Vector of lines, used in purging
-     *         duplicates.
-     */
-    ListIterator getInternalIterator() {
-        return this.lines.listIterator();
-    }
 }
 
 /* Emacs configuration

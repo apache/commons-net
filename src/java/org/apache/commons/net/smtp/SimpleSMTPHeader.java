@@ -95,7 +95,7 @@ public class SimpleSMTPHeader
      * <p>
      * @param from  The value of the <code>From:</code> header field.  This
      *              should be the sender's email address.
-     * @param from  The value of the <code>To:</code> header field.  This
+     * @param to    The value of the <code>To:</code> header field.  This
      *              should be the recipient's email address.
      * @param subject  The value of the <code>Subject:</code> header field. 
      *              This should be the subject of the message.

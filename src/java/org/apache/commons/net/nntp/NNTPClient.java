@@ -966,7 +966,10 @@ public class NNTPClient extends NNTP
      * LIST ACTIVE command.
      * <p>
      * @param wildmat a pseudo-regex pattern (cf. RFC 2980)
-     * @return
+     * @return An array of NewsgroupInfo instances containing the information
+     *    for each newsgroup served by the NNTP server corresponding to the 
+     *    supplied pattern.   If no such newsgroups are served, a zero length 
+     *    array will be returned.  If the command fails, null will be returned.
      * @throws IOException
      */
     public NewsgroupInfo[] listNewsgroups(String wildmat) throws IOException 

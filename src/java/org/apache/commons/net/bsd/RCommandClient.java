@@ -295,7 +295,7 @@ public class RCommandClient extends RExecClient
      * Before returning, <a href="org.apache.commons.net.SocketClient.html#_connectAction_"> _connectAction_() </a>
      * is called to perform connection initialization actions.
      * <p>
-     * @param host  The remote host.
+     * @param hostname  The remote host.
      * @param port  The port to connect to on the remote host.
      * @param localAddr  The local address to use.
      * @exception SocketException If the socket timeout could not be set.

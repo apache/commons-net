@@ -97,7 +97,7 @@ public final class NNTPCommand
      * Retrieve the NNTP protocol command string corresponding to a specified
      * command code.
      * <p>
-     * @param The command code.
+     * @param command The command code.
      * @return The NNTP protcol command string corresponding to a specified
      *         command code.
      ***/

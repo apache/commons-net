@@ -116,7 +116,7 @@ public final class SMTPCommand
      * Retrieve the SMTP protocol command string corresponding to a specified
      * command code.
      * <p>
-     * @param The command code.
+     * @param command The command code.
      * @return The SMTP protcol command string corresponding to a specified
      *         command code.
      ***/

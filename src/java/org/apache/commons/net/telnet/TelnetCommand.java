@@ -143,7 +143,7 @@ public final class TelnetCommand
      * Returns the string representation of the telnet protocol command
      * corresponding to the given command code.
      * <p>
-     * @param The command code of the telnet protocol command.
+     * @param code The command code of the telnet protocol command.
      * @return The string representation of the telnet protocol command.
      ***/
     public static final String getCommand(int code)

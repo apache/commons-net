@@ -62,7 +62,7 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
-import org.apache.commons.net.ftp.FTPFileList;
+import org.apache.commons.net.ftp.FTPListParseEngine;
 
 /**
  * Implementation FTPFileEntryParser and FTPFileListParser for VMS Systems.
@@ -81,7 +81,7 @@ import org.apache.commons.net.ftp.FTPFileList;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.17 2004/01/16 02:15:37 scohen Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.18 2004/01/17 17:20:26 scohen Exp $
  * 
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
@@ -141,7 +141,9 @@ public class VMSFTPEntryParser extends FTPFileEntryParserImpl
      * @exception IOException  If an I/O error occurs reading the listStream.
      ***/
     public FTPFile[] parseFileList(InputStream listStream) throws IOException {
-        return FTPFileList.create(listStream, this).getFiles();
+    	FTPListParseEngine engine = new FTPListParseEngine(this);
+    	engine.readServerList(listStream);
+    	return engine.getFiles();
     }
 
 

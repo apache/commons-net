@@ -55,9 +55,9 @@ package org.apache.commons.net.ftp.parser;
  */
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.ListIterator;
 
-import org.apache.commons.net.ftp.FTPFileList;
 import org.apache.oro.text.regex.MalformedPatternException;
 import org.apache.oro.text.regex.MatchResult;
 import org.apache.oro.text.regex.Pattern;
@@ -79,7 +79,7 @@ import org.apache.oro.text.regex.Perl5Matcher;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSVersioningFTPEntryParser.java,v 1.4 2004/01/16 02:15:37 scohen Exp $
+ * @version $Id: VMSVersioningFTPEntryParser.java,v 1.5 2004/01/17 17:20:26 scohen Exp $
  * 
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
@@ -95,8 +95,6 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
      * Constructor for a VMSFTPEntryParser object.  Sets the versioning member 
      * to the supplied value.
      *  
-     * @param versioning Value to which versioning is to be set.
-     * 
      * @exception IllegalArgumentException
      * Thrown if the regular expression is unparseable.  Should not be seen 
      * under normal conditions.  It it is seen, this is a sign that 
@@ -137,9 +135,10 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
      *
      * @return Original list purged of duplicates
      */
-    public FTPFileList preParse(FTPFileList original) {
+    public List preParse(List original) {
+    	original = super.preParse(original);
         HashMap existingEntries = new HashMap();
-        ListIterator iter = getInternalIteratorForFtpFileList(original);
+        ListIterator iter = original.listIterator();
         while (iter.hasNext()) {
             String entry = ((String)iter.next()).trim();
             MatchResult result = null;

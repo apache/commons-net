@@ -63,8 +63,8 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
  * org.apache.commons.net.ftp.FTPClient.listFiles()
  * if no other implementation has been specified.
  * 
- * @see org.apache.commons.net.ftp.FTPClient.listFiles()
- * @see org.apache.commons.net.ftp.FTPClient.setParserFactory()
+ * @see org.apache.commons.net.ftp.FTPClient#listFiles
+ * @see org.apache.commons.net.ftp.FTPClient#setParserFactory
  */
 public class DefaultFTPFileEntryParserFactory 
 implements FTPFileEntryParserFactory 

@@ -54,18 +54,18 @@ package org.apache.commons.net.ftp;
  * <http://www.apache.org/>.
  */
 
-import java.io.InputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Iterator;
+import java.util.List;
 
-import java.util.ListIterator;
-
-import org.apache.oro.text.regex.Pattern;
 import org.apache.oro.text.regex.MalformedPatternException;
-import org.apache.oro.text.regex.PatternMatcher;
-import org.apache.oro.text.regex.Perl5Matcher;
-import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.MatchResult;
+import org.apache.oro.text.regex.Pattern;
+import org.apache.oro.text.regex.PatternMatcher;
+import org.apache.oro.text.regex.Perl5Compiler;
+import org.apache.oro.text.regex.Perl5Matcher;
 
 /**
  * This abstract class implements both the older FTPFileListParser and
@@ -241,25 +241,22 @@ public abstract class FTPFileEntryParserImpl
      *
      * @return <code>original</code> unmodified.
      */
-     public FTPFileList preParse(FTPFileList original) { 
+     public List preParse(List original) { 
+     	 Iterator it = original.iterator();
+     	 while (it.hasNext()){
+     	 	String entry = (String) it.next();
+     	 	if (null == parseFTPEntry(entry)) {
+     	 		it.remove();
+     	 	} else {
+     	 		break;
+     	 	}
+     	 }
          return original;                                
      } 
-      
+     
                                                         
 
-    /**
-     * return a ListIterator to the internal Vector of lines of <code>list</code>, 
-     * used in purging duplicates.
-     * 
-     * This method could go away if FTPFileEntryParser were moved down into the 
-     * parser package.
-     * 
-     * @return a ListIterator to the internal Vector of lines, used in purging
-     *         duplicates.
-     */
-    protected ListIterator getInternalIteratorForFtpFileList(FTPFileList list) {
-        return list.getInternalIterator();
-    }
+
 }
 
 /* Emacs configuration

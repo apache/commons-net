@@ -594,7 +594,7 @@ public class SMTPClient extends SMTP
      * Fetches the help information for a given command from the server and
      * returns the full string.
      * <p>
-     * @param  The command on which to ask for help.
+     * @param command The command on which to ask for help.
      * @return The command help string obtained from the server.  null if the
      *       information could not be obtained.
      * @exception SMTPConnectionClosedException

@@ -62,10 +62,11 @@ package org.apache.commons.net.ftp;
  * 
  * @author Steve Cohen <scohen@apache.org>
  * @see org.apache.commons.net.ftp.FTPFileEntryParserImpl
- * @deprecated This class is deprecated and will not be supported when version 2.0 is 
- *             released.  org.apache.commons.net.ftp.FTPFileEntryParserImpl is its
- *             designated replacement.  Class has been renamed, entire implemenation
- *             in FTPFileEntryParserImpl.
+ * @deprecated This class is deprecated as of version 1.2 and will be 
+ *             removed in version 2.0 -- 
+ *             org.apache.commons.net.ftp.FTPFileEntryParserImpl is its
+ *             designated replacement.  Class has been renamed, entire 
+ *             implemenation is in FTPFileEntryParserImpl.
  * 
  */
 public abstract class FTPFileListParserImpl 
