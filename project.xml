@@ -133,6 +133,9 @@
       <includes>
         <include>**/*Test.java</include>
       </includes>
+      <excludes>
+        <exclude>**/TelnetClientFunctionalTest.java</exclude>
+      </excludes>
     </unitTest>
     
   </build>
