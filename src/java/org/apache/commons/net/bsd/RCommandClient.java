@@ -74,7 +74,7 @@ import org.apache.commons.net.io.SocketInputStream;
  * parameter of {@link #rcommand  rcommand() } to <code> true </code>.
  * The standard input of the remote process can be written to through
  * the output stream returned by
- * {@link org.apache.commons.net.bsd.RExecClient#getOutputStream getOutputSream() }
+ * {@link org.apache.commons.net.bsd.RExecClient#getOutputStream getOutputStream() }
  * .
  * <p>
  * <p>
