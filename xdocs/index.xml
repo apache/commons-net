@@ -55,6 +55,7 @@
        <li>Time (rdate) and Daytime</li>
        <li>Echo</li>
        <li>Discard</li>
+       <li>NTP/SNTP</li>
      </ul>
    </p>
    </section>
