@@ -44,6 +44,18 @@
           <li>
             TLS for FTP
           </li>
+          <li>
+            Change build so that API documentation doesn't include
+            private and package private members.
+          </li>
+          <li>
+            Change build so that javadoc generation doesn't have unit
+            testing as a prerequisite.
+          </li>
+          <li>
+            Change jar generation so that it doesn't include example
+            classes.
+          </li>
         </ul>
       </p>
     </section>
