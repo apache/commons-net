@@ -72,12 +72,11 @@ implements FTPFileEntryParserFactory
     /**
      * This default implementation of the FTPFileEntryParserFactory
      * interface works according to the following logic:
-     * <p>
      * First it attempts to interpret the supplied key as a fully
      * qualified classname of a class implementing the
      * FTPFileEntryParser interface.  If that succeeds, a parser 
      * object of this class is instantiated and is returned.
-     * <p/>
+     * <p>
      * If <code>key</code> is not recognized as a fully qualified
      * classname known to the system, this method will then attempt
      * to see whether it <b>contains</b> a string identifying one of
@@ -107,7 +106,6 @@ implements FTPFileEntryParserFactory
      * @see FTPFileEntryParser
      */
     public FTPFileEntryParser createFileEntryParser(String key) 
-    throws ParserInitializationException 
     {
         Class parserClass = null;
         try {

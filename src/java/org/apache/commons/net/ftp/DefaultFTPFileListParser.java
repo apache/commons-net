@@ -61,7 +61,7 @@ import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.Vector;
 
-/***
+/**
  * DefaultFTPFileListParser is the default implementation of
  * <a href="org.apache.commons.net.ftp.FTPFileListParser.html"> FTPFileListParser </a>
  * used by <a href="org.apache.commons.net.ftp.FTPClient.html"> FTPClient </a>
@@ -75,8 +75,9 @@ import java.util.Vector;
  * @see FTPFileListParser
  * @see FTPFile
  * @see FTPClient#listFiles
- ***/
-
+ * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
+ * @deprecated use autodetect mechanism in DefaultFTPFileEntryParserFactory instead
+ */
 public final class DefaultFTPFileListParser implements FTPFileListParser
 {
 

@@ -59,7 +59,7 @@ package org.apache.commons.net.ftp.parser;
  * the process of an FTPFileEntryParserFactory creating and
  * instantiating an FTPFileEntryParser.
  */ 
-public class ParserInitializationException extends Exception {
+public class ParserInitializationException extends RuntimeException {
     
     /**
      * Root exception that caused this to be thrown
