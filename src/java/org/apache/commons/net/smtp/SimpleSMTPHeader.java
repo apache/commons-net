@@ -149,7 +149,8 @@ public class SimpleSMTPHeader
     /***
      * Converts the SimpleSMTPHeader to a properly formatted header in
      * the form of a String, including the blank line used to separate
-     * the header from the article body.
+     * the header from the article body.  The header fields CC and Subject
+     * are only included when they are non-null.
      * <p>
      * @return The message header in the form of a String.
      ***/
@@ -168,13 +169,16 @@ public class SimpleSMTPHeader
         if (__cc != null)
         {
             header.append("\nCc: ");
-            header.append(__cc);
+            header.append(__cc.toString());
         }
 
-        header.append("\nSubject: ");
-        header.append(__subject);
-        header.append('\n');
+        if (__subject != null)
+        {
+            header.append("\nSubject: ");
+            header.append(__subject);
+        }
 
+        header.append('\n');
         header.append('\n');
 
         return header.toString();
