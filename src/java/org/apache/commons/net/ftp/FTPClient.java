@@ -47,6 +47,7 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
  * Then you need to check the FTP reply code to see if the connection
  * was successful.  For example:
  * <pre>
+ *    boolean error = false;
  *    try {
  *      int reply;
  *      ftp.connect("ftp.foobar.com");
@@ -62,18 +63,20 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
  *        System.err.println("FTP server refused connection.");
  *        System.exit(1);
  *      }
- *     ... // transfer files
- *     ftp.disconnect();
+ *      ... // transfer files
+ *      ftp.logout();
  *    } catch(IOException e) {
+ *      error = true;
+ *      e.printStackTrace();
+ *    } finally {
  *      if(ftp.isConnected()) {
  *        try {
  *          ftp.disconnect();
- *        } catch(IOException f) {
+ *        } catch(IOException ioe) {
  *          // do nothing
  *        }
  *      }
- *      e.printStackTrace();
- *      System.exit(1);
+ *      System.exit(error ? 1 : 0);
  *    }
  * </pre>
  * <p>
