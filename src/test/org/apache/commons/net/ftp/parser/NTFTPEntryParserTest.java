@@ -23,7 +23,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: NTFTPEntryParserTest.java,v 1.13 2004/04/21 23:30:33 scohen Exp $
+ * @version $Id: NTFTPEntryParserTest.java,v 1.14 2004/04/22 00:48:07 scohen Exp $
  */
 public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
 {
@@ -35,18 +35,18 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
             "12-05-96  05:03PM       <DIR>          absoft2",
             "11-14-97  04:21PM                  953 AUDITOR3.INI",
             "05-22-97  08:08AM                  828 AUTOEXEC.BAK",
-			"01-22-98  01:52PM                  795 AUTOEXEC.BAT",
-			"05-13-97  01:46PM                  828 AUTOEXEC.DOS",
-			"12-03-96  06:38AM                  403 AUTOTOOL.LOG",
-			"12-03-96  06:38AM       <DIR>          123xyz",
-			"01-20-97  03:48PM       <DIR>          bin",
-	},
-	{
-			"-rw-r--r--   1 root     root       111325 Apr 27  2001 zxJDBC-2.0.1b1.tar.gz",
-			"-rw-r--r--   1 root     root       190144 Apr 27  2001 zxJDBC-2.0.1b1.zip",
-			"-rwxr-xr-x   2 500      500           166 Nov  2  2001 73131-testtes1.afp",
-			"-rw-r--r--   1 500      500           166 Nov  9  2001 73131-testtes1.AFP",
-    	}
+            "01-22-98  01:52PM                  795 AUTOEXEC.BAT",
+            "05-13-97  01:46PM                  828 AUTOEXEC.DOS",
+            "12-03-96  06:38AM                  403 AUTOTOOL.LOG",
+            "12-03-96  06:38AM       <DIR>          123xyz",
+            "01-20-97  03:48PM       <DIR>          bin",
+    },
+    {
+            "-rw-r--r--   1 root     root       111325 Apr 27  2001 zxJDBC-2.0.1b1.tar.gz",
+            "-rw-r--r--   1 root     root       190144 Apr 27  2001 zxJDBC-2.0.1b1.zip",
+            "-rwxr-xr-x   2 500      500           166 Nov  2  2001 73131-testtes1.afp",
+            "-rw-r--r--   1 500      500           166 Nov  9  2001 73131-testtes1.AFP",
+        }
     };
 
     private static final String[][] badsamples =
@@ -54,8 +54,8 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
             {
                 "05-26-1995  10:57AM               143712 $LDR$",
                 "20-05-97  03:31PM                  681 .bash_history",
-				"drwxr-xr-x   2 root     99           4096 Feb 23 30:01 zzplayer",
-				"12-05-96  17:03         <DIR>          absoft2",
+                "drwxr-xr-x   2 root     99           4096 Feb 23 30:01 zzplayer",
+                "12-05-96  17:03         <DIR>          absoft2",
                 "05-22-97  08:08                    828 AUTOEXEC.BAK",
                 "     0           DIR   05-19-97   12:56  local",
                 "     0           DIR   05-12-97   16:52  Maintenance Desktop",
@@ -72,7 +72,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
             };
 
     private static final String directoryBeginningWithNumber =
-    	"12-03-96  06:38AM       <DIR>          123xyz";
+        "12-03-96  06:38AM       <DIR>          123xyz";
 
 
     /**
@@ -104,11 +104,11 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
      */
     protected FTPFileEntryParser getParser()
     {
-		return new CompositeFileEntryParser(new FTPFileEntryParser[]
-		{
-			new NTFTPEntryParser(),
-			new UnixFTPEntryParser()
-		});
+        return new CompositeFileEntryParser(new FTPFileEntryParser[]
+        {
+            new NTFTPEntryParser(),
+            new UnixFTPEntryParser()
+        });
     }
 
     /**
@@ -138,7 +138,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         dir = getParser().parseFTPEntry("12-03-96  06:38AM       <DIR>          123456");
         assertNotNull("Could not parse entry.", dir);
         assertTrue("Should have been a directory.",
-        		dir.isDirectory());
+                dir.isDirectory());
         assertEquals("123456", dir.getName());
         assertEquals(0, dir.getSize());
 
@@ -162,13 +162,13 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         // on the hour.
 
         f = getParser().parseFTPEntry(
-        		"-rw-rw-r--   1 mqm        mqm          17707 Mar 12  3:33 killmq.sh.log");
+                "-rw-rw-r--   1 mqm        mqm          17707 Mar 12  3:33 killmq.sh.log");
         assertNotNull("Could not parse entry.", f);
         Calendar cal = Calendar.getInstance();
         cal.setTime(f.getTimestamp().getTime());
         assertEquals("hour", 3, cal.get(Calendar.HOUR));
         assertTrue("Should have been a file.",
-        		f.isFile());
+                f.isFile());
         assertEquals(17707, f.getSize());
 
 
@@ -181,22 +181,22 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
     protected void doAdditionalGoodTests(String test, FTPFile f)
     {
         if (test.indexOf("<DIR>") >= 0)
-		{
-					assertEquals("directory.type",
-							FTPFile.DIRECTORY_TYPE, f.getType());
-				}
-	}
+        {
+                    assertEquals("directory.type",
+                            FTPFile.DIRECTORY_TYPE, f.getType());
+                }
+    }
 
-	/**
-	 * test condition reported as bug 20259.
-	 * directory with name beginning with a numeric character
-	 * was not parsing correctly
+    /**
+     * test condition reported as bug 20259.
+     * directory with name beginning with a numeric character
+     * was not parsing correctly
      *
-	 * @throws Exception
-	 */
+     * @throws Exception
+     */
     public void testDirectoryBeginningWithNumber() throws Exception
     {
-		FTPFile f = getParser().parseFTPEntry(directoryBeginningWithNumber);
-		assertEquals("name", "123xyz", f.getName());
-	}
+        FTPFile f = getParser().parseFTPEntry(directoryBeginningWithNumber);
+        assertEquals("name", "123xyz", f.getName());
+    }
 }

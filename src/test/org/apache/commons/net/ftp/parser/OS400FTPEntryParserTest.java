@@ -22,7 +22,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 import java.util.Calendar;
 
 /**
- * @version $Id: OS400FTPEntryParserTest.java,v 1.2 2004/04/16 01:52:24 scohen Exp $
+ * @version $Id: OS400FTPEntryParserTest.java,v 1.3 2004/04/22 00:48:07 scohen Exp $
  */
 
 public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
@@ -30,11 +30,11 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
     private static final String[][] badsamples =
 {
     {
-		"PEP              4019 04/03/18 18:58:16 STMF       einladung.zip",
-		"PEP               422 03/24 14:06:26 *STMF      readme",
-		"PEP              6409 04/03/24 30:06:29 *STMF      build.xml",
-		"PEP USR         36864 04/03/24 14:06:34 *DIR       dir1/",
-		"PEP             3686404/03/24 14:06:47 *DIR       zdir2/"
+        "PEP              4019 04/03/18 18:58:16 STMF       einladung.zip",
+        "PEP               422 03/24 14:06:26 *STMF      readme",
+        "PEP              6409 04/03/24 30:06:29 *STMF      build.xml",
+        "PEP USR         36864 04/03/24 14:06:34 *DIR       dir1/",
+        "PEP             3686404/03/24 14:06:47 *DIR       zdir2/"
             },
 
             {
@@ -49,11 +49,11 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
     private static final String[][] goodsamples =
         {
     {
-		"PEP              4019 04/03/18 18:58:16 *STMF      einladung.zip",
-		"PEP               422 04/03/24 14:06:26 *STMF      readme",
-		"PEP              6409 04/03/24 14:06:29 *STMF      build.xml",
-		"PEP             36864 04/03/24 14:06:34 *DIR       dir1/",
-		"PEP             36864 04/03/24 14:06:47 *DIR       zdir2/"
+        "PEP              4019 04/03/18 18:58:16 *STMF      einladung.zip",
+        "PEP               422 04/03/24 14:06:26 *STMF      readme",
+        "PEP              6409 04/03/24 14:06:29 *STMF      build.xml",
+        "PEP             36864 04/03/24 14:06:34 *DIR       dir1/",
+        "PEP             36864 04/03/24 14:06:47 *DIR       zdir2/"
             },
             {
                 "----rwxr-x   1 PEP      0           4019 Mar 18 18:58 einladung.zip",
@@ -121,9 +121,9 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
         cal.set(Calendar.MONTH, Calendar.MARCH);
 
         cal.set(Calendar.YEAR, 2004);
-		cal.set(Calendar.DATE, 24);
+        cal.set(Calendar.DATE, 24);
         cal.set(Calendar.HOUR_OF_DAY, 14);
-		cal.set(Calendar.MINUTE, 6);
+        cal.set(Calendar.MINUTE, 6);
         cal.set(Calendar.SECOND, 34);
 
         assertEquals(df.format(cal.getTime()),
@@ -159,11 +159,11 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
         Calendar cal = Calendar.getInstance();
 
         cal.set(Calendar.DATE, 24);
-		cal.set(Calendar.MONTH, Calendar.MARCH);
+        cal.set(Calendar.MONTH, Calendar.MARCH);
         cal.set(Calendar.YEAR, 2004);
         cal.set(Calendar.HOUR_OF_DAY, 14);
         cal.set(Calendar.MINUTE, 6);
-		cal.set(Calendar.SECOND, 29);
+        cal.set(Calendar.SECOND, 29);
         assertEquals(df.format(cal.getTime()),
                      df.format(f.getTimestamp().getTime()));
     }

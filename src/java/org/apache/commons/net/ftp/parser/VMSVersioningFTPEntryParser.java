@@ -39,7 +39,7 @@ import org.apache.oro.text.regex.Perl5Matcher;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSVersioningFTPEntryParser.java,v 1.7 2004/04/21 23:30:33 scohen Exp $
+ * @version $Id: VMSVersioningFTPEntryParser.java,v 1.8 2004/04/22 00:48:07 scohen Exp $
  *
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
@@ -96,7 +96,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
      * @return Original list purged of duplicates
      */
     public List preParse(List original) {
-    	original = super.preParse(original);
+        original = super.preParse(original);
         HashMap existingEntries = new HashMap();
         ListIterator iter = original.listIterator();
         while (iter.hasNext()) {

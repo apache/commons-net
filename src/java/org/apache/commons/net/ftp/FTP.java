@@ -262,7 +262,7 @@ public class FTP extends TelnetClient
 
         try
         {
-        	String code = line.substring(0, 3);
+            String code = line.substring(0, 3);
             _replyCode = Integer.parseInt(code);
         }
         catch (NumberFormatException e)

@@ -26,7 +26,7 @@ import org.apache.commons.net.ftp.FTPListParseEngine;
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParserTest.java,v 1.14 2004/04/21 23:30:33 scohen Exp $
+ * @version $Id: VMSFTPEntryParserTest.java,v 1.15 2004/04/22 00:48:07 scohen Exp $
  */
 public class VMSFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -90,7 +90,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         VMSFTPEntryParser parser = new VMSFTPEntryParser();
         FTPListParseEngine engine = new FTPListParseEngine(parser);
         engine.readServerList(
-        		new ByteArrayInputStream(fullListing.getBytes()));
+                new ByteArrayInputStream(fullListing.getBytes()));
         FTPFile[] files = engine.getFiles();
         assertEquals(6, files.length);
         assertFileInListing(files, "2-JUN.LIS");
@@ -110,7 +110,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         VMSFTPEntryParser parser = new VMSVersioningFTPEntryParser();
         FTPListParseEngine engine = new FTPListParseEngine(parser);
         engine.readServerList(
-        		new ByteArrayInputStream(fullListing.getBytes()));
+                new ByteArrayInputStream(fullListing.getBytes()));
         FTPFile[] files = engine.getFiles();
         assertEquals(3, files.length);
         assertFileInListing(files, "1-JUN.LIS;1");

@@ -20,119 +20,119 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mario@ops.co.at">MarioIvankovits</a>
- * @version $Id: CompositeFTPParseTestFramework.java,v 1.1 2004/04/16 01:52:24 scohen Exp $
+ * @version $Id: CompositeFTPParseTestFramework.java,v 1.2 2004/04/22 00:48:07 scohen Exp $
  */
 public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramework
 {
-	/**
-	 * @see junit.framework.TestCase#TestCase(String)
-	 */
-	public CompositeFTPParseTestFramework(String name)
-	{
-		super(name);
-	}
+    /**
+     * @see junit.framework.TestCase#TestCase(String)
+     */
+    public CompositeFTPParseTestFramework(String name)
+    {
+        super(name);
+    }
 
-	/**
-	 * @see FTPParseTestFramework#getGoodListing()
-	 */
-	protected String[] getGoodListing()
-	{
-		return (getGoodListings()[0]);
-	}
+    /**
+     * @see FTPParseTestFramework#getGoodListing()
+     */
+    protected String[] getGoodListing()
+    {
+        return (getGoodListings()[0]);
+    }
 
-	/**
-	 * Method getBadListing.
-	 * Implementors must provide multiple listing that contains failures and
-	 * must force the composite parser to switch the FtpEntryParser
-	 *
-	 * @return String[]
-	 */
-	protected abstract String[][] getBadListings();
+    /**
+     * Method getBadListing.
+     * Implementors must provide multiple listing that contains failures and
+     * must force the composite parser to switch the FtpEntryParser
+     *
+     * @return String[]
+     */
+    protected abstract String[][] getBadListings();
 
-	/**
-	 * Method getGoodListing.
-	 * Implementors must provide multiple listing that passes and
-	 * must force the composite parser to switch the FtpEntryParser
-	 *
-	 * @return String[]
-	 */
-	protected abstract String[][] getGoodListings();
+    /**
+     * Method getGoodListing.
+     * Implementors must provide multiple listing that passes and
+     * must force the composite parser to switch the FtpEntryParser
+     *
+     * @return String[]
+     */
+    protected abstract String[][] getGoodListings();
 
-	/**
-	 * @see FTPParseTestFramework#getBadListing()
-	 */
-	protected String[] getBadListing()
-	{
-		return (getBadListings()[0]);
-	}
+    /**
+     * @see FTPParseTestFramework#getBadListing()
+     */
+    protected String[] getBadListing()
+    {
+        return (getBadListings()[0]);
+    }
 
-	/* (non-Javadoc)
-	 * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testGoodListing()
-	 */
-	public void testConsistentListing() throws Exception
-	{
-		String goodsamples[][] = getGoodListings();
+    /* (non-Javadoc)
+     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testGoodListing()
+     */
+    public void testConsistentListing() throws Exception
+    {
+        String goodsamples[][] = getGoodListings();
 
-		for (int i = 0; i < goodsamples.length; i++)
-		{
-			FTPFileEntryParser parser = getParser();
-			for (int j = 0; j < goodsamples[i].length; j++)
-			{
-				String test = goodsamples[i][j];
-				FTPFile f = parser.parseFTPEntry(test);
-				assertNotNull("Failed to parse " + test,
-						f);
+        for (int i = 0; i < goodsamples.length; i++)
+        {
+            FTPFileEntryParser parser = getParser();
+            for (int j = 0; j < goodsamples[i].length; j++)
+            {
+                String test = goodsamples[i][j];
+                FTPFile f = parser.parseFTPEntry(test);
+                assertNotNull("Failed to parse " + test,
+                        f);
 
-				doAdditionalGoodTests(test, f);
-			}
-		}
-	}
+                doAdditionalGoodTests(test, f);
+            }
+        }
+    }
 
-	/* (non-Javadoc)
-	 * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testGoodListing()
-	 */
-	public void testBadListing() throws Exception
-	{
-		String badsamples[][] = getBadListings();
+    /* (non-Javadoc)
+     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testGoodListing()
+     */
+    public void testBadListing() throws Exception
+    {
+        String badsamples[][] = getBadListings();
 
-		for (int i = 0; i < badsamples.length; i++)
-		{
-			FTPFileEntryParser parser = getParser();
-			for (int j = 0; j < badsamples[i].length; j++)
-			{
-				String test = badsamples[i][j];
-				FTPFile f = parser.parseFTPEntry(test);
-				assertNull("Should have Failed to parse " + test,
-						f);
+        for (int i = 0; i < badsamples.length; i++)
+        {
+            FTPFileEntryParser parser = getParser();
+            for (int j = 0; j < badsamples[i].length; j++)
+            {
+                String test = badsamples[i][j];
+                FTPFile f = parser.parseFTPEntry(test);
+                assertNull("Should have Failed to parse " + test,
+                        f);
 
-				doAdditionalBadTests(test, f);
-			}
-		}
-	}
+                doAdditionalBadTests(test, f);
+            }
+        }
+    }
 
-	// even though all these listings are good using one parser
-	// or the other, this tests that a parser that has succeeded
-	// on one format will fail if another format is substituted.
-	public void testInconsistentListing() throws Exception
-	{
-		String goodsamples[][] = getGoodListings();
+    // even though all these listings are good using one parser
+    // or the other, this tests that a parser that has succeeded
+    // on one format will fail if another format is substituted.
+    public void testInconsistentListing() throws Exception
+    {
+        String goodsamples[][] = getGoodListings();
 
-		FTPFileEntryParser parser = getParser();
+        FTPFileEntryParser parser = getParser();
 
-		for (int i = 0; i < goodsamples.length; i++)
-		{
-			String test = goodsamples[i][0];
-			FTPFile f = parser.parseFTPEntry(test);
+        for (int i = 0; i < goodsamples.length; i++)
+        {
+            String test = goodsamples[i][0];
+            FTPFile f = parser.parseFTPEntry(test);
 
-			switch (i)
-			{
-			case 0:
-				assertNotNull("Failed to parse " + test, f);
-				break;
-			case 1:
-				assertNull("Should have failed to parse " + test, f);
-				break;
-			}
-		}
-	}
+            switch (i)
+            {
+            case 0:
+                assertNotNull("Failed to parse " + test, f);
+                break;
+            case 1:
+                assertNull("Should have failed to parse " + test, f);
+                break;
+            }
+        }
+    }
 }

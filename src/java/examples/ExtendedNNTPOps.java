@@ -167,31 +167,31 @@ public class ExtendedNNTPOps {
             // AUTHINFO USER/AUTHINFO PASS
             boolean success = client.authenticate(user, password);
             if(success)
-		{
+        {
                     System.out.println("Authentication succeeded");
-		}
+        }
             else
-		{
+        {
                     System.out.println("Authentication failed, error =" +
                                        client.getReplyString());
-		}
+        }
 
-	    // XOVER
-	    NewsgroupInfo testGroup = new NewsgroupInfo();
+        // XOVER
+        NewsgroupInfo testGroup = new NewsgroupInfo();
             client.selectNewsgroup("alt.test", testGroup);
             int lowArticleNumber = testGroup.getFirstArticle();
             int highArticleNumber = testGroup.getLastArticle();
-	    Article[] articles =
+        Article[] articles =
                 getArticleInfo(lowArticleNumber, highArticleNumber);
 
-	    for(int i =0; i < articles.length; ++i)
+        for(int i =0; i < articles.length; ++i)
                 {
                     System.out.println(articles[i].getSubject());
                 }
 
-	    // LIST ACTIVE
-	    NewsgroupInfo[] fanGroups = client.listNewsgroups("alt.fan.*");
-	    for(int i = 0; i < fanGroups.length; ++i)
+        // LIST ACTIVE
+        NewsgroupInfo[] fanGroups = client.listNewsgroups("alt.fan.*");
+        for(int i = 0; i < fanGroups.length; ++i)
                 {
                     System.out.println(fanGroups[i].getNewsgroup());
                 }

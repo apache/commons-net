@@ -2053,7 +2053,7 @@ public class FTPClient extends FTP
     throws IOException
     {
         FTPListParseEngine engine =
-        	initiateListParsing(parserKey, pathname);
+            initiateListParsing(parserKey, pathname);
         return engine.getFiles();
     }
 
@@ -2180,9 +2180,9 @@ public class FTPClient extends FTP
      * @see FTPListParseEngine
      */
     public FTPListParseEngine initiateListParsing()
-	throws IOException
-	{
-    	return initiateListParsing("");
+    throws IOException
+    {
+        return initiateListParsing("");
     }
 
     /**
@@ -2201,18 +2201,18 @@ public class FTPClient extends FTP
      * expensive FTPFile objects are not created until needed which may be
      * an advantage on large lists.
      * <p>
-	 * <pre>
-	 *    FTPClient f=FTPClient();
-	 *    f.connect(server);
-	 *    f.login(username, password);
-	 *    FTPListParseEngine engine = f.initiateListParsing(directory);
-	 *
-	 *    while (engine.hasNext()) {
-	 *       FTPFile[] files = engine.getNext(25);  // "page size" you want
-	 *       //do whatever you want with these files, display them, etc.
-	 *       //expensive FTPFile objects not created until needed.
-	 *    }
-	 * </pre>
+     * <pre>
+     *    FTPClient f=FTPClient();
+     *    f.connect(server);
+     *    f.login(username, password);
+     *    FTPListParseEngine engine = f.initiateListParsing(directory);
+     *
+     *    while (engine.hasNext()) {
+     *       FTPFile[] files = engine.getNext(25);  // "page size" you want
+     *       //do whatever you want with these files, display them, etc.
+     *       //expensive FTPFile objects not created until needed.
+     *    }
+     * </pre>
      *
      * @return A FTPListParseEngine object that holds the raw information and
      * is capable of providing parsed FTPFile objects, one for each file
@@ -2235,48 +2235,48 @@ public class FTPClient extends FTP
      * @see FTPListParseEngine
      */
     public FTPListParseEngine initiateListParsing(
-    		String pathname)
-	throws IOException
-	{
-    	String key = null;
-    	return initiateListParsing(key, pathname);
+            String pathname)
+    throws IOException
+    {
+        String key = null;
+        return initiateListParsing(key, pathname);
     }
 
-	/**
-	 * Using the supplied parser key, initialize an FTPListParseEngine
-	 * object containing a raw file information for the supplied directory.
-	 * This information is obtained through the LIST command.  This object
-	 * is then capable of being iterated to return a sequence of FTPFile
-	 * objects with information filled in by the
-	 * <code> FTPFileEntryParser </code> used.
-	 * <p>
-	 * The server may or may not expand glob expressions.  You should avoid
-	 * using glob expressions because the return format for glob listings
-	 * differs from server to server and will likely cause this method to fail.
-	 * <p>
-	 * This method differs from using the listFiles() methods in that
-	 * expensive FTPFile objects are not created until needed which may be
-	 * an advantage on large lists.
-	 *
-	 * @param parserKey A string representing a designated code or fully-qualified
+    /**
+     * Using the supplied parser key, initialize an FTPListParseEngine
+     * object containing a raw file information for the supplied directory.
+     * This information is obtained through the LIST command.  This object
+     * is then capable of being iterated to return a sequence of FTPFile
+     * objects with information filled in by the
+     * <code> FTPFileEntryParser </code> used.
+     * <p>
+     * The server may or may not expand glob expressions.  You should avoid
+     * using glob expressions because the return format for glob listings
+     * differs from server to server and will likely cause this method to fail.
+     * <p>
+     * This method differs from using the listFiles() methods in that
+     * expensive FTPFile objects are not created until needed which may be
+     * an advantage on large lists.
+     *
+     * @param parserKey A string representing a designated code or fully-qualified
      * class name of an  <code> FTPFileEntryParser </code> that should be
-	 *               used to parse each server file listing.
-	 *
-	 * @return A FTPListParseEngine object that holds the raw information and
-	 * is capable of providing parsed FTPFile objects, one for each file
-	 * containing information contained in the given path in the format
-	 * determined by the <code> parser </code> parameter.   Null will be
-	 * returned if a data connection cannot be opened.  If the current working
-	 * directory contains no files, an empty array will be the return.
-	 *
-	 * @exception FTPConnectionClosedException
-	 *                   If the FTP server prematurely closes the connection as a result
-	 *                   of the client being idle or some other reason causing the server
-	 *                   to send FTP reply code 421.  This exception may be caught either
-	 *                   as an IOException or independently as itself.
-	 * @exception IOException
-	 *                   If an I/O error occurs while either sending a
-	 *                   command to the server or receiving a reply from the server.
+     *               used to parse each server file listing.
+     *
+     * @return A FTPListParseEngine object that holds the raw information and
+     * is capable of providing parsed FTPFile objects, one for each file
+     * containing information contained in the given path in the format
+     * determined by the <code> parser </code> parameter.   Null will be
+     * returned if a data connection cannot be opened.  If the current working
+     * directory contains no files, an empty array will be the return.
+     *
+     * @exception FTPConnectionClosedException
+     *                   If the FTP server prematurely closes the connection as a result
+     *                   of the client being idle or some other reason causing the server
+     *                   to send FTP reply code 421.  This exception may be caught either
+     *                   as an IOException or independently as itself.
+     * @exception IOException
+     *                   If an I/O error occurs while either sending a
+     *                   command to the server or receiving a reply from the server.
      * @exception ParserInitializationException
      *                   Thrown if the parserKey parameter cannot be
      *                   resolved by the selected parser factory.
@@ -2288,25 +2288,25 @@ public class FTPClient extends FTP
      *                   nor a string containing one of the recognized keys
      *                   mapping to such a parser or if class loader
      *                   security issues prevent its being loaded.
-	 * @see FTPListParseEngine
-	 */
-	public FTPListParseEngine initiateListParsing(
-    		String parserKey, String pathname)
-	throws IOException
-	{
-    	// if a null parserKey is supplied, autodetect by calling
-    	// the SYST command and use that to choose the parser.
-    	if (null == parserKey) {
-    		parserKey = getSystemName();
-    	}
+     * @see FTPListParseEngine
+     */
+    public FTPListParseEngine initiateListParsing(
+            String parserKey, String pathname)
+    throws IOException
+    {
+        // if a null parserKey is supplied, autodetect by calling
+        // the SYST command and use that to choose the parser.
+        if (null == parserKey) {
+            parserKey = getSystemName();
+        }
 
-    	// We cache the value to avoid creation of a new object every
-    	// time a file listing is generated.
-    	if(__entryParser == null) {
-    		__entryParser =  __parserFactory.createFileEntryParser(parserKey);
-    	}
+        // We cache the value to avoid creation of a new object every
+        // time a file listing is generated.
+        if(__entryParser == null) {
+            __entryParser =  __parserFactory.createFileEntryParser(parserKey);
+        }
 
-    	return initiateListParsing(__entryParser, pathname);
+        return initiateListParsing(__entryParser, pathname);
 
     }
 
@@ -2326,24 +2326,24 @@ public class FTPClient extends FTP
      * @see FTPListParseEngine
      */
     private FTPListParseEngine initiateListParsing(
-    		FTPFileEntryParser parser, String pathname)
-	throws IOException
-	{
-    	Socket socket;
+            FTPFileEntryParser parser, String pathname)
+    throws IOException
+    {
+        Socket socket;
 
-    	FTPListParseEngine engine = new FTPListParseEngine(parser);
-    	if ((socket = _openDataConnection_(FTPCommand.LIST, pathname)) == null)
-    	{
-    		return engine;
-    	}
+        FTPListParseEngine engine = new FTPListParseEngine(parser);
+        if ((socket = _openDataConnection_(FTPCommand.LIST, pathname)) == null)
+        {
+            return engine;
+        }
 
 
-     	engine.readServerList(socket.getInputStream());
+        engine.readServerList(socket.getInputStream());
 
-    	socket.close();
+        socket.close();
 
-    	completePendingCommand();
-    	return engine;
+        completePendingCommand();
+        return engine;
     }
 
     /***
@@ -2417,21 +2417,21 @@ public class FTPClient extends FTP
      * @deprecated use listFiles(String parserKey, String pathname) instead
      */
     public FTPFile[] listFiles(FTPFileListParser parser, String pathname)
-	throws IOException
-	{
-    	Socket socket;
-    	FTPFile[] results;
+    throws IOException
+    {
+        Socket socket;
+        FTPFile[] results;
 
-    	if ((socket = _openDataConnection_(FTPCommand.LIST, pathname)) == null)
-    		return new FTPFile[0];
+        if ((socket = _openDataConnection_(FTPCommand.LIST, pathname)) == null)
+            return new FTPFile[0];
 
-    	results = parser.parseFileList(socket.getInputStream());
+        results = parser.parseFileList(socket.getInputStream());
 
-    	socket.close();
+        socket.close();
 
-    	completePendingCommand();
+        completePendingCommand();
 
-    	return results;
+        return results;
     }
 
 
@@ -2461,8 +2461,8 @@ public class FTPClient extends FTP
      * @deprecated use listFiles(String parserKey) instead.
      */
     public FTPFile[] listFiles(FTPFileListParser parser) throws IOException
-	{
-    	return listFiles(parser, null);
+    {
+        return listFiles(parser, null);
     }
 
 
@@ -2517,8 +2517,8 @@ public class FTPClient extends FTP
      * @see FTPFileList
      */
     public FTPFileList createFileList(FTPFileEntryParser parser) throws IOException
-	{
-    	return createFileList(null, parser);
+    {
+        return createFileList(null, parser);
     }
 
     /**
@@ -2553,22 +2553,22 @@ public class FTPClient extends FTP
      * @see FTPFileList
      */
     public FTPFileList createFileList(String pathname,
-    		FTPFileEntryParser parser)
-	throws IOException
-	{
-    	Socket socket;
+            FTPFileEntryParser parser)
+    throws IOException
+    {
+        Socket socket;
 
-    	if ((socket = _openDataConnection_(FTPCommand.LIST, pathname)) == null)
-    	{
-    		return null;
-    	}
+        if ((socket = _openDataConnection_(FTPCommand.LIST, pathname)) == null)
+        {
+            return null;
+        }
 
-    	FTPFileList list = FTPFileList.create(socket.getInputStream(), parser);
+        FTPFileList list = FTPFileList.create(socket.getInputStream(), parser);
 
-    	socket.close();
+        socket.close();
 
-    	completePendingCommand();
-    	return list;
+        completePendingCommand();
+        return list;
     }}
 
 /* Emacs configuration

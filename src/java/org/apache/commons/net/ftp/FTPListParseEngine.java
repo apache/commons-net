@@ -68,17 +68,17 @@ import java.util.ListIterator;
  * <p>
  * For unpaged access, simply use FTPClient.listFiles().  That method
  * uses this class transparently.
- * @version $Id: FTPListParseEngine.java,v 1.6 2004/04/21 23:30:33 scohen Exp $
+ * @version $Id: FTPListParseEngine.java,v 1.7 2004/04/22 00:48:07 scohen Exp $
  */
 public class FTPListParseEngine {
-	private List entries = new LinkedList();
-	private ListIterator _internalIterator = entries.listIterator();
+    private List entries = new LinkedList();
+    private ListIterator _internalIterator = entries.listIterator();
 
-	FTPFileEntryParser parser = null;
+    FTPFileEntryParser parser = null;
 
-	public FTPListParseEngine(FTPFileEntryParser parser) {
-		this.parser = parser;
-	}
+    public FTPListParseEngine(FTPFileEntryParser parser) {
+        this.parser = parser;
+    }
 
     /**
      * handle the iniitial reading and preparsing of the list returned by
@@ -91,14 +91,14 @@ public class FTPListParseEngine {
      * @exception IOException
      *                   thrown on any failure to read from the sever.
      */
-	public void readServerList(InputStream stream)
-	throws IOException
-	{
-		this.entries = new LinkedList();
-		readStream(stream);
+    public void readServerList(InputStream stream)
+    throws IOException
+    {
+        this.entries = new LinkedList();
+        readStream(stream);
         this.parser.preParse(this.entries);
-		resetIterator();
-	}
+        resetIterator();
+    }
 
 
     /**
@@ -114,20 +114,20 @@ public class FTPListParseEngine {
      * @exception IOException
      *                   thrown on any failure to read the stream
      */
-	private void readStream(InputStream stream) throws IOException
-	{
-		BufferedReader reader =
-			new BufferedReader(new InputStreamReader(stream));
+    private void readStream(InputStream stream) throws IOException
+    {
+        BufferedReader reader =
+            new BufferedReader(new InputStreamReader(stream));
 
-		String line = this.parser.readNextEntry(reader);
+        String line = this.parser.readNextEntry(reader);
 
-		while (line != null)
-		{
-			this.entries.add(line);
-			line = this.parser.readNextEntry(reader);
-		}
-		reader.close();
-	}
+        while (line != null)
+        {
+            this.entries.add(line);
+            line = this.parser.readNextEntry(reader);
+        }
+        reader.close();
+    }
 
     /**
      * Returns an array of at most <code>quantityRequested</code> FTPFile
@@ -148,18 +148,18 @@ public class FTPListParseEngine {
      * list and at least the number of elements which  exist in the list at
      * and after its current position.
      */
-	public FTPFile[] getNext(int quantityRequested) {
-		List tmpResults = new LinkedList();
-		int count = quantityRequested;
-		while (count > 0 && this._internalIterator.hasNext()) {
-			String entry = (String) this._internalIterator.next();
-			FTPFile temp = this.parser.parseFTPEntry(entry);
-			tmpResults.add(temp);
-			count--;
-		}
-		return (FTPFile[]) tmpResults.toArray(new FTPFile[0]);
+    public FTPFile[] getNext(int quantityRequested) {
+        List tmpResults = new LinkedList();
+        int count = quantityRequested;
+        while (count > 0 && this._internalIterator.hasNext()) {
+            String entry = (String) this._internalIterator.next();
+            FTPFile temp = this.parser.parseFTPEntry(entry);
+            tmpResults.add(temp);
+            count--;
+        }
+        return (FTPFile[]) tmpResults.toArray(new FTPFile[0]);
 
-	}
+    }
 
     /**
      * Returns an array of at most <code>quantityRequested</code> FTPFile
@@ -183,17 +183,17 @@ public class FTPListParseEngine {
      * and after its current position.  This array will be in the same order
      * as the underlying list (not reversed).
      */
-	public FTPFile[] getPrevious(int quantityRequested) {
-		List tmpResults = new LinkedList();
-		int count = quantityRequested;
-		while (count > 0 && this._internalIterator.hasPrevious()) {
-			String entry = (String) this._internalIterator.previous();
-			FTPFile temp = this.parser.parseFTPEntry(entry);
-			tmpResults.add(0,temp);
-			count--;
-		}
-		return (FTPFile[]) tmpResults.toArray(new FTPFile[0]);
-	}
+    public FTPFile[] getPrevious(int quantityRequested) {
+        List tmpResults = new LinkedList();
+        int count = quantityRequested;
+        while (count > 0 && this._internalIterator.hasPrevious()) {
+            String entry = (String) this._internalIterator.previous();
+            FTPFile temp = this.parser.parseFTPEntry(entry);
+            tmpResults.add(0,temp);
+            count--;
+        }
+        return (FTPFile[]) tmpResults.toArray(new FTPFile[0]);
+    }
 
     /**
      * Returns an array of FTPFile objects containing the whole list of
@@ -203,19 +203,19 @@ public class FTPListParseEngine {
      *         files returned by the server as read by this object's parser.
      * @exception IOException
      */
-	public FTPFile[] getFiles()
-	throws IOException
-	{
-		List tmpResults = new LinkedList();
+    public FTPFile[] getFiles()
+    throws IOException
+    {
+        List tmpResults = new LinkedList();
         Iterator iter = this.entries.iterator();
-		while (iter.hasNext()) {
-			String entry = (String) iter.next();
-			FTPFile temp = this.parser.parseFTPEntry(entry);
-			tmpResults.add(temp);
-		}
-		return (FTPFile[]) tmpResults.toArray(new FTPFile[0]);
+        while (iter.hasNext()) {
+            String entry = (String) iter.next();
+            FTPFile temp = this.parser.parseFTPEntry(entry);
+            tmpResults.add(temp);
+        }
+        return (FTPFile[]) tmpResults.toArray(new FTPFile[0]);
 
-	}
+    }
 
     /**
      * convenience method to allow clients to know whether this object's
@@ -224,9 +224,9 @@ public class FTPListParseEngine {
      * @return true if internal iterator is not at end of list, false
      * otherwise.
      */
-	public boolean hasNext() {
-		return _internalIterator.hasNext();
-	}
+    public boolean hasNext() {
+        return _internalIterator.hasNext();
+    }
 
     /**
      * convenience method to allow clients to know whether this object's
@@ -235,14 +235,14 @@ public class FTPListParseEngine {
      * @return true if internal iterator is not at beginning of list, false
      * otherwise.
      */
-	public boolean hasPrevious() {
-		return _internalIterator.hasPrevious();
-	}
+    public boolean hasPrevious() {
+        return _internalIterator.hasPrevious();
+    }
 
     /**
      * resets this object's internal iterator to the beginning of the list.
      */
-	public void resetIterator() {
-		this._internalIterator = this.entries.listIterator();
-	}
+    public void resetIterator() {
+        this._internalIterator = this.entries.listIterator();
+    }
 }

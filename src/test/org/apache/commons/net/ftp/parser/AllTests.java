@@ -17,18 +17,18 @@ import junit.framework.TestSuite;
  */
 public class AllTests {
 
-	public static Test suite() {
-		TestSuite suite =
-			new TestSuite("Test for org.apache.commons.net.ftp.parser");
-		//$JUnit-BEGIN$
-		suite.addTest(OS2FTPEntryParserTest.suite());
-		suite.addTest(VMSFTPEntryParserTest.suite());
-		suite.addTest(UnixFTPEntryParserTest.suite());
-		suite.addTestSuite(DefaultFTPFileEntryParserFactoryTest.class);
-		suite.addTest(EnterpriseUnixFTPEntryParserTest.suite());
-		suite.addTest(OS400FTPEntryParserTest.suite());
-		suite.addTest(NTFTPEntryParserTest.suite());
-		//$JUnit-END$
-		return suite;
-	}
+    public static Test suite() {
+        TestSuite suite =
+            new TestSuite("Test for org.apache.commons.net.ftp.parser");
+        //$JUnit-BEGIN$
+        suite.addTest(OS2FTPEntryParserTest.suite());
+        suite.addTest(VMSFTPEntryParserTest.suite());
+        suite.addTest(UnixFTPEntryParserTest.suite());
+        suite.addTestSuite(DefaultFTPFileEntryParserFactoryTest.class);
+        suite.addTest(EnterpriseUnixFTPEntryParserTest.suite());
+        suite.addTest(OS400FTPEntryParserTest.suite());
+        suite.addTest(NTFTPEntryParserTest.suite());
+        //$JUnit-END$
+        return suite;
+    }
 }

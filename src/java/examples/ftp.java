@@ -128,9 +128,9 @@ __main:
             if (binaryTransfer)
                 ftp.setFileType(FTP.BINARY_FILE_TYPE);
 
-	    // Use passive mode as default because most of us are
-	    // behind firewalls these days.
-	    ftp.enterLocalPassiveMode();
+        // Use passive mode as default because most of us are
+        // behind firewalls these days.
+        ftp.enterLocalPassiveMode();
 
             if (storeFile)
             {
