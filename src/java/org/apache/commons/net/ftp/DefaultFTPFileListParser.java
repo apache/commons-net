@@ -146,8 +146,8 @@ public final class DefaultFTPFileListParser implements FTPFileListParser
      * <p>
      * @param entry  A single line of an FTP server listing with the
      *                 end of line truncated.
-     * @return An FTPFile instance representing the file information.  null if
-     *         the entry could be parsed, returns null.
+     * @return An FTPFile instance representing the file information.  If
+     *         the entry could not be parsed, returns null.
      ***/
     public FTPFile parseFTPEntry(String entry)
     {
