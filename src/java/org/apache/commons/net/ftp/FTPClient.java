@@ -2330,9 +2330,15 @@ implements Configurable
         // We cache the value to avoid creation of a new object every
         // time a file listing is generated.
         if(__entryParser == null) {
-            // if a null parserKey is supplied, check the
-        	// configuration to see if one was specified there.
-            if (null == parserKey) {
+            if (null != parserKey) {
+                // if a parser key was supplied in the parameters, 
+                // use that to create the paraser
+        	    __entryParser = 
+        	        __parserFactory.createFileEntryParser(parserKey);
+                
+            } else {
+	            // if no parserKey was supplied, check for a configuration
+	        	// in the params, and if non-null, use that.
             	if (null != __configuration) {
             	    __entryParser = 
             	        __parserFactory.createFileEntryParser(__configuration);
@@ -2340,11 +2346,9 @@ implements Configurable
                     // if a parserKey hasn't been supplied, and a configuration
             	    // hasn't been supplied, then autodetect by calling
                     // the SYST command and use that to choose the parser.
-                    parserKey = getSystemName();
-            	    
-            	}
-            } else {
-	            __entryParser =  __parserFactory.createFileEntryParser(parserKey);
+            	    __entryParser = 
+            	        __parserFactory.createFileEntryParser(getSystemName());
+             	}
             }
         }
 
