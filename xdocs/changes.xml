@@ -21,6 +21,12 @@
   </properties>
 
   <body>
+    <release version="1.2.1" date="May 5, 2004">
+      <action dev="scohen" type="fix">
+      	remove any code that would render package uncompilable under JDK 1.2
+      </action>
+    </release>	
+
     <release version="1.2.0" date="April 30, 2004">
       <action dev="scohen" type="fix">
       	Mario Ivankovits &lt;mario@ops.co.at&gt; added
