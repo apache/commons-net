@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.nntp;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -76,6 +77,8 @@ import org.apache.commons.net.MalformedServerReplyException;
  * <p>
  * <p>
  * @author Daniel F. Savarese
+ * @author Rory Winston
+ * @author Ted Wise
  * @see NNTP
  * @see NNTPConnectionClosedException
  * @see org.apache.commons.net.MalformedServerReplyException
@@ -1144,14 +1147,14 @@ public class NNTPClient extends NNTP
      * @throws IOException
      */
     public boolean authenticate(String username, String password)
-	throws IOException 
+        throws IOException 
     {
         int replyCode = authinfoUser(username);
-		
+
         if (replyCode == NNTPReply.MORE_AUTH_INFO_REQUIRED) 
             {
                 replyCode = authinfoPass(password);
-			
+                        
                 if (replyCode == NNTPReply.AUTHENTICATION_ACCEPTED) 
                     {
                         _isAllowedToPost = true;
@@ -1160,7 +1163,7 @@ public class NNTPClient extends NNTP
             }
         return false;
     }
-			
+
     /***
      * Private implementation of XOVER functionality.  
      * 
@@ -1180,7 +1183,7 @@ public class NNTPClient extends NNTP
 
         return new DotTerminatedMessageReader(_reader_);
     }
-			
+
     /**
      * Return article headers for a specified post.
      * <p>
@@ -1192,7 +1195,7 @@ public class NNTPClient extends NNTP
     {
         return __retrieveArticleInfo(new Integer(articleNumber).toString());
     }
-			
+
     /**
      * Return article headers for all articles between lowArticleNumber
      * and highArticleNumber, inclusively.
@@ -1209,6 +1212,60 @@ public class NNTPClient extends NNTP
         return
             __retrieveArticleInfo(new String(lowArticleNumber + "-" + 
                                              highArticleNumber));
+    }
+
+    /***
+     * Private implementation of XHDR functionality.  
+     * 
+     * See <a href="org.apache.commons.nntp.NNTP.html#xhdr">
+     * for legal agument formats. Alternatively, read RFC 1036. 
+     * <p>
+     * @param header
+     * @param articleRange
+     * @return Returns a DotTerminatedMessageReader if successful, null
+     *         otherwise
+     * @exception IOException
+     */
+    private Reader __retrieveHeader(String header, String articleRange)
+        throws IOException 
+    {
+        if (!NNTPReply.isPositiveCompletion(xhdr(header, articleRange)))
+            return null;
+
+        return new DotTerminatedMessageReader(_reader_);
+    }
+                        
+    /**
+     * Return an article header for a specified post.
+     * <p>
+     * @param header the header to retrieve
+     * @param articleNumber the article to retrieve the header for
+     * @return a DotTerminatedReader if successful, null otherwise
+     * @throws IOException
+     */
+    public Reader retrieveHeader(String header, int articleNumber) throws IOException 
+    {
+        return __retrieveHeader(header, Integer.toString(articleNumber));
+    }
+                        
+    /**
+     * Return an article header for all articles between lowArticleNumber
+     * and highArticleNumber, inclusively.
+     * <p>
+     * @param header
+     * @param lowArticleNumber 
+     * @param highArticleNumber 
+     * @return a DotTerminatedReader if successful, null otherwise
+     * @throws IOException
+     */
+    public Reader retrieveHeader(String header, int lowArticleNumber,
+                                 int highArticleNumber)
+        throws IOException 
+    {
+        return
+            __retrieveHeader(header,
+                             new String(lowArticleNumber + "-" + 
+                                        highArticleNumber));
     }
 }
 

@@ -22,6 +22,11 @@
 
   <body>
     <release version="1.2.0-dev" date="In CVS">
+      <action dev="dfs" type="add">
+        Ted Wise &lt;ctwise@bellsouth.net&gt; provided a
+        <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=24078">
+        patche</a> to add the XHDR extended NNTP command.
+      </action>
       <action dev="scohen,dfs" type="update">
         Deprecated FTPFileListParser interface, DefaultFTPFileListParser
         class, and the FTPClient.listFiles methods that accepted an

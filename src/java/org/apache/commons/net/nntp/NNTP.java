@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.nntp;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -70,6 +71,8 @@ import org.apache.commons.net.SocketClient;
  * <p>
  * <p>
  * @author Daniel F. Savarese
+ * @author Rory Winston
+ * @author Ted Wise
  * @see NNTPClient
  * @see NNTPConnectionClosedException
  * @see org.apache.commons.net.MalformedServerReplyException
@@ -922,7 +925,7 @@ public class NNTP extends SocketClient
      * <p>
      * @param password a valid password.
      * @return The reply code received from the server. The server should
-     *         return a	281 or 502 for this command. 
+     *         return a 281 or 502 for this command. 
      * @exception NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
@@ -935,7 +938,7 @@ public class NNTP extends SocketClient
         String passParameter = "PASS " + password;
         return sendCommand(NNTPCommand.AUTHINFO, passParameter);
     }
-		
+
     /***
      * A convenience method to send the NNTP XOVER command to the server,
      * receive the reply, and return the reply code.
@@ -959,7 +962,36 @@ public class NNTP extends SocketClient
     public int xover(String selectedArticles) throws IOException {
         return sendCommand(NNTPCommand.XOVER, selectedArticles);
     }
-		
+                
+    /***
+     * A convenience method to send the NNTP XHDR command to the server,
+     * receive the reply, and return the reply code.
+     * <p>
+     * @param header a String naming a header line (e.g., "subject").  See 
+     * RFC-1036 for a list of valid header lines.
+     * @param selectedArticles a String representation of the range of
+     * article headers required. This may be an article number, or a
+     * range of article numbers in the form "XXXX-YYYY", where XXXX
+     * and YYYY are valid article numbers in the current group.  It
+     * also may be of the form "XXX-", meaning "return XXX and all
+     * following articles" In this revision, the last format is not
+     * possible (yet).
+     * @return The reply code received from the server.
+     * @exception NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     ***/
+    public int xhdr(String header, String selectedArticles) throws IOException {
+        StringBuffer command = new StringBuffer(header);
+        command.append(" ");
+        command.append(selectedArticles);
+        return sendCommand(NNTPCommand.XHDR, command.toString());
+    }
+                
     /**
      * A convenience wrapper for the extended LIST command that takes
      * an argument, allowing us to selectively list multiple groups.
@@ -973,7 +1005,7 @@ public class NNTP extends SocketClient
         StringBuffer command = new StringBuffer("ACTIVE ");
         command.append(wildmat);
         return sendCommand(NNTPCommand.LIST, command.toString());
-    }	
+    }   
 }
 
 /* Emacs configuration

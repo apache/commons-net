@@ -20,6 +20,8 @@ package org.apache.commons.net.nntp;
  * the meaning of the codes, familiarity with RFC 977 is assumed.
  * <p>
  * @author Daniel F. Savarese
+ * @author Rory Winston
+ * @author Ted Wise
  ***/
 
 public final class NNTPCommand
@@ -42,6 +44,7 @@ public final class NNTPCommand
     public static final int STAT      = 14;
     public static final int AUTHINFO  = 15;
     public static final int XOVER     = 16;
+    public static final int XHDR      = 17;
 
     // Cannot be instantiated
     private NNTPCommand()
@@ -50,7 +53,7 @@ public final class NNTPCommand
     static final String[] _commands = {
         "ARTICLE", "BODY", "GROUP", "HEAD", "HELP", "IHAVE", "LAST", "LIST",
         "NEWGROUPS", "NEWNEWS", "NEXT", "POST", "QUIT", "SLAVE", "STAT",
-        "AUTHINFO", "XOVER"
+        "AUTHINFO", "XOVER", "XHDR"
     };
 
 
