@@ -8,11 +8,19 @@
   </properties>
 
   <body>
+
+<section name="Release Builds">
+
+<p>
+You will find the list of release builds <a href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-net/">here</a>.
+</p>
+
+</section>
     
 <section name="Nightly Builds">
 
 <p>
-You will find the list of nightly builds <a href=" http://jakarta.apache.org/builds/jakarta-commons/nightly/commons-net/">here</a>.
+You will find the list of nightly builds <a href="http://jakarta.apache.org/builds/jakarta-commons/nightly/commons-net/">here</a>.
 </p>
 
 </section>
