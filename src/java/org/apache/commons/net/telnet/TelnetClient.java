@@ -88,6 +88,7 @@ public class TelnetClient extends Telnet
 {
     private InputStream __input;
     private OutputStream __output;
+    protected boolean readerThread = true;
 
     /***
      * Default TelnetClient constructor.
@@ -137,7 +138,10 @@ public class TelnetClient extends Telnet
 
 
         tmp = new TelnetInputStream(input, this);
-        tmp._start();
+        if(readerThread)
+        {
+            tmp._start();
+        }
         // __input CANNOT refer to the TelnetInputStream.  We run into
         // blocking problems when some classes use TelnetInputStream, so
         // we wrap it with a BufferedInputStream which we know is safe.
@@ -305,5 +309,26 @@ public class TelnetClient extends Telnet
     public void unregisterNotifHandler()
     {
         super.unregisterNotifHandler();
+    }
+
+    /***
+     * Sets the status of the reader thread.
+     * The reader thread status will apply to all subsequent connections
+     * <p>
+     * @param flag - true switches the reader thread on, false switches it off
+     ***/
+    public void setReaderThread(boolean flag)
+    {
+        readerThread = flag;
+    }
+
+    /***
+     * Gets the status of the reader thread.
+     * <p>
+     * @return true if the reader thread is on, false otherwise
+     ***/
+    public boolean getReaderThread()
+    {
+        return (readerThread);
     }
 }

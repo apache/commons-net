@@ -90,6 +90,8 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     /* TERMINAL-TYPE option (end)*/
 
     private boolean _ayt_flag = false;
+
+    private boolean __threaded = false;
     TelnetInputStream(InputStream input, TelnetClient client)
     {
         super(input);
@@ -122,6 +124,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         __thread.setPriority(priority);
         __thread.setDaemon(true);
         __thread.start();
+        __threaded = true;
     }
 
 
@@ -291,7 +294,45 @@ _mainSwitch:
         return ch;
     }
 
+    // synchronized(__client) critical sections are to protect against
+    // TelnetOutputStream writing through the telnet client at same time
+    // as a processDo/Will/etc. command invoked from TelnetInputStream
+    // tries to write.
+    private void __processChar(int ch) throws InterruptedException
+    {
+        // Critical section because we're altering __bytesAvailable,
+        // __queueTail, and the contents of _queue.
+        synchronized (__queue)
+        {
+            while (__bytesAvailable >= __queue.length - 1)
+            {
+                if(__threaded)
+                {
+                    __queue.notify();
+                    try
+                    {
+                        __queue.wait();
+                    }
+                    catch (InterruptedException e)
+                    {
+                        throw e;
+                    }
+                }
+            }
 
+            // Need to do this in case we're not full, but block on a read
+            if (__readIsWaiting && __threaded)
+            {
+                __queue.notify();
+            }
+
+            __queue[__queueTail] = ch;
+            ++__bytesAvailable;
+
+            if (++__queueTail >= __queue.length)
+                __queueTail = 0;
+        }
+    }
 
     public int read() throws IOException
     {
@@ -318,16 +359,68 @@ _mainSwitch:
                         return -1;
 
                     // Otherwise, we have to wait for queue to get something
-                    __queue.notify();
-                    try
+                    if(__threaded)
                     {
-                        __readIsWaiting = true;
-                        __queue.wait();
-                        __readIsWaiting = false;
+                        __queue.notify();
+                        try
+                        {
+                            __readIsWaiting = true;
+                            __queue.wait();
+                            __readIsWaiting = false;
+                        }
+                        catch (InterruptedException e)
+                        {
+                            throw new IOException("Fatal thread interruption during read.");
+                        }
                     }
-                    catch (InterruptedException e)
+                    else
                     {
-                        throw new IOException("Fatal thread interruption during read.");
+                        //__alreadyread = false;
+                        __readIsWaiting = true;
+                        int ch;
+
+                        do
+                        {
+                            try
+                            {
+                                if ((ch = __read()) < 0)
+                                    if(ch != -2)
+                                        return (ch);
+                            }
+                            catch (InterruptedIOException e)
+                            {
+                                synchronized (__queue)
+                                {
+                                    __ioException = e;
+                                    __queue.notifyAll();
+                                    try
+                                    {
+                                        __queue.wait(100);
+                                    }
+                                    catch (InterruptedException interrupted)
+                                    {
+                                    }
+                                }
+                                return (-1);
+                            }
+
+
+                            try
+                            {
+                                if(ch != -2)
+                                {
+                                    __processChar(ch);
+                                }
+                            }
+                            catch (InterruptedException e)
+                            {
+                                if (__isClosed)
+                                    return (-1);
+                            }
+                        }
+                        while (super.available() > 0);
+
+                        __readIsWaiting = false;
                     }
                     continue;
                 }
@@ -448,6 +541,8 @@ _mainSwitch:
 
             __queue.notifyAll();
         }
+
+        __threaded = false;
     }
 
     public void run()
@@ -491,35 +586,14 @@ _outerLoop:
                     break _outerLoop;
                 }
 
-                // Critical section because we're altering __bytesAvailable,
-                // __queueTail, and the contents of _queue.
-                synchronized (__queue)
+                try
                 {
-                    while (__bytesAvailable >= __queue.length - 1)
-                    {
-                        __queue.notify();
-                        try
-                        {
-                            __queue.wait(100);
-                        }
-                        catch (InterruptedException e)
-                        {
-                            if (__isClosed)
-                                break _outerLoop;
-                        }
-                    }
-
-                    // Need to do this in case we're not full, but block on a read
-                    if (__readIsWaiting)
-                    {
-                        __queue.notify();
-                    }
-
-                    __queue[__queueTail] = ch;
-                    ++__bytesAvailable;
-
-                    if (++__queueTail >= __queue.length)
-                        __queueTail = 0;
+                    __processChar(ch);
+                }
+                catch (InterruptedException e)
+                {
+                    if (__isClosed)
+                        break _outerLoop;
                 }
             }
         }
@@ -537,6 +611,8 @@ _outerLoop:
             __hasReachedEOF = true;
             __queue.notify();
         }
+
+        __threaded = false;
     }
 }
 

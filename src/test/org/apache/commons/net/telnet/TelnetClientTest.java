@@ -114,6 +114,23 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         tc3.connect("127.0.0.1", 3335);
         Thread.sleep(1000);
     }
+    /***
+     * open connections (ReaderThread test).
+     ***/
+    protected void openConnReaderThread() throws Exception
+    {
+        server1 = new TelnetTestSimpleServer(3333);
+        server2 = new TelnetTestSimpleServer(3334);
+
+        tc1 = new TelnetClient();
+        tc1.setReaderThread(false);
+        tc2 = new TelnetClient();
+        tc2.setReaderThread(true);
+
+        tc1.connect("127.0.0.1", 3333);
+        tc2.connect("127.0.0.1", 3334);
+        Thread.sleep(1000);
+    }
 
     /***
      * tests the initial condition of the sessions
@@ -448,7 +465,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         };
 
         byte buffread2b[] = new byte[11];
-    
+
         openConnections();
 
         numdo = 0;
@@ -674,6 +691,79 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
     }
 
     /***
+     * test of setReaderThread
+     ***/
+    public void testSetReaderThread() throws Exception
+    {
+        boolean negotiation1_ok = false;
+        boolean negotiation2_ok = false;
+        boolean read_ok = false;
+        byte buffread1[] = new byte[6];
+        byte send1[] =
+        {
+            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO, (byte)15,
+            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WILL, (byte)15,
+        };
+        byte expected1[] =
+        {
+            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WONT, (byte)15,
+            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DONT, (byte)15,
+        };
+
+
+        openConnReaderThread();
+
+        InputStream is1 = server1.getInputStream();
+        OutputStream os1 = server1.getOutputStream();
+        is1.skip(is1.available());
+        os1.write(send1);
+        os1.flush();
+        os1.write("A".getBytes());
+        os1.flush();
+        Thread.sleep(1000);
+        InputStream instr = tc1.getInputStream();
+        byte[] buff = new byte[4];
+        int ret_read = 0;
+
+        ret_read = instr.read(buff);
+        if((ret_read == 1) && (buff[0] == 'A'))
+        {
+            read_ok = true;
+        }
+
+        if(is1.available() == 6)
+        {
+            is1.read(buffread1);
+
+            if(equalBytes(buffread1, expected1))
+                negotiation1_ok = true;
+        }
+
+        InputStream is2 = server2.getInputStream();
+        OutputStream os2 = server2.getOutputStream();
+        Thread.sleep(1000);
+        is2.skip(is2.available());
+        os2.write(send1);
+        os2.flush();
+        Thread.sleep(1000);
+        if(is2.available() == 6)
+        {
+            is2.read(buffread1);
+
+            if(equalBytes(buffread1, expected1))
+                negotiation2_ok = true;
+        }
+
+        closeConnReaderThread();
+
+        assertTrue(!tc1.getReaderThread());
+        assertTrue(tc2.getReaderThread());
+        assertTrue(read_ok);
+        assertTrue(negotiation1_ok);
+        assertTrue(negotiation2_ok);
+    }
+
+    /***
      * closes all the connections
      ***/
     protected void closeConnections()
@@ -689,6 +779,24 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
             server3.disconnect();
             server3.stop();
             tc3.disconnect();
+            Thread.sleep(1000);
+        }
+        catch (Exception e)
+        {
+        }
+    }    /***
+     * closes all the connections (ReaderThread test)
+     ***/
+    protected void closeConnReaderThread()
+    {
+        try
+        {
+            server1.disconnect();
+            server1.stop();
+            tc1.disconnect();
+            server2.disconnect();
+            server2.stop();
+            tc2.disconnect();
             Thread.sleep(1000);
         }
         catch (Exception e)
