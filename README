@@ -1,147 +1,16 @@
 
-Copyright
----------
-Please read the copyright statement and license agreement in the
-COPYRIGHT and LICENSE files before using the package.  NetComponents
-is now distributed under the LGPL and the copyright is owned by Daniel
-Savarese.
+o Building
 
+To build, you must have ant and maven installed.  Just type 'ant' -- the default
+target will compile the classes, run the tests and build the jar
 
-Background
-----------
-This is the 1.3.8 version of NetComponents, an Internet protocol
-suite Java library originally developed by ORO, Inc.  This version
-supports Finger, Whois, TFTP, Telnet, POP3, FTP, NNTP, SMTP, and some
-miscellaneous protocols like Time and Echo as well as BSD R command
-support.  The purpose of the library is to provide fundamental
-protocol access, not higher-level abstractions.  Therefore, some of
-the design violates object-oriented design principles.  Our philosophy
-is to make the global functionality of a protocal accesible (e.g.,
-TFTP send file and receive file) when possible, but also provide
-access to the fundamental protocols where applicable so that the
-programmer may construct his own custom implementations (e.g, the TFTP
-packet classes and the TFTP packet send and receive methods are
-exposed).
+Maven can be downloaded from the main site and there is good documentation
+on the targets for building and installation instructions:
 
-NetComponents was originally a commercial product, but after ORO
-dissolved, it was continued to be made available for those who found
-it useful.  However, no updates have been made since version 1.3.8,
-released in 1998.  Yet the library continues to be very popular.  Now
-that certain contract obligations have expired, it is possible to make
-the source code freely available under the LGPL.
+http://jakarta.apache.org/turbine/maven
 
+o Documentation
 
-Building
---------
+You can build the documenation with:
 
-You need Ant (http://jakarta.apache.org/ant/) to build the source
-code.
-
-
-What about NetComponents 2.0?
------------------------------
-
-The original version of NetComponents was written in a very short
-amount of time and subsequent maintenance releases have built on top
-of that original "good enough, but flawed" design.  If I were to do
-it again, I would do it completely differently.  That is a pretty
-common theme in software development.  The experience you gain from
-exploring a problem space in the first version of a piece of software
-teaches you enough to know how to do the same thing better.
-
-A NetComponents 2.0 would be a completely new piece of software.
-However, the factors that led to the development of NetComponents 1.x
-are no longer present, and I have no inclination to do the grunt work
-for NetComponents 2.0.  The implementation of IETF protocols is simple
-and uninteresting.  Even though designing useful and well-designed
-software interfaces combined with an efficient implementation is
-always a challenge, I am not working on any projects that require the
-functionality, flexibility, or efficiency that a NetComponents 2.0
-would deliver.  It is the nature of opens source software development
-to be driven by the needs of its users.  I don't have any need for a
-new version of NetComponents, but many of its users do.
-
-Continued development of NetComponents will have to be driven by the
-NetComponents user community.  Jon Stevens had suggested that
-NetComponents be donated to the Apache Jakarta Project
-(http//jakarta.apache.org/) at the same time the software that is now
-Jakarta-ORO (http://jakarta.apache.org/oro/) was donated.  I wanted to
-wait and see how Jakarta-ORO worked out before going forward with a
-proposal to donate NetComponents.  My experience with Jakarta-ORO has
-been disappointing.  Many developers use the software and report bugs
-(many of which aren't bugs), but few, if any, are willing to help
-advance the development of the software, leaving me as both a
-bottleneck and a slave to Jakarta-ORO development.  I will see through
-my commitment to fix bugs and develop the next major version of
-Jakarta-ORO with Perl 5.6 compatability, but I do not wish to have the
-same thing happen with NetComponents.  The user community must be
-willing to continue developing the software and share their patches,
-or there will be no Jakarta release.
-
-Jon Stevens successfully led the proposal effort for Jakarta-ORO and
-probably would have done so for NetComponents as well.  But now that
-the window of opportunity has passed, I would have mount a proposal
-effort, or, ideally some other Jakarta member or avid NetComponents
-user.  There are a series of conditions that a proposal has to meet
-(http://jakarta.apache.org/site/newproject.html) before it can be
-voted on; and I want to ensure that NetComponents has a strong user
-community before a donation attempt is made.
-
-So the onus is on you, the NetComponents user, to see that
-NetComponents continues to be developed.  First, we need a mailing
-list.  I do not wish to become a slave to NetComponents, so I will not
-do anything other than apply patches and distribute the software from
-my web site.  Someone needs to set up a developer mailing list where
-people can post patches.  I'll maintain a web page with links to all
-resources, but that's it.  After we've established that there is
-active interest in developing the software, as a member of the Jakarta
-PMC, I will put forth a proposal to bring NetComponents under the
-Jakarta fold.  Ideally, some other Jakarta member will volunteer to do
-this so we can start off with several developers who are already
-Jakarta committers.  I will not in any way support or condone the
-further development of NetComponents through SourceForge.
-
-Future Work
------------
-
-NetComponents is "good enough" for a lot of tasks, but it has some
-major flaws.  If you want to contribute, here are just a few things
-that could use some work:
-
-1. DefaultFTPFileLister doesn't work with every FTP server.  Some
-   Microsoft and VMS FTP servers foil it.  It is also wasteful of
-   memory in that it parses the listing into a complete set of FTPFile
-   instances when it could store the listing and just parse the
-   listing on demand through an iterator.  An FTPFileListParser
-   implementation should be created that is backed by the original
-   listing and iterates through it using a regular expression.
-   Regular exxpressions could be installed based on FTP server system
-   id's, so when a user runs across an unsupported server, he can
-   register a regular expression rather than create a completely new
-   hand parsesd FTPFileLister implementation.
-
-2. Make buffer size settable for FTP data transfers using
-   retrieveFile().  retrieveFile() uses Util.copyStream and a 1024
-   byte buffer which is too small for some applications (Solaris SMP).
-
-3. Divorce FTPClient from TelnetClient, getting rid of the
-   TelnetClient threads which cause problems on some platforms (e.g.,
-   MacOS).
-
-4. Parse the client/server interactions without creating so many
-   strings.  Many operations are slow because of this.
-
-5. Add ESMTP and extended NNTP commands (e.g., NNTP authentication).
-
-6. Make NNTPClient.listNewsgropus() and NNTPClient.listNewNews() more
-   efficient.  Don't preparse into lots of little objects.
-
-7. TLS for FTP
-
-Contact Information
--------------------
-
-All correspondence regarding NetComponents should be sent to
-netcomponents at oroinc.com.  I will not answer support questions,
-but I will accept patches and post information you provide, such as
-the address of a developer mailing list.
+ant maven:site
