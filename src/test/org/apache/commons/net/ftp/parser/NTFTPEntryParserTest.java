@@ -3,7 +3,7 @@ package org.apache.commons.net.ftp.parser;
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2004 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -61,7 +61,7 @@ import junit.framework.TestSuite;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @versionn $Id: NTFTPEntryParserTest.java,v 1.4 2004/01/01 21:04:22 scohen Exp $
+ * @versionn $Id: NTFTPEntryParserTest.java,v 1.5 2004/01/02 03:39:07 scohen Exp $
  */
 public class NTFTPEntryParserTest extends FTPParseTestFramework
 {

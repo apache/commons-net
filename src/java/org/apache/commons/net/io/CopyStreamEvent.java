@@ -3,7 +3,7 @@ package org.apache.commons.net.io;
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2004 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -67,7 +67,7 @@ import java.util.EventObject;
  * @see CopyStreamAdapter
  * @see Util
  * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
- * @version $Id: CopyStreamEvent.java,v 1.7 2004/01/01 21:04:20 scohen Exp $
+ * @version $Id: CopyStreamEvent.java,v 1.8 2004/01/02 03:39:05 scohen Exp $
  */
 public class CopyStreamEvent extends EventObject
 {

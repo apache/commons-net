@@ -3,7 +3,7 @@ package org.apache.commons.net.ftp.ftp2.parser;
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2004 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -103,7 +103,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * <P>
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.9 2004/01/01 21:04:18 scohen Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.10 2004/01/02 03:39:02 scohen Exp $
  */
 public class VMSFTPEntryParser
             extends MatchApparatus implements FTPFileEntryParser

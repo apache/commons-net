@@ -3,7 +3,7 @@ package org.apache.commons.net.ftp.ftp2;
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2004 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -65,7 +65,7 @@ import java.util.Vector;
  * be receieved as an array of any requested number of entries or all of them.
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileIterator.java,v 1.6 2004/01/01 21:04:18 scohen Exp $
+ * @version $Id: FTPFileIterator.java,v 1.7 2004/01/02 03:39:02 scohen Exp $
  * @see org.apache.commons.net.ftp.ftp2.FTPFileList
  */
 public class FTPFileIterator
