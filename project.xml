@@ -34,11 +34,12 @@
       the The Apache Software License.
   </description>
   
-  <url>http://jakarta.apache.org/commons/</url>
+  <url>http://jakarta.apache.org/commons/sandbox/net/</url>
   <cvsWebUrl>http://cvs.apache.org/viewcvs/jakarta-commons-sandbox/net/</cvsWebUrl>
   <issueTrackingUrl>http://nagoya.apache.org/bugzilla/</issueTrackingUrl>
+  
   <siteAddress>jakarta.apache.org</siteAddress>
-  <siteDirectory>/www/jakarta.apache.org/commons-sandbox/net/</siteDirectory>
+  <siteDirectory>/www/jakarta.apache.org/commons/sandbox/net/</siteDirectory>
   
   <mailingLists>
     <mailingList>
