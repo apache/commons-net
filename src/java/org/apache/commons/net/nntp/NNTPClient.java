@@ -1193,7 +1193,7 @@ public class NNTPClient extends NNTP
      */
     public Reader retrieveArticleInfo(int articleNumber) throws IOException 
     {
-        return __retrieveArticleInfo(new Integer(articleNumber).toString());
+        return __retrieveArticleInfo(Integer.toString(articleNumber));
     }
 
     /**
@@ -1243,7 +1243,8 @@ public class NNTPClient extends NNTP
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException
      */
-    public Reader retrieveHeader(String header, int articleNumber) throws IOException 
+    public Reader retrieveHeader(String header, int articleNumber)
+        throws IOException 
     {
         return __retrieveHeader(header, Integer.toString(articleNumber));
     }
