@@ -271,7 +271,7 @@ public class NNTPClient extends NNTP
         BufferedReader reader;
         NewsgroupInfo tmp, info[];
 
-        reader = new BufferedReader(new DotTerminatedMessageReader(_reader));
+        reader = new BufferedReader(new DotTerminatedMessageReader(_reader_));
         // Start of with a big vector because we may be reading a very large
         // amount of groups.
         list = new Vector(2048);
@@ -316,7 +316,7 @@ public class NNTPClient extends NNTP
         if (pointer != null)
             __parseArticlePointer(getReplyString(), pointer);
 
-        reader = new DotTerminatedMessageReader(_reader);
+        reader = new DotTerminatedMessageReader(_reader_);
         return reader;
     }
 
@@ -334,7 +334,7 @@ public class NNTPClient extends NNTP
         if (pointer != null)
             __parseArticlePointer(getReplyString(), pointer);
 
-        reader = new DotTerminatedMessageReader(_reader);
+        reader = new DotTerminatedMessageReader(_reader_);
         return reader;
     }
 
@@ -735,7 +735,7 @@ public class NNTPClient extends NNTP
             return null;
 
         help = new StringWriter();
-        reader = new DotTerminatedMessageReader(_reader);
+        reader = new DotTerminatedMessageReader(_reader_);
         Util.copyReader(reader, help);
         reader.close();
         help.close();
@@ -1030,7 +1030,7 @@ public class NNTPClient extends NNTP
             return null;
 
         list = new Vector();
-        reader = new BufferedReader(new DotTerminatedMessageReader(_reader));
+        reader = new BufferedReader(new DotTerminatedMessageReader(_reader_));
 
         while ((line = reader.readLine()) != null)
             list.addElement(line);
@@ -1125,7 +1125,7 @@ public class NNTPClient extends NNTP
         if (!NNTPReply.isPositiveIntermediate(post()))
             return null;
 
-        return new DotTerminatedMessageWriter(_writer);
+        return new DotTerminatedMessageWriter(_writer_);
     }
 
 
@@ -1134,7 +1134,7 @@ public class NNTPClient extends NNTP
         if (!NNTPReply.isPositiveIntermediate(ihave(articleId)))
             return null;
 
-        return new DotTerminatedMessageWriter(_writer);
+        return new DotTerminatedMessageWriter(_writer_);
     }
 
 
