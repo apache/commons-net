@@ -43,6 +43,9 @@
   
   <siteAddress>jakarta.apache.org</siteAddress>
   <siteDirectory>/www/jakarta.apache.org/commons/sandbox/net/</siteDirectory>
+
+  <cvsRoot>:pserver:anoncvs@cvs.apache.org:/home/cvspublic</cvsRoot>
+  <cvsModule>jakarta-commons-sandbox/net</cvsModule>
   
   <mailingLists>
     <mailingList>
