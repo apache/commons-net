@@ -149,18 +149,16 @@ public final class FTPCommand
                                           "NLST", "SITE", "SYST", "STAT", "HELP", "NOOP"
                                       };
 
-
-    /***
+    /**
      * Retrieve the FTP protocol command string corresponding to a specified
      * command code.
      * <p>
-     * @param The command code.
+     * @param command The command code.
      * @return The FTP protcol command string corresponding to a specified
      *         command code.
-     ***/
+     */
     public static final String getCommand(int command)
     {
         return _commands[command];
     }
-
 }

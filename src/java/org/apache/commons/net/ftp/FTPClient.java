@@ -399,7 +399,7 @@ public class FTPClient extends FTP
     }
 
 
-    /***
+    /**
      * Establishes a data connection with the FTP server, returning
      * a Socket for the connection if successful.  If a restart
      * offset has been set with {@link #setRestartOffset(long)},
@@ -408,7 +408,7 @@ public class FTPClient extends FTP
      * mode connections also cause a local PORT command to be issued.
      * <p>
      * @param command  The text representation of the FTP command to send.
-     * @param args The arguments to the FTP command.  If this parameter is
+     * @param arg The arguments to the FTP command.  If this parameter is
      *             set to null, then the command is sent with no argument.
      * @return A Socket corresponding to the established data connection.
      *         Null is returned if an FTP protocol error is reported at
@@ -416,7 +416,7 @@ public class FTPClient extends FTP
      *         the connection.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     protected Socket _openDataConnection_(int command, String arg)
       throws IOException
     {
@@ -1487,7 +1487,7 @@ public class FTPClient extends FTP
         return __storeFileStream(FTPCommand.STOU, remote);
     }
 
-    /***
+    /**
      * Stores a file on the server using a unique name assigned by the
      * server and taking input from the given InputStream.  This method does
      * NOT close the given
@@ -1495,7 +1495,6 @@ public class FTPClient extends FTP
      * the file are transparently converted to the NETASCII format (i.e.,
      * you should not attempt to create a special InputStream to do this).
      * <p>
-     * @param remote  The name to give the remote file.
      * @param local   The local InputStream from which to read the file.
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
@@ -1510,13 +1509,13 @@ public class FTPClient extends FTP
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean storeUniqueFile(InputStream local) throws IOException
     {
         return __storeFile(FTPCommand.STOU, null, local);
     }
 
-    /***
+    /**
      * Returns an OutputStream through which data can be written to store
      * a file on the server using a unique name assigned by the server.
      * If the current file type
@@ -1529,7 +1528,6 @@ public class FTPClient extends FTP
      * <a href="#completePendingCommand"> completePendingCommand </a> and
      * check its return value to verify success.
      * <p>
-     * @param remote  The name to give the remote file.
      * @return An OutputStream through which the remote file can be written.  If
      *      the data connection cannot be opened (e.g., the file does not
      *      exist), null is returned (in which case you may check the reply
@@ -1541,7 +1539,7 @@ public class FTPClient extends FTP
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public OutputStream storeUniqueFileStream() throws IOException
     {
         return __storeFileStream(FTPCommand.STOU, null);
@@ -1566,11 +1564,11 @@ public class FTPClient extends FTP
     }
 
 
-    /***
+    /**
      * Reserve space on the server for the next file transfer.
      * <p>
      * @param bytes  The number of bytes which the server should allocate.
-     * @param bytes  The size of a file record.
+     * @param recordSize  The size of a file record.
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -1579,7 +1577,7 @@ public class FTPClient extends FTP
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean allocate(int bytes, int recordSize) throws IOException
     {
         return FTPReply.isPositiveCompletion(allo(bytes, recordSize));
@@ -1759,10 +1757,9 @@ public class FTPClient extends FTP
     }
 
 
-    /***
+    /**
      * Send a site specific command.
-     * <p>
-     * @param argument  The site specific command and arguments.
+     * @param arguments The site specific command and arguments.
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -1771,7 +1768,7 @@ public class FTPClient extends FTP
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean sendSiteCommand(String arguments) throws IOException
     {
         return FTPReply.isPositiveCompletion(site(arguments));
@@ -1826,11 +1823,10 @@ public class FTPClient extends FTP
     }
 
 
-    /***
+    /**
      * Fetches the help information for a given command from the server and
      * returns the full string.
-     * <p>
-     * @param  The command on which to ask for help.
+     * @param command The command on which to ask for help.
      * @return The command help string obtained from the server.  null if the
      *       information could not be obtained.
      * @exception FTPConnectionClosedException
@@ -1840,7 +1836,7 @@ public class FTPClient extends FTP
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
      *  command to the server or receiving a reply from the server.
-     ***/
+     */
     public String listHelp(String command) throws IOException
     {
         if (FTPReply.isPositiveCompletion(help(command)))
@@ -2098,7 +2094,7 @@ public class FTPClient extends FTP
      *         <code> parser </code> parameter.   Null will be returned if a
      *         data connection cannot be opened.  If the current working directory
      *         contains no files, an empty array will be the return.
-     * @example <pre>
+     * <pre>
      *    FTPClient f=FTPClient();
      *    f.connect(server);
      *    f.login(username, password);
@@ -2122,8 +2118,7 @@ public class FTPClient extends FTP
      *                   command to the server or receiving a reply from the server.
      * @see FTPFileList
      */
-    public FTPFileList createFileList(FTPFileEntryParser parser)
-    throws IOException
+    public FTPFileList createFileList(FTPFileEntryParser parser) throws IOException
     {
         return createFileList(null, parser);
     }

@@ -628,11 +628,10 @@ public class FTP extends TelnetClient
         return sendCommand(FTPCommand.USER, username);
     }
 
-    /***
+    /**
      * A convenience method to send the FTP PASS command to the server,
      * receive the reply, and return the reply code.
-     * <p>
-     * @param pass  The plain text password of the username being logged into.
+     * @param password The plain text password of the username being logged into.
      * @return The reply code received from the server.
      * @exception FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -641,7 +640,7 @@ public class FTP extends TelnetClient
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int pass(String password) throws IOException
     {
         return sendCommand(FTPCommand.PASS, password);
@@ -828,11 +827,10 @@ public class FTP extends TelnetClient
         return sendCommand(FTPCommand.PASV);
     }
 
-    /***
+    /**
      * A convenience method to send the FTP TYPE command for text files
      * to the server, receive the reply, and return the reply code.
-     * <p>
-     * @param type  The type of the file (one of the <code>FILE_TYPE</code>
+     * @param fileType  The type of the file (one of the <code>FILE_TYPE</code>
      *              constants).
      * @param formatOrByteSize  The format of the file (one of the
      *              <code>_FORMAT</code> constants.  In the case of
@@ -845,7 +843,7 @@ public class FTP extends TelnetClient
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int type(int fileType, int formatOrByteSize) throws IOException
     {
         StringBuffer arg = new StringBuffer();
@@ -861,11 +859,11 @@ public class FTP extends TelnetClient
     }
 
 
-    /***
+    /**
      * A convenience method to send the FTP TYPE command to the server,
      * receive the reply, and return the reply code.
      * <p>
-     * @param type  The type of the file (one of the <code>FILE_TYPE</code>
+     * @param fileType  The type of the file (one of the <code>FILE_TYPE</code>
      *              constants).
      * @return The reply code received from the server.
      * @exception FTPConnectionClosedException
@@ -875,7 +873,7 @@ public class FTP extends TelnetClient
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int type(int fileType) throws IOException
     {
         return sendCommand(FTPCommand.TYPE,
@@ -995,8 +993,7 @@ public class FTP extends TelnetClient
      * receive the reply, and return the reply code.  Remember, it is up
      * to you to manage the data connection.  If you don't need this low
      * level of access, use <a href="org.apache.commons.net.ftp.FTPClient.html">
-     * FTPClient</a>, which will handle all low level details for you.
-     * <p>
+     * FTPClient</a>, which will handle all low level details for you. 
      * @param pathname  The base pathname to use for the file when stored at
      *                  the remote end of the transfer.  Some FTP servers
      *                  require this.
@@ -1008,10 +1005,10 @@ public class FTP extends TelnetClient
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
-    public int stou(String filename) throws IOException
+     */
+    public int stou(String pathname) throws IOException
     {
-        return sendCommand(FTPCommand.STOU, filename);
+        return sendCommand(FTPCommand.STOU, pathname);
     }
 
     /***

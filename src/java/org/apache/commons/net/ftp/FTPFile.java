@@ -240,11 +240,10 @@ public class FTPFile implements Serializable
     }
 
 
-    /***
+    /**
      * Set the file size in bytes.
-     * <p>
-     * @param The file size in bytes.
-     ***/
+     * @param size The file size in bytes.
+     */
     public void setSize(long size)
     {
         _size = size;
