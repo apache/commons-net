@@ -89,19 +89,20 @@ import java.io.IOException;
  *    }
  * </pre>
  * 
- * The second example uses the newer <code>FTPClient.getFileList()</code>
- * API to pull the whole list from the <code>subfolder</code>in one call, 
- * attempting to automatically detect the parser type.  The null parameter
- * indicates that autodection should be used.
+ * The second example uses the revised <code>FTPClient.listFiles()</code>
+ * API to pull the whole list from the subfolder <code>subfolder</code> in 
+ * one call, attempting to automatically detect the parser type.  This 
+ * method, without a parserKey parameter, indicates that autodection should 
+ * be used.
  * 
  * <pre>
  *    FTPClient f=FTPClient();
  *    f.connect(server);
  *    f.login(username, password);
- *    FTPFile[] files = f.getFileList(null, "subfolder");
+ *    FTPFile[] files = f.listFiles("subfolder");
  * </pre>
  * 
- * The third example uses the newer <code>FTPClient.getFileList()</code>
+ * The third example uses the revised <code>FTPClient.listFiles()</code>>
  * API to pull the whole list from the current working directory in one call, 
  * but specifying by classname the parser to be used.  For this particular
  * parser class, this approach is necessary since there is no way to 
@@ -111,11 +112,12 @@ import java.io.IOException;
  *    FTPClient f=FTPClient();
  *    f.connect(server);
  *    f.login(username, password);
- *    FTPFile[] files = f.getFileList(
- *      "org.apache.commons.net.ftp.parser.EnterpriseUnixFTPFileEntryParser");
+ *    FTPFile[] files = f.listFiles(
+ *      "org.apache.commons.net.ftp.parser.EnterpriseUnixFTPFileEntryParser", 
+ *      ".");
  * </pre>
  *
- * The fourth example uses the newer <code>FTPClient.getFileList()</code>
+ * The fourth example uses the revised <code>FTPClient.listFiles()</code>
  * API to pull a single file listing in an arbitrary directory in one call, 
  * specifying by KEY the parser to be used, in this case, VMS.  
  * 
@@ -123,11 +125,11 @@ import java.io.IOException;
  *    FTPClient f=FTPClient();
  *    f.connect(server);
  *    f.login(username, password);
- *    FTPFile[] files = f.getFileList("VMS", "subfolder/foo.java");
+ *    FTPFile[] files = f.listFiles("VMS", "subfolder/foo.java");
  * </pre>
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileEntryParser.java,v 1.8 2004/01/03 17:55:22 scohen Exp $
+ * @version $Id: FTPFileEntryParser.java,v 1.9 2004/01/05 22:29:21 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFile
  * @see org.apache.commons.net.ftp.FTPClient#createFileList
  */
