@@ -3,7 +3,7 @@ package org.apache.commons.net.telnet;
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -81,6 +81,7 @@ import org.apache.commons.net.io.ToNetASCIIOutputStream;
  * <p>
  * <p>
  * @author Daniel F. Savarese
+ * @author Bruno D'Avanzo
  ***/
 
 public class TelnetClient extends Telnet
@@ -93,9 +94,21 @@ public class TelnetClient extends Telnet
      ***/
     public TelnetClient()
     {
+        /* TERMINAL-TYPE option (start)*/
+        super ("VT100");
+        /* TERMINAL-TYPE option (end)*/
         __input = null;
         __output = null;
     }
+
+    /* TERMINAL-TYPE option (start)*/
+    public TelnetClient(String termtype)
+    {
+        super (termtype);
+        __input = null;
+        __output = null;
+    }
+    /* TERMINAL-TYPE option (end)*/
 
     void _flushOutputStream() throws IOException
     {
@@ -172,4 +185,105 @@ public class TelnetClient extends Telnet
     {
         return __input;
     }
+
+    /***
+     * Returns the state of the option on the local side.
+     * <p>
+     * @param option - Option to be checked.
+     * <p>
+     * @return The state of the option on the local side.
+     ***/
+    public boolean getLocalOptionState(int option)
+    {
+        /* BUG (option active when not already acknowledged) (start)*/
+        return (_stateIsWill(option) && _requestedWill(option));
+        /* BUG (option active when not already acknowledged) (end)*/
+    }
+
+    /***
+     * Returns the state of the option on the remote side.
+     * <p>
+     * @param option - Option to be checked.
+     * <p>
+     * @return The state of the option on the remote side.
+     ***/
+    public boolean getRemoteOptionState(int option)
+    {
+        /* BUG (option active when not already acknowledged) (start)*/
+        return (_stateIsDo(option) && _requestedDo(option));
+        /* BUG (option active when not already acknowledged) (end)*/
+    }
+    /* open TelnetOptionHandler functionality (end)*/
+
+    /* Code Section added for supporting AYT (start)*/
+
+    /***
+     * Sends an Are You There sequence and waits for the result
+     * <p>
+     * @throws InterruptedException
+     * @throws IllegalArgumentException
+     * @throws IOException
+     * <p>
+     * @param timeout - Time to wait for a response (millis.)
+     * <p>
+     * @return true if AYT received a response, false otherwise
+     ***/
+    public boolean sendAYT(long timeout)
+    throws IOException, IllegalArgumentException, InterruptedException
+    {
+        return (_sendAYT(timeout));
+    }
+    /* Code Section added for supporting AYT (start)*/
+
+    /* open TelnetOptionHandler functionality (start)*/
+
+    /***
+     * Registers a new TelnetOptionHandler for this telnet client to use.
+     * <p>
+     * @throws InvalidTelnetOptionException
+     * <p>
+     * @param opthand - option handler to be registered.
+     ***/
+    public void addOptionHandler(TelnetOptionHandler opthand)
+    throws InvalidTelnetOptionException
+    {
+        super.addOptionHandler(opthand);
+    }
+    /* open TelnetOptionHandler functionality (end)*/
+
+    /***
+     * Unregisters a  TelnetOptionHandler.
+     * <p>
+     * @throws InvalidTelnetOptionException
+     * <p>
+     * @param optcode - Code of the option to be unregistered.
+     ***/
+    public void deleteOptionHandler(int optcode)
+    throws InvalidTelnetOptionException
+    {
+        super.deleteOptionHandler(optcode);
+    }
+
+    /* Code Section added for supporting spystreams (start)*/
+    /***
+     * Registers an OutputStream for spying what's going on in
+     * the TelnetClient session.
+     * <p>
+     * @param spystream - OutputStream on which session activity
+     * will be echoed.
+     ***/
+    public void registerSpyStream(OutputStream  spystream)
+    {
+        super._registerSpyStream(spystream);
+    }
+
+    /***
+     * Stops spying this TelnetClient.
+     * <p>
+     ***/
+    public void stopSpyStream()
+    {
+        super._stopSpyStream();
+    }
+    /* Code Section added for supporting spystreams (end)*/
 }

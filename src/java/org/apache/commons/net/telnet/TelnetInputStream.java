@@ -3,7 +3,7 @@ package org.apache.commons.net.telnet;
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -66,6 +66,7 @@ import java.io.InterruptedIOException;
  * <p>
  * <p>
  * @author Daniel F. Savarese
+ * @author Bruno D'Avanzo
  ***/
 
 
@@ -73,7 +74,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
 {
     static final int _STATE_DATA = 0, _STATE_IAC = 1, _STATE_WILL = 2,
                      _STATE_WONT = 3, _STATE_DO = 4, _STATE_DONT = 5,
-                     _STATE_SB = 6, _STATE_SE = 7, _STATE_CR = 8;
+                     _STATE_SB = 6, _STATE_SE = 7, _STATE_CR = 8, _STATE_IAC_SB = 9;
 
     private boolean __hasReachedEOF, __isClosed;
     private boolean __readIsWaiting;
@@ -83,6 +84,12 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     private Thread __thread;
     private IOException __ioException;
 
+    /* TERMINAL-TYPE option (start)*/
+    private int __suboption[] = new int[256];
+    private int __suboption_count = 0;
+    /* TERMINAL-TYPE option (end)*/
+
+    private boolean _ayt_flag = false;
     TelnetInputStream(InputStream input, TelnetClient client)
     {
         super(input);
@@ -134,6 +141,17 @@ _loop:
                 return -1;
 
             ch = (ch & 0xff);
+
+            /* Code Section added for supporting AYT (start)*/
+            synchronized (__client)
+            {
+                __client._processAYTResponse();
+            }
+            /* Code Section added for supporting AYT (end)*/
+
+            /* Code Section added for supporting spystreams (start)*/
+            __client._spyRead(ch);
+            /* Code Section added for supporting spystreams (end)*/
 
 _mainSwitch:
             switch (__receiveState)
@@ -187,6 +205,12 @@ _mainSwitch:
                 case TelnetCommand.DONT:
                     __receiveState = _STATE_DONT;
                     continue;
+                /* TERMINAL-TYPE option (start)*/
+                case TelnetCommand.SB:
+                    __suboption_count = 0;
+                    __receiveState = _STATE_SB;
+                    continue;
+                /* TERMINAL-TYPE option (end)*/
                 case TelnetCommand.IAC:
                     __receiveState = _STATE_DATA;
                     break;
@@ -227,6 +251,38 @@ _mainSwitch:
                 }
                 __receiveState = _STATE_DATA;
                 continue;
+            /* TERMINAL-TYPE option (start)*/
+            case _STATE_SB:
+                switch (ch)
+                {
+                case TelnetCommand.IAC:
+                    __receiveState = _STATE_IAC_SB;
+                    continue;
+                default:
+                    // store suboption char
+                    __suboption[__suboption_count++] = ch;
+                    break;
+                }
+                __receiveState = _STATE_SB;
+                continue;
+            case _STATE_IAC_SB:
+                switch (ch)
+                {
+                case TelnetCommand.SE:
+                    synchronized (__client)
+                    {
+                        __client._processSuboption(__suboption, __suboption_count);
+                        __client._flushOutputStream();
+                    }
+                    __receiveState = _STATE_DATA;
+                    continue;
+                default:
+                    __receiveState = _STATE_SB;
+                    break;
+                }
+                __receiveState = _STATE_DATA;
+                continue;
+            /* TERMINAL-TYPE option (end)*/
             }
 
             break;
@@ -349,6 +405,7 @@ _mainSwitch:
         }
         while (--length > 0 && (ch = read()) != -1);
 
+        //__client._spyRead(buffer, off, offset - off);
         return (offset - off);
     }
 
@@ -426,7 +483,6 @@ _outerLoop:
                     }
                 }
 
-
                 // Critical section because we're altering __bytesAvailable,
                 // __queueTail, and the contents of _queue.
                 synchronized (__queue)
@@ -474,6 +530,4 @@ _outerLoop:
             __queue.notify();
         }
     }
-
-
 }
