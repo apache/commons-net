@@ -50,7 +50,7 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
         }
 
         parser = factory.createFileEntryParser("WindowsNT");
-        assertTrue(parser instanceof NTFTPEntryParser);
+        assertTrue(parser instanceof CompositeFileEntryParser);
         
         parser = factory.createFileEntryParser("ThigaVMSaMaJig");
         assertTrue(parser instanceof VMSFTPEntryParser);

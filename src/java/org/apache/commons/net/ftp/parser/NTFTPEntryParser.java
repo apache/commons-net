@@ -16,17 +16,16 @@
 package org.apache.commons.net.ftp.parser;
 import java.util.Calendar;
 import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
 
 /**
  * Implementation of FTPFileEntryParser and FTPFileListParser for NT Systems.
  * 
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: NTFTPEntryParser.java,v 1.12 2004/03/10 03:37:16 scohen Exp $
+ * @version $Id: NTFTPEntryParser.java,v 1.13 2004/04/06 04:40:57 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
-public class NTFTPEntryParser extends FTPFileEntryParserImpl
+public class NTFTPEntryParser extends RegexFTPFileEntryParserImpl
 {
     /**
      * this is the regular expression used by this parser.

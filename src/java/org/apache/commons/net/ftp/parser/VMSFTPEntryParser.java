@@ -21,7 +21,6 @@ import java.util.Calendar;
 import java.util.StringTokenizer;
 
 import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
 import org.apache.commons.net.ftp.FTPListParseEngine;
 
 /**
@@ -41,12 +40,12 @@ import org.apache.commons.net.ftp.FTPListParseEngine;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.20 2004/02/29 10:26:56 scolebourne Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.21 2004/04/06 04:40:57 scohen Exp $
  * 
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
  */
-public class VMSFTPEntryParser extends FTPFileEntryParserImpl
+public class VMSFTPEntryParser extends RegexFTPFileEntryParserImpl
 {
 
 

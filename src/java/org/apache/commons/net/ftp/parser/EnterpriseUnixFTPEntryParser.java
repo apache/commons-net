@@ -17,7 +17,6 @@ package org.apache.commons.net.ftp.parser;
 import java.util.Calendar;
 
 import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
 
 /**
  * Parser for the Connect Enterprise Unix FTP Server From Sterling Commerce.  
@@ -28,12 +27,12 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
  * DefaultFTPParserFactory by classname.  It will not be chosen
  * by the autodetection scheme.
  * </B>
- * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.9 2004/02/29 10:26:56 scolebourne Exp $
+ * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.10 2004/04/06 04:40:57 scohen Exp $
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
  */
-public class EnterpriseUnixFTPEntryParser extends FTPFileEntryParserImpl
+public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
 {
 
     /**

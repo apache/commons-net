@@ -21,29 +21,47 @@ import junit.framework.TestSuite;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @versionn $Id: NTFTPEntryParserTest.java,v 1.8 2004/03/10 03:37:16 scohen Exp $
+ * @version $Id: NTFTPEntryParserTest.java,v 1.9 2004/04/06 04:40:57 scohen Exp $
  */
 public class NTFTPEntryParserTest extends FTPParseTestFramework
 {
 
-    private static final String [] goodsamples = {
-                "05-26-95  10:57AM               143712 $LDR$",
-                "05-20-97  03:31PM                  681 .bash_history",
-                "12-05-96  05:03PM       <DIR>          absoft2",
-                "11-14-97  04:21PM                  953 AUDITOR3.INI",
-                "05-22-97  08:08AM                  828 AUTOEXEC.BAK",
-                "01-22-98  01:52PM                  795 AUTOEXEC.BAT",
-                "05-13-97  01:46PM                  828 AUTOEXEC.DOS",
-                "12-03-96  06:38AM                  403 AUTOTOOL.LOG",
-                "12-03-96  06:38AM       <DIR>          123xyz",
-				"01-20-97  03:48PM       <DIR>          bin",
-
-            };
+    private static final String [][] goodsamples = { 
+    {
+            "05-26-95  10:57AM               143712 $LDR$",
+            "05-20-97  03:31PM                  681 .bash_history",
+            "12-05-96  05:03PM       <DIR>          absoft2",
+            "11-14-97  04:21PM                  953 AUDITOR3.INI",
+            "05-22-97  08:08AM                  828 AUTOEXEC.BAK",
+			"01-22-98  01:52PM                  795 AUTOEXEC.BAT",
+			"05-13-97  01:46PM                  828 AUTOEXEC.DOS",
+			"12-03-96  06:38AM                  403 AUTOTOOL.LOG",
+			"12-03-96  06:38AM       <DIR>          123xyz",
+			"01-20-97  03:48PM       <DIR>          bin",
+	},
+	{
+			"-rw-r--r--   1 root     root       111325 Apr 27  2001 zxJDBC-2.0.1b1.tar.gz", 
+			"-rw-r--r--   1 root     root       190144 Apr 27  2001 zxJDBC-2.0.1b1.zip",
+			"-rwxr-xr-x   2 500      500           166 Nov  2  2001 73131-testtes1.afp",
+			"-rw-r--r--   1 500      500           166 Nov  9  2001 73131-testtes1.AFP",
+    	}
+    };
+    
+    private static final String [] inconsistentsamples = {
+    	"-rw-r--r--   1 root     root       111325 Apr 27  2001 zxJDBC-2.0.1b1.tar.gz", 
+    	"-rwxr-xr-x   2 500      500           166 Nov  2  2001 73131-testtes1.afp",
+		"05-22-97  08:08AM                  828 AUTOEXEC.BAK",
+		"01-22-98  01:52PM                  795 AUTOEXEC.BAT",
+		"05-13-97  01:46PM                  828 AUTOEXEC.DOS",
+		"12-03-96  06:38AM                  403 AUTOTOOL.LOG",
+		
+    };
 
     private static final String [] badsamples = {
                 "05-26-1995  10:57AM               143712 $LDR$",
                 "20-05-97  03:31PM                  681 .bash_history",
-                "12-05-96  17:03         <DIR>          absoft2",
+				"drwxr-xr-x   2 root     99           4096 Feb 23 30:01 zzplayer",
+				"12-05-96  17:03         <DIR>          absoft2",
                 "05-22-97  08:08                    828 AUTOEXEC.BAK",
                 "     0           DIR   05-19-97   12:56  local",
                 "     0           DIR   05-12-97   16:52  Maintenance Desktop",
@@ -66,7 +84,7 @@ public class NTFTPEntryParserTest extends FTPParseTestFramework
      */
     protected String[] getGoodListing()
     {
-        return(goodsamples);
+        return(goodsamples[0]);
     }
     
     /**
@@ -82,7 +100,11 @@ public class NTFTPEntryParserTest extends FTPParseTestFramework
      */
     protected FTPFileEntryParser getParser()
     {
-        return(new NTFTPEntryParser());
+		return new CompositeFileEntryParser(new FTPFileEntryParser[]
+		{
+			new NTFTPEntryParser(),
+			new UnixFTPEntryParser()
+		});
     }
     
     /**
@@ -127,24 +149,43 @@ public class NTFTPEntryParserTest extends FTPParseTestFramework
     /* (non-Javadoc)
 	 * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testGoodListing()
 	 */
-	public void testGoodListing() throws Exception {
-		String[] goodsamples = getGoodListing();
+	public void testConsistentListing() throws Exception {
 		for (int i = 0; i < goodsamples.length; i++)
 		{
-
-			String test = goodsamples[i];
-			FTPFile f = getParser().parseFTPEntry(test);
-			assertNotNull("Failed to parse " + test, 
-					f);
-			if (test.indexOf("<DIR>") >= 0) {
-				assertEquals("directory.type", 
-						FTPFile.DIRECTORY_TYPE, f.getType());
-			} else {
-				assertEquals("file.type", 
-						FTPFile.FILE_TYPE, f.getType());
+			FTPFileEntryParser parser = getParser();
+			for (int j = 0; j < goodsamples[i].length; j++) {
+				String test = goodsamples[i][j];
+				FTPFile f = parser.parseFTPEntry(test);
+				assertNotNull("Failed to parse " + test, 
+						f);
+				if (test.indexOf("<DIR>") >= 0) {
+					assertEquals("directory.type", 
+							FTPFile.DIRECTORY_TYPE, f.getType());
+				}
+				
 			}
+
 		}
 		
+	}
+	
+	// even though all these listings are good using one parser
+	// or the other, this tests that a parser that has succeeded
+	// on one format will fail if another format is substituted.
+	public void testInconsistentListing() throws Exception {
+		FTPFileEntryParser parser = getParser();
+		for (int i = 0; i < 2; i++)
+		{
+			String test = inconsistentsamples[i];
+			FTPFile f = parser.parseFTPEntry(test);
+			assertNotNull("Failed to parse " + test, f);
+		}
+		for (int i = 2; i < inconsistentsamples.length; i++)
+		{
+			String test = inconsistentsamples[i];
+			FTPFile f = parser.parseFTPEntry(test);
+			assertNull("Should have failed to parse " + test, f);
+		}
 	}
 	
 

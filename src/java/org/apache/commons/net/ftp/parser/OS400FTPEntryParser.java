@@ -16,15 +16,14 @@
 package org.apache.commons.net.ftp.parser;
 
 import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
 
 import java.util.Calendar;
 
 /**
- * @version $Id: OS400FTPEntryParser.java,v 1.1 2004/03/26 12:54:57 scohen Exp $
+ * @version $Id: OS400FTPEntryParser.java,v 1.2 2004/04/06 04:40:57 scohen Exp $
  */
 
-public class OS400FTPEntryParser extends FTPFileEntryParserImpl
+public class OS400FTPEntryParser extends RegexFTPFileEntryParserImpl
 {
 	private static final String REGEX =
 		"(\\S+)\\s+"				// user

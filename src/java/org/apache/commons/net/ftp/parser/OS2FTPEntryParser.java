@@ -16,17 +16,16 @@
 package org.apache.commons.net.ftp.parser;
 import java.util.Calendar;
 import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
 
 /**
  * Implementation of FTPFileEntryParser and FTPFileListParser for OS2 Systems.
  * 
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: OS2FTPEntryParser.java,v 1.9 2004/02/29 10:26:56 scolebourne Exp $
+ * @version $Id: OS2FTPEntryParser.java,v 1.10 2004/04/06 04:40:57 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
-public class OS2FTPEntryParser extends FTPFileEntryParserImpl
+public class OS2FTPEntryParser extends RegexFTPFileEntryParserImpl
 
 {
     /**

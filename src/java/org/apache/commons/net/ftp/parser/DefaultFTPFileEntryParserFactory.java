@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.parser;
+
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
@@ -36,7 +37,7 @@ implements FTPFileEntryParserFactory
      * qualified classname of a class implementing the
      * FTPFileEntryParser interface.  If that succeeds, a parser 
      * object of this class is instantiated and is returned.
-     * <p>
+	 * <p/>
      * If <code>key</code> is not recognized as a fully qualified
      * classname known to the system, this method will then attempt
      * to see whether it <b>contains</b> a string identifying one of
@@ -46,6 +47,7 @@ implements FTPFileEntryParserFactory
      * the corresponding parser successfully parses.  This enables 
      * this factory to be used in the auto-detection system. 
      * <p/>
+	 *
      * @param key    should be a fully qualified classname corresponding to
      *               a class implementing the FTPFileEntryParser interface<br/>
      *               OR<br/>
@@ -57,48 +59,90 @@ implements FTPFileEntryParserFactory
      *               <li><code>os/2</code></li>
      *               <li><code>vms</code></li>
      *               </ul>
-     * 
      * @return the FTPFileEntryParser corresponding to the supplied key.
-     * @exception ParserInitializationException
-     *                   thrown if for any reason the factory cannot resolve 
+	 * @throws ParserInitializationException thrown if for any reason the factory cannot resolve
      *                   the supplied key into an FTPFileEntryParser.
      * @see FTPFileEntryParser
      */
     public FTPFileEntryParser createFileEntryParser(String key) 
     {
         Class parserClass = null;
-        try {
+		try
+		{
             parserClass = Class.forName(key);
             return (FTPFileEntryParser) parserClass.newInstance();
-        } catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e)
+		{
             String ukey = null;
-            if (null != key) {
+			if (null != key)
+			{
                 ukey = key.toUpperCase();
             }
-            if (ukey.indexOf("UNIX") >= 0) {
+			if (ukey.indexOf("UNIX") >= 0)
+			{
+				return createUnixFTPEntryParser();
+			}
+			else if (ukey.indexOf("VMS") >= 0)
+			{
+				return createVMSVersioningFTPEntryParser();
+			}
+			else if (ukey.indexOf("WINDOWS") >= 0)
+			{
+				return createNTFTPEntryParser();
+			}
+			else if (ukey.indexOf("OS/2") >= 0)
+			{
+				return createOS2FTPEntryParser();
+			}
+			else if (ukey.indexOf("OS/400") >= 0)
+			{
+				return createOS400FTPEntryParser();
+			}
+			else
+			{
+				throw new ParserInitializationException("Unknown parser type: " + key);
+			}
+		}
+		catch (ClassCastException e)
+		{
+			throw new ParserInitializationException(parserClass.getName()
+					+ " does not implement the interface "
+					+ "org.apache.commons.net.ftp.FTPFileEntryParser.", e);
+		}
+		catch (Throwable e)
+		{
+			throw new ParserInitializationException("Error initializing parser", e);
+		}
+	}
+
+	public FTPFileEntryParser createUnixFTPEntryParser()
+	{
                 return new UnixFTPEntryParser();
-            } else if (ukey.indexOf("VMS") >= 0) {
+	}
+
+	public FTPFileEntryParser createVMSVersioningFTPEntryParser()
+	{
                 return new VMSVersioningFTPEntryParser();
-            } else if (ukey.indexOf("WINDOWS") >= 0) {
-                return new NTFTPEntryParser();
-            } else if (ukey.indexOf("OS/2") >= 0) {
+	}
+
+	public FTPFileEntryParser createNTFTPEntryParser()
+	{
+		return new CompositeFileEntryParser(new FTPFileEntryParser[]
+		{
+			new NTFTPEntryParser(),
+			new UnixFTPEntryParser()
+		});
+	}
+
+	public FTPFileEntryParser createOS2FTPEntryParser()
+	{
                 return new OS2FTPEntryParser();
-			} else if (ukey.indexOf("OS/400") >= 0) {
-                return new OS400FTPEntryParser();
-            } else {
-                throw new ParserInitializationException(
-                    "Unknown parser type: " + key);
-            }
-        } catch (ClassCastException e) {
-            throw new ParserInitializationException(
-                parserClass.getName() 
-                + " does not implement the interface " 
-                + "org.apache.commons.net.ftp.FTPFileEntryParser.", e);
-        } catch (Throwable e) {
-            throw new ParserInitializationException(
-                "Error initializing parser", e);
         }
 
+	public FTPFileEntryParser createOS400FTPEntryParser()
+	{
+		return new OS400FTPEntryParser();
     }
 }
 

@@ -27,7 +27,7 @@ import junit.framework.TestSuite;
 /**
  * A functional test suite for checking that site listings work.  
  * @author <a href="mailto:brekke@apache.org">Jeffrey D. Brekke</a>
- * @version $Id: ListingFunctionalTest.java,v 1.3 2004/02/29 10:26:57 scolebourne Exp $
+ * @version $Id: ListingFunctionalTest.java,v 1.4 2004/04/06 04:40:57 scohen Exp $
  */
 public class ListingFunctionalTest extends TestCase
 {
@@ -43,7 +43,7 @@ public class ListingFunctionalTest extends TestCase
         String[][] testData = 
             {
                 {
-                    "ftp.ibiblio.org", "unix", "windows",
+                    "ftp.ibiblio.org", "unix", "vms",
                     "HA!", "javaio.jar",
                     "pub/languages/java/javafaq"
                 },
@@ -54,6 +54,7 @@ public class ListingFunctionalTest extends TestCase
                 {
                     "h71000.www7.hp.com", "vms", "windows",
                     "[.HA!]", "ACLOCAL.M4;1",
+					
                     "[.FREEWARE50.XTERM]"
                 }
             };

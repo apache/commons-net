@@ -15,22 +15,24 @@
  */
 package org.apache.commons.net.ftp;
 
+import org.apache.commons.net.ftp.parser.*;
+
 /**
  * This abstract class implements both the older FTPFileListParser and
  * newer FTPFileEntryParser interfaces with default functionality.
  * All the classes in the parser subpackage inherit from this.
  * 
  * @author Steve Cohen <scohen@apache.org>
- * @see org.apache.commons.net.ftp.FTPFileEntryParserImpl
+ * @see org.apache.commons.net.ftp.parser.RegexFTPFileEntryParserImpl
  * @deprecated This class is deprecated as of version 1.2 and will be 
  *             removed in version 2.0 -- 
- *             org.apache.commons.net.ftp.FTPFileEntryParserImpl is its
+ *             org.apache.commons.net.ftp.RegexFTPFileEntryParserImpl is its
  *             designated replacement.  Class has been renamed, entire 
- *             implemenation is in FTPFileEntryParserImpl.
+ *             implemenation is in RegexFTPFileEntryParserImpl.
  * 
  */
 public abstract class FTPFileListParserImpl 
-    extends FTPFileEntryParserImpl
+    extends RegexFTPFileEntryParserImpl
 {
     /**
      * The constructor for a FTPFileListParserImpl object.
