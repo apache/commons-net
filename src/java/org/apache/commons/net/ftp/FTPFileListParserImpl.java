@@ -74,31 +74,15 @@ import org.apache.oro.text.regex.MatchResult;
  * @see org.apache.commons.net.ftp.FTPFileEntryParserImpl
  * @deprecated This class is deprecated and will not be supported when version 2.0 is 
  *             released.  org.apache.commons.net.ftp.FTPFileEntryParserImpl is its
- *             designated replacement.
+ *             designated replacement.  Class has been renamed, entire implemenation
+ *             in FTPFileEntryParserImpl.
+ * 
  */
 public abstract class FTPFileListParserImpl 
-    implements FTPFileListParser, FTPFileEntryParser
+    extends FTPFileEntryParserImpl
 {
     /**
-     * internal pattern the matcher tries to match, representing a file 
-     * entry
-     */
-    private Pattern pattern = null;
-
-    /**
-     * internal match result used by the parser
-     */
-    private MatchResult result = null;
-
-    /**
-     * Internal PatternMatcher object used by the parser.  It has protected
-     * scope in case subclasses want to make use of it for their own purposes.
-     */
-    protected PatternMatcher _matcher_ = null;
-
-    
-    /**
-     * The constructor for a MatchApparatus object.
+     * The constructor for a FTPFileListParserImpl object.
      * 
      * @param regex  The regular expression with which this object is 
      * initialized.
@@ -110,135 +94,12 @@ public abstract class FTPFileListParserImpl
      * created before use, this means that any bad parser subclasses created 
      * from this will bomb very quickly,  leading to easy detection.  
      */
-    public FTPFileListParserImpl(String regex) 
-    {
-        try 
-        {
-            _matcher_ = new Perl5Matcher();
-            pattern   = new Perl5Compiler().compile(regex);
-        } 
-        catch (MalformedPatternException e) 
-        {
-            throw new IllegalArgumentException (
-                "Unparseable regex supplied:  " + regex);
-        }
+
+    public FTPFileListParserImpl(String regex) {
+        super(regex);
     }
+
     
-
-    /***
-     * Parses an FTP server file listing and converts it into a usable format
-     * in the form of an array of <code> FTPFile </code> instances.  If the
-     * file list contains no files, <code> null </code> should be
-     * returned, otherwise an array of <code> FTPFile </code> instances
-     * representing the files in the directory is returned.
-     * <p>
-     * @param listStream The InputStream from which the file list should be
-     *        read.
-     * @return The list of file information contained in the given path.  null
-     *     if the list could not be obtained or if there are no files in
-     *     the directory.
-     * @exception IOException  If an I/O error occurs reading the listStream.
-     ***/
-    public FTPFile[] parseFileList(InputStream listStream) throws IOException 
-    {
-        FTPFileList ffl = createFTPFileList(listStream);
-        return ffl.getFiles();
-
-    }
-
-    public FTPFileList createFTPFileList(InputStream stream)
-        throws IOException
-    {
-        DefaultFTPFileList list = new DefaultFTPFileList(this);
-        list.readStream(stream);
-        return list;
-    }
-
-
-    /**
-     * Convenience method delegates to the internal MatchResult's matches()
-     * method.
-     *
-     * @param s the String to be matched
-     * @return true if s matches this object's regular expression.
-     */
-    public boolean matches(String s)
-    {
-        this.result = null;
-        if (_matcher_.matches(s.trim(), this.pattern))
-        {
-            this.result = _matcher_.getMatch();
-        }
-        return null != this.result;
-    }
-
-    /**
-     * Convenience method delegates to the internal MatchResult's groups()
-     * method.
-     *
-     * @return the number of groups() in the internal MatchResult.
-     */
-    public int getGroupCnt()
-    {
-        if (this.result == null)
-        {
-            return 0;
-        }
-        return this.result.groups();
-    }
-
-    /**
-     * Convenience method delegates to the internal MatchResult's group()
-     * method.
-     * 
-     * @param matchnum match group number to be retrieved
-     * 
-     * @return the content of the <code>matchnum'th<code> group of the internal
-     *         match or null if this method is called without a match having 
-     *         been made.
-     */
-    public String group(int matchnum)
-    {
-        if (this.result == null)
-        {
-            return null;
-        }
-        return this.result.group(matchnum);
-    }
-
-    /**
-     * For debugging purposes - returns a string shows each match group by 
-     * number.
-     * 
-     * @return a string shows each match group by number.
-     */
-    public String getGroupsAsString()
-    {
-        StringBuffer b = new StringBuffer();
-        for (int i = 1; i <= this.result.groups(); i++)
-        {
-            b.append(i).append(") ").append(this.result.group(i))
-                .append(System.getProperty("line.separator"));
-        }
-        return b.toString();
-
-    }
-
-    /**
-     * Reads the next entry using the supplied BufferedReader object up to
-     * whatever delemits one entry from the next.  This default implementation
-     * simply calls BufferedReader.readLine().
-     *
-     * @param reader The BufferedReader object from which entries are to be 
-     * read.
-     *
-     * @return A string representing the next ftp entry or null if none found.
-     * @exception IOException thrown on any IO Error reading from the reader.
-     */
-    public String readNextEntry(BufferedReader reader) throws IOException 
-    {
-        return reader.readLine();
-    }
 }
 
 /* Emacs configuration

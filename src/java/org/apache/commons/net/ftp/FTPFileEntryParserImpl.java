@@ -96,7 +96,7 @@ public abstract class FTPFileEntryParserImpl
 
     
     /**
-     * The constructor for a MatchApparatus object.
+     * The constructor for a FTPFileEntryParserImpl object.
      * 
      * @param regex  The regular expression with which this object is 
      * initialized.
