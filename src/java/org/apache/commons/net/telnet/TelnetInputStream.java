@@ -439,7 +439,7 @@ _mainSwitch:
         synchronized (__queue)
         {
             __hasReachedEOF = true;
-            __isClosed = true;
+            __isClosed      = true;
 
             if (__thread.isAlive())
             {
@@ -481,6 +481,14 @@ _outerLoop:
                         }
                         continue;
                     }
+                } catch(RuntimeException re) {
+                    // We treat any runtime exceptions as though the
+                    // stream has been closed.  We close the
+                    // underlying stream just to be sure.
+                    super.close();
+                    // Breaking the loop has the effect of setting
+                    // the state to closed at the end of the method.
+                    break _outerLoop;
                 }
 
                 // Critical section because we're altering __bytesAvailable,
@@ -515,19 +523,27 @@ _outerLoop:
                 }
             }
         }
-        catch (IOException e)
+        catch (IOException ioe)
         {
             synchronized (__queue)
             {
-                __ioException = e;
+                __ioException = ioe;
             }
         }
 
         synchronized (__queue)
         {
-            __isClosed = true; // Possibly redundant
+            __isClosed      = true; // Possibly redundant
             __hasReachedEOF = true;
             __queue.notify();
         }
     }
 }
+
+/* Emacs configuration
+ * Local variables:        **
+ * mode:             java  **
+ * c-basic-offset:   4     **
+ * indent-tabs-mode: nil   **
+ * End:                    **
+ */
