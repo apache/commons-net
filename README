@@ -11,6 +11,6 @@ http://jakarta.apache.org/turbine/maven
 
 o Documentation
 
-You can build the documenation with:
+You can build the documentation with:
 
 ant maven:site
