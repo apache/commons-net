@@ -63,7 +63,7 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * 
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: NTFTPEntryParser.java,v 1.7 2004/01/02 03:39:05 scohen Exp $
+ * @version $Id: NTFTPEntryParser.java,v 1.7.2.1 2004/01/21 19:59:31 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class NTFTPEntryParser extends FTPFileListParserImpl
@@ -79,7 +79,7 @@ public class NTFTPEntryParser extends FTPFileListParserImpl
         + "([0-5]\\d)\\s*" 
         + "([AP])M\\s*" 
         + "(<DIR>)?\\s*" 
-        + "([0-9]+)?\\s*" 
+        + "([0-9]+)?\\s+" 
         + "(\\S.*)";
 
     /**
