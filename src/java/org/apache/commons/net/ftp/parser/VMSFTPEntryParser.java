@@ -56,11 +56,17 @@ package org.apache.commons.net.ftp.parser;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import org.apache.oro.text.regex.Pattern;
+import org.apache.oro.text.regex.Perl5Compiler;
+import org.apache.oro.text.regex.Util;
+import org.apache.oro.text.regex.MalformedPatternException;
 
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileListParserImpl;
@@ -118,7 +124,7 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.6 2003/07/29 02:35:34 dfs Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.7 2003/08/05 18:10:38 dfs Exp $
  */
 public class VMSFTPEntryParser extends FTPFileListParserImpl
 {
@@ -148,6 +154,22 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
         + "\\[(([0-9$A-Za-z_]+)|([0-9$A-Za-z_]+),([0-9$a-zA-Z_]+))\\]\\s*" 
         + "\\([a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*\\)";
 
+
+    /** Pattern for splitting owner listing. */
+    private static final Pattern OWNER_SPLIT_PATTERN;
+
+    static {
+        Perl5Compiler compiler = new Perl5Compiler();
+
+        try {
+            OWNER_SPLIT_PATTERN =
+                compiler.compile(",", Perl5Compiler.READ_ONLY_MASK);
+        } catch(MalformedPatternException mpe) {
+            throw new IllegalStateException(
+                "Pattern compilation failed in VMSFTPEntryParser " +
+                "static initialization block.");
+        }
+    }
 
     /**
      * Convenience Constructor for a VMSFTPEntryParser object.  Sets the 
@@ -271,21 +293,23 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
             String min = group(7);
             String sec = group(8);
             String owner = group(9);
-            String[] array = owner.split(",");
             String grp;
             String user;
+            ArrayList list = new ArrayList();
 
-            switch (array.length) {
+            Util.split(list, _matcher_, OWNER_SPLIT_PATTERN, owner);
+
+            switch (list.size()) {
                 case 1:
-                    grp = null;
-                    user = array[0];
+                    grp  = null;
+                    user = (String)list.get(0);
                     break;
                 case 2:
-                    grp = array[0];
-                    user = array[1];
+                    grp  = (String)list.get(0);
+                    user = (String)list.get(1);
                     break;
                 default:
-                    grp = null;
+                    grp  = null;
                     user = null;
             }
             
@@ -367,3 +391,11 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
         return (entry.length() == 0 ? null : entry.toString());
     }
 }
+
+/* Emacs configuration
+ * Local variables:        **
+ * mode:             java  **
+ * c-basic-offset:   4     **
+ * indent-tabs-mode: nil   **
+ * End:                    **
+ */
