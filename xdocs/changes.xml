@@ -140,7 +140,7 @@
       </action>
     </release>
 
-    <release version="1.0.0" date="02/23/2003" description="first jakarta release">
+    <release version="1.0.0" date="February 23, 2003" description="first jakarta-commons release">
       <action dev="brekke" type="add">
         Added a migration document for moving from NetComponents to Commons/Net.
       </action>
