@@ -204,6 +204,11 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
  *       //expensive FTPFile objects not created until needed.
  *    }
  * </pre>
+ * <p>
+ * NOTE: If you experience problems with unwanted firing of <pre>setSoTimeout()</pre> 
+ * during periods of client inactivity, this can be alleviated by calling <pre>setReaderThread(false)</pre>.
+ * For more details, see <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=31122">this thread</a>. 
+ * </p>
  * <p> * @author Daniel F. Savarese
  * @see FTP
  * @see FTPConnectionClosedException
