@@ -104,7 +104,10 @@ import java.util.ListIterator;
  *       //expensive FTPFile objects not created until needed.
  *    }
  * </pre>
- * @version
+ * <p>
+ * For unpaged access, simply use FTPClient.listFiles().  That method
+ * uses this class transparently.
+ * @version $Id: FTPListParseEngine.java,v 1.3 2004/01/17 18:48:36 scohen Exp $
  */
 public class FTPListParseEngine {
 	private List entries = new LinkedList();
