@@ -81,8 +81,8 @@
         <fileset dir="lib">
           <include name="*.jar"></include>
         </fileset>
-        <pathelement location="target/${final.name}.jar"></pathelement>
         <pathelement path="${testclassesdir}"></pathelement>
+        <pathelement path="${classesdir}"></pathelement>
       </classpath>
       <batchtest todir="${testreportdir}">
         <fileset dir="src/test">
@@ -105,7 +105,7 @@
         <fileset dir="lib">
           <include name="*.jar"></include>
         </fileset>
-        <pathelement location="target/${final.name}.jar"></pathelement>
+        <pathelement path="${classesdir}"></pathelement>
       </classpath>
     </javac>
 
