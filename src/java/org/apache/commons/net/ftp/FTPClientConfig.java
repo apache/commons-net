@@ -42,6 +42,90 @@ import java.util.TreeMap;
  * only need to be explicitly invoked by the user of this package for problem
  * cases that previous implementations could not solve.
  * </p>
+ * <h3>Examples of use of FTPClientConfig</h3>
+ * Use cases:
+ * You are trying to access a server that 
+ * <ul> 
+ * <li>lists files with timestamps that use month names in languages other 
+ * than English</li>
+ * <li>lists files with timestamps that use date formats other 
+ * than the American English "standard" <code>MM dd yyyy</code></li>
+ * <li>is in different timezone and you need accurate timestamps for 
+ * dependency checking as in Ant</li>
+ * </ul>
+ * <p>
+ * Unpaged (whole list) access on a UNIX server that uses French month names
+ * but uses the "standard" <code>MMM d yyyy</code> date formatting
+ * <pre>
+ *    FTPClient f=FTPClient();
+ *    FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
+ * 	  conf.setServerLanguageCode("fr");
+ *    f.connect(server);
+ *    f.login(username, password);
+ *    FTPFile[] files = listFiles(directory);
+ * </pre>
+ * </p>
+ * <p>
+ * Paged access on a UNIX server that uses Danish month names
+ * and "European" date formatting in Denmark's time zone, when you
+ * are in some other time zone.
+ * <pre>
+ *    FTPClient f=FTPClient();
+ *    FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
+ * 	  conf.setServerLanguageCode("da");
+ * 	  conf.setDefaultDateFormat("d MMM yyyy");
+ *    conf.setRecentDateFormat("d MMM HH:mm"); 
+ * 	  conf.setTimeZoneId("Europe/Copenhagen");
+ *    f.connect(server);
+ *    f.login(username, password);
+ *    FTPListParseEngine engine =
+ *       f.initiateListParsing("com.whatever.YourOwnParser", directory);
+ *
+ *    while (engine.hasNext()) {
+ *       FTPFile[] files = engine.getNext(25);  // "page size" you want
+ *       //do whatever you want with these files, display them, etc.
+ *       //expensive FTPFile objects not created until needed.
+ *    }
+ * </pre>
+ * </p> 
+ * <p>
+ * Unpaged (whole list) access on a VMS server that uses month names
+ * in a language not {@link #getSupportedLanguageCodes() supported} by the system.
+ * but uses the "standard" <code>MMM d yyyy</code> date formatting
+ * <pre>
+ *    FTPClient f=FTPClient();
+ *    FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_VMS);
+ * 	  conf.setShortMonthNames(
+ * 		"jan|feb|mar|apr|ma&#xED;|j&#xFA;n|j&#xFA;l|&#xE1;g&#xFA;|sep|okt|n&#xF3;v|des");
+ *    f.connect(server);
+ *    f.login(username, password);
+ *    FTPFile[] files = listFiles(directory);
+ * </pre>
+ * </p>
+ * <p>
+ * Unpaged (whole list) access on a Windows-NT server in a different time zone.
+ * (Note, since the NT Format uses numeric date formatting, language issues
+ * are irrelevant here).
+ * <pre>
+ *    FTPClient f=FTPClient();
+ *    FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_NT);
+ * 	  conf.setTimeZoneId("America/Denver");
+ *    f.connect(server);
+ *    f.login(username, password);
+ *    FTPFile[] files = listFiles(directory);
+ * </pre>
+ * </p>
+ * Unpaged (whole list) access on a Windows-NT server in a different time zone
+ * but which has been configured to use a unix-style listing format.
+ * <pre>
+ *    FTPClient f=FTPClient();
+ *    FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
+ * 	  conf.setTimeZoneId("America/Denver");
+ *    f.connect(server);
+ *    f.login(username, password);
+ *    FTPFile[] files = listFiles(directory);
+ * </pre>
+ * </p>
  * @since 1.4
  * @see org.apache.commons.net.ftp.Configurable
  * @see org.apache.commons.net.ftp.FTPClient

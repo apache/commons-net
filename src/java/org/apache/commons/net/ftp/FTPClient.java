@@ -105,10 +105,9 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
  * for EBCDIC.  To transfer EBCDIC and other unsupported file types you
  * must create your own filter InputStreams and OutputStreams and wrap
  * them around the streams returned or required by the FTPClient methods.
- * FTPClient uses the NetASCII filter streams in
- * {@link org.apache.commons.net.io} to provide
- * transparent handling of ASCII files.  We will consider incorporating
- * EBCDIC support if there is enough demand.
+ * FTPClient uses the {@link ToNetASCIIOutputStream NetASCII}  
+ * filter streams to provide transparent handling of ASCII files.  We will 
+ * consider incorporating EBCDIC support if there is enough demand.
  * <p>
  * <code> FTP.NON_PRINT_TEXT_FORMAT </code>,
  * <code> FTP.STREAM_TRANSFER_MODE </code>, and
@@ -209,23 +208,28 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
  *    }
  * </pre>
  * <p>
+ * For examples of using FTPClient on servers whose directory listings 
+ * <ul> 
+ * <li>use languages other than English</li>
+ * <li>use date formats other than the American English "standard" <code>MM d yyyy</code></li>
+ * <li>are in different timezones and you need accurate timestamps for dependency checking 
+ *     as in Ant</li>
+ * </ul>see {@link  FTPClientConfig  FTPClientConfig}.
+ * <p>
  * NOTE: If you experience problems with unwanted firing of <pre>setSoTimeout()</pre> 
  * during periods of client inactivity, this can be alleviated by calling <pre>setReaderThread(false)</pre>.
  * For more details, see <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=31122">this thread</a>. 
  * </p>
- * <p> * @author Daniel F. Savarese
+ * <p> 
+ * @author Daniel F. Savarese
  * @see FTP
  * @see FTPConnectionClosedException
  * @see FTPFileEntryParser
  * @see FTPFileEntryParserFactory
  * @see DefaultFTPFileEntryParserFactory
+ * @see FTPClientConfig
  * @see org.apache.commons.net.MalformedServerReplyException
- ***/
-
-/**
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates - Comments
- */
+ **/
 public class FTPClient extends FTP
 implements Configurable
 {
