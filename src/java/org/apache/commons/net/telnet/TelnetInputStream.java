@@ -407,6 +407,8 @@ _mainSwitch:
 
                     --__bytesAvailable;
 
+		    // Need to explicitly notify()
+		    __queue.notify();
                     return ch;
                 }
             }
