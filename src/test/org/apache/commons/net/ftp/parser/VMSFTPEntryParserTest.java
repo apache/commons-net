@@ -65,7 +65,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParserTest.java,v 1.6 2003/08/05 18:56:42 brekke Exp $
+ * @version $Id: VMSFTPEntryParserTest.java,v 1.7 2003/12/30 01:17:04 scohen Exp $
  */
 public class VMSFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -125,9 +125,26 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         VMSFTPEntryParser parser = new VMSFTPEntryParser();
         FTPFile[] files = parser.parseFileList(new ByteArrayInputStream(fullListing.getBytes()));
         assertEquals(3, files.length);
-        assertEquals(files[0].getName(), "2-JUN.LIS", files[0].getName());
-        assertEquals(files[1].getName(), "3-JUN.LIS", files[1].getName());
-        assertEquals(files[2].getName(), "1-JUN.LIS", files[2].getName());        
+        assertFileInListing(files, "1-JUN.LIS");
+        assertFileInListing(files, "2-JUN.LIS");
+        assertFileInListing(files, "3-JUN.LIS");
+        assertFileNotInListing(files, "1-JUN.LIS;1");
+    }
+
+    public void assertFileInListing(FTPFile[] listing, String name) {
+        for (int i = 0; i < listing.length; i++) {
+            if (name.equals(listing[i].getName())) {
+                return;
+            }
+        }
+        fail("File " + name + " not found in supplied listing");
+    }
+    public void assertFileNotInListing(FTPFile[] listing, String name) {
+        for (int i = 0; i < listing.length; i++) {
+            if (name.equals(listing[i].getName())) {
+                fail("Unexpected File " + name + " found in supplied listing");
+            }
+        }
     }
 
     /**
