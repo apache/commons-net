@@ -2338,8 +2338,6 @@ public class FTPClient extends FTP
         socket.close();
 
         completePendingCommand();
-
-//        return parser.removeDuplicates(list);
         return list;
     }
 

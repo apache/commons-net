@@ -89,7 +89,7 @@ import org.apache.commons.net.ftp.FTPFileList;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSVersioningFTPEntryParser.java,v 1.2 2004/01/10 16:01:49 scohen Exp $
+ * @version $Id: VMSVersioningFTPEntryParser.java,v 1.3 2004/01/10 23:19:52 scohen Exp $
  * 
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
@@ -147,7 +147,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
      *
      * @return Original list purged of duplicates
      */
-    public FTPFileList removeDuplicates(FTPFileList original) {
+    public FTPFileList preParse(FTPFileList original) {
         HashMap existingEntries = new HashMap();
         ListIterator iter = getInternalIteratorForFtpFileList(original);
         while (iter.hasNext()) {

@@ -230,20 +230,22 @@ public abstract class FTPFileEntryParserImpl
         return reader.readLine();
     }
     /**
-     * Implement hook provided for those implementers (such as
-     * VMSVersioningFTPEntryParser, and possibly others) which return
-     * multiple files with the same name to remove the duplicates by
-     * defining a no-op method which simply returns the original
-     * FTPFileList.  This method should not be overridden except in 
-     * parsers that really have to remove duplicates.
+     * This method is a hook for those implementors (such as
+     * VMSVersioningFTPEntryParser, and possibly others) which need to
+     * perform some action upon the FTPFileList after it has been created
+     * from the server stream, but before any clients see the list.
      *
-     * @param original Original list 
+     * This default implementation is a no-op.
      *
-     * @return Original list
+     * @param original Original list after it has been created from the server stream
+     *
+     * @return <code>original</code> unmodified.
      */
-    public FTPFileList removeDuplicates(FTPFileList original) {
-        return original;
-    }
+     public FTPFileList preParse(FTPFileList original) { 
+         return original;                                
+     } 
+      
+                                                        
 
     /**
      * return a ListIterator to the internal Vector of lines of <code>list</code>, 

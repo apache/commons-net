@@ -76,7 +76,7 @@ import java.util.Vector;
  * which required a bigger memory hit.
  * 
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileList.java,v 1.8 2004/01/10 15:36:40 scohen Exp $
+ * @version $Id: FTPFileList.java,v 1.9 2004/01/10 23:19:52 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPClient#createFileList
  * @see org.apache.commons.net.ftp.FTPFileIterator
  * @see org.apache.commons.net.ftp.FTPFileEntryParser
@@ -132,7 +132,7 @@ public class FTPFileList
     {
         FTPFileList list = new FTPFileList(parser);
         list.readStream(stream);
-        return parser.removeDuplicates(list);
+        return parser.preParse(list);
     } 
 
     /**

@@ -130,7 +130,7 @@ import java.io.InputStream;
  * </pre>
  *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPFileEntryParser.java,v 1.13 2004/01/10 15:36:40 scohen Exp $
+ * @version $Id: FTPFileEntryParser.java,v 1.14 2004/01/10 23:19:52 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFile
  * @see org.apache.commons.net.ftp.FTPClient#createFileList
  */
@@ -164,18 +164,18 @@ public interface FTPFileEntryParser
 
     
     /**
-     * This method is a hook for those implementers (such as 
-     * VMSVersioningFTPEntryParser, and possibly others) which return
-     * multiple files with the same name to remove the duplicates.
+     * This method is a hook for those implementors (such as
+     * VMSVersioningFTPEntryParser, and possibly others) which need to
+     * perform some action upon the FTPFileList after it has been created
+     * from the server stream, but before any clients see the list.
      * 
-     * Implementations for systems that do not allow duplicates will
-     * implement a NO-OP here.
+     * The default implementation can be a no-op.
      * 
-     * @param original Original list which may contain duplicates
+     * @param original Original list after it has been created from the server stream
      * 
-     * @return Original list purged of duplicates
+     * @return Original list as processed by this method.
      */
-    FTPFileList removeDuplicates(FTPFileList original);
+    FTPFileList preParse(FTPFileList original);
 
 
 }
