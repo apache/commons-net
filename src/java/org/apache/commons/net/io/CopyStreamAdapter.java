@@ -31,7 +31,7 @@ package org.apache.commons.net.io;
  *    written permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
+ *    nor may "Apache" appear in their name, without
  *    prior written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -73,7 +73,7 @@ import org.apache.commons.net.util.ListenerList;
  * @see CopyStreamListener
  * @see Util
  * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
- * @version $Id: CopyStreamAdapter.java,v 1.5 2003/01/26 03:56:14 brekke Exp $
+ * @version $Id: CopyStreamAdapter.java,v 1.6 2003/01/26 04:33:32 brekke Exp $
  */
 public class CopyStreamAdapter implements CopyStreamListener
 {

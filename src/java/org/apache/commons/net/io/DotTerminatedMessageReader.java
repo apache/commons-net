@@ -31,7 +31,7 @@ package org.apache.commons.net.io;
  *    written permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
+ *    nor may "Apache" appear in their name, without
  *    prior written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -71,7 +71,7 @@ import java.io.Reader;
  * local line separator format, truncates the end of message indicator,
  * and ensures you cannot read past the end of the message.
  * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
- * @version $Id: DotTerminatedMessageReader.java,v 1.5 2003/01/26 03:56:14 brekke Exp $
+ * @version $Id: DotTerminatedMessageReader.java,v 1.6 2003/01/26 04:33:32 brekke Exp $
  */
 public final class DotTerminatedMessageReader extends Reader
 {
