@@ -43,17 +43,18 @@
    <p>
      Supported protocols are:
      <ul>
-       <li>Finger</li>
-       <li>Whois</li> 
-       <li>TFTP</li>
-       <li>Telnet</li>
-       <li>POP3</li>
        <li>FTP</li>
        <li>NNTP</li>
        <li>SMTP</li>
-       <li>Time</li>
+       <li>POP3</li>
+       <li>Telnet</li>
+       <li>TFTP</li>
+       <li>Finger</li>
+       <li>Whois</li> 
+       <li>rlogin, BSD R commands</li>
+       <li>Time (rdate) and Daytime</li>
        <li>Echo</li>
-       <li>BSD R command support</li>
+       <li>Discard</li>
      </ul>
    </p>
    </section>
