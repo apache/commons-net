@@ -4,7 +4,7 @@
   <pomVersion>3</pomVersion>
   <name>Jakarta Commons/Net</name>
   <id>commons-net</id>
-  <currentVersion>1.0.0-dev</currentVersion>
+  <currentVersion>1.0.0</currentVersion>
   <organization>
     <name>Apache Software Foundation</name>
     <url>http://jakarta.apache.org/</url>
@@ -42,7 +42,7 @@
   <issueTrackingUrl>http://nagoya.apache.org/bugzilla/</issueTrackingUrl>
   <siteAddress>jakarta.apache.org</siteAddress>
   <siteDirectory>/www/jakarta.apache.org/commons/net/</siteDirectory> 
-  <distributionDirectory/>
+  <distributionDirectory>/www/jakarta.apache.org/builds/jakarta-commons/release/commons-net/</distributionDirectory>
 
   <repository>
     <connection>scm:cvs:pserver:anoncvs@cvs.apache.org:/home/cvspublic:jakarta-commons/net</connection>
@@ -51,8 +51,13 @@
 
   <versions>
     <version>
-      <id>1.0.0-dev</id>
-      <name>1.0.0-dev</name>
+      <id>1.0.0</id>
+      <name>1.0.0</name>
+      <tag>NET_1_0_0</tag>
+    </version>
+    <version>
+      <id>1.0.1-dev</id>
+      <name>1.0.1</name>
       <tag>HEAD</tag>
     </version>
   </versions>
@@ -120,4 +125,17 @@
     </unitTest>
     
   </build>
+
+  <reports>
+    <report>maven-jdepend-plugin</report>
+    <report>maven-checkstyle-plugin</report>
+    <report>maven-changelog-plugin</report>
+    <report>maven-file-activity-plugin</report>
+    <report>maven-developer-activity-plugin</report>
+    <report>maven-javadoc-plugin</report>
+    <report>maven-jxr-plugin</report>
+    <report>maven-junit-report-plugin</report>
+    <report>maven-tasklist-plugin</report>
+  </reports>
+
 </project>

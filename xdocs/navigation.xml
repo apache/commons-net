@@ -7,6 +7,7 @@
     <menu name="Documentation">
       <item name="Migration How-to"      href="/migration.html"/>
       <item name="Download"              href="/download.html"/>
+      <item name="Release Notes"         href="/release-notes.html"/>
     </menu>
     <menu name="Development">
       <item name="Coding Specifications" href="/code-standards.html"/>
