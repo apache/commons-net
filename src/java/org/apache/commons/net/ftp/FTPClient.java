@@ -427,7 +427,10 @@ public class FTPClient extends FTP
         if ((socket = __openDataConnection(command, remote)) == null)
             return false;
 
-        output = new BufferedOutputStream(socket.getOutputStream());
+        // TODO: Buffer size may have to be adjustable in future to tune
+        // performance.
+        output = new BufferedOutputStream(socket.getOutputStream(),
+                                          Util.DEFAULT_COPY_BUFFER_SIZE);
         if (__fileType == ASCII_FILE_TYPE)
             output = new ToNetASCIIOutputStream(output);
         // Treat everything else as binary for now
@@ -460,8 +463,19 @@ public class FTPClient extends FTP
             return null;
 
         output = socket.getOutputStream();
-        if (__fileType == ASCII_FILE_TYPE)
-            output = new ToNetASCIIOutputStream(output);
+        if (__fileType == ASCII_FILE_TYPE) {
+          // We buffer ascii transfers because the buffering has to
+          // be interposed between ToNetASCIIOutputSream and the underlying
+          // socket output stream.  We don't buffer binary transfers
+          // because we don't want to impose a buffering policy on the
+          // programmer if possible.  Programmers can decide on their
+          // own if they want to wrap the SocketOutputStream we return
+          // for file types other than ASCII.
+          output = new BufferedOutputStream(output,
+                                            Util.DEFAULT_COPY_BUFFER_SIZE);
+          output = new ToNetASCIIOutputStream(output);
+          
+        }
         return new org.apache.commons.net.io.SocketOutputStream(socket, output);
     }
 
@@ -1193,9 +1207,12 @@ public class FTPClient extends FTP
         if ((socket = __openDataConnection(FTPCommand.RETR, remote)) == null)
             return false;
 
-        input = new BufferedInputStream(socket.getInputStream());
+        // TODO: Buffer size may have to be adjustable in future to tune
+        // performance.
+        input = new BufferedInputStream(socket.getInputStream(),
+                                        Util.DEFAULT_COPY_BUFFER_SIZE);
         if (__fileType == ASCII_FILE_TYPE)
-            input = new FromNetASCIIInputStream(input);
+          input = new FromNetASCIIInputStream(input);
         // Treat everything else as binary for now
         try
         {
@@ -1248,8 +1265,18 @@ public class FTPClient extends FTP
             return null;
 
         input = socket.getInputStream();
-        if (__fileType == ASCII_FILE_TYPE)
-            input = new FromNetASCIIInputStream(input);
+        if (__fileType == ASCII_FILE_TYPE) {
+          // We buffer ascii transfers because the buffering has to
+          // be interposed between FromNetASCIIOutputSream and the underlying
+          // socket input stream.  We don't buffer binary transfers
+          // because we don't want to impose a buffering policy on the
+          // programmer if possible.  Programmers can decide on their
+          // own if they want to wrap the SocketInputStream we return
+          // for file types other than ASCII.
+          input = new BufferedInputStream(input,
+                                          Util.DEFAULT_COPY_BUFFER_SIZE);
+          input = new FromNetASCIIInputStream(input);
+        }
         return new org.apache.commons.net.io.SocketInputStream(socket, input);
     }
 
