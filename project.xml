@@ -6,7 +6,7 @@
   <currentVersion>1.0.0-dev</currentVersion>
   <organization>Apache Software Foundation</organization>
   <inceptionYear>1997</inceptionYear>
-  <package>com.oroinc</package>
+  <package>org.apache.commons</package>
 
   <!-- Gump integration. -->
   <gumpRepositoryId>jakarta</gumpRepositoryId>
