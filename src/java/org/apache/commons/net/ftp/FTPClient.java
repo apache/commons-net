@@ -251,7 +251,11 @@ public class FTPClient extends FTP
     private int __fileType, __fileFormat, __fileStructure, __fileTransferMode;
     private boolean __remoteVerificationEnabled;
     private long __restartOffset;
-    private FTPFileEntryParserFactory parserFactory;
+    private FTPFileEntryParserFactory __parserFactory;
+
+    // __systemName is a cached values that should not be referenced directly
+    // except when assigned in getSystemName and __initDefaults.
+    private String __systemName;
 
     /***
      * Default FTPClient constructor.  Creates a new FTPClient instance
@@ -267,7 +271,7 @@ public class FTPClient extends FTP
         __initDefaults();
         __dataTimeout = -1;
         __remoteVerificationEnabled = true;
-        parserFactory = new DefaultFTPFileEntryParserFactory();
+        __parserFactory = new DefaultFTPFileEntryParserFactory();
     }
 
 
@@ -281,6 +285,7 @@ public class FTPClient extends FTP
         __fileFormat         = FTP.NON_PRINT_TEXT_FORMAT;
         __fileTransferMode   = FTP.STREAM_TRANSFER_MODE;
         __restartOffset      = 0;
+        __systemName         = null;
     }
 
     private String __parsePathname(String reply)
@@ -530,14 +535,14 @@ public class FTPClient extends FTP
     /**
      * set the factory used for parser creation to the supplied factory object.
      * 
-     * @param parserFactory
+     * @param __parserFactory
      *               factory object used to create FTPFileEntryParsers
      * 
      * @see org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory
      * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
      */
     public void setParserFactory(FTPFileEntryParserFactory parserFactory) {
-        this.parserFactory = parserFactory;
+        __parserFactory = parserFactory;
     }
 
 
@@ -1795,6 +1800,11 @@ public class FTPClient extends FTP
 
     /***
      * Fetches the system type name from the server and returns the string.
+     * This value is cached for the duration of the connection after the
+     * first call to this method.  In other words, only the first time
+     * that you invoke this method will it issue a SYST command to the
+     * FTP server.  FTPClient will remember the value and return the
+     * cached value until a call to disconnect.
      * <p>
      * @return The system type name obtained from the server.  null if the
      *       information could not be obtained.
@@ -1812,10 +1822,10 @@ public class FTPClient extends FTP
       // Technically, we should expect a NAME_SYSTEM_TYPE response, but
       // in practice FTP servers deviate, so we soften the condition to
       // a positive completion.
-        if (FTPReply.isPositiveCompletion(syst()))
-            return ((String)_replyLines.elementAt(0)).substring(4);
+        if (__systemName == null && FTPReply.isPositiveCompletion(syst()))
+            __systemName = ((String)_replyLines.elementAt(0)).substring(4);
 
-        return null;
+        return __systemName;
     }
 
 
@@ -2045,7 +2055,7 @@ public class FTPClient extends FTP
         }
 
         FTPFileEntryParser parser = 
-            this.parserFactory.createFileEntryParser(parserKey);
+          __parserFactory.createFileEntryParser(parserKey);
         FTPFileList list = createFileList(pathname, parser);
         return list.getFiles();
     }
@@ -2366,3 +2376,11 @@ public class FTPClient extends FTP
         return null;
     }
 }
+
+/* Emacs configuration
+ * Local variables:        **
+ * mode:             java  **
+ * c-basic-offset:   4     **
+ * indent-tabs-mode: nil   **
+ * End:                    **
+ */
