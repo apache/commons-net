@@ -21,7 +21,7 @@
   </properties>
 
   <body>
-    <release version="1.2.1" date="May 5, 2004">
+    <release version="1.2.1" date="May 6, 2004">
       <action dev="scohen" type="fix">
       	remove any code that would render package uncompilable under JDK 1.2
       </action>
