@@ -107,6 +107,12 @@
       <email>dfs -> apache.org</email>
       <organization>savarese.org</organization>
     </developer>
+    <developer>
+	    <name>Rory Winston</name>
+	    <id>rwinston</id>
+	    <email>rwinston@apache.org</email>
+	    <organization>Checkfree</organization>
+    </developer>
   </developers>
 
   <contributors>
@@ -122,10 +128,6 @@
       <name>Winston Ojeda</name>
       <email>Winston.Ojeda@qg.com</email>
       <organization>Quad/Graphics, Inc.</organization>
-    </contributor>
-   <contributor>
-      <name>Rory Winston</name>
-      <email>Rory.Winston@telewest.co.uk</email>
     </contributor>
    <contributor>
       <name>Ted Wise</name>
