@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project basedir="." name="commons-net" default="jar">
+<project default="jar" name="commons-net" basedir=".">
   
   <property name="defaulttargetdir" value="target"></property> 
   <property name="classesdir" value="target/classes"></property>
@@ -10,18 +10,18 @@
   <property name="javadocdir" value="target/docs/apidocs"></property>
   <property name="final.name" value="commons-net-1.0.0-dev"></property>
   
-  <target description="o Initializes some properties" name="init">
+  <target name="init" description="o Initializes some properties">
 
     <condition property="noget">
       <equals arg2="only" arg1="${build.sysclasspath}"></equals>
     </condition>
   </target>
     
-  <target description="o Create the jar" name="jar" depends="get-deps">
+  <target name="jar" description="o Create the jar" depends="get-deps">
 
     <mkdir dir="${classesdir}"></mkdir>
 
-    <javac optimize="false" destdir="${classesdir}" excludes="**/package.html" deprecation="true" debug="true">
+    <javac destdir="${classesdir}" deprecation="true" debug="true" optimize="false" excludes="**/package.html">
       <src>
         <pathelement location="src/java"></pathelement>
       </src>
@@ -37,7 +37,11 @@
     
  
     <copy todir="${classesdir}">
-      <fileset dir="/home/jbrekke/sandbox/other/jakarta-commons-sandbox/net">
+      
+      
+      
+      <fileset dir="${basedir}">
+      
       
         <include name="**/*.properties"></include>
       
@@ -46,28 +50,28 @@
     </copy>
  
     
-    <jar basedir="${classesdir}" excludes="**/package.html" jarfile="target/${final.name}.jar"></jar>
+    <jar jarfile="target/${final.name}.jar" excludes="**/package.html" basedir="${classesdir}"></jar>
 
   </target>
   
-  <target description="o Clean up the generated directories" name="clean">
+  <target name="clean" description="o Clean up the generated directories">
     <delete dir="${defaulttargetdir}"></delete>
     <delete dir="${distdir}"></delete>
   </target>
 
-  <target description="o Create a distribution" name="dist" depends="jar, javadoc">
+  <target name="dist" description="o Create a distribution" depends="jar, javadoc">
     <mkdir dir="dist"></mkdir>
     <copy todir="dist">
       <fileset dir="${defaulttargetdir}"></fileset>
     </copy>
   </target>
  
-  <target description="o Run the test cases" name="test" depends="compile-tests">
+  <target name="test" description="o Run the test cases" depends="compile-tests">
     <mkdir dir="${testreportdir}"></mkdir>
-    <junit dir="./" printSummary="yes" haltonerror="true" fork="true">
+    <junit dir="./" printSummary="yes" fork="true" haltonerror="true">
       <sysproperty key="basedir" value="src/test"></sysproperty>
       <formatter type="xml"></formatter>
-      <formatter type="plain" usefile="true"></formatter>
+      <formatter usefile="true" type="plain"></formatter>
       <classpath>
         <fileset dir="lib">
           <include name="*.jar"></include>
@@ -88,7 +92,7 @@
 
   <target name="compile-tests" depends="jar">
     <mkdir dir="${testclassesdir}"></mkdir>
-    <javac optimize="false" destdir="${testclassesdir}" excludes="**/package.html" deprecation="true" debug="true">
+    <javac destdir="${testclassesdir}" deprecation="true" debug="true" optimize="false" excludes="**/package.html">
       <src>
         <pathelement location="src/test"></pathelement>
       </src>
@@ -113,21 +117,21 @@
     
   </target>
 
-  <target description="o Generate javadoc" name="javadoc" depends="jar">
+  <target name="javadoc" description="o Generate javadoc" depends="jar">
  
  
     <mkdir dir="${javadocdir}"></mkdir>
  
     
     <tstamp>
-      <format property="year" pattern="1997-yyyy"></format>
+      <format pattern="1997-yyyy" property="year"></format>
     </tstamp>
  
     <property name="copyright" value="Copyright &amp;copy;  Apache Software Foundation. All Rights Reserved."></property>
  
     <property name="title" value="Jakarta Commons/Net 1.0.0-dev API"></property>
  
-    <javadoc author="true" destdir="${javadocdir}" version="true" use="true" private="true" packagenames="org.apache.commons.*" sourcepath="src/java">
+    <javadoc use="true" private="true" destdir="${javadocdir}" author="true" version="true" sourcepath="src/java" packagenames="org.apache.commons.*">
       <classpath>
         <fileset dir="lib">
           <include name="*.jar"></include>
@@ -138,12 +142,12 @@
  
   </target>
 
-  <target name="get-deps" depends="init" unless="noget">
+  <target name="get-deps" unless="noget" depends="init">
   
     <mkdir dir="lib"></mkdir>
     
-    <get usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/mavenoro/jars/oro-2.0.6.jar" dest="lib/oro-2.0.6.jar"></get>
-    <get usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/mavenjunit/jars/junit-3.7.jar" dest="lib/junit-3.7.jar"></get>
+    <get dest="lib/oro-2.0.6.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/mavenoro/jars/oro-2.0.6.jar"></get>
+    <get dest="lib/junit-3.7.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/mavenjunit/jars/junit-3.7.jar"></get>
   
   </target>
 
@@ -160,9 +164,9 @@
 
     
 
-    <get usetimestamp="true" src="${maven.repo.remote}maven/maven-install-latest.jar" dest="${user.home}/maven-install-latest.jar"></get>
+    <get dest="${user.home}/maven-install-latest.jar" usetimestamp="true" src="${maven.repo.remote}maven/maven-install-latest.jar"></get>
     
-    <unjar src="${user.home}/maven-install-latest.jar" dest="${maven.home}"></unjar>
+    <unjar dest="${maven.home}" src="${user.home}/maven-install-latest.jar"></unjar>
     
   </target>
 
