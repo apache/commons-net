@@ -99,7 +99,7 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  *
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: NTFTPEntryParser.java,v 1.3 2003/03/06 03:28:36 scohen Exp $
+ * @version $Id: NTFTPEntryParser.java,v 1.4 2003/05/18 04:03:17 brekke Exp $
  * @see org.apache.commons.net.ftp.FTPFileListParser
  */
 public class NTFTPEntryParser extends FTPFileListParserImpl
@@ -146,9 +146,7 @@ public class NTFTPEntryParser extends FTPFileListParserImpl
     {
         FTPFile f = new FTPFile();
         f.setRawListing(entry);
-        int type;
-        boolean isDevice = false;
-
+        
         if (matches(entry))
         {
             String mo = group(1);

@@ -136,7 +136,6 @@ public class TelnetClientFunctionalTest extends TestCase
      ***/
     public boolean waitForString(InputStream is, String end, long timeout) throws Exception
     {
-        boolean result = false;
         byte buffer[] = new byte[32];
         long starttime = System.currentTimeMillis();
 

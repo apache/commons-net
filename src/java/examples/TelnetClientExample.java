@@ -59,7 +59,6 @@ import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import org.apache.commons.net.telnet.TelnetClient;
-import org.apache.commons.net.telnet.TelnetOptionHandler;
 import org.apache.commons.net.telnet.SimpleOptionHandler;
 import org.apache.commons.net.telnet.EchoOptionHandler;
 import org.apache.commons.net.telnet.TerminalTypeOptionHandler;

@@ -58,7 +58,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.Socket;
 import java.io.DataOutputStream;
 
 /***
@@ -174,7 +173,6 @@ public class FingerClient extends SocketClient
     public InputStream getInputStream(boolean longOutput, String username)
     throws IOException
     {
-        Socket socket;
         DataOutputStream output;
 
         __query.setLength(0);

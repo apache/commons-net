@@ -2152,7 +2152,6 @@ public class FTPClient extends FTP
     throws IOException
     {
         Socket socket;
-        FTPFile[] results;
 
         if ((socket = _openDataConnection_(FTPCommand.LIST, pathname)) == null)
         {

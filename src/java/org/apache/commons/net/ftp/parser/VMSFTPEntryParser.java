@@ -112,7 +112,7 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * 
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.4 2003/03/06 03:28:36 scohen Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.5 2003/05/18 04:03:17 brekke Exp $
  */
 public class VMSFTPEntryParser extends FTPFileListParserImpl
 {
@@ -187,10 +187,7 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
     public FTPFile parseFTPEntry(String entry)
     {
         //one block in VMS equals 512 bytes
-        Integer oneBlock = new Integer(512);
-        int intBlock = oneBlock.intValue();
         long longBlock = 512;
-
 
         if (matches(entry))
         {

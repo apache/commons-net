@@ -208,8 +208,7 @@ public final class TFTPDataPacket extends TFTPPacket
     public DatagramPacket newDatagram()
     {
         byte[] data;
-        DatagramPacket datagram;
-
+        
         data = new byte[_length + 4];
         data[0] = 0;
         data[1] = (byte)_type;

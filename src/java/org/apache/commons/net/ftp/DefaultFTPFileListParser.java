@@ -59,7 +59,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Calendar;
-import java.util.StringTokenizer;
 import java.util.Vector;
 
 /***
@@ -154,7 +153,6 @@ public final class DefaultFTPFileListParser implements FTPFileListParser
         int access, start, end, type, month, year, hour, minutes;
         boolean isDevice;
         Calendar date;
-        StringTokenizer tokenizer;
         String sToken;
         char cToken[];
         FTPFile file;

@@ -62,7 +62,7 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * Parser for the Connect Enterprise Unix FTP Server From Sterling Commerce.  
  * Here is a sample of the sort of output line this parser processes:
  *  "-C--E-----FTP B QUA1I1      18128       41 Aug 12 13:56 QUADTEST"
- * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.2 2003/03/06 03:28:35 scohen Exp $
+ * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.3 2003/05/18 04:03:17 brekke Exp $
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  */
 public class EnterpriseUnixFTPEntryParser extends FTPFileListParserImpl
@@ -117,8 +117,6 @@ public class EnterpriseUnixFTPEntryParser extends FTPFileListParserImpl
         FTPFile file = new FTPFile();
         file.setRawListing(entry);
 
-        int type;
-        boolean isDevice = false;
         if (matches(entry))
         {
             String usr = group(14);

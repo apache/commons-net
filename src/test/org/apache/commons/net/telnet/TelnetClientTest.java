@@ -89,14 +89,10 @@ public class TelnetClientTest extends TestCase
      ***/
     protected void openConnections() throws Exception
     {
-        boolean server_creation_ok = false;
-        boolean client_creation_ok = false;
-
         server1 = new TelnetTestSimpleServer(3333);
         server2 = new TelnetTestSimpleServer(3334);
         server3 = new TelnetTestSimpleServer(3335);
-        server_creation_ok = true;
-
+        
         tc1 = new TelnetClient();
         tc2 = new TelnetClient();
         tc3 = new TelnetClient("ANSI");
@@ -108,7 +104,6 @@ public class TelnetClientTest extends TestCase
         tc2.addOptionHandler(ttopt);
         tc2.addOptionHandler(echoopt);
         tc2.addOptionHandler(gaopt);
-        client_creation_ok = true;
 
         tc1.connect("127.0.0.1", 3333);
         tc2.connect("127.0.0.1", 3334);
@@ -147,7 +142,6 @@ public class TelnetClientTest extends TestCase
             add_invalid_ok1 = true;
         }
 
-        EchoOptionHandler echoopt = new EchoOptionHandler(true, false, true, false);
         try
         {
             tc2.addOptionHandler(hand);

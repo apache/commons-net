@@ -279,12 +279,11 @@ public class FTP extends TelnetClient
     private void __getReply() throws IOException
     {
         int length;
-        String line, code;
 
         _newReplyString = true;
         _replyLines.setSize(0);
 
-        line = _controlInput.readLine();
+        String line = _controlInput.readLine();
 
         if (line == null)
             throw new FTPConnectionClosedException(
@@ -299,7 +298,8 @@ public class FTP extends TelnetClient
 
         try
         {
-            _replyCode = Integer.parseInt(code = line.substring(0, 3));
+        	String code = line.substring(0, 3);
+            _replyCode = Integer.parseInt(code);
         }
         catch (NumberFormatException e)
         {
@@ -768,7 +768,7 @@ public class FTP extends TelnetClient
      ***/
     public int smnt(String dir) throws IOException
     {
-        return sendCommand(FTPCommand.SMNT);
+        return sendCommand(FTPCommand.SMNT, dir);
     }
 
     /***
