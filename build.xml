@@ -71,9 +71,12 @@
     </copy>
   </target>
  
-  <target name="test" description="o Run the test cases" depends="compile-tests">
+  <target name="test" description="o Run the test cases" if="test.failure" depends="internal-test">
+    <fail message="There were test failures."></fail>
+  </target>
+  <target name="internal-test" depends="compile-tests">
     <mkdir dir="${testreportdir}"></mkdir>
-    <junit dir="./" printSummary="yes" fork="true" haltonerror="true">
+    <junit dir="./" failureproperty="test.failure" printSummary="yes" fork="true" haltonerror="true">
       <sysproperty key="basedir" value="src/test"></sysproperty>
       <formatter type="xml"></formatter>
       <formatter usefile="true" type="plain"></formatter>
