@@ -11,7 +11,7 @@
   <property name="final.name" value="commons-net-1.0.0-dev"></property>
   
   <target name="init" description="o Initializes some properties">
-
+    <mkdir dir="lib"></mkdir>
     <condition property="noget">
       <equals arg2="only" arg1="${build.sysclasspath}"></equals>
     </condition>
@@ -149,7 +149,6 @@
 
   <target name="get-deps" unless="noget" depends="init">
   
-    <mkdir dir="lib"></mkdir>
     
     <get dest="lib/oro-2.0.6.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/oro/jars/oro-2.0.6.jar"></get>
     <get dest="lib/junit-3.8.1.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/junit/jars/junit-3.8.1.jar"></get>
