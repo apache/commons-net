@@ -23,7 +23,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
  * 
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: NTFTPEntryParser.java,v 1.11 2004/02/29 10:26:56 scolebourne Exp $
+ * @version $Id: NTFTPEntryParser.java,v 1.12 2004/03/10 03:37:16 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class NTFTPEntryParser extends FTPFileEntryParserImpl
@@ -103,10 +103,9 @@ public class NTFTPEntryParser extends FTPFileEntryParserImpl
             }
 
             Calendar cal = Calendar.getInstance();
+            cal.clear();
+            
             //set the calendar
-            cal.set(Calendar.SECOND, 0);
-            cal.set(Calendar.MINUTE, minutes);
-            cal.set(Calendar.HOUR, hour);
             cal.set(Calendar.YEAR, year);
             cal.set(Calendar.DATE, day);
             cal.set(Calendar.MONTH, month);
@@ -114,8 +113,24 @@ public class NTFTPEntryParser extends FTPFileEntryParserImpl
             if ("P".equals(ampm))
             {
                 ap = Calendar.PM;
+                if (hour != 12) {
+                	hour += 12;
+                }
+            } else if (hour == 12) {
+           		hour = 0;
             }
-            cal.set(Calendar.AM_PM, ap);
+
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MINUTE, minutes);
+
+            // Using Calendar.HOUR_OF_DAY instead of Calendar.HOUR			
+            // since the latter has proven to be unreliable.
+            // see bug 27085
+            
+//          cal.set(Calendar.AM_PM, ap);
+            cal.set(Calendar.HOUR_OF_DAY, hour);
+            
+            cal.getTimeInMillis();
             f.setTimestamp(cal);
 
             if ("<DIR>".equals(dirString))

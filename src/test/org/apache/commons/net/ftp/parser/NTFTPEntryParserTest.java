@@ -21,7 +21,7 @@ import junit.framework.TestSuite;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @versionn $Id: NTFTPEntryParserTest.java,v 1.7 2004/02/29 10:26:53 scolebourne Exp $
+ * @versionn $Id: NTFTPEntryParserTest.java,v 1.8 2004/03/10 03:37:16 scohen Exp $
  */
 public class NTFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -114,9 +114,9 @@ public class NTFTPEntryParserTest extends FTPParseTestFramework
      */
     public void testParseFieldsOnFile() throws Exception
     {
-        FTPFile f = getParser().parseFTPEntry("05-22-97  08:08AM                  828 AUTOEXEC.BAK");
+        FTPFile f = getParser().parseFTPEntry("05-22-97  12:08AM                  828 AUTOEXEC.BAK");
         assertNotNull("Could not parse entry.", f);
-        assertEquals("Thu May 22 08:08:00 1997", 
+        assertEquals("Thu May 22 00:08:00 1997", 
                      df.format(f.getTimestamp().getTime()));
         assertTrue("Should have been a file.", 
                    f.isFile());

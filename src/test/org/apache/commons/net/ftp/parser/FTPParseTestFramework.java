@@ -23,7 +23,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPParseTestFramework.java,v 1.5 2004/02/29 10:26:53 scolebourne Exp $
+ * @version $Id: FTPParseTestFramework.java,v 1.6 2004/03/10 03:37:16 scohen Exp $
  */
 public abstract class FTPParseTestFramework extends TestCase
 {
@@ -118,6 +118,6 @@ public abstract class FTPParseTestFramework extends TestCase
     {
         super.setUp();
         parser = getParser();
-        df = new SimpleDateFormat("EEE MMM dd kk:mm:ss yyyy", Locale.US);
+        df = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy", Locale.US);
     }
 }
