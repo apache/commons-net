@@ -24,7 +24,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: UnixFTPEntryParserTest.java,v 1.13 2004/06/29 04:54:32 dfs Exp $
+ * @version $Id: UnixFTPEntryParserTest.java,v 1.14 2004/07/29 11:38:36 scohen Exp $
  */
 public class UnixFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -185,7 +185,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework
      */
     public void testParseFieldsOnFile() throws Exception
     {
-        FTPFile f = getParser().parseFTPEntry("-rwxr-xr-x   2 user     group         4096 Mar  2 15:13 zxbox");
+        FTPFile f = getParser().parseFTPEntry("-rwxr-xr-x   2 user     group         5000000000 Mar  2 15:13 zxbox");
         assertNotNull("Could not parse entry.",
                       f);
         assertTrue("Should have been a file.",
@@ -199,7 +199,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework
                      f.getGroup());
         assertEquals("zxbox",
                      f.getName());
-        assertEquals(4096,
+        assertEquals(5000000000L,
                      f.getSize());
 
         Calendar cal = Calendar.getInstance();

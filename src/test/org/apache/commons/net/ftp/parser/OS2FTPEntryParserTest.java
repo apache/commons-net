@@ -22,7 +22,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: OS2FTPEntryParserTest.java,v 1.8 2004/06/29 04:54:32 dfs Exp $
+ * @version $Id: OS2FTPEntryParserTest.java,v 1.9 2004/07/29 11:38:36 scohen Exp $
  */
 public class OS2FTPEntryParserTest extends FTPParseTestFramework
 {
@@ -92,11 +92,11 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
      */
     public void testParseFieldsOnFile() throws Exception
     {
-        FTPFile file = getParser().parseFTPEntry("149473      A          11-17-98   16:07  POPUPLOG.OS2");
+        FTPFile file = getParser().parseFTPEntry("5000000000      A          11-17-98   16:07  POPUPLOG.OS2");
         assertNotNull("Could not parse entry.", file);
         assertTrue("Should have been a file.",
                    file.isFile());
-        assertEquals(149473,file.getSize());
+        assertEquals(5000000000L, file.getSize());
         assertEquals("POPUPLOG.OS2", file.getName());
         assertEquals("Tue Nov 17 16:07:00 1998",
                      df.format(file.getTimestamp().getTime()));

@@ -25,7 +25,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 /**
  * Tests the EnterpriseUnixFTPEntryParser
  *
- * @version $Id: EnterpriseUnixFTPEntryParserTest.java,v 1.9 2004/06/29 04:54:32 dfs Exp $
+ * @version $Id: EnterpriseUnixFTPEntryParserTest.java,v 1.10 2004/07/29 11:38:36 scohen Exp $
  * @author <a href="mailto:Winston.Ojeda@qg.com">Winston Ojeda</a>
  */
 public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
@@ -59,7 +59,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     private static final String[] GOODSAMPLES =
     {
         "-C--E-----FTP B QUA1I1      18128       41 Aug 12 13:56 QUADTEST",
-        "-C--E-----FTP A QUA1I1      18128       41 Aug 12 13:56 QUADTEST2"
+		"-C--E-----FTP A QUA1I1      18128       41 Aug 12 13:56 QUADTEST2"
     };
 
     /**
@@ -96,7 +96,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
      */
     public void testParseFieldsOnFile() throws Exception
     {
-        FTPFile file = getParser().parseFTPEntry("-C--E-----FTP B QUA1I1      18128       41 Aug 12 13:56 QUADTEST");
+        FTPFile file = getParser().parseFTPEntry("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 13:56 QUADTEST");
         Calendar today  = Calendar.getInstance();
         int year        = today.get(Calendar.YEAR);
 
@@ -104,8 +104,8 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
                    file.isFile());
         assertEquals("QUADTEST",
                      file.getName());
-        assertEquals(41,
-                     file.getSize());
+        assertEquals(5000000000L, 
+        			 file.getSize());
         assertEquals("QUA1I1",
                      file.getUser());
         assertEquals("18128",

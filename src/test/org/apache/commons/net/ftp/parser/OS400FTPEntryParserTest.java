@@ -22,7 +22,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 import java.util.Calendar;
 
 /**
- * @version $Id: OS400FTPEntryParserTest.java,v 1.3 2004/04/22 00:48:07 scohen Exp $
+ * @version $Id: OS400FTPEntryParserTest.java,v 1.4 2004/07/29 11:38:36 scohen Exp $
  */
 
 public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
@@ -144,7 +144,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
      */
     public void testParseFieldsOnFile() throws Exception
     {
-        FTPFile f = getParser().parseFTPEntry("PEP              6409 04/03/24 14:06:29 *STMF      build.xml");
+        FTPFile f = getParser().parseFTPEntry("PEP              5000000000 04/03/24 14:06:29 *STMF      build.xml");
         assertNotNull("Could not parse entry.",
                       f);
         assertTrue("Should have been a file.",
@@ -153,7 +153,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
                      f.getUser());
         assertEquals("build.xml",
                      f.getName());
-        assertEquals(6409,
+        assertEquals(5000000000L,
                      f.getSize());
 
         Calendar cal = Calendar.getInstance();

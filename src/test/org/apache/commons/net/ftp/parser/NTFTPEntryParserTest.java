@@ -23,7 +23,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: NTFTPEntryParserTest.java,v 1.14 2004/04/22 00:48:07 scohen Exp $
+ * @version $Id: NTFTPEntryParserTest.java,v 1.15 2004/07/29 11:38:36 scohen Exp $
  */
 public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
 {
@@ -149,14 +149,14 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
      */
     public void testParseFieldsOnFile() throws Exception
     {
-        FTPFile f = getParser().parseFTPEntry("05-22-97  12:08AM                  828 AUTOEXEC.BAK");
+        FTPFile f = getParser().parseFTPEntry("05-22-97  12:08AM                  5000000000 AUTOEXEC.BAK");
         assertNotNull("Could not parse entry.", f);
         assertEquals("Thu May 22 00:08:00 1997",
                      df.format(f.getTimestamp().getTime()));
         assertTrue("Should have been a file.",
                    f.isFile());
         assertEquals("AUTOEXEC.BAK", f.getName());
-        assertEquals(828, f.getSize());
+        assertEquals(5000000000L, f.getSize());
 
         // test an NT-unix style listing that does NOT have a leading zero
         // on the hour.
