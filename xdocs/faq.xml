@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<document>
+
+  <properties>
+    <title>Commons/Net FAQ</title>
+    <author email="commons-user@jakarta.apache.org">Commons/User Mailing List</author>
+  </properties>
+
+  <body>
+
+    <section name="Frequently Asked Questions">
+      <p>
+        This document attempts to answer some of the more frequently asked
+        questions regarding various aspects of Commons/Net.  These questions are
+        typically asked over and over again on the mailing lists, as a
+        courtesy to the developers, we ask that you read this document
+        before posting to the mailing lists.
+      </p>
+      <p>
+        <a href="http://nagoya.apache.org/wiki/apachewiki.cgi?CommonsNet/FrequentlyAskedQuestions">CommonsNet/FrequentlyAskedQuestions</a> 
+      </p> 
+    </section>
+  </body>
+</document>

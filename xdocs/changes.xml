@@ -7,6 +7,9 @@
 
   <body>
     <release version="1.0.1" date="In CVS">
+      <action dev="brekke" type="add">
+        Added a link to the FAQ currently hosted on the Apache Wiki.
+      </action>
       <action dev="dfs" type="update">
         Changed package private NNTP._reader and NNTP._writer member
         variables to protected NNTP._reader_ and NNTP._writer_
