@@ -21,13 +21,13 @@
   </properties>
 
   <body>
-    <release version="1.2.1" date="May 6, 2004">
+    <release version="1.2.1" date="May 6, 2004" description="fix release">
       <action dev="scohen" type="fix">
-      	remove any code that would render package uncompilable under JDK 1.2
+      	changed code that rendered package uncompilable under JDK 1.2
       </action>
     </release>	
 
-    <release version="1.2.0" date="April 30, 2004">
+    <release version="1.2.0" date="April 30, 2004" description="autodetection of system for listings">
       <action dev="scohen" type="fix">
       	Mario Ivankovits &lt;mario@ops.co.at&gt; added
       	functionality supporting correct handling of the &quot;dirstyle&quot; 
@@ -62,7 +62,7 @@
       </action>
     </release>
     
-    <release version="1.1.1" date="TBD">
+    <release version="1.1.1" date="TBD" description="last jdk1.1 compatible release">
       <action dev="scohen" type="fix">
         Removed all JDK 1.1 incompatibilities that had been introduced
         unintentionally in previous versions.  Release 1.1.1 is the last 
@@ -73,7 +73,7 @@
       </action>
     </release>
 
-    <release version="1.1.0" date="October 23, 2003">
+    <release version="1.1.0" date="October 23, 2003" description="many enhancements and bug fixes">
       <action dev="dfs" type="add">
         Rory Winston &lt;Rory.Winston@telewest.co.uk&gt; provided
         patches to add the following extended NNTP commands to
@@ -139,7 +139,8 @@
         New parsers merged with mainline with support for old list parsers.
       </action>
     </release>
-    <release version="1.0.0" date="02/23/2003">
+
+    <release version="1.0.0" date="02/23/2003" description="first jakarta release">
       <action dev="brekke" type="add">
         Added a migration document for moving from NetComponents to Commons/Net.
       </action>
