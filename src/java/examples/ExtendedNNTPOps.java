@@ -58,7 +58,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import org.apache.commons.net.io.DotTerminatedMessageReader;
@@ -143,9 +142,8 @@ public class ExtendedNNTPOps {
                                      int highArticleNumber)
         throws IOException 
     {
-        ArrayList articles = new ArrayList();
         Reader reader = null;
-
+        Article[] articles = new Article[0];
         reader = (DotTerminatedMessageReader)
             client.retrieveArticleInfo(lowArticleNumber, highArticleNumber);
 
@@ -156,6 +154,11 @@ public class ExtendedNNTPOps {
             // Extract the article information
             // Mandatory format (from NNTP RFC 2980) is :
             // Subject\tAuthor\tDate\tID\tReference(s)\tByte Count\tLine Count
+
+            int count = st.countTokens();
+            articles = new Article[count];
+            int index = 0;
+
             while (st.hasMoreTokens()) {
                 StringTokenizer stt = new StringTokenizer(st.nextToken(), "\t");
                 Article article = new Article();
@@ -165,13 +168,13 @@ public class ExtendedNNTPOps {
                 article.setDate(stt.nextToken());
                 article.setArticleId(stt.nextToken());
                 article.addHeaderField("References", stt.nextToken());
-                articles.add(article);
+                articles[index++] = article;
             }
         } else {
             return null;
         }
 			
-        return (Article[]) articles.toArray(new Article[articles.size()]);
+        return articles;
     }
 		
     private String readerToString(Reader reader) 

@@ -3,7 +3,7 @@ package org.apache.commons.net.ftp.parser;
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,8 +55,9 @@ package org.apache.commons.net.ftp.parser;
  */
 
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.StringTokenizer;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -83,7 +84,7 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.8 2003/12/30 03:58:52 scohen Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.9 2004/01/01 20:49:48 scohen Exp $
  * 
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
@@ -209,7 +210,7 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
             files = super.parseFileList(listingStream);
         } else {
             FTPFile[] tempFiles = super.parseFileList(listingStream);
-            HashMap filesHash = new HashMap();
+            Hashtable filesHash = new Hashtable();
             String fileName;
             
             for (int index = 0; index < tempFiles.length; index++) {
@@ -218,8 +219,14 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
                     filesHash.put(fileName, (FTPFile) tempFiles[index]);
                 }
             }
+            files = new FTPFile[filesHash.size()];
+            Enumeration e = filesHash.keys();
+            int index = 0;
+            while (e.hasMoreElements()) {
+                FTPFile ftpf = (FTPFile) filesHash.get(e.nextElement());
+                files[index++] = ftpf;
+            }
             
-            files = (FTPFile[]) filesHash.values().toArray(new FTPFile[0]);
         }
         
         return files;
@@ -256,18 +263,15 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
             String owner = group(9);
             String grp;
             String user;
-            ArrayList list = new ArrayList();
-
-            Util.split(list, _matcher_, OWNER_SPLIT_PATTERN, owner);
-
-            switch (list.size()) {
+            StringTokenizer t = new StringTokenizer(owner, ",");
+            switch (t.countTokens()) {
                 case 1:
                     grp  = null;
-                    user = (String)list.get(0);
+                    user = t.nextToken();
                     break;
                 case 2:
-                    grp  = (String)list.get(0);
-                    user = (String)list.get(1);
+                    grp  = t.nextToken();
+                    user = t.nextToken();
                     break;
                 default:
                     grp  = null;
