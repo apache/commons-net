@@ -33,7 +33,7 @@
   </property>
   <property name="javadocdir" value="dist/docs/api">
   </property>
-  <property name="final.name" value="commons-net-1.2.1">
+  <property name="final.name" value="commons-net-1.3.0-dev">
   </property>
   <target name="init" description="o Initializes some properties">
     <mkdir dir="${libdir}">
@@ -140,7 +140,7 @@
     </tstamp>
     <property name="copyright" value="Copyright &amp;copy;  Apache Software Foundation. All Rights Reserved.">
     </property>
-    <property name="title" value="Jakarta Commons/Net 1.2.1 API">
+    <property name="title" value="Jakarta Commons/Net 1.2.0 API">
     </property>
     <javadoc use="true" private="true" destdir="${javadocdir}" author="true" version="true" sourcepath="src/java" packagenames="org.apache.commons.net.*">
       <classpath>
