@@ -1,0 +1,87 @@
+This file contains the PGP keys of various developers.
+Please don't use them for email unless you have to. Their main
+purpose is code signing.
+
+Users: pgp < KEYS
+       gpg --import KEYS
+Developers: 
+        pgp -kxa <your name> and append it to this file.
+        (pgpk -ll <your name> && pgpk -xa <your name>) >> this file.
+        (gpg --list-sigs <your name>
+             && gpg --armor --export <your name>) >> this file.
+
+pub  1024D/B1313DE2 2003-01-15 Robert Burrell Donkin (CODE SIGNING KEY) <rdonkin@apache.org>
+sig 3       B1313DE2 2003-01-15   Robert Burrell Donkin (CODE SIGNING KEY) <rdonkin@apache.org>
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.0.7 (GNU/Linux)
+
+mQGiBD4lztcRBAClmlgorzoHH7IVYYerQY0e7QU0X3+4PRGGZVcbkZA3qMZV8rG3
+FSB4qp3cLX7rnco26oQbP4jSqXe1piEzYloyzYvgW9t0uFOFF7N8h9XtgA3E836v
+DE/dbrteJ6wZZvS0BR1J0u2/+3nSf4bdmzjd8JPMCIp4q4ztTMTNsWKUswCg3vRA
+NpL1bO0lTi5M013YhY+8wHcD/0Swc47PQuruwL+54ZMFFEHu+24UukU/7T6X2hos
+ERgq9HkUyqK5mOEqp4Y4AfhwPfzp/qOFbg+Jn0IIVg3XGZhTLyeBiwHpXBhJw2TT
+FXhLxm9G2PoYgkhMSgOo4wrHLCMszfvOABzCEZ4TAw3k4s3X4PSfNjHjOHUNYWhb
+1BNLA/wIVDCdOyHoUvw6R0rCTKFcHSXu7XQxjYIBKGAQkcNlCZElqNVlqa+eQTPW
+3AHXor/TUDzzd4afjkvmWaayGDZwOSWlsfqfPItvzTNzmE44wqfICa0/aMgkU6aZ
+m/k+UMFegH1YVBaAl0aj8Gx+T5B7JqA9i7+lmw3nwB1Ge0miBbQ9Um9iZXJ0IEJ1
+cnJlbGwgRG9ua2luIChDT0RFIFNJR05JTkcgS0VZKSA8cmRvbmtpbkBhcGFjaGUu
+b3JnPohZBBMRAgAZBQI+Jc7XBAsHAwIDFQIDAxYCAQIeAQIXgAAKCRDVM051sTE9
+4qflAJ9B2L8SOnFRnoJktHImJU9JO72IdwCgpM08Fi8O0dI5WuOFdz5sLobqioY=
+=nk3Z
+-----END PGP PUBLIC KEY BLOCK-----
+pub  1024D/57452E64 2001-09-20 Jeffrey D. Brekke <brekke@apache.org>
+sig 3       57452E64 2003-10-23   Jeffrey D. Brekke <brekke@apache.org>
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.2.3 (GNU/Linux)
+
+mQGiBDupN50RBADJVVB7IvDqVXArvsxWt0BBOC74Qn91G3w5/kEzuv6cjv4Wc4Ll
+s2o229+FxjASQ8G3k1RXLdkn/sGaU7A/D0YD0AJgE7Xz4pe6qusu/ABjUsmWCOBc
+6pzZ22xSF5NjYsPEKvWbc/oZFAepa/juAufjK6Ubhdsdaje/o42mALZoKwCg5xwF
+HW+yyf5Ws6Nr36OI2DxmlA0EAKdQM4c71KJlqtF9Ck2NcchJ/xr7DBg+leBhoHFP
+j3tFijdXJz96glptZak0ssupZ8v24y3QhqLzkkwfYsOeS3+y+AEpa2LvyeECu/KJ
+rtfvX8PiViN1A+6D8D43S+UlKK10NgF60eo0AcxP/XVei5Obz54HvM45wW4CYeIJ
+ZcgCA/46e5LivzuoFyMTqP+5o4CwC402uhR7Wba1VQVSki5IP+vl5vatUC/iIfVo
+CMtiHSEZ1mo6eThgd9on+Ju62Q4PNYEYkyLpJfew1VzdoJUCrho96iiJPy6NVZo9
+tUXhdOfSrUiqOT9i8+zjLiRsGV3fd3eSxtuKJX4dxzpCaXuzBLQlSmVmZnJleSBE
+LiBCcmVra2UgPGJyZWtrZUBhcGFjaGUub3JnPohdBBMRAgAdBQsHCgMEAxUDAgMW
+AgECF4AFAj+XPmgFCQty1MsACgkQ7ub3MVdFLmRTfwCdHBz+mooBeV57oj2g3JY4
+Q2Jd0uAAn1u1J/GbkPbQJ6i/gBozQPm6iamnuQENBDupN7cQBACzGaBHk7LAPmCV
+iNZRunUVqaLvykJ7BS5R6s8fJ/m3//rB/ooirXsEDnm++FjiSXKpeYRk9yawi2/U
+BmCVK9xX2zDV08fB/3FDoCLQ3o6zcJTOLaY8SsCDbr4SUauycGEoue5Umy9sOxOa
+1cT4TtPNHZ3eWnzDB3+9iZ5TCucb8wADBQP+MZ4ZYtwNxiytYS3jHcjlvGTARhvP
+nTNqtcq9OZPLsGorQ5WlJVnwaOXUk13f8SxasuLPorbORIME9I38FuF+xavO2sMk
+fVxGgXE78gDCUAyqyvvnb2lWvlDwBVLdq2+UiumLFSNhAWu6fFef+dF9xDpNQhDK
+KF2mlhdfLc/osseITAQYEQIADAUCO6k3twUJAsfqAAAKCRDu5vcxV0UuZJZlAJ9w
+ety/S7kFtg13ekvoPBiL+/nwNACgyWxd+g+B6Jhxm2KTardZb5nKa3w=
+=cOP8
+-----END PGP PUBLIC KEY BLOCK-----
+pub  1024D/47717B4B 2004-05-01 Steven M. Cohen (no comment needed) <scohen@javactivity.org>
+sig 3       47717B4B 2004-05-01   Steven M. Cohen (no comment needed) <scohen@javactivity.org>
+sub  1024g/32E08DCC 2004-05-01
+sig         47717B4B 2004-05-01   Steven M. Cohen (no comment needed) <scohen@javactivity.org>
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.2.1 (GNU/Linux)
+
+mQGiBECS+kARBADIjMbaWVyh1AkcoipkjVTW4X8jp2RJrh3NDNhq5GE5xV+j0+Rb
+HCiZRoSbzZ8XAdIfF6y3Z0DjDee69KuGxmrpMbwooB+XsKVYMMOxO8YDgKxjxeWl
+65boEOeeGjCQNzniQirY4qy/V0+2hUjjmJOA8o7BxZwblZsLvFZPNyMwxwCg7ifb
+5otvBRZbmDyb4ecQ3SfSlFcD/R32IH2Z5xIn72inCSM2iNHkujgL0oV23vsBUZ/O
+GjPmRSc1YgtXp9oeOcFXbGFppot6C9GvE3LQbvEqQPDGbfG+Us9Qs7pxxVGIczlS
+fHM+iCOuQE8IouwdoNmIsSygKpQHB982WGVwmy6AgTaMYAHvHP/CjjXczJv+MT4w
+nGr1A/9qE1aampCiWLPvUg4TM5oKa+XvADGyMdE/9rVs6Rz6jAJSp1OlDRRaAC4X
+WafaSqhs5cx1ReFAelbQvuZjw/XBAC0u2UM9uMy9Wa11faGfrTc+UTudx8IHO74u
+oQiYWa3atbBPLdzHTL7Kyu0GsfkwQhRFSxR6KPhFKm0yokgk8bQ8U3RldmVuIE0u
+IENvaGVuIChubyBjb21tZW50IG5lZWRlZCkgPHNjb2hlbkBqYXZhY3Rpdml0eS5v
+cmc+iFkEExECABkFAkCS+kAECwcDAgMVAgMDFgIBAh4BAheAAAoJEIadKLpHcXtL
+aOkAoN6wav5+gv3WnnZRnVYhxUJDdt64AKCzhTBFuhCxWUgYtYlXBm90f2yP37kB
+DQRAkvpDEAQA4N2GYczt1u0OKaVh7ScNPcNfDs+g4Eh9/62TU2NIwsLunMVxxcLS
+y5rHWOnlgv8CrBiVtrLUQ+6pg+g7OOj6CLjf/CkWSyDdbNgeuGrnYg/tx1Dhj9sw
+TgxYbXkxbjuN3SGdSaHtdOaXGxQP18RS5P3i0h4fULpEOyr01yQQ3lsAAwUEAJDK
+JzxWAqn4JOmajQ40NFwJF9h3MBZhnxB7ir5yV0FhqRnRsX60C5f2HcNWNH47u8kZ
+9W7RMqQYujBvYAAc7S1bn3gmLGDljZ1IPKuVOmzoUqlWBlJiy3O/XQYzKRimjXi/
+0dl97eHETQpv8cvXPu6snp5I59LST5JxIOOiROvdiEYEGBECAAYFAkCS+kMACgkQ
+hp0oukdxe0sppQCeJS+rSgLhHerHQmHzTQs2SOwlwoAAoLqkD1+EHjZYrpARXbR7
+hActYzM/
+=e4Xf
+-----END PGP PUBLIC KEY BLOCK-----
