@@ -27,6 +27,9 @@
       	specified.  Current directory was not being 'remembered'.  This was most 
       	problematic in the dependent ftp task of Ant.
       </action>
+      <action dev="scohen" type="fix">
+      	fixed handling of certain unusual "special" file types in the Unix parser.
+      </action>
     </release>	
 
     <release version="1.2.1" date="May 6, 2004" description="fix release">
