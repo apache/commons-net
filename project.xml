@@ -76,7 +76,7 @@
       <archive>http://nagoya.apache.org/eyebrowse/SummarizeList?listName=commons-dev@jakarta.apache.org</archive>
     </mailingList>
   </mailingLists>
-  
+ 
   <developers>
     <developer>
       <name>Jeffrey D. Brekke</name>
