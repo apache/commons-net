@@ -91,6 +91,12 @@
       <organization>Sportvision, Inc.</organization>
     </developer>
     <developer>
+      <name>Bruno D'Avanzo</name>
+      <id>brudav</id>
+      <email>bruno.davanzo@hp.com</email>
+      <organization>Hewlett-Packard</organization>
+    </developer>
+    <developer>
       <name>Daniel F. Savarese</name>
       <id>dfs</id>
       <email>dfs -> apache.org</email>
@@ -99,10 +105,6 @@
   </developers>
 
   <contributors>
-    <contributor>
-      <name>Bruno D'Avanzo</name>
-      <email>b.davanzo@inwind.it</email>
-    </contributor>
     <contributor>
       <name>Tapan Karecha</name>
       <email>tapan@india.hp.com</email>
