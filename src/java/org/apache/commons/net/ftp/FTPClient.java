@@ -246,6 +246,7 @@ public class FTPClient extends FTP
     private int __fileType, __fileFormat, __fileStructure, __fileTransferMode;
     private boolean __remoteVerificationEnabled;
     private FTPFileListParser __fileListParser;
+    private long __restartOffset;
 
     /***
      * Default FTPClient constructor.  Creates a new FTPClient instance
@@ -353,6 +354,12 @@ public class FTPClient extends FTP
 
             if (!FTPReply.isPositiveCompletion(port(getLocalAddress(),
                                                     server.getLocalPort())))
+            {
+                server.close();
+                return null;
+            }
+
+            if ((__restartOffset > 0) && !restart(__restartOffset))
             {
                 server.close();
                 return null;
@@ -1548,10 +1555,38 @@ public class FTPClient extends FTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean restart(long offset) throws IOException
+    private boolean restart(long offset) throws IOException
     {
+        __restartOffset = 0;
         return FTPReply.isPositiveIntermediate(rest(Long.toString(offset)));
     }
+
+    /***
+     * Sets the restart offset.  The restart command is sent to the server
+     * only before sending the file transfer command.  When this is done,
+     * the restart marker is reset to zero.
+     * <p>
+     * @param offset  The offset into the remote file at which to start the
+     *           next file transfer.  This must be a value greater than or
+     *           equal to zero.
+     ***/
+    public void setRestartOffset(long offset)
+    {
+        if (offset >= 0)
+            __restartOffset = offset;
+    }
+
+    /***
+     * Fetches the restart offset.
+     * <p>
+     * @return offset  The offset into the remote file at which to start the
+     *           next file transfer.
+     ***/
+    public long getRestartOffset()
+    {
+        return __restartOffset;
+    }
+
 
 
     /***
