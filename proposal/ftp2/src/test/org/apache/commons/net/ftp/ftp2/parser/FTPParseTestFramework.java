@@ -53,48 +53,60 @@ package org.apache.commons.net.ftp.ftp2.parser;
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
  */
-
 import junit.framework.TestCase;
+
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 
 /**
- * FTPParseTestFramework.java
- * This provides a basic framework for pass-fail testing of
- * sample FTP directory strings in a particular format.
- *
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: FTPParseTestFramework.java,v 1.1 2002/04/29 03:55:32 brekke Exp $
+ * @version $Id: FTPParseTestFramework.java,v 1.2 2002/08/06 20:32:04 brekke Exp $
  */
-
 public abstract class FTPParseTestFramework extends TestCase
 {
-    FTPFileEntryParser parser;
 
-    public FTPParseTestFramework (String name, FTPFileEntryParser parser)
+    private FTPFileEntryParser parser = null;
+
+    public FTPParseTestFramework(String name)
     {
         super(name);
-        this.parser = parser;
     }
 
-    protected void _testPositive(String[] goodsamples) throws Exception
+    public void testBadListing() throws Exception
     {
-        for (int i = 0; i < goodsamples.length; i++)
-        {
-            String test = goodsamples[i];
-            FTPFile f = this.parser.parseFTPEntry(test);
-            assertNotNull( "Failed to parse " + test, f);
-        }
-    }
 
-    protected void _testNegative(String[] badsamples) throws Exception
-    {
+        String[] badsamples = getBadListing();
         for (int i = 0; i < badsamples.length; i++)
         {
+
             String test = badsamples[i];
-            FTPFile f = this.parser.parseFTPEntry(test);
-            assertNull( "Should have Failed to parse " + test, f);
+            FTPFile f = parser.parseFTPEntry(test);
+            assertNull("Should have Failed to parse " + test, 
+                       f);
         }
     }
 
+    public void testGoodListing() throws Exception
+    {
+
+        String[] goodsamples = getGoodListing();
+        for (int i = 0; i < goodsamples.length; i++)
+        {
+
+            String test = goodsamples[i];
+            FTPFile f = parser.parseFTPEntry(test);
+            assertNotNull("Failed to parse " + test, 
+                          f);
+        }
+    }
+
+    protected abstract String[] getBadListing();
+    protected abstract String[] getGoodListing();
+    protected abstract FTPFileEntryParser getParser();
+
+    protected void setUp() throws Exception
+    {
+        super.setUp();
+        parser = getParser();
+    }
 }

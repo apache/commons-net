@@ -54,56 +54,151 @@ package org.apache.commons.net.ftp.ftp2.parser;
  * <http://www.apache.org/>.
  */
 
+import junit.framework.TestSuite;
+
+import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
+
 /**
- * UnixFTPEntryParserTest.java
- * Tests the UnixFTPEntryParser
- *
  * @author <a href="mailto:scohen@stevecoh1@attbi.com">Steve Cohen</a>
- * @versionn $Id: UnixFTPEntryParserTest.java,v 1.1 2002/04/29 03:55:32 brekke Exp $
+ * @versionn $Id: UnixFTPEntryParserTest.java,v 1.2 2002/08/06 20:32:05 brekke Exp $
  */
 public class UnixFTPEntryParserTest extends FTPParseTestFramework
 {
-    private static final String[] goodsamples = {
-                "drwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox",
-                "drwxr-xr-x   2 root     root         4096 Aug 24  2001 zxjdbc",
-                "drwxr-xr-x   2 root     root         4096 Jan  4 00:03 zziplib",
-                "drwxr-xr-x   2 root     99           4096 Feb 23  2001 zzplayer",
-                "drwxr-xr-x   2 root     root         4096 Aug  6  2001 zztpp",
-                "-rw-r--r--   1 14       staff       80284 Aug 22  2000 zxJDBC-1.2.3.tar.gz",
-                "-rw-r--r--   1 14       staff      119926 Aug 22  2000 zxJDBC-1.2.3.zip",
-                "-rw-r--r--   1 ftp      nogroup     83853 Jan 22  2001 zxJDBC-1.2.4.tar.gz",
-                "-rw-r--r--   1 ftp      nogroup    126552 Jan 22  2001 zxJDBC-1.2.4.zip",
-                "-rw-r--r--   1 root     root       111325 Apr 27  2001 zxJDBC-2.0.1b1.tar.gz",
-                "-rw-r--r--   1 root     root       190144 Apr 27  2001 zxJDBC-2.0.1b1.zip"
-            };
-    private static final String[] badsamples = {
-                "zrwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox",
-                "dxrwr-xr-x   2 root     root         4096 Aug 24  2001 zxjdbc",
-                "drwxr-xr-x   2 root     root         4096 Jam  4 00:03 zziplib",
-                "drwxr-xr-x   2 root     99           4096 Feb 23 30:01 zzplayer",
-                "drwxr-xr-x   2 root     root         4096 Aug 36  2001 zztpp",
-                "-rw-r--r--   1 14       staff       80284 Aug 22  zxJDBC-1.2.3.tar.gz",
-                "-rw-r--r--   1 14       staff      119:26 Aug 22  2000 zxJDBC-1.2.3.zip",
-                "-rw-r--r--   1 ftp      no group    83853 Jan 22  2001 zxJDBC-1.2.4.tar.gz",
-                "-rw-r--r--   1ftp       nogroup    126552 Jan 22  2001 zxJDBC-1.2.4.zip",
-                "-rw-r--r--   1 root     root       111325 Apr -7 18:79 zxJDBC-2.0.1b1.tar.gz",
-            };
 
-
-
-
-    public UnixFTPEntryParserTest (String name)
+    private static final String[] badsamples = 
     {
-        super(name, new UnixFTPEntryParser());
+        "zrwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox", 
+        "dxrwr-xr-x   2 root     root         4096 Aug 24  2001 zxjdbc", 
+        "drwxr-xr-x   2 root     root         4096 Jam  4 00:03 zziplib", 
+        "drwxr-xr-x   2 root     99           4096 Feb 23 30:01 zzplayer", 
+        "drwxr-xr-x   2 root     root         4096 Aug 36  2001 zztpp", 
+        "-rw-r--r--   1 14       staff       80284 Aug 22  zxJDBC-1.2.3.tar.gz", 
+        "-rw-r--r--   1 14       staff      119:26 Aug 22  2000 zxJDBC-1.2.3.zip", 
+        "-rw-r--r--   1 ftp      no group    83853 Jan 22  2001 zxJDBC-1.2.4.tar.gz", 
+        "-rw-r--r--   1ftp       nogroup    126552 Jan 22  2001 zxJDBC-1.2.4.zip", 
+        "-rw-r--r--   1 root     root       111325 Apr -7 18:79 zxJDBC-2.0.1b1.tar.gz"
+    };
+
+    private static final String[] goodsamples = 
+    {
+        "-rwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox", 
+        "drwxr-xr-x   2 root     root         4096 Aug 24  2001 zxjdbc", 
+        "drwxr-xr-x   2 root     root         4096 Jan  4 00:03 zziplib", 
+        "drwxr-xr-x   2 root     99           4096 Feb 23  2001 zzplayer", 
+        "drwxr-xr-x   2 root     root         4096 Aug  6  2001 zztpp", 
+        "lrw-r--r--   1 14       14          80284 Aug 22  2000 zxJDBC-1.2.3.tar.gz", 
+        "srw-r--r--   1 14       staff      119926 Aug 22  2000 zxJDBC-1.2.3.zip", 
+        "crw-r--r--   1 ftp      nogroup     83853 Jan 22  2001 zxJDBC-1.2.4.tar.gz", 
+        "brw-r--r--   1 ftp      nogroup    126552 Jan 22  2001 zxJDBC-1.2.4.zip", 
+        "-rw-r--r--   1 root     root       111325 Apr 27  2001 zxJDBC-2.0.1b1.tar.gz", 
+        "-rw-r--r--   1 root     root       190144 Apr 27  2001 zxJDBC-2.0.1b1.zip",
+        "-rwxr-xr-x   2 500      500           166 Nov  2  2001 73131-testtes1.afp",
+        "-rw-r--r--   1 500      500           166 Nov  9  2001 73131-testtes1.AFP",
+        "-rw-r--r--   1 500      500           166 Nov 12  2001 73131-testtes2.afp",
+        "-rw-r--r--   1 500      500           166 Nov 12  2001 73131-testtes2.AFP",      
+        "-rw-r--r--   1 500      500       2040000 Aug  5 07:35 testRemoteUPCopyNIX",
+        "-rw-r--r--   1 500      500       2040000 Aug  5 07:31 testRemoteUPDCopyNIX",
+        "-rw-r--r--   1 500      500       2040000 Aug  5 07:31 testRemoteUPVCopyNIX"       
+    };
+
+    public UnixFTPEntryParserTest(String name)
+    {
+        super(name);
     }
 
-    public void testPositive() throws Exception
+    protected String[] getBadListing()
     {
-        _testPositive(goodsamples);
+        return(badsamples);
     }
-    public void testNegative() throws Exception
+    
+    protected String[] getGoodListing()
     {
-        _testNegative(badsamples);
+        return(goodsamples);
+    }
+    
+    protected FTPFileEntryParser getParser() 
+    {
+        return(new UnixFTPEntryParser());
+    }
+    
+    public void testParseFieldsOnDirectory() throws Exception
+    {
+        FTPFile f = getParser().parseFTPEntry("drwxr-xr-x   2 user     group         4096 Mar  2 15:13 zxbox");
+        assertNotNull("Could not parse entry.", 
+                      f);
+        assertTrue("Should have been a directory.", 
+                   f.isDirectory());       
+        checkPermissions(f);
+        assertEquals(2, 
+                     f.getHardLinkCount());
+        assertEquals("user", 
+                     f.getUser());
+        assertEquals("group", 
+                     f.getGroup());
+        assertEquals("zxbox", 
+                     f.getName());
+        assertEquals(4096, 
+                     f.getSize());
+        assertEquals("Sat Mar 02 15:13:00 CST 2002", 
+                     f.getTimestamp().getTime().toString());
+    }
 
+    private void checkPermissions(FTPFile f)
+    {
+        assertTrue("Should have user read permission.", 
+                   f.hasPermission(FTPFile.USER_ACCESS, 
+                                   FTPFile.READ_PERMISSION));
+        assertTrue("Should have user write permission.", 
+                   f.hasPermission(FTPFile.USER_ACCESS, 
+                                   FTPFile.WRITE_PERMISSION));
+        assertTrue("Should have user execute permission.", 
+                   f.hasPermission(FTPFile.USER_ACCESS, 
+                                   FTPFile.EXECUTE_PERMISSION));
+        assertTrue("Should have group read permission.", 
+                   f.hasPermission(FTPFile.GROUP_ACCESS, 
+                                   FTPFile.READ_PERMISSION));
+        assertTrue("Should NOT have group write permission.", 
+                   !f.hasPermission(FTPFile.GROUP_ACCESS, 
+                                    FTPFile.WRITE_PERMISSION));
+        assertTrue("Should have group execute permission.", 
+                   f.hasPermission(FTPFile.GROUP_ACCESS, 
+                                   FTPFile.EXECUTE_PERMISSION));
+        assertTrue("Should have world read permission.", 
+                   f.hasPermission(FTPFile.WORLD_ACCESS, 
+                                   FTPFile.READ_PERMISSION));
+        assertTrue("Should NOT have world write permission.", 
+                   !f.hasPermission(FTPFile.WORLD_ACCESS, 
+                                    FTPFile.WRITE_PERMISSION));
+        assertTrue("Should have world execute permission.", 
+                   f.hasPermission(FTPFile.WORLD_ACCESS, 
+                                   FTPFile.EXECUTE_PERMISSION));
+    }
+
+    public void testParseFieldsOnFile() throws Exception
+    {
+        FTPFile f = getParser().parseFTPEntry("-rwxr-xr-x   2 user     group         4096 Mar  2 15:13 zxbox");
+        assertNotNull("Could not parse entry.", 
+                      f);
+        assertTrue("Should have been a file.", 
+                   f.isFile());
+        checkPermissions(f);
+        assertEquals(2, 
+                     f.getHardLinkCount());
+        assertEquals("user", 
+                     f.getUser());
+        assertEquals("group", 
+                     f.getGroup());
+        assertEquals("zxbox", 
+                     f.getName());
+        assertEquals(4096, 
+                     f.getSize());
+        assertEquals("Sat Mar 02 15:13:00 CST 2002", 
+                     f.getTimestamp().getTime().toString());
+    }
+    
+    public static TestSuite suite()
+    {
+        return(new TestSuite(UnixFTPEntryParserTest.class));
     }
 }

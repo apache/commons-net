@@ -63,7 +63,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * DefaultFTPListParser, but adapted to use regular expressions and to fit the
  * new FTPFileEntryParser interface.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: UnixFTPEntryParser.java,v 1.3 2002/05/03 14:52:30 brekke Exp $
+ * @version $Id: UnixFTPEntryParser.java,v 1.4 2002/08/06 20:32:04 brekke Exp $
  */
 public class UnixFTPEntryParser
             extends MatchApparatus implements FTPFileEntryParser
@@ -71,16 +71,16 @@ public class UnixFTPEntryParser
     private static final String MONTHS =
         "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)";
     private static final String REGEX =
-        "([bcdlf])"
-        + "(((r|-)(w|-)(x|-))((r|-)(w|-)(x|-))((r|-)(w|-)(x|-)))\\s*"
-        + "(\\d*)\\s*"
-        + "(\\S*)\\s*"
-        + "(\\S*)\\s*"
-        + "(\\d*)\\s*"
-        + MONTHS + "\\s*"
-        + "((?:[012]\\d*)|(?:3[01]))\\s*"
+        "([bcdlf-])"
+        + "(((r|-)(w|-)(x|-))((r|-)(w|-)(x|-))((r|-)(w|-)(x|-)))\\s+"
+        + "(\\d+)\\s+"
+        + "(\\S+)\\s+"
+        + "(\\S+)\\s+"
+        + "(\\d+)\\s+"
+        + MONTHS + "\\s+"
+        + "((?:[012]\\d*)|(?:3[01]))\\s+"
         + "((\\d\\d\\d\\d)|((?:[01]\\d)|(?:2[0123])):([012345]\\d))\\s"
-        + "(\\S*)(\\s*.*)";
+        + "(\\S+)(\\s*.*)";
 
     
     /**
@@ -129,7 +129,6 @@ public class UnixFTPEntryParser
             String name = group(25);
             String endtoken = group(26);
 
-
             switch (typeStr.charAt(0))
             {
             case 'd':
@@ -145,6 +144,9 @@ public class UnixFTPEntryParser
             default:
                 type = FTPFile.FILE_TYPE;
             }
+
+            file.setType(type);
+           
             int g = 4;
             for (int access = 0; access < 3; access++, g += 4)
             {
@@ -251,7 +253,6 @@ public class UnixFTPEntryParser
             }
             return file;
         }
-
         return null;
     }
 }

@@ -54,12 +54,13 @@ package org.apache.commons.net.ftp.ftp2.parser;
  * <http://www.apache.org/>.
  */
 
+import junit.framework.TestSuite;
+
+import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
+
 /**
- * OS2FTPEntryParserTest.java
- * Tests the OS2FTPEntryParser
- *
  * @author <a href="mailto:scohen@stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: OS2FTPEntryParserTest.java,v 1.1 2002/04/29 03:55:32 brekke Exp $
+ * @version $Id: OS2FTPEntryParserTest.java,v 1.2 2002/08/06 20:32:04 brekke Exp $
  */
 public class OS2FTPEntryParserTest extends FTPParseTestFramework
 {
@@ -94,16 +95,27 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
 
     public OS2FTPEntryParserTest (String name)
     {
-        super(name, new OS2FTPEntryParser());
+        super(name);
     }
 
-    public void testPositive() throws Exception
+    protected String[] getGoodListing()
     {
-        _testPositive(goodsamples);
+        return(goodsamples);
     }
-    public void testNegative() throws Exception
+    
+    protected String[] getBadListing()
     {
-        _testNegative(badsamples);
-
+        return(badsamples);
     }
+    
+    protected FTPFileEntryParser getParser()
+    {
+        return(new OS2FTPEntryParser());
+    }
+    
+    public static TestSuite suite()
+    {
+        return(new TestSuite(OS2FTPEntryParserTest.class));
+    }
+    
 }

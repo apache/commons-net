@@ -54,12 +54,13 @@ package org.apache.commons.net.ftp.ftp2.parser;
  * <http://www.apache.org/>.
  */
 
+import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
+
+import junit.framework.TestSuite;
+
 /**
- * NTFTPEntryParserTest.java
- * Tests the NTFTPEntryParser
- *
  * @author <a href="mailto:scohen@stevecoh1@attbi.com">Steve Cohen</a>
- * @versionn $Id: NTFTPEntryParserTest.java,v 1.1 2002/04/29 03:55:32 brekke Exp $
+ * @versionn $Id: NTFTPEntryParserTest.java,v 1.2 2002/08/06 20:32:04 brekke Exp $
  */
 public class NTFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -89,16 +90,26 @@ public class NTFTPEntryParserTest extends FTPParseTestFramework
 
     public NTFTPEntryParserTest (String name)
     {
-        super(name, new NTFTPEntryParser());
+        super(name);
     }
 
-    public void testPositive() throws Exception
+    protected String[] getGoodListing()
     {
-        _testPositive(goodsamples);
+        return(goodsamples);
     }
-    public void testNegative() throws Exception
+    
+    protected String[] getBadListing()
     {
-        _testNegative(badsamples);
+        return(badsamples);
+    }
 
+    protected FTPFileEntryParser getParser()
+    {
+        return(new NTFTPEntryParser());
+    }
+    
+    public static TestSuite suite()
+    {
+        return(new TestSuite(NTFTPEntryParserTest.class));
     }
 }

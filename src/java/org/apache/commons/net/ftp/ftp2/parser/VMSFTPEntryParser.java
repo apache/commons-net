@@ -103,7 +103,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * <P>
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.4 2002/08/06 15:23:37 brekke Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.5 2002/08/06 20:32:04 brekke Exp $
  */
 public class VMSFTPEntryParser
             extends MatchApparatus implements FTPFileEntryParser
@@ -127,7 +127,7 @@ public class VMSFTPEntryParser
         MONTHS +
         "-([0-9]{4})\\s*" +
         "((?:[01]\\d)|(?:2[0-3])):([012345]\\d):([012345]\\d)\\s*" +
-        "(\\[[0-9$A-Za-z_]+),([0-9$a-zA-Z_]+)\\]\\s*" +
+        "\\[([0-9$A-Za-z_]+),([0-9$a-zA-Z_]+)\\]\\s*" +
         "(\\([a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*\\))";
 
 
