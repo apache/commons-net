@@ -10,12 +10,13 @@
     <section name="Tasks">
       <p>
         <ul>
+          <li>Add programmer and acceptance tests.</li>
           <li>
             Convert code to specified coding standards.  Checkstyle report provided.
           </li>
           <li>
             Clean out any classes that don't belong in this project.  Probably classes from
-            org.apache.commons.util and org.apache.commons.io could be moved to their corresponding
+            org.apache.commons.net.util and org.apache.commons.net.io could be moved to their corresponding
             commons projects.
           </li>
           <li>

@@ -4,11 +4,15 @@
   <title>Jakarta Commons/Net</title>
 
   <body>
+    <menu name="Documentation">
+      <item name="Migration How-to"      href="/migration.html"/>
+    </menu>
     <menu name="Development">
       <item name="Proposal"              href="/proposal.html"/>
       <item name="Coding Specifications" href="/code-standards.html"/>
       <item name="Download"              href="/download.html"/>
     </menu>
+
   </body>
 
 </project>

@@ -1,7 +1,7 @@
 
 o Building
 
-To build, you must have ant and maven installed.  Just type 'ant' -- the default
+To build, you must have ant and/or maven installed.  Just type 'ant' -- the default
 target will compile the classes, run the tests and build the jar
 
 Maven can be downloaded from the main site and there is good documentation

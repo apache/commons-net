@@ -7,6 +7,21 @@
 
   <body>
     <release version="1.0" date="in CVS">
+      <action dev="brekke" type="add">
+      Added a migration document for moving from NetComponents to Commons/Net.
+      </action>
+      <action dev="brekke" type="fix">
+      Moved the ftp2 tree with tests to a proposal directory and setup 
+      a build for that code.  This can grow in this area so users don't 
+      think it is production ready.
+      </action>
+      <action dev="dfs" type="fix">
+      Cleaned up license header on some source.
+      </action>
+      <action dev="dfs" type="fix">
+      Moved .io and .util to .net.io and .net.util in preparation for
+      1.0 release.
+      </action>
       <action dev="dfs" type="fix" due-to-email="joev@atg.com">
       Fixed typo in NNTP.removeProtocolCommandListener() method name.  It
       was missing an L.

@@ -11,7 +11,7 @@
     <logo>/images/jakarta-logo-blue.gif</logo>
   </organization>
   <inceptionYear>1997</inceptionYear>
-  <package>org.apache.commons</package>
+  <package>org.apache.commons.net</package>
   
   <gumpRepositoryId>jakarta</gumpRepositoryId>
   
@@ -48,6 +48,14 @@
     <connection>scm:cvs:pserver:anoncvs@cvs.apache.org:/home/cvspublic:jakarta-commons-sandbox/net</connection>
     <url>http://cvs.apache.org/viewcvs/jakarta-commons-sandbox/net/</url>
   </repository>
+
+  <versions>
+    <version>
+      <id>1.0.0-dev</id>
+      <name>1.0.0-dev</name>
+      <tag>HEAD</tag>
+    </version>
+  </versions>
 
   <mailingLists>
     <mailingList>
@@ -89,20 +97,7 @@
     </contributor>
   </contributors>
   
-  <dependencies>
-    <dependency>
-      <id>oro</id>
-      <version>2.0.6</version>
-      <url>http://jakarta.apache.org/oro/</url>
-    </dependency>
-
-    <dependency>
-      <id>junit</id>
-      <version>3.8.1</version>
-      <url>http://junit.org/</url>
-    </dependency>
-    
-  </dependencies>
+  <dependencies/>
   
   <build>
 
@@ -112,28 +107,11 @@
  
     <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
     
-    <!-- maven b5 onwards -->
     <unitTest>
       <includes>
         <include>**/*Test.java</include>
       </includes>
     </unitTest>
     
-    <integrationUnitTestSourceDirectory/>
-    <integrationUnitTestPatterns/>
-    
-    <!-- J A R  R E S O U R C E S -->
-    <!-- Resources that are packaged up inside the JAR file -->
-    <resources>
-      <includes>
-        <include>**/*.properties</include>
-      </includes>
-    </resources>
-
-    <jarResources>
-      <jarResource>**/*.properties</jarResource>
-    </jarResources>
-    <jars></jars>
-  
-</build>
+  </build>
 </project>
