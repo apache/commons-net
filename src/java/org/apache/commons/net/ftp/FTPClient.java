@@ -2183,7 +2183,7 @@ public class FTPClient extends FTP
     public FTPFile[] listFiles() 
     throws IOException    
     {
-        return listFiles(".");
+        return listFiles("");
     }
 
     /**
@@ -2222,7 +2222,7 @@ public class FTPClient extends FTP
     public FTPListParseEngine initiateListParsing()
 	throws IOException
 	{
-    	return initiateListParsing(".");
+    	return initiateListParsing("");
     }
 	
     /**
@@ -2371,14 +2371,14 @@ public class FTPClient extends FTP
 	{
     	Socket socket;
 
+    	FTPListParseEngine engine = new FTPListParseEngine(parser);
     	if ((socket = _openDataConnection_(FTPCommand.LIST, pathname)) == null)
     	{
-    		return null;
+    		return engine;
     	}
     	
     	
-    	FTPListParseEngine engine = new FTPListParseEngine(parser);
-    	engine.readServerList(socket.getInputStream());
+     	engine.readServerList(socket.getInputStream());
 
     	socket.close();
 
@@ -2463,7 +2463,7 @@ public class FTPClient extends FTP
     	FTPFile[] results;
 
     	if ((socket = _openDataConnection_(FTPCommand.LIST, pathname)) == null)
-    		return null;
+    		return new FTPFile[0];
 
     	results = parser.parseFileList(socket.getInputStream());
 

@@ -107,11 +107,11 @@ import java.util.ListIterator;
  * <p>
  * For unpaged access, simply use FTPClient.listFiles().  That method
  * uses this class transparently.
- * @version $Id: FTPListParseEngine.java,v 1.3 2004/01/17 18:48:36 scohen Exp $
+ * @version $Id: FTPListParseEngine.java,v 1.4 2004/02/19 02:17:19 scohen Exp $
  */
 public class FTPListParseEngine {
 	private List entries = new LinkedList();
-	private ListIterator _internalIterator; 
+	private ListIterator _internalIterator = entries.listIterator(); 
 	
 	FTPFileEntryParser parser = null;
 	

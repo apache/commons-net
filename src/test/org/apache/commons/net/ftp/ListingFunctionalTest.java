@@ -67,7 +67,7 @@ import junit.framework.TestSuite;
 /**
  * A functional test suite for checking that site listings work.  
  * @author <a href="mailto:brekke@apache.org">Jeffrey D. Brekke</a>
- * @version $Id: ListingFunctionalTest.java,v 1.1 2004/02/17 05:14:02 brekke Exp $
+ * @version $Id: ListingFunctionalTest.java,v 1.2 2004/02/19 02:17:19 scohen Exp $
  */
 public class ListingFunctionalTest extends TestCase
 {
@@ -90,12 +90,12 @@ public class ListingFunctionalTest extends TestCase
                 {
                     "ftp.wacom.com", "windows", "VMS", "HA!",
                     "wacom97.zip", "pub\\ftp\\drivers"
-                }/*,
+                },
                 {
                     "h71000.www7.hp.com", "vms", "windows",
-                    "[.HA!]", "XTERM.EXE;1",
+                    "[.HA!]", "ACLOCAL.M4;1",
                     "[.FREEWARE50.XTERM]"
-                }*/
+                }
             };
         Class clasz = ListingFunctionalTest.class;
         Method[] methods = clasz.getDeclaredMethods();

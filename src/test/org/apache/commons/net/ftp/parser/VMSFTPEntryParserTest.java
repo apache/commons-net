@@ -66,7 +66,7 @@ import org.apache.commons.net.ftp.FTPListParseEngine;
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParserTest.java,v 1.11 2004/01/17 17:20:26 scohen Exp $
+ * @version $Id: VMSFTPEntryParserTest.java,v 1.12 2004/02/19 02:17:19 scohen Exp $
  */
 public class VMSFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -100,7 +100,8 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         "UNXMERGE.COM;15          1/15         20-AUG-1996 13:59:50  [POSTWARE,LP]    (RWE,RWE,RWE,RE)",
         "UNXTEMP.COM;7            1/15         15-AUG-1996 14:10:38  [POSTWARE,LP]    (RWE,RWE,RWE,RE)",
         "UNZIP_AND_ATTACH_FILES.COM;12\r\n                        14/15         24-JUL-2002 14:35:40  [TRANSLATED]    (RWE,RWE,RWE,RE)",
-        "UNZIP_AND_ATTACH_FILES.SAV;1\r\n                        14/15         17-JAN-2002 11:13:53  [POSTWARE,LP]    (RWE,RWED,RWE,RE)"        
+        "UNZIP_AND_ATTACH_FILES.SAV;1\r\n                        14/15         17-JAN-2002 11:13:53  [POSTWARE,LP]    (RWE,RWED,RWE,RE)",       
+        "FREEWARE40.DIR;1        27/36         16-FEB-1999 10:01:46  [AP_HTTPD,APACHE$WWW                               (RWE,RWE,RE,RE)"
     };
     
     private static final String fullListing = "Directory USER1:[TEMP]\r\n\r\n"+
