@@ -93,7 +93,7 @@
     <developer>
       <name>Daniel F. Savarese</name>
       <id>dfs</id>
-      <email>dfs@apache.org</email>
+      <email>dfs -> apache.org</email>
       <organization>savarese.org</organization>
     </developer>
   </developers>
