@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<!-- $Id: build.xml,v 1.1 2002/04/03 01:04:22 brekke Exp $ -->
+
+<project default="all">
+
+  <!-- Allow properties following these statements to be overridden -->
+  <!-- Note that all of these don't have to exist.  They've just been defined
+       incase they are used. -->
+  <property file="build.properties"/>
+<!--
+  <property file=".ant.properties"/>
+  <property file="${user.home}/.ant.properties"/>
+  <property file="default.properties"/>  
+ -->
+  <!-- Public Targets -->
+
+  <target name="all" depends="lib,jar,examples,javadocs"/>
+
+  <!-- prepare target.  Creates build directory. -->
+
+  <target name="prepare">
+     <mkdir dir="${build.lib.dir}"/>
+     <mkdir dir="${build.doc.java.dir}"/>
+     <mkdir dir="${build.doc.java.dir}/images"/>
+     <mkdir dir="${build.dir}/examples"/>
+  </target>
+
+  <!-- lib target.  Compiles the library classes only -->
+
+  <target name="lib" depends="prepare">
+     <javac srcdir="${src.java.dir}"
+         destdir="${build.lib.dir}"
+         excludes="examples/**"
+         debug="${build.debug}"
+         deprecation="${build.deprecation}"
+         optimize="${build.optimize}"/>
+  </target>
+
+  <!-- examples target.  Compiles the example classes. -->
+
+  <target name="examples" depends="prepare,jar">
+     <javac srcdir="${src.java.dir}/examples"
+         classpath="${build.lib.dir}/${project.name}.jar"
+         destdir="${build.dir}/examples"
+         debug="${build.debug}"
+         deprecation="${build.deprecation}"
+         optimize="${build.optimize}"/>
+  </target>
+
+  <!-- jar target.  Compiles the source directory and creates a .jar file -->
+
+  <target name="jar" depends="lib">
+      <jar jarfile="${build.lib.dir}/${project.name}.jar"
+          basedir="${build.lib.dir}"
+          includes="com/**"
+          excludes="**/package.html,**/overview.html"/>
+  </target>
+  
+
+  <!-- javadocs target.  Creates the API documentation -->
+
+    <target name="javadocs" depends="prepare">
+        <javadoc packagenames="com.oroinc.io,com.oroinc.util,com.oroinc.net,com.oroinc.net.bsd,com.oroinc.net.ftp,com.oroinc.net.nntp,com.oroinc.net.pop3,com.oroinc.net.smtp,com.oroinc.net.telnet,com.oroinc.net.tftp"
+            sourcepath="${src.java.dir}"
+            destdir="${build.doc.java.dir}"
+            author="true"
+            version="true"
+            windowtitle="${name} ${version} API"
+            doctitle="${name} ${version} API"
+            header="&lt;map name=&apos;_logoMap&apos;&gt;&lt;area href=&apos;http://www.savarese.org/&apos; alt=&apos;Savarese.Org Home&apos; shape=rect coords=&apos;0,0,66,14&apos;&gt;&lt;area href=&apos;http://www.savarese.org/oro/&apos; alt=&apos;ORO Home&apos;shape=rect coords=&apos;0,15,66,70&apos;&gt;&lt;/map&gt;&lt;img src=&apos;{@docroot}/../images/soroLogo.gif&apos; alt=&apos;Savarese.Org/ORO Logo&apos; width=67 height=71 align=left border=0 hspace=1 vspace=0 usemap=&apos;#_logoMap&apos;&gt;"
+            bottom="${copyright.message}">
+<!--
+           overview="${build.src.dir}/com/oroinc/overview.html"
+-->
+        </javadoc>
+        <copy todir="${build.doc.dir}/images" filtering="no">
+           <fileset dir="${doc.dir}/images">
+             <include name="**/*.gif"/>
+           </fileset>
+        </copy>
+        <replace file="${build.doc.java.dir}/overview-frame.html"
+                 token="{@docroot}" value="."/>
+        <replace dir="${build.doc.java.dir}" includes="**/*.html"
+                 token="@version@" value="${version}"/>
+    </target>
+
+
+    <target name="package-src">
+        <delete dir="${build.dir}/${project.name}"
+                quiet="true"
+                includeEmptyDirs="true"/>
+        <mkdir dir="${build.dir}/${project.name}"/>
+        <copy todir="${build.dir}/${project.name}">
+            <fileset dir="${top.dir}">
+              <exclude name="**/CVS/**"/>
+              <exclude name="build/**"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="package-bin" depends="lib,jar,examples,javadocs">
+        <delete dir="${build.dir}/${project.name}"
+                quiet="true"
+                includeEmptyDirs="true"/>
+        <mkdir dir="${build.dir}/${project.name}"/>
+        <copy todir="${build.dir}/${project.name}">
+            <fileset dir="${build.dir}">
+              <include name="lib/*.jar"/>
+              <include name="examples/**"/>
+              <include name="docs/**"/>
+            </fileset>
+            <fileset dir="${src.java.dir}">
+              <include name="examples/**"/>
+            </fileset>
+            <fileset dir="${top.dir}">
+              <exclude name="build/**"/>
+              <exclude name="docs/**"/>
+              <exclude name="src/**"/>
+            </fileset>
+        </copy>
+    </target>
+
+   <target name="package-src-zip" depends="package-src">
+        <zip zipfile="${build.dir}/${project.name}-src.zip"
+             basedir="${build.dir}"
+             includes="${project.name}/**"/>
+   </target>
+
+   <target name="package-src-tgz" depends="package-src">
+       <tar tarfile="${build.dir}/${project.name}-src.tar"
+             basedir="${build.dir}"
+             includes="${project.name}/**"/>
+       <gzip zipfile="${build.dir}/${project.name}-src.tar.gz"
+             src="${build.dir}/${project.name}-src.tar"/>
+   </target>
+
+   <target name="package-bin-zip" depends="package-bin">
+        <zip zipfile="${build.dir}/${project.name}-bin.zip"
+             basedir="${build.dir}"
+             includes="${project.name}/**"/>
+   </target>
+
+   <target name="package-bin-tgz" depends="package-bin">
+       <tar tarfile="${build.dir}/${project.name}-bin.tar"
+             basedir="${build.dir}"
+             includes="${project.name}/**"/>
+       <gzip zipfile="${build.dir}/${project.name}-bin.tar.gz"
+             src="${build.dir}/${project.name}-bin.tar"/>
+   </target>
+    
+    <target name="package-all"
+    depends="package-src-zip,package-src-tgz,package-bin-zip,package-bin-tgz">
+    </target>
+
+    <!-- Makes an attempt to clean up a little. -->
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+</project>

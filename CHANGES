@@ -1,0 +1,315 @@
+version 1.3.8
+	o Works with Java 1.2
+
+version 1.3.7
+	o NetComponents.jar file is now compressed and includes an
+	auto-generated manifest so that it may be used with the HotJava
+	web browser.
+
+	o Fixed a date parsing bug in DefaultFTPFileListeParser.  Months
+	would not always be properly converted (e.g., April would turn
+	up as August).  We must have inadvertently introduced this bug with
+	release 1.3, when we rewrote DefaultFTPFileListParser.  We're really
+	sorry for goofing that up.
+
+	o Added isConversionRequired() static final method to
+	com.oroinc.io.FromNetASCIIInputStream. 
+
+	o Fixed a bug whereby the InputStream returned by
+	TelnetClient.getInputStream might return an incorrect available()
+	value.  Also added documentation to the FromNetASCIIInputStream
+	available() method indicating that its return value is unreliable.
+	In other words, you can rely on the available() value returned by
+	the TelnetClient InputStream, but you can't rely on the
+	FromNetASCIIInputStream available() value.
+
+version 1.3.6
+	o added SocketFactory and DatagramSocketFactory interfaces as well
+	as DefaultSocketFactory and DefaultDatagramSocketFactory classes to
+	the com.oroinc.net package.  Also added setSocketFactory and
+	setDatagramSocketFactory methods to SocketClient and
+	DatagramSocketClient respectively.  This new functionality allows
+	you to use your own SSL sockets with any of the NetComponents
+	classes, request browser capabilities in an applet before creating
+	a socket, and other customizations dependent on the ability to
+	control the Socket creation process.
+
+	o added setRemoteVerificationEnabled(boolean) and
+	isRemoteVerificationEnabled()methods to FTPClient and RExecClient
+	so that you may disable the host-based incoming connection security
+	check when behind a proxy or firewall.	
+
+	o Fixed a bug in com.oroinc.net.tftp.TFTPRequestPacket whereby the
+	TFTPRequestPacket(int, DatagramPacket) constructor would not
+	properly parse out the transfer mode.  This was only an issue
+	for people writing TFTP servers using the TFTP package.
+
+	o Implemented setting of FTPFile raw listing so that getRawListing()
+	will no longer just return null.  At some point after changing
+	DefaultFTPListPaser, the raw listing of FTPFile was no longer being
+	set.  This error is now corrected.
+
+	o Removed the final keyword from the declaration of FTPClient,
+	NNTPClient, SMTPClient, POP3Client, and TFTPClient so that
+	programmers may derive subclasses rather than use aggregation
+	to extend functionality.
+
+version 1.3.5
+	o Added ProtocolCommandEvent, ProtocolCommandListener, and
+	ProtocolCommandSupport classes to com.oroinc.net to facilitate
+	the interception of command/reply traffic from protocols that rely
+	on text commands, including FTP, SMTP, NNTP, and POP3.  Some of the
+	example programs, including ftp.java and mail.java demonstrate how
+	to register a ProtocolCommandListener, using the example
+	PrintCommandListener class.
+
+	o Modified reply parsing code in SMTP, FTP, and NNTP classes to
+	handle server replies consisting of only a 3 digit reply code.
+	The various RFC's are ambiguous as to whether these kinds of replies
+	are legal, but since some servers produce them, NetComponents will
+	handle them.
+
+	o Made com.oroinc.net.ftp.FTPFile implement the Serializable
+	interface so that the NetComponents Pro FTP bean may be properly
+	serialized.
+
+version 1.3
+	o Added com.oroinc.net.bsd package which includes new RExecClient,
+	RCommandClient, and RLoginClient classes which implement
+	BSD Unix rexec(), rcmd() (rshell), and rlogin functionality.
+
+	o Added rexec.java, rshell.java, and rlogin.java example programs
+
+	o Common reader/writer thread behavior shared by weatherTelnet,
+	rexec, rshell, and rlogin examples moved into IOUtil class in
+	examples directory.
+
+	o Added verifyRemote() convenience method to SocketClient for making
+	it easier to verify that the remote end of a socket is the same
+	as the host the SocketClient is connected to.  This is used for
+	verifying things like rexec() error stream connections and FTP
+	data connections.
+
+	o Enhanced performance of DefaultFTPFileListParser and also made
+	it better able to handle unusual variations of the "default"
+	listing format.  This was prompted by not being able to list an
+	ftp site that had the following entry:
+drwxrwsr-x1170 18280    25051       34304 Jan 31 22:36 faq 
+
+	There was no whitespace between the permissions field and the
+	hard link count.  The new parser can deal with this situation.
+
+version 1.2.6
+	Fixed bug in SimpleSMTPHeader which would add an extra blank line
+	between headers added with addHeaderField() and the default headers
+	from the constructor.
+
+version 1.2.5
+	o Due to developer requests, changed the behavior of FTPClient
+	enterLocalPassiveMode().  Up to now, enterLocalPassiveMode()
+	would issue a PASV command to the server immediately, and you would
+	have to call enterLocalPassiveMode manually before every
+	file transfer or other operation requiring a data connection.
+	Now enterLocalPassiveMode() has been changed to not issue a PASV
+	command to the server immediately.  If you wish to do this, you
+	should use the pasv() command in the FTP class.  Now you only have
+	to call enterLocalPassiveMode() once, and from then on FTPClient
+	will automatically issue PASV commands to the server before opening
+	a data connection.  To return to normal mode, you only have to call
+	enterLocalActiveMode().  Because of this change,
+	enterLocalPassiveMode() now is of type void and doesn't throw any
+	exceptions.  You may have to make some changes to existing code.
+	Additionally, getPassiveHost() and getPassivePort() now only return
+	valid data AFTER the first data connection has been established in
+	passive mode since enterLocalPassiveMode() no longer issues a
+	PASV command immediately, but rather causes PASV commands to be
+	automatically sent before the opening of all future data connections.
+
+	o Added CopyStreamEvent, CopyStreamListener, and CopyStreamAdapter
+	support classes that are required by NetComponents Pro to track the
+	progress of file transfer operations using the Util copyStream()
+	methods.
+
+	o Changed com.oroinc.io.Util copyStream and copyReader methods to 
+	return a long value instead of int for number of bytes copied.  This
+	was previously reported to have been done for version 1.2.3, but the
+	change really hadn't been made.
+
+	o Added com.oroinc.io.CopyStreamException and changed
+	changed com.oroinc.io.Util copyStream and copyReader methods to throw
+	CopyStreamException.  CopyStreamException stores the number of bytes
+	confirmed to have been transferred before the throwing of an
+	IOException.  It also stores the original IOException responsible for
+	the failure of a complete copy.
+
+	o storeFile, retrieveFile, appendFile, and storeUniqueFile in
+	FTPClient now can also throw a CopyStreamException.  No changes
+	in existing code are necessary since CopyStreamException is a
+	subclass of IOException.  The only point in doing this is so that
+	you may retrieve the number of bytes transferred before failure.
+
+	o Relaxed the multi-line reply parsing code in the FTP class to
+	handle non-conformant FTP servers.  For example, the FTP server 
+	running on ftp.funet.fi ends a 426 multi-line reply with a line
+	starting with 226 rather than 426.  Previously this would cause
+	the FTP and FTPClient classes to block indefinitely waiting for
+	the correctly formatted multi-line reply ending.  This was further
+	complicated by the fact that the multi-line reply ending
+	detection was already relaxed to handle other non-conformant
+	FTP servers.  Right now all deviations from RFC 959 that we have
+	encountered are handled.
+
+	o Changed write(byte b[], int offset, int length) in
+	SocketOutputStream and FromNetASCIIOutputStream to bypass the
+	equivalent method in FilterOutputStream because the
+	FilterOutputStream method is very inefficient.  The change was
+	made after noticing that FTP file uploads were noticeably slower
+	than downloads and tracing the bottleneck to FilterOutputStream.
+
+	o Adjusted DefaultFTPFileLister to handle block and character
+	device listings which include major and minor device numbers.
+
+version 1.2.4
+	o Included class files in a jar file called NetComponents.jar so
+	that Macintosh developers may use the classes without problems
+	resulting from the MacOS 32 character filename limit.
+
+	o Adjusted ftp.java example to be more correct.  Added a call to
+	ftp.quit() in case of login failure rather than disconnecting
+	outright.  It is more polite to send the FTP QUIT command to
+	the server before disconnecting.
+
+	o Fixed bug in a support class for TelnetClient that could cause
+	deadlock in unusual cases.  For example, if FTPClient tried to
+	call disconnect() without calling quit() first, deadlock could
+	have happened in the past because the TelnetClient input stream
+	reader thread would be blocked holding a lock on the stream when
+	trying to read while the thread calling disconnect() would be
+	trying to close the stream, blocking while trying to acquire the
+	lock.  The correct solution was to not make the close synchronized.
+
+version 1.2.3
+	o Reimplemented workaround for Linux JDK bug.  It turns out that
+	users of Solaris x86, FreeBSD, and other x86 Unix implementations
+	using a port of the Sun JDK may be experiencing the same bug.  We
+	finally got to the root of the problem and provided a new workaround
+	which doesn't break anything, unlike our previous workaround.  You
+	should remove the old workaround if installed and use the new one.
+
+	o TelnetClient spawns a thread to handle asynchronous events.  Fixed
+	a bug where the priority assigned to that thread might be invalid
+	in some cases.
+
+	o Changed FTPFile getSize() and setSize() methods to return and
+	accept a long value respectively instead of an int to accomodate
+	very large file sizes.
+
+	o Slightly improved performance of DefaultFTPListParser so very
+	large directory listings will be parsed more quickly.
+
+version 1.2.2
+	o Fixed small bug in DefaultFTPListParser which would truncate the
+	last letter of a filename that contained spaces and also the last
+	letter of the value stored for FTPFile getSymbolicLink()
+
+	o Corrected the comment of server2serverFTP.java example to reflect
+	that the second host argument should be the host running the program
+	in most cases.
+
+	o Made an additional fix to InetAddress for BlackDown Linux JDK
+	users.  Our workaround fix for the Linux bug had caused an additional
+	problem when InetAddress.getByName() was used, which would break
+	some of the example programs on Linux.
+
+version 1.2.1
+	o Fixed small bug in DefaultFTPListParser which would set the
+	year in the date of FTPFile to a year earlier for some files
+	depending on the FTP server.  The year should always be correct
+	now.
+
+version 1.2
+	o Added the SMTP package and mail.java example
+
+	o Minor performance improvements in FTP, NNTP, and POP3	packages
+
+version 1.1.1
+	o Added some robustness features to FTP, NNTP, and POP3 classes.
+	Specifically, added more lenient handling of malformed server
+	replies and worked around a bug/limitation of the BufferedReader
+	readLine() method.  There are enough RFC non-compliant servers out
+	there that it was necessary to try to accommodate them as best
+	as possible.
+
+version 1.1
+	o Added com.oroinc.net.nntp NNTP package.  See the new
+	newsgroup.java and post.java examples as well as API documentation.
+
+	o Added com.oroinc.net.MalformedServerReplyException which most
+	of the IETF protocol client classes will throw when receiving
+	uninterpretable replies from the server.  The exception is a
+	subclass of IOException, and therefore does not require you to
+	change existing code.  However, if you are trying to develop a
+	robust fault-tolerant application, you will want to test for
+	this exception so your program can recover from the error.
+
+	o Removed com.oroinc.net.pop3.POP3MessageReader and replaced with
+	the more general com.oroinc.io.DotTerminatedMessageReader.  Code
+	written using version 1.0 that specifically refers to
+	POP3MessageReader must be changed.
+
+	o Added com.oroinc.io.DotTerminatedMessageWriter which is used by
+	the NNTP and SMTP packages
+
+	o Restructured telnet package.  TelnetClient is no longer usable
+	as an active object.  You interact with it solely through its
+	input and output streams.  The inner classes that caused problems
+	on the Microsoft Java SDK have been removed.  See new weatherTelnet
+	example to see how to use the telnet functionality.
+
+	o Added setting of timeouts to example programs
+
+	o Added setDataTimeout method to FTPClient so that the timeout
+	on a data connection can be set.
+
+	o Added com.oroinc.ftp.FTPConnectionClosedException which is now
+	thrown by FTP command methods if an FTP 421 reply (service not
+	available, connection closed) is received in a reply.  This exception
+	is a subclass of IOException and consequently will not break any
+	existing code.  However, you may now specifically catch
+	FTPConnectionClosedException to detect a server disconnect caused by
+	client idle activity or some other reason.
+
+	o Added pluggable FTP file listing parser.  You can now subclass
+	FTPFile and provide your own implementation of the FTPFileListParser
+	interface to parse unique file listing formats.  The new class
+	DefaultFTPFileListParser provides a default implementation compatible
+	with most FTP server listing formats.  Also changed the default list
+	parser to handle the common "total xx" listing prefix in non-English
+	servers (essentially, any single-line listing prefix is now accepted).
+
+	o Significantly changed FingerClient and WhoisClient.  FingerClient
+	now subclasses SocketClient and WhoisClient subclasses
+	FingerClient.  This makes the classes more flexible and consistent
+	with the rest of the package.  It will break old code, but the
+	necessary code changes are very easy to make.  See finger.java and
+	fwhois.java examples and compare to old.
+
+	o Removed _getInputStream_() and _getOutputStream_() protected
+	methods from SocketClient.  They are superfluous.  Instead,
+	customization of connection streams should be peformed in 
+	_connectAction_().
+
+version 1.0.1
+	o retrieveFileStream was inadvertently left out of
+	com.oroinc.net.ftp.FTPClient and its javadoc comments were
+	listed for storeFile in version 1.0.  This has been fixed.
+	retrieveFileStream is back in version 1.0.1 and the comments
+	are correct.
+
+	o The documentation for listFiles and listNames was in error in
+	version 1.0.  These methods return null if no files are found.
+	The original documentation erroneously stated that a zero length
+	array would be returned for an empty directory.  The documentation
+	has been changed in 1.0.1 to reflect the actual behavior, which is
+	to return null.
+
