@@ -22,7 +22,7 @@ import org.apache.commons.net.ftp.FTPFile;
  *
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: OS2FTPEntryParser.java,v 1.11 2004/04/21 23:30:33 scohen Exp $
+ * @version $Id: OS2FTPEntryParser.java,v 1.12 2004/07/28 05:01:47 dfs Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class OS2FTPEntryParser extends RegexFTPFileEntryParserImpl
@@ -123,9 +123,7 @@ public class OS2FTPEntryParser extends RegexFTPFileEntryParserImpl
             f.setName(name.trim());
 
             //set the size
-            Long theSize = new Long(size.trim());
-            theSize = new Long(String.valueOf(theSize.intValue()));
-            f.setSize(theSize.longValue());
+            f.setSize(Long.parseLong(size.trim()));
 
             return (f);
         }

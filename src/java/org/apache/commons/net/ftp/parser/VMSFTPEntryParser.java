@@ -40,7 +40,7 @@ import org.apache.commons.net.ftp.FTPListParseEngine;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.23 2004/04/22 00:48:07 scohen Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.24 2004/07/28 05:01:47 dfs Exp $
  *
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
@@ -173,8 +173,7 @@ public class VMSFTPEntryParser extends RegexFTPFileEntryParserImpl
             }
             //size is retreived in blocks and needs to be put in bytes
             //for us humans and added to the FTPFile array
-            Long theSize = new Long(size);
-            long sizeInBytes = theSize.longValue() * longBlock;
+            long sizeInBytes = Long.parseLong(size) * longBlock;
             f.setSize(sizeInBytes);
 
             //set the date

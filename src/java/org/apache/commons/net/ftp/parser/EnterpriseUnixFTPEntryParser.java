@@ -27,7 +27,7 @@ import org.apache.commons.net.ftp.FTPFile;
  * DefaultFTPParserFactory by classname.  It will not be chosen
  * by the autodetection scheme.
  * </B>
- * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.11 2004/04/21 23:30:33 scohen Exp $
+ * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.12 2004/07/28 05:01:47 dfs Exp $
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
@@ -101,7 +101,7 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
             file.setGroup(grp);
             try
             {
-                file.setSize(Integer.parseInt(filesize));
+                file.setSize(Long.parseLong(filesize));
             }
             catch (NumberFormatException e)
             {

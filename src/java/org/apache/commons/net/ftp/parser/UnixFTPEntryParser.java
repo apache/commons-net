@@ -25,7 +25,7 @@ import org.apache.commons.net.ftp.FTPFile;
  * DefaultFTPListParser, but adapted to use regular expressions and to fit the
  * new FTPFileEntryParser interface.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: UnixFTPEntryParser.java,v 1.17 2004/06/22 02:30:33 scohen Exp $
+ * @version $Id: UnixFTPEntryParser.java,v 1.18 2004/07/28 05:01:47 dfs Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
@@ -175,7 +175,7 @@ public class UnixFTPEntryParser extends RegexFTPFileEntryParserImpl
 
             try
             {
-                file.setSize(Integer.parseInt(filesize));
+                file.setSize(Long.parseLong(filesize));
             }
             catch (NumberFormatException e)
             {

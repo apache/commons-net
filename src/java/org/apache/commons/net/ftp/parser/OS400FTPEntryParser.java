@@ -20,7 +20,7 @@ import org.apache.commons.net.ftp.FTPFile;
 import java.util.Calendar;
 
 /**
- * @version $Id: OS400FTPEntryParser.java,v 1.3 2004/04/22 00:48:07 scohen Exp $
+ * @version $Id: OS400FTPEntryParser.java,v 1.4 2004/07/28 05:01:47 dfs Exp $
  */
 
 public class OS400FTPEntryParser extends RegexFTPFileEntryParserImpl
@@ -77,7 +77,7 @@ public class OS400FTPEntryParser extends RegexFTPFileEntryParserImpl
 
             try
             {
-                file.setSize(Integer.parseInt(filesize));
+                file.setSize(Long.parseLong(filesize));
             }
             catch (NumberFormatException e)
             {
