@@ -56,59 +56,53 @@ package org.apache.commons.io;
 
 import java.io.IOException;
 
-/***
+/**
  * The CopyStreamException class is thrown by the org.apache.commons.io.Util
  * copyStream() methods.  It stores the number of bytes confirmed to
  * have been transferred before an I/O error as well as the IOException
  * responsible for the failure of a copy operation.
- * <p>
- * <p>
  * @see Util
- * @author Daniel F. Savarese
- ***/
-
+ * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
+ * @version $Id: CopyStreamException.java,v 1.3 2002/04/13 04:55:00 brekke Exp $
+ */
 public class CopyStreamException extends IOException
 {
-    private long __bytesTransferred;
-    private IOException __exception;
+    private long totalBytesTransferred;
+    private IOException ioException;
 
-    /***
+    /**
      * Creates a new CopyStreamException instance.
-     * <p>
      * @param message  A message describing the error.
      * @param bytesTransferred  The total number of bytes transferred before
      *        an exception was thrown in a copy operation.
      * @param exception  The IOException thrown during a copy operation.
-     ***/
-    public CopyStreamException(String message, long bytesTransferred,
+     */
+    public CopyStreamException(String message,
+                               long bytesTransferred,
                                IOException exception)
     {
         super(message);
-        __bytesTransferred = bytesTransferred;
-        __exception = exception;
+        totalBytesTransferred = bytesTransferred;
+        ioException = exception;
     }
 
-    /***
-     * Returns the total number of bytes confirmed to have been transferred by a 
-     * failed copy operation.
-     * <p>
-     * @return The total number of bytes confirmed to have been transferred by a 
-     * failed copy operation.
-     ***/
+    /**
+     * Returns the total number of bytes confirmed to have
+     * been transferred by a failed copy operation.
+     * @return The total number of bytes confirmed to have
+     * been transferred by a failed copy operation.
+     */
     public long getTotalBytesTransferred()
     {
-        return __bytesTransferred;
+        return totalBytesTransferred;
     }
 
-
-    /***
+    /**
      * Returns the IOException responsible for the failure of a copy operation.
-     * <p>
      * @return The IOException responsible for the failure of a copy operation.
-     ***/
+     */
     public IOException getIOException()
     {
-        return __exception;
+        return ioException;
     }
-
 }

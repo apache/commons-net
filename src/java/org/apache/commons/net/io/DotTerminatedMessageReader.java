@@ -58,7 +58,7 @@ import java.io.IOException;
 import java.io.PushbackReader;
 import java.io.Reader;
 
-/***
+/**
  * DotTerminatedMessageReader is a class used to read messages from a
  * server that are terminated by a single dot followed by a 
  * &lt;CR&gt;&lt;LF&gt;
@@ -70,126 +70,133 @@ import java.io.Reader;
  * of lines starting with a period, converts NETASCII newlines to the
  * local line separator format, truncates the end of message indicator,
  * and ensures you cannot read past the end of the message.
- * <p>
- * <p>
- * @author Daniel F. Savarese
- ***/
-
+ * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
+ * @version $Id: DotTerminatedMessageReader.java,v 1.3 2002/04/13 04:55:00 brekke Exp $
+ */
 public final class DotTerminatedMessageReader extends Reader
 {
-    private static final String __lineSeparator;
-    private static final char[] __lineSeparatorChars;
+    private static final String LS;
+    private static final char[] LS_CHARS;
 
-    static {
-        __lineSeparator = System.getProperty("line.separator");
-        __lineSeparatorChars = __lineSeparator.toCharArray();
+    static
+    {
+        LS = System.getProperty("line.separator");
+        LS_CHARS = LS.toCharArray();
     }
 
-    private boolean __atBeginning, __eof;
-    private int __pos;
-    private char[] __buffer;
-    private PushbackReader __in;
+    private boolean atBeginning;
+    private boolean eof;
+    private int pos;
+    private char[] internalBuffer;
+    private PushbackReader internalReader;
 
-    /***
+    /**
      * Creates a DotTerminatedMessageReader that wraps an existing Reader
      * input source.
-     * <p>
      * @param reader  The Reader input source containing the message.
-     ***/
+     */
     public DotTerminatedMessageReader(Reader reader)
     {
         super(reader);
-        __buffer = new char[__lineSeparatorChars.length + 3];
-        __pos = __buffer.length;
+        internalBuffer = new char[LS_CHARS.length + 3];
+        pos = internalBuffer.length;
         // Assumes input is at start of message
-        __atBeginning = true;
-        __eof = false;
-        __in = new PushbackReader(reader);
+        atBeginning = true;
+        eof = false;
+        internalReader = new PushbackReader(reader);
     }
 
-
-    /***
+    /**
      * Reads and returns the next character in the message.  If the end of the
      * message has been reached, returns -1.  Note that a call to this method
      * may result in multiple reads from the underlying input stream to decode
      * the message properly (removing doubled dots and so on).  All of
      * this is transparent to the programmer and is only mentioned for
      * completeness.
-     * <p>
      * @return The next character in the message. Returns -1 if the end of the
      *          message has been reached.
      * @exception IOException If an error occurs while reading the underlying
      *            stream.
-     ***/
+     */
     public int read() throws IOException
     {
         int ch;
 
         synchronized (lock)
         {
-            if (__pos < __buffer.length)
-                return __buffer[__pos++];
-
-            if (__eof)
-                return -1;
-
-            if ((ch = __in.read()) == -1)
+            if (pos < internalBuffer.length)
             {
-                __eof = true;
+                return internalBuffer[pos++];
+            }
+
+            if (eof)
+            {
                 return -1;
             }
 
-            if (__atBeginning)
+            if ((ch = internalReader.read()) == -1)
             {
-                __atBeginning = false;
+                eof = true;
+                return -1;
+            }
+
+            if (atBeginning)
+            {
+                atBeginning = false;
                 if (ch == '.')
                 {
-                    ch = __in.read();
+                    ch = internalReader.read();
 
                     if (ch != '.')
                     {
                         // read newline
-                        __eof = true;
-                        __in.read();
+                        eof = true;
+                        internalReader.read();
                         return -1;
                     }
                     else
+                    {
                         return '.';
+                    }
                 }
             }
 
             if (ch == '\r')
             {
-                ch = __in.read();
+                ch = internalReader.read();
 
                 if (ch == '\n')
                 {
-                    ch = __in.read();
+                    ch = internalReader.read();
 
                     if (ch == '.')
                     {
-                        ch = __in.read();
+                        ch = internalReader.read();
 
                         if (ch != '.')
                         {
                             // read newline and indicate end of file
-                            __in.read();
-                            __eof = true;
+                            internalReader.read();
+                            eof = true;
                         }
                         else
-                            __buffer[--__pos] = (char)ch;
+                        {
+                            internalBuffer[--pos] = (char) ch;
+                        }
                     }
                     else
-                        __in.unread(ch);
+                    {
+                        internalReader.unread(ch);
+                    }
 
-                    __pos -= __lineSeparatorChars.length;
-                    System.arraycopy(__lineSeparatorChars, 0, __buffer, __pos,
-                                     __lineSeparatorChars.length);
-                    ch = __buffer[__pos++];
+                    pos -= LS_CHARS.length;
+                    System.arraycopy(LS_CHARS, 0, internalBuffer, pos,
+                                     LS_CHARS.length);
+                    ch = internalBuffer[pos++];
                 }
                 else
                 {
-                    __buffer[--__pos] = (char)ch;
+                    internalBuffer[--pos] = (char) ch;
                     return '\r';
                 }
             }
@@ -198,31 +205,27 @@ public final class DotTerminatedMessageReader extends Reader
         }
     }
 
-
-    /***
+    /**
      * Reads the next characters from the message into an array and
      * returns the number of characters read.  Returns -1 if the end of the
      * message has been reached.
-     * <p>
      * @param buffer  The character array in which to store the characters.
      * @return The number of characters read. Returns -1 if the
      *          end of the message has been reached.
      * @exception IOException If an error occurs in reading the underlying
      *            stream.
-     ***/
+     */
     public int read(char[] buffer) throws IOException
     {
         return read(buffer, 0, buffer.length);
     }
 
-
-    /***
+    /**
      * Reads the next characters from the message into an array and
      * returns the number of characters read.  Returns -1 if the end of the
      * message has been reached.  The characters are stored in the array
      * starting from the given offset and up to the length specified.
-     * <p>
-     * @param bufffer  The character array in which to store the characters.
+     * @param buffer  The character array in which to store the characters.
      * @param offset   The offset into the array at which to start storing
      *              characters.
      * @param length   The number of characters to read.
@@ -230,23 +233,25 @@ public final class DotTerminatedMessageReader extends Reader
      *          end of the message has been reached.
      * @exception IOException If an error occurs in reading the underlying
      *            stream.
-     ***/
+     */
     public int read(char[] buffer, int offset, int length) throws IOException
     {
         int ch, off;
         synchronized (lock)
         {
             if (length < 1)
+            {
                 return 0;
-
+            }
             if ((ch = read()) == -1)
+            {
                 return -1;
-
+            }
             off = offset;
 
             do
             {
-                buffer[offset++] = (char)ch;
+                buffer[offset++] = (char) ch;
             }
             while (--length > 0 && (ch = read()) != -1);
 
@@ -254,24 +259,21 @@ public final class DotTerminatedMessageReader extends Reader
         }
     }
 
-
-    /***
+    /**
      * Determines if the message is ready to be read.
-     * <p>
      * @return True if the message is ready to be read, false if not.
      * @exception IOException If an error occurs while checking the underlying
      *            stream.
-     ***/
+     */
     public boolean ready() throws IOException
     {
         synchronized (lock)
         {
-            return (__pos < __buffer.length || __in.ready());
+            return (pos < internalBuffer.length || internalReader.ready());
         }
     }
 
-
-    /***
+    /**
      * Closes the message for reading.  This doesn't actually close the
      * underlying stream.  The underlying stream may still be used for 
      * communicating with the server and therefore is not closed.
@@ -282,27 +284,29 @@ public final class DotTerminatedMessageReader extends Reader
      * for communicating with the server.  If you do not fully read
      * a message, you MUST close it, otherwise your program will likely
      * hang or behave improperly.
-     * <p>
      * @exception IOException  If an error occurs while reading the
      *            underlying stream.
-     ***/
+     */
     public void close() throws IOException
     {
         synchronized (lock)
         {
-            if (__in == null)
-                return ;
+            if (internalReader == null)
+            {
+                return;
+            }
 
-            if (!__eof)
+            if (!eof)
+            {
                 while (read() != -1)
+                {
                     ;
-
-            __eof = true;
-            __atBeginning = false;
-            __pos = __buffer.length;
-            __in = null;
+                }
+            }
+            eof = true;
+            atBeginning = false;
+            pos = internalBuffer.length;
+            internalReader = null;
         }
     }
-
 }
-

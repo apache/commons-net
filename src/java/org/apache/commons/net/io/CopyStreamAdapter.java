@@ -57,12 +57,13 @@ package org.apache.commons.io;
 import java.util.Enumeration;
 import org.apache.commons.util.ListenerList;
 
-/***
+/**
  * The CopyStreamAdapter will relay CopyStreamEvents to a list of listeners
  * when either of its bytesTransferred() methods are called.  Its purpose
  * is to facilitate the notification of the progress of a copy operation
- * performed by one of the static copyStream() methods in org.apache.commons.io.Util
- * to multiple listeners.  The static copyStream() methods invoke the
+ * performed by one of the static copyStream() methods in
+ * org.apache.commons.io.Util to multiple listeners.  The static
+ * copyStream() methods invoke the
  * bytesTransfered(long, int) of a CopyStreamListener for performance
  * reasons and also because multiple listeners cannot be registered given
  * that the methods are static.
@@ -71,32 +72,31 @@ import org.apache.commons.util.ListenerList;
  * @see CopyStreamEvent
  * @see CopyStreamListener
  * @see Util
- * @author Daniel F. Savarese
- ***/
-
+ * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
+ * @version $Id: CopyStreamAdapter.java,v 1.3 2002/04/13 04:55:00 brekke Exp $
+ */
 public class CopyStreamAdapter implements CopyStreamListener
 {
-    private ListenerList __listeners;
+    private ListenerList internalListeners;
 
-    /***
+    /**
      * Creates a new copyStreamAdapter.
-     ***/
+     */
     public CopyStreamAdapter()
     {
-        __listeners = new ListenerList();
+        internalListeners = new ListenerList();
     }
 
-    /***
+    /**
      * This method is invoked by a CopyStreamEvent source after copying
      * a block of bytes from a stream.  The CopyStreamEvent will contain
      * the total number of bytes transferred so far and the number of bytes
      * transferred in the last write.  The CopyStreamAdapater will relay
      * the event to all of its registered listeners, listing itself as the
      * source of the event.
-     * <p>
      * @param event The CopyStreamEvent fired by the copying of a block of
      *              bytes.
-     ***/
+     */
     public void bytesTransferred(CopyStreamEvent event)
     {
         bytesTransferred(event.getTotalBytesTransferred(),
@@ -104,15 +104,13 @@ public class CopyStreamAdapter implements CopyStreamListener
                          event.getStreamSize());
     }
 
-
-    /***
+    /**
      * This method is not part of the JavaBeans model and is used by the
      * static methods in the org.apache.commons.io.Util class for efficiency.
      * It is invoked after a block of bytes to inform the listener of the
      * transfer.  The CopyStreamAdapater will create a CopyStreamEvent
      * from the arguments and relay the event to all of its registered
      * listeners, listing itself as the source of the event.
-     * <p>
      * @param totalBytesTransferred  The total number of bytes transferred
      *         so far by the copy operation.
      * @param bytesTransferred  The number of bytes copied by the most recent
@@ -120,43 +118,45 @@ public class CopyStreamAdapter implements CopyStreamListener
      * @param streamSize The number of bytes in the stream being copied.
      *        This may be equal to CopyStreamEvent.UNKNOWN_STREAM_SIZE if
      *        the size is unknown.
-     ***/
+     */
     public void bytesTransferred(long totalBytesTransferred,
                                  int bytesTransferred, long streamSize)
     {
         Enumeration listeners;
         CopyStreamEvent event;
 
-        listeners = __listeners.getListeners();
+        listeners = internalListeners.getListeners();
 
-        event = new CopyStreamEvent(this, totalBytesTransferred, bytesTransferred,
+        event = new CopyStreamEvent(this,
+                                    totalBytesTransferred,
+                                    bytesTransferred,
                                     streamSize);
 
         while (listeners.hasMoreElements())
-            ((CopyStreamListener)(listeners.nextElement())).bytesTransferred(event);
+        {
+            ((CopyStreamListener) (listeners.nextElement())).
+                bytesTransferred(event);
+        }
     }
 
-
-    /***
+    /**
      * Registers a CopyStreamListener to receive CopyStreamEvents.
      * Although this method is not declared to be synchronized, it is
      * implemented in a thread safe manner.
-     * <p>
      * @param listener  The CopyStreamlistener to register.
-     ***/
+     */
     public void addCopyStreamListener(CopyStreamListener listener)
     {
-        __listeners.addListener(listener);
+        internalListeners.addListener(listener);
     }
 
-    /***
+    /**
      * Unregisters a CopyStreamListener.  Although this method is not
      * synchronized, it is implemented in a thread safe manner.
-     * <p>
      * @param listener  The CopyStreamlistener to unregister.
-     ***/
+     */
     public void removeCopyStreamListener(CopyStreamListener listener)
     {
-        __listeners.removeListener(listener);
+        internalListeners.removeListener(listener);
     }
 }

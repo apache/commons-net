@@ -56,7 +56,7 @@ package org.apache.commons.io;
 
 import java.util.EventObject;
 
-/***
+/**
  * A CopyStreamEvent is triggered after every write performed by a
  * stream copying operation.  The event stores the number of bytes
  * transferred by the write triggering the event as well as the total
@@ -66,19 +66,22 @@ import java.util.EventObject;
  * @see CopyStreamListener
  * @see CopyStreamAdapter
  * @see Util
- * @author Daniel F. Savarese
- ***/
-
+ * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
+ * @version $Id: CopyStreamEvent.java,v 1.3 2002/04/13 04:55:00 brekke Exp $
+ */
 public class CopyStreamEvent extends EventObject
 {
+    /**
+     * Constant used to indicate the stream size is unknown.
+     */
     public static final long UNKNOWN_STREAM_SIZE = -1;
 
-    private int __bytesTransferred;
-    private long __totalBytesTransferred, __streamSize;
+    private int bytesTransferred;
+    private long totalBytesTransferred;
+    private long streamSize;
 
-    /***
+    /**
      * Creates a new CopyStreamEvent instance.
-     * <p>
      * @param source  The source of the event.
      * @param totalBytesTransferred The total number of bytes transferred so
      *   far during a copy operation.
@@ -87,49 +90,46 @@ public class CopyStreamEvent extends EventObject
      * @param streamSize  The number of bytes in the stream being copied.
      *          This may be set to <code>UNKNOWN_STREAM_SIZE</code> if the
      *          size is unknown.
-     ***/
+     */
     public CopyStreamEvent(Object source, long totalBytesTransferred,
                            int bytesTransferred, long streamSize)
     {
         super(source);
-        __bytesTransferred = bytesTransferred;
-        __totalBytesTransferred = totalBytesTransferred;
+        this.bytesTransferred = bytesTransferred;
+        this.totalBytesTransferred = totalBytesTransferred;
+        this.streamSize = streamSize;
     }
 
-    /***
+    /**
      * Returns the number of bytes transferred by the write that triggered
      * the event.
-     * <p>
      * @return The number of bytes transferred by the write that triggered
      * the vent.
-     ***/
+     */
     public int getBytesTransferred()
     {
-        return __bytesTransferred;
+        return bytesTransferred;
     }
 
-    /***
+    /**
      * Returns the total number of bytes transferred so far by the copy
      * operation.
-     * <p>
      * @return The total number of bytes transferred so far by the copy
      * operation.
-     ***/
+     */
     public long getTotalBytesTransferred()
     {
-        return __totalBytesTransferred;
+        return totalBytesTransferred;
     }
 
-    /***
+    /**
      * Returns the size of the stream being copied.
      * This may be set to <code>UNKNOWN_STREAM_SIZE</code> if the
      * size is unknown.
-     * <p>
      * @return The size of the stream being copied.
-     ***/
+     */
     public long getStreamSize()
     {
-        return __streamSize;
+        return streamSize;
     }
-
 }
