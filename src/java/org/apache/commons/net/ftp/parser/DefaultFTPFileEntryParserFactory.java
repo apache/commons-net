@@ -61,11 +61,11 @@ public class DefaultFTPFileEntryParserFactory
      *               a string containing (case-insensitively) one of the
      *               following keywords:
      *               <ul>
-     *               <li><code>unix</code></li>
-     *               <li><code>windows</code></li>
-     *               <li><code>os/2</code></li>
-     *               <li><code>os/400</code></li>
-     *               <li><code>vms</code></li>
+     *               <li>{@link FTPClientConfig#SYST_UNIX UNIX}</li>
+     *               <li>{@link FTPClientConfig#SYST_NT WINDOWS}</li>
+     *               <li>{@link FTPClientConfig#SYST_OS2 OS/2}</li>
+     *               <li>{@link FTPClientConfig#SYST_OS400 OS/400}</li>
+     *               <li>{@link FTPClientConfig#SYST_VMS VMS}</li>
      *               </ul>
      * @return the FTPFileEntryParser corresponding to the supplied key.
      * @throws ParserInitializationException thrown if for any reason the factory cannot resolve
