@@ -298,6 +298,7 @@ implements Configurable
         __dataTimeout = -1;
         __remoteVerificationEnabled = true;
         __parserFactory = new DefaultFTPFileEntryParserFactory();
+        __configuration      = null;
     }
 
 
@@ -311,7 +312,6 @@ implements Configurable
         __fileFormat         = FTP.NON_PRINT_TEXT_FORMAT;
         __fileTransferMode   = FTP.STREAM_TRANSFER_MODE;
         __restartOffset      = 0;
-        __configuration      = null;
         __systemName         = null;
         __entryParser        = null;
         __bufferSize 		 = Util.DEFAULT_COPY_BUFFER_SIZE;
@@ -2343,9 +2343,9 @@ implements Configurable
                     parserKey = getSystemName();
             	    
             	}
+            } else {
+	            __entryParser =  __parserFactory.createFileEntryParser(parserKey);
             }
-          
-            __entryParser =  __parserFactory.createFileEntryParser(parserKey);
         }
 
         return initiateListParsing(__entryParser, pathname);

@@ -89,10 +89,17 @@ implements Configurable
     public void configure(FTPClientConfig config)
     {
         if (this.timestampParser instanceof Configurable) {
+            FTPClientConfig defaultCfg = getDefaultConfiguration();
 	        if (config != null) {
+	            if (null == config.getDefaultDateFormatStr()) {
+	                config.setDefaultDateFormatStr(defaultCfg.getDefaultDateFormatStr());
+	            }
+	            if (null == config.getRecentDateFormatStr()) {
+	                config.setRecentDateFormatStr(defaultCfg.getRecentDateFormatStr());
+	            }
 	            ((Configurable)this.timestampParser).configure(config);
 	        } else {
-	            ((Configurable)this.timestampParser).configure(getDefaultConfiguration());
+	            ((Configurable)this.timestampParser).configure(defaultCfg);
 	        }
         }
     }
