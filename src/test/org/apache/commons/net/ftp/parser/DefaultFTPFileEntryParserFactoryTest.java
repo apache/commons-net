@@ -55,7 +55,6 @@ package org.apache.commons.net.ftp.parser;
  */
 import junit.framework.TestCase;
 
-import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 
