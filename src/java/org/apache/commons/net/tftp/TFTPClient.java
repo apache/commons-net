@@ -86,7 +86,7 @@ public class TFTPClient extends TFTP
      ***/
     public void setMaxTimeouts(int numTimeouts)
     {
-        if (__maxTimeouts < 1)
+        if (numTimeouts < 1)
             __maxTimeouts = 1;
         else
             __maxTimeouts = numTimeouts;
