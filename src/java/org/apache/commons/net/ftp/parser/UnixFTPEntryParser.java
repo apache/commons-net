@@ -26,7 +26,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
  * DefaultFTPListParser, but adapted to use regular expressions and to fit the
  * new FTPFileEntryParser interface.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: UnixFTPEntryParser.java,v 1.10 2004/03/18 13:47:02 scohen Exp $
+ * @version $Id: UnixFTPEntryParser.java,v 1.11 2004/03/26 12:32:21 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class UnixFTPEntryParser extends FTPFileEntryParserImpl
@@ -40,10 +40,26 @@ public class UnixFTPEntryParser extends FTPFileEntryParserImpl
     
     /**
      * this is the regular expression used by this parser.
+	 *
+	 * Permissions:
+	 * 	  r   the file is readable
+	 *    w   the file is writable
+	 *    x   the file is executable
+	 *    -   the indicated permission is not granted
+	 *    L   mandatory	locking	occurs during access (the set-group-ID bit is
+	 *        on and the group execution bit is off)
+	 *    s   the set-user-ID or set-group-ID bit is on, and the corresponding
+	 *        user or group execution bit is also on
+	 *    S   undefined	bit-state (the set-user-ID bit is on and the user
+	 *        execution	bit is off)
+	 *    t   the 1000 (octal) bit, or sticky bit, is on [see chmod(1)], and
+	 *        execution	is on
+	 *    T   the 1000 bit is turned on, and execution is off (undefined bit-
+	 *        state)
      */
     private static final String REGEX =
         "([bcdlf-])"
-        + "(((r|-)(w|-)(x|-))((r|-)(w|-)(x|-))((r|-)(w|-)(x|-)))\\s+"
+        + "(((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-])))\\s+"
         + "(\\d+)\\s+"
         + "(\\S+)\\s+"
         + "(?:(\\S+)\\s+)?"
@@ -126,8 +142,16 @@ public class UnixFTPEntryParser extends FTPFileEntryParserImpl
                                    (!group(g).equals("-")));
                 file.setPermission(access, FTPFile.WRITE_PERMISSION,
                                    (!group(g + 1).equals("-")));
-                file.setPermission(access, FTPFile.EXECUTE_PERMISSION,
-                                   (!group(g + 2).equals("-")));
+
+				String execPerm = group(g + 2);
+				if (!execPerm.equals("-") && !Character.isUpperCase(execPerm.charAt(0)))
+				{
+                	file.setPermission(access, FTPFile.EXECUTE_PERMISSION, true);
+				}
+				else
+				{
+					file.setPermission(access, FTPFile.EXECUTE_PERMISSION, false);
+				}
             }
 
             if (!isDevice)
