@@ -87,7 +87,7 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.12 2004/01/09 09:07:03 dfs Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.13 2004/01/09 16:35:36 dfs Exp $
  * 
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
@@ -96,7 +96,7 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
     private static class DuplicateFilteringFileIterator extends FTPFileIterator
     {
         FTPFile[] files;
-        int current;
+        int next;
 
         public DuplicateFilteringFileIterator(FTPFileIterator iterator) {
             FTPFile[] tempFiles = iterator.getFiles();
@@ -122,7 +122,7 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
                 files[index++] = ftpf;
             }
 
-            current = 0;
+            next = 0;
         }
             
         public FTPFile[] getFiles() {
@@ -135,7 +135,7 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
             FTPFile[] result;
             int remaining;
 
-            remaining = files.length - current;
+            remaining = files.length - next;
 
             if(quantityRequested > remaining)
                 quantityRequested = remaining;
@@ -148,22 +148,22 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
             }
 
             result = new FTPFile[quantityRequested];
-            System.arraycopy(files, current, result, 0, result.length);
-            current+=quantityRequested;
+            System.arraycopy(files, next, result, 0, result.length);
+            next+=quantityRequested;
 
             return result;
         }
 
         public boolean hasNext() {
-            return (current < files.length && files.length > 0);
+            return (next < files.length && files.length > 0);
         }
 
         public FTPFile next() {
             FTPFile result = null;
 
             if(hasNext()) {
-                result = files[current];
-                ++current;
+                result = files[next];
+                ++next;
             }
 
             return result;
@@ -173,34 +173,34 @@ public class VMSFTPEntryParser extends FTPFileListParserImpl
             FTPFile[] result;
             int start = 0;
 
-            if(quantityRequested > current)
-                quantityRequested = current;
+            if(quantityRequested > next)
+                quantityRequested = next;
             else if(quantityRequested < 0)
                 quantityRequested = 0;
             else if(quantityRequested == 0) {
-                // interpret a 0 as meaning all items between 0 and current.
+                // interpret a 0 as meaning all items between 0 and next.
                 // ask Steve if this is what he intended.
-                quantityRequested = current;
+                quantityRequested = next;
             } else
-                start = current - quantityRequested;
+                start = next - quantityRequested;
 
             result = new FTPFile[quantityRequested];
             System.arraycopy(files, start, result, 0, result.length);
-            current = start;
+            next = start;
 
             return result;
         }
 
         public boolean hasPrevious() {
-            return (current > 0 && files.length > 0);
+            return (next > 0 && files.length > 0);
         }
 
         public FTPFile previous() {
             FTPFile result = null;
 
             if(hasPrevious()) {
-                --current;
-                result = files[current];
+                --next;
+                result = files[next];
             }
 
             return result;
