@@ -336,10 +336,88 @@ public class FTPClient extends FTP
         __passivePort = index;
     }
 
-
-    // null arg if no arg
-    protected Socket __openDataConnection(int command, String arg)
+    private boolean __storeFile(int command, String remote, InputStream local)
     throws IOException
+    {
+        OutputStream output;
+        Socket socket;
+
+        if ((socket = _openDataConnection_(command, remote)) == null)
+            return false;
+
+        // TODO: Buffer size may have to be adjustable in future to tune
+        // performance.
+        output = new BufferedOutputStream(socket.getOutputStream(),
+                                          Util.DEFAULT_COPY_BUFFER_SIZE);
+        if (__fileType == ASCII_FILE_TYPE)
+            output = new ToNetASCIIOutputStream(output);
+        // Treat everything else as binary for now
+        try
+        {
+            Util.copyStream(local, output);
+        }
+        catch (IOException e)
+        {
+            try
+            {
+                socket.close();
+            }
+            catch (IOException f)
+            {}
+            throw e;
+        }
+        output.close();
+        socket.close();
+        return completePendingCommand();
+    }
+
+    private OutputStream __storeFileStream(int command, String remote)
+    throws IOException
+    {
+        OutputStream output;
+        Socket socket;
+
+        if ((socket = _openDataConnection_(command, remote)) == null)
+            return null;
+
+        output = socket.getOutputStream();
+        if (__fileType == ASCII_FILE_TYPE) {
+          // We buffer ascii transfers because the buffering has to
+          // be interposed between ToNetASCIIOutputSream and the underlying
+          // socket output stream.  We don't buffer binary transfers
+          // because we don't want to impose a buffering policy on the
+          // programmer if possible.  Programmers can decide on their
+          // own if they want to wrap the SocketOutputStream we return
+          // for file types other than ASCII.
+          output = new BufferedOutputStream(output,
+                                            Util.DEFAULT_COPY_BUFFER_SIZE);
+          output = new ToNetASCIIOutputStream(output);
+          
+        }
+        return new org.apache.commons.net.io.SocketOutputStream(socket, output);
+    }
+
+
+    /***
+     * Establishes a data connection with the FTP server, returning
+     * a Socket for the connection if successful.  If a restart
+     * offset has been set with {@link #setRestartOffset(long)},
+     * a REST command is issued to the server with the offset as
+     * an argument before establishing the data connection.  Active
+     * mode connections also cause a local PORT command to be issued.
+     * <p>
+     * @param command  The text representation of the FTP command to send.
+     * @param args The arguments to the FTP command.  If this parameter is
+     *             set to null, then the command is sent with no argument.
+     * @return A Socket corresponding to the established data connection.
+     *         Null is returned if an FTP protocol error is reported at
+     *         any point during the establishment and initialization of
+     *         the connection.
+     * @exception IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     ***/
+    protected Socket _openDataConnection_(int command, String arg)
+      throws IOException
     {
         Socket socket;
 
@@ -415,68 +493,6 @@ public class FTPClient extends FTP
             socket.setSoTimeout(__dataTimeout);
 
         return socket;
-    }
-
-
-    private boolean __storeFile(int command, String remote, InputStream local)
-    throws IOException
-    {
-        OutputStream output;
-        Socket socket;
-
-        if ((socket = __openDataConnection(command, remote)) == null)
-            return false;
-
-        // TODO: Buffer size may have to be adjustable in future to tune
-        // performance.
-        output = new BufferedOutputStream(socket.getOutputStream(),
-                                          Util.DEFAULT_COPY_BUFFER_SIZE);
-        if (__fileType == ASCII_FILE_TYPE)
-            output = new ToNetASCIIOutputStream(output);
-        // Treat everything else as binary for now
-        try
-        {
-            Util.copyStream(local, output);
-        }
-        catch (IOException e)
-        {
-            try
-            {
-                socket.close();
-            }
-            catch (IOException f)
-            {}
-            throw e;
-        }
-        output.close();
-        socket.close();
-        return completePendingCommand();
-    }
-
-    private OutputStream __storeFileStream(int command, String remote)
-    throws IOException
-    {
-        OutputStream output;
-        Socket socket;
-
-        if ((socket = __openDataConnection(command, remote)) == null)
-            return null;
-
-        output = socket.getOutputStream();
-        if (__fileType == ASCII_FILE_TYPE) {
-          // We buffer ascii transfers because the buffering has to
-          // be interposed between ToNetASCIIOutputSream and the underlying
-          // socket output stream.  We don't buffer binary transfers
-          // because we don't want to impose a buffering policy on the
-          // programmer if possible.  Programmers can decide on their
-          // own if they want to wrap the SocketOutputStream we return
-          // for file types other than ASCII.
-          output = new BufferedOutputStream(output,
-                                            Util.DEFAULT_COPY_BUFFER_SIZE);
-          output = new ToNetASCIIOutputStream(output);
-          
-        }
-        return new org.apache.commons.net.io.SocketOutputStream(socket, output);
     }
 
 
@@ -748,7 +764,7 @@ public class FTPClient extends FTP
     {
         __dataConnectionMode = PASSIVE_LOCAL_DATA_CONNECTION_MODE;
         // These will be set when just before a data connection is opened
-        // in __openDataConnection()
+        // in _openDataConnection_()
         __passiveHost = null;
         __passivePort = -1;
     }
@@ -1204,7 +1220,7 @@ public class FTPClient extends FTP
         InputStream input;
         Socket socket;
 
-        if ((socket = __openDataConnection(FTPCommand.RETR, remote)) == null)
+        if ((socket = _openDataConnection_(FTPCommand.RETR, remote)) == null)
             return false;
 
         // TODO: Buffer size may have to be adjustable in future to tune
@@ -1261,7 +1277,7 @@ public class FTPClient extends FTP
         InputStream input;
         Socket socket;
 
-        if ((socket = __openDataConnection(FTPCommand.RETR, remote)) == null)
+        if ((socket = _openDataConnection_(FTPCommand.RETR, remote)) == null)
             return null;
 
         input = socket.getInputStream();
@@ -1873,7 +1889,7 @@ public class FTPClient extends FTP
         BufferedReader reader;
         Vector results;
 
-        if ((socket = __openDataConnection(FTPCommand.NLST, pathname)) == null)
+        if ((socket = _openDataConnection_(FTPCommand.NLST, pathname)) == null)
             return null;
 
         reader =
@@ -1954,7 +1970,7 @@ public class FTPClient extends FTP
         Socket socket;
         FTPFile[] results;
 
-        if ((socket = __openDataConnection(FTPCommand.LIST, pathname)) == null)
+        if ((socket = _openDataConnection_(FTPCommand.LIST, pathname)) == null)
             return null;
 
         results = parser.parseFileList(socket.getInputStream());
@@ -2138,7 +2154,7 @@ public class FTPClient extends FTP
         Socket socket;
         FTPFile[] results;
 
-        if ((socket = __openDataConnection(FTPCommand.LIST, pathname)) == null)
+        if ((socket = _openDataConnection_(FTPCommand.LIST, pathname)) == null)
         {
             return null;
         }
