@@ -14,36 +14,54 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.parser;
-import java.util.Calendar;
 
 import junit.framework.TestSuite;
-
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
+import java.util.Calendar;
+
 /**
- * @version $Id: OS400FTPEntryParserTest.java,v 1.1 2004/03/26 12:54:57 scohen Exp $
+ * @version $Id: OS400FTPEntryParserTest.java,v 1.2 2004/04/16 01:52:24 scohen Exp $
  */
 
-public class OS400FTPEntryParserTest extends FTPParseTestFramework
+public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
 {
-
-    private static final String[] badsamples =
+    private static final String[][] badsamples =
+{
     {
 		"PEP              4019 04/03/18 18:58:16 STMF       einladung.zip",
 		"PEP               422 03/24 14:06:26 *STMF      readme",
 		"PEP              6409 04/03/24 30:06:29 *STMF      build.xml",
 		"PEP USR         36864 04/03/24 14:06:34 *DIR       dir1/",
 		"PEP             3686404/03/24 14:06:47 *DIR       zdir2/"
+            },
+
+            {
+                "----rwxr-x   1PEP       0           4019 Mar 18 18:58 einladung.zip",
+                "----rwxr-x   1 PEP      0  xx        422 Mar 24 14:06 readme",
+                "----rwxr-x   1 PEP      0           8492 Apr 07 30:13 build.xml",
+                "d---rwxr-x   2 PEP USR  0          45056 Mar 24 14:06 dir1",
+                "d---rwxr-x   2 PEP      0          45056Mar 24 14:06 zdir2"
+            }
     };
 
-    private static final String[] goodsamples =
+    private static final String[][] goodsamples =
+        {
     {
 		"PEP              4019 04/03/18 18:58:16 *STMF      einladung.zip",
 		"PEP               422 04/03/24 14:06:26 *STMF      readme",
 		"PEP              6409 04/03/24 14:06:29 *STMF      build.xml",
 		"PEP             36864 04/03/24 14:06:34 *DIR       dir1/",
 		"PEP             36864 04/03/24 14:06:47 *DIR       zdir2/"
+            },
+            {
+                "----rwxr-x   1 PEP      0           4019 Mar 18 18:58 einladung.zip",
+                "----rwxr-x   1 PEP      0            422 Mar 24 14:06 readme",
+                "----rwxr-x   1 PEP      0           8492 Apr 07 07:13 build.xml",
+                "d---rwxr-x   2 PEP      0          45056 Mar 24 14:06 dir1",
+                "d---rwxr-x   2 PEP      0          45056 Mar 24 14:06 zdir2"
+            }
     };
 
     /**
@@ -57,17 +75,17 @@ public class OS400FTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see FTPParseTestFramework#getBadListing()
      */
-    protected String[] getBadListing()
+    protected String[][] getBadListings()
     {
-        return(badsamples);
+        return badsamples;
     }
 
     /**
      * @see FTPParseTestFramework#getGoodListing()
      */
-    protected String[] getGoodListing()
+    protected String[][] getGoodListings()
     {
-        return(goodsamples);
+        return goodsamples;
     }
 
     /**
@@ -75,7 +93,11 @@ public class OS400FTPEntryParserTest extends FTPParseTestFramework
      */
     protected FTPFileEntryParser getParser()
     {
-        return(new OS400FTPEntryParser());
+        return new CompositeFileEntryParser(new FTPFileEntryParser[]
+        {
+            new OS400FTPEntryParser(),
+            new UnixFTPEntryParser()
+        });
     }
 
     /**
@@ -106,6 +128,15 @@ public class OS400FTPEntryParserTest extends FTPParseTestFramework
 
         assertEquals(df.format(cal.getTime()),
                      df.format(f.getTimestamp().getTime()));
+    }
+
+    protected void doAdditionalGoodTests(String test, FTPFile f)
+    {
+        if (test.startsWith("d"))
+        {
+            assertEquals("directory.type",
+                FTPFile.DIRECTORY_TYPE, f.getType());
+        }
     }
 
     /**
@@ -139,6 +170,7 @@ public class OS400FTPEntryParserTest extends FTPParseTestFramework
 
     /**
      * Method suite.
+     *
      * @return TestSuite
      */
     public static TestSuite suite()

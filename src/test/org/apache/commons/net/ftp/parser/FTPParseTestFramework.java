@@ -23,7 +23,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPParseTestFramework.java,v 1.6 2004/03/10 03:37:16 scohen Exp $
+ * @version $Id: FTPParseTestFramework.java,v 1.7 2004/04/16 01:52:24 scohen Exp $
  */
 public abstract class FTPParseTestFramework extends TestCase
 {
@@ -54,6 +54,8 @@ public abstract class FTPParseTestFramework extends TestCase
             FTPFile f = parser.parseFTPEntry(test);
             assertNull("Should have Failed to parse " + test, 
                        f);
+
+            doAdditionalBadTests(test, f);
         }
     }
 
@@ -73,7 +75,29 @@ public abstract class FTPParseTestFramework extends TestCase
             FTPFile f = parser.parseFTPEntry(test);
             assertNotNull("Failed to parse " + test, 
                           f);
+
+            doAdditionalGoodTests(test, f);
         }
+    }
+
+    /**
+     * during processing you could hook here to do additional tests
+     *
+     * @param test raw entry
+     * @param f    parsed entry
+     */
+    protected void doAdditionalGoodTests(String test, FTPFile f)
+    {
+        }
+
+    /**
+     * during processing you could hook here to do additional tests
+     *
+     * @param test raw entry
+     * @param f    parsed entry
+     */
+    protected void doAdditionalBadTests(String test, FTPFile f)
+    {
     }
 
     /**

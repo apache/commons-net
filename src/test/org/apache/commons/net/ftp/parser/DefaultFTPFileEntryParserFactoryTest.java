@@ -59,7 +59,7 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
         assertTrue(parser instanceof OS2FTPEntryParser);
 
         parser = factory.createFileEntryParser("OS/400");
-        assertTrue(parser instanceof OS400FTPEntryParser);
+        assertTrue(parser instanceof CompositeFileEntryParser);
         
         try {
             parser = factory.createFileEntryParser("OS2FTPFileEntryParser");
