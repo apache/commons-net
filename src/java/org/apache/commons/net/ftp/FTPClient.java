@@ -1793,7 +1793,7 @@ public class FTPClient extends FTP
     public String getSystemName() throws IOException
     {
       //if (syst() == FTPReply.NAME_SYSTEM_TYPE)
-      // Technically, we should expect a NAME_SYSTE_TYPE response, but
+      // Technically, we should expect a NAME_SYSTEM_TYPE response, but
       // in practice FTP servers deviate, so we soften the condition to
       // a positive completion.
         if (FTPReply.isPositiveCompletion(syst()))
