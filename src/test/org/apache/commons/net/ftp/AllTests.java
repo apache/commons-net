@@ -28,6 +28,7 @@ public class AllTests {
         //$JUnit-BEGIN$
         suite.addTest(ListingFunctionalTest.suite());
         suite.addTestSuite(FTPClientConfigTest.class);
+        suite.addTestSuite(FTPClientConfigFunctionalTest.class);
         //$JUnit-END$
         return suite;
     }
