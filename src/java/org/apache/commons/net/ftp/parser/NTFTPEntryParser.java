@@ -22,7 +22,7 @@ import org.apache.commons.net.ftp.FTPFile;
  *
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: NTFTPEntryParser.java,v 1.15 2004/04/21 23:30:33 scohen Exp $
+ * @version $Id: NTFTPEntryParser.java,v 1.16 2004/05/04 22:44:05 scohen Exp $
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class NTFTPEntryParser extends RegexFTPFileEntryParserImpl
@@ -129,7 +129,7 @@ public class NTFTPEntryParser extends RegexFTPFileEntryParserImpl
             //          cal.set(Calendar.AM_PM, ap);
             cal.set(Calendar.HOUR_OF_DAY, hour);
 
-            cal.getTimeInMillis();
+            cal.getTime().getTime();
             f.setTimestamp(cal);
 
             if ("<DIR>".equals(dirString))

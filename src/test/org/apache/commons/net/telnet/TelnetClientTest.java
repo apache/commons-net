@@ -26,7 +26,8 @@ import java.io.PipedOutputStream;
  * <p>
  * @author Bruno D'Avanzo
  ***/
-public class TelnetClientTest extends TestCase implements TelnetNotificationHandler
+public class TelnetClientTest 
+extends TestCase implements TelnetNotificationHandler
 {
     protected TelnetTestSimpleServer server1;
     protected TelnetTestSimpleServer server2;
@@ -60,9 +61,12 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         tc2 = new TelnetClient();
         tc3 = new TelnetClient("ANSI");
 
-        TerminalTypeOptionHandler ttopt = new TerminalTypeOptionHandler("VT100", false, false, true, false);
-        EchoOptionHandler echoopt = new EchoOptionHandler(true, false, true, false);
-        SuppressGAOptionHandler gaopt = new SuppressGAOptionHandler(true, true, true, true);
+        TerminalTypeOptionHandler ttopt = 
+            new TerminalTypeOptionHandler("VT100", false, false, true, false);
+        EchoOptionHandler echoopt = 
+            new EchoOptionHandler(true, false, true, false);
+        SuppressGAOptionHandler gaopt = 
+            new SuppressGAOptionHandler(true, true, true, true);
 
         tc2.addOptionHandler(ttopt);
         tc2.addOptionHandler(echoopt);
@@ -105,9 +109,12 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         byte buffread2[] = new byte[9];
         byte expected2[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WILL, (byte)TelnetOption.ECHO,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WILL, (byte)TelnetOption.SUPPRESS_GO_AHEAD,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO, (byte)TelnetOption.SUPPRESS_GO_AHEAD,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL, 
+            (byte) TelnetOption.ECHO,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL, 
+            (byte) TelnetOption.SUPPRESS_GO_AHEAD,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, 
+            (byte) TelnetOption.SUPPRESS_GO_AHEAD,
         };
 
         openConnections();
@@ -181,65 +188,83 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         byte buffread1[] = new byte[6];
         byte send1[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO, (byte)15,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WILL, (byte)15,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, (byte) 15,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL, (byte) 15,
         };
         byte expected1[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WONT, (byte)15,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DONT, (byte)15,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, (byte) 15,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT, (byte) 15,
         };
 
         boolean negotiation2_ok = false;
         byte buffread2[] = new byte[9];
         byte send2[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO, (byte)TelnetOption.TERMINAL_TYPE,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DONT, (byte)TelnetOption.ECHO,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO, (byte)TelnetOption.SUPPRESS_GO_AHEAD,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WONT, (byte)TelnetOption.SUPPRESS_GO_AHEAD
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, 
+            (byte) TelnetOption.TERMINAL_TYPE,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT, 
+            (byte) TelnetOption.ECHO,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, 
+            (byte) TelnetOption.SUPPRESS_GO_AHEAD,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, 
+            (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
         byte expected2[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WILL, (byte)TelnetOption.TERMINAL_TYPE,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WONT, (byte)TelnetOption.ECHO,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DONT, (byte)TelnetOption.SUPPRESS_GO_AHEAD
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL, 
+            (byte) TelnetOption.TERMINAL_TYPE,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, 
+            (byte) TelnetOption.ECHO,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT, 
+            (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
 
         byte buffread2b[] = new byte[11];
         byte send2b[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.SB, (byte)TelnetOption.TERMINAL_TYPE,
-            (byte)1, (byte)TelnetCommand.IAC, (byte)TelnetCommand.SE,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.SB, 
+            (byte) TelnetOption.TERMINAL_TYPE,
+            (byte) 1, (byte) TelnetCommand.IAC, (byte) TelnetCommand.SE,
         };
         byte expected2b[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.SB, (byte)TelnetOption.TERMINAL_TYPE,
-            (byte)0, 'V', 'T', '1', '0', '0', (byte)TelnetCommand.IAC, (byte)TelnetCommand.SE,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.SB, 
+            (byte) TelnetOption.TERMINAL_TYPE,
+            (byte) 0, (byte) 'V', (byte) 'T', (byte) '1', (byte) '0', 
+            (byte) '0', 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.SE,
         };
 
         boolean negotiation3_ok = false;
         byte buffread3[] = new byte[6];
         byte send3[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO, (byte)TelnetOption.TERMINAL_TYPE,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO, (byte)TelnetOption.SUPPRESS_GO_AHEAD
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, 
+            (byte) TelnetOption.TERMINAL_TYPE,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO,
+            (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
         byte expected3[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WILL, (byte)TelnetOption.TERMINAL_TYPE,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WONT, (byte)TelnetOption.SUPPRESS_GO_AHEAD
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL, 
+            (byte) TelnetOption.TERMINAL_TYPE,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, 
+            (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
         byte buffread3b[] = new byte[10];
         byte send3b[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.SB, (byte)TelnetOption.TERMINAL_TYPE,
-            (byte)1, (byte)TelnetCommand.IAC, (byte)TelnetCommand.SE,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.SB, 
+            (byte) TelnetOption.TERMINAL_TYPE,
+            (byte) 1, (byte) TelnetCommand.IAC, (byte) TelnetCommand.SE,
         };
         byte expected3b[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.SB, (byte)TelnetOption.TERMINAL_TYPE,
-            (byte)0, 'A', 'N', 'S', 'I', (byte)TelnetCommand.IAC, (byte)TelnetCommand.SE,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.SB, 
+            (byte) TelnetOption.TERMINAL_TYPE,
+            (byte) 0, (byte) 'A', (byte) 'N', (byte) 'S', (byte) 'I', 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.SE,
         };
 
         openConnections();
@@ -345,24 +370,31 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         byte buffread[] = new byte[6];
         byte send[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO, (byte)TelnetOption.ECHO,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DONT, (byte)TelnetOption.SUPPRESS_GO_AHEAD,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WONT, (byte)TelnetOption.SUPPRESS_GO_AHEAD
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, 
+            (byte) TelnetOption.ECHO,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT, 
+            (byte) TelnetOption.SUPPRESS_GO_AHEAD,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, 
+            (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
         byte expected[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WONT, (byte)TelnetOption.SUPPRESS_GO_AHEAD,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DONT, (byte)TelnetOption.SUPPRESS_GO_AHEAD
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, 
+            (byte) TelnetOption.SUPPRESS_GO_AHEAD,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT, 
+            (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
 
         byte buffread2[] = new byte[3];
         byte send2[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DONT, (byte)TelnetOption.ECHO,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT, 
+            (byte) TelnetOption.ECHO,
         };
         byte expected2[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WONT, (byte)TelnetOption.ECHO,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, 
+            (byte) TelnetOption.ECHO,
         };
 
         openConnections();
@@ -410,17 +442,21 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         byte buffread1[] = new byte[6];
         byte send1[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO, (byte)15,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WILL, (byte)15,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, (byte) 15,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL, (byte) 15,
         };
 
         byte buffread2[] = new byte[9];
         byte send2[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO, (byte)TelnetOption.TERMINAL_TYPE,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DONT, (byte)TelnetOption.ECHO,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO, (byte)TelnetOption.SUPPRESS_GO_AHEAD,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WONT, (byte)TelnetOption.SUPPRESS_GO_AHEAD
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, 
+            (byte) TelnetOption.TERMINAL_TYPE,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT, 
+            (byte) TelnetOption.ECHO,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, 
+            (byte) TelnetOption.SUPPRESS_GO_AHEAD,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, 
+            (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
 
         byte buffread2b[] = new byte[11];
@@ -483,15 +519,20 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         byte buffread[] = new byte[6];
         byte send[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO, (byte)TelnetOption.ECHO,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO, (byte)TelnetOption.SUPPRESS_GO_AHEAD,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WILL, (byte)TelnetOption.SUPPRESS_GO_AHEAD
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, 
+            (byte) TelnetOption.ECHO,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, 
+            (byte) TelnetOption.SUPPRESS_GO_AHEAD,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL, 
+            (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
 
         byte expected[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WONT, (byte)TelnetOption.SUPPRESS_GO_AHEAD,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DONT, (byte)TelnetOption.SUPPRESS_GO_AHEAD
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, 
+            (byte) TelnetOption.SUPPRESS_GO_AHEAD,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT, 
+            (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
 
         openConnections();
@@ -553,8 +594,9 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         boolean ayt_false_ok = false;
 
 
-        byte AYT[] = { (byte)TelnetCommand.IAC, (byte)TelnetCommand.AYT };
-        byte response[] = { '[', 'Y', 'e', 's', ']' };
+        byte AYT[] = { (byte) TelnetCommand.IAC, (byte) TelnetCommand.AYT };
+        byte response[] = 
+            { (byte) '[', (byte) 'Y', (byte) 'e', (byte) 's', (byte) ']' };
         String inputs[] = new String[1];
         String outputs[] = new String[1];
         inputs[0] = new String (AYT);
@@ -564,7 +606,8 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
 
         OutputStream os = server3.getOutputStream();
         InputStream is = server3.getInputStream();
-        TelnetTestResponder tr = new TelnetTestResponder(is, os, inputs, outputs, 30000);
+        TelnetTestResponder tr = 
+            new TelnetTestResponder(is, os, inputs, outputs, 30000);
         assertNotNull(tr);
         boolean res1 = tc3.sendAYT(2000);
 
@@ -593,8 +636,10 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         boolean test1spy_ok = false;
         boolean test2spy_ok = false;
         boolean stopspy_ok = false;
-        byte expected1[] = { 't', 'e', 's', 't', '1' };
-        byte expected2[] = { 't', 'e', 's', 't', '2' };
+        byte expected1[] = 
+        	{ (byte) 't', (byte) 'e', (byte) 's', (byte) 't', (byte) '1' };
+        byte expected2[] = 
+        	{ (byte) 't', (byte) 'e', (byte) 's', (byte) 't', (byte) '2' };
 
         openConnections();
 
@@ -660,13 +705,13 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         byte buffread1[] = new byte[6];
         byte send1[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO, (byte)15,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WILL, (byte)15,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, (byte) 15,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL, (byte) 15,
         };
         byte expected1[] =
         {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.WONT, (byte)15,
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.DONT, (byte)15,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, (byte) 15,
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT, (byte) 15,
         };
 
 
