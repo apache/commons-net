@@ -7,6 +7,19 @@
 
   <body>
     <release version="1.0.1" date="In CVS">
+      <action dev="dfs" type="update">
+        Changed package private NNTP._reader and NNTP._writer member
+        variables to protected NNTP._reader_ and NNTP._writer_
+        variables as suggested by issue report 16995 to facilitate
+        extending NNTPClient functionality in subclasses.
+      </action>
+      <action dev="dfs" type="update">
+        Changed name of FTPClient.__openDataConnection() to
+        FTPClient._openDataConnection_() to remain consistent
+        with the convention in the code that protected members
+        are of the form _foo_.  At some point __openDataConnection()
+        had been changed from private to protected.
+      </action>
       <action dev="brekke" type="add">
         Added terminal option support to the telnet client with tests.
         From Bruno D'Avanzo ( b.davanzo@inwind.it ).
