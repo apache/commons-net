@@ -60,7 +60,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
  * This is the default implementation of the 
  * FTPFileEntryParserFactory interface.  This is the 
  * implementation that will be used by
- * org.apache.commons.net.ftp.FTPClient.getFileList()
+ * org.apache.commons.net.ftp.FTPClient.listFiles()
  * if no other implementation has been specified.
  * 
  * @see org.apache.commons.net.ftp.FTPClient.listFiles()
