@@ -31,7 +31,7 @@ package org.apache.commons.net.pop3;
  *    written permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
+ *    nor may "Apache" appear in their name, without
  *    prior written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -60,7 +60,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Enumeration;
 import java.util.StringTokenizer;
-import org.apache.commons.io.DotTerminatedMessageReader;
+import org.apache.commons.net.io.DotTerminatedMessageReader;
 
 /***
  * The POP3Client class implements the client side of the Internet POP3
@@ -81,7 +81,7 @@ import org.apache.commons.io.DotTerminatedMessageReader;
  * <p>
  * @author Daniel F. Savarese
  * @see POP3MessageInfo
- * @see org.apache.commons.io.DotTerminatedMessageReader
+ * @see org.apache.commons.net.io.DotTerminatedMessageReader
  * @see org.apache.commons.net.MalformedServerReplyException
  ***/
 

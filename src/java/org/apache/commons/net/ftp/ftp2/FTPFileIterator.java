@@ -31,7 +31,7 @@ package org.apache.commons.net.ftp.ftp2;
  *    written permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
+ *    nor may "Apache" appear in their name, without
  *    prior written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -65,7 +65,7 @@ import java.util.Vector;
  * be receieved as an array of any requested number of entries or all of them.
  *
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: FTPFileIterator.java,v 1.3 2002/05/03 14:52:29 brekke Exp $
+ * @version $Id: FTPFileIterator.java,v 1.4 2003/01/26 00:21:43 dfs Exp $
  * @see org.apache.commons.net.ftp.ftp2.FTPFileList
  */
 public class FTPFileIterator

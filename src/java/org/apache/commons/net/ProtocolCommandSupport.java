@@ -31,7 +31,7 @@ package org.apache.commons.net;
  *    written permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
+ *    nor may "Apache" appear in their name, without
  *    prior written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -56,7 +56,7 @@ package org.apache.commons.net;
 
 import java.io.Serializable;
 import java.util.Enumeration;
-import org.apache.commons.util.ListenerList;
+import org.apache.commons.net.util.ListenerList;
 
 /***
  * ProtocolCommandSupport is a convenience class for managing a list of

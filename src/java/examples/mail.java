@@ -31,7 +31,7 @@ package examples;
  *    written permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
+ *    nor may "Apache" appear in their name, without
  *    prior written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -63,7 +63,7 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Enumeration;
 import java.util.Vector;
-import org.apache.commons.io.Util;
+import org.apache.commons.net.io.Util;
 import org.apache.commons.net.smtp.SMTPClient;
 import org.apache.commons.net.smtp.SMTPReply;
 import org.apache.commons.net.smtp.SimpleSMTPHeader;

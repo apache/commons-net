@@ -31,7 +31,7 @@ package org.apache.commons.net.bsd;
  *    written permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
+ *    nor may "Apache" appear in their name, without
  *    prior written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -61,7 +61,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import org.apache.commons.io.SocketInputStream;
+import org.apache.commons.net.io.SocketInputStream;
 import org.apache.commons.net.SocketClient;
 
 /***

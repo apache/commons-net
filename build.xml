@@ -52,9 +52,12 @@
     
 
   </target>
-    
-  <target name="jar" description="o Create the jar" depends="compile,test">
 
+  <target name="jar" description="o Create the jar"
+	  depends="compile">
+<!--    
+	  depends="compile,test">
+-->
     <jar jarfile="target/${final.name}.jar" excludes="**/package.html" basedir="${classesdir}"></jar>
 
   </target>

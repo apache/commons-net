@@ -31,7 +31,7 @@ package org.apache.commons.net.ftp;
  *    written permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
+ *    nor may "Apache" appear in their name, without
  *    prior written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -65,9 +65,9 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
-import org.apache.commons.io.FromNetASCIIInputStream;
-import org.apache.commons.io.ToNetASCIIOutputStream;
-import org.apache.commons.io.Util;
+import org.apache.commons.net.io.FromNetASCIIInputStream;
+import org.apache.commons.net.io.ToNetASCIIOutputStream;
+import org.apache.commons.net.io.Util;
 import org.apache.commons.net.MalformedServerReplyException;
 
 /***
@@ -139,7 +139,7 @@ import org.apache.commons.net.MalformedServerReplyException;
  * must create your own filter InputStreams and OutputStreams and wrap
  * them around the streams returned or required by the FTPClient methods.
  * FTPClient uses the NetASCII filter streams in
- * <a href="Package-org.apache.commons.io.html"> org.apache.commons.io </a> to provide
+ * <a href="Package-org.apache.commons.net.io.html"> org.apache.commons.net.io </a> to provide
  * transparent handling of ASCII files.  We will consider incorporating
  * EBCDIC support if there is enough demand.
  * <p>
@@ -462,7 +462,7 @@ public class FTPClient extends FTP
         output = socket.getOutputStream();
         if (__fileType == ASCII_FILE_TYPE)
             output = new ToNetASCIIOutputStream(output);
-        return new org.apache.commons.io.SocketOutputStream(socket, output);
+        return new org.apache.commons.net.io.SocketOutputStream(socket, output);
     }
 
 
@@ -1250,7 +1250,7 @@ public class FTPClient extends FTP
         input = socket.getInputStream();
         if (__fileType == ASCII_FILE_TYPE)
             input = new FromNetASCIIInputStream(input);
-        return new org.apache.commons.io.SocketInputStream(socket, input);
+        return new org.apache.commons.net.io.SocketInputStream(socket, input);
     }
 
 

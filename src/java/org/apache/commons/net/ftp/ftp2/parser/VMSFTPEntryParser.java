@@ -31,7 +31,7 @@ package org.apache.commons.net.ftp.ftp2.parser;
  *    written permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
+ *    nor may "Apache" appear in their name, without
  *    prior written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -103,7 +103,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * <P>
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.6 2002/08/08 20:01:41 brekke Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.7 2003/01/26 00:21:44 dfs Exp $
  */
 public class VMSFTPEntryParser
             extends MatchApparatus implements FTPFileEntryParser

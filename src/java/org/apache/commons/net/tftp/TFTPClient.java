@@ -31,7 +31,7 @@ package org.apache.commons.net.tftp;
  *    written permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
+ *    nor may "Apache" appear in their name, without
  *    prior written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -61,8 +61,8 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import org.apache.commons.io.FromNetASCIIOutputStream;
-import org.apache.commons.io.ToNetASCIIInputStream;
+import org.apache.commons.net.io.FromNetASCIIOutputStream;
+import org.apache.commons.net.io.ToNetASCIIInputStream;
 
 /***
  * The TFTPClient class encapsulates all the aspects of the TFTP protocol

@@ -31,7 +31,7 @@ package org.apache.commons.net.ftp.ftp2.parser;
  *    written permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
+ *    nor may "Apache" appear in their name, without
  *    prior written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -63,7 +63,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
  * DefaultFTPListParser, but adapted to use regular expressions and to fit the
  * new FTPFileEntryParser interface.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: UnixFTPEntryParser.java,v 1.5 2002/08/08 20:01:41 brekke Exp $
+ * @version $Id: UnixFTPEntryParser.java,v 1.6 2003/01/26 00:21:44 dfs Exp $
  */
 public class UnixFTPEntryParser
             extends MatchApparatus implements FTPFileEntryParser

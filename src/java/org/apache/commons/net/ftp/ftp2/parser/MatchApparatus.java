@@ -31,7 +31,7 @@ package org.apache.commons.net.ftp.ftp2.parser;
  *    written permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
+ *    nor may "Apache" appear in their name, without
  *    prior written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -68,7 +68,7 @@ import org.apache.oro.text.regex.MatchResult;
  * It is also designed to encapsulate access to the oro.text.regex
  * classes in one place.
  * @author <a href="mailto:scohen@ignitesports.com">Steve Cohen</a>
- * @version $Id: MatchApparatus.java,v 1.4 2002/08/08 20:01:41 brekke Exp $
+ * @version $Id: MatchApparatus.java,v 1.5 2003/01/26 00:21:44 dfs Exp $
  */
 abstract class MatchApparatus
 {

@@ -31,7 +31,7 @@ package org.apache.commons.net.ftp.ftp2.parser;
  *    written permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
+ *    nor may "Apache" appear in their name, without
  *    prior written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -60,7 +60,7 @@ import org.apache.commons.net.ftp.ftp2.FTPFileEntryParser;
 
 /**
  * Parser for the Connect Enterprise Unix FTP Server From Sterling Commerce.  
- * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.1 2002/08/15 17:47:44 brekke Exp $
+ * @version $Id: EnterpriseUnixFTPEntryParser.java,v 1.2 2003/01/26 00:21:43 dfs Exp $
  * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  */
 public class EnterpriseUnixFTPEntryParser extends MatchApparatus

@@ -31,7 +31,7 @@ package org.apache.commons.net.ftp.ftp2;
  *    written permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
+ *    nor may "Apache" appear in their name, without
  *    prior written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -77,7 +77,7 @@ import org.apache.commons.net.ftp.FTPFile;
  * which required a bigger memory hit.
  *
  * @author <a href="mailto:stevecoh1@attbi.com">Steve Cohen</a>
- * @version $Id: FTPFileList.java,v 1.3 2002/05/03 14:52:29 brekke Exp $
+ * @version $Id: FTPFileList.java,v 1.4 2003/01/26 00:21:43 dfs Exp $
  * @see FTPClient2#listFiles
  * @see FTPClient2#createFileList
  */
