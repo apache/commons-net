@@ -98,7 +98,7 @@ public class TelnetClient extends Telnet
             input = _input_;
 
 
-        tmp = new TelnetInputStream(input, this);
+        tmp = new TelnetInputStream(input, this, readerThread);
         if(readerThread)
         {
             tmp._start();

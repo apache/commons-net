@@ -50,10 +50,10 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     private int __suboption_count = 0;
     /* TERMINAL-TYPE option (end)*/
 
-    private boolean _ayt_flag = false;
+    private boolean __threaded;
 
-    private boolean __threaded = false;
-    TelnetInputStream(InputStream input, TelnetClient client)
+    TelnetInputStream(InputStream input, TelnetClient client,
+                      boolean readerThread)
     {
         super(input);
         __client = client;
@@ -69,11 +69,22 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         __bytesAvailable = 0;
         __ioException = null;
         __readIsWaiting = false;
-        __thread = new Thread(this);
+        __threaded = false;
+        if(__threaded)
+            __thread = new Thread(this);
+        else
+            __thread = null;
+    }
+
+    TelnetInputStream(InputStream input, TelnetClient client) {
+        this(input, client, true);
     }
 
     void _start()
     {
+        if(__thread == null)
+            return;
+
         int priority;
         __isClosed = false;
         // Need to set a higher priority in case JVM does not use pre-emptive
@@ -495,7 +506,7 @@ _mainSwitch:
             __hasReachedEOF = true;
             __isClosed      = true;
 
-            if (__thread.isAlive())
+            if (__thread != null && __thread.isAlive())
             {
                 __thread.interrupt();
             }
