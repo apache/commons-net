@@ -2164,7 +2164,9 @@ public class FTPClient extends FTP
      * @param parser
      * @param pathname
      * 
-     * @return 
+     * @return The list of file information contained in the given path in
+     *         the format determined by<code> parserKey </code>parameter.
+     *         
      * @exception IOException
      * @since 5 Jan 2004
      * @deprecated use listFiles(String parserKey, String pathname) instead

@@ -56,7 +56,7 @@ package org.apache.commons.net.telnet;
 
 /***
  * Simple option handler that can be used for options
- * that don't require subnegotiation
+ * that don't require subnegotiation.
  * <p>
  * @author Bruno D'Avanzo
  ***/

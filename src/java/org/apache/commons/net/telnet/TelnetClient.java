@@ -218,7 +218,7 @@ public class TelnetClient extends Telnet
     /* Code Section added for supporting AYT (start)*/
 
     /***
-     * Sends an Are You There sequence and waits for the result
+     * Sends an Are You There sequence and waits for the result.
      * <p>
      * @throws InterruptedException
      * @throws IllegalArgumentException

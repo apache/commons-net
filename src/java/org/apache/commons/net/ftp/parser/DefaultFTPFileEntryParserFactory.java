@@ -64,7 +64,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
  * if no other implementation is specified as a system
  * property.
  * 
- * @see org.apache.commons.net.ftp.FTPClient.getFileList()
+ * @see org.apache.commons.net.ftp.FTPClient.listFiles()
  */
 public class DefaultFTPFileEntryParserFactory 
 implements FTPFileEntryParserFactory 
@@ -83,9 +83,8 @@ implements FTPFileEntryParserFactory
      * the known parsers.  This comparison is <b>case-insensitive</b>.
      * The intent here is where possible, to select as keys strings
      * which are returned by the SYST command on the systems which
-     * the corresponding parser successfully parses.  This will 
-     * enable this factory to be used in a future auto-detection
-     * system. 
+     * the corresponding parser successfully parses.  This enables 
+     * this factory to be used in the auto-detection system. 
      * <p/>
      * @param key    should be a fully qualified classname corresponding to
      *               a class implementing the FTPFileEntryParser interface<br/>

@@ -139,7 +139,7 @@ public abstract class TelnetOptionHandler
 
     /***
      * Returns a boolean indicating whether to accept a DO
-     * request coming from the other end
+     * request coming from the other end.
      * <p>
      * @return true if a DO request shall be accepted.
      ***/
@@ -150,7 +150,7 @@ public abstract class TelnetOptionHandler
 
     /***
      * Returns a boolean indicating whether to accept a WILL
-     * request coming from the other end
+     * request coming from the other end.
      * <p>
      * @return true if a WILL request shall be accepted.
      ***/
@@ -204,7 +204,7 @@ public abstract class TelnetOptionHandler
     }
 
     /***
-     * Tells this option whether to send a WILL request upon connection
+     * Tells this option whether to send a WILL request upon connection.
      * <p>
      * @param init - if true, a WILL request will be sent upon subsequent
      * connections.
@@ -215,7 +215,7 @@ public abstract class TelnetOptionHandler
     }
 
     /***
-     * Tells this option whether to send a DO request upon connection
+     * Tells this option whether to send a DO request upon connection.
      * <p>
      * @param init - if true, a DO request will be sent upon subsequent
      * connections.

@@ -443,7 +443,7 @@ class Telnet extends SocketClient
     }
 
     /***
-     * Processes a DO request
+     * Processes a DO request.
      * <p>
      * @throws IOException - Exception in I/O.
      * <p>
@@ -541,7 +541,7 @@ class Telnet extends SocketClient
     }
 
     /***
-     * Processes a DONT request
+     * Processes a DONT request.
      * <p>
      * @throws IOException - Exception in I/O.
      * <p>
@@ -595,7 +595,7 @@ class Telnet extends SocketClient
 
 
     /***
-     * Processes a WILL request
+     * Processes a WILL request.
      * <p>
      * @throws IOException - Exception in I/O.
      * <p>
@@ -662,7 +662,7 @@ class Telnet extends SocketClient
     }
 
     /***
-     * Processes a WONT request
+     * Processes a WONT request.
      * <p>
      * @throws IOException - Exception in I/O.
      * <p>
@@ -718,7 +718,7 @@ class Telnet extends SocketClient
 
     /* TERMINAL-TYPE option (start)*/
     /***
-     * Processes a suboption negotiation
+     * Processes a suboption negotiation.
      * <p>
      * @throws IOException - Exception in I/O.
      * <p>
@@ -767,7 +767,7 @@ class Telnet extends SocketClient
     }
 
     /***
-     * Sends terminal type information
+     * Sends terminal type information.
      * <p>
      * @throws IOException - Exception in I/O.
      ***/
@@ -792,7 +792,7 @@ class Telnet extends SocketClient
 
     /* open TelnetOptionHandler functionality (start)*/
     /***
-     * Manages subnegotiation for Terminal Type
+     * Manages subnegotiation for Terminal Type.
      * <p>
      * @throws IOException - Exception in I/O.
      * <p>
@@ -856,7 +856,7 @@ class Telnet extends SocketClient
     /* Code Section added for supporting AYT (end)*/
 
     /***
-     * Called upon connection
+     * Called upon connection.
      * <p>
      * @throws IOException - Exception in I/O.
      ***/
@@ -918,7 +918,7 @@ class Telnet extends SocketClient
     }
 
     /***
-     * Sends a DO
+     * Sends a DO.
      * <p>
      * @throws IOException - Exception in I/O.
      * <p>
@@ -940,7 +940,7 @@ class Telnet extends SocketClient
     }
 
     /***
-     * Requests a DO
+     * Requests a DO.
      * <p>
      * @throws IOException - Exception in I/O.
      * <p>
@@ -960,7 +960,7 @@ class Telnet extends SocketClient
     }
 
     /***
-     * Sends a DONT
+     * Sends a DONT.
      * <p>
      * @throws IOException - Exception in I/O.
      * <p>
@@ -982,7 +982,7 @@ class Telnet extends SocketClient
     }
 
     /***
-     * Requests a DONT
+     * Requests a DONT.
      * <p>
      * @throws IOException - Exception in I/O.
      * <p>
@@ -1003,7 +1003,7 @@ class Telnet extends SocketClient
 
 
     /***
-     * Sends a WILL
+     * Sends a WILL.
      * <p>
      * @throws IOException - Exception in I/O.
      * <p>
@@ -1025,7 +1025,7 @@ class Telnet extends SocketClient
     }
 
     /***
-     * Requests a WILL
+     * Requests a WILL.
      * <p>
      * @throws IOException - Exception in I/O.
      * <p>
@@ -1045,7 +1045,7 @@ class Telnet extends SocketClient
     }
 
     /***
-     * Sends a WONT
+     * Sends a WONT.
      * <p>
      * @throws IOException - Exception in I/O.
      * <p>
@@ -1067,7 +1067,7 @@ class Telnet extends SocketClient
     }
 
     /***
-     * Requests a WONT
+     * Requests a WONT.
      * <p>
      * @throws IOException - Exception in I/O.
      * <p>
@@ -1087,7 +1087,7 @@ class Telnet extends SocketClient
     }
 
     /***
-     * Sends a byte
+     * Sends a byte.
      * <p>
      * @throws IOException - Exception in I/O.
      * <p>
@@ -1106,7 +1106,7 @@ class Telnet extends SocketClient
 
     /* Code Section added for supporting AYT (start)*/
     /***
-     * Sends an Are You There sequence and waits for the result
+     * Sends an Are You There sequence and waits for the result.
      * <p>
      * @throws IOException - Exception in I/O.
      * @throws IllegalArgumentException - Illegal argument
@@ -1297,7 +1297,7 @@ class Telnet extends SocketClient
     }
 
     /***
-     * Sends a read char on the spy stream
+     * Sends a read char on the spy stream.
      * <p>
      * @param ch - character read from the session
      ***/
@@ -1325,7 +1325,7 @@ class Telnet extends SocketClient
     }
 
     /***
-     * Sends a written char on the spy stream
+     * Sends a written char on the spy stream.
      * <p>
      * @param ch - character written to the session
      ***/

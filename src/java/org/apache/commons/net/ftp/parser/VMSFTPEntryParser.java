@@ -73,7 +73,7 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileListParserImpl;
 
 /**
- * Implementation FTPFileEntryParser and FTPFileListParser for VMS Systems
+ * Implementation FTPFileEntryParser and FTPFileListParser for VMS Systems.
  * This is a sample of VMS LIST output
  *   
  *  "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
@@ -84,7 +84,7 @@ import org.apache.commons.net.ftp.FTPFileListParserImpl;
  * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParser.java,v 1.10 2004/01/02 03:39:05 scohen Exp $
+ * @version $Id: VMSFTPEntryParser.java,v 1.11 2004/01/05 23:56:49 scohen Exp $
  * 
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
