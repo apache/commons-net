@@ -54,13 +54,6 @@ package org.apache.commons.net.telnet;
  * <http://www.apache.org/>.
  */
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import org.apache.commons.net.io.FromNetASCIIInputStream;
-import org.apache.commons.net.io.ToNetASCIIOutputStream;
-
 /***
  * The TelnetNotificationHandler interface can be used to handle
  * notification of options negotiation commands received on a telnet

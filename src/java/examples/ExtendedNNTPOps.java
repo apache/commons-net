@@ -145,8 +145,6 @@ public class ExtendedNNTPOps {
     {
         ArrayList articles = new ArrayList();
         Reader reader = null;
-        String theMessage;
-        char[] buffer = new char[128];
 
         reader = (DotTerminatedMessageReader)
             client.retrieveArticleInfo(lowArticleNumber, highArticleNumber);
@@ -181,7 +179,6 @@ public class ExtendedNNTPOps {
         String temp;
         StringBuffer sb = null;
         BufferedReader bufReader = new BufferedReader(reader);
-        boolean endOfHeader = false;
 			
         sb = new StringBuffer();
         try 

@@ -448,12 +448,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         };
 
         byte buffread2b[] = new byte[11];
-        byte send2b[] =
-        {
-            (byte)TelnetCommand.IAC, (byte)TelnetCommand.SB, (byte)TelnetOption.TERMINAL_TYPE,
-            (byte)1, (byte)TelnetCommand.IAC, (byte)TelnetCommand.SE,
-        };
-
+    
         openConnections();
 
         numdo = 0;
@@ -594,6 +589,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         OutputStream os = server3.getOutputStream();
         InputStream is = server3.getInputStream();
         TelnetTestResponder tr = new TelnetTestResponder(is, os, inputs, outputs, 30000);
+        assertNotNull(tr);
         boolean res1 = tc3.sendAYT(2000);
 
         if(res1 == true)
