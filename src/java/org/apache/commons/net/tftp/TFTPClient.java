@@ -192,7 +192,6 @@ _receivePacket:
                 {
                     try
                     {
-                        //System.err.println("Receiving.");
                         received = bufferedReceive();
                         break;
                     }
@@ -221,9 +220,8 @@ _receivePacket:
                     }
                 }
 
-                //System.err.println("Got an answer.");
-
-                // The first time we receive we get the port number.
+                // The first time we receive we get the port number and
+		// answering host address (for hosts with multiple IPs)
                 if (lastBlock == 0)
                 {
                     hostPort = received.getPort();
@@ -242,8 +240,6 @@ _receivePacket:
                         received.getPort() == hostPort)
                 {
 
-                    //System.err.println("Got this far.");
-
                     switch (received.getType())
                     {
                     case TFTPPacket.ERROR:
@@ -256,8 +252,6 @@ _receivePacket:
                         dataLength = data.getDataLength();
 
                         lastBlock = data.getBlockNumber();
-
-                        //System.err.println("Data: Got Block: " + lastBlock +" Expected: " + block);
 
                         if (lastBlock == block)
                         {
@@ -309,12 +303,9 @@ _receivePacket:
                 //break;
             }
 
-            //System.err.println("Setting acknowledgement: " + lastBlock);
-
             ack.setBlockNumber(lastBlock);
             sent = ack;
             bytesRead += dataLength;
-            //System.err.println("bytesRead: " + bytesRead);
         } // First data packet less than 512 bytes signals end of stream.
 
         while (dataLength == TFTPPacket.SEGMENT_SIZE);
@@ -441,7 +432,6 @@ _receivePacket:
                 {
                     try
                     {
-                        //System.err.println("Receiving.");
                         received = bufferedReceive();
                         break;
                     }
@@ -470,13 +460,18 @@ _receivePacket:
                     }
                 }
 
-                //System.err.println("Got an answer.");
-
-                // The first time we receive we get the port number.
+                // The first time we receive we get the port number and
+		// answering host address (for hosts with multiple IPs)
                 if (lastBlock == 0)
                 {
                     hostPort = received.getPort();
                     data.setPort(hostPort);
+                    if(!host.equals(received.getAddress()))
+                    {
+                        host = received.getAddress();
+                        data.setAddress(host);
+                        sent.setAddress(host);
+                    }
                 }
 
                 // Comply with RFC 783 indication that an error acknowledgement
@@ -484,8 +479,6 @@ _receivePacket:
                 if (host.equals(received.getAddress()) &&
                         received.getPort() == hostPort)
                 {
-
-                    //System.err.println("Got this far.");
 
                     switch (received.getType())
                     {
@@ -498,8 +491,6 @@ _receivePacket:
                         ack = (TFTPAckPacket)received;
 
                         lastBlock = ack.getBlockNumber();
-
-                        //System.err.println("Ack: Got Block: " + lastBlock +" Expected: " + block);
 
                         if (lastBlock == block)
                         {
