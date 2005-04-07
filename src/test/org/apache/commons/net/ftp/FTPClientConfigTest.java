@@ -113,7 +113,7 @@ public class FTPClientConfigTest extends TestCase {
         Date d2 = null;
         Date d3 = null;
         try {
-	        d1 = sdf1.parse("31 déc 2004");
+	        d1 = sdf1.parse("31 d\u00e9c 2004");
         } catch (ParseException px) {
             fail("failed.to.parse.french");
         }

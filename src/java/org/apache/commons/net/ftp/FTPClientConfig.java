@@ -98,7 +98,7 @@ import java.util.TreeMap;
  *    FTPClient f=FTPClient();
  *    FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_VMS);
  *    conf.setShortMonthNames(
- *        "jan|feb|mar|apr|ma&#xED;|j&#xFA;n|j&#xFA;l|&#xE1;g&#xFA;|sep|okt|n&#xF3;v|des");
+ *        "jan|feb|mar|apr|ma\u00ED|j\u00FAn|j\u00FAl|\u00e1g\u00FA|sep|okt|n\u00F3v|des");
  *    f.configure(conf);
  *    f.connect(server);
  *    f.login(username, password);
@@ -254,7 +254,7 @@ public class FTPClientConfig
 
 		// some don't
 		LANGUAGE_CODE_MAP.put("fr",	
-		        "jan|fév|mar|avr|mai|jun|jui|aoû|sep|oct|nov|déc");  //french
+		        "jan|f\u00e9v|mar|avr|mai|jun|jui|ao\u00fb|sep|oct|nov|d\u00e9c");  //french
 			
 	}
 	

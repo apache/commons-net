@@ -129,7 +129,7 @@ public class FTPTimestampParserImplTest extends TestCase {
 			fail("failed.to.parse.default");
 		}
 		try {
-			parser.parseTimestamp("fév 22 2002");
+			parser.parseTimestamp("f\u00e9v 22 2002");
 			fail("should.have.failed.to.parse.default");
 		} catch (ParseException e) {
 			// this is the success case
@@ -141,13 +141,13 @@ public class FTPTimestampParserImplTest extends TestCase {
 		config.setServerLanguageCode("fr");
 		parser.configure(config);
 		try {
-			parser.parseTimestamp("déc 22 2002");
+			parser.parseTimestamp("d\u00e9c 22 2002");
 			fail("incorrect.field.order");
 		} catch (ParseException e) {
 			// this is the success case
 		}
 		try {
-			parser.parseTimestamp("22 déc 2002");
+			parser.parseTimestamp("22 d\u00e9c 2002");
 		} catch (ParseException e) {
 			fail("failed.to.parse.french");
 		}
@@ -159,27 +159,27 @@ public class FTPTimestampParserImplTest extends TestCase {
 			// this is the success case
 		}
 		try {
-			parser.parseTimestamp("29 fév 2002");
+			parser.parseTimestamp("29 f\u00e9v 2002");
 			fail("nonexistent.date");
 		} catch (ParseException e) {
 			// this is the success case
 		}
 
 		try {
-			parser.parseTimestamp("22 aoû 30:02");
+			parser.parseTimestamp("22 ao\u00fb 30:02");
 			fail("bad.hour");
 		} catch (ParseException e) {
 			// this is the success case
 		}
 		
 		try {
-			parser.parseTimestamp("22 aoû 20:74");
+			parser.parseTimestamp("22 ao\u00fb 20:74");
 			fail("bad.minute");
 		} catch (ParseException e) {
 			// this is the success case
 		}
 		try {
-			parser.parseTimestamp("28 aoû 20:02");
+			parser.parseTimestamp("28 ao\u00fb 20:02");
 		} catch (ParseException e) {
 			fail("failed.to.parse.french.recent");
 		}
