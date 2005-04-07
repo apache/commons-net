@@ -19,6 +19,7 @@ import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import junit.framework.TestCase;
 
@@ -152,14 +153,15 @@ public class FTPClientConfigTest extends TestCase {
         } catch (IllegalArgumentException e){
             // should have failed
         }
-        DateFormatSymbols dfs = null;
+        DateFormatSymbols dfs2 = null;
         try {
-            dfs = FTPClientConfig.getDateFormatSymbols(fakeLang);
+            dfs2 = FTPClientConfig.getDateFormatSymbols(fakeLang);
         } catch (Exception e){
             fail("rejected valid short month string");
         }
-        SimpleDateFormat sdf1 = new SimpleDateFormat("MMM dd, yyyy");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("MMM dd, yyyy", dfs);
+        SimpleDateFormat sdf1 = 
+            new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
+        SimpleDateFormat sdf2 = new SimpleDateFormat("MMM dd, yyyy", dfs2);
         
         Date d1 = null;
         Date d2 = null;

@@ -73,17 +73,6 @@ public class FTPTimestampParserImplTest extends TestCase {
 		
 		FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
 
-		SimpleDateFormat sdf = 
-			new SimpleDateFormat(parser.getRecentDateFormatString());
-	    // assume we're in the US Pacific Time Zone
-	    TimeZone tzla = TimeZone.getTimeZone("America/Los_Angeles");
-		sdf.setTimeZone(tzla);
-		
-		// get formatted versions of time in L.A. 
-		String fmtTimePlusOneHour = sdf.format(anHourFromNow);
-		String fmtTimePlusThreeHours = sdf.format(threeHoursFromNow);
-
-		
 		// assume we are FTPing a server in Chicago, two hours ahead of 
 		// L. A.
 		FTPClientConfig config = 
@@ -94,6 +83,17 @@ public class FTPTimestampParserImplTest extends TestCase {
 		config.setServerTimeZoneId("America/Chicago");
 		parser.configure(config);
 		
+		SimpleDateFormat sdf = (SimpleDateFormat)
+			parser.getRecentDateFormat().clone();
+		
+	    // assume we're in the US Pacific Time Zone
+	    TimeZone tzla = TimeZone.getTimeZone("America/Los_Angeles");
+		sdf.setTimeZone(tzla);
+		
+		// get formatted versions of time in L.A. 
+		String fmtTimePlusOneHour = sdf.format(anHourFromNow);
+		String fmtTimePlusThreeHours = sdf.format(threeHoursFromNow);
+		
 		
 		try {
 			Calendar parsed = parser.parseTimestamp(fmtTimePlusOneHour);
@@ -103,7 +103,7 @@ public class FTPTimestampParserImplTest extends TestCase {
 				(long)TWO_HOURS_OF_MILLISECONDS, 
 				cal.getTime().getTime() - parsed.getTime().getTime());
 		} catch (ParseException e){
-			fail("Unable to parse");
+			fail("Unable to parse " + fmtTimePlusOneHour);
 		}
 		
 		//but if the file's timestamp is THREE hours ahead of now, that should 
@@ -116,7 +116,7 @@ public class FTPTimestampParserImplTest extends TestCase {
 			assertEquals("rollback.even.with.time.zones", 
 					1, cal.get(Calendar.YEAR) - parsed.get(Calendar.YEAR));
 		} catch (ParseException e){
-			fail("Unable to parse");
+			fail("Unable to parse" + fmtTimePlusThreeHours);
 		}
 	}
 
