@@ -29,6 +29,8 @@ public class AllTests {
         suite.addTest(EnterpriseUnixFTPEntryParserTest.suite());
         suite.addTest(OS400FTPEntryParserTest.suite());
         suite.addTest(NTFTPEntryParserTest.suite());
+        suite.addTest(MVSFTPEntryParserTest.suite());
+
         //$JUnit-END$
         return suite;
     }

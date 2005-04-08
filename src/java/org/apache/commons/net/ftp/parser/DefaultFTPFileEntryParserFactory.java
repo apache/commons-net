@@ -66,6 +66,7 @@ public class DefaultFTPFileEntryParserFactory
      *               <li>{@link FTPClientConfig#SYST_OS2 OS/2}</li>
      *               <li>{@link FTPClientConfig#SYST_OS400 OS/400}</li>
      *               <li>{@link FTPClientConfig#SYST_VMS VMS}</li>
+     *               <li>{@link FTPClientConfig#SYST_MVS MVS}</li>
      *               </ul>
      * @return the FTPFileEntryParser corresponding to the supplied key.
      * @throws ParserInitializationException thrown if for any reason the factory cannot resolve
@@ -108,6 +109,10 @@ public class DefaultFTPFileEntryParserFactory
             {
                 parser = createOS400FTPEntryParser();
             }
+            else if (ukey.indexOf(FTPClientConfig.SYST_MVS) >= 0)
+            {
+                parser = createMVSEntryParser();
+        	}
             else
             {
                 throw new ParserInitializationException("Unknown parser type: " + key);
@@ -204,6 +209,10 @@ public class DefaultFTPFileEntryParserFactory
     	}
     }
 
+    public FTPFileEntryParser createMVSEntryParser()
+    {
+        return new MVSFTPEntryParser();
+    }
 
 
 	
