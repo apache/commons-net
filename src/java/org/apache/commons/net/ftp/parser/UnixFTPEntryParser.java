@@ -70,7 +70,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         + "(\\S+)\\s+"
         + "(?:(\\S+)\\s+)?"
         + "(\\d+)\\s+"
-		+ "(\\S+)\\s+(\\S+)\\s+(\\S+)\\s+" /*the three parts of the date in any order*/
+		+ "(\\S+)\\s+(\\S+)\\s+((\\S+)(?:\\s+))?" /*the three parts of the date in any order*/
         + "(\\S+)(\\s*.*)";
 
 
@@ -129,9 +129,10 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             String usr = group(16);
             String grp = group(17);
             String filesize = group(18);
-            String datestr = group(19) + " " + group(20) + " " + group(21);
-            String name = group(22);
-            String endtoken = group(23);
+            String datestr = group(19) + " " + group(20);
+            if(group(22) != null && group(22) != "") datestr += " " +  group(22);
+            String name = group(23);
+            String endtoken = group(24);
 
             try
             {
