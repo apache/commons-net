@@ -16,7 +16,7 @@ import org.apache.commons.net.ftp.FTPFile;
  * 
  * The original system presenting this issue was an AIX system - see bug #27437 for details.
  * 
- *  $Id$
+ *  @version $Id$
  */
 public class FTPConfigEntryParserTest extends TestCase {
 	
