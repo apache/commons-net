@@ -21,8 +21,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.Socket;
 import java.util.Enumeration;
 import java.util.Vector;
+import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
+
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ProtocolCommandListener;
 import org.apache.commons.net.ProtocolCommandSupport;
@@ -439,7 +443,7 @@ public class FTP extends TelnetClient
         }
         catch (SocketException e)
         {
-            if (!isConnected() || _socket_ == null || !_socket_.isConnected())
+            if (!isConnected() || !socketIsConnected(_socket_))
             {
                 throw new FTPConnectionClosedException("Connection unexpectedly closed.");
             }
@@ -457,6 +461,38 @@ public class FTP extends TelnetClient
         return _replyCode;
     }
 
+    /**
+     * Checks if the socket is connected using reflection to be backward compatible.
+     * The return value of this method is only meaningful in an java 1.4 environment.
+     *
+     * @param socket
+     * @return true if connected or pre java 1.4
+     */
+    private boolean socketIsConnected(Socket socket)
+    {
+        if (socket == null)
+        {
+            return false;
+        }
+
+        try
+        {
+            Method isConnected = socket.getClass().getMethod("isConnected", null);
+            return ((Boolean) isConnected.invoke(socket, null)).booleanValue();
+        }
+        catch (NoSuchMethodException e)
+        {
+            return true;
+        }
+        catch (IllegalAccessException e)
+        {
+            return true;
+        }
+        catch (InvocationTargetException e)
+        {
+            return true;
+        }
+    }
 
     /***
      * Sends an FTP command to the server, waits for a reply and returns the
