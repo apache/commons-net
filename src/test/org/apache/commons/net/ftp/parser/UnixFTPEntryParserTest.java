@@ -45,6 +45,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework
 
     private static final String[] goodsamples =
     {
+
         "-rw-r--r--   1 500      500            21 Aug  8 14:14 JB3-TES1.gz",
         "-rwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox",
         "drwxr-xr-x   2 root     root         4096 Aug 24  2001 zxjdbc",
@@ -70,6 +71,8 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework
         "-rwSr-Sr--   1 500      500             0 Mar 25 08:22 testSuid",
 		"-rwsr-sr--   1 500      500             0 Mar 25 08:23 testSuidExec",
 		"-rwsr-sr--   1 500      500             0 Mar 25 0:23 testSuidExec2",
+        "drwxrwx---+ 23 500     500    0 Jan 10 13:09 testACL",
+
 		"-rw-r--r--   1 1        3518644 May 25 12:12 std"
     };
 

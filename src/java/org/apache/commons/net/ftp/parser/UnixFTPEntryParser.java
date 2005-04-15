@@ -65,7 +65,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      */
     private static final String REGEX =
         "([bcdlfmpSs-])"
-        + "(((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-])))\\s+"
+        +"(((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-])))\\+?\\s+"
         + "(\\d+)\\s+"
         + "(\\S+)\\s+"
         + "(?:(\\S+)\\s+)?"
