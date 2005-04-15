@@ -372,6 +372,7 @@ _receivePacket:
 
         dataLength = lastBlock = hostPort = bytesRead = 0;
         block = 0;
+        boolean lastAckWait = false;
 
         if (mode == TFTP.ASCII_MODE)
             input = new ToNetASCIIInputStream(input);
@@ -455,7 +456,10 @@ _receivePacket:
                         if (lastBlock == block)
                         {
                             ++block;
-                            break _receivePacket;
+                            if (lastAckWait)
+                              break _sendPacket;
+                            else
+                              break _receivePacket;
                         }
                         else
                         {
@@ -501,9 +505,8 @@ _receivePacket:
             data.setData(_sendBuffer, 4, offset - 4);
             sent = data;
         }
-        while (dataLength == 0);
+        while (dataLength == 0 || lastAckWait);
 
-        bufferedSend(sent);
         endBufferedOps();
     }
 
