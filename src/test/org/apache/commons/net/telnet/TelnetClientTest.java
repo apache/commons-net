@@ -135,7 +135,6 @@ extends TestCase implements TelnetNotificationHandler
                
                // only increment socket number on success
                socket++;
-               System.err.println("opened client-server connection on port " + port);
            } catch (IOException e) {
                closeConnection(server, client, port);
                System.err.println("failed to open client-server connection on port " + port);
@@ -170,7 +169,6 @@ extends TestCase implements TelnetNotificationHandler
         try {
             if (client != null) {
                 client.disconnect();
-                System.err.println("closed client-server connection on port " + port);
             }
         } catch (IOException e) {
             System.err.println("failed to close client-server connection on port " + port);
