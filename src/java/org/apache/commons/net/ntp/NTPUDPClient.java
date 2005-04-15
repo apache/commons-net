@@ -68,6 +68,7 @@ public final class NTPUDPClient extends DatagramSocketClient
         message.setVersion(_version);
         DatagramPacket sendPacket = message.getDatagramPacket();
         sendPacket.setAddress(host);
+        sendPacket.setPort(port);
 
         NtpV3Packet recMessage = new NtpV3Impl();
         DatagramPacket receivePacket = recMessage.getDatagramPacket();
