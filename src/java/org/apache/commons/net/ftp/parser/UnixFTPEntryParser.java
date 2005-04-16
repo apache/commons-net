@@ -44,6 +44,15 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     static final String DEFAULT_RECENT_DATE_FORMAT 
 		= "MMM d HH:mm"; //Nov 9 20:06
 
+    static final String NUMERIC_DATE_FORMAT 
+		= "yyyy-MM-dd HH:mm"; //2001-11-09 20:06
+
+    static final FTPClientConfig NUMERIC_DATE_CONFIG =
+        new FTPClientConfig(
+                FTPClientConfig.SYST_UNIX,
+                NUMERIC_DATE_FORMAT,
+                null, null, null, null);
+
     /**
      * this is the regular expression used by this parser.
      *
@@ -70,7 +79,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         + "(\\S+)\\s+"
         + "(?:(\\S+)\\s+)?"
         + "(\\d+)\\s+"
-		+ "(\\S+)\\s+(\\S+)\\s+((\\S+)(?:\\s+))?" /*the three parts of the date in any order*/
+		+ "(\\S+)\\s+(\\S+)\\s+((\\S+)(?:\\s+))?" /*the two or three parts of the date in any order*/
         + "(\\S+)(\\s*.*)";
 
 
@@ -259,5 +268,8 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
                 DEFAULT_RECENT_DATE_FORMAT,
                 null, null, null);
     }
+    
+    
+    
 
 }

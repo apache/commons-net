@@ -38,10 +38,11 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 			"-rw-r--r--   1 14       staff      119:26 Aug 22  2000 zxJDBC-1.2.3.zip",
 			"-rw-r--r--   1 ftp      no group    83853 Jan 22  2001 zxJDBC-1.2.4.tar.gz",
 			"-rw-r--r--   1ftp       nogroup    126552 Jan 22  2001 zxJDBC-1.2.4.zip",
+			"-rw-r--r--   1 root     root       190144 2001-04-27 zxJDBC-2.0.1b1.zip",
 			"-rw-r--r--   1 root     root       111325 Apr -7 18:79 zxJDBC-2.0.1b1.tar.gz" };
 
-	private static final String[] goodsamples = {
-
+	private static final String[] goodsamples = 
+	{
 			"-rw-r--r--   1 500      500            21 Aug  8 14:14 JB3-TES1.gz",
 			"-rwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox",
 			"drwxr-xr-x   2 root     root         4096 Aug 24  2001 zxjdbc",
@@ -68,8 +69,8 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 			"-rwsr-sr--   1 500      500             0 Mar 25 08:23 testSuidExec",
 			"-rwsr-sr--   1 500      500             0 Mar 25 0:23 testSuidExec2",
 			"drwxrwx---+ 23 500     500    0 Jan 10 13:09 testACL",
-
-			"-rw-r--r--   1 1        3518644 May 25 12:12 std" };
+			"-rw-r--r--   1 1        3518644 May 25 12:12 std" 
+		};
 
 	/**
 	 * @see junit.framework.TestCase#TestCase(String)
@@ -91,6 +92,33 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 	protected String[] getGoodListing() {
 		return (goodsamples);
 	}
+	
+    /**
+     */
+    public void testNumericDateFormat()
+    {
+        String testNumericDF = 
+			"-rw-r-----   1 neeme neeme   346 2005-04-08 11:22 services.vsp";
+
+        UnixFTPEntryParser parser = 
+            new UnixFTPEntryParser(UnixFTPEntryParser.NUMERIC_DATE_CONFIG);
+        
+        FTPFile f = parser.parseFTPEntry(testNumericDF);
+        assertNotNull("Failed to parse " + testNumericDF,
+                      f);
+        
+        
+		Calendar cal = Calendar.getInstance();
+		cal.clear();
+		cal.set(Calendar.YEAR, 2005);
+		cal.set(Calendar.MONTH, Calendar.APRIL);
+
+		cal.set(Calendar.DATE, 8);
+		cal.set(Calendar.HOUR_OF_DAY, 11);
+		cal.set(Calendar.MINUTE, 22);
+		assertEquals(cal.getTime(), f.getTimestamp().getTime());
+    }
+
 
 	/**
 	 * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
