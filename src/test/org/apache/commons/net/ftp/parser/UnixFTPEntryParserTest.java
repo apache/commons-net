@@ -69,7 +69,9 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 			"-rwsr-sr--   1 500      500             0 Mar 25 08:23 testSuidExec",
 			"-rwsr-sr--   1 500      500             0 Mar 25 0:23 testSuidExec2",
 			"drwxrwx---+ 23 500     500    0 Jan 10 13:09 testACL",
-			"-rw-r--r--   1 1        3518644 May 25 12:12 std" 
+			"-rw-r--r--   1 1        3518644 May 25 12:12 std",
+            "lrwxrwxrwx   1 neeme neeme             23 Mar  2 18:06 macros -> ./../../global/macros/."
+
 		};
 
 	/**
@@ -99,6 +101,8 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
     {
         String testNumericDF = 
 			"-rw-r-----   1 neeme neeme   346 2005-04-08 11:22 services.vsp";
+        String testNumericDF2 = 
+            "lrwxrwxrwx   1 neeme neeme    23 2005-03-02 18:06 macros -> ./../../global/macros/.";
 
         UnixFTPEntryParser parser = 
             new UnixFTPEntryParser(UnixFTPEntryParser.NUMERIC_DATE_CONFIG);
@@ -117,6 +121,11 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 		cal.set(Calendar.HOUR_OF_DAY, 11);
 		cal.set(Calendar.MINUTE, 22);
 		assertEquals(cal.getTime(), f.getTimestamp().getTime());
+
+        FTPFile f2 = parser.parseFTPEntry(testNumericDF2);
+        assertNotNull("Failed to parse " + testNumericDF2,
+                      f2);
+
     }
 
 
