@@ -80,7 +80,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         + "(?:(\\S+)\\s+)?"
         + "(\\d+)\\s+"
 		+ "(\\S+)\\s+(\\S+)\\s+((\\S+)(?:\\s+))?" /*the two or three parts of the date in any order*/
-        + "(\\w+)(\\s*.*)";
+        + "([^-\\s]\\S*)(\\s*.*)";
 
 
     /**
