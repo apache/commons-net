@@ -79,8 +79,19 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         + "(\\S+)\\s+"
         + "(?:(\\S+)\\s+)?"
         + "(\\d+)\\s+"
-		+ "(\\S+)\\s+(\\S+)\\s+((\\S+)(?:\\s+))?" /*the two or three parts of the date in any order*/
-        + "([^-\\s]\\S*)(\\s*.*)";
+        
+        /*
+          numeric or standard format date
+        */
+        + "((?:\\d+[-/]\\d+[-/]\\d+)|(?:\\S+\\s+\\S+))\\s+"
+		
+        /* 
+           year (for non-recent standard format) 
+		   or time (for numeric or recent standard format  
+		*/
+		+ "((?:\\d{4})|(?:\\d{1,2}:\\d{2}))\\s+"
+        
+		+ "(\\S*)(\\s*.*)";
 
 
     /**
@@ -139,9 +150,8 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             String grp = group(17);
             String filesize = group(18);
             String datestr = group(19) + " " + group(20);
-            if(group(22) != null && group(22) != "") datestr += " " +  group(22);
-            String name = group(23);
-            String endtoken = group(24);
+            String name = group(21);
+            String endtoken = group(22);
 
             try
             {
