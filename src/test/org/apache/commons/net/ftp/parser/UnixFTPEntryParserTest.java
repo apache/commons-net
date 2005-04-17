@@ -125,6 +125,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
         FTPFile f2 = parser.parseFTPEntry(testNumericDF2);
         assertNotNull("Failed to parse " + testNumericDF2,
                       f2);
+        assertEquals("symbolic link", "./../../global/macros/.", f2.getLink());
 
     }
 
@@ -235,4 +236,54 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 	public static TestSuite suite() {
 		return (new TestSuite(UnixFTPEntryParserTest.class));
 	}
+	
+	
+    /* 
+     * @param test
+     * @param f
+     */
+    protected void doAdditionalGoodTests(String test, FTPFile f) {
+        String link = f.getLink();
+        if (null != link) {
+            int linklen = link.length();
+            if (linklen > 0) {
+                assertEquals(link, test.substring(test.length() - linklen));
+                assertEquals(f.getType(), FTPFile.SYMBOLIC_LINK_TYPE);
+            }
+        }
+        int type = f.getType();
+        switch (test.charAt(0))
+        {
+        case 'd':
+            assertEquals("Type of "+ test, type, FTPFile.DIRECTORY_TYPE);
+            break;
+        case 'l':
+             assertEquals("Type of "+ test, type, FTPFile.SYMBOLIC_LINK_TYPE);
+             break;
+        case 'b':
+        case 'c':
+            assertEquals(0, f.getHardLinkCount());
+        case 'f':
+        case '-':
+            assertEquals("Type of "+ test, type, FTPFile.FILE_TYPE);
+            break;
+        default:
+            assertEquals("Type of "+ test, type, FTPFile.UNKNOWN_TYPE);
+        }
+        
+        for (int access = FTPFile.USER_ACCESS; 
+        	access <= FTPFile.WORLD_ACCESS; access++) 
+        {
+            for (int perm = FTPFile.READ_PERMISSION; 
+            	perm <= FTPFile.EXECUTE_PERMISSION; perm++)
+            {
+                int pos = 3*access + perm + 1;
+                char permchar = test.charAt(pos);
+                assertEquals("Permission " + test.substring(1,10), 
+                        f.hasPermission(access, perm), 
+                        permchar != '-' && !Character.isUpperCase(permchar)); 
+            }
+        }
+
+    }
 }
