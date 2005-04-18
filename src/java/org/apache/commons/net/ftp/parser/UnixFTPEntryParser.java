@@ -47,7 +47,19 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     static final String NUMERIC_DATE_FORMAT 
 		= "yyyy-MM-dd HH:mm"; //2001-11-09 20:06
 
-    static final FTPClientConfig NUMERIC_DATE_CONFIG =
+    /**
+     * Some Linux distributions are now shipping an FTP server which formats
+     * file listing dates in an all-numeric format: 
+     * <code>"yyyy-MM-dd HH:mm</code>.  
+     * This is a very welcome development,  and hopefully it will soon become 
+     * the standard.  However, since it is so new, for now, and possibly 
+     * forever, we merely accomodate it, but do not make it the default.
+     * <p>
+     * For now end users may specify this format only via 
+     * <code>UnixFTPEntryParser(FTPClientConfig)</code>.
+     * Steve Cohen - 2005-04-17
+     */
+    public static final FTPClientConfig NUMERIC_DATE_CONFIG =
         new FTPClientConfig(
                 FTPClientConfig.SYST_UNIX,
                 NUMERIC_DATE_FORMAT,
