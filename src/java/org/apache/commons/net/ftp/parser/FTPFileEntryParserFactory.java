@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.parser;
-import org.apache.commons.net.ftp.FTPFileEntryParser;
 import org.apache.commons.net.ftp.FTPClientConfig;
+import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * The interface describes a factory for creating FTPFileEntryParsers.

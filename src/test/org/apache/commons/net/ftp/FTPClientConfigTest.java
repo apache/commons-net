@@ -23,10 +23,6 @@ import java.util.Locale;
 
 import junit.framework.TestCase;
 
-/**
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates - Comments
- */
 public class FTPClientConfigTest extends TestCase {
 
     /*

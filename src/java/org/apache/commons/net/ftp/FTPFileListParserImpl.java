@@ -15,7 +15,7 @@
  */
 package org.apache.commons.net.ftp;
 
-import org.apache.commons.net.ftp.parser.*;
+import org.apache.commons.net.ftp.parser.RegexFTPFileEntryParserImpl;
 
 /**
  * This abstract class implements both the older FTPFileListParser and

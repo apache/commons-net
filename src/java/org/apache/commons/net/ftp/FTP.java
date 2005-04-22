@@ -19,13 +19,13 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.InetAddress;
-import java.net.SocketException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.Vector;
-import java.lang.reflect.Method;
-import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ProtocolCommandListener;

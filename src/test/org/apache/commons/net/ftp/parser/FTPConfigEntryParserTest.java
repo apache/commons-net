@@ -1,3 +1,18 @@
+/*
+ * Copyright 2001-2004 The Apache Software Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.apache.commons.net.ftp.parser;
 
 import java.text.SimpleDateFormat;
@@ -11,7 +26,7 @@ import org.apache.commons.net.ftp.FTPFile;
 
 /**
  * This is a simple TestCase that tests entry parsing using the new FTPClientConfig
- * mechanism. The normal FTPClient cannot handle the different date format in these 
+ * mechanism. The normal FTPClient cannot handle the different date formats in these 
  * entries, however using a configurable format, we can handle it easily.
  * 
  * The original system presenting this issue was an AIX system - see bug #27437 for details.
@@ -76,7 +91,7 @@ public class FTPConfigEntryParserTest extends TestCase {
 		cal.set(Calendar.SECOND, 0);
 		
 		// With no year specified, it defaults to 1970
-		// TODO this is a bug - it should default to the current year
+		// TODO this is probably a bug - it should default to the current year
 		cal.set(Calendar.YEAR, 1970);
 		
 		assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp()

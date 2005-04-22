@@ -20,7 +20,6 @@ import java.util.Calendar;
 
 import org.apache.commons.net.ftp.Configurable;
 import org.apache.commons.net.ftp.FTPClientConfig;
-import org.apache.commons.net.ftp.FTPFile;
 
 
 /**
