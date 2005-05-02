@@ -802,11 +802,7 @@ extends TestCase implements TelnetNotificationHandler
             if(equalBytes(buffread1, expected1))
                 negotiation1_ok = true;
         //}
-        //else {
-       // 	System.err.println("is1.available() = " + is1.available() + ", should be 6");
-        //}
         
-
 
         InputStream is2 = STANDARD.server.getInputStream();
         OutputStream os2 = STANDARD.server.getOutputStream();
