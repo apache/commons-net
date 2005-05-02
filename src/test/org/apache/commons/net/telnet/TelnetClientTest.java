@@ -795,13 +795,18 @@ extends TestCase implements TelnetNotificationHandler
             read_ok = true;
         }
 
-        if(is1.available() == 6)
-        {
+       // if(is1.available() == 6)
+        //{
             is1.read(buffread1);
 
             if(equalBytes(buffread1, expected1))
                 negotiation1_ok = true;
-        }
+        //}
+        //else {
+       // 	System.err.println("is1.available() = " + is1.available() + ", should be 6");
+        //}
+        
+
 
         InputStream is2 = STANDARD.server.getInputStream();
         OutputStream os2 = STANDARD.server.getOutputStream();
@@ -810,19 +815,19 @@ extends TestCase implements TelnetNotificationHandler
         os2.write(send1);
         os2.flush();
         Thread.sleep(1000);
-        if(is2.available() == 6)
-        {
+        //if(is2.available() == 6)
+        //{
             is2.read(buffread1);
 
             if(equalBytes(buffread1, expected1))
                 negotiation2_ok = true;
-        }
+        //}
 
         assertTrue(!NOREAD.client.getReaderThread());
         assertTrue(STANDARD.client.getReaderThread());
-        assertTrue(read_ok);
-        assertTrue(negotiation1_ok);
-        assertTrue(negotiation2_ok);
+        assertTrue("Expected read_ok to be true, got " + read_ok, read_ok);
+        assertTrue("Expected negotiation1_ok to be true, got " + negotiation1_ok, negotiation1_ok);
+        assertTrue("Expected negotiation2_ok to be true, got " + negotiation2_ok, negotiation2_ok);
     }
 
 
@@ -840,8 +845,9 @@ extends TestCase implements TelnetNotificationHandler
             boolean result = true;
             for(int ii=0; ii<a1.length; ii++)
             {
+            	
                 if(a1[ii]!= a2[ii])
-                    result = false;
+                	result = false;
             }
             return(result);
         }
