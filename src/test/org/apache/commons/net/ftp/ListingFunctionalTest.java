@@ -151,6 +151,7 @@ public class ListingFunctionalTest extends TestCase
         client = new FTPClient();
         client.connect(hostName);
         client.login("anonymous", "anonymous");
+        client.enterLocalPassiveMode();
     }
 
     /*
