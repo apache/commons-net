@@ -19,7 +19,7 @@ limitations under the License.
 
 	<name>Jakarta Commons Net</name>
 	<id>commons-net</id>
-	<currentVersion>1.4.0-dev</currentVersion>
+	<currentVersion>1.4.0</currentVersion>
 	<inceptionYear>1997</inceptionYear>
 	<shortDescription>Jakarta Commons Net</shortDescription>
 	<description/>
@@ -206,7 +206,6 @@ limitations under the License.
 	<reports>
 		<report>maven-changes-plugin</report>
 		<report>maven-tasklist-plugin</report>
-		<report>maven-statcvs-plugin</report>
 		<report>maven-junit-report-plugin</report>
 		<report>maven-jdepend-plugin</report>
 		<report>maven-jcoverage-plugin</report>
