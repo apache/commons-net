@@ -22,7 +22,7 @@ limitations under the License.
 	
 
 	<body>
-		<release version="1.4.0" date="February 9, 2005" description="Some additions and enhancements">
+		<release version="1.4.0" date="May 7, 2005" description="Some additions and enhancements">
 			<action dev="dfs" type="fix">
 				Fixed typo in method name.
 				FTP.removeCommandListener() was missing
