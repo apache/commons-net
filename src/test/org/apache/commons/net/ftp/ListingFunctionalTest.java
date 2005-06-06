@@ -49,7 +49,7 @@ public class ListingFunctionalTest extends TestCase
                 },
                 {
                     "ftp.wacom.com", "windows", "VMS", "HA!",
-                    "wacom97.zip", "pub\\ftp\\drivers"
+                    "wacom97.zip", "pub\\drivers"
                 },
                 {
                     "h71000.www7.hp.com", "vms", "windows",
