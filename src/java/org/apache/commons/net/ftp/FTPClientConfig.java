@@ -179,6 +179,7 @@ public class FTPClientConfig
     private final String serverSystemKey;
 	private String defaultDateFormatStr = null;
 	private String recentDateFormatStr = null;
+	private boolean lenientFutureDates = false;
 	private String serverLanguageCode = null;
 	private String shortMonthNames = null;
 	private String serverTimeZoneId = null;
@@ -324,6 +325,15 @@ public class FTPClientConfig
 		return serverLanguageCode;
 	}
 	
+    /**
+	 * <p>
+	 * getter for the {@link  #setLenientFutureDates(boolean)  lenientFutureDates} property.
+	 * </p>  
+     * @return Returns the lenientFutureDates.
+     */
+    public boolean isLenientFutureDates() {
+        return lenientFutureDates;
+    }
 	/**
 	 * <p>
 	 * setter for the defaultDateFormatStr property.  This property
@@ -361,6 +371,29 @@ public class FTPClientConfig
 		this.recentDateFormatStr = recentDateFormatStr;
 	}
 	
+	/**
+	 * <p>
+	 * setter for the lenientFutureDates property.  This boolean property
+	 * (default: false) only has meaning when a 
+	 * {@link  #setRecentDateFormatStr(String)  recentDateFormatStr} property
+	 * has been set.  In that case, if this property is set true, then the
+	 * parser, when it encounters a listing parseable with the recent date 
+	 * format, will only consider a date to belong to the previous year if
+	 * it is more than one day in the future.  This will allow all 
+	 * out-of-synch situations (whether based on "slop" - i.e. servers simply 
+	 * out of synch with one another or because of time zone differences - 
+	 * but in the latter case it is highly recommended to use the 
+	 * {@link  #setServerTimeZoneId(String)  serverTimeZoneId} property
+	 * instead) to resolve correctly.
+	 * </p><p>
+	 * This is used primarily in unix-based systems.
+	 * </p>
+	 * @param lenientFutureDates set true to compensate for out-of-synch 
+	 * conditions.
+	 */
+    public void setLenientFutureDates(boolean lenientFutureDates) {
+        this.lenientFutureDates = lenientFutureDates;
+    }
 	/**
 	 * <p>
 	 * setter for the serverTimeZoneId property.  This property

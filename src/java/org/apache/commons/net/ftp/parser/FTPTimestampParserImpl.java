@@ -41,6 +41,7 @@ public class FTPTimestampParserImpl implements
 	
 	private SimpleDateFormat defaultDateFormat;
 	private SimpleDateFormat recentDateFormat;
+	private boolean lenientFutureDates = false;
 	
 	
 	/**
@@ -82,6 +83,12 @@ public class FTPTimestampParserImpl implements
 		{
 			working.setTime(parsed);
 			working.set(Calendar.YEAR, now.get(Calendar.YEAR));
+			
+			if (this.lenientFutureDates) {
+			    // add a day to "now" so that "slop" doesn't cause a date 
+			    // slightly in the future to roll back a full year.  (Bug 35181)
+			    now.add(Calendar.DATE, 1);
+			}    
 			if (working.after(now)) {
 				working.add(Calendar.YEAR, -1);
 			}
@@ -233,5 +240,19 @@ public class FTPTimestampParserImpl implements
 		this.defaultDateFormat.setLenient(false);
 		
 		setServerTimeZone(config.getServerTimeZoneId());
+		
+		this.lenientFutureDates = config.isLenientFutureDates();
 	}
+    /**
+     * @return Returns the lenientFutureDates.
+     */
+    boolean isLenientFutureDates() {
+        return lenientFutureDates;
+    }
+    /**
+     * @param lenientFutureDates The lenientFutureDates to set.
+     */
+    void setLenientFutureDates(boolean lenientFutureDates) {
+        this.lenientFutureDates = lenientFutureDates;
+    }
 }

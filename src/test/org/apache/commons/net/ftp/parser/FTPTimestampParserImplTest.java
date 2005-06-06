@@ -57,6 +57,43 @@ public class FTPTimestampParserImplTest extends TestCase {
 		}
 	}
 		
+	public void testParseTimestampWithSlop() {
+		Calendar cal = Calendar.getInstance();
+		int timeZoneOffset = cal.getTimeZone().getRawOffset();
+		cal.add(Calendar.HOUR_OF_DAY, 1);
+		cal.set(Calendar.SECOND,0);
+		cal.set(Calendar.MILLISECOND,0);
+		Date anHourFromNow = cal.getTime();
+		cal.add(Calendar.DATE, 1);
+		Date anHourFromNowTomorrow = cal.getTime();
+		cal.add(Calendar.DATE, -1);
+
+		FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
+		
+		// set the "slop" factor on
+		parser.setLenientFutureDates(true);
+		
+		SimpleDateFormat sdf = 
+			new SimpleDateFormat(parser.getRecentDateFormatString());
+		try {
+			String fmtTime = sdf.format(anHourFromNow);
+			Calendar parsed = parser.parseTimestamp(fmtTime);
+			// the timestamp is ahead of now (by one hour), but
+			// that's within range of the "slop" factor.
+			// so the date is still considered this year.
+			assertEquals("test.slop.no.roll.back.year", 0, cal.get(Calendar.YEAR) - parsed.get(Calendar.YEAR));
+
+			// add a day to get beyond the range of the slop factor. 
+			// this must mean the file's date refers to a year ago.
+			fmtTime = sdf.format(anHourFromNowTomorrow);
+			parsed = parser.parseTimestamp(fmtTime);
+			assertEquals("test.slop.roll.back.year", 1, cal.get(Calendar.YEAR) - parsed.get(Calendar.YEAR));
+			
+		} catch (ParseException e) {
+			fail("Unable to parse");
+		}
+	}
+
 	public void testParseTimestampAcrossTimeZones() {
 	    
 	    
