@@ -199,4 +199,14 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         FTPFile f = getParser().parseFTPEntry(directoryBeginningWithNumber);
         assertEquals("name", "123xyz", f.getName());
     }
+    
+    public void testDirectoryBeginningWithNumberFollowedBySpaces() throws Exception
+    {
+        FTPFile f = getParser().parseFTPEntry("12-03-96  06:38AM       <DIR>          123 xyz");
+        assertEquals("name", "123 xyz", f.getName());
+        f = getParser().parseFTPEntry("12-03-96  06:38AM       <DIR>          123 abc xyz");
+        assertNotNull(f);
+        assertEquals("name", "123 abc xyz", f.getName());
+    }
+
 }

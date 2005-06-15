@@ -39,8 +39,7 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      */
     private static final String REGEX =
         "(\\S+)\\s+(\\S+)\\s+"
-        + "(<DIR>)?\\s*"
-        + "([0-9]+)?\\s+"
+        + "(?:(<DIR>)|([0-9]+))\\s+"
         + "(\\S.*)";
 
     /**
