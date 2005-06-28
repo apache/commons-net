@@ -22,6 +22,13 @@ limitations under the License.
 	
 
 	<body>
+		<release version="1.4.x" date="" description="">
+			<action dev="dfs" type="fix">
+				Reverted PR 32859 patch to TFTPClient
+				because it caused final packets to not
+				be sent.
+			</action>
+		</release>
 		<release version="1.4.0" date="May 7, 2005" description="Some additions and enhancements">
 			<action dev="dfs" type="fix">
 				Fixed typo in method name.
