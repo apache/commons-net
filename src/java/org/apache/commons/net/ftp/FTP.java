@@ -220,7 +220,7 @@ public class FTP extends TelnetClient
      * with {@link #setControlEncoding setControlEncoding}.
      */
     public static final String DEFAULT_CONTROL_ENCODING = "ISO-8859-1";
-    private static final String __modes = "ABILNTCFRPSBC";
+    private static final String __modes = "AEILNTCFRPSBC";
 
     private StringBuffer __commandBuffer;
 
