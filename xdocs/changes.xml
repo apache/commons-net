@@ -22,6 +22,11 @@ limitations under the License.
 	
 
 	<body>
+		<release version="1.4.1" date="December 3, 2005" description="fix release to restore jdk 1.3 compatability">
+			<action dev="scohen" type="fix">
+				Applied fix to fix incompatibilites. Original patch submitted by &lt;Andrea Rombald&gt;
+			</action>
+		</release>
 		<release version="1.4.0" date="February 9, 2005" description="fixes">
 			<action dev="dfs" type="fix">
 				Fixed typo in method name.
