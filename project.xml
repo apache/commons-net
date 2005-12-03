@@ -211,7 +211,6 @@ limitations under the License.
 	<reports>
 		<report>maven-changes-plugin</report>
 		<report>maven-tasklist-plugin</report>
-		<report>maven-statcvs-plugin</report>
 		<report>maven-junit-report-plugin</report>
 		<report>maven-jdepend-plugin</report>
 		<report>maven-jcoverage-plugin</report>
