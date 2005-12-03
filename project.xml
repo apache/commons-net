@@ -19,7 +19,7 @@ limitations under the License.
 
 	<name>Jakarta Commons Net</name>
 	<id>commons-net</id>
-	<currentVersion>1.4.0-dev</currentVersion>
+	<currentVersion>1.4.1</currentVersion>
 	<inceptionYear>1997</inceptionYear>
 	<shortDescription>Jakarta Commons Net</shortDescription>
 	<description/>
@@ -99,6 +99,16 @@ limitations under the License.
 			<id>1.3.0</id>
 			<name>1.3.0</name>
 			<tag>NET_1_3_0</tag>
+		</version>
+		<version>
+			<id>1.4.0</id>
+			<name>1.4.0</name>
+			<tag>NET_1_4_0</tag>
+		</version>
+		<version>
+			<id>1.4.1</id>
+			<name>1.4.1</name>
+			<tag>NET_1_4_1</tag>
 		</version>
 	</versions>
 
