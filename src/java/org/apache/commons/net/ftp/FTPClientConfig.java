@@ -245,17 +245,17 @@ public class FTPClientConfig
 		LANGUAGE_CODE_MAP.put("en", Locale.ENGLISH);
 		LANGUAGE_CODE_MAP.put("de",Locale.GERMAN);
 		LANGUAGE_CODE_MAP.put("it",Locale.ITALIAN);
-		LANGUAGE_CODE_MAP.put("es", new Locale("es")); // spanish
-		LANGUAGE_CODE_MAP.put("pt", new Locale("pt")); // portuguese
-		LANGUAGE_CODE_MAP.put("da", new Locale("da")); // danish
-		LANGUAGE_CODE_MAP.put("sv", new Locale("sv")); // swedish
-		LANGUAGE_CODE_MAP.put("no", new Locale("no")); // norwegian
-		LANGUAGE_CODE_MAP.put("nl", new Locale("nl")); // dutch
-		LANGUAGE_CODE_MAP.put("ro", new Locale("ro")); // romanian
-		LANGUAGE_CODE_MAP.put("sq", new Locale("sq")); // albanian
-		LANGUAGE_CODE_MAP.put("sh", new Locale("sh")); // serbo-croatian
-		LANGUAGE_CODE_MAP.put("sk", new Locale("sk")); // slovak		
-		LANGUAGE_CODE_MAP.put("sl", new Locale("sl")); // slovenian
+		LANGUAGE_CODE_MAP.put("es", new Locale("es", "", "")); // spanish
+		LANGUAGE_CODE_MAP.put("pt", new Locale("pt", "", "")); // portuguese
+		LANGUAGE_CODE_MAP.put("da", new Locale("da", "", "")); // danish
+		LANGUAGE_CODE_MAP.put("sv", new Locale("sv", "", "")); // swedish
+		LANGUAGE_CODE_MAP.put("no", new Locale("no", "", "")); // norwegian
+		LANGUAGE_CODE_MAP.put("nl", new Locale("nl", "", "")); // dutch
+		LANGUAGE_CODE_MAP.put("ro", new Locale("ro", "", "")); // romanian
+		LANGUAGE_CODE_MAP.put("sq", new Locale("sq", "", "")); // albanian
+		LANGUAGE_CODE_MAP.put("sh", new Locale("sh", "", "")); // serbo-croatian
+		LANGUAGE_CODE_MAP.put("sk", new Locale("sk", "", "")); // slovak		
+		LANGUAGE_CODE_MAP.put("sl", new Locale("sl", "", "")); // slovenian
 
 
 		// some don't

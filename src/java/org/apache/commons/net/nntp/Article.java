@@ -113,7 +113,7 @@ public class Article implements Threadable {
 		if (references == null)
 			return new String[0];
 		ArrayList list = new ArrayList();
-		int terminator = references.indexOf(":");
+		int terminator = references.toString().indexOf(':');
 		StringTokenizer st =
 			new StringTokenizer(references.substring(terminator), "\t");
 		while (st.hasMoreTokens()) {
