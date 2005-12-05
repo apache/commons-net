@@ -24,6 +24,7 @@
       <item name="Migration How-to"      href="/migration.html"/>
       <item name="FAQ"                   href="/faq.html"/>
       <item name="Download"              href="/download.html"/>
+      <item name="Javadoc"               href="apidocs/index.html"/>
       <item name="Release Notes"         href="/changes-report.html"/>
     </menu>
     <menu name="Development">
