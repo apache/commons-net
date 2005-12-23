@@ -130,6 +130,7 @@ public class TimeTCPClientTest extends TestCase
                 time = System.currentTimeMillis();
             } finally
             {
+              if(client.isConnected())
                 client.disconnect();
             }
 
@@ -142,6 +143,7 @@ public class TimeTCPClientTest extends TestCase
                 time2 = System.currentTimeMillis();
             } finally
             {
+              if(client.isConnected())
                 client.disconnect();
             }
 
