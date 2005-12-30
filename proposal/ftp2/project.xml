@@ -18,7 +18,8 @@
 <project>
   <pomVersion>3</pomVersion>
   <name>Jakarta Commons/Net FTP Proposal</name>
-  <id>commons-net-ftp2</id>
+  <groupId>commons-net-ftp2</groupId>
+  <artifactId>commons-net-ftp2</artifactId>
   <currentVersion>SNAPSHOT</currentVersion>
   <organization/>
   <package>org.apache.commons.net.ftp.ftp2</package>
@@ -44,13 +45,15 @@
   
   <dependencies>
     <dependency>
-      <id>oro</id>
+      <groupId>oro</groupId>
+      <artifactId>oro</artifactId>
       <version>2.0.6</version>
       <url>http://jakarta.apache.org/oro/</url>
     </dependency>
 
     <dependency>
-      <id>commons-net</id>
+      <groupId>commons-net</groupId>
+      <artifactId>commons-net</artifactId>
       <version>SNAPSHOT</version>
     </dependency>
     
