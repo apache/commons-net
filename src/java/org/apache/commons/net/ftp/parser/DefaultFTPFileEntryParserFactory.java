@@ -84,38 +84,60 @@ public class DefaultFTPFileEntryParserFactory
         }
         catch (ClassNotFoundException e)
         {
-            String ukey = null;
-            if (null != key)
+            try 
             {
-                ukey = key.toUpperCase();
+	            String ukey = null;
+	            if (null != key)
+	            {
+	                ukey = key.toUpperCase();
+	            }
+	            if (ukey.indexOf(FTPClientConfig.SYST_UNIX) >= 0)
+	            {
+	                parser = createUnixFTPEntryParser();
+	            }
+	            else if (ukey.indexOf(FTPClientConfig.SYST_VMS) >= 0)
+	            {
+	                parser = createVMSVersioningFTPEntryParser();
+	            }
+	            else if (ukey.indexOf(FTPClientConfig.SYST_NT) >= 0)
+	            {
+	                parser = createNTFTPEntryParser();
+	            }
+	            else if (ukey.indexOf(FTPClientConfig.SYST_OS2) >= 0)
+	            {
+	                parser = createOS2FTPEntryParser();
+	            }
+	            else if (ukey.indexOf(FTPClientConfig.SYST_OS400) >= 0)
+	            {
+	                parser = createOS400FTPEntryParser();
+	            }
+	            else if (ukey.indexOf(FTPClientConfig.SYST_MVS) >= 0)
+	            {
+	                parser = createMVSEntryParser();
+	        	}
+	            else
+	            {
+	                throw new ParserInitializationException("Unknown parser type: " + key);
+	            }
+            } 
+            catch (NoClassDefFoundError nf)
+            { 	
+                if (nf.getMessage().startsWith("org/apache/oro")) {
+    	            throw new ParserInitializationException(
+    	                " jakarta-oro-2.x.jar required on the runtime classpath. ", nf);
+                } else {
+                    throw new ParserInitializationException("Error initializing parser", nf);
+                }
             }
-            if (ukey.indexOf(FTPClientConfig.SYST_UNIX) >= 0)
-            {
-                parser = createUnixFTPEntryParser();
-            }
-            else if (ukey.indexOf(FTPClientConfig.SYST_VMS) >= 0)
-            {
-                parser = createVMSVersioningFTPEntryParser();
-            }
-            else if (ukey.indexOf(FTPClientConfig.SYST_NT) >= 0)
-            {
-                parser = createNTFTPEntryParser();
-            }
-            else if (ukey.indexOf(FTPClientConfig.SYST_OS2) >= 0)
-            {
-                parser = createOS2FTPEntryParser();
-            }
-            else if (ukey.indexOf(FTPClientConfig.SYST_OS400) >= 0)
-            {
-                parser = createOS400FTPEntryParser();
-            }
-            else if (ukey.indexOf(FTPClientConfig.SYST_MVS) >= 0)
-            {
-                parser = createMVSEntryParser();
-        	}
-            else
-            {
-                throw new ParserInitializationException("Unknown parser type: " + key);
+
+        }
+        catch (NoClassDefFoundError e)
+        { 	
+            if (e.getMessage().startsWith("org/apache/oro")) {
+	            throw new ParserInitializationException(
+	                " jakarta-oro-2.x.jar required on the runtime classpath. ", e);
+            } else {
+                throw new ParserInitializationException("Error initializing parser", e);
             }
         }
         catch (ClassCastException e)
