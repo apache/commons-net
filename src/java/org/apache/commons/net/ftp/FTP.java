@@ -224,13 +224,29 @@ public class FTP extends TelnetClient
 
     private StringBuffer __commandBuffer;
 
-    BufferedReader _controlInput;
-    BufferedWriter _controlOutput;
     int _replyCode;
     Vector _replyLines;
     boolean _newReplyString;
     String _replyString;
     String _controlEncoding;
+
+    /**
+     * Wraps SocketClient._input_ to facilitate the writing of text
+     * to the FTP control connection.  Do not access the control
+     * connection via SocketClient._input_.  This member starts
+     * with a null value, is initialized in {@link #_connectAction_},
+     * and set to null in {@link #disconnect}.
+     */
+    protected BufferedReader _controlInput_;
+
+    /**
+     * Wraps SocketClient._output_ to facilitate the reading of text
+     * from the FTP control connection.  Do not access the control
+     * connection via SocketClient._output_.  This member starts
+     * with a null value, is initialized in {@link #_connectAction_},
+     * and set to null in {@link #disconnect}.
+     */
+    protected BufferedWriter _controlOutput_;
 
     /***
      * A ProtocolCommandSupport object used to manage the registering of
@@ -261,7 +277,7 @@ public class FTP extends TelnetClient
         _newReplyString = true;
         _replyLines.setSize(0);
 
-        String line = _controlInput.readLine();
+        String line = _controlInput_.readLine();
 
         if (line == null)
             throw new FTPConnectionClosedException(
@@ -292,7 +308,7 @@ public class FTP extends TelnetClient
         {
             do
             {
-                line = _controlInput.readLine();
+                line = _controlInput_.readLine();
 
                 if (line == null)
                     throw new FTPConnectionClosedException(
@@ -322,14 +338,17 @@ public class FTP extends TelnetClient
                 "FTP response 421 received.  Server closed connection.");
     }
 
-    // initiates control connections and gets initial reply
+    /**
+     * Initiates control connections and gets initial reply.
+     * Initializes {@link #_controlInput_} and {@link #_controlOutput_}.
+     */
     protected void _connectAction_() throws IOException
     {
         super._connectAction_();
-        _controlInput =
+        _controlInput_ =
             new BufferedReader(new InputStreamReader(getInputStream(),
                                                      getControlEncoding()));
-        _controlOutput =
+        _controlOutput_ =
             new BufferedWriter(new OutputStreamWriter(getOutputStream(),
                                                       getControlEncoding()));
         __getReply();
@@ -389,14 +408,15 @@ public class FTP extends TelnetClient
      * some internal data so that the memory may be reclaimed by the
      * garbage collector.  The reply text and code information from the
      * last command is voided so that the memory it used may be reclaimed.
+     * Also sets {@link #_controlInput_} and {@link #_controlOutput_} to null.
      * <p>
      * @exception IOException If an error occurs while disconnecting.
      ***/
     public void disconnect() throws IOException
     {
         super.disconnect();
-        _controlInput = null;
-        _controlOutput = null;
+        _controlInput_ = null;
+        _controlOutput_ = null;
         _replyLines.setSize(0);
         _newReplyString = false;
         _replyString = null;
@@ -438,8 +458,8 @@ public class FTP extends TelnetClient
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
         try{
-	    _controlOutput.write(message = __commandBuffer.toString());
-        _controlOutput.flush();
+	    _controlOutput_.write(message = __commandBuffer.toString());
+            _controlOutput_.flush();
         }
         catch (SocketException e)
         {
