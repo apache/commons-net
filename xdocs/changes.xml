@@ -23,6 +23,13 @@ limitations under the License.
 
 	<body>
 		<release version="1.4.x" date="" description="">
+			<action dev="dfs" type="update">
+				Exposed control connection of FTP
+				class via _controlInput_ and _controlOutput_
+				protected member variables in response
+				to PR 38309 reported by
+				&lt;josejuan.montiel@gmail.com&gt;.
+			</action>
 			<action dev="dfs" type="fix">
 				Reverted PR 32859 patch to TFTPClient
 				because it caused final packets to not
