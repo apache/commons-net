@@ -1,7 +1,7 @@
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2005 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2006 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -60,7 +60,7 @@ import java.util.StringTokenizer;
 /**
  * This is a class that contains the basic state needed for message retrieval and threading.
  * With thanks to Jamie  Zawinski <jwz@jwz.org>
- * @author rwinston <rwinston@checkfree.com>
+ * @author rwinston <rwinston@apache.org>
  *
  */
 public class Article implements Threadable {
@@ -119,7 +119,7 @@ public class Article implements Threadable {
 		while (st.hasMoreTokens()) {
 			list.add(st.nextToken());
 		}
-		return (String[]) list.toArray();
+		return (String[]) list.toArray(new String[list.size()]);
 	}
 	
 	/**
