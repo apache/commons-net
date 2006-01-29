@@ -500,12 +500,10 @@ implements Configurable
             if (__dataTimeout >= 0)
                 server.setSoTimeout(__dataTimeout);
             try {
-				socket = server.accept();
-			} catch (IOException ioe) {
-				server.close();
-				throw ioe;
-			}
-            server.close();
+                socket = server.accept();
+            } finally {
+                server.close();
+            }
         }
         else
         { // We must be in PASSIVE_LOCAL_DATA_CONNECTION_MODE
