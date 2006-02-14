@@ -89,7 +89,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         +"(((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-])))\\+?\\s+"
         + "(\\d+)\\s+"
         + "(\\S+)\\s+"
-        + "(?:(\\S+)\\s+)?"
+        + "(?:(\\S+(?:\\s\\S+)*)\\s+)?"
         + "(\\d+)\\s+"
         
         /*

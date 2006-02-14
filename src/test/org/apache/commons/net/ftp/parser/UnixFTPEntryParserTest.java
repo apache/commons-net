@@ -36,7 +36,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 			"drwxr-xr-x   2 root     root         4096 Aug 36  2001 zztpp",
 			"-rw-r--r--   1 14       staff       80284 Aug 22  zxJDBC-1.2.3.tar.gz",
 			"-rw-r--r--   1 14       staff      119:26 Aug 22  2000 zxJDBC-1.2.3.zip",
-			"-rw-r--r--   1 ftp      no group    83853 Jan 22  2001 zxJDBC-1.2.4.tar.gz",
+			/*"-rw-r--r--   1 ftp      no group    83853 Jan 22  2001 zxJDBC-1.2.4.tar.gz",*/
 			"-rw-r--r--   1ftp       nogroup    126552 Jan 22  2001 zxJDBC-1.2.4.zip",
 			"-rw-r--r--   1 root     root       190144 2001-04-27 zxJDBC-2.0.1b1.zip",
 			"-rw-r--r--   1 root     root       111325 Apr -7 18:79 zxJDBC-2.0.1b1.tar.gz" };
@@ -70,7 +70,9 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 			"-rwsr-sr--   1 500      500             0 Mar 25 0:23 testSuidExec2",
 			"drwxrwx---+ 23 500     500    0 Jan 10 13:09 testACL",
 			"-rw-r--r--   1 1        3518644 May 25 12:12 std",
-            "lrwxrwxrwx   1 neeme neeme             23 Mar  2 18:06 macros -> ./../../global/macros/."
+            "lrwxrwxrwx   1 neeme neeme             23 Mar  2 18:06 macros -> ./../../global/macros/.",
+			"-rw-r--r--   1 ftp      group with spaces in it as allowed in cygwin see bug 38634   83853 Jan 22  2001 zxJDBC-1.2.4.tar.gz"
+
 
 		};
 
@@ -202,13 +204,13 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 	public void testParseFieldsOnFile() throws Exception {
 		FTPFile f = getParser()
 				.parseFTPEntry(
-						"-rwxr-xr-x   2 user     group         5000000000 Mar  2 15:13 zxbox");
+						"-rwxr-xr-x   2 user     my group 500        5000000000 Mar  2 15:13 zxbox");
 		assertNotNull("Could not parse entry.", f);
 		assertTrue("Should have been a file.", f.isFile());
 		checkPermissions(f);
 		assertEquals(2, f.getHardLinkCount());
 		assertEquals("user", f.getUser());
-		assertEquals("group", f.getGroup());
+		assertEquals("my group 500", f.getGroup());
 		assertEquals("zxbox", f.getName());
 		assertEquals(5000000000L, f.getSize());
 
