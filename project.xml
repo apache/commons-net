@@ -131,7 +131,9 @@ limitations under the License.
 			<name>Daniel F. Savarese</name>
 			<id>dfs</id>
 			<email>dfs -> apache.org</email>
-			<organization>savarese.org</organization>
+			<organization>
+			&lt;a href="http://www.savarese.com/"&gt;Savarese Software Research&lt;/a&gt;
+			</organization>
 		</developer>
 		<developer>
 			<name>Rory Winston</name>
