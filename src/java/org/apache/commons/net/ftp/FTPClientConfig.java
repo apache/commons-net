@@ -175,6 +175,12 @@ public class FTPClientConfig
      * the commons-net ftp system.
      */
     public static final String SYST_MVS = "MVS";
+
+    /**
+     * Identifier by which an Netware-based ftp server is known throughout
+     * the commons-net ftp system.
+     */
+	public static final String SYST_NETWARE = "NETWARE";
     
     private final String serverSystemKey;
 	private String defaultDateFormatStr = null;

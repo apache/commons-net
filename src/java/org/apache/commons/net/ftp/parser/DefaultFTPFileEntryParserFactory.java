@@ -115,6 +115,10 @@ public class DefaultFTPFileEntryParserFactory
 	            {
 	                parser = createMVSEntryParser();
 	        	}
+	            else if (ukey.indexOf(FTPClientConfig.SYST_NETWARE) >= 0) 
+	            {
+	            	parser = createNetwareFTPEntryParser();
+	            }
 	            else
 	            {
 	                throw new ParserInitializationException("Unknown parser type: " + key);
@@ -194,6 +198,10 @@ public class DefaultFTPFileEntryParserFactory
     public FTPFileEntryParser createVMSVersioningFTPEntryParser()
     {
         return (FTPFileEntryParser) new VMSVersioningFTPEntryParser();
+    }
+    
+    public FTPFileEntryParser createNetwareFTPEntryParser() {
+    	return new NetwareFTPEntryParser();
     }
 
     public FTPFileEntryParser createNTFTPEntryParser()
