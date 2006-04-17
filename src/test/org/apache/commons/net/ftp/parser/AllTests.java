@@ -30,6 +30,7 @@ public class AllTests {
         suite.addTest(OS400FTPEntryParserTest.suite());
         suite.addTest(NTFTPEntryParserTest.suite());
         suite.addTest(MVSFTPEntryParserTest.suite());
+        suite.addTest(NetwareFTPEntryParserTest.suite());
 
         //$JUnit-END$
         return suite;
