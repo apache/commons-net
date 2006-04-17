@@ -46,9 +46,11 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 	 * this is the regular expression used by this parser.
 	 * Example: d [-W---F--] SCION_VOL2                        512 Apr 13 23:12 VOL2
 	 */
-	private static final String REGEX = "(d|-){1}\\s+" + "\\[(.*)\\]\\s+"
-			+ "(\\S+)\\s+" + "(\\d+)\\s+"
-			+ "(\\S+\\s+\\S+\\s+((\\d+:\\d+)|(\\d{4})))" + "\\s+(.*)";
+	private static final String REGEX = "(d|-){1}\\s+"	// Directory/file flag 
+			+ "\\[(.*)\\]\\s+"			// Attributes
+			+ "(\\S+)\\s+" + "(\\d+)\\s+"		// Owner and size
+			+ "(\\S+\\s+\\S+\\s+((\\d+:\\d+)|(\\d{4})))" // Long/short date format
+			+ "\\s+(.*)";				// Filename (incl. spaces)
 
 	/**
 	 * The default constructor for a NetwareFTPEntryParser object.
