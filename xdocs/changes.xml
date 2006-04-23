@@ -23,6 +23,12 @@ limitations under the License.
 
 	<body>
 		<release version="1.4.x" date="" description="">
+			<action dev="dfs" type="fix">
+				Applied Rob Hasselbaum's
+				&lt;rhasselbaum -> alumni.ithaca.edu&gt;
+				patch for PR 38688 fixing a
+				TelnetInputStream hang.
+			</action>
 			<action dev="dfs" type="update">
 				Exposed control connection of FTP
 				class via _controlInput_ and _controlOutput_

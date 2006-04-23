@@ -277,6 +277,8 @@ _mainSwitch:
         {
             while (__bytesAvailable >= __queue.length - 1)
             {
+                // The queue is full. We need to wait before adding any more data to it. Hopefully the stream owner
+                // will consume some data soon! 
                 if(__threaded)
                 {
                     __queue.notify();
@@ -288,6 +290,12 @@ _mainSwitch:
                     {
                         throw e;
                     }
+                }
+                else
+                {
+                    // We've been asked to add another character to the queue, but it is already full and there's
+                    // no other thread to drain it. This should not have happened! 
+                    throw new IllegalStateException("Queue is full! Cannot process another character.");
                 }
             }
 
@@ -389,8 +397,9 @@ _mainSwitch:
                                     return (-1);
                             }
                         }
-                        while (super.available() > 0);
-
+                        // Continue reading as long as there is data available and the queue is not full.
+                        while (super.available() > 0 && __bytesAvailable < __queue.length - 1);
+                        
                         __readIsWaiting = false;
                     }
                     continue;
