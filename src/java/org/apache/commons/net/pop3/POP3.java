@@ -21,9 +21,9 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.StringBuffer;
 import java.util.Enumeration;
 import java.util.Vector;
+
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ProtocolCommandListener;
 import org.apache.commons.net.ProtocolCommandSupport;

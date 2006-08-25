@@ -86,6 +86,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
 
         int priority;
         __isClosed = false;
+        // TODO remove this
         // Need to set a higher priority in case JVM does not use pre-emptive
         // threads.  This should prevent scheduler induced deadlock (rather than
         // deadlock caused by a bug in this code).

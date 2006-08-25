@@ -17,11 +17,12 @@ package org.apache.commons.net.bsd;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import org.apache.commons.net.io.SocketInputStream;
+
 import org.apache.commons.net.SocketClient;
-import java.io.OutputStream;
+import org.apache.commons.net.io.SocketInputStream;
 
 /***
  * RExecClient implements the rexec() facility that first appeared in

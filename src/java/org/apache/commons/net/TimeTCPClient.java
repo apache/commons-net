@@ -15,9 +15,9 @@
  */
 package org.apache.commons.net;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Date;
-import java.io.DataInputStream;
 
 /***
  * The TimeTCPClient class is a TCP implementation of a client for the

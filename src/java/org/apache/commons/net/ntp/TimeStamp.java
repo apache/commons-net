@@ -16,12 +16,12 @@ package org.apache.commons.net.ntp;
  */
 
 
-import java.util.TimeZone;
+import java.lang.ref.SoftReference;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.lang.ref.SoftReference;
-import java.text.SimpleDateFormat;
-import java.text.DateFormat;
+import java.util.TimeZone;
 
 /***
  * TimeStamp class represents the Network Time Protocol (NTP) timestamp

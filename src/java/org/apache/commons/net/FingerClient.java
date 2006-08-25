@@ -15,12 +15,12 @@
  */
 package org.apache.commons.net;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.BufferedOutputStream;
-import java.io.DataOutputStream;
 
 /***
  * The FingerClient class implements the client side of the Internet Finger

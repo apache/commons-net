@@ -16,6 +16,8 @@
 package org.apache.commons.net.io;
 
 import java.util.Enumeration;
+import java.util.EventListener;
+
 import org.apache.commons.net.util.ListenerList;
 
 /**
@@ -83,20 +85,16 @@ public class CopyStreamAdapter implements CopyStreamListener
     public void bytesTransferred(long totalBytesTransferred,
                                  int bytesTransferred, long streamSize)
     {
-        Enumeration listeners;
         CopyStreamEvent event;
-
-        listeners = internalListeners.getListeners();
 
         event = new CopyStreamEvent(this,
                                     totalBytesTransferred,
                                     bytesTransferred,
                                     streamSize);
 
-        while (listeners.hasMoreElements())
+        for (EventListener listener : internalListeners)
         {
-            ((CopyStreamListener) (listeners.nextElement())).
-                bytesTransferred(event);
+            ((CopyStreamListener) (listener)).bytesTransferred(event);
         }
     }
 

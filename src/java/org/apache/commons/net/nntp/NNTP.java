@@ -20,9 +20,10 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+
 import org.apache.commons.net.MalformedServerReplyException;
-import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.ProtocolCommandListener;
+import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
 
 /***

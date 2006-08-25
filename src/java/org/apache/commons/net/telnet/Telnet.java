@@ -17,8 +17,9 @@ package org.apache.commons.net.telnet;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.OutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+
 import org.apache.commons.net.SocketClient;
 
 /**

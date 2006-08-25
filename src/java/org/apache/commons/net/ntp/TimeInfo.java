@@ -15,8 +15,8 @@ package org.apache.commons.net.ntp;
  * limitations under the License.
  */
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Wrapper class to network time packet messages (NTP, etc) that computes

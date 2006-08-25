@@ -17,6 +17,8 @@ package org.apache.commons.net;
 
 import java.io.Serializable;
 import java.util.Enumeration;
+import java.util.EventListener;
+
 import org.apache.commons.net.util.ListenerList;
 
 /***
@@ -62,18 +64,13 @@ public class ProtocolCommandSupport implements Serializable
      ***/
     public void fireCommandSent(String command, String message)
     {
-        Enumeration en;
         ProtocolCommandEvent event;
-        ProtocolCommandListener listener;
-
-        en = __listeners.getListeners();
 
         event = new ProtocolCommandEvent(__source, command, message);
 
-        while (en.hasMoreElements())
+        for (EventListener listener : __listeners)
         {
-            listener = (ProtocolCommandListener)en.nextElement();
-            listener.protocolCommandSent(event);
+           ((ProtocolCommandListener)listener).protocolCommandSent(event);
         }
     }
 
@@ -92,18 +89,12 @@ public class ProtocolCommandSupport implements Serializable
      ***/
     public void fireReplyReceived(int replyCode, String message)
     {
-        Enumeration en;
         ProtocolCommandEvent event;
-        ProtocolCommandListener listener;
-
-        en = __listeners.getListeners();
-
         event = new ProtocolCommandEvent(__source, replyCode, message);
 
-        while (en.hasMoreElements())
+        for (EventListener listener : __listeners)
         {
-            listener = (ProtocolCommandListener)en.nextElement();
-            listener.protocolReplyReceived(event);
+            ((ProtocolCommandListener)listener).protocolReplyReceived(event);
         }
     }
 

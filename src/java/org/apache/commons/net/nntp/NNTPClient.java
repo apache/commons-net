@@ -22,10 +22,11 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.StringTokenizer;
 import java.util.Vector;
+
+import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.io.DotTerminatedMessageReader;
 import org.apache.commons.net.io.DotTerminatedMessageWriter;
 import org.apache.commons.net.io.Util;
-import org.apache.commons.net.MalformedServerReplyException;
 
 /***
  * NNTPClient encapsulates all the functionality necessary to post and
