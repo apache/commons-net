@@ -19,8 +19,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
@@ -482,11 +480,10 @@ public class FTP extends TelnetClient
     }
 
     /**
-     * Checks if the socket is connected using reflection to be backward compatible.
-     * The return value of this method is only meaningful in an java 1.4 environment.
+     * Checks if the socket is connected 
      *
      * @param socket
-     * @return true if connected or pre java 1.4
+     * @return true if connected
      */
     private boolean socketIsConnected(Socket socket)
     {
@@ -495,23 +492,8 @@ public class FTP extends TelnetClient
             return false;
         }
 
-        try
-        {
-            Method isConnected = socket.getClass().getMethod("isConnected", null);
-            return ((Boolean) isConnected.invoke(socket, null)).booleanValue();
-        }
-        catch (NoSuchMethodException e)
-        {
-            return true;
-        }
-        catch (IllegalAccessException e)
-        {
-            return true;
-        }
-        catch (InvocationTargetException e)
-        {
-            return true;
-        }
+        return socket.isConnected();
+        
     }
 
     /***
