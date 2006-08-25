@@ -16,10 +16,8 @@
 package org.apache.commons.net.util;
 
 import java.io.Serializable;
-import java.util.Enumeration;
 import java.util.EventListener;
 import java.util.Iterator;
-import java.util.Vector;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
