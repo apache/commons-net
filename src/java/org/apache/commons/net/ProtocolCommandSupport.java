@@ -16,7 +16,6 @@
 package org.apache.commons.net;
 
 import java.io.Serializable;
-import java.util.Enumeration;
 import java.util.EventListener;
 
 import org.apache.commons.net.util.ListenerList;
