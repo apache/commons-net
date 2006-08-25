@@ -15,13 +15,13 @@
  */
 
 package org.apache.commons.net.ftp.parser;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+
 import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
-import org.apache.oro.text.regex.MalformedPatternException;
-import org.apache.oro.text.regex.MatchResult;
-import org.apache.oro.text.regex.Pattern;
-import org.apache.oro.text.regex.PatternMatcher;
-import org.apache.oro.text.regex.Perl5Compiler;
-import org.apache.oro.text.regex.Perl5Matcher;
+
 
 
 
@@ -51,7 +51,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
      * Internal PatternMatcher object used by the parser.  It has protected
      * scope in case subclasses want to make use of it for their own purposes.
      */
-    protected PatternMatcher _matcher_ = null;
+    protected Matcher _matcher_ = null;
 
     /**
      * The constructor for a RegexFTPFileEntryParserImpl object.
@@ -72,10 +72,10 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
         super();
         try
         {
-            _matcher_ = new Perl5Matcher();
-            pattern   = new Perl5Compiler().compile(regex);
+            //matcher_ = new Perl5Matcher();
+            pattern   = Pattern.compile(regex);
         }
-        catch (MalformedPatternException e)
+        catch (PatternSyntaxException e)
         {
             throw new IllegalArgumentException (
                "Unparseable regex supplied:  " + regex);
@@ -93,18 +93,17 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
     public boolean matches(String s)
     {
         this.result = null;
-        if (_matcher_.matches(s.trim(), this.pattern))
+        _matcher_ = pattern.matcher(s);
+        if (_matcher_.matches())
         {
-            this.result = _matcher_.getMatch();
+            this.result = _matcher_.toMatchResult();
         }
         return null != this.result;
     }
-
-
+    
 
     /**
-     * Convenience method delegates to the internal MatchResult's groups()
-     * method.
+     * Convenience method 
      *
      * @return the number of groups() in the internal MatchResult.
      */
@@ -115,7 +114,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
         {
             return 0;
         }
-        return this.result.groups();
+        return this.result.groupCount();
     }
 
 
@@ -149,7 +148,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
     public String getGroupsAsString()
     {
         StringBuffer b = new StringBuffer();
-        for (int i = 1; i <= this.result.groups(); i++)
+        for (int i = 1; i <= this.result.groupCount(); i++)
         {
             b.append(i).append(") ").append(this.result.group(i))
                 .append(System.getProperty("line.separator"));

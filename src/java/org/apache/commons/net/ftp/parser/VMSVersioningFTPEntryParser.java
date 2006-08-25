@@ -18,13 +18,12 @@ package org.apache.commons.net.ftp.parser;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import org.apache.commons.net.ftp.FTPClientConfig;
-import org.apache.oro.text.regex.MalformedPatternException;
-import org.apache.oro.text.regex.MatchResult;
-import org.apache.oro.text.regex.Pattern;
-import org.apache.oro.text.regex.Perl5Compiler;
-import org.apache.oro.text.regex.Perl5Matcher;
 
 /**
  * Special implementation VMSFTPEntryParser with versioning turned on.
@@ -47,7 +46,7 @@ import org.apache.oro.text.regex.Perl5Matcher;
 public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
 {
 
-    private Perl5Matcher _preparse_matcher_;
+    private Matcher _preparse_matcher_;
     private Pattern _preparse_pattern_;
     private static final String PRE_PARSE_REGEX =
         "(.*);([0-9]+)\\s*.*";
@@ -84,10 +83,10 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
         configure(config);
         try
         {
-            _preparse_matcher_ = new Perl5Matcher();
-            _preparse_pattern_ = new Perl5Compiler().compile(PRE_PARSE_REGEX);
+            //_preparse_matcher_ = new Perl5Matcher();
+            _preparse_pattern_ = Pattern.compile(PRE_PARSE_REGEX);
         }
-        catch (MalformedPatternException e)
+        catch (PatternSyntaxException pse)
         {
             throw new IllegalArgumentException (
                 "Unparseable regex supplied:  " + PRE_PARSE_REGEX);
@@ -122,8 +121,9 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
         while (iter.hasNext()) {
             String entry = ((String)iter.next()).trim();
             MatchResult result = null;
-            if (_preparse_matcher_.matches(entry, _preparse_pattern_)) {
-                result = _preparse_matcher_.getMatch();
+            _preparse_matcher_ = _preparse_pattern_.matcher(entry);
+            if (_preparse_matcher_.matches()) {
+                result = _preparse_matcher_.toMatchResult();
                 String name = result.group(1);
                 String version = result.group(2);
                 NameVersion nv = new NameVersion(name, version);
@@ -145,8 +145,9 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
         while (iter.hasPrevious()) {
             String entry = ((String)iter.previous()).trim();
             MatchResult result = null;
-            if (_preparse_matcher_.matches(entry, _preparse_pattern_)) {
-                result = _preparse_matcher_.getMatch();
+            _preparse_matcher_ = _preparse_pattern_.matcher(entry);
+            if (_preparse_matcher_.matches()) {
+                result = _preparse_matcher_.toMatchResult();
                 String name = result.group(1);
                 String version = result.group(2);
                 NameVersion nv = new NameVersion(name, version);
@@ -161,6 +162,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
         }
         return original;
     }
+
 
     protected boolean isVersioning() {
         return true;
