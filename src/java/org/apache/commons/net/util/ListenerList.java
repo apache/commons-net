@@ -35,12 +35,12 @@ public class ListenerList implements Serializable, Iterable<EventListener>
         __listeners = new CopyOnWriteArrayList<EventListener>();
     }
 
-    public synchronized void addListener(EventListener listener)
+    public void addListener(EventListener listener)
     {
     		__listeners.add(listener);
     }
 
-    public synchronized void removeListener(EventListener listener)
+    public  void removeListener(EventListener listener)
     {
     		__listeners.remove(listener);
     }
