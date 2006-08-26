@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-Copyright 2003-200666666 The Apache Software Foundation
+Copyright 2003-2006 The Apache Software Foundation
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,7 +23,14 @@ limitations under the License.
 	<version>2.0.0-SNAPSHOT</version>
 	<inceptionYear>1997</inceptionYear>
 	<description>Jakarta Commons Net</description>
-
+	
+	<pluginRepositories>
+    <pluginRepository>
+      <id>snapshots</id>
+      <url>http://people.apache.org/maven-snapshot-repository/</url>
+    </pluginRepository>
+  	</pluginRepositories>
+  
 	<url>http://jakarta.apache.org/commons/${pom.artifactId.substring(8)}/</url>
 
 	<organization>
@@ -40,7 +47,7 @@ limitations under the License.
 	</licenses>
 
 	<issueManagement>
-		<url>http://issues.apache.org/jira/</url>
+		<url>https://issues.apache.org/jira/browse/NET</url>
 	</issueManagement>
 	
 	<distributionManagement>
@@ -144,7 +151,7 @@ limitations under the License.
 	<scm>
     	<connection>scm:svn:http://svn.apache.org/repos/asf/jakarta/commons/proper/net/trunk</connection>
     	<developerConnection>scm:svn:https://svn.apache.org/repos/asf/jakarta/commons/proper/net/trunk</developerConnection>
-    	<url>http://svn.apache.org/repos/asf/jakarta/commons/proper/net/trunk</url>
+    	<url>http://svn.apache.org/viewvc/jakarta/commons/proper/net/trunk</url>
   	</scm>
   
 	<build>
@@ -193,17 +200,25 @@ limitations under the License.
 		</testResources>
 
 	</build>
-
-	<reports>
-		<report>maven-changes-plugin</report>
-		<report>maven-tasklist-plugin</report>
-		<report>maven-junit-report-plugin</report>
-		<report>maven-jdepend-plugin</report>
-		<report>maven-jcoverage-plugin</report>
-		<report>maven-simian-plugin</report>
-		<report>maven-javadoc-plugin</report>
-		<report>maven-jxr-plugin</report>
-		<report>maven-license-plugin</report>
-	</reports>
+	
+	 <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+        <configuration>
+          <xmlPath>${basedir}/xdocs/changes.xml</xmlPath>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>changes-report</report>
+              <report>jira-report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
 
 </project>

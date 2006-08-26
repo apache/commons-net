@@ -22,6 +22,43 @@ limitations under the License.
 	
 
 	<body>
+		<release version="2.0" date="" description="Java 5.0+ release">
+			<action dev="rwinston" type="add">
+				FTPS (TLS and SSL) is now supported. Thanks to Jose Juan Montiel, Paul Ferraro, and Satoshi Ishigami.
+			</action>
+			<action dev="rwinston" type="update">
+				Commons::Net now uses Maven 2.
+			</action>
+			<action dev="rwinston" type="remove">
+				Removed old ftp2 proposal directories.
+			</action>
+			<action dev="rwinston" type="update">
+				Commons::Net now uses JDK regex functionality, saving on an extra [oro] dependency.
+			</action>
+			<action dev="rwinston" type="fix">
+				Various syntactic issues (FindBugs issues, JDK 5.0 generics support)
+			</action>
+			<action dev="dfs" type="fix">
+				Applied Rob Hasselbaum's
+				&lt;rhasselbaum -> alumni.ithaca.edu&gt;
+				patch for PR 38688 fixing a
+				TelnetInputStream hang.
+			</action>
+			<action dev="dfs" type="update">
+				Exposed control connection of FTP
+				class via _controlInput_ and _controlOutput_
+				protected member variables in response
+				to PR 38309 reported by
+				&lt;josejuan.montiel@gmail.com&gt;.
+			</action>
+			<action dev="dfs" type="fix">
+				Reverted PR 32859 patch to TFTPClient
+				because it caused final packets to not
+				be sent.
+			</action>
+		</release>	
+
+
 		<release version="1.4.x" date="" description="">
 			<action dev="dfs" type="fix">
 				Applied Rob Hasselbaum's
