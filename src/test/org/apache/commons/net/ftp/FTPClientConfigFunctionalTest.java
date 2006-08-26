@@ -16,14 +16,14 @@
  */
 package org.apache.commons.net.ftp;
 
-import junit.framework.TestCase;
 import java.io.IOException;
 import java.net.SocketException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.TreeSet;
+
+import junit.framework.TestCase;
 
 /*
  * This test was contributed in a different form by W. McDonald Buck
