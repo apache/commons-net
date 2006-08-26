@@ -64,6 +64,8 @@ public class FTPSClient extends FTPClient {
 	 * @param keyStoreName Type of instance KeyStore, JKS for Java 1.3 y JCEKS for Java 1.4 
 	 * @param sslContext Type of the instance SSLContext, can be SSL or TLS.
 	 * @param password The password to access the KeyStore.
+	 * @param pbsz Protection buffer size (Use 0 to indicate streaming) 
+	 * @param prot The protection level for the data channel
 	 */
 	public FTPSClient(String keyStoreName, String sslContext, String password, String pbsz, String prot) {
 		this.sslContext = sslContext;
