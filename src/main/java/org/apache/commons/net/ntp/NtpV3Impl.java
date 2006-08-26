@@ -55,7 +55,7 @@ public class NtpV3Impl implements NtpV3Packet
 
     private byte[] buf = new byte[48];
 
-    private DatagramPacket dp;
+    private volatile DatagramPacket dp;
 
     /** Creates a new instance of NtpV3Impl */
     public NtpV3Impl()

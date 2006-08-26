@@ -43,6 +43,23 @@ import javax.net.ssl.TrustManagerFactory;
 
 /**
  * FTP over SSL processing.
+ * 
+ * <p>For example:
+ * <p>
+ * <code>
+ *  FTPSClient client = new FTPSClient();
+ *	client.setReaderThread(false);
+ *	client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
+ *	client.connect("127.0.0.1");
+ *	client.login(username, password);
+ *	
+ *	for (FTPFile file : client.listFiles()) {
+ *		System.out.printf("%s [%d bytes]\n", file.getName(), file.getSize());
+ *	}
+ *	
+ * 	client.disconnect();
+ *	</code>
+ * 	</p>
  */
 public class FTPSClient extends FTPClient {
 
@@ -405,9 +422,9 @@ public class FTPSClient extends FTPClient {
         socket.startHandshake();
 
         _socket_ = socket;
-        _controlInput = new BufferedReader(new InputStreamReader(
+        _controlInput_ = new BufferedReader(new InputStreamReader(
                 socket .getInputStream(), getControlEncoding()));
-        _controlOutput = new BufferedWriter(new OutputStreamWriter(
+        _controlOutput_ = new BufferedWriter(new OutputStreamWriter(
                 socket.getOutputStream(), getControlEncoding()));
     }
 
