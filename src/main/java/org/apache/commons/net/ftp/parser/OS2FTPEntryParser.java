@@ -37,7 +37,7 @@ public class OS2FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * this is the regular expression used by this parser.
      */
     private static final String REGEX =
-        "(\\s+|[0-9]+)\\s*"
+        "\\s*([0-9]+)\\s*"
         + "(\\s+|[A-Z]+)\\s*"
         + "(DIR|\\s+)\\s*"
         + "(\\S+)\\s+(\\S+)\\s+" /* date stuff */
