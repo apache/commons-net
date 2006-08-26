@@ -1,0 +1,209 @@
+<?xml version="1.0"?>
+<!--
+Copyright 2003-200666666 The Apache Software Foundation
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<project>
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>Jakarta Commons Net</name>
+	<groupId>commons-net</groupId>
+    <artifactId>commons-net</artifactId>
+	<version>2.0.0-SNAPSHOT</version>
+	<inceptionYear>1997</inceptionYear>
+	<description>Jakarta Commons Net</description>
+
+	<url>http://jakarta.apache.org/commons/${pom.artifactId.substring(8)}/</url>
+
+	<organization>
+		<name>The Apache Software Foundation</name>
+		<url>http://jakarta.apache.org</url>
+	</organization>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>/LICENSE.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<issueManagement>
+		<url>http://issues.apache.org/jira/</url>
+	</issueManagement>
+	
+	<distributionManagement>
+    <site>
+      <id>website</id>
+      <name>Apache Website</name>
+      <url>scp://people.apache.org/www/jakarta.apache.org/commons/proper/net/</url>
+    </site>
+  </distributionManagement>
+  
+  <repositories>
+	<repository>
+		<id>jakarta</id>
+		<url>http://svn.apache.org/repos/asf/jakarta/commons/proper/net/trunk</url>
+	</repository>
+  </repositories>
+  
+  <dependencies>
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>3.8.1</version>
+		<scope>test</scope>
+	</dependency>
+  </dependencies>
+
+	<mailingLists>
+		<mailingList>
+			<name>Commons Dev List</name>
+			<subscribe>commons-dev-subscribe@jakarta.apache.org</subscribe>
+			<unsubscribe>commons-dev-unsubscribe@jakarta.apache.org</unsubscribe>
+			<archive>http://mail-archives.apache.org/eyebrowse/SummarizeList?listName=commons-dev@jakarta.apache.org</archive>
+		</mailingList>
+		<mailingList>
+			<name>Commons User List</name>
+			<subscribe>commons-user-subscribe@jakarta.apache.org</subscribe>
+			<unsubscribe>commons-user-unsubscribe@jakarta.apache.org</unsubscribe>
+			<archive>http://mail-archives.apache.org/eyebrowse/SummarizeList?listName=commons-user@jakarta.apache.org</archive>
+		</mailingList>
+	</mailingLists>
+
+	<developers>
+		<developer>
+			<name>Jeffrey D. Brekke</name>
+			<id>brekke</id>
+			<email>Jeff.Brekke@qg.com</email>
+			<organization>Quad/Graphics, Inc.</organization>
+		</developer>
+		<developer>
+			<name>Steve Cohen</name>
+			<id>scohen</id>
+			<email>scohen@apache.org</email>
+			<organization>javactivity.org</organization>
+		</developer>
+		<developer>
+			<name>Bruno D'Avanzo</name>
+			<id>brudav</id>
+			<email>bruno.davanzo@hp.com</email>
+			<organization>Hewlett-Packard</organization>
+		</developer>
+		<developer>
+			<name>Daniel F. Savarese</name>
+			<id>dfs</id>
+			<email>dfs -> apache.org</email>
+			<organization>
+			&lt;a href="http://www.savarese.com/"&gt;Savarese Software Research&lt;/a&gt;
+			</organization>
+		</developer>
+		<developer>
+			<name>Rory Winston</name>
+			<id>rwinston</id>
+			<email>rwinston@apache.org</email>
+			<organization></organization>
+		</developer>
+	</developers>
+
+	<contributors>
+		<contributor>
+			<name>Rob Hasselbaum</name>
+			<email>rhasselbaum -> alumni.ithaca.edu</email>
+		</contributor>
+		<contributor>
+			<name>Mario Ivankovits</name>
+			<email>mario@ops.co.at</email>
+		</contributor>
+		<contributor>
+			<name>Tapan Karecha</name>
+			<email>tapan@india.hp.com</email>
+		</contributor>
+		<contributor>
+			<name>Winston Ojeda</name>
+			<email>Winston.Ojeda@qg.com</email>
+			<organization>Quad/Graphics, Inc.</organization>
+		</contributor>
+		<contributor>
+			<name>Ted Wise</name>
+			<email>ctwise@bellsouth.net</email>
+		</contributor>
+	</contributors>
+	
+	<scm>
+    	<connection>scm:svn:http://svn.apache.org/repos/asf/jakarta/commons/proper/net/trunk</connection>
+    	<developerConnection>scm:svn:https://svn.apache.org/repos/asf/jakarta/commons/proper/net/trunk</developerConnection>
+    	<url>http://svn.apache.org/repos/asf/jakarta/commons/proper/net/trunk</url>
+  	</scm>
+  
+	<build>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0</version>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			
+		<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/*FunctionalTest.java</exclude>
+			<exclude>**/TestSetupParameters.java</exclude>
+			<exclude>**/*POP3*.java</exclude>
+          </excludes>
+        </configuration>
+      	</plugin>
+		</plugins>
+		
+		<resources>
+			<resource>
+				<directory>${basedir}</directory>
+				<targetPath>META-INF</targetPath>
+				<includes>
+					<include>NOTICE.txt</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<testResources>
+		<testResource>
+			<directory>${basedir}</directory>
+			<includes>
+				<include>**/*Test.java</include>
+			</includes>
+		</testResource>
+		</testResources>
+
+	</build>
+
+	<reports>
+		<report>maven-changes-plugin</report>
+		<report>maven-tasklist-plugin</report>
+		<report>maven-junit-report-plugin</report>
+		<report>maven-jdepend-plugin</report>
+		<report>maven-jcoverage-plugin</report>
+		<report>maven-simian-plugin</report>
+		<report>maven-javadoc-plugin</report>
+		<report>maven-jxr-plugin</report>
+		<report>maven-license-plugin</report>
+	</reports>
+
+</project>
