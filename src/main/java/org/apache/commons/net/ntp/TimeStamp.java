@@ -407,7 +407,7 @@ public class TimeStamp implements java.io.Serializable, Comparable
             // No cache yet, or cached formatter GC'd
             formatter = new SimpleDateFormat(NTP_DATE_FORMAT, Locale.US);
             formatter.setTimeZone(TimeZone.getDefault());
-            simpleFormatter = new SoftReference(formatter);
+            simpleFormatter = new SoftReference<DateFormat>(formatter);
         }
         Date ntpDate = getDate();
         synchronized (formatter) {
@@ -434,7 +434,7 @@ public class TimeStamp implements java.io.Serializable, Comparable
             formatter = new SimpleDateFormat(NTP_DATE_FORMAT + " 'UTC'",
                     Locale.US);
             formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
-            utcFormatter = new SoftReference(formatter);
+            utcFormatter = new SoftReference<DateFormat>(formatter);
         }
         Date ntpDate = getDate();
         synchronized (formatter) {

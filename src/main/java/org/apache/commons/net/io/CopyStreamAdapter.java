@@ -15,7 +15,6 @@
  */
 package org.apache.commons.net.io;
 
-import java.util.Enumeration;
 import java.util.EventListener;
 
 import org.apache.commons.net.util.ListenerList;

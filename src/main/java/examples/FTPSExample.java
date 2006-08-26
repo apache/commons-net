@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
+
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPConnectionClosedException;
 import org.apache.commons.net.ftp.FTPReply;
@@ -45,7 +47,7 @@ public final class FTPSExample
         "\t-s store file on server (upload)\n" +
         "\t-b use binary transfer mode\n";
 
-    public static final void main(String[] args)
+    public static final void main(String[] args) throws NoSuchAlgorithmException
     {
     	int base = 0;
         boolean storeFile = false, binaryTransfer = false, error = false;
@@ -74,7 +76,7 @@ public final class FTPSExample
         remote = args[base++];
         local = args[base];
 
-        ftps = new FTPSClient("JKS","SSL","password","0","P");
+        ftps = new FTPSClient();
         // NOTE this is necessary for FTPSClient connections
 		ftps.setReaderThread(false);
         ftps.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));

@@ -328,13 +328,13 @@ public class NtpV3Impl implements NtpV3Packet
 
     private String idAsString()
     {
-        String id = "";
+        StringBuilder id = new StringBuilder();
         for (int i = 0; i <= 3; i++) {
             char c = (char) buf[REFERENCE_ID_INDEX + i];
             if (c == 0) break; // 0-terminated string
-            id = id + c;
+            id.append(c);
         }
-        return id;
+        return id.toString();
     }
 
     private String idAsHex()

@@ -41,7 +41,7 @@ public class InvalidTelnetOptionExceptionTest extends TestCase
      ***/
     protected void setUp()
     {
-        msg1 = new String("MSG");
+        msg1 = "MSG";
         code1 = 13;
         exc1 = new InvalidTelnetOptionException(msg1, code1);
     }

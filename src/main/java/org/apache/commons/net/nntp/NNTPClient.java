@@ -1215,8 +1215,8 @@ public class NNTPClient extends NNTP
         throws IOException
     {
         return
-            __retrieveArticleInfo(new String(lowArticleNumber + "-" +
-                                             highArticleNumber));
+            __retrieveArticleInfo(lowArticleNumber + "-" +
+                                             highArticleNumber);
     }
 
     /***
@@ -1269,9 +1269,7 @@ public class NNTPClient extends NNTP
         throws IOException
     {
         return
-            __retrieveHeader(header,
-                             new String(lowArticleNumber + "-" +
-                                        highArticleNumber));
+            __retrieveHeader(header,lowArticleNumber + "-" + highArticleNumber);
     }
 }
 

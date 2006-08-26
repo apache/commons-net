@@ -17,7 +17,6 @@ package org.apache.commons.net.ftp.parser;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import junit.framework.TestCase;
 
@@ -81,9 +80,7 @@ public class FTPConfigEntryParserTest extends TestCase {
 		assertEquals(814, f.getSize());
 
 		Calendar cal = Calendar.getInstance();
-		
-		Date refDate = new Date();
-		
+				
 		cal.set(Calendar.MONTH, Calendar.MARCH);
 		cal.set(Calendar.DATE, 2);
 		cal.set(Calendar.HOUR_OF_DAY, 16);
@@ -145,8 +142,6 @@ public class FTPConfigEntryParserTest extends TestCase {
 		assertEquals(23, f.getSize());
 
 		Calendar cal = Calendar.getInstance();
-		
-		Date refDate = new Date();
 		
 		cal.set(Calendar.MONTH, Calendar.MARCH);
 		cal.set(Calendar.DATE, 2);
