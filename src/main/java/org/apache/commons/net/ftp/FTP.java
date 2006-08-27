@@ -29,16 +29,12 @@ import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ProtocolCommandListener;
 import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
-import org.apache.commons.net.telnet.TelnetClient;
 
 /***
  * FTP provides the basic the functionality necessary to implement your
- * own FTP client.  It extends org.apache.commons.net.TelnetClient
- * simply because it saves the writing of extra code to handle the FTP
- * control connection which always remains open during an FTP session and
- * uses the Telnet protocol.  Aggregation would require writing new
- * wrapper methods and wouldn't leverage the functionality already
- * present in org.apache.commons.net.SocketClient.
+ * own FTP client.  It extends org.apache.commons.net.SocketClient since
+ * extending TelnetClient was causing unwanted behavior (like connections
+ * that did not time out properly).
  * <p>
  * To derive the full benefits of the FTP class requires some knowledge
  * of the FTP protocol defined in RFC 959.  However, there is no reason
@@ -88,12 +84,14 @@ import org.apache.commons.net.telnet.TelnetClient;
  * <p>
  * <p>
  * @author Daniel F. Savarese
+ * @author Joseph Hindsley
  * @see FTPClient
  * @see FTPConnectionClosedException
  * @see org.apache.commons.net.MalformedServerReplyException
+ * @version $Id$
  ***/
 
-public class FTP extends TelnetClient
+public class FTP extends SocketClient
 {
     /*** The default FTP data port (20). ***/
     public static final int DEFAULT_DATA_PORT = 20;
@@ -220,13 +218,13 @@ public class FTP extends TelnetClient
     public static final String DEFAULT_CONTROL_ENCODING = "ISO-8859-1";
     private static final String __modes = "AEILNTCFRPSBC";
 
-    private StringBuffer __commandBuffer;
+    private StringBuilder __commandBuffer = new StringBuilder();
 
-    int _replyCode;
-    Vector _replyLines;
-    boolean _newReplyString;
-    String _replyString;
-    String _controlEncoding;
+    protected int _replyCode;
+    protected Vector<String> _replyLines;
+    protected boolean _newReplyString;
+    protected String _replyString;
+    protected String _controlEncoding;
 
     /**
      * Wraps SocketClient._input_ to facilitate the writing of text
@@ -259,9 +257,9 @@ public class FTP extends TelnetClient
      ***/
     public FTP()
     {
+        super();
         setDefaultPort(DEFAULT_PORT);
-        __commandBuffer = new StringBuffer();
-        _replyLines = new Vector();
+        _replyLines = new Vector<String>();
         _newReplyString = false;
         _replyString = null;
         _commandSupport_ = new ProtocolCommandSupport(this);
@@ -328,12 +326,13 @@ public class FTP extends TelnetClient
             // line.startsWith(code)));
         }
 
-        if (_commandSupport_.getListenerCount() > 0)
+        if (_commandSupport_.getListenerCount() > 0) {
             _commandSupport_.fireReplyReceived(_replyCode, getReplyString());
+        }
 
-        if (_replyCode == FTPReply.SERVICE_NOT_AVAILABLE)
-            throw new FTPConnectionClosedException(
-                "FTP response 421 received.  Server closed connection.");
+        if (_replyCode == FTPReply.SERVICE_NOT_AVAILABLE) {
+            throw new FTPConnectionClosedException("FTP response 421 received.  Server closed connection.");
+        }
     }
 
     /**
@@ -344,10 +343,10 @@ public class FTP extends TelnetClient
     {
         super._connectAction_();
         _controlInput_ =
-            new BufferedReader(new InputStreamReader(getInputStream(),
+            new BufferedReader(new InputStreamReader(_socket_.getInputStream(),
                                                      getControlEncoding()));
         _controlOutput_ =
-            new BufferedWriter(new OutputStreamWriter(getOutputStream(),
+            new BufferedWriter(new OutputStreamWriter(_socket_.getOutputStream(),
                                                       getControlEncoding()));
         __getReply();
         // If we received code 120, we have to fetch completion reply.
@@ -636,8 +635,9 @@ public class FTP extends TelnetClient
         Enumeration en;
         StringBuffer buffer;
 
-        if (!_newReplyString)
+        if (!_newReplyString) {
             return _replyString;
+        }
 
         buffer = new StringBuffer(256);
         en = _replyLines.elements();

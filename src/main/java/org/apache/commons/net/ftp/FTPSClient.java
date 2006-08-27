@@ -48,7 +48,6 @@ import javax.net.ssl.TrustManagerFactory;
  * <p>
  * <code>
  *  FTPSClient client = new FTPSClient();
- *	client.setReaderThread(false);
  *	client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
  *	client.connect("127.0.0.1");
  *	client.login(username, password);

@@ -27,13 +27,15 @@ limitations under the License.
 				FTPS (TLS and SSL) is now supported. Thanks to Jose Juan Montiel, Paul Ferraro, and Satoshi Ishigami.
 			</action>
 			<action dev="rwinston" type="update">
-				Commons::Net now uses Maven 2.
+				Commons::Net now uses Maven 2. The project.xml has been replaced with a pom.xml, and the source tree layout
+				has been changed accordingly.
 			</action>
 			<action dev="rwinston" type="remove">
 				Removed old ftp2 proposal directories.
 			</action>
 			<action dev="rwinston" type="update">
-				Commons::Net now uses JDK regex functionality, saving on an extra [oro] dependency.
+				Commons::Net now uses JDK regex functionality, saving on an extra [oro] dependency. There are now
+				no external dependencies required.
 			</action>
 			<action dev="rwinston" type="fix">
 				Various syntactic issues (FindBugs issues, JDK 5.0 generics support)
@@ -56,6 +58,10 @@ limitations under the License.
 				because it caused final packets to not
 				be sent.
 			</action>
+			<action dev="rwinston" type="update">
+				Applied patch from NET-36 which makes FTPClient extend SocketClient
+				instead of TelnetClient.
+			<action>
 		</release>	
 
 

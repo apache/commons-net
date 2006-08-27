@@ -77,8 +77,7 @@ public final class FTPSExample
         local = args[base];
 
         ftps = new FTPSClient();
-        // NOTE this is necessary for FTPSClient connections
-		ftps.setReaderThread(false);
+       
         ftps.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
 
         try
