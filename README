@@ -13,4 +13,4 @@ o Documentation
 
 You can build the documentation with:
 
-maven site
+mvn site

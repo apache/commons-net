@@ -263,10 +263,10 @@ public abstract class SocketClient
      */
     public void disconnect() throws IOException
     {
-        _socket_.close();
-        _input_.close();
-        _output_.close();
-        _socket_ = null;
+        if (_socket_ != null) _socket_.close();
+        if (_input_ != null) _input_.close();
+        if (_output_ != null) _output_.close();
+        if (_socket_ != null) _socket_ = null;
         _input_ = null;
         _output_ = null;
         _isConnected_ = false;

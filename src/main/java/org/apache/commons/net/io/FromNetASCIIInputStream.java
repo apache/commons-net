@@ -34,12 +34,12 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
 {
     static final boolean _noConversionRequired;
     static final String _lineSeparator;
-    static final byte[] _lineSeparatorBytes;
+    static byte[] _lineSeparatorBytes;
 
     static {
         _lineSeparator = System.getProperty("line.separator");
         _noConversionRequired = _lineSeparator.equals("\r\n");
-        _lineSeparatorBytes = _lineSeparator.getBytes();
+        _lineSeparatorBytes = _lineSeparator.getBytes(); // TODO specify encoding
     }
 
     private int __length = 0;

@@ -43,7 +43,7 @@
    <p>
      Supported protocols are:
      <ul>
-       <li>FTP</li>
+       <li>FTP/FTPS</li>
        <li>NNTP</li>
        <li>SMTP</li>
        <li>POP3</li>

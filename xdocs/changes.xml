@@ -61,11 +61,20 @@ limitations under the License.
 			<action dev="rwinston" type="update">
 				Applied patch from NET-36 which makes FTPClient extend SocketClient
 				instead of TelnetClient.
-			<action>
+			</action>
+			<action dev="rwinston" type="fix">
+				Apply patch for NET-39, which adds an "e" symbolic link flag to the Unix FTP parser
+			</action>
+			<action dev="rwinston" type="fix">
+				Apply patch for NET-119 (allow hidden files to be listed)
+			</action>
+			<action dev="rwinston" type="add">
+				Added an FTP parser for Netware FTP servers.
+			</action>
 		</release>	
 
 
-		<release version="1.4.x" date="" description="">
+		<release version="1.5" date="" description="">
 			<action dev="dfs" type="fix">
 				Applied Rob Hasselbaum's
 				&lt;rhasselbaum -> alumni.ithaca.edu&gt;
@@ -83,6 +92,9 @@ limitations under the License.
 				Reverted PR 32859 patch to TFTPClient
 				because it caused final packets to not
 				be sent.
+			</action>
+			<action dev="rwinston" type="add">
+				Added an FTP parser for Netware FTP servers.
 			</action>
 		</release>
 		

@@ -143,6 +143,17 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         assertEquals(0, dir.getSize());
 
     }
+    
+    public void testParseLeadingDigits() {
+    		FTPFile file = getParser().parseFTPEntry("05-22-97  12:08AM                  5000000000 10 years and under");
+    		assertNotNull("Could not parse entry", file);
+    		assertEquals("10 years and under", file.getName());
+    		assertEquals(5000000000L, file.getSize());
+    		
+    		FTPFile dir = getParser().parseFTPEntry("12-03-96  06:38AM       <DIR>           10 years and under");
+    		assertNotNull("Could not parse entry", dir);
+    		assertEquals("10 years and under", dir.getName());
+    }
 
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()

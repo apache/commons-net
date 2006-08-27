@@ -275,6 +275,7 @@ implements Configurable
     private long __restartOffset;
     private FTPFileEntryParserFactory __parserFactory;
     private int __bufferSize;
+    private boolean __listHiddenFiles;
 
     // __systemName is a cached value that should not be referenced directly
     // except when assigned in getSystemName and __initDefaults.
@@ -302,6 +303,7 @@ implements Configurable
         __remoteVerificationEnabled = true;
         __parserFactory = new DefaultFTPFileEntryParserFactory();
         __configuration      = null;
+        __listHiddenFiles = false;
     }
 
 
@@ -2390,7 +2392,8 @@ implements Configurable
         Socket socket;
 
         FTPListParseEngine engine = new FTPListParseEngine(parser);
-        if ((socket = _openDataConnection_(FTPCommand.LIST, pathname)) == null)
+
+        if ((socket = _openDataConnection_(FTPCommand.LIST, getListArguments(pathname))) == null)
         {
             return engine;
         }
@@ -2404,7 +2407,20 @@ implements Configurable
         return engine;
     }
 
-    /***
+    protected String getListArguments(String pathname) {
+    	if (getListHiddenFiles())
+    	{
+    		StringBuffer sb = new StringBuffer(pathname.length() + 3);
+    		sb.append("-a ");
+    		sb.append(pathname);
+    		return sb.toString();
+    	}
+    	
+    	return pathname;
+	}
+
+
+	/***
      * Issue the FTP STAT command to the server.
      * <p>
      * @return The status information returned by the server.
@@ -2488,7 +2504,7 @@ implements Configurable
         Socket socket;
         FTPFile[] results;
 
-        if ((socket = _openDataConnection_(FTPCommand.LIST, pathname)) == null)
+        if ((socket = _openDataConnection_(FTPCommand.LIST, getListArguments(pathname))) == null)
             return new FTPFile[0];
 
         results = parser.parseFileList(socket.getInputStream(), getControlEncoding());
@@ -2628,7 +2644,7 @@ implements Configurable
     {
         Socket socket;
 
-        if ((socket = _openDataConnection_(FTPCommand.LIST, pathname)) == null)
+        if ((socket = _openDataConnection_(FTPCommand.LIST, getListArguments(pathname))) == null)
         {
             return null;
         }
@@ -2670,7 +2686,26 @@ implements Configurable
     public void configure(FTPClientConfig config) {
     	this.__configuration = config;
     }
-    
+
+    /**
+     * You can set this to true if you would like to get hidden files when {@link #listFiles} too.
+     * A <code>LIST -a</code> will be issued to the ftp server.
+     * It depends on your ftp server if you need to call this method, also dont expect to get rid
+     * of hidden files if you call this method with "false".
+     * 
+     * @param listHiddenFiles true if hidden files should be listed 
+     */
+    public void setListHiddenFiles(boolean listHiddenFiles) {
+    	this.__listHiddenFiles = listHiddenFiles;
+    }
+
+    /**
+     * @see #setListHiddenFiles(boolean)
+     * @return the current state
+     */
+    public boolean getListHiddenFiles() {
+    	return this.__listHiddenFiles;
+    }
 }
 
 /* Emacs configuration

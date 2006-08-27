@@ -83,9 +83,10 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      *        execution is on
      *    T   the 1000 bit is turned on, and execution is off (undefined bit-
      *        state)
+     *    e   z/OS external link bit
      */
     private static final String REGEX =
-        "([bcdlfmpSs-])"
+        "([bcdelfmpSs-])"
         +"(((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-])))\\+?\\s+"
         + "(\\d+)\\s+"
         + "(\\S+)\\s+"
@@ -180,6 +181,9 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             {
             case 'd':
                 type = FTPFile.DIRECTORY_TYPE;
+                break;
+            case 'e':
+                type = FTPFile.SYMBOLIC_LINK_TYPE;
                 break;
             case 'l':
                 type = FTPFile.SYMBOLIC_LINK_TYPE;
