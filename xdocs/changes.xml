@@ -74,6 +74,9 @@ limitations under the License.
 			<action dev="rwinston" type="update">
 				Remove reflective check for Socket::isConnected() (no longer needed)
 			</action>
+			<action dev="rwinston" type="add">
+				Added WindowSizeOptionHandler (NET-136)
+			</action>
 		</release>	
 
 
