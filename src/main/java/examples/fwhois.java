@@ -18,7 +18,8 @@ package examples;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import org.apache.commons.net.WhoisClient;
+
+import org.apache.commons.net.whois.WhoisClient;
 
 /***
  * This is an example of how you would implement the Linux fwhois command

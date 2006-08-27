@@ -23,8 +23,9 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.SocketException;
-import org.apache.commons.net.EchoTCPClient;
-import org.apache.commons.net.EchoUDPClient;
+
+import org.apache.commons.net.echo.EchoTCPClient;
+import org.apache.commons.net.echo.EchoUDPClient;
 
 /***
  * This is an example program demonstrating how to use the EchoTCPClient

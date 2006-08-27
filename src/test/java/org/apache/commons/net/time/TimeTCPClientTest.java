@@ -61,7 +61,6 @@ import java.io.IOException;
 import java.util.TimeZone;
 
 import junit.framework.TestCase;
-import org.apache.commons.net.TimeTCPClient;
 
 public class TimeTCPClientTest extends TestCase
 {

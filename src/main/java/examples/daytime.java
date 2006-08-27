@@ -17,8 +17,9 @@ package examples;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import org.apache.commons.net.DaytimeTCPClient;
-import org.apache.commons.net.DaytimeUDPClient;
+
+import org.apache.commons.net.daytime.DaytimeTCPClient;
+import org.apache.commons.net.daytime.DaytimeUDPClient;
 
 /***
  * This is an example program demonstrating how to use the DaytimeTCP

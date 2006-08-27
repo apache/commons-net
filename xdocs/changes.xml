@@ -71,6 +71,9 @@ limitations under the License.
 			<action dev="rwinston" type="add">
 				Added an FTP parser for Netware FTP servers.
 			</action>
+			<action dev="rwinston" type="update">
+				Remove reflective check for Socket::isConnected() (no longer needed)
+			</action>
 		</release>	
 
 
