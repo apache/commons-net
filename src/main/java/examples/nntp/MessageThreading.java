@@ -20,12 +20,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.SocketException;
 
+import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.nntp.Article;
 import org.apache.commons.net.nntp.NNTPClient;
 import org.apache.commons.net.nntp.NewsgroupInfo;
 import org.apache.commons.net.nntp.Threader;
 
-import examples.PrintCommandListener;
 
 public class MessageThreading {
 	public MessageThreading() {

@@ -43,22 +43,6 @@ import javax.net.ssl.TrustManagerFactory;
 
 /**
  * FTP over SSL processing.
- * 
- * <p>For example:
- * <p>
- * <code>
- *  FTPSClient client = new FTPSClient();
- *	client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
- *	client.connect("127.0.0.1");
- *	client.login(username, password);
- *	
- *	for (FTPFile file : client.listFiles()) {
- *		System.out.printf("%s [%d bytes]\n", file.getName(), file.getSize());
- *	}
- *	
- * 	client.disconnect();
- *	</code>
- * 	</p>
  */
 public class FTPSClient extends FTPClient {
 
@@ -402,6 +386,13 @@ public class FTPSClient extends FTPClient {
     private void sslNegotiation() throws IOException {
         // Evacuation not ssl socket.
         planeSocket = _socket_;
+        
+        try {
+			context.init(null, new TrustManager[] { new FTPSTrustManager() } , null);
+		} catch (KeyManagementException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         SSLSocketFactory ssf = context.getSocketFactory();
         String ip = _socket_.getInetAddress().getHostAddress();
@@ -640,8 +631,7 @@ public class FTPSClient extends FTPClient {
      * Null is returned if an FTP protocol error is reported at any point 
      * during the establishment and initialization of the connection.
      * @throws IOException If there is any problem with the connection.
-     * @see org.apache.commons.net.ftp.FTPCliente
-     * #_openDataConnection_(java.lang.String, int)
+     * @see org.apache.commons.net.ftp.FTPClient#_openDataConnection_(java.lang.String, int)
      */
     protected Socket _openDataConnection_(int command, String arg)
             throws IOException {

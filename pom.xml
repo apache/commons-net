@@ -168,16 +168,41 @@ limitations under the License.
 			</plugin>
 			
 		<plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>**/*FunctionalTest.java</exclude>
-			<exclude>**/TestSetupParameters.java</exclude>
-			<exclude>**/*POP3*.java</exclude>
-          </excludes>
-        </configuration>
+        	<groupId>org.apache.maven.plugins</groupId>
+        	<artifactId>maven-surefire-plugin</artifactId>
+        	<configuration>
+          		<excludes>
+            		<exclude>**/*FunctionalTest.java</exclude>
+					<exclude>**/TestSetupParameters.java</exclude>
+					<exclude>**/*POP3*.java</exclude>
+          		</excludes>
+        	</configuration>
       	</plugin>
+		
+		<plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <configuration>
+              <tasks>
+		      <jar destfile="target/commons-net-ftp-${version}.jar">
+                	<fileset dir="target/classes" 
+                		includes="org/apache/commons/net/ftp/**,org/apache/commons/net/*,org/apache/commons/net/io/*,org/apache/commons/net/util/*"/>
+                	<fileset dir="${basedir}" includes="LICENSE.txt"/>
+                	<manifest>
+                		<attribute name="Implementation-Vendor" value="Apache Software Foundation"/>
+                	</manifest>
+				</jar>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+		
 		</plugins>
 		
 		<resources>

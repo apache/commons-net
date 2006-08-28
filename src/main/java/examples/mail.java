@@ -24,6 +24,8 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Enumeration;
 import java.util.Vector;
+
+import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.io.Util;
 import org.apache.commons.net.smtp.SMTPClient;
 import org.apache.commons.net.smtp.SMTPReply;

@@ -22,12 +22,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Writer;
+
+import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.io.Util;
 import org.apache.commons.net.nntp.NNTPClient;
 import org.apache.commons.net.nntp.NNTPReply;
 import org.apache.commons.net.nntp.SimpleNNTPHeader;
 
-import examples.PrintCommandListener;
 
 /***
  * This is an example program using the NNTP package to post an article

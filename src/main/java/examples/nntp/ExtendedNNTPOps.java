@@ -18,11 +18,11 @@ package examples.nntp;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.nntp.Article;
 import org.apache.commons.net.nntp.NNTPClient;
 import org.apache.commons.net.nntp.NewsgroupInfo;
 
-import examples.PrintCommandListener;
 
 /**
  * Simple class showing some of the extended commands (AUTH, XOVER, LIST ACTIVE)
