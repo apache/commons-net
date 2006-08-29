@@ -30,7 +30,8 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
 /**
- * FTP over SSL processing.
+ * FTP over SSL processing. If desired, the JVM property -Djavax.net.debug=all can be used to 
+ * see wire-level SSL details.
  * 
  * @version $Id$
  */
