@@ -14,8 +14,12 @@
  */
 package org.apache.commons.net.ftp;
 
+
 /**
- * I confirm a response cord of a command added in FTPS.
+ * FTPS Response codes and status checking. Just delegates to {@link FTPReply} for now.
+ *  
+ * @version $Id$
+ * @see {@link FTPReply}
  */
 public final class FTPSReply {
     public static final int CODE_200 = 200;
@@ -67,7 +71,7 @@ public final class FTPSReply {
      *  false if not.
      */
     public static boolean isPositivePreliminary(int reply) {
-        return (reply >= 100 && reply < 200);
+        return FTPReply.isPositivePreliminary(reply);
     }
 
     /**
@@ -81,7 +85,7 @@ public final class FTPSReply {
      *  false if not.
      */
     public static boolean isPositiveCompletion(int reply) {
-        return (reply >= 200 && reply < 300);
+        return FTPReply.isPositiveCompletion(reply);
     }
 
     /**
@@ -98,7 +102,7 @@ public final class FTPSReply {
      *  false if not.
      */
     public static boolean isPositiveIntermediate(int reply) {
-        return (reply >= 300 && reply < 400);
+        return FTPReply.isPositiveIntermediate(reply);
     }
 
     /**
@@ -112,7 +116,7 @@ public final class FTPSReply {
      *  false if not.
      */
     public static boolean isNegativeTransient(int reply) {
-        return (reply >= 400 && reply < 500);
+        return FTPReply.isNegativeTransient(reply);
     }
 
     /**
@@ -126,6 +130,6 @@ public final class FTPSReply {
      *  false if not.
      */
     public static boolean isNegativePermanent(int reply) {
-        return (reply >= 500 && reply < 600);
+        return FTPReply.isNegativePermanent(reply);
     }
 }
