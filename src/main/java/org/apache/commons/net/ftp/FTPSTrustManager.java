@@ -18,10 +18,20 @@ package org.apache.commons.net.ftp;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
+import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+/**
+ * Custom {@link TrustManager} implementation.
+ * 
+ * @version $Id$
+ *
+ */
 public class FTPSTrustManager implements X509TrustManager
 {
+	/**
+	 * No-op
+	 */
 	public void checkClientTrusted(X509Certificate[] certificates, String authType)
 	{
 		return;

@@ -31,6 +31,8 @@ import javax.net.ssl.TrustManager;
 
 /**
  * FTP over SSL processing.
+ * 
+ * @version $Id$
  */
 public class FTPSClient extends FTPClient {
 
@@ -122,8 +124,6 @@ public class FTPSClient extends FTPClient {
         context = SSLContext.getInstance(protocol);
     }
 
- 
- 
 
     /**
      * Set AUTH command use value.
