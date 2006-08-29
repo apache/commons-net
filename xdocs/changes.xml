@@ -22,7 +22,7 @@ limitations under the License.
 	
 
 	<body>
-		<release version="2.0" date="" description="Java 5.0+ release">
+		<release version="2.0" date="" description="Java 5.0 release">
 			<action dev="rwinston" type="add">
 				FTPS (TLS and SSL) is now supported. Thanks to Jose Juan Montiel, Paul Ferraro, and Satoshi Ishigami.
 			</action>
@@ -76,6 +76,13 @@ limitations under the License.
 			</action>
 			<action dev="rwinston" type="add">
 				Added WindowSizeOptionHandler (NET-136)
+			</action>
+			<action dev="rwinston" type="update">
+				Refactored *Client classes under net/ package into separate subpackages
+			</action>
+			<action dev="rwinston" type="add">
+				Added an ant target to the Maven build to generate an FTP-only jar file, for clients who 
+				wish to use only FTP-based functionality.
 			</action>
 		</release>	
 

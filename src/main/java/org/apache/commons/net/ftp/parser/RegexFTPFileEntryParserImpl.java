@@ -67,7 +67,7 @@ public abstract class RegexFTPFileEntryParserImpl extends
 
 	public RegexFTPFileEntryParserImpl(String regex) {
 		super();
-		changeRegex(regex);
+		setRegex(regex);
 	}
 
 	/**
@@ -139,7 +139,7 @@ public abstract class RegexFTPFileEntryParserImpl extends
 	 * @param regex The new regular expression
 	 * @return 
 	 */
-	public boolean changeRegex(String regex) {
+	public boolean setRegex(String regex) {
 		try {
 			pattern = Pattern.compile(regex);
 		} catch (PatternSyntaxException pse) {

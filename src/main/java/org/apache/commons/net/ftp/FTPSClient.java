@@ -19,27 +19,15 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.net.SocketException;
 import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
-import java.util.Enumeration;
-import java.util.Vector;
 
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
 
 /**
  * FTP over SSL processing.
@@ -68,10 +56,6 @@ public class FTPSClient extends FTPClient {
     private String protocol = DEFAULT_PROTOCOL;
     /** The AUTH Command value */
     private String auth = DEFAULT_PROTOCOL;
-    /** The KeyManager object. */
-    private KeyManager[] keyManager = null;
-    /** The TrustManager object */
-    private TrustManager[] trustManager = null;
     /** The context object. */
     private SSLContext context;
     /** The socket object. */
@@ -138,116 +122,8 @@ public class FTPSClient extends FTPClient {
         context = SSLContext.getInstance(protocol);
     }
 
-    /**
-     * Create KeyManager[] object.
-     * @param ks The KeyStore objects.
-     * @param storePass The Store password.
-     * @throws NoSuchAlgorithmException A requested cryptographic 
-     * algorithm is not available in the environment.
-     * @throws NoSuchProviderException A requested cryptographic provider 
-     * is not available in the environment.
-     * @throws UnrecoverableKeyException This exception is thrown 
-     * if a key in the keystore cannot be recovered.
-     * @throws KeyStoreException This is the generic KeyStore exception.
-     * @throws KeyManagementException It is the generic KeyManager exception.
-     */
-    public void createKeyManager(KeyStore ks, String storePass)
-            throws NoSuchAlgorithmException, NoSuchProviderException,
-            KeyStoreException,UnrecoverableKeyException,KeyManagementException{
-        if (ks == null) {
-            keyManager = null;
-            return;
-        }
-        if (KEYSTORE_ALGORITHM == null)
-            KEYSTORE_ALGORITHM = KeyManagerFactory.getDefaultAlgorithm();
-        KeyManagerFactory kmf;
-        if (PROVIDER == null) {
-            kmf = KeyManagerFactory.getInstance(KEYSTORE_ALGORITHM);
-        } else {
-            kmf = KeyManagerFactory.getInstance(KEYSTORE_ALGORITHM, PROVIDER);
-        }
-        if (kmf == null) {
-            keyManager = null;
-            return;
-        }
-        kmf.init(ks, storePass.toCharArray());
-        keyManager = kmf.getKeyManagers();
-        context.init(keyManager, trustManager, null);
-    }
-
-    /**
-     * Create TrustManager[] object.
-     * @param ks The KeyStore object.
-     * @throws NoSuchAlgorithmException A requested cryptographic algorithm 
-     * is not available in the environment.
-     * @throws NoSuchProviderException A requested cryptographic provider 
-     * is not available in the environment.
-     * @throws KeyStoreException This is the generic KeyStore exception.
-     * @throws KeyManagementException It is the generic KeyManager exception.
-     */
-    public void createTrustManager(KeyStore ks) 
-            throws NoSuchAlgorithmException, NoSuchProviderException, 
-            KeyStoreException, KeyManagementException {
-        if (ks == null) trustManager = null;
-        if (TRUSTSTORE_ALGORITHM == null)
-            TRUSTSTORE_ALGORITHM = TrustManagerFactory.getDefaultAlgorithm();
-        TrustManagerFactory tmf;
-        if (PROVIDER == null) {
-            tmf = TrustManagerFactory.getInstance(TRUSTSTORE_ALGORITHM);
-        } else {
-            tmf = TrustManagerFactory.getInstance(
-                    TRUSTSTORE_ALGORITHM, PROVIDER);
-        }
-        if (tmf == null) {
-            trustManager = null;
-            return;
-        }
-        tmf.init(ks);
-        trustManager = tmf.getTrustManagers();
-        context.init(keyManager, trustManager, null);
-    }
-
-    /**
-     * Create TrustManager[] object.
-     * @param _ks The KeyStore objects.
-     * @throws KeyStoreException This is the generic KeyStore exception.
-     * @throws CertificateException This exception indicates one of 
-     * a variety of certificate problems.
-     * @throws NoSuchAlgorithmException A requested cryptographic algorithm 
-     * is not available in the environment.
-     * @throws NoSuchProviderException A requested cryptographic provider 
-     * is not available in the environment.
-     * @throws KeyManagementException It is the generic KeyManager exception.
-     * @throws IOException
-     */
-    public void createTrustManager(Vector ks) throws KeyStoreException, 
-            NoSuchAlgorithmException, CertificateException, 
-            IOException, NoSuchProviderException, KeyManagementException {
-        if (ks == null) {
-            trustManager = null;
-            return;
-        }
-        KeyStore _ks;
-        if (STORE_TYPE == null) {
-            _ks = KeyStore.getInstance(KeyStore.getDefaultType());
-        } else {
-            _ks = KeyStore.getInstance(STORE_TYPE);
-        }
-        _ks.load(null, null);
-        int n = 0;
-        // as for every keystore
-        for (int i = 0; i < ks.size(); i++) {
-            // as for every alias
-            KeyStore wks = ((KeyStore) ks.get(i));
-            for (Enumeration e = wks.aliases(); e.hasMoreElements();) {
-                String alias = (String) e.nextElement();
-                _ks.setCertificateEntry(String.valueOf(n), 
-                        wks.getCertificate(alias));
-                n++;
-            }
-        }
-        createTrustManager(_ks);
-    }
+ 
+ 
 
     /**
      * Set AUTH command use value.
@@ -266,82 +142,7 @@ public class FTPSClient extends FTPClient {
         return this.auth;
     }
 
-    /**
-     * I work to be connected. Opens a Socket connected to a remote host 
-     * at the specified port and originating from the current host at 
-     * a system assigned port.
-     * @param address The name of the remote host.
-     * @param port The port to connect to on the remote host.
-     * @throws SocketException If the socket timeout could not be set.
-     * @throws IOException If the socket could not be opened.
-     * In most cases you will only want to catch IOException since 
-     * SocketException is derived from it.
-     * @see org.apache.commons.net.SocketClient#connect(java.lang.String, int)
-     */
-    public void connect(String address, int port) 
-            throws SocketException, IOException {
-        super.connect(address, port);
-    }
-
-    /**
-     * I work to be connected. Opens a Socket connected to a remote host 
-     * at the specified port and originating from the current host at 
-     * a system assigned port.
-     * @param address The name of the remote host.
-     * @param port The port to connect to on the remote host.
-     * @throws SocketException If the socket timeout could not be set.
-     * @throws IOException If the socket could not be opened.
-     * In most cases you will only want to catch IOException since 
-     * SocketException is derived from it.
-     * @see org.apache.commons.net.SocketClient 
-     * #connect(java.net.InetAddress, int)
-     */
-    public void connect(InetAddress address, int port) 
-            throws SocketException, IOException {
-        super.connect(address, port);
-    }
-
-    /**
-     * I work to be connected. Opens a Socket connected to a remote host 
-     * at the specified port and originating from the specified 
-     * local address and port.
-     * @param address The name of the remote host.
-     * @param port The port to connect to on the remote host.
-     * @param localAddress The local address to use.
-     * @param localPort The local port to use.
-     * @throws SocketException If the socket timeout could not be set.
-     * @throws IOException If the socket could not be opened.
-     * In most cases you will only want to catch IOException since 
-     * SocketException is derived from it.
-     * @see org.apache.commons.net.SocketClient
-     * #connect(java.net.InetAddress, int, java.net.InetAddress, int)
-     */
-    public void connect(InetAddress address, int port, 
-            InetAddress localAddress, int localPort) 
-            throws SocketException, IOException {
-        super.connect(address, port, localAddress, localPort);
-    }
-
-    /**
-     * I work to be connected. Opens a Socket connected to a remote host 
-     * at the specified port and originating from the specified 
-     * local address and port.
-     * @param address The name of the remote host.
-     * @param port The port to connect to on the remote host.
-     * @param localAddress The local address to use.
-     * @param localPort The local port to use.
-     * @throws SocketException If the socket timeout could not be set.
-     * @throws IOException If the socket could not be opened. 
-     * In most cases you will only want to catch IOException since 
-     * SocketException is derived from it.
-     * @see org.apache.commons.net.SocketClient 
-     * #connect(java.lang.String, int, java.net.InetAddress, int)
-     */
-    public void connect(String address, int port, InetAddress localAddress,
-            int localPort) throws SocketException, IOException {
-        super.connect(address, port, localAddress, localPort);
-    }
-
+    
     /**
      * Because there are so many connect() methods, 
      * the _connectAction_() method is provided as a means of performing 
@@ -362,7 +163,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * I carry out an AUTH command.
+     * AUTH command.
      * @throws SSLException If it server reply code not equal "234" and "334".
      * @throws IOException If an I/O error occurs while either sending 
      * the command.
@@ -379,8 +180,8 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * SSL/TLS negotiation. I acquire an SSL socket of a control 
-     * connection and carry out handshake processing.
+     * SSL/TLS negotiation. Acquires an SSL socket of a control 
+     * connection and carries out handshake processing.
      * @throws IOException A handicap breaks out by sever negotiation.
      */
     private void sslNegotiation() throws IOException {
@@ -390,7 +191,6 @@ public class FTPSClient extends FTPClient {
         try {
 			context.init(null, new TrustManager[] { new FTPSTrustManager() } , null);
 		} catch (KeyManagementException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -419,7 +219,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Controls whether new SSL session may be established by this socket.
+     * Controls whether new a SSL session may be established by this socket.
      * @param isCreation The established socket flag.
      */
     public void setEnabledSessionCreation(boolean isCreation) {
@@ -546,7 +346,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * I carry out an PBSZ command. pbsz value: 0 to (2^32)-1 decimal integer.
+     * PBSZ command. pbsz value: 0 to (2^32)-1 decimal integer.
      * @param pbsz Protection Buffer Size.
      * @throws SSLException If it server reply code not equal "200".
      * @throws IOException If an I/O error occurs while either sending 
@@ -561,7 +361,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * I carry out an PROT command.</br>
+     * PROT command.</br>
      * C - Clear</br>
      * S - Safe(SSL protocol only)</br>
      * E - Confidential(SSL protocol only)</br>
@@ -620,9 +420,8 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * I return a socket of the data connection that I acquired. 
-     * When I ssl it and communicate, I return the SSL socket which 
-     * carried out handshake processing.
+     * Returns a socket of the data connection. 
+     * Wrapped as an {@link SSLSocket}, which carries out handshake processing.
      * @pram command The text representation of the FTP command to send.
      * @param arg The arguments to the FTP command. 
      * If this parameter is set to null, then the command is sent with 
