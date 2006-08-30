@@ -474,7 +474,7 @@ implements Configurable
         if (__dataConnectionMode == ACTIVE_LOCAL_DATA_CONNECTION_MODE)
         {
             ServerSocket server;
-            server = _socketFactory_.createServerSocket(0, 1, getLocalAddress());
+            server = _serverSocketFactory_.createServerSocket(0, 1, getLocalAddress());
 
             if (!FTPReply.isPositiveCompletion(port(getLocalAddress(),
                                                     server.getLocalPort())))

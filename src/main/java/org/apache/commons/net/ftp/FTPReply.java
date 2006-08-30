@@ -110,6 +110,28 @@ public final class FTPReply
     public static final int PAGE_TYPE_UNKNOWN = CODE_551;
     public static final int STORAGE_ALLOCATION_EXCEEDED = CODE_552;
     public static final int FILE_NAME_NOT_ALLOWED = CODE_553;
+    
+    // FTPS Reply Codes
+    public static final int CODE_234 = 234;
+    public static final int CODE_235 = 235;
+    public static final int CODE_334 = 334;
+    public static final int CODE_335 = 335;
+    public static final int CODE_431 = 431;
+    public static final int CODE_533 = 533;
+    public static final int CODE_534 = 534;
+    public static final int CODE_535 = 535;
+    public static final int CODE_536 = 536;
+    
+    public static final int SECURITY_DATA_EXCHANGE_COMPLETE = CODE_234;
+    public static final int SECURITY_DATA_EXCHANGE_SUCCESSFULLY = CODE_235;
+    public static final int SECURITY_MECHANISM_IS_OK = CODE_334;
+    public static final int SECURITY_DATA_IS_ACCEPTABLE = CODE_335;
+    public static final int UNAVAILABLE_RESOURCE = CODE_431;
+    public static final int DENIED_FOR_POLICY_REASONS = CODE_533;
+    public static final int REQUEST_DENIED = CODE_534;
+    public static final int FAILED_SECURITY_CHECK = CODE_535;
+    public static final int REQUESTED_PROT_LEVEL_NOT_SUPPORTED = CODE_536;
+    
 
     // Cannot be instantiated
     private FTPReply()

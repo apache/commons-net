@@ -21,6 +21,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import javax.net.SocketFactory;
+
 /***
  * DefaultSocketFactory implements the SocketFactory interface by
  * simply wrapping the java.net.Socket and java.net.ServerSocket
@@ -35,7 +37,7 @@ import java.net.UnknownHostException;
  * @see SocketClient#setSocketFactory
  ***/
 
-public class DefaultSocketFactory implements SocketFactory
+public class DefaultSocketFactory extends SocketFactory
 {
 
     /***

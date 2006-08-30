@@ -22,6 +22,10 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
 
+import javax.net.ServerSocketFactory;
+import javax.net.SocketFactory;
+
+
 /**
  * The SocketClient provides the basic operations that are required of
  * client objects accessing sockets.  It is meant to be
@@ -53,7 +57,10 @@ public abstract class SocketClient
 
     /** The default SocketFactory shared by all SocketClient instances. */
     private static final SocketFactory __DEFAULT_SOCKET_FACTORY =
-        new DefaultSocketFactory();
+    		SocketFactory.getDefault();
+    
+    private static final ServerSocketFactory __DEFAULT_SERVER_SOCKET_FACTORY = 
+    		ServerSocketFactory.getDefault();
 
     /** The timeout to use after opening a socket. */
     protected int _timeout_;
@@ -77,6 +84,8 @@ public abstract class SocketClient
 
     /** The socket's SocketFactory. */
     protected SocketFactory _socketFactory_;
+    
+    protected ServerSocketFactory _serverSocketFactory_;
 
 
     /**
@@ -499,6 +508,21 @@ public abstract class SocketClient
         else
             _socketFactory_ = factory;
     }
+    
+    /**
+     * Sets the ServerSocketFactory used by the SocketClient to open ServerSocket
+     * connections.  If the factory value is null, then a default
+     * factory is used (only do this to reset the factory after having
+     * previously altered it).
+     * <p>
+     * @param factory  The new ServerSocketFactory the SocketClient should use.
+     */
+    public void setServerSocketFactory(ServerSocketFactory factory) {
+		if (factory == null)
+			_serverSocketFactory_ = __DEFAULT_SERVER_SOCKET_FACTORY;
+		else
+			_serverSocketFactory_ = factory;
+	}
 }
 
 

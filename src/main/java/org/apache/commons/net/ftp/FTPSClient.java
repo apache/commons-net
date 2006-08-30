@@ -172,10 +172,10 @@ public class FTPSClient extends FTPClient {
     private void execAUTH() throws SSLException, IOException {
         int replyCode = sendCommand(
                 FTPSCommand._commands[FTPSCommand.AUTH], auth);
-        if (FTPSReply.SECURITY_MECHANISM_IS_OK == replyCode) {
+        if (FTPReply.SECURITY_MECHANISM_IS_OK == replyCode) {
             // replyCode = 334
             // I carry out an ADAT command.
-        } else if (FTPSReply.SECURITY_DATA_EXCHANGE_COMPLETE != replyCode) {
+        } else if (FTPReply.SECURITY_DATA_EXCHANGE_COMPLETE != replyCode) {
             throw new SSLException(getReplyString());
         }
     }
@@ -356,7 +356,7 @@ public class FTPSClient extends FTPClient {
     public void execPBSZ(long pbsz) throws SSLException, IOException {
         if (pbsz < 0 || 4294967295L < pbsz) 
             throw new IllegalArgumentException();
-        if (FTPSReply.COMMAND_OK != sendCommand(
+        if (FTPReply.COMMAND_OK != sendCommand(
                 FTPSCommand._commands[FTPSCommand.PBSZ],String.valueOf(pbsz)))
             throw new SSLException(getReplyString());
     }
@@ -375,7 +375,7 @@ public class FTPSClient extends FTPClient {
     public void execPROT(String prot) throws SSLException, IOException {
         if (prot == null) prot = DEFAULT_PROT;
         if (!checkPROTValue(prot)) throw new IllegalArgumentException();
-        if (FTPSReply.COMMAND_OK != sendCommand(
+        if (FTPReply.COMMAND_OK != sendCommand(
                 FTPSCommand._commands[FTPSCommand.PROT], prot)) 
             throw new SSLException(getReplyString());
         if (DEFAULT_PROT.equals(prot)) {
@@ -410,7 +410,7 @@ public class FTPSClient extends FTPClient {
     public int sendCommand(String command, String args) throws IOException {
         int repCode = super.sendCommand(command, args);
         if (FTPSCommand._commands[FTPSCommand.CCC].equals(command)) {
-            if (FTPSReply.COMMAND_OK == repCode) {
+            if (FTPReply.COMMAND_OK == repCode) {
             		// TODO Check this - is this necessary at all?
                 _socket_ = planeSocket;
                 setSocketFactory(null);

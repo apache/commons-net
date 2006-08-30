@@ -118,7 +118,7 @@ public class RCommandClient extends RExecClient
         {
             try
             {
-                server = _socketFactory_.createServerSocket(localPort, 1,
+                server = _serverSocketFactory_.createServerSocket(localPort, 1,
                          getLocalAddress());
             }
             catch (SocketException e)

@@ -22,17 +22,17 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import javax.net.SocketFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLServerSocket;
 
-import org.apache.commons.net.SocketFactory;
 
 /**
  * 
  * Implementation of org.apache.commons.net.SocketFactory
  *
  */
-public class FTPSSocketFactory implements SocketFactory {
+public class FTPSSocketFactory extends SocketFactory {
 
     private SSLContext context;
     
