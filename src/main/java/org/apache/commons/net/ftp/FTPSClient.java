@@ -234,7 +234,7 @@ public class FTPSClient extends FTPClient {
      * this is the default. 
      * false - indicates that an existing session must be resumed.
      */
-    public boolean getEnableSeeionCreation() {
+    public boolean getEnableSessionCreation() {
         if (_socket_ instanceof SSLSocket) 
             return ((SSLSocket)_socket_).getEnableSessionCreation();
         return false;
@@ -411,6 +411,7 @@ public class FTPSClient extends FTPClient {
         int repCode = super.sendCommand(command, args);
         if (FTPSCommand._commands[FTPSCommand.CCC].equals(command)) {
             if (FTPSReply.COMMAND_OK == repCode) {
+            		// TODO Check this - is this necessary at all?
                 _socket_ = planeSocket;
                 setSocketFactory(null);
             } else {
