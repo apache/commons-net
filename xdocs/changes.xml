@@ -58,15 +58,14 @@ limitations under the License.
 				because it caused final packets to not
 				be sent.
 			</action>
-			<action dev="rwinston" type="update">
-				Applied patch from NET-36 which makes FTPClient extend SocketClient
-				instead of TelnetClient.
+			<action dev="rwinston" type="update" issue="NET-36">
+				Make FTPClient extend SocketClient instead of TelnetClient. From &lt;jhindsley@providerlink.com&gt;
 			</action>
-			<action dev="rwinston" type="fix">
-				Apply patch for NET-39, which adds an "e" symbolic link flag to the Unix FTP parser
+			<action dev="rwinston" type="fix" issue="NET-39">
+				Adds an "e" symbolic link flag to the Unix FTP parser. From &lt;denisgaebler@netscape.net&gt;
 			</action>
-			<action dev="rwinston" type="fix">
-				Apply patch for NET-119 (allow hidden files to be listed)
+			<action dev="rwinston" type="fix" issue="NET-119">
+				Allow hidden files to be listed. Thanks to &lt;mario@ops.co.at&gt;
 			</action>
 			<action dev="rwinston" type="add">
 				Added an FTP parser for Netware FTP servers.
@@ -74,15 +73,20 @@ limitations under the License.
 			<action dev="rwinston" type="update">
 				Remove reflective check for Socket::isConnected() (no longer needed)
 			</action>
-			<action dev="rwinston" type="add">
-				Added WindowSizeOptionHandler (NET-136)
+			<action dev="rwinston" type="add" issue="NET-136">
+				Added WindowSizeOptionHandler for TelnetClient. Thanks to &lt;yuvalkashtan@gmail.com&gt;
 			</action>
 			<action dev="rwinston" type="update">
-				Refactored *Client classes under net/ package into separate subpackages
+				Refactored *Client classes under net/ package into separate subpackages, and move PrintCommandListener 
+				out of the examples/ package.
 			</action>
 			<action dev="rwinston" type="add">
 				Added an ant target to the Maven build to generate an FTP-only jar file, for clients who 
 				wish to use only FTP-based functionality.
+			</action>
+			<action dev="rwinston" type="update">
+				Custom SocketFactory interface has been replaced with the JDK SocketFactory implementation. Added
+				ServerSocketFactory instance to SocketClient.
 			</action>
 		</release>	
 
