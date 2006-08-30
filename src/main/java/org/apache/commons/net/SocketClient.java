@@ -85,8 +85,8 @@ public abstract class SocketClient
     /** The socket's SocketFactory. */
     protected SocketFactory _socketFactory_;
     
+    /** The socket's ServerSocket Factory. */
     protected ServerSocketFactory _serverSocketFactory_;
-
 
     /**
      * Default constructor for SocketClient.  Initializes
@@ -103,6 +103,7 @@ public abstract class SocketClient
         _defaultPort_ = 0;
         _isConnected_ = false;
         _socketFactory_ = __DEFAULT_SOCKET_FACTORY;
+        _serverSocketFactory_ = __DEFAULT_SERVER_SOCKET_FACTORY;
     }
 
 
