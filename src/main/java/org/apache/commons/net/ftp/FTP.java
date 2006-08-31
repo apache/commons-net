@@ -113,14 +113,7 @@ public class FTP extends SocketClient
      ***/
     public static final int EBCDIC_FILE_TYPE = 1;
 
-    /***
-     * A constant used to indicate the file(s) being transfered should
-     * be treated as a binary image, i.e., no translations should be
-     * performed.  All constants ending in <code>FILE_TYPE</code> are used to
-     * indicate file types.
-     ***/
-    public static final int IMAGE_FILE_TYPE = 2;
-
+   
     /***
      * A constant used to indicate the file(s) being transfered should
      * be treated as a binary image, i.e., no translations should be
