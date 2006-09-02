@@ -78,8 +78,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
 	 */
 	public MVSFTPEntryParserTest(String name) {
 		super(name);
-		if (saveftpfiles == null)
-			saveftpfiles = new ArrayList();
+
 	}
 
 	/* (non-Javadoc)
