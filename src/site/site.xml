@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE org.apache.commons.menus SYSTEM '../../commons-build/menus/menus.dtd'>
 <!--
    Copyright 2003-2004 The Apache Software Foundation
 
@@ -15,7 +14,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<site>
+<project name="Jakarta Commons Net">
   <body>
     <menu name="Documentation">
       <item name="Migration How-to"      href="/migration.html"/>
@@ -28,6 +27,9 @@
       <item name="To-Do List" href="/tasks.html"/>
       <item name="Coding Specifications" href="/code-standards.html"/>
     </menu>
+    
+    ${reports}
+    
   </body>
 
-</site>
+</project>
