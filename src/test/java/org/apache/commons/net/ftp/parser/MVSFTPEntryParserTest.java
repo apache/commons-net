@@ -34,7 +34,6 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
  * @version $Id: MVSFTPEntryParserTest.java,v 1.16 2005/01/02 03:17:50 scohen Exp $
  */
 public class MVSFTPEntryParserTest extends FTPParseTestFramework {
-	static List saveftpfiles;
 
 	private static final String[] goodsamplesDatasetList = { /* Note, if the string begins with SAVE, the parsed entry is stored in the List saveftpfiles */
 			//	"Volume Unit    Referred Ext Used Recfm Lrecl BlkSz Dsorg Dsname",
@@ -110,15 +109,6 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
 		return l;
 	}
 
-	/**
-	 * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#doAdditionalGoodTests()
-	 */
-	/* Add the parsed files for more testing later */
-	protected void doAdditionalGoodTests(String test, FTPFile f) {
-		if (test.startsWith("SAVE")) { //System.out.println("saving ftpfile name ="+f.getName()); 
-			saveftpfiles.add(f);
-		}
-	}
 
 	/**
 	 * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()

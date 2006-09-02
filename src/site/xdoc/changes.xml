@@ -91,6 +91,9 @@ limitations under the License.
 			<action dev="rwinston" type="update">
 				Removed redundant FTP.IMAGE_FILE_TYPE flag.
 			</action>
+			<action dev="rwinston" type="update">
+				Added heavily updated MVSFTPEntryParser from &lt;henrik.sorensen@balcab.ch&gt;
+			</action>
 		</release>	
 
 
