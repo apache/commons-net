@@ -15,10 +15,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<project name="Jakarta Commons/Net">
-
-  <title>Jakarta Commons/Net</title>
-
+<site>
   <body>
     <menu name="Documentation">
       <item name="Migration How-to"      href="/migration.html"/>
@@ -31,8 +28,6 @@
       <item name="To-Do List" href="/tasks.html"/>
       <item name="Coding Specifications" href="/code-standards.html"/>
     </menu>
-
-	&common-menus;
   </body>
 
-</project>
+</site>
