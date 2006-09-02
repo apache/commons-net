@@ -88,6 +88,9 @@ limitations under the License.
 				Custom SocketFactory interface has been replaced with the JDK SocketFactory implementation. Added
 				ServerSocketFactory instance to SocketClient.
 			</action>
+			<action dev="rwinston" type="update">
+				Removed redundant FTP.IMAGE_FILE_TYPE flag.
+			</action>
 		</release>	
 
 
