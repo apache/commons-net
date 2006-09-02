@@ -53,6 +53,7 @@ public final class FTPSExample
     	int base = 0;
         boolean storeFile = false, binaryTransfer = false, error = false;
         String server, username, password, remote, local;
+        String protocol = "SSL";	// SSL/TLS
         FTPSClient ftps;
         
         for (base = 0; base < args.length; base++)
@@ -77,7 +78,7 @@ public final class FTPSExample
         remote = args[base++];
         local = args[base];
 
-        ftps = new FTPSClient();
+        ftps = new FTPSClient(protocol);
        
         ftps.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
 
