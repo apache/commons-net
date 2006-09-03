@@ -97,7 +97,7 @@ limitations under the License.
 		</release>	
 
 
-		<release version="1.5" date="" description="">
+		<release version="1.5.0" date="" description="">
 			<action dev="dfs" type="fix">
 				Applied Rob Hasselbaum's
 				&lt;rhasselbaum -> alumni.ithaca.edu&gt;

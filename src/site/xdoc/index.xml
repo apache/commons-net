@@ -69,7 +69,8 @@
     to the continued development of Jakarta Commons Net.  The current
     version numbering scheme bears no relation to the old.  In other
     words, Jakarta Commons Net 1.0 succeeded and supplanted
-    NetComponents 1.3.8.
+    NetComponents 1.3.8. The 2.0 branch of Commons Net will only run on
+    JDK 5.0 or higher.
    </p>
    </section>
    <section name="Further Information">
