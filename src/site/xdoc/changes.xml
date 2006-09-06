@@ -94,6 +94,10 @@ limitations under the License.
 			<action dev="rwinston" type="update">
 				Added heavily updated MVSFTPEntryParser from &lt;henrik.sorensen@balcab.ch&gt;
 			</action>
+			<action dev="rwinston" type="remove">
+				Removed deprecated classes FTPFileListParser, FTPFileListParserImpl, and DefaultFTPFileListParser. Also
+				removed associated deprecated methods from FTPClient.
+			</action>
 		</release>	
 
 
