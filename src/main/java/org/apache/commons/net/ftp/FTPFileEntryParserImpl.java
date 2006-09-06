@@ -27,7 +27,7 @@ import java.util.List;
  *
  */
 public abstract class FTPFileEntryParserImpl
-    implements FTPFileEntryParser, FTPFileListParser
+    implements FTPFileEntryParser
 {
     /**
      * The constructor for a FTPFileEntryParserImpl object.
