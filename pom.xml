@@ -263,6 +263,14 @@ limitations under the License.
 					</reportSet>
 				</reportSets>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</reporting>
 
