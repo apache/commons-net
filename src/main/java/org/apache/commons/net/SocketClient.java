@@ -68,11 +68,6 @@ public abstract class SocketClient
     /** The socket used for the connection. */
     protected Socket _socket_;
 
-    /**
-     * A status variable indicating if the client's socket is currently open.
-     */
-    protected boolean _isConnected_;
-
     /** The default port the client should connect to. */
     protected int _defaultPort_;
 
@@ -101,7 +96,6 @@ public abstract class SocketClient
         _output_ = null;
         _timeout_ = 0;
         _defaultPort_ = 0;
-        _isConnected_ = false;
         _socketFactory_ = __DEFAULT_SOCKET_FACTORY;
         _serverSocketFactory_ = __DEFAULT_SERVER_SOCKET_FACTORY;
     }
@@ -128,7 +122,6 @@ public abstract class SocketClient
         _socket_.setSoTimeout(_timeout_);
         _input_ = _socket_.getInputStream();
         _output_ = _socket_.getOutputStream();
-        _isConnected_ = true;
     }
 
 
@@ -279,7 +272,6 @@ public abstract class SocketClient
         if (_socket_ != null) _socket_ = null;
         _input_ = null;
         _output_ = null;
-        _isConnected_ = false;
     }
 
 
@@ -291,7 +283,10 @@ public abstract class SocketClient
      */
     public boolean isConnected()
     {
-        return _isConnected_;
+        if (_socket_ == null)
+        	return false;
+        
+    	return _socket_.isConnected();
     }
 
 

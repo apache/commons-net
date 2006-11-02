@@ -116,7 +116,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
      */
     public List preParse(List original) {
         original = super.preParse(original);
-        HashMap existingEntries = new HashMap();
+        HashMap<String, NameVersion> existingEntries = new HashMap<String, NameVersion>();
         ListIterator iter = original.listIterator();
         while (iter.hasNext()) {
             String entry = ((String)iter.next()).trim();

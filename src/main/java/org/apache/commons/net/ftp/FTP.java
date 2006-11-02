@@ -22,8 +22,8 @@ import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ProtocolCommandListener;
@@ -214,7 +214,7 @@ public class FTP extends SocketClient
     private StringBuilder __commandBuffer = new StringBuilder();
 
     protected int _replyCode;
-    protected Vector<String> _replyLines;
+    protected ArrayList<String> _replyLines;
     protected boolean _newReplyString;
     protected String _replyString;
     protected String _controlEncoding;
@@ -252,7 +252,7 @@ public class FTP extends SocketClient
     {
         super();
         setDefaultPort(DEFAULT_PORT);
-        _replyLines = new Vector<String>();
+        _replyLines = new ArrayList<String>();
         _newReplyString = false;
         _replyString = null;
         _commandSupport_ = new ProtocolCommandSupport(this);
@@ -264,7 +264,7 @@ public class FTP extends SocketClient
         int length;
 
         _newReplyString = true;
-        _replyLines.setSize(0);
+        //_replyLines. setSize(0);
 
         String line = _controlInput_.readLine();
 
@@ -290,7 +290,7 @@ public class FTP extends SocketClient
                 "Could not parse response code.\nServer Reply: " + line);
         }
 
-        _replyLines.addElement(line);
+        _replyLines.add(line);
 
         // Get extra lines if message continues.
         if (length > 3 && line.charAt(3) == '-')
@@ -303,7 +303,7 @@ public class FTP extends SocketClient
                     throw new FTPConnectionClosedException(
                         "Connection closed without indication.");
 
-                _replyLines.addElement(line);
+                _replyLines.add(line);
 
                 // The length() check handles problems that could arise from readLine()
                 // returning too soon after encountering a naked CR or some other
@@ -407,7 +407,6 @@ public class FTP extends SocketClient
         super.disconnect();
         _controlInput_ = null;
         _controlOutput_ = null;
-        _replyLines.setSize(0);
         _newReplyString = false;
         _replyString = null;
     }
@@ -612,7 +611,7 @@ public class FTP extends SocketClient
     {
         String[] lines;
         lines = new String[_replyLines.size()];
-        _replyLines.copyInto(lines);
+        _replyLines.addAll(Arrays.asList(lines));
         return lines;
     }
 
@@ -625,22 +624,20 @@ public class FTP extends SocketClient
      ***/
     public String getReplyString()
     {
-        Enumeration en;
-        StringBuffer buffer;
+        StringBuilder buffer;
 
         if (!_newReplyString) {
             return _replyString;
         }
 
-        buffer = new StringBuffer(256);
-        en = _replyLines.elements();
-        while (en.hasMoreElements())
-        {
-            buffer.append((String)en.nextElement());
-            buffer.append(SocketClient.NETASCII_EOL);
+        buffer = new StringBuilder(256);
+        
+        for (String line : _replyLines) {
+        		buffer.append(line);
+        		buffer.append(SocketClient.NETASCII_EOL);
         }
-
-        _newReplyString = false;
+        
+         _newReplyString = false;
 
         return (_replyString = buffer.toString());
     }

@@ -47,8 +47,8 @@ package org.apache.commons.net.nntp;
 public class SimpleNNTPHeader
 {
     private String __subject, __from;
-    private StringBuffer __newsgroups;
-    private StringBuffer __headerFields;
+    private StringBuilder __newsgroups;
+    private StringBuilder __headerFields;
     private int __newsgroupCount;
 
     /***
@@ -64,8 +64,8 @@ public class SimpleNNTPHeader
     {
         __from = from;
         __subject = subject;
-        __newsgroups = new StringBuffer();
-        __headerFields = new StringBuffer();
+        __newsgroups = new StringBuilder();
+        __headerFields = new StringBuilder();
         __newsgroupCount = 0;
     }
 

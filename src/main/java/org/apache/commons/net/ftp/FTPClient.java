@@ -24,7 +24,8 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory;
@@ -231,6 +232,7 @@ import org.apache.commons.net.io.Util;
  * @see FTPFileEntryParserFactory
  * @see DefaultFTPFileEntryParserFactory
  * @see FTPClientConfig
+ * 
  * @see org.apache.commons.net.MalformedServerReplyException
  **/
 public class FTPClient extends FTP
@@ -513,7 +515,7 @@ implements Configurable
             if (pasv() != FTPReply.ENTERING_PASSIVE_MODE)
                 return null;
 
-            __parsePassiveModeReply((String)_replyLines.elementAt(0));
+            __parsePassiveModeReply((String)_replyLines.get(0));
 
             socket = _socketFactory_.createSocket(__passiveHost, __passivePort);
             if ((__restartOffset > 0) && !restart(__restartOffset))
@@ -902,7 +904,7 @@ implements Configurable
             return false;
 
         __dataConnectionMode = PASSIVE_REMOTE_DATA_CONNECTION_MODE;
-        __parsePassiveModeReply((String)_replyLines.elementAt(0));
+        __parsePassiveModeReply((String)_replyLines.get(0));
 
         return true;
     }
@@ -1814,7 +1816,7 @@ implements Configurable
         if (pwd() != FTPReply.PATHNAME_CREATED)
             return null;
 
-        return __parsePathname((String)_replyLines.elementAt(0));
+        return __parsePathname((String)_replyLines.get(0));
     }
 
 
@@ -1861,7 +1863,7 @@ implements Configurable
       // in practice FTP servers deviate, so we soften the condition to
       // a positive completion.
         if (__systemName == null && FTPReply.isPositiveCompletion(syst()))
-            __systemName = ((String)_replyLines.elementAt(0)).substring(4);
+            __systemName = ((String)_replyLines.get(0)).substring(4);
 
         return __systemName;
     }
@@ -1959,7 +1961,7 @@ implements Configurable
         String line;
         Socket socket;
         BufferedReader reader;
-        Vector results;
+        ArrayList<String> results;
 
         if ((socket = _openDataConnection_(FTPCommand.NLST, pathname)) == null)
             return null;
@@ -1967,9 +1969,9 @@ implements Configurable
         reader =
             new BufferedReader(new InputStreamReader(socket.getInputStream(), getControlEncoding()));
 
-        results = new Vector();
+        results = new ArrayList<String>();
         while ((line = reader.readLine()) != null)
-            results.addElement(line);
+            results.add(line);
         reader.close();
         socket.close();
 
@@ -1977,7 +1979,7 @@ implements Configurable
         {
             String[] result;
             result = new String[results.size()];
-            results.copyInto(result);
+            results.addAll(Arrays.asList(result));
             return result;
         }
 
@@ -2011,91 +2013,6 @@ implements Configurable
         return listNames(null);
     }
 
-
-    /**
-     * Using the supplied <code>parserKey</code>, obtain a list
-     * of file information for the current working directory or for just a
-     * single file.
-     * <p>
-     * If <code>key</code> is null, this object will try to autodetect
-     * the system-type/parser-type by calling the SYST command.
-     * <p>
-     * Under the DefaultFTPFileEntryParserFactory, which is used unless a
-     * different factory has been specified, the key
-     * can be either a recognized System type for which a parser has been
-     * defined, or the fully qualified class name of a class that implements
-     * org.apache.commons.net.ftp.FTPFileEntryParser.
-     * <p>
-     * This information is obtained through the LIST command.  The contents of
-     * the returned array is determined by the<code> FTPFileEntryParser </code>
-     * used.
-     * <p>
-     * @param parserKey This is a "handle" which the parser factory used
-     *                  must be able to resolve into a class implementing
-     *                  FTPFileEntryParser.
-     *                  <p>
-     *                  In the DefaultFTPFileEntryParserFactory, this
-     *                  may either be a specific key identifying a server type,
-     *                  which is used to identify a parser type,
-     *                  or the fully qualified class name of the parser.  See
-     *                  DefaultFTPFileEntryParserFactory.createFileEntryParser
-     *                  for full details.
-     *                  <p>
-     *                  If this parameter is null, will attempt to generate a key
-     *                  by running the SYST command.  This should cause no problem
-     *                  with the functionality implemented in the
-     *                  DefaultFTPFileEntryParserFactory, but may not map so well
-     *                  to an alternative user-created factory.  If that is the
-     *                  case, calling this routine with a null parameter and a
-     *                  custom parser factory may not be advisable.
-     *                  <p>
-     * @param pathname  The file or directory to list.  Since the server may
-     *                  or may not expand glob expressions, using them here
-     *                  is not recommended and may well cause this method to
-     *                  fail.
-     *
-     * @return The list of file information contained in the given path in
-     *         the format determined by the parser represented by the
-     *         <code> parserKey </code> parameter.
-     *         <p><b> 
-     * 		   NOTE:</b> This array may contain null members if any of the 
-     *         individual file listings failed to parse.  The caller should 
-     *         check each entry for null before referencing it.
-     * @exception FTPConnectionClosedException
-     *                   If the FTP server prematurely closes the connection
-     *                   as a result of the client being idle or some other
-     *                   reason causing the server to send FTP reply code 421.
-     *                   This exception may be caught either as an IOException
-     *                   or independently as itself.
-     * @exception IOException
-     *                   If an I/O error occurs while either sending a
-     *                   command to the server or receiving a reply
-     *                   from the server.
-     * @exception ParserInitializationException
-     *                   Thrown if the parserKey parameter cannot be
-     *                   resolved by the selected parser factory.
-     *                   In the DefaultFTPEntryParserFactory, this will
-     *                   happen when parserKey is neither
-     *                   the fully qualified class name of a class
-     *                   implementing the interface
-     *                   org.apache.commons.net.ftp.FTPFileEntryParser
-     *                   nor a string containing one of the recognized keys
-     *                   mapping to such a parser or if class loader
-     *                   security issues prevent its being loaded.
-     * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
-     * @see org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory
-     * @see org.apache.commons.net.ftp.FTPFileEntryParser
-     * @deprecated use {@link  #listFiles()  listFiles()} or 
-     * {@link  #listFiles(String)  listFiles(String)} instead and specify the
-     * parser Key in an {@link  #FTPClientConfig  FTPClientConfig} object instead.
-     */
-    public FTPFile[] listFiles(String parserKey, String pathname)
-    throws IOException
-    {
-        FTPListParseEngine engine =
-            initiateListParsing(parserKey, pathname);
-        return engine.getFiles();
-    }
 
 
     /**
