@@ -22,7 +22,6 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-
 import org.apache.commons.net.io.FromNetASCIIOutputStream;
 import org.apache.commons.net.io.ToNetASCIIInputStream;
 
@@ -361,7 +360,7 @@ _receivePacket:
     public void sendFile(String filename, int mode, InputStream input,
                          InetAddress host, int port) throws IOException
     {
-        int bytesRead, timeouts, lastBlock, block, hostPort, dataLength, offset;
+        int bytesRead, timeouts, lastBlock, block, hostPort, dataLength, offset, totalThisPacket;
         TFTPPacket sent, received = null;
         TFTPErrorPacket error;
         TFTPDataPacket data =
@@ -369,10 +368,13 @@ _receivePacket:
         ;
         TFTPAckPacket ack;
 
+        boolean justStarted = true;
+        
         beginBufferedOps();
 
-        dataLength = lastBlock = hostPort = bytesRead = 0;
+        dataLength = lastBlock = hostPort = bytesRead = totalThisPacket = 0;
         block = 0;
+        boolean lastAckWait = false;
 
         if (mode == TFTP.ASCII_MODE)
             input = new ToNetASCIIInputStream(input);
@@ -383,11 +385,16 @@ _receivePacket:
 _sendPacket:
         do
         {
+            // first time: block is 0, lastBlock is 0, send a request packet.
+            // subsequent: block is integer starting at 1, send data packet.
             bufferedSend(sent);
-
+            
+            // this is trying to receive an ACK
 _receivePacket:
             while (true)
             {
+                
+
                 timeouts = 0;
                 while (timeouts < __maxTimeouts)
                 {
@@ -419,12 +426,13 @@ _receivePacket:
                         endBufferedOps();
                         throw new IOException("Bad packet: " + e.getMessage());
                     }
-                }
+                } // end of while loop over tries to receive
 
                 // The first time we receive we get the port number and
         // answering host address (for hosts with multiple IPs)
-                if (lastBlock == 0)
+                if (justStarted)
                 {
+                    justStarted = false;
                     hostPort = received.getPort();
                     data.setPort(hostPort);
                     if(!host.equals(received.getAddress()))
@@ -456,7 +464,13 @@ _receivePacket:
                         if (lastBlock == block)
                         {
                             ++block;
-                            break _receivePacket;
+                            if (lastAckWait) {
+                                
+                              break _sendPacket;
+                            }
+                            else {
+                              break _receivePacket;
+                            }
                         }
                         else
                         {
@@ -489,22 +503,33 @@ _receivePacket:
                 //break;
             }
 
+            // OK, we have just gotten ACK about the last data we sent. Make another
+            // and send it            
+
             dataLength = TFTPPacket.SEGMENT_SIZE;
             offset = 4;
+            totalThisPacket = 0;
             while (dataLength > 0 &&
                     (bytesRead = input.read(_sendBuffer, offset, dataLength)) > 0)
             {
                 offset += bytesRead;
                 dataLength -= bytesRead;
+                totalThisPacket += bytesRead;
             }
 
+            if( totalThisPacket < TFTPPacket.SEGMENT_SIZE ) {
+                /* this will be our last packet -- send, wait for ack, stop */
+                lastAckWait = true;
+            }
             data.setBlockNumber(block);
-            data.setData(_sendBuffer, 4, offset - 4);
+            data.setData(_sendBuffer, 4, totalThisPacket);
             sent = data;
         }
-        while (dataLength == 0);
-
-        bufferedSend(sent);
+        while ( totalThisPacket > 0 || lastAckWait );
+        // Note: this was looping while dataLength == 0 || lastAckWait,
+        // which was discarding the last packet if it was not full size
+        // Should send the packet. 
+        
         endBufferedOps();
     }
 
