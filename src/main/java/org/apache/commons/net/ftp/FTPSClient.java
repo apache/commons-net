@@ -25,6 +25,7 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
@@ -380,8 +381,10 @@ public class FTPSClient extends FTPClient {
             throw new SSLException(getReplyString());
         if (DEFAULT_PROT.equals(prot)) {
             setSocketFactory(null);
+            setServerSocketFactory(null);
         } else {
             setSocketFactory(new FTPSSocketFactory(context));
+            setServerSocketFactory(SSLServerSocketFactory.getDefault());
         }
     }
 
