@@ -23,6 +23,12 @@ limitations under the License.
 
 	<body>
 		<release version="2.0" date="" description="Java 5.0 release">
+			<action dev="rwinston" type="update">
+				Patch FTPSClient to set default SSLServerSocketFactory. Thanks &lt;niklas@protocol7.com&gt;
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-68">
+				Patch to prevent TFTPClient dropping last packet. Thanks &lt;palm@poplarware.com&gt;
+			</action>
 			<action dev="rwinston" type="add">
 				FTPS (TLS and SSL) is now supported. Thanks to Jose Juan Montiel, Paul Ferraro, and Satoshi Ishigami.
 			</action>
