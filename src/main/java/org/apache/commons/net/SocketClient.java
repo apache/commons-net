@@ -19,8 +19,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 
 import javax.net.ServerSocketFactory;
 import javax.net.SocketFactory;
@@ -82,6 +84,10 @@ public abstract class SocketClient
     
     /** The socket's ServerSocket Factory. */
     protected ServerSocketFactory _serverSocketFactory_;
+    
+    /** The socket's connect timeout (0 = infinite timeout) */
+    private static final int DEFAULT_CONNECT_TIMEOUT = 0;
+    protected int connectTimeout = DEFAULT_CONNECT_TIMEOUT;
 
     /**
      * Default constructor for SocketClient.  Initializes
@@ -141,7 +147,12 @@ public abstract class SocketClient
     public void connect(InetAddress host, int port)
     throws SocketException, IOException
     {
-        _socket_ = _socketFactory_.createSocket(host, port);
+    	_socket_ = _socketFactory_.createSocket();
+    	if (connectTimeout == DEFAULT_CONNECT_TIMEOUT)
+    		_socket_.connect(new InetSocketAddress(host, port));
+    	else 
+    		_socket_.connect(new InetSocketAddress(host, port), connectTimeout);
+
         _connectAction_();
     }
 
@@ -162,7 +173,12 @@ public abstract class SocketClient
     public void connect(String hostname, int port)
     throws SocketException, IOException
     {
-        _socket_ = _socketFactory_.createSocket(hostname, port);
+    	_socket_= _socketFactory_.createSocket();
+    	if (connectTimeout == DEFAULT_CONNECT_TIMEOUT)
+    		_socket_.connect(new InetSocketAddress(hostname, port));
+    	else
+    		_socket_.connect(new InetSocketAddress(hostname, port), connectTimeout);
+    	
         _connectAction_();
     }
 
@@ -186,7 +202,14 @@ public abstract class SocketClient
                         InetAddress localAddr, int localPort)
     throws SocketException, IOException
     {
-        _socket_ = _socketFactory_.createSocket(host, port, localAddr, localPort);
+    	_socket_ = _socketFactory_.createSocket();
+    	_socket_.bind(new InetSocketAddress(localAddr, localPort));
+    	
+    	if (connectTimeout == DEFAULT_CONNECT_TIMEOUT)
+    		_socket_.connect(new InetSocketAddress(host, port));
+    	else 
+    		_socket_.connect(new InetSocketAddress(host, port), connectTimeout);
+        
         _connectAction_();
     }
 
@@ -519,6 +542,26 @@ public abstract class SocketClient
 		else
 			_serverSocketFactory_ = factory;
 	}
+    
+    /**
+     * Sets the connection timeout in milliseconds, which will be passed to the {@link Socket} object's
+     * connect() method. 
+     * @param connectTimeout The connection timeout to use (in ms)
+     */
+    public void setConnectTimeout(int connectTimeout) {
+    	this.connectTimeout = connectTimeout;
+    }
+    
+    /**
+     * Get the underlying socket connection timeout.
+     * @return
+     */
+    public int getConnectTimeout() {
+    	return connectTimeout;
+    }
+    
+    
+    
 }
 
 
