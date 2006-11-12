@@ -76,6 +76,9 @@ public class FTPSClient extends FTPClient {
     private String[] suites = null;
     /** The protocol versions */
     private String[] protocols = null;
+    
+    /** The FTPS {@link TrustManager} implementation. */
+    private TrustManager trustManager = new FTPSTrustManager();
 
     /**
      * Constructor for FTPSClient.
@@ -191,7 +194,7 @@ public class FTPSClient extends FTPClient {
         planeSocket = _socket_;
         
         try {
-			context.init(null, new TrustManager[] { new FTPSTrustManager() } , null);
+			context.init(null, new TrustManager[] { getTrustManager() } , null);
 		} catch (KeyManagementException e) {
 			e.printStackTrace();
 		}
@@ -457,4 +460,25 @@ public class FTPSClient extends FTPClient {
         }
         return socket;
     }
+
+    /**
+     * Get the currently configured {@link TrustManager}.
+     * 
+     * @return A TrustManager instance.
+     */
+	public TrustManager getTrustManager() {
+		return trustManager;
+	}
+
+	/**
+	 * Override the default {@link TrustManager} to use.
+	 * 
+	 * @param trustManager The TrustManager implementation to set.
+	 */
+	public void setTrustManager(TrustManager trustManager) {
+		this.trustManager = trustManager;
+	}
+    
+    
+    
 }
