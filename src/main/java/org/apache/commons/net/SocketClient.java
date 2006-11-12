@@ -148,10 +148,7 @@ public abstract class SocketClient
     throws SocketException, IOException
     {
     	_socket_ = _socketFactory_.createSocket();
-    	if (connectTimeout == DEFAULT_CONNECT_TIMEOUT)
-    		_socket_.connect(new InetSocketAddress(host, port));
-    	else 
-    		_socket_.connect(new InetSocketAddress(host, port), connectTimeout);
+    	_socket_.connect(new InetSocketAddress(host, port), connectTimeout);
 
         _connectAction_();
     }
@@ -174,10 +171,7 @@ public abstract class SocketClient
     throws SocketException, IOException
     {
     	_socket_= _socketFactory_.createSocket();
-    	if (connectTimeout == DEFAULT_CONNECT_TIMEOUT)
-    		_socket_.connect(new InetSocketAddress(hostname, port));
-    	else
-    		_socket_.connect(new InetSocketAddress(hostname, port), connectTimeout);
+    	_socket_.connect(new InetSocketAddress(hostname, port), connectTimeout);
     	
         _connectAction_();
     }
@@ -204,11 +198,7 @@ public abstract class SocketClient
     {
     	_socket_ = _socketFactory_.createSocket();
     	_socket_.bind(new InetSocketAddress(localAddr, localPort));
-    	
-    	if (connectTimeout == DEFAULT_CONNECT_TIMEOUT)
-    		_socket_.connect(new InetSocketAddress(host, port));
-    	else 
-    		_socket_.connect(new InetSocketAddress(host, port), connectTimeout);
+    	_socket_.connect(new InetSocketAddress(host, port), connectTimeout);
         
         _connectAction_();
     }
