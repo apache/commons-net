@@ -219,11 +219,6 @@ import org.apache.commons.net.io.Util;
  * <li>are in different timezones and you need accurate timestamps for dependency checking 
  *     as in Ant</li>
  * </ul>see {@link  FTPClientConfig  FTPClientConfig}.
- * <p>
- * NOTE: If you experience problems with unwanted firing of <pre>setSoTimeout()</pre> 
- * during periods of client inactivity, this can be alleviated by calling <pre>setReaderThread(false)</pre>.
- * For more details, see <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=31122">this thread</a>. 
- * </p>
  * <p> 
  * @author Daniel F. Savarese
  * @see FTP
@@ -515,7 +510,7 @@ implements Configurable
             if (pasv() != FTPReply.ENTERING_PASSIVE_MODE)
                 return null;
 
-            __parsePassiveModeReply((String)_replyLines.get(0));
+            __parsePassiveModeReply((String)_replyLines.get(_replyLines.size() - 1));
 
             socket = _socketFactory_.createSocket(__passiveHost, __passivePort);
             if ((__restartOffset > 0) && !restart(__restartOffset))
@@ -1863,7 +1858,7 @@ implements Configurable
       // in practice FTP servers deviate, so we soften the condition to
       // a positive completion.
         if (__systemName == null && FTPReply.isPositiveCompletion(syst()))
-            __systemName = ((String)_replyLines.get(0)).substring(4);
+            __systemName = ((String)_replyLines.get(_replyLines.size() - 1)).substring(4);
 
         return __systemName;
     }
