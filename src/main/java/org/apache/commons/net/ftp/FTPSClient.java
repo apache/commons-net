@@ -23,6 +23,7 @@ import java.net.Socket;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
+import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLServerSocketFactory;
@@ -79,6 +80,9 @@ public class FTPSClient extends FTPClient {
     
     /** The FTPS {@link TrustManager} implementation. */
     private TrustManager trustManager = new FTPSTrustManager();
+    
+    /** The {@link KeyManager} */
+    private KeyManager keyManager;
 
     /**
      * Constructor for FTPSClient.
@@ -194,7 +198,7 @@ public class FTPSClient extends FTPClient {
         planeSocket = _socket_;
         
         try {
-			context.init(null, new TrustManager[] { getTrustManager() } , null);
+			context.init(new KeyManager[] { getKeyManager() } , new TrustManager[] { getTrustManager() } , null);
 		} catch (KeyManagementException e) {
 			e.printStackTrace();
 		}
@@ -222,8 +226,25 @@ public class FTPSClient extends FTPClient {
         _controlOutput_ = new BufferedWriter(new OutputStreamWriter(
                 socket.getOutputStream(), getControlEncoding()));
     }
-
+    
     /**
+     * Get the {@link KeyManager} instance.
+     * @return The {@link KeyManager} instance
+     */
+    private KeyManager getKeyManager() {
+		return keyManager;
+	}
+    
+    /**
+    * Set a {@link KeyManager} to use
+    * 
+    * @param keyManager The KeyManager implementation to set.
+    */
+    public void setKeyManager(KeyManager keyManager) {
+    	this.keyManager = keyManager;
+    }
+
+	/**
      * Controls whether new a SSL session may be established by this socket.
      * @param isCreation The established socket flag.
      */
