@@ -24,6 +24,9 @@ limitations under the License.
 	<body>
 		<release version="2.0" date="" description="Java 5.0 release">
 			<action dev="rwinston" type="update">
+				Make the KeyManager and TrustManager settable (&lt;niklas@protocol7.com&gt;).
+			</action>
+			<action dev="rwinston" type="update">
 				Patch FTPSClient to set default SSLServerSocketFactory. Thanks &lt;niklas@protocol7.com&gt;
 			</action>
 			<action dev="rwinston" type="fix" issue="NET-68">
