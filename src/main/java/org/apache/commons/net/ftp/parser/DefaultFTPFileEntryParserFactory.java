@@ -67,6 +67,7 @@ public class DefaultFTPFileEntryParserFactory
      *               <li>{@link FTPClientConfig#SYST_OS400 OS/400}</li>
      *               <li>{@link FTPClientConfig#SYST_VMS VMS}</li>
      *               <li>{@link FTPClientConfig#SYST_MVS MVS}</li>
+     *               <li>{@link FTPClientConfig#SYST_NETWARE}</li>
      *               </ul>
      * @return the FTPFileEntryParser corresponding to the supplied key.
      * @throws ParserInitializationException thrown if for any reason the factory cannot resolve

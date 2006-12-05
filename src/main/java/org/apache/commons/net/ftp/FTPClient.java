@@ -103,8 +103,7 @@ import org.apache.commons.net.io.Util;
  * <code> FTP.STREAM_TRANSFER_MODE </code>, and
  * <code> FTP.FILE_STRUCTURE </code>.  The only file types directly supported
  * are <code> FTP.ASCII_FILE_TYPE </code> and
- * <code> FTP.IMAGE_FILE_TYPE </code> (which is the same as
- * <code> FTP.BINARY_FILE_TYPE </code>).  Because there are at lest 4
+ * <code> FTP.BINARY_FILE_TYPE </code>.  Because there are at least 4
  * different EBCDIC encodings, we have opted not to provide direct support
  * for EBCDIC.  To transfer EBCDIC and other unsupported file types you
  * must create your own filter InputStreams and OutputStreams and wrap
@@ -954,7 +953,7 @@ implements Configurable
 
     /***
      * Sets the file type to be transferred.  This should be one of
-     * <code> FTP.ASCII_FILE_TYPE </code>, <code> FTP.IMAGE_FILE_TYPE </code>,
+     * <code> FTP.ASCII_FILE_TYPE </code>, <code> FTP.BINARY_FILE_TYPE</code>,
      * etc.  The file type only needs to be set when you want to change the
      * type.  After changing it, the new type stays in effect until you change
      * it again.  The default file type is <code> FTP.ASCII_FILE_TYPE </code>
@@ -986,7 +985,7 @@ implements Configurable
     /***
      * Sets the file type to be transferred and the format.  The type should be
      * one of  <code> FTP.ASCII_FILE_TYPE </code>,
-     * <code> FTP.IMAGE_FILE_TYPE </code>, etc.  The file type only needs to
+     * <code> FTP.BINARY_FILE_TYPE </code>, etc.  The file type only needs to
      * be set when you want to change the type.  After changing it, the new
      * type stays in effect until you change it again.  The default file type
      * is <code> FTP.ASCII_FILE_TYPE </code> if this method is never called.
