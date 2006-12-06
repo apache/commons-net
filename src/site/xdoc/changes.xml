@@ -23,6 +23,9 @@ limitations under the License.
 
 	<body>
 		<release version="2.0" date="" description="Java 5.0 release">
+			<action dev="rwinston" type="remove">
+				Remove deprecated FTPFileIterator and FTPFileList classes.
+			</action>
 			<action dev="rwinston" type="add">
 				Add connection timeout functionality to SocketClient.
 			</action>
