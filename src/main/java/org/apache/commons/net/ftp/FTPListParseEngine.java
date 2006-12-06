@@ -71,7 +71,7 @@ import java.util.ListIterator;
  * @version $Id$
  */
 public class FTPListParseEngine {
-    private List entries = new LinkedList();
+    private List<String> entries = new LinkedList<String>();
     private ListIterator _internalIterator = entries.listIterator();
 
     FTPFileEntryParser parser = null;
@@ -94,7 +94,7 @@ public class FTPListParseEngine {
     public void readServerList(InputStream stream, String encoding)
     throws IOException
     {
-        this.entries = new LinkedList();
+        this.entries = new LinkedList<String>();
         readStream(stream, encoding);
         this.parser.preParse(this.entries);
         resetIterator();
@@ -181,7 +181,7 @@ public class FTPListParseEngine {
      * check each entry for null before referencing it.
      */
     public FTPFile[] getNext(int quantityRequested) {
-        List tmpResults = new LinkedList();
+        List<FTPFile> tmpResults = new LinkedList<FTPFile>();
         int count = quantityRequested;
         while (count > 0 && this._internalIterator.hasNext()) {
             String entry = (String) this._internalIterator.next();
@@ -220,7 +220,7 @@ public class FTPListParseEngine {
      * check each entry for null before referencing it.
      */
     public FTPFile[] getPrevious(int quantityRequested) {
-        List tmpResults = new LinkedList();
+        List<FTPFile> tmpResults = new LinkedList<FTPFile>();
         int count = quantityRequested;
         while (count > 0 && this._internalIterator.hasPrevious()) {
             String entry = (String) this._internalIterator.previous();
@@ -246,7 +246,7 @@ public class FTPListParseEngine {
     public FTPFile[] getFiles()
     throws IOException
     {
-        List tmpResults = new LinkedList();
+        List<FTPFile> tmpResults = new LinkedList<FTPFile>();
         Iterator iter = this.entries.iterator();
         while (iter.hasNext()) {
             String entry = (String) iter.next();
