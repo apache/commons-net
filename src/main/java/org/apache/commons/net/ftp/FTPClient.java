@@ -1810,7 +1810,7 @@ implements Configurable
         if (pwd() != FTPReply.PATHNAME_CREATED)
             return null;
 
-        return __parsePathname((String)_replyLines.get(0));
+        return __parsePathname((String)_replyLines.get( _replyLines.size() - 1));
     }
 
 
@@ -1971,10 +1971,8 @@ implements Configurable
 
         if (completePendingCommand())
         {
-            String[] result;
-            result = new String[results.size()];
-            results.addAll(Arrays.asList(result));
-            return result;
+        	String[] names = new String[ results.size() ];
+            return results.toArray(names);
         }
 
         return null;
