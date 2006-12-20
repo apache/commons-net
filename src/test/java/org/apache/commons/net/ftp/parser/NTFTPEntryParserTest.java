@@ -47,6 +47,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
             "-rw-r--r--   1 root     root       190144 Apr 27  2001 zxJDBC-2.0.1b1.zip",
             "-rwxr-xr-x   2 500      500           166 Nov  2  2001 73131-testtes1.afp",
             "-rw-r--r--   1 500      500           166 Nov  9  2001 73131-testtes1.AFP",
+            "drwx------ 4 maxm Domain Users 512 Oct 2 10:59 .metadata",
         }
     };
 
@@ -181,11 +182,6 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         assertTrue("Should have been a file.",
                 f.isFile());
         assertEquals(17707, f.getSize());
-
-
-
-
-
     }
 
 
@@ -195,7 +191,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         {
                     assertEquals("directory.type",
                             FTPFile.DIRECTORY_TYPE, f.getType());
-                }
+        }
     }
 
     /**
@@ -219,5 +215,14 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         assertNotNull(f);
         assertEquals("name", "123 abc xyz", f.getName());
     }
-
+    
+    /**
+     * Test that group names with embedded spaces can be handled correctly
+     *
+     */
+    public void testGroupNameWithSpaces() {
+    	FTPFile f = getParser().parseFTPEntry("drwx------ 4 maxm Domain Users 512 Oct 2 10:59 .metadata");
+    	assertEquals(f.getGroup(), "Domain Users");	
+    }
+    
 }
