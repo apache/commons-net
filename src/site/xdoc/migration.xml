@@ -30,6 +30,13 @@ This how-to lists the migration steps for moving between versions of Commons/Net
 </p>
 </section>
 
+<section name="Commons/Net 1.4.x to Commons/Net 2.0">
+	<p>
+		This version requires a JDK 5.0+ runtime. It has also been tested on JDK 6.0. There should
+		be no changes required to existing client code.
+	</p>
+</section>
+
 <section name="NetComponents 1.3.8  to  Commons/Net">
 <p>
 This version is a drop in replacement for NetComponents.  Only package names have changed.
