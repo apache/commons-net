@@ -123,8 +123,10 @@ public class TelnetClient extends Telnet
      ***/
     public void disconnect() throws IOException
     {
-        __input.close();
-        __output.close();
+        if (__input != null)
+        	__input.close();
+        if (__output != null)
+        	__output.close();
         super.disconnect();
     }
 
