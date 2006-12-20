@@ -1966,6 +1966,7 @@ implements Configurable
         results = new ArrayList<String>();
         while ((line = reader.readLine()) != null)
             results.add(line);
+        
         reader.close();
         socket.close();
 
