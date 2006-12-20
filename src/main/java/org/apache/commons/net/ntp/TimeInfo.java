@@ -29,7 +29,7 @@ import java.util.List;
 public class TimeInfo {
 
     private NtpV3Packet _message;
-    private List _comments;
+    private List<String> _comments;
     private Long _delay;
     private Long _offset;
 
@@ -117,7 +117,7 @@ public class TimeInfo {
     public void addComment(String comment)
     {
         if (_comments == null) {
-            _comments = new ArrayList();
+            _comments = new ArrayList<String>();
         }
         _comments.add(comment);
     }
@@ -133,7 +133,7 @@ public class TimeInfo {
         }
         _detailsComputed = true;
         if (_comments == null) {
-            _comments = new ArrayList();
+            _comments = new ArrayList<String>();
         }
 
         TimeStamp origNtpTime = _message.getOriginateTimeStamp();
@@ -169,7 +169,7 @@ public class TimeInfo {
             // might be via a broadcast NTP packet...
             if (xmitNtpTime.ntpValue() != 0)
             {
-                _offset = new Long(xmitTime - _returnTime);
+                _offset = Long.valueOf(xmitTime - _returnTime);
                 _comments.add("Error: zero orig time -- cannot compute delay");
             } else
                 _comments.add("Error: zero orig time -- cannot compute delay/offset");
@@ -183,7 +183,7 @@ public class TimeInfo {
             {
                 // without receive or xmit time cannot figure out processing time
                 // so delay is simply the network travel time
-                _delay = new Long(_returnTime - origTime);
+                _delay = Long.valueOf(_returnTime - origTime);
             }
             // TODO: is offset still valid if rcvNtpTime=0 || xmitNtpTime=0 ???
             // Could always hash origNtpTime (sendTime) but if host doesn't set it
@@ -192,11 +192,11 @@ public class TimeInfo {
             if (rcvNtpTime.ntpValue() != 0)
             {
                 // xmitTime is 0 just use rcv time
-                _offset = new Long(rcvTime - origTime);
+                _offset = Long.valueOf(rcvTime - origTime);
             } else if (xmitNtpTime.ntpValue() != 0)
             {
                 // rcvTime is 0 just use xmitTime time
-                _offset = new Long(xmitTime - _returnTime);
+                _offset = Long.valueOf(xmitTime - _returnTime);
             }
         } else
         {
@@ -231,11 +231,11 @@ public class TimeInfo {
                          _comments.add("Warning: processing time > total network time");
                  }
              }
-             _delay = new Long(delayValue);
+             _delay = Long.valueOf(delayValue);
             if (origTime > _returnTime) // assert destTime >= origTime
                 _comments.add("Error: OrigTime > DestRcvTime");
 
-            _offset = new Long(((rcvTime - origTime) + (xmitTime - _returnTime)) / 2);
+            _offset = Long.valueOf(((rcvTime - origTime) + (xmitTime - _returnTime)) / 2);
         }
     }
 

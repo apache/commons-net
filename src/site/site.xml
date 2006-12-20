@@ -24,7 +24,6 @@
       <item name="Release Notes"         href="/changes-report.html"/>
     </menu>
     <menu name="Development">
-      <item name="To-Do List" href="/tasks.html"/>
       <item name="Coding Specifications" href="/code-standards.html"/>
     </menu>
     
