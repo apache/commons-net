@@ -90,7 +90,7 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
 		cal.set(Calendar.MINUTE, 12);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
-		
+		cal.set(Calendar.YEAR, f.getTimestamp().get(Calendar.YEAR));
 		assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp()
 				.getTime()));
 
