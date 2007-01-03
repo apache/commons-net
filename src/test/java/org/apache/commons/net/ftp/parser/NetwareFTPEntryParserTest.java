@@ -16,7 +16,7 @@
 package org.apache.commons.net.ftp.parser;
 
 import java.util.Calendar;
-
+ 
 import junit.framework.TestSuite;
  
 import org.apache.commons.net.ftp.FTPFile;
