@@ -1,10 +1,9 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * Copyright 2001-2006 The Apache Software Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -91,6 +90,7 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
 		cal.set(Calendar.MINUTE, 12);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
+		cal.set(Calendar.YEAR, f.getTimestamp().get(Calendar.YEAR));
 		
 		assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp()
 				.getTime()));
@@ -127,3 +127,4 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
 	
 	
 }
+
