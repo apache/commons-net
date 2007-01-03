@@ -25,6 +25,13 @@
 	<inceptionYear>1997</inceptionYear>
 	<description>Jakarta Commons Net</description>
 
+	<parent>
+    		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-parent</artifactId>
+		<version>1</version>
+	</parent>
+
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>snapshots</id>
