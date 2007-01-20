@@ -266,7 +266,7 @@ public class FTP extends SocketClient
         int length;
 
         _newReplyString = true;
-        //_replyLines. setSize(0);
+        _replyLines.clear();
 
         String line = _controlInput_.readLine();
 
