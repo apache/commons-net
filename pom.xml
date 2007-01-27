@@ -28,7 +28,7 @@ limitations under the License.
 	<parent>
 		<groupId>org.apache.commons</groupId>
 		<artifactId>commons-parent</artifactId>
-		<version>1</version>
+		<version>2-SNAPSHOT</version>
 	</parent>
 
 
@@ -39,7 +39,7 @@ limitations under the License.
 		</pluginRepository>
 	</pluginRepositories>
 
-	<url>http://jakarta.apache.org/commons/${pom.artifactId.substring(8)}/</url>
+	<url>http://jakarta.apache.org/commons/net/</url>
 
 	<organization>
 		<name>The Apache Software Foundation</name>
@@ -71,6 +71,10 @@ limitations under the License.
 			<id>jakarta</id>
 			<url>http://svn.apache.org/repos/asf/jakarta/commons/proper/net/trunk</url>
 		</repository>
+		<repository>
+			<id>maven-snapshots</id>
+			<url>http://people.apache.org/maven-snapshot-repository/</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -81,21 +85,6 @@ limitations under the License.
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<mailingLists>
-		<mailingList>
-			<name>Commons Dev List</name>
-			<subscribe>commons-dev-subscribe@jakarta.apache.org</subscribe>
-			<unsubscribe>commons-dev-unsubscribe@jakarta.apache.org</unsubscribe>
-			<archive>http://mail-archives.apache.org/eyebrowse/SummarizeList?listName=commons-dev@jakarta.apache.org</archive>
-		</mailingList>
-		<mailingList>
-			<name>Commons User List</name>
-			<subscribe>commons-user-subscribe@jakarta.apache.org</subscribe>
-			<unsubscribe>commons-user-unsubscribe@jakarta.apache.org</unsubscribe>
-			<archive>http://mail-archives.apache.org/eyebrowse/SummarizeList?listName=commons-user@jakarta.apache.org</archive>
-		</mailingList>
-	</mailingLists>
 
 	<developers>
 		<developer>
