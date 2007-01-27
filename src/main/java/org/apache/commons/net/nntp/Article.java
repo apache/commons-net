@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
- 
 package org.apache.commons.net.nntp;
 
 import java.util.ArrayList;
