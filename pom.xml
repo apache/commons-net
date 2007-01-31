@@ -201,11 +201,11 @@ limitations under the License.
 								<jar destfile="target/commons-net-ftp-${version}.jar">
 									<fileset dir="target/classes" 
 										includes="org/apache/commons/net/ftp/**,org/apache/commons/net/*,org/apache/commons/net/io/*,org/apache/commons/net/util/*"/>
-									<fileset dir="${basedir}" includes="LICENSE.txt"/>
+									<metainf dir="${basedir}" includes="LICENSE.txt,NOTICE.txt"/>			
 									<manifest>
 										<attribute name="Extension-Name" value="org.apache.commons.net"/>
 										<attribute name="Specification-Title" value="Jakarta Commons Net"/>
-										<attribute name="Implmentation-Title" value="Jakarta Commons Net"/>
+										<attribute name="Implementation-Title" value="Jakarta Commons Net"/>
 										<attribute name="Implementation-Vendor" value="The Apache Software Foundation"/>
 										<attribute name="Implementation-Version" value="2.0"/>
 										<attribute name="Implementation-Vendor-Id" value="Apache"/>
