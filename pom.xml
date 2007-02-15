@@ -31,14 +31,6 @@ limitations under the License.
 		<version>2-SNAPSHOT</version>
 	</parent>
 
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>snapshots</id>
-			<url>http://people.apache.org/maven-snapshot-repository/</url>
-		</pluginRepository>
-	</pluginRepositories>
-
 	<url>http://jakarta.apache.org/commons/net/</url>
 
 	<organization>

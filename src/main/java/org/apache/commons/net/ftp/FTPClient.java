@@ -274,6 +274,7 @@ implements Configurable
     private FTPFileEntryParserFactory __parserFactory;
     private int __bufferSize;
     private boolean __listHiddenFiles;
+    private InetAddress __overrideHostForPassiveConnections;
 
     // __systemName is a cached value that should not be referenced directly
     // except when assigned in getSystemName and __initDefaults.
@@ -513,7 +514,10 @@ implements Configurable
 
             __parsePassiveModeReply((String)_replyLines.get(_replyLines.size() - 1));
 
-            socket = _socketFactory_.createSocket(__passiveHost, __passivePort);
+            String host = __passiveHost;
+            if(__overrideHostForPassiveConnections != null)
+            	host = __overrideHostForPassiveConnections.getHostAddress();
+            socket = _socketFactory_.createSocket(host, __passivePort);
             if ((__restartOffset > 0) && !restart(__restartOffset))
             {
                 socket.close();
@@ -619,6 +623,20 @@ implements Configurable
     public boolean isRemoteVerificationEnabled()
     {
         return __remoteVerificationEnabled;
+    }
+
+    /***
+     * Override the host used for passive mode data connections.
+     * The default is to use the host given by the FTP server.
+     * You may set this value at any time, whether the
+     * FTPClient is currently connected or not.
+     * <p>
+     * @param host The inet address of the host to use or null to 
+     * disable overriding.
+     ***/
+    public void overrideHostForPassiveConnections(InetAddress host)
+    {
+    	__overrideHostForPassiveConnections = host;
     }
 
     /***
