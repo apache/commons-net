@@ -23,6 +23,9 @@ limitations under the License.
 
 	<body>
 		<release version="2.0" date="" description="Java 5.0 release">
+			<action dev="rwinston" type="update" issue="NET-151">
+				Add support for explictly overriding destination hosts for passive sessions. Thanks to &lt;neil@JAMMConsulting.com&gt;
+			</action>
 			<action dev="rwinston" type="update">
 				Add null check in TelnetClient::disconnect().
 			</action>
