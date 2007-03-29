@@ -42,7 +42,7 @@ public class NNTPUtils {
 	 * @return Article[] An array of Article
 	 * @throws IOException
 	 */
-	public  static Article[] getArticleInfo(NNTPClient client, int lowArticleNumber, int highArticleNumber)
+	public  static Article[] getArticleInfo(NNTPClient client, long lowArticleNumber, long highArticleNumber)
 			throws IOException {
 			Reader reader = null;
 			Article[] articles = null;

@@ -176,7 +176,7 @@ public class NNTPClient extends NNTP
     {
         NewsgroupInfo result;
         StringTokenizer tokenizer;
-        int lastNum, firstNum;
+        long lastNum, firstNum;
         String last, first, permission;
 
         result = new NewsgroupInfo();
@@ -192,8 +192,8 @@ public class NNTPClient extends NNTP
 
         try
         {
-            lastNum = Integer.parseInt(last);
-            firstNum = Integer.parseInt(first);
+            lastNum = Long.valueOf(last);
+            firstNum = Long.valueOf(first);
             result._setFirstArticle(firstNum);
             result._setLastArticle(lastNum);
 
@@ -1212,8 +1212,8 @@ public class NNTPClient extends NNTP
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException
      */
-    public Reader retrieveArticleInfo(int lowArticleNumber,
-                                      int highArticleNumber)
+    public Reader retrieveArticleInfo(long lowArticleNumber,
+                                      long highArticleNumber)
         throws IOException
     {
         return
