@@ -54,7 +54,7 @@ import org.apache.commons.net.io.Util;
  * When that occurs, the NNTP class method encountering that reply will throw
  * an {@link org.apache.commons.net.nntp.NNTPConnectionClosedException}
  * .
- * <code>NNTPConectionClosedException</code>
+ * <code>NNTPConnectionClosedException</code>
  * is a subclass of <code> IOException </code> and therefore need not be
  * caught separately, but if you are going to catch it separately, its
  * catch block must appear before the more general <code> IOException </code>
