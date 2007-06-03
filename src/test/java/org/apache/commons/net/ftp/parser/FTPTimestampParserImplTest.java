@@ -158,6 +158,49 @@ public class FTPTimestampParserImplTest extends TestCase {
 	}
 
 
+	public void testParseWithoutDateRollback() {
+		FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
+		
+		// Client calendar
+		Calendar now = Calendar.getInstance();
+		
+		// Server calendar - same TZ, +1 hour drift
+		Calendar working = Calendar.getInstance();
+		working.add(Calendar.HOUR_OF_DAY, 1);
+		
+		// Create a dummy timestamp
+		SimpleDateFormat formatter = new SimpleDateFormat("MMM d HH:mm");
+		String timestamp = formatter.format(working.getTime());
+		
+		Calendar server = null;
+		
+		try {
+			server = parser.parseTimestamp(timestamp);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		// As the server's clock is (client clock + 1 hour), the date should have rolled back
+		// by a full year
+		assertTrue( server.get(Calendar.YEAR) == now.get(Calendar.YEAR) - 1 );
+		
+		/* Now, we attempt to parse the same timestamp, but explicitly disallow */
+		/* date rollback														*/
+		
+		// Set property directly on parser (normally we would set it via the FTPClientConfig instance)
+		parser.setDateRollbackPermitted(false);
+	
+		try {
+			server = parser.parseTimestamp(timestamp);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		// The local and remote year value should be equal
+		assertTrue( server.get(Calendar.YEAR) == now.get(Calendar.YEAR) );
+	}
+	
+	
 	public void testParser() {
 		FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
 		try {

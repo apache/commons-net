@@ -33,7 +33,7 @@ import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
 
 /***
- * FTP provides the basic the functionality necessary to implement your
+ * FTP provides basic functionality necessary to implement your
  * own FTP client.  It extends org.apache.commons.net.SocketClient since
  * extending TelnetClient was causing unwanted behavior (like connections
  * that did not time out properly).
@@ -311,8 +311,7 @@ public class FTP extends SocketClient
                 // returning too soon after encountering a naked CR or some other
                 // anomaly.
             }
-            while (!(line.length() >= 4 && line.charAt(3) != '-' &&
-                     Character.isDigit(line.charAt(0))));
+            while ((line.length() >= 4 || line.charAt(3) == '-' || !(line.substring(0,3).matches("\\d{3}"))));
             // This is too strong a condition because of non-conforming ftp
             // servers like ftp.funet.fi which sent 226 as the last line of a
             // 426 multi-line reply in response to ls /.  We relax the condition to

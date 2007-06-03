@@ -23,6 +23,14 @@ limitations under the License.
 
 	<body>
 		<release version="2.0" date="" description="Java 5.0 release">
+			<action dev="rwinston" type="update" issue="NET-159">
+				Add a setDateRollbackPermitted() method to disable rolling 
+				back dates by 1 year when only short date format is 
+				available, and server timstamp is ahead of local.
+			</action>
+			<action dev="rwinston" type="update" issue="NET-153">
+				Add getCause() to CopyStreamException
+			</action>
 			<action dev="rwinston" type="update" issue="NET-155">
 				Change NNTPClient/NewsgroupInfo article counts from int to long
 			</action>

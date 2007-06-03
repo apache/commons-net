@@ -192,6 +192,8 @@ public class FTPClientConfig
 	private String shortMonthNames = null;
 	private String serverTimeZoneId = null;
 	
+	private boolean dateRollbackPermitted = true;
+	
 	
 	/**
 	 * The main constructor for an FTPClientConfig object
@@ -554,5 +556,22 @@ public class FTPClientConfig
 	    return LANGUAGE_CODE_MAP.keySet();
 	}
 	
+
+	/**
+	 * getter for the {@link #dateRollbackPermitted} property
+	 * @return
+	 */
+	public boolean isDateRollbackPermitted() {
+		return dateRollbackPermitted;
+	}
+	
+	/**
+	 * @see FTPClient#setDateRollbackPermitted(boolean)
+	 * 
+	 * @param dateRollbackPermitted true/false
+	 */
+	public void setDateRollbackPermitted(boolean dateRollbackPermitted) {
+		this.dateRollbackPermitted = dateRollbackPermitted;
+	}
 	
 }

@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import org.apache.commons.net.ftp.Configurable;
+import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPClientConfig;
 
 /**
@@ -44,6 +45,7 @@ public class FTPTimestampParserImpl implements
 	private SimpleDateFormat defaultDateFormat;
 	private SimpleDateFormat recentDateFormat;
 	private boolean lenientFutureDates = false;
+	private boolean dateRollbackPermitted = true;
 	
 	
 	/**
@@ -91,7 +93,7 @@ public class FTPTimestampParserImpl implements
 			    // slightly in the future to roll back a full year.  (Bug 35181)
 			    now.add(Calendar.DATE, 1);
 			}    
-			if (working.after(now)) {
+			if (working.after(now) && isDateRollbackPermitted()) {
 				working.add(Calendar.YEAR, -1);
 			}
 		} else {
@@ -244,6 +246,8 @@ public class FTPTimestampParserImpl implements
 		setServerTimeZone(config.getServerTimeZoneId());
 		
 		this.lenientFutureDates = config.isLenientFutureDates();
+		
+		this.dateRollbackPermitted = config.isDateRollbackPermitted();
 	}
     /**
      * @return Returns the lenientFutureDates.
@@ -257,4 +261,19 @@ public class FTPTimestampParserImpl implements
     void setLenientFutureDates(boolean lenientFutureDates) {
         this.lenientFutureDates = lenientFutureDates;
     }
+    
+    /**
+     * @returns the {@link #dateRollbackPermitted} property
+     */
+    boolean isDateRollbackPermitted() {
+		return dateRollbackPermitted;
+	}
+    
+    /**
+     * @see FTPClient#setDateRollbackPermitted(boolean)
+     * @param dateRollbackPermitted
+     */
+    void setDateRollbackPermitted(boolean dateRollbackPermitted) {
+		this.dateRollbackPermitted = dateRollbackPermitted;
+	}
 }

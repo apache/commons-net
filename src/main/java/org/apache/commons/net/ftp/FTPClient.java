@@ -2431,7 +2431,7 @@ implements Configurable
     public void setListHiddenFiles(boolean listHiddenFiles) {
     	this.__listHiddenFiles = listHiddenFiles;
     }
-
+    
     /**
      * @see #setListHiddenFiles(boolean)
      * @return the current state
@@ -2439,6 +2439,27 @@ implements Configurable
     public boolean getListHiddenFiles() {
     	return this.__listHiddenFiles;
     }
+
+    /**
+     * 
+     * @return
+     */
+	public boolean isDateRollbackPermitted() {
+		return __configuration.isDateRollbackPermitted();
+	}
+
+	/**
+	 * Set a boolean flag that specifies whether short date timestamps on the server 
+	 * (i.e. those with no year component) can be "rolled back" by a year if the server
+	 * timestamp is greater than the local timestamp. This is true by default.
+	 *
+	 * @param dateRollbackPermitted false to explicitly prevent date rollback
+	 */
+	public void setDateRollbackPermitted(boolean dateRollbackPermitted) {
+		__configuration.setDateRollbackPermitted(dateRollbackPermitted);
+	}
+    
+    
 }
 
 /* Emacs configuration

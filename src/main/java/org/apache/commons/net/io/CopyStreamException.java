@@ -68,4 +68,12 @@ public class CopyStreamException extends IOException
     {
         return ioException;
     }
+    
+    /**
+     * Returns the original {@link IOException}
+     */
+    @Override
+    public Throwable getCause() {
+    	return getIOException();
+    }
 }
