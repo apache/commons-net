@@ -58,16 +58,6 @@ limitations under the License.
 		</site>
 	</distributionManagement>
 
-	<repositories>
-		<repository>
-			<id>jakarta</id>
-			<url>http://svn.apache.org/repos/asf/jakarta/commons/proper/net/trunk</url>
-		</repository>
-		<repository>
-			<id>maven-snapshots</id>
-			<url>http://people.apache.org/maven-snapshot-repository/</url>
-		</repository>
-	</repositories>
 
 	<dependencies>
 		<dependency>
