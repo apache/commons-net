@@ -23,6 +23,9 @@ limitations under the License.
 
 	<body>
 		<release version="2.0" date="" description="Java 5.0 release">
+			<action dev="rwinston" type="update" issue="NET-158">
+				Added a workaround for intermediate 451 code in authentication.
+			</action>
 			<action dev="rwinston" type="update" issue="NET-159">
 				Add a setDateRollbackPermitted() method to disable rolling 
 				back dates by 1 year when only short date format is 
