@@ -664,7 +664,16 @@ implements Configurable
         if (!FTPReply.isPositiveIntermediate(_replyCode))
             return false;
 
-        return FTPReply.isPositiveCompletion(pass(password));
+        int replyCode = pass(password);
+        boolean replyOk = FTPReply.isPositiveCompletion(replyCode);
+        
+        // Work around stupid servers that send a 451 here
+        if (!replyOk && (replyCode == FTPReply.ACTION_ABORTED)) {
+        	replyCode = getReply();
+        	replyOk = FTPReply.isPositiveCompletion(replyCode);
+        }
+        
+        return replyOk;
     }
 
 
