@@ -18,23 +18,23 @@ limitations under the License.
 <project>
 	<pomVersion>3</pomVersion>
 
-	<name>Jakarta Commons Net</name>
+	<name>Commons Net</name>
 	<groupId>commons-net</groupId>
     <artifactId>commons-net</artifactId>
 	<currentVersion>1.5.0-SNAPSHOT</currentVersion>
 	<inceptionYear>1997</inceptionYear>
-	<shortDescription>Jakarta Commons Net</shortDescription>
+	<shortDescription>Commons Net</shortDescription>
 	<description/>
 
 	<logo>/images/net-logo-white.png</logo>
 
-	<url>http://jakarta.apache.org/commons/${pom.artifactId.substring(8)}/</url>
+	<url>http://commons.apache.org/${pom.artifactId.substring(8)}/</url>
 	<package>org.apache.commons.${pom.artifactId.substring(8)}</package>
 
 	<organization>
 		<name>The Apache Software Foundation</name>
-		<url>http://jakarta.apache.org</url>
-		<logo>http://jakarta.apache.org/images/original-jakarta-logo.gif</logo>
+          <url>http://commons.apache.org/</url>
+          <logo>http://commons.apache.org/images/logo.png</logo>
 	</organization>
 
 	<licenses>
@@ -45,29 +45,29 @@ limitations under the License.
 		</license>
 	</licenses>
 
-	<gumpRepositoryId>jakarta</gumpRepositoryId>
+	<gumpRepositoryId>commons</gumpRepositoryId>
 	<issueTrackingUrl>http://issues.apache.org/jira/</issueTrackingUrl>
-	<siteAddress>jakarta.apache.org</siteAddress>
-	<siteDirectory>/www/jakarta.apache.org/commons/${pom.artifactId.substring(8)}/</siteDirectory>
-	<distributionDirectory>/www/jakarta.apache.org/builds/jakarta-commons/${pom.artifactId.substring(8)}/</distributionDirectory>
+	<siteAddress>commons.apache.org</siteAddress>
+	<siteDirectory>/www/commons.apache.org/${pom.artifactId.substring(8)}/</siteDirectory>
+	<distributionDirectory>/www/people.apache.org/builds/commons/${pom.artifactId.substring(8)}/</distributionDirectory>
 
 	<repository>
-		<connection>scm:svn:http://svn.apache.org/repos/asf/jakarta/commons/proper/${pom.artifactId.substring(8)}/trunk</connection>
-		<url>http://svn.apache.org/repos/asf/jakarta/commons/proper/${pom.artifactId.substring(8)}/trunk</url>
+		<connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/${pom.artifactId.substring(8)}/trunk</connection>
+		<url>http://svn.apache.org/repos/asf/commons/proper/${pom.artifactId.substring(8)}/trunk</url>
 	</repository>
 
 	<mailingLists>
 		<mailingList>
-			<name>Commons Dev List</name>
-			<subscribe>commons-dev-subscribe@jakarta.apache.org</subscribe>
-			<unsubscribe>commons-dev-unsubscribe@jakarta.apache.org</unsubscribe>
-			<archive>http://mail-archives.apache.org/mod_mbox/jakarta-commons-dev/</archive>
+            <name>Commons Dev List</name>
+            <subscribe>dev-subscribe@commons.apache.org</subscribe>
+            <unsubscribe>dev-unsubscribe@commons.apache.org</unsubscribe>
+            <archive>http://mail-archives.apache.org/mod_mbox/commons-dev/</archive>
 		</mailingList>
 		<mailingList>
-			<name>Commons User List</name>
-			<subscribe>commons-user-subscribe@jakarta.apache.org</subscribe>
-			<unsubscribe>commons-user-unsubscribe@jakarta.apache.org</unsubscribe>
-			<archive>http://mail-archives.apache.org/mod_mbox/jakarta-commons-user/</archive>
+            <name>Commons User List</name>
+            <subscribe>user-subscribe@commons.apache.org</subscribe>
+            <unsubscribe>user-unsubscribe@commons.apache.org</unsubscribe>
+            <archive>http://mail-archives.apache.org/mod_mbox/commons-user/</archive>
 		</mailingList>
 	</mailingLists>
 
@@ -193,7 +193,7 @@ limitations under the License.
 
 	<build>
 
-		<nagEmailAddress>commons-dev@jakarta.apache.org</nagEmailAddress>
+            <nagEmailAddress>dev@commons.apache.org</nagEmailAddress>
 
 		<sourceDirectory>src/java</sourceDirectory>
 
