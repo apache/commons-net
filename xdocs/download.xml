@@ -27,7 +27,7 @@
 
 <section name="Release Builds">
 <p>
-You can download <a href="http://jakarta.apache.org/site/binindex.cgi">binary</a> or <a href="http://jakarta.apache.org/site/sourceindex.cgi">source</a> production releases.
+You can download <a href="http://jakarta.apache.org/site/downloads/download_net.cgi">source or binary</a> production releases.
 </p>
     
 </section>
@@ -35,7 +35,7 @@ You can download <a href="http://jakarta.apache.org/site/binindex.cgi">binary</a
 <section name="Nightly Builds">
 
 <p>
-You will find the list of nightly builds <a href="http://jakarta.apache.org/builds/jakarta-commons/nightly/commons-net/">here</a>.
+You will find the list of nightly builds <a href="http://people.apache.org/builds/commons/nightly/commons-net/">here</a>.
 </p>
 
 </section>
