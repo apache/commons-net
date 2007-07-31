@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE org.apache.commons.menus SYSTEM 'http://jakarta.apache.org/commons/build/maven-build.dtd'>
+<!DOCTYPE org.apache.commons.menus SYSTEM 'http://commons.apache.org/build/maven-build.dtd'>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -16,15 +16,15 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<project name="Jakarta Commons/Net">
+<project name="Apache Commons/Net">
 
-  <title>Jakarta Commons/Net</title>
+  <title>Apache Commons/Net</title>
 
   <body>
     <links>
       <item name="Apache"  href="http://www.apache.org"/>
       <item name="Jakarta" href="http://jakarta.apache.org"/>
-      <item name="Commons" href="http://jakarta.apache.org/commons/"/>
+      <item name="Commons" href="http://commons.apache.org/"/>
     </links>
     <menu name="Documentation">
       <item name="Migration How-to"      href="/migration.html"/>

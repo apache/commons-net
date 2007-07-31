@@ -43,7 +43,7 @@ are responsible for also fixing your own code.</strong>
 </p>
 
 <p>
-Below is a list of coding conventions that are specific to Jakarta Commons/Net
+Below is a list of coding conventions that are specific to Apache Commons/Net
 everything else not specificially mentioned here should follow the official
 <a href="http://java.sun.com/docs/codeconv/html/CodeConvTOC.doc.html">Sun
 Java Coding Conventions</a>.

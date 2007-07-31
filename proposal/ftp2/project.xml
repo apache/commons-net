@@ -18,18 +18,18 @@
 
 <project>
   <pomVersion>3</pomVersion>
-  <name>Jakarta Commons/Net FTP Proposal</name>
+  <name>Apache Commons/Net FTP Proposal</name>
   <groupId>commons-net-ftp2</groupId>
   <artifactId>commons-net-ftp2</artifactId>
   <currentVersion>SNAPSHOT</currentVersion>
   <organization/>
   <package>org.apache.commons.net.ftp.ftp2</package>
   
-  <shortDescription>Jakarta Commons/Net FTP Proposal</shortDescription>
+  <shortDescription>Apache Commons/Net FTP Proposal</shortDescription>
   
   <description/>
   
-  <url>http://jakarta.apache.org/commons/sandbox/net/</url>
+  <url>http://commons.apache.org/sandbox/net/</url>
   <issueTrackingUrl/>
   <siteAddress/>
   <siteDirectory/>
