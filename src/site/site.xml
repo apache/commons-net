@@ -14,7 +14,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<project name="Jakarta Commons Net">
+<project name="Commons Net">
+
+  <bannerRight>
+    <name>Commons Net</name>
+    <src>/images/net-logo-white.png</src>
+    <href>/index.html</href>
+  </bannerRight>
+
   <body>
     <menu name="Documentation">
       <item name="Migration How-to"      href="/migration.html"/>
