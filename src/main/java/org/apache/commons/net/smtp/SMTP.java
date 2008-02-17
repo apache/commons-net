@@ -22,6 +22,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -93,13 +95,16 @@ public class SMTP extends SocketClient
     // but we use ISO-8859-1 just in case 8-bit characters cross
     // the wire.
     private static final String __DEFAULT_ENCODING = "ISO-8859-1";
+    
+    /** The encoding to use (user-settable) */
+    private String encoding = __DEFAULT_ENCODING;
 
     private StringBuffer __commandBuffer;
 
     BufferedReader _reader;
     BufferedWriter _writer;
     int _replyCode;
-    Vector _replyLines;
+    ArrayList<String> _replyLines;
     boolean _newReplyString;
     String _replyString;
 
@@ -118,10 +123,19 @@ public class SMTP extends SocketClient
     {
         setDefaultPort(DEFAULT_PORT);
         __commandBuffer = new StringBuffer();
-        _replyLines = new Vector();
+        _replyLines = new ArrayList<String>();
         _newReplyString = false;
         _replyString = null;
         _commandSupport_ = new ProtocolCommandSupport(this);
+    }
+    
+    /**
+     * Overloaded constructor where the user may specify a default encoding.
+     * @param encoding
+     */
+    public SMTP(String encoding) {
+    	this();
+    	this.encoding = encoding;
     }
 
     private int __sendCommand(String command, String args, boolean includeSpace)
@@ -162,7 +176,7 @@ public class SMTP extends SocketClient
         int length;
 
         _newReplyString = true;
-        _replyLines.setSize(0);
+        _replyLines.clear();
 
         String line = _reader.readLine();
 
@@ -188,7 +202,7 @@ public class SMTP extends SocketClient
                 "Could not parse response code.\nServer Reply: " + line);
         }
 
-        _replyLines.addElement(line);
+        _replyLines.add(line);
 
         // Get extra lines if message continues.
         if (length > 3 && line.charAt(3) == '-')
@@ -201,7 +215,7 @@ public class SMTP extends SocketClient
                     throw new SMTPConnectionClosedException(
                         "Connection closed without indication.");
 
-                _replyLines.addElement(line);
+                _replyLines.add(line);
 
                 // The length() check handles problems that could arise from readLine()
                 // returning too soon after encountering a naked CR or some other
@@ -228,11 +242,12 @@ public class SMTP extends SocketClient
         super._connectAction_();
         _reader =
             new BufferedReader(new InputStreamReader(_input_,
-                                                     __DEFAULT_ENCODING));
+                                                    encoding));
         _writer =
             new BufferedWriter(new OutputStreamWriter(_output_,
-                                                      __DEFAULT_ENCODING));
+                                                      encoding));
         __getReply();
+        
     }
 
 
@@ -273,7 +288,7 @@ public class SMTP extends SocketClient
         _reader = null;
         _writer = null;
         _replyString = null;
-        _replyLines.setSize(0);
+        _replyLines.clear();
         _newReplyString = false;
     }
 
@@ -428,7 +443,7 @@ public class SMTP extends SocketClient
     {
         String[] lines;
         lines = new String[_replyLines.size()];
-        _replyLines.copyInto(lines);
+        _replyLines.addAll(Arrays.asList(lines));
         return lines;
     }
 
@@ -441,17 +456,16 @@ public class SMTP extends SocketClient
      ***/
     public String getReplyString()
     {
-        Enumeration en;
-        StringBuffer buffer;
+        StringBuilder buffer;
 
         if (!_newReplyString)
             return _replyString;
 
-        buffer = new StringBuffer(256);
-        en = _replyLines.elements();
-        while (en.hasMoreElements())
+        buffer = new StringBuilder();
+        
+        for (String line : _replyLines)
         {
-            buffer.append((String)en.nextElement());
+            buffer.append((String)line);
             buffer.append(SocketClient.NETASCII_EOL);
         }
 
