@@ -1,12 +1,11 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * Copyright 2001-2005 The Apache Software Foundation
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,17 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.apache.commons.net;
 
-package org.apache.commons.net.finger;
-
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
-import org.apache.commons.net.SocketClient;
+import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
 
 /***
  * The FingerClient class implements the client side of the Internet Finger
@@ -139,6 +135,26 @@ public class FingerClient extends SocketClient
     public InputStream getInputStream(boolean longOutput, String username)
     throws IOException
     {
+        return getInputStream(longOutput, username, null);
+    }
+    
+    /***
+     * Fingers a user and returns the input stream from the network connection
+     * of the finger query.  You must first connect to a finger server before
+     * calling this method, and you should disconnect after finishing reading
+     * the stream.
+     * <p>
+     * @param longOutput Set to true if long output is requested, false if not.
+     * @param username  The name of the user to finger.
+     * @param encoding the character encoding that should be used for the query,
+     *        null for the platform's default encoding
+     * @return The InputStream of the network connection of the finger query.
+     *         Can be read to obtain finger results.
+     * @exception IOException If an I/O error during the operation.
+     ***/
+    public InputStream getInputStream(boolean longOutput, String username, String encoding)
+    throws IOException
+    {
         DataOutputStream output;
 
         __query.setLength(0);
@@ -146,10 +162,12 @@ public class FingerClient extends SocketClient
             __query.append(__LONG_FLAG);
         __query.append(username);
         __query.append(SocketClient.NETASCII_EOL);
+        
+        byte[] encodedQuery = 
+                (encoding == null ? __query.toString().getBytes() : __query.toString().getBytes(encoding));
 
-        output =
-          new DataOutputStream(new BufferedOutputStream(_output_, 1024));
-        output.writeBytes(__query.toString());
+        output = new DataOutputStream(new BufferedOutputStream(_output_, 1024));
+        output.write(encodedQuery, 0, encodedQuery.length);
         output.flush();
 
         return _input_;
