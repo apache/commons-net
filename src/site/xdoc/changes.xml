@@ -119,6 +119,27 @@ limitations under the License.
 				Removed deprecated classes FTPFileListParser, FTPFileListParserImpl, and DefaultFTPFileListParser. Also
 				removed associated deprecated methods from FTPClient.
 			</action>
+			<action dev="rwinston" type="fix" issue="NET-164">
+				Added encoding to FingerClient. From Ulrich Mayring.
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-24">
+				Catch BindException in RCommandClient::connect()
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-178">
+				Add encoding specifier to SMTPClient
+			</action>
+			<action dev="rwinston" type="add">
+				Add setters for socket send/receive buffer size to SocketClient
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-177">
+				Fix PASV specifiers that broke previously. From Chris Eagle.
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-182">
+				Catch NPE in FTP parser factory method.
+			</action>
+
+
+
 		</release>	
 
 
