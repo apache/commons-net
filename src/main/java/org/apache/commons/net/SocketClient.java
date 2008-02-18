@@ -373,6 +373,28 @@ public abstract class SocketClient
     {
         _socket_.setSoTimeout(timeout);
     }
+    
+    
+    /**
+     * Set the underlying socket send buffer size.
+     * <p>
+     * @param size The size of the buffer in bytes.
+     * @throws SocketException 
+     */
+    public void setSendBufferSize(int size) throws SocketException {
+    	_socket_.setSendBufferSize(size);
+    }
+    
+    
+    /**
+     * Sets the underlying socket receive buffer size.
+     * <p>
+     * @param size The size of the buffer in bytes.
+     * @throws SocketException 
+     */
+    public void setReceiveBufferSize(int size) throws SocketException  {
+    	_socket_.setReceiveBufferSize(size);
+    }
 
 
     /**
