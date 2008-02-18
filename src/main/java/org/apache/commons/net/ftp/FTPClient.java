@@ -285,6 +285,13 @@ implements Configurable
     
     private FTPClientConfig __configuration;
 
+    private static String __parms = "\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3}";
+    private static java.util.regex.Pattern __parms_pat;
+
+    static {
+       __parms_pat = java.util.regex.Pattern.compile(__parms);
+    }
+
     /***
      * Default FTPClient constructor.  Creates a new FTPClient instance
      * with the data connection mode set to
@@ -334,37 +341,21 @@ implements Configurable
     private void __parsePassiveModeReply(String reply)
     throws MalformedServerReplyException
     {
-        int i, index, lastIndex;
-        String octet1, octet2;
-        StringBuffer host;
-
-        reply = reply.substring(reply.indexOf('(') + 1,
-                                reply.indexOf(')')).trim();
-
-        host = new StringBuffer(24);
-        lastIndex = 0;
-        index = reply.indexOf(',');
-        host.append(reply.substring(lastIndex, index));
-
-        for (i = 0; i < 3; i++)
-        {
-            host.append('.');
-            lastIndex = index + 1;
-            index = reply.indexOf(',', lastIndex);
-            host.append(reply.substring(lastIndex, index));
+        java.util.regex.Matcher m = __parms_pat.matcher(reply);
+        if (!m.find()) {
+            throw new MalformedServerReplyException(
+                "Could not parse passive host information.\nServer Reply: " + reply);
         }
+        reply = m.group();
+        String parts[] = m.group().split(",");
+        
+        __passiveHost = parts[0] + '.' + parts[1] + '.' + parts[2] + '.' + parts[3];
 
-        lastIndex = index + 1;
-        index = reply.indexOf(',', lastIndex);
-
-        octet1 = reply.substring(lastIndex, index);
-        octet2 = reply.substring(index + 1);
-
-        // index and lastIndex now used as temporaries
         try
         {
-            index = Integer.parseInt(octet1);
-            lastIndex = Integer.parseInt(octet2);
+            int oct1 = Integer.parseInt(parts[4]);
+            int oct2 = Integer.parseInt(parts[5]);
+            __passivePort = (oct1 << 8) | oct2;
         }
         catch (NumberFormatException e)
         {
@@ -372,11 +363,6 @@ implements Configurable
                 "Could not parse passive host information.\nServer Reply: " + reply);
         }
 
-        index <<= 8;
-        index |= lastIndex;
-
-        __passiveHost = host.toString();
-        __passivePort = index;
     }
 
     private boolean __storeFile(int command, String remote, InputStream local)
