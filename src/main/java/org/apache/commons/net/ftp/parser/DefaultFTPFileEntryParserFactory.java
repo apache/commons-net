@@ -78,6 +78,9 @@ public class DefaultFTPFileEntryParserFactory
      */
     public FTPFileEntryParser createFileEntryParser(String key)
     {
+    	if (key == null)
+    		throw new ParserInitializationException("Parser key cannot be null");
+    		
         Class parserClass = null;
         FTPFileEntryParser parser = null;
         try
@@ -127,25 +130,14 @@ public class DefaultFTPFileEntryParserFactory
 	                throw new ParserInitializationException("Unknown parser type: " + key);
 	            }
             } 
-            catch (NoClassDefFoundError nf)
-            { 	
-                if (nf.getMessage().startsWith("org/apache/oro")) {
-    	            throw new ParserInitializationException(
-    	                " jakarta-oro-2.x.jar required on the runtime classpath. ", nf);
-                } else {
+            catch (NoClassDefFoundError nf) {
                     throw new ParserInitializationException("Error initializing parser", nf);
-                }
             }
 
         }
         catch (NoClassDefFoundError e)
         { 	
-            if (e.getMessage().startsWith("org/apache/oro")) {
-	            throw new ParserInitializationException(
-	                " jakarta-oro-2.x.jar required on the runtime classpath. ", e);
-            } else {
-                throw new ParserInitializationException("Error initializing parser", e);
-            }
+            throw new ParserInitializationException("Error initializing parser", e);
         }
         catch (ClassCastException e)
         {
