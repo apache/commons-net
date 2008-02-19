@@ -138,6 +138,19 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 	protected FTPFileEntryParser getParser() {
 		return (new UnixFTPEntryParser());
 	}
+	
+	public void testOwnerNameWithSpaces() {
+		FTPFile f = getParser().parseFTPEntry("drwxr-xr-x   2 john smith     group         4096 Mar  2 15:13 zxbox");
+		assertNotNull(f);
+		assertEquals("john smith", f.getUser());
+	}
+	
+	public void testOwnerANdGroupNameWithSpaces() {
+		FTPFile f = getParser().parseFTPEntry("drwxr-xr-x   2 john smith     test group         4096 Mar  2 15:13 zxbox");
+		assertNotNull(f);
+		assertEquals("john smith", f.getUser());
+		assertEquals("test group", f.getGroup());
+	}
 
 	/**
 	 * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()

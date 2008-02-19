@@ -33,12 +33,6 @@ import org.apache.commons.net.ftp.FTPFile;
  */
 public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 {
-    /**
-     * months abbreviations looked for by this parser.  Also used
-     * to determine which month is matched by the parser
-     */
-    private static final String DEFAULT_MONTHS =
-        "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)";
     
     static final String DEFAULT_DATE_FORMAT 
 		= "MMM d yyyy"; //Nov 9 2001
@@ -91,8 +85,8 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         "([bcdelfmpSs-])"
         +"(((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-])))\\+?\\s+"
         + "(\\d+)\\s+"
-        + "(\\S+)\\s+"
-        + "(?:(\\S+(?:\\s\\S+)*)\\s+)?"
+        + "(?:(\\S+(?:\\s\\S+)*)\\s+)?"					// owner name (optional spaces)
+        + "(?:(\\S+(?:\\s\\S+)*)\\s+)?" // group name (optional spaces)
         + "(\\d+)\\s+"
         
         /*
