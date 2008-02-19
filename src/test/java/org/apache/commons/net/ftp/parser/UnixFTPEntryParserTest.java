@@ -151,6 +151,13 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 		assertEquals("john smith", f.getUser());
 		assertEquals("test group", f.getGroup());
 	}
+	
+	public void testGroupNameWithSpaces() {
+		FTPFile f = getParser().parseFTPEntry("drwx------ 4 maxm Domain Users 512 Oct 2 10:59 .metadata");
+		assertNotNull(f);
+		assertEquals("maxm", f.getUser());
+		assertEquals("Domain Users", f.getGroup());
+	}
 
 	/**
 	 * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()

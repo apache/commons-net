@@ -85,8 +85,8 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         "([bcdelfmpSs-])"
         +"(((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-])))\\+?\\s+"
         + "(\\d+)\\s+"
-        + "(?:(\\S+(?:\\s\\S+)*)\\s+)?"					// owner name (optional spaces)
-        + "(?:(\\S+(?:\\s\\S+)*)\\s+)?" // group name (optional spaces)
+        + "(?:(\\S+(?:\\s\\S+)*?)\\s+)?"					// owner name (optional spaces)
+        + "(?:(\\S+(?:\\s\\S+)*)\\s+)?" 				// group name (optional spaces)
         + "(\\d+)\\s+"
         
         /*

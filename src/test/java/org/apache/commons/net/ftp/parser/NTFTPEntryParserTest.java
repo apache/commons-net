@@ -222,7 +222,9 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
      */
     public void testGroupNameWithSpaces() {
     	FTPFile f = getParser().parseFTPEntry("drwx------ 4 maxm Domain Users 512 Oct 2 10:59 .metadata");
-    	assertEquals(f.getGroup(), "Domain Users");	
+    	assertNotNull(f);
+    	assertEquals("maxm", f.getUser());
+    	assertEquals("Domain Users", f.getGroup());	
     }
     
 }

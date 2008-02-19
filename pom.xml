@@ -30,15 +30,7 @@ limitations under the License.
 		<artifactId>commons-parent</artifactId>
 		<version>7</version>
 	</parent>
-
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>snapshots</id>
-			<url>http://people.apache.org/maven-snapshot-repository/</url>
-		</pluginRepository>
-	</pluginRepositories>
-
+	
 	<url>http://jakarta.apache.org/commons/net/</url>
 
 	<issueManagement>
@@ -53,16 +45,6 @@ limitations under the License.
 		</site>
 	</distributionManagement>
 
-	<repositories>
-		<repository>
-			<id>commons</id>
-			<url>http://svn.apache.org/repos/asf/commons/proper/net/trunk</url>
-		</repository>
-		<repository>
-			<id>maven-snapshots</id>
-			<url>http://people.apache.org/maven-snapshot-repository/</url>
-		</repository>
-	</repositories>
 
 	<dependencies>
 		<dependency>

@@ -96,7 +96,8 @@ public class FTPClientConfigFunctionalTest extends TestCase {
     }
 
 	
-    private TreeSet<FTPFile> getSortedList(FTPFile[] files) {
+    @SuppressWarnings("unchecked")
+	private TreeSet<FTPFile> getSortedList(FTPFile[] files) {
         // create a TreeSet which will sort each element
         // as it is added.
         TreeSet<FTPFile> sorted = new TreeSet<FTPFile>(new Comparator() {
@@ -130,12 +131,11 @@ public class FTPClientConfigFunctionalTest extends TestCase {
     public void testTimeZoneFunctionality() throws Exception {
         java.util.Date now = new java.util.Date();
         FTPFile[] files = FTP.listFiles();
-        TreeSet sorted = getSortedList(files);
+        TreeSet<FTPFile> sorted = getSortedList(files);
         //SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm z" );
         FTPFile lastfile = null;
         FTPFile firstfile = null;
-        for (Iterator it = sorted.iterator(); it.hasNext();) {
-            FTPFile thisfile = (FTPFile) it.next();
+        for (FTPFile thisfile : sorted) {
             if (firstfile == null) {
                 firstfile = thisfile;
             }
