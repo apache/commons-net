@@ -221,6 +221,7 @@ import org.apache.commons.net.io.Util;
  * </ul>see {@link  FTPClientConfig  FTPClientConfig}.
  * <p> 
  * @author Daniel F. Savarese
+ * @author Rory Winston
  * @see FTP
  * @see FTPConnectionClosedException
  * @see FTPFileEntryParser

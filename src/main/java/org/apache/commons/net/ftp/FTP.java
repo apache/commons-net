@@ -86,6 +86,7 @@ import org.apache.commons.net.SocketClient;
  * <p>
  * <p>
  * @author Daniel F. Savarese
+ * @author Rory Winston 
  * @author Joseph Hindsley
  * @see FTPClient
  * @see FTPConnectionClosedException
