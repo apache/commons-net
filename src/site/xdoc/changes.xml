@@ -123,19 +123,25 @@ limitations under the License.
 				Added encoding to FingerClient. From Ulrich Mayring.
 			</action>
 			<action dev="rwinston" type="fix" issue="NET-24">
-				Catch BindException in RCommandClient::connect()
+				Catch BindException in RCommandClient::connect().
 			</action>
 			<action dev="rwinston" type="fix" issue="NET-178">
-				Add encoding specifier to SMTPClient
+				Add encoding specifier to SMTPClient.
 			</action>
 			<action dev="rwinston" type="add">
-				Add setters for socket send/receive buffer size to SocketClient
+				Add setters for socket send/receive buffer size to SocketClient.
 			</action>
 			<action dev="rwinston" type="fix" issue="NET-177">
 				Fix PASV specifiers that broke previously. From Chris Eagle.
 			</action>
 			<action dev="rwinston" type="fix" issue="NET-182">
 				Catch NPE in FTP parser factory method.
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-172">
+				Don't bind a UDP socket to NTP protocol port.
+			</action>
+			<action dev="rwinston" type="fix">
+				Better handling of user and group names with embedded spaces in FTP listings.
 			</action>
 
 
