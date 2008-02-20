@@ -20,6 +20,8 @@ package org.apache.commons.net.io;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PushbackInputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 
 /***
  * This class wraps an input stream, replacing all occurrences
@@ -41,7 +43,6 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
     static {
         _lineSeparator = System.getProperty("line.separator");
         _noConversionRequired = _lineSeparator.equals("\r\n");
-        _lineSeparatorBytes = _lineSeparator.getBytes(); // TODO specify encoding
     }
 
     private int __length = 0;
@@ -63,13 +64,28 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
     /***
      * Creates a FromNetASCIIInputStream instance that wraps an existing
      * InputStream.
+     * @param input The {@link InputStream} instance
+     * @param encoding A character set encoding specifier
+     * 
+     * @throws UnsupportedEncodingException 
      ***/
-    public FromNetASCIIInputStream(InputStream input)
+    public FromNetASCIIInputStream(InputStream input, String encoding) throws UnsupportedEncodingException
     {
         super(input, _lineSeparatorBytes.length + 1);
+        _lineSeparatorBytes = _lineSeparator.getBytes(encoding); 
     }
-
-
+    
+    /**
+     * Creates a FromNetASCIIInputStream instance that wraps an existing
+     * InputStream.
+     * @param input An {@link InputStream} instance
+     * @throws UnsupportedEncodingException
+     */
+    public FromNetASCIIInputStream(InputStream input) throws UnsupportedEncodingException 
+    {
+    	this(input, Charset.defaultCharset().name()); 
+    }
+    
     private int __read() throws IOException
     {
         int ch;

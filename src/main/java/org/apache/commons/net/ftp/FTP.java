@@ -220,6 +220,13 @@ public class FTP extends SocketClient
     protected boolean _newReplyString;
     protected String _replyString;
     protected String _controlEncoding;
+    
+    /**
+     * This is used to signal whether a block of multiline responses beginning
+     * with xxx must be terminated by the same numeric code xxx
+     * See section 4.2 of RFX 959 for details. 
+     */
+    protected boolean strictMultilineParsing = false;
 
     /**
      * Wraps SocketClient._input_ to facilitate the writing of text
@@ -261,6 +268,17 @@ public class FTP extends SocketClient
         _controlEncoding = DEFAULT_CONTROL_ENCODING;
     }
 
+    
+    private boolean __strictCheck(String line, String code) {
+    	return (line.startsWith(code));
+    }
+    
+    private boolean __lenientCheck(String line) {
+    	return (!(line.length() >= 4 && line.charAt(3) != '-' &&
+                Character.isDigit(line.charAt(0))));
+    }
+    
+    
     private void __getReply() throws IOException
     {
         int length;
@@ -280,10 +298,11 @@ public class FTP extends SocketClient
         if (length < 3)
             throw new MalformedServerReplyException(
                 "Truncated server reply: " + line);
-
+        
+        String code = null;
         try
         {
-            String code = line.substring(0, 3);
+            code = line.substring(0, 3);
             _replyCode = Integer.parseInt(code);
         }
         catch (NumberFormatException e)
@@ -311,8 +330,7 @@ public class FTP extends SocketClient
                 // returning too soon after encountering a naked CR or some other
                 // anomaly.
             }
-            while (!(line.length() >= 4 && line.charAt(3) != '-' &&
-                     Character.isDigit(line.charAt(0))));
+            while ( isStrictMultilineParsing() ? __strictCheck(line, code) : __lenientCheck(line));
             // This is too strong a condition because of non-conforming ftp
             // servers like ftp.funet.fi which sent 226 as the last line of a
             // 426 multi-line reply in response to ls /.  We relax the condition to
@@ -1457,6 +1475,21 @@ public class FTP extends SocketClient
         return sendCommand(FTPCommand.NOOP);
     }
 
+    /**
+     * Return whether strict multiline parsing is enabled, as per RFX 959, section 4.2.
+     * @return True if strict, false if lenient
+     */
+	public boolean isStrictMultilineParsing() {
+		return strictMultilineParsing;
+	}
+
+	/**
+	 * Set strict multiline parsing.
+	 * @param strictMultilineParsing
+	 */
+	public void setStrictMultilineParsing(boolean strictMultilineParsing) {
+		this.strictMultilineParsing = strictMultilineParsing;
+	}
 }
 
 /* Emacs configuration

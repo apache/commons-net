@@ -27,7 +27,6 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory;
@@ -285,9 +284,9 @@ implements Configurable
     
     private FTPClientConfig __configuration;
 
+    /** Pattern for PASV mode responses */ 
     private static String __parms = "\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3}";
     private static java.util.regex.Pattern __parms_pat;
-
     static {
        __parms_pat = java.util.regex.Pattern.compile(__parms);
     }
@@ -1277,7 +1276,7 @@ implements Configurable
         input = new BufferedInputStream(socket.getInputStream(),
                                         getBufferSize());
         if (__fileType == ASCII_FILE_TYPE)
-          input = new FromNetASCIIInputStream(input);
+          input = new FromNetASCIIInputStream(input, getControlEncoding());
         // Treat everything else as binary for now
         try
         {
@@ -1342,7 +1341,7 @@ implements Configurable
           // for file types other than ASCII.
           input = new BufferedInputStream(input,
                                           getBufferSize());
-          input = new FromNetASCIIInputStream(input);
+          input = new FromNetASCIIInputStream(input, getControlEncoding());
         }
         return new org.apache.commons.net.io.SocketInputStream(socket, input);
     }
