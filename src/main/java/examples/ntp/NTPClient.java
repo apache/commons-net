@@ -151,7 +151,7 @@ public final class NTPClient
         // We want to timeout if a response takes longer than 10 seconds
         client.setDefaultTimeout(10000);
         try {
-            client.open(NtpV3Packet.NTP_PORT);
+            client.open();
             for (int i = 0; i < args.length; i++)
             {
                 System.out.println();
