@@ -291,7 +291,4 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
                 null, null, null);
     }
     
-    
-    
-
 }

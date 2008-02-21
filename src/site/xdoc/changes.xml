@@ -143,6 +143,9 @@ limitations under the License.
 			<action dev="rwinston" type="fix">
 				Better handling of user and group names with embedded spaces in FTP listings.
 			</action>
+			<action dev="rwinston" type="fix" issue="NET-173">
+				Add configurable multiline parsing.
+			</action>
 
 
 
