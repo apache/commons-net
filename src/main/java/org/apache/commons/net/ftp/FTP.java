@@ -271,7 +271,7 @@ public class FTP extends SocketClient
 
     // The RFC-compliant multiline termination check
     private boolean __strictCheck(String line, String code) {
-    	return (line.startsWith(code));
+    	return (!(line.startsWith(code) && line.charAt(3) == ' '));
     }
     
     // The strict check is too strong a condition because of non-conforming ftp
