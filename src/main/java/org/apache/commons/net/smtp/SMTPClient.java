@@ -126,10 +126,18 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
 public class SMTPClient extends SMTP
 {
 
-    /*
+    /**
      * Default SMTPClient constructor.  Creates a new SMTPClient instance.
      */
-    //public SMTPClient() {  }
+    public SMTPClient() {  }
+    
+    /**
+     * Overloaded constructor that takes an encoding specification
+     * @param encoding The encoding to use
+     */
+    public SMTPClient(String encoding) {
+    	super(encoding);
+    }
 
 
     /***
