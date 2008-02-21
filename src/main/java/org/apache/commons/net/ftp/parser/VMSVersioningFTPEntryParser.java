@@ -98,7 +98,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
 
 
 
-    private class NameVersion {
+    private static class NameVersion {
         String name;
         int versionNumber;
         NameVersion(String name, String vers) {
@@ -116,7 +116,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
      *
      * @return Original list purged of duplicates
      */
-    public List preParse(List original) {
+    public List preParse(List<String> original) {
         original = super.preParse(original);
         HashMap<String, NameVersion> existingEntries = new HashMap<String, NameVersion>();
         ListIterator iter = original.listIterator();

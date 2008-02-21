@@ -64,7 +64,7 @@ public abstract class FTPFileEntryParserImpl
      *
      * @return <code>original</code> unmodified.
      */
-     public List preParse(List original) {
+     public List preParse(List<String> original) {
          Iterator it = original.iterator();
          while (it.hasNext()){
             String entry = (String) it.next();
