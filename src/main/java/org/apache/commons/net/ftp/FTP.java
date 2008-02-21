@@ -269,16 +269,20 @@ public class FTP extends SocketClient
         _controlEncoding = DEFAULT_CONTROL_ENCODING;
     }
 
-    
+    // The RFC-compliant multiline termination check
     private boolean __strictCheck(String line, String code) {
     	return (line.startsWith(code));
     }
     
+    // The strict check is too strong a condition because of non-conforming ftp
+    // servers like ftp.funet.fi which sent 226 as the last line of a
+    // 426 multi-line reply in response to ls /.  We relax the condition to
+    // test that the line starts with a digit rather than starting with
+    // the code.
     private boolean __lenientCheck(String line) {
     	return (!(line.length() >= 4 && line.charAt(3) != '-' &&
                 Character.isDigit(line.charAt(0))));
     }
-    
     
     private void __getReply() throws IOException
     {
@@ -332,12 +336,6 @@ public class FTP extends SocketClient
                 // anomaly.
             }
             while ( isStrictMultilineParsing() ? __strictCheck(line, code) : __lenientCheck(line));
-            // This is too strong a condition because of non-conforming ftp
-            // servers like ftp.funet.fi which sent 226 as the last line of a
-            // 426 multi-line reply in response to ls /.  We relax the condition to
-            // test that the line starts with a digit rather than starting with
-            // the code.
-            // line.startsWith(code)));
         }
 
         if (_commandSupport_.getListenerCount() > 0) {
