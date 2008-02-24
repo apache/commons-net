@@ -32,7 +32,7 @@ public class TFTPServer implements Runnable
 	public static final int GET_AND_PUT = 2;
 
 	private HashSet<TFTPTransfer> transfers_ = new HashSet<TFTPTransfer>();
-	private boolean shutdown_ = false;
+	private volatile boolean shutdown_ = false;
 	private TFTP serverTftp_;
 	private File serverReadDirectory_;
 	private File serverWriteDirectory_;
