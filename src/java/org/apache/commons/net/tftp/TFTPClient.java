@@ -231,13 +231,19 @@ _receivePacket:
                                 throw e;
                             }
                             ++block;
+                            if (block > 65535)
+							{
+								// wrap the block number
+								block = 0;
+							}
+                            
                             break _receivePacket;
                         }
                         else
                         {
                             discardPackets();
 
-                            if (lastBlock == (block - 1))
+                            if (lastBlock == (block == 0 ? 65535 : (block - 1)))
                                 continue _sendPacket;  // Resend last acknowledgement.
 
                             continue _receivePacket; // Start fetching packets again.
@@ -464,6 +470,11 @@ _receivePacket:
                         if (lastBlock == block)
                         {
                             ++block;
+                            if (block > 65535)
+							{
+								// wrap the block number
+								block = 0;
+							}
                             if (lastAckWait) {
                                 
                               break _sendPacket;
@@ -476,7 +487,7 @@ _receivePacket:
                         {
                             discardPackets();
 
-                            if (lastBlock == (block - 1))
+                            if (lastBlock == (block == 0 ? 65535 : (block - 1)))
                                 continue _sendPacket;  // Resend last acknowledgement.
 
                             continue _receivePacket; // Start fetching packets again.
