@@ -25,12 +25,13 @@ import org.apache.commons.net.io.*;
 
 public class TFTPServer implements Runnable
 {
+	private static final int DEFAULT_TFTP_PORT = 69;
 	// Modes for the server. These should be an enum, in java 1.5
 	public static final int GET_ONLY = 0;
 	public static final int PUT_ONLY = 1;
 	public static final int GET_AND_PUT = 2;
 
-	private HashSet transfers_ = new HashSet();
+	private HashSet<TFTPTransfer> transfers_ = new HashSet<TFTPTransfer>();
 	private boolean shutdown_ = false;
 	private TFTP serverTftp_;
 	private File serverReadDirectory_;
@@ -86,7 +87,7 @@ public class TFTPServer implements Runnable
 	public TFTPServer(File serverReadDirectory, File serverWriteDirectory, int mode)
 			throws IOException
 	{
-		this(serverReadDirectory, serverWriteDirectory, 69, mode, null, null);
+		this(serverReadDirectory, serverWriteDirectory, DEFAULT_TFTP_PORT, mode, null, null);
 	}
 
 	/**
