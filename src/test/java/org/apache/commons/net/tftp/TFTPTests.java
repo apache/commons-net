@@ -1,9 +1,15 @@
 package org.apache.commons.net.tftp;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import junit.framework.TestCase;
-import org.apache.commons.net.tftp.TFTP;
-import org.apache.commons.net.tftp.TFTPClient;
 
 /**
  * Test the TFTP Server and TFTP Client by creating some files in the system temp folder and then

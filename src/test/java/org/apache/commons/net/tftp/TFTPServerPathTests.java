@@ -16,8 +16,12 @@
 
 package org.apache.commons.net.tftp;
 
-import java.io.*;
-import junit.framework.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import junit.framework.TestCase;
 
 /**
  * Some basic tests to ensure that the TFTP Server is honoring its read/write mode, and preventing
@@ -161,4 +165,6 @@ public class TFTPServerPathTests extends TestCase
 
 		tftpS.shutdown();
 	}
+	
+	
 }
