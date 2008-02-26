@@ -23,7 +23,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id$
+ * @version $Id: FTPParseTestFramework.java 437134 2006-08-26 09:36:36Z rwinston $
  */
 public abstract class FTPParseTestFramework extends TestCase
 {

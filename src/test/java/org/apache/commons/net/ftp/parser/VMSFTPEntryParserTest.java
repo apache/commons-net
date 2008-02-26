@@ -27,7 +27,7 @@ import org.apache.commons.net.ftp.FTPListParseEngine;
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id$
+ * @version $Id: VMSFTPEntryParserTest.java 437134 2006-08-26 09:36:36Z rwinston $
  */
 public class VMSFTPEntryParserTest extends FTPParseTestFramework
 {
