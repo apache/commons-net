@@ -30,7 +30,7 @@ import junit.framework.TestCase;
  * @author <A HREF="mailto:daniel.armbrust.list@gmail.com">Dan Armbrust</A>
  * 
  */
-public class TFTPServerPathTests extends TestCase
+public class TFTPServerPathTest extends TestCase
 {
 	String filePrefix = "tftp-";
 	File serverDirectory = new File(System.getProperty("java.io.tmpdir"));

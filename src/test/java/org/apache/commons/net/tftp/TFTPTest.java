@@ -18,7 +18,7 @@ import junit.framework.TestCase;
  * @author <A HREF="mailto:daniel.armbrust.list@gmail.com">Dan Armbrust</A>
  * 
  */
-public class TFTPTests extends TestCase
+public class TFTPTest extends TestCase
 {
 	static TFTPServer tftpS;
 	static File serverDirectory = new File(System.getProperty("java.io.tmpdir"));
