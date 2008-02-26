@@ -17,10 +17,23 @@
 
 package org.apache.commons.net.tftp;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import org.apache.commons.net.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.net.SocketTimeoutException;
+import java.util.HashSet;
+import java.util.Iterator;
+
+import org.apache.commons.net.io.FromNetASCIIOutputStream;
+import org.apache.commons.net.io.ToNetASCIIInputStream;
 
 /**
  * A fully multi-threaded tftp server. Can handle multiple clients at the same time. Implements RFC
