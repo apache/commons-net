@@ -104,8 +104,10 @@ public class FTPTimestampParserImpl implements
 				pp = new ParsePosition(0);
 				int year = Calendar.getInstance().get(Calendar.YEAR);
 				String timeStampStrPlusYear = timestampStr + " " + year;
-				SimpleDateFormat hackFormatter = new SimpleDateFormat(recentDateFormat.toPattern() + " yyyy");
+				SimpleDateFormat hackFormatter = new SimpleDateFormat(recentDateFormat.toPattern() + " yyyy", 
+						recentDateFormat.getDateFormatSymbols());
 				hackFormatter.setLenient(false);
+				hackFormatter.setTimeZone(recentDateFormat.getTimeZone());
 				parsed = hackFormatter.parse(timeStampStrPlusYear, pp);
 			}
 			if (parsed != null && pp.getIndex() == timestampStr.length() + 5) {
