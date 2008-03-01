@@ -23,6 +23,7 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import org.apache.commons.net.ftp.Configurable;
@@ -99,8 +100,9 @@ public class FTPTimestampParserImpl implements
 			// to cope with short-date leap year strings.
 			// e.g. Java's DateFormatter will assume that "Feb 29 12:00" refers to 
 			// Feb 29 1970 (an invalid date) rather than a potentially valid leap year date.
-			// TODO This is a HORRENDOUS hack. Remove at first opportunity.
-			if (recentDateFormat != null) {
+			// This is pretty bad hack to work around the deficiencies of the JDK date/time classes.
+			if (recentDateFormat != null && 
+					new GregorianCalendar().isLeapYear(now.get(Calendar.YEAR))) {
 				pp = new ParsePosition(0);
 				int year = Calendar.getInstance().get(Calendar.YEAR);
 				String timeStampStrPlusYear = timestampStr + " " + year;
