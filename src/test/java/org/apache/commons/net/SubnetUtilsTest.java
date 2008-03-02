@@ -22,7 +22,7 @@ import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
 
 import junit.framework.TestCase;
 
-public class TestSubnetUtils extends TestCase {
+public class SubnetUtilsTest extends TestCase {
 	
 	public void testParseSimpleNetmask() {
 		final String address = "192.168.0.1";
