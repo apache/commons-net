@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.net.ftp.parser;
 
 import java.text.DateFormatSymbols;
@@ -22,6 +23,7 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import org.apache.commons.net.ftp.Configurable;
@@ -71,44 +73,65 @@ public class FTPTimestampParserImpl implements
 	public Calendar parseTimestamp(String timestampStr) throws ParseException {
 		Calendar now = Calendar.getInstance();
 		now.setTimeZone(this.getServerTimeZone());
-		
+
 		Calendar working = Calendar.getInstance();
-		working.setTimeZone(this.getServerTimeZone());
+		working.setTimeZone(getServerTimeZone());
 		ParsePosition pp = new ParsePosition(0);
 
 		Date parsed = null;
-		if (this.recentDateFormat != null) {
+		if (recentDateFormat != null) {
 			parsed = recentDateFormat.parse(timestampStr, pp);
 		}
 		if (parsed != null && pp.getIndex() == timestampStr.length()) 
 		{
 			working.setTime(parsed);
 			working.set(Calendar.YEAR, now.get(Calendar.YEAR));
-			
-			if (this.lenientFutureDates) {
-			    // add a day to "now" so that "slop" doesn't cause a date 
-			    // slightly in the future to roll back a full year.  (Bug 35181)
-			    now.add(Calendar.DATE, 1);
+
+			if (lenientFutureDates) {
+				// add a day to "now" so that "slop" doesn't cause a date 
+				// slightly in the future to roll back a full year.  (Bug 35181)
+				now.add(Calendar.DATE, 1);
 			}    
 			if (working.after(now)) {
 				working.add(Calendar.YEAR, -1);
 			}
 		} else {
-			pp = new ParsePosition(0);
-			parsed = defaultDateFormat.parse(timestampStr, pp);
-			// note, length checks are mandatory for us since
-			// SimpleDateFormat methods will succeed if less than
-			// full string is matched.  They will also accept, 
-			// despite "leniency" setting, a two-digit number as
-			// a valid year (e.g. 22:04 will parse as 22 A.D.) 
-			// so could mistakenly confuse an hour with a year, 
-			// if we don't insist on full length parsing.
-			if (parsed != null && pp.getIndex() == timestampStr.length()) {
+			// Temporarily add the current year to the short date time
+			// to cope with short-date leap year strings.
+			// e.g. Java's DateFormatter will assume that "Feb 29 12:00" refers to 
+			// Feb 29 1970 (an invalid date) rather than a potentially valid leap year date.
+			// This is pretty bad hack to work around the deficiencies of the JDK date/time classes.
+			if (recentDateFormat != null && 
+					new GregorianCalendar().isLeapYear(now.get(Calendar.YEAR))) {
+				pp = new ParsePosition(0);
+				int year = Calendar.getInstance().get(Calendar.YEAR);
+				String timeStampStrPlusYear = timestampStr + " " + year;
+				SimpleDateFormat hackFormatter = new SimpleDateFormat(recentDateFormat.toPattern() + " yyyy", 
+						recentDateFormat.getDateFormatSymbols());
+				hackFormatter.setLenient(false);
+				hackFormatter.setTimeZone(recentDateFormat.getTimeZone());
+				parsed = hackFormatter.parse(timeStampStrPlusYear, pp);
+			}
+			if (parsed != null && pp.getIndex() == timestampStr.length() + 5) {
 				working.setTime(parsed);
-			} else {
-				throw new ParseException(
-					"Timestamp could not be parsed with older or recent DateFormat", 
-					pp.getIndex());
+			}
+			else {
+				pp = new ParsePosition(0);
+				parsed = defaultDateFormat.parse(timestampStr, pp);
+				// note, length checks are mandatory for us since
+				// SimpleDateFormat methods will succeed if less than
+				// full string is matched.  They will also accept, 
+				// despite "leniency" setting, a two-digit number as
+				// a valid year (e.g. 22:04 will parse as 22 A.D.) 
+				// so could mistakenly confuse an hour with a year, 
+				// if we don't insist on full length parsing.
+				if (parsed != null && pp.getIndex() == timestampStr.length()) {
+					working.setTime(parsed);
+				} else {
+					throw new ParseException(
+							"Timestamp could not be parsed with older or recent DateFormat", 
+							pp.getIndex());
+				}
 			}
 		}
 		return working;
@@ -257,3 +280,4 @@ public class FTPTimestampParserImpl implements
         this.lenientFutureDates = lenientFutureDates;
     }
 }
+
