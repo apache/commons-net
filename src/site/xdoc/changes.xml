@@ -146,6 +146,12 @@ limitations under the License.
 			<action dev="rwinston" type="fix" issue="NET-173">
 				Add configurable multiline parsing.
 			</action>
+			<action dev="rwinston" type="fix" issue="NET-188">
+				Add fix for broken leap year date parsing.
+			</action>
+			<action dev="rwinston" type="add">
+				Add SubnetUtils class (suggested by Kenny McLeod)
+			</action>
 
 
 
