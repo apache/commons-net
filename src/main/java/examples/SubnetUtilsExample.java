@@ -29,7 +29,7 @@ import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
 public class SubnetUtilsExample {
 	
 	public static void main(String[] args) {
-		String subnet = "192.168.0.1/24";
+		String subnet = "192.168.0.1/29";
 		SubnetUtils utils = new SubnetUtils(subnet);
 		SubnetInfo info = utils.getInfo();
 		
