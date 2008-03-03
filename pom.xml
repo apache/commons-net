@@ -174,13 +174,13 @@
                                     <fileset dir="${basedir}" includes="LICENSE.txt"/>
                                     <manifest>
                                         <attribute name="Extension-Name" value="org.apache.commons.net"/>
-                                        <attribute name="Specification-Title" value="Commons Net"/>
-                                        <attribute name="Implmentation-Title" value="Commons Net"/>
-                                        <attribute name="Implementation-Vendor" value="The Apache Software Foundation"/>
+                                        <attribute name="Specification-Title" value="${project.name}"/>
+                                        <attribute name="Implmentation-Title" value="${project.name}"/>
+                                        <attribute name="Implementation-Vendor" value="${project.organization.name}"/>
                                         <attribute name="Implementation-Version" value="${version}"/>
                                         <attribute name="Implementation-Vendor-Id" value="org.apache"/>
-
-
+                                        <attribute name="X-Compile-Source-JDK" value="${maven.compile.source}"/>
+                                        <attribute name="X-Compile-Target-JDK" value="${maven.compile.target}"/>
 
                                     </manifest>
                                 </jar>
