@@ -39,6 +39,11 @@
         <url>http://issues.apache.org/jira/browse/NET</url>
     </issueManagement>
     <inceptionYear>1997</inceptionYear>
+    <scm>
+        <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/net/branches/NET_2_0</connection>
+        <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/net/branches/NET_2_0</developerConnection>
+        <url>http://svn.apache.org/viewvc/commons/proper/net/branches/NET_2_0</url>
+    </scm>
 
     <distributionManagement>
         <site>
@@ -48,15 +53,6 @@
         </site>
     </distributionManagement>
 
-
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 
     <developers>
         <developer>
@@ -117,11 +113,14 @@
         </contributor>
     </contributors>
 
-    <scm>
-        <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/net/branches/NET_2_0</connection>
-        <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/net/branches/NET_2_0</developerConnection>
-        <url>http://svn.apache.org/viewvc/commons/proper/net/branches/NET_2_0</url>
-    </scm>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <properties>
         <maven.compile.source>1.5</maven.compile.source>
@@ -237,4 +236,3 @@
     </reporting>
 
 </project>
-
