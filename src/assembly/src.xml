@@ -29,7 +29,6 @@ Licensed to the Apache Software Foundation (ASF) under one or more
         <include>LICENSE*</include>
         <include>NOTICE*</include>
         <include>pom.xml</include>
-        <include>assembly*</include>
       </includes>
     </fileSet>
     <fileSet>
