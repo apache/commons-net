@@ -23,7 +23,7 @@ limitations under the License.
 	
 
 	<body>
-		<release version="1.4.x" date="" description="">
+		<release version="1.5.0" date="" description="">
 			<action dev="dfs" type="fix">
 				Applied Rob Hasselbaum's
 				&lt;rhasselbaum -> alumni.ithaca.edu&gt;
@@ -41,6 +41,18 @@ limitations under the License.
 				Reverted PR 32859 patch to TFTPClient
 				because it caused final packets to not
 				be sent.
+			</action>
+			<action dev="rwinston" type="add">
+				Added an FTP parser for Netware FTP servers.
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-188">
+				Fix leap year date parsing bug.
+			</action>
+			<action dev="rwinston" type="add">
+				Added an FTP parser for Netware FTP servers.
+			</action>
+			<action dev="rwinston" type="fix">
+				Fix minor issues with NNTP parsing.
 			</action>
 		</release>
 		

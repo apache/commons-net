@@ -20,7 +20,7 @@
   </property>
   <property name="javadocdir" value="dist/docs/api">
   </property>
-  <property name="final.name" value="commons-net-1.5.0-dev">
+  <property name="final.name" value="commons-net-1.5.0">
   </property>
   <path id="build.classpath">
     <fileset dir="${libdir}">
