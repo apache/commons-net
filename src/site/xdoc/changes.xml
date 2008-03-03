@@ -152,9 +152,6 @@ limitations under the License.
 			<action dev="rwinston" type="add">
 				Add SubnetUtils class (suggested by Kenny McLeod)
 			</action>
-
-
-
 		</release>	
 
 
@@ -182,6 +179,12 @@ limitations under the License.
 			</action>
 			<action dev="rwinston" type="fix" issue="NET-188">
 				Fix leap year date parsing bug.
+			</action>
+			<action dev="rwinston" type="add">
+				Added an FTP parser for Netware FTP servers.
+			</action>
+			<action dev="rwinston" type="fix">
+				Fix minor issues with NNTP parsing.
 			</action>
 		</release>
 		
