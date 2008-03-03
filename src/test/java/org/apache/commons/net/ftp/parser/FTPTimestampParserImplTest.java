@@ -39,7 +39,6 @@ public class FTPTimestampParserImplTest extends TestCase {
 
 	public void testParseTimestamp() {
 		Calendar cal = Calendar.getInstance();
-		int timeZoneOffset = cal.getTimeZone().getRawOffset();
 		cal.add(Calendar.HOUR_OF_DAY, 1);
 		cal.set(Calendar.SECOND,0);
 		cal.set(Calendar.MILLISECOND,0);
@@ -60,7 +59,6 @@ public class FTPTimestampParserImplTest extends TestCase {
 		
 	public void testParseTimestampWithSlop() {
 		Calendar cal = Calendar.getInstance();
-		int timeZoneOffset = cal.getTimeZone().getRawOffset();
 		cal.add(Calendar.HOUR_OF_DAY, 1);
 		cal.set(Calendar.SECOND,0);
 		cal.set(Calendar.MILLISECOND,0);
