@@ -176,6 +176,15 @@
                     </reportSet>
                 </reportSets>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>clirr-maven-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <comparisonVersion>1.4.1</comparisonVersion>
+                    <minSeverity>info</minSeverity>
+                </configuration>
+            </plugin>
 
         </plugins>
     </reporting>
