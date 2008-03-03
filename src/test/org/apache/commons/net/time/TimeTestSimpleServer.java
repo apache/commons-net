@@ -35,7 +35,7 @@ import java.net.Socket;
  *
  * @author Jason Mathews, MITRE Corporation
  *
- * @version $Revision: 1.1 $ $Date: 2003/09/24 21:51:48 $
+ * @version $Revision$ $Date$
  */
 public class TimeTestSimpleServer implements Runnable
 {
