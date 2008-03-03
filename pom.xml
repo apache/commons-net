@@ -47,7 +47,7 @@
 
     <distributionManagement>
         <site>
-            <id>taging</id>
+            <id>staging</id>
             <name>Apache Website</name>
             <url>scp://people.apache.org/~rwinston/release/net/</url>
         </site>
@@ -175,7 +175,7 @@
                                     <manifest>
                                         <attribute name="Extension-Name" value="org.apache.commons.net"/>
                                         <attribute name="Specification-Title" value="${project.name}"/>
-                                        <attribute name="Implmentation-Title" value="${project.name}"/>
+                                        <attribute name="Implementation-Title" value="${project.name}"/>
                                         <attribute name="Implementation-Vendor" value="${project.organization.name}"/>
                                         <attribute name="Implementation-Version" value="${version}"/>
                                         <attribute name="Implementation-Vendor-Id" value="org.apache"/>
