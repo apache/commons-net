@@ -16,6 +16,7 @@
  */
 package examples;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 import org.apache.commons.net.util.SubnetUtils;
@@ -52,7 +53,8 @@ public class SubnetUtilsExample {
 		System.out.printf("Last Usable Address:\t\t%s\t[%s]\n", info.getHighAddress(), 
 				Integer.toBinaryString(info.asInteger(info.getHighAddress())));
 		
-		System.out.printf("Total usable addresses: \t%d\n\n", info.getAddressCount());
+		System.out.printf("Total usable addresses: \t%d\n", info.getAddressCount());
+		System.out.printf("Address List: %s\n\n", Arrays.toString(info.getAllAddresses()));
 		
 		final String prompt ="Enter an IP address (e.g. 192.168.0.10):"; 
 		System.out.println(prompt);
