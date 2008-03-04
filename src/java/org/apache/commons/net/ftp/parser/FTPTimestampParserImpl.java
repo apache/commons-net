@@ -101,8 +101,7 @@ public class FTPTimestampParserImpl implements
 			// e.g. Java's DateFormatter will assume that "Feb 29 12:00" refers to 
 			// Feb 29 1970 (an invalid date) rather than a potentially valid leap year date.
 			// This is pretty bad hack to work around the deficiencies of the JDK date/time classes.
-			if (recentDateFormat != null && 
-					new GregorianCalendar().isLeapYear(now.get(Calendar.YEAR))) {
+			if (recentDateFormat != null) {
 				pp = new ParsePosition(0);
 				int year = Calendar.getInstance().get(Calendar.YEAR);
 				String timeStampStrPlusYear = timestampStr + " " + year;
