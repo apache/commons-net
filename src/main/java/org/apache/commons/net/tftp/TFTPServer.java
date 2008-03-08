@@ -25,7 +25,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.SocketTimeoutException;
@@ -49,6 +48,33 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
  * 
  * By default, logs debug info and errors to the console streams. This can be changed with the
  * setLog and setLogError methods.
+ * 
+ * <p>
+ * Example usage is below:
+ * 
+ * <code>
+ * public static void main(String[] args) throws Exception
+ *	{
+ *		if (args.length != 1)
+ *		{
+ *			System.out
+ *					.println("You must provide 1 argument - the base path for the server to serve from.");
+ *			System.exit(1);
+ *		}
+ *
+ *		TFTPServer ts = new TFTPServer(new File(args[0]), new File(args[0]), GET_AND_PUT);
+ *		ts.setSocketTimeout(2000);
+ *
+ *		System.out.println("TFTP Server running.  Press enter to stop.");
+ *		new InputStreamReader(System.in).read();
+ *
+ *		ts.shutdown();
+ *		System.out.println("Server shut down.");
+ *		System.exit(0);
+ *	}
+ *
+ * </code>
+ * 
  * 
  * @author <A HREF="mailto:daniel.armbrust.list@gmail.com">Dan Armbrust</A>
  */
@@ -77,26 +103,6 @@ public class TFTPServer implements Runnable
 
 	private int maxTimeoutRetries_ = 3;
 	private int socketTimeout_;
-
-	public static void main(String[] args) throws Exception
-	{
-		if (args.length != 1)
-		{
-			System.out
-					.println("You must provide 1 argument - the base path for the server to serve from.");
-			System.exit(1);
-		}
-
-		TFTPServer ts = new TFTPServer(new File(args[0]), new File(args[0]), GET_AND_PUT);
-		ts.setSocketTimeout(2000);
-
-		System.out.println("TFTP Server running.  Press enter to stop.");
-		new InputStreamReader(System.in).read();
-
-		ts.shutdown();
-		System.out.println("Server shut down.");
-		System.exit(0);
-	}
 
 	/**
 	 * Start a TFTP Server on the default port (69). Gets and Puts occur in the specified
