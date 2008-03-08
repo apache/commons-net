@@ -63,17 +63,36 @@ public class FTPTimestampParserImpl implements
 	 * If the recentDateFormat member has been defined, try to parse the 
 	 * supplied string with that.  If that parse fails, or if the recentDateFormat
 	 * member has not been defined, attempt to parse with the defaultDateFormat
-	 * member.  If that fails, throw a ParseException. 
+	 * member.  If that fails, throw a ParseException.
 	 * 
-	 * @see org.apache.commons.net.ftp.parser.FTPTimestampParser#parseTimestamp(java.lang.String)	 
-	 */
-	/* (non-Javadoc)
+	 * This method allows a {@link Calendar} instance to be passed in which represents the
+	 * current (system) time.
 	 * 
+	 * @see org.apache.commons.net.ftp.parser.FTPTimestampParser#parseTimestamp(java.lang.String)
+	 * 
+	 * @param timestampStr The timestamp to be parsed	 
 	 */
 	public Calendar parseTimestamp(String timestampStr) throws ParseException {
 		Calendar now = Calendar.getInstance();
 		now.setTimeZone(this.getServerTimeZone());
-
+		return parseTimestamp(timestampStr, now);
+	}
+	
+	/** 
+	 * Implements the one {@link  FTPTimestampParser#parseTimestamp(String)  method}
+	 * in the {@link  FTPTimestampParser  FTPTimestampParser} interface 
+	 * according to this algorithm:
+	 * 
+	 * If the recentDateFormat member has been defined, try to parse the 
+	 * supplied string with that.  If that parse fails, or if the recentDateFormat
+	 * member has not been defined, attempt to parse with the defaultDateFormat
+	 * member.  If that fails, throw a ParseException. 
+	 * 
+	 * @see org.apache.commons.net.ftp.parser.FTPTimestampParser#parseTimestamp(java.lang.String)
+	 * @param timestampStr The timestamp to be parsed
+	 * @param now The current time 	 
+	 */
+	public Calendar parseTimestamp(String timestampStr, Calendar now) throws ParseException {
 		Calendar working = Calendar.getInstance();
 		working.setTimeZone(getServerTimeZone());
 		ParsePosition pp = new ParsePosition(0);
