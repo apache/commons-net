@@ -149,6 +149,12 @@ limitations under the License.
 			<action dev="rwinston" type="add">
 				Add SubnetUtils class (suggested by Kenny McLeod)
 			</action>
+			<action dev="rwinston" type="fix" issue="NET-169">
+				Add Unix-type handling for UNKNOWN Type: L8 syst() message systems.
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-198">
+				Allow FTPTimestampParserImpl to take a predefined Calendar instance representing current time.
+			</action>
 		</release>	
 
 
