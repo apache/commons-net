@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.apache.commons.net.tftp.TFTPServer.ServerMode;
+
 import junit.framework.TestCase;
 
 /**
@@ -58,7 +60,7 @@ public class TFTPTest extends TestCase
 			files[7] = createFile(new File(serverDirectory, filePrefix + "huge.txt"), 37000 * 1024);
 
 			// Start the server
-			tftpS = new TFTPServer(serverDirectory, serverDirectory, 6900, TFTPServer.GET_AND_PUT,
+			tftpS = new TFTPServer(serverDirectory, serverDirectory, 6900, ServerMode.GET_AND_PUT,
 					null, null);
 			tftpS.setSocketTimeout(2000);
 		}

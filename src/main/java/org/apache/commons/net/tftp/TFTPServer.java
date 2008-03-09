@@ -46,7 +46,7 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
  * To check to see if the server is still running (or if it stopped because of an error), call the
  * isRunning() method.
  * 
- * By default, logs debug info and errors to the console streams. This can be changed with the
+ * By default, events are not logged to stdout/stderr. This can be changed with the
  * setLog and setLogError methods.
  * 
  * <p>
@@ -81,11 +81,8 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
 
 public class TFTPServer implements Runnable
 {
-	private static final int DEFAULT_TFTP_PORT = 69;
-	// Modes for the server. These should be an enum, in java 1.5
-	public static final int GET_ONLY = 0;
-	public static final int PUT_ONLY = 1;
-	public static final int GET_AND_PUT = 2;
+	private static final int DEFAULT_TFTP_PORT = 69;	
+	public static enum ServerMode { GET_ONLY, PUT_ONLY, GET_AND_PUT; }
 
 	private HashSet<TFTPTransfer> transfers_ = new HashSet<TFTPTransfer>();
 	private volatile boolean shutdown_ = false;
@@ -94,16 +91,25 @@ public class TFTPServer implements Runnable
 	private File serverWriteDirectory_;
 	private int port_;
 	private Exception serverException = null;
-	private int mode_;
+	private ServerMode mode_;
+
+	/* /dev/null output stream (default) */ 
+	private static final PrintStream nullStream = new PrintStream(
+			new OutputStream() { 
+				public void write(int b){}
+				public void write(byte[] b) throws IOException {}
+				}
+			);
 
 	// don't have access to a logger api, so we will log to these streams, which
-	// by default are set to the console.
+	// by default are set to a no-op logger
 	private PrintStream log_;
 	private PrintStream logError_;
 
 	private int maxTimeoutRetries_ = 3;
 	private int socketTimeout_;
-
+	
+	
 	/**
 	 * Start a TFTP Server on the default port (69). Gets and Puts occur in the specified
 	 * directories.
@@ -120,7 +126,7 @@ public class TFTPServer implements Runnable
 	 * @param mode A value as specified above.
 	 * @throws IOException if the server directory is invalid or does not exist.
 	 */
-	public TFTPServer(File serverReadDirectory, File serverWriteDirectory, int mode)
+	public TFTPServer(File serverReadDirectory, File serverWriteDirectory, ServerMode mode)
 			throws IOException
 	{
 		this(serverReadDirectory, serverWriteDirectory, DEFAULT_TFTP_PORT, mode, null, null);
@@ -143,13 +149,13 @@ public class TFTPServer implements Runnable
 	 * @param errorLog Stream to write error messages to. If not provided, uses System.err.
 	 * @throws IOException if the server directory is invalid or does not exist.
 	 */
-	public TFTPServer(File serverReadDirectory, File serverWriteDirectory, int port, int mode,
+	public TFTPServer(File serverReadDirectory, File serverWriteDirectory, int port, ServerMode mode,
 			PrintStream log, PrintStream errorLog) throws IOException
 	{
 		port_ = port;
 		mode_ = mode;
-		log_ = (log == null ? System.out : log);
-		logError_ = (errorLog == null ? System.err : errorLog);
+		log_ = (log == null ? nullStream: log);
+		logError_ = (errorLog == null ? nullStream : errorLog);
 		launch(serverReadDirectory, serverWriteDirectory);
 	}
 
@@ -413,7 +419,7 @@ public class TFTPServer implements Runnable
 			InputStream is = null;
 			try
 			{
-				if (mode_ == PUT_ONLY)
+				if (mode_ == ServerMode.PUT_ONLY)
 				{
 					transferTftp_.bufferedSend(new TFTPErrorPacket(trrp.getAddress(), trrp
 							.getPort(), TFTPErrorPacket.ILLEGAL_OPERATION,
@@ -575,7 +581,7 @@ public class TFTPServer implements Runnable
 			OutputStream bos = null;
 			try
 			{
-				if (mode_ == GET_ONLY)
+				if (mode_ == ServerMode.GET_ONLY)
 				{
 					transferTftp_.bufferedSend(new TFTPErrorPacket(twrp.getAddress(), twrp
 							.getPort(), TFTPErrorPacket.ILLEGAL_OPERATION,
@@ -822,7 +828,7 @@ public class TFTPServer implements Runnable
 	}
 
 	/**
-	 * Set the stream object to log debug / informational messages. By default, this is System.out
+	 * Set the stream object to log debug / informational messages. By default, this is a no-op
 	 * 
 	 * @param log
 	 */
@@ -832,7 +838,7 @@ public class TFTPServer implements Runnable
 	}
 
 	/**
-	 * Set the stream object to log error messsages. By default, this is System.err
+	 * Set the stream object to log error messsages. By default, this is a no-op
 	 * 
 	 * @param logError
 	 */

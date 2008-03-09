@@ -21,6 +21,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.apache.commons.net.tftp.TFTPServer.ServerMode;
+
 import junit.framework.TestCase;
 
 /**
@@ -39,7 +41,7 @@ public class TFTPServerPathTest extends TestCase
 	{
 		// Start a read-only server
 		TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, 6900,
-				TFTPServer.GET_ONLY, null, null);
+				ServerMode.GET_ONLY, null, null);
 
 		// Create our TFTP instance to handle the file transfer.
 		TFTPClient tftp = new TFTPClient();
@@ -85,7 +87,7 @@ public class TFTPServerPathTest extends TestCase
 	{
 		// Start a write-only server
 		TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, 6900,
-				TFTPServer.PUT_ONLY, null, null);
+				ServerMode.PUT_ONLY, null, null);
 
 		// Create our TFTP instance to handle the file transfer.
 		TFTPClient tftp = new TFTPClient();
@@ -133,7 +135,7 @@ public class TFTPServerPathTest extends TestCase
 	{
 		// Start a server
 		TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, 6900,
-				TFTPServer.GET_AND_PUT, null, null);
+				ServerMode.GET_AND_PUT, null, null);
 
 		// Create our TFTP instance to handle the file transfer.
 		TFTPClient tftp = new TFTPClient();
