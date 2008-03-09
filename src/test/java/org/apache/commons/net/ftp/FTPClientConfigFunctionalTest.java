@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.net.SocketException;
 import java.util.Calendar;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.TreeSet;
 
 import junit.framework.TestCase;
