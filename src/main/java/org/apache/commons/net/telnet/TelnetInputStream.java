@@ -106,14 +106,19 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     // TelnetOutputStream writing through the telnet client at same time
     // as a processDo/Will/etc. command invoked from TelnetInputStream
     // tries to write.
-    private int __read() throws IOException
+    private int __read(boolean mayBlock) throws IOException
     {
         int ch;
 
 _loop:
         while (true)
         {
-            // Exit only when we reach end of stream.
+ 
+            // If there is no more data AND we were told not to block, just return -2. (More efficient than exception.)
+            if(!mayBlock && super.available() == 0)
+                return -2;
+        	
+            // Otherwise, exit only when we reach end of stream.
             if ((ch = super.read()) < 0)
                 return -1;
 
@@ -360,12 +365,13 @@ _mainSwitch:
                         //__alreadyread = false;
                         __readIsWaiting = true;
                         int ch;
-
+                        boolean mayBlock = true;	// block on the first read only
+                        
                         do
                         {
                             try
                             {
-                                if ((ch = __read()) < 0)
+                                if ((ch = __read(mayBlock)) < 0)
                                     if(ch != -2)
                                         return (ch);
                             }
@@ -399,6 +405,11 @@ _mainSwitch:
                                 if (__isClosed)
                                     return (-1);
                             }
+                            
+                            // Reads should not block on subsequent iterations. Potentially, this could happen if the 
+                            // remaining buffered socket data consists entirely of Telnet command sequence and no "user" data.
+                            mayBlock = false;
+                            
                         }
                         // Continue reading as long as there is data available and the queue is not full.
                         while (super.available() > 0 && __bytesAvailable < __queue.length - 1);
@@ -544,7 +555,7 @@ _outerLoop:
             {
                 try
                 {
-                    if ((ch = __read()) < 0)
+                    if ((ch = __read(true)) < 0)
                         break;
                 }
                 catch (InterruptedIOException e)
