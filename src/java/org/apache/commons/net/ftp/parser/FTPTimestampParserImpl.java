@@ -74,7 +74,6 @@ public class FTPTimestampParserImpl implements
 	 */
 	public Calendar parseTimestamp(String timestampStr) throws ParseException {
 		Calendar now = Calendar.getInstance();
-		now.setTimeZone(this.getServerTimeZone());
 		return parseTimestamp(timestampStr, now);
 	}
 	
@@ -93,7 +92,8 @@ public class FTPTimestampParserImpl implements
 	 * @param now The current time 	 
 	 */
 	public Calendar parseTimestamp(String timestampStr, Calendar now) throws ParseException {
-		Calendar working = Calendar.getInstance();
+		now.setTimeZone(this.getServerTimeZone());
+		Calendar working = (Calendar) now.clone();;
 		working.setTimeZone(getServerTimeZone());
 		ParsePosition pp = new ParsePosition(0);
 
@@ -122,7 +122,7 @@ public class FTPTimestampParserImpl implements
 			// This is pretty bad hack to work around the deficiencies of the JDK date/time classes.
 			if (recentDateFormat != null) {
 				pp = new ParsePosition(0);
-				int year = Calendar.getInstance().get(Calendar.YEAR);
+				int year = now.get(Calendar.YEAR);
 				String timeStampStrPlusYear = timestampStr + " " + year;
 				SimpleDateFormat hackFormatter = new SimpleDateFormat(recentDateFormat.toPattern() + " yyyy", 
 						recentDateFormat.getDateFormatSymbols());
