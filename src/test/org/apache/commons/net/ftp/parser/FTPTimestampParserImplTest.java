@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -226,7 +226,7 @@ public class FTPTimestampParserImplTest extends TestCase {
     /*
      * Check how short date is interpreted at a given time
      */
-    private void checkShortParse(String msg, Calendar now, Calendar input) throws Exception {
+    private void checkShortParse(String msg, Calendar now, Calendar input) throws ParseException {
         FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
         Format shortFormat = parser.getRecentDateFormat(); // It's expecting this format
         Format longFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
@@ -286,15 +286,19 @@ public class FTPTimestampParserImplTest extends TestCase {
     // Test Feb 29 for a known leap year
     public void testFeb29LeapYear() throws Exception{
         int year = 2000; // Use same year for current and short date
-        GregorianCalendar now = new GregorianCalendar(year, Calendar.APRIL, 1);
+        GregorianCalendar now = new GregorianCalendar(year, Calendar.APRIL, 1, 12, 0);
         checkShortParse("Feb 29th 2000",now,new GregorianCalendar(year, Calendar.FEBRUARY,29));
     }
 
-    // Test Feb 29 for a known non-leap year
-    public void testFeb29NonLeapYear() throws Exception{
-        int year = 1999;// Use same year for current and short date
-        GregorianCalendar now = new GregorianCalendar(year, Calendar.APRIL, 1);
-        checkShortParse("Feb 29th 1900",now,new GregorianCalendar(year, Calendar.FEBRUARY,29));
+    // Test Feb 29 for a known non-leap year - should fail
+    public void testFeb29NonLeapYear(){
+        GregorianCalendar now = new GregorianCalendar(1999, Calendar.APRIL, 1, 12, 0);
+        // Note: we use a known leap year for the target date to avoid rounding up
+        try {
+            checkShortParse("Feb 29th 1999",now,new GregorianCalendar(2000, Calendar.FEBRUARY,29));
+            fail("Should have failed to parse Feb 29th 1999");
+        } catch (ParseException expected) {
+        }
     }
 
     /**
