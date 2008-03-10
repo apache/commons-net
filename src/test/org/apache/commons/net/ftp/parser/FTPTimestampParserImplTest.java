@@ -16,10 +16,12 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import org.apache.commons.net.ftp.FTPClientConfig;
@@ -28,10 +30,10 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
+ * Test the FTPTimestampParser class.
+ * 
  * @author scohen
  *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public class FTPTimestampParserImplTest extends TestCase {
 	
@@ -39,7 +41,6 @@ public class FTPTimestampParserImplTest extends TestCase {
 
 	public void testParseTimestamp() {
 		Calendar cal = Calendar.getInstance();
-		int timeZoneOffset = cal.getTimeZone().getRawOffset();
 		cal.add(Calendar.HOUR_OF_DAY, 1);
 		cal.set(Calendar.SECOND,0);
 		cal.set(Calendar.MILLISECOND,0);
@@ -60,7 +61,6 @@ public class FTPTimestampParserImplTest extends TestCase {
 		
 	public void testParseTimestampWithSlop() {
 		Calendar cal = Calendar.getInstance();
-		int timeZoneOffset = cal.getTimeZone().getRawOffset();
 		cal.add(Calendar.HOUR_OF_DAY, 1);
 		cal.set(Calendar.SECOND,0);
 		cal.set(Calendar.MILLISECOND,0);
@@ -223,6 +223,80 @@ public class FTPTimestampParserImplTest extends TestCase {
 		}
 	}
 	
+    /*
+     * Check how short date is interpreted at a given time
+     */
+    private void checkShortParse(String msg, Calendar now, Calendar input) throws Exception {
+        FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
+        Format shortFormat = parser.getRecentDateFormat(); // It's expecting this format
+        Format longFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        
+        final String shortDate = shortFormat.format(input.getTime());
+        Calendar output=parser.parseTimestamp(shortDate, now);
+        int outyear = output.get(Calendar.YEAR);
+        int outdom = output.get(Calendar.DAY_OF_MONTH);
+        int outmon = output.get(Calendar.MONTH);
+        int inyear = input.get(Calendar.YEAR);
+        int indom = input.get(Calendar.DAY_OF_MONTH);
+        int inmon = input.get(Calendar.MONTH);
+        if (indom != outdom || inmon != outmon || inyear != outyear){
+            fail("Test: '"+msg+"' Server="+longFormat.format(now.getTime())
+                    +". Failed to parse "+shortDate
+                    +". Actual "+longFormat.format(output.getTime())
+                    +". Expected "+longFormat.format(input.getTime()));
+        }
+    }
+
+    public void testParseShortPastDates() throws Exception {
+        GregorianCalendar now = new GregorianCalendar();
+        checkShortParse("Now",now,now); // should always work
+        GregorianCalendar target = (GregorianCalendar) now.clone();
+        target.add(Calendar.WEEK_OF_YEAR, -1);
+        checkShortParse("Now -1 week",now,target);
+        target.add(Calendar.WEEK_OF_YEAR, -12);
+        checkShortParse("Now -13 weeks",now,target);
+        target.add(Calendar.WEEK_OF_YEAR, -13);
+        checkShortParse("Now -26 weeks",now,target);
+    }
+
+    public void testParseShortFutureDates() throws Exception {
+        GregorianCalendar now = new GregorianCalendar();
+        checkShortParse("Now",now,now); // should always work
+        GregorianCalendar target = (GregorianCalendar) now.clone();
+        target.add(Calendar.WEEK_OF_YEAR, 1);
+        checkShortParse("Now +1 week",now,target);
+        target.add(Calendar.WEEK_OF_YEAR, 12);
+        checkShortParse("Now +13 weeks",now,target);
+        target.add(Calendar.WEEK_OF_YEAR, 13);
+        checkShortParse("Now +26 weeks",now,target);
+    }
+
+    // Test leap year if current year is a leap year
+    public void testFeb29IfLeapYear() throws Exception{
+        GregorianCalendar now = new GregorianCalendar();
+        final int thisYear = now.get(Calendar.YEAR);
+        if (now.isLeapYear(thisYear) && now.before(new GregorianCalendar(thisYear,Calendar.AUGUST,29))){
+            GregorianCalendar target = new GregorianCalendar(thisYear,Calendar.FEBRUARY,29);            
+            checkShortParse("Feb 29th",now,target);
+        } else {
+            System.out.println("Skipping Feb 29 test");
+        }
+    }
+
+    // Test Feb 29 for a known leap year
+    public void testFeb29LeapYear() throws Exception{
+        int year = 2000; // Use same year for current and short date
+        GregorianCalendar now = new GregorianCalendar(year, Calendar.APRIL, 1);
+        checkShortParse("Feb 29th 2000",now,new GregorianCalendar(year, Calendar.FEBRUARY,29));
+    }
+
+    // Test Feb 29 for a known non-leap year
+    public void testFeb29NonLeapYear() throws Exception{
+        int year = 1999;// Use same year for current and short date
+        GregorianCalendar now = new GregorianCalendar(year, Calendar.APRIL, 1);
+        checkShortParse("Feb 29th 1900",now,new GregorianCalendar(year, Calendar.FEBRUARY,29));
+    }
+
     /**
      * Method suite.
      *
