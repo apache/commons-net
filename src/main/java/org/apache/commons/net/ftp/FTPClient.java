@@ -1912,7 +1912,7 @@ implements Configurable
     {
         return FTPReply.isPositiveCompletion(noop());
     }
-
+    
 
     /***
      * Obtain a list of filenames in a directory (or just the name of a given
@@ -2356,6 +2356,21 @@ implements Configurable
         if (FTPReply.isPositiveCompletion(stat(pathname)))
             return getReplyString();
         return null;
+    }
+    
+    
+    /**
+     * Issue the FTP MDTM command (not supported by all servers to retrieve the last
+     * modification time of a file. The modification string should be in the form "YYYYMMDDhhmmss"
+     * 
+     * @param pathname The file path to query.
+     * @return A string representing the last file modification time in <code>YYYYMMDDhhmmss</code> format.
+     * @throws IOException if an I/O error occurs.
+     */
+    public String getModificationTime(String pathname) throws IOException {
+    	if (FTPReply.isPositiveCompletion(mdtm(pathname)))
+    		return getReplyString();
+    	return null;
     }
 
 

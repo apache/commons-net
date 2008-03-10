@@ -66,6 +66,7 @@ public final class FTPCommand
     public static final int STAT = 30;
     public static final int HELP = 31;
     public static final int NOOP = 32;
+    public static final int MDTM = 33;
 
     public static final int USERNAME = USER;
     public static final int PASSWORD = PASS;
@@ -100,6 +101,7 @@ public final class FTPCommand
     public static final int STATUS = STAT;
     //public static final int HELP = HELP;
     //public static final int NOOP = NOOP;
+    public static final int MOD_TIME = MDTM;
 
     // Cannot be instantiated
     private FTPCommand()

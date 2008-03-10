@@ -1145,6 +1145,12 @@ public class FTP extends SocketClient
     {
         return sendCommand(FTPCommand.REST, marker);
     }
+    
+    
+    public int mdtm(String file) throws IOException 
+    {
+    	return sendCommand(FTPCommand.MDTM, file);
+    }
 
     /***
      * A convenience method to send the FTP RNFR command to the server,
