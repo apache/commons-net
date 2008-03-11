@@ -247,28 +247,52 @@ public class FTPTimestampParserImplTest extends TestCase {
         }
     }
 
-    public void testParseShortPastDates() throws Exception {
-        GregorianCalendar now = new GregorianCalendar();
-        checkShortParse("Now",now,now); // should always work
+    public void testParseShortPastDates1() throws Exception {
+        GregorianCalendar now = new GregorianCalendar(2001, Calendar.MAY, 30, 12, 0);
+        checkShortParse("2001-5-30",now,now); // should always work
         GregorianCalendar target = (GregorianCalendar) now.clone();
         target.add(Calendar.WEEK_OF_YEAR, -1);
-        checkShortParse("Now -1 week",now,target);
+        checkShortParse("2001-5-30 -1 week",now,target);
         target.add(Calendar.WEEK_OF_YEAR, -12);
-        checkShortParse("Now -13 weeks",now,target);
+        checkShortParse("2001-5-30 -13 weeks",now,target);
         target.add(Calendar.WEEK_OF_YEAR, -13);
-        checkShortParse("Now -26 weeks",now,target);
+        checkShortParse("2001-5-30 -26 weeks",now,target);
     }
 
-    public void testParseShortFutureDates() throws Exception {
-        GregorianCalendar now = new GregorianCalendar();
-        checkShortParse("Now",now,now); // should always work
+    public void testParseShortPastDates2() throws Exception {
+        GregorianCalendar now = new GregorianCalendar(2004, Calendar.AUGUST, 1, 12, 0);
+        checkShortParse("2004-8-1",now,now); // should always work
+        GregorianCalendar target = (GregorianCalendar) now.clone();
+        target.add(Calendar.WEEK_OF_YEAR, -1);
+        checkShortParse("2004-8-1 -1 week",now,target);
+        target.add(Calendar.WEEK_OF_YEAR, -12);
+        checkShortParse("2004-8-1 -13 weeks",now,target);
+        target.add(Calendar.WEEK_OF_YEAR, -13);
+        checkShortParse("2004-8-1 -26 weeks",now,target);
+    }
+
+    public void testParseShortFutureDates1() throws Exception {
+        GregorianCalendar now = new GregorianCalendar(2001, Calendar.MAY, 30, 12, 0);
+        checkShortParse("2001-5-30",now,now); // should always work
         GregorianCalendar target = (GregorianCalendar) now.clone();
         target.add(Calendar.WEEK_OF_YEAR, 1);
-        checkShortParse("Now +1 week",now,target);
+        checkShortParse("2001-5-30 +1 week",now,target);
         target.add(Calendar.WEEK_OF_YEAR, 12);
-        checkShortParse("Now +13 weeks",now,target);
+        checkShortParse("2001-5-30 +13 weeks",now,target);
         target.add(Calendar.WEEK_OF_YEAR, 13);
-        checkShortParse("Now +26 weeks",now,target);
+        checkShortParse("2001-5-30 +26 weeks",now,target);
+    }
+
+    public void testParseShortFutureDates2() throws Exception {
+        GregorianCalendar now = new GregorianCalendar(2004, Calendar.AUGUST, 1, 12, 0);
+        checkShortParse("2004-8-1",now,now); // should always work
+        GregorianCalendar target = (GregorianCalendar) now.clone();
+        target.add(Calendar.WEEK_OF_YEAR, 1);
+        checkShortParse("2004-8-1 +1 week",now,target);
+        target.add(Calendar.WEEK_OF_YEAR, 12);
+        checkShortParse("2004-8-1 +13 weeks",now,target);
+        target.add(Calendar.WEEK_OF_YEAR, 13);
+        checkShortParse("2004-8-1 +26 weeks",now,target);
     }
 
     // Test leap year if current year is a leap year
