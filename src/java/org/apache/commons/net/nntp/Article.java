@@ -248,6 +248,6 @@ public class Article implements Threadable {
 
 	
 	public Threadable makeDummy() {
-		return (Threadable)new Article();
+		return new Article();
 	}
 }
