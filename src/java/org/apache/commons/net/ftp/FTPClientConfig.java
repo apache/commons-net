@@ -178,6 +178,14 @@ public class FTPClientConfig
     public static final String SYST_MVS = "MVS";
 
     /**
+     * Some servers return an "UNKNOWN Type: L8" message
+     * in response to the SYST command. We set these to be a Unix-type system.
+     * This may happen if the ftpd in question was compiled without system
+     * information.
+     */
+    public static final String SYST_L8 = "Type: L8";
+
+    /**
      * Identifier by which an Netware-based ftp server is known throughout
      * the commons-net ftp system.
      */

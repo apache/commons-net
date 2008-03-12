@@ -92,7 +92,8 @@ public class DefaultFTPFileEntryParserFactory
 	            {
 	                ukey = key.toUpperCase();
 	            }
-	            if (ukey.indexOf(FTPClientConfig.SYST_UNIX) >= 0)
+	            if (ukey.indexOf(FTPClientConfig.SYST_UNIX) >= 0
+	                    || (ukey.indexOf(FTPClientConfig.SYST_L8) >= 0))
 	            {
 	                parser = createUnixFTPEntryParser();
 	            }
