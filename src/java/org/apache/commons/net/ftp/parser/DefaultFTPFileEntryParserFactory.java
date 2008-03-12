@@ -193,12 +193,12 @@ public class DefaultFTPFileEntryParserFactory
 
     public FTPFileEntryParser createUnixFTPEntryParser()
     {
-        return (FTPFileEntryParser) new UnixFTPEntryParser();
+        return new UnixFTPEntryParser();
     }
 
     public FTPFileEntryParser createVMSVersioningFTPEntryParser()
     {
-        return (FTPFileEntryParser) new VMSVersioningFTPEntryParser();
+        return new VMSVersioningFTPEntryParser();
     }
     
     public FTPFileEntryParser createNetwareFTPEntryParser() {
@@ -222,7 +222,7 @@ public class DefaultFTPFileEntryParserFactory
     
      public FTPFileEntryParser createOS2FTPEntryParser()
     {
-        return (FTPFileEntryParser) new OS2FTPEntryParser();
+        return new OS2FTPEntryParser();
     }
 
     public FTPFileEntryParser createOS400FTPEntryParser()
