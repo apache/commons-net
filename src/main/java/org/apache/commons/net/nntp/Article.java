@@ -75,14 +75,14 @@ public class Article implements Threadable {
 	public String[] getReferences() {
 		if (references == null)
 			return new String[0];
-		ArrayList list = new ArrayList();
+		ArrayList<String> list = new ArrayList<String>();
 		int terminator = references.toString().indexOf(':');
 		StringTokenizer st =
 			new StringTokenizer(references.substring(terminator), "\t");
 		while (st.hasMoreTokens()) {
 			list.add(st.nextToken());
 		}
-		return (String[]) list.toArray(new String[list.size()]);
+		return list.toArray(new String[list.size()]);
 	}
 	
 	/**
@@ -248,6 +248,6 @@ public class Article implements Threadable {
 
 	
 	public Threadable makeDummy() {
-		return (Threadable)new Article();
+		return new Article();
 	}
 }
