@@ -19,7 +19,6 @@ package org.apache.commons.net.echo;
 
 import java.io.InputStream;
 
-import org.apache.commons.net.SocketClient;
 import org.apache.commons.net.discard.DiscardTCPClient;
 
 /***
