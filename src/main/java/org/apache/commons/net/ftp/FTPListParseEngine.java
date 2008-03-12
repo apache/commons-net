@@ -191,7 +191,7 @@ public class FTPListParseEngine {
             tmpResults.add(temp);
             count--;
         }
-        return (FTPFile[]) tmpResults.toArray(new FTPFile[0]);
+        return tmpResults.toArray(new FTPFile[0]);
 
     }
 
@@ -230,7 +230,7 @@ public class FTPListParseEngine {
             tmpResults.add(0,temp);
             count--;
         }
-        return (FTPFile[]) tmpResults.toArray(new FTPFile[0]);
+        return tmpResults.toArray(new FTPFile[0]);
     }
 
     /**
@@ -255,7 +255,7 @@ public class FTPListParseEngine {
             FTPFile temp = this.parser.parseFTPEntry(entry);
             tmpResults.add(temp);
         }
-        return (FTPFile[]) tmpResults.toArray(new FTPFile[0]);
+        return tmpResults.toArray(new FTPFile[0]);
 
     }
 

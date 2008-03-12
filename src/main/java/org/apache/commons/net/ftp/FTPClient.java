@@ -497,7 +497,7 @@ implements Configurable
             if (pasv() != FTPReply.ENTERING_PASSIVE_MODE)
                 return null;
 
-            __parsePassiveModeReply((String)_replyLines.get(_replyLines.size() - 1));
+            __parsePassiveModeReply(_replyLines.get(_replyLines.size() - 1));
 
             socket = _socketFactory_.createSocket(__passiveHost, __passivePort);
             if ((__restartOffset > 0) && !restart(__restartOffset))
@@ -886,7 +886,7 @@ implements Configurable
             return false;
 
         __dataConnectionMode = PASSIVE_REMOTE_DATA_CONNECTION_MODE;
-        __parsePassiveModeReply((String)_replyLines.get(0));
+        __parsePassiveModeReply(_replyLines.get(0));
 
         return true;
     }
@@ -1798,7 +1798,7 @@ implements Configurable
         if (pwd() != FTPReply.PATHNAME_CREATED)
             return null;
 
-        return __parsePathname((String)_replyLines.get( _replyLines.size() - 1));
+        return __parsePathname(_replyLines.get( _replyLines.size() - 1));
     }
 
 
@@ -1845,7 +1845,7 @@ implements Configurable
       // in practice FTP servers deviate, so we soften the condition to
       // a positive completion.
         if (__systemName == null && FTPReply.isPositiveCompletion(syst()))
-            __systemName = ((String)_replyLines.get(_replyLines.size() - 1)).substring(4);
+            __systemName = _replyLines.get(_replyLines.size() - 1).substring(4);
 
         return __systemName;
     }

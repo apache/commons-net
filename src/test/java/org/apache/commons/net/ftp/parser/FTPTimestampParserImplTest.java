@@ -138,7 +138,7 @@ public class FTPTimestampParserImplTest extends TestCase {
 			// the only difference should be the two hours
 			// difference, no rolling back a year should occur.
 			assertEquals("no.rollback.because.of.time.zones",
-				(long)TWO_HOURS_OF_MILLISECONDS, 
+				TWO_HOURS_OF_MILLISECONDS, 
 				cal.getTime().getTime() - parsed.getTime().getTime());
 		} catch (ParseException e){
 			fail("Unable to parse " + fmtTimePlusOneHour);

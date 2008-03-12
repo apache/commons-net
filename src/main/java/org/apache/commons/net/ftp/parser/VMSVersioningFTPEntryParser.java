@@ -129,7 +129,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
                 String name = result.group(1);
                 String version = result.group(2);
                 NameVersion nv = new NameVersion(name, version);
-                NameVersion existing = (NameVersion) existingEntries.get(name);
+                NameVersion existing = existingEntries.get(name);
                 if (null != existing) {
                     if (nv.versionNumber < existing.versionNumber) {
                         iter.remove();  // removal removes from original list.
@@ -153,7 +153,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
                 String name = result.group(1);
                 String version = result.group(2);
                 NameVersion nv = new NameVersion(name, version);
-                NameVersion existing = (NameVersion) existingEntries.get(name);
+                NameVersion existing = existingEntries.get(name);
                 if (null != existing) {
                     if (nv.versionNumber < existing.versionNumber) {
                         iter.remove(); // removal removes from original list.

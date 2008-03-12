@@ -463,7 +463,7 @@ public class SMTP extends SocketClient
         
         for (String line : _replyLines)
         {
-            buffer.append((String)line);
+            buffer.append(line);
             buffer.append(SocketClient.NETASCII_EOL);
         }
 

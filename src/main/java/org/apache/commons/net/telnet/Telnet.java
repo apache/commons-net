@@ -1271,12 +1271,12 @@ class Telnet extends SocketClient
         {
             try
             {
-                if (ch != (int) '\r')
+                if (ch != '\r')
                 {
                     spyStream.write(ch);
-                    if (ch == (int) '\n')
+                    if (ch == '\n')
                     {
-                        spyStream.write((int) '\r');
+                        spyStream.write('\r');
                     }
                     spyStream.flush();
                 }

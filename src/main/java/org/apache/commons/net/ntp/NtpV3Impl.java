@@ -128,7 +128,7 @@ public class NtpV3Impl implements NtpV3Packet
      */
     public int getPoll()
     {
-        return (int) (buf[POLL_INDEX]);
+        return buf[POLL_INDEX];
     }
 
     /***
@@ -150,7 +150,7 @@ public class NtpV3Impl implements NtpV3Packet
      */
     public int getPrecision()
     {
-        return (int) buf[PRECISION_INDEX];
+        return buf[PRECISION_INDEX];
     }
 
     /***

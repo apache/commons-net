@@ -102,7 +102,7 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler
 
                 for (int ii = 0; ii < termType.length(); ii++)
                 {
-                    response[ii + 2] = (int) termType.charAt(ii);
+                    response[ii + 2] = termType.charAt(ii);
                 }
 
                 return response;
