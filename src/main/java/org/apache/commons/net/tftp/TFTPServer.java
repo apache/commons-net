@@ -314,10 +314,10 @@ public class TFTPServer implements Runnable
 
 		synchronized(transfers_)
 		{
-			Iterator it = transfers_.iterator();
+			Iterator<TFTPTransfer> it = transfers_.iterator();
 			while (it.hasNext())
 			{
-				((TFTPTransfer) it.next()).shutdown();
+				it.next().shutdown();
 			}
 		}
 

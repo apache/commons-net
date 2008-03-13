@@ -33,7 +33,7 @@ import java.util.Vector;
 
 public final class RelayPath
 {
-    Vector _path;
+    Vector<String> _path;
     String _emailAddress;
 
     /***
@@ -44,7 +44,7 @@ public final class RelayPath
      ***/
     public RelayPath(String emailAddress)
     {
-        _path = new Vector();
+        _path = new Vector<String>();
         _emailAddress = emailAddress;
     }
 
@@ -74,7 +74,7 @@ public final class RelayPath
     public String toString()
     {
         StringBuffer buffer = new StringBuffer();
-        Enumeration hosts;
+        Enumeration<String> hosts;
 
         buffer.append('<');
 
@@ -83,12 +83,12 @@ public final class RelayPath
         if (hosts.hasMoreElements())
         {
             buffer.append('@');
-            buffer.append((String)hosts.nextElement());
+            buffer.append(hosts.nextElement());
 
             while (hosts.hasMoreElements())
             {
                 buffer.append(",@");
-                buffer.append((String)hosts.nextElement());
+                buffer.append(hosts.nextElement());
             }
             buffer.append(':');
         }

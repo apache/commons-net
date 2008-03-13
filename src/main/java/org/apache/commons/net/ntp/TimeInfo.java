@@ -64,7 +64,7 @@ public class TimeInfo {
      * @param comments List of errors/warnings identified during processing
      * @throws IllegalArgumentException if message is null
      */
-    public TimeInfo(NtpV3Packet message, long returnTime, List comments)
+    public TimeInfo(NtpV3Packet message, long returnTime, List<String> comments)
     {
             this(message, returnTime, comments, true);
     }
@@ -97,7 +97,7 @@ public class TimeInfo {
      * @param doComputeDetails  flag to pre-compute delay/offset values
      * @throws IllegalArgumentException if message is null
      */
-    public TimeInfo(NtpV3Packet message, long returnTime, List comments,
+    public TimeInfo(NtpV3Packet message, long returnTime, List<String> comments,
                    boolean doComputeDetails)
     {
         if (message == null)
@@ -246,7 +246,7 @@ public class TimeInfo {
      *
      * @return List or null if not yet computed
      */
-    public List getComments()
+    public List<String> getComments()
     {
         return _comments;
     }

@@ -32,7 +32,7 @@ import java.util.Iterator;
 
 public class Threader {
 	private ThreadContainer root;
-	private HashMap idTable;
+	private HashMap<String,ThreadContainer> idTable;
 	private int bogusIdCount = 0;
 
 	/**
@@ -45,7 +45,7 @@ public class Threader {
 		if (messages == null)
 			return null;
 
-		idTable = new HashMap();
+		idTable = new HashMap<String,ThreadContainer>();
 
 		// walk through each Threadable element
 		for (int i = 0; i < messages.length; ++i) {
@@ -83,7 +83,7 @@ public class Threader {
 	 */
 	private void buildContainer(Threadable threadable) {
 		String id = threadable.messageThreadId();
-		ThreadContainer container = (ThreadContainer) idTable.get(id);
+		ThreadContainer container = idTable.get(id);
 
 		// A ThreadContainer exists for this id already. This should be a forward reference, but may 
 		// be a duplicate id, in which case we will need to generate a bogus placeholder id
@@ -112,7 +112,7 @@ public class Threader {
 			String[] references = threadable.messageThreadReferences();
 			for (int i = 0; i < references.length; ++i) {
 				String refString = references[i];
-				ThreadContainer ref = (ThreadContainer) idTable.get(refString);
+				ThreadContainer ref = idTable.get(refString);
 
 				// if this id doesnt have a container, create one
 				if (ref == null) {
@@ -187,11 +187,11 @@ public class Threader {
 	 */
 	private ThreadContainer findRootSet() {
 		ThreadContainer root = new ThreadContainer();
-		Iterator iter = idTable.keySet().iterator();
+		Iterator<String> iter = idTable.keySet().iterator();
 
 		while (iter.hasNext()) {
 			Object key = iter.next();
-			ThreadContainer c = (ThreadContainer) idTable.get(key);
+			ThreadContainer c = idTable.get(key);
 			if (c.parent == null) {
 				if (c.next != null)
 					throw new RuntimeException(
@@ -275,7 +275,7 @@ public class Threader {
 			count++;
 
 		// TODO verify this will avoid rehashing
-		HashMap subjectTable = new HashMap((int) (count * 1.2), (float) 0.9);
+		HashMap<String, ThreadContainer> subjectTable = new HashMap<String, ThreadContainer>((int) (count * 1.2), (float) 0.9);
 		count = 0;
 
 		for (ThreadContainer c = root.child; c != null; c = c.next) {
@@ -292,7 +292,7 @@ public class Threader {
 			if (subj == null || subj == "")
 				continue;
 
-			ThreadContainer old = (ThreadContainer) subjectTable.get(subj);
+			ThreadContainer old = subjectTable.get(subj);
 
 			// Add this container to the table iff:
 			// - There exists no container with this subject
@@ -334,7 +334,7 @@ public class Threader {
 			if (subj == null || subj == "")
 				continue;
 
-			ThreadContainer old = (ThreadContainer) subjectTable.get(subj);
+			ThreadContainer old = subjectTable.get(subj);
 
 			if (old == c) // That's us
 				continue;

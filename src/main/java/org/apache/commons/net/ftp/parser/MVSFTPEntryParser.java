@@ -273,9 +273,9 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 	 * a tape archive. These entries is currently not supported by this parser.
 	 * A null value is returned.
 	 * 
-	 * @param f:
+	 * @param file
 	 *            will be updated with Name, Type, Timestamp if parsed.
-	 * @param zosDirectoryEntry
+	 * @param entry zosDirectoryEntry
 	 * @return true: entry was parsed, false: entry was not parsed.
 	 */
 	private boolean parseFileList(FTPFile file, String entry) {
@@ -317,9 +317,9 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 	 * last update
 	 * 
 	 * 
-	 * @param f:
+	 * @param file
 	 *            will be updated with Name, Type and Timestamp if parsed.
-	 * @param zosDirectoryEntry
+	 * @param entry zosDirectoryEntry
 	 * @return true: entry was parsed, false: entry was not parsed.
 	 */
 	private boolean parseMemberList(FTPFile file, String entry) {
@@ -386,9 +386,9 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 	 * files [5] The string "Spool Files"
 	 * 
 	 * 
-	 * @param f:
+	 * @param file
 	 *            will be updated with Name, Type and Timestamp if parsed.
-	 * @param zosDirectoryEntry
+	 * @param entry zosDirectoryEntry
 	 * @return true: entry was parsed, false: entry was not parsed.
 	 */
 	private boolean parseJeslevel1List(FTPFile file, String entry) {
@@ -415,9 +415,9 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 	 * Class [6] The rest
 	 * 
 	 * 
-	 * @param f:
+	 * @param file
 	 *            will be updated with Name, Type and Timestamp if parsed.
-	 * @param zosDirectoryEntry
+	 * @param entry zosDirectoryEntry
 	 * @return true: entry was parsed, false: entry was not parsed.
 	 */
 	private boolean parseJeslevel2List(FTPFile file, String entry) {
@@ -440,12 +440,12 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 	 * z/OS-MVS File lists z/OS-MVS Member lists unix file lists
 	 */
 	@Override
-	public List preParse(List orig) {
+	public List<String> preParse(List<String> orig) {
 		// simply remove the header line. Composite logic will take care of the
 		// two different types of
 		// list in short order.
 		if (orig != null && orig.size() > 0) {
-			String header = (String) orig.get(0);
+			String header = orig.get(0);
 			if (header.indexOf("Volume") >= 0 && header.indexOf("Dsname") >= 0) {
 				setType(FILE_LIST_TYPE);
 				super.setRegex(FILE_LIST_REGEX);

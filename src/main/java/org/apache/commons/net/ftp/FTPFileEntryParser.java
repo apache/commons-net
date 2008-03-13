@@ -137,7 +137,7 @@ public interface FTPFileEntryParser
      *
      * @return Original list as processed by this method.
      */
-    List preParse(List<String> original);
+    List<String> preParse(List<String> original);
 
 
 }

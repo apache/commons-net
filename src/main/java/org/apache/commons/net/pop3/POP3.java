@@ -84,7 +84,7 @@ public class POP3 extends SocketClient
     BufferedReader _reader;
     int _replyCode;
     String _lastReplyLine;
-    Vector _replyLines;
+    Vector<String> _replyLines;
 
     /***
      * A ProtocolCommandSupport object used to manage the registering of
@@ -103,7 +103,7 @@ public class POP3 extends SocketClient
         __popState = DISCONNECTED_STATE;
         _reader = null;
         __writer = null;
-        _replyLines = new Vector();
+        _replyLines = new Vector<String>();
         _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
@@ -341,13 +341,13 @@ public class POP3 extends SocketClient
      ***/
     public String getReplyString()
     {
-        Enumeration en;
+        Enumeration<String> en;
         StringBuffer buffer = new StringBuffer(256);
 
         en = _replyLines.elements();
         while (en.hasMoreElements())
         {
-            buffer.append((String)en.nextElement());
+            buffer.append(en.nextElement());
             buffer.append(SocketClient.NETASCII_EOL);
         }
 

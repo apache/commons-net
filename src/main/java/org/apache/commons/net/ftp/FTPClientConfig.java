@@ -558,7 +558,7 @@ public class FTPClientConfig
 	 * @return a Collection of all the language codes currently supported
 	 * by this class
 	 */
-	public static Collection getSupportedLanguageCodes() {
+	public static Collection<String> getSupportedLanguageCodes() {
 	    return LANGUAGE_CODE_MAP.keySet();
 	}
 	

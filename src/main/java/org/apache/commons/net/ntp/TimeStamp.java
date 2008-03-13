@@ -43,7 +43,7 @@ import java.util.TimeZone;
  * @version $Revision$ $Date$
  * @see java.util.Date
  */
-public class TimeStamp implements java.io.Serializable, Comparable
+public class TimeStamp implements java.io.Serializable, Comparable // TODO add comparable type?
 {
 
     /**
@@ -65,8 +65,8 @@ public class TimeStamp implements java.io.Serializable, Comparable
     /*
      * Caches for the DateFormatters used by various toString methods.
      */
-    private static SoftReference simpleFormatter = null;
-    private static SoftReference utcFormatter = null;
+    private static SoftReference<DateFormat> simpleFormatter = null;
+    private static SoftReference<DateFormat> utcFormatter = null;
 
     /**
      * NTP timestamp value: 64-bit unsigned fixed-point number as defined in RFC-1305
@@ -406,7 +406,7 @@ public class TimeStamp implements java.io.Serializable, Comparable
     {
         DateFormat formatter = null;
         if (simpleFormatter != null) {
-            formatter = (DateFormat) simpleFormatter.get();
+            formatter = simpleFormatter.get();
         }
         if (formatter == null) {
             // No cache yet, or cached formatter GC'd
@@ -433,7 +433,7 @@ public class TimeStamp implements java.io.Serializable, Comparable
     {
         DateFormat formatter = null;
         if (utcFormatter != null)
-            formatter = (DateFormat) utcFormatter.get();
+            formatter = utcFormatter.get();
         if (formatter == null) {
             // No cache yet, or cached formatter GC'd
             formatter = new SimpleDateFormat(NTP_DATE_FORMAT + " 'UTC'",

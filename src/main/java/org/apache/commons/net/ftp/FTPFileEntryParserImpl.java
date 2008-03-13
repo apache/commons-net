@@ -64,10 +64,10 @@ public abstract class FTPFileEntryParserImpl
      *
      * @return <code>original</code> unmodified.
      */
-     public List preParse(List<String> original) {
-         Iterator it = original.iterator();
+     public List<String> preParse(List<String> original) {
+         Iterator<String> it = original.iterator();
          while (it.hasNext()){
-            String entry = (String) it.next();
+            String entry = it.next();
             if (null == parseFTPEntry(entry)) {
                 it.remove();
             } else {

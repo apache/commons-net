@@ -369,7 +369,7 @@ public class POP3Client extends POP3
     public POP3MessageInfo[] listMessages() throws IOException
     {
         POP3MessageInfo[] messages;
-        Enumeration en;
+        Enumeration<String> en;
         int line;
 
         if (getState() != TRANSACTION_STATE)
@@ -387,7 +387,7 @@ public class POP3Client extends POP3
 
         // Fetch lines.
         for (line = 0; line < messages.length; line++)
-            messages[line] = __parseStatus((String)en.nextElement());
+            messages[line] = __parseStatus(en.nextElement());
 
         return messages;
     }
@@ -441,7 +441,7 @@ public class POP3Client extends POP3
     public POP3MessageInfo[] listUniqueIdentifiers() throws IOException
     {
         POP3MessageInfo[] messages;
-        Enumeration en;
+        Enumeration<String> en;
         int line;
 
         if (getState() != TRANSACTION_STATE)
@@ -459,7 +459,7 @@ public class POP3Client extends POP3
 
         // Fetch lines.
         for (line = 0; line < messages.length; line++)
-            messages[line] = __parseUID((String)en.nextElement());
+            messages[line] = __parseUID(en.nextElement());
 
         return messages;
     }

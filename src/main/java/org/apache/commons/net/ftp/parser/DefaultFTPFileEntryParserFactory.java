@@ -81,7 +81,7 @@ public class DefaultFTPFileEntryParserFactory
     	if (key == null)
     		throw new ParserInitializationException("Parser key cannot be null");
     		
-        Class parserClass = null;
+        Class<?> parserClass = null;
         FTPFileEntryParser parser = null;
         try
         {

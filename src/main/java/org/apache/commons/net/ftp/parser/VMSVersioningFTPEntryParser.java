@@ -117,12 +117,12 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
      * @return Original list purged of duplicates
      */
     @Override
-    public List preParse(List<String> original) {
+    public List<String> preParse(List<String> original) {
         original = super.preParse(original);
         HashMap<String, NameVersion> existingEntries = new HashMap<String, NameVersion>();
-        ListIterator iter = original.listIterator();
+        ListIterator<String> iter = original.listIterator();
         while (iter.hasNext()) {
-            String entry = ((String)iter.next()).trim();
+            String entry = iter.next().trim();
             MatchResult result = null;
             _preparse_matcher_ = _preparse_pattern_.matcher(entry);
             if (_preparse_matcher_.matches()) {
@@ -146,7 +146,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
         // we now must remove those with smaller than the largest version number
         // for each name that were found before the largest
         while (iter.hasPrevious()) {
-            String entry = ((String)iter.previous()).trim();
+            String entry = iter.previous().trim();
             MatchResult result = null;
             _preparse_matcher_ = _preparse_pattern_.matcher(entry);
             if (_preparse_matcher_.matches()) {

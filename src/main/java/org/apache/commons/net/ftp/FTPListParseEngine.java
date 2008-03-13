@@ -74,7 +74,7 @@ import java.util.ListIterator;
  */
 public class FTPListParseEngine {
     private List<String> entries = new LinkedList<String>();
-    private ListIterator _internalIterator = entries.listIterator();
+    private ListIterator<String> _internalIterator = entries.listIterator();
 
     FTPFileEntryParser parser = null;
 
@@ -186,7 +186,7 @@ public class FTPListParseEngine {
         List<FTPFile> tmpResults = new LinkedList<FTPFile>();
         int count = quantityRequested;
         while (count > 0 && this._internalIterator.hasNext()) {
-            String entry = (String) this._internalIterator.next();
+            String entry = this._internalIterator.next();
             FTPFile temp = this.parser.parseFTPEntry(entry);
             tmpResults.add(temp);
             count--;
@@ -225,7 +225,7 @@ public class FTPListParseEngine {
         List<FTPFile> tmpResults = new LinkedList<FTPFile>();
         int count = quantityRequested;
         while (count > 0 && this._internalIterator.hasPrevious()) {
-            String entry = (String) this._internalIterator.previous();
+            String entry = this._internalIterator.previous();
             FTPFile temp = this.parser.parseFTPEntry(entry);
             tmpResults.add(0,temp);
             count--;
@@ -249,9 +249,9 @@ public class FTPListParseEngine {
     throws IOException
     {
         List<FTPFile> tmpResults = new LinkedList<FTPFile>();
-        Iterator iter = this.entries.iterator();
+        Iterator<String> iter = this.entries.iterator();
         while (iter.hasNext()) {
-            String entry = (String) iter.next();
+            String entry = iter.next();
             FTPFile temp = this.parser.parseFTPEntry(entry);
             tmpResults.add(temp);
         }
