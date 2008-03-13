@@ -113,7 +113,7 @@ public class SubnetUtils {
 			address = matchAddress(matcher);
 
 			/* Create a binary netmask from the number of bits specification /x */
-			int cidrPart = rangeCheck(Integer.valueOf(matcher.group(5)), 0, NBITS-1);
+			int cidrPart = rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS-1);
 			for (int j = 0; j < cidrPart; ++j) {
 				netmask |= (1 << 31-j);
 			}
@@ -147,7 +147,7 @@ public class SubnetUtils {
 	private int matchAddress(Matcher matcher) {
 		int addr = 0;
 		for (int i = 1; i <= 4; ++i) { 
-			int n = (rangeCheck(Integer.valueOf(matcher.group(i)), 0, 255));
+			int n = (rangeCheck(Integer.parseInt(matcher.group(i)), 0, 255));
 			addr |= ((n & 0xff) << 8*(4-i));
 		}
 		return addr;
@@ -168,16 +168,19 @@ public class SubnetUtils {
 	 */
 	private String format(int[] octets) {
 		StringBuilder str = new StringBuilder();
-		for (int i =0; i < octets.length; ++i)
-			str.append((i == octets.length - 1) 
-					? octets[i] : octets[i] + ".");
+		for (int i =0; i < octets.length; ++i){
+		    str.append(octets[i]);
+		    if (i != octets.length - 1) {
+		        str.append("."); 
+		    }
+		}
 		return str.toString();
 	}
 
 	/*
 	 * Convenience function to check integer boundaries
 	 */
-	private int rangeCheck(Integer value, int begin, int end) {
+	private int rangeCheck(int value, int begin, int end) {
 		if (value >= begin && value <= end)
 			return value;
 
