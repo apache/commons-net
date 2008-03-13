@@ -27,10 +27,10 @@ package org.apache.commons.net.pop3;
 public final class POP3Reply
 {
     /*** The reply code indicating success of an operation. ***/
-    public static int OK = 0;
+    public static final int OK = 0;
 
     /*** The reply code indicating failure of an operation. ***/
-    public static int ERROR = 1;
+    public static final int ERROR = 1;
 
     // Cannot be instantiated.
     private POP3Reply()
