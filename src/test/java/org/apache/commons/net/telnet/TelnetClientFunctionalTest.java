@@ -100,7 +100,7 @@ public class TelnetClientFunctionalTest extends TestCase
         byte buffer[] = new byte[32];
         long starttime = System.currentTimeMillis();
 
-        String readbytes = new String();
+        String readbytes = "";
         while((readbytes.indexOf(end) < 0) &&
               ((System.currentTimeMillis() - starttime) < timeout))
         {
