@@ -534,6 +534,7 @@ implements Configurable
     }
 
 
+    @Override
     protected void _connectAction_() throws IOException
     {
         super._connectAction_();
@@ -574,6 +575,7 @@ implements Configurable
      * <p>
      * @exception IOException If an error occurs while disconnecting.
      ***/
+    @Override
     public void disconnect() throws IOException
     {
         super.disconnect();

@@ -87,6 +87,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 	/**
 	 * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getBadListing()
 	 */
+	@Override
 	protected String[] getBadListing() {
 		return (badsamples);
 	}
@@ -94,6 +95,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 	/**
 	 * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getGoodListing()
 	 */
+	@Override
 	protected String[] getGoodListing() {
 		return (goodsamples);
 	}
@@ -136,6 +138,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 	/**
 	 * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
 	 */
+    @Override
 	protected FTPFileEntryParser getParser() {
 		return (new UnixFTPEntryParser());
 	}
@@ -163,6 +166,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 	/**
 	 * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
 	 */
+	@Override
 	public void testParseFieldsOnDirectory() throws Exception {
 		FTPFile f = getParser().parseFTPEntry("drwxr-xr-x   2 user     group         4096 Mar  2 15:13 zxbox");
 		assertNotNull("Could not parse entry.", f);
@@ -222,6 +226,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 	/**
 	 * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
 	 */
+	@Override
 	public void testParseFieldsOnFile() throws Exception {
 		FTPFile f = getParser()
 				.parseFTPEntry(
@@ -265,6 +270,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
      * @param test
      * @param f
      */
+	@Override
     protected void doAdditionalGoodTests(String test, FTPFile f) {
         String link = f.getLink();
         if (null != link) {

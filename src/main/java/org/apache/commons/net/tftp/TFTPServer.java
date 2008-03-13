@@ -96,7 +96,9 @@ public class TFTPServer implements Runnable
 	/* /dev/null output stream (default) */ 
 	private static final PrintStream nullStream = new PrintStream(
 			new OutputStream() { 
+			    @Override
 				public void write(int b){}
+				@Override
 				public void write(byte[] b) throws IOException {}
 				}
 			);
@@ -241,6 +243,7 @@ public class TFTPServer implements Runnable
 		go.start();
 	}
 
+	@Override
 	protected void finalize() throws Throwable
 	{
 		shutdown();

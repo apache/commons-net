@@ -163,6 +163,7 @@ public class FTPSClient extends FTPClient {
      * @throws IOException If it throw by _connectAction_.
      * @see org.apache.commons.net.SocketClient#_connectAction_()
      */
+    @Override
     protected void _connectAction_() throws IOException {
         // Implicit mode.
         if (isImplicit) sslNegotiation();
@@ -437,6 +438,7 @@ public class FTPSClient extends FTPClient {
      * the command.
      * @see org.apache.commons.net.ftp.FTP#sendCommand(java.lang.String)
      */
+    @Override
     public int sendCommand(String command, String args) throws IOException {
         int repCode = super.sendCommand(command, args);
         if (FTPSCommand._commands[FTPSCommand.CCC].equals(command)) {
@@ -464,6 +466,7 @@ public class FTPSClient extends FTPClient {
      * @throws IOException If there is any problem with the connection.
      * @see org.apache.commons.net.ftp.FTPClient#_openDataConnection_(java.lang.String, int)
      */
+    @Override
     protected Socket _openDataConnection_(int command, String arg)
             throws IOException {
         Socket socket = super._openDataConnection_(command, arg);

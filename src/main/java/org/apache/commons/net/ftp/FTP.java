@@ -351,6 +351,7 @@ public class FTP extends SocketClient
      * Initiates control connections and gets initial reply.
      * Initializes {@link #_controlInput_} and {@link #_controlOutput_}.
      */
+    @Override
     protected void _connectAction_() throws IOException
     {
         super._connectAction_();
@@ -421,6 +422,7 @@ public class FTP extends SocketClient
      * <p>
      * @exception IOException If an error occurs while disconnecting.
      ***/
+    @Override
     public void disconnect() throws IOException
     {
         super.disconnect();

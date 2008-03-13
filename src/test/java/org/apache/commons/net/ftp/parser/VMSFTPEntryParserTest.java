@@ -144,6 +144,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
      */
+    @Override
     public void testParseFieldsOnDirectory() throws Exception
     {
 
@@ -182,6 +183,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
      */
+    @Override
     public void testParseFieldsOnFile() throws Exception
     {
         FTPFile file = getParser().parseFTPEntry("1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)");
@@ -219,6 +221,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getBadListing()
      */
+    @Override
     protected String[] getBadListing()
     {
 
@@ -228,6 +231,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getGoodListing()
      */
+    @Override
     protected String[] getGoodListing()
     {
 
@@ -237,6 +241,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
      */
+    @Override
     protected FTPFileEntryParser getParser()
     {
         ConfigurableFTPFileEntryParserImpl parser =

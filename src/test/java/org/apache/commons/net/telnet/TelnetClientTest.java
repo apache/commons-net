@@ -81,6 +81,7 @@ extends TestCase implements TelnetNotificationHandler
     /***
      * open connections needed for the tests for the test.
      ***/
+    @Override
     protected void setUp() throws Exception 
     {
         super.setUp();
@@ -147,6 +148,7 @@ extends TestCase implements TelnetNotificationHandler
     /* 
      * @throws java.lang.Exception
      */
+    @Override
     protected void tearDown() throws Exception {
         NOREAD.close();
         ANSI.close();

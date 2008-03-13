@@ -219,6 +219,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * @return A string representing the next ftp entry or null if none found.
      * @exception IOException thrown on any IO Error reading from the reader.
      */
+    @Override
     public String readNextEntry(BufferedReader reader) throws IOException
     {
         String line = reader.readLine();
@@ -250,7 +251,8 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * parameter being specified.
      * @return the default configuration for this parser.
      */
-   protected FTPClientConfig getDefaultConfiguration() {
+    @Override
+    protected FTPClientConfig getDefaultConfiguration() {
         return new FTPClientConfig(
                 FTPClientConfig.SYST_VMS,
                 DEFAULT_DATE_FORMAT,

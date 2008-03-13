@@ -87,6 +87,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.CompositeFTPParseTestFramework#getGoodListings()
      */
+    @Override
     protected String[][] getGoodListings()
     {
         return goodsamples;
@@ -95,6 +96,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.CompositeFTPParseTestFramework#getBadListings()
      */
+    @Override
     protected String[][] getBadListings()
     {
         return badsamples;
@@ -103,6 +105,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
      */
+    @Override
     protected FTPFileEntryParser getParser()
     {
        return new CompositeFileEntryParser(new FTPFileEntryParser[]
@@ -126,6 +129,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
      */
+    @Override
     public void testParseFieldsOnDirectory() throws Exception
     {
         FTPFile dir = getParser().parseFTPEntry("12-05-96  05:03PM       <DIR>          absoft2");
@@ -160,6 +164,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
      */
+    @Override
     public void testParseFieldsOnFile() throws Exception
     {
         FTPFile f = getParser().parseFTPEntry("05-22-97  12:08AM                  5000000000 AUTOEXEC.BAK");
@@ -186,6 +191,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
     }
 
 
+    @Override
     protected void doAdditionalGoodTests(String test, FTPFile f)
     {
         if (test.indexOf("<DIR>") >= 0)

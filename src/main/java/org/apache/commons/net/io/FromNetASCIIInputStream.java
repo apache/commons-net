@@ -127,6 +127,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      * @exception IOException If an error occurs while reading the underlying
      *            stream.
      ***/
+    @Override
     public int read() throws IOException
     {
         if (_noConversionRequired)
@@ -147,6 +148,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      * @exception IOException If an error occurs in reading the underlying
      *            stream.
      ***/
+    @Override
     public int read(byte buffer[]) throws IOException
     {
         return read(buffer, 0, buffer.length);
@@ -167,6 +169,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      * @exception IOException If an error occurs while reading the underlying
      *            stream.
      ***/
+    @Override
     public int read(byte buffer[], int offset, int length) throws IOException
     {
         int ch, off;
@@ -209,6 +212,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      * rely on the value returned by this method if you are trying to avoid
      * blocking.
      ***/
+    @Override
     public int available() throws IOException
     {
         return (buf.length - pos) + in.available();

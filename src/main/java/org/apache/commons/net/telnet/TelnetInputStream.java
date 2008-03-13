@@ -321,6 +321,7 @@ _mainSwitch:
         }
     }
 
+    @Override
     public int read() throws IOException
     {
         // Critical section because we're altering __bytesAvailable,
@@ -452,6 +453,7 @@ _mainSwitch:
      * @exception IOException If an error occurs in reading the underlying
      *            stream.
      ***/
+    @Override
     public int read(byte buffer[]) throws IOException
     {
         return read(buffer, 0, buffer.length);
@@ -472,6 +474,7 @@ _mainSwitch:
      * @exception IOException If an error occurs while reading the underlying
      *            stream.
      ***/
+    @Override
     public int read(byte buffer[], int offset, int length) throws IOException
     {
         int ch, off;
@@ -503,11 +506,13 @@ _mainSwitch:
 
 
     /*** Returns false.  Mark is not supported. ***/
+    @Override
     public boolean markSupported()
     {
         return false;
     }
 
+    @Override
     public int available() throws IOException
     {
         // Critical section because run() may change __bytesAvailable
@@ -520,6 +525,7 @@ _mainSwitch:
 
     // Cannot be synchronized.  Will cause deadlock if run() is blocked
     // in read because BufferedInputStream read() is synchronized.
+    @Override
     public void close() throws IOException
     {
         // Completely disregard the fact thread may still be running.

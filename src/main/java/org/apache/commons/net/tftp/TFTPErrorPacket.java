@@ -144,6 +144,7 @@ public final class TFTPErrorPacket extends TFTPPacket
      * @param data The buffer to store the packet and to use in the datagram.
      * @return The datagram argument.
      ***/
+    @Override
     DatagramPacket _newDatagram(DatagramPacket datagram, byte[] data)
     {
         int length;
@@ -180,6 +181,7 @@ public final class TFTPErrorPacket extends TFTPPacket
      * <p>
      * @return A UDP datagram containing the TFTP error packet.
      ***/
+    @Override
     public DatagramPacket newDatagram()
     {
         byte[] data;

@@ -66,6 +66,7 @@ public class SimpleOptionHandler extends TelnetOptionHandler
      * <p>
      * @return always null (no response to subnegotiation)
      ***/
+    @Override
     public int[] answerSubnegotiation(int suboptionData[], int suboptionLength)
     {
         return null;
@@ -76,6 +77,7 @@ public class SimpleOptionHandler extends TelnetOptionHandler
      * <p>
      * @return always null (no response to subnegotiation)
      ***/
+    @Override
     public int[] startSubnegotiationLocal()
     {
         return null;
@@ -86,6 +88,7 @@ public class SimpleOptionHandler extends TelnetOptionHandler
      * <p>
      * @return always null (no response to subnegotiation)
      ***/
+    @Override
     public int[] startSubnegotiationRemote()
     {
         return null;

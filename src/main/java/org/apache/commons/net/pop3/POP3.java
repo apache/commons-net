@@ -138,6 +138,7 @@ public class POP3 extends SocketClient
      * Performs connection initialization and sets state to
      * <code> AUTHORIZATION_STATE </code>.
      ***/
+    @Override
     protected void _connectAction_() throws IOException
     {
         super._connectAction_();
@@ -224,6 +225,7 @@ public class POP3 extends SocketClient
      * <p>
      * @exception IOException  If there is an error in disconnecting.
      ***/
+    @Override
     public void disconnect() throws IOException
     {
         super.disconnect();

@@ -34,6 +34,7 @@ public class EchoOptionHandlerTest extends TelnetOptionHandlerTestAbstract
     /***
      * setUp for the test.
      ***/
+    @Override
     protected void setUp()
     {
         opthand1 = new EchoOptionHandler();
@@ -44,6 +45,7 @@ public class EchoOptionHandlerTest extends TelnetOptionHandlerTestAbstract
     /***
      * test of the constructors.
      ***/
+    @Override
     public void testConstructors()
     {
         assertEquals(opthand1.getOptionCode(), TelnetOption.ECHO);
@@ -54,6 +56,7 @@ public class EchoOptionHandlerTest extends TelnetOptionHandlerTestAbstract
      * test of client-driven subnegotiation.
      * Checks that no subnegotiation is made.
      ***/
+    @Override
     public void testStartSubnegotiation()
     {
         int resp1[] = opthand1.startSubnegotiationLocal();
@@ -67,6 +70,7 @@ public class EchoOptionHandlerTest extends TelnetOptionHandlerTestAbstract
      * test of server-driven subnegotiation.
      * Checks that no subnegotiation is made.
      ***/
+    @Override
     public void testAnswerSubnegotiation()
     {
         int subn[] =

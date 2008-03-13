@@ -96,6 +96,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
      * @exception IOException If an error occurs while writing to the underlying
      *            stream.
      ***/
+    @Override
     public synchronized void write(int ch)
     throws IOException
     {
@@ -116,6 +117,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
      * @exception IOException If an error occurs while writing to the underlying
      *            stream.
      ***/
+    @Override
     public synchronized void write(byte buffer[])
     throws IOException
     {
@@ -133,6 +135,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
      * @exception IOException If an error occurs while writing to the underlying
      *            stream.
      ***/
+    @Override
     public synchronized void write(byte buffer[], int offset, int length)
     throws IOException
     {
@@ -154,6 +157,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
      * <p>
      * @exception IOException  If an error occurs while closing the stream.
      ***/
+    @Override
     public synchronized void close()
     throws IOException
     {

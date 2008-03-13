@@ -62,6 +62,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
      * @exception IOException If an error occurs while reading the underlying
      *            stream.
      ***/
+    @Override
     public int read() throws IOException
     {
         int ch;
@@ -106,6 +107,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
      * @exception IOException If an error occurs in reading the underlying
      *            stream.
      ***/
+    @Override
     public int read(byte buffer[]) throws IOException
     {
         return read(buffer, 0, buffer.length);
@@ -126,6 +128,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
      * @exception IOException If an error occurs while reading the underlying
      *            stream.
      ***/
+    @Override
     public int read(byte buffer[], int offset, int length) throws IOException
     {
         int ch, off;
@@ -157,11 +160,13 @@ public final class ToNetASCIIInputStream extends FilterInputStream
     }
 
     /*** Returns false.  Mark is not supported. ***/
+    @Override
     public boolean markSupported()
     {
         return false;
     }
 
+    @Override
     public int available() throws IOException
     {
         int result;

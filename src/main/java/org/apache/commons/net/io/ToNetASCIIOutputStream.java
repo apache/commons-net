@@ -61,6 +61,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
      * @exception IOException If an error occurs while writing to the underlying
      *            stream.
      ***/
+    @Override
     public synchronized void write(int ch)
     throws IOException
     {
@@ -89,6 +90,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
      * @exception IOException If an error occurs while writing to the underlying
      *            stream.
      ***/
+    @Override
     public synchronized void write(byte buffer[])
     throws IOException
     {
@@ -106,6 +108,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
      * @exception IOException If an error occurs while writing to the underlying
      *            stream.
      ***/
+    @Override
     public synchronized void write(byte buffer[], int offset, int length)
     throws IOException
     {

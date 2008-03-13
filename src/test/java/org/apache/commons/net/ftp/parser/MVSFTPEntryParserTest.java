@@ -84,6 +84,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
 	/* (non-Javadoc)
 	 * @see org.apache.commons.net.ftp.parser.CompositeFTPParseTestFramework#getBadListings()
 	 */
+	@Override
 	protected String[] getBadListing() {
 		return badsamples;
 	}
@@ -91,6 +92,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
 	/* (non-Javadoc)
 	 * @see org.apache.commons.net.ftp.parser.CompositeFTPParseTestFramework#getGoodListings()
 	 */
+	@Override
 	protected String[] getGoodListing() {
 		return goodsamplesDatasetList;
 	}
@@ -112,6 +114,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
 	/**
 	 * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
 	 */
+	@Override
 	protected FTPFileEntryParser getParser() {
 		return new MVSFTPEntryParser();
 	}
@@ -178,6 +181,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
 		}
 	}
 
+	@Override
 	public void testParseFieldsOnDirectory() throws Exception {
 		MVSFTPEntryParser parser = new MVSFTPEntryParser();
 		parser.setType(MVSFTPEntryParser.FILE_LIST_TYPE);
@@ -200,6 +204,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
 	/* (non-Javadoc)
 	 * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
 	 */
+	@Override
 	public void testParseFieldsOnFile() throws Exception {
 		FTPFile file = null;
 		

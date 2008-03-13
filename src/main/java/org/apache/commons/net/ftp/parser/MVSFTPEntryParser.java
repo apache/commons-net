@@ -439,6 +439,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 	 * before the parsing takes place. Three kind of lists is recognize:
 	 * z/OS-MVS File lists z/OS-MVS Member lists unix file lists
 	 */
+	@Override
 	public List preParse(List orig) {
 		// simply remove the header line. Composite logic will take care of the
 		// two different types of
@@ -484,6 +485,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 	/* 
 	 * @return
 	 */
+	@Override
 	protected FTPClientConfig getDefaultConfiguration() {
 		return new FTPClientConfig(FTPClientConfig.SYST_MVS,
 				DEFAULT_DATE_FORMAT, null, null, null, null);

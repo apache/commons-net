@@ -87,6 +87,7 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler
      * <p>
      * @return terminal type information
      ***/
+    @Override
     public int[] answerSubnegotiation(int suboptionData[], int suboptionLength)
     {
         if ((suboptionData != null) && (suboptionLength > 1)
@@ -116,6 +117,7 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler
      * <p>
      * @return always null (no response to subnegotiation)
      ***/
+    @Override
     public int[] startSubnegotiationLocal()
     {
         return null;
@@ -126,6 +128,7 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler
      * <p>
      * @return always null (no response to subnegotiation)
      ***/
+    @Override
     public int[] startSubnegotiationRemote()
     {
         return null;

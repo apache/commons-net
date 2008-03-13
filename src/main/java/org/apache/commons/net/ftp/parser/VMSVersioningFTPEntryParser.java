@@ -116,6 +116,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
      *
      * @return Original list purged of duplicates
      */
+    @Override
     public List preParse(List<String> original) {
         original = super.preParse(original);
         HashMap<String, NameVersion> existingEntries = new HashMap<String, NameVersion>();
@@ -166,6 +167,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
     }
 
 
+    @Override
     protected boolean isVersioning() {
         return true;
     }

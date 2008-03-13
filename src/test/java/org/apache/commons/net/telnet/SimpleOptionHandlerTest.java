@@ -34,6 +34,7 @@ public class SimpleOptionHandlerTest extends TelnetOptionHandlerTestAbstract
     /***
      * setUp for the test.
      ***/
+    @Override
     protected void setUp()
     {
         opthand1 = new SimpleOptionHandler(4);
@@ -44,6 +45,7 @@ public class SimpleOptionHandlerTest extends TelnetOptionHandlerTestAbstract
     /***
      * test of the constructors.
      ***/
+    @Override
     public void testConstructors()
     {
         assertEquals(opthand1.getOptionCode(), 4);
@@ -56,6 +58,7 @@ public class SimpleOptionHandlerTest extends TelnetOptionHandlerTestAbstract
      * test of client-driven subnegotiation.
      * Checks that no subnegotiation is made.
      ***/
+    @Override
     public void testStartSubnegotiation()
     {
 
@@ -70,6 +73,7 @@ public class SimpleOptionHandlerTest extends TelnetOptionHandlerTestAbstract
      * test of server-driven subnegotiation.
      * Checks that no subnegotiation is made.
      ***/
+    @Override
     public void testAnswerSubnegotiation()
     {
         int subn[] =

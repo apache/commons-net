@@ -317,6 +317,7 @@ public class TimeStamp implements java.io.Serializable, Comparable
      *
      * @return  a hash code value for this object.
      */
+    @Override
     public int hashCode()
     {
         return (int) (ntpTime ^ (ntpTime >>> 32));
@@ -332,6 +333,7 @@ public class TimeStamp implements java.io.Serializable, Comparable
      * @return  <code>true</code> if the objects are the same;
      *          <code>false</code> otherwise.
      */
+    @Override
     public boolean equals(Object obj)
     {
         if (obj instanceof TimeStamp) {
@@ -349,6 +351,7 @@ public class TimeStamp implements java.io.Serializable, Comparable
      * @return NTP timestamp 64-bit long value as hex string with seconds
      * separated by fractional seconds.
      */
+    @Override
     public String toString()
     {
         return toString(ntpTime);

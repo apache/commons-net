@@ -60,6 +60,7 @@ public class SocketInputStream extends FilterInputStream
      * @exception IOException  If there is an error in closing the stream
      *                         or socket.
      ***/
+    @Override
     public void close() throws IOException
     {
         super.close();

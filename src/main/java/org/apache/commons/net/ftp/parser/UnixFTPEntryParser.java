@@ -283,6 +283,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * parameter being specified.
      * @return the default configuration for this parser.
      */
+	@Override
     protected FTPClientConfig getDefaultConfiguration() {
         return new FTPClientConfig(
                 FTPClientConfig.SYST_UNIX,

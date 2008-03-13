@@ -165,6 +165,7 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 	 * parameter being specified.
 	 * @return the default configuration for this parser.
 	 */
+	@Override
 	protected FTPClientConfig getDefaultConfiguration() {
 		return new FTPClientConfig(FTPClientConfig.SYST_NETWARE,
 				DEFAULT_DATE_FORMAT, DEFAULT_RECENT_DATE_FORMAT, null, null,

@@ -41,6 +41,7 @@ public abstract class TelnetOptionHandlerTestAbstract extends TestCase
      *     opthand2 = new EchoOptionHandler(true, true, true, true);
      *     opthand3 = new EchoOptionHandler(false, false, false, false);
      ***/
+    @Override
     protected abstract void setUp();
 
     /***

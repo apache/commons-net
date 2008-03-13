@@ -42,6 +42,7 @@ public class TelnetClientFunctionalTest extends TestCase
     /***
      * test setUp
      ***/
+    @Override
     protected void setUp()
     {
         tc1 = new TelnetClient();

@@ -87,6 +87,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
      */
+    @Override
     public void testParseFieldsOnDirectory() throws Exception
     {
         // Everything is a File for now.
@@ -95,6 +96,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
      */
+    @Override
     public void testParseFieldsOnFile() throws Exception
     {
         FTPFile file = getParser().parseFTPEntry("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 13:56 QUADTEST");
@@ -129,6 +131,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getBadListing()
      */
+    @Override
     protected String[] getBadListing()
     {
 
@@ -138,6 +141,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getGoodListing()
      */
+    @Override
     protected String[] getGoodListing()
     {
 
@@ -147,6 +151,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
      */
+    @Override
     protected FTPFileEntryParser getParser()
     {
 

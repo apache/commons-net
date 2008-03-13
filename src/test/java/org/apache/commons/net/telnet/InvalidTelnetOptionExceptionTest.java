@@ -40,6 +40,7 @@ public class InvalidTelnetOptionExceptionTest extends TestCase
     /***
      * setUp for the test.
      ***/
+    @Override
     protected void setUp()
     {
         msg1 = "MSG";

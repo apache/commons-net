@@ -104,6 +104,7 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
      * <p>
      * @return terminal type information
      ***/
+    @Override
     public int[] answerSubnegotiation(int suboptionData[], int suboptionLength)
     {
         return null;
@@ -115,6 +116,7 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
      * <p>
      * @return always null (no response to subnegotiation)
      ***/
+    @Override
     public int[] startSubnegotiationLocal()
     {
 		int nCompoundWindowSize = m_nWidth * 0x10000 + m_nHeight;
@@ -177,6 +179,7 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
      * <p>
      * @return always null (no response to subnegotiation)
      ***/
+    @Override
     public int[] startSubnegotiationRemote()
     {
         return null;

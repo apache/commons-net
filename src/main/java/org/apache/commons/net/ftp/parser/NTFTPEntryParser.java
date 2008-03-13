@@ -136,7 +136,8 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * parameter being specified.
      * @return the default configuration for this parser.
      */
-   public FTPClientConfig getDefaultConfiguration() {
+    @Override
+    public FTPClientConfig getDefaultConfiguration() {
         return new FTPClientConfig(
                 FTPClientConfig.SYST_NT,
                 DEFAULT_DATE_FORMAT,

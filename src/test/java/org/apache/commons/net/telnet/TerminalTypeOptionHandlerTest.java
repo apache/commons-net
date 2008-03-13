@@ -34,6 +34,7 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
     /***
      * setUp for the test.
      ***/
+    @Override
     protected void setUp()
     {
         opthand1 = new TerminalTypeOptionHandler("VT100");
@@ -44,6 +45,7 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
     /***
      * test of the constructors.
      ***/
+    @Override
     public void testConstructors()
     {
         assertEquals(opthand1.getOptionCode(), TelnetOption.TERMINAL_TYPE);
@@ -54,6 +56,7 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
      * test of client-driven subnegotiation.
      * Checks that no subnegotiation is made.
      ***/
+    @Override
     public void testStartSubnegotiation()
     {
 
@@ -69,6 +72,7 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
      * test of client-driven subnegotiation.
      * Checks that the terminal type is sent
      ***/
+    @Override
     public void testAnswerSubnegotiation()
     {
         int subn[] =

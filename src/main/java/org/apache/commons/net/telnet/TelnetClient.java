@@ -89,6 +89,7 @@ public class TelnetClient extends Telnet
      * <p>
      * @exception IOException  If an error occurs during connection setup.
      ***/
+    @Override
     protected void _connectAction_() throws IOException
     {
         super._connectAction_();
@@ -123,6 +124,7 @@ public class TelnetClient extends Telnet
      * close them yourself, but rather call disconnect to properly close
      * the connection.
      ***/
+    @Override
     public void disconnect() throws IOException
     {
         if (__input != null)
@@ -210,10 +212,11 @@ public class TelnetClient extends Telnet
     /***
      * Registers a new TelnetOptionHandler for this telnet client to use.
      * <p>
-     * @throws InvalidTelnetOptionException
-     * <p>
      * @param opthand - option handler to be registered.
+     * <p>
+     * @throws InvalidTelnetOptionException
      ***/
+    @Override
     public void addOptionHandler(TelnetOptionHandler opthand)
     throws InvalidTelnetOptionException
     {
@@ -224,10 +227,11 @@ public class TelnetClient extends Telnet
     /***
      * Unregisters a  TelnetOptionHandler.
      * <p>
-     * @throws InvalidTelnetOptionException
-     * <p>
      * @param optcode - Code of the option to be unregistered.
+     * <p>
+     * @throws InvalidTelnetOptionException
      ***/
+    @Override
     public void deleteOptionHandler(int optcode)
     throws InvalidTelnetOptionException
     {
@@ -263,6 +267,7 @@ public class TelnetClient extends Telnet
      * <p>
      * @param notifhand - TelnetNotificationHandler to be registered
      ***/
+    @Override
     public void registerNotifHandler(TelnetNotificationHandler  notifhand)
     {
         super.registerNotifHandler(notifhand);
@@ -272,6 +277,7 @@ public class TelnetClient extends Telnet
      * Unregisters the current notification handler.
      * <p>
      ***/
+    @Override
     public void unregisterNotifHandler()
     {
         super.unregisterNotifHandler();

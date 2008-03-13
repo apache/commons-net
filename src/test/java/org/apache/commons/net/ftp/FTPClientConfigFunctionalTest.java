@@ -64,6 +64,7 @@ public class FTPClientConfigFunctionalTest extends TestCase {
     /* 
      * @throws java.lang.Exception
      */
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
 	    FTPConf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
@@ -83,6 +84,7 @@ public class FTPClientConfigFunctionalTest extends TestCase {
     /* 
      * @throws java.lang.Exception
      */
+    @Override
     protected void tearDown() throws Exception {
         FTP.disconnect();
         super.tearDown();

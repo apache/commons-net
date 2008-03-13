@@ -51,6 +51,7 @@ public class DefaultSocketFactory extends SocketFactory
      * @exception UnknownHostException  If the hostname cannot be resolved.
      * @exception IOException If an I/O error occurs while creating the Socket.
      ***/
+    @Override
     public Socket createSocket(String host, int port)
     throws UnknownHostException, IOException
     {
@@ -65,6 +66,7 @@ public class DefaultSocketFactory extends SocketFactory
      * @return A Socket connected to the given host and port.
      * @exception IOException If an I/O error occurs while creating the Socket.
      ***/
+    @Override
     public Socket createSocket(InetAddress address, int port)
     throws IOException
     {
@@ -83,6 +85,7 @@ public class DefaultSocketFactory extends SocketFactory
      * @exception UnknownHostException  If the hostname cannot be resolved.
      * @exception IOException If an I/O error occurs while creating the Socket.
      ***/
+    @Override
     public Socket createSocket(String host, int port,
                                InetAddress localAddr, int localPort)
     throws UnknownHostException, IOException
@@ -101,6 +104,7 @@ public class DefaultSocketFactory extends SocketFactory
      * @return A Socket connected to the given host and port.
      * @exception IOException If an I/O error occurs while creating the Socket.
      ***/
+    @Override
     public Socket createSocket(InetAddress address, int port,
                                InetAddress localAddr, int localPort)
     throws IOException

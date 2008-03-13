@@ -824,6 +824,7 @@ class Telnet extends SocketClient
      * <p>
      * @throws IOException - Exception in I/O.
      ***/
+    @Override
     protected void _connectAction_() throws IOException
     {
         /* (start). BUGFIX: clean the option info for each connection*/
