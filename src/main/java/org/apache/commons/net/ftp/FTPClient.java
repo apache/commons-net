@@ -2363,7 +2363,9 @@ implements Configurable
     
     /**
      * Issue the FTP MDTM command (not supported by all servers to retrieve the last
-     * modification time of a file. The modification string should be in the form "YYYYMMDDhhmmss"
+     * modification time of a file. The modification string should be in the 
+     * ISO 3077 form "YYYYMMDDhhmmss(.xxx)?". The timestamp represented should also be in 
+     * GMT, but not all FTP servers honour this.
      * 
      * @param pathname The file path to query.
      * @return A string representing the last file modification time in <code>YYYYMMDDhhmmss</code> format.
