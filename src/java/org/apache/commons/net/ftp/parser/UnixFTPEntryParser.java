@@ -91,7 +91,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         + "(\\d+)\\s+"
         + "(\\S+)\\s+"
         + "(?:(\\S+(?:\\s\\S+)*)\\s+)?"
-        + "(\\d+)\\s+"
+        + "(\\d+(?:,\\s*\\d+)?)\\s+"
         
         /*
           numeric or standard format date
