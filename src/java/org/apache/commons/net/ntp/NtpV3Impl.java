@@ -507,15 +507,12 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return a datagram packet.
      */
-    public DatagramPacket getDatagramPacket()
+    public synchronized DatagramPacket getDatagramPacket()
     {
-        if (dp == null)
-            synchronized(this) {
-                if (dp == null) {
-                    dp = new DatagramPacket(buf, buf.length);
-                    dp.setPort(NTP_PORT);
-                }
-            }
+        if (dp == null) {
+            dp = new DatagramPacket(buf, buf.length);
+            dp.setPort(NTP_PORT);
+        }
         return dp;
     }
 
