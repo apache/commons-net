@@ -123,7 +123,7 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 			try {
 				f.setTimestamp(super.parseTimestamp(datestr));
 			} catch (ParseException e) {
-				return null; // this is a parsing failure too.
+			     // intentionally do nothing
 			}
 
 			//is it a DIR or a file

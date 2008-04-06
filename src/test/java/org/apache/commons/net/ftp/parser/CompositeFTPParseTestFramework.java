@@ -107,7 +107,7 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
                 String test = badsamples[i][j];
                 FTPFile f = parser.parseFTPEntry(test);
                 assertNull("Should have Failed to parse " + test,
-                        f);
+                        nullFileOrNullDate(f));
 
                 doAdditionalBadTests(test, f);
             }

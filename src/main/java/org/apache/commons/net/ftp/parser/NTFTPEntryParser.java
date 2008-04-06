@@ -102,7 +102,7 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             }
             catch (ParseException e)
             {
-            	return null;  // this is a parsing failure too.
+                // intentionally do nothing
             }
 
             if (null == name || name.equals(".") || name.equals(".."))
