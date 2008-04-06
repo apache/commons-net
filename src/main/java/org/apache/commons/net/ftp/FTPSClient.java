@@ -112,7 +112,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Constructor for FTPSClient.
-     * @param conType The context type
+     * @param protocol the protocol
      * @throws NoSuchAlgorithmException A requested cryptographic algorithm 
      * is not available in the environment.
      */
@@ -124,7 +124,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Constructor for FTPSClient.
-     * @param conType The context type
+     * @param protocol the protocol
      * @param isImplicit The secutiry mode(Implicit/Explicit).
      * @throws NoSuchAlgorithmException A requested cryptographic algorithm 
      * is not available in the environment.
@@ -336,10 +336,11 @@ public class FTPSClient extends FTPClient {
     /**
      * Controls which particular cipher suites are enabled for use on this 
      * connection. I perform setting before a server negotiation.
-     * @param suites The cipher suites.
+     * @param cipherSuites The cipher suites.
      */
-    public void setEnabledCipherSuites(String[] suites) {
-        this.suites = suites;
+    public void setEnabledCipherSuites(String[] cipherSuites) {
+        suites = new String[cipherSuites.length];
+        System.arraycopy(cipherSuites, 0, suites, 0, cipherSuites.length);
     }
 
     /**
@@ -357,10 +358,11 @@ public class FTPSClient extends FTPClient {
     /**
      * Controls which particular protocol versions are enabled for use on this
      * connection. I perform setting before a server negotiation.
-     * @param protocols The protocol versions.
+     * @param protocolVersions The protocol versions.
      */
-    public void setEnabledProtocols(String[] protocols) {
-        this.protocols = protocols;
+    public void setEnabledProtocols(String[] protocolVersions) {
+        protocols = new String[protocolVersions.length];
+        System.arraycopy(protocolVersions, 0, protocols, 0, protocolVersions.length);
     }
 
     /**
