@@ -149,7 +149,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             }
             catch (ParseException e)
             {
-            	return null;  // this is a parsing failure too.
+                 // intentionally do nothing
             }
 
 
