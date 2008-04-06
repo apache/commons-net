@@ -101,7 +101,7 @@ public abstract class FTPFileEntryParserImpl
      * perform some action upon the FTPFileList after it has been created
      * from the server stream, but before any clients see the list.
      *
-     * This default implementation is a no-op.
+     * This default implementation removes entries that do not parse as files.
      *
      * @param original Original list after it has been created from the server stream
      *
