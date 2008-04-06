@@ -143,7 +143,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
             ++index;
         }
 
-        mode = buffer.toString().toLowerCase();
+        mode = buffer.toString().toLowerCase(java.util.Locale.ENGLISH);
         length = _modeStrings.length;
 
         for (index = 0; index < length; index++)
