@@ -99,6 +99,11 @@ public class FTPTimestampParserImpl implements
 
 		Date parsed = null;
 		if (recentDateFormat != null) {
+            if (lenientFutureDates) {
+                // add a day to "now" so that "slop" doesn't cause a date 
+                // slightly in the future to roll back a full year.  (Bug 35181)
+                now.add(Calendar.DATE, 1);
+            }    
 			parsed = recentDateFormat.parse(timestampStr, pp);
 		}
 		if (parsed != null && pp.getIndex() == timestampStr.length()) 
@@ -106,11 +111,6 @@ public class FTPTimestampParserImpl implements
 			working.setTime(parsed);
 			working.set(Calendar.YEAR, now.get(Calendar.YEAR));
 
-			if (lenientFutureDates) {
-				// add a day to "now" so that "slop" doesn't cause a date 
-				// slightly in the future to roll back a full year.  (Bug 35181)
-				now.add(Calendar.DATE, 1);
-			}    
 			if (working.after(now)) {
 				working.add(Calendar.YEAR, -1);
 			}
