@@ -224,14 +224,17 @@ public class FTPTimestampParserImplTest extends TestCase {
 	}
 	
     /*
-     * Check how short date is interpreted at a given time
+     * Check how short date is interpreted at a given time.
+     * Check both with and without lenient future dates
      */
     private void checkShortParse(String msg, Calendar now, Calendar input) throws ParseException {
         checkShortParse(msg, now, input, false);
+        checkShortParse(msg, now, input, true);
     }
 
     /*
      * Check how short date is interpreted at a given time
+     * Check only using specified lenient future dates setting
      */
     private void checkShortParse(String msg, Calendar now, Calendar input, boolean lenient) throws ParseException {
         FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
@@ -349,6 +352,14 @@ public class FTPTimestampParserImplTest extends TestCase {
         GregorianCalendar target = (GregorianCalendar) now.clone();
         target.add(Calendar.DAY_OF_YEAR, +1); // tomorrow
         checkShortParse("2008-1-1",now,target, true);
+    }
+
+    public void testParseJan01() throws Exception {
+        GregorianCalendar now = new GregorianCalendar(2007, Calendar.JANUARY, 1, 12, 0);
+        checkShortParse("2007-01-01",now,now); // should always work
+        GregorianCalendar target = new GregorianCalendar(2006, Calendar.DECEMBER, 31, 12, 0);
+        checkShortParse("2006-12-31",now,target, true);
+        checkShortParse("2006-12-31",now,target, false);
     }
 
     /**
