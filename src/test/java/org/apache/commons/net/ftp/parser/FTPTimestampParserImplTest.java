@@ -227,7 +227,15 @@ public class FTPTimestampParserImplTest extends TestCase {
      * Check how short date is interpreted at a given time
      */
     private void checkShortParse(String msg, Calendar now, Calendar input) throws ParseException {
+        checkShortParse(msg, now, input, false);
+    }
+
+    /*
+     * Check how short date is interpreted at a given time
+     */
+    private void checkShortParse(String msg, Calendar now, Calendar input, boolean lenient) throws ParseException {
         FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
+        parser.setLenientFutureDates(true);
         Format shortFormat = parser.getRecentDateFormat(); // It's expecting this format
         Format longFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         
@@ -325,6 +333,22 @@ public class FTPTimestampParserImplTest extends TestCase {
             fail("Should have failed to parse Feb 29th 1999");
         } catch (ParseException expected) {
         }
+    }
+
+    public void testParseDec31Lenient() throws Exception {
+        GregorianCalendar now = new GregorianCalendar(2007, Calendar.DECEMBER, 30, 12, 0);
+        checkShortParse("2007-12-30",now,now); // should always work
+        GregorianCalendar target = (GregorianCalendar) now.clone();
+        target.add(Calendar.DAY_OF_YEAR, +1); // tomorrow
+        checkShortParse("2007-12-31",now,target, true);
+    }
+
+    public void testParseJan01Lenient() throws Exception {
+        GregorianCalendar now = new GregorianCalendar(2007, Calendar.DECEMBER, 31, 12, 0);
+        checkShortParse("2007-12-31",now,now); // should always work
+        GregorianCalendar target = (GregorianCalendar) now.clone();
+        target.add(Calendar.DAY_OF_YEAR, +1); // tomorrow
+        checkShortParse("2008-1-1",now,target, true);
     }
 
     /**
