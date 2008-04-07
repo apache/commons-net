@@ -100,6 +100,11 @@ public class FTPTimestampParserImpl implements
 		Date parsed = null;
 		String timeStampStrPlusYear="";
 		if (recentDateFormat != null) {
+            if (lenientFutureDates) {
+                // add a day to "now" so that "slop" doesn't cause a date 
+                // slightly in the future to roll back a full year.  (Bug 35181)
+                now.add(Calendar.DATE, 1);
+            }    
             // Temporarily add the current year to the short date time
             // to cope with short-date leap year strings.
             // e.g. Java's DateFormatter will assume that "Feb 29 12:00" refers to 
@@ -118,11 +123,6 @@ public class FTPTimestampParserImpl implements
 			working.setTime(parsed);
 			working.set(Calendar.YEAR, now.get(Calendar.YEAR));
 
-			if (lenientFutureDates) {
-				// add a day to "now" so that "slop" doesn't cause a date 
-				// slightly in the future to roll back a full year.  (Bug 35181)
-				now.add(Calendar.DATE, 1);
-			}    
 			if (working.after(now)) {
 				working.add(Calendar.YEAR, -1);
 			}
