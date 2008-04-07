@@ -121,7 +121,6 @@ public class FTPTimestampParserImpl implements
 		if (parsed != null && pp.getIndex() == timeStampStrPlusYear.length()) 
 		{
 			working.setTime(parsed);
-			working.set(Calendar.YEAR, now.get(Calendar.YEAR));
 
 			if (working.after(now)) {
 				working.add(Calendar.YEAR, -1);
