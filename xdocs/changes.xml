@@ -92,6 +92,24 @@ year date parsing bug.
 				Article.java: Fix minor issues with NNTP
 parsing.
 			</action>
+			<action dev="sebb" type="fix" issue="NET-195">
+				NtpV3Impl.java: Avoid double-checked locking
+			</action>
+			<action dev="sebb" type="fix" issue="NET-197">
+				FTPFileEntryParserImpl.java: Fix Javadoc for preParse()
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-201">
+				UnixFTPEntryParser.java: Support Solaris special devices
+			</action>
+			<action dev="sebb" type="fix" issue="NET-205">
+				*FTPEntryParser.java: Keep files with unparseable dates in list
+			</action>
+			<action dev="sebb" type="fix" issue="NET-206">
+				DefaultFTPFileEntryParserFactory.java, TFTPRequestPacket.java: Fix String conversions in non-English Locales
+			</action>
+			<action dev="sebb" type="fix" issue="NET-211">
+				FTPTimestampParserImpl.java: Fix lenient future dates at year boundary
+			</action>
 		</release> 
 		
 		<release version="1.4.1" date="December 3, 2005" description="fix release to restore jdk 1.3 compatability">
