@@ -1279,7 +1279,7 @@ implements Configurable
         input = new BufferedInputStream(socket.getInputStream(),
                                         getBufferSize());
         if (__fileType == ASCII_FILE_TYPE)
-          input = new FromNetASCIIInputStream(input, getControlEncoding());
+          input = new FromNetASCIIInputStream(input);
         // Treat everything else as binary for now
         try
         {
@@ -1344,7 +1344,7 @@ implements Configurable
           // for file types other than ASCII.
           input = new BufferedInputStream(input,
                                           getBufferSize());
-          input = new FromNetASCIIInputStream(input, getControlEncoding());
+          input = new FromNetASCIIInputStream(input);
         }
         return new org.apache.commons.net.io.SocketInputStream(socket, input);
     }
