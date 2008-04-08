@@ -93,7 +93,7 @@ public class FTPTimestampParserImpl implements
 	public Calendar parseTimestamp(String timestampStr, Calendar serverTime) throws ParseException {
         Calendar now = (Calendar) serverTime.clone();// Copy this, because we may change it
 		now.setTimeZone(this.getServerTimeZone());
-		Calendar working = (Calendar) now.clone();;
+		Calendar working = (Calendar) now.clone();
 		working.setTimeZone(getServerTimeZone());
 		ParsePosition pp = new ParsePosition(0);
 
