@@ -95,7 +95,6 @@ public class FTPSClient extends FTPClient {
     public FTPSClient() throws NoSuchAlgorithmException {
         this.protocol = DEFAULT_PROTOCOL;
         this.isImplicit = false;
-        context = SSLContext.getInstance(protocol);
     }
 
     /**
@@ -107,7 +106,6 @@ public class FTPSClient extends FTPClient {
     public FTPSClient(boolean isImplicit) throws NoSuchAlgorithmException {
         this.protocol = DEFAULT_PROTOCOL;
         this.isImplicit = isImplicit;
-        context = SSLContext.getInstance(protocol);
     }
 
     /**
@@ -119,7 +117,6 @@ public class FTPSClient extends FTPClient {
     public FTPSClient(String protocol) throws NoSuchAlgorithmException {
         this.protocol = protocol;
         this.isImplicit = false;
-        context = SSLContext.getInstance(protocol);
     }
 
     /**
@@ -133,7 +130,6 @@ public class FTPSClient extends FTPClient {
             throws NoSuchAlgorithmException {
         this.protocol = protocol;
         this.isImplicit = isImplicit;
-        context = SSLContext.getInstance(protocol);
     }
 
 
@@ -193,6 +189,28 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
+     * Performs a lazy init of the SSL context 
+     * @throws IOException 
+     */
+    private void initSslContext() throws IOException {
+        if(context == null) {
+            try  {
+                context = SSLContext.getInstance(protocol);
+    
+                context.init(new KeyManager[] { getKeyManager() } , new TrustManager[] { getTrustManager() } , null);
+            } catch (KeyManagementException e) {
+                IOException ioe = new IOException("Could not initialize SSL context");
+                ioe.initCause(e);
+                throw ioe;
+            } catch (NoSuchAlgorithmException e) {
+                IOException ioe = new IOException("Could not initialize SSL context");
+                ioe.initCause(e);
+                throw ioe;
+            }
+        }
+    }
+    
+    /**
      * SSL/TLS negotiation. Acquires an SSL socket of a control 
      * connection and carries out handshake processing.
      * @throws IOException A handicap breaks out by sever negotiation.
@@ -201,11 +219,7 @@ public class FTPSClient extends FTPClient {
         // Evacuation not ssl socket.
         planeSocket = _socket_;
         
-        try {
-			context.init(new KeyManager[] { getKeyManager() } , new TrustManager[] { getTrustManager() } , null);
-		} catch (KeyManagementException e) {
-			e.printStackTrace();
-		}
+        initSslContext();
 
         SSLSocketFactory ssf = context.getSocketFactory();
         String ip = _socket_.getInetAddress().getHostAddress();
@@ -414,7 +428,12 @@ public class FTPSClient extends FTPClient {
             setServerSocketFactory(null);
         } else {
             setSocketFactory(new FTPSSocketFactory(context));
-            setServerSocketFactory(SSLServerSocketFactory.getDefault());
+
+            initSslContext();
+            
+            SSLServerSocketFactory ssf = context.getServerSocketFactory();
+
+            setServerSocketFactory(ssf);
         }
     }
 
