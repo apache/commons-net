@@ -358,7 +358,7 @@ _mainSwitch:
                         }
                         catch (InterruptedException e)
                         {
-                            throw new IOException("Fatal thread interruption during read.");
+                            throw new InterruptedIOException("Fatal thread interruption during read.");
                         }
                     }
                     else
