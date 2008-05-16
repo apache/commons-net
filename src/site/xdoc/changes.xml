@@ -155,6 +155,12 @@ limitations under the License.
 			<action dev="rwinston" type="fix" issue="NET-198">
 				Allow FTPTimestampParserImpl to take a predefined Calendar instance representing current time.
 			</action>
+            <action dev="sebb" type="fix" issue="NET-194">
+                Replace Exception with IOException
+            </action>
+            <action dev="sebb" type="update" issue="NET-214">
+                VMS file permission parsing
+            </action>
 		</release>	
 
 
