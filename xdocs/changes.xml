@@ -89,8 +89,11 @@ limitations under the License.
             <action dev="sebb" type="fix" issue="NET-194">
                 Replace Exception with IOException
             </action>
-            <action dev="sebb" type="update" issue="NET-214">
+            <action dev="rwinston" type="update" issue="NET-214">
                 VMS file permission parsing
+            </action>
+            <action dev="sebb" type="fix" issue="NET-208">
+                TelnetInputStream swallows interruptedexception as IOException
             </action>
 		</release> 
 		
