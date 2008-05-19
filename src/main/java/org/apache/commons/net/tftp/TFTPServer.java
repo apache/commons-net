@@ -124,7 +124,8 @@ public class TFTPServer implements Runnable
 	 * GET_ONLY mode only allows gets, PUT_ONLY mode only allows puts, and GET_AND_PUT allows both.
 	 * Modes are defined as int constants in this class.
 	 * 
-	 * @param serverDirectory
+	 * @param serverReadDirectory directory for GET requests
+	 * @param serverWriteDirectory directory for PUT requests
 	 * @param mode A value as specified above.
 	 * @throws IOException if the server directory is invalid or does not exist.
 	 */
@@ -145,7 +146,8 @@ public class TFTPServer implements Runnable
 	 * GET_ONLY mode only allows gets, PUT_ONLY mode only allows puts, and GET_AND_PUT allows both.
 	 * Modes are defined as int constants in this class.
 	 * 
-	 * @param serverDirectory
+	 * @param serverReadDirectory directory for GET requests
+	 * @param serverWriteDirectory directory for PUT requests
 	 * @param mode A value as specified above.
 	 * @param log Stream to write log message to. If not provided, uses System.out
 	 * @param errorLog Stream to write error messages to. If not provided, uses System.err.
