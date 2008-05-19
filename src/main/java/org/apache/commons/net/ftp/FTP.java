@@ -1149,6 +1149,9 @@ public class FTP extends SocketClient
     }
     
     
+    /**
+     * @since 2.0
+     **/
     public int mdtm(String file) throws IOException 
     {
     	return sendCommand(FTPCommand.MDTM, file);
@@ -1485,6 +1488,7 @@ public class FTP extends SocketClient
     /**
      * Return whether strict multiline parsing is enabled, as per RFX 959, section 4.2.
      * @return True if strict, false if lenient
+     * @since 2.0
      */
 	public boolean isStrictMultilineParsing() {
 		return strictMultilineParsing;
@@ -1493,6 +1497,7 @@ public class FTP extends SocketClient
 	/**
 	 * Set strict multiline parsing.
 	 * @param strictMultilineParsing
+	 * @since 2.0
 	 */
 	public void setStrictMultilineParsing(boolean strictMultilineParsing) {
 		this.strictMultilineParsing = strictMultilineParsing;

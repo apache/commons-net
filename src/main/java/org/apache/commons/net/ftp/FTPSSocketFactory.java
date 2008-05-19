@@ -33,6 +33,7 @@ import javax.net.ssl.SSLServerSocket;
  * 
  * Implementation of org.apache.commons.net.SocketFactory
  *
+ * @since 2.0
  */
 public class FTPSSocketFactory extends SocketFactory {
 

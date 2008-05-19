@@ -183,12 +183,16 @@ public class FTPClientConfig
      * in response to the SYST command. We set these to be a Unix-type system.
      * This may happen if the ftpd in question was compiled without system
      * information.
+     *
+     * @since 1.5
      */
     public static final String SYST_L8 = "Type: L8";
     
     /**
      * Identifier by which an Netware-based ftp server is known throughout
      * the commons-net ftp system.
+     *
+     * @since 1.5
      */
 	public static final String SYST_NETWARE = "NETWARE";
     
@@ -346,6 +350,7 @@ public class FTPClientConfig
 	 * getter for the {@link  #setLenientFutureDates(boolean)  lenientFutureDates} property.
 	 * </p>  
      * @return Returns the lenientFutureDates.
+     * @since 1.5
      */
     public boolean isLenientFutureDates() {
         return lenientFutureDates;

@@ -39,6 +39,7 @@ import javax.net.ssl.TrustManager;
  * see wire-level SSL details.
  * 
  * @version $Id$
+ * @since 2.0
  */
 public class FTPSClient extends FTPClient {
 

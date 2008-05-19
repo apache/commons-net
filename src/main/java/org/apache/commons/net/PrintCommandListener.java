@@ -26,6 +26,8 @@ import org.apache.commons.net.ProtocolCommandListener;
  * a sample implementation of the ProtocolCommandListener interface
  * which just prints out to a specified stream all command/reply traffic.
  * <p>
+ *
+ * @since 2.0
  ***/
 
 public class PrintCommandListener implements ProtocolCommandListener

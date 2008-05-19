@@ -380,6 +380,7 @@ public abstract class SocketClient
      * <p>
      * @param size The size of the buffer in bytes.
      * @throws SocketException 
+     * @since 2.0
      */
     public void setSendBufferSize(int size) throws SocketException {
     	_socket_.setSendBufferSize(size);
@@ -391,6 +392,7 @@ public abstract class SocketClient
      * <p>
      * @param size The size of the buffer in bytes.
      * @throws SocketException 
+     * @since 2.0
      */
     public void setReceiveBufferSize(int size) throws SocketException  {
     	_socket_.setReceiveBufferSize(size);
@@ -549,6 +551,7 @@ public abstract class SocketClient
      * previously altered it).
      * <p>
      * @param factory  The new ServerSocketFactory the SocketClient should use.
+     * @since 2.0
      */
     public void setServerSocketFactory(ServerSocketFactory factory) {
 		if (factory == null)
@@ -561,6 +564,7 @@ public abstract class SocketClient
      * Sets the connection timeout in milliseconds, which will be passed to the {@link Socket} object's
      * connect() method. 
      * @param connectTimeout The connection timeout to use (in ms)
+     * @since 2.0
      */
     public void setConnectTimeout(int connectTimeout) {
     	this.connectTimeout = connectTimeout;
@@ -569,6 +573,7 @@ public abstract class SocketClient
     /**
      * Get the underlying socket connection timeout.
      * @return
+     * @since 2.0
      */
     public int getConnectTimeout() {
     	return connectTimeout;

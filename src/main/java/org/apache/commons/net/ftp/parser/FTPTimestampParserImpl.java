@@ -89,6 +89,7 @@ public class FTPTimestampParserImpl implements
 	 * @see org.apache.commons.net.ftp.parser.FTPTimestampParser#parseTimestamp(java.lang.String)
 	 * @param timestampStr The timestamp to be parsed
 	 * @param serverTime The current time for the server
+	 * @since 1.5
 	 */
 	public Calendar parseTimestamp(String timestampStr, Calendar serverTime) throws ParseException {
         Calendar now = (Calendar) serverTime.clone();// Copy this, because we may change it

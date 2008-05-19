@@ -134,6 +134,7 @@ public class SMTPClient extends SMTP
     /**
      * Overloaded constructor that takes an encoding specification
      * @param encoding The encoding to use
+     * @since 2.0
      */
     public SMTPClient(String encoding) {
     	super(encoding);

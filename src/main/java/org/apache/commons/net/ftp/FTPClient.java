@@ -2307,6 +2307,9 @@ implements Configurable
         return engine;
     }
 
+    /**
+     * @since 2.0
+     */
     protected String getListArguments(String pathname) {
     	if (getListHiddenFiles())
     	{
@@ -2370,6 +2373,7 @@ implements Configurable
      * @param pathname The file path to query.
      * @return A string representing the last file modification time in <code>YYYYMMDDhhmmss</code> format.
      * @throws IOException if an I/O error occurs.
+     * @since 2.0
      */
     public String getModificationTime(String pathname) throws IOException {
     	if (FTPReply.isPositiveCompletion(mdtm(pathname)))
@@ -2415,6 +2419,7 @@ implements Configurable
      * of hidden files if you call this method with "false".
      * 
      * @param listHiddenFiles true if hidden files should be listed 
+     * @since 2.0
      */
     public void setListHiddenFiles(boolean listHiddenFiles) {
     	this.__listHiddenFiles = listHiddenFiles;
@@ -2423,6 +2428,7 @@ implements Configurable
     /**
      * @see #setListHiddenFiles(boolean)
      * @return the current state
+     * @since 2.0
      */
     public boolean getListHiddenFiles() {
     	return this.__listHiddenFiles;

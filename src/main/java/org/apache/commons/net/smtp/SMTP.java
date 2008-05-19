@@ -130,6 +130,7 @@ public class SMTP extends SocketClient
     /**
      * Overloaded constructor where the user may specify a default encoding.
      * @param encoding
+     * @since 2.0
      */
     public SMTP(String encoding) {
     	this();

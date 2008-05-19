@@ -53,6 +53,7 @@ public class ListenerList implements Serializable, Iterable<EventListener>
     /**
      * Return an {@link Iterator} for the {@link EventListener} instances
      * 
+     * @since 2.0
      * TODO Check that this is a good defensive strategy
      */
     public Iterator<EventListener> iterator() {

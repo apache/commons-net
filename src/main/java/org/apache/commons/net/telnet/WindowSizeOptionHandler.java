@@ -22,6 +22,7 @@ package org.apache.commons.net.telnet;
  * <p>
  * @author Yuval Kashtan
  * @version $Id$
+ * @since 2.0
  ***/
 public class WindowSizeOptionHandler extends TelnetOptionHandler
 {

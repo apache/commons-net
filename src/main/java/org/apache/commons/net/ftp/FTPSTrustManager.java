@@ -27,7 +27,7 @@ import javax.net.ssl.X509TrustManager;
  * Custom {@link TrustManager} implementation.
  * 
  * @version $Id$
- *
+ * @since 2.0
  */
 public class FTPSTrustManager implements X509TrustManager
 {
