@@ -85,7 +85,7 @@ public class TFTPServer implements Runnable
 	public static enum ServerMode { GET_ONLY, PUT_ONLY, GET_AND_PUT; }
 
 	private HashSet<TFTPTransfer> transfers_ = new HashSet<TFTPTransfer>();
-	private volatile boolean shutdown_ = false;
+	private volatile boolean shutdownServer = false;
 	private TFTP serverTftp_;
 	private File serverReadDirectory_;
 	private File serverWriteDirectory_;
@@ -260,18 +260,18 @@ public class TFTPServer implements Runnable
 	 */
 	public boolean isRunning() throws Exception
 	{
-		if (shutdown_ && serverException != null)
+		if (shutdownServer && serverException != null)
 		{
 			throw serverException;
 		}
-		return !shutdown_;
+		return !shutdownServer;
 	}
 
 	public void run()
 	{
 		try
 		{
-			while (!shutdown_)
+			while (!shutdownServer)
 			{
 				TFTPPacket tftpPacket;
 
@@ -290,7 +290,7 @@ public class TFTPServer implements Runnable
 		}
 		catch (Exception e)
 		{
-			if (!shutdown_)
+			if (!shutdownServer)
 			{
 				serverException = e;
 				logError_.println("Unexpected Error in TFTP Server - Server shut down! + " + e);
@@ -298,7 +298,7 @@ public class TFTPServer implements Runnable
 		}
 		finally
 		{
-			shutdown_ = true; // set this to true, so the launching thread can check to see if it started.
+			shutdownServer = true; // set this to true, so the launching thread can check to see if it started.
 			if (serverTftp_ != null && serverTftp_.isOpen())
 			{
 				serverTftp_.close();
@@ -312,7 +312,7 @@ public class TFTPServer implements Runnable
 	 */
 	public void shutdown()
 	{
-		shutdown_ = true;
+		shutdownServer = true;
 
 		synchronized(transfers_)
 		{
@@ -340,7 +340,7 @@ public class TFTPServer implements Runnable
 	{
 		private TFTPPacket tftpPacket_;
 
-		private boolean shutdown_ = false;
+		private boolean shutdownTransfer = false;
 
 		TFTP transferTftp_ = null;
 
@@ -351,7 +351,7 @@ public class TFTPServer implements Runnable
 
 		public void shutdown()
 		{
-			shutdown_ = true;
+			shutdownTransfer = true;
 			try
 			{
 				transferTftp_.close();
@@ -388,7 +388,7 @@ public class TFTPServer implements Runnable
 			}
 			catch (Exception e)
 			{
-				if (!shutdown_)
+				if (!shutdownTransfer)
 				{
 					logError_
 							.println("Unexpected Error in during TFTP file transfer.  Transfer aborted. "
@@ -468,7 +468,7 @@ public class TFTPServer implements Runnable
 
 				// We are reading a file, so when we read less than the
 				// requested bytes, we know that we are at the end of the file.
-				while (readLength == TFTPDataPacket.MAX_DATA_LENGTH && !shutdown_)
+				while (readLength == TFTPDataPacket.MAX_DATA_LENGTH && !shutdownTransfer)
 				{
 					if (sendNext)
 					{
@@ -487,7 +487,7 @@ public class TFTPServer implements Runnable
 
 					int timeoutCount = 0;
 
-					while (!shutdown_
+					while (!shutdownTransfer
 							&& (answer == null || !answer.getAddress().equals(trrp.getAddress()) || answer
 									.getPort() != trrp.getPort()))
 					{
@@ -522,7 +522,7 @@ public class TFTPServer implements Runnable
 
 					if (answer == null || !(answer instanceof TFTPAckPacket))
 					{
-						if (!shutdown_)
+						if (!shutdownTransfer)
 						{
 							logError_
 									.println("Unexpected response from tftp client during transfer ("
@@ -630,7 +630,7 @@ public class TFTPServer implements Runnable
 
 					int timeoutCount = 0;
 
-					while (!shutdown_
+					while (!shutdownTransfer
 							&& (dataPacket == null
 									|| !dataPacket.getAddress().equals(twrp.getAddress()) || dataPacket
 									.getPort() != twrp.getPort()))
@@ -672,7 +672,7 @@ public class TFTPServer implements Runnable
 					}
 					else if (dataPacket == null || !(dataPacket instanceof TFTPDataPacket))
 					{
-						if (!shutdown_)
+						if (!shutdownTransfer)
 						{
 							logError_
 									.println("Unexpected response from tftp client during transfer ("
