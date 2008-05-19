@@ -202,6 +202,9 @@ public class DefaultFTPFileEntryParserFactory
         return new VMSVersioningFTPEntryParser();
     }
     
+    /**
+     * @since 1.5
+     */
     public FTPFileEntryParser createNetwareFTPEntryParser() {
     	return new NetwareFTPEntryParser();
     }

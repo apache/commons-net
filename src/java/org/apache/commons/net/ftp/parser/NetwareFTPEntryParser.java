@@ -30,6 +30,7 @@ import org.apache.commons.net.ftp.FTPFile;
  * @author <a href="rwinston@apache.org">Rory Winston</a>
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @version $Id$
+ * @since 1.5
  */
 public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
