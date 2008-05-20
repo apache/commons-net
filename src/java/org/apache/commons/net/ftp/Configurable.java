@@ -24,13 +24,12 @@ package org.apache.commons.net.ftp;
  */
 public interface Configurable {
 
-	/**
-	 * @param config the object containing the configuration data
-	 * @return the object being configured after the configuration
-	 * @throws IllegalArgumentException if the elements of the 
-	 * <code>config</code> are somehow inadequate to configure the
-	 * Configurable object.
-	 */
-	public void configure(
-			FTPClientConfig config);	
+    /**
+     * @param config the object containing the configuration data
+     * @throws IllegalArgumentException if the elements of the 
+     * <code>config</code> are somehow inadequate to configure the
+     * Configurable object.
+     */
+    public void configure(
+            FTPClientConfig config);
 }
