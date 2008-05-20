@@ -62,6 +62,6 @@ public interface FTPFileEntryParserFactory
      * @since 1.4
      */
     public FTPFileEntryParser createFileEntryParser(FTPClientConfig config)
-    	throws ParserInitializationException;
+        throws ParserInitializationException;
 
 }

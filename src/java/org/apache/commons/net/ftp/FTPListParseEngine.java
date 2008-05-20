@@ -102,24 +102,24 @@ public class FTPListParseEngine {
     }
     
     /**
-	 * handle the iniitial reading and preparsing of the list returned by
-	 * the server.  After this method has completed, this object will contain
-	 * a list of unparsed entries (Strings) each referring to a unique file
-	 * on the server.
-	 *
-	 * @param stream input stream provided by the server socket.
-	 *
-	 * @exception IOException
-	 *                   thrown on any failure to read from the sever.
-	 *
-	 * @deprecated The version of this method which takes an encoding should be used.
-	*/
-	public void readServerList(InputStream stream)
-	throws IOException
-	{
-		readServerList(stream, null);
-	}
-	
+     * handle the iniitial reading and preparsing of the list returned by
+     * the server.  After this method has completed, this object will contain
+     * a list of unparsed entries (Strings) each referring to a unique file
+     * on the server.
+     *
+     * @param stream input stream provided by the server socket.
+     *
+     * @exception IOException
+     *                   thrown on any failure to read from the sever.
+     *
+     * @deprecated The version of this method which takes an encoding should be used.
+    */
+    public void readServerList(InputStream stream)
+    throws IOException
+    {
+        readServerList(stream, null);
+    }
+    
 
 
     /**
@@ -138,16 +138,16 @@ public class FTPListParseEngine {
      */
     private void readStream(InputStream stream, String encoding) throws IOException
     {
-    	BufferedReader reader;
-    	if (encoding == null)
-    	{
-    		reader = new BufferedReader(new InputStreamReader(stream));
-    	}
-    	else
-    	{
-    		reader = new BufferedReader(new InputStreamReader(stream, encoding));
-    	}
-    	
+        BufferedReader reader;
+        if (encoding == null)
+        {
+            reader = new BufferedReader(new InputStreamReader(stream));
+        }
+        else
+        {
+            reader = new BufferedReader(new InputStreamReader(stream, encoding));
+        }
+
         String line = this.parser.readNextEntry(reader);
 
         while (line != null)

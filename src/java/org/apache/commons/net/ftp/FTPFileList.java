@@ -94,7 +94,7 @@ public class FTPFileList
      */
     public static FTPFileList create(InputStream stream,
                                       FTPFileEntryParser parser,
-									  String encoding)
+                                      String encoding)
             throws IOException
     {
         FTPFileList list = new FTPFileList(parser, encoding);
@@ -122,11 +122,10 @@ public class FTPFileList
      *
      * @deprecated The version of this method which takes an encoding should be used.
     */
-    public static FTPFileList create(InputStream stream, 
-    								  FTPFileEntryParser parser)
-    	throws IOException
+    public static FTPFileList create(InputStream stream, FTPFileEntryParser parser)
+        throws IOException
     {
-    	return create(stream, parser, null);
+        return create(stream, parser, null);
     }
     
     
@@ -154,19 +153,19 @@ public class FTPFileList
     }
     
     /**
-	 * internal method for reading the input into the <code>lines</code> vector.
-	 *
-	 * @param stream The socket stream on which the input will be read.
-	 *
-	 * @exception IOException thrown on any failure to read the stream
-	 *
-	 * @deprecated The version of this method which takes an encoding should be used.
-	*/
-	public void readStream(InputStream stream) throws IOException
-	{
-	 readStream(stream, null);
-	}
-	 
+     * internal method for reading the input into the <code>lines</code> vector.
+     *
+     * @param stream The socket stream on which the input will be read.
+     *
+     * @exception IOException thrown on any failure to read the stream
+     *
+     * @deprecated The version of this method which takes an encoding should be used.
+    */
+    public void readStream(InputStream stream) throws IOException
+    {
+     readStream(stream, null);
+    }
+     
 
     /**
      * Accessor for this object's default parser.

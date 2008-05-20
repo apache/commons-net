@@ -153,7 +153,7 @@ public class TimeInfo {
          * according to this standard NTP equation:
          *
          * LocalClockOffset = ((ReceiveTimestamp - OriginateTimestamp) +
-         *		        (TransmitTimestamp - DestinationTimestamp)) / 2
+         *                     (TransmitTimestamp - DestinationTimestamp)) / 2
          *
          * equations from RFC-1305 (NTPv3)
          *      roundtrip delay = (t4 - t1) - (t3 - t2)

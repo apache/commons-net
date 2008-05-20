@@ -188,8 +188,8 @@ public class TimeStamp implements java.io.Serializable, Comparable
      */
     public static long getTime(long ntpTimeValue)
     {
-        long seconds = (ntpTimeValue >>> 32) & 0xffffffffL;	// high-order 32-bits
-        long fraction = ntpTimeValue & 0xffffffffL;		// low-order 32-bits
+        long seconds = (ntpTimeValue >>> 32) & 0xffffffffL;     // high-order 32-bits
+        long fraction = ntpTimeValue & 0xffffffffL;             // low-order 32-bits
 
         // Use round-off on fractional part to preserve going to lower precision
         fraction = Math.round(1000D * fraction / 0x100000000L);
@@ -285,7 +285,7 @@ public class TimeStamp implements java.io.Serializable, Comparable
      */
     protected static long toNtpTime(long t)
     {
-        boolean useBase1 = t < msb0baseTime;	// time < Feb-2036
+        boolean useBase1 = t < msb0baseTime;    // time < Feb-2036
         long baseTime;
         if (useBase1) {
             baseTime = t - msb1baseTime; // dates <= Feb-2036
@@ -452,7 +452,7 @@ public class TimeStamp implements java.io.Serializable, Comparable
      *          is numerically less than the TimeStamp argument; and a
      *          value greater than <code>0</code> if this TimeStamp is
      *          numerically greater than the TimeStamp argument
-     *		(signed comparison).
+     *          (signed comparison).
      */
     public int compareTo(TimeStamp anotherTimeStamp)
     {
@@ -469,13 +469,13 @@ public class TimeStamp implements java.io.Serializable, Comparable
      *
      * @param   o the <code>Object</code> to be compared.
      * @return  the value <code>0</code> if the argument is a TimeStamp
-     *		numerically equal to this TimeStamp; a value less than
-     *		<code>0</code> if the argument is a TimeStamp numerically
-     *		greater than this TimeStamp; and a value greater than
-     *		<code>0</code> if the argument is a TimeStamp numerically
-     *		less than this TimeStamp.
+     *      numerically equal to this TimeStamp; a value less than
+     *      <code>0</code> if the argument is a TimeStamp numerically
+     *      greater than this TimeStamp; and a value greater than
+     *      <code>0</code> if the argument is a TimeStamp numerically
+     *      less than this TimeStamp.
      * @exception ClassCastException if the argument is not a
-     *		  <code>TimeStamp</code>.
+     *        <code>TimeStamp</code>.
      * @see     java.lang.Comparable
      */
     public int compareTo(Object o)

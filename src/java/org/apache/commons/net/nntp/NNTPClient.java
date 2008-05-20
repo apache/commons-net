@@ -195,10 +195,10 @@ public class NNTPClient extends NNTP
             result._setFirstArticle(firstNum);
             result._setLastArticle(lastNum);
 
-	    if((firstNum == 0) && (lastNum == 0))
-		    result._setArticleCount(0);
-	    else
-		    result._setArticleCount(lastNum - firstNum + 1);
+        if((firstNum == 0) && (lastNum == 0))
+            result._setArticleCount(0);
+        else
+            result._setArticleCount(lastNum - firstNum + 1);
         }
         catch (NumberFormatException e)
         {

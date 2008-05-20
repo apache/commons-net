@@ -459,7 +459,7 @@ public class FTP extends TelnetClient
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
         try{
-	    _controlOutput_.write(message = __commandBuffer.toString());
+        _controlOutput_.write(message = __commandBuffer.toString());
             _controlOutput_.flush();
         }
         catch (SocketException e)
@@ -473,7 +473,7 @@ public class FTP extends TelnetClient
                 throw e;
             }
         }
-	
+    
 
         if (_commandSupport_.getListenerCount() > 0)
             _commandSupport_.fireCommandSent(command, message);

@@ -34,9 +34,9 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 public class DefaultFTPFileEntryParserFactory
     implements FTPFileEntryParserFactory
 {
-	private FTPClientConfig config = null;
+    private FTPClientConfig config = null;
 
-	/**
+    /**
      * This default implementation of the FTPFileEntryParserFactory
      * interface works according to the following logic:
      * First it attempts to interpret the supplied key as a fully
@@ -87,50 +87,50 @@ public class DefaultFTPFileEntryParserFactory
         {
             try 
             {
-	            String ukey = null;
-	            if (null != key)
-	            {
-	                ukey = key.toUpperCase(java.util.Locale.ENGLISH);
-	            }
-	            if (ukey.indexOf(FTPClientConfig.SYST_UNIX) >= 0
-	                    || (ukey.indexOf(FTPClientConfig.SYST_L8) >= 0))
-	            {
-	                parser = createUnixFTPEntryParser();
-	            }
-	            else if (ukey.indexOf(FTPClientConfig.SYST_VMS) >= 0)
-	            {
-	                parser = createVMSVersioningFTPEntryParser();
-	            }
-	            else if (ukey.indexOf(FTPClientConfig.SYST_NT) >= 0)
-	            {
-	                parser = createNTFTPEntryParser();
-	            }
-	            else if (ukey.indexOf(FTPClientConfig.SYST_OS2) >= 0)
-	            {
-	                parser = createOS2FTPEntryParser();
-	            }
-	            else if (ukey.indexOf(FTPClientConfig.SYST_OS400) >= 0)
-	            {
-	                parser = createOS400FTPEntryParser();
-	            }
-	            else if (ukey.indexOf(FTPClientConfig.SYST_MVS) >= 0)
-	            {
-	                parser = createMVSEntryParser();
-	        	}
-	            else if (ukey.indexOf(FTPClientConfig.SYST_NETWARE) >= 0) 
-	            {
-	            	parser = createNetwareFTPEntryParser();
-	            }
-	            else
-	            {
-	                throw new ParserInitializationException("Unknown parser type: " + key);
-	            }
+                String ukey = null;
+                if (null != key)
+                {
+                    ukey = key.toUpperCase(java.util.Locale.ENGLISH);
+                }
+                if (ukey.indexOf(FTPClientConfig.SYST_UNIX) >= 0
+                        || (ukey.indexOf(FTPClientConfig.SYST_L8) >= 0))
+                {
+                    parser = createUnixFTPEntryParser();
+                }
+                else if (ukey.indexOf(FTPClientConfig.SYST_VMS) >= 0)
+                {
+                    parser = createVMSVersioningFTPEntryParser();
+                }
+                else if (ukey.indexOf(FTPClientConfig.SYST_NT) >= 0)
+                {
+                    parser = createNTFTPEntryParser();
+                }
+                else if (ukey.indexOf(FTPClientConfig.SYST_OS2) >= 0)
+                {
+                    parser = createOS2FTPEntryParser();
+                }
+                else if (ukey.indexOf(FTPClientConfig.SYST_OS400) >= 0)
+                {
+                    parser = createOS400FTPEntryParser();
+                }
+                else if (ukey.indexOf(FTPClientConfig.SYST_MVS) >= 0)
+                {
+                    parser = createMVSEntryParser();
+                }
+                else if (ukey.indexOf(FTPClientConfig.SYST_NETWARE) >= 0) 
+                {
+                    parser = createNetwareFTPEntryParser();
+                }
+                else
+                {
+                    throw new ParserInitializationException("Unknown parser type: " + key);
+                }
             } 
             catch (NoClassDefFoundError nf)
-            { 	
+            {
                 if (nf.getMessage().startsWith("org/apache/oro")) {
-    	            throw new ParserInitializationException(
-    	                " jakarta-oro-2.x.jar required on the runtime classpath. ", nf);
+                    throw new ParserInitializationException(
+                        " jakarta-oro-2.x.jar required on the runtime classpath. ", nf);
                 } else {
                     throw new ParserInitializationException("Error initializing parser", nf);
                 }
@@ -138,10 +138,10 @@ public class DefaultFTPFileEntryParserFactory
 
         }
         catch (NoClassDefFoundError e)
-        { 	
+        {
             if (e.getMessage().startsWith("org/apache/oro")) {
-	            throw new ParserInitializationException(
-	                " jakarta-oro-2.x.jar required on the runtime classpath. ", e);
+                throw new ParserInitializationException(
+                    " jakarta-oro-2.x.jar required on the runtime classpath. ", e);
             } else {
                 throw new ParserInitializationException("Error initializing parser", e);
             }
@@ -183,13 +183,13 @@ public class DefaultFTPFileEntryParserFactory
      *                   Thrown on any exception in instantiation
      * @since 1.4
      */
-	public FTPFileEntryParser createFileEntryParser(FTPClientConfig config) 
-	throws ParserInitializationException 
-	{
-	    this.config = config;
-		String key = config.getServerSystemKey();
-		return createFileEntryParser(key);
-	}
+    public FTPFileEntryParser createFileEntryParser(FTPClientConfig config) 
+    throws ParserInitializationException 
+    {
+        this.config = config;
+        String key = config.getServerSystemKey();
+        return createFileEntryParser(key);
+    }
 
 
     public FTPFileEntryParser createUnixFTPEntryParser()
@@ -206,22 +206,22 @@ public class DefaultFTPFileEntryParserFactory
      * @since 1.5
      */
     public FTPFileEntryParser createNetwareFTPEntryParser() {
-    	return new NetwareFTPEntryParser();
+        return new NetwareFTPEntryParser();
     }
 
     public FTPFileEntryParser createNTFTPEntryParser()
     {
-    	if (config != null && FTPClientConfig.SYST_NT.equals(
-    	        config.getServerSystemKey())) 
-    	{
+        if (config != null && FTPClientConfig.SYST_NT.equals(
+                config.getServerSystemKey())) 
+        {
             return new NTFTPEntryParser();
-    	} else {
+        } else {
             return new CompositeFileEntryParser(new FTPFileEntryParser[]
-	   	        {
-	   	            new NTFTPEntryParser(),
-	   	            new UnixFTPEntryParser()
-	   	        });
-    	}
+                {
+                    new NTFTPEntryParser(),
+                    new UnixFTPEntryParser()
+                });
+        }
     }
     
      public FTPFileEntryParser createOS2FTPEntryParser()
@@ -231,17 +231,17 @@ public class DefaultFTPFileEntryParserFactory
 
     public FTPFileEntryParser createOS400FTPEntryParser()
     {
-    	if (config != null && 
-    	        FTPClientConfig.SYST_OS400.equals(config.getServerSystemKey())) 
-    	{
+        if (config != null && 
+                FTPClientConfig.SYST_OS400.equals(config.getServerSystemKey())) 
+        {
             return new OS400FTPEntryParser();
-    	} else {
-	        return new CompositeFileEntryParser(new FTPFileEntryParser[]
-	            {
-	                new OS400FTPEntryParser(),
-	                new UnixFTPEntryParser()
-	            });
-    	}
+        } else {
+            return new CompositeFileEntryParser(new FTPFileEntryParser[]
+                {
+                    new OS400FTPEntryParser(),
+                    new UnixFTPEntryParser()
+                });
+        }
     }
 
     public FTPFileEntryParser createMVSEntryParser()
@@ -250,6 +250,5 @@ public class DefaultFTPFileEntryParserFactory
     }
 
 
-	
+    
 }
-

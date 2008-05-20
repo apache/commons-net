@@ -233,10 +233,10 @@ _receivePacket:
                             }
                             ++block;
                             if (block > 65535)
-							{
-								// wrap the block number
-								block = 0;
-							}
+                            {
+                                // wrap the block number
+                                block = 0;
+                            }
                             
                             break _receivePacket;
                         }
@@ -471,10 +471,10 @@ _receivePacket:
                         {
                             ++block;
                             if (block > 65535)
-							{
-								// wrap the block number
-								block = 0;
-							}
+                            {
+                                // wrap the block number
+                                block = 0;
+                            }
                             if (lastAckWait) {
                                 
                               break _sendPacket;

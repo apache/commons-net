@@ -60,7 +60,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     private static final String[] GOODSAMPLES =
     {
         "-C--E-----FTP B QUA1I1      18128       41 Aug 12 13:56 QUADTEST",
-		"-C--E-----FTP A QUA1I1      18128       41 Aug 12 13:56 QUADTEST2"
+        "-C--E-----FTP A QUA1I1      18128       41 Aug 12 13:56 QUADTEST2"
     };
 
     /**
@@ -106,7 +106,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
         assertEquals("QUADTEST",
                      file.getName());
         assertEquals(5000000000L, 
-        			 file.getSize());
+                    file.getSize());
         assertEquals("QUA1I1",
                      file.getUser());
         assertEquals("18128",

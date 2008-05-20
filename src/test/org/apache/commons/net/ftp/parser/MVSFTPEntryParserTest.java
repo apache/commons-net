@@ -40,9 +40,9 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework
         "Migrated                                                file6.O",
         "PSMLB7 3390   2005/04/04  1    1  VB   27994 27998  PS  file7.O",
         "PSMLC6 3390   2005/04/05  1    1  VB   27994 27998  PS  file7.O.BU",
-    	"FPFS42 3390   2004/06/23  1    1  FB     128  6144  PS  INCOMING.RPTBM023.D061704",
-    	"FPFS41 3390   2004/06/23  1    1  FB     128  6144  PS  INCOMING.RPTBM056.D061704",
-    	"FPFS25 3390   2004/06/23  1    1  FB     128  6144  PS  INCOMING.WTM204.D061704",                
+        "FPFS42 3390   2004/06/23  1    1  FB     128  6144  PS  INCOMING.RPTBM023.D061704",
+        "FPFS41 3390   2004/06/23  1    1  FB     128  6144  PS  INCOMING.RPTBM056.D061704",
+        "FPFS25 3390   2004/06/23  1    1  FB     128  6144  PS  INCOMING.WTM204.D061704",                
     };
     
     private static final String [] badsamples = 

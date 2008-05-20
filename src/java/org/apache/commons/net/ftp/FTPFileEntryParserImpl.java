@@ -77,7 +77,7 @@ public abstract class FTPFileEntryParserImpl
     ***/
     public FTPFile[] parseFileList(InputStream listStream) throws IOException
     {
-    	return parseFileList(listStream, null);
+        return parseFileList(listStream, null);
     }
 
     /**
