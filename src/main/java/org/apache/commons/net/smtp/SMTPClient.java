@@ -137,7 +137,7 @@ public class SMTPClient extends SMTP
      * @since 2.0
      */
     public SMTPClient(String encoding) {
-    	super(encoding);
+        super(encoding);
     }
 
 

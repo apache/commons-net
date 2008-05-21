@@ -133,8 +133,8 @@ public class SMTP extends SocketClient
      * @since 2.0
      */
     public SMTP(String encoding) {
-    	this();
-    	this.encoding = encoding;
+        this();
+        this.encoding = encoding;
     }
 
     private int __sendCommand(String command, String args, boolean includeSpace)

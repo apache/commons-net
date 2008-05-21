@@ -251,8 +251,8 @@ public class FTPSClient extends FTPClient {
      * @return The {@link KeyManager} instance
      */
     private KeyManager getKeyManager() {
-		return keyManager;
-	}
+        return keyManager;
+    }
     
     /**
     * Set a {@link KeyManager} to use
@@ -260,10 +260,10 @@ public class FTPSClient extends FTPClient {
     * @param keyManager The KeyManager implementation to set.
     */
     public void setKeyManager(KeyManager keyManager) {
-    	this.keyManager = keyManager;
+        this.keyManager = keyManager;
     }
 
-	/**
+    /**
      * Controls whether new a SSL session may be established by this socket.
      * @param isCreation The established socket flag.
      */
@@ -465,7 +465,7 @@ public class FTPSClient extends FTPClient {
         int repCode = super.sendCommand(command, args);
         if (FTPSCommand._commands[FTPSCommand.CCC].equals(command)) {
             if (FTPReply.COMMAND_OK == repCode) {
-            		// TODO Check this - is this necessary at all?
+                    // TODO Check this - is this necessary at all?
                 _socket_ = planeSocket;
                 setSocketFactory(null);
             } else {
@@ -515,18 +515,18 @@ public class FTPSClient extends FTPClient {
      * 
      * @return A TrustManager instance.
      */
-	public TrustManager getTrustManager() {
-		return trustManager;
-	}
+    public TrustManager getTrustManager() {
+        return trustManager;
+    }
 
-	/**
-	 * Override the default {@link TrustManager} to use.
-	 * 
-	 * @param trustManager The TrustManager implementation to set.
-	 */
-	public void setTrustManager(TrustManager trustManager) {
-		this.trustManager = trustManager;
-	}
+    /**
+     * Override the default {@link TrustManager} to use.
+     * 
+     * @param trustManager The TrustManager implementation to set.
+     */
+    public void setTrustManager(TrustManager trustManager) {
+        this.trustManager = trustManager;
+    }
     
     
     

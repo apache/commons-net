@@ -324,7 +324,7 @@ implements Configurable
         __restartOffset      = 0;
         __systemName         = null;
         __entryParser        = null;
-        __bufferSize 		 = Util.DEFAULT_COPY_BUFFER_SIZE;
+        __bufferSize         = Util.DEFAULT_COPY_BUFFER_SIZE;
     }
     
     private String __parsePathname(String reply)
@@ -1962,7 +1962,7 @@ implements Configurable
 
         if (completePendingCommand())
         {
-        	String[] names = new String[ results.size() ];
+            String[] names = new String[ results.size() ];
             return results.toArray(names);
         }
 
@@ -2059,7 +2059,7 @@ implements Configurable
      * @return The list of file information contained in the current directory
      *         in the format determined by the autodetection mechanism.  
      *         <p><b> 
-     * 		   NOTE:</b> This array may contain null members if any of the 
+     *         NOTE:</b> This array may contain null members if any of the 
      *         individual file listings failed to parse.  The caller should 
      *         check each entry for null before referencing it.
      * @exception FTPConnectionClosedException
@@ -2247,22 +2247,22 @@ implements Configurable
             if (null != parserKey) {
                 // if a parser key was supplied in the parameters, 
                 // use that to create the paraser
-        	    __entryParser = 
-        	        __parserFactory.createFileEntryParser(parserKey);
+                __entryParser = 
+                    __parserFactory.createFileEntryParser(parserKey);
                 
             } else {
-	            // if no parserKey was supplied, check for a configuration
-	        	// in the params, and if non-null, use that.
-            	if (null != __configuration) {
-            	    __entryParser = 
-            	        __parserFactory.createFileEntryParser(__configuration);
-            	} else {
+                // if no parserKey was supplied, check for a configuration
+                // in the params, and if non-null, use that.
+                if (null != __configuration) {
+                    __entryParser = 
+                        __parserFactory.createFileEntryParser(__configuration);
+                } else {
                     // if a parserKey hasn't been supplied, and a configuration
-            	    // hasn't been supplied, then autodetect by calling
+                    // hasn't been supplied, then autodetect by calling
                     // the SYST command and use that to choose the parser.
-            	    __entryParser = 
-            	        __parserFactory.createFileEntryParser(getSystemName());
-             	}
+                    __entryParser = 
+                        __parserFactory.createFileEntryParser(getSystemName());
+                }
             }
         }
 
@@ -2311,19 +2311,19 @@ implements Configurable
      * @since 2.0
      */
     protected String getListArguments(String pathname) {
-    	if (getListHiddenFiles())
-    	{
-    		StringBuffer sb = new StringBuffer(pathname.length() + 3);
-    		sb.append("-a ");
-    		sb.append(pathname);
-    		return sb.toString();
-    	}
-    	
-    	return pathname;
-	}
+        if (getListHiddenFiles())
+        {
+            StringBuffer sb = new StringBuffer(pathname.length() + 3);
+            sb.append("-a ");
+            sb.append(pathname);
+            return sb.toString();
+        }
+        
+        return pathname;
+    }
 
 
-	/***
+    /***
      * Issue the FTP STAT command to the server.
      * <p>
      * @return The status information returned by the server.
@@ -2376,9 +2376,9 @@ implements Configurable
      * @since 2.0
      */
     public String getModificationTime(String pathname) throws IOException {
-    	if (FTPReply.isPositiveCompletion(mdtm(pathname)))
-    		return getReplyString();
-    	return null;
+        if (FTPReply.isPositiveCompletion(mdtm(pathname)))
+            return getReplyString();
+        return null;
     }
 
 
@@ -2388,7 +2388,7 @@ implements Configurable
      * @param bufSize The size of the buffer
      */
     public void setBufferSize(int bufSize) {
-    	__bufferSize = bufSize;
+        __bufferSize = bufSize;
     }
     
     /**
@@ -2396,7 +2396,7 @@ implements Configurable
      * @return The current buffer size.
      */
     public int getBufferSize() {
-    	return __bufferSize;
+        return __bufferSize;
     }
 
 
@@ -2409,7 +2409,7 @@ implements Configurable
      * @since 1.4
      */
     public void configure(FTPClientConfig config) {
-    	this.__configuration = config;
+        this.__configuration = config;
     }
 
     /**
@@ -2422,7 +2422,7 @@ implements Configurable
      * @since 2.0
      */
     public void setListHiddenFiles(boolean listHiddenFiles) {
-    	this.__listHiddenFiles = listHiddenFiles;
+        this.__listHiddenFiles = listHiddenFiles;
     }
 
     /**
@@ -2431,7 +2431,7 @@ implements Configurable
      * @since 2.0
      */
     public boolean getListHiddenFiles() {
-    	return this.__listHiddenFiles;
+        return this.__listHiddenFiles;
     }
 }
 
