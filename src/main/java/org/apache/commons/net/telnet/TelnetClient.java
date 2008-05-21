@@ -128,9 +128,9 @@ public class TelnetClient extends Telnet
     public void disconnect() throws IOException
     {
         if (__input != null)
-        	__input.close();
+            __input.close();
         if (__output != null)
-        	__output.close();
+            __output.close();
         super.disconnect();
     }
 

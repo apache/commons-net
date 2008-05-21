@@ -39,14 +39,14 @@ import junit.framework.TestSuite;
  */
 public class AllTests {
 
-	public static Test suite() {
-		TestSuite suite =
-			new TestSuite("Test for org.apache.commons.net.pop3");
-		//$JUnit-BEGIN$
-		suite.addTest(POP3ConstructorTest.suite());
-		suite.addTest(POP3ClientTest.suite());
-		suite.addTest(POP3ClientCommandsTest.suite());
-		//$JUnit-END$
-		return suite;
-	}
+    public static Test suite() {
+        TestSuite suite =
+            new TestSuite("Test for org.apache.commons.net.pop3");
+        //$JUnit-BEGIN$
+        suite.addTest(POP3ConstructorTest.suite());
+        suite.addTest(POP3ClientTest.suite());
+        suite.addTest(POP3ClientCommandsTest.suite());
+        //$JUnit-END$
+        return suite;
+    }
 }

@@ -52,7 +52,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 {
 
     private static final String DEFAULT_DATE_FORMAT 
-		= "d-MMM-yyyy HH:mm:ss"; //9-NOV-2001 12:30:24
+        = "d-MMM-yyyy HH:mm:ss"; //9-NOV-2001 12:30:24
 
     /**
      * this is the regular expression used by this parser.
@@ -143,10 +143,10 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             f.setRawListing(entry);
             String name = group(1);
             String size = group(2);
-        	String datestr = group(3)+" "+group(4);
+            String datestr = group(3)+" "+group(4);
             String owner = group(5);
-        	String permissions[] = new String[3];
-        	permissions[0]= group(9);
+            String permissions[] = new String[3];
+            permissions[0]= group(9);
             permissions[1]= group(10);
             permissions[2]= group(11);
             try

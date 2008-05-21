@@ -35,13 +35,13 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 {
     
     static final String DEFAULT_DATE_FORMAT 
-		= "MMM d yyyy"; //Nov 9 2001
+        = "MMM d yyyy"; //Nov 9 2001
     
     static final String DEFAULT_RECENT_DATE_FORMAT 
-		= "MMM d HH:mm"; //Nov 9 20:06
+        = "MMM d HH:mm"; //Nov 9 20:06
 
     static final String NUMERIC_DATE_FORMAT 
-		= "yyyy-MM-dd HH:mm"; //2001-11-09 20:06
+        = "yyyy-MM-dd HH:mm"; //2001-11-09 20:06
 
     /**
      * Some Linux distributions are now shipping an FTP server which formats
@@ -85,22 +85,22 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         "([bcdelfmpSs-])"
         +"(((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-])))\\+?\\s+"
         + "(\\d+)\\s+"
-        + "(?:(\\S+(?:\\s\\S+)*?)\\s+)?"					// owner name (optional spaces)
-        + "(?:(\\S+(?:\\s\\S+)*)\\s+)?" 				// group name (optional spaces)
+        + "(?:(\\S+(?:\\s\\S+)*?)\\s+)?"                // owner name (optional spaces)
+        + "(?:(\\S+(?:\\s\\S+)*)\\s+)?"                 // group name (optional spaces)
         + "(\\d+(?:,\\s*\\d+)?)\\s+"
         
         /*
           numeric or standard format date
         */
         + "((?:\\d+[-/]\\d+[-/]\\d+)|(?:\\S+\\s+\\S+))\\s+"
-		
+        
         /* 
            year (for non-recent standard format) 
-		   or time (for numeric or recent standard format  
-		*/
-		+ "(\\d+(?::\\d+)?)\\s+"
+           or time (for numeric or recent standard format  
+        */
+        + "(\\d+(?::\\d+)?)\\s+"
         
-		+ "(\\S*)(\\s*.*)";
+        + "(\\S*)(\\s*.*)";
 
 
     /**
@@ -145,7 +145,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * @param entry A line of text from the file listing
      * @return An FTPFile instance corresponding to the supplied entry
      */
-	public FTPFile parseFTPEntry(String entry) {
+    public FTPFile parseFTPEntry(String entry) {
         FTPFile file = new FTPFile();
         file.setRawListing(entry);
         int type;
@@ -190,8 +190,8 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
                 // break; - fall through
             case 'f':
             case '-':
-            	type = FTPFile.FILE_TYPE;
-            	break;
+                type = FTPFile.FILE_TYPE;
+                break;
             default:
                 type = FTPFile.UNKNOWN_TYPE;
             }
@@ -275,7 +275,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             return file;
         }
         return null;
-	}
+    }
 
     /**
      * Defines a default configuration to be used when this class is
@@ -283,7 +283,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * parameter being specified.
      * @return the default configuration for this parser.
      */
-	@Override
+    @Override
     protected FTPClientConfig getDefaultConfiguration() {
         return new FTPClientConfig(
                 FTPClientConfig.SYST_UNIX,

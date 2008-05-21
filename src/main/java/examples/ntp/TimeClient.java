@@ -42,14 +42,14 @@ public final class TimeClient
     public static final void timeTCP(String host) throws IOException
     {
         TimeTCPClient client = new TimeTCPClient();
-	try {
+    try {
           // We want to timeout if a response takes longer than 60 seconds
           client.setDefaultTimeout(60000);
-	  client.connect(host);
+      client.connect(host);
           System.out.println(client.getDate());
-	} finally {
+    } finally {
           client.disconnect();
-	}
+    }
     }
 
     public static final void timeUDP(String host) throws IOException

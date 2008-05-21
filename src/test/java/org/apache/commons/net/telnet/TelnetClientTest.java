@@ -92,13 +92,13 @@ extends TestCase implements TelnetNotificationHandler
            try {
                server = new TelnetTestSimpleServer(port);
                 switch (socket) {
-               		case 0:
-               		    client = new TelnetClient();
+                    case 0:
+                        client = new TelnetClient();
                         // redundant but makes code clearer.
                         client.setReaderThread(true);
-               		    break;
-               		case 1:
-               		    client = new TelnetClient();
+                        break;
+                    case 1:
+                        client = new TelnetClient();
                         TerminalTypeOptionHandler ttopt = 
                             new TerminalTypeOptionHandler("VT100", false, false, true, false);
                         EchoOptionHandler echoopt = 
@@ -109,30 +109,30 @@ extends TestCase implements TelnetNotificationHandler
                         client.addOptionHandler(ttopt);
                         client.addOptionHandler(echoopt);
                         client.addOptionHandler(gaopt);
-               		    break;
-               		case 2:
+                        break;
+                    case 2:
                         client = new TelnetClient("ANSI");
-               		    break;
-               		case 3:
+                        break;
+                    case 3:
                         client = new TelnetClient();
                         client.setReaderThread(false);
-               		    break;
+                        break;
                }
                client.connect("127.0.0.1", port);
                switch (socket) {
-               		case 0:
-               		    STANDARD = new TestConnection(server, client, port);
-               		    break;
-               		case 1:
-               		    OPTIONS = new TestConnection(server, client, port);
-               		    break;
-               		case 2:
-               		    ANSI = new TestConnection(server, client, port);
-               		    break;
-               		case 3:
-               		    NOREAD = new TestConnection(server, client, port);
-               		    break;
-               		    
+                    case 0:
+                        STANDARD = new TestConnection(server, client, port);
+                        break;
+                    case 1:
+                        OPTIONS = new TestConnection(server, client, port);
+                        break;
+                    case 2:
+                        ANSI = new TestConnection(server, client, port);
+                        break;
+                    case 3:
+                        NOREAD = new TestConnection(server, client, port);
+                        break;
+                        
                }
                
                // only increment socket number on success
@@ -704,9 +704,9 @@ extends TestCase implements TelnetNotificationHandler
         boolean test2spy_ok = false;
         boolean stopspy_ok = false;
         byte expected1[] = 
-        	{ (byte) 't', (byte) 'e', (byte) 's', (byte) 't', (byte) '1' };
+            { (byte) 't', (byte) 'e', (byte) 's', (byte) 't', (byte) '1' };
         byte expected2[] = 
-        	{ (byte) 't', (byte) 'e', (byte) 's', (byte) 't', (byte) '2' };
+            { (byte) 't', (byte) 'e', (byte) 's', (byte) 't', (byte) '2' };
 
 
         PipedOutputStream po = new PipedOutputStream();
@@ -844,9 +844,9 @@ extends TestCase implements TelnetNotificationHandler
             boolean result = true;
             for(int ii=0; ii<a1.length; ii++)
             {
-            	
+                
                 if(a1[ii]!= a2[ii])
-                	result = false;
+                    result = false;
             }
             return(result);
         }

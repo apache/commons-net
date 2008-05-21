@@ -95,14 +95,14 @@ public class TimeTestSimpleServer implements Runnable
     public void start() throws IOException
     {
         if (server == null)
-	{
+    {
             connect();
-	}
-	if (!running)
-	{
-	    running = true;
-	    new Thread(this).start();
-	}
+    }
+    if (!running)
+    {
+        running = true;
+        new Thread(this).start();
+    }
     }
 
     public void run()

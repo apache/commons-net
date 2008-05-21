@@ -30,22 +30,22 @@ import junit.framework.TestCase;
  */
 public class TestConnectTimeout extends TestCase {
 
-	public void testConnectTimeout() throws SocketException, IOException {
-		FTPClient client = new FTPClient();
-		client.setConnectTimeout(1000);
-		
-		try {
-			// Connect to a valid host on a bogus port
-			client.connect("ftp.microsoft.com", 1234);
-			assertTrue("Expecting SocketTimeoutException", false);
-		} 
-		catch (SocketTimeoutException se) {
-			assertTrue(true);
-		}
-		catch (UnknownHostException ue) {
-			// Not much we can do about this, we may be firewalled
-			assertTrue(true);
-		}
-		
-	}
+    public void testConnectTimeout() throws SocketException, IOException {
+        FTPClient client = new FTPClient();
+        client.setConnectTimeout(1000);
+        
+        try {
+            // Connect to a valid host on a bogus port
+            client.connect("ftp.microsoft.com", 1234);
+            assertTrue("Expecting SocketTimeoutException", false);
+        } 
+        catch (SocketTimeoutException se) {
+            assertTrue(true);
+        }
+        catch (UnknownHostException ue) {
+            // Not much we can do about this, we may be firewalled
+            assertTrue(true);
+        }
+        
+    }
 }
