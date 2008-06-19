@@ -311,8 +311,8 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
                 int pos = 3*access + perm + 1;
                 char permchar = test.charAt(pos);
                 assertEquals("Permission " + test.substring(1,10), 
-                        new Boolean(f.hasPermission(access, perm)), 
-                        new Boolean(permchar != '-' && !Character.isUpperCase(permchar))); 
+                        Boolean.valueOf(f.hasPermission(access, perm)), 
+                        Boolean.valueOf(permchar != '-' && !Character.isUpperCase(permchar))); 
             }
         }
 
