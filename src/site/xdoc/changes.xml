@@ -164,6 +164,9 @@ limitations under the License.
             <action dev="sebb" type="fix" issue="NET-208">
                 TelnetInputStream swallows interruptedexception as IOException
             </action>
+            <action dev="sebb" type="fix" issue="NET-223">
+                the data connection socket is not closed when an IOException occurred
+            </action>
 		</release>	
 
 

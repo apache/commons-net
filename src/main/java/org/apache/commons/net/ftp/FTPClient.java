@@ -2299,9 +2299,12 @@ implements Configurable
         }
 
 
-        engine.readServerList(socket.getInputStream(), getControlEncoding());
-
-        socket.close();
+        try {
+            engine.readServerList(socket.getInputStream(), getControlEncoding());
+        }
+        finally {
+            socket.close();
+        }
 
         completePendingCommand();
         return engine;
