@@ -173,6 +173,12 @@ public class FTPClientConfig
     public static final String SYST_OS400 = "OS/400";
     
     /**
+     * Identifier by which an AS/400-based ftp server is known throughout
+     * the commons-net ftp system.
+     */
+    public static final String SYST_AS400 = "AS/400";
+    
+    /**
      * Identifier by which an MVS-based ftp server is known throughout
      * the commons-net ftp system.
      */
