@@ -171,6 +171,12 @@ public class FTPClientConfig
      */
     public static final String SYST_OS400 = "OS/400";
     
+
+    /**
+     * Alternate SYST value for an AS/400 system.
+     */
+    public static final String SYST_AS400 = "AS/400";
+
     /**
      * Identifier by which an MVS-based ftp server is known throughout
      * the commons-net ftp system.
@@ -185,7 +191,7 @@ public class FTPClientConfig
      *
      * @since 1.5
      */
-    public static final String SYST_L8 = "Type: L8";
+    public static final String SYST_L8 = "TYPE: L8";
 
     /**
      * Identifier by which an Netware-based ftp server is known throughout

@@ -28,7 +28,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
  * org.apache.commons.net.ftp.FTPClient.listFiles()
  * if no other implementation has been specified.
  *
- * @see org.apache.commons.net.ftp.FTPClient#listFiles
+ * @see org.apache.commons.net.ftp.FTPClient#listFiles()
  * @see org.apache.commons.net.ftp.FTPClient#setParserFactory
  */
 public class DefaultFTPFileEntryParserFactory
@@ -109,7 +109,8 @@ public class DefaultFTPFileEntryParserFactory
                 {
                     parser = createOS2FTPEntryParser();
                 }
-                else if (ukey.indexOf(FTPClientConfig.SYST_OS400) >= 0)
+                else if ((ukey.indexOf(FTPClientConfig.SYST_OS400) >= 0)
+                    || (ukey.indexOf(FTPClientConfig.SYST_AS400) >= 0))
                 {
                     parser = createOS400FTPEntryParser();
                 }

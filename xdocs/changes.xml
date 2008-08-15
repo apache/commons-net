@@ -98,6 +98,10 @@ limitations under the License.
             <action dev="sebb" type="fix" issue="NET-223">
                 the data connection socket is not closed when an IOException occurred
             </action>
+            <action dev="sebb" type="fix" issue="NET-231">
+                ParserInitializationException when connecting to a Unix FTP server: comparison string must be upper case
+                Added check for AS/400 response.
+            </action>
 		</release> 
 		
 		<release version="1.4.1" date="December 3, 2005" description="fix release to restore jdk 1.3 compatability">
