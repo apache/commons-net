@@ -62,6 +62,14 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
         parser = factory.createFileEntryParser("OS/400");
         assertTrue(parser instanceof CompositeFileEntryParser);
 
+        parser = factory.createFileEntryParser("AS/400");
+        assertTrue(parser instanceof CompositeFileEntryParser);
+
+        // Added test to make sure it handles the Unix systems that were
+        // compiled with OS as "UNKNOWN". This test validates that the
+        // check is case-insensitive.
+        parser = factory.createFileEntryParser("UNKNOWN Type: L8");
+
         try {
             parser = factory.createFileEntryParser("OS2FTPFileEntryParser");
             fail("Exception should have been thrown. \"OS2FTPFileEntryParser\" is not a recognized key");

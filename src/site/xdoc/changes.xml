@@ -168,6 +168,9 @@ limitations under the License.
             <action dev="sebb" type="fix" issue="NET-223">
                 the data connection socket is not closed when an IOException occurred
             </action>
+            <action dev="sebb" type="fix" issue="NET-230">
+                ParserInitializationException when connecting to a Unix FTP server: comparison string must be upper case
+            </action>
 		</release>	
 
 

@@ -190,9 +190,12 @@ public class FTPClientConfig
      * This may happen if the ftpd in question was compiled without system
      * information.
      *
+     * NET-230 - Updated to be UPPERCASE so that the check done in
+     * createFileEntryParser will succeed.
+     *
      * @since 1.5
      */
-    public static final String SYST_L8 = "Type: L8";
+    public static final String SYST_L8 = "TYPE: L8";
     
     /**
      * Identifier by which an Netware-based ftp server is known throughout
