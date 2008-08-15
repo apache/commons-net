@@ -70,8 +70,6 @@ public abstract class FTPFileEntryParserImpl
             String entry = it.next();
             if (null == parseFTPEntry(entry)) {
                 it.remove();
-            } else {
-                break;
             }
          }
          return original;

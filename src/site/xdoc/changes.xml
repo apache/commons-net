@@ -171,6 +171,9 @@ limitations under the License.
             <action dev="sebb" type="fix" issue="NET-230">
                 ParserInitializationException when connecting to a Unix FTP server: comparison string must be upper case
             </action>
+            <action dev="sebb" type="fix" issue="NET-225">
+                FTPFileEntryParserImpl.preParse() doesn't remove unparsable entries at the end of the file list
+            </action>
 		</release>	
 
 
