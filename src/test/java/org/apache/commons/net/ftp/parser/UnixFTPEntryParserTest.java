@@ -170,6 +170,13 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 		assertNotNull(f);
 		assertEquals(f.getName(), "zxbox     ");	
 	}
+	
+	public void testNameWIthPunctuation() {
+		FTPFile f = getParser().parseFTPEntry("drwx------ 4 maxm Domain Users 512 Oct 2 10:59 abc(test)123.pdf");
+		assertNotNull(f);
+		assertEquals(f.getName(), "abc(test)123.pdf");
+		
+	}
 
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
