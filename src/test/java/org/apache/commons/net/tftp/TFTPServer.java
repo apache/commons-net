@@ -111,6 +111,7 @@ public class TFTPServer implements Runnable
 
     private int maxTimeoutRetries_ = 3;
     private int socketTimeout_;
+    private Thread serverThread;
     
     
     /**
@@ -241,9 +242,9 @@ public class TFTPServer implements Runnable
 
         serverTftp_.open(port_);
 
-        Thread go = new Thread(this);
-        go.setDaemon(true);
-        go.start();
+        serverThread = new Thread(this);
+        serverThread.setDaemon(true);
+        serverThread.start();
     }
 
     @Override
@@ -331,6 +332,12 @@ public class TFTPServer implements Runnable
         catch (RuntimeException e)
         {
             // noop
+        }
+        
+        try {
+            serverThread.join();
+        } catch (InterruptedException e) {
+            // we've done the best we could, return
         }
     }
 
