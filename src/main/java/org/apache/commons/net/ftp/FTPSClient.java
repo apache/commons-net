@@ -39,6 +39,7 @@ import javax.net.ssl.TrustManager;
  * see wire-level SSL details.
  * 
  * @version $Id$
+ * @since 2.0
  */
 public class FTPSClient extends FTPClient {
 
@@ -95,7 +96,6 @@ public class FTPSClient extends FTPClient {
     public FTPSClient() throws NoSuchAlgorithmException {
         this.protocol = DEFAULT_PROTOCOL;
         this.isImplicit = false;
-        context = SSLContext.getInstance(protocol);
     }
 
     /**
@@ -107,24 +107,22 @@ public class FTPSClient extends FTPClient {
     public FTPSClient(boolean isImplicit) throws NoSuchAlgorithmException {
         this.protocol = DEFAULT_PROTOCOL;
         this.isImplicit = isImplicit;
-        context = SSLContext.getInstance(protocol);
     }
 
     /**
      * Constructor for FTPSClient.
-     * @param conType The context type
+     * @param protocol the protocol
      * @throws NoSuchAlgorithmException A requested cryptographic algorithm 
      * is not available in the environment.
      */
     public FTPSClient(String protocol) throws NoSuchAlgorithmException {
         this.protocol = protocol;
         this.isImplicit = false;
-        context = SSLContext.getInstance(protocol);
     }
 
     /**
      * Constructor for FTPSClient.
-     * @param conType The context type
+     * @param protocol the protocol
      * @param isImplicit The secutiry mode(Implicit/Explicit).
      * @throws NoSuchAlgorithmException A requested cryptographic algorithm 
      * is not available in the environment.
@@ -133,7 +131,6 @@ public class FTPSClient extends FTPClient {
             throws NoSuchAlgorithmException {
         this.protocol = protocol;
         this.isImplicit = isImplicit;
-        context = SSLContext.getInstance(protocol);
     }
 
 
@@ -163,6 +160,7 @@ public class FTPSClient extends FTPClient {
      * @throws IOException If it throw by _connectAction_.
      * @see org.apache.commons.net.SocketClient#_connectAction_()
      */
+    @Override
     protected void _connectAction_() throws IOException {
         // Implicit mode.
         if (isImplicit) sslNegotiation();
@@ -192,6 +190,28 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
+     * Performs a lazy init of the SSL context 
+     * @throws IOException 
+     */
+    private void initSslContext() throws IOException {
+        if(context == null) {
+            try  {
+                context = SSLContext.getInstance(protocol);
+    
+                context.init(new KeyManager[] { getKeyManager() } , new TrustManager[] { getTrustManager() } , null);
+            } catch (KeyManagementException e) {
+                IOException ioe = new IOException("Could not initialize SSL context");
+                ioe.initCause(e);
+                throw ioe;
+            } catch (NoSuchAlgorithmException e) {
+                IOException ioe = new IOException("Could not initialize SSL context");
+                ioe.initCause(e);
+                throw ioe;
+            }
+        }
+    }
+    
+    /**
      * SSL/TLS negotiation. Acquires an SSL socket of a control 
      * connection and carries out handshake processing.
      * @throws IOException A handicap breaks out by sever negotiation.
@@ -200,11 +220,7 @@ public class FTPSClient extends FTPClient {
         // Evacuation not ssl socket.
         planeSocket = _socket_;
         
-        try {
-			context.init(new KeyManager[] { getKeyManager() } , new TrustManager[] { getTrustManager() } , null);
-		} catch (KeyManagementException e) {
-			e.printStackTrace();
-		}
+        initSslContext();
 
         SSLSocketFactory ssf = context.getSocketFactory();
         String ip = _socket_.getInetAddress().getHostAddress();
@@ -235,8 +251,8 @@ public class FTPSClient extends FTPClient {
      * @return The {@link KeyManager} instance
      */
     private KeyManager getKeyManager() {
-		return keyManager;
-	}
+        return keyManager;
+    }
     
     /**
     * Set a {@link KeyManager} to use
@@ -244,10 +260,10 @@ public class FTPSClient extends FTPClient {
     * @param keyManager The KeyManager implementation to set.
     */
     public void setKeyManager(KeyManager keyManager) {
-    	this.keyManager = keyManager;
+        this.keyManager = keyManager;
     }
 
-	/**
+    /**
      * Controls whether new a SSL session may be established by this socket.
      * @param isCreation The established socket flag.
      */
@@ -335,10 +351,11 @@ public class FTPSClient extends FTPClient {
     /**
      * Controls which particular cipher suites are enabled for use on this 
      * connection. I perform setting before a server negotiation.
-     * @param suites The cipher suites.
+     * @param cipherSuites The cipher suites.
      */
-    public void setEnabledCipherSuites(String[] suites) {
-        this.suites = suites;
+    public void setEnabledCipherSuites(String[] cipherSuites) {
+        suites = new String[cipherSuites.length];
+        System.arraycopy(cipherSuites, 0, suites, 0, cipherSuites.length);
     }
 
     /**
@@ -356,10 +373,11 @@ public class FTPSClient extends FTPClient {
     /**
      * Controls which particular protocol versions are enabled for use on this
      * connection. I perform setting before a server negotiation.
-     * @param protocols The protocol versions.
+     * @param protocolVersions The protocol versions.
      */
-    public void setEnabledProtocols(String[] protocols) {
-        this.protocols = protocols;
+    public void setEnabledProtocols(String[] protocolVersions) {
+        protocols = new String[protocolVersions.length];
+        System.arraycopy(protocolVersions, 0, protocols, 0, protocolVersions.length);
     }
 
     /**
@@ -411,7 +429,12 @@ public class FTPSClient extends FTPClient {
             setServerSocketFactory(null);
         } else {
             setSocketFactory(new FTPSSocketFactory(context));
-            setServerSocketFactory(SSLServerSocketFactory.getDefault());
+
+            initSslContext();
+            
+            SSLServerSocketFactory ssf = context.getServerSocketFactory();
+
+            setServerSocketFactory(ssf);
         }
     }
 
@@ -437,11 +460,12 @@ public class FTPSClient extends FTPClient {
      * the command.
      * @see org.apache.commons.net.ftp.FTP#sendCommand(java.lang.String)
      */
+    @Override
     public int sendCommand(String command, String args) throws IOException {
         int repCode = super.sendCommand(command, args);
         if (FTPSCommand._commands[FTPSCommand.CCC].equals(command)) {
             if (FTPReply.COMMAND_OK == repCode) {
-            		// TODO Check this - is this necessary at all?
+                    // TODO Check this - is this necessary at all?
                 _socket_ = planeSocket;
                 setSocketFactory(null);
             } else {
@@ -464,6 +488,7 @@ public class FTPSClient extends FTPClient {
      * @throws IOException If there is any problem with the connection.
      * @see org.apache.commons.net.ftp.FTPClient#_openDataConnection_(java.lang.String, int)
      */
+    @Override
     protected Socket _openDataConnection_(int command, String arg)
             throws IOException {
         Socket socket = super._openDataConnection_(command, arg);
@@ -490,18 +515,18 @@ public class FTPSClient extends FTPClient {
      * 
      * @return A TrustManager instance.
      */
-	public TrustManager getTrustManager() {
-		return trustManager;
-	}
+    public TrustManager getTrustManager() {
+        return trustManager;
+    }
 
-	/**
-	 * Override the default {@link TrustManager} to use.
-	 * 
-	 * @param trustManager The TrustManager implementation to set.
-	 */
-	public void setTrustManager(TrustManager trustManager) {
-		this.trustManager = trustManager;
-	}
+    /**
+     * Override the default {@link TrustManager} to use.
+     * 
+     * @param trustManager The TrustManager implementation to set.
+     */
+    public void setTrustManager(TrustManager trustManager) {
+        this.trustManager = trustManager;
+    }
     
     
     

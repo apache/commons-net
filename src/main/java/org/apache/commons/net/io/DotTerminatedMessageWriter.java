@@ -72,6 +72,7 @@ public final class DotTerminatedMessageWriter extends Writer
      * @exception IOException  If an error occurs while writing to the
      *            underlying output.
      ***/
+    @Override
     public void write(int ch) throws IOException
     {
         synchronized (lock)
@@ -112,6 +113,7 @@ public final class DotTerminatedMessageWriter extends Writer
      * @exception IOException If an error occurs while writing to the underlying
      *            output.
      ***/
+    @Override
     public void write(char[] buffer, int offset, int length) throws IOException
     {
         synchronized (lock)
@@ -129,6 +131,7 @@ public final class DotTerminatedMessageWriter extends Writer
      * @exception IOException If an error occurs while writing to the underlying
      *            output.
      ***/
+    @Override
     public void write(char[] buffer) throws IOException
     {
         write(buffer, 0, buffer.length);
@@ -142,6 +145,7 @@ public final class DotTerminatedMessageWriter extends Writer
      * @exception IOException If an error occurs while writing to the underlying
      *            output.
      ***/
+    @Override
     public void write(String string) throws IOException
     {
         write(string.toCharArray());
@@ -157,6 +161,7 @@ public final class DotTerminatedMessageWriter extends Writer
      * @exception IOException If an error occurs while writing to the underlying
      *            output.
      ***/
+    @Override
     public void write(String string, int offset, int length) throws IOException
     {
         write(string.toCharArray(), offset, length);
@@ -169,6 +174,7 @@ public final class DotTerminatedMessageWriter extends Writer
      * @exception IOException If an error occurs while writing to the underlying
      *            output.
      ***/
+    @Override
     public void flush() throws IOException
     {
         synchronized (lock)
@@ -186,6 +192,7 @@ public final class DotTerminatedMessageWriter extends Writer
      * @exception IOException If an error occurs while writing to the underlying
      *            output or closing the Writer.
      ***/
+    @Override
     public void close() throws IOException
     {
         synchronized (lock)

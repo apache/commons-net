@@ -42,10 +42,10 @@ public class TimeStampTest extends TestCase {
 
     public void testCompare() {
 
-        TimeStamp ts1 = new TimeStamp(TIME1);	// Tue, Dec 17 2002 14:07:24.810 UTC
+        TimeStamp ts1 = new TimeStamp(TIME1);   // Tue, Dec 17 2002 14:07:24.810 UTC
         TimeStamp ts2 = new TimeStamp(TIME1);
-        TimeStamp ts3 = new TimeStamp(TIME2); 	// Tue, Dec 17 2002 14:07:24.810 UTC
-        TimeStamp ts4 = new TimeStamp(TIME3); 	// Tue, Dec 17 2002 14:07:25.810 UTC
+        TimeStamp ts3 = new TimeStamp(TIME2);   // Tue, Dec 17 2002 14:07:24.810 UTC
+        TimeStamp ts4 = new TimeStamp(TIME3);   // Tue, Dec 17 2002 14:07:25.810 UTC
 
         // do assertion tests on TimeStamp class
         assertEquals("equals(1,2)", ts1, ts2);
@@ -54,9 +54,9 @@ public class TimeStampTest extends TestCase {
         assertEquals("hashCode(1,2)", ts1.hashCode(), ts2.hashCode());
         assertEquals("ts1==ts1", ts1, ts1);
 
-	// timestamps in ts1 (TIME1) and ts3 (TIME2) are only off by the smallest
-	// fraction of a second (~200 picoseconds) so the times are not equal but
-	// when converted to Java dates (in milliseconds) they will be equal.
+    // timestamps in ts1 (TIME1) and ts3 (TIME2) are only off by the smallest
+    // fraction of a second (~200 picoseconds) so the times are not equal but
+    // when converted to Java dates (in milliseconds) they will be equal.
         assertTrue("ts1 != ts3", !ts1.equals(ts3));
         assertTrue("compareTo(1,3)", ts1.compareTo(ts3) == -1);
         assertEquals("seconds", ts1.getSeconds(), ts3.getSeconds());
@@ -72,20 +72,20 @@ public class TimeStampTest extends TestCase {
     }
 
     public void testUTCString() {
-        TimeStamp ts1 = new TimeStamp(TIME1);	// Tue, Dec 17 2002 14:07:24.810 UTC
-	String actual = ts1.toUTCString();
-	assertEquals("Tue, Dec 17 2002 14:07:24.810 UTC", actual);
+        TimeStamp ts1 = new TimeStamp(TIME1);   // Tue, Dec 17 2002 14:07:24.810 UTC
+    String actual = ts1.toUTCString();
+    assertEquals("Tue, Dec 17 2002 14:07:24.810 UTC", actual);
     }
 
     public void testDateConversion() {
-	// convert current date to NtpTimeStamp then compare Java date
-	// computed from NTP timestamp with original Java date.
-	Calendar refCal = Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC"));
-	Date refDate = refCal.getTime();
-	TimeStamp ts = new TimeStamp(refDate);
-	assertEquals("refDate.getTime()", refDate.getTime(), ts.getTime());
-	Date tsDate = ts.getDate();
-	assertEquals(refDate, tsDate);
+    // convert current date to NtpTimeStamp then compare Java date
+    // computed from NTP timestamp with original Java date.
+    Calendar refCal = Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC"));
+    Date refDate = refCal.getTime();
+    TimeStamp ts = new TimeStamp(refDate);
+    assertEquals("refDate.getTime()", refDate.getTime(), ts.getTime());
+    Date tsDate = ts.getDate();
+    assertEquals(refDate, tsDate);
     }
 
 }

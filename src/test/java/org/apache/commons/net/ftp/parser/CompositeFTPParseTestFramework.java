@@ -36,6 +36,7 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
     /**
      * @see FTPParseTestFramework#getGoodListing()
      */
+    @Override
     protected String[] getGoodListing()
     {
         return (getGoodListings()[0]);
@@ -62,6 +63,7 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
     /**
      * @see FTPParseTestFramework#getBadListing()
      */
+    @Override
     protected String[] getBadListing()
     {
         return (getBadListings()[0]);
@@ -92,6 +94,7 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
     /* (non-Javadoc)
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testGoodListing()
      */
+    @Override
     public void testBadListing() throws Exception
     {
         String badsamples[][] = getBadListings();
@@ -104,7 +107,7 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
                 String test = badsamples[i][j];
                 FTPFile f = parser.parseFTPEntry(test);
                 assertNull("Should have Failed to parse " + test,
-                        f);
+                        nullFileOrNullDate(f));
 
                 doAdditionalBadTests(test, f);
             }

@@ -19,6 +19,7 @@ package org.apache.commons.net.ftp;
 
 /**
  * I acquire a command added in FTPS.
+ * @since 2.0
  */
 public final class FTPSCommand {
     public static final int AUTH = 0;

@@ -29,11 +29,11 @@ import org.apache.commons.net.ftp.FTPFile;
 public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 {
     private static final String DEFAULT_DATE_FORMAT 
-		= "yy/MM/dd HH:mm:ss"; //01/11/09 12:30:24
+        = "yy/MM/dd HH:mm:ss"; //01/11/09 12:30:24
     
 
 
-	private static final String REGEX =
+    private static final String REGEX =
         "(\\S+)\\s+"                // user
         + "(\\d+)\\s+"              // size
         + "(\\S+)\\s+(\\S+)\\s+"    // date stuff 
@@ -84,7 +84,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         {
             String usr = group(1);
             String filesize = group(2);
-        	String datestr = group(3)+" "+group(4);
+            String datestr = group(3)+" "+group(4);
             String typeStr = group(5);
             String name = group(6);
             
@@ -94,7 +94,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             }
             catch (ParseException e)
             {
-            	return null;  // this is a parsing failure too.
+                // intentionally do nothing
             }
 
 
@@ -147,6 +147,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * parameter being specified.
      * @return the default configuration for this parser.
      */
+    @Override
     protected FTPClientConfig getDefaultConfiguration() {
         return new FTPClientConfig(
                 FTPClientConfig.SYST_OS400,

@@ -22,10 +22,9 @@
     <parent>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-parent</artifactId>
-        <version>8</version>
+        <version>11</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <packaging>bundle</packaging>
     <groupId>commons-net</groupId>
     <artifactId>commons-net</artifactId>
     <version>2.0.0-SNAPSHOT</version>
@@ -117,7 +116,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <version>3.8.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -158,6 +157,19 @@
                     <tarLongFileMode>gnu</tarLongFileMode>
                 </configuration>
             </plugin>
+
+		     <plugin>
+		       <groupId>org.apache.maven.plugins</groupId>
+		       <artifactId>maven-jar-plugin</artifactId>
+		       <version>2.2</version>
+		       <executions>
+		         <execution>
+		           <goals>
+		             <goal>test-jar</goal>
+		           </goals>
+		         </execution>
+		       </executions>
+		     </plugin>
 
 
             <plugin>
@@ -211,6 +223,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-changes-plugin</artifactId>
+                <version>2.0</version>
                 <configuration>
                     <xmlPath>${basedir}/src/site/xdoc/changes.xml</xmlPath>
                     <issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
@@ -227,10 +240,21 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>clirr-maven-plugin</artifactId>
-                <version>2.1</version>
+                <version>2.2.2</version>
                 <configuration>
                     <comparisonVersion>1.4.1</comparisonVersion>
                     <minSeverity>info</minSeverity>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <linksource>true</linksource>
+                    <links>
+                        <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
+                    </links>
                 </configuration>
             </plugin>
 

@@ -42,7 +42,7 @@ public class TestSetupParameters
 
     public static final String mailhost = "localhost";
 
-	 //Cannot be instantiated
+     //Cannot be instantiated
     private TestSetupParameters()
     {}
 }

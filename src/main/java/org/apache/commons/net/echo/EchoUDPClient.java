@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 
-import org.apache.commons.net.DatagramSocketClient;
 import org.apache.commons.net.discard.DiscardUDPClient;
 
 /***
@@ -59,6 +58,7 @@ public final class EchoUDPClient extends DiscardUDPClient
      * @exception IOException If an error occurs during the datagram send
      *     operation.
      ***/
+    @Override
     public void send(byte[] data, int length, InetAddress host)
     throws IOException
     {
@@ -67,6 +67,7 @@ public final class EchoUDPClient extends DiscardUDPClient
 
 
     /*** Same as <code> send(data, data.length, host) </code> ***/
+    @Override
     public void send(byte[] data, InetAddress host) throws IOException
     {
         send(data, data.length, host, DEFAULT_PORT);

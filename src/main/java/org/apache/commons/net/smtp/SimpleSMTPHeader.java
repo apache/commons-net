@@ -117,6 +117,7 @@ public class SimpleSMTPHeader
      * <p>
      * @return The message header in the form of a String.
      ***/
+    @Override
     public String toString()
     {
         StringBuffer header = new StringBuffer();

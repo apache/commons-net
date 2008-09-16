@@ -52,10 +52,10 @@ public final class FTPSExample
 
     public static final void main(String[] args) throws NoSuchAlgorithmException
     {
-    	int base = 0;
+        int base = 0;
         boolean storeFile = false, binaryTransfer = false, error = false;
         String server, username, password, remote, local;
-        String protocol = "SSL";	// SSL/TLS
+        String protocol = "SSL";    // SSL/TLS
         FTPSClient ftps;
         
         for (base = 0; base < args.length; base++)
@@ -125,7 +125,7 @@ __main:
         {
             ftps.setBufferSize(1000);
 
-        	if (!ftps.login(username, password))
+            if (!ftps.login(username, password))
             {
                 ftps.logout();
                 error = true;

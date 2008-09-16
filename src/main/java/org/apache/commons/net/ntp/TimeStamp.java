@@ -43,7 +43,7 @@ import java.util.TimeZone;
  * @version $Revision$ $Date$
  * @see java.util.Date
  */
-public class TimeStamp implements java.io.Serializable, Comparable
+public class TimeStamp implements java.io.Serializable, Comparable // TODO add comparable type?
 {
 
     /**
@@ -65,8 +65,8 @@ public class TimeStamp implements java.io.Serializable, Comparable
     /*
      * Caches for the DateFormatters used by various toString methods.
      */
-    private static SoftReference simpleFormatter = null;
-    private static SoftReference utcFormatter = null;
+    private static SoftReference<DateFormat> simpleFormatter = null;
+    private static SoftReference<DateFormat> utcFormatter = null;
 
     /**
      * NTP timestamp value: 64-bit unsigned fixed-point number as defined in RFC-1305
@@ -189,8 +189,8 @@ public class TimeStamp implements java.io.Serializable, Comparable
      */
     public static long getTime(long ntpTimeValue)
     {
-        long seconds = (ntpTimeValue >>> 32) & 0xffffffffL;	// high-order 32-bits
-        long fraction = ntpTimeValue & 0xffffffffL;		// low-order 32-bits
+        long seconds = (ntpTimeValue >>> 32) & 0xffffffffL;     // high-order 32-bits
+        long fraction = ntpTimeValue & 0xffffffffL;             // low-order 32-bits
 
         // Use round-off on fractional part to preserve going to lower precision
         fraction = Math.round(1000D * fraction / 0x100000000L);
@@ -286,7 +286,7 @@ public class TimeStamp implements java.io.Serializable, Comparable
      */
     protected static long toNtpTime(long t)
     {
-        boolean useBase1 = t < msb0baseTime;	// time < Feb-2036
+        boolean useBase1 = t < msb0baseTime;    // time < Feb-2036
         long baseTime;
         if (useBase1) {
             baseTime = t - msb1baseTime; // dates <= Feb-2036
@@ -317,6 +317,7 @@ public class TimeStamp implements java.io.Serializable, Comparable
      *
      * @return  a hash code value for this object.
      */
+    @Override
     public int hashCode()
     {
         return (int) (ntpTime ^ (ntpTime >>> 32));
@@ -332,6 +333,7 @@ public class TimeStamp implements java.io.Serializable, Comparable
      * @return  <code>true</code> if the objects are the same;
      *          <code>false</code> otherwise.
      */
+    @Override
     public boolean equals(Object obj)
     {
         if (obj instanceof TimeStamp) {
@@ -349,6 +351,7 @@ public class TimeStamp implements java.io.Serializable, Comparable
      * @return NTP timestamp 64-bit long value as hex string with seconds
      * separated by fractional seconds.
      */
+    @Override
     public String toString()
     {
         return toString(ntpTime);
@@ -403,7 +406,7 @@ public class TimeStamp implements java.io.Serializable, Comparable
     {
         DateFormat formatter = null;
         if (simpleFormatter != null) {
-            formatter = (DateFormat) simpleFormatter.get();
+            formatter = simpleFormatter.get();
         }
         if (formatter == null) {
             // No cache yet, or cached formatter GC'd
@@ -430,7 +433,7 @@ public class TimeStamp implements java.io.Serializable, Comparable
     {
         DateFormat formatter = null;
         if (utcFormatter != null)
-            formatter = (DateFormat) utcFormatter.get();
+            formatter = utcFormatter.get();
         if (formatter == null) {
             // No cache yet, or cached formatter GC'd
             formatter = new SimpleDateFormat(NTP_DATE_FORMAT + " 'UTC'",
@@ -453,7 +456,7 @@ public class TimeStamp implements java.io.Serializable, Comparable
      *          is numerically less than the TimeStamp argument; and a
      *          value greater than <code>0</code> if this TimeStamp is
      *          numerically greater than the TimeStamp argument
-     *		(signed comparison).
+     *          (signed comparison).
      */
     public int compareTo(TimeStamp anotherTimeStamp)
     {
@@ -470,13 +473,13 @@ public class TimeStamp implements java.io.Serializable, Comparable
      *
      * @param   o the <code>Object</code> to be compared.
      * @return  the value <code>0</code> if the argument is a TimeStamp
-     *		numerically equal to this TimeStamp; a value less than
-     *		<code>0</code> if the argument is a TimeStamp numerically
-     *		greater than this TimeStamp; and a value greater than
-     *		<code>0</code> if the argument is a TimeStamp numerically
-     *		less than this TimeStamp.
+     *      numerically equal to this TimeStamp; a value less than
+     *      <code>0</code> if the argument is a TimeStamp numerically
+     *      greater than this TimeStamp; and a value greater than
+     *      <code>0</code> if the argument is a TimeStamp numerically
+     *      less than this TimeStamp.
      * @exception ClassCastException if the argument is not a
-     *		  <code>TimeStamp</code>.
+     *        <code>TimeStamp</code>.
      * @see     java.lang.Comparable
      */
     public int compareTo(Object o)

@@ -52,17 +52,18 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 {
 
     private static final String DEFAULT_DATE_FORMAT 
-		= "d-MMM-yyyy HH:mm:ss"; //9-NOV-2001 12:30:24
+        = "d-MMM-yyyy HH:mm:ss"; //9-NOV-2001 12:30:24
 
     /**
      * this is the regular expression used by this parser.
      */
     private static final String REGEX =
-        "(.*;[0-9]+)\\s*"
-        + "(\\d+)/\\d+\\s*"
-        +"(\\S+)\\s+(\\S+)\\s+"
-        + "\\[(([0-9$A-Za-z_]+)|([0-9$A-Za-z_]+),([0-9$a-zA-Z_]+))\\]?\\s*"
-        + "\\([a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*,[a-zA-Z]*\\)";
+        "(.*;[0-9]+)\\s*"                                                   //1  file and version
+        + "(\\d+)/\\d+\\s*"                                                 //2  size/allocated
+        +"(\\S+)\\s+(\\S+)\\s+"                                             //3+4 date and time
+        + "\\[(([0-9$A-Za-z_]+)|([0-9$A-Za-z_]+),([0-9$a-zA-Z_]+))\\]?\\s*" //5(6,7,8) owner
+        + "\\([a-zA-Z]*,([a-zA-Z]*),([a-zA-Z]*),([a-zA-Z]*)\\)";            //9,10,11 Permissions (O,G,W)
+    // TODO - perhaps restrict permissions to [RWED]* ?
 
 
 
@@ -142,15 +143,19 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             f.setRawListing(entry);
             String name = group(1);
             String size = group(2);
-        	String datestr = group(3)+" "+group(4);
+            String datestr = group(3)+" "+group(4);
             String owner = group(5);
+            String permissions[] = new String[3];
+            permissions[0]= group(9);
+            permissions[1]= group(10);
+            permissions[2]= group(11);
             try
             {
                 f.setTimestamp(super.parseTimestamp(datestr));
             }
             catch (ParseException e)
             {
-            	return null;  // this is a parsing failure too.
+                 // intentionally do nothing
             }
 
 
@@ -198,9 +203,21 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             f.setGroup(grp);
             f.setUser(user);
             //set group and owner
-            //Since I don't need the persmissions on this file (RWED), I'll
-            //leave that for further development. 'Cause it will be a bit
-            //elaborate to do it right with VMSes World, Global and so forth.
+
+            //Set file permission. 
+            //VMS has (SYSTEM,OWNER,GROUP,WORLD) users that can contain
+            //R (read) W (write) E (execute) D (delete)
+
+            //iterate for OWNER GROUP WORLD permissions 
+            for (int access = 0; access < 3; access++)
+            {
+                String permission = permissions[access];
+
+                f.setPermission(access, FTPFile.READ_PERMISSION, permission.indexOf('R')>=0);
+                f.setPermission(access, FTPFile.WRITE_PERMISSION, permission.indexOf('W')>=0);
+                f.setPermission(access, FTPFile.EXECUTE_PERMISSION, permission.indexOf('E')>=0);
+            }
+
             return f;
         }
         return null;
@@ -219,6 +236,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * @return A string representing the next ftp entry or null if none found.
      * @exception IOException thrown on any IO Error reading from the reader.
      */
+    @Override
     public String readNextEntry(BufferedReader reader) throws IOException
     {
         String line = reader.readLine();
@@ -250,7 +268,8 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * parameter being specified.
      * @return the default configuration for this parser.
      */
-   protected FTPClientConfig getDefaultConfiguration() {
+    @Override
+    protected FTPClientConfig getDefaultConfiguration() {
         return new FTPClientConfig(
                 FTPClientConfig.SYST_VMS,
                 DEFAULT_DATE_FORMAT,

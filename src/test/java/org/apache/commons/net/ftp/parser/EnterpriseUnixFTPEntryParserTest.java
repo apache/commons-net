@@ -60,7 +60,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     private static final String[] GOODSAMPLES =
     {
         "-C--E-----FTP B QUA1I1      18128       41 Aug 12 13:56 QUADTEST",
-		"-C--E-----FTP A QUA1I1      18128       41 Aug 12 13:56 QUADTEST2"
+        "-C--E-----FTP A QUA1I1      18128       41 Aug 12 13:56 QUADTEST2"
     };
 
     /**
@@ -87,6 +87,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
      */
+    @Override
     public void testParseFieldsOnDirectory() throws Exception
     {
         // Everything is a File for now.
@@ -95,6 +96,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
      */
+    @Override
     public void testParseFieldsOnFile() throws Exception
     {
         FTPFile file = getParser().parseFTPEntry("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 13:56 QUADTEST");
@@ -106,7 +108,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
         assertEquals("QUADTEST",
                      file.getName());
         assertEquals(5000000000L, 
-        			 file.getSize());
+                     file.getSize());
         assertEquals("QUA1I1",
                      file.getUser());
         assertEquals("18128",
@@ -129,6 +131,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getBadListing()
      */
+    @Override
     protected String[] getBadListing()
     {
 
@@ -138,6 +141,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getGoodListing()
      */
+    @Override
     protected String[] getGoodListing()
     {
 
@@ -147,6 +151,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
      */
+    @Override
     protected FTPFileEntryParser getParser()
     {
 

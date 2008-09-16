@@ -76,6 +76,7 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
      */
+    @Override
     public void testParseFieldsOnDirectory() throws Exception
     {
         FTPFile dir = getParser().parseFTPEntry("     0           DIR   11-28-97   09:42  PC");
@@ -91,6 +92,7 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
      */
+    @Override
     public void testParseFieldsOnFile() throws Exception
     {
         FTPFile file = getParser().parseFTPEntry("5000000000      A          11-17-98   16:07  POPUPLOG.OS2");
@@ -106,6 +108,7 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getBadListing()
      */
+    @Override
     protected String[] getBadListing()
     {
 
@@ -115,6 +118,7 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getGoodListing()
      */
+    @Override
     protected String[] getGoodListing()
     {
 
@@ -124,6 +128,7 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
      */
+    @Override
     protected FTPFileEntryParser getParser()
     {
         ConfigurableFTPFileEntryParserImpl parser =

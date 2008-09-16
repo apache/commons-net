@@ -144,7 +144,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
             ++index;
         }
 
-        mode = buffer.toString().toLowerCase();
+        mode = buffer.toString().toLowerCase(java.util.Locale.ENGLISH);
         length = _modeStrings.length;
 
         for (index = 0; index < length; index++)
@@ -177,6 +177,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
      * @param data The buffer to store the packet and to use in the datagram.
      * @return The datagram argument.
      ***/
+    @Override
     final DatagramPacket _newDatagram(DatagramPacket datagram, byte[] data)
     {
         int fileLength, modeLength;
@@ -210,6 +211,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
      * <p>
      * @return A UDP datagram containing the TFTP request packet.
      ***/
+    @Override
     public final DatagramPacket newDatagram()
     {
         int fileLength, modeLength;

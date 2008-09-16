@@ -252,6 +252,7 @@ public class RExecClient extends SocketClient
      * <p>
      * @exception IOException If there an error occurs while disconnecting.
      ***/
+    @Override
     public void disconnect() throws IOException
     {
         if (_errorStream_ != null)

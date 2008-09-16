@@ -96,10 +96,10 @@ public class NtpV3Impl implements NtpV3Packet
 
     /***
      * Returns leap indicator as defined in RFC-1305 which is a two-bit code:
-     *	0=no warning
-     *	1=last minute has 61 seconds
-     *	2=last minute has 59 seconds
-     *	3=alarm condition (clock not synchronized)
+     *  0=no warning
+     *  1=last minute has 61 seconds
+     *  2=last minute has 59 seconds
+     *  3=alarm condition (clock not synchronized)
      *
      * @return leap indicator as defined in RFC-1305.
      */
@@ -128,7 +128,7 @@ public class NtpV3Impl implements NtpV3Packet
      */
     public int getPoll()
     {
-        return (int) (buf[POLL_INDEX]);
+        return buf[POLL_INDEX];
     }
 
     /***
@@ -150,7 +150,7 @@ public class NtpV3Impl implements NtpV3Packet
      */
     public int getPrecision()
     {
-        return (int) buf[PRECISION_INDEX];
+        return buf[PRECISION_INDEX];
     }
 
     /***
@@ -508,15 +508,12 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return a datagram packet.
      */
-    public DatagramPacket getDatagramPacket()
+    public synchronized DatagramPacket getDatagramPacket()
     {
-        if (dp == null)
-            synchronized(this) {
-                if (dp == null) {
-                    dp = new DatagramPacket(buf, buf.length);
-                    dp.setPort(NTP_PORT);
-                }
-            }
+        if (dp == null) {
+            dp = new DatagramPacket(buf, buf.length);
+            dp.setPort(NTP_PORT);
+        }
         return dp;
     }
 
@@ -568,6 +565,7 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return details of NTP packet as a string.
      */
+    @Override
     public String toString()
     {
         return "[" +

@@ -76,6 +76,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
     /**
      * @see FTPParseTestFramework#getBadListing()
      */
+    @Override
     protected String[][] getBadListings()
     {
         return badsamples;
@@ -84,6 +85,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
     /**
      * @see FTPParseTestFramework#getGoodListing()
      */
+    @Override
     protected String[][] getGoodListings()
     {
         return goodsamples;
@@ -92,6 +94,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
     /**
      * @see FTPParseTestFramework#getParser()
      */
+    @Override
     protected FTPFileEntryParser getParser()
     {
         return new CompositeFileEntryParser(new FTPFileEntryParser[]
@@ -104,6 +107,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
     /**
      * @see FTPParseTestFramework#testParseFieldsOnDirectory()
      */
+    @Override
     public void testParseFieldsOnDirectory() throws Exception
     {
         FTPFile f = getParser().parseFTPEntry("PEP             36864 04/03/24 14:06:34 *DIR       dir1/");
@@ -131,6 +135,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
                      df.format(f.getTimestamp().getTime()));
     }
 
+    @Override
     protected void doAdditionalGoodTests(String test, FTPFile f)
     {
         if (test.startsWith("d"))
@@ -143,6 +148,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
     /**
      * @see FTPParseTestFramework#testParseFieldsOnFile()
      */
+    @Override
     public void testParseFieldsOnFile() throws Exception
     {
         FTPFile f = getParser().parseFTPEntry("PEP              5000000000 04/03/24 14:06:29 *STMF      build.xml");

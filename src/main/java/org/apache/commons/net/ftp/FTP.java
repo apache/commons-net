@@ -271,7 +271,7 @@ public class FTP extends SocketClient
 
     // The RFC-compliant multiline termination check
     private boolean __strictCheck(String line, String code) {
-    	return (!(line.startsWith(code) && line.charAt(3) == ' '));
+        return (!(line.startsWith(code) && line.charAt(3) == ' '));
     }
     
     // The strict check is too strong a condition because of non-conforming ftp
@@ -280,7 +280,7 @@ public class FTP extends SocketClient
     // test that the line starts with a digit rather than starting with
     // the code.
     private boolean __lenientCheck(String line) {
-    	return (!(line.length() >= 4 && line.charAt(3) != '-' &&
+        return (!(line.length() >= 4 && line.charAt(3) != '-' &&
                 Character.isDigit(line.charAt(0))));
     }
     
@@ -351,6 +351,7 @@ public class FTP extends SocketClient
      * Initiates control connections and gets initial reply.
      * Initializes {@link #_controlInput_} and {@link #_controlOutput_}.
      */
+    @Override
     protected void _connectAction_() throws IOException
     {
         super._connectAction_();
@@ -421,6 +422,7 @@ public class FTP extends SocketClient
      * <p>
      * @exception IOException If an error occurs while disconnecting.
      ***/
+    @Override
     public void disconnect() throws IOException
     {
         super.disconnect();
@@ -466,7 +468,7 @@ public class FTP extends SocketClient
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
         try{
-	    _controlOutput_.write(message = __commandBuffer.toString());
+        _controlOutput_.write(message = __commandBuffer.toString());
             _controlOutput_.flush();
         }
         catch (SocketException e)
@@ -480,7 +482,7 @@ public class FTP extends SocketClient
                 throw e;
             }
         }
-	
+    
 
         if (_commandSupport_.getListenerCount() > 0)
             _commandSupport_.fireCommandSent(command, message);
@@ -652,8 +654,8 @@ public class FTP extends SocketClient
         buffer = new StringBuilder(256);
         
         for (String line : _replyLines) {
-        		buffer.append(line);
-        		buffer.append(SocketClient.NETASCII_EOL);
+                buffer.append(line);
+                buffer.append(SocketClient.NETASCII_EOL);
         }
         
          _newReplyString = false;
@@ -1145,6 +1147,15 @@ public class FTP extends SocketClient
     {
         return sendCommand(FTPCommand.REST, marker);
     }
+    
+    
+    /**
+     * @since 2.0
+     **/
+    public int mdtm(String file) throws IOException 
+    {
+        return sendCommand(FTPCommand.MDTM, file);
+    }
 
     /***
      * A convenience method to send the FTP RNFR command to the server,
@@ -1477,18 +1488,20 @@ public class FTP extends SocketClient
     /**
      * Return whether strict multiline parsing is enabled, as per RFX 959, section 4.2.
      * @return True if strict, false if lenient
+     * @since 2.0
      */
-	public boolean isStrictMultilineParsing() {
-		return strictMultilineParsing;
-	}
+    public boolean isStrictMultilineParsing() {
+        return strictMultilineParsing;
+    }
 
-	/**
-	 * Set strict multiline parsing.
-	 * @param strictMultilineParsing
-	 */
-	public void setStrictMultilineParsing(boolean strictMultilineParsing) {
-		this.strictMultilineParsing = strictMultilineParsing;
-	}
+    /**
+     * Set strict multiline parsing.
+     * @param strictMultilineParsing
+     * @since 2.0
+     */
+    public void setStrictMultilineParsing(boolean strictMultilineParsing) {
+        this.strictMultilineParsing = strictMultilineParsing;
+    }
 }
 
 /* Emacs configuration

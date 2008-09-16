@@ -137,6 +137,7 @@ public final class TFTPDataPacket extends TFTPPacket
      * @param data The buffer to store the packet and to use in the datagram.
      * @return The datagram argument.
      ***/
+    @Override
     DatagramPacket _newDatagram(DatagramPacket datagram, byte[] data)
     {
         data[0] = 0;
@@ -168,6 +169,7 @@ public final class TFTPDataPacket extends TFTPPacket
      * <p>
      * @return A UDP datagram containing the TFTP data packet.
      ***/
+    @Override
     public DatagramPacket newDatagram()
     {
         byte[] data;

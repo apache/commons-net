@@ -23,12 +23,12 @@ package org.apache.commons.net.nntp;
  *
  */
 public interface Threadable {
-	public boolean isDummy();
-	public String messageThreadId();
-	public String[] messageThreadReferences();
-	public String simplifiedSubject();
-	public boolean subjectIsReply();
-	public void setChild(Threadable child); 
-	public void setNext(Threadable next);
-	public Threadable makeDummy();
+    public boolean isDummy();
+    public String messageThreadId();
+    public String[] messageThreadReferences();
+    public String simplifiedSubject();
+    public boolean subjectIsReply();
+    public void setChild(Threadable child); 
+    public void setNext(Threadable next);
+    public Threadable makeDummy();
 }

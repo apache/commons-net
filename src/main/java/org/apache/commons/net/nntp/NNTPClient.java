@@ -197,10 +197,10 @@ public class NNTPClient extends NNTP
             result._setFirstArticle(firstNum);
             result._setLastArticle(lastNum);
 
-	    if((firstNum == 0) && (lastNum == 0))
-		    result._setArticleCount(0);
-	    else
-		    result._setArticleCount(lastNum - firstNum + 1);
+        if((firstNum == 0) && (lastNum == 0))
+            result._setArticleCount(0);
+        else
+            result._setArticleCount(lastNum - firstNum + 1);
         }
         catch (NumberFormatException e)
         {
@@ -237,14 +237,14 @@ public class NNTPClient extends NNTP
     {
         int size;
         String line;
-        Vector list;
+        Vector<NewsgroupInfo> list;
         BufferedReader reader;
         NewsgroupInfo tmp, info[];
 
         reader = new BufferedReader(new DotTerminatedMessageReader(_reader_));
         // Start of with a big vector because we may be reading a very large
         // amount of groups.
-        list = new Vector(2048);
+        list = new Vector<NewsgroupInfo>(2048);
 
         while ((line = reader.readLine()) != null)
         {
@@ -1009,7 +1009,7 @@ public class NNTPClient extends NNTP
     {
         int size;
         String line;
-        Vector list;
+        Vector<String> list;
         String[] result;
         BufferedReader reader;
 
@@ -1018,7 +1018,7 @@ public class NNTPClient extends NNTP
                                                 query.isGMT(), query.getDistributions())))
             return null;
 
-        list = new Vector();
+        list = new Vector<String>();
         reader = new BufferedReader(new DotTerminatedMessageReader(_reader_));
 
         while ((line = reader.readLine()) != null)

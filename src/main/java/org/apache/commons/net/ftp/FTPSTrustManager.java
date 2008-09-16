@@ -27,28 +27,28 @@ import javax.net.ssl.X509TrustManager;
  * Custom {@link TrustManager} implementation.
  * 
  * @version $Id$
- *
+ * @since 2.0
  */
 public class FTPSTrustManager implements X509TrustManager
 {
-	/**
-	 * No-op
-	 */
-	public void checkClientTrusted(X509Certificate[] certificates, String authType)
-	{
-		return;
-	}
+    /**
+     * No-op
+     */
+    public void checkClientTrusted(X509Certificate[] certificates, String authType)
+    {
+        return;
+    }
 
-	public void checkServerTrusted(X509Certificate[] certificates, String authType) throws CertificateException
-	{
-		for (int i = 0; i < certificates.length; ++i)
-		{
-			certificates[i].checkValidity();
-		}
-	}
+    public void checkServerTrusted(X509Certificate[] certificates, String authType) throws CertificateException
+    {
+        for (int i = 0; i < certificates.length; ++i)
+        {
+            certificates[i].checkValidity();
+        }
+    }
 
-	public X509Certificate[] getAcceptedIssuers()
-	{
-		return null;
-	}
+    public X509Certificate[] getAcceptedIssuers()
+    {
+        return null;
+    }
 }

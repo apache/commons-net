@@ -58,20 +58,18 @@ public abstract class FTPFileEntryParserImpl
      * perform some action upon the FTPFileList after it has been created
      * from the server stream, but before any clients see the list.
      *
-     * This default implementation is a no-op.
+     * This default implementation removes entries that do not parse as files.
      *
      * @param original Original list after it has been created from the server stream
      *
      * @return <code>original</code> unmodified.
      */
-     public List preParse(List<String> original) {
-         Iterator it = original.iterator();
+     public List<String> preParse(List<String> original) {
+         Iterator<String> it = original.iterator();
          while (it.hasNext()){
-            String entry = (String) it.next();
+            String entry = it.next();
             if (null == parseFTPEntry(entry)) {
                 it.remove();
-            } else {
-                break;
             }
          }
          return original;

@@ -107,6 +107,7 @@ public class RCommandClient extends RExecClient
 
     // Overrides method in RExecClient in order to implement proper
     // port number limitations.
+    @Override
     InputStream _createErrorStream() throws IOException
     {
         int localPort;
@@ -192,7 +193,7 @@ public class RCommandClient extends RExecClient
                     _socketFactory_.createSocket(host, port, localAddr, localPort);
             }
             catch (BindException be) {
-            	continue;
+                continue;
             }
             catch (SocketException e)
             {
@@ -224,6 +225,7 @@ public class RCommandClient extends RExecClient
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
      ***/
+    @Override
     public void connect(InetAddress host, int port)
     throws SocketException, IOException
     {
@@ -247,6 +249,7 @@ public class RCommandClient extends RExecClient
      *  derived from it.
      * @exception UnknownHostException If the hostname cannot be resolved.
      ***/
+    @Override
     public void connect(String hostname, int port)
     throws SocketException, IOException
     {
@@ -297,6 +300,7 @@ public class RCommandClient extends RExecClient
      * @exception IllegalArgumentException If an invalid local port number
      *            is specified.
      ***/
+    @Override
     public void connect(InetAddress host, int port,
                         InetAddress localAddr, int localPort)
     throws SocketException, IOException, IllegalArgumentException
@@ -328,6 +332,7 @@ public class RCommandClient extends RExecClient
      * @exception IllegalArgumentException If an invalid local port number
      *            is specified.
      ***/
+    @Override
     public void connect(String hostname, int port,
                         InetAddress localAddr, int localPort)
     throws SocketException, IOException, IllegalArgumentException

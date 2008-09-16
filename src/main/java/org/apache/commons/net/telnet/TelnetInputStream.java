@@ -117,7 +117,7 @@ _loop:
             // If there is no more data AND we were told not to block, just return -2. (More efficient than exception.)
             if(!mayBlock && super.available() == 0)
                 return -2;
-        	
+            
             // Otherwise, exit only when we reach end of stream.
             if ((ch = super.read()) < 0)
                 return -1;
@@ -321,6 +321,7 @@ _mainSwitch:
         }
     }
 
+    @Override
     public int read() throws IOException
     {
         // Critical section because we're altering __bytesAvailable,
@@ -357,7 +358,7 @@ _mainSwitch:
                         }
                         catch (InterruptedException e)
                         {
-                            throw new IOException("Fatal thread interruption during read.");
+                            throw new InterruptedIOException("Fatal thread interruption during read.");
                         }
                     }
                     else
@@ -365,7 +366,7 @@ _mainSwitch:
                         //__alreadyread = false;
                         __readIsWaiting = true;
                         int ch;
-                        boolean mayBlock = true;	// block on the first read only
+                        boolean mayBlock = true;    // block on the first read only
                         
                         do
                         {
@@ -429,11 +430,11 @@ _mainSwitch:
 
                     --__bytesAvailable;
 
-		    // Need to explicitly notify() so available() works properly
-		    if(__bytesAvailable == 0 && __threaded) {
-			    __queue.notify();
-		    }
-		    
+            // Need to explicitly notify() so available() works properly
+            if(__bytesAvailable == 0 && __threaded) {
+                __queue.notify();
+            }
+            
                     return ch;
                 }
             }
@@ -452,6 +453,7 @@ _mainSwitch:
      * @exception IOException If an error occurs in reading the underlying
      *            stream.
      ***/
+    @Override
     public int read(byte buffer[]) throws IOException
     {
         return read(buffer, 0, buffer.length);
@@ -472,6 +474,7 @@ _mainSwitch:
      * @exception IOException If an error occurs while reading the underlying
      *            stream.
      ***/
+    @Override
     public int read(byte buffer[], int offset, int length) throws IOException
     {
         int ch, off;
@@ -503,11 +506,13 @@ _mainSwitch:
 
 
     /*** Returns false.  Mark is not supported. ***/
+    @Override
     public boolean markSupported()
     {
         return false;
     }
 
+    @Override
     public int available() throws IOException
     {
         // Critical section because run() may change __bytesAvailable
@@ -520,6 +525,7 @@ _mainSwitch:
 
     // Cannot be synchronized.  Will cause deadlock if run() is blocked
     // in read because BufferedInputStream read() is synchronized.
+    @Override
     public void close() throws IOException
     {
         // Completely disregard the fact thread may still be running.

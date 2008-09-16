@@ -22,6 +22,7 @@ package org.apache.commons.net.telnet;
  * <p>
  * @author Yuval Kashtan
  * @version $Id$
+ * @since 2.0
  ***/
 public class WindowSizeOptionHandler extends TelnetOptionHandler
 {
@@ -54,24 +55,24 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
      * @param acceptremote - if set to true, any WILL request is accepted.
      ***/
     public WindowSizeOptionHandler(
-		int nWidth,
-		int nHeight,
-		boolean initlocal,
-		boolean initremote,
-		boolean acceptlocal,
-		boolean acceptremote
+        int nWidth,
+        int nHeight,
+        boolean initlocal,
+        boolean initremote,
+        boolean acceptlocal,
+        boolean acceptremote
     ) {
         super (
-			TelnetOption.WINDOW_SIZE,
-			initlocal,
-			initremote,
-			acceptlocal,
-			acceptremote
-		);
+            TelnetOption.WINDOW_SIZE,
+            initlocal,
+            initremote,
+            acceptlocal,
+            acceptremote
+        );
 
-		m_nWidth = nWidth;
-		m_nHeight = nHeight;
-	}
+        m_nWidth = nWidth;
+        m_nHeight = nHeight;
+    }
 
     /***
      * Constructor for the WindowSizeOptionHandler. Initial and accept
@@ -81,19 +82,19 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
      * @param nHeight - Window Height
      ***/
     public WindowSizeOptionHandler(
-		int nWidth,
-		int nHeight
+        int nWidth,
+        int nHeight
     ) {
         super (
-			TelnetOption.WINDOW_SIZE,
-			false,
-			false,
-			false,
-			false
-		);
+            TelnetOption.WINDOW_SIZE,
+            false,
+            false,
+            false,
+            false
+        );
 
-		m_nWidth = nWidth;
-		m_nHeight = nHeight;
+        m_nWidth = nWidth;
+        m_nHeight = nHeight;
     }
 
     /***
@@ -104,6 +105,7 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
      * <p>
      * @return terminal type information
      ***/
+    @Override
     public int[] answerSubnegotiation(int suboptionData[], int suboptionLength)
     {
         return null;
@@ -115,61 +117,62 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
      * <p>
      * @return always null (no response to subnegotiation)
      ***/
+    @Override
     public int[] startSubnegotiationLocal()
     {
-		int nCompoundWindowSize = m_nWidth * 0x10000 + m_nHeight;
-		int nResponseSize = 5;
-		int nIndex;
-		int nShift;
-		int nTurnedOnBits;
+        int nCompoundWindowSize = m_nWidth * 0x10000 + m_nHeight;
+        int nResponseSize = 5;
+        int nIndex;
+        int nShift;
+        int nTurnedOnBits;
 
-		if ((m_nWidth % 0x100) == 0xFF) {
-			nResponseSize += 1;
-		}
+        if ((m_nWidth % 0x100) == 0xFF) {
+            nResponseSize += 1;
+        }
 
-		if ((m_nWidth / 0x100) == 0xFF) {
-			nResponseSize += 1;
-		}
+        if ((m_nWidth / 0x100) == 0xFF) {
+            nResponseSize += 1;
+        }
 
-		if ((m_nHeight % 0x100) == 0xFF) {
-			nResponseSize += 1;
-		}
+        if ((m_nHeight % 0x100) == 0xFF) {
+            nResponseSize += 1;
+        }
 
-		if ((m_nHeight / 0x100) == 0xFF) {
-			nResponseSize += 1;
-		}
+        if ((m_nHeight / 0x100) == 0xFF) {
+            nResponseSize += 1;
+        }
 
-		//
-		// allocate response array
-		//
-		int response[] = new int[nResponseSize];
+        //
+        // allocate response array
+        //
+        int response[] = new int[nResponseSize];
 
-		//
-		// Build response array.
-		// ---------------------
-		// 1. put option name.
-		// 2. loop through Window size and fill the values,
-		// 3.    duplicate 'ff' if needed.
-		//
+        //
+        // Build response array.
+        // ---------------------
+        // 1. put option name.
+        // 2. loop through Window size and fill the values,
+        // 3.    duplicate 'ff' if needed.
+        //
 
-		response[0] = WINDOW_SIZE;							// 1 //
+        response[0] = WINDOW_SIZE;                          // 1 //
 
-		for (												// 2 //
-			nIndex=1, nShift = 24;
-			nIndex < nResponseSize;
-			nIndex++, nShift -=8
-		) {
-			nTurnedOnBits = 0xFF;
-			nTurnedOnBits <<= nShift;
-			response[nIndex] = ((int)nCompoundWindowSize & nTurnedOnBits) >>> nShift;
+        for (                                               // 2 //
+            nIndex=1, nShift = 24;
+            nIndex < nResponseSize;
+            nIndex++, nShift -=8
+        ) {
+            nTurnedOnBits = 0xFF;
+            nTurnedOnBits <<= nShift;
+            response[nIndex] = (nCompoundWindowSize & nTurnedOnBits) >>> nShift;
 
-			if (response[nIndex] == 0xff) {					// 3 //
-				nIndex++;
-				response[nIndex] = 0xff;
-			}
-		}
+            if (response[nIndex] == 0xff) {                 // 3 //
+                nIndex++;
+                response[nIndex] = 0xff;
+            }
+        }
 
-		return response;
+        return response;
     }
 
     /***
@@ -177,6 +180,7 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
      * <p>
      * @return always null (no response to subnegotiation)
      ***/
+    @Override
     public int[] startSubnegotiationRemote()
     {
         return null;

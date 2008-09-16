@@ -81,7 +81,7 @@ public class DefaultFTPFileEntryParserFactory
     	if (key == null)
     		throw new ParserInitializationException("Parser key cannot be null");
     		
-        Class parserClass = null;
+        Class<?> parserClass = null;
         FTPFileEntryParser parser = null;
         try
         {
@@ -95,7 +95,7 @@ public class DefaultFTPFileEntryParserFactory
 	            String ukey = null;
 	            if (null != key)
 	            {
-	                ukey = key.toUpperCase();
+	                ukey = key.toUpperCase(java.util.Locale.ENGLISH);
 	            }
 	            if ((ukey.indexOf(FTPClientConfig.SYST_UNIX) >= 0) 
 	            		|| (ukey.indexOf(FTPClientConfig.SYST_L8) >= 0))
@@ -114,7 +114,8 @@ public class DefaultFTPFileEntryParserFactory
 	            {
 	                parser = createOS2FTPEntryParser();
 	            }
-	            else if (ukey.indexOf(FTPClientConfig.SYST_OS400) >= 0)
+	            else if (ukey.indexOf(FTPClientConfig.SYST_OS400) >= 0 ||
+	            		ukey.indexOf(FTPClientConfig.SYST_AS400) >= 0)
 	            {
 	                parser = createOS400FTPEntryParser();
 	            }
@@ -188,12 +189,12 @@ public class DefaultFTPFileEntryParserFactory
 
     public FTPFileEntryParser createUnixFTPEntryParser()
     {
-        return (FTPFileEntryParser) new UnixFTPEntryParser();
+        return new UnixFTPEntryParser();
     }
 
     public FTPFileEntryParser createVMSVersioningFTPEntryParser()
     {
-        return (FTPFileEntryParser) new VMSVersioningFTPEntryParser();
+        return new VMSVersioningFTPEntryParser();
     }
     
     public FTPFileEntryParser createNetwareFTPEntryParser() {
@@ -217,7 +218,7 @@ public class DefaultFTPFileEntryParserFactory
     
      public FTPFileEntryParser createOS2FTPEntryParser()
     {
-        return (FTPFileEntryParser) new OS2FTPEntryParser();
+        return new OS2FTPEntryParser();
     }
 
     public FTPFileEntryParser createOS400FTPEntryParser()

@@ -114,24 +114,42 @@ public final class FTPReply
     public static final int FILE_NAME_NOT_ALLOWED = CODE_553;
     
     // FTPS Reply Codes
+    /** @since 2.0 */
     public static final int CODE_234 = 234;
+    /** @since 2.0 */
     public static final int CODE_235 = 235;
+    /** @since 2.0 */
     public static final int CODE_334 = 334;
+    /** @since 2.0 */
     public static final int CODE_335 = 335;
+    /** @since 2.0 */
     public static final int CODE_431 = 431;
+    /** @since 2.0 */
     public static final int CODE_533 = 533;
+    /** @since 2.0 */
     public static final int CODE_534 = 534;
+    /** @since 2.0 */
     public static final int CODE_535 = 535;
+    /** @since 2.0 */
     public static final int CODE_536 = 536;
     
+    /** @since 2.0 */
     public static final int SECURITY_DATA_EXCHANGE_COMPLETE = CODE_234;
+    /** @since 2.0 */
     public static final int SECURITY_DATA_EXCHANGE_SUCCESSFULLY = CODE_235;
+    /** @since 2.0 */
     public static final int SECURITY_MECHANISM_IS_OK = CODE_334;
+    /** @since 2.0 */
     public static final int SECURITY_DATA_IS_ACCEPTABLE = CODE_335;
+    /** @since 2.0 */
     public static final int UNAVAILABLE_RESOURCE = CODE_431;
+    /** @since 2.0 */
     public static final int DENIED_FOR_POLICY_REASONS = CODE_533;
+    /** @since 2.0 */
     public static final int REQUEST_DENIED = CODE_534;
+    /** @since 2.0 */
     public static final int FAILED_SECURITY_CHECK = CODE_535;
+    /** @since 2.0 */
     public static final int REQUESTED_PROT_LEVEL_NOT_SUPPORTED = CODE_536;
     
 

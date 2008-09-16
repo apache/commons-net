@@ -64,7 +64,7 @@ public class TimeInfo {
      * @param comments List of errors/warnings identified during processing
      * @throws IllegalArgumentException if message is null
      */
-    public TimeInfo(NtpV3Packet message, long returnTime, List comments)
+    public TimeInfo(NtpV3Packet message, long returnTime, List<String> comments)
     {
             this(message, returnTime, comments, true);
     }
@@ -97,7 +97,7 @@ public class TimeInfo {
      * @param doComputeDetails  flag to pre-compute delay/offset values
      * @throws IllegalArgumentException if message is null
      */
-    public TimeInfo(NtpV3Packet message, long returnTime, List comments,
+    public TimeInfo(NtpV3Packet message, long returnTime, List<String> comments,
                    boolean doComputeDetails)
     {
         if (message == null)
@@ -154,7 +154,7 @@ public class TimeInfo {
          * according to this standard NTP equation:
          *
          * LocalClockOffset = ((ReceiveTimestamp - OriginateTimestamp) +
-         *		        (TransmitTimestamp - DestinationTimestamp)) / 2
+         *                     (TransmitTimestamp - DestinationTimestamp)) / 2
          *
          * equations from RFC-1305 (NTPv3)
          *      roundtrip delay = (t4 - t1) - (t3 - t2)
@@ -246,7 +246,7 @@ public class TimeInfo {
      *
      * @return List or null if not yet computed
      */
-    public List getComments()
+    public List<String> getComments()
     {
         return _comments;
     }

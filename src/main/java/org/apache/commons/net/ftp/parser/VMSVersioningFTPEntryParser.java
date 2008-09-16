@@ -116,12 +116,13 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
      *
      * @return Original list purged of duplicates
      */
-    public List preParse(List<String> original) {
+    @Override
+    public List<String> preParse(List<String> original) {
         original = super.preParse(original);
         HashMap<String, NameVersion> existingEntries = new HashMap<String, NameVersion>();
-        ListIterator iter = original.listIterator();
+        ListIterator<String> iter = original.listIterator();
         while (iter.hasNext()) {
-            String entry = ((String)iter.next()).trim();
+            String entry = iter.next().trim();
             MatchResult result = null;
             _preparse_matcher_ = _preparse_pattern_.matcher(entry);
             if (_preparse_matcher_.matches()) {
@@ -129,7 +130,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
                 String name = result.group(1);
                 String version = result.group(2);
                 NameVersion nv = new NameVersion(name, version);
-                NameVersion existing = (NameVersion) existingEntries.get(name);
+                NameVersion existing = existingEntries.get(name);
                 if (null != existing) {
                     if (nv.versionNumber < existing.versionNumber) {
                         iter.remove();  // removal removes from original list.
@@ -145,7 +146,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
         // we now must remove those with smaller than the largest version number
         // for each name that were found before the largest
         while (iter.hasPrevious()) {
-            String entry = ((String)iter.previous()).trim();
+            String entry = iter.previous().trim();
             MatchResult result = null;
             _preparse_matcher_ = _preparse_pattern_.matcher(entry);
             if (_preparse_matcher_.matches()) {
@@ -153,7 +154,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
                 String name = result.group(1);
                 String version = result.group(2);
                 NameVersion nv = new NameVersion(name, version);
-                NameVersion existing = (NameVersion) existingEntries.get(name);
+                NameVersion existing = existingEntries.get(name);
                 if (null != existing) {
                     if (nv.versionNumber < existing.versionNumber) {
                         iter.remove(); // removal removes from original list.
@@ -166,6 +167,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
     }
 
 
+    @Override
     protected boolean isVersioning() {
         return true;
     }

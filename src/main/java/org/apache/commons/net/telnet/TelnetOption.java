@@ -86,7 +86,7 @@ public class TelnetOption
 
     public static final int END_OF_RECORD = 25;
 
-    public static int TACACS_USER_IDENTIFICATION = 26;
+    public static final int TACACS_USER_IDENTIFICATION = 26;
 
     public static final int OUTPUT_MARKING = 27;
 
@@ -116,8 +116,8 @@ public class TelnetOption
 
     public static final int EXTENDED_OPTIONS_LIST = 255;
 
-    private static int __FIRST_OPTION = BINARY;
-    private static int __LAST_OPTION = EXTENDED_OPTIONS_LIST;
+    private static final int __FIRST_OPTION = BINARY;
+    private static final int __LAST_OPTION = EXTENDED_OPTIONS_LIST;
 
     private static final String __optionString[] = {
                 "BINARY", "ECHO", "RCP", "SUPPRESS GO AHEAD", "NAME", "STATUS",

@@ -143,6 +143,7 @@ public class SimpleNNTPHeader
      * <p>
      * @return The article header in the form of a String.
      ***/
+    @Override
     public String toString()
     {
         StringBuffer header = new StringBuffer();

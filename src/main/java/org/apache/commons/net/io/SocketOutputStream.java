@@ -66,6 +66,7 @@ public class SocketOutputStream extends FilterOutputStream
      * @exception IOException If an error occurs while writing to the underlying
      *            stream.
      ***/
+    @Override
     public void write(byte buffer[], int offset, int length) throws IOException
     {
         out.write(buffer, offset, length);
@@ -79,6 +80,7 @@ public class SocketOutputStream extends FilterOutputStream
      * @exception IOException  If there is an error in closing the stream
      *                         or socket.
      ***/
+    @Override
     public void close() throws IOException
     {
         super.close();

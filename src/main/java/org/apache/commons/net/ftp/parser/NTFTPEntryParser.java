@@ -31,9 +31,9 @@ import org.apache.commons.net.ftp.FTPFile;
  */
 public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 {
-	
+    
     private static final String DEFAULT_DATE_FORMAT 
-		= "MM-dd-yy hh:mma"; //11-09-01 12:30PM
+        = "MM-dd-yy hh:mma"; //11-09-01 12:30PM
 
 
     /**
@@ -92,7 +92,7 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 
         if (matches(entry))
         {
-        	String datestr = group(1)+" "+group(2);
+            String datestr = group(1)+" "+group(2);
             String dirString = group(3);
             String size = group(4);
             String name = group(5);
@@ -102,7 +102,7 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             }
             catch (ParseException e)
             {
-            	return null;  // this is a parsing failure too.
+                // intentionally do nothing
             }
 
             if (null == name || name.equals(".") || name.equals(".."))
@@ -136,7 +136,8 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * parameter being specified.
      * @return the default configuration for this parser.
      */
-   public FTPClientConfig getDefaultConfiguration() {
+    @Override
+    public FTPClientConfig getDefaultConfiguration() {
         return new FTPClientConfig(
                 FTPClientConfig.SYST_NT,
                 DEFAULT_DATE_FORMAT,

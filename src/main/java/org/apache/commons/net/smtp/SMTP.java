@@ -130,10 +130,11 @@ public class SMTP extends SocketClient
     /**
      * Overloaded constructor where the user may specify a default encoding.
      * @param encoding
+     * @since 2.0
      */
     public SMTP(String encoding) {
-    	this();
-    	this.encoding = encoding;
+        this();
+        this.encoding = encoding;
     }
 
     private int __sendCommand(String command, String args, boolean includeSpace)
@@ -235,6 +236,7 @@ public class SMTP extends SocketClient
     }
 
     /*** Initiates control connections and gets initial reply. ***/
+    @Override
     protected void _connectAction_() throws IOException
     {
         super._connectAction_();
@@ -280,6 +282,7 @@ public class SMTP extends SocketClient
      * <p>
      * @exception IOException If an error occurs while disconnecting.
      ***/
+    @Override
     public void disconnect() throws IOException
     {
         super.disconnect();
@@ -463,7 +466,7 @@ public class SMTP extends SocketClient
         
         for (String line : _replyLines)
         {
-            buffer.append((String)line);
+            buffer.append(line);
             buffer.append(SocketClient.NETASCII_EOL);
         }
 

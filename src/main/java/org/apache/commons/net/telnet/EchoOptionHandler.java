@@ -59,6 +59,7 @@ public class EchoOptionHandler extends TelnetOptionHandler
      * <p>
      * @return always null (no response to subnegotiation)
      ***/
+    @Override
     public int[] answerSubnegotiation(int suboptionData[],
                                         int suboptionLength)
     {
@@ -70,6 +71,7 @@ public class EchoOptionHandler extends TelnetOptionHandler
      * <p>
      * @return always null (no response to subnegotiation)
      ***/
+    @Override
     public int[] startSubnegotiationLocal()
     {
         return null;
@@ -80,6 +82,7 @@ public class EchoOptionHandler extends TelnetOptionHandler
      * <p>
      * @return always null (no response to subnegotiation)
      ***/
+    @Override
     public int[] startSubnegotiationRemote()
     {
         return null;

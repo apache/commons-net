@@ -383,6 +383,7 @@ public class FTPFile implements Serializable
      * <p>
      * @return A string representation of the FTPFile information.
      ***/
+    @Override
     public String toString()
     {
         return _rawListing;

@@ -54,6 +54,7 @@ public class InvalidTelnetOptionException extends Exception
      * <p>
      * @return the error message.
      ***/
+    @Override
     public String getMessage()
     {
         return (msg + ": " + optionCode);

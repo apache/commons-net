@@ -61,10 +61,10 @@ public abstract class SocketClient
 
     /** The default SocketFactory shared by all SocketClient instances. */
     private static final SocketFactory __DEFAULT_SOCKET_FACTORY =
-    		SocketFactory.getDefault();
+            SocketFactory.getDefault();
     
     private static final ServerSocketFactory __DEFAULT_SERVER_SOCKET_FACTORY = 
-    		ServerSocketFactory.getDefault();
+            ServerSocketFactory.getDefault();
 
     /** The timeout to use after opening a socket. */
     protected int _timeout_;
@@ -149,8 +149,8 @@ public abstract class SocketClient
     public void connect(InetAddress host, int port)
     throws SocketException, IOException
     {
-    	_socket_ = _socketFactory_.createSocket();
-    	_socket_.connect(new InetSocketAddress(host, port), connectTimeout);
+        _socket_ = _socketFactory_.createSocket();
+        _socket_.connect(new InetSocketAddress(host, port), connectTimeout);
 
         _connectAction_();
     }
@@ -172,9 +172,9 @@ public abstract class SocketClient
     public void connect(String hostname, int port)
     throws SocketException, IOException
     {
-    	_socket_= _socketFactory_.createSocket();
-    	_socket_.connect(new InetSocketAddress(hostname, port), connectTimeout);
-    	
+        _socket_= _socketFactory_.createSocket();
+        _socket_.connect(new InetSocketAddress(hostname, port), connectTimeout);
+        
         _connectAction_();
     }
 
@@ -198,9 +198,9 @@ public abstract class SocketClient
                         InetAddress localAddr, int localPort)
     throws SocketException, IOException
     {
-    	_socket_ = _socketFactory_.createSocket();
-    	_socket_.bind(new InetSocketAddress(localAddr, localPort));
-    	_socket_.connect(new InetSocketAddress(host, port), connectTimeout);
+        _socket_ = _socketFactory_.createSocket();
+        _socket_.bind(new InetSocketAddress(localAddr, localPort));
+        _socket_.connect(new InetSocketAddress(host, port), connectTimeout);
         
         _connectAction_();
     }
@@ -299,9 +299,9 @@ public abstract class SocketClient
     public boolean isConnected()
     {
         if (_socket_ == null)
-        	return false;
+            return false;
         
-    	return _socket_.isConnected();
+        return _socket_.isConnected();
     }
 
 
@@ -380,9 +380,10 @@ public abstract class SocketClient
      * <p>
      * @param size The size of the buffer in bytes.
      * @throws SocketException 
+     * @since 2.0
      */
     public void setSendBufferSize(int size) throws SocketException {
-    	_socket_.setSendBufferSize(size);
+        _socket_.setSendBufferSize(size);
     }
     
     
@@ -391,9 +392,10 @@ public abstract class SocketClient
      * <p>
      * @param size The size of the buffer in bytes.
      * @throws SocketException 
+     * @since 2.0
      */
     public void setReceiveBufferSize(int size) throws SocketException  {
-    	_socket_.setReceiveBufferSize(size);
+        _socket_.setReceiveBufferSize(size);
     }
 
 
@@ -549,29 +551,32 @@ public abstract class SocketClient
      * previously altered it).
      * <p>
      * @param factory  The new ServerSocketFactory the SocketClient should use.
+     * @since 2.0
      */
     public void setServerSocketFactory(ServerSocketFactory factory) {
-		if (factory == null)
-			_serverSocketFactory_ = __DEFAULT_SERVER_SOCKET_FACTORY;
-		else
-			_serverSocketFactory_ = factory;
-	}
+        if (factory == null)
+            _serverSocketFactory_ = __DEFAULT_SERVER_SOCKET_FACTORY;
+        else
+            _serverSocketFactory_ = factory;
+    }
     
     /**
      * Sets the connection timeout in milliseconds, which will be passed to the {@link Socket} object's
      * connect() method. 
      * @param connectTimeout The connection timeout to use (in ms)
+     * @since 2.0
      */
     public void setConnectTimeout(int connectTimeout) {
-    	this.connectTimeout = connectTimeout;
+        this.connectTimeout = connectTimeout;
     }
     
     /**
      * Get the underlying socket connection timeout.
      * @return
+     * @since 2.0
      */
     public int getConnectTimeout() {
-    	return connectTimeout;
+        return connectTimeout;
     }
     
     

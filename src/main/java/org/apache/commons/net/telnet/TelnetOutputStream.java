@@ -49,6 +49,7 @@ final class TelnetOutputStream extends OutputStream
      * @exception IOException If an error occurs while writing to the underlying
      *            stream.
      ***/
+    @Override
     public void write(int ch) throws IOException
     {
 
@@ -108,6 +109,7 @@ final class TelnetOutputStream extends OutputStream
      * @exception IOException If an error occurs while writing to the underlying
      *            stream.
      ***/
+    @Override
     public void write(byte buffer[]) throws IOException
     {
         write(buffer, 0, buffer.length);
@@ -124,6 +126,7 @@ final class TelnetOutputStream extends OutputStream
      * @exception IOException If an error occurs while writing to the underlying
      *            stream.
      ***/
+    @Override
     public void write(byte buffer[], int offset, int length) throws IOException
     {
         synchronized (__client)
@@ -134,12 +137,14 @@ final class TelnetOutputStream extends OutputStream
     }
 
     /*** Flushes the stream. ***/
+    @Override
     public void flush() throws IOException
     {
         __client._flushOutputStream();
     }
 
     /*** Closes the stream. ***/
+    @Override
     public void close() throws IOException
     {
         __client._closeOutputStream();

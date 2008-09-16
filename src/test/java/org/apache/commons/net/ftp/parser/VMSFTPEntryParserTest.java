@@ -28,7 +28,7 @@ import org.apache.commons.net.ftp.FTPListParseEngine;
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
- * @version $Id: VMSFTPEntryParserTest.java 437134 2006-08-26 09:36:36Z rwinston $
+ * @version $Id: VMSFTPEntryParserTest.java 657169 2008-05-16 19:07:02Z sebb $
  */
 public class VMSFTPEntryParserTest extends FTPParseTestFramework
 {
@@ -144,6 +144,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
      */
+    @Override
     public void testParseFieldsOnDirectory() throws Exception
     {
 
@@ -160,10 +161,10 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
                      dir.getGroup());
         assertEquals("OWNER",
                      dir.getUser());
-        checkPermisions(dir);
+        checkPermisions(dir, 0775);
 
 
-        dir = getParser().parseFTPEntry("DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [TRANSLATED]    (RWED,RWED,RWED,RE)");
+        dir = getParser().parseFTPEntry("DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [TRANSLATED]    (RWED,RWED,,RE)");
         assertTrue("Should be a directory.",
                            dir.isDirectory());
         assertEquals("DATA.DIR",
@@ -176,15 +177,16 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
                      dir.getGroup());
         assertEquals("TRANSLATED",
                      dir.getUser());
-        checkPermisions(dir);
+        checkPermisions(dir, 0705);
     }
 
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
      */
+    @Override
     public void testParseFieldsOnFile() throws Exception
     {
-        FTPFile file = getParser().parseFTPEntry("1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)");
+        FTPFile file = getParser().parseFTPEntry("1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RW,R)");
         assertTrue("Should be a file.",
                    file.isFile());
         assertEquals("1-JUN.LIS",
@@ -197,10 +199,10 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
                      file.getGroup());
         assertEquals("OWNER",
                      file.getUser());
-        checkPermisions(file);
+        checkPermisions(file, 0764);
 
 
-        file = getParser().parseFTPEntry("1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [TRANSLATED]    (RWED,RWED,RWED,RE)");
+        file = getParser().parseFTPEntry("1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [TRANSLATED]    (RWED,RD,,)");
         assertTrue("Should be a file.",
                    file.isFile());
         assertEquals("1-JUN.LIS",
@@ -213,12 +215,13 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
                      file.getGroup());
         assertEquals("TRANSLATED",
                      file.getUser());
-        checkPermisions(file);
+        checkPermisions(file, 0400);
     }
 
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getBadListing()
      */
+    @Override
     protected String[] getBadListing()
     {
 
@@ -228,6 +231,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getGoodListing()
      */
+    @Override
     protected String[] getGoodListing()
     {
 
@@ -237,6 +241,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
      */
+    @Override
     protected FTPFileEntryParser getParser()
     {
         ConfigurableFTPFileEntryParserImpl parser =
@@ -257,34 +262,43 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
      * Verify that the VMS parser does NOT  set the permissions.
      * @param dir
      */
-    private void checkPermisions(FTPFile dir)
+    private void checkPermisions(FTPFile dir, int octalPerm)
     {
+        int permMask = 1<<8;
         assertTrue("Owner should not have read permission.",
-                   !dir.hasPermission(FTPFile.USER_ACCESS,
+                ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.USER_ACCESS,
                                       FTPFile.READ_PERMISSION));
+        permMask >>= 1;
         assertTrue("Owner should not have write permission.",
-                   !dir.hasPermission(FTPFile.USER_ACCESS,
+                ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.USER_ACCESS,
                                       FTPFile.WRITE_PERMISSION));
+        permMask >>= 1;
         assertTrue("Owner should not have execute permission.",
-                   !dir.hasPermission(FTPFile.USER_ACCESS,
+                ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.USER_ACCESS,
                                       FTPFile.EXECUTE_PERMISSION));
+        permMask >>= 1;
         assertTrue("Group should not have read permission.",
-                   !dir.hasPermission(FTPFile.GROUP_ACCESS,
+                ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.GROUP_ACCESS,
                                       FTPFile.READ_PERMISSION));
+        permMask >>= 1;
         assertTrue("Group should not have write permission.",
-                   !dir.hasPermission(FTPFile.GROUP_ACCESS,
+                ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.GROUP_ACCESS,
                                       FTPFile.WRITE_PERMISSION));
+        permMask >>= 1;
         assertTrue("Group should not have execute permission.",
-                   !dir.hasPermission(FTPFile.GROUP_ACCESS,
+                ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.GROUP_ACCESS,
                                       FTPFile.EXECUTE_PERMISSION));
+        permMask >>= 1;
         assertTrue("World should not have read permission.",
-                   !dir.hasPermission(FTPFile.WORLD_ACCESS,
+                ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.WORLD_ACCESS,
                                       FTPFile.READ_PERMISSION));
+        permMask >>= 1;
         assertTrue("World should not have write permission.",
-                   !dir.hasPermission(FTPFile.WORLD_ACCESS,
+                ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.WORLD_ACCESS,
                                       FTPFile.WRITE_PERMISSION));
+        permMask >>= 1;
         assertTrue("World should not have execute permission.",
-                   !dir.hasPermission(FTPFile.WORLD_ACCESS,
+                ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.WORLD_ACCESS,
                                       FTPFile.EXECUTE_PERMISSION));
     }
 

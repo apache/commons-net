@@ -37,12 +37,12 @@ public class ListenerList implements Serializable, Iterable<EventListener>
 
     public void addListener(EventListener listener)
     {
-    		__listeners.add(listener);
+            __listeners.add(listener);
     }
 
     public  void removeListener(EventListener listener)
     {
-    		__listeners.remove(listener);
+            __listeners.remove(listener);
     }
 
     public int getListenerCount()
@@ -53,10 +53,11 @@ public class ListenerList implements Serializable, Iterable<EventListener>
     /**
      * Return an {@link Iterator} for the {@link EventListener} instances
      * 
+     * @since 2.0
      * TODO Check that this is a good defensive strategy
      */
     public Iterator<EventListener> iterator() {
-    		return __listeners.iterator();
+            return __listeners.iterator();
     }
 
 }
