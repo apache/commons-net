@@ -1,203 +1,216 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Licensed to the Apache Software Foundation (ASF) under one or more
- contributor license agreements.  See the NOTICE file distributed with
- this work for additional information regarding copyright ownership.
- The ASF licenses this file to You under the Apache License, Version 2.0
- (the "License"); you may not use this file except in compliance with
- the License.  You may obtain a copy of the License at
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
 
-      http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <parent>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-parent</artifactId>
-        <version>11</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>commons-net</groupId>
-    <artifactId>commons-net</artifactId>
-    <version>1.5.0</version>
-    <name>Commons Net</name>
-    <description>
-        A collection of network utilities and protocol implementations.
-    </description>
-    <url>http://commons.apache.org/net/</url>
-    <issueManagement>
-        <system>jira</system>
-        <url>http://issues.apache.org/jira/browse/NET</url>
-    </issueManagement>
-    <inceptionYear>1997</inceptionYear>
-    <scm>
-        <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/net/trunk/</connection>
-        <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/net/trunk/</developerConnection>
-        <url>http://svn.apache.org/viewvc/commons/proper/net/trunk/</url>
-    </scm>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-parent</artifactId>
+		<version>11</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>commons-net</groupId>
+	<artifactId>commons-net</artifactId>
+	<version>1.5.0</version>
+	<name>Commons Net</name>
+	<description>
+		A collection of network utilities and protocol implementations.
+	</description>
+	<url>http://commons.apache.org/net/</url>
+	<issueManagement>
+		<system>jira</system>
+		<url>http://issues.apache.org/jira/browse/NET</url>
+	</issueManagement>
+	<inceptionYear>1997</inceptionYear>
+	<scm>
+		<connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/net/trunk/</connection>
+		<developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/net/trunk/</developerConnection>
+		<url>http://svn.apache.org/viewvc/commons/proper/net/trunk/</url>
+	</scm>
 
-    <developers>
-        <developer>
-            <name>Jeffrey D. Brekke</name>
-            <id>brekke</id>
-            <email>Jeff.Brekke@qg.com</email>
-            <organization>Quad/Graphics, Inc.</organization>
-        </developer>
-        <developer>
-            <name>Steve Cohen</name>
-            <id>scohen</id>
-            <email>scohen@apache.org</email>
-            <organization>javactivity.org</organization>
-        </developer>
-        <developer>
-            <name>Bruno D'Avanzo</name>
-            <id>brudav</id>
-            <email>bruno.davanzo@hp.com</email>
-            <organization>Hewlett-Packard</organization>
-        </developer>
-        <developer>
-            <name>Daniel F. Savarese</name>
-            <id>dfs</id>
-            <email>dfs -> apache.org</email>
-            <organization>
-            &lt;a href="http://www.savarese.com/"&gt;Savarese Software Research&lt;/a&gt;
-            </organization>
-        </developer>
-        <developer>
-            <name>Rory Winston</name>
-            <id>rwinston</id>
-            <email>rwinston@apache.org</email>
-            <organization></organization>
-        </developer>
-    </developers>
+	<developers>
+		<developer>
+			<name>Jeffrey D. Brekke</name>
+			<id>brekke</id>
+			<email>Jeff.Brekke@qg.com</email>
+			<organization>Quad/Graphics, Inc.</organization>
+		</developer>
+		<developer>
+			<name>Steve Cohen</name>
+			<id>scohen</id>
+			<email>scohen@apache.org</email>
+			<organization>javactivity.org</organization>
+		</developer>
+		<developer>
+			<name>Bruno D'Avanzo</name>
+			<id>brudav</id>
+			<email>bruno.davanzo@hp.com</email>
+			<organization>Hewlett-Packard</organization>
+		</developer>
+		<developer>
+			<name>Daniel F. Savarese</name>
+			<id>dfs</id>
+			<email>dfs -> apache.org</email>
+			<organization>
+				&lt;a href="http://www.savarese.com/"&gt;Savarese Software Research&lt;/a&gt;
+			</organization>
+		</developer>
+		<developer>
+			<name>Rory Winston</name>
+			<id>rwinston</id>
+			<email>rwinston@apache.org</email>
+			<organization></organization>
+		</developer>
+	</developers>
 
-    <contributors>
-        <contributor>
-            <name>Rob Hasselbaum</name>
-            <email>rhasselbaum -> alumni.ithaca.edu</email>
-        </contributor>
-        <contributor>
-            <name>Mario Ivankovits</name>
-            <email>mario@ops.co.at</email>
-        </contributor>
-        <contributor>
-            <name>Tapan Karecha</name>
-            <email>tapan@india.hp.com</email>
-        </contributor>
-        <contributor>
-            <name>Winston Ojeda</name>
-            <email>Winston.Ojeda@qg.com</email>
-            <organization>Quad/Graphics, Inc.</organization>
-        </contributor>
-        <contributor>
-            <name>Ted Wise</name>
-            <email>ctwise@bellsouth.net</email>
-        </contributor>
-    </contributors>
+	<contributors>
+		<contributor>
+			<name>Rob Hasselbaum</name>
+			<email>rhasselbaum -> alumni.ithaca.edu</email>
+		</contributor>
+		<contributor>
+			<name>Mario Ivankovits</name>
+			<email>mario@ops.co.at</email>
+		</contributor>
+		<contributor>
+			<name>Tapan Karecha</name>
+			<email>tapan@india.hp.com</email>
+		</contributor>
+		<contributor>
+			<name>Winston Ojeda</name>
+			<email>Winston.Ojeda@qg.com</email>
+			<organization>Quad/Graphics, Inc.</organization>
+		</contributor>
+		<contributor>
+			<name>Ted Wise</name>
+			<email>ctwise@bellsouth.net</email>
+		</contributor>
+	</contributors>
 
-    <dependencies>
-        <dependency>
-            <groupId>oro</groupId>
-            <artifactId>oro</artifactId>
-            <version>2.0.8</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>oro</groupId>
+			<artifactId>oro</artifactId>
+			<version>2.0.8</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
-    <properties>
-        <commons.componentid>net</commons.componentid>
-        <commons.release.version>1.4.1</commons.release.version>
-        <commons.binary.suffix></commons.binary.suffix>
-        <commons.jira.id>NET</commons.jira.id>
-        <commons.jira.pid>12310487</commons.jira.pid>
-    </properties> 
+	<properties>
+		<commons.componentid>net</commons.componentid>
+		<commons.release.version>1.4.1</commons.release.version>
+		<commons.binary.suffix></commons.binary.suffix>
+		<commons.jira.id>NET</commons.jira.id>
+		<commons.jira.pid>12310487</commons.jira.pid>
+	</properties> 
 
-    <build>
-        <sourceDirectory>src/java</sourceDirectory>
-        <testSourceDirectory>src/test</testSourceDirectory>
-        <plugins>
+	<build>
+		<sourceDirectory>src/java</sourceDirectory>
+		<testSourceDirectory>src/test</testSourceDirectory>
+		<plugins>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <includes>
-                        <include>**/*Test.java</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/*FunctionalTest.java</exclude>
-                        <exclude>**/*POP3*.java</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>**/examples/**/*.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
 
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptors>
-                        <descriptor>src/assembly/bin.xml</descriptor>
-                        <descriptor>src/assembly/src.xml</descriptor>
-                    </descriptors>
-                    <tarLongFileMode>gnu</tarLongFileMode>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-changes-plugin</artifactId>
-                <version>2.0</version>
-                <configuration>
-                    <xmlPath>xdocs/changes.xml</xmlPath>
-                    <issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
-                </configuration>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>changes-report</report>
-                            <report>jira-report</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>clirr-maven-plugin</artifactId>
-                <version>2.2.2</version>
-                <configuration>
-                    <comparisonVersion>1.4.1</comparisonVersion>
-                    <minSeverity>info</minSeverity>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <linksource>true</linksource>
-                    <links>
-                        <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
-                    </links>
-                </configuration>
-            </plugin>
 
-        </plugins>
-    </reporting>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/*Test.java</include>
+					</includes>
+					<excludes>
+						<exclude>**/*FunctionalTest.java</exclude>
+						<exclude>**/*POP3*.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>src/assembly/bin.xml</descriptor>
+						<descriptor>src/assembly/src.xml</descriptor>
+					</descriptors>
+					<tarLongFileMode>gnu</tarLongFileMode>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<reporting>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changes-plugin</artifactId>
+				<version>2.0</version>
+				<configuration>
+					<xmlPath>xdocs/changes.xml</xmlPath>
+					<issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>changes-report</report>
+							<report>jira-report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>clirr-maven-plugin</artifactId>
+				<version>2.2.2</version>
+				<configuration>
+					<comparisonVersion>1.4.1</comparisonVersion>
+					<minSeverity>info</minSeverity>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<linksource>true</linksource>
+					<links>
+						<link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
+					</links>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</reporting>
 
 </project>

@@ -760,7 +760,7 @@ extends TestCase implements TelnetNotificationHandler
     /***
      * test of setReaderThread
      ***/
-    public void testSetReaderThread() throws Exception
+    private void setReaderThread() throws Exception
     {
         boolean negotiation1_ok = false;
         boolean negotiation2_ok = false;
