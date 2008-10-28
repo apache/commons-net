@@ -54,7 +54,7 @@ public abstract class FTPParseTestFramework extends TestCase
             String test = badsamples[i];
             FTPFile f = parser.parseFTPEntry(test);
             assertNull("Should have Failed to parse " + test,
-                       f);
+                       nullFileOrNullDate(f));
 
             doAdditionalBadTests(test, f);
         }
@@ -144,5 +144,21 @@ public abstract class FTPParseTestFramework extends TestCase
         super.setUp();
         parser = getParser();
         df = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy", Locale.US);
+    }
+
+    /**
+     * Check if FTPFile entry parsing failed; i.e. if entry is null or date is null.
+     * 
+     * @param f FTPFile entry - may be null
+     * @return null if f is null or the date is null
+     */
+    protected FTPFile nullFileOrNullDate(FTPFile f) {
+        if (f==null){
+            return null;
+        }
+        if (f.getTimestamp() == null){
+            return null;
+        }
+        return f;
     }
 }

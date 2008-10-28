@@ -27,227 +27,227 @@ import java.util.StringTokenizer;
  *
  */
 public class Article implements Threadable {
-	private int articleNumber;
-	private String subject;
-	private String date;
-	private String articleId;
-	private String simplifiedSubject;
-	private String from;
-	private StringBuffer header;
-	private StringBuffer references;
-	private boolean isReply = false;
-	
-	public Article kid, next;
+    private int articleNumber;
+    private String subject;
+    private String date;
+    private String articleId;
+    private String simplifiedSubject;
+    private String from;
+    private StringBuffer header;
+    private StringBuffer references;
+    private boolean isReply = false;
+    
+    public Article kid, next;
 
-	public Article() {
-		header = new StringBuffer();
-	}
+    public Article() {
+        header = new StringBuffer();
+    }
 
-	/**
-	 * Adds an arbitrary header key and value to this message's header.
-	 * @param name the header name
-	 * @param val the header value
-	 */
-	public void addHeaderField(String name, String val) {
-		header.append(name);
-		header.append(": ");
-		header.append(val);
-		header.append('\n');
-	}
-	
-	/**
-	 * Adds a message-id to the list of messages that this message references (i.e. replies to)
-	 * @param msgId
-	 */
-	public void addReference(String msgId) {
-		if (references == null) {
-			references = new StringBuffer();
-			references.append("References: ");
-		}
-		references.append(msgId);
-		references.append("\t");
-	}
+    /**
+     * Adds an arbitrary header key and value to this message's header.
+     * @param name the header name
+     * @param val the header value
+     */
+    public void addHeaderField(String name, String val) {
+        header.append(name);
+        header.append(": ");
+        header.append(val);
+        header.append('\n');
+    }
+    
+    /**
+     * Adds a message-id to the list of messages that this message references (i.e. replies to)
+     * @param msgId
+     */
+    public void addReference(String msgId) {
+        if (references == null) {
+            references = new StringBuffer();
+            references.append("References: ");
+        }
+        references.append(msgId);
+        references.append("\t");
+    }
 
-	/**
-	 * Returns the MessageId references as an array of Strings
-	 * @return an array of message-ids
-	 */
-	public String[] getReferences() {
-		if (references == null)
-			return new String[0];
-		ArrayList list = new ArrayList();
-		int terminator = references.toString().indexOf(':');
-		StringTokenizer st =
-			new StringTokenizer(references.substring(terminator), "\t");
-		while (st.hasMoreTokens()) {
-			list.add(st.nextToken());
-		}
-		return (String[]) list.toArray(new String[list.size()]);
-	}
-	
-	/**
-	 * Attempts to parse the subject line for some typical reply signatures, and strip them out
-	 *
-	 */
-	private void simplifySubject() {
-			int start = 0;
-			String subject = getSubject();
-			int len = subject.length();
+    /**
+     * Returns the MessageId references as an array of Strings
+     * @return an array of message-ids
+     */
+    public String[] getReferences() {
+        if (references == null)
+            return new String[0];
+        ArrayList list = new ArrayList();
+        int terminator = references.toString().indexOf(':');
+        StringTokenizer st =
+            new StringTokenizer(references.substring(terminator), "\t");
+        while (st.hasMoreTokens()) {
+            list.add(st.nextToken());
+        }
+        return (String[]) list.toArray(new String[list.size()]);
+    }
+    
+    /**
+     * Attempts to parse the subject line for some typical reply signatures, and strip them out
+     *
+     */
+    private void simplifySubject() {
+            int start = 0;
+            String subject = getSubject();
+            int len = subject.length();
 
-			boolean done = false;
+            boolean done = false;
 
-			while (!done) {
-				done = true;
+            while (!done) {
+                done = true;
 
-				// skip whitespace
-				// "Re: " breaks this
-				while (start < len && subject.charAt(start) == ' ') {
-					start++;
-				}
+                // skip whitespace
+                // "Re: " breaks this
+                while (start < len && subject.charAt(start) == ' ') {
+                    start++;
+                }
 
-				if (start < (len - 2)
-					&& (subject.charAt(start) == 'r' || subject.charAt(start) == 'R')
-					&& (subject.charAt(start + 1) == 'e' || subject.charAt(start + 1) == 'E')) {
+                if (start < (len - 2)
+                    && (subject.charAt(start) == 'r' || subject.charAt(start) == 'R')
+                    && (subject.charAt(start + 1) == 'e' || subject.charAt(start + 1) == 'E')) {
 
-					if (subject.charAt(start + 2) == ':') {
-						start += 3; // Skip "Re:"
-						isReply = true;
-						done = false;
-					} else if (
-						start < (len - 2) 
-						&& 
-						(subject.charAt(start + 2) == '[' || subject.charAt(start + 2) == '(')) {
-                    	
-						int i = start + 3;
+                    if (subject.charAt(start + 2) == ':') {
+                        start += 3; // Skip "Re:"
+                        isReply = true;
+                        done = false;
+                    } else if (
+                        start < (len - 2) 
+                        && 
+                        (subject.charAt(start + 2) == '[' || subject.charAt(start + 2) == '(')) {
 
-						while (i < len && subject.charAt(i) >= '0' && subject.charAt(i) <= '9')
-							i++;
+                        int i = start + 3;
 
-						if (i < (len - 1)
-							&& (subject.charAt(i) == ']' || subject.charAt(i) == ')')
-							&& subject.charAt(i + 1) == ':') {
-							start = i + 2;
-							isReply = true;
-							done = false;
-						}
-					}
-				}
+                        while (i < len && subject.charAt(i) >= '0' && subject.charAt(i) <= '9')
+                            i++;
 
-				if (simplifiedSubject == "(no subject)")
-					simplifiedSubject = "";
+                        if (i < (len - 1)
+                            && (subject.charAt(i) == ']' || subject.charAt(i) == ')')
+                            && subject.charAt(i + 1) == ':') {
+                            start = i + 2;
+                            isReply = true;
+                            done = false;
+                        }
+                    }
+                }
 
-				int end = len;
+                if (simplifiedSubject == "(no subject)")
+                    simplifiedSubject = "";
 
-				while (end > start && subject.charAt(end - 1) < ' ')
-					end--;
+                int end = len;
 
-				if (start == 0 && end == len)
-					simplifiedSubject = subject;
-				else
-					simplifiedSubject = subject.substring(start, end);
-			}
-		}
-		
-	/**
-	 * Recursive method that traverses a pre-threaded graph (or tree) 
-	 * of connected Article objects and prints them out.  
-	 * @param article the root of the article 'tree'
-	 * @param depth the current tree depth
-	 */
-	public static void printThread(Article article, int depth) {
-			for (int i = 0; i < depth; ++i)
-				System.out.print("==>");
-			System.out.println(article.getSubject() + "\t" + article.getFrom());
-			if (article.kid != null)
-				printThread(article.kid, depth + 1);
-			if (article.next != null)
-				printThread(article.next, depth);
-	}
+                while (end > start && subject.charAt(end - 1) < ' ')
+                    end--;
 
-	public String getArticleId() {
-		return articleId;
-	}
+                if (start == 0 && end == len)
+                    simplifiedSubject = subject;
+                else
+                    simplifiedSubject = subject.substring(start, end);
+            }
+        }
+        
+    /**
+     * Recursive method that traverses a pre-threaded graph (or tree) 
+     * of connected Article objects and prints them out.  
+     * @param article the root of the article 'tree'
+     * @param depth the current tree depth
+     */
+    public static void printThread(Article article, int depth) {
+            for (int i = 0; i < depth; ++i)
+                System.out.print("==>");
+            System.out.println(article.getSubject() + "\t" + article.getFrom());
+            if (article.kid != null)
+                printThread(article.kid, depth + 1);
+            if (article.next != null)
+                printThread(article.next, depth);
+    }
 
-	public int getArticleNumber() {
-		return articleNumber;
-	}
+    public String getArticleId() {
+        return articleId;
+    }
 
-	public String getDate() {
-		return date;
-	}
+    public int getArticleNumber() {
+        return articleNumber;
+    }
 
-	public String getFrom() {
-		return from;
-	}
+    public String getDate() {
+        return date;
+    }
 
-	public String getSubject() {
-		return subject;
-	}
+    public String getFrom() {
+        return from;
+    }
 
-	public void setArticleId(String string) {
-		articleId = string;
-	}
+    public String getSubject() {
+        return subject;
+    }
 
-	public void setArticleNumber(int i) {
-		articleNumber = i;
-	}
+    public void setArticleId(String string) {
+        articleId = string;
+    }
 
-	public void setDate(String string) {
-		date = string;
-	}
+    public void setArticleNumber(int i) {
+        articleNumber = i;
+    }
 
-	public void setFrom(String string) {
-		from = string;
-	}
+    public void setDate(String string) {
+        date = string;
+    }
 
-	public void setSubject(String string) {
-		subject = string;
-	}
+    public void setFrom(String string) {
+        from = string;
+    }
 
-	
-	public boolean isDummy() {
-		return (getSubject() == null);
-	}
+    public void setSubject(String string) {
+        subject = string;
+    }
 
-	public String messageThreadId() {
-		return articleId;
-	}
-	
-	public String[] messageThreadReferences() {
-		return getReferences();
-	}
-	
-	public String simplifiedSubject() {
-		if(simplifiedSubject == null)
-			simplifySubject();
-		return simplifiedSubject;
-	}
+    
+    public boolean isDummy() {
+        return (getSubject() == null);
+    }
 
-	
-	public boolean subjectIsReply() {
-		if(simplifiedSubject == null)
-			simplifySubject();
-		return isReply;
-	}
+    public String messageThreadId() {
+        return articleId;
+    }
+    
+    public String[] messageThreadReferences() {
+        return getReferences();
+    }
+    
+    public String simplifiedSubject() {
+        if(simplifiedSubject == null)
+            simplifySubject();
+        return simplifiedSubject;
+    }
 
-	
-	public void setChild(Threadable child) {
-		this.kid = (Article) child;
-		flushSubjectCache();
-	}
+    
+    public boolean subjectIsReply() {
+        if(simplifiedSubject == null)
+            simplifySubject();
+        return isReply;
+    }
 
-	private void flushSubjectCache() {
-		simplifiedSubject = null;
-	}
+    
+    public void setChild(Threadable child) {
+        this.kid = (Article) child;
+        flushSubjectCache();
+    }
 
-	
-	public void setNext(Threadable next) {
-		this.next = (Article)next;
-		flushSubjectCache();
-	}
+    private void flushSubjectCache() {
+        simplifiedSubject = null;
+    }
 
-	
-	public Threadable makeDummy() {
-		return (Threadable)new Article();
-	}
+    
+    public void setNext(Threadable next) {
+        this.next = (Article)next;
+        flushSubjectCache();
+    }
+
+    
+    public Threadable makeDummy() {
+        return new Article();
+    }
 }

@@ -233,10 +233,10 @@ _receivePacket:
                             }
                             ++block;
                             if (block > 65535)
-							{
-								// wrap the block number
-								block = 0;
-							}
+                            {
+                                // wrap the block number
+                                block = 0;
+                            }
                             
                             break _receivePacket;
                         }
@@ -372,7 +372,6 @@ _receivePacket:
         TFTPErrorPacket error;
         TFTPDataPacket data =
             new TFTPDataPacket(host, port, 0, _sendBuffer, 4, 0);
-        ;
         TFTPAckPacket ack;
 
         boolean justStarted = true;
@@ -472,10 +471,10 @@ _receivePacket:
                         {
                             ++block;
                             if (block > 65535)
-							{
-								// wrap the block number
-								block = 0;
-							}
+                            {
+                                // wrap the block number
+                                block = 0;
+                            }
                             if (lastAckWait) {
                                 
                               break _sendPacket;

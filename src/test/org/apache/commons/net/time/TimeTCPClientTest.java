@@ -43,16 +43,16 @@ public class TimeTCPClientTest extends TestCase
      ***/
     protected void openConnections() throws Exception
     {
-	try {
+    try {
             server1 = new TimeTestSimpleServer(_port);
             server1.connect();
-	} catch (IOException ioe)
-	{
-	    // try again on another port
-	    _port = 4000;
+    } catch (IOException ioe)
+    {
+        // try again on another port
+        _port = 4000;
             server1 = new TimeTestSimpleServer(_port);
             server1.connect();
-	}
+    }
         server1.start();
     }
 

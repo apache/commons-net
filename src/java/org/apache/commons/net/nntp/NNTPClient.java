@@ -195,10 +195,10 @@ public class NNTPClient extends NNTP
             result._setFirstArticle(firstNum);
             result._setLastArticle(lastNum);
 
-	    if((firstNum == 0) && (lastNum == 0))
-		    result._setArticleCount(0);
-	    else
-		    result._setArticleCount(lastNum - firstNum + 1);
+        if((firstNum == 0) && (lastNum == 0))
+            result._setArticleCount(0);
+        else
+            result._setArticleCount(lastNum - firstNum + 1);
         }
         catch (NumberFormatException e)
         {
@@ -1215,8 +1215,7 @@ public class NNTPClient extends NNTP
         throws IOException
     {
         return
-            __retrieveArticleInfo(new String(lowArticleNumber + "-" +
-                                             highArticleNumber));
+            __retrieveArticleInfo(lowArticleNumber + "-" + highArticleNumber);
     }
 
     /***
@@ -1269,9 +1268,7 @@ public class NNTPClient extends NNTP
         throws IOException
     {
         return
-            __retrieveHeader(header,
-                             new String(lowArticleNumber + "-" +
-                                        highArticleNumber));
+            __retrieveHeader(header,lowArticleNumber + "-" + highArticleNumber);
     }
 }
 

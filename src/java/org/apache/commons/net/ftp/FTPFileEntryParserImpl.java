@@ -77,7 +77,7 @@ public abstract class FTPFileEntryParserImpl
     ***/
     public FTPFile[] parseFileList(InputStream listStream) throws IOException
     {
-    	return parseFileList(listStream, null);
+        return parseFileList(listStream, null);
     }
 
     /**
@@ -101,7 +101,7 @@ public abstract class FTPFileEntryParserImpl
      * perform some action upon the FTPFileList after it has been created
      * from the server stream, but before any clients see the list.
      *
-     * This default implementation is a no-op.
+     * This default implementation removes entries that do not parse as files.
      *
      * @param original Original list after it has been created from the server stream
      *
@@ -113,8 +113,6 @@ public abstract class FTPFileEntryParserImpl
             String entry = (String) it.next();
             if (null == parseFTPEntry(entry)) {
                 it.remove();
-            } else {
-                break;
             }
          }
          return original;

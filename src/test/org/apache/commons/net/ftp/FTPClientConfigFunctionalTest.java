@@ -20,7 +20,6 @@ package org.apache.commons.net.ftp;
 import junit.framework.TestCase;
 import java.io.IOException;
 import java.net.SocketException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -61,16 +60,16 @@ public class FTPClientConfigFunctionalTest extends TestCase {
     public FTPClientConfigFunctionalTest() {
         super();
 
-	}
+    }
 
     /* 
      * @throws java.lang.Exception
      */
     protected void setUp() throws Exception {
         super.setUp();
-	    FTPConf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
-	    FTPConf.setServerTimeZoneId("GMT"); 
-	    FTP.configure(FTPConf); 
+        FTPConf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
+        FTPConf.setServerTimeZoneId("GMT"); 
+        FTP.configure(FTPConf); 
         try {
             FTP.connect("tgftp.nws.noaa.gov");
             FTP.login("anonymous","testing@apache.org");
@@ -96,7 +95,7 @@ public class FTPClientConfigFunctionalTest extends TestCase {
         super(arg0);
     }
 
-	
+    
     private TreeSet getSortedList(FTPFile[] files) {
         // create a TreeSet which will sort each element
         // as it is added.
@@ -112,10 +111,10 @@ public class FTPClientConfigFunctionalTest extends TestCase {
         
          
         for (int i=0; i < files.length; i++) {
-			// The directory contains a few additional files at the beginning
-			// which aren't in the series we want. The series we want consists
-			// of files named sn.dddd. This adjusts the file list to get rid 
-			// of the uninteresting ones. 
+            // The directory contains a few additional files at the beginning
+            // which aren't in the series we want. The series we want consists
+            // of files named sn.dddd. This adjusts the file list to get rid 
+            // of the uninteresting ones. 
             if (files[i].getName().startsWith("sn")) {
                 sorted.add(files[i]);
             }    
@@ -123,7 +122,7 @@ public class FTPClientConfigFunctionalTest extends TestCase {
         return sorted;
     }
 
-	
+    
     public static void main(String[] args) {
         FTPClientConfigFunctionalTest F = new FTPClientConfigFunctionalTest();
     }
