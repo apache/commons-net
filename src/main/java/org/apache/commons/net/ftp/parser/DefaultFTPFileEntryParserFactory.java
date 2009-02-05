@@ -97,8 +97,7 @@ public class DefaultFTPFileEntryParserFactory
 	            {
 	                ukey = key.toUpperCase(java.util.Locale.ENGLISH);
 	            }
-	            if ((ukey.indexOf(FTPClientConfig.SYST_UNIX) >= 0) 
-	            		|| (ukey.indexOf(FTPClientConfig.SYST_L8) >= 0))
+	            if (ukey.indexOf(FTPClientConfig.SYST_UNIX) >= 0) 
 	            {
 	                parser = createUnixFTPEntryParser();
 	            }
@@ -126,6 +125,12 @@ public class DefaultFTPFileEntryParserFactory
 	            else if (ukey.indexOf(FTPClientConfig.SYST_NETWARE) >= 0) 
 	            {
 	            	parser = createNetwareFTPEntryParser();
+	            }
+	            else if (ukey.indexOf(FTPClientConfig.SYST_L8) >= 0) 
+	            {
+	            	// L8 normally means Unix, but move it to the end for some L8 systems that aren't.
+	            	// This check should be last!
+	            	parser = createUnixFTPEntryParser();
 	            }
 	            else
 	            {
