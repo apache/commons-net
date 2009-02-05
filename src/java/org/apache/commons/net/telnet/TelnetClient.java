@@ -75,11 +75,11 @@ public class TelnetClient extends Telnet
 
     void _flushOutputStream() throws IOException
     {
-        _output_.flush();
+        if(_output_ != null) _output_.flush();
     }
     void _closeOutputStream() throws IOException
     {
-        _output_.close();
+    	if(_output_ != null) _output_.close();
     }
 
     /***
@@ -123,8 +123,8 @@ public class TelnetClient extends Telnet
      ***/
     public void disconnect() throws IOException
     {
-        __input.close();
-        __output.close();
+        if(__input != null) __input.close();
+        if(__output != null) __output.close();
         super.disconnect();
     }
 
