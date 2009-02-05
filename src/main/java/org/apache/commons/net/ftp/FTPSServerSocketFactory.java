@@ -17,12 +17,10 @@
 
 package org.apache.commons.net.ftp;
 
-import java.io.BufferedReader;
-package org.apache.commons.net.ftp;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
+
 import javax.net.ServerSocketFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLServerSocket;

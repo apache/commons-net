@@ -46,6 +46,7 @@ public class SubnetUtilsTest extends TestCase {
         }
     }
     
+    // TODO Lower address test
     public void testAddresses() {
         SubnetUtils utils = new SubnetUtils("192.168.0.1/29");
         SubnetInfo info = utils.getInfo();
