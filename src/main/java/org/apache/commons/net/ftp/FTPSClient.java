@@ -429,12 +429,9 @@ public class FTPSClient extends FTPClient {
             setServerSocketFactory(null);
         } else {
             setSocketFactory(new FTPSSocketFactory(context));
-
+            setServerSocketFactory(new FTPSServerSocketFactory(context));
             initSslContext();
             
-            SSLServerSocketFactory ssf = context.getServerSocketFactory();
-
-            setServerSocketFactory(ssf);
         }
     }
 
