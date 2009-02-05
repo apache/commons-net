@@ -70,7 +70,11 @@ public class SubnetUtils {
         private int high()          { return broadcast() - 1; }
 
         public boolean isInRange(String address)    { return isInRange(toInteger(address)); }
-        private boolean isInRange(int address)      { return ((address-low()) <= (high()-low())); }
+        
+        private boolean isInRange(int address)      { 
+            int diff = address-low();
+            return (diff >= 0 && (diff <= (high()-low())));
+        }
 
         public String getBroadcastAddress()         { return format(toArray(broadcast())); }
         public String getNetworkAddress()           { return format(toArray(network())); }
