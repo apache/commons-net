@@ -63,6 +63,7 @@ public abstract class SocketClient
     private static final SocketFactory __DEFAULT_SOCKET_FACTORY =
             SocketFactory.getDefault();
     
+    /** The default {@link ServerSocketFactory} */
     private static final ServerSocketFactory __DEFAULT_SERVER_SOCKET_FACTORY = 
             ServerSocketFactory.getDefault();
 
@@ -578,9 +579,16 @@ public abstract class SocketClient
     public int getConnectTimeout() {
         return connectTimeout;
     }
-    
-    
-    
+
+    /**
+     * Get the underlying {@link ServerSocketFactory}
+     * @return The server socket factory
+     * @since 2.1
+     */
+	public ServerSocketFactory getServerSocketFactory() {
+		return _serverSocketFactory_;
+	}
+	
 }
 
 

@@ -29,7 +29,6 @@ import java.security.NoSuchAlgorithmException;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
-import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
@@ -68,7 +67,7 @@ public class FTPSClient extends FTPClient {
     /** The context object. */
     private SSLContext context;
     /** The socket object. */
-    private Socket planeSocket;
+    private Socket plainSocket;
     /** The established socket flag. */
     private boolean isCreation = true;
     /** The use client mode flag. */
@@ -217,9 +216,7 @@ public class FTPSClient extends FTPClient {
      * @throws IOException A handicap breaks out by sever negotiation.
      */
     private void sslNegotiation() throws IOException {
-        // Evacuation not ssl socket.
-        planeSocket = _socket_;
-        
+        plainSocket = _socket_;
         initSslContext();
 
         SSLSocketFactory ssf = context.getSocketFactory();
@@ -271,9 +268,11 @@ public class FTPSClient extends FTPClient {
         this.isCreation = isCreation;
     }
 
-    /**
+	/**
      * Returns true if new SSL sessions may be established by this socket.
-     * When a socket does not have a ssl socket, This return False.
+     * When the underlying {@link Socket} instance is not SSL-enabled (i.e. an
+     * instance of {@link SSLSocket} with {@link SSLSocket}{@link #getEnableSessionCreation()}) enabled,
+     * this returns False.
      * @return true - Indicates that sessions may be created;
      * this is the default. 
      * false - indicates that an existing session must be resumed.
@@ -294,7 +293,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Returns true if the socket will require client authentication.
-     * When a socket does not have a ssl socket, This return False.
+     * When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns false.
      * @return true - If the server mode socket should request 
      * that the client authenticate itself.
      */
@@ -316,7 +315,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Returns true if the socket will request client authentication.
-     * When a socket does not have a ssl socket, This return False.
+     * When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns false.
      * @return true - If the server mode socket should request 
      * that the client authenticate itself.
      */
@@ -338,7 +337,7 @@ public class FTPSClient extends FTPClient {
     /**
      * Returns true if the socket is set to use client mode 
      * in its first handshake.
-     * When a socket does not have a ssl socket, This return False.
+     * When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns false.
      * @return true - If the socket should start its first handshake 
      * in "client" mode.
      */
@@ -350,7 +349,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Controls which particular cipher suites are enabled for use on this 
-     * connection. I perform setting before a server negotiation.
+     * connection. Called before server negotiation.
      * @param cipherSuites The cipher suites.
      */
     public void setEnabledCipherSuites(String[] cipherSuites) {
@@ -361,7 +360,7 @@ public class FTPSClient extends FTPClient {
     /**
      * Returns the names of the cipher suites which could be enabled 
      * for use on this connection.
-     * When a socket does not have a ssl socket, This return null.
+     * When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns false.
      * @return An array of cipher suite names.
      */
     public String[] getEnabledCipherSuites() {
@@ -383,7 +382,7 @@ public class FTPSClient extends FTPClient {
     /**
      * Returns the names of the protocol versions which are currently 
      * enabled for use on this connection.
-     * When a socket does not have a ssl socket, This return null.
+     * When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns false.
      * @return An array of protocols.
      */
     public String[] getEnabledProtocols() {
@@ -395,8 +394,8 @@ public class FTPSClient extends FTPClient {
     /**
      * PBSZ command. pbsz value: 0 to (2^32)-1 decimal integer.
      * @param pbsz Protection Buffer Size.
-     * @throws SSLException If it server reply code not equal "200".
-     * @throws IOException If an I/O error occurs while either sending 
+     * @throws SSLException If the server reply code does not equal "200".
+     * @throws IOException If an I/O error occurs while sending 
      * the command.
      */
     public void execPBSZ(long pbsz) throws SSLException, IOException {
@@ -414,8 +413,8 @@ public class FTPSClient extends FTPClient {
      * E - Confidential(SSL protocol only)</br>
      * P - Private
      * @param prot Data Channel Protection Level.
-     * @throws SSLException If it server reply code not equal "200".
-     * @throws IOException If an I/O error occurs while either sending 
+     * @throws SSLException If the server reply code does not equal "200".
+     * @throws IOException If an I/O error occurs while sending 
      * the command.
      */
     public void execPROT(String prot) throws SSLException, IOException {
@@ -436,7 +435,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * I check the value that I can set in PROT Command value.
+     * Check the value that can be set in PROT Command value.
      * @param prot Data Channel Protection Level.
      * @return True - A set point is right / False - A set point is not right
      */
@@ -448,12 +447,12 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * I carry out an ftp command.
-     * When a CCC command was carried out, I steep socket and SocketFactory 
-     * in a state of not ssl.
-     * @parm command ftp command.
+     * Send an FTP command.
+     * The CCC (Clear Command Channel) command causes the underlying {@link SSLSocket} instance  to be assigned 
+     * to a plain {@link Socket} instances
+     * @param command The FTP command.
      * @return server reply.
-     * @throws IOException If an I/O error occurs while either sending 
+     * @throws IOException If an I/O error occurs while sending 
      * the command.
      * @see org.apache.commons.net.ftp.FTP#sendCommand(java.lang.String)
      */
@@ -462,8 +461,7 @@ public class FTPSClient extends FTPClient {
         int repCode = super.sendCommand(command, args);
         if (FTPSCommand._commands[FTPSCommand.CCC].equals(command)) {
             if (FTPReply.COMMAND_OK == repCode) {
-                    // TODO Check this - is this necessary at all?
-                _socket_ = planeSocket;
+                _socket_ = plainSocket;
                 setSocketFactory(null);
             } else {
                 throw new SSLException(getReplyString());
@@ -475,11 +473,11 @@ public class FTPSClient extends FTPClient {
     /**
      * Returns a socket of the data connection. 
      * Wrapped as an {@link SSLSocket}, which carries out handshake processing.
-     * @pram command The text representation of the FTP command to send.
+     * @param command The textual representation of the FTP command to send.
      * @param arg The arguments to the FTP command. 
      * If this parameter is set to null, then the command is sent with 
-     * no argument.
-     * @return A Socket corresponding to the established data connection. 
+     * no arguments.
+     * @return corresponding to the established data connection. 
      * Null is returned if an FTP protocol error is reported at any point 
      * during the establishment and initialization of the connection.
      * @throws IOException If there is any problem with the connection.
@@ -523,8 +521,5 @@ public class FTPSClient extends FTPClient {
      */
     public void setTrustManager(TrustManager trustManager) {
         this.trustManager = trustManager;
-    }
-    
-    
-    
+    }    
 }

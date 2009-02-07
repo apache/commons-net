@@ -18,7 +18,7 @@
 package org.apache.commons.net.ftp;
 
 /**
- * I acquire a command added in FTPS.
+ * FTPS-specific command
  * @since 2.0
  */
 public final class FTPSCommand {

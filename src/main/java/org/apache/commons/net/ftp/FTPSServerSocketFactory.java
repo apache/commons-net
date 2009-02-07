@@ -30,6 +30,7 @@ import javax.net.ssl.SSLServerSocket;
  */
 public class FTPSServerSocketFactory extends ServerSocketFactory {
     
+	/** Factory for secure socket factories */
     private SSLContext context;
     
     public FTPSServerSocketFactory(SSLContext context) {
@@ -37,15 +38,15 @@ public class FTPSServerSocketFactory extends ServerSocketFactory {
     }
     
     public ServerSocket createServerSocket(int port) throws IOException {
-        return this.init(this.context.getServerSocketFactory().createServerSocket(port));
+        return init(this.context.getServerSocketFactory().createServerSocket(port));
     }
 
     public ServerSocket createServerSocket(int port, int backlog) throws IOException {
-        return this.init(this.context.getServerSocketFactory().createServerSocket(port, backlog));
+        return 	init(this.context.getServerSocketFactory().createServerSocket(port, backlog));
     }
 
     public ServerSocket createServerSocket(int port, int backlog, InetAddress ifAddress) throws IOException {
-        return this.init(this.context.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
+    	return init(this.context.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
     }
         
     public ServerSocket init(ServerSocket socket) throws IOException {

@@ -2293,6 +2293,7 @@ implements Configurable
 
         FTPListParseEngine engine = new FTPListParseEngine(parser);
 
+        // TODO is this the correct thing to do? Should we throw an exception here?
         if ((socket = _openDataConnection_(FTPCommand.LIST, getListArguments(pathname))) == null)
         {
             return engine;
