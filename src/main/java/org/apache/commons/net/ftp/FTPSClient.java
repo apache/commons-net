@@ -51,7 +51,7 @@ public class FTPSClient extends FTPClient {
     /** truststore type. */
     public static String STORE_TYPE;
 
-    /** The value that I can set in PROT command */
+    /** The value that I can set in PROT command  (C = Clear, P = Protected) */
     private static final String[] PROT_COMMAND_VALUE = {"C","E","S","P"}; 
     /** Default PROT Command */
     private static final String DEFAULT_PROT = "C";
@@ -196,7 +196,6 @@ public class FTPSClient extends FTPClient {
         if(context == null) {
             try  {
                 context = SSLContext.getInstance(protocol);
-    
                 context.init(new KeyManager[] { getKeyManager() } , new TrustManager[] { getTrustManager() } , null);
             } catch (KeyManagementException e) {
                 IOException ioe = new IOException("Could not initialize SSL context");
@@ -213,7 +212,7 @@ public class FTPSClient extends FTPClient {
     /**
      * SSL/TLS negotiation. Acquires an SSL socket of a control 
      * connection and carries out handshake processing.
-     * @throws IOException A handicap breaks out by sever negotiation.
+     * @throws IOException If server negotiation fails
      */
     private void sslNegotiation() throws IOException {
         plainSocket = _socket_;
@@ -231,9 +230,9 @@ public class FTPSClient extends FTPClient {
             socket.setNeedClientAuth(isNeedClientAuth);
             socket.setWantClientAuth(isWantClientAuth);
         }
+
         if (protocols != null) socket.setEnabledProtocols(protocols);
         if (suites != null) socket.setEnabledCipherSuites(suites);
-
         socket.startHandshake();
 
         _socket_ = socket;
@@ -430,7 +429,6 @@ public class FTPSClient extends FTPClient {
             setSocketFactory(new FTPSSocketFactory(context));
             setServerSocketFactory(new FTPSServerSocketFactory(context));
             initSslContext();
-            
         }
     }
 
@@ -486,13 +484,15 @@ public class FTPSClient extends FTPClient {
     @Override
     protected Socket _openDataConnection_(int command, String arg)
             throws IOException {
-        Socket socket = super._openDataConnection_(command, arg);
+        Socket socket = super._openDataConnection_(command, arg); 
         if (socket != null && socket instanceof SSLSocket) {
-            SSLSocket sslSocket = (SSLSocket)socket;
+        	SSLSocket sslSocket = (SSLSocket)socket;
+
             sslSocket.setUseClientMode(isClientMode);
             sslSocket.setEnableSessionCreation(isCreation);
+       
             // server mode
-            if (!isClientMode) {
+            if (!isClientMode) {     	
                 sslSocket.setNeedClientAuth(isNeedClientAuth);
                 sslSocket.setWantClientAuth(isWantClientAuth);
             }
@@ -502,6 +502,7 @@ public class FTPSClient extends FTPClient {
                 sslSocket.setEnabledProtocols(protocols);
             sslSocket.startHandshake();
         }
+       
         return socket;
     }
 

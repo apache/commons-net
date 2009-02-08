@@ -503,9 +503,7 @@ public class FTP extends SocketClient
         {
             return false;
         }
-
         return socket.isConnected();
-        
     }
 
     /***
@@ -1106,6 +1104,18 @@ public class FTP extends SocketClient
     public int allo(int bytes) throws IOException
     {
         return sendCommand(FTPCommand.ALLO, Integer.toString(bytes));
+    }
+    
+    /**
+     * A convenience method to send the FTP FEAT command to the server, receive the reply,
+     * and return the reply code.
+     * @return The reply code received by the server
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int feat() throws IOException
+    {
+    	return sendCommand(FTPCommand.FEAT);
     }
 
     /***

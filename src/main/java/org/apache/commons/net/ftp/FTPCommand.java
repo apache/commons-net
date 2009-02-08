@@ -28,7 +28,7 @@ package org.apache.commons.net.ftp;
  * <p>
  * @author Daniel F. Savarese
  ***/
-
+/** TODO replace this with an enum */
 public final class FTPCommand
 {
 
@@ -68,7 +68,9 @@ public final class FTPCommand
     public static final int NOOP = 32;
     /** @since 2.0 */
     public static final int MDTM = 33;
-
+    /** @since 2.1 */
+    public static final int FEAT = 34;
+    
     public static final int USERNAME = USER;
     public static final int PASSWORD = PASS;
     public static final int ACCOUNT = ACCT;
@@ -104,7 +106,9 @@ public final class FTPCommand
     //public static final int NOOP = NOOP;
     /** @since 2.0 */
     public static final int MOD_TIME = MDTM;
-
+    /** @since 2.1 */
+    public static final int FEATURES = FEAT;
+    
     // Cannot be instantiated
     private FTPCommand()
     {}
@@ -113,7 +117,7 @@ public final class FTPCommand
                                           "USER", "PASS", "ACCT", "CWD", "CDUP", "SMNT", "REIN", "QUIT", "PORT",
                                           "PASV", "TYPE", "STRU", "MODE", "RETR", "STOR", "STOU", "APPE", "ALLO",
                                           "REST", "RNFR", "RNTO", "ABOR", "DELE", "RMD", "MKD", "PWD", "LIST",
-                                          "NLST", "SITE", "SYST", "STAT", "HELP", "NOOP", "MDTM"
+                                          "NLST", "SITE", "SYST", "STAT", "HELP", "NOOP", "MDTM", "FEAT"
                                       };
 
     /**

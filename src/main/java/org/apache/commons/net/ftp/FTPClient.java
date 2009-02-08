@@ -1609,6 +1609,26 @@ implements Configurable
     {
         return FTPReply.isPositiveCompletion(allo(bytes));
     }
+    
+    /**
+     * Query the server for supported features. The server may reply with a list of server-supported exensions.
+     * For example, a typical client-server interaction might be (from RFC 	2289):
+     * <pre>
+        C> feat
+        S> 211-Extensions supported:
+        S>  MLST size*;create;modify*;perm;media-type
+        S>  SIZE
+        S>  COMPRESSION
+        S>  MDTM
+        S> 211 END
+     * </pre>
+     * @see <a href="http://www.faqs.org/rfcs/rfc2389.html">http://www.faqs.org/rfcs/rfc2389.html</a>
+     * @return True if successfully completed, false if not.
+     * @throws IOException
+     */
+    public boolean features() throws IOException {
+    	return FTPReply.isPositiveCompletion(feat());
+    }
 
 
     /**
@@ -2292,13 +2312,10 @@ implements Configurable
         Socket socket;
 
         FTPListParseEngine engine = new FTPListParseEngine(parser);
-
-        // TODO is this the correct thing to do? Should we throw an exception here?
         if ((socket = _openDataConnection_(FTPCommand.LIST, getListArguments(pathname))) == null)
         {
             return engine;
         }
-
 
         try {
             engine.readServerList(socket.getInputStream(), getControlEncoding());
