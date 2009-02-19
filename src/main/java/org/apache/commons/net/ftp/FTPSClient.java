@@ -131,6 +131,24 @@ public class FTPSClient extends FTPClient {
         this.protocol = protocol;
         this.isImplicit = isImplicit;
     }
+    
+    /**
+     * Constructor for FTPSClient.
+     * @param isImplicit The secutiry mode(Implicit/Explicit).
+     * @param context A pre-configured SSL Context
+     */
+    public FTPSClient(boolean isImplicit, SSLContext context) {
+        this.isImplicit = isImplicit;
+        this.context = context;
+    }
+    
+    /**
+     * Constructor for FTPSClient.
+     * @param context A pre-configured SSL Context
+     */
+    public FTPSClient(SSLContext context) {
+        this(false, context);
+    }
 
 
     /**
