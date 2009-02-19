@@ -628,10 +628,7 @@ public class FTP extends SocketClient
      ***/
     public String[] getReplyStrings()
     {
-        String[] lines;
-        lines = new String[_replyLines.size()];
-        _replyLines.addAll(Arrays.asList(lines));
-        return lines;
+        return _replyLines.toArray(new String[0]);
     }
 
     /***
