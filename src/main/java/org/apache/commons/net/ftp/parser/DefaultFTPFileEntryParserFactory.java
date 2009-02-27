@@ -92,11 +92,7 @@ public class DefaultFTPFileEntryParserFactory
         {
             try 
             {
-	            String ukey = null;
-	            if (null != key)
-	            {
-	                ukey = key.toUpperCase(java.util.Locale.ENGLISH);
-	            }
+	            String ukey = key.toUpperCase(java.util.Locale.ENGLISH);
 	            if (ukey.indexOf(FTPClientConfig.SYST_UNIX) >= 0) 
 	            {
 	                parser = createUnixFTPEntryParser();
