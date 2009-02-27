@@ -186,13 +186,13 @@ public class TelnetClient extends Telnet
     /***
      * Sends an Are You There sequence and waits for the result.
      * <p>
-     * @throws InterruptedException
-     * @throws IllegalArgumentException
-     * @throws IOException
-     * <p>
      * @param timeout - Time to wait for a response (millis.)
      * <p>
      * @return true if AYT received a response, false otherwise
+     * <p>
+     * @throws InterruptedException
+     * @throws IllegalArgumentException
+     * @throws IOException
      ***/
     public boolean sendAYT(long timeout)
     throws IOException, IllegalArgumentException, InterruptedException
@@ -206,9 +206,9 @@ public class TelnetClient extends Telnet
     /***
      * Registers a new TelnetOptionHandler for this telnet client to use.
      * <p>
-     * @throws InvalidTelnetOptionException
-     * <p>
      * @param opthand - option handler to be registered.
+     * <p>
+     * @throws InvalidTelnetOptionException
      ***/
     public void addOptionHandler(TelnetOptionHandler opthand)
     throws InvalidTelnetOptionException
@@ -220,9 +220,9 @@ public class TelnetClient extends Telnet
     /***
      * Unregisters a  TelnetOptionHandler.
      * <p>
-     * @throws InvalidTelnetOptionException
-     * <p>
      * @param optcode - Code of the option to be unregistered.
+     * <p>
+     * @throws InvalidTelnetOptionException
      ***/
     public void deleteOptionHandler(int optcode)
     throws InvalidTelnetOptionException

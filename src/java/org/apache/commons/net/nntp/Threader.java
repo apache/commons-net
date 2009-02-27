@@ -38,7 +38,7 @@ public class Threader {
      * The main threader entry point - The client passes in an array of Threadable objects, and 
      * the Threader constructs a connected 'graph' of messages
      * @param messages
-     * @return
+     * @return null if messages == null or root.child == null
      */
     public Threadable thread(Threadable[] messages) {
         if (messages == null)
