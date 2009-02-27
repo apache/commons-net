@@ -192,13 +192,13 @@ public class TelnetClient extends Telnet
     /***
      * Sends an Are You There sequence and waits for the result.
      * <p>
-     * @throws InterruptedException
-     * @throws IllegalArgumentException
-     * @throws IOException
-     * <p>
      * @param timeout - Time to wait for a response (millis.)
      * <p>
      * @return true if AYT received a response, false otherwise
+     * <p>
+     * @throws InterruptedException
+     * @throws IllegalArgumentException
+     * @throws IOException
      ***/
     public boolean sendAYT(long timeout)
     throws IOException, IllegalArgumentException, InterruptedException

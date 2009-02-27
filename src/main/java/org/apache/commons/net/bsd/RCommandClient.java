@@ -24,6 +24,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 
 import org.apache.commons.net.io.SocketInputStream;
 
@@ -251,7 +252,7 @@ public class RCommandClient extends RExecClient
      ***/
     @Override
     public void connect(String hostname, int port)
-    throws SocketException, IOException
+    throws SocketException, IOException, UnknownHostException
     {
         connect(InetAddress.getByName(hostname), port, InetAddress.getLocalHost());
     }
@@ -335,7 +336,7 @@ public class RCommandClient extends RExecClient
     @Override
     public void connect(String hostname, int port,
                         InetAddress localAddr, int localPort)
-    throws SocketException, IOException, IllegalArgumentException
+    throws SocketException, IOException, IllegalArgumentException, UnknownHostException
     {
         if (localPort < MIN_CLIENT_PORT || localPort > MAX_CLIENT_PORT)
             throw new IllegalArgumentException("Invalid port number " + localPort);

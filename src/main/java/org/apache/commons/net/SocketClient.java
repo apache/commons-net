@@ -573,7 +573,7 @@ public abstract class SocketClient
     
     /**
      * Get the underlying socket connection timeout.
-     * @return
+     * @return timeout (in ms)
      * @since 2.0
      */
     public int getConnectTimeout() {

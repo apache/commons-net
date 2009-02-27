@@ -94,7 +94,7 @@ import java.util.List;
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @version $Id$
  * @see org.apache.commons.net.ftp.FTPFile
- * @see org.apache.commons.net.ftp.FTPClient#createFileList
+ * @see org.apache.commons.net.ftp.FTPClient#listFiles()
  */
 public interface FTPFileEntryParser
 {

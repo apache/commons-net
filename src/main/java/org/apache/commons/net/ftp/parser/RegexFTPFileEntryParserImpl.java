@@ -139,7 +139,7 @@ public abstract class RegexFTPFileEntryParserImpl extends
      * Alter the current regular expression being utilised for entry parsing 
      * and create a new {@link Pattern} instance.
      * @param regex The new regular expression
-     * @return 
+     * @return  true if the compiled pattern is not null
      * @since 2.0
      */
     public boolean setRegex(String regex) {
