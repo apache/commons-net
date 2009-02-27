@@ -25,7 +25,6 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ProtocolCommandListener;
