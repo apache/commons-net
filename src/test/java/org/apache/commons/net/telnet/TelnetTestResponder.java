@@ -42,7 +42,8 @@ public class TelnetTestResponder implements Runnable
      * @param is - InputStream on which to read.
      * @param os - OutputStream on which to answer.
      * @param inputs - Array of waited for Strings.
-     * @param inputs - Array of answers.
+     * @param outputs - Array of answers.
+     * @param timeout - milliseconds
      ***/
     public TelnetTestResponder(InputStream is, OutputStream os, String inputs[], String outputs[], long timeout)
     {

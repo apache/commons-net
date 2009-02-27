@@ -104,7 +104,7 @@ public class SubnetUtils {
 
     /**
      * Return a {@link SubnetInfo} instance that contains subnet-specific statistics
-     * @return
+     * @return new instance
      */
     public final SubnetInfo getInfo() { return new SubnetInfo(); }
 
