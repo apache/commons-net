@@ -436,8 +436,31 @@ public abstract class SocketClient
     {
         return _socket_.getTcpNoDelay();
     }
-
-
+    
+    /**
+     * Sets the SO_KEEPALIVE flag on the currently opened socket.
+     * 
+     * From the Javadocs, the default keepalive time is 2 hours (although this is 
+     * implementation  dependent). It looks as though the Windows WSA sockets implementation
+     * allows a specific keepalive value to be set, although this seems not to be the case on 
+     * other systems.
+     * @param  keepAlive If true, keepAlive is turned on
+     * @throws SocketException
+     */
+    public void setKeepAlive(boolean keepAlive) throws SocketException {
+    	_socket_.setKeepAlive(keepAlive);
+    }
+    
+    /**
+     * Returns the current value of the SO_KEEPALIVE flag on the currently opened socket.
+     * 
+     * @return True if SO_KEEPALIVE is enabled.
+     * @throws SocketException
+     */
+    public boolean getKeepAlive() throws SocketException {
+    	return _socket_.getKeepAlive();
+    }
+    
     /**
      * Sets the SO_LINGER timeout on the currently opened socket.
      * <p>
