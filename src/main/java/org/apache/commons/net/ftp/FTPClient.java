@@ -157,7 +157,7 @@ import org.apache.commons.net.io.Util;
  * and
  * {@link org.apache.commons.net.ftp.FTP#getReplyStrings  getReplyStrings}.
  * You may avoid server disconnections while the client is idle by
- * periodicaly sending NOOP commands to the server.
+ * periodically sending NOOP commands to the server.
  * <p>
  * Rather than list it separately for each method, we mention here that
  * every method communicating with the server and throwing an IOException
