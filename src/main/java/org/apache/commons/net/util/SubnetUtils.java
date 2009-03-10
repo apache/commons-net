@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 
 /**
  * A class that performs some subnet calculations given a network address and a subnet mask. 
- * @see http://www.faqs.org/rfcs/rfc1519.html
+ * @see "http://www.faqs.org/rfcs/rfc1519.html"
  * @author <rwinston@apache.org>
  * @since 2.0
  */
@@ -47,7 +47,7 @@ public class SubnetUtils {
     }
 
     /**
-     * Constructor that takes two dotted decimal addresses. 
+     * Constructor that takes a dotted decimal address and a dotted decimal mask. 
      * @param address An IP address, e.g. "192.168.0.1"
      * @param mask A dotted decimal netmask e.g. "255.255.0.0"
      */
