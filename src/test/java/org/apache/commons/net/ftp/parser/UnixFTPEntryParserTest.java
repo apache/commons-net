@@ -186,6 +186,26 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 		assertEquals(f.getGroup(), "chrism");
 		assertEquals(f.getHardLinkCount(), 1464);
 	}
+	
+	public void testCorrectGroupNameParsing() {
+		FTPFile f = getParser().parseFTPEntry("-rw-r--r--   1 ftpuser  ftpusers 12414535 Mar 17 11:07 test 1999 abc.pdf");
+		assertNotNull(f);
+		assertEquals(f.getHardLinkCount(), 1);
+		assertEquals(f.getUser(), "ftpuser");
+		assertEquals(f.getGroup(), "ftpusers");
+		assertEquals(f.getSize(), 12414535);
+		assertEquals(f.getName(), "test 1999 abc.pdf");
+
+
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.MONTH, Calendar.MARCH);
+		cal.set(Calendar.DAY_OF_MONTH, 17);
+		cal.set(Calendar.HOUR_OF_DAY, 11);
+		cal.set(Calendar.MINUTE, 7);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		assertEquals(cal.getTime(), f.getTimestamp().getTime());
+	}
 
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()

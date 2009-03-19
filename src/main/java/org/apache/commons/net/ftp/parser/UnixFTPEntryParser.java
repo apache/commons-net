@@ -88,12 +88,10 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         + "(?:(\\S+(?:\\s\\S+)*?)\\s+)?"                // owner name (optional spaces)
         + "(?:(\\S+(?:\\s\\S+)*)\\s+)?"                 // group name (optional spaces)
         + "(\\d+(?:,\\s*\\d+)?)\\s+"
-        
         /*
           numeric or standard format date
         */
-        + "((?:\\d+[-/]\\d+[-/]\\d+)|(?:\\S+\\s+\\S+))\\s+"
-        
+        + "((?:\\d+[-/]\\d+[-/]\\d+)|(?:[a-zA-Z]+\\s+\\S+))\\s+"
         /* 
            year (for non-recent standard format) 
            or time (for numeric or recent standard format  
