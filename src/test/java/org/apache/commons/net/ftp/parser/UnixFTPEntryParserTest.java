@@ -206,6 +206,11 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 		cal.set(Calendar.MILLISECOND, 0);
 		assertEquals(cal.getTime(), f.getTimestamp().getTime());
 	}
+	
+	public void testFilenamesWithEmbeddedNumbers() {
+		FTPFile f = getParser().parseFTPEntry("-rw-r--r--   1 root     root       111325 Feb 25 12:00 123 456 abc.csv");
+		assertEquals(f.getName(), "123 456 abc.csv");
+	}
 
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
