@@ -83,7 +83,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      */
     private static final String REGEX =
         "([bcdelfmpSs-])"
-        +"(((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-])))\\+?\\s+"
+        +"(((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-])))\\+?\\s*"
         + "(\\d+)\\s+"
         + "(?:(\\S+(?:\\s\\S+)*?)\\s+)?"                // owner name (optional spaces)
         + "(?:(\\S+(?:\\s\\S+)*)\\s+)?"                 // group name (optional spaces)

@@ -174,8 +174,17 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 	public void testNameWIthPunctuation() {
 		FTPFile f = getParser().parseFTPEntry("drwx------ 4 maxm Domain Users 512 Oct 2 10:59 abc(test)123.pdf");
 		assertNotNull(f);
-		assertEquals(f.getName(), "abc(test)123.pdf");
-		
+		assertEquals(f.getName(), "abc(test)123.pdf");	
+	}
+
+	public void testNoSpacesBeforeFileSize() {
+		FTPFile f = getParser().parseFTPEntry("drwxr-x---+1464 chrism   chrism     41472 Feb 25 13:17 20090225");
+		assertNotNull(f);
+		assertEquals(f.getSize(), 41472);
+		assertEquals(f.getType(), FTPFile.DIRECTORY_TYPE);
+		assertEquals(f.getUser(), "chrism");
+		assertEquals(f.getGroup(), "chrism");
+		assertEquals(f.getHardLinkCount(), 1464);
 	}
 
     /**
