@@ -42,7 +42,6 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
                 "----rwxr-x   1PEP       0           4019 Mar 18 18:58 einladung.zip",
                 "----rwxr-x   1 PEP      0  xx        422 Mar 24 14:06 readme",
                 "----rwxr-x   1 PEP      0           8492 Apr 07 30:13 build.xml",
-                "d---rwxr-x   2 PEP USR  0          45056 Mar 24 14:06 dir1",
                 "d---rwxr-x   2 PEP      0          45056Mar 24 14:06 zdir2"
             }
     };

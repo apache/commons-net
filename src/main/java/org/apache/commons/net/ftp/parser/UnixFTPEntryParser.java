@@ -91,7 +91,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         /*
           numeric or standard format date
         */
-        + "((?:\\d+[-/]\\d+[-/]\\d+)|(?:[a-zA-Z]+\\s+\\S+))\\s+"
+        + "((?:\\d+[-/]\\d+[-/]\\d+)|(?:[a-zA-Z0-9]+\\s+\\S+))\\s+"
         /* 
            year (for non-recent standard format) 
            or time (for numeric or recent standard format  
