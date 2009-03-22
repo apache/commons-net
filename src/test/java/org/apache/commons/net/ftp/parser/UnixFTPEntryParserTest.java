@@ -196,7 +196,6 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 		assertEquals(f.getSize(), 12414535);
 		assertEquals(f.getName(), "test 1999 abc.pdf");
 
-
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.MONTH, Calendar.MARCH);
 		cal.set(Calendar.DAY_OF_MONTH, 17);
@@ -208,8 +207,11 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 	}
 	
 	public void testFilenamesWithEmbeddedNumbers() {
-		FTPFile f = getParser().parseFTPEntry("-rw-r--r--   1 root     root       111325 Feb 25 12:00 123 456 abc.csv");
+		FTPFile f = getParser().parseFTPEntry("-rw-rw-rw-   1 user group 5840 Mar 19 09:34 123 456 abc.csv");
 		assertEquals(f.getName(), "123 456 abc.csv");
+		assertEquals(f.getSize(), 5840);
+		assertEquals(f.getUser(), "user");
+		assertEquals(f.getGroup(), "group");
 	}
 
     /**
