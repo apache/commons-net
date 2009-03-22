@@ -151,7 +151,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
         assertEquals("john smith", f.getUser());
     }
     
-    public void testOwnerANdGroupNameWithSpaces() {
+    public void testOwnerAndGroupNameWithSpaces() {
         FTPFile f = getParser().parseFTPEntry("drwxr-xr-x   2 john smith     test group         4096 Mar  2 15:13 zxbox");
         assertNotNull(f);
         assertEquals("john smith", f.getUser());

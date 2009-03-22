@@ -23,6 +23,9 @@ limitations under the License.
 	
 
 	<body>
+		<release version="2.1" description="Fix release">
+		</release>
+
 		<release version="2.0" date="October 20, 2008" description="Java 5.0 release">
 			<action dev="rwinston" type="update">
 				Add null check in TelnetClient::disconnect().
