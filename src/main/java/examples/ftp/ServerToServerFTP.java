@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package examples;
+package examples.ftp;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,7 +37,7 @@ import org.apache.commons.net.ftp.FTPReply;
  * Usage: ftp <host1> <user1> <pass1> <file1> <host2> <user2> <pass2> <file2>
  * <p>
  ***/
-public final class server2serverFTP
+public final class ServerToServerFTP
 {
 
     public static final void main(String[] args)

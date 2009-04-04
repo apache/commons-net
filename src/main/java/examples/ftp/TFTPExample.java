@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package examples;
+package examples.ftp;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,7 +44,7 @@ import org.apache.commons.net.tftp.TFTPClient;
  *        -b Use binary transfer mode
  * <p>
  ***/
-public final class tftp
+public final class TFTPExample
 {
     static final String USAGE =
         "Usage: tftp [options] hostname localfile remotefile\n\n" +

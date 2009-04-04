@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package examples;
+package examples.ftp;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
