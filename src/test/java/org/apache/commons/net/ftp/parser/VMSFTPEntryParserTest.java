@@ -93,7 +93,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         parser.configure(null);
         FTPListParseEngine engine = new FTPListParseEngine(parser);
         engine.readServerList(
-                new ByteArrayInputStream(fullListing.getBytes()));
+                new ByteArrayInputStream(fullListing.getBytes()), null); // use default encoding
         FTPFile[] files = engine.getFiles();
         assertEquals(6, files.length);
         assertFileInListing(files, "2-JUN.LIS");
@@ -114,7 +114,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         parser.configure(null);
         FTPListParseEngine engine = new FTPListParseEngine(parser);
         engine.readServerList(
-                new ByteArrayInputStream(fullListing.getBytes()));
+                new ByteArrayInputStream(fullListing.getBytes()), null); // use default encoding
         FTPFile[] files = engine.getFiles();
         assertEquals(3, files.length);
         assertFileInListing(files, "1-JUN.LIS;1");

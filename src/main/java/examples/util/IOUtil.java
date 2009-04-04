@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package examples;
+package examples.util;
 
 import java.io.IOException;
 import java.io.InputStream;

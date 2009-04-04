@@ -116,7 +116,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      ***/
     public FTPFile[] parseFileList(InputStream listStream) throws IOException {
         FTPListParseEngine engine = new FTPListParseEngine(this);
-        engine.readServerList(listStream);
+        engine.readServerList(listStream, null);
         return engine.getFiles();
     }
 

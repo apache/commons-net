@@ -20,6 +20,8 @@ package examples;
 import java.io.IOException;
 import org.apache.commons.net.bsd.RLoginClient;
 
+import examples.util.IOUtil;
+
 /***
  * This is an example program demonstrating how to use the RLoginClient
  * class. This program connects to an rlogin daemon and begins to
