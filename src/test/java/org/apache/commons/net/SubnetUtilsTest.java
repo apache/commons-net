@@ -51,7 +51,7 @@ public class SubnetUtilsTest extends TestCase {
         SubnetUtils utils = new SubnetUtils("192.168.0.1/29");
         SubnetInfo info = utils.getInfo();
         assertTrue(info.isInRange("192.168.0.1"));
-        // We dont count the broadcast address as usable
+        // We don't count the broadcast address as usable
         assertFalse(info.isInRange("192.168.0.7"));
         assertFalse(info.isInRange("192.168.0.8"));
         assertFalse(info.isInRange("10.10.2.1"));
@@ -61,11 +61,11 @@ public class SubnetUtilsTest extends TestCase {
     
     public void testZeroNetmaskBits() {
     	try {
-    		SubnetUtils utils = new SubnetUtils("192.168.0.1/0");
-    		assertTrue("/0 should be an invalid mask", false);
+    		@SuppressWarnings("unused")
+            SubnetUtils utils = new SubnetUtils("192.168.0.1/0");
+    		fail("Mask /0 should have generated an IllegalArgumentException");
     	}
-    	catch (Exception e) {
-    		;
+    	catch (IllegalArgumentException expected) {
     	}
     }
 }
