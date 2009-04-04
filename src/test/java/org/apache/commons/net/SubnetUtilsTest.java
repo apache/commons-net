@@ -58,4 +58,14 @@ public class SubnetUtilsTest extends TestCase {
         assertFalse(info.isInRange("192.168.1.1"));
         assertFalse(info.isInRange("192.168.0.255"));
     }
+    
+    public void testZeroNetmaskBits() {
+    	try {
+    		SubnetUtils utils = new SubnetUtils("192.168.0.1/0");
+    		assertTrue("/0 should be an invalid mask", false);
+    	}
+    	catch (Exception e) {
+    		;
+    	}
+    }
 }
