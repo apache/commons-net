@@ -91,7 +91,13 @@ public abstract class SocketClient
     /** The socket's connect timeout (0 = infinite timeout) */
     private static final int DEFAULT_CONNECT_TIMEOUT = 0;
     protected int connectTimeout = DEFAULT_CONNECT_TIMEOUT;
-
+    
+    /** Hint for SO_RCVBUF size */
+    int receiveBufferSize = -1;
+    
+    /** Hint for SO_SNDBUF size */
+    int sendBufferSize = -1;
+    
     /**
      * Default constructor for SocketClient.  Initializes
      * _socket_ to null, _timeout_ to 0, _defaultPort to 0,
@@ -151,8 +157,9 @@ public abstract class SocketClient
     throws SocketException, IOException
     {
         _socket_ = _socketFactory_.createSocket();
+        if (receiveBufferSize != -1) _socket_.setReceiveBufferSize(receiveBufferSize);
+        if (sendBufferSize != -1) _socket_.setSendBufferSize(sendBufferSize);
         _socket_.connect(new InetSocketAddress(host, port), connectTimeout);
-
         _connectAction_();
     }
 
@@ -173,10 +180,7 @@ public abstract class SocketClient
     public void connect(String hostname, int port)
     throws SocketException, IOException
     {
-        _socket_= _socketFactory_.createSocket();
-        _socket_.connect(new InetSocketAddress(hostname, port), connectTimeout);
-        
-        _connectAction_();
+        connect(InetAddress.getByName(hostname), port);
     }
 
 
@@ -199,10 +203,11 @@ public abstract class SocketClient
                         InetAddress localAddr, int localPort)
     throws SocketException, IOException
     {
-        _socket_ = _socketFactory_.createSocket();
+        _socket_ = _socketFactory_.createSocket();     
+        if (receiveBufferSize != -1) _socket_.setReceiveBufferSize(receiveBufferSize);
+        if (sendBufferSize != -1) _socket_.setSendBufferSize(sendBufferSize);
         _socket_.bind(new InetSocketAddress(localAddr, localPort));
         _socket_.connect(new InetSocketAddress(host, port), connectTimeout);
-        
         _connectAction_();
     }
 
@@ -227,9 +232,7 @@ public abstract class SocketClient
                         InetAddress localAddr, int localPort)
     throws SocketException, IOException
     {
-        _socket_ =
-            _socketFactory_.createSocket(hostname, port, localAddr, localPort);
-        _connectAction_();
+       connect(InetAddress.getByName(hostname), port, localAddr, localPort);
     }
 
 
@@ -384,7 +387,7 @@ public abstract class SocketClient
      * @since 2.0
      */
     public void setSendBufferSize(int size) throws SocketException {
-        _socket_.setSendBufferSize(size);
+        sendBufferSize = size;
     }
     
     
@@ -396,7 +399,7 @@ public abstract class SocketClient
      * @since 2.0
      */
     public void setReceiveBufferSize(int size) throws SocketException  {
-        _socket_.setReceiveBufferSize(size);
+        receiveBufferSize = size;
     }
 
 
