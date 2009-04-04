@@ -100,6 +100,19 @@ public class SubnetUtils {
             }
             return addresses;
         }
+        
+        @Override
+        public String toString() {
+        	final StringBuilder buf = new StringBuilder();
+        	buf.append("CIDR Signature:\t[").append(getCidrSignature()).append("]")
+        		.append(" Netmask: [").append(getNetmask()).append("]\n")
+        		.append("Network:\t[").append(getNetworkAddress()).append("]\n")
+        		.append("Broadcast:\t[").append(getBroadcastAddress()).append("]\n")
+        	 	.append("First Address:\t[").append(getLowAddress()).append("]\n")
+        	 	.append("Last Address:\t[").append(getHighAddress()).append("]\n")
+        	 	.append("# Addresses:\t[").append(getAddressCount()).append("]\n");        	 	
+        	return buf.toString();
+        }
     }
 
     /**
