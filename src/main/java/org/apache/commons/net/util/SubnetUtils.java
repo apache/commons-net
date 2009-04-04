@@ -199,7 +199,7 @@ public class SubnetUtils {
      * Convenience function to check integer boundaries
      */
     private int rangeCheck(int value, int begin, int end) {
-        if (value >= begin && value <= end)
+        if (value > begin && value <= end) // (0,nbits]
             return value;
 
         throw new IllegalArgumentException("Value out of range: [" + value + "]");

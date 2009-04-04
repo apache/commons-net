@@ -30,7 +30,7 @@ import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
 public class SubnetUtilsExample {
     
     public static void main(String[] args) {
-        String subnet = "192.168.0.1/29";
+        String subnet = "192.168.0.3/31";
         SubnetUtils utils = new SubnetUtils(subnet);
         SubnetInfo info = utils.getInfo();
         
@@ -48,9 +48,9 @@ public class SubnetUtilsExample {
                 Integer.toBinaryString(info.asInteger(info.getNetworkAddress())));
         System.out.printf("Broadcast Address:\t\t%s\t[%s]\n", info.getBroadcastAddress(), 
                 Integer.toBinaryString(info.asInteger(info.getBroadcastAddress())));
-        System.out.printf("First Usable Address:\t\t%s\t[%s]\n", info.getLowAddress(), 
+        System.out.printf("Low Address:\t\t\t%s\t[%s]\n", info.getLowAddress(), 
                 Integer.toBinaryString(info.asInteger(info.getLowAddress())));
-        System.out.printf("Last Usable Address:\t\t%s\t[%s]\n", info.getHighAddress(), 
+        System.out.printf("High Address:\t\t\t%s\t[%s]\n", info.getHighAddress(), 
                 Integer.toBinaryString(info.asInteger(info.getHighAddress())));
         
         System.out.printf("Total usable addresses: \t%d\n", info.getAddressCount());
