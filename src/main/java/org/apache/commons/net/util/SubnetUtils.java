@@ -69,6 +69,13 @@ public class SubnetUtils {
         private int low()           { return network() + 1; }
         private int high()          { return broadcast() - 1; }
 
+        /**
+         * Returns true if the parameter <code>address</code> is in the 
+         * range of usable endpoint addresses for this subnet. This excludes the
+         * network and broadcast adresses.
+         * @param address A dot-delimited IPv4 address, e.g. "192.168.0.1"
+         * @return True if in range, false otherwise
+         */
         public boolean isInRange(String address)    { return isInRange(toInteger(address)); }
         
         private boolean isInRange(int address)      { 
@@ -131,10 +138,12 @@ public class SubnetUtils {
             address = matchAddress(matcher);
 
             /* Create a binary netmask from the number of bits specification /x */
-            int cidrPart = rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS-1);
+            int cidrPart = rangeCheck(Integer.parseInt(matcher.group(5)), -1, NBITS-1);
             for (int j = 0; j < cidrPart; ++j) {
                 netmask |= (1 << 31-j);
             }
+            
+            rangeCheck(pop(netmask),0, NBITS);
 
             /* Calculate base network address */
             network = (address & netmask);
@@ -165,7 +174,7 @@ public class SubnetUtils {
     private int matchAddress(Matcher matcher) {
         int addr = 0;
         for (int i = 1; i <= 4; ++i) { 
-            int n = (rangeCheck(Integer.parseInt(matcher.group(i)), 0, 255));
+            int n = (rangeCheck(Integer.parseInt(matcher.group(i)), -1, 255));
             addr |= ((n & 0xff) << 8*(4-i));
         }
         return addr;
@@ -196,10 +205,12 @@ public class SubnetUtils {
     }
 
     /*
-     * Convenience function to check integer boundaries
+     * Convenience function to check integer boundaries.
+     * Checks if a value x is in the range (begin,end].
+     * Returns x if it is in range, throws an exception otherwise.
      */
     private int rangeCheck(int value, int begin, int end) {
-        if (value > begin && value <= end) // (0,nbits]
+        if (value > begin && value <= end) // (begin,end]
             return value;
 
         throw new IllegalArgumentException("Value out of range: [" + value + "]");
