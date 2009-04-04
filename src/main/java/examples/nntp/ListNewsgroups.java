@@ -30,7 +30,7 @@ import org.apache.commons.net.nntp.NewsgroupInfo;
  * <p>
  ***/
 
-public final class newsgroups
+public final class ListNewsgroups
 {
 
     public final static void main(String[] args)
