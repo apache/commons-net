@@ -20,10 +20,67 @@ limitations under the License.
 		<title>Changes</title>
 		<author email="rwinston@apache.org">Rory Winston</author>
 	</properties>
-	
+
 
 	<body>
 		<release version="2.1" description="Fix release">
+			<action dev="rwinston" type="fix" issue="NET-215">
+				UNIXFTPEntryParser didn't preserve trailing whitespace in files
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-236">
+				method SubnetUtils.SubnetInfo.isInRange(addr) returns incorrect result
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-242">
+				Method createServerSocket of FTPSSocketFactory never called and thus UseClientMode is incorrect in a secured ftp transfer using active mode.
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-248">
+				Fix inconsistent command list in FTPCommand
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-250">
+				DefaultFTPFileEntryParserFactory did not work with Netware FTP server returning "NETWARE TYPE: L8"
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-257">
+				FTP.getReplyStrings() returned array of null Strings
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-259">
+				UnixFTPEntryParser regex did not match some directory entries
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-260">
+				SubnetUtils.SubnetInfo.isInRange(...) returned incorrect values
+			</action>
+			<action dev="rwinston" type="update" issue="NET-261">
+				SubnetUtils.SubnetInfo.isInRange(...) behaviour not documented
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-262">
+				SubnetUtils did not handle /31 and /32 CIDRs well
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-265">
+				UnixFTPEntryParser failed to parse entry in certain conditions
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-266">
+				FTPClient.listFiles() corrupted file name in certain circumstances
+			</action>
+			<action dev="rwinston" type="update" issue="NET-251">
+				Moved class "ThreadContainer" from Threader.java into its own source file
+			</action>
+			<action dev="rwinston" type="update" issue="NET-252">
+				Get rid of using deprecated API in VMSFTPEntryParser
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-256">
+				FTPSClient should accept a pre-configured SSLContext
+			</action>
+			<action dev="rwinston" type="add" issue="NET-263">
+				SubnetUtils / SubNetInfo toString() implementations
+			</action>
+			<action dev="rwinston" type="fix">
+				Improve NNTPClient handling of invalid articles
+			</action>
+			<action dev="rwinston" type="update">
+				Refactor examples package.
+			</action>
+			<action dev="sebb" type="add">
+				Javadoc fixes, improvements, and refactoring.
+			</action>
 		</release>
 
 		<release version="2.0" date="October 20, 2008" description="Java 5.0 release">
@@ -159,99 +216,99 @@ limitations under the License.
 			<action dev="rwinston" type="fix" issue="NET-198">
 				Allow FTPTimestampParserImpl to take a predefined Calendar instance representing current time.
 			</action>
-            <action dev="sebb" type="fix" issue="NET-194">
-                Replace Exception with IOException
-            </action>
-            <action dev="sebb" type="update" issue="NET-214">
-                VMS file permission parsing
-            </action>
-            <action dev="sebb" type="fix" issue="NET-208">
-                TelnetInputStream swallows interruptedexception as IOException
-            </action>
-            <action dev="sebb" type="fix" issue="NET-223">
-                the data connection socket is not closed when an IOException occurred
-            </action>
-            <action dev="sebb" type="fix" issue="NET-230">
-                ParserInitializationException when connecting to a Unix FTP server: comparison string must be upper case
-            </action>
-            <action dev="sebb" type="fix" issue="NET-225">
-                FTPFileEntryParserImpl.preParse() doesn't remove unparsable entries at the end of the file list
-            </action>
+			<action dev="sebb" type="fix" issue="NET-194">
+				Replace Exception with IOException
+			</action>
+			<action dev="sebb" type="update" issue="NET-214">
+				VMS file permission parsing
+			</action>
+			<action dev="sebb" type="fix" issue="NET-208">
+				TelnetInputStream swallows interruptedexception as IOException
+			</action>
+			<action dev="sebb" type="fix" issue="NET-223">
+				the data connection socket is not closed when an IOException occurred
+			</action>
+			<action dev="sebb" type="fix" issue="NET-230">
+				ParserInitializationException when connecting to a Unix FTP server: comparison string must be upper case
+			</action>
+			<action dev="sebb" type="fix" issue="NET-225">
+				FTPFileEntryParserImpl.preParse() doesn't remove unparsable entries at the end of the file list
+			</action>
 		</release>	
 
 
 		<release version="1.5.0" date="" description="">
 			<action dev="dfs" type="fix" issue="NET-3">
 				TelnetInputStream.java: Applied Rob
-Hasselbaum's
+				Hasselbaum's
 				rhasselbaum@alumni.ithaca.edu
 				patch for PR 38688 fixing a
 				TelnetInputStream hang.
 			</action>
 			<action dev="rwinston" type="fix"
-issue="NET-73">
+				issue="NET-73">
 				TelnetInputStream.java: Fixing another
-potential deadlock for 
-                        telnet and FTP (patch courtesy Rob Hasselbaum).
+				potential deadlock for 
+				telnet and FTP (patch courtesy Rob Hasselbaum).
 			</action>
 			<action dev="dfs" type="update" issue="NET-57">
 				FTP.java: Exposed control connection of
-FTP
+				FTP
 				class via _controlInput_ and
-_controlOutput_
+				_controlOutput_
 				protected member variables in response
 				to PR 38309 reported by
 				josejuan.montiel@gmail.com.
 			</action>
 			<action dev="rwinston" type="fix"
-issue="NET-68">
+				issue="NET-68">
 				TFTPClient.java: Fix bug causing final
-packets
+				packets
 				to not be sent.
 			</action>
 			<action dev="rwinston" type="fix"
-issue="NET-161">
+				issue="NET-161">
 				TFTPClient.java: Fix sendFile() (related
-to NET-68).
+				to NET-68).
 			</action>
 			<action dev="rwinston" type="fix"
-issue="NET-181">
+				issue="NET-181">
 				TFTPClient.java: block number
-wraparound.
+				wraparound.
 			</action>
 			<action dev="scohen" type="fix" issue="NET-16">
 				UNIXFTPEntryParser.java: support for
-group names with
-                        spaces (patch courtesy D. Kilzer).
+				group names with
+				spaces (patch courtesy D. Kilzer).
 			</action>
 			<action dev="scohen" type="fix" issue="NET-62">
 				DefaultFTPFileEntryParserFactory.java:
-Wrap 
-                        NoClassDefFoundError in FTP parser exception
-                        when ORO is not available.
+				Wrap 
+				NoClassDefFoundError in FTP parser exception
+				when ORO is not available.
 			</action>
 			<action dev="rwinston" type="add"
-issue="NET-33">
+				issue="NET-33">
 				FTPClient.java: Fix closing FTP
-ServerSocket after timeout
+				ServerSocket after timeout
 			</action>
 			<action dev="rwinston" type="add">
 				FTPClientConfig.java: Added an FTP
-parser for Netware FTP servers.
-                        Tested on Novell Netware 6.5.
+				parser for Netware FTP servers.
+				Tested on Novell Netware 6.5.
 			</action>
 			<action dev="rwinston" type="fix"
-issue="NET-188">
+				issue="NET-188">
 				FTPTimestampParserImpl.java: Fix leap
-year date parsing bug.
+				year date parsing bug.
 			</action>
 			<action dev="rwinston" type="fix">
 				Article.java: Fix minor issues with NNTP
-parsing.
+				parsing.
 			</action>
 		</release> 
 
-		
+
 
 		<release version="1.4.1" date="December 3, 2005" description="fix release to restore jdk 1.3 compatability">
 			<action dev="scohen" type="fix">
@@ -261,7 +318,7 @@ parsing.
 				Applied patches for defect 37522. updated project.xml to correct compatibility level.
 			</action>
 		</release>
-		
+
 		<release version="1.4.0" date="May 7, 2005" description="Some additions and enhancements">
 			<action dev="dfs" type="fix">
 				Fixed typo in method name.
@@ -294,7 +351,7 @@ parsing.
 				Added functionality for extensible parsing of FTP responses, using a configurable format string. This should enable the FTP client to operate across many different locales and date formats.
 			</action>
 		</release>
-		
+
 		<release version="1.3.0" date="December 15, 2004" description="many fixes and enhancements">
 			<action dev="rwinston" type="fix">
 				Applied patch for PR 31793. Thanks to mario@ops.co.at
