@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package examples;
+package examples.telnet;
 
 import java.io.IOException;
 import org.apache.commons.net.telnet.TelnetClient;
@@ -36,7 +36,7 @@ import examples.util.IOUtil;
  ***/
 
 // This class requires the IOUtil support class!
-public final class weatherTelnet
+public final class WeatherTelnet
 {
 
     public final static void main(String[] args)

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package examples;
+package examples.telnet;
 
 import java.io.InputStream;
 import java.io.OutputStream;

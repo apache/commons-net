@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package examples;
+package examples.unix;
 
 import java.io.BufferedReader;
 import java.io.IOException;

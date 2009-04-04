@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package examples;
+package examples.unix;
 
 import java.io.IOException;
 import java.net.InetAddress;

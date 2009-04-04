@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package examples;
+package examples.mail;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -24,8 +24,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Vector;
+import java.util.List;
 
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.io.Util;
@@ -40,13 +41,13 @@ import org.apache.commons.net.smtp.SimpleSMTPHeader;
  * <p>
  ***/
 
-public final class mail
+public final class SMTPMail
 {
 
     public final static void main(String[] args)
     {
         String sender, recipient, subject, filename, server, cc;
-        Vector ccList = new Vector();
+        List<String> ccList = new ArrayList<String>();
         BufferedReader stdin;
         FileReader fileReader = null;
         Writer writer;
@@ -96,7 +97,7 @@ public final class mail
                     break;
 
                 header.addCC(cc);
-                ccList.addElement(cc);
+                ccList.add(cc);
             }
 
             System.out.print("Filename: ");
@@ -131,10 +132,10 @@ public final class mail
             client.setSender(sender);
             client.addRecipient(recipient);
 
-            en = ccList.elements();
+           
 
-            while (en.hasMoreElements())
-                client.addRecipient((String)en.nextElement());
+            for (String recpt : ccList)
+                client.addRecipient(recpt);
 
             writer = client.sendMessageData();
 

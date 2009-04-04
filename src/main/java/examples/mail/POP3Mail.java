@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package examples;
+package examples.mail;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,7 +32,7 @@ import org.apache.commons.net.pop3.POP3MessageInfo;
  * Usage: messages <pop3 server hostname> <username> <password>
  * <p>
  ***/
-public final class messages
+public final class POP3Mail
 {
 
     public static final void printMessageInfo(BufferedReader reader, int id)

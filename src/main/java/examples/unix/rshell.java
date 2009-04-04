@@ -15,61 +15,54 @@
  * limitations under the License.
  */
 
-package examples;
+package examples.unix;
 
 import java.io.IOException;
-import org.apache.commons.net.bsd.RLoginClient;
+import org.apache.commons.net.bsd.RCommandClient;
 
 import examples.util.IOUtil;
 
 /***
- * This is an example program demonstrating how to use the RLoginClient
- * class. This program connects to an rlogin daemon and begins to
- * interactively read input from stdin (this will be line buffered on most
- * systems, so don't expect character at a time interactivity), passing it
- * to the remote login process and writing the remote stdout and stderr
- * to local stdout.  If you don't have .rhosts or hosts.equiv files set up,
- * the rlogin daemon will prompt you for a password.
+ * This is an example program demonstrating how to use the RCommandClient
+ * class. This program connects to an rshell daemon and requests that the
+ * given command be executed on the server.  It then reads input from stdin
+ * (this will be line buffered on most systems, so don't expect character
+ * at a time interactivity), passing it to the remote process and writes
+ * the process stdout and stderr to local stdout.
  * <p>
  * On Unix systems you will not be able to use the rshell capability
  * unless the process runs as root since only root can bind port addresses
  * lower than 1024.
  * <p>
- * JVM's using green threads will likely have problems if the rlogin daemon
- * requests a password.  This program is merely a demonstration and is
- * not suitable for use as an application, especially given that it relies
- * on line buffered input from System.in.  The best way to run this example
- * is probably from a Win95 dos box into a Unix host.
+ * Example: java rshell myhost localusername remoteusername "ps -aux"
  * <p>
- * Example: java rlogin myhost localusername remoteusername vt100
- * <p>
- * Usage: rlogin <hostname> <localuser> <remoteuser> <terminal>
+ * Usage: rshell <hostname> <localuser> <remoteuser> <command>
  * <p>
  ***/
 
 // This class requires the IOUtil support class!
-public final class rlogin
+public final class rshell
 {
 
     public static final void main(String[] args)
     {
-        String server, localuser, remoteuser, terminal;
-        RLoginClient client;
+        String server, localuser, remoteuser, command;
+        RCommandClient client;
 
         if (args.length != 4)
         {
             System.err.println(
-                "Usage: rlogin <hostname> <localuser> <remoteuser> <terminal>");
+                "Usage: rshell <hostname> <localuser> <remoteuser> <command>");
             System.exit(1);
             return ; // so compiler can do proper flow control analysis
         }
 
-        client = new RLoginClient();
+        client = new RCommandClient();
 
         server = args[0];
         localuser = args[1];
         remoteuser = args[2];
-        terminal = args[3];
+        command = args[3];
 
         try
         {
@@ -84,7 +77,7 @@ public final class rlogin
 
         try
         {
-            client.rlogin(localuser, remoteuser, terminal);
+            client.rcommand(localuser, remoteuser, command);
         }
         catch (IOException e)
         {
@@ -95,7 +88,7 @@ public final class rlogin
             catch (IOException f)
             {}
             e.printStackTrace();
-            System.err.println("rlogin authentication failed.");
+            System.err.println("Could not execute command.");
             System.exit(1);
         }
 
