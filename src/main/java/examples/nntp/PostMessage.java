@@ -39,7 +39,7 @@ import org.apache.commons.net.nntp.SimpleNNTPHeader;
  * <p>
  ***/
 
-public final class post
+public final class PostMessage
 {
 
     public final static void main(String[] args)
