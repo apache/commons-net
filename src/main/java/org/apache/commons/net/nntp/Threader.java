@@ -29,6 +29,7 @@ package org.apache.commons.net.nntp;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 public class Threader {
     private ThreadContainer root;
@@ -41,16 +42,16 @@ public class Threader {
      * @param messages
      * @return null if messages == null or root.child == null
      */
-    public Threadable thread(Threadable[] messages) {
+    public Threadable thread(List<? extends Threadable> messages) {
         if (messages == null)
             return null;
 
         idTable = new HashMap<String,ThreadContainer>();
 
-        // walk through each Threadable element
-        for (int i = 0; i < messages.length; ++i) {
-            if (!messages[i].isDummy())
-                buildContainer(messages[i]);
+        // walk through each Threadable element    
+        for (Threadable t : messages) {
+        	if (!t.isDummy())
+        		buildContainer(t);
         }
 
         root = findRootSet();

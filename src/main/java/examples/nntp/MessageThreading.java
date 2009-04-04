@@ -21,6 +21,7 @@ package examples.nntp;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.SocketException;
+import java.util.List;
 
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.nntp.Article;
@@ -45,27 +46,27 @@ public class MessageThreading {
         NNTPClient client = new NNTPClient();
         client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
         client.connect(hostname);
-        
-        if(!client.authenticate(user, password)) {
-            System.out.println("Authentication failed for user " + user + "!");
-            System.exit(1);
-        }
-        
+//      optional authentication
+//        
+//        if(!client.authenticate(user, password)) {
+//            System.out.println("Authentication failed for user " + user + "!");
+//          //  System.exit(1);
+//        }
+//        
         NewsgroupInfo group = new NewsgroupInfo();
-        client.selectNewsgroup("comp.lang.lisp", group);
+        client.selectNewsgroup("alt.test", group);
         
         int lowArticleNumber = group.getFirstArticle();
-        int highArticleNumber = lowArticleNumber + 100;
+        int highArticleNumber = lowArticleNumber + 5000;
         
         System.out.println("Retrieving articles between [" + lowArticleNumber + "] and [" + highArticleNumber + "]");
-        Article[] articles = NNTPUtils.getArticleInfo(client, lowArticleNumber, highArticleNumber);
+        List<Article> articles = NNTPUtils.getArticleInfo(client, lowArticleNumber, highArticleNumber);
         
         System.out.println("Building message thread tree...");
         Threader threader = new Threader();
         Article root = (Article)threader.thread(articles);
         
         Article.printThread(root, 0);
-        
     }
     
     

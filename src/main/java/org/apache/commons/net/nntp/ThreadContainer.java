@@ -31,6 +31,8 @@ class ThreadContainer {
 
     // Copy the ThreadContainer tree structure down into the underlying Threadable objects
     // (Make the Threadable tree look like the ThreadContainer tree)
+    // TODO convert this to an iterative function - this can blow the stack 
+    // with very large Threadable trees
     void flush() {
         if (parent != null && threadable == null)
             throw new RuntimeException("no threadable in " + this.toString());

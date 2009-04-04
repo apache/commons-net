@@ -19,6 +19,7 @@ package examples.nntp;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.nntp.Article;
@@ -29,7 +30,7 @@ import org.apache.commons.net.nntp.NewsgroupInfo;
 /**
  * Simple class showing some of the extended commands (AUTH, XOVER, LIST ACTIVE)
  * 
- * @author Rory Winston <rwinston@checkfree.com>
+ * @author Rory Winston <rwinston@apache.org>
  */
 public class ExtendedNNTPOps {
 
@@ -59,10 +60,10 @@ public class ExtendedNNTPOps {
             client.selectNewsgroup("alt.test", testGroup);
             int lowArticleNumber = testGroup.getFirstArticle();
             int highArticleNumber = lowArticleNumber + 100;
-            Article[] articles = NNTPUtils.getArticleInfo(client, lowArticleNumber, highArticleNumber);
+            List<Article> articles = NNTPUtils.getArticleInfo(client, lowArticleNumber, highArticleNumber);
 
-            for (int i = 0; i < articles.length; ++i) {
-                System.out.println(articles[i].getSubject());
+            for (Article article : articles) {
+                System.out.println(article.getSubject());
             }
 
             // LIST ACTIVE
