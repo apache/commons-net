@@ -32,7 +32,6 @@ package org.apache.commons.net.ftp;
 public final class FTPCommand
 {
 
-
     public static final int USER = 0;
     public static final int PASS = 1;
     public static final int ACCT = 2;
@@ -70,6 +69,7 @@ public final class FTPCommand
     public static final int MDTM = 33;
     /** @since 2.1 */
     public static final int FEAT = 34;
+    public static final int MFMT = 35;
     
     public static final int USERNAME = USER;
     public static final int PASSWORD = PASS;
@@ -105,9 +105,10 @@ public final class FTPCommand
     //public static final int HELP = HELP;
     //public static final int NOOP = NOOP;
     /** @since 2.0 */
-    public static final int MOD_TIME = MDTM;
+    public static final int GET_MOD_TIME = MDTM;
     /** @since 2.1 */
     public static final int FEATURES = FEAT;
+    public static final int SET_MOD_TIME = MFMT;
     
     // Cannot be instantiated
     private FTPCommand()
@@ -117,7 +118,7 @@ public final class FTPCommand
                                           "USER", "PASS", "ACCT", "CWD", "CDUP", "SMNT", "REIN", "QUIT", "PORT",
                                           "PASV", "TYPE", "STRU", "MODE", "RETR", "STOR", "STOU", "APPE", "ALLO",
                                           "REST", "RNFR", "RNTO", "ABOR", "DELE", "RMD", "MKD", "PWD", "LIST",
-                                          "NLST", "SITE", "SYST", "STAT", "HELP", "NOOP", "MDTM", "FEAT"
+                                          "NLST", "SITE", "SYST", "STAT", "HELP", "NOOP", "MDTM", "FEAT", "MFMT"
                                       };
 
     /**

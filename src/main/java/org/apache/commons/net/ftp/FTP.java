@@ -1162,7 +1162,30 @@ public class FTP extends SocketClient
     {
         return sendCommand(FTPCommand.MDTM, file);
     }
-
+    
+    
+    /**
+     * A convenience method to send the FTP MFMT command to the server,
+     * receive the reply, and return the reply code.
+     * <p>
+     * @param pathname The pathname for which mtime is to be changed
+     * @param timeval Timestamp in <code>YYYYMMDDhhmmss</code> format
+     * @return The reply code received from the server.
+     * @exception FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     * @see <a href="http://tools.ietf.org/html/draft-somers-ftp-mfxx-04">http://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
+     **/
+    public int mfmt(String pathname, String timeval) throws IOException 
+    {
+    	return sendCommand(FTPCommand.MFMT, timeval + " " + pathname);
+    }
+    
+    
     /***
      * A convenience method to send the FTP RNFR command to the server,
      * receive the reply, and return the reply code.

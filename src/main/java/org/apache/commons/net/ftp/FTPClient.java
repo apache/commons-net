@@ -625,6 +625,7 @@ implements Configurable
      ***/
     public boolean login(String username, String password) throws IOException
     {
+    	
         user(username);
 
         if (FTPReply.isPositiveCompletion(_replyCode))
@@ -2402,7 +2403,29 @@ implements Configurable
         return null;
     }
 
-
+    
+    /**
+     * Issue the FTP MFMT command (not supported by all servers) which sets the last
+     * modified time of a file.
+     * 
+     * The timestamp should be in the form <code>YYYYMMDDhhmmss</code>. It should also
+     * be in GMT, but not all servers honour this.
+     * 
+     * An FTP server would indicate its support of this feature by including "MFMT"
+     * in its response to the FEAT command, which may be retrieved by FTPClient.features()
+     * 
+     * @param pathname The file path for which last modified time is to be changed.
+     * @param timeval The timestamp to set to, in <code>YYYYMMDDhhmmss</code> format. 
+     * @return true if successfully set, false if not
+     * @throws IOException if an I/O error occurs.
+     * @see <a href="http://tools.ietf.org/html/draft-somers-ftp-mfxx-04">http://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
+     */
+    public boolean setModificationTime(String pathname, String timeval) throws IOException {
+        return (FTPReply.isPositiveCompletion(mfmt(pathname, timeval));
+        		
+    }
+    
+    
     /**
      * Set the internal buffer size.
      *  
