@@ -175,7 +175,7 @@ import org.apache.commons.net.io.Util;
  * <p>
  * Unpaged (whole list) access, using a parser accessible by auto-detect:
  * <pre>
- *    FTPClient f=FTPClient();
+ *    FTPClient f = new FTPClient();
  *    f.connect(server);
  *    f.login(username, password);
  *    FTPFile[] files = listFiles(directory);
@@ -185,7 +185,7 @@ import org.apache.commons.net.io.Util;
  * defined in the first parameter of initateListParsing should be derived
  * from org.apache.commons.net.FTPFileEntryParser:
  * <pre>
- *    FTPClient f=FTPClient();
+ *    FTPClient f = new FTPClient();
  *    f.connect(server);
  *    f.login(username, password);
  *    FTPListParseEngine engine =
@@ -200,7 +200,7 @@ import org.apache.commons.net.io.Util;
  * <p>
  * Paged access, using a parser accessible by auto-detect:
  * <pre>
- *    FTPClient f=FTPClient();
+ *    FTPClient f = new FTPClient();
  *    f.connect(server);
  *    f.login(username, password);
  *    FTPListParseEngine engine = f.initiateListParsing(directory);
