@@ -58,8 +58,8 @@ public class ExtendedNNTPOps {
             // XOVER
             NewsgroupInfo testGroup = new NewsgroupInfo();
             client.selectNewsgroup("alt.test", testGroup);
-            int lowArticleNumber = testGroup.getFirstArticle();
-            int highArticleNumber = lowArticleNumber + 100;
+            long lowArticleNumber = testGroup.getFirstArticle();
+            long  highArticleNumber = lowArticleNumber + 100;
             List<Article> articles = NNTPUtils.getArticleInfo(client, lowArticleNumber, highArticleNumber);
 
             for (Article article : articles) {

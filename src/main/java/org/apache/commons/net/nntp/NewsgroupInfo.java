@@ -54,8 +54,8 @@ public final class NewsgroupInfo
     public static final int PROHIBITED_POSTING_PERMISSION = 3;
 
     private String __newsgroup;
-    private int __estimatedArticleCount;
-    private int __firstArticle, __lastArticle;
+    private long __estimatedArticleCount;
+    private long __firstArticle, __lastArticle;
     private int __postingPermission;
 
     void _setNewsgroup(String newsgroup)
@@ -63,17 +63,17 @@ public final class NewsgroupInfo
         __newsgroup = newsgroup;
     }
 
-    void _setArticleCount(int count)
+    void _setArticleCount(long count)
     {
         __estimatedArticleCount = count;
     }
 
-    void _setFirstArticle(int first)
+    void _setFirstArticle(long first)
     {
         __firstArticle = first;
     }
 
-    void _setLastArticle(int last)
+    void _setLastArticle(long last)
     {
         __lastArticle = last;
     }
@@ -99,7 +99,7 @@ public final class NewsgroupInfo
      * <p>
      * @return The estimated number of articles in the newsgroup.
      ***/
-    public int getArticleCount()
+    public long getArticleCount()
     {
         return __estimatedArticleCount;
     }
@@ -109,7 +109,7 @@ public final class NewsgroupInfo
      * <p>
      * @return The number of the first article in the newsgroup.
      ***/
-    public int getFirstArticle()
+    public long getFirstArticle()
     {
         return __firstArticle;
     }
@@ -119,7 +119,7 @@ public final class NewsgroupInfo
      * <p>
      * @return The number of the last article in the newsgroup.
      ***/
-    public int getLastArticle()
+    public long getLastArticle()
     {
         return __lastArticle;
     }
