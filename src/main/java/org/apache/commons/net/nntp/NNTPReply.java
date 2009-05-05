@@ -53,7 +53,6 @@ public final class NNTPReply
     public static final int CODE_340 = 340;
     public static final int CODE_381 = 381;
     public static final int CODE_400 = 400;
-    public static final int CODE_408 = 408;
     public static final int CODE_411 = 411;
     public static final int CODE_412 = 412;
     public static final int CODE_420 = 420;
@@ -66,6 +65,7 @@ public final class NNTPReply
     public static final int CODE_437 = 437;
     public static final int CODE_440 = 440;
     public static final int CODE_441 = 441;
+    public static final int CODE_480 = 480;
     public static final int CODE_482 = 482;
     public static final int CODE_500 = 500;
     public static final int CODE_501 = 501;
@@ -94,7 +94,6 @@ public final class NNTPReply
     public static final int MORE_AUTH_INFO_REQUIRED            = CODE_381;
     public static final int SERVICE_DISCONTINUED               = CODE_400;
     public static final int NO_SUCH_NEWSGROUP                  = CODE_411;
-    public static final int AUTHENTICATION_REQUIRED            = CODE_408;
     public static final int NO_NEWSGROUP_SELECTED              = CODE_412;
     public static final int NO_CURRENT_ARTICLE_SELECTED        = CODE_420;
     public static final int NO_NEXT_ARTICLE                    = CODE_421;
@@ -106,6 +105,7 @@ public final class NNTPReply
     public static final int ARTICLE_REJECTED                   = CODE_437;
     public static final int POSTING_NOT_ALLOWED                = CODE_440;
     public static final int POSTING_FAILED                     = CODE_441;
+    public static final int AUTHENTICATION_REQUIRED            = CODE_480;
     public static final int AUTHENTICATION_REJECTED            = CODE_482;
     public static final int COMMAND_NOT_RECOGNIZED             = CODE_500;
     public static final int COMMAND_SYNTAX_ERROR               = CODE_501;
