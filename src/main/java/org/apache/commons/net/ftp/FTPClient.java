@@ -2421,8 +2421,7 @@ implements Configurable
      * @see <a href="http://tools.ietf.org/html/draft-somers-ftp-mfxx-04">http://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
      */
     public boolean setModificationTime(String pathname, String timeval) throws IOException {
-        return (FTPReply.isPositiveCompletion(mfmt(pathname, timeval));
-        		
+        return (FTPReply.isPositiveCompletion(mfmt(pathname, timeval)));
     }
     
     
