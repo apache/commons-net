@@ -34,11 +34,11 @@
       </SVNRepository>
     </repository>
     <release>
-      <revision>
+      <Version>
         <name>commons-net</name>
         <created>2005-12-03</created>
-        <version>2.0</version>
-      </revision>
+        <revision>2.0</revision>
+      </Version>
     </release>
     <mailing-list rdf:resource="http://jakarta.apache.org/site/mail2.html#Commons"/>
   </Project>
