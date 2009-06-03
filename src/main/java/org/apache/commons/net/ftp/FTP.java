@@ -224,7 +224,7 @@ public class FTP extends SocketClient
     /**
      * This is used to signal whether a block of multiline responses beginning
      * with xxx must be terminated by the same numeric code xxx
-     * See section 4.2 of RFX 959 for details. 
+     * See section 4.2 of RFC 959 for details. 
      */
     protected boolean strictMultilineParsing = false;
 
@@ -1515,7 +1515,7 @@ public class FTP extends SocketClient
     }
 
     /**
-     * Return whether strict multiline parsing is enabled, as per RFX 959, section 4.2.
+     * Return whether strict multiline parsing is enabled, as per RFC 959, section 4.2.
      * @return True if strict, false if lenient
      * @since 2.0
      */
