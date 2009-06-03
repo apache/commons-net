@@ -213,7 +213,7 @@ public class SubnetUtils {
         if (value > begin && value <= end) // (begin,end]
             return value;
 
-        throw new IllegalArgumentException("Value out of range: [" + value + "]");
+        throw new IllegalArgumentException("Value [" + value + "] not in range ("+begin+","+end+"]");
     }
 
     /*
