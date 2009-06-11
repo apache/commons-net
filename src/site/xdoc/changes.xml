@@ -81,6 +81,24 @@ limitations under the License.
 			<action dev="sebb" type="add">
 				Javadoc fixes, improvements, and refactoring.
 			</action>
+			<action dev="rwinston" type="fix" issue="NET-245">
+				Apply MFMT patch 
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-279">
+				Fix copying of reply lines collection
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-277">
+				Fix incorrect NNTP constant
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-276">
+				Use long instead of int for newsgroup counts
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-274">
+				Restore socket state after CCC command
+			</action>
+			<action dev="rwinston" type="fix">
+				Fix inconsistent handling of socket read/write buffer size
+			</action>
 		</release>
 
 		<release version="2.0" date="October 20, 2008" description="Java 5.0 release">
