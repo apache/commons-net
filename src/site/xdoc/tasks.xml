@@ -24,14 +24,6 @@
   </properties>
 
   <body>
-    <section name="Pre-1.4 Tasks">
-      <p>
-        <ul>
-          <li>Implement Extensible date format handling for FTPClient (DONE)</li>
-          <li>Scan the bug list</li>
-        </ul>
-      </p> 
-    </section>
     <section name="Wishlist">
       <p>
         <ul>
@@ -44,11 +36,6 @@
             org.apache.commons.net.util and org.apache.commons.net.io could be moved to their corresponding commons projects.
           </li>
           <li>
-            Divorce FTPClient from TelnetClient, getting rid of the 
-            TelnetClient threads which cause problems on some platforms 
-            (e.g., MacOS).
-          </li>
-          <li>
             Parse the client/server interactions without creating so many 
             strings. Many operations are slow because of this.
           </li>
@@ -59,9 +46,7 @@
             Make NNTPClient.listNewsgroups() and NNTPClient.listNewNews() 
             more efficient. Don't preparse into lots of little objects.
           </li>
-          <li>
-            TLS for FTP
-          </li>
+	  <li>FTP proxy support</li>
         </ul>
       </p>
     </section>
