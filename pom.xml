@@ -27,7 +27,7 @@ limitations under the License.
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>commons-net</groupId>
 	<artifactId>commons-net</artifactId>
-	<version>1.5.0</version>
+	<version>2.1-SNAPSHOT</version>
 	<name>Commons Net</name>
 	<description>
 		A collection of network utilities and protocol implementations.
@@ -39,10 +39,19 @@ limitations under the License.
 	</issueManagement>
 	<inceptionYear>1997</inceptionYear>
 	<scm>
-		<connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/net/trunk/</connection>
-		<developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/net/trunk/</developerConnection>
-		<url>http://svn.apache.org/viewvc/commons/proper/net/trunk/</url>
+		<connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/net/branches/NET_2_0</connection>
+		<developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/net/branches/NET_2_0</developerConnection>
+		<url>http://svn.apache.org/viewvc/commons/proper/net/branches/NET_2_0</url>
 	</scm>
+
+	<distributionManagement>
+		<site>
+			<id>staging</id>
+			<name>Apache Website</name>
+			<url>scp://people.apache.org/~rwinston/release/net/</url>
+		</site>
+	</distributionManagement>
+
 
 	<developers>
 		<developer>
@@ -66,7 +75,7 @@ limitations under the License.
 		<developer>
 			<name>Daniel F. Savarese</name>
 			<id>dfs</id>
-			<email>dfs -> apache.org</email>
+			<email>dfs@apache.org</email>
 			<organization>
 				&lt;a href="http://www.savarese.com/"&gt;Savarese Software Research&lt;/a&gt;
 			</organization>
@@ -82,7 +91,7 @@ limitations under the License.
 	<contributors>
 		<contributor>
 			<name>Rob Hasselbaum</name>
-			<email>rhasselbaum -> alumni.ithaca.edu</email>
+			<email>rhasselbaum@alumni.ithaca.edu</email>
 		</contributor>
 		<contributor>
 			<name>Mario Ivankovits</name>
@@ -105,29 +114,24 @@ limitations under the License.
 
 	<dependencies>
 		<dependency>
-			<groupId>oro</groupId>
-			<artifactId>oro</artifactId>
-			<version>2.0.8</version>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>3.8.2</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
 	<properties>
+		<maven.compile.source>1.5</maven.compile.source>
+		<maven.compile.target>1.5</maven.compile.target>
 		<commons.componentid>net</commons.componentid>
-		<commons.release.version>1.4.1</commons.release.version>
+		<commons.release.version>2.0</commons.release.version>
 		<commons.binary.suffix></commons.binary.suffix>
 		<commons.jira.id>NET</commons.jira.id>
 		<commons.jira.pid>12310487</commons.jira.pid>
 	</properties> 
 
 	<build>
-		<sourceDirectory>src/java</sourceDirectory>
-		<testSourceDirectory>src/test</testSourceDirectory>
 		<plugins>
 
 			<plugin>
@@ -140,17 +144,13 @@ limitations under the License.
 				</configuration>
 			</plugin>
 
-
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<includes>
-						<include>**/*Test.java</include>
-					</includes>
 					<excludes>
 						<exclude>**/*FunctionalTest.java</exclude>
+						<exclude>**/TestSetupParameters.java</exclude>
 						<exclude>**/*POP3*.java</exclude>
 					</excludes>
 				</configuration>
@@ -166,18 +166,88 @@ limitations under the License.
 					<tarLongFileMode>gnu</tarLongFileMode>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+								<jar destfile="target/commons-net-ftp-${version}.jar">
+									<fileset dir="target/classes" 
+										includes="org/apache/commons/net/ftp/**,org/apache/commons/net/*,org/apache/commons/net/io/*,org/apache/commons/net/util/*"/>
+
+									<metainf dir="${basedir}" includes="NOTICE.txt,LICENSE.txt"/>
+									<manifest>
+										<attribute name="Extension-Name" value="org.apache.commons.net"/>
+										<attribute name="Specification-Title" value="${project.name}"/>
+										<attribute name="Implementation-Title" value="${project.name}"/>
+										<attribute name="Implementation-Vendor" value="${project.organization.name}"/>
+										<attribute name="Implementation-Version" value="${version}"/>
+										<attribute name="Implementation-Vendor-Id" value="org.apache"/>
+										<attribute name="X-Compile-Source-JDK" value="${maven.compile.source}"/>
+										<attribute name="X-Compile-Target-JDK" value="${maven.compile.target}"/>
+
+									</manifest>
+								</jar>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+            <!--  Attaches the commons-net-ftp JAR to the Maven lifecycle
+                  to ensure that it will be signed a deployed as normal -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.2</version>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>target/commons-net-ftp-${version}.jar</file>
+                                    <type>jar</type>
+                                    <classifier>ftp</classifier>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
 		</plugins>
+
+		<testResources>
+			<testResource>
+				<directory>${basedir}/src/test/java</directory>
+				<includes>
+					<include>**/*Test.java</include>
+				</includes>
+			</testResource>
+		</testResources>
+
+
 	</build>
 
 	<reporting>
 		<plugins>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-changes-plugin</artifactId>
 				<version>2.0</version>
 				<configuration>
-					<xmlPath>xdocs/changes.xml</xmlPath>
+					<xmlPath>${basedir}/src/site/xdoc/changes.xml</xmlPath>
 					<issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
 				</configuration>
 				<reportSets>
@@ -189,6 +259,12 @@ limitations under the License.
 					</reportSet>
 				</reportSets>
 			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+			</plugin>
+
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>clirr-maven-plugin</artifactId>
@@ -198,18 +274,6 @@ limitations under the License.
 					<minSeverity>info</minSeverity>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<linksource>true</linksource>
-					<links>
-						<link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
-					</links>
-				</configuration>
-			</plugin>
-
 		</plugins>
 	</reporting>
 

@@ -1,5 +1,5 @@
 <!--
- Licensed to the Apache Software Foundation (ASF) under one or more
+Licensed to the Apache Software Foundation (ASF) under one or more
  contributor license agreements.  See the NOTICE file distributed with
  this work for additional information regarding copyright ownership.
  The ASF licenses this file to You under the Apache License, Version 2.0
@@ -15,33 +15,25 @@
  limitations under the License.
 -->
 <assembly>
-    <id>src</id>
-    <formats>
-        <format>tar.gz</format>
-        <format>zip</format>
-    </formats>
-    <baseDirectory>${project.artifactId}-${project.version}-src</baseDirectory>
-    <fileSets>
-        <fileSet>
-            <includes>
-                <include>build.xml</include>
-                <include>LICENSE.txt</include>
-                <include>maven.xml</include>
-                <include>NOTICE.txt</include>
-                <include>pom.xml</include>
-                <include>project.properties</include>
-                <include>project.xml</include>
-                <include>README</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>proposal</directory>
-        </fileSet>
-        <fileSet>
-            <directory>src</directory>
-        </fileSet>
-        <fileSet>
-            <directory>xdocs</directory>
-        </fileSet>
-    </fileSets>
+  <id>src</id>
+  <formats>
+    <format>tar.gz</format>
+    <format>tar.bz2</format>
+    <format>zip</format>
+  </formats>
+  <baseDirectory>${artifactId}-${version}-src</baseDirectory>
+  <fileSets>
+    <fileSet>
+      <includes>
+        <include>README*</include>
+        <include>LICENSE*</include>
+        <include>NOTICE*</include>
+        <include>pom.xml</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>src</directory>
+    </fileSet>
+  </fileSets>
 </assembly>
+
