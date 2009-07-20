@@ -23,6 +23,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 
 import org.apache.commons.net.io.SocketInputStream;
 
@@ -244,7 +245,7 @@ public class RCommandClient extends RExecClient
      * @exception UnknownHostException If the hostname cannot be resolved.
      ***/
     public void connect(String hostname, int port)
-    throws SocketException, IOException
+    throws SocketException, IOException, UnknownHostException, BindException
     {
         connect(InetAddress.getByName(hostname), port, InetAddress.getLocalHost());
     }

@@ -111,17 +111,17 @@ public class FTPClientConfigTest extends TestCase {
         Date d2 = null;
         Date d3 = null;
         try {
-	        d1 = sdf1.parse("31 d\u00e9c 2004");
+            d1 = sdf1.parse("31 d\u00e9c 2004");
         } catch (ParseException px) {
             fail("failed.to.parse.french");
         }
         try {
-	        d2 = sdf2.parse("dhj 31, 2004");
+            d2 = sdf2.parse("dhj 31, 2004");
         } catch (ParseException px) {
             fail("failed.to.parse.albanian");
         }
         try {
-	        d3 = sdf3.parse("DEC 31, 2004");
+            d3 = sdf3.parse("DEC 31, 2004");
         } catch (ParseException px) {
             fail("failed.to.parse.'russian'");
         }
@@ -163,12 +163,12 @@ public class FTPClientConfigTest extends TestCase {
         Date d1 = null;
         Date d2 = null;
         try {
-	        d1 = sdf1.parse("dec 31, 2004");
+            d1 = sdf1.parse("dec 31, 2004");
         } catch (ParseException px) {
             fail("failed.to.parse.std");
         }
         try {
-	        d2 = sdf2.parse("hij 31, 2004");
+            d2 = sdf2.parse("hij 31, 2004");
         } catch (ParseException px) {
             fail("failed.to.parse.weird");
         }
@@ -176,12 +176,12 @@ public class FTPClientConfigTest extends TestCase {
         assertEquals("different.parser.same.date",d1, d2);
         
         try {
-	        d2 = sdf1.parse("hij 31, 2004");
+            d2 = sdf1.parse("hij 31, 2004");
             fail("should.have.failed.to.parse.weird");
         } catch (ParseException px) {
         }
         try {
-	        d2 = sdf2.parse("dec 31, 2004");
+            d2 = sdf2.parse("dec 31, 2004");
             fail("should.have.failed.to.parse.standard");
         } catch (ParseException px) {
         }

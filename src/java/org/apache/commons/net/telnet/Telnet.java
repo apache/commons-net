@@ -282,7 +282,7 @@ class Telnet extends SocketClient
                     {
                         _sendSubnegotiation(subneg);
                     }
-                    catch (Exception e)
+                    catch (IOException e)
                     {
                         System.err.println(
                             "Exception in option subnegotiation"
@@ -319,7 +319,7 @@ class Telnet extends SocketClient
                     {
                         _sendSubnegotiation(subneg);
                     }
-                    catch (Exception e)
+                    catch (IOException e)
                     {
                         System.err.println("Exception in option subnegotiation"
                             + e.getMessage());
@@ -404,13 +404,12 @@ class Telnet extends SocketClient
         _options[option] &= ~_REQUESTED_DO_MASK;
     }
 
-    /***
+    /**
      * Processes a DO request.
-     * <p>
-     * @throws IOException - Exception in I/O.
-     * <p>
+     * 
      * @param option - option code to be set.
-     ***/
+     * @throws IOException - Exception in I/O.
+     **/
     void _processDo(int option) throws IOException
     {
         if (debugoptions)
@@ -502,13 +501,12 @@ class Telnet extends SocketClient
         _setWill(option);
     }
 
-    /***
+    /**
      * Processes a DONT request.
-     * <p>
-     * @throws IOException - Exception in I/O.
-     * <p>
+     * 
      * @param option - option code to be set.
-     ***/
+     * @throws IOException - Exception in I/O.
+     **/
     void _processDont(int option) throws IOException
     {
         if (debugoptions)
@@ -556,13 +554,12 @@ class Telnet extends SocketClient
     }
 
 
-    /***
+    /**
      * Processes a WILL request.
-     * <p>
-     * @throws IOException - Exception in I/O.
-     * <p>
+     * 
      * @param option - option code to be set.
-     ***/
+     * @throws IOException - Exception in I/O.
+     **/
     void _processWill(int option) throws IOException
     {
         if (debugoptions)
@@ -623,13 +620,12 @@ class Telnet extends SocketClient
         _setDo(option);
     }
 
-    /***
+    /**
      * Processes a WONT request.
-     * <p>
-     * @throws IOException - Exception in I/O.
-     * <p>
+     * 
      * @param option - option code to be set.
-     ***/
+     * @throws IOException - Exception in I/O.
+     **/
     void _processWont(int option) throws IOException
     {
         if (debugoptions)
@@ -679,14 +675,13 @@ class Telnet extends SocketClient
     }
 
     /* TERMINAL-TYPE option (start)*/
-    /***
+    /**
      * Processes a suboption negotiation.
-     * <p>
-     * @throws IOException - Exception in I/O.
-     * <p>
+     * 
      * @param suboption - subnegotiation data received
      * @param suboptionLength - length of data received
-     ***/
+     * @throws IOException - Exception in I/O.
+     **/
     void _processSuboption(int suboption[], int suboptionLength)
     throws IOException
     {
@@ -753,13 +748,12 @@ class Telnet extends SocketClient
     /* TERMINAL-TYPE option (end)*/
 
     /* open TelnetOptionHandler functionality (start)*/
-    /***
+    /**
      * Manages subnegotiation for Terminal Type.
-     * <p>
-     * @throws IOException - Exception in I/O.
-     * <p>
+     *
      * @param subn - subnegotiation data to be sent
-     ***/
+     * @throws IOException - Exception in I/O.
+     **/
     final synchronized void _sendSubnegotiation(int subn[])
     throws IOException
     {
@@ -808,7 +802,7 @@ class Telnet extends SocketClient
                 {
                     aytMonitor.notifyAll();
                 }
-                catch (Exception e)
+                catch (IllegalMonitorStateException e)
                 {
                     System.err.println("Exception notifying:" + e.getMessage());
                 }
@@ -879,13 +873,12 @@ class Telnet extends SocketClient
         /* open TelnetOptionHandler functionality (end)*/
     }
 
-    /***
+    /**
      * Sends a DO.
-     * <p>
-     * @throws IOException - Exception in I/O.
-     * <p>
+     *
      * @param option - Option code.
-     ***/
+     * @throws IOException - Exception in I/O.
+     **/
     final synchronized void _sendDo(int option)
     throws IOException
     {
@@ -901,13 +894,12 @@ class Telnet extends SocketClient
         /* Code Section added for sending the negotiation ASAP (end)*/
     }
 
-    /***
+    /**
      * Requests a DO.
-     * <p>
-     * @throws IOException - Exception in I/O.
-     * <p>
+     *
      * @param option - Option code.
-     ***/
+     * @throws IOException - Exception in I/O.
+     **/
     final synchronized void _requestDo(int option)
     throws IOException
     {
@@ -921,13 +913,12 @@ class Telnet extends SocketClient
         _sendDo(option);
     }
 
-    /***
+    /**
      * Sends a DONT.
-     * <p>
-     * @throws IOException - Exception in I/O.
-     * <p>
+     *
      * @param option - Option code.
-     ***/
+     * @throws IOException - Exception in I/O.
+     **/
     final synchronized void _sendDont(int option)
     throws IOException
     {
@@ -943,13 +934,12 @@ class Telnet extends SocketClient
         /* Code Section added for sending the negotiation ASAP (end)*/
     }
 
-    /***
+    /**
      * Requests a DONT.
-     * <p>
-     * @throws IOException - Exception in I/O.
-     * <p>
+     *
      * @param option - Option code.
-     ***/
+     * @throws IOException - Exception in I/O.
+     **/
     final synchronized void _requestDont(int option)
     throws IOException
     {
@@ -964,13 +954,12 @@ class Telnet extends SocketClient
     }
 
 
-    /***
+    /**
      * Sends a WILL.
-     * <p>
-     * @throws IOException - Exception in I/O.
-     * <p>
+     *
      * @param option - Option code.
-     ***/
+     * @throws IOException - Exception in I/O.
+     **/
     final synchronized void _sendWill(int option)
     throws IOException
     {
@@ -986,13 +975,12 @@ class Telnet extends SocketClient
         /* Code Section added for sending the negotiation ASAP (end)*/
     }
 
-    /***
+    /**
      * Requests a WILL.
-     * <p>
-     * @throws IOException - Exception in I/O.
-     * <p>
+     *
      * @param option - Option code.
-     ***/
+     * @throws IOException - Exception in I/O.
+     **/
     final synchronized void _requestWill(int option)
     throws IOException
     {
@@ -1006,13 +994,12 @@ class Telnet extends SocketClient
         _sendWill(option);
     }
 
-    /***
+    /**
      * Sends a WONT.
-     * <p>
-     * @throws IOException - Exception in I/O.
-     * <p>
+     *
      * @param option - Option code.
-     ***/
+     * @throws IOException - Exception in I/O.
+     **/
     final synchronized void _sendWont(int option)
     throws IOException
     {
@@ -1028,13 +1015,12 @@ class Telnet extends SocketClient
         /* Code Section added for sending the negotiation ASAP (end)*/
     }
 
-    /***
+    /**
      * Requests a WONT.
-     * <p>
-     * @throws IOException - Exception in I/O.
-     * <p>
+     *
      * @param option - Option code.
-     ***/
+     * @throws IOException - Exception in I/O.
+     **/
     final synchronized void _requestWont(int option)
     throws IOException
     {
@@ -1048,13 +1034,12 @@ class Telnet extends SocketClient
         _sendWont(option);
     }
 
-    /***
+    /**
      * Sends a byte.
-     * <p>
-     * @throws IOException - Exception in I/O.
-     * <p>
+     *
      * @param b - byte to send
-     ***/
+     * @throws IOException - Exception in I/O.
+     **/
     final synchronized void _sendByte(int b)
     throws IOException
     {
@@ -1067,17 +1052,15 @@ class Telnet extends SocketClient
     }
 
     /* Code Section added for supporting AYT (start)*/
-    /***
+    /**
      * Sends an Are You There sequence and waits for the result.
-     * <p>
+     *
+     * @param timeout - Time to wait for a response (millis.)
      * @throws IOException - Exception in I/O.
      * @throws IllegalArgumentException - Illegal argument
      * @throws InterruptedException - Interrupted during wait.
-     * <p>
-     * @param timeout - Time to wait for a response (millis.)
-     * <p>
      * @return true if AYT received a response, false otherwise
-     ***/
+     **/
     final boolean _sendAYT(long timeout)
     throws IOException, IllegalArgumentException, InterruptedException
     {
@@ -1117,13 +1100,12 @@ class Telnet extends SocketClient
 
     /* open TelnetOptionHandler functionality (start)*/
 
-    /***
+    /**
      * Registers a new TelnetOptionHandler for this telnet  to use.
-     * <p>
-     * @throws InvalidTelnetOptionException - The option code is invalid.
-     * <p>
+     *
      * @param opthand - option handler to be registered.
-     ***/
+     * @throws InvalidTelnetOptionException - The option code is invalid.
+     **/
     void addOptionHandler(TelnetOptionHandler opthand)
     throws InvalidTelnetOptionException
     {
@@ -1177,13 +1159,12 @@ class Telnet extends SocketClient
         }
     }
 
-    /***
+    /**
      * Unregisters a  TelnetOptionHandler.
-     * <p>
-     * @throws InvalidTelnetOptionException - The option code is invalid.
-     * <p>
+     *
      * @param optcode - Code of the option to be unregistered.
-     ***/
+     * @throws InvalidTelnetOptionException - The option code is invalid.
+     **/
     void deleteOptionHandler(int optcode)
     throws InvalidTelnetOptionException
     {
@@ -1269,17 +1250,17 @@ class Telnet extends SocketClient
         {
             try
             {
-                if (ch != (int) '\r')
+                if (ch != '\r')
                 {
                     spyStream.write(ch);
-                    if (ch == (int) '\n')
+                    if (ch == '\n')
                     {
-                        spyStream.write((int) '\r');
+                        spyStream.write('\r');
                     }
                     spyStream.flush();
                 }
             }
-            catch (Exception e)
+            catch (IOException e)
             {
                 spyStream = null;
             }
@@ -1303,7 +1284,7 @@ class Telnet extends SocketClient
                     spyStream.write(ch);
                     spyStream.flush();
                 }
-                catch (Exception e)
+                catch (IOException e)
                 {
                     spyStream = null;
                 }

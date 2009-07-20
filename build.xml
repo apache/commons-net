@@ -4,6 +4,14 @@
   on date September 8 2004, time 2216-->
 
 <project default="jar" name="commons-net" basedir=".">
+
+  <available property="jre.dom.available" classname="java.lang.CharSequence" />
+
+  <fileset id="xmlLibs" dir="${ant.home}/lib">
+    <include name="xml-apis.jar" unless="jre.dom.available" />
+    <include name="xercesImpl.jar" unless="jre.dom.available" />
+  </fileset>
+
   <property name="defaulttargetdir" value="target">
   </property>
   <property name="libdir" value="target/lib">
@@ -104,6 +112,7 @@
         </pathelement>
         <pathelement path="${classesdir}">
         </pathelement>
+        <fileset refid="xmlLibs" />
       </classpath>
       <batchtest todir="${testreportdir}">
         <fileset dir="src/test">

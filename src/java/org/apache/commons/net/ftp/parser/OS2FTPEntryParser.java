@@ -31,9 +31,9 @@ import org.apache.commons.net.ftp.FTPFile;
 public class OS2FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 
 {
-	
+    
     private static final String DEFAULT_DATE_FORMAT 
-		= "MM-dd-yy HH:mm"; //11-09-01 12:30
+        = "MM-dd-yy HH:mm"; //11-09-01 12:30
     /**
      * this is the regular expression used by this parser.
      */
@@ -94,7 +94,7 @@ public class OS2FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             String size = group(1);
             String attrib = group(2);
             String dirString = group(3);
-        	String datestr = group(4)+" "+group(5);
+            String datestr = group(4)+" "+group(5);
             String name = group(6);
             try
             {

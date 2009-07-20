@@ -25,73 +25,86 @@ limitations under the License.
 
 		<release version="1.5.0" date="" description="">
 			<action dev="dfs" type="fix" issue="NET-3">
-				TelnetInputStream.java: Applied Rob
-Hasselbaum's
+				TelnetInputStream.java: Applied Rob Hasselbaum's
 				&lt;rhasselbaum -> alumni.ithaca.edu&gt;
-				patch for PR 38688 fixing a
-				TelnetInputStream hang.
+				patch for PR 38688 fixing a TelnetInputStream hang.
 			</action>
-			<action dev="rwinston" type="fix"
-issue="NET-73">
-				TelnetInputStream.java: Fixing another
-potential deadlock for 
+			<action dev="rwinston" type="fix" issue="NET-73">
+				TelnetInputStream.java: Fixing another potential deadlock for 
                         telnet and FTP (patch courtesy Rob Hasselbaum).
 			</action>
 			<action dev="dfs" type="update" issue="NET-57">
-				FTP.java: Exposed control connection of
-FTP
-				class via _controlInput_ and
-_controlOutput_
+				FTP.java: Exposed control connection of FTP
+				class via _controlInput_ and _controlOutput_
 				protected member variables in response
-				to PR 38309 reported by
-				&lt;josejuan.montiel@gmail.com&gt;.
+				to PR 38309 reported by &lt;josejuan.montiel@gmail.com&gt;.
 			</action>
-			<action dev="rwinston" type="fix"
-issue="NET-68">
-				TFTPClient.java: Fix bug causing final
-packets
-				to not be sent.
+			<action dev="rwinston" type="fix" issue="NET-68">
+				TFTPClient.java: Fix bug causing final packets to not be sent.
 			</action>
-			<action dev="rwinston" type="fix"
-issue="NET-161">
-				TFTPClient.java: Fix sendFile() (related
-to NET-68).
+			<action dev="rwinston" type="fix" issue="NET-161">
+				TFTPClient.java: Fix sendFile() (related to NET-68).
 			</action>
-			<action dev="rwinston" type="fix"
-issue="NET-181">
-				TFTPClient.java: block number
-wraparound.
+			<action dev="rwinston" type="fix" issue="NET-181">
+				TFTPClient.java: block number wraparound.
 			</action>
 			<action dev="scohen" type="fix" issue="NET-16">
-				UNIXFTPEntryParser.java: support for
-group names with
-                        spaces (patch courtesy D. Kilzer).
+				UNIXFTPEntryParser.java: support for group names with spaces (patch courtesy D. Kilzer).
 			</action>
 			<action dev="scohen" type="fix" issue="NET-62">
-				DefaultFTPFileEntryParserFactory.java:
-Wrap 
-                        NoClassDefFoundError in FTP parser exception
-                        when ORO is not available.
+				DefaultFTPFileEntryParserFactory.java: 
+				Wrap NoClassDefFoundError in FTP parser exception when ORO is not available.
 			</action>
-			<action dev="rwinston" type="add"
-issue="NET-33">
-				FTPClient.java: Fix closing FTP
-ServerSocket after timeout
+			<action dev="rwinston" type="add" issue="NET-33">
+				FTPClient.java: Fix closing FTP ServerSocket after timeout
 			</action>
 			<action dev="rwinston" type="add">
-				FTPClientConfig.java: Added an FTP
-parser for Netware FTP servers.
+				FTPClientConfig.java: Added an FTP parser for Netware FTP servers.
                         Tested on Novell Netware 6.5.
 			</action>
-			<action dev="rwinston" type="fix"
-issue="NET-188">
-				FTPTimestampParserImpl.java: Fix leap
-year date parsing bug.
+			<action dev="rwinston" type="fix" issue="NET-188">
+				FTPTimestampParserImpl.java: Fix leap year date parsing bug.
 			</action>
 			<action dev="rwinston" type="fix">
-				Article.java: Fix minor issues with NNTP
-parsing.
+				Article.java: Fix minor issues with NNTP parsing.
 			</action>
+			<action dev="sebb" type="fix" issue="NET-195">
+				NtpV3Impl.java: Avoid double-checked locking
+			</action>
+			<action dev="sebb" type="fix" issue="NET-197">
+				FTPFileEntryParserImpl.java: Fix Javadoc for preParse()
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-201">
+				UnixFTPEntryParser.java: Support Solaris special devices
+			</action>
+			<action dev="sebb" type="fix" issue="NET-205">
+				*FTPEntryParser.java: Keep files with unparseable dates in list
+			</action>
+			<action dev="sebb" type="fix" issue="NET-206">
+				DefaultFTPFileEntryParserFactory.java, TFTPRequestPacket.java: Fix String conversions in non-English Locales
+			</action>
+			<action dev="sebb" type="fix" issue="NET-211">
+				FTPTimestampParserImpl.java: Fix lenient future dates at year boundary
+			</action>
+            <action dev="sebb" type="fix" issue="NET-194">
+                Replace Exception with IOException
+            </action>
+            <action dev="rwinston" type="update" issue="NET-214">
+                VMS file permission parsing
+            </action>
+            <action dev="sebb" type="fix" issue="NET-208">
+                TelnetInputStream swallows interruptedexception as IOException
+            </action>
+            <action dev="sebb" type="fix" issue="NET-223">
+                the data connection socket is not closed when an IOException occurred
+            </action>
+            <action dev="sebb" type="fix" issue="NET-231">
+                ParserInitializationException when connecting to a Unix FTP server: comparison string must be upper case
+                Added check for AS/400 response.
+            </action>
+            <action dev="sebb" type="fix" issue="NET-225">
+                FTPFileEntryParserImpl.preParse() doesn't remove unparsable entries at the end of the file list
+            </action>
 		</release> 
 		
 		<release version="1.4.1" date="December 3, 2005" description="fix release to restore jdk 1.3 compatability">

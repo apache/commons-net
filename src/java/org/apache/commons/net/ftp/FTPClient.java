@@ -318,7 +318,7 @@ implements Configurable
         __restartOffset      = 0;
         __systemName         = null;
         __entryParser        = null;
-        __bufferSize 		 = Util.DEFAULT_COPY_BUFFER_SIZE;
+        __bufferSize         = Util.DEFAULT_COPY_BUFFER_SIZE;
     }
     
     private String __parsePathname(String reply)
@@ -2057,7 +2057,7 @@ implements Configurable
      *         the format determined by the parser represented by the
      *         <code> parserKey </code> parameter.
      *         <p><b> 
-     * 		   NOTE:</b> This array may contain null members if any of the 
+     *         NOTE:</b> This array may contain null members if any of the 
      *         individual file listings failed to parse.  The caller should 
      *         check each entry for null before referencing it.
      * @exception FTPConnectionClosedException
@@ -2086,7 +2086,7 @@ implements Configurable
      * @see org.apache.commons.net.ftp.FTPFileEntryParser
      * @deprecated use {@link  #listFiles()  listFiles()} or 
      * {@link  #listFiles(String)  listFiles(String)} instead and specify the
-     * parser Key in an {@link  #FTPClientConfig  FTPClientConfig} object instead.
+     * parser Key in an {@link  FTPClientConfig} object instead.
      */
     public FTPFile[] listFiles(String parserKey, String pathname)
     throws IOException
@@ -2158,7 +2158,7 @@ implements Configurable
      * @return The list of file information contained in the current directory
      *         in the format determined by the autodetection mechanism.  
      *         <p><b> 
-     * 		   NOTE:</b> This array may contain null members if any of the 
+     *         NOTE:</b> This array may contain null members if any of the 
      *         individual file listings failed to parse.  The caller should 
      *         check each entry for null before referencing it.
      * @exception FTPConnectionClosedException
@@ -2346,22 +2346,22 @@ implements Configurable
             if (null != parserKey) {
                 // if a parser key was supplied in the parameters, 
                 // use that to create the paraser
-        	    __entryParser = 
-        	        __parserFactory.createFileEntryParser(parserKey);
+                __entryParser = 
+                    __parserFactory.createFileEntryParser(parserKey);
                 
             } else {
-	            // if no parserKey was supplied, check for a configuration
-	        	// in the params, and if non-null, use that.
-            	if (null != __configuration) {
-            	    __entryParser = 
-            	        __parserFactory.createFileEntryParser(__configuration);
-            	} else {
+                // if no parserKey was supplied, check for a configuration
+                // in the params, and if non-null, use that.
+                if (null != __configuration) {
+                    __entryParser = 
+                        __parserFactory.createFileEntryParser(__configuration);
+                } else {
                     // if a parserKey hasn't been supplied, and a configuration
-            	    // hasn't been supplied, then autodetect by calling
+                    // hasn't been supplied, then autodetect by calling
                     // the SYST command and use that to choose the parser.
-            	    __entryParser = 
-            	        __parserFactory.createFileEntryParser(getSystemName());
-             	}
+                    __entryParser = 
+                        __parserFactory.createFileEntryParser(getSystemName());
+                }
             }
         }
 
@@ -2397,9 +2397,12 @@ implements Configurable
         }
 
 
-        engine.readServerList(socket.getInputStream(), getControlEncoding());
-
-        socket.close();
+        try {
+            engine.readServerList(socket.getInputStream(), getControlEncoding());
+        }
+        finally {
+            socket.close();
+        }
 
         completePendingCommand();
         return engine;
@@ -2461,7 +2464,7 @@ implements Configurable
      * @return The list of file information contained in the given path in
      *         the format determined by the <code> parser </code> parameter.
      *         <p><b> 
-     * 		   NOTE:</b> This array may contain null members if any of the 
+     *         NOTE:</b> This array may contain null members if any of the 
      *         individual file listings failed to parse.  The caller should 
      *         check each entry for null before referencing it.
      * @exception FTPConnectionClosedException
@@ -2471,13 +2474,6 @@ implements Configurable
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     *
-     * @return The list of file information contained in the given path in
-     *         the format determined by<code> parserKey </code>parameter.
-     *         <p><b> 
-     * 		   NOTE:</b> This array may contain null members if any of the 
-     *         individual file listings failed to parse.  The caller should 
-     *         check each entry for null before referencing it.
      *
      * @exception IOException
      * @since 5 Jan 2004
@@ -2516,7 +2512,7 @@ implements Configurable
      * @return The list of file information contained in the given path in
      *         the format determined by the <code> parser </code> parameter.
      *         <p><b> 
-     * 		   NOTE:</b> This array may contain null members if any of the 
+     *         NOTE:</b> This array may contain null members if any of the 
      *         individual file listings failed to parse.  The caller should 
      *         check each entry for null before referencing it.
      * @exception FTPConnectionClosedException
@@ -2648,7 +2644,7 @@ implements Configurable
      * @param bufSize The size of the buffer
      */
     public void setBufferSize(int bufSize) {
-    	__bufferSize = bufSize;
+        __bufferSize = bufSize;
     }
     
     /**
@@ -2656,7 +2652,7 @@ implements Configurable
      * @return The current buffer size.
      */
     public int getBufferSize() {
-    	return __bufferSize;
+        return __bufferSize;
     }
 
 
@@ -2669,7 +2665,7 @@ implements Configurable
      * @since 1.4
      */
     public void configure(FTPClientConfig config) {
-    	this.__configuration = config;
+        this.__configuration = config;
     }
     
 }

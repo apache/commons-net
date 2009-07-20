@@ -75,11 +75,11 @@ public class TelnetClient extends Telnet
 
     void _flushOutputStream() throws IOException
     {
-        _output_.flush();
+        if(_output_ != null) _output_.flush();
     }
     void _closeOutputStream() throws IOException
     {
-        _output_.close();
+    	if(_output_ != null) _output_.close();
     }
 
     /***
@@ -123,8 +123,8 @@ public class TelnetClient extends Telnet
      ***/
     public void disconnect() throws IOException
     {
-        __input.close();
-        __output.close();
+        if(__input != null) __input.close();
+        if(__output != null) __output.close();
         super.disconnect();
     }
 
@@ -186,13 +186,13 @@ public class TelnetClient extends Telnet
     /***
      * Sends an Are You There sequence and waits for the result.
      * <p>
-     * @throws InterruptedException
-     * @throws IllegalArgumentException
-     * @throws IOException
-     * <p>
      * @param timeout - Time to wait for a response (millis.)
      * <p>
      * @return true if AYT received a response, false otherwise
+     * <p>
+     * @throws InterruptedException
+     * @throws IllegalArgumentException
+     * @throws IOException
      ***/
     public boolean sendAYT(long timeout)
     throws IOException, IllegalArgumentException, InterruptedException
@@ -206,9 +206,9 @@ public class TelnetClient extends Telnet
     /***
      * Registers a new TelnetOptionHandler for this telnet client to use.
      * <p>
-     * @throws InvalidTelnetOptionException
-     * <p>
      * @param opthand - option handler to be registered.
+     * <p>
+     * @throws InvalidTelnetOptionException
      ***/
     public void addOptionHandler(TelnetOptionHandler opthand)
     throws InvalidTelnetOptionException
@@ -220,9 +220,9 @@ public class TelnetClient extends Telnet
     /***
      * Unregisters a  TelnetOptionHandler.
      * <p>
-     * @throws InvalidTelnetOptionException
-     * <p>
      * @param optcode - Code of the option to be unregistered.
+     * <p>
+     * @throws InvalidTelnetOptionException
      ***/
     public void deleteOptionHandler(int optcode)
     throws InvalidTelnetOptionException

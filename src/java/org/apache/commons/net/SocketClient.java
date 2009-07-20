@@ -22,6 +22,7 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 
 /**
  * The SocketClient provides the basic operations that are required of
@@ -158,7 +159,7 @@ public abstract class SocketClient
      * @exception UnknownHostException If the hostname cannot be resolved.
      */
     public void connect(String hostname, int port)
-    throws SocketException, IOException
+    throws SocketException, IOException, UnknownHostException
     {
         _socket_ = _socketFactory_.createSocket(hostname, port);
         _connectAction_();
@@ -264,9 +265,9 @@ public abstract class SocketClient
      */
     public void disconnect() throws IOException
     {
-        _socket_.close();
-        _input_.close();
-        _output_.close();
+        if(_socket_ != null) _socket_.close();
+        if(_input_ != null) _input_.close();
+        if(_output_ != null) _output_.close();
         _socket_ = null;
         _input_ = null;
         _output_ = null;

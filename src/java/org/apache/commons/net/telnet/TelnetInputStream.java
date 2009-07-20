@@ -115,7 +115,7 @@ _loop:
             // If there is no more data AND we were told not to block, just return -2. (More efficient than exception.)
             if(!mayBlock && super.available() == 0)
                 return -2;
-        	
+
             // Otherwise, exit only when we reach end of stream.
             if ((ch = super.read()) < 0)
                 return -1;
@@ -355,7 +355,7 @@ _mainSwitch:
                         }
                         catch (InterruptedException e)
                         {
-                            throw new IOException("Fatal thread interruption during read.");
+                            throw new InterruptedIOException("Fatal thread interruption during read.");
                         }
                     }
                     else
@@ -363,7 +363,7 @@ _mainSwitch:
                         //__alreadyread = false;
                         __readIsWaiting = true;
                         int ch;
-                        boolean mayBlock = true;	// block on the first read only
+                        boolean mayBlock = true;    // block on the first read only
                         
                         do
                         {
@@ -427,11 +427,11 @@ _mainSwitch:
 
                     --__bytesAvailable;
 
-		    // Need to explicitly notify() so available() works properly
-		    if(__bytesAvailable == 0 && __threaded) {
-			    __queue.notify();
-		    }
-		    
+            // Need to explicitly notify() so available() works properly
+            if(__bytesAvailable == 0 && __threaded) {
+                __queue.notify();
+            }
+            
                     return ch;
                 }
             }
