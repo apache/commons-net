@@ -88,23 +88,25 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     private static final String REGEX =
         "([bcdlfmpSs-])"
         +"(((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-])))\\+?\\s+"
-        + "(\\d+)\\s+"
-        + "(\\S+)\\s+"
-        + "(?:(\\S+(?:\\s\\S+)*)\\s+)?"
-        + "(\\d+(?:,\\s*\\d+)?)\\s+"
+        + "(\\d+)\\s+"                    // link count
+        + "(\\S+)\\s+"                    // owner name
+        + "(?:(\\S+(?:\\s\\S+)*)\\s+)?"   // group name (optional spaces)
+        + "(\\d+(?:,\\s*\\d+)?)\\s+"      // size or n,m
         
         /*
-          numeric or standard format date
+         * numeric or standard format date:
+         *   yyyy-mm-dd (expecting hh:mm to follow)
+         *   MMMM [d]d
+         *   [d]d MMM
         */
-        + "((?:\\d+[-/]\\d+[-/]\\d+)|(?:\\S+\\s+\\S+))\\s+"
-        
+        + "((?:\\d+[-/]\\d+[-/]\\d+)|(?:[a-zA-Z]{3}\\s+\\d{1,2})|(?:\\d{1,2}\\s+[a-zA-Z]{3}))\\s+"
         /* 
-           year (for non-recent standard format) 
-           or time (for numeric or recent standard format  
+           year (for non-recent standard format) - yyyy
+           or time (for numeric or recent standard format [h]h:mm  
         */
         + "(\\d+(?::\\d+)?)\\s+"
         
-        + "(\\S*)(\\s*.*)";
+        + "(\\S*)(\\s*.*)"; // the rest
 
 
     /**
