@@ -74,7 +74,8 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
             "lrwxrwxrwx   1 neeme neeme             23 Mar  2 18:06 macros -> ./../../global/macros/.",
             "-rw-r--r--   1 ftp      group with spaces in it as allowed in cygwin see bug 38634   83853 Jan 22  2001 zxJDBC-1.2.4.tar.gz",
             "crw-r----- 1 root kmem 0, 27 Jan 30 11:42 kmem",  //FreeBSD device
-            "crw-------   1 root     sys      109,767 Jul  2  2004 pci@1c,600000:devctl" //Solaris device
+            "crw-------   1 root     sys      109,767 Jul  2  2004 pci@1c,600000:devctl", //Solaris device
+            "-rwxrwx---   1 ftp      ftp-admin 816026400 Oct  5  2008 bloplab 7 cd1.img", // NET-294
 
 
         };
@@ -156,6 +157,18 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
         assertNotNull(f);
         assertEquals("john smith", f.getUser());
         assertEquals("test group", f.getGroup());
+    }
+    
+    public void testNET294() {
+        FTPFile f = getParser().parseFTPEntry(
+                "-rwxrwx---   1 ftp      ftp-admin 816026400 Oct  5  2008 bloplab 7 cd1.img");
+        assertNotNull(f);
+        assertEquals("ftp", f.getUser());
+        assertEquals("ftp-admin", f.getGroup());
+        assertEquals(816026400L,f.getSize());
+        assertNotNull("Timestamp should not be null",f.getTimestamp());
+        assertEquals(2008,f.getTimestamp().get(Calendar.YEAR));
+        assertEquals("bloplab 7 cd1.img",f.getName());
     }
     
     public void testGroupNameWithSpaces() {
@@ -343,6 +356,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
         case 'b':
         case 'c':
             assertEquals(0, f.getHardLinkCount());
+            //$FALL-THROUGH$ TODO this needs to be fixed if a device type is introduced
         case 'f':
         case '-':
             assertEquals("Type of "+ test, type, FTPFile.FILE_TYPE);
@@ -365,5 +379,8 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
             }
         }
 
+        assertNotNull("Expected to find a timestamp",f.getTimestamp());
+// Perhaps check date range (need to ensure all good examples qualify)
+//        assertTrue(test,f.getTimestamp().get(Calendar.YEAR)>=2000);
     }
 }

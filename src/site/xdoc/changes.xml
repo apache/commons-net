@@ -99,6 +99,9 @@ limitations under the License.
 			<action dev="rwinston" type="fix">
 				Fix inconsistent handling of socket read/write buffer size
 			</action>
+            <action dev="sebb" type="fix" issue="NET-294">
+                UnixFTPEntryParser fails to parse some entries
+            </action>
 		</release>
 
 		<release version="2.0" date="October 20, 2008" description="Java 5.0 release">
