@@ -16,18 +16,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
 		<groupId>org.apache.commons</groupId>
 		<artifactId>commons-parent</artifactId>
-		<version>11</version>
+		<version>12</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>commons-net</groupId>
 	<artifactId>commons-net</artifactId>
-	<version>2.1-SNAPSHOT</version>
+	<version>2.1</version>
 	<name>Commons Net</name>
 	<description>
 		A collection of network utilities and protocol implementations.
@@ -37,11 +35,11 @@ limitations under the License.
 		<system>jira</system>
 		<url>http://issues.apache.org/jira/browse/NET</url>
 	</issueManagement>
-	<inceptionYear>1997</inceptionYear>
+	<inceptionYear>2001</inceptionYear>
 	<scm>
-		<connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/net/branches/NET_2_0</connection>
-		<developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/net/branches/NET_2_0</developerConnection>
-		<url>http://svn.apache.org/viewvc/commons/proper/net/branches/NET_2_0</url>
+		<connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/net/tags/commons-net-2.1</connection>
+		<developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/net/tags/commons-net-2.1</developerConnection>
+		<url>http://svn.apache.org/viewvc/commons/proper/net/tags/commons-net-2.1</url>
 	</scm>
 
 	<distributionManagement>
@@ -84,7 +82,7 @@ limitations under the License.
 			<name>Rory Winston</name>
 			<id>rwinston</id>
 			<email>rwinston@apache.org</email>
-			<organization></organization>
+			<organization />
 		</developer>
 	</developers>
 
@@ -126,7 +124,7 @@ limitations under the License.
 		<maven.compile.target>1.5</maven.compile.target>
 		<commons.componentid>net</commons.componentid>
 		<commons.release.version>2.0</commons.release.version>
-		<commons.binary.suffix></commons.binary.suffix>
+		<commons.binary.suffix />
 		<commons.jira.id>NET</commons.jira.id>
 		<commons.jira.pid>12310487</commons.jira.pid>
 	</properties> 
@@ -175,19 +173,18 @@ limitations under the License.
 						<configuration>
 							<tasks>
 								<jar destfile="target/commons-net-ftp-${version}.jar">
-									<fileset dir="target/classes" 
-										includes="org/apache/commons/net/ftp/**,org/apache/commons/net/*,org/apache/commons/net/io/*,org/apache/commons/net/util/*"/>
+									<fileset dir="target/classes" includes="org/apache/commons/net/ftp/**,org/apache/commons/net/*,org/apache/commons/net/io/*,org/apache/commons/net/util/*" />
 
-									<metainf dir="${basedir}" includes="NOTICE.txt,LICENSE.txt"/>
+									<metainf dir="${basedir}" includes="NOTICE.txt,LICENSE.txt" />
 									<manifest>
-										<attribute name="Extension-Name" value="org.apache.commons.net"/>
-										<attribute name="Specification-Title" value="${project.name}"/>
-										<attribute name="Implementation-Title" value="${project.name}"/>
-										<attribute name="Implementation-Vendor" value="${project.organization.name}"/>
-										<attribute name="Implementation-Version" value="${version}"/>
-										<attribute name="Implementation-Vendor-Id" value="org.apache"/>
-										<attribute name="X-Compile-Source-JDK" value="${maven.compile.source}"/>
-										<attribute name="X-Compile-Target-JDK" value="${maven.compile.target}"/>
+										<attribute name="Extension-Name" value="org.apache.commons.net" />
+										<attribute name="Specification-Title" value="${project.name}" />
+										<attribute name="Implementation-Title" value="${project.name}" />
+										<attribute name="Implementation-Vendor" value="${project.organization.name}" />
+										<attribute name="Implementation-Version" value="${version}" />
+										<attribute name="Implementation-Vendor-Id" value="org.apache" />
+										<attribute name="X-Compile-Source-JDK" value="${maven.compile.source}" />
+										<attribute name="X-Compile-Target-JDK" value="${maven.compile.target}" />
 
 									</manifest>
 								</jar>
