@@ -538,7 +538,7 @@ public class FTP extends TelnetClient
      ***/
     public int sendCommand(int command, String args) throws IOException
     {
-        return sendCommand(FTPCommand._commands[command], args);
+        return sendCommand(FTPCommand.getCommand(command), args);
     }
 
 

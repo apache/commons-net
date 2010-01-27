@@ -104,7 +104,7 @@ public final class FTPCommand
     private FTPCommand()
     {}
 
-    static final String[] _commands = {
+    private static final String[] _commands = {
                                           "USER", "PASS", "ACCT", "CWD", "CDUP", "SMNT", "REIN", "QUIT", "PORT",
                                           "PASV", "TYPE", "STRU", "MODE", "RETR", "STOR", "STOU", "APPE", "ALLO",
                                           "REST", "RNFR", "RNTO", "ABOR", "DELE", "RMD", "MKD", "PWD", "LIST",
