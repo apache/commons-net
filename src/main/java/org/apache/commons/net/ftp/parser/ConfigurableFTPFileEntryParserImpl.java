@@ -47,10 +47,10 @@ extends RegexFTPFileEntryParserImpl
 implements Configurable 
 {
 
-    private FTPTimestampParser timestampParser;
+    private final FTPTimestampParser timestampParser;
     
     /**
-     * Only constructor for this absract class.
+     * Only constructor for this abstract class.
      * @param regex  Regular expression used main parsing of the 
      * file listing.
      */

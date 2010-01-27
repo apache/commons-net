@@ -76,7 +76,7 @@ public class FTPListParseEngine {
     private List<String> entries = new LinkedList<String>();
     private ListIterator<String> _internalIterator = entries.listIterator();
 
-    FTPFileEntryParser parser = null;
+    private final FTPFileEntryParser parser;
 
     public FTPListParseEngine(FTPFileEntryParser parser) {
         this.parser = parser;

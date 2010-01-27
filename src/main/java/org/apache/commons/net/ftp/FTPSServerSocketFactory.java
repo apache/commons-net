@@ -31,7 +31,7 @@ import javax.net.ssl.SSLServerSocket;
 public class FTPSServerSocketFactory extends ServerSocketFactory {
     
 	/** Factory for secure socket factories */
-    private SSLContext context;
+    private final SSLContext context;
     
     public FTPSServerSocketFactory(SSLContext context) {
         this.context = context;

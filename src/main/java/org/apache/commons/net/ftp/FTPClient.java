@@ -286,8 +286,8 @@ implements Configurable
     private FTPClientConfig __configuration;
 
     /** Pattern for PASV mode responses */ 
-    private static String __parms = "\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3}";
-    private static java.util.regex.Pattern __parms_pat;
+    private static final String __parms = "\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3}";
+    private static final java.util.regex.Pattern __parms_pat;
     static {
        __parms_pat = java.util.regex.Pattern.compile(__parms);
     }

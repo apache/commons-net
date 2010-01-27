@@ -99,8 +99,8 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
 
 
     private static class NameVersion {
-        String name;
-        int versionNumber;
+        final String name;
+        final int versionNumber;
         NameVersion(String name, String vers) {
             this.name = name;
             this.versionNumber = Integer.parseInt(vers);

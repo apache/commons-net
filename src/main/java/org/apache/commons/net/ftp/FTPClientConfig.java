@@ -262,7 +262,7 @@ public class FTPClientConfig
         this.serverTimeZoneId = serverTimeZoneId;
     }
     
-    private static Map<String, Object> LANGUAGE_CODE_MAP = new TreeMap<String, Object>();
+    private static final Map<String, Object> LANGUAGE_CODE_MAP = new TreeMap<String, Object>();
     static {
         
         // if there are other commonly used month name encodings which
