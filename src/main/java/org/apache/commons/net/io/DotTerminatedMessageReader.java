@@ -268,7 +268,7 @@ public final class DotTerminatedMessageReader extends Reader
             {
                 while (read() != -1)
                 {
-                    ;
+                    // read to EOF
                 }
             }
             eof = true;
