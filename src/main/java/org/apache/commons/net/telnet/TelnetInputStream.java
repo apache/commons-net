@@ -110,7 +110,6 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     {
         int ch;
 
-_loop:
         while (true)
         {
  
@@ -135,7 +134,6 @@ _loop:
             __client._spyRead(ch);
             /* Code Section added for supporting spystreams (end)*/
 
-_mainSwitch:
             switch (__receiveState)
             {
 
@@ -150,6 +148,7 @@ _mainSwitch:
 
                 // Handle as normal data by falling through to _STATE_DATA case
 
+                //$FALL-THROUGH$
             case _STATE_DATA:
                 if (ch == TelnetCommand.IAC)
                 {
