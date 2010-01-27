@@ -61,17 +61,17 @@ public abstract class TFTPRequestPacket extends TFTPPacket
      * transfer mode constants.  This is convenient for creating the TFTP
      * request packets.
      ***/
-    static final byte[] _modeBytes[] = {
+    private static final byte[] _modeBytes[] = {
                                            { (byte)'n', (byte)'e', (byte)'t', (byte)'a', (byte)'s', (byte)'c',
                                              (byte)'i', (byte)'i', 0 },
                                            { (byte)'o', (byte)'c', (byte)'t', (byte)'e', (byte)'t', 0 }
                                        };
 
     /*** The transfer mode of the request. ***/
-    int _mode;
+    private int _mode;
 
     /*** The filename of the request. ***/
-    String _filename;
+    private final String _filename;
 
     /***
      * Creates a request packet of a given type to be sent to a host at a
@@ -110,20 +110,15 @@ public abstract class TFTPRequestPacket extends TFTPPacket
     {
         super(type, datagram.getAddress(), datagram.getPort());
 
-        byte[] data;
-        int index, length;
-        String mode;
-        StringBuffer buffer;
-
-        data = datagram.getData();
+        byte[] data = datagram.getData();
 
         if (getType() != data[1])
             throw new TFTPPacketException("TFTP operator code does not match type.");
 
-        buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
-        index = 2;
-        length = datagram.getLength();
+        int index = 2;
+        int length = datagram.getLength();
 
         while (index < length && data[index] != 0)
         {
@@ -144,21 +139,24 @@ public abstract class TFTPRequestPacket extends TFTPPacket
             ++index;
         }
 
-        mode = buffer.toString().toLowerCase(java.util.Locale.ENGLISH);
+        String modeString = buffer.toString().toLowerCase(java.util.Locale.ENGLISH);
         length = _modeStrings.length;
 
+        int mode = 0;
         for (index = 0; index < length; index++)
         {
-            if (mode.equals(_modeStrings[index]))
+            if (modeString.equals(_modeStrings[index]))
             {
-                _mode = index;
+                mode = index;
                 break;
             }
         }
 
+        _mode = mode;
+
         if (index >= length)
         {
-            throw new TFTPPacketException("Unrecognized TFTP transfer mode: " + mode);
+            throw new TFTPPacketException("Unrecognized TFTP transfer mode: " + modeString);
             // May just want to default to binary mode instead of throwing
             // exception.
             //_mode = TFTP.OCTET_MODE;
