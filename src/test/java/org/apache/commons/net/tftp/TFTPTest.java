@@ -38,10 +38,10 @@ import junit.framework.TestCase;
  */
 public class TFTPTest extends TestCase
 {
-    static TFTPServer tftpS;
-    static File serverDirectory = new File(System.getProperty("java.io.tmpdir"));
-    static String filePrefix = "tftp-";
-    static File[] files = new File[8];
+    private static TFTPServer tftpS;
+    private static final File serverDirectory = new File(System.getProperty("java.io.tmpdir"));
+    private static final String filePrefix = "tftp-";
+    private static final File[] files = new File[8];
 
     static int testsLeftToRun = 6;
 
