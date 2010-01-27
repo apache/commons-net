@@ -73,7 +73,7 @@ public class TimeStamp implements java.io.Serializable, Comparable // TODO add c
      * with high-order 32 bits the seconds field and the low-order 32-bits the
      * fractional field.
      */
-    private long ntpTime;
+    private final long ntpTime;
 
     private static final long serialVersionUID = 8139806907588338737L;
 
