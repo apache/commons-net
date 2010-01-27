@@ -74,7 +74,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
         case '\n':
             if (!__lastWasCR)
                 out.write('\r');
-            // Fall through
+            //$FALL-THROUGH$
         default:
             __lastWasCR = false;
             out.write(ch);

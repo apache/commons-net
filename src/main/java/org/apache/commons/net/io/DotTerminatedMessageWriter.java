@@ -93,7 +93,7 @@ public final class DotTerminatedMessageWriter extends Writer
                 // Double the dot at the beginning of a line
                 if (__state == __LAST_WAS_NL_STATE)
                     __output.write('.');
-                // Fall through
+                //$FALL-THROUGH$
             default:
                 __state = __NOTHING_SPECIAL_STATE;
                 __output.write(ch);

@@ -86,7 +86,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
                 __status = __LAST_WAS_NL;
                 return '\r';
             }
-            // else fall through
+            //$FALL-THROUGH$
         default:
             __status = __NOTHING_SPECIAL;
             return ch;
