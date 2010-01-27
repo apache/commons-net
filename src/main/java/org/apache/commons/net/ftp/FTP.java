@@ -528,7 +528,7 @@ public class FTP extends SocketClient
      ***/
     public int sendCommand(int command, String args) throws IOException
     {
-        return sendCommand(FTPCommand._commands[command], args);
+        return sendCommand(FTPCommand.getCommand(command), args);
     }
 
 
