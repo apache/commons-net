@@ -20,7 +20,7 @@ limitations under the License.
 	<parent>
 		<groupId>org.apache.commons</groupId>
 		<artifactId>commons-parent</artifactId>
-		<version>12</version>
+		<version>13</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>commons-net</groupId>
@@ -125,6 +125,8 @@ limitations under the License.
 		<commons.componentid>net</commons.componentid>
 		<commons.release.version>2.0</commons.release.version>
 		<commons.binary.suffix />
+		<commons.release.2.version>1.4.1</commons.release.2.version>
+		<commons.release.2.binary.suffix />
 		<commons.jira.id>NET</commons.jira.id>
 		<commons.jira.pid>12310487</commons.jira.pid>
 	</properties> 
