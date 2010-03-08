@@ -69,6 +69,10 @@ public class SubnetUtilsTest extends TestCase {
     	}
     }
     
+    /** 
+     * Test using the inclusiveHostCount flag, which includes
+     * the network and broadcast addresses in host counts
+     */
     public void testCidrAddresses() {
     	SubnetUtils utils = new SubnetUtils("192.168.0.1/8");
     	utils.setInclusiveHostCount(true);
@@ -219,7 +223,5 @@ public class SubnetUtilsTest extends TestCase {
     	info = utils.getInfo();
     	assertEquals("255.255.255.255",info.getNetmask());
     	assertEquals(1, info.getAddressCount());
-
-
     }
 }

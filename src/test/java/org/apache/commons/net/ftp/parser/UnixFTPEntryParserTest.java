@@ -216,7 +216,12 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 		cal.set(Calendar.MINUTE, 7);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
-		assertEquals(cal.getTime(), f.getTimestamp().getTime());
+		
+		assertEquals(f.getTimestamp().get(Calendar.MONTH), cal.get(Calendar.MONTH));
+		assertEquals(f.getTimestamp().get(Calendar.DAY_OF_MONTH), cal.get(Calendar.DAY_OF_MONTH));
+		assertEquals(f.getTimestamp().get(Calendar.HOUR_OF_DAY), cal.get(Calendar.HOUR_OF_DAY));
+		assertEquals(f.getTimestamp().get(Calendar.MINUTE), cal.get(Calendar.MINUTE));
+		assertEquals(f.getTimestamp().get(Calendar.SECOND), cal.get(Calendar.SECOND));
 	}
 	
 	public void testFilenamesWithEmbeddedNumbers() {
