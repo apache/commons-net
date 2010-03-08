@@ -38,6 +38,10 @@ public class SubnetUtils {
     private int network = 0;
     private int broadcast = 0;
 
+    /** Whether the broadcast/network address are included in host count */
+    private boolean inclusiveHostCount = false;
+    
+    
     /**
      * Constructor that takes a CIDR-notation string, e.g. "192.168.0.1/16"
      * @param cidrNotation A CIDR-notation string, e.g. "192.168.0.1/16"
@@ -54,8 +58,29 @@ public class SubnetUtils {
     public SubnetUtils(String address, String mask) {
         calculate(toCidrNotation(address, mask));
     }
+    
+    
+    /**
+     * Returns <code>true</code> if the return value of {@link SubnetInfo#getAddressCount()}
+     * includes the network address and broadcast addresses.
+     * @return
+     */
+    public boolean isInclusiveHostCount() {
+		return inclusiveHostCount;
+	}
 
     /**
+     * Set to <code>true</code> if you want the return value of {@link SubnetInfo#getAddressCount()}
+     * to include the network and broadcast addresses.
+     * @param inclusiveHostCount
+     */
+	public void setInclusiveHostCount(boolean inclusiveHostCount) {
+		this.inclusiveHostCount = inclusiveHostCount;
+	}
+
+
+
+	/**
      * Convenience container for subnet summary information.
      *
      */
@@ -66,8 +91,8 @@ public class SubnetUtils {
         private int network()       { return network; }
         private int address()       { return address; }
         private int broadcast()     { return broadcast; }
-        private int low()           { return network() + 1; }
-        private int high()          { return broadcast() - 1; }
+        private int low()           { return network() + (isInclusiveHostCount() ? 0 : 1); }
+        private int high()          { return broadcast() - (isInclusiveHostCount() ? 0 : 1); }
 
         /**
          * Returns true if the parameter <code>address</code> is in the 
@@ -89,7 +114,7 @@ public class SubnetUtils {
         public String getAddress()                  { return format(toArray(address())); }
         public String getLowAddress()               { return format(toArray(low())); }
         public String getHighAddress()              { return format(toArray(high())); }
-        public int getAddressCount()                { return (broadcast() - low()); }
+        public int getAddressCount()                { return (broadcast() - low() + (isInclusiveHostCount() ? 1 : 0)); }
 
         public int asInteger(String address)        { return toInteger(address); }
         
@@ -138,7 +163,7 @@ public class SubnetUtils {
             address = matchAddress(matcher);
 
             /* Create a binary netmask from the number of bits specification /x */
-            int cidrPart = rangeCheck(Integer.parseInt(matcher.group(5)), -1, NBITS-1);
+            int cidrPart = rangeCheck(Integer.parseInt(matcher.group(5)), -1, NBITS);
             for (int j = 0; j < cidrPart; ++j) {
                 netmask |= (1 << 31-j);
             }
