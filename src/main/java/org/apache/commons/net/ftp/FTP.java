@@ -21,6 +21,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
@@ -857,6 +859,58 @@ public class FTP extends SocketClient
     }
 
     /***
+     * A convenience method to send the FTP EPRT command to the server,
+     * receive the reply, and return the reply code.
+     * 
+     * @see http://www.faqs.org/rfcs/rfc2428.html
+     * 
+     * Examples:
+     * <code>
+     * <ul>
+     * <li>EPRT |1|132.235.1.2|6275|</li>
+     * <li>EPRT |2|1080::8:800:200C:417A|5282|</li>
+     * </ul>
+     * </code>
+     * <p>
+     * @param host  The host owning the port.
+     * @param port  The new port.
+     * @return The reply code received from the server.
+     * @exception FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     ***/
+    public int eprt(InetAddress host, int port) throws IOException
+    {
+        int num;
+        StringBuffer info = new StringBuffer();
+        String h;
+
+        // If IPv6, trim the zone index
+        h = host.getHostAddress();
+        num = h.indexOf("%");
+        if (num > 0)
+            h = h.substring(0, num);
+
+        info.append("|");
+        
+        if (host instanceof Inet4Address)
+            info.append("1");
+        else if (host instanceof Inet6Address)
+            info.append("2");
+        info.append("|");
+        info.append(h);
+        info.append("|");
+        info.append(port);
+        info.append("|");
+
+        return sendCommand(FTPCommand.EPRT, info.toString());
+    }
+
+    /***
      * A convenience method to send the FTP PASV command to the server,
      * receive the reply, and return the reply code.  Remember, it's up
      * to you to interpret the reply string containing the host/port
@@ -874,6 +928,26 @@ public class FTP extends SocketClient
     public int pasv() throws IOException
     {
         return sendCommand(FTPCommand.PASV);
+    }
+
+     /***
+     * A convenience method to send the FTP EPSV command to the server,
+     * receive the reply, and return the reply code.  Remember, it's up
+     * to you to interpret the reply string containing the host/port
+     * information.
+     * <p>
+     * @return The reply code received from the server.
+     * @exception FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     ***/
+    public int epsv() throws IOException
+    {
+        return sendCommand(FTPCommand.EPSV);
     }
 
     /**

@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -119,11 +120,11 @@ import org.apache.commons.net.io.Util;
  * transfer modes, and file structures.
  * <p>
  * Because the handling of sockets on different platforms can differ
- * significantly, the FTPClient automatically issues a new PORT command
+ * significantly, the FTPClient automatically issues a new PORT (or EPRT) command
  * prior to every transfer requiring that the server connect to the client's
  * data port.  This ensures identical problem-free behavior on Windows, Unix,
  * and Macintosh platforms.  Additionally, it relieves programmers from
- * having to issue the PORT command themselves and dealing with platform
+ * having to issue the PORT (or EPRT) command themselves and dealing with platform
  * dependent issues.
  * <p>
  * Additionally, for security purposes, all data connections to the
@@ -365,6 +366,40 @@ implements Configurable
 
     }
 
+    private void __parseExtendedPassiveModeReply(String reply)
+    throws MalformedServerReplyException
+    {
+        int port;
+ 
+        reply = reply.substring(reply.indexOf('(') + 1,
+                                reply.indexOf(')')).trim();
+
+        char delim1, delim2, delim3, delim4;
+        delim1 = reply.charAt(0);
+        delim2 = reply.charAt(1);
+        delim3 = reply.charAt(2);
+        delim4 = reply.charAt(reply.length()-1);
+
+        if (!(delim1 == delim2) || !(delim2 == delim3)
+                || !(delim3 == delim4))
+            throw new MalformedServerReplyException(
+                    "Could not parse extended passive host information.\nServer Reply: " + reply);
+        try
+        {
+            port = Integer.parseInt(reply.substring(3, reply.length()-1));
+        }
+        catch (NumberFormatException e)
+        {
+            throw new MalformedServerReplyException(
+                "Could not parse extended passive host information.\nServer Reply: " + reply);
+        }
+
+
+        // in EPSV mode, the passive host address is implicit
+        __passiveHost = getRemoteAddress().getHostAddress();
+        __passivePort = port;
+    }
+
     private boolean __storeFile(int command, String remote, InputStream local)
     throws IOException
     {
@@ -460,13 +495,26 @@ implements Configurable
             ServerSocket server;
             server = _serverSocketFactory_.createServerSocket(0, 1, getLocalAddress());
 
-            if (!FTPReply.isPositiveCompletion(port(getLocalAddress(),
+            // try EPRT first. If that fails, and the connection is over IPv4
+            // fallback to PORT
+
+            if (!FTPReply.isPositiveCompletion(eprt(getLocalAddress(),
                                                     server.getLocalPort())))
             {
-                server.close();
-                return null;
-            }
+                if (getRemoteAddress() instanceof Inet6Address)
+                {
+                    server.close();
+                    return null;
+                }
 
+                if (!FTPReply.isPositiveCompletion(port(getLocalAddress(),
+                                                       server.getLocalPort())))
+                {
+                    server.close();
+                    return null;
+                }
+            }
+            
             if ((__restartOffset > 0) && !restart(__restartOffset))
             {
                 server.close();
@@ -494,10 +542,17 @@ implements Configurable
         else
         { // We must be in PASSIVE_LOCAL_DATA_CONNECTION_MODE
 
-            if (pasv() != FTPReply.ENTERING_PASSIVE_MODE)
-                return null;
-
-            __parsePassiveModeReply(_replyLines.get(_replyLines.size() - 1));
+        	// If we are over an IPv6 connection, try EPSV
+        	if (getRemoteAddress() instanceof Inet6Address) {
+        		if (epsv() != FTPReply.ENTERING_EPSV_MODE) 
+        			return null;
+            	__parseExtendedPassiveModeReply((String)_replyLines.get(0));
+        	}
+        	else {
+        		if (pasv() != FTPReply.ENTERING_PASSIVE_MODE)
+        			return null;
+        		__parsePassiveModeReply((String)_replyLines.get(0));
+        	}
 
             socket = _socketFactory_.createSocket(__passiveHost, __passivePort);
             if ((__restartOffset > 0) && !restart(__restartOffset))

@@ -70,6 +70,9 @@ public final class FTPCommand
     /** @since 2.1 */
     public static final int FEAT = 34;
     public static final int MFMT = 35;
+    public static final int EPSV = 36;
+    public static final int EPRT = 37;
+
     
     public static final int USERNAME = USER;
     public static final int PASSWORD = PASS;
@@ -118,8 +121,8 @@ public final class FTPCommand
                                           "USER", "PASS", "ACCT", "CWD", "CDUP", "SMNT", "REIN", "QUIT", "PORT",
                                           "PASV", "TYPE", "STRU", "MODE", "RETR", "STOR", "STOU", "APPE", "ALLO",
                                           "REST", "RNFR", "RNTO", "ABOR", "DELE", "RMD", "MKD", "PWD", "LIST",
-                                          "NLST", "SITE", "SYST", "STAT", "HELP", "NOOP", "MDTM", "FEAT", "MFMT"
-                                      };
+                                          "NLST", "SITE", "SYST", "STAT", "HELP", "NOOP", "MDTM", "FEAT", "MFMT",
+                                          "EPSV", "EPRT" };
 
     /**
      * Retrieve the FTP protocol command string corresponding to a specified
