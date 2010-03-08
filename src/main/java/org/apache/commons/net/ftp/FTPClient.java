@@ -2335,10 +2335,17 @@ implements Configurable
     protected String getListArguments(String pathname) {
         if (getListHiddenFiles())
         {
-            StringBuffer sb = new StringBuffer(pathname.length() + 3);
-            sb.append("-a ");
-            sb.append(pathname);
-            return sb.toString();
+            if (pathname != null)
+            {
+                StringBuffer sb = new StringBuffer(pathname.length() + 3);
+                sb.append("-a ");
+                sb.append(pathname);
+                return sb.toString();
+            }
+            else
+            {
+                return "-a";
+            }
         }
         
         return pathname;
