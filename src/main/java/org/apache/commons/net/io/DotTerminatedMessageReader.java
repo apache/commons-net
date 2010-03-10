@@ -38,14 +38,8 @@ import java.io.Reader;
  */
 public final class DotTerminatedMessageReader extends Reader
 {
-    private static final String LS;
-    private static final char[] LS_CHARS;
-
-    static
-    {
-        LS = System.getProperty("line.separator");
-        LS_CHARS = LS.toCharArray();
-    }
+    private static final String LS = System.getProperty("line.separator");
+    char[] LS_CHARS;
 
     private boolean atBeginning;
     private boolean eof;
@@ -61,6 +55,7 @@ public final class DotTerminatedMessageReader extends Reader
     public DotTerminatedMessageReader(Reader reader)
     {
         super(reader);
+        LS_CHARS = LS.toCharArray();
         internalBuffer = new char[LS_CHARS.length + 3];
         pos = internalBuffer.length;
         // Assumes input is at start of message

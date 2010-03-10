@@ -27,17 +27,32 @@ public class DotTerminatedMessageReaderTest extends TestCase {
 	private DotTerminatedMessageReader reader;
 	private StringBuilder str = new StringBuilder();
 	private char[] buf = new char[64];
+	final static String SEP = System.getProperty("line.separator");
 	
-	public void testReadSimpleString() throws IOException {
+	public void testReadSimpleStringCrLfLineEnding() throws IOException {
 		final String test = "Hello World!\r\n.\r\n";
 		reader = new DotTerminatedMessageReader(new StringReader(test));
+		reader.LS_CHARS = new char[]{'\r','\n'};
 		
 		int read = 0;
 		while ((read = reader.read(buf)) != -1) {
-			str.append(buf, 0, read-1);
+			str.append(buf, 0, read);
 		}
 		
-		assertEquals(str.toString(), "Hello World!");
+		assertEquals("Hello World!" + String.valueOf(reader.LS_CHARS), str.toString());
+	}
+	
+	public void testReadSimpleStringLfLineEnding() throws IOException {
+		final String test = "Hello World!\r\n.\r\n";
+		reader = new DotTerminatedMessageReader(new StringReader(test));
+		reader.LS_CHARS = new char[]{'\n'};
+		
+		int read = 0;
+		while ((read = reader.read(buf)) != -1) {
+			str.append(buf, 0, read);
+		}
+		
+		assertEquals("Hello World!" + String.valueOf(reader.LS_CHARS), str.toString());
 	}
 	
 	public void testEmbeddedNewlines() throws IOException {
@@ -46,10 +61,10 @@ public class DotTerminatedMessageReaderTest extends TestCase {
 		
 		int read = 0;
 		while ((read = reader.read(buf)) != -1) {
-			str.append(buf, 0, read-1);
+			str.append(buf, 0, read);
 		}
 		
-		assertEquals(str.toString(), "Hello\nWorld\nA\rB");
+		assertEquals(str.toString(), "Hello\nWorld\nA\rB" + SEP);
 	}
 	
 	public void testDoubleCrBeforeDot() throws IOException {
@@ -58,10 +73,10 @@ public class DotTerminatedMessageReaderTest extends TestCase {
 		
 		int read = 0;
 		while ((read = reader.read(buf)) != -1) {
-			str.append(buf, 0, read-1);
+			str.append(buf, 0, read);
 		}
 		
-		assertEquals("Hello World!\r",str.toString());
+		assertEquals("Hello World!\r" + SEP,str.toString());
 	}
 
 }
