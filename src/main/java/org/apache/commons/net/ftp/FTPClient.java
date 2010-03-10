@@ -519,7 +519,7 @@ implements Configurable
 				}
 
 				if (!FTPReply.isPositiveCompletion(port(getHostAddress(),
-						getActivePort())))
+						server.getLocalPort())))
 				{
 					server.close();
 					return null;
