@@ -64,7 +64,7 @@ public class DotTerminatedMessageReaderTest extends TestCase {
 			str.append(buf, 0, read);
 		}
 		
-		assertEquals(str.toString(), "Hello\nWorld\nA\rB" + SEP);
+		assertEquals(str.toString(), "Hello\r\nWorld\nA\rB" + SEP);
 	}
 	
 	public void testDoubleCrBeforeDot() throws IOException {
