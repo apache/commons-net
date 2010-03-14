@@ -150,7 +150,6 @@ limitations under the License.
 				<configuration>
 					<excludes>
 						<exclude>**/*FunctionalTest.java</exclude>
-						<exclude>**/TestSetupParameters.java</exclude>
 						<exclude>**/*POP3*.java</exclude>
 					</excludes>
 				</configuration>
