@@ -16,7 +16,6 @@
  */
 package org.apache.commons.net.ftp.parser;
 
-import junit.framework.TestSuite;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
@@ -172,15 +171,5 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
         cal.set(Calendar.SECOND, 29);
         assertEquals(df.format(cal.getTime()),
                      df.format(f.getTimestamp().getTime()));
-    }
-
-    /**
-     * Method suite.
-     *
-     * @return TestSuite
-     */
-    public static TestSuite suite()
-    {
-        return(new TestSuite(OS400FTPEntryParserTest.class));
     }
 }

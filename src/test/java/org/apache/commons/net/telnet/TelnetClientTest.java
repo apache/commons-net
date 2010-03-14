@@ -71,14 +71,6 @@ extends TestCase implements TelnetNotificationHandler
     protected int numwont = 0;
 
     /***
-     * main for running the test.
-     ***/
-    public static void main(String args[])
-    {
-        junit.textui.TestRunner.run(TelnetClientTest.class);
-    }
-
-    /***
      * open connections needed for the tests for the test.
      ***/
     @Override

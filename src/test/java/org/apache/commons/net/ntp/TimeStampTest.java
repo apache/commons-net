@@ -32,14 +32,6 @@ public class TimeStampTest extends TestCase {
     private static final String TIME2 = "c1a9ae1c.cf6ac48f";  // Tue, Dec 17 2002 14:07:24.810 UTC
     private static final String TIME3 = "c1a9ae1d.cf6ac48e";  // Tue, Dec 17 2002 14:07:25.810 UTC
 
-    /***
-     * main for running the test.
-     ***/
-    public static void main(String args[])
-    {
-        junit.textui.TestRunner.run(TimeStampTest.class);
-    }
-
     public void testCompare() {
 
         TimeStamp ts1 = new TimeStamp(TIME1);   // Tue, Dec 17 2002 14:07:24.810 UTC

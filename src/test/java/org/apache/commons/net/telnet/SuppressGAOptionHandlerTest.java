@@ -23,13 +23,6 @@ package org.apache.commons.net.telnet;
  ***/
 public class SuppressGAOptionHandlerTest extends TelnetOptionHandlerTestAbstract
 {
-    /***
-     * main for running the test.
-     ***/
-    public static void main(String args[])
-    {
-        junit.textui.TestRunner.run(SuppressGAOptionHandlerTest.class);
-    }
 
     /***
      * setUp for the test.

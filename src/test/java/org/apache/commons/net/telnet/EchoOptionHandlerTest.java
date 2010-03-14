@@ -23,13 +23,6 @@ package org.apache.commons.net.telnet;
  ***/
 public class EchoOptionHandlerTest extends TelnetOptionHandlerTestAbstract
 {
-    /***
-     * main for running the test.
-     ***/
-    public static void main(String args[])
-    {
-        junit.textui.TestRunner.run(EchoOptionHandlerTest.class);
-    }
 
     /***
      * setUp for the test.

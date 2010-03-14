@@ -124,11 +124,6 @@ public class FTPClientConfigFunctionalTest extends TestCase {
         return sorted;
     }
 
-    
-    public static void main(String[] args) {
-        FTPClientConfigFunctionalTest F = new FTPClientConfigFunctionalTest();
-    }
-    
     public void testTimeZoneFunctionality() throws Exception {
         java.util.Date now = new java.util.Date();
         FTPFile[] files = FTP.listFiles();

@@ -30,14 +30,6 @@ public class TimeTCPClientTest extends TestCase
     private int _port = 3333; // default test port
 
     /***
-     * main for running the test.
-     ***/
-    public static void main(String[] args)
-    {
-        junit.textui.TestRunner.run(TimeTCPClientTest.class);
-    }
-
-    /***
      * open connections needed for the tests for the test.
      ***/
     protected void openConnections() throws Exception

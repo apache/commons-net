@@ -17,7 +17,6 @@
 package org.apache.commons.net.pop3;
 
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import java.io.Reader;
 
 /**
@@ -52,16 +51,6 @@ public class POP3ConstructorTest extends TestCase
     {
         super(name);
     }
-
-    /**
-     * Method suite.
-     * @return TestSuite
-     */
-    public static TestSuite suite()
-    {
-        return (new TestSuite(POP3ConstructorTest.class));
-    }
-
 
     /**
      * This test will ensure that the constants are not inadvertently changed.

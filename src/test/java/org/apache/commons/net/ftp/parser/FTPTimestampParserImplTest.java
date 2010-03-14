@@ -27,7 +27,6 @@ import java.util.TimeZone;
 import org.apache.commons.net.ftp.FTPClientConfig;
 
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Test the FTPTimestampParser class.
@@ -361,17 +360,5 @@ public class FTPTimestampParserImplTest extends TestCase {
         checkShortParse("2006-12-31",now,target, true);
         checkShortParse("2006-12-31",now,target, false);
     }
-
-    /**
-     * Method suite.
-     *
-     * @return TestSuite
-     */
-    public static TestSuite suite()
-    {
-        return(new TestSuite(FTPTimestampParserImplTest.class));
-    }
-
-
 
 }

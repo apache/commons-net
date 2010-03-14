@@ -17,7 +17,6 @@
 package org.apache.commons.net.pop3;
 
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 import java.net.InetAddress;
 import java.io.IOException;
@@ -56,15 +55,6 @@ public class POP3ClientTest extends TestCase
     public POP3ClientTest(String name)
     {
         super(name);
-    }
-
-    /**
-     * Method suite.
-     * @return TestSuite
-     */
-    public static TestSuite suite()
-    {
-        return (new TestSuite(POP3ClientTest.class));
     }
 
     private void reset() throws IOException

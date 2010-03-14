@@ -18,8 +18,6 @@ package org.apache.commons.net.ftp.parser;
 
 import java.util.Calendar;
 
-import junit.framework.TestSuite;
-
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
@@ -324,16 +322,6 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
         cal.set(Calendar.MINUTE, 13);
         assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp().getTime()));
     }
-    
-
-    /**
-     * Method suite.
-     * @return TestSuite
-     */
-    public static TestSuite suite() {
-        return (new TestSuite(UnixFTPEntryParserTest.class));
-    }
-    
     
     /* 
      * @param test

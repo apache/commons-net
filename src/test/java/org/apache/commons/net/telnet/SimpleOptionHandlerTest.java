@@ -24,14 +24,6 @@ package org.apache.commons.net.telnet;
 public class SimpleOptionHandlerTest extends TelnetOptionHandlerTestAbstract
 {
     /***
-     * main for running the test.
-     ***/
-    public static void main(String args[])
-    {
-        junit.textui.TestRunner.run(SimpleOptionHandlerTest.class);
-    }
-
-    /***
      * setUp for the test.
      ***/
     @Override

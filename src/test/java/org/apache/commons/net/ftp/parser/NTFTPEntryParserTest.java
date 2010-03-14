@@ -18,7 +18,6 @@ package org.apache.commons.net.ftp.parser;
 
 import java.util.Calendar;
 
-import junit.framework.TestSuite;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
@@ -114,16 +113,6 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
             new UnixFTPEntryParser()
 
         });
-    }
-
-    /**
-     * Method suite.
-     *
-     * @return TestSuite
-     */
-    public static TestSuite suite()
-    {
-        return(new TestSuite(NTFTPEntryParserTest.class));
     }
 
     /**

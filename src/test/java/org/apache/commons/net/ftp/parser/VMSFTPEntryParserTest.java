@@ -19,8 +19,6 @@ package org.apache.commons.net.ftp.parser;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import junit.framework.TestSuite;
-
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 import org.apache.commons.net.ftp.FTPListParseEngine;
@@ -300,14 +298,5 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         assertTrue("World should not have execute permission.",
                 ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.WORLD_ACCESS,
                                       FTPFile.EXECUTE_PERMISSION));
-    }
-
-    /**
-     * Method suite.
-     * @return TestSuite
-     */
-    public static TestSuite suite()
-    {
-        return(new TestSuite(VMSFTPEntryParserTest.class));
     }
 }

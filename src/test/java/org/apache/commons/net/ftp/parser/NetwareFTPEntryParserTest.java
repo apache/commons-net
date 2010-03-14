@@ -18,8 +18,6 @@ package org.apache.commons.net.ftp.parser;
 
 import java.util.Calendar;
  
-import junit.framework.TestSuite;
- 
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
@@ -120,15 +118,5 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
         assertTrue(f.hasPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
         assertFalse(f.hasPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION));
     }
-    
-
-    /**
-     * Method suite.
-     * @return TestSuite
-     */
-    public static TestSuite suite() {
-        return (new TestSuite(NetwareFTPEntryParserTest.class));
-    }
-    
     
 }

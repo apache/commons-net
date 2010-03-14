@@ -30,14 +30,6 @@ public class InvalidTelnetOptionExceptionTest extends TestCase
     private int code1;
 
     /***
-     * main for running the test.
-     ***/
-    public static void main(String args[])
-    {
-        junit.textui.TestRunner.run(InvalidTelnetOptionExceptionTest.class);
-    }
-
-    /***
      * setUp for the test.
      ***/
     @Override

@@ -32,14 +32,6 @@ public class TelnetClientFunctionalTest extends TestCase
     protected TelnetClient tc1;
 
     /***
-     * main for running the test.
-     ***/
-    public static void main(String args[])
-    {
-        junit.textui.TestRunner.run(TelnetClientFunctionalTest.class);
-    }
-
-    /***
      * test setUp
      ***/
     @Override

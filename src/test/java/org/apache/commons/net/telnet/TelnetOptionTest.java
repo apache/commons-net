@@ -26,14 +26,6 @@ import junit.framework.TestCase;
 public class TelnetOptionTest extends TestCase
 {
     /***
-     * main for running the test.
-     ***/
-    public static void main(String args[])
-    {
-        junit.textui.TestRunner.run(TelnetOptionTest.class);
-    }
-
-    /***
      * test of the isValidOption method.
      ***/
     public void testisValidOption()

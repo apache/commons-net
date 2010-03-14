@@ -19,8 +19,6 @@ package org.apache.commons.net.ftp.parser;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestSuite;
-
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
@@ -117,15 +115,6 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
     @Override
     protected FTPFileEntryParser getParser() {
         return new MVSFTPEntryParser();
-    }
-
-    /**
-     * Method suite.
-     * 
-     * @return TestSuite
-     */
-    public static TestSuite suite() {
-        return (new TestSuite(MVSFTPEntryParserTest.class));
     }
 
     /* 
