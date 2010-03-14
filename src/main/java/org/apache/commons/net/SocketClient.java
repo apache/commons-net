@@ -62,9 +62,9 @@ public abstract class SocketClient
     /** The default SocketFactory shared by all SocketClient instances. */
     private static final SocketFactory __DEFAULT_SOCKET_FACTORY =
             SocketFactory.getDefault();
-    
+
     /** The default {@link ServerSocketFactory} */
-    private static final ServerSocketFactory __DEFAULT_SERVER_SOCKET_FACTORY = 
+    private static final ServerSocketFactory __DEFAULT_SERVER_SOCKET_FACTORY =
             ServerSocketFactory.getDefault();
 
     /** The timeout to use after opening a socket. */
@@ -84,20 +84,20 @@ public abstract class SocketClient
 
     /** The socket's SocketFactory. */
     protected SocketFactory _socketFactory_;
-    
+
     /** The socket's ServerSocket Factory. */
     protected ServerSocketFactory _serverSocketFactory_;
-    
+
     /** The socket's connect timeout (0 = infinite timeout) */
     private static final int DEFAULT_CONNECT_TIMEOUT = 0;
     protected int connectTimeout = DEFAULT_CONNECT_TIMEOUT;
-    
+
     /** Hint for SO_RCVBUF size */
     int receiveBufferSize = -1;
-    
+
     /** Hint for SO_SNDBUF size */
     int sendBufferSize = -1;
-    
+
     /**
      * Default constructor for SocketClient.  Initializes
      * _socket_ to null, _timeout_ to 0, _defaultPort to 0,
@@ -203,7 +203,7 @@ public abstract class SocketClient
                         InetAddress localAddr, int localPort)
     throws SocketException, IOException
     {
-        _socket_ = _socketFactory_.createSocket();     
+        _socket_ = _socketFactory_.createSocket();
         if (receiveBufferSize != -1) _socket_.setReceiveBufferSize(receiveBufferSize);
         if (sendBufferSize != -1) _socket_.setSendBufferSize(sendBufferSize);
         _socket_.bind(new InetSocketAddress(localAddr, localPort));
@@ -304,7 +304,7 @@ public abstract class SocketClient
     {
         if (_socket_ == null)
             return false;
-        
+
         return _socket_.isConnected();
     }
 
@@ -377,25 +377,25 @@ public abstract class SocketClient
     {
         _socket_.setSoTimeout(timeout);
     }
-    
-    
+
+
     /**
      * Set the underlying socket send buffer size.
      * <p>
      * @param size The size of the buffer in bytes.
-     * @throws SocketException 
+     * @throws SocketException
      * @since 2.0
      */
     public void setSendBufferSize(int size) throws SocketException {
         sendBufferSize = size;
     }
-    
-    
+
+
     /**
      * Sets the underlying socket receive buffer size.
      * <p>
      * @param size The size of the buffer in bytes.
-     * @throws SocketException 
+     * @throws SocketException
      * @since 2.0
      */
     public void setReceiveBufferSize(int size) throws SocketException  {
@@ -439,31 +439,31 @@ public abstract class SocketClient
     {
         return _socket_.getTcpNoDelay();
     }
-    
+
     /**
      * Sets the SO_KEEPALIVE flag on the currently opened socket.
-     * 
-     * From the Javadocs, the default keepalive time is 2 hours (although this is 
+     *
+     * From the Javadocs, the default keepalive time is 2 hours (although this is
      * implementation  dependent). It looks as though the Windows WSA sockets implementation
-     * allows a specific keepalive value to be set, although this seems not to be the case on 
+     * allows a specific keepalive value to be set, although this seems not to be the case on
      * other systems.
      * @param  keepAlive If true, keepAlive is turned on
      * @throws SocketException
      */
     public void setKeepAlive(boolean keepAlive) throws SocketException {
-    	_socket_.setKeepAlive(keepAlive);
+        _socket_.setKeepAlive(keepAlive);
     }
-    
+
     /**
      * Returns the current value of the SO_KEEPALIVE flag on the currently opened socket.
-     * 
+     *
      * @return True if SO_KEEPALIVE is enabled.
      * @throws SocketException
      */
     public boolean getKeepAlive() throws SocketException {
-    	return _socket_.getKeepAlive();
+        return _socket_.getKeepAlive();
     }
-    
+
     /**
      * Sets the SO_LINGER timeout on the currently opened socket.
      * <p>
@@ -570,7 +570,7 @@ public abstract class SocketClient
         else
             _socketFactory_ = factory;
     }
-    
+
     /**
      * Sets the ServerSocketFactory used by the SocketClient to open ServerSocket
      * connections.  If the factory value is null, then a default
@@ -586,17 +586,17 @@ public abstract class SocketClient
         else
             _serverSocketFactory_ = factory;
     }
-    
+
     /**
      * Sets the connection timeout in milliseconds, which will be passed to the {@link Socket} object's
-     * connect() method. 
+     * connect() method.
      * @param connectTimeout The connection timeout to use (in ms)
      * @since 2.0
      */
     public void setConnectTimeout(int connectTimeout) {
         this.connectTimeout = connectTimeout;
     }
-    
+
     /**
      * Get the underlying socket connection timeout.
      * @return timeout (in ms)
@@ -611,10 +611,10 @@ public abstract class SocketClient
      * @return The server socket factory
      * @since 2.1
      */
-	public ServerSocketFactory getServerSocketFactory() {
-		return _serverSocketFactory_;
-	}
-	
+    public ServerSocketFactory getServerSocketFactory() {
+        return _serverSocketFactory_;
+    }
+
 }
 
 

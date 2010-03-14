@@ -87,7 +87,7 @@ import org.apache.commons.net.SocketClient;
  * <p>
  * <p>
  * @author Daniel F. Savarese
- * @author Rory Winston 
+ * @author Rory Winston
  * @author Joseph Hindsley
  * @see FTPClient
  * @see FTPConnectionClosedException
@@ -117,7 +117,7 @@ public class FTP extends SocketClient
      ***/
     public static final int EBCDIC_FILE_TYPE = 1;
 
-   
+
     /***
      * A constant used to indicate the file(s) being transfered should
      * be treated as a binary image, i.e., no translations should be
@@ -222,11 +222,11 @@ public class FTP extends SocketClient
     protected boolean _newReplyString;
     protected String _replyString;
     protected String _controlEncoding;
-    
+
     /**
      * This is used to signal whether a block of multiline responses beginning
      * with xxx must be terminated by the same numeric code xxx
-     * See section 4.2 of RFC 959 for details. 
+     * See section 4.2 of RFC 959 for details.
      */
     protected boolean strictMultilineParsing = false;
 
@@ -274,7 +274,7 @@ public class FTP extends SocketClient
     private boolean __strictCheck(String line, String code) {
         return (!(line.startsWith(code) && line.charAt(3) == ' '));
     }
-    
+
     // The strict check is too strong a condition because of non-conforming ftp
     // servers like ftp.funet.fi which sent 226 as the last line of a
     // 426 multi-line reply in response to ls /.  We relax the condition to
@@ -284,7 +284,7 @@ public class FTP extends SocketClient
         return (!(line.length() >= 4 && line.charAt(3) != '-' &&
                 Character.isDigit(line.charAt(0))));
     }
-    
+
     private void __getReply() throws IOException
     {
         int length;
@@ -304,7 +304,7 @@ public class FTP extends SocketClient
         if (length < 3)
             throw new MalformedServerReplyException(
                 "Truncated server reply: " + line);
-        
+
         String code = null;
         try
         {
@@ -483,7 +483,7 @@ public class FTP extends SocketClient
                 throw e;
             }
         }
-    
+
 
         if (_commandSupport_.getListenerCount() > 0)
             _commandSupport_.fireCommandSent(command, message);
@@ -493,7 +493,7 @@ public class FTP extends SocketClient
     }
 
     /**
-     * Checks if the socket is connected 
+     * Checks if the socket is connected
      *
      * @param socket
      * @return true if connected
@@ -648,12 +648,12 @@ public class FTP extends SocketClient
         }
 
         buffer = new StringBuilder(256);
-        
+
         for (String line : _replyLines) {
                 buffer.append(line);
                 buffer.append(SocketClient.NETASCII_EOL);
         }
-        
+
          _newReplyString = false;
 
         return (_replyString = buffer.toString());
@@ -861,9 +861,9 @@ public class FTP extends SocketClient
     /***
      * A convenience method to send the FTP EPRT command to the server,
      * receive the reply, and return the reply code.
-     * 
+     *
      * @see http://www.faqs.org/rfcs/rfc2428.html
-     * 
+     *
      * Examples:
      * <code>
      * <ul>
@@ -896,7 +896,7 @@ public class FTP extends SocketClient
             h = h.substring(0, num);
 
         info.append("|");
-        
+
         if (host instanceof Inet4Address)
             info.append("1");
         else if (host instanceof Inet6Address)
@@ -1175,7 +1175,7 @@ public class FTP extends SocketClient
     {
         return sendCommand(FTPCommand.ALLO, Integer.toString(bytes));
     }
-    
+
     /**
      * A convenience method to send the FTP FEAT command to the server, receive the reply,
      * and return the reply code.
@@ -1185,7 +1185,7 @@ public class FTP extends SocketClient
      */
     public int feat() throws IOException
     {
-    	return sendCommand(FTPCommand.FEAT);
+        return sendCommand(FTPCommand.FEAT);
     }
 
     /***
@@ -1227,17 +1227,17 @@ public class FTP extends SocketClient
     {
         return sendCommand(FTPCommand.REST, marker);
     }
-    
-    
+
+
     /**
      * @since 2.0
      **/
-    public int mdtm(String file) throws IOException 
+    public int mdtm(String file) throws IOException
     {
         return sendCommand(FTPCommand.MDTM, file);
     }
-    
-    
+
+
     /**
      * A convenience method to send the FTP MFMT command to the server,
      * receive the reply, and return the reply code.
@@ -1254,12 +1254,12 @@ public class FTP extends SocketClient
      *      command or receiving the server reply.
      * @see <a href="http://tools.ietf.org/html/draft-somers-ftp-mfxx-04">http://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
      **/
-    public int mfmt(String pathname, String timeval) throws IOException 
+    public int mfmt(String pathname, String timeval) throws IOException
     {
-    	return sendCommand(FTPCommand.MFMT, timeval + " " + pathname);
+        return sendCommand(FTPCommand.MFMT, timeval + " " + pathname);
     }
-    
-    
+
+
     /***
      * A convenience method to send the FTP RNFR command to the server,
      * receive the reply, and return the reply code.

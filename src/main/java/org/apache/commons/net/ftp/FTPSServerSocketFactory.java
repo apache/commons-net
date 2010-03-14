@@ -29,14 +29,14 @@ import javax.net.ssl.SSLServerSocket;
  * Server socket factory for FTPS connections.
  */
 public class FTPSServerSocketFactory extends ServerSocketFactory {
-    
-	/** Factory for secure socket factories */
+
+    /** Factory for secure socket factories */
     private final SSLContext context;
-    
+
     public FTPSServerSocketFactory(SSLContext context) {
         this.context = context;
     }
-    
+
     @Override
     public ServerSocket createServerSocket(int port) throws IOException {
         return init(this.context.getServerSocketFactory().createServerSocket(port));
@@ -44,14 +44,14 @@ public class FTPSServerSocketFactory extends ServerSocketFactory {
 
     @Override
     public ServerSocket createServerSocket(int port, int backlog) throws IOException {
-        return 	init(this.context.getServerSocketFactory().createServerSocket(port, backlog));
+        return init(this.context.getServerSocketFactory().createServerSocket(port, backlog));
     }
 
     @Override
     public ServerSocket createServerSocket(int port, int backlog, InetAddress ifAddress) throws IOException {
-    	return init(this.context.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
+        return init(this.context.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
     }
-        
+
     public ServerSocket init(ServerSocket socket) throws IOException {
         ((SSLServerSocket) socket).setUseClientMode(true);
         return socket;

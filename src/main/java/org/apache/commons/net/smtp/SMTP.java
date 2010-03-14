@@ -92,7 +92,7 @@ public class SMTP extends SocketClient
     // but we use ISO-8859-1 just in case 8-bit characters cross
     // the wire.
     private static final String __DEFAULT_ENCODING = "ISO-8859-1";
-    
+
     /** The encoding to use (user-settable) */
     private String encoding = __DEFAULT_ENCODING;
 
@@ -125,7 +125,7 @@ public class SMTP extends SocketClient
         _replyString = null;
         _commandSupport_ = new ProtocolCommandSupport(this);
     }
-    
+
     /**
      * Overloaded constructor where the user may specify a default encoding.
      * @param encoding
@@ -246,7 +246,7 @@ public class SMTP extends SocketClient
             new BufferedWriter(new OutputStreamWriter(_output_,
                                                       encoding));
         __getReply();
-        
+
     }
 
 
@@ -441,7 +441,7 @@ public class SMTP extends SocketClient
      ***/
     public String[] getReplyStrings()
     {
-    	  return _replyLines.toArray(new String[_replyLines.size()]);
+        return _replyLines.toArray(new String[_replyLines.size()]);
     }
 
     /***
@@ -459,7 +459,7 @@ public class SMTP extends SocketClient
             return _replyString;
 
         buffer = new StringBuilder();
-        
+
         for (String line : _replyLines)
         {
             buffer.append(line);

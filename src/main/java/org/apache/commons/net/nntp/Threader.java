@@ -22,7 +22,7 @@ package org.apache.commons.net.nntp;
  * This is an implementation of a message threading algorithm, as originally devised by Zamie Zawinski.
  * See <a href="http://www.jwz.org/doc/threading.html">http://www.jwz.org/doc/threading.html</a> for details.
  * For his Java implementation, see <a href="http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java">http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java</a>
- *  
+ *
  * @author rwinston <rwinston@checkfree.com>
  *
  */
@@ -37,7 +37,7 @@ public class Threader {
     private int bogusIdCount = 0;
 
     /**
-     * The main threader entry point - The client passes in an array of Threadable objects, and 
+     * The main threader entry point - The client passes in an array of Threadable objects, and
      * the Threader constructs a connected 'graph' of messages
      * @param messages
      * @return null if messages == null or root.child == null
@@ -48,10 +48,10 @@ public class Threader {
 
         idTable = new HashMap<String,ThreadContainer>();
 
-        // walk through each Threadable element    
+        // walk through each Threadable element
         for (Threadable t : messages) {
-        	if (!t.isDummy())
-        		buildContainer(t);
+            if (!t.isDummy())
+                buildContainer(t);
         }
 
         root = findRootSet();
@@ -79,14 +79,14 @@ public class Threader {
     }
 
     /**
-     * 
+     *
      * @param threadable
      */
     private void buildContainer(Threadable threadable) {
         String id = threadable.messageThreadId();
         ThreadContainer container = idTable.get(id);
 
-        // A ThreadContainer exists for this id already. This should be a forward reference, but may 
+        // A ThreadContainer exists for this id already. This should be a forward reference, but may
         // be a duplicate id, in which case we will need to generate a bogus placeholder id
         if (container != null) {
             if (container.threadable != null) { // oops! duplicate ids...
@@ -137,7 +137,7 @@ public class Threader {
             }
         }
 
-        // parentRef is now set to the container of the last element in the references field. make that 
+        // parentRef is now set to the container of the last element in the references field. make that
         // be the parent of this container, unless doing so causes a circular reference
         if (parentRef != null
             && (parentRef == container || container.findChild(parentRef)))
@@ -216,7 +216,7 @@ public class Threader {
                 container = next,
                 next = (container == null ? null : container.next)) {
 
-            // Is it empty and without any children? If so,delete it 
+            // Is it empty and without any children? If so,delete it
             if (container.threadable == null && container.child == null) {
                 if (prev == null)
                     parent.child = container.next;
@@ -233,7 +233,7 @@ public class Threader {
                     && container.child != null
                     && (container.parent != null
                         || container.child.next == null)) {
-                // We have an invalid/expired message with kids. Promote the kids to this level. 
+                // We have an invalid/expired message with kids. Promote the kids to this level.
                 ThreadContainer tail;
                 ThreadContainer kids = container.child;
 
@@ -266,7 +266,7 @@ public class Threader {
     }
 
     /**
-     *  If any two members of the root set have the same subject, merge them. This is to attempt to accomodate messages without References: headers. 
+     *  If any two members of the root set have the same subject, merge them. This is to attempt to accomodate messages without References: headers.
      */
     private void gatherSubjects() {
 
@@ -299,7 +299,7 @@ public class Threader {
             // - There exists no container with this subject
             // - or this is a dummy container and the old one is not - the dummy one is
             // more interesting as a root, so put it in the table instead
-            // - The container in the table has a "Re:" version of this subject, and 
+            // - The container in the table has a "Re:" version of this subject, and
             // this container has a non-"Re:" version of this subject. The non-"Re:" version
             // is the more interesting of the two.
             if (old == null
@@ -317,7 +317,7 @@ public class Threader {
         if (count == 0)
             return;
 
-        // subjectTable is now populated with one entry for each subject which occurs in the 
+        // subjectTable is now populated with one entry for each subject which occurs in the
         // root set. Iterate over the root set, and gather together the difference.
         ThreadContainer prev, c, rest;
         for (prev = null, c = root.child, rest = c.next;

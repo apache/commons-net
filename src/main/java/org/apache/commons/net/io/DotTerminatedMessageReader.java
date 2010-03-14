@@ -154,7 +154,7 @@ public final class DotTerminatedMessageReader extends Reader
                     ch = internalBuffer[pos++];
                 }
                 else if (ch == '\r') {
-                	internalReader.unread(ch);
+                    internalReader.unread(ch);
                 }
                 else
                 {

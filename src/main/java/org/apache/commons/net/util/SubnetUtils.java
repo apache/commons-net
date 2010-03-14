@@ -20,7 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * A class that performs some subnet calculations given a network address and a subnet mask. 
+ * A class that performs some subnet calculations given a network address and a subnet mask.
  * @see "http://www.faqs.org/rfcs/rfc1519.html"
  * @author <rwinston@apache.org>
  * @since 2.0
@@ -40,8 +40,8 @@ public class SubnetUtils {
 
     /** Whether the broadcast/network address are included in host count */
     private boolean inclusiveHostCount = false;
-    
-    
+
+
     /**
      * Constructor that takes a CIDR-notation string, e.g. "192.168.0.1/16"
      * @param cidrNotation A CIDR-notation string, e.g. "192.168.0.1/16"
@@ -51,36 +51,36 @@ public class SubnetUtils {
     }
 
     /**
-     * Constructor that takes a dotted decimal address and a dotted decimal mask. 
+     * Constructor that takes a dotted decimal address and a dotted decimal mask.
      * @param address An IP address, e.g. "192.168.0.1"
      * @param mask A dotted decimal netmask e.g. "255.255.0.0"
      */
     public SubnetUtils(String address, String mask) {
         calculate(toCidrNotation(address, mask));
     }
-    
-    
+
+
     /**
      * Returns <code>true</code> if the return value of {@link SubnetInfo#getAddressCount()}
      * includes the network address and broadcast addresses.
      * @return
      */
     public boolean isInclusiveHostCount() {
-		return inclusiveHostCount;
-	}
+        return inclusiveHostCount;
+    }
 
     /**
      * Set to <code>true</code> if you want the return value of {@link SubnetInfo#getAddressCount()}
      * to include the network and broadcast addresses.
      * @param inclusiveHostCount
      */
-	public void setInclusiveHostCount(boolean inclusiveHostCount) {
-		this.inclusiveHostCount = inclusiveHostCount;
-	}
+    public void setInclusiveHostCount(boolean inclusiveHostCount) {
+        this.inclusiveHostCount = inclusiveHostCount;
+    }
 
 
 
-	/**
+    /**
      * Convenience container for subnet summary information.
      *
      */
@@ -95,15 +95,15 @@ public class SubnetUtils {
         private int high()          { return broadcast() - (isInclusiveHostCount() ? 0 : 1); }
 
         /**
-         * Returns true if the parameter <code>address</code> is in the 
+         * Returns true if the parameter <code>address</code> is in the
          * range of usable endpoint addresses for this subnet. This excludes the
          * network and broadcast adresses.
          * @param address A dot-delimited IPv4 address, e.g. "192.168.0.1"
          * @return True if in range, false otherwise
          */
         public boolean isInRange(String address)    { return isInRange(toInteger(address)); }
-        
-        private boolean isInRange(int address)      { 
+
+        private boolean isInRange(int address)      {
             int diff = address-low();
             return (diff >= 0 && (diff <= (high()-low())));
         }
@@ -117,33 +117,33 @@ public class SubnetUtils {
         public int getAddressCount()                { return (broadcast() - low() + (isInclusiveHostCount() ? 1 : 0)); }
 
         public int asInteger(String address)        { return toInteger(address); }
-        
-        public String getCidrSignature() { 
+
+        public String getCidrSignature() {
             return toCidrNotation(
-                    format(toArray(address())), 
+                    format(toArray(address())),
                     format(toArray(netmask()))
             );
         }
-        
-        public String[] getAllAddresses() { 
+
+        public String[] getAllAddresses() {
             String[] addresses = new String[getAddressCount()];
             for (int add = low(), j=0; add <= high(); ++add, ++j) {
                 addresses[j] = format(toArray(add));
             }
             return addresses;
         }
-        
+
         @Override
         public String toString() {
-        	final StringBuilder buf = new StringBuilder();
-        	buf.append("CIDR Signature:\t[").append(getCidrSignature()).append("]")
-        		.append(" Netmask: [").append(getNetmask()).append("]\n")
-        		.append("Network:\t[").append(getNetworkAddress()).append("]\n")
-        		.append("Broadcast:\t[").append(getBroadcastAddress()).append("]\n")
-        	 	.append("First Address:\t[").append(getLowAddress()).append("]\n")
-        	 	.append("Last Address:\t[").append(getHighAddress()).append("]\n")
-        	 	.append("# Addresses:\t[").append(getAddressCount()).append("]\n");        	 	
-        	return buf.toString();
+            final StringBuilder buf = new StringBuilder();
+            buf.append("CIDR Signature:\t[").append(getCidrSignature()).append("]")
+                .append(" Netmask: [").append(getNetmask()).append("]\n")
+                .append("Network:\t[").append(getNetworkAddress()).append("]\n")
+                .append("Broadcast:\t[").append(getBroadcastAddress()).append("]\n")
+                 .append("First Address:\t[").append(getLowAddress()).append("]\n")
+                 .append("Last Address:\t[").append(getHighAddress()).append("]\n")
+                 .append("# Addresses:\t[").append(getAddressCount()).append("]\n");
+            return buf.toString();
         }
     }
 
@@ -167,7 +167,7 @@ public class SubnetUtils {
             for (int j = 0; j < cidrPart; ++j) {
                 netmask |= (1 << 31-j);
             }
-            
+
             rangeCheck(pop(netmask),0, NBITS);
 
             /* Calculate base network address */
@@ -176,7 +176,7 @@ public class SubnetUtils {
             /* Calculate broadcast address */
             broadcast = network | ~(netmask);
         }
-        else 
+        else
             throw new IllegalArgumentException("Could not parse [" + mask + "]");
     }
 
@@ -193,12 +193,12 @@ public class SubnetUtils {
     }
 
     /*
-     * Convenience method to extract the components of a dotted decimal address and 
+     * Convenience method to extract the components of a dotted decimal address and
      * pack into an integer using a regex match
      */
     private int matchAddress(Matcher matcher) {
         int addr = 0;
-        for (int i = 1; i <= 4; ++i) { 
+        for (int i = 1; i <= 4; ++i) {
             int n = (rangeCheck(Integer.parseInt(matcher.group(i)), -1, 255));
             addr |= ((n & 0xff) << 8*(4-i));
         }
@@ -223,7 +223,7 @@ public class SubnetUtils {
         for (int i =0; i < octets.length; ++i){
             str.append(octets[i]);
             if (i != octets.length - 1) {
-                str.append("."); 
+                str.append(".");
             }
         }
         return str.toString();
@@ -243,19 +243,19 @@ public class SubnetUtils {
 
     /*
      * Count the number of 1-bits in a 32-bit integer using a divide-and-conquer strategy
-     * see Hacker's Delight section 5.1 
+     * see Hacker's Delight section 5.1
      */
     int pop(int x) {
-        x = x - ((x >>> 1) & 0x55555555); 
-        x = (x & 0x33333333) + ((x >>> 2) & 0x33333333); 
-        x = (x + (x >>> 4)) & 0x0F0F0F0F; 
-        x = x + (x >>> 8); 
-        x = x + (x >>> 16); 
-        return x & 0x0000003F; 
-    } 
+        x = x - ((x >>> 1) & 0x55555555);
+        x = (x & 0x33333333) + ((x >>> 2) & 0x33333333);
+        x = (x + (x >>> 4)) & 0x0F0F0F0F;
+        x = x + (x >>> 8);
+        x = x + (x >>> 16);
+        return x & 0x0000003F;
+    }
 
     /* Convert two dotted decimal addresses to a single xxx.xxx.xxx.xxx/yy format
-     * by counting the 1-bit population in the mask address. (It may be better to count 
+     * by counting the 1-bit population in the mask address. (It may be better to count
      * NBITS-#trailing zeroes for this case)
      */
     private String toCidrNotation(String addr, String mask) {
