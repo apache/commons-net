@@ -63,7 +63,6 @@ public class SubnetUtils {
     /**
      * Returns <code>true</code> if the return value of {@link SubnetInfo#getAddressCount()}
      * includes the network address and broadcast addresses.
-     * @return
      */
     public boolean isInclusiveHostCount() {
         return inclusiveHostCount;

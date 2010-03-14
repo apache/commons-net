@@ -862,8 +862,6 @@ public class FTP extends SocketClient
      * A convenience method to send the FTP EPRT command to the server,
      * receive the reply, and return the reply code.
      *
-     * @see http://www.faqs.org/rfcs/rfc2428.html
-     *
      * Examples:
      * <code>
      * <ul>
@@ -872,6 +870,8 @@ public class FTP extends SocketClient
      * </ul>
      * </code>
      * <p>
+     * @see "http://www.faqs.org/rfcs/rfc2428.html"
+     *
      * @param host  The host owning the port.
      * @param port  The new port.
      * @return The reply code received from the server.

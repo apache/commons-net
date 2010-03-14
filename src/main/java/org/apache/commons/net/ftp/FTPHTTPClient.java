@@ -32,114 +32,114 @@ import org.apache.commons.net.util.Base64;
 
 /**
  * Experimental attempt at FTP client that tunnels over an HTTP proxy connection.
- * 
+ *
  * @author rory
  *
  */
 public class FTPHTTPClient extends FTPClient {
-	private final String proxyHost;
-	private int proxyPort;
-	private final String proxyUsername;
-	private final String proxyPassword;
-	private String host;
-	private int port;
+    private final String proxyHost;
+    private int proxyPort;
+    private final String proxyUsername;
+    private final String proxyPassword;
+    private String host;
+    private int port;
 
-	private final byte[] CRLF;
-	private final Base64 base64 = new Base64();
+    private final byte[] CRLF;
+    private final Base64 base64 = new Base64();
 
-	public FTPHTTPClient(String proxyHost, int proxyPort, String proxyUser, String proxyPass) {
-		this.proxyHost = proxyHost;
-		this.proxyPort = proxyPort;
-		this.proxyUsername = proxyUser;
-		this.proxyPassword = proxyPass;
+    public FTPHTTPClient(String proxyHost, int proxyPort, String proxyUser, String proxyPass) {
+        this.proxyHost = proxyHost;
+        this.proxyPort = proxyPort;
+        this.proxyUsername = proxyUser;
+        this.proxyPassword = proxyPass;
 
-		try {
-			CRLF = "\r\n".getBytes(getControlEncoding());
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e);
-		}
-	}
+        try {
+            CRLF = "\r\n".getBytes(getControlEncoding());
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	public FTPHTTPClient(String proxyHost, int proxyPort) {
-		this(proxyHost, proxyPort, null, null);
-	}
+    public FTPHTTPClient(String proxyHost, int proxyPort) {
+        this(proxyHost, proxyPort, null, null);
+    }
 
-	
-	@Override
-	protected Socket _openDataConnection_(int command, String arg)
-	throws IOException {
-		Socket socket = new Socket(host, port);
-		InputStream is = socket.getInputStream();
-		OutputStream os = socket.getOutputStream();
 
-		tunnelHandshake(host, port, is, os);
+    @Override
+    protected Socket _openDataConnection_(int command, String arg)
+    throws IOException {
+        Socket socket = new Socket(host, port);
+        InputStream is = socket.getInputStream();
+        OutputStream os = socket.getOutputStream();
 
-		return socket;
-	}
+        tunnelHandshake(host, port, is, os);
 
-	public void connect(String host, int port) throws SocketException,
-	IOException {
-		this.host = host;
-		this.port = port;
+        return socket;
+    }
 
-		_socket_ = new Socket(proxyHost, proxyPort);
-		_input_ = _socket_.getInputStream();
-		_output_ = _socket_.getOutputStream();
-		try {
-			tunnelHandshake(host, port, _input_, _output_);
-		} 
-		catch (Exception e) {
-			throw new IOException(e);
-		}
-	}
+    public void connect(String host, int port) throws SocketException,
+    IOException {
+        this.host = host;
+        this.port = port;
 
-	private void tunnelHandshake(String host, int port, InputStream input, OutputStream output) throws IOException,
-	UnsupportedEncodingException {
-		final String connectString = "CONNECT "  + host + ":" + port  + " HTTP/1.1";
+        _socket_ = new Socket(proxyHost, proxyPort);
+        _input_ = _socket_.getInputStream();
+        _output_ = _socket_.getOutputStream();
+        try {
+            tunnelHandshake(host, port, _input_, _output_);
+        }
+        catch (Exception e) {
+            throw new IOException(e);
+        }
+    }
 
-		_output_.write(connectString.getBytes(getControlEncoding()));
-		_output_.write(CRLF);
+    private void tunnelHandshake(String host, int port, InputStream input, OutputStream output) throws IOException,
+    UnsupportedEncodingException {
+        final String connectString = "CONNECT "  + host + ":" + port  + " HTTP/1.1";
 
-		if (proxyUsername != null && proxyPassword != null) {
-			final String header = "Proxy-Authorization: Basic "
-				+ base64.encode(proxyUsername + ":" + proxyPassword) + "\r\n";
-			_output_.write(header.getBytes("UTF-8"));
-			_output_.write(CRLF);
-			
-			List<String> response = new ArrayList<String>();
-			BufferedReader reader = new BufferedReader(
-					new InputStreamReader(_input_));
+        _output_.write(connectString.getBytes(getControlEncoding()));
+        _output_.write(CRLF);
 
-			for (String line = reader.readLine(); line != null
-			&& line.length() > 0; line = reader.readLine()) {
-				response.add(line);
-			}
-			
-			int size = response.size();
-			if (size == 0) {
-				throw new IOException("No response from proxy");
-			}
+        if (proxyUsername != null && proxyPassword != null) {
+            final String header = "Proxy-Authorization: Basic "
+                + base64.encode(proxyUsername + ":" + proxyPassword) + "\r\n";
+            _output_.write(header.getBytes("UTF-8"));
+            _output_.write(CRLF);
 
-			String code = null;
-			String resp = (String) response.get(0);
-			if (resp.startsWith("HTTP/") && resp.length() >= 12) {
-				code = resp.substring(9, 12);
-			} else {
-				throw new IOException("Invalid response from proxy: " + resp);
-			}
+            List<String> response = new ArrayList<String>();
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(_input_));
 
-			if (!"200".equals(code)) {
-				StringBuilder msg = new StringBuilder();
-				msg.append("HTTPTunnelConnector: connection failed\r\n");
-				msg.append("Response received from the proxy:\r\n");
-				for (String line : response) {
-					msg.append(line);
-					msg.append("\r\n");
-				}
-				throw new IOException(msg.toString());
-			}
-		}
-	}
+            for (String line = reader.readLine(); line != null
+            && line.length() > 0; line = reader.readLine()) {
+                response.add(line);
+            }
+
+            int size = response.size();
+            if (size == 0) {
+                throw new IOException("No response from proxy");
+            }
+
+            String code = null;
+            String resp = response.get(0);
+            if (resp.startsWith("HTTP/") && resp.length() >= 12) {
+                code = resp.substring(9, 12);
+            } else {
+                throw new IOException("Invalid response from proxy: " + resp);
+            }
+
+            if (!"200".equals(code)) {
+                StringBuilder msg = new StringBuilder();
+                msg.append("HTTPTunnelConnector: connection failed\r\n");
+                msg.append("Response received from the proxy:\r\n");
+                for (String line : response) {
+                    msg.append(line);
+                    msg.append("\r\n");
+                }
+                throw new IOException(msg.toString());
+            }
+        }
+    }
 }
 
 
