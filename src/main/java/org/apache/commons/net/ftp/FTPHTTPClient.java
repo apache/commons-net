@@ -121,7 +121,7 @@ public class FTPHTTPClient extends FTPClient {
             }
 
             String code = null;
-            String resp = (String) response.get(0);
+            String resp = response.get(0);
             if (resp.startsWith("HTTP/") && resp.length() >= 12) {
                 code = resp.substring(9, 12);
             } else {

@@ -552,12 +552,12 @@ implements Configurable
             if (getRemoteAddress() instanceof Inet6Address) {
                 if (epsv() != FTPReply.ENTERING_EPSV_MODE)
                     return null;
-                __parseExtendedPassiveModeReply((String)_replyLines.get(0));
+                __parseExtendedPassiveModeReply(_replyLines.get(0));
             }
             else {
                 if (pasv() != FTPReply.ENTERING_PASSIVE_MODE)
                     return null;
-                __parsePassiveModeReply((String)_replyLines.get(0));
+                __parsePassiveModeReply(_replyLines.get(0));
             }
 
             socket = _socketFactory_.createSocket(__passiveHost, __passivePort);
