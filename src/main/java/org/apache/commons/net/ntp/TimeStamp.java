@@ -43,7 +43,7 @@ import java.util.TimeZone;
  * @version $Revision$ $Date$
  * @see java.util.Date
  */
-public class TimeStamp implements java.io.Serializable, Comparable // TODO add comparable type?
+public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
 {
 
     /**
@@ -463,28 +463,6 @@ public class TimeStamp implements java.io.Serializable, Comparable // TODO add c
         long thisVal = this.ntpTime;
         long anotherVal = anotherTimeStamp.ntpTime;
         return (thisVal < anotherVal ? -1 : (thisVal == anotherVal ? 0 : 1));
-    }
-
-    /***
-     * Compares this TimeStamp to another Object.  If the Object is a TimeStamp,
-     * this function behaves like <code>compareTo(TimeStamp)</code>.  Otherwise,
-     * it throws a <code>ClassCastException</code> (as TimeStamps are comparable
-     * only to other TimeStamps).
-     *
-     * @param   o the <code>Object</code> to be compared.
-     * @return  the value <code>0</code> if the argument is a TimeStamp
-     *      numerically equal to this TimeStamp; a value less than
-     *      <code>0</code> if the argument is a TimeStamp numerically
-     *      greater than this TimeStamp; and a value greater than
-     *      <code>0</code> if the argument is a TimeStamp numerically
-     *      less than this TimeStamp.
-     * @exception ClassCastException if the argument is not a
-     *        <code>TimeStamp</code>.
-     * @see     java.lang.Comparable
-     */
-    public int compareTo(Object o)
-    {
-        return compareTo((TimeStamp) o);
     }
 
 }
