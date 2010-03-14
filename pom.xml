@@ -42,14 +42,6 @@ limitations under the License.
 		<url>http://svn.apache.org/viewvc/commons/proper/net/tags/commons-net-2.1</url>
 	</scm>
 
-	<distributionManagement>
-		<site>
-			<id>staging</id>
-			<name>Apache Website</name>
-			<url>scp://people.apache.org/~rwinston/release/net/</url>
-		</site>
-	</distributionManagement>
-	
 	<developers>
 		<developer>
 			<name>Jeffrey D. Brekke</name>
