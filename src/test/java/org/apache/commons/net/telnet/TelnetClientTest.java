@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.util.Arrays;
 
 /***
  * JUnit test class for TelnetClient.s
@@ -792,8 +793,16 @@ extends TestCase implements TelnetNotificationHandler
 
        // if(is1.available() == 6)
         //{
-            is1.read(buffread1);
-
+            int read = 0;
+            int pos = 0; 
+            
+            byte[] tmp = new byte[16];
+            while ( pos < 5 ) {
+            	read = is1.read(tmp); 
+            	System.arraycopy(tmp, 0, buffread1, pos, read);
+            	pos+=read;
+            }
+            
             if(equalBytes(buffread1, expected1))
                 negotiation1_ok = true;
         //}
@@ -806,6 +815,13 @@ extends TestCase implements TelnetNotificationHandler
         os2.write(send1);
         os2.flush();
         Thread.sleep(1000);
+        
+        tmp = new byte[16];
+        while ( pos < 5 ) {
+        	read = is2.read(tmp); 
+        	System.arraycopy(tmp, 0, buffread1, pos, read);
+        	pos+=read;
+        }
         //if(is2.available() == 6)
         //{
             is2.read(buffread1);
