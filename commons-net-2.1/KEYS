@@ -1,0 +1,181 @@
+This file contains the PGP keys of various developers.
+Please don't use them for email unless you have to. Their main
+purpose is code signing.
+
+Users: pgp < KEYS
+       gpg --import KEYS
+Developers: 
+        pgp -kxa <your name> and append it to this file.
+        (pgpk -ll <your name> && pgpk -xa <your name>) >> this file.
+        (gpg --list-sigs <your name>
+             && gpg --armor --export <your name>) >> this file.
+
+pub  1024D/B1313DE2 2003-01-15 Robert Burrell Donkin (CODE SIGNING KEY) <rdonkin@apache.org>
+sig 3       B1313DE2 2003-01-15   Robert Burrell Donkin (CODE SIGNING KEY) <rdonkin@apache.org>
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.0.7 (GNU/Linux)
+
+mQGiBD4lztcRBAClmlgorzoHH7IVYYerQY0e7QU0X3+4PRGGZVcbkZA3qMZV8rG3
+FSB4qp3cLX7rnco26oQbP4jSqXe1piEzYloyzYvgW9t0uFOFF7N8h9XtgA3E836v
+DE/dbrteJ6wZZvS0BR1J0u2/+3nSf4bdmzjd8JPMCIp4q4ztTMTNsWKUswCg3vRA
+NpL1bO0lTi5M013YhY+8wHcD/0Swc47PQuruwL+54ZMFFEHu+24UukU/7T6X2hos
+ERgq9HkUyqK5mOEqp4Y4AfhwPfzp/qOFbg+Jn0IIVg3XGZhTLyeBiwHpXBhJw2TT
+FXhLxm9G2PoYgkhMSgOo4wrHLCMszfvOABzCEZ4TAw3k4s3X4PSfNjHjOHUNYWhb
+1BNLA/wIVDCdOyHoUvw6R0rCTKFcHSXu7XQxjYIBKGAQkcNlCZElqNVlqa+eQTPW
+3AHXor/TUDzzd4afjkvmWaayGDZwOSWlsfqfPItvzTNzmE44wqfICa0/aMgkU6aZ
+m/k+UMFegH1YVBaAl0aj8Gx+T5B7JqA9i7+lmw3nwB1Ge0miBbQ9Um9iZXJ0IEJ1
+cnJlbGwgRG9ua2luIChDT0RFIFNJR05JTkcgS0VZKSA8cmRvbmtpbkBhcGFjaGUu
+b3JnPohZBBMRAgAZBQI+Jc7XBAsHAwIDFQIDAxYCAQIeAQIXgAAKCRDVM051sTE9
+4qflAJ9B2L8SOnFRnoJktHImJU9JO72IdwCgpM08Fi8O0dI5WuOFdz5sLobqioY=
+=nk3Z
+-----END PGP PUBLIC KEY BLOCK-----
+pub  1024D/57452E64 2001-09-20 Jeffrey D. Brekke <brekke@apache.org>
+sig 3       57452E64 2003-10-23   Jeffrey D. Brekke <brekke@apache.org>
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.2.3 (GNU/Linux)
+
+mQGiBDupN50RBADJVVB7IvDqVXArvsxWt0BBOC74Qn91G3w5/kEzuv6cjv4Wc4Ll
+s2o229+FxjASQ8G3k1RXLdkn/sGaU7A/D0YD0AJgE7Xz4pe6qusu/ABjUsmWCOBc
+6pzZ22xSF5NjYsPEKvWbc/oZFAepa/juAufjK6Ubhdsdaje/o42mALZoKwCg5xwF
+HW+yyf5Ws6Nr36OI2DxmlA0EAKdQM4c71KJlqtF9Ck2NcchJ/xr7DBg+leBhoHFP
+j3tFijdXJz96glptZak0ssupZ8v24y3QhqLzkkwfYsOeS3+y+AEpa2LvyeECu/KJ
+rtfvX8PiViN1A+6D8D43S+UlKK10NgF60eo0AcxP/XVei5Obz54HvM45wW4CYeIJ
+ZcgCA/46e5LivzuoFyMTqP+5o4CwC402uhR7Wba1VQVSki5IP+vl5vatUC/iIfVo
+CMtiHSEZ1mo6eThgd9on+Ju62Q4PNYEYkyLpJfew1VzdoJUCrho96iiJPy6NVZo9
+tUXhdOfSrUiqOT9i8+zjLiRsGV3fd3eSxtuKJX4dxzpCaXuzBLQlSmVmZnJleSBE
+LiBCcmVra2UgPGJyZWtrZUBhcGFjaGUub3JnPohdBBMRAgAdBQsHCgMEAxUDAgMW
+AgECF4AFAj+XPmgFCQty1MsACgkQ7ub3MVdFLmRTfwCdHBz+mooBeV57oj2g3JY4
+Q2Jd0uAAn1u1J/GbkPbQJ6i/gBozQPm6iamnuQENBDupN7cQBACzGaBHk7LAPmCV
+iNZRunUVqaLvykJ7BS5R6s8fJ/m3//rB/ooirXsEDnm++FjiSXKpeYRk9yawi2/U
+BmCVK9xX2zDV08fB/3FDoCLQ3o6zcJTOLaY8SsCDbr4SUauycGEoue5Umy9sOxOa
+1cT4TtPNHZ3eWnzDB3+9iZ5TCucb8wADBQP+MZ4ZYtwNxiytYS3jHcjlvGTARhvP
+nTNqtcq9OZPLsGorQ5WlJVnwaOXUk13f8SxasuLPorbORIME9I38FuF+xavO2sMk
+fVxGgXE78gDCUAyqyvvnb2lWvlDwBVLdq2+UiumLFSNhAWu6fFef+dF9xDpNQhDK
+KF2mlhdfLc/osseITAQYEQIADAUCO6k3twUJAsfqAAAKCRDu5vcxV0UuZJZlAJ9w
+ety/S7kFtg13ekvoPBiL+/nwNACgyWxd+g+B6Jhxm2KTardZb5nKa3w=
+=cOP8
+-----END PGP PUBLIC KEY BLOCK-----
+pub  1024D/47717B4B 2004-05-01 Steven M. Cohen (no comment needed) <scohen@javactivity.org>
+sig 3       47717B4B 2004-05-01   Steven M. Cohen (no comment needed) <scohen@javactivity.org>
+sub  1024g/32E08DCC 2004-05-01
+sig         47717B4B 2004-05-01   Steven M. Cohen (no comment needed) <scohen@javactivity.org>
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.2.1 (GNU/Linux)
+
+mQGiBECS+kARBADIjMbaWVyh1AkcoipkjVTW4X8jp2RJrh3NDNhq5GE5xV+j0+Rb
+HCiZRoSbzZ8XAdIfF6y3Z0DjDee69KuGxmrpMbwooB+XsKVYMMOxO8YDgKxjxeWl
+65boEOeeGjCQNzniQirY4qy/V0+2hUjjmJOA8o7BxZwblZsLvFZPNyMwxwCg7ifb
+5otvBRZbmDyb4ecQ3SfSlFcD/R32IH2Z5xIn72inCSM2iNHkujgL0oV23vsBUZ/O
+GjPmRSc1YgtXp9oeOcFXbGFppot6C9GvE3LQbvEqQPDGbfG+Us9Qs7pxxVGIczlS
+fHM+iCOuQE8IouwdoNmIsSygKpQHB982WGVwmy6AgTaMYAHvHP/CjjXczJv+MT4w
+nGr1A/9qE1aampCiWLPvUg4TM5oKa+XvADGyMdE/9rVs6Rz6jAJSp1OlDRRaAC4X
+WafaSqhs5cx1ReFAelbQvuZjw/XBAC0u2UM9uMy9Wa11faGfrTc+UTudx8IHO74u
+oQiYWa3atbBPLdzHTL7Kyu0GsfkwQhRFSxR6KPhFKm0yokgk8bQ8U3RldmVuIE0u
+IENvaGVuIChubyBjb21tZW50IG5lZWRlZCkgPHNjb2hlbkBqYXZhY3Rpdml0eS5v
+cmc+iFkEExECABkFAkCS+kAECwcDAgMVAgMDFgIBAh4BAheAAAoJEIadKLpHcXtL
+aOkAoN6wav5+gv3WnnZRnVYhxUJDdt64AKCzhTBFuhCxWUgYtYlXBm90f2yP37kB
+DQRAkvpDEAQA4N2GYczt1u0OKaVh7ScNPcNfDs+g4Eh9/62TU2NIwsLunMVxxcLS
+y5rHWOnlgv8CrBiVtrLUQ+6pg+g7OOj6CLjf/CkWSyDdbNgeuGrnYg/tx1Dhj9sw
+TgxYbXkxbjuN3SGdSaHtdOaXGxQP18RS5P3i0h4fULpEOyr01yQQ3lsAAwUEAJDK
+JzxWAqn4JOmajQ40NFwJF9h3MBZhnxB7ir5yV0FhqRnRsX60C5f2HcNWNH47u8kZ
+9W7RMqQYujBvYAAc7S1bn3gmLGDljZ1IPKuVOmzoUqlWBlJiy3O/XQYzKRimjXi/
+0dl97eHETQpv8cvXPu6snp5I59LST5JxIOOiROvdiEYEGBECAAYFAkCS+kMACgkQ
+hp0oukdxe0sppQCeJS+rSgLhHerHQmHzTQs2SOwlwoAAoLqkD1+EHjZYrpARXbR7
+hActYzM/
+=e4Xf
+-----END PGP PUBLIC KEY BLOCK-----
+pub  1024R/CDA88D2A 2004-11-24 Rory Winston (Apache signature) <rwinston@eircom.net>
+
+pub  1024D/E47D74BF 2004-11-24 Rory Winston (Apache signature) <rwinston@eircom.net>
+sub  2048g/811235D3 2004-11-24
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.2.4 (Cygwin)
+
+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
+cVG3koNNWLuu03PLMojho4Bc
+=AOQa
+-----END PGP PUBLIC KEY BLOCK-----
+pub   1024D/B6E5C0E2 2005-08-09
+uid                  Rory Winston <rory@researchkitchen.co.uk>
+sig 3        B6E5C0E2 2005-08-09  Rory Winston <rory@researchkitchen.co.uk>
+sub   2048g/B770B4CC 2005-08-09
+sig          B6E5C0E2 2005-08-09  Rory Winston <rory@researchkitchen.co.uk>
+
+pub   1024D/11F3482A 2008-09-16 [expires: 2010-09-16]
+uid                  Rory Winston <rwinston@apache.org>
+sig 3        11F3482A 2008-09-16  Rory Winston <rwinston@apache.org>
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.4.9 (MingW32)
+
+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
+=2/VL
+-----END PGP PUBLIC KEY BLOCK-----
