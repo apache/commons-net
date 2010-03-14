@@ -59,9 +59,9 @@ public class FTPSClient extends FTPClient {
     private static final String DEFAULT_PROTOCOL = "TLS";
 
     /** The security mode. (True - Implicit Mode / False - Explicit Mode) */
-    private boolean isImplicit;
+    private final boolean isImplicit;
     /** The use SSL/TLS protocol. */
-    private String protocol = DEFAULT_PROTOCOL;
+    private final String protocol;
     /** The AUTH Command value */
     private String auth = DEFAULT_PROTOCOL;
     /** The context object. */
@@ -140,6 +140,7 @@ public class FTPSClient extends FTPClient {
     public FTPSClient(boolean isImplicit, SSLContext context) {
         this.isImplicit = isImplicit;
         this.context = context;
+        this.protocol = DEFAULT_PROTOCOL;
     }
     
     /**
