@@ -472,8 +472,7 @@ limitations under the License.
 			</action>
 			<action dev="dfs" type="add">
 				Ted Wise ctwise@bellsouth.net provided a
-				<a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=24078">
-					patch</a> to add the XHDR extended NNTP command.
+				patch to add the XHDR extended NNTP command.
 			</action>
 			<action dev="scohen,dfs" type="update">
 				Deprecated FTPFileListParser interface, DefaultFTPFileListParser
@@ -522,10 +521,8 @@ limitations under the License.
 			<action dev="dfs" type="fix">
 				Applied variation of fix suggested by Matthieu Recouly
 				matthieu.recouly@laposte.net so that
-				UnixFTPEntryParser may handle listings of the form
-				<pre>
-					drwxr-xr-x 1 usernameftp 512 Jan 29 23:32 prog
-				</pre>
+				UnixFTPEntryParser may handle listings of the form:
+					"drwxr-xr-x 1 usernameftp 512 Jan 29 23:32 prog"
 				where the space between user name and group is omitted.
 			</action>
 			<action dev="dfs" type="fix">
