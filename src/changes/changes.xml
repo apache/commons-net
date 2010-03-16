@@ -23,7 +23,7 @@ limitations under the License.
 
 
 	<body>
-		<release version="2.1" description="Fix release">
+		<release version="2.1" date="" description="Fix release">
 			<action dev="rwinston" type="fix" issue="NET-215">
 				UNIXFTPEntryParser didn't preserve trailing whitespace in files
 			</action>

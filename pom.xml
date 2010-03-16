@@ -244,7 +244,9 @@ limitations under the License.
 				<artifactId>maven-changes-plugin</artifactId>
 				<version>2.3</version>
 				<configuration>
-					<issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
+					<issueLinkTemplatePerSystem>
+						<default>%URL%/%ISSUE%</default>
+					</issueLinkTemplatePerSystem>
 				</configuration>
 				<reportSets>
 					<reportSet>
