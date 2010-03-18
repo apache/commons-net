@@ -1,0 +1,13 @@
+
+o Building
+
+To build, you must have Maven 2 installed. Maven can be downloaded from 
+
+http://maven.apache.org/.
+
+
+o Documentation
+
+You can build the documentation with:
+
+mvn site
