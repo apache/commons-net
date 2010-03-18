@@ -24,6 +24,24 @@ limitations under the License.
 
 	<body>
 		<release version="2.1" date="" description="Fix release">
+			<action dev="niallp" type="fix">
+				Fix site reports
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-285">
+				Add support for setting external host ip/port range
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-290">
+				Add fix and testcase for DotTerminatedMessageReader
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-288">
+				Add support for IPv6 EPRT/EPSV
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-305">
+				Fix SubnetUtils for /32 subnets and add inclusive host count flag
+			</action>
+			<action dev="rwinston" type="fix" issue="NET-300">
+				Fix NPE when listHiddenFiles was on
+			</action>
 			<action dev="rwinston" type="fix" issue="NET-215">
 				UNIXFTPEntryParser didn't preserve trailing whitespace in files
 			</action>
