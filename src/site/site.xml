@@ -27,8 +27,8 @@
     <menu name="Documentation">
       <item name="Migration How-to"      href="/migration.html"/>
       <item name="FAQ"                   href="/faq.html"/>
-      <item name="Download"              href="/download.html"/>
-      <item name="Javadoc"               href="apidocs/index.html"/>
+      <item name="Download"              href="http://commons.apache.org/net/download_net.cgi"/>
+      <item name="Javadoc"               href="api-release/index.html"/>
       <item name="Release Notes"         href="/changes-report.html"/>
       <item name="Issue Tracking"        href="/issue-tracking.html"/>
     </menu>

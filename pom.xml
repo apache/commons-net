@@ -20,12 +20,12 @@ limitations under the License.
 	<parent>
 		<groupId>org.apache.commons</groupId>
 		<artifactId>commons-parent</artifactId>
-		<version>13</version>
+		<version>14</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>commons-net</groupId>
 	<artifactId>commons-net</artifactId>
-	<version>2.1</version>
+	<version>2.1-SNAPSHOT</version>
 	<name>Commons Net</name>
 	<description>
 		A collection of network utilities and protocol implementations.
@@ -37,9 +37,9 @@ limitations under the License.
 	</issueManagement>
 	<inceptionYear>2001</inceptionYear>
 	<scm>
-		<connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/net/tags/commons-net-2.1</connection>
-		<developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/net/tags/commons-net-2.1</developerConnection>
-		<url>http://svn.apache.org/viewvc/commons/proper/net/tags/commons-net-2.1</url>
+		<connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/net/tags/commons-net-2.1-rc4</connection>
+		<developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/net/tags/commons-net-2.1-rc4</developerConnection>
+		<url>http://svn.apache.org/viewvc/commons/proper/net/tags/commons-net-2.1-rc4</url>
 	</scm>
 
 	<developers>
@@ -114,7 +114,7 @@ limitations under the License.
 		<maven.compile.source>1.5</maven.compile.source>
 		<maven.compile.target>1.5</maven.compile.target>
 		<commons.componentid>net</commons.componentid>
-		<commons.release.version>2.0</commons.release.version>
+		<commons.release.version>2.1</commons.release.version>
 		<commons.rc.version>RC4</commons.rc.version>
 		<commons.binary.suffix />
 		<commons.release.2.version>1.4.1</commons.release.2.version>
@@ -242,10 +242,11 @@ limitations under the License.
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-changes-plugin</artifactId>
-				<version>2.0</version>
+				<version>2.3</version>
 				<configuration>
-					<xmlPath>${basedir}/src/site/xdoc/changes.xml</xmlPath>
-					<issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
+					<issueLinkTemplatePerSystem>
+						<default>%URL%/%ISSUE%</default>
+					</issueLinkTemplatePerSystem>
 				</configuration>
 				<reportSets>
 					<reportSet>
@@ -267,7 +268,7 @@ limitations under the License.
 				<artifactId>clirr-maven-plugin</artifactId>
 				<version>2.2.2</version>
 				<configuration>
-					<comparisonVersion>1.4.1</comparisonVersion>
+					<comparisonVersion>2.0</comparisonVersion>
 					<minSeverity>info</minSeverity>
 				</configuration>
 			</plugin>
