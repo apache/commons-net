@@ -114,7 +114,7 @@ limitations under the License.
 		<maven.compile.source>1.5</maven.compile.source>
 		<maven.compile.target>1.5</maven.compile.target>
 		<commons.componentid>net</commons.componentid>
-		<commons.release.version>2.0</commons.release.version>
+		<commons.release.version>2.1</commons.release.version>
 		<commons.rc.version>RC4</commons.rc.version>
 		<commons.binary.suffix />
 		<commons.release.2.version>1.4.1</commons.release.2.version>
