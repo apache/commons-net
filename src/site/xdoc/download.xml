@@ -19,7 +19,7 @@
 <document>
 
   <properties>
-    <title>Jakarta Commons/Net Download</title>
+    <title>Apache Commons Net Download</title>
     <author email="brekke@apache.org">Jeffrey D. Brekke</author>
   </properties>
 
@@ -27,17 +27,9 @@
 
 <section name="Release Builds">
 <p>
-You can download <a href="http://commons.apache.org/net/download_net.cgi">binary</a> or <a href="http://commons.apache.org/downloads/download_net.cgi">source</a> production releases.
+You can download <a href="http://commons.apache.org/net/download_net.cgi">binary and source</a> release builds.
 </p>
     
-</section>
-
-<section name="Nightly Builds">
-
-<p>
-You will find the list of nightly builds <a href="http://jakarta.apache.org/builds/jakarta-commons/nightly/commons-net/">here</a>.
-</p>
-
 </section>
 
 </body>
