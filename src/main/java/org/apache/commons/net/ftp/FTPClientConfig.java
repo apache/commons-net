@@ -488,7 +488,7 @@ public class FTPClientConfig
      * common alternative set of short month names is known to be used.
      * This means that users who can tell us of additional such encodings
      * may get them added to the list of supported languages by contacting
-     * the jakarta-commons-net team.
+     * the Apache Commons Net team.
      * </p>
      * <p><strong>
      * Please note that this attribute will NOT be used to determine a 

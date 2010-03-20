@@ -18,15 +18,15 @@
 <document>
 
  <properties>
-  <title>Jakarta Commons Net</title>
-  <author email="commons-dev@jakarta.apache.org">Commons Documentation Team</author>
+  <title>Apache Commons Net</title>
+  <author email="dev@commons.apache.org">Commons Documentation Team</author>
  </properties>
 
  <body>
  
-   <section name="Jakarta Commons Net">
+   <section name="Apache Commons Net">
    <p>
-     Jakarta Commons Net implements the client side of many basic
+     Apache Commons Net implements the client side of many basic
      Internet protocols.  The purpose of the library is to provide
      fundamental protocol access, not higher-level
      abstractions. Therefore, some of the design violates
@@ -69,8 +69,8 @@
     to the continued development of Jakarta Commons Net.  The current
     version numbering scheme bears no relation to the old.  In other
     words, Jakarta Commons Net 1.0 succeeded and supplanted
-    NetComponents 1.3.8. The latest releases of Commons Net (2.0+) require
-    a JDK 5+ installation.
+    NetComponents 1.3.8.
+    Apache Jakarta Commons is now an independent project and is called Apache Commons.
    </p>
    </section>
    <section name="Further Information">
