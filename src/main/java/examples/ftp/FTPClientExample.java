@@ -40,7 +40,7 @@ import org.apache.commons.net.ftp.FTPReply;
  * Usage: ftp [-s] [-b] <hostname> <username> <password> <remote file> <local file>
  * <p>
  ***/
-public final class FTPExample
+public final class FTPClientExample
 {
 
     public static final String USAGE =
