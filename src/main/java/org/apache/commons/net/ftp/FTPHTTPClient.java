@@ -89,7 +89,7 @@ public class FTPHTTPClient extends FTPClient {
             tunnelHandshake(host, port, _input_, _output_);
         }
         catch (Exception e) {
-            throw new IOException(e);
+            throw new IOException("Could not connect to " + host, e);
         }
     }
 
