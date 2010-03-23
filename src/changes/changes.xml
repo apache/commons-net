@@ -24,6 +24,10 @@ limitations under the License.
 
     <body>
         <release version="2.1" date="" description="Fix release">
+            <action dev="sebb" type="remove">
+                Removed the following unused fields from org.apache.commons.net.ftp.FTPSClient:
+                KEYSTORE_ALGORITHM, PROVIDER, STORE_TYPE, TRUSTSTORE_ALGORITHM
+            </action>
             <action dev="niallp" type="fix">
                 Fix site reports
             </action>
@@ -107,6 +111,10 @@ limitations under the License.
             </action>
             <action dev="rwinston" type="fix" issue="NET-277">
                 Fix incorrect NNTP constant
+            </action>
+            <action dev="rwinston" type="remove">
+                Removed the field constant CODE_408 from org.apache.commons.net.nntp.NNTPReply.
+                This was previously incorrectly used to define AUTHENTICATION_REQUIRED, see NET-277
             </action>
             <action dev="rwinston" type="fix" issue="NET-276">
                 Use long instead of int for newsgroup counts
