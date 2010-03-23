@@ -46,7 +46,7 @@
             Make NNTPClient.listNewsgroups() and NNTPClient.listNewNews() 
             more efficient. Don't preparse into lots of little objects.
           </li>
-	  <li>FTP proxy support</li>
+          <li>FTP proxy support</li>
         </ul>
       </p>
     </section>
