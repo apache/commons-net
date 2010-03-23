@@ -77,6 +77,7 @@ public class FTPHTTPClient extends FTPClient {
         return socket;
     }
 
+    @Override
     public void connect(String host, int port) throws SocketException,
     IOException {
         this.host = host;
