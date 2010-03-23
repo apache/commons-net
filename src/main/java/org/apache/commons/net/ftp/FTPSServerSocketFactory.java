@@ -52,7 +52,7 @@ public class FTPSServerSocketFactory extends ServerSocketFactory {
         return init(this.context.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
     }
 
-    public ServerSocket init(ServerSocket socket) throws IOException {
+    public ServerSocket init(ServerSocket socket) {
         ((SSLServerSocket) socket).setUseClientMode(true);
         return socket;
     }
