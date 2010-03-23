@@ -722,14 +722,14 @@ public class Base64 {
     }
 
     private byte[] getBytesUtf8(String pArray) {
-		try {
-			return pArray.getBytes("UTF8");
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e);
-		}
-	}
+        try {
+            return pArray.getBytes("UTF8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	/**
+    /**
      * Decodes a byte[] containing containing characters in the Base64 alphabet.
      * 
      * @param pArray
@@ -900,16 +900,16 @@ public class Base64 {
     }
 
     private static String newStringUtf8(byte[] encode) {
-		String str = null;
-		try {
-			str = new String(encode, "UTF8");
-		} catch (UnsupportedEncodingException ue) {
-			throw new RuntimeException(ue);
-		}
-		return str;
-	}
+        String str = null;
+        try {
+            str = new String(encode, "UTF8");
+        } catch (UnsupportedEncodingException ue) {
+            throw new RuntimeException(ue);
+        }
+        return str;
+    }
 
-	/**
+    /**
      * Encodes a byte[] containing binary data, into a byte[] containing characters in the Base64 alphabet.
      * 
      * @param pArray

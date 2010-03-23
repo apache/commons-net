@@ -798,9 +798,9 @@ extends TestCase implements TelnetNotificationHandler
             
             byte[] tmp = new byte[16];
             while ( pos < 5 ) {
-            	read = is1.read(tmp); 
-            	System.arraycopy(tmp, 0, buffread1, pos, read);
-            	pos+=read;
+                read = is1.read(tmp);
+                System.arraycopy(tmp, 0, buffread1, pos, read);
+                pos+=read;
             }
             
             if(equalBytes(buffread1, expected1))
@@ -818,9 +818,9 @@ extends TestCase implements TelnetNotificationHandler
         
         tmp = new byte[16];
         while ( pos < 5 ) {
-        	read = is2.read(tmp); 
-        	System.arraycopy(tmp, 0, buffread1, pos, read);
-        	pos+=read;
+            read = is2.read(tmp); 
+            System.arraycopy(tmp, 0, buffread1, pos, read);
+            pos+=read;
         }
         //if(is2.available() == 6)
         //{
