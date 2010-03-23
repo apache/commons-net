@@ -107,10 +107,13 @@ public final class FTPCommand
     public static final int STATUS = STAT;
     //public static final int HELP = HELP;
     //public static final int NOOP = NOOP;
+
     /** @since 2.0 */
-    public static final int GET_MOD_TIME = MDTM;
+    public static final int MOD_TIME = MDTM;
+
     /** @since 2.1 */
     public static final int FEATURES = FEAT;
+    public static final int GET_MOD_TIME = MDTM;
     public static final int SET_MOD_TIME = MFMT;
     
     // Cannot be instantiated
