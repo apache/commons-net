@@ -52,6 +52,13 @@ public class FTPSServerSocketFactory extends ServerSocketFactory {
         return init(this.context.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
     }
 
+    /**
+     * Sets the socket so newly accepted connections will use SSL client mode.
+     * 
+     * @param socket the SSLServerSocket to initialise
+     * @return the socket
+     * @throws ClassCastException if socket is not an instance of SSLServerSocket
+     */
     public ServerSocket init(ServerSocket socket) {
         ((SSLServerSocket) socket).setUseClientMode(true);
         return socket;
