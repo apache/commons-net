@@ -69,8 +69,11 @@ public final class FTPCommand
     public static final int MDTM = 33;
     /** @since 2.1 */
     public static final int FEAT = 34;
+    /** @since 2.1 */
     public static final int MFMT = 35;
+    /** @since 2.1 */
     public static final int EPSV = 36;
+    /** @since 2.1 */
     public static final int EPRT = 37;
 
     
@@ -113,7 +116,9 @@ public final class FTPCommand
 
     /** @since 2.1 */
     public static final int FEATURES = FEAT;
+    /** @since 2.1 */
     public static final int GET_MOD_TIME = MDTM;
+    /** @since 2.1 */
     public static final int SET_MOD_TIME = MFMT;
     
     // Cannot be instantiated
