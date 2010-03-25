@@ -21,22 +21,11 @@ import java.util.Calendar;
 
 /***
  * The FTPFile class is used to represent information about files stored
- * on an FTP server.  Because there is no standard representation for
- * file information on FTP servers, it may not always be possible to
- * extract all the information that can be represented by FTPFile, or
- * it may even be possible to extract more information.  In cases where
- * more information can be extracted, you will want to subclass FTPFile
- * and implement your own {@link org.apache.commons.net.ftp.FTPFileListParser}
- *  to extract the information.
- * However, most FTP servers return file information in a format that
- * can be completely parsed by
- * {@link org.apache.commons.net.ftp.DefaultFTPFileListParser}
- *  and stored in FTPFile.
+ * on an FTP server.
  * <p>
  * <p>
  * @author Daniel F. Savarese
- * @see FTPFileListParser
- * @see DefaultFTPFileListParser
+ * @see FTPFileEntryParser
  * @see FTPClient#listFiles
  ***/
 

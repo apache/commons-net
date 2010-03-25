@@ -696,7 +696,7 @@ public class Base64 {
      * @param pObject
      *            Object to decode
      * @return An object (of type byte[]) containing the binary data which corresponds to the byte[] or String supplied.
-     * @throws DecoderException
+     * @throws RuntimeException
      *             if the parameter supplied is not of type byte[]
      */
     public Object decode(Object pObject) {        
@@ -877,7 +877,7 @@ public class Base64 {
      * @param pObject
      *            Object to encode
      * @return An object (of type byte[]) containing the base64 encoded data which corresponds to the byte[] supplied.
-     * @throws EncoderException
+     * @throws RuntimeException
      *             if the parameter supplied is not of type byte[]
      */
     public Object encode(Object pObject)  {

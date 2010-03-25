@@ -40,7 +40,7 @@ import javax.net.SocketFactory;
  * creates for initiating network connections.  This is especially useful
  * for adding SSL or proxy support as well as better support for applets.  For
  * example, you could create a
- * {@link org.apache.commons.net.SocketFactory} that
+ * {@link javax.net.SocketFactory} that
  * requests browser security capabilities before creating a socket.
  * All classes derived from SocketClient should use the
  * {@link #_socketFactory_  _socketFactory_ } member variable to
