@@ -166,7 +166,7 @@ limitations under the License.
                         <phase>package</phase>
                         <configuration>
                             <tasks>
-                                <jar destfile="target/commons-net-ftp-${version}.jar">
+                                <jar destfile="target/commons-net-ftp-${project.version}.jar">
                                     <fileset dir="target/classes" includes="org/apache/commons/net/ftp/**,org/apache/commons/net/*,org/apache/commons/net/io/*,org/apache/commons/net/util/*" />
 
                                     <metainf dir="${basedir}" includes="NOTICE.txt,LICENSE.txt" />
@@ -175,7 +175,7 @@ limitations under the License.
                                         <attribute name="Specification-Title" value="${project.name}" />
                                         <attribute name="Implementation-Title" value="${project.name}" />
                                         <attribute name="Implementation-Vendor" value="${project.organization.name}" />
-                                        <attribute name="Implementation-Version" value="${version}" />
+                                        <attribute name="Implementation-Version" value="${project.version}" />
                                         <attribute name="Implementation-Vendor-Id" value="org.apache" />
                                         <attribute name="X-Compile-Source-JDK" value="${maven.compile.source}" />
                                         <attribute name="X-Compile-Target-JDK" value="${maven.compile.target}" />
@@ -206,7 +206,7 @@ limitations under the License.
                         <configuration>
                             <artifacts>
                                 <artifact>
-                                    <file>target/commons-net-ftp-${version}.jar</file>
+                                    <file>target/commons-net-ftp-${project.version}.jar</file>
                                     <type>jar</type>
                                     <classifier>ftp</classifier>
                                 </artifact>
