@@ -248,6 +248,8 @@ limitations under the License.
                     <issueLinkTemplatePerSystem>
                         <default>%URL%/%ISSUE%</default>
                     </issueLinkTemplatePerSystem>
+                    <template>release-notes.vm</template>
+                    <templateDirectory>templates</templateDirectory>
                 </configuration>
                 <reportSets>
                     <reportSet>
