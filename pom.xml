@@ -167,8 +167,6 @@ limitations under the License.
                         <configuration>
                             <tasks>
                                 <jar destfile="target/commons-net-ftp-${project.version}.jar">
-                                    <fileset dir="target/classes" includes="org/apache/commons/net/ftp/**,org/apache/commons/net/*,org/apache/commons/net/io/*,org/apache/commons/net/util/*" />
-
                                     <metainf dir="${basedir}" includes="NOTICE.txt,LICENSE.txt" />
                                     <manifest>
                                         <attribute name="Extension-Name" value="org.apache.commons.net" />
@@ -179,8 +177,8 @@ limitations under the License.
                                         <attribute name="Implementation-Vendor-Id" value="org.apache" />
                                         <attribute name="X-Compile-Source-JDK" value="${maven.compile.source}" />
                                         <attribute name="X-Compile-Target-JDK" value="${maven.compile.target}" />
-
                                     </manifest>
+                                    <fileset dir="target/classes" includes="org/apache/commons/net/ftp/**,org/apache/commons/net/*,org/apache/commons/net/io/*,org/apache/commons/net/util/*" />
                                 </jar>
                             </tasks>
                         </configuration>
