@@ -102,6 +102,25 @@ public class FTPListParseEngine {
         resetIterator();
     }
     
+    /**
+     * handle the iniitial reading and preparsing of the list returned by
+     * the server.  After this method has completed, this object will contain
+     * a list of unparsed entries (Strings) each referring to a unique file
+     * on the server.
+     *
+     * @param stream input stream provided by the server socket.
+     *
+     * @exception IOException
+     *                   thrown on any failure to read from the sever.
+     *
+     * @deprecated The version of this method which takes an encoding should be used.
+    */
+    @Deprecated
+    public void readServerList(InputStream stream)
+    throws IOException
+    {
+        readServerList(stream, null);
+    }
   
     /**
      * Internal method for reading the input into the <code>entries</code> list.
