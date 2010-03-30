@@ -37,9 +37,9 @@ limitations under the License.
     </issueManagement>
     <inceptionYear>2001</inceptionYear>
     <scm>
-        <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/net/tags/commons-net-2.1</connection>
-        <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/net/tags/commons-net-2.1</developerConnection>
-        <url>http://svn.apache.org/viewvc/commons/proper/net/tags/commons-net-2.1</url>
+        <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/net/branches/NET_2_0</connection>
+        <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/net/branches/NET_2_0</developerConnection>
+        <url>http://svn.apache.org/viewvc/commons/proper/net/branches/NET_2_0</url>
     </scm>
 
     <developers>
