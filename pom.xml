@@ -213,8 +213,19 @@ limitations under the License.
                     </execution>
                 </executions>
             </plugin>
-
-
+            <!-- Repeat the configuration here for use when directly invoking the plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-changes-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <issueLinkTemplatePerSystem>
+                        <default>%URL%/%ISSUE%</default>
+                    </issueLinkTemplatePerSystem>
+                    <template>release-notes.vm</template>
+                    <templateDirectory>src/changes</templateDirectory>
+                </configuration>
+            </plugin>
         </plugins>
 
         <testResources>
