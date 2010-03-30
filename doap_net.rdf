@@ -23,14 +23,14 @@
     <category rdf:resource="http://projects.apache.org/category/library"/>
     <license rdf:resource="http://usefulinc.com/doap/licenses/asl20"/>
     <bug-database rdf:resource="https://issues.apache.org/jira/browse/NET"/>
-    <download-page rdf:resource="http://commons.apache.org/site/downloads/downloads_commons-net.cgi"/>
+    <download-page rdf:resource="http://commons.apache.org/net/download_net.cgi"/>
     <asfext:pmc rdf:resource="http://commons.apache.org/"/>
     <shortdesc xml:lang="en">Apache Commons Net</shortdesc>
     <description xml:lang="en"/>
     <repository>
       <SVNRepository>
-        <browse rdf:resource="http://svn.apache.org/repos/asf/jakarta/commons/proper/net/trunk"/>
-        <location rdf:resource="http://svn.apache.org/repos/asf/jakarta/commons/proper/net"/>
+        <browse rdf:resource="http://svn.apache.org/repos/asf/commons/proper/net/trunk"/>
+        <location rdf:resource="http://svn.apache.org/repos/asf/commons/proper/net"/>
       </SVNRepository>
     </repository>
     <release>
@@ -40,6 +40,6 @@
         <revision>2.0</revision>
       </Version>
     </release>
-    <mailing-list rdf:resource="http://jakarta.apache.org/site/mail2.html#Commons"/>
+    <mailing-list rdf:resource="http://commons.apache.org/mail-lists.html"/>
   </Project>
 </rdf:RDF>
