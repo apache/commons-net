@@ -60,7 +60,6 @@ public class FingerClient extends SocketClient
 
     private static final String __LONG_FLAG = "/W ";
 
-    private transient StringBuffer __query = new StringBuffer(64);
     private transient char[] __buffer = new char[1024];
 
     /***
@@ -159,15 +158,14 @@ public class FingerClient extends SocketClient
     throws IOException
     {
         DataOutputStream output;
-
-        __query.setLength(0);
+        StringBuilder buffer = new StringBuilder(64);
         if (longOutput)
-            __query.append(__LONG_FLAG);
-        __query.append(username);
-        __query.append(SocketClient.NETASCII_EOL);
+            buffer.append(__LONG_FLAG);
+        buffer.append(username);
+        buffer.append(SocketClient.NETASCII_EOL);
         
         byte[] encodedQuery = 
-                (encoding == null ? __query.toString().getBytes() : __query.toString().getBytes(encoding));
+                (encoding == null ? buffer.toString().getBytes() : buffer.toString().getBytes(encoding));
 
         output = new DataOutputStream(new BufferedOutputStream(_output_, 1024));
         output.write(encodedQuery, 0, encodedQuery.length);
