@@ -120,7 +120,7 @@ public class SimpleSMTPHeader
     @Override
     public String toString()
     {
-        StringBuffer header = new StringBuffer();
+        StringBuilder header = new StringBuilder();
 
         if (__headerFields.length() > 0)
             header.append(__headerFields.toString());

@@ -67,7 +67,7 @@ public final class NtpUtils {
         int refId = message.getReferenceId();
         if (refId == 0)
             return "";
-        StringBuffer buf = new StringBuffer(4);
+        StringBuilder buf = new StringBuilder(4);
         // start at highest-order byte (0x4c434c00 -> LCL)
         for (int shiftBits = 24; shiftBits >= 0; shiftBits -= 8)
         {

@@ -99,10 +99,8 @@ public class NNTPUtils {
      */
     public static String readerToString(Reader reader) {
         String temp = null;
-        StringBuffer sb = null;
         BufferedReader bufReader = new BufferedReader(reader);
-
-        sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         try {
             temp = bufReader.readLine();
             while (temp != null) {

@@ -2459,7 +2459,7 @@ implements Configurable
         {
             if (pathname != null)
             {
-                StringBuffer sb = new StringBuffer(pathname.length() + 3);
+                StringBuilder sb = new StringBuilder(pathname.length() + 3);
                 sb.append("-a ");
                 sb.append(pathname);
                 return sb.toString();

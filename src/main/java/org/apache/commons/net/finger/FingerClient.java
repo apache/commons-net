@@ -86,7 +86,7 @@ public class FingerClient extends SocketClient
     public String query(boolean longOutput, String username) throws IOException
     {
         int read;
-        StringBuffer result = new StringBuffer(__buffer.length);
+        StringBuilder result = new StringBuilder(__buffer.length);
         BufferedReader input;
 
         input =

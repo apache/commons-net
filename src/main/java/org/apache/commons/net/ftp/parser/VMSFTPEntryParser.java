@@ -240,7 +240,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     public String readNextEntry(BufferedReader reader) throws IOException
     {
         String line = reader.readLine();
-        StringBuffer entry = new StringBuffer();
+        StringBuilder entry = new StringBuilder();
         while (line != null)
         {
             if (line.startsWith("Directory") || line.startsWith("Total")) {

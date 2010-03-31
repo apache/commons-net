@@ -182,7 +182,7 @@ public class POP3Client extends POP3
     {
         int i;
         byte[] digest;
-        StringBuffer buffer, digestBuffer;
+        StringBuilder buffer, digestBuffer;
         MessageDigest md5;
 
         if (getState() != AUTHORIZATION_STATE)
@@ -191,12 +191,12 @@ public class POP3Client extends POP3
         md5 = MessageDigest.getInstance("MD5");
         timestamp += secret;
         digest = md5.digest(timestamp.getBytes());
-        digestBuffer = new StringBuffer(128);
+        digestBuffer = new StringBuilder(128);
 
         for (i = 0; i < digest.length; i++)
             digestBuffer.append(Integer.toHexString(digest[i] & 0xff));
 
-        buffer = new StringBuffer(256);
+        buffer = new StringBuilder(256);
         buffer.append(username);
         buffer.append(' ');
         buffer.append(digestBuffer.toString());

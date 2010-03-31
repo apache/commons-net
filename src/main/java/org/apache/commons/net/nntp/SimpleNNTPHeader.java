@@ -146,7 +146,7 @@ public class SimpleNNTPHeader
     @Override
     public String toString()
     {
-        StringBuffer header = new StringBuffer();
+        StringBuilder header = new StringBuilder();
 
         header.append("From: ");
         header.append(__from);

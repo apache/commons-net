@@ -222,7 +222,7 @@ public class RExecClient extends SocketClient
         ch = _input_.read();
         if (ch > 0)
         {
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
 
             while ((ch = _input_.read()) != -1 && ch != '\n')
                 buffer.append((char)ch);

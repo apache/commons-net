@@ -60,13 +60,13 @@ public final class NewGroupsOrNewsQuery
     {
         int num;
         String str;
-        StringBuffer buffer;
+        StringBuilder buffer;
 
         __distributions = null;
         __newsgroups = null;
         __isGMT = gmt;
 
-        buffer = new StringBuffer();
+        buffer = new StringBuilder();
 
         // Get year
         num = date.get(Calendar.YEAR);

@@ -845,7 +845,7 @@ public class FTP extends SocketClient
     public int port(InetAddress host, int port) throws IOException
     {
         int num;
-        StringBuffer info = new StringBuffer(24);
+        StringBuilder info = new StringBuilder(24);
 
         info.append(host.getHostAddress().replace('.', ','));
         num = port >>> 8;
@@ -886,7 +886,7 @@ public class FTP extends SocketClient
     public int eprt(InetAddress host, int port) throws IOException
     {
         int num;
-        StringBuffer info = new StringBuffer();
+        StringBuilder info = new StringBuilder();
         String h;
 
         // If IPv6, trim the zone index
@@ -969,7 +969,7 @@ public class FTP extends SocketClient
      */
     public int type(int fileType, int formatOrByteSize) throws IOException
     {
-        StringBuffer arg = new StringBuffer();
+        StringBuilder arg = new StringBuilder();
 
         arg.append(__modes.charAt(fileType));
         arg.append(' ');

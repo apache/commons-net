@@ -360,10 +360,10 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
     /***
      * Left-pad 8-character hex string with 0's
      *
-     * @param buf - StringBuffer which is appended with leading 0's.
+     * @param buf - StringBuilder which is appended with leading 0's.
      * @param l - a long.
      */
-    private static void appendHexString(StringBuffer buf, long l)
+    private static void appendHexString(StringBuilder buf, long l)
     {
         String s = Long.toHexString(l);
         for (int i = s.length(); i < 8; i++)
@@ -382,7 +382,7 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
      */
     public static String toString(long ntpTime)
     {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         // high-order second bits (32..63) as hexstring
         appendHexString(buf, (ntpTime >>> 32) & 0xffffffffL);
 

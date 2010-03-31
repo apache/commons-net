@@ -137,7 +137,7 @@ public final class NewsgroupInfo
 
     /*
     public String toString() {
-      StringBuffer buffer = new StringBuffer();
+      StringBuilder buffer = new StringBuilder();
       buffer.append(__newsgroup);
       buffer.append(' ');
       buffer.append(__lastArticle);

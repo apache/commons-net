@@ -342,7 +342,7 @@ public class POP3 extends SocketClient
     public String getReplyString()
     {
         Enumeration<String> en;
-        StringBuffer buffer = new StringBuffer(256);
+        StringBuilder buffer = new StringBuilder(256);
 
         en = _replyLines.elements();
         while (en.hasMoreElements())

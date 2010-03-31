@@ -790,7 +790,7 @@ public class NNTP extends SocketClient
     public int newgroups(String date, String time, boolean GMT,
                          String distributions) throws IOException
     {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
         buffer.append(date);
         buffer.append(' ');
@@ -838,7 +838,7 @@ public class NNTP extends SocketClient
     public int newnews(String newsgroups, String date, String time, boolean GMT,
                        String distributions) throws IOException
     {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
         buffer.append(newsgroups);
         buffer.append(' ');
@@ -991,7 +991,7 @@ public class NNTP extends SocketClient
      *      command or receiving the server reply.
      ***/
     public int xhdr(String header, String selectedArticles) throws IOException {
-        StringBuffer command = new StringBuffer(header);
+        StringBuilder command = new StringBuilder(header);
         command.append(" ");
         command.append(selectedArticles);
         return sendCommand(NNTPCommand.XHDR, command.toString());
@@ -1007,7 +1007,7 @@ public class NNTP extends SocketClient
      * @throws IOException
      */
     public int listActive(String wildmat) throws IOException {
-        StringBuffer command = new StringBuffer("ACTIVE ");
+        StringBuilder command = new StringBuilder("ACTIVE ");
         command.append(wildmat);
         return sendCommand(NNTPCommand.LIST, command.toString());
     }

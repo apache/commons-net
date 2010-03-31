@@ -108,7 +108,7 @@ public final class TFTPErrorPacket extends TFTPPacket
         super(TFTPPacket.ERROR, datagram.getAddress(), datagram.getPort());
         int index, length;
         byte[] data;
-        StringBuffer buffer;
+        StringBuilder buffer;
 
         data = datagram.getData();
         length = datagram.getLength();
@@ -122,7 +122,7 @@ public final class TFTPErrorPacket extends TFTPPacket
             throw new TFTPPacketException("Bad error packet. No message.");
 
         index = 4;
-        buffer = new StringBuffer();
+        buffer = new StringBuilder();
 
         while (index < length && data[index] != 0)
         {
