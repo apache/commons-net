@@ -45,7 +45,7 @@ public final class DaytimeTCPClient extends SocketClient
 
     // Received dates will likely be less than 64 characters.
     // This is a temporary buffer used while receiving data.
-    private char[] __buffer = new char[64];
+    private final char[] __buffer = new char[64];
 
     /***
      * The default DaytimeTCPClient constructor.  It merely sets the default

@@ -39,9 +39,9 @@ public class CopyStreamEvent extends EventObject
      */
     public static final long UNKNOWN_STREAM_SIZE = -1;
 
-    private int bytesTransferred;
-    private long totalBytesTransferred;
-    private long streamSize;
+    private final int bytesTransferred;
+    private final long totalBytesTransferred;
+    private final long streamSize;
 
     /**
      * Creates a new CopyStreamEvent instance.

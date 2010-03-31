@@ -30,8 +30,8 @@ import java.io.IOException;
  */
 public class CopyStreamException extends IOException
 {
-    private long totalBytesTransferred;
-    private IOException ioException;
+    private final long totalBytesTransferred;
+    private final IOException ioException;
 
     /**
      * Creates a new CopyStreamException instance.

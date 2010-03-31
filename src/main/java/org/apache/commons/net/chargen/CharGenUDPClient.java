@@ -64,9 +64,9 @@ public final class CharGenUDPClient extends DatagramSocketClient
     /*** The default chargen port.  It is set to 19 according to RFC 864. ***/
     public static final int DEFAULT_PORT = 19;
 
-    private byte[] __receiveData;
-    private DatagramPacket __receivePacket;
-    private DatagramPacket __sendPacket;
+    private final byte[] __receiveData;
+    private final DatagramPacket __receivePacket;
+    private final DatagramPacket __sendPacket;
 
     /***
      * The default CharGenUDPClient constructor.  It initializes some internal
@@ -77,7 +77,7 @@ public final class CharGenUDPClient extends DatagramSocketClient
     {
         // CharGen return packets have a maximum length of 512
         __receiveData = new byte[512];
-        __receivePacket = new DatagramPacket(__receiveData, 512);
+        __receivePacket = new DatagramPacket(__receiveData, __receiveData.length);
         __sendPacket = new DatagramPacket(new byte[0], 0);
     }
 

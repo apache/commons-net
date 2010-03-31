@@ -55,7 +55,7 @@ public class NtpV3Impl implements NtpV3Packet
     private static final int KEY_IDENTIFIER_INDEX = 48;
     private static final int MESSAGE_DIGEST = 54; /* len 16 bytes */
 
-    private byte[] buf = new byte[48];
+    private final byte[] buf = new byte[48];
 
     private volatile DatagramPacket dp;
 

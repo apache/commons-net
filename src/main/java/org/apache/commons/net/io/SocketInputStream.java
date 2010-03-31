@@ -37,7 +37,7 @@ import java.net.Socket;
 
 public class SocketInputStream extends FilterInputStream
 {
-    private Socket __socket;
+    private final Socket __socket;
 
     /***
      * Creates a SocketInputStream instance wrapping an input stream and

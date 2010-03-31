@@ -47,9 +47,9 @@ public final class DaytimeUDPClient extends DatagramSocketClient
     /*** The default daytime port.  It is set to 13 according to RFC 867. ***/
     public static final int DEFAULT_PORT = 13;
 
-    private byte[] __dummyData = new byte[1];
+    private final byte[] __dummyData = new byte[1];
     // Received dates should be less than 256 bytes
-    private byte[] __timeData = new byte[256];
+    private final byte[] __timeData = new byte[256];
 
     /***
      * Retrieves the time string from the specified server and port and

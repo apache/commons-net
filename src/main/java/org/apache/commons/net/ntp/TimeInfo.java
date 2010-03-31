@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class TimeInfo {
 
-    private NtpV3Packet _message;
+    private final NtpV3Packet _message;
     private List<String> _comments;
     private Long _delay;
     private Long _offset;
@@ -38,7 +38,7 @@ public class TimeInfo {
     /**
      * time at which time message packet was received by local machine
      */
-    private long _returnTime;
+    private final long _returnTime;
 
     /**
      * flag indicating that the TimeInfo details was processed and delay/offset were computed

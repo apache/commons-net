@@ -41,7 +41,7 @@ import org.apache.commons.net.util.ListenerList;
  */
 public class CopyStreamAdapter implements CopyStreamListener
 {
-    private ListenerList internalListeners;
+    private final ListenerList internalListeners;
 
     /**
      * Creates a new copyStreamAdapter.
