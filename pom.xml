@@ -105,7 +105,7 @@ limitations under the License.
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.2</version>
+            <version>4.8.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -144,6 +144,8 @@ limitations under the License.
                     <excludes>
                         <exclude>**/*FunctionalTest.java</exclude>
                         <exclude>**/*POP3*.java</exclude>
+                        <!-- JUnit4 and/or Surefire does not like a class with a private constructor -->
+                        <exclude>**/TestSetupParameters.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>
