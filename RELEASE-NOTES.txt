@@ -1,4 +1,4 @@
-                        
+
 
               Apache Commons Net 2.1 RELEASE NOTES
 
@@ -46,13 +46,13 @@ o NET-279:  Fix copying of reply lines collection
 o NET-277:  Fix incorrect NNTP constant 
 o NET-276:  Use long instead of int for newsgroup counts 
 o NET-274:  Restore socket state after CCC command 
+o NET-275:  Example code in FTPClient doesn't compile 
 o Fix inconsistent handling of socket read/write buffer size 
 o NET-294:  UnixFTPEntryParser fails to parse some entries 
 
 Changes:
 o NET-261:  SubnetUtils.SubnetInfo.isInRange(...) behaviour not documented 
 o NET-251:  Moved class "ThreadContainer" from Threader.java into its own source file 
-o NET-252:  Get rid of using deprecated API in VMSFTPEntryParser 
 o Refactor examples package. 
 
 Removed:
