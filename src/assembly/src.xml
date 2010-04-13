@@ -26,11 +26,8 @@
             <includes>
                 <include>build.xml</include>
                 <include>LICENSE.txt</include>
-                <include>maven.xml</include>
                 <include>NOTICE.txt</include>
                 <include>pom.xml</include>
-                <include>project.properties</include>
-                <include>project.xml</include>
                 <include>README</include>
             </includes>
         </fileSet>
