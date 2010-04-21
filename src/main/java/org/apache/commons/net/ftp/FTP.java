@@ -215,7 +215,7 @@ public class FTP extends SocketClient
     public static final String DEFAULT_CONTROL_ENCODING = "ISO-8859-1";
     private static final String __modes = "AEILNTCFRPSBC";
 
-    private StringBuilder __commandBuffer = new StringBuilder();
+    private final StringBuilder __commandBuffer = new StringBuilder();
 
     protected int _replyCode;
     protected ArrayList<String> _replyLines;
@@ -468,8 +468,12 @@ public class FTP extends SocketClient
         }
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
+        if (_controlOutput_ == null){
+            throw new IOException("Connection is not open");
+        }
+
         try{
-        _controlOutput_.write(message = __commandBuffer.toString());
+            _controlOutput_.write(message = __commandBuffer.toString());
             _controlOutput_.flush();
         }
         catch (SocketException e)
