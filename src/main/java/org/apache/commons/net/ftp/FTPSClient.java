@@ -471,12 +471,12 @@ public class FTPSClient extends FTPClient {
         if (FTPSCommand._commands[FTPSCommand.CCC].equals(command)) {
             if (FTPReply.COMMAND_OK == repCode) {
                 _socket_ = plainSocket;
-        _controlInput_ = new BufferedReader(
-                new InputStreamReader(
-                    _socket_ .getInputStream(), getControlEncoding()));
-        _controlOutput_ = new BufferedWriter(
-                new OutputStreamWriter(
-                    _socket_.getOutputStream(), getControlEncoding()));
+                _controlInput_ = new BufferedReader(
+                    new InputStreamReader(
+                        _socket_ .getInputStream(), getControlEncoding()));
+                _controlOutput_ = new BufferedWriter(
+                    new OutputStreamWriter(
+                        _socket_.getOutputStream(), getControlEncoding()));
                 setSocketFactory(null);
             } else {
                 throw new SSLException(getReplyString());
