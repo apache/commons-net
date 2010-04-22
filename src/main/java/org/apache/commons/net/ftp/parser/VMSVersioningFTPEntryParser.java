@@ -48,14 +48,12 @@ import org.apache.commons.net.ftp.FTPClientConfig;
 public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
 {
 
-    private Matcher _preparse_matcher_;
-    private Pattern _preparse_pattern_;
+    private final Pattern _preparse_pattern_;
     private static final String PRE_PARSE_REGEX =
         "(.*);([0-9]+)\\s*.*";
 
     /**
-     * Constructor for a VMSFTPEntryParser object.  Sets the versioning member
-     * to the supplied value.
+     * Constructor for a VMSFTPEntryParser object.
      *
      * @exception IllegalArgumentException
      * Thrown if the regular expression is unparseable.  Should not be seen
@@ -124,7 +122,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
         while (iter.hasNext()) {
             String entry = iter.next().trim();
             MatchResult result = null;
-            _preparse_matcher_ = _preparse_pattern_.matcher(entry);
+            Matcher _preparse_matcher_ = _preparse_pattern_.matcher(entry);
             if (_preparse_matcher_.matches()) {
                 result = _preparse_matcher_.toMatchResult();
                 String name = result.group(1);
@@ -148,7 +146,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
         while (iter.hasPrevious()) {
             String entry = iter.previous().trim();
             MatchResult result = null;
-            _preparse_matcher_ = _preparse_pattern_.matcher(entry);
+            Matcher _preparse_matcher_ = _preparse_pattern_.matcher(entry);
             if (_preparse_matcher_.matches()) {
                 result = _preparse_matcher_.toMatchResult();
                 String name = result.group(1);
