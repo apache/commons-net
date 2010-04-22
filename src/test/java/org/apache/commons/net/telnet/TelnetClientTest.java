@@ -565,10 +565,10 @@ extends TestCase implements TelnetNotificationHandler
         }
 
 
-        assertTrue(numdo == 2);
-        assertTrue(numdont == 1);
-        assertTrue(numwont == 1);
-        assertTrue(numwill == 0);
+        assertEquals(2, numdo);
+        assertEquals(1, numdont);
+        assertEquals(1, numwont);
+        assertEquals(0, numwill);
     }
 
 

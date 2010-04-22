@@ -58,7 +58,7 @@ public class TimeTCPClientTest extends TestCase
         calendar.set(Calendar.MILLISECOND, 0);
         long baseTime = calendar.getTime().getTime() / 1000L;
 
-        assertTrue(baseTime == -TimeTCPClient.SECONDS_1900_TO_1970);
+        assertEquals(baseTime, -TimeTCPClient.SECONDS_1900_TO_1970);
     }
 
     /***

@@ -41,7 +41,7 @@ public class TimeStampTest extends TestCase {
 
         // do assertion tests on TimeStamp class
         assertEquals("equals(1,2)", ts1, ts2);
-        assertTrue("compareTo(1,2)", ts1.compareTo(ts2) == 0);
+        assertEquals("compareTo(1,2)", 0, ts1.compareTo(ts2));
         assertEquals("ntpValue(1,2)", ts1.ntpValue(), ts2.ntpValue());
         assertEquals("hashCode(1,2)", ts1.hashCode(), ts2.hashCode());
         assertEquals("ts1==ts1", ts1, ts1);
@@ -50,7 +50,7 @@ public class TimeStampTest extends TestCase {
     // fraction of a second (~200 picoseconds) so the times are not equal but
     // when converted to Java dates (in milliseconds) they will be equal.
         assertTrue("ts1 != ts3", !ts1.equals(ts3));
-        assertTrue("compareTo(1,3)", ts1.compareTo(ts3) == -1);
+        assertEquals("compareTo(1,3)", -1, ts1.compareTo(ts3));
         assertEquals("seconds", ts1.getSeconds(), ts3.getSeconds());
         assertTrue("fraction", ts1.getFraction() != ts3.getFraction());
         assertTrue("ntpValue(1,3)", ts1.ntpValue() != ts3.ntpValue());
