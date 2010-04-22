@@ -32,11 +32,12 @@ import junit.framework.TestSuite;
  */
 public class ListingFunctionalTest extends TestCase
 {
+    // Offsets within testData below
     static final int HOSTNAME = 0;
+    static final int VALID_PARSERKEY = 1;
     static final int INVALID_PARSERKEY = 2;
     static final int INVALID_PATH = 3;
     static final int VALID_FILENAME = 4;
-    static final int VALID_PARSERKEY = 1;
     static final int VALID_PATH = 5;
 
     public static final Test suite()
@@ -53,11 +54,15 @@ public class ListingFunctionalTest extends TestCase
                     "wacom97.zip", "pub\\drivers"
                 },
                 {
-                    "h71000.www7.hp.com", "vms", "windows",
-                    "[.HA!]", "ACLOCAL.M4;1",
-
-                    "[.FREEWARE50.XTERM]"
-                }
+                    "ftp.decuslib.com", "vms", "windows", // VMS OpenVMS V8.3
+                    "[.HA!]", "FREEWARE_SUBMISSION_INSTRUCTIONS.TXT;1",
+                    "[.FREEWAREV80.FREEWARE]"
+                },
+//                {  // VMS TCPware V5.7-2 does not return (RWED) permissions
+//                    "ftp.process.com", "vms", "windows",
+//                    "[.HA!]", "MESSAGE.;1",
+//                    "[.VMS-FREEWARE.FREE-VMS]" // 
+//                },
             };
         Class<?> clasz = ListingFunctionalTest.class;
         Method[] methods = clasz.getDeclaredMethods();
@@ -65,7 +70,7 @@ public class ListingFunctionalTest extends TestCase
 
         for (int i = 0; i < testData.length; i++)
         {
-            TestSuite suite = new TestSuite(testData[i][VALID_PARSERKEY]);
+            TestSuite suite = new TestSuite(testData[i][VALID_PARSERKEY]+ " @ " +testData[i][HOSTNAME]);
 
             for (int j = 0; j < methods.length; j++)
             {
