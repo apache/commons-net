@@ -1,13 +1,12 @@
-
 o Building
 
-To build, you must have ant and/or maven installed.  Just type 'ant' -- the default
-target will compile the classes, run the tests and build the jar
+To build, you must have Maven installed.
 
-Maven can be downloaded from the main site and there is good documentation
-on the targets for building and installation instructions:
+Maven can be downloaded from http://maven.apache.org/
 
-http://jakarta.apache.org/turbine/maven
+There is documentation on the targets for building at:
+
+http://commons.apache.org/building.html
 
 o Documentation
 
