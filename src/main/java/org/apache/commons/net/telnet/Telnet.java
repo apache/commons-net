@@ -125,7 +125,7 @@ class Telnet extends SocketClient
     /***
      * The stream on which to spy
      ***/
-    private OutputStream spyStream = null;
+    private volatile OutputStream spyStream = null;
 
     /***
      * The notification handler
@@ -1248,18 +1248,19 @@ class Telnet extends SocketClient
      ***/
     void _spyRead(int ch)
     {
-        if (spyStream != null)
+        OutputStream spy = spyStream;
+        if (spy != null)
         {
             try
             {
                 if (ch != '\r')
                 {
-                    spyStream.write(ch);
+                    spy.write(ch);
                     if (ch == '\n')
                     {
-                        spyStream.write('\r');
+                        spy.write('\r');
                     }
-                    spyStream.flush();
+                    spy.flush();
                 }
             }
             catch (IOException e)
@@ -1279,12 +1280,13 @@ class Telnet extends SocketClient
         if (!(_stateIsDo(TelnetOption.ECHO)
             && _requestedDo(TelnetOption.ECHO)))
         {
-            if (spyStream != null)
+            OutputStream spy = spyStream;
+            if (spy != null)
             {
                 try
                 {
-                    spyStream.write(ch);
-                    spyStream.flush();
+                    spy.write(ch);
+                    spy.flush();
                 }
                 catch (IOException e)
                 {
