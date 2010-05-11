@@ -287,6 +287,9 @@ implements Configurable
     // __entryParser is a cached value that should not be referenced directly
     // except when assigned in listFiles(String, String) and __initDefaults.
     private FTPFileEntryParser __entryParser;
+    
+    // Key used to create the parser; necessary to ensure that the parser type is not ignored
+    private String __entryParserKey;
 
     private FTPClientConfig __configuration;
 
@@ -333,6 +336,7 @@ implements Configurable
         __restartOffset      = 0;
         __systemName         = null;
         __entryParser        = null;
+        __entryParserKey    = "";
         __bufferSize         = Util.DEFAULT_COPY_BUFFER_SIZE;
     }
 
@@ -2386,12 +2390,13 @@ implements Configurable
     {
         // We cache the value to avoid creation of a new object every
         // time a file listing is generated.
-        if(__entryParser == null) {
+        if(__entryParser == null ||  ! __entryParserKey.equals(parserKey)) {
             if (null != parserKey) {
                 // if a parser key was supplied in the parameters,
-                // use that to create the paraser
+                // use that to create the parser
                 __entryParser =
                     __parserFactory.createFileEntryParser(parserKey);
+                __entryParserKey = parserKey;
 
             } else {
                 // if no parserKey was supplied, check for a configuration
@@ -2399,12 +2404,15 @@ implements Configurable
                 if (null != __configuration) {
                     __entryParser =
                         __parserFactory.createFileEntryParser(__configuration);
+                    __entryParserKey = __configuration.getServerSystemKey();
                 } else {
                     // if a parserKey hasn't been supplied, and a configuration
                     // hasn't been supplied, then autodetect by calling
                     // the SYST command and use that to choose the parser.
+                    final String systemName = getSystemName();
                     __entryParser =
-                        __parserFactory.createFileEntryParser(getSystemName());
+                        __parserFactory.createFileEntryParser(systemName);
+                    __entryParserKey = systemName;
                 }
             }
         }
