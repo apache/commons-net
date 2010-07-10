@@ -31,6 +31,8 @@ import javax.net.ssl.X509TrustManager;
  */
 public class FTPSTrustManager implements X509TrustManager
 {
+    private static final X509Certificate[] EMPTY_X509CERTIFICATE_ARRAY = new X509Certificate[]{};
+
     /**
      * No-op
      */
@@ -49,6 +51,6 @@ public class FTPSTrustManager implements X509TrustManager
 
     public X509Certificate[] getAcceptedIssuers()
     {
-        return null;
+        return EMPTY_X509CERTIFICATE_ARRAY;
     }
 }
