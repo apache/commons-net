@@ -42,6 +42,22 @@ import javax.net.ssl.TrustManager;
  */
 public class FTPSClient extends FTPClient {
 
+    /** @deprecated - not used - will be removed in next major release */
+    @Deprecated
+    public static String KEYSTORE_ALGORITHM;
+
+    /** @deprecated - not used - will be removed in next major release */
+    @Deprecated
+    public static String TRUSTSTORE_ALGORITHM;
+
+    /** @deprecated - not used - will be removed in next major release */
+    @Deprecated
+    public static String PROVIDER;
+
+    /** @deprecated - not used - will be removed in next major release */
+    @Deprecated
+    public static String STORE_TYPE;
+    
     /** The value that I can set in PROT command  (C = Clear, P = Protected) */
     private static final String[] PROT_COMMAND_VALUE = {"C","E","S","P"};
     /** Default PROT Command */
