@@ -1,5 +1,4 @@
 
-
               Apache Commons Net 2.1 RELEASE NOTES
 
 This is primarily a maintenance release, but it also includes new features and enhancements.
@@ -8,12 +7,7 @@ Users of version 2.0 are encouraged to upgrade to 2.1, as this release includes 
 
 See the detailed list of changes below for full description of all bug fixes and enhancements.
 
-This release contains some API compatibility breaks with version 2.0 (see also the clirr report):
- Removed 4 unused fields from oacn.ftp.FTPSClient: KEYSTORE_ALGORITHM, PROVIDER, STORE_TYPE, TRUSTSTORE_ALGORITHM
- Removed the field constant CODE_408 from org.apache.commons.net.nntp.NNTPReply
-
-
-TO BE COMPLETED
+ TO BE COMPLETED
 
 Changes in this version include:
 
@@ -22,6 +16,7 @@ o NET-263:  SubnetUtils / SubNetInfo toString() implementations
 o Javadoc fixes, improvements, and refactoring. 
 
 Fixed Bugs:
+o NET-283:  SocketClient should ensure input and output streams are closed 
 o NET-302:  FTP: initiateListParsing should not cache entryParser 
 o NET-264:  Telnet spyStream NullPointerException 
 o Fix site reports 

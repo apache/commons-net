@@ -58,13 +58,12 @@ This is primarily a maintenance release, but it also includes new features and e
   Users of version 2.0 are encouraged to upgrade to 2.1, as this release includes some important bug fixes.
 
   See the detailed list of changes below for full description of all bug fixes and enhancements.
-
-  This release contains some API compatibility breaks with version 2.0 (see also the clirr report):
-  Removed 4 unused fields from oacn.ftp.FTPSClient: KEYSTORE_ALGORITHM, PROVIDER, STORE_TYPE, TRUSTSTORE_ALGORITHM
-  Removed the field constant CODE_408 from org.apache.commons.net.nntp.NNTPReply
-  
+ 
   TO BE COMPLETED
 ">
+            <action issue="NET-283" dev="sebb" type="fix">
+                SocketClient should ensure input and output streams are closed
+            </action>
             <action issue="NET-302" dev="sebb" type="fix">
                 FTP: initiateListParsing should not cache entryParser
             </action>
