@@ -32,6 +32,7 @@ package org.apache.commons.net.nntp;
 public final class NNTPReply
 {
 
+    // TODO - drop all these numeric constants?
     public static final int CODE_100 = 100;
     public static final int CODE_199 = 199;
     public static final int CODE_200 = 200;
@@ -53,6 +54,7 @@ public final class NNTPReply
     public static final int CODE_340 = 340;
     public static final int CODE_381 = 381;
     public static final int CODE_400 = 400;
+    public static final int CODE_408 = 408; // Not actually needed; kept for API compatibility
     public static final int CODE_411 = 411;
     public static final int CODE_412 = 412;
     public static final int CODE_420 = 420;
