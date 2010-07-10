@@ -95,9 +95,6 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
         return goodsamplesDatasetList;
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getAllGoodListings()
-     */
     protected List<String[]> getAllGoodListings() {
         List<String[]> l = new ArrayList<String[]>();
         l.add(goodsamplesDatasetList);
