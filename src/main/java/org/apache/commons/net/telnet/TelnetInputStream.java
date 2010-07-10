@@ -42,13 +42,13 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     private boolean __hasReachedEOF, __isClosed;
     private boolean __readIsWaiting;
     private int __receiveState, __queueHead, __queueTail, __bytesAvailable;
-    private int[] __queue;
-    private TelnetClient __client;
-    private Thread __thread;
+    private final int[] __queue;
+    private final TelnetClient __client;
+    private final Thread __thread;
     private IOException __ioException;
 
     /* TERMINAL-TYPE option (start)*/
-    private int __suboption[] = new int[256];
+    private final int __suboption[] = new int[256];
     private int __suboption_count = 0;
     /* TERMINAL-TYPE option (end)*/
 
