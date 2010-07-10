@@ -68,7 +68,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
                                        };
 
     /*** The transfer mode of the request. ***/
-    private int _mode;
+    private final int _mode;
 
     /*** The filename of the request. ***/
     private final String _filename;

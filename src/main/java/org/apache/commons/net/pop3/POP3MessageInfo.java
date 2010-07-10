@@ -41,6 +41,7 @@ package org.apache.commons.net.pop3;
 
 public final class POP3MessageInfo
 {
+    // TODO - make these fields final? They are all set on construction
     public int number;
     public int size;
     public String identifier;

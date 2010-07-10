@@ -35,9 +35,9 @@ import java.util.EventObject;
 
 public class ProtocolCommandEvent extends EventObject
 {
-    private int __replyCode;
-    private boolean __isCommand;
-    private String __message, __command;
+    private final int __replyCode;
+    private final boolean __isCommand;
+    private final String __message, __command;
 
     /***
      * Creates a ProtocolCommandEvent signalling a command was sent to

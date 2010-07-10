@@ -32,7 +32,7 @@ import org.apache.commons.net.ProtocolCommandListener;
 
 public class PrintCommandListener implements ProtocolCommandListener
 {
-    private PrintWriter __writer;
+    private final PrintWriter __writer;
 
     public PrintCommandListener(PrintWriter writer)
     {

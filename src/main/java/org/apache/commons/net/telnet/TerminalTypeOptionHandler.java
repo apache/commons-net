@@ -27,7 +27,7 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler
     /***
      * Terminal type
      ***/
-    private String termType = null;
+    private final String termType;
 
     /***
      * Terminal type option

@@ -56,8 +56,8 @@ public final class TimeUDPClient extends DatagramSocketClient
      ***/
     public static final long SECONDS_1900_TO_1970 = 2208988800L;
 
-    private byte[] __dummyData = new byte[1];
-    private byte[] __timeData = new byte[4];
+    private final byte[] __dummyData = new byte[1];
+    private final byte[] __timeData = new byte[4];
 
     /***
      * Retrieves the time from the specified server and port and

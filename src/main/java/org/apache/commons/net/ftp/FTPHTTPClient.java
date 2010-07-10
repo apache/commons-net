@@ -38,7 +38,7 @@ import org.apache.commons.net.util.Base64;
  */
 public class FTPHTTPClient extends FTPClient {
     private final String proxyHost;
-    private int proxyPort;
+    private final int proxyPort;
     private final String proxyUsername;
     private final String proxyPassword;
     private String host;

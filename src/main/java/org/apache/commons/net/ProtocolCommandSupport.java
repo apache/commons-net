@@ -36,8 +36,8 @@ import org.apache.commons.net.util.ListenerList;
 
 public class ProtocolCommandSupport implements Serializable
 {
-    private Object __source;
-    private ListenerList __listeners;
+    private final Object __source;
+    private final ListenerList __listeners;
 
     /***
      * Creates a ProtocolCommandSupport instant using the indicated source

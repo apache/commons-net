@@ -30,12 +30,12 @@ public class InvalidTelnetOptionException extends Exception
     /***
      * Option code
      ***/
-    private int optionCode = -1;
+    private final int optionCode;
 
     /***
      * Error message
      ***/
-    private String msg;
+    private final String msg;
 
     /***
      * Constructor for the exception.
