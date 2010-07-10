@@ -65,6 +65,12 @@ This is primarily a maintenance release, but it also includes new features and e
   
   TO BE COMPLETED
 ">
+            <action issue="NET-302" dev="sebb" type="fix">
+                FTP: initiateListParsing should not cache entryParser
+            </action>
+            <action issue="NET-264" dev="sebb" type="fix">
+                Telnet spyStream NullPointerException
+            </action>
             <action dev="sebb" type="remove">
                 Removed the following unused fields from org.apache.commons.net.ftp.FTPSClient:
                 KEYSTORE_ALGORITHM, PROVIDER, STORE_TYPE, TRUSTSTORE_ALGORITHM

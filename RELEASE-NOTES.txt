@@ -22,6 +22,8 @@ o NET-263:  SubnetUtils / SubNetInfo toString() implementations
 o Javadoc fixes, improvements, and refactoring. 
 
 Fixed Bugs:
+o NET-302:  FTP: initiateListParsing should not cache entryParser 
+o NET-264:  Telnet spyStream NullPointerException 
 o Fix site reports 
 o NET-285:  Add support for setting external host ip/port range 
 o NET-290:  Add fix and testcase for DotTerminatedMessageReader 
