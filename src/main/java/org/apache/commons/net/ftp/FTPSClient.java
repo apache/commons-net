@@ -385,8 +385,8 @@ public class FTPSClient extends FTPClient {
     /**
      * Returns the names of the cipher suites which could be enabled
      * for use on this connection.
-     * When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns false.
-     * @return An array of cipher suite names.
+     * When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns null.
+     * @return An array of cipher suite names, or <code>null</code>
      */
     public String[] getEnabledCipherSuites() {
         if (_socket_ instanceof SSLSocket)
@@ -407,8 +407,8 @@ public class FTPSClient extends FTPClient {
     /**
      * Returns the names of the protocol versions which are currently
      * enabled for use on this connection.
-     * When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns false.
-     * @return An array of protocols.
+     * When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns null.
+     * @return An array of protocols, or <code>null</code>
      */
     public String[] getEnabledProtocols() {
         if (_socket_ instanceof SSLSocket)
