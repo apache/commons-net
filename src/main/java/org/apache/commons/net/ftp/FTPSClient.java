@@ -512,7 +512,7 @@ public class FTPSClient extends FTPClient {
      * Null is returned if an FTP protocol error is reported at any point
      * during the establishment and initialization of the connection.
      * @throws IOException If there is any problem with the connection.
-     * @see org.apache.commons.net.ftp.FTPClient#_openDataConnection_(java.lang.String, int)
+     * @see FTPClient#_openDataConnection_(int, String)
      */
     @Override
     protected Socket _openDataConnection_(int command, String arg)
