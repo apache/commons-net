@@ -12,10 +12,15 @@ See the detailed list of changes below for full description of all bug fixes and
 Changes in this version include:
 
 New features:
+o NET-74:  Testcase to show WindowSizeOptionHandler is working OK 
 o NET-263:  SubnetUtils / SubNetInfo toString() implementations 
 o Javadoc fixes, improvements, and refactoring. 
 
 Fixed Bugs:
+o NET-330:  The method VMSFTPEntryParser.parseFileList(InputStream listStream) should not be present.
+            Mark method as deprecated and to be removed 
+o NET-180:  Telnet EOR is "consumed" by TelnetInputStream when in BINARY transmission.
+            Send notification to TelnetNotificationHandler. 
 o NET-329:  TelnetInoutStream#__read() bug in the __receiveState handling for the _STATE_IAC state. 
 o NET-283:  SocketClient should ensure input and output streams are closed 
 o NET-302:  FTP: initiateListParsing should not cache entryParser 

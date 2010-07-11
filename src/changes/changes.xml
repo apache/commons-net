@@ -61,6 +61,17 @@ This is primarily a maintenance release, but it also includes new features and e
  
   TO BE COMPLETED
 ">
+            <action issue="NET-74" dev="sebb" type="add">
+            Testcase to show WindowSizeOptionHandler is working OK
+            </action>
+            <action issue="NET-330" dev="sebb" type="fix">
+            The method VMSFTPEntryParser.parseFileList(InputStream listStream) should not be present.
+            Mark method as deprecated and to be removed
+            </action>
+            <action issue="NET-180" dev="sebb" type="fix">
+            Telnet EOR is "consumed" by TelnetInputStream when in BINARY transmission.
+            Send notification to TelnetNotificationHandler.
+            </action>
             <action issue="NET-329" dev="sebb" type="fix">
                 TelnetInoutStream#__read() bug in the __receiveState handling for the _STATE_IAC state.
             </action>
