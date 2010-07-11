@@ -35,6 +35,13 @@ import java.io.InterruptedIOException;
 
 final class TelnetInputStream extends BufferedInputStream implements Runnable
 {
+    /** End of file has been reached */
+    private static final int EOF = -1;
+
+    /** Read would block */
+    private static final int WOULD_BLOCK = -2;
+
+    // TODO should these be private enums?
     static final int _STATE_DATA = 0, _STATE_IAC = 1, _STATE_WILL = 2,
                      _STATE_WONT = 3, _STATE_DO = 4, _STATE_DONT = 5,
                      _STATE_SB = 6, _STATE_SE = 7, _STATE_CR = 8, _STATE_IAC_SB = 9;
@@ -106,6 +113,15 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     // TelnetOutputStream writing through the telnet client at same time
     // as a processDo/Will/etc. command invoked from TelnetInputStream
     // tries to write.
+    /**
+     * Get the next byte of data.
+     * IAC commands are processed internally and do not return data.
+     * 
+     * @param mayBlock true if method is allowed to block
+     * @return the next byte of data, 
+     * or -1 (EOF) if end of stread reached,
+     * or -2 (WOULD_BLOCK) if mayBlock is false and there is no data available
+     */
     private int __read(boolean mayBlock) throws IOException
     {
         int ch;
@@ -113,13 +129,13 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         while (true)
         {
  
-            // If there is no more data AND we were told not to block, just return -2. (More efficient than exception.)
+            // If there is no more data AND we were told not to block, just return WOULD_BLOCK (-2). (More efficient than exception.)
             if(!mayBlock && super.available() == 0)
-                return -2;
+                return WOULD_BLOCK;
             
             // Otherwise, exit only when we reach end of stream.
             if ((ch = super.read()) < 0)
-                return -1;
+                return EOF;
 
             ch = (ch & 0xff);
 
@@ -341,9 +357,9 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
 
                 if (__bytesAvailable == 0)
                 {
-                    // Return -1 if at end of file
+                    // Return EOF if at end of file
                     if (__hasReachedEOF)
-                        return -1;
+                        return EOF;
 
                     // Otherwise, we have to wait for queue to get something
                     if(__threaded)
@@ -371,9 +387,9 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                         {
                             try
                             {
-                                if ((ch = __read(mayBlock)) < 0)
-                                    if(ch != -2)
-                                        return (ch);
+                                if ((ch = __read(mayBlock)) < 0) // EOF or WOULD_BLOCK
+                                    if(ch != WOULD_BLOCK)
+                                        return (ch); // must be EOF
                             }
                             catch (InterruptedIOException e)
                             {
@@ -389,13 +405,13 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                                     {
                                     }
                                 }
-                                return (-1);
+                                return EOF;
                             }
 
 
                             try
                             {
-                                if(ch != -2)
+                                if(ch != WOULD_BLOCK)
                                 {
                                     __processChar(ch);
                                 }
@@ -403,7 +419,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                             catch (InterruptedException e)
                             {
                                 if (__isClosed)
-                                    return (-1);
+                                    return EOF;
                             }
                             
                             // Reads should not block on subsequent iterations. Potentially, this could happen if the 
@@ -488,8 +504,8 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                 length = __bytesAvailable;
         }
 
-        if ((ch = read()) == -1)
-            return -1;
+        if ((ch = read()) == EOF)
+            return EOF;
 
         off = offset;
 
@@ -497,7 +513,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         {
             buffer[offset++] = (byte)ch;
         }
-        while (--length > 0 && (ch = read()) != -1);
+        while (--length > 0 && (ch = read()) != EOF);
 
         //__client._spyRead(buffer, off, offset - off);
         return (offset - off);
