@@ -116,6 +116,7 @@ public class TelnetOption
 
     public static final int EXTENDED_OPTIONS_LIST = 255;
 
+    @SuppressWarnings("unused")
     private static final int __FIRST_OPTION = BINARY;
     private static final int __LAST_OPTION = EXTENDED_OPTIONS_LIST;
 
