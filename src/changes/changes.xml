@@ -61,6 +61,9 @@ This is primarily a maintenance release, but it also includes new features and e
  
   TO BE COMPLETED
 ">
+            <action issue="NET-328" dev="sebb" type="fix">
+            FromNetASCIIInputStream.read(byte[], int, int) may change length passed to superclass if not doing conversion
+            </action>
             <action issue="NET-74" dev="sebb" type="add">
             Testcase to show WindowSizeOptionHandler is working OK
             </action>

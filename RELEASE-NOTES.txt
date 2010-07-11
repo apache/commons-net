@@ -17,6 +17,7 @@ o NET-263:  SubnetUtils / SubNetInfo toString() implementations
 o Javadoc fixes, improvements, and refactoring. 
 
 Fixed Bugs:
+o NET-328:  FromNetASCIIInputStream.read(byte[], int, int) may change length passed to superclass if not doing conversion 
 o NET-330:  The method VMSFTPEntryParser.parseFileList(InputStream listStream) should not be present.
             Mark method as deprecated and to be removed 
 o NET-180:  Telnet EOR is "consumed" by TelnetInputStream when in BINARY transmission.
