@@ -115,7 +115,7 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
      * Implements the abstract method of TelnetOptionHandler.
      * This will send the client Height and Width to the server.
      * <p>
-     * @return always null (no response to subnegotiation)
+     * @return array to send to remote system
      ***/
     @Override
     public int[] startSubnegotiationLocal()
