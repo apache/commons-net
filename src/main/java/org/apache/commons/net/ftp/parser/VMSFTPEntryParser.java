@@ -113,7 +113,10 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      *     if the list could not be obtained or if there are no files in
      *     the directory.
      * @exception IOException  If an I/O error occurs reading the listStream.
+     * @deprecated No other FTPFileEntryParser implementations have this method.
+     * Not currently used by NET code. To be removed in 3.0
      ***/
+    @Deprecated
     public FTPFile[] parseFileList(InputStream listStream) throws IOException {
         FTPListParseEngine engine = new FTPListParseEngine(this);
         engine.readServerList(listStream, null);
