@@ -194,12 +194,12 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                 /* TERMINAL-TYPE option (end)*/
                 case TelnetCommand.IAC:
                     __receiveState = _STATE_DATA;
-                    break;
+                    break; // exit to enclosing switch to return IAC from read
                 default:
-                    break;
+                    __receiveState = _STATE_DATA;           
+                    continue; // move on the next char, i.e. ignore IAC+unknown
                 }
-                __receiveState = _STATE_DATA;
-                continue;
+                break; // exit and return from read
             case _STATE_WILL:
                 synchronized (__client)
                 {
