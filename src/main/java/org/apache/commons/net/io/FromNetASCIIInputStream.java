@@ -156,10 +156,13 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
     @Override
     public int read(byte buffer[], int offset, int length) throws IOException
     {
-        int ch, off;
+        if (_noConversionRequired)
+            return super.read(buffer, offset, length);
 
         if (length < 1)
             return 0;
+
+        int ch, off;
 
         ch = available();
 
@@ -169,8 +172,6 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
         if (__length < 1)
             __length = 1;
 
-        if (_noConversionRequired)
-            return super.read(buffer, offset, __length);
 
         if ((ch = __read()) == -1)
             return -1;
