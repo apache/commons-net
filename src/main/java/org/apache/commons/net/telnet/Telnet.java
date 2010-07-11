@@ -406,6 +406,25 @@ class Telnet extends SocketClient
     }
 
     /**
+     * Processes a COMMAND.
+     * 
+     * @param command - option code to be set.
+     **/
+    void _processCommand(int command)
+    {
+        if (debugoptions)
+        {
+            System.err.println("RECEIVED COMMAND: " + command);
+        }
+
+        if (__notifhand != null)
+        {
+            __notifhand.receivedNegotiation(
+                TelnetNotificationHandler.RECEIVED_COMMAND, command);
+        }
+    }
+
+    /**
      * Processes a DO request.
      * 
      * @param option - option code to be set.

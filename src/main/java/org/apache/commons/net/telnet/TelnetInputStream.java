@@ -212,8 +212,9 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                     __receiveState = _STATE_DATA;
                     break; // exit to enclosing switch to return IAC from read
                 default:
-                    __receiveState = _STATE_DATA;           
-                    continue; // move on the next char, i.e. ignore IAC+unknown
+                    __receiveState = _STATE_DATA;
+                    __client._processCommand(ch); // Notify the user
+                    continue; // move on the next char
                 }
                 break; // exit and return from read
             case _STATE_WILL:
@@ -382,7 +383,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                         __readIsWaiting = true;
                         int ch;
                         boolean mayBlock = true;    // block on the first read only
-                        
+
                         do
                         {
                             try
@@ -421,7 +422,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                                 if (__isClosed)
                                     return EOF;
                             }
-                            
+
                             // Reads should not block on subsequent iterations. Potentially, this could happen if the 
                             // remaining buffered socket data consists entirely of Telnet command sequence and no "user" data.
                             mayBlock = false;
