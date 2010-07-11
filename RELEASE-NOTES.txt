@@ -16,6 +16,7 @@ o NET-263:  SubnetUtils / SubNetInfo toString() implementations
 o Javadoc fixes, improvements, and refactoring. 
 
 Fixed Bugs:
+o NET-329:  TelnetInoutStream#__read() bug in the __receiveState handling for the _STATE_IAC state. 
 o NET-283:  SocketClient should ensure input and output streams are closed 
 o NET-302:  FTP: initiateListParsing should not cache entryParser 
 o NET-264:  Telnet spyStream NullPointerException 
@@ -48,15 +49,12 @@ o Fix inconsistent handling of socket read/write buffer size
 o NET-294:  UnixFTPEntryParser fails to parse some entries 
 
 Changes:
+o Deprecated the following unused fields from org.apache.commons.net.ftp.FTPSClient:
+                KEYSTORE_ALGORITHM, PROVIDER, STORE_TYPE, TRUSTSTORE_ALGORITHM 
 o NET-261:  SubnetUtils.SubnetInfo.isInRange(...) behaviour not documented 
 o NET-251:  Moved class "ThreadContainer" from Threader.java into its own source file 
 o Refactor examples package. 
 
-Removed:
-o Removed the following unused fields from org.apache.commons.net.ftp.FTPSClient:
-                KEYSTORE_ALGORITHM, PROVIDER, STORE_TYPE, TRUSTSTORE_ALGORITHM 
-o Removed the field constant CODE_408 from org.apache.commons.net.nntp.NNTPReply.
-                This was previously incorrectly used to define AUTHENTICATION_REQUIRED, see NET-277 
  
 For complete information on Commons Net, including instructions on how to submit bug reports,
 patches, or suggestions for improvement, see the Apache Commons Net website:

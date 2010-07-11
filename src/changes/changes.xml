@@ -61,6 +61,9 @@ This is primarily a maintenance release, but it also includes new features and e
  
   TO BE COMPLETED
 ">
+            <action issue="NET-329" dev="sebb" type="fix">
+                TelnetInoutStream#__read() bug in the __receiveState handling for the _STATE_IAC state.
+            </action>
             <action issue="NET-283" dev="sebb" type="fix">
                 SocketClient should ensure input and output streams are closed
             </action>
@@ -70,8 +73,8 @@ This is primarily a maintenance release, but it also includes new features and e
             <action issue="NET-264" dev="sebb" type="fix">
                 Telnet spyStream NullPointerException
             </action>
-            <action dev="sebb" type="remove">
-                Removed the following unused fields from org.apache.commons.net.ftp.FTPSClient:
+            <action dev="sebb" type="update">
+                Deprecated the following unused fields from org.apache.commons.net.ftp.FTPSClient:
                 KEYSTORE_ALGORITHM, PROVIDER, STORE_TYPE, TRUSTSTORE_ALGORITHM
             </action>
             <action dev="niallp" type="fix">
@@ -154,10 +157,6 @@ This is primarily a maintenance release, but it also includes new features and e
             </action>
             <action dev="rwinston" type="fix" issue="NET-277">
                 Fix incorrect NNTP constant
-            </action>
-            <action dev="rwinston" type="remove">
-                Removed the field constant CODE_408 from org.apache.commons.net.nntp.NNTPReply.
-                This was previously incorrectly used to define AUTHENTICATION_REQUIRED, see NET-277
             </action>
             <action dev="rwinston" type="fix" issue="NET-276">
                 Use long instead of int for newsgroup counts
