@@ -894,13 +894,16 @@ implements Configurable
      * Set the current data connection mode to
      * <code> PASSIVE_LOCAL_DATA_CONNECTION_MODE </code>.  Use this
      * method only for data transfers between the client and server.
-     * This method causes a PASV command to be issued to the server
+     * This method causes a PASV (or EPSV) command to be issued to the server
      * before the opening of every data connection, telling the server to
      * open a data port to which the client will connect to conduct
      * data transfers.  The FTPClient will stay in
      * <code> PASSIVE_LOCAL_DATA_CONNECTION_MODE </code> until the
      * mode is changed by calling some other method such as
      * {@link #enterLocalActiveMode  enterLocalActiveMode() }
+     * <p>
+     * <b>N.B.</b> currently calling any connect method will reset the mode to 
+     * ACTIVE_LOCAL_DATA_CONNECTION_MODE.
      ***/
     public void enterLocalPassiveMode()
     {
@@ -1101,6 +1104,8 @@ implements Configurable
      * it again.  The default file type is <code> FTP.ASCII_FILE_TYPE </code>
      * if this method is never called.
      * <p>
+     * <b>N.B.</b> currently calling any connect method will reset the mode to 
+     * ACTIVE_LOCAL_DATA_CONNECTION_MODE.
      * @param fileType The <code> _FILE_TYPE </code> constant indcating the
      *                 type of file.
      * @return True if successfully completed, false if not.
@@ -1136,6 +1141,9 @@ implements Configurable
      * format should be the byte size for that type.  The default format
      * is <code> FTP.NON_PRINT_TEXT_FORMAT </code> if this method is never
      * called.
+     * <p>
+     * <b>N.B.</b> currently calling any connect method will reset the mode to 
+     * ACTIVE_LOCAL_DATA_CONNECTION_MODE.
      * <p>
      * @param fileType The <code> _FILE_TYPE </code> constant indcating the
      *                 type of file.
