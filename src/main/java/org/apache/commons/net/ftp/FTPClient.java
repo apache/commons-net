@@ -279,7 +279,8 @@ implements Configurable
     private FTPFileEntryParserFactory __parserFactory;
     private int __bufferSize;
     private boolean __listHiddenFiles;
-
+    private boolean __useEPSVwithIPv4; // whether to attempt EPSV with an IPv4 connection
+    
     // __systemName is a cached value that should not be referenced directly
     // except when assigned in getSystemName and __initDefaults.
     private String __systemName;
@@ -317,6 +318,7 @@ implements Configurable
         __parserFactory = new DefaultFTPFileEntryParserFactory();
         __configuration      = null;
         __listHiddenFiles = false;
+        __useEPSVwithIPv4 = false;
         __random = new Random();
     }
 
@@ -502,23 +504,32 @@ implements Configurable
                 __dataConnectionMode != PASSIVE_LOCAL_DATA_CONNECTION_MODE)
             return null;
 
+        final boolean isInet6Address = getRemoteAddress() instanceof Inet6Address;
+        
         if (__dataConnectionMode == ACTIVE_LOCAL_DATA_CONNECTION_MODE)
         {
+            // if no activePortRange was set (correctly) -> getActivePort() = 0
+            // -> new ServerSocket(0) -> bind to any free local port
             ServerSocket server = _serverSocketFactory_.createServerSocket(getActivePort(), 1, getHostAddress());
 
-            // try EPRT first. If that fails, and the connection is over IPv4
-            // fallback to PORT
-            if (!FTPReply.isPositiveCompletion(eprt(getHostAddress(),
-                    getActivePort())))
+            // Try EPRT only if remote server is over IPv6, if not use PORT,
+            // because EPRT has no advantage over PORT on IPv4.
+            // It could even have the disadvantage,
+            // that EPRT will make the data connection fail, because
+            // today's intelligent NAT Firewalls are able to
+            // substitute IP addresses in the PORT command,
+            // but might not be able to recognize the EPRT command.
+            if (isInet6Address)
             {
-                if (getRemoteAddress() instanceof Inet6Address)
+                if (!FTPReply.isPositiveCompletion(eprt(getHostAddress(), server.getLocalPort())))
                 {
                     server.close();
                     return null;
                 }
-
-                if (!FTPReply.isPositiveCompletion(port(getHostAddress(),
-                        server.getLocalPort())))
+            }
+            else
+            {
+                if (!FTPReply.isPositiveCompletion(port(getHostAddress(), server.getLocalPort())))
                 {
                     server.close();
                     return null;
@@ -552,15 +563,27 @@ implements Configurable
         else
         { // We must be in PASSIVE_LOCAL_DATA_CONNECTION_MODE
 
-            // If we are over an IPv6 connection, try EPSV
-            if (getRemoteAddress() instanceof Inet6Address) {
-                if (epsv() != FTPReply.ENTERING_EPSV_MODE)
-                    return null;
+            // Try EPSV command first on IPv6 - and IPv4 if enabled.
+            // When using IPv4 with NAT it has the advantage
+            // to work with more rare configurations.
+            // E.g. if FTP server has a static PASV address (external network)
+            // and the client is coming from another internal network.
+            // In that case the data connection after PASV command would fail,
+            // while EPSV would make the client succeed by taking just the port.
+            boolean attemptEPSV = isUseEPSVwithIPv4() || isInet6Address;
+            if (attemptEPSV && epsv() == FTPReply.ENTERING_EPSV_MODE)
+            {
                 __parseExtendedPassiveModeReply(_replyLines.get(0));
             }
-            else {
-                if (pasv() != FTPReply.ENTERING_PASSIVE_MODE)
+            else
+            {
+                if (isInet6Address) {
+                    return null; // Must use EPSV for IPV6
+                }
+                // If EPSV failed on IPV4, revert to PASV
+                if (pasv() != FTPReply.ENTERING_PASSIVE_MODE) {
                     return null;
+                }
                 __parsePassiveModeReply(_replyLines.get(0));
             }
 
@@ -2620,6 +2643,34 @@ implements Configurable
     public boolean getListHiddenFiles() {
         return this.__listHiddenFiles;
     }
+
+    /**
+     * Whether should attempt to use EPSV with IPv4.
+     * Default (if not set) is <code>false</code>
+     * @return true if should attempt EPS
+     */
+    public boolean isUseEPSVwithIPv4() {
+        return __useEPSVwithIPv4;
+    }
+
+
+    /**
+     * Set whether to use EPSV with IPv4.
+     * Might be worth enabling in some circumstances.
+     * 
+     * For example, when using IPv4 with NAT it
+     * may work with some rare configurations.
+     * E.g. if FTP server has a static PASV address (external network)
+     * and the client is coming from another internal network.
+     * In that case the data connection after PASV command would fail,
+     * while EPSV would make the client succeed by taking just the port.
+     * 
+     * @param selected value to set.
+     */
+    public void setUseEPSVwithIPv4(boolean selected) {
+        this.__useEPSVwithIPv4 = selected;
+    }
+
 }
 
 /* Emacs configuration
