@@ -1013,8 +1013,10 @@ implements Configurable
      */
     private int getActivePort()
     {
-        if (__activeMinPort > 0 && __activeMaxPort > __activeMinPort)
+        if (__activeMinPort > 0 && __activeMaxPort >= __activeMinPort)
         {
+            if (__activeMaxPort == __activeMinPort)
+                return __activeMaxPort;
             // Get a random port between the min and max port range
             return __random.nextInt(__activeMaxPort - __activeMinPort + 1) + __activeMinPort;
         }
