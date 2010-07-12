@@ -61,6 +61,15 @@ This is primarily a maintenance release, but it also includes new features and e
  
   TO BE COMPLETED
 ">
+            <action issue="NET-244" dev="sebb" type="add">
+            Add support for FTPFileFilter filters. New classes FTPFileFilter, FTPFileFilters, new methods:
+            FTPListParseEngine#getFiles(FTPFileFilter filter)
+            FTPClient.listFiles(String pathname, FTPFileFilter filter)
+            </action>
+            <action issue="NET-313" dev="sebb" type="fix">
+            Optionally enable EPSV with IPv4; Only send EPRT with IPv6.
+            Fix incorrect port used with EPRT. Allow activeMaxPort == activeMinPort in getActivePort() method.
+            </action>
             <action issue="NET-328" dev="sebb" type="fix">
             FromNetASCIIInputStream.read(byte[], int, int) may change length passed to superclass if not doing conversion
             </action>
