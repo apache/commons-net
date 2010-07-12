@@ -270,7 +270,7 @@ implements Configurable
     private int __dataConnectionMode, __dataTimeout;
     private int __passivePort;
     private String __passiveHost;
-    private Random __random;
+    private final Random __random;
     private int __activeMinPort, __activeMaxPort;
     private InetAddress __activeExternalHost;
     private int __fileType, __fileFormat, __fileStructure, __fileTransferMode;
@@ -1378,6 +1378,8 @@ implements Configurable
      * If the current file type is ASCII, line separators in the file are
      * converted to the local representation.
      * <p>
+     * Note: if you have used {@link #setRestartOffset(long)}, 
+     * the file data will start from the selected offset.
      * @param remote  The name of the remote file.
      * @param local   The local OutputStream to which to write the file.
      * @return True if successfully completed, false if not.
@@ -1439,6 +1441,9 @@ implements Configurable
      * {@link #completePendingCommand  completePendingCommand } and
      * check its return value to verify success.
      * <p>
+     * Note: if you have used {@link #setRestartOffset(long)}, 
+     * the file data will start from the selected offset.
+     *  
      * @param remote  The name of the remote file.
      * @return An InputStream from which the remote file can be read.  If
      *      the data connection cannot be opened (e.g., the file does not
