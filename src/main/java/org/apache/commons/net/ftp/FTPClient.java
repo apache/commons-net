@@ -2271,6 +2271,22 @@ implements Configurable
     }
 
     /**
+     * Version of {@link #listFiles(String)} which allows a filter to be provided.
+     * For example: <code>listFiles("site", FTPFileFilters.DIRECTORY);</code>
+     * @param pathname the initial path, may be null
+     * @param filter the filter, non-null
+     * @return the list of FTPFile entries.
+     * @throws IOException
+     */
+    public FTPFile[] listFiles(String pathname, FTPFileFilter filter)
+    throws IOException
+    {
+        FTPListParseEngine engine = initiateListParsing((String) null, pathname);
+        return engine.getFiles(filter);
+
+    }
+
+    /**
      * Using the default autodetect mechanism, initialize an FTPListParseEngine
      * object containing a raw file information for the current working
      * directory on the server
