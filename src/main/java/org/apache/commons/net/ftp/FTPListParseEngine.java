@@ -21,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -247,14 +248,40 @@ public class FTPListParseEngine {
     public FTPFile[] getFiles()
     throws IOException
     {
-        List<FTPFile> tmpResults = new LinkedList<FTPFile>();
+        return getFiles(FTPFileFilters.ALL);
+    }
+
+    /**
+     * Returns an array of FTPFile objects containing the whole list of
+     * files returned by the server as read by this object's parser.
+     * The files are filtered before being added to the array.
+     * 
+     * @param filter FTPFileFilter, must not be <code>null</code>.
+     * 
+     * @return an array of FTPFile objects containing the whole list of
+     *         files returned by the server as read by this object's parser.
+     * <p><b> 
+     * NOTE:</b> This array may contain null members if any of the 
+     * individual file listings failed to parse.  The caller should 
+     * check each entry for null before referencing it, or use the
+     * a filter such as {@link FTPFileFilters#NON_NULL} which does not 
+     * allow null entries.
+     * 
+     * @exception IOException
+     */
+    public FTPFile[] getFiles(FTPFileFilter filter)
+    throws IOException
+    {
+        List<FTPFile> tmpResults = new ArrayList<FTPFile>();
         Iterator<String> iter = this.entries.iterator();
         while (iter.hasNext()) {
             String entry = iter.next();
             FTPFile temp = this.parser.parseFTPEntry(entry);
-            tmpResults.add(temp);
+            if (filter.accept(temp)){
+                tmpResults.add(temp);
+            }
         }
-        return tmpResults.toArray(new FTPFile[0]);
+        return tmpResults.toArray(new FTPFile[tmpResults.size()]);
 
     }
 
