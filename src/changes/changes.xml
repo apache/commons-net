@@ -52,10 +52,10 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
     <body>
-        <release version="2.1" date="" description="
+        <release version="2.2" date="" description="
 This is primarily a maintenance release, but it also includes new features and enhancements.
 
-  Users of version 2.0 are encouraged to upgrade to 2.1, as this release includes some important bug fixes.
+  Users of version 2.0 are encouraged to upgrade to 2.2, as this release includes some important bug fixes.
 
   See the detailed list of changes below for full description of all bug fixes and enhancements.
  
