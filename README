@@ -1,15 +1,13 @@
+
 o Building
 
-To build, you must have Maven installed.
+To build, you must have Maven 2 installed. Maven can be downloaded from 
 
-Maven can be downloaded from http://maven.apache.org/
+http://maven.apache.org/.
 
-There is documentation on the targets for building at:
-
-http://commons.apache.org/building.html
 
 o Documentation
 
 You can build the documentation with:
 
-maven site
+mvn site
