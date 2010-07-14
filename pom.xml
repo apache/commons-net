@@ -55,9 +55,9 @@ limitations under the License.
 	</issueManagement>
 	<inceptionYear>1997</inceptionYear>
 	<scm>
-		<connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/net/trunk/</connection>
-		<developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/net/trunk/</developerConnection>
-		<url>http://svn.apache.org/viewvc/commons/proper/net/trunk/</url>
+		<connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/net/branches/NET_1_X/</connection>
+		<developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/net/branches/NET_1_X/</developerConnection>
+		<url>http://svn.apache.org/viewvc/commons/proper/net/branches/NET_1_X/</url>
 	</scm>
 
 	<developers>
