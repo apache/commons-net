@@ -118,7 +118,12 @@ public class TFTPTest extends TestCase
         // test with the smaller files
         for (int i = 0; i < 6; i++)
         {
-            testDownload(TFTP.ASCII_MODE, files[i]);
+            try {
+                testDownload(TFTP.ASCII_MODE, files[i]);
+            } catch (IOException e) {
+                fail("Entry "+i+" Error "+e.toString());
+            }
+            
         }
     }
 
