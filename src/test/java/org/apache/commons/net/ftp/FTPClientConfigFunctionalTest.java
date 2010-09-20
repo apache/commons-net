@@ -95,13 +95,11 @@ public class FTPClientConfigFunctionalTest extends TestCase {
     public FTPClientConfigFunctionalTest(String arg0) {
         super(arg0);
     }
-
     
-    @SuppressWarnings("unchecked")
     private TreeSet<FTPFile> getSortedList(FTPFile[] files) {
         // create a TreeSet which will sort each element
         // as it is added.
-        TreeSet<FTPFile> sorted = new TreeSet<FTPFile>(new Comparator() {
+        TreeSet<FTPFile> sorted = new TreeSet<FTPFile>(new Comparator<Object>() {
 
             public int compare(Object o1, Object o2) {
                 FTPFile f1 = (FTPFile) o1;
