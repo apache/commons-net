@@ -61,6 +61,11 @@ This is primarily a maintenance release, but it also includes new features and e
  
   TO BE COMPLETED
 ">
+            <action issue="NET-338" dev="sebb" type="add">
+            ftp.FTPClient.initiateListParsing(String parserKey, String pathname) 
+            can call createFileEntryParser with null systemName. 
+            Fix this by adding getSystemType() which does not return null, and deprecating getSystemName().
+            </action>
             <action issue="NET-244" dev="sebb" type="add">
             Add support for FTPFileFilter filters. New classes FTPFileFilter, FTPFileFilters, new methods:
             FTPListParseEngine#getFiles(FTPFileFilter filter)

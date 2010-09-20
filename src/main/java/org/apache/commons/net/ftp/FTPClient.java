@@ -2024,7 +2024,9 @@ implements Configurable
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
      *  command to the server or receiving a reply from the server.
+     *  @deprecated Use {@link #getSystemType()} - which does not return null
      ***/
+    @Deprecated
     public String getSystemName() throws IOException
     {
         //if (syst() == FTPReply.NAME_SYSTEM_TYPE)
@@ -2034,6 +2036,41 @@ implements Configurable
         if (__systemName == null && FTPReply.isPositiveCompletion(syst()))
             __systemName = _replyLines.get(_replyLines.size() - 1).substring(4);
 
+        return __systemName;
+    }
+
+
+    /***
+     * Fetches the system type from the server and returns the string.
+     * This value is cached for the duration of the connection after the
+     * first call to this method.  In other words, only the first time
+     * that you invoke this method will it issue a SYST command to the
+     * FTP server.  FTPClient will remember the value and return the
+     * cached value until a call to disconnect.
+     * <p>
+     * @return The system type obtained from the server. Never null.
+     * @exception FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending a
+     *  command to the server or receiving a reply from the server.
+     ***/
+    public String getSystemType() throws IOException
+    {
+        //if (syst() == FTPReply.NAME_SYSTEM_TYPE)
+        // Technically, we should expect a NAME_SYSTEM_TYPE response, but
+        // in practice FTP servers deviate, so we soften the condition to
+        // a positive completion.
+        if (__systemName == null){
+            if (FTPReply.isPositiveCompletion(syst())) {
+                // Assume that response is not empty here (cannot be null)
+                __systemName = _replyLines.get(_replyLines.size() - 1).substring(4);
+            } else {
+                throw new IOException("Unable to determine system type - response: " + getReplyString());
+            }
+        }
         return __systemName;
     }
 
@@ -2463,10 +2500,10 @@ implements Configurable
                     // if a parserKey hasn't been supplied, and a configuration
                     // hasn't been supplied, then autodetect by calling
                     // the SYST command and use that to choose the parser.
-                    final String systemName = getSystemName();
+                    final String systemType = getSystemType(); // cannot be null
                     __entryParser =
-                        __parserFactory.createFileEntryParser(systemName);
-                    __entryParserKey = systemName;
+                        __parserFactory.createFileEntryParser(systemType);
+                    __entryParserKey = systemType;
                 }
             }
         }
