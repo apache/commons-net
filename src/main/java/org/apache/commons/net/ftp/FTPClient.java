@@ -273,7 +273,9 @@ implements Configurable
     private final Random __random;
     private int __activeMinPort, __activeMaxPort;
     private InetAddress __activeExternalHost;
-    private int __fileType, __fileFormat, __fileStructure, __fileTransferMode;
+    private int __fileType;
+    @SuppressWarnings("unused") // fields are written, but currently not read
+    private int __fileFormat, __fileStructure, __fileTransferMode;
     private boolean __remoteVerificationEnabled;
     private long __restartOffset;
     private FTPFileEntryParserFactory __parserFactory;
