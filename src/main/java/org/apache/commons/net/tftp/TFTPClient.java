@@ -184,7 +184,7 @@ _receivePacket:
                 }
 
                 // The first time we receive we get the port number and
-        // answering host address (for hosts with multiple IPs)
+                // answering host address (for hosts with multiple IPs)
                 if (lastBlock == 0)
                 {
                     hostPort = received.getPort();
