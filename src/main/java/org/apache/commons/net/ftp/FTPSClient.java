@@ -96,6 +96,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Constructor for FTPSClient.
+     * Sets security mode to explicit (isImplicit = false)
      * @throws NoSuchAlgorithmException A requested cryptographic algorithm
      * is not available in the environment.
      */
@@ -106,7 +107,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Constructor for FTPSClient.
-     * @param isImplicit The secutiry mode(Implicit/Explicit).
+     * @param isImplicit The security mode (Implicit/Explicit).
      * @throws NoSuchAlgorithmException A requested cryptographic algorithm
      * is not available in the environment.
      */
@@ -129,7 +130,7 @@ public class FTPSClient extends FTPClient {
     /**
      * Constructor for FTPSClient.
      * @param protocol the protocol
-     * @param isImplicit The secutiry mode(Implicit/Explicit).
+     * @param isImplicit The security mode(Implicit/Explicit).
      * @throws NoSuchAlgorithmException A requested cryptographic algorithm
      * is not available in the environment.
      */
@@ -141,7 +142,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Constructor for FTPSClient.
-     * @param isImplicit The secutiry mode(Implicit/Explicit).
+     * @param isImplicit The security mode(Implicit/Explicit).
      * @param context A pre-configured SSL Context
      */
     public FTPSClient(boolean isImplicit, SSLContext context) {
