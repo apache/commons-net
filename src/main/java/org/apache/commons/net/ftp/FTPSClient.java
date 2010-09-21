@@ -62,12 +62,12 @@ public class FTPSClient extends FTPClient {
     private static final String[] PROT_COMMAND_VALUE = {"C","E","S","P"};
     /** Default PROT Command */
     private static final String DEFAULT_PROT = "C";
-    /** Default protocol name */
+    /** Default secure socket protocol name, i.e. TLS */
     private static final String DEFAULT_PROTOCOL = "TLS";
 
     /** The security mode. (True - Implicit Mode / False - Explicit Mode) */
     private final boolean isImplicit;
-    /** The use SSL/TLS protocol. */
+    /** The secure socket protocol to be used, e.g. SSL/TLS. */
     private final String protocol;
     /** The AUTH Command value */
     private String auth = DEFAULT_PROTOCOL;
