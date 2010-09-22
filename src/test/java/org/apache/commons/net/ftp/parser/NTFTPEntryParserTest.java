@@ -144,10 +144,16 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
             assertNotNull("Could not parse entry", file);
             assertEquals("10 years and under", file.getName());
             assertEquals(5000000000L, file.getSize());
+            Calendar timestamp = file.getTimestamp();
+            assertNotNull("Could not parse time",timestamp);
+            assertEquals("Thu May 22 00:08:00 1997",df.format(timestamp.getTime()));
             
-            FTPFile dir = getParser().parseFTPEntry("12-03-96  06:38AM       <DIR>           10 years and under");
+            FTPFile dir = getParser().parseFTPEntry("12-03-96  06:38PM       <DIR>           10 years and under");
             assertNotNull("Could not parse entry", dir);
             assertEquals("10 years and under", dir.getName());
+            timestamp = dir.getTimestamp();
+            assertNotNull("Could not parse time",timestamp);
+            assertEquals("Tue Dec 03 18:38:00 1996",df.format(timestamp.getTime()));
     }
 
     /**
