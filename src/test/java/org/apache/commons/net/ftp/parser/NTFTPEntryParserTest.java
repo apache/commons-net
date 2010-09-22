@@ -55,8 +55,8 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         {
             { // DOS-style tests
                 "20-05-97  03:31PM                  681 .bash_history",
-                "12-05-96  17:03         <DIR>          absoft2",
-                "05-22-97  08:08                    828 AUTOEXEC.BAK",
+                "12-05-96  17:03         <DIR>          absoft2", // TODO will be valid if NET-339 is fixed
+                "05-22-97  08:08                    828 AUTOEXEC.BAK",// TODO will be valid if NET-339 is fixed
                 "     0           DIR   05-19-97   12:56  local",
                 "     0           DIR   05-12-97   16:52  Maintenance Desktop",
             },
@@ -149,6 +149,23 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
             assertNotNull("Could not parse time",timestamp);
             assertEquals("Tue Dec 03 18:38:00 1996",df.format(timestamp.getTime()));
     }
+
+    public void TODOtestNET339() { // TODO enable when NET-339 is fixed
+        FTPFile file = getParser().parseFTPEntry("05-22-97  12:08                  5000000000 10 years and under");
+        assertNotNull("Could not parse entry", file);
+        assertEquals("10 years and under", file.getName());
+        assertEquals(5000000000L, file.getSize());
+        Calendar timestamp = file.getTimestamp();
+        assertNotNull("Could not parse time",timestamp);
+        assertEquals("Thu May 22 00:08:00 1997",df.format(timestamp.getTime()));
+        
+        FTPFile dir = getParser().parseFTPEntry("12-03-96  06:38       <DIR>           10 years and under");
+        assertNotNull("Could not parse entry", dir);
+        assertEquals("10 years and under", dir.getName());
+        timestamp = dir.getTimestamp();
+        assertNotNull("Could not parse time",timestamp);
+        assertEquals("Tue Dec 03 18:38:00 1996",df.format(timestamp.getTime()));
+}
 
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
