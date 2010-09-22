@@ -29,7 +29,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
 {
 
     private static final String [][] goodsamples = {
-    {
+    { // DOS-style tests
             "05-26-95  10:57AM               143712 $LDR$",
             "05-20-97  03:31PM                  681 .bash_history",
             "12-05-96  05:03PM       <DIR>          absoft2",
@@ -42,7 +42,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
             "01-20-97  03:48PM       <DIR>          bin",
             "05-26-1995  10:57AM               143712 $LDR$",
     },
-    {
+    { // Unix-style tests
             "-rw-r--r--   1 root     root       111325 Apr 27  2001 zxJDBC-2.0.1b1.tar.gz",
             "-rw-r--r--   1 root     root       190144 Apr 27  2001 zxJDBC-2.0.1b1.zip",
             "-rwxr-xr-x   2 500      500           166 Nov  2  2001 73131-testtes1.afp",
@@ -53,21 +53,15 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
 
     private static final String[][] badsamples =
         {
-            {
+            { // DOS-style tests
                 "20-05-97  03:31PM                  681 .bash_history",
-                "drwxr-xr-x   2 root     99           4096 Feb 23 30:01 zzplayer",
                 "12-05-96  17:03         <DIR>          absoft2",
                 "05-22-97  08:08                    828 AUTOEXEC.BAK",
                 "     0           DIR   05-19-97   12:56  local",
                 "     0           DIR   05-12-97   16:52  Maintenance Desktop",
             },
-            {
-                "20-05-97  03:31PM                  681 .bash_history",
+            { // Unix-style tests
                 "drwxr-xr-x   2 root     99           4096Feb 23 30:01 zzplayer",
-                "12-05-96  17:03         <DIR>          absoft2",
-                "05-22-97  08:08                    828 AUTOEXEC.BAK",
-                "     0           DIR   05-19-97   12:56  local",
-                "     0           DIR   05-12-97   16:52  Maintenance Desktop",
             }
             };
 
