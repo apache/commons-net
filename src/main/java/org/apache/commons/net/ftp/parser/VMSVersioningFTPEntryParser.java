@@ -94,17 +94,6 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
 
    }
 
-
-
-    private static class NameVersion {
-        final String name;
-        final int versionNumber;
-        NameVersion(String name, String vers) {
-            this.name = name;
-            this.versionNumber = Integer.parseInt(vers);
-        }
-    }
-
     /**
      * Implement hook provided for those implementers (such as
      * VMSVersioningFTPEntryParser, and possibly others) which return
@@ -117,7 +106,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
     @Override
     public List<String> preParse(List<String> original) {
         original = super.preParse(original);
-        HashMap<String, NameVersion> existingEntries = new HashMap<String, NameVersion>();
+        HashMap<String, Integer> existingEntries = new HashMap<String, Integer>();
         ListIterator<String> iter = original.listIterator();
         while (iter.hasNext()) {
             String entry = iter.next().trim();
@@ -127,11 +116,11 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
                 result = _preparse_matcher_.toMatchResult();
                 String name = result.group(1);
                 String version = result.group(2);
-                NameVersion nv = new NameVersion(name, version);
-                NameVersion existing = existingEntries.get(name);
+                Integer nv = Integer.valueOf(version);
+                Integer existing = existingEntries.get(name);
                 if (null != existing) {
-                    if (nv.versionNumber < existing.versionNumber) {
-                        iter.remove();  // removal removes from original list.
+                    if (nv.intValue() < existing.intValue()) {
+                        iter.remove();  // removes older version from original list.
                         continue;
                     }
                 }
@@ -151,11 +140,11 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
                 result = _preparse_matcher_.toMatchResult();
                 String name = result.group(1);
                 String version = result.group(2);
-                NameVersion nv = new NameVersion(name, version);
-                NameVersion existing = existingEntries.get(name);
+                Integer nv = Integer.valueOf(version);
+                Integer existing = existingEntries.get(name);
                 if (null != existing) {
-                    if (nv.versionNumber < existing.versionNumber) {
-                        iter.remove(); // removal removes from original list.
+                    if (nv.intValue() < existing.intValue()) {
+                        iter.remove(); // removes older version from original list.
                     }
                 }
             }
