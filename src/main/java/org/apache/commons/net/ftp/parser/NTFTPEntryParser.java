@@ -40,9 +40,9 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * this is the regular expression used by this parser.
      */
     private static final String REGEX =
-        "(\\S+)\\s+(\\S+)\\s+"
-        + "(?:(<DIR>)|([0-9]+))\\s+"
-        + "(\\S.*)";
+        "(\\S+)\\s+(\\S+)\\s+"          // MM-dd-yy whitespace hh:mma|kk:mm; swallow trailing spaces
+        + "(?:(<DIR>)|([0-9]+))\\s+"    // <DIR> or ddddd; swallow trailing spaces
+        + "(\\S.*)";                    // First non-space followed by rest of line (name)
 
     /**
      * The sole constructor for an NTFTPEntryParser object.
