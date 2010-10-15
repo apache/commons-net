@@ -41,6 +41,18 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
             "12-03-96  06:38AM       <DIR>          123xyz",
             "01-20-97  03:48PM       <DIR>          bin",
             "05-26-1995  10:57AM               143712 $LDR$",
+            // 24hr clock as used on Windows_CE
+            "12-05-96  17:03         <DIR>          absoft2",
+            "05-22-97  08:08                    828 AUTOEXEC.BAK",            
+            "01-01-98  05:00       <DIR>          Network",
+            "01-01-98  05:00       <DIR>          StorageCard",
+            "09-13-10  20:08       <DIR>          Recycled",
+            "09-06-06  19:00                   69 desktop.ini",
+            "09-13-10  13:08                   23 Control Panel.lnk",
+            "09-13-10  13:08       <DIR>          My Documents",
+            "09-13-10  13:08       <DIR>          Program Files",
+            "09-13-10  13:08       <DIR>          Temp",
+            "09-13-10  13:08       <DIR>          Windows",
     },
     { // Unix-style tests
             "-rw-r--r--   1 root     root       111325 Apr 27  2001 zxJDBC-2.0.1b1.tar.gz",
@@ -55,8 +67,6 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         {
             { // DOS-style tests
                 "20-05-97  03:31PM                  681 .bash_history",
-                "12-05-96  17:03         <DIR>          absoft2", // TODO will be valid if NET-339 is fixed
-                "05-22-97  08:08                    828 AUTOEXEC.BAK",// TODO will be valid if NET-339 is fixed
                 "     0           DIR   05-19-97   12:56  local",
                 "     0           DIR   05-12-97   16:52  Maintenance Desktop",
             },
@@ -150,21 +160,21 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
             assertEquals("Tue Dec 03 18:38:00 1996",df.format(timestamp.getTime()));
     }
 
-    public void TODOtestNET339() { // TODO enable when NET-339 is fixed
+    public void testNET339() { // TODO enable when NET-339 is fixed
         FTPFile file = getParser().parseFTPEntry("05-22-97  12:08                  5000000000 10 years and under");
         assertNotNull("Could not parse entry", file);
         assertEquals("10 years and under", file.getName());
         assertEquals(5000000000L, file.getSize());
         Calendar timestamp = file.getTimestamp();
         assertNotNull("Could not parse time",timestamp);
-        assertEquals("Thu May 22 00:08:00 1997",df.format(timestamp.getTime()));
+        assertEquals("Thu May 22 12:08:00 1997",df.format(timestamp.getTime()));
         
         FTPFile dir = getParser().parseFTPEntry("12-03-96  06:38       <DIR>           10 years and under");
         assertNotNull("Could not parse entry", dir);
         assertEquals("10 years and under", dir.getName());
         timestamp = dir.getTimestamp();
         assertNotNull("Could not parse time",timestamp);
-        assertEquals("Tue Dec 03 18:38:00 1996",df.format(timestamp.getTime()));
+        assertEquals("Tue Dec 03 06:38:00 1996",df.format(timestamp.getTime()));
 }
 
     /**

@@ -18,6 +18,7 @@
 package org.apache.commons.net.ftp.parser;
 import java.text.ParseException;
 
+import org.apache.commons.net.ftp.Configurable;
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 
@@ -35,6 +36,10 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     private static final String DEFAULT_DATE_FORMAT 
         = "MM-dd-yy hh:mma"; //11-09-01 12:30PM
 
+    private static final String DEFAULT_DATE_FORMAT2
+        = "MM-dd-yy kk:mm"; //11-09-01 18:30
+
+    private FTPTimestampParser timestampParser;
 
     /**
      * this is the regular expression used by this parser.
@@ -73,6 +78,13 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     {
         super(REGEX);
         configure(config);
+        FTPClientConfig config2 = new FTPClientConfig(
+                FTPClientConfig.SYST_NT,
+                DEFAULT_DATE_FORMAT2,
+                null, null, null, null);
+        config2.setDefaultDateFormatStr(DEFAULT_DATE_FORMAT2);
+        this.timestampParser = new FTPTimestampParserImpl();
+        ((Configurable)this.timestampParser).configure(config2);
     }
 
     /**
@@ -102,7 +114,15 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             }
             catch (ParseException e)
             {
-                // intentionally do nothing
+                // parsing fails, try the other date format
+                try
+                {
+                    f.setTimestamp(timestampParser.parseTimestamp(datestr));
+                }
+                catch (ParseException e2)
+                {
+                    // intentionally do nothing
+                }
             }
 
             if (null == name || name.equals(".") || name.equals(".."))
