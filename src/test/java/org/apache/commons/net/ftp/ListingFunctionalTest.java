@@ -337,7 +337,9 @@ public class ListingFunctionalTest extends TestCase
     public void testListNamesWithPath()
         throws IOException
     {
-        List<String> names = Arrays.asList(client.listNames(validPath));
+        String[] listNames = client.listNames(validPath);
+        assertNotNull("listNames not null", listNames);
+        List<String> names = Arrays.asList(listNames);
 
         assertTrue(names.toString(),
                    findByName(names, validFilename));
