@@ -48,6 +48,8 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
             fail("Exception should have been thrown. \"NT\" is not a recognized key");
         } catch (ParserInitializationException pie) {
             assertNull(pie.getRootCause());
+            assertTrue(pie.getMessage()+ "should contain 'Unknown parser type:'",
+                    pie.getMessage().contains("Unknown parser type:"));
         }
 
         parser = factory.createFileEntryParser("WindowsNT");
