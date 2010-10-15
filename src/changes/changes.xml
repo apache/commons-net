@@ -61,6 +61,9 @@ This is primarily a maintenance release, but it also includes new features and e
  
   TO BE COMPLETED
 ">
+            <action issue="NET-334" dev="sebb" type="fix">
+            FromNetASCIIInputStream can throw a NullPointerException
+            </action>
             <action issue="NET-341" dev="sebb" type="fix">
             FTPClient.remoteAppend(String filename) uses STOR instead of APPE
             </action>

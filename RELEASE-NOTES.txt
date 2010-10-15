@@ -23,6 +23,7 @@ o NET-263:  SubnetUtils / SubNetInfo toString() implementations
 o Javadoc fixes, improvements, and refactoring. 
 
 Fixed Bugs:
+o NET-334:  FromNetASCIIInputStream can throw a NullPointerException 
 o NET-341:  FTPClient.remoteAppend(String filename) uses STOR instead of APPE 
 o NET-339:  Incorrect parsing of timestamp on Windows CE
             Fix parsing to allow for new-style DOS listing using 24hr clock rather than AM/PM 
