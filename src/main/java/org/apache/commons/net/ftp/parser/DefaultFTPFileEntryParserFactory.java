@@ -86,7 +86,13 @@ public class DefaultFTPFileEntryParserFactory
         try
         {
             parserClass = Class.forName(key);
-            parser = (FTPFileEntryParser) parserClass.newInstance();
+            try {
+                parser = (FTPFileEntryParser) parserClass.newInstance();
+            } catch (ClassCastException e) {
+                throw new ParserInitializationException(parserClass.getName()
+                    + " does not implement the interface "
+                    + "org.apache.commons.net.ftp.FTPFileEntryParser.", e);
+            }
         }
         catch (ClassNotFoundException e)
         {
@@ -141,12 +147,6 @@ public class DefaultFTPFileEntryParserFactory
         catch (NoClassDefFoundError e)
         {
             throw new ParserInitializationException("Error initializing parser", e);
-        }
-        catch (ClassCastException e)
-        {
-            throw new ParserInitializationException(parserClass.getName()
-                + " does not implement the interface "
-                + "org.apache.commons.net.ftp.FTPFileEntryParser.", e);
         }
         catch (Throwable e)
         {
