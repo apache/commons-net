@@ -1353,7 +1353,7 @@ implements Configurable
     {
         if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
                 __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE)
-            return FTPReply.isPositivePreliminary(stor(filename));
+            return FTPReply.isPositivePreliminary(appe(filename));
         return false;
     }
 

@@ -61,6 +61,13 @@ This is primarily a maintenance release, but it also includes new features and e
  
   TO BE COMPLETED
 ">
+            <action issue="NET-341" dev="sebb" type="fix">
+            FTPClient.remoteAppend(String filename) uses STOR instead of APPE
+            </action>
+            <action issue="NET-339" dev="sebb" type="fix">
+            Incorrect parsing of timestamp on Windows CE
+            Fix parsing to allow for new-style DOS listing using 24hr clock rather than AM/PM
+            </action>
             <action issue="NET-338" dev="sebb" type="add">
             ftp.FTPClient.initiateListParsing(String parserKey, String pathname) 
             can call createFileEntryParser with null systemName. 
