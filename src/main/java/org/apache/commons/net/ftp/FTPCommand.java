@@ -76,6 +76,8 @@ public final class FTPCommand
     /** @since 2.2 */
     public static final int EPRT = 37;
 
+    // Must agree with final entry above; used to check array size
+    private static final int LAST = EPRT;
     
     public static final int USERNAME = USER;
     public static final int PASSWORD = PASS;
@@ -131,6 +133,17 @@ public final class FTPCommand
                                           "REST", "RNFR", "RNTO", "ABOR", "DELE", "RMD", "MKD", "PWD", "LIST",
                                           "NLST", "SITE", "SYST", "STAT", "HELP", "NOOP", "MDTM", "FEAT", "MFMT",
                                           "EPSV", "EPRT" };
+
+    
+    
+    // default access needed for Unit test
+    static void checkArray(){
+        int expectedLength = LAST+1;
+        if (_commands.length != expectedLength) {
+            throw new RuntimeException("Incorrect _commands array. Should have length "
+                    +expectedLength+" found "+_commands.length);
+        }
+    }
 
     /**
      * Retrieve the FTP protocol command string corresponding to a specified
