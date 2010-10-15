@@ -626,7 +626,7 @@ public abstract class SocketClient
     /**
      * Get the underlying {@link ServerSocketFactory}
      * @return The server socket factory
-     * @since 2.1
+     * @since 2.2
      */
     public ServerSocketFactory getServerSocketFactory() {
         return _serverSocketFactory_;

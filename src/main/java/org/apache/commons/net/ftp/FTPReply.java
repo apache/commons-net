@@ -127,7 +127,7 @@ public final class FTPReply
     public static final int CODE_335 = 335;
     /** @since 2.0 */
     public static final int CODE_431 = 431;
-    /** @since 2.1 */
+    /** @since 2.2 */
     public static final int CODE_522 = 522;
     /** @since 2.0 */
     public static final int CODE_533 = 533;
@@ -148,7 +148,7 @@ public final class FTPReply
     public static final int SECURITY_DATA_IS_ACCEPTABLE = CODE_335;
     /** @since 2.0 */
     public static final int UNAVAILABLE_RESOURCE = CODE_431;
-    /** @since 2.1 */
+    /** @since 2.2 */
     public static final int BAD_TLS_NEGOTIATION_OR_DATA_ENCRYPTION_REQUIRED = CODE_522;
     /** @since 2.0 */
     public static final int DENIED_FOR_POLICY_REASONS = CODE_533;
