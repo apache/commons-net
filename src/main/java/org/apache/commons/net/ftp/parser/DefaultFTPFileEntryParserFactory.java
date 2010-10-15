@@ -139,6 +139,7 @@ public class DefaultFTPFileEntryParserFactory
                     throw new ParserInitializationException("Unknown parser type: " + key);
                 }
             }
+            // TODO can this happen?
             catch (NoClassDefFoundError nf) {
                     throw new ParserInitializationException("Error initializing parser", nf);
             }
