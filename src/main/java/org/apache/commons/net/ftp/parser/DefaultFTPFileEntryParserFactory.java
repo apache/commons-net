@@ -148,6 +148,10 @@ public class DefaultFTPFileEntryParserFactory
         {
             throw new ParserInitializationException("Error initializing parser", e);
         }
+        catch (ParserInitializationException e) // Don't rewrap exception
+        {
+            throw e;
+        }
         catch (Throwable e)
         {
             throw new ParserInitializationException("Error initializing parser", e);
