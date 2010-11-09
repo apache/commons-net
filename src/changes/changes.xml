@@ -92,7 +92,7 @@ This is primarily a maintenance release, but it also includes new features and e
             </action>
             <action issue="NET-330" dev="sebb" type="fix">
             The method VMSFTPEntryParser.parseFileList(InputStream listStream) should not be present.
-            Mark method as deprecated and to be removed
+            Partial fix - marked method as deprecated and to be removed
             </action>
             <action issue="NET-180" dev="sebb" type="fix">
             Telnet EOR is "consumed" by TelnetInputStream when in BINARY transmission.
@@ -107,6 +107,12 @@ This is primarily a maintenance release, but it also includes new features and e
             <action issue="NET-302" dev="sebb" type="fix">
                 FTP: initiateListParsing should not cache entryParser
             </action>
+            <action issue="NET-282" dev="rwinston" type="fix">
+                Improvement to isInRange method in SubnetUtil.SubnetInfo class
+            </action>
+            <action issue="NET-266" dev="rwinston" type="fix">
+                FTPClient.listFiles() corrupts file name in certain circumstances
+            </action>
             <action issue="NET-264" dev="sebb" type="fix">
                 Telnet spyStream NullPointerException
             </action>
@@ -117,64 +123,64 @@ This is primarily a maintenance release, but it also includes new features and e
             <action dev="niallp" type="fix">
                 Fix site reports
             </action>
-            <action dev="rwinston" type="fix" issue="NET-285">
+            <action issue="NET-285" dev="rwinston" type="fix">
                 Add support for setting external host ip/port range
             </action>
-            <action dev="rwinston" type="fix" issue="NET-290">
+            <action issue="NET-290" dev="rwinston" type="fix">
                 Add fix and testcase for DotTerminatedMessageReader
             </action>
-            <action dev="rwinston" type="fix" issue="NET-288">
+            <action issue="NET-288" dev="rwinston" type="fix">
                 Add support for IPv6 EPRT/EPSV
             </action>
-            <action dev="rwinston" type="fix" issue="NET-305">
+            <action issue="NET-305" dev="rwinston" type="fix">
                 Fix SubnetUtils for /32 subnets and add inclusive host count flag
             </action>
-            <action dev="rwinston" type="fix" issue="NET-300">
+            <action issue="NET-300" dev="rwinston" type="fix">
                 Fix NPE when listHiddenFiles was on
             </action>
-            <action dev="rwinston" type="fix" issue="NET-215">
+            <action issue="NET-215" dev="rwinston" type="fix">
                 UNIXFTPEntryParser didn't preserve trailing whitespace in files
             </action>
-            <action dev="rwinston" type="fix" issue="NET-236">
+            <action issue="NET-236" dev="rwinston" type="fix">
                 method SubnetUtils.SubnetInfo.isInRange(addr) returns incorrect result
             </action>
-            <action dev="rwinston" type="fix" issue="NET-242">
+            <action issue="NET-242" dev="rwinston" type="fix">
                 Method createServerSocket of FTPSSocketFactory never called and thus UseClientMode is incorrect in a secured ftp transfer using active mode.
             </action>
-            <action dev="rwinston" type="fix" issue="NET-248">
+            <action issue="NET-248" dev="rwinston" type="fix">
                 Fix inconsistent command list in FTPCommand
             </action>
-            <action dev="rwinston" type="fix" issue="NET-250">
+            <action issue="NET-250" dev="rwinston" type="fix">
                 DefaultFTPFileEntryParserFactory did not work with Netware FTP server returning "NETWARE TYPE: L8"
             </action>
-            <action dev="rwinston" type="fix" issue="NET-257">
+            <action issue="NET-257" dev="rwinston" type="fix">
                 FTP.getReplyStrings() returned array of null Strings
             </action>
-            <action dev="rwinston" type="fix" issue="NET-259">
+            <action issue="NET-259" dev="rwinston" type="fix">
                 UnixFTPEntryParser regex did not match some directory entries
             </action>
-            <action dev="rwinston" type="fix" issue="NET-260">
+            <action issue="NET-260" dev="rwinston" type="fix">
                 SubnetUtils.SubnetInfo.isInRange(...) returned incorrect values
             </action>
-            <action dev="rwinston" type="update" issue="NET-261">
+            <action issue="NET-261" dev="rwinston" type="update">
                 SubnetUtils.SubnetInfo.isInRange(...) behaviour not documented
             </action>
-            <action dev="rwinston" type="fix" issue="NET-262">
+            <action issue="NET-262"> dev="rwinston" type="fix"
                 SubnetUtils did not handle /31 and /32 CIDRs well
             </action>
-            <action dev="rwinston" type="fix" issue="NET-265">
+            <action issue="NET-265" dev="rwinston" type="fix">
                 UnixFTPEntryParser failed to parse entry in certain conditions
             </action>
-            <action dev="rwinston" type="fix" issue="NET-266">
+            <action issue="NET-266" dev="rwinston" type="fix">
                 FTPClient.listFiles() corrupted file name in certain circumstances
             </action>
-            <action dev="rwinston" type="update" issue="NET-251">
+            <action issue="NET-251" dev="rwinston" type="update">
                 Moved class "ThreadContainer" from Threader.java into its own source file
             </action>
-            <action dev="rwinston" type="fix" issue="NET-256">
+            <action issue="NET-256" dev="rwinston" type="fix">
                 FTPSClient should accept a pre-configured SSLContext
             </action>
-            <action dev="rwinston" type="add" issue="NET-263">
+            <action issue="NET-263" dev="rwinston" type="add">
                 SubnetUtils / SubNetInfo toString() implementations
             </action>
             <action dev="rwinston" type="fix">
@@ -186,25 +192,25 @@ This is primarily a maintenance release, but it also includes new features and e
             <action dev="sebb" type="add">
                 Javadoc fixes, improvements, and refactoring.
             </action>
-            <action dev="rwinston" type="fix" issue="NET-245">
+            <action issue="NET-245" dev="rwinston" type="fix">
                 Apply MFMT patch 
             </action>
-            <action dev="rwinston" type="fix" issue="NET-279">
+            <action issue="NET-279" dev="rwinston" type="fix">
                 Fix copying of reply lines collection
             </action>
-            <action dev="rwinston" type="fix" issue="NET-277">
+            <action issue="NET-277" dev="rwinston" type="fix">
                 Fix incorrect NNTP constant
             </action>
-            <action dev="rwinston" type="fix" issue="NET-274">
+            <action issue="NET-274" dev="rwinston" type="fix">
                 Restore socket state after CCC command
             </action>
-            <action dev="rwinston" type="fix" issue="NET-275">
+            <action issue="NET-275" dev="rwinston" type="fix">
                 Example code in FTPClient doesn't compile
             </action>
             <action dev="rwinston" type="fix">
                 Fix inconsistent handling of socket read/write buffer size
             </action>
-            <action dev="sebb" type="fix" issue="NET-294">
+            <action issue="NET-294" dev="sebb" type="fix">
                 UnixFTPEntryParser fails to parse some entries
             </action>
         </release>

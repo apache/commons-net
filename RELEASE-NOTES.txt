@@ -29,12 +29,14 @@ o NET-313:  Optionally enable EPSV with IPv4; Only send EPRT with IPv6.
             Fix incorrect port used with EPRT. Allow activeMaxPort == activeMinPort in getActivePort() method. 
 o NET-328:  FromNetASCIIInputStream.read(byte[], int, int) may change length passed to superclass if not doing conversion 
 o NET-330:  The method VMSFTPEntryParser.parseFileList(InputStream listStream) should not be present.
-            Mark method as deprecated and to be removed 
+            Partial fix - marked method as deprecated and to be removed 
 o NET-180:  Telnet EOR is "consumed" by TelnetInputStream when in BINARY transmission.
             Send notification to TelnetNotificationHandler. 
 o NET-329:  TelnetInoutStream#__read() bug in the __receiveState handling for the _STATE_IAC state. 
 o NET-283:  SocketClient should ensure input and output streams are closed 
 o NET-302:  FTP: initiateListParsing should not cache entryParser 
+o NET-282:  Improvement to isInRange method in SubnetUtil.SubnetInfo class 
+o NET-266:  FTPClient.listFiles() corrupts file name in certain circumstances 
 o NET-264:  Telnet spyStream NullPointerException 
 o Fix site reports 
 o NET-285:  Add support for setting external host ip/port range 
@@ -50,7 +52,6 @@ o NET-250:  DefaultFTPFileEntryParserFactory did not work with Netware FTP serve
 o NET-257:  FTP.getReplyStrings() returned array of null Strings 
 o NET-259:  UnixFTPEntryParser regex did not match some directory entries 
 o NET-260:  SubnetUtils.SubnetInfo.isInRange(...) returned incorrect values 
-o NET-262:  SubnetUtils did not handle /31 and /32 CIDRs well 
 o NET-265:  UnixFTPEntryParser failed to parse entry in certain conditions 
 o NET-266:  FTPClient.listFiles() corrupted file name in certain circumstances 
 o NET-256:  FTPSClient should accept a pre-configured SSLContext 
