@@ -108,7 +108,7 @@ public class NNTPClient extends NNTP
             // Get article number
             try
             {
-                pointer.articleNumber = Long.parseLong(tokenizer.nextToken());
+                pointer.articleNumber = Integer.parseInt(tokenizer.nextToken());
             }
             catch (NumberFormatException e)
             {
@@ -153,9 +153,9 @@ public class NNTPClient extends NNTP
 
             try
             {
-                info._setArticleCount(Long.parseLong(count));
-                info._setFirstArticle(Long.parseLong(first));
-                info._setLastArticle(Long.parseLong(last));
+                info._setArticleCount(Integer.parseInt(count));
+                info._setFirstArticle(Integer.parseInt(first));
+                info._setLastArticle(Integer.parseInt(last));
             }
             catch (NumberFormatException e)
             {
@@ -176,7 +176,7 @@ public class NNTPClient extends NNTP
     {
         NewsgroupInfo result;
         StringTokenizer tokenizer;
-        long lastNum, firstNum;
+        int lastNum, firstNum;
         String last, first, permission;
 
         result = new NewsgroupInfo();
@@ -192,8 +192,8 @@ public class NNTPClient extends NNTP
 
         try
         {
-            lastNum = Long.parseLong(last);
-            firstNum = Long.parseLong(first);
+            lastNum = Integer.parseInt(last);
+            firstNum = Integer.parseInt(first);
             result._setFirstArticle(firstNum);
             result._setLastArticle(lastNum);
 
@@ -1212,8 +1212,8 @@ public class NNTPClient extends NNTP
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException
      */
-    public Reader retrieveArticleInfo(long lowArticleNumber,
-                                      long highArticleNumber)
+    public Reader retrieveArticleInfo(int lowArticleNumber,
+                                      int highArticleNumber)
         throws IOException
     {
         return
