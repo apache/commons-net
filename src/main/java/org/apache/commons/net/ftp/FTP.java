@@ -633,7 +633,7 @@ public class FTP extends SocketClient
      ***/
     public String[] getReplyStrings()
     {
-        return _replyLines.toArray(new String[0]);
+        return _replyLines.toArray(new String[_replyLines.size()]);
     }
 
     /***
