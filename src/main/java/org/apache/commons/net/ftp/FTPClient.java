@@ -1078,6 +1078,7 @@ implements Configurable
      * <p>
      * @param minPort The lowest available port (inclusive).
      * @param maxPort The highest available port (inclusive).
+     * @since 2.2
      ***/
     public void setActivePortRange(int minPort, int maxPort)
     {
@@ -1091,6 +1092,7 @@ implements Configurable
      * <p>
      * @param ipAddress The external IP address of this machine.
      * @throws UnknownHostException
+     * @since 2.2
      ***/
     public void setActiveExternalIPAddress(String ipAddress) throws UnknownHostException
     {
@@ -1792,6 +1794,7 @@ implements Configurable
      * @see <a href="http://www.faqs.org/rfcs/rfc2389.html">http://www.faqs.org/rfcs/rfc2389.html</a>
      * @return True if successfully completed, false if not.
      * @throws IOException
+     * @since 2.2
      */
     public boolean features() throws IOException {
         return FTPReply.isPositiveCompletion(feat());
@@ -2026,7 +2029,8 @@ implements Configurable
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
      *  command to the server or receiving a reply from the server.
-     *  @deprecated Use {@link #getSystemType()} - which does not return null
+     *  @deprecated Use {@link #getSystemType()} - which does not return null.
+     *  Will be deleted in version 3.0
      ***/
     @Deprecated
     public String getSystemName() throws IOException
@@ -2058,6 +2062,7 @@ implements Configurable
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
      *  command to the server or receiving a reply from the server.
+     *  @since 2.2
      ***/
     public String getSystemType() throws IOException
     {
@@ -2324,6 +2329,7 @@ implements Configurable
      * @param filter the filter, non-null
      * @return the list of FTPFile entries.
      * @throws IOException
+     * @since 2.2
      */
     public FTPFile[] listFiles(String pathname, FTPFileFilter filter)
     throws IOException
@@ -2648,6 +2654,7 @@ implements Configurable
      * @param timeval The timestamp to set to, in <code>YYYYMMDDhhmmss</code> format.
      * @return true if successfully set, false if not
      * @throws IOException if an I/O error occurs.
+     * @since 2.2
      * @see <a href="http://tools.ietf.org/html/draft-somers-ftp-mfxx-04">http://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
      */
     public boolean setModificationTime(String pathname, String timeval) throws IOException {
@@ -2711,6 +2718,7 @@ implements Configurable
      * Whether should attempt to use EPSV with IPv4.
      * Default (if not set) is <code>false</code>
      * @return true if should attempt EPS
+     * @since 2.2
      */
     public boolean isUseEPSVwithIPv4() {
         return __useEPSVwithIPv4;
@@ -2729,6 +2737,7 @@ implements Configurable
      * while EPSV would make the client succeed by taking just the port.
      * 
      * @param selected value to set.
+     * @since 2.2
      */
     public void setUseEPSVwithIPv4(boolean selected) {
         this.__useEPSVwithIPv4 = selected;

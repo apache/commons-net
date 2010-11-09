@@ -67,6 +67,7 @@ public final class NNTPReply
     public static final int CODE_437 = 437;
     public static final int CODE_440 = 440;
     public static final int CODE_441 = 441;
+    /** @since 2.2 */
     public static final int CODE_480 = 480;
     public static final int CODE_482 = 482;
     public static final int CODE_500 = 500;
@@ -107,6 +108,7 @@ public final class NNTPReply
     public static final int ARTICLE_REJECTED                   = CODE_437;
     public static final int POSTING_NOT_ALLOWED                = CODE_440;
     public static final int POSTING_FAILED                     = CODE_441;
+    /** @since 2.2 - corrected value to 480 */
     public static final int AUTHENTICATION_REQUIRED            = CODE_480;
     public static final int AUTHENTICATION_REJECTED            = CODE_482;
     public static final int COMMAND_NOT_RECOGNIZED             = CODE_500;

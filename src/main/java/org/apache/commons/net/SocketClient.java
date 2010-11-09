@@ -466,6 +466,7 @@ public abstract class SocketClient
      * other systems.
      * @param  keepAlive If true, keepAlive is turned on
      * @throws SocketException
+     * @since 2.2
      */
     public void setKeepAlive(boolean keepAlive) throws SocketException {
         _socket_.setKeepAlive(keepAlive);
@@ -476,6 +477,7 @@ public abstract class SocketClient
      *
      * @return True if SO_KEEPALIVE is enabled.
      * @throws SocketException
+     * @since 2.2
      */
     public boolean getKeepAlive() throws SocketException {
         return _socket_.getKeepAlive();

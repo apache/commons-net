@@ -20,6 +20,7 @@ package org.apache.commons.net.ftp;
 
 /**
  * Perform filtering on FTPFile entries.
+ * @since 2.2
  */
 public interface FTPFileFilter {
     /**

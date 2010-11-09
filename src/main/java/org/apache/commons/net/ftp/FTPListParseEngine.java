@@ -266,7 +266,7 @@ public class FTPListParseEngine {
      * check each entry for null before referencing it, or use the
      * a filter such as {@link FTPFileFilters#NON_NULL} which does not 
      * allow null entries.
-     * 
+     * @since 2.2
      * @exception IOException
      */
     public FTPFile[] getFiles(FTPFileFilter filter)

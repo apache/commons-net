@@ -34,7 +34,7 @@ import org.apache.commons.net.util.Base64;
  * Experimental attempt at FTP client that tunnels over an HTTP proxy connection.
  *
  * @author rory
- *
+ * @since 2.2
  */
 public class FTPHTTPClient extends FTPClient {
     private final String proxyHost;

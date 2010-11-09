@@ -54,6 +54,7 @@ public interface TelnetNotificationHandler
 
     /***
      * The remote party sent a COMMAND.
+     * @since 2.2
      ***/
     public static final int RECEIVED_COMMAND = 5;
 

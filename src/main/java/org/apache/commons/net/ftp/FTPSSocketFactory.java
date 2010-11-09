@@ -61,25 +61,26 @@ public class FTPSSocketFactory extends SocketFactory {
         return this.context.getSocketFactory().createSocket(address, port, localAddress, localPort);
     }
 
-    /** @deprecated use {@link FTPSServerSocketFactory#createServerSocket(int) instead} */
+    /** @deprecated (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int) instead} */
     @Deprecated
     public ServerSocket createServerSocket(int port) throws IOException {
         return this.init(this.context.getServerSocketFactory().createServerSocket(port));
     }
 
-    /** @deprecated  use {@link FTPSServerSocketFactory#createServerSocket(int, int) instead} */
+    /** @deprecated  (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int, int) instead} */
     @Deprecated
     public ServerSocket createServerSocket(int port, int backlog) throws IOException {
         return this.init(this.context.getServerSocketFactory().createServerSocket(port, backlog));
     }
 
-    /** @deprecated  use {@link FTPSServerSocketFactory#createServerSocket(int, int, InetAddress) instead} */
+    /** @deprecated  (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int, int, InetAddress) instead} */
     @Deprecated
     public ServerSocket createServerSocket(int port, int backlog, InetAddress ifAddress) throws IOException {
         return this.init(this.context.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
     }
         
-    /** @deprecated  use {@link FTPSServerSocketFactory#init(ServerSocket)} */
+    /** @deprecated  (2.2) use {@link FTPSServerSocketFactory#init(ServerSocket)} */
+    @SuppressWarnings("unused")
     @Deprecated
     public ServerSocket init(ServerSocket socket) throws IOException {
         ((SSLServerSocket) socket).setUseClientMode(true);

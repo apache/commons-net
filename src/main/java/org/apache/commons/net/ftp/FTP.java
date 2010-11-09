@@ -886,6 +886,7 @@ public class FTP extends SocketClient
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
+     * @since 2.2
      ***/
     public int eprt(InetAddress host, int port) throws IOException
     {
@@ -948,6 +949,7 @@ public class FTP extends SocketClient
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
+     * @since 2.2
      ***/
     public int epsv() throws IOException
     {
@@ -1186,6 +1188,7 @@ public class FTP extends SocketClient
      * @return The reply code received by the server
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
+     * @since 2.2
      */
     public int feat() throws IOException
     {
@@ -1256,6 +1259,7 @@ public class FTP extends SocketClient
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
+     * @since 2.2
      * @see <a href="http://tools.ietf.org/html/draft-somers-ftp-mfxx-04">http://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
      **/
     public int mfmt(String pathname, String timeval) throws IOException

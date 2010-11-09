@@ -27,6 +27,7 @@ import javax.net.ssl.SSLServerSocket;
 
 /**
  * Server socket factory for FTPS connections.
+ * @since 2.2
  */
 public class FTPSServerSocketFactory extends ServerSocketFactory {
 

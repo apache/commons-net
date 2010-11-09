@@ -42,7 +42,7 @@ public class Threader {
      * the Threader constructs a connected 'graph' of messages
      * @param messages array of messages to thread
      * @return null if messages == null or root.child == null
-     * @deprecated prefer {@link #thread(List)}
+     * @deprecated (2.2) prefer {@link #thread(List)}
      */
     @Deprecated
     public Threadable thread(Threadable[] messages) {
@@ -54,6 +54,7 @@ public class Threader {
      * the Threader constructs a connected 'graph' of messages
      * @param messages list of messages to thread
      * @return null if messages == null or root.child == null
+     * @since 2.2
      */
     public Threadable thread(List<? extends Threadable> messages) {
         if (messages == null)

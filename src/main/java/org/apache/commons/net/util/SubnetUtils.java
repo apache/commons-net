@@ -67,6 +67,7 @@ public class SubnetUtils {
     /**
      * Returns <code>true</code> if the return value of {@link SubnetInfo#getAddressCount()}
      * includes the network address and broadcast addresses.
+     * @since 2.2
      */
     public boolean isInclusiveHostCount() {
         return inclusiveHostCount;
@@ -76,6 +77,7 @@ public class SubnetUtils {
      * Set to <code>true</code> if you want the return value of {@link SubnetInfo#getAddressCount()}
      * to include the network and broadcast addresses.
      * @param inclusiveHostCount
+     * @since 2.2
      */
     public void setInclusiveHostCount(boolean inclusiveHostCount) {
         this.inclusiveHostCount = inclusiveHostCount;
@@ -136,6 +138,10 @@ public class SubnetUtils {
             return addresses;
         }
 
+        /**
+         * {@inheritDoc}
+         * @since 2.2
+         */
         @Override
         public String toString() {
             final StringBuilder buf = new StringBuilder();

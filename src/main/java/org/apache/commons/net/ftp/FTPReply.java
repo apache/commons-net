@@ -49,6 +49,7 @@ public final class FTPReply
     public static final int CODE_225 = 225;
     public static final int CODE_226 = 226;
     public static final int CODE_227 = 227;
+    /** @since 2.2 */
     public static final int CODE_229 = 229;
     public static final int CODE_230 = 230;
     public static final int CODE_250 = 250;
@@ -91,6 +92,7 @@ public final class FTPReply
     public static final int DATA_CONNECTION_OPEN = CODE_225;
     public static final int CLOSING_DATA_CONNECTION = CODE_226;
     public static final int ENTERING_PASSIVE_MODE = CODE_227;
+    /** @since 2.2 */
     public static final int ENTERING_EPSV_MODE = CODE_229;
     public static final int USER_LOGGED_IN = CODE_230;
     public static final int FILE_ACTION_OK = CODE_250;
@@ -161,6 +163,7 @@ public final class FTPReply
     
     // IPv6 error codes
     // Note this is also used as an FTPS error code reply
+    /** @since 2.2 */
     public static final int EXTENDED_PORT_FAILURE = CODE_522;
 
     // Cannot be instantiated
