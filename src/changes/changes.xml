@@ -58,8 +58,7 @@ This is primarily a maintenance release, but it also includes new features and e
   Users of version 2.0 are encouraged to upgrade to 2.2, as this release includes some important bug fixes.
 
   See the detailed list of changes below for full description of all bug fixes and enhancements.
- 
-  TO BE COMPLETED
+
 ">
             <action issue="NET-334" dev="sebb" type="fix">
             FromNetASCIIInputStream can throw a NullPointerException
@@ -195,9 +194,6 @@ This is primarily a maintenance release, but it also includes new features and e
             </action>
             <action dev="rwinston" type="fix" issue="NET-277">
                 Fix incorrect NNTP constant
-            </action>
-            <action dev="rwinston" type="fix" issue="NET-276">
-                Use long instead of int for newsgroup counts
             </action>
             <action dev="rwinston" type="fix" issue="NET-274">
                 Restore socket state after CCC command

@@ -7,8 +7,6 @@ Users of version 2.0 are encouraged to upgrade to 2.2, as this release includes 
 
 See the detailed list of changes below for full description of all bug fixes and enhancements.
 
- TO BE COMPLETED
-
 Changes in this version include:
 
 New features:
@@ -60,7 +58,6 @@ o Improve NNTPClient handling of invalid articles
 o NET-245:  Apply MFMT patch 
 o NET-279:  Fix copying of reply lines collection 
 o NET-277:  Fix incorrect NNTP constant 
-o NET-276:  Use long instead of int for newsgroup counts 
 o NET-274:  Restore socket state after CCC command 
 o NET-275:  Example code in FTPClient doesn't compile 
 o Fix inconsistent handling of socket read/write buffer size 
