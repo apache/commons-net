@@ -133,7 +133,7 @@ public class Article implements Threadable {
                     }
                 }
 
-                if (simplifiedSubject == "(no subject)")
+                if ("(no subject)".equals(simplifiedSubject))
                     simplifiedSubject = "";
 
                 int end = len;
