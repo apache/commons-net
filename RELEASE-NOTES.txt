@@ -1,5 +1,5 @@
 
-              Apache Commons Net 2.2-SNAPSHOT RELEASE NOTES
+              Apache Commons Net 2.2 RELEASE NOTES
 
 This is primarily a maintenance release, but it also includes new features and enhancements.
 
