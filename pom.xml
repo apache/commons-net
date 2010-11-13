@@ -25,7 +25,7 @@ limitations under the License.
     <modelVersion>4.0.0</modelVersion>
     <groupId>commons-net</groupId>
     <artifactId>commons-net</artifactId>
-    <version>2.2-SNAPSHOT</version>
+    <version>2.2</version>
     <name>Commons Net</name>
     <description>
         A collection of network utilities and protocol implementations.
