@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import org.apache.commons.net.ftp.FTPClientConfig;
@@ -159,66 +160,73 @@ public class FTPTimestampParserImplTest extends TestCase {
 
 
     public void testParser() {
-        FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
+        // This test requires an English Locale
+        Locale locale = Locale.getDefault();
         try {
-            parser.parseTimestamp("feb 22 2002");
-        } catch (ParseException e) {
-            fail("failed.to.parse.default");
-        }
-        try {
-            parser.parseTimestamp("f\u00e9v 22 2002");
-            fail("should.have.failed.to.parse.default");
-        } catch (ParseException e) {
-            // this is the success case
-        }
+            Locale.setDefault(Locale.ENGLISH);
+            FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
+            try {
+                parser.parseTimestamp("feb 22 2002");
+            } catch (ParseException e) {
+                fail("failed.to.parse.default");
+            }
+            try {
+                parser.parseTimestamp("f\u00e9v 22 2002");
+                fail("should.have.failed.to.parse.default");
+            } catch (ParseException e) {
+                // this is the success case
+            }
 
-        FTPClientConfig config = new FTPClientConfig();
-        config.setDefaultDateFormatStr("d MMM yyyy");
-        config.setRecentDateFormatStr("d MMM HH:mm");
-        config.setServerLanguageCode("fr");
-        parser.configure(config);
-        try {
-            parser.parseTimestamp("d\u00e9c 22 2002");
-            fail("incorrect.field.order");
-        } catch (ParseException e) {
-            // this is the success case
-        }
-        try {
-            parser.parseTimestamp("22 d\u00e9c 2002");
-        } catch (ParseException e) {
-            fail("failed.to.parse.french");
-        }
-        
-        try {
-            parser.parseTimestamp("22 dec 2002");
-            fail("incorrect.language");
-        } catch (ParseException e) {
-            // this is the success case
-        }
-        try {
-            parser.parseTimestamp("29 f\u00e9v 2002");
-            fail("nonexistent.date");
-        } catch (ParseException e) {
-            // this is the success case
-        }
+            FTPClientConfig config = new FTPClientConfig();
+            config.setDefaultDateFormatStr("d MMM yyyy");
+            config.setRecentDateFormatStr("d MMM HH:mm");
+            config.setServerLanguageCode("fr");
+            parser.configure(config);
+            try {
+                parser.parseTimestamp("d\u00e9c 22 2002");
+                fail("incorrect.field.order");
+            } catch (ParseException e) {
+                // this is the success case
+            }
+            try {
+                parser.parseTimestamp("22 d\u00e9c 2002");
+            } catch (ParseException e) {
+                fail("failed.to.parse.french");
+            }
+            
+            try {
+                parser.parseTimestamp("22 dec 2002");
+                fail("incorrect.language");
+            } catch (ParseException e) {
+                // this is the success case
+            }
+            try {
+                parser.parseTimestamp("29 f\u00e9v 2002");
+                fail("nonexistent.date");
+            } catch (ParseException e) {
+                // this is the success case
+            }
 
-        try {
-            parser.parseTimestamp("22 ao\u00fb 30:02");
-            fail("bad.hour");
-        } catch (ParseException e) {
-            // this is the success case
-        }
-        
-        try {
-            parser.parseTimestamp("22 ao\u00fb 20:74");
-            fail("bad.minute");
-        } catch (ParseException e) {
-            // this is the success case
-        }
-        try {
-            parser.parseTimestamp("28 ao\u00fb 20:02");
-        } catch (ParseException e) {
-            fail("failed.to.parse.french.recent");
+            try {
+                parser.parseTimestamp("22 ao\u00fb 30:02");
+                fail("bad.hour");
+            } catch (ParseException e) {
+                // this is the success case
+            }
+            
+            try {
+                parser.parseTimestamp("22 ao\u00fb 20:74");
+                fail("bad.minute");
+            } catch (ParseException e) {
+                // this is the success case
+            }
+            try {
+                parser.parseTimestamp("28 ao\u00fb 20:02");
+            } catch (ParseException e) {
+                fail("failed.to.parse.french.recent");
+            }
+        } finally {
+            Locale.setDefault(locale);
         }
     }
     
