@@ -21,6 +21,8 @@ o NET-263:  SubnetUtils / SubNetInfo toString() implementations
 o Javadoc fixes, improvements, and refactoring. 
 
 Fixed Bugs:
+o NET-351:  APOP authentication fails most of the time
+            Fix by adding leading 0 if necessary. Patch due to Bogdan Drozdowski
 o NET-334:  FromNetASCIIInputStream can throw a NullPointerException 
 o NET-341:  FTPClient.remoteAppend(String filename) uses STOR instead of APPE 
 o NET-339:  Incorrect parsing of timestamp on Windows CE
