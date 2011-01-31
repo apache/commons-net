@@ -191,8 +191,11 @@ public class POP3Client extends POP3
         digest = md5.digest(timestamp.getBytes());
         digestBuffer = new StringBuffer(128);
 
-        for (i = 0; i < digest.length; i++)
-            digestBuffer.append(Integer.toHexString(digest[i] & 0xff));
+        for (i = 0; i < digest.length; i++) {
+            int digit = digest[i] & 0xff;
+            if (digit <= 15) digestBuffer.append("0"); // Add leading zero if necessary (NET-351)
+            digestBuffer.append(Integer.toHexString(digit));            
+        }
 
         buffer = new StringBuffer(256);
         buffer.append(username);
