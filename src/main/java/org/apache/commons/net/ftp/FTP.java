@@ -454,7 +454,9 @@ public class FTP extends SocketClient
      ***/
     public int sendCommand(String command, String args) throws IOException
     {
-        String message;
+        if (_controlOutput_ == null) {
+            throw new IOException("Connection is not open");
+        }
 
         final StringBuilder __commandBuffer = new StringBuilder();
 
@@ -467,12 +469,9 @@ public class FTP extends SocketClient
         }
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
-        if (_controlOutput_ == null){
-            throw new IOException("Connection is not open");
-        }
-
+        String message = __commandBuffer.toString();
         try{
-            _controlOutput_.write(message = __commandBuffer.toString());
+            _controlOutput_.write(message);
             _controlOutput_.flush();
         }
         catch (SocketException e)
@@ -486,7 +485,6 @@ public class FTP extends SocketClient
                 throw e;
             }
         }
-
 
         if (_commandSupport_.getListenerCount() > 0)
             _commandSupport_.fireCommandSent(command, message);
