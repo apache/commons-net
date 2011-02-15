@@ -215,8 +215,6 @@ public class FTP extends SocketClient
     public static final String DEFAULT_CONTROL_ENCODING = "ISO-8859-1";
     private static final String __modes = "AEILNTCFRPSBC";
 
-    private final StringBuilder __commandBuffer = new StringBuilder();
-
     protected int _replyCode;
     protected ArrayList<String> _replyLines;
     protected boolean _newReplyString;
@@ -458,7 +456,8 @@ public class FTP extends SocketClient
     {
         String message;
 
-        __commandBuffer.setLength(0);
+        final StringBuilder __commandBuffer = new StringBuilder();
+
         __commandBuffer.append(command);
 
         if (args != null)
