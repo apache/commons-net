@@ -133,7 +133,7 @@ __main:
             }
 
             
-            System.out.println("Remote system is " + ftps.getSystemName());
+            System.out.println("Remote system is " + ftps.getSystemType());
 
             if (binaryTransfer) ftps.setFileType(FTP.BINARY_FILE_TYPE);
 

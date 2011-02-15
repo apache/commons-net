@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
-import org.apache.commons.net.io.DotTerminatedMessageReader;
 import org.apache.commons.net.nntp.Article;
 import org.apache.commons.net.nntp.NNTPClient;
 
@@ -49,8 +48,7 @@ public class NNTPUtils {
     throws IOException {
         Reader reader = null;
         List<Article> articles = new ArrayList<Article>();
-        reader =
-            (DotTerminatedMessageReader) client.retrieveArticleInfo(
+        reader = client.retrieveArticleInfo(
                     lowArticleNumber,
                     highArticleNumber);
 
@@ -61,9 +59,6 @@ public class NNTPUtils {
             // Extract the article information
             // Mandatory format (from NNTP RFC 2980) is :
             // Subject\tAuthor\tDate\tID\tReference(s)\tByte Count\tLine Count
-
-            int count = st.countTokens();
-            int index = 0;
 
             while (st.hasMoreTokens()) {
                 String msg = st.nextToken();

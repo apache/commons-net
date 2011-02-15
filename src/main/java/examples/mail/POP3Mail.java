@@ -115,7 +115,7 @@ public final class POP3Mail
                 System.exit(1);
             }
 
-            for (message = 0; message < messages.length; message++)
+            for (message = 0; message < messages.length; message++) // messages cannot be null here
             {
                 reader = pop3.retrieveMessageTop(messages[message].number, 0);
 

@@ -177,7 +177,9 @@ public final class TFTPExample
                 tftp.close();
                 try
                 {
-                    output.close();
+                    if (output != null) {
+                        output.close();
+                    }
                     closed = true;
                 }
                 catch (IOException e)
@@ -234,7 +236,9 @@ public final class TFTPExample
                 tftp.close();
                 try
                 {
-                    input.close();
+                    if (input != null) {
+                        input.close();
+                    }
                     closed = true;
                 }
                 catch (IOException e)

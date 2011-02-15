@@ -20,7 +20,8 @@ package examples.telnet;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.util.StringTokenizer;
+
 import org.apache.commons.net.telnet.TelnetClient;
 import org.apache.commons.net.telnet.TelnetNotificationHandler;
 import org.apache.commons.net.telnet.SimpleOptionHandler;
@@ -28,7 +29,6 @@ import org.apache.commons.net.telnet.EchoOptionHandler;
 import org.apache.commons.net.telnet.TerminalTypeOptionHandler;
 import org.apache.commons.net.telnet.SuppressGAOptionHandler;
 import org.apache.commons.net.telnet.InvalidTelnetOptionException;
-import java.util.StringTokenizer;
 
 
 /***
@@ -53,7 +53,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
     /***
      * Main for the TelnetClientExample.
      ***/
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args) throws Exception
     {
         FileOutputStream fout = null;
 

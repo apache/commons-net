@@ -25,7 +25,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 import org.apache.commons.net.PrintCommandListener;
@@ -53,7 +52,6 @@ public final class SMTPMail
         Writer writer;
         SimpleSMTPHeader header;
         SMTPClient client;
-        Enumeration en;
 
         if (args.length < 1)
         {
@@ -147,7 +145,9 @@ public final class SMTPMail
                 client.completePendingCommand();
             }
 
-            fileReader.close();
+            if (fileReader != null ) {
+                fileReader.close();
+            }
 
             client.logout();
 

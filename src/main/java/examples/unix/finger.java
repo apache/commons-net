@@ -118,6 +118,7 @@ public final class finger
                 try
                 {
                     address = InetAddress.getByName(host);
+                    System.out.println("[" + address.getHostName() + "]");
                 }
                 catch (UnknownHostException e)
                 {
@@ -125,8 +126,6 @@ public final class finger
                     System.exit(1);
                 }
             }
-
-            System.out.println("[" + address.getHostName() + "]");
 
             try
             {

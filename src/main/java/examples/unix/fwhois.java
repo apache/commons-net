@@ -64,14 +64,13 @@ public final class fwhois
         try
         {
             address = InetAddress.getByName(host);
+            System.out.println("[" + address.getHostName() + "]");
         }
         catch (UnknownHostException e)
         {
             System.err.println("Error unknown host: " + e.getMessage());
             System.exit(1);
         }
-
-        System.out.println("[" + address.getHostName() + "]");
 
         try
         {

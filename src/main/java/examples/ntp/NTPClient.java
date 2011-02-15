@@ -142,7 +142,7 @@ public final class NTPClient
 
     public static final void main(String[] args)
     {
-        if (args == null || args.length == 0) {
+        if (args.length == 0) {
             System.err.println("Usage: NTPClient <hostname-or-address-list>");
             System.exit(1);
         }

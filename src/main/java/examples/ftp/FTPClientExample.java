@@ -127,7 +127,7 @@ __main:
                 break __main;
             }
 
-            System.out.println("Remote system is " + ftp.getSystemName());
+            System.out.println("Remote system is " + ftp.getSystemType());
 
             if (binaryTransfer)
                 ftp.setFileType(FTP.BINARY_FILE_TYPE);

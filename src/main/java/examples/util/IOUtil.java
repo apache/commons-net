@@ -46,6 +46,7 @@ public final class IOUtil
 
         reader = new Thread()
                  {
+                     @Override
                      public void run()
                      {
                          int ch;
@@ -69,6 +70,7 @@ public final class IOUtil
 
         writer = new Thread()
                  {
+                     @Override
                      public void run()
                      {
                          try

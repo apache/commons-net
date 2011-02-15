@@ -108,7 +108,7 @@ public final class PostMessage
             if (organization != null && organization.length() > 0)
                 header.addHeaderField("Organization", organization);
 
-            if (references != null && organization.length() > 0)
+            if (references != null && references.length() > 0)
                 header.addHeaderField("References", references);
 
             header.addHeaderField("X-Newsreader", "NetComponents");
@@ -154,7 +154,9 @@ public final class PostMessage
                 }
             }
 
-            fileReader.close();
+            if (fileReader != null) {
+                fileReader.close();
+            }
 
             client.logout();
 
