@@ -229,8 +229,8 @@ public class FTP extends SocketClient
     protected boolean strictMultilineParsing = false;
 
     /**
-     * Wraps SocketClient._input_ to facilitate the writing of text
-     * to the FTP control connection.  Do not access the control
+     * Wraps SocketClient._input_ to facilitate the reading of text
+     * from the FTP control connection.  Do not access the control
      * connection via SocketClient._input_.  This member starts
      * with a null value, is initialized in {@link #_connectAction_},
      * and set to null in {@link #disconnect}.
@@ -238,8 +238,8 @@ public class FTP extends SocketClient
     protected BufferedReader _controlInput_;
 
     /**
-     * Wraps SocketClient._output_ to facilitate the reading of text
-     * from the FTP control connection.  Do not access the control
+     * Wraps SocketClient._output_ to facilitate the writing of text
+     * to the FTP control connection.  Do not access the control
      * connection via SocketClient._output_.  This member starts
      * with a null value, is initialized in {@link #_connectAction_},
      * and set to null in {@link #disconnect}.
