@@ -36,6 +36,7 @@ import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
 import org.apache.commons.net.ftp.parser.ParserInitializationException;
 import org.apache.commons.net.io.CopyStreamEvent;
 import org.apache.commons.net.io.CopyStreamException;
+import org.apache.commons.net.io.CopyStreamListener;
 import org.apache.commons.net.io.FromNetASCIIInputStream;
 import org.apache.commons.net.io.ToNetASCIIOutputStream;
 import org.apache.commons.net.io.Util;
@@ -296,6 +297,9 @@ implements Configurable
 
     private FTPClientConfig __configuration;
 
+    // Listener used by store/retrieve methods
+    private CopyStreamListener __copyStreamListener;
+
     /** Pattern for PASV mode responses */
     private static final String __parms = "\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3}";
     private static final java.util.regex.Pattern __parms_pat;
@@ -434,7 +438,7 @@ implements Configurable
         try
         {
             Util.copyStream(local, output, getBufferSize(),
-                    CopyStreamEvent.UNKNOWN_STREAM_SIZE, null,
+                    CopyStreamEvent.UNKNOWN_STREAM_SIZE, __copyStreamListener,
                     false);
         }
         catch (IOException e)
@@ -1450,7 +1454,7 @@ implements Configurable
         try
         {
             Util.copyStream(input, local, getBufferSize(),
-                    CopyStreamEvent.UNKNOWN_STREAM_SIZE, null,
+                    CopyStreamEvent.UNKNOWN_STREAM_SIZE, __copyStreamListener,
                     false);
         }
         catch (IOException e)
@@ -2743,6 +2747,24 @@ implements Configurable
         this.__useEPSVwithIPv4 = selected;
     }
 
+    /**
+     * Set the listener to be used when performing store/retrieve operations.
+     * The default value (if not set) is {@code null}.
+     * 
+     * @param listener to be used, may be {@code null} to disable
+     */
+    public void setCopyStreamListener(CopyStreamListener listener){
+        __copyStreamListener = listener;
+    }
+    
+    /**
+     * Obtain the currently active listener.
+     * 
+     * @return the listener, may be {@code null}
+     */
+    public CopyStreamListener getCopyStreamListener(){
+        return __copyStreamListener;
+    }
 }
 
 /* Emacs configuration
