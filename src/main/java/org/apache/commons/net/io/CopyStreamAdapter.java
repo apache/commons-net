@@ -63,9 +63,10 @@ public class CopyStreamAdapter implements CopyStreamListener
      */
     public void bytesTransferred(CopyStreamEvent event)
     {
-        bytesTransferred(event.getTotalBytesTransferred(),
-                         event.getBytesTransferred(),
-                         event.getStreamSize());
+        for (EventListener listener : internalListeners)
+        {
+            ((CopyStreamListener) (listener)).bytesTransferred(event);
+        }
     }
 
     /**
@@ -86,16 +87,10 @@ public class CopyStreamAdapter implements CopyStreamListener
     public void bytesTransferred(long totalBytesTransferred,
                                  int bytesTransferred, long streamSize)
     {
-        CopyStreamEvent event;
-
-        event = new CopyStreamEvent(this,
-                                    totalBytesTransferred,
-                                    bytesTransferred,
-                                    streamSize);
-
         for (EventListener listener : internalListeners)
         {
-            ((CopyStreamListener) (listener)).bytesTransferred(event);
+            ((CopyStreamListener) (listener)).bytesTransferred(
+                    totalBytesTransferred, bytesTransferred, streamSize);
         }
     }
 
