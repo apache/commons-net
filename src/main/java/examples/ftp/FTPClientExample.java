@@ -73,6 +73,12 @@ public final class FTPClientExample
         }
 
         server = args[base++];
+        int port = 21;
+        String parts[] = server.split(":");
+        if (parts.length == 2){
+            server=parts[0];
+            port=Integer.parseInt(parts[1]);
+        }
         username = args[base++];
         password = args[base++];
         remote = args[base++];
@@ -85,7 +91,7 @@ public final class FTPClientExample
         try
         {
             int reply;
-            ftp.connect(server);
+            ftp.connect(server, port);
             System.out.println("Connected to " + server + ".");
 
             // After connection attempt, you should check the reply code to verify
