@@ -53,17 +53,21 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="2.3" date="TBA" description="TBA">
-            <action issue="NET-356" dev="sebb" type="add" dueTo="Bogdan Drozdowski">
-            The SMTP client does not support SSL/TLS connections
+            <action issue="NET-356" dev="sebb" type="add" due-to="Bogdan Drozdowski">
+            The SMTP client does not support SSL/TLS connections.
             </action>
             <action issue="NET-358" dev="sebb" type="add">
-            Implement copy Listener in FTPClient file operations
+            Implement copy Listener in FTPClient file operations.
             </action>
             <action issue="NET-359" dev="sebb" type="fix">
-            CopyStreamAdapter unconditionally resets the CopyStreamEvent source and is inefficient
+            CopyStreamAdapter unconditionally resets the CopyStreamEvent source and is inefficient.
             </action>
             <action issue="NET-355" dev="sebb" type="fix">
             examples.nntp.NNTPUtils does not compile
+            </action>
+            <action issue="NET-351" dev="sebb" type="add" due-to="Bogdan Drozdowski">
+            APOP authentication fails most of the time.
+            Fix by adding leading 0 if necessary.
             </action>
         </release>
         <release version="2.2" date="Nov 2010" description="
