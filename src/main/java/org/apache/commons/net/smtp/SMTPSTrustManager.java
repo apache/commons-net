@@ -25,7 +25,6 @@ import javax.net.ssl.X509TrustManager;
 
 /**
  * Custom {@link TrustManager} implementation, taken from FTPSTrustManager.
- * @author Bogdan Drozdowski, bogdandr # op . pl
  */
 public class SMTPSTrustManager implements X509TrustManager
 {

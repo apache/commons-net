@@ -53,10 +53,10 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="2.3" date="TBA" description="TBA">
-            <action issue="NET-353" dev="sebb" type="add" due-to="Bogdan Drozdowski">
+            <action issue="NET-353" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
             The SMTPClient does not support authentication.
             </action>
-            <action issue="NET-356" dev="sebb" type="add" due-to="Bogdan Drozdowski">
+            <action issue="NET-356" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
             The SMTP client does not support SSL/TLS connections.
             </action>
             <action issue="NET-358" dev="sebb" type="add">
@@ -68,7 +68,7 @@ The <action> type attribute can be add,update,fix,remove.
             <action issue="NET-355" dev="sebb" type="fix">
             examples.nntp.NNTPUtils does not compile
             </action>
-            <action issue="NET-351" dev="sebb" type="add" due-to="Bogdan Drozdowski">
+            <action issue="NET-351" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
             APOP authentication fails most of the time.
             Fix by adding leading 0 if necessary.
             </action>
