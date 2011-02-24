@@ -279,7 +279,7 @@ limitations under the License.
                 <artifactId>clirr-maven-plugin</artifactId>
                 <version>2.2.2</version>
                 <configuration>
-                    <comparisonVersion>2.0</comparisonVersion>
+                    <comparisonVersion>2.2</comparisonVersion>
                     <minSeverity>info</minSeverity>
                 </configuration>
             </plugin>
