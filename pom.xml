@@ -222,7 +222,10 @@ limitations under the License.
                 <artifactId>maven-changes-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
-                   <announcementFile>RELEASE-NOTES.txt</announcementFile>
+                   <!-- Cannot use outputDirectory to place the file, 
+                        as that affects the HTML output, so use relative path instead 
+                    -->
+                   <announcementFile>../../RELEASE-NOTES.txt</announcementFile>
                     <issueLinkTemplatePerSystem>
                         <default>%URL%/%ISSUE%</default>
                     </issueLinkTemplatePerSystem>
