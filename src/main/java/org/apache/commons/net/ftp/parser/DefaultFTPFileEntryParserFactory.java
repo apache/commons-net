@@ -17,6 +17,8 @@
 
 package org.apache.commons.net.ftp.parser;
 
+import java.util.regex.Pattern;
+
 import org.apache.commons.net.ftp.Configurable;
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
@@ -35,6 +37,14 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 public class DefaultFTPFileEntryParserFactory
     implements FTPFileEntryParserFactory
 {
+
+    // Match a plain Java Identifier
+    private static final String JAVA_IDENTIFIER = "\\p{javaJavaIdentifierStart}(\\p{javaJavaIdentifierPart})*";
+    // Match a qualified name, e.g. a.b.c.Name
+    private static final String JAVA_QUALIFIED_NAME  = "("+JAVA_IDENTIFIER+"\\.)*"+JAVA_IDENTIFIER;
+    // Create the pattern, as it will be reused many times
+    private static final Pattern JAVA_QUALIFIED_NAME_PATTERN = Pattern.compile(JAVA_QUALIFIED_NAME);
+
     private FTPClientConfig config = null;
 
     /**
@@ -81,81 +91,70 @@ public class DefaultFTPFileEntryParserFactory
         if (key == null)
             throw new ParserInitializationException("Parser key cannot be null");
 
-        Class<?> parserClass = null;
         FTPFileEntryParser parser = null;
-        try
-        {
-            parserClass = Class.forName(key);
-            try {
-                parser = (FTPFileEntryParser) parserClass.newInstance();
-            } catch (ClassCastException e) {
-                throw new ParserInitializationException(parserClass.getName()
-                    + " does not implement the interface "
-                    + "org.apache.commons.net.ftp.FTPFileEntryParser.", e);
-            }
-        }
-        catch (ClassNotFoundException e)
-        {
+        
+        // Is the key a possible class name?
+        if (JAVA_QUALIFIED_NAME_PATTERN.matcher(key).matches()) {
             try
             {
-                String ukey = key.toUpperCase(java.util.Locale.ENGLISH);
-                if (ukey.indexOf(FTPClientConfig.SYST_UNIX) >= 0)
-                {
-                    parser = createUnixFTPEntryParser();
+                Class<?> parserClass = Class.forName(key);
+                try {
+                    parser = (FTPFileEntryParser) parserClass.newInstance();
+                } catch (ClassCastException e) {
+                    throw new ParserInitializationException(parserClass.getName()
+                        + " does not implement the interface "
+                        + "org.apache.commons.net.ftp.FTPFileEntryParser.", e);
+                } catch (Exception e) {
+                    throw new ParserInitializationException("Error initializing parser", e);
+                } catch (ExceptionInInitializerError e) {
+                    throw new ParserInitializationException("Error initializing parser", e);                    
                 }
-                else if (ukey.indexOf(FTPClientConfig.SYST_VMS) >= 0)
-                {
-                    parser = createVMSVersioningFTPEntryParser();
-                }
-                else if (ukey.indexOf(FTPClientConfig.SYST_NT) >= 0)
-                {
-                    parser = createNTFTPEntryParser();
-                }
-                else if (ukey.indexOf(FTPClientConfig.SYST_OS2) >= 0)
-                {
-                    parser = createOS2FTPEntryParser();
-                }
-                else if (ukey.indexOf(FTPClientConfig.SYST_OS400) >= 0 ||
-                        ukey.indexOf(FTPClientConfig.SYST_AS400) >= 0)
-                {
-                    parser = createOS400FTPEntryParser();
-                }
-                else if (ukey.indexOf(FTPClientConfig.SYST_MVS) >= 0)
-                {
-                    parser = createMVSEntryParser();
-                }
-                else if (ukey.indexOf(FTPClientConfig.SYST_NETWARE) >= 0)
-                {
-                    parser = createNetwareFTPEntryParser();
-                }
-                else if (ukey.indexOf(FTPClientConfig.SYST_L8) >= 0)
-                {
-                    // L8 normally means Unix, but move it to the end for some L8 systems that aren't.
-                    // This check should be last!
-                    parser = createUnixFTPEntryParser();
-                }
-                else
-                {
-                    throw new ParserInitializationException("Unknown parser type: " + key);
-                }
-            }
-            // TODO can this happen?
-            catch (NoClassDefFoundError nf) {
-                    throw new ParserInitializationException("Error initializing parser", nf);
-            }
+            } catch (ClassNotFoundException e) {
+                // OK, assume it is an alias
+            }            
+        }
 
-        }
-        catch (NoClassDefFoundError e)
-        {
-            throw new ParserInitializationException("Error initializing parser", e);
-        }
-        catch (ParserInitializationException e) // Don't rewrap exception
-        {
-            throw e;
-        }
-        catch (Throwable e)
-        {
-            throw new ParserInitializationException("Error initializing parser", e);
+        if (parser == null) { // Now try for aliases
+            String ukey = key.toUpperCase(java.util.Locale.ENGLISH);
+            if (ukey.indexOf(FTPClientConfig.SYST_UNIX) >= 0) 
+            {
+                parser = createUnixFTPEntryParser();
+            }
+            else if (ukey.indexOf(FTPClientConfig.SYST_VMS) >= 0)
+            {
+                parser = createVMSVersioningFTPEntryParser();
+            }
+            else if (ukey.indexOf(FTPClientConfig.SYST_NT) >= 0)
+            {
+                parser = createNTFTPEntryParser();
+            }
+            else if (ukey.indexOf(FTPClientConfig.SYST_OS2) >= 0)
+            {
+                parser = createOS2FTPEntryParser();
+            }
+            else if (ukey.indexOf(FTPClientConfig.SYST_OS400) >= 0 ||
+                    ukey.indexOf(FTPClientConfig.SYST_AS400) >= 0)
+            {
+                parser = createOS400FTPEntryParser();
+            }
+            else if (ukey.indexOf(FTPClientConfig.SYST_MVS) >= 0)
+            {
+                parser = createMVSEntryParser();
+            }
+            else if (ukey.indexOf(FTPClientConfig.SYST_NETWARE) >= 0)
+            {
+                parser = createNetwareFTPEntryParser();
+            }
+            else if (ukey.indexOf(FTPClientConfig.SYST_L8) >= 0)
+            {
+                // L8 normally means Unix, but move it to the end for some L8 systems that aren't.
+                // This check should be last!
+                parser = createUnixFTPEntryParser();
+            }
+            else
+            {
+                throw new ParserInitializationException("Unknown parser type: " + key);
+            }
         }
 
         if (parser instanceof Configurable) {
@@ -182,6 +181,7 @@ public class DefaultFTPFileEntryParserFactory
      * @return the @link  FTPFileEntryParser FTPFileEntryParser} so created.
      * @exception ParserInitializationException
      *                   Thrown on any exception in instantiation
+     * @throws NullPointerException if {@code config} is {@code null}
      * @since 1.4
      */
     public FTPFileEntryParser createFileEntryParser(FTPClientConfig config)
