@@ -139,5 +139,16 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
         checkParserClass(factory, FTPClientConfig.SYST_OS2, OS2FTPEntryParser.class);
         checkParserClass(factory, FTPClientConfig.SYST_UNIX, UnixFTPEntryParser.class);
         checkParserClass(factory, FTPClientConfig.SYST_VMS, VMSFTPEntryParser.class);
+
+        checkParserClass(factory, "WINDOWS", NTFTPEntryParser.class); // Same as SYST_NT
+        // This is the way it works at present; config matching is exact
+        checkParserClass(factory, "Windows", CompositeFileEntryParser.class);
+
+        checkParserClass(factory, "OS/400", OS400FTPEntryParser.class); // Same as SYST_OS400
+        // This is the way it works at present; config matching is exact
+        checkParserClass(factory, "OS/400 v1", CompositeFileEntryParser.class);
+
+        // Note: exact matching via config is the only way to generate NTFTPEntryParser and OS400FTPEntryParser
+        // using DefaultFTPFileEntryParserFactory
     }
 }
