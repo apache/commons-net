@@ -45,8 +45,6 @@ public class DefaultFTPFileEntryParserFactory
     // Create the pattern, as it will be reused many times
     private static final Pattern JAVA_QUALIFIED_NAME_PATTERN = Pattern.compile(JAVA_QUALIFIED_NAME);
 
-    private FTPClientConfig config = null;
-
     /**
      * This default implementation of the FTPFileEntryParserFactory
      * interface works according to the following logic:
@@ -90,7 +88,11 @@ public class DefaultFTPFileEntryParserFactory
     {
         if (key == null)
             throw new ParserInitializationException("Parser key cannot be null");
+        return createFileEntryParser(key, null);
+    }
 
+    // Common method to process both key and config parameters.
+    private FTPFileEntryParser createFileEntryParser(String key, FTPClientConfig config) {
         FTPFileEntryParser parser = null;
         
         // Is the key a possible class name?
@@ -126,7 +128,7 @@ public class DefaultFTPFileEntryParserFactory
             }
             else if (ukey.indexOf(FTPClientConfig.SYST_NT) >= 0)
             {
-                parser = createNTFTPEntryParser();
+                parser = createNTFTPEntryParser(config);
             }
             else if (ukey.indexOf(FTPClientConfig.SYST_OS2) >= 0)
             {
@@ -135,7 +137,7 @@ public class DefaultFTPFileEntryParserFactory
             else if (ukey.indexOf(FTPClientConfig.SYST_OS400) >= 0 ||
                     ukey.indexOf(FTPClientConfig.SYST_AS400) >= 0)
             {
-                parser = createOS400FTPEntryParser();
+                parser = createOS400FTPEntryParser(config);
             }
             else if (ukey.indexOf(FTPClientConfig.SYST_MVS) >= 0)
             {
@@ -158,7 +160,7 @@ public class DefaultFTPFileEntryParserFactory
         }
 
         if (parser instanceof Configurable) {
-            ((Configurable)parser).configure(this.config);
+            ((Configurable)parser).configure(config);
         }
         return parser;
     }
@@ -187,9 +189,8 @@ public class DefaultFTPFileEntryParserFactory
     public FTPFileEntryParser createFileEntryParser(FTPClientConfig config)
     throws ParserInitializationException
     {
-        this.config = config;
         String key = config.getServerSystemKey();
-        return createFileEntryParser(key);
+        return createFileEntryParser(key, config);
     }
 
 
@@ -208,6 +209,11 @@ public class DefaultFTPFileEntryParserFactory
     }
 
     public FTPFileEntryParser createNTFTPEntryParser()
+    {
+        return createNTFTPEntryParser(null);
+    }
+
+    private FTPFileEntryParser createNTFTPEntryParser(FTPClientConfig config)
     {
         if (config != null && FTPClientConfig.SYST_NT.equals(
                 config.getServerSystemKey()))
@@ -229,6 +235,11 @@ public class DefaultFTPFileEntryParserFactory
 
     public FTPFileEntryParser createOS400FTPEntryParser()
     {
+        return createOS400FTPEntryParser(null);
+    }
+
+    public FTPFileEntryParser createOS400FTPEntryParser(FTPClientConfig config)
+        {
         if (config != null &&
                 FTPClientConfig.SYST_OS400.equals(config.getServerSystemKey()))
         {
