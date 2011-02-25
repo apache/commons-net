@@ -28,6 +28,7 @@ import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPConnectionClosedException;
+import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 
 /***
@@ -47,12 +48,13 @@ public final class FTPClientExample
         "Usage: ftp [-s] [-b] <hostname> <username> <password> <remote file> <local file>\n" +
         "\nDefault behavior is to download a file and use ASCII transfer mode.\n" +
         "\t-s store file on server (upload)\n" +
+        "\t-l list files\n" +
         "\t-b use binary transfer mode\n";
 
     public static final void main(String[] args)
     {
         int base = 0;
-        boolean storeFile = false, binaryTransfer = false, error = false;
+        boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false;
         String server, username, password, remote, local;
         FTPClient ftp;
 
@@ -62,6 +64,8 @@ public final class FTPClientExample
                 storeFile = true;
             else if (args[base].startsWith("-b"))
                 binaryTransfer = true;
+            else if (args[base].equals("-l"))
+                listFiles = true;
             else
                 break;
         }
@@ -151,6 +155,13 @@ __main:
                 ftp.storeFile(remote, input);
 
                 input.close();
+            }
+            else if (listFiles)
+            {
+                for (FTPFile f : ftp.listFiles(remote)) {
+                    System.out.println(f);
+                }
+                    
             }
             else
             {
