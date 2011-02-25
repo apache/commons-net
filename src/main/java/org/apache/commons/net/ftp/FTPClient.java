@@ -237,6 +237,11 @@ import org.apache.commons.net.io.Util;
 public class FTPClient extends FTP
 implements Configurable
 {
+    /**
+     * The system property ({@value}) which can be used to override the system type. 
+     */
+    public static final String FTP_SYSTEM_TYPE = "org.apache.commons.net.ftp.systemType";
+
     /***
      * A constant indicating the FTP session is expecting all transfers
      * to occur between the client (local) and server and that the server
@@ -2538,8 +2543,9 @@ implements Configurable
      * @param parserKey A string representing a designated code or fully-qualified
      * class name of an  <code> FTPFileEntryParser </code> that should be
      *               used to parse each server file listing.
-     *               May be {@code null}, in which case the {@link #getSystemType()}
-     *               is used to provide the value.
+     *               May be {@code null}, in which case the code checks first
+     *               the system property {@link #FTP_SYSTEM_TYPE}, and if that is
+     *               not defined the SYST command is used to provide the value.
      *
      * @return A FTPListParseEngine object that holds the raw information and
      * is capable of providing parsed FTPFile objects, one for each file
@@ -2592,9 +2598,13 @@ implements Configurable
                     __entryParserKey = __configuration.getServerSystemKey();
                 } else {
                     // if a parserKey hasn't been supplied, and a configuration
-                    // hasn't been supplied, then autodetect by calling
+                    // hasn't been supplied, and the override property is not set
+                    // then autodetect by calling
                     // the SYST command and use that to choose the parser.
-                    final String systemType = getSystemType(); // cannot be null
+                    String systemType = System.getProperty(FTP_SYSTEM_TYPE);
+                    if (systemType == null) {
+                        systemType = getSystemType(); // cannot be null
+                    }
                     __entryParser =
                         __parserFactory.createFileEntryParser(systemType);
                     __entryParserKey = systemType;
