@@ -91,6 +91,23 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
             Throwable root = pie.getRootCause();
             assertTrue(root instanceof ClassCastException);
         }
+
+        try {
+            // Class exists, but is an interface
+            factory.createFileEntryParser("org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory");
+            fail("ParserInitializationException should have been thrown.");
+        } catch (ParserInitializationException pie){
+            Throwable root = pie.getRootCause();
+            assertTrue(root instanceof InstantiationException);            
+        }
+        try {
+            // Class exists, but is abstract
+            factory.createFileEntryParser("org.apache.commons.net.ftp.FTPFileEntryParserImpl");
+            fail("ParserInitializationException should have been thrown.");
+        } catch (ParserInitializationException pie){
+            Throwable root = pie.getRootCause();
+            assertTrue(root instanceof InstantiationException);            
+        }
     }
 }
 
