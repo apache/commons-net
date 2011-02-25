@@ -2538,6 +2538,8 @@ implements Configurable
      * @param parserKey A string representing a designated code or fully-qualified
      * class name of an  <code> FTPFileEntryParser </code> that should be
      *               used to parse each server file listing.
+     *               May be {@code null}, in which case the {@link #getSystemType()}
+     *               is used to provide the value.
      *
      * @return A FTPListParseEngine object that holds the raw information and
      * is capable of providing parsed FTPFile objects, one for each file
