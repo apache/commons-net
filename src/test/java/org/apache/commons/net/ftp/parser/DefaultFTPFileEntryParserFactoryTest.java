@@ -17,6 +17,7 @@
 package org.apache.commons.net.ftp.parser;
 import junit.framework.TestCase;
 
+import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 
@@ -109,5 +110,34 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
             assertTrue(root instanceof InstantiationException);            
         }
     }
-}
+    
+    private void checkParserClass(FTPFileEntryParserFactory fact, String key, Class<?> expected){
+        FTPClientConfig config = key == null ? new FTPClientConfig() : new FTPClientConfig(key);
+        FTPFileEntryParser parser = fact.createFileEntryParser(config);
+        assertNotNull(parser);
+        assertTrue("Expected "+expected.getCanonicalName()+" got "+parser.getClass().getCanonicalName(),
+                expected.isInstance(parser));
+    }
+    public void testDefaultParserFactoryConfig() throws Exception {
+        DefaultFTPFileEntryParserFactory factory =
+            new DefaultFTPFileEntryParserFactory();
 
+        try {
+            factory.createFileEntryParser((FTPClientConfig)null);
+            fail("Expected NullPointerException");
+        } catch (NullPointerException npe) {
+            // expected
+        }
+        checkParserClass(factory, null, UnixFTPEntryParser.class);
+
+        checkParserClass(factory, FTPClientConfig.SYST_OS400, OS400FTPEntryParser.class);
+        checkParserClass(factory, FTPClientConfig.SYST_AS400, CompositeFileEntryParser.class);
+        checkParserClass(factory, FTPClientConfig.SYST_L8, UnixFTPEntryParser.class);
+        checkParserClass(factory, FTPClientConfig.SYST_MVS, MVSFTPEntryParser.class);
+        checkParserClass(factory, FTPClientConfig.SYST_NETWARE, NetwareFTPEntryParser.class);
+        checkParserClass(factory, FTPClientConfig.SYST_NT, NTFTPEntryParser.class);
+        checkParserClass(factory, FTPClientConfig.SYST_OS2, OS2FTPEntryParser.class);
+        checkParserClass(factory, FTPClientConfig.SYST_UNIX, UnixFTPEntryParser.class);
+        checkParserClass(factory, FTPClientConfig.SYST_VMS, VMSFTPEntryParser.class);
+    }
+}
