@@ -2344,6 +2344,86 @@ implements Configurable
     }
 
     /**
+     * Using the default system autodetect mechanism, obtain a
+     * list of directories contained in the current working directory.
+     * <p>
+     * This information is obtained through the LIST command.  The contents of
+     * the returned array is determined by the<code> FTPFileEntryParser </code>
+     * used.
+     * <p>
+     * @return The list of directories contained in the current directory
+     *         in the format determined by the autodetection mechanism.
+     *         
+     * @exception FTPConnectionClosedException
+     *                   If the FTP server prematurely closes the connection
+     *                   as a result of the client being idle or some other
+     *                   reason causing the server to send FTP reply code 421.
+     *                   This exception may be caught either as an IOException
+     *                   or independently as itself.
+     * @exception IOException
+     *                   If an I/O error occurs while either sending a
+     *                   command to the server or receiving a reply
+     *                   from the server.
+     * @exception ParserInitializationException
+     *                   Thrown if the parserKey parameter cannot be
+     *                   resolved by the selected parser factory.
+     *                   In the DefaultFTPEntryParserFactory, this will
+     *                   happen when parserKey is neither
+     *                   the fully qualified class name of a class
+     *                   implementing the interface
+     *                   org.apache.commons.net.ftp.FTPFileEntryParser
+     *                   nor a string containing one of the recognized keys
+     *                   mapping to such a parser or if class loader
+     *                   security issues prevent its being loaded.
+     * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
+     * @see org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory
+     * @see org.apache.commons.net.ftp.FTPFileEntryParser
+     */
+    public FTPFile[] listDirectories() throws IOException {
+        return listDirectories((String) null);
+    }
+
+    /**
+     * Using the default system autodetect mechanism, obtain a
+     * list of directories contained in the specified directory.
+     * <p>
+     * This information is obtained through the LIST command.  The contents of
+     * the returned array is determined by the<code> FTPFileEntryParser </code>
+     * used.
+     * <p>
+     * @return The list of directories contained in the specified directory
+     *         in the format determined by the autodetection mechanism.
+     *         
+     * @exception FTPConnectionClosedException
+     *                   If the FTP server prematurely closes the connection
+     *                   as a result of the client being idle or some other
+     *                   reason causing the server to send FTP reply code 421.
+     *                   This exception may be caught either as an IOException
+     *                   or independently as itself.
+     * @exception IOException
+     *                   If an I/O error occurs while either sending a
+     *                   command to the server or receiving a reply
+     *                   from the server.
+     * @exception ParserInitializationException
+     *                   Thrown if the parserKey parameter cannot be
+     *                   resolved by the selected parser factory.
+     *                   In the DefaultFTPEntryParserFactory, this will
+     *                   happen when parserKey is neither
+     *                   the fully qualified class name of a class
+     *                   implementing the interface
+     *                   org.apache.commons.net.ftp.FTPFileEntryParser
+     *                   nor a string containing one of the recognized keys
+     *                   mapping to such a parser or if class loader
+     *                   security issues prevent its being loaded.
+     * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
+     * @see org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory
+     * @see org.apache.commons.net.ftp.FTPFileEntryParser
+     */
+    public FTPFile[] listDirectories(String parent) throws IOException {
+        return listFiles(parent, FTPFileFilters.DIRECTORIES);
+    }
+
+    /**
      * Using the default autodetect mechanism, initialize an FTPListParseEngine
      * object containing a raw file information for the current working
      * directory on the server
