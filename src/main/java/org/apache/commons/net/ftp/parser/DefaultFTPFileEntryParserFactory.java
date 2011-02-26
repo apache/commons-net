@@ -40,8 +40,8 @@ public class DefaultFTPFileEntryParserFactory
 
     // Match a plain Java Identifier
     private static final String JAVA_IDENTIFIER = "\\p{javaJavaIdentifierStart}(\\p{javaJavaIdentifierPart})*";
-    // Match a qualified name, e.g. a.b.c.Name
-    private static final String JAVA_QUALIFIED_NAME  = "("+JAVA_IDENTIFIER+"\\.)*"+JAVA_IDENTIFIER;
+    // Match a qualified name, e.g. a.b.c.Name - but don't allow the default package as that would allow "VMS"/"UNIX" etc.
+    private static final String JAVA_QUALIFIED_NAME  = "("+JAVA_IDENTIFIER+"\\.)+"+JAVA_IDENTIFIER;
     // Create the pattern, as it will be reused many times
     private static final Pattern JAVA_QUALIFIED_NAME_PATTERN = Pattern.compile(JAVA_QUALIFIED_NAME);
 
@@ -49,7 +49,7 @@ public class DefaultFTPFileEntryParserFactory
      * This default implementation of the FTPFileEntryParserFactory
      * interface works according to the following logic:
      * First it attempts to interpret the supplied key as a fully
-     * qualified classname of a class implementing the
+     * qualified classname (default package is not allowed) of a class implementing the
      * FTPFileEntryParser interface.  If that succeeds, a parser
      * object of this class is instantiated and is returned;
      * otherwise it attempts to interpret the key as an identirier
@@ -75,9 +75,11 @@ public class DefaultFTPFileEntryParserFactory
      *               <li>{@link FTPClientConfig#SYST_NT WINDOWS}</li>
      *               <li>{@link FTPClientConfig#SYST_OS2 OS/2}</li>
      *               <li>{@link FTPClientConfig#SYST_OS400 OS/400}</li>
+     *               <li>{@link FTPClientConfig#SYST_AS400 AS/400}</li>
      *               <li>{@link FTPClientConfig#SYST_VMS VMS}</li>
      *               <li>{@link FTPClientConfig#SYST_MVS MVS}</li>
      *               <li>{@link FTPClientConfig#SYST_NETWARE NETWARE}</li>
+     *               <li>{@link FTPClientConfig#SYST_L8 TYPE:L8}</li>
      *               </ul>
      * @return the FTPFileEntryParser corresponding to the supplied key.
      * @throws ParserInitializationException thrown if for any reason the factory cannot resolve
