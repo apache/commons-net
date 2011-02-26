@@ -52,6 +52,9 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="2.3" date="TBA" description="TBA">
+            <action issue="NET-330" dev="sebb" type="fix">
+            The method VMSFTPEntryParser.parseFileList(InputStream listStream) should not be present.
+            </action>
             <action issue="NET-303" dev="sebb" type="fix">
             FTPFileEntryParser API samples are wrong.
             </action>
