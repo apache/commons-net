@@ -52,6 +52,9 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="2.3" date="TBA" description="TBA">
+            <action issue="NET-252" dev="sebb" type="fix">
+            Get rid of using deprecated API in VMSFTPEntryParser.
+            </action>
             <action issue="NET-330" dev="sebb" type="fix">
             The method VMSFTPEntryParser.parseFileList(InputStream listStream) should not be present.
             </action>
