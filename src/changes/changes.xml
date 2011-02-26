@@ -52,6 +52,9 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="2.3" date="TBA" description="TBA">
+            <action issue="NET-303" dev="sebb" type="fix">
+            FTPFileEntryParser API samples are wrong.
+            </action>
             <action issue="NET-229" dev="sebb" type="add">
             Use properties file to handle new OS-type auto-detection.
             </action>

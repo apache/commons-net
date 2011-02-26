@@ -31,28 +31,8 @@ import java.util.List;
  * Here are some examples showing how to use one of the classes that
  * implement this interface.
  * <p>
- * The first example shows how to get an <b>iterable</b> list of files in which the
- * more expensive <code>FTPFile</code> objects are not created until needed.  This
- * is suitable for paged displays.   It requires that a parser object be created
- * beforehand: <code>parser</code> is an object (in the package
- * <code>org.apache.commons.net.ftp.parser</code>)
- * implementing this inteface.
  *
- * <pre>
- *    FTPClient f=FTPClient();
- *    f.connect(server);
- *    f.login(username, password);
- *    FTPFileList list = f.createFileList(directory, parser);
- *    FTPFileIterator iter = list.iterator();
- *
- *    while (iter.hasNext()) {
- *       FTPFile[] files = iter.getNext(25);  // "page size" you want
- *       //do whatever you want with these files, display them, etc.
- *       //expensive FTPFile objects not created until needed.
- *    }
- * </pre>
- *
- * The second example uses the revised <code>FTPClient.listFiles()</code>
+ * The first example uses the <code>FTPClient.listFiles()</code>
  * API to pull the whole list from the subfolder <code>subfolder</code> in
  * one call, attempting to automatically detect the parser type.  This
  * method, without a parserKey parameter, indicates that autodection should
@@ -65,7 +45,7 @@ import java.util.List;
  *    FTPFile[] files = f.listFiles("subfolder");
  * </pre>
  *
- * The third example uses the revised <code>FTPClient.listFiles()</code>>
+ * The secondr example uses the <code>FTPClient.listFiles()</code>>
  * API to pull the whole list from the current working directory in one call,
  * but specifying by classname the parser to be used.  For this particular
  * parser class, this approach is necessary since there is no way to
@@ -80,7 +60,7 @@ import java.util.List;
  *      ".");
  * </pre>
  *
- * The fourth example uses the revised <code>FTPClient.listFiles()</code>
+ * The third example uses the <code>FTPClient.listFiles()</code>
  * API to pull a single file listing in an arbitrary directory in one call,
  * specifying by KEY the parser to be used, in this case, VMS.
  *
@@ -91,6 +71,9 @@ import java.util.List;
  *    FTPFile[] files = f.listFiles("VMS", "subfolder/foo.java");
  * </pre>
  *
+ * For an alternative approach, see the {@link FTPListParseEngine} class
+ * which provides iterative access.
+ * 
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @version $Id$
  * @see org.apache.commons.net.ftp.FTPFile
