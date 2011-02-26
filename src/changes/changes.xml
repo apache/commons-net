@@ -52,6 +52,9 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="2.3" date="TBA" description="TBA">
+            <action issue="NET-229" dev="sebb" type="add">
+            Use properties file to handle new OS-type auto-detection.
+            </action>
             <action issue="NET-332" dev="sebb" type="add">
             Commons net ftp cannot handle unknown type parser and should allow override of parser through vm argument.
             The system property "org.apache.commons.net.ftp.systemType" can be used to provide the system type.

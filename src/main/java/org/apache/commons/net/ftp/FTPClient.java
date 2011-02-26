@@ -28,6 +28,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.Random;
 
 import org.apache.commons.net.MalformedServerReplyException;
@@ -242,6 +243,11 @@ implements Configurable
      */
     public static final String FTP_SYSTEM_TYPE = "org.apache.commons.net.ftp.systemType";
 
+    /**
+     * The name of the systemType properties file ({@value}).
+     */
+    private static final String SYSTEM_TYPE_PROPERTIES = "/systemType.properties";
+
     /***
      * A constant indicating the FTP session is expecting all transfers
      * to occur between the client (local) and server and that the server
@@ -310,6 +316,28 @@ implements Configurable
     private static final java.util.regex.Pattern __parms_pat;
     static {
         __parms_pat = java.util.regex.Pattern.compile(__parms);
+    }
+
+    private static class PropertiesSingleton {
+
+        static final Properties PROPERTIES;
+        
+        static {
+            InputStream resourceAsStream = FTPClient.class.getResourceAsStream(SYSTEM_TYPE_PROPERTIES);
+            Properties p = null;
+            if (resourceAsStream != null) {
+                p = new Properties();
+                try {
+                    p.load(resourceAsStream);
+                } catch (IOException e) {
+                }                            
+            }
+            PROPERTIES = p;
+        }
+        
+    }
+    private static Properties getOverrideProperties(){
+        return PropertiesSingleton.PROPERTIES;
     }
 
     /***
@@ -2546,6 +2574,9 @@ implements Configurable
      *               May be {@code null}, in which case the code checks first
      *               the system property {@link #FTP_SYSTEM_TYPE}, and if that is
      *               not defined the SYST command is used to provide the value.
+     *               To allow for arbitrary system types, the return from the
+     *               SYST command is used to look up an alias for the type in the
+     *               {@link #SYSTEM_TYPE_PROPERTIES} properties file if it is available.
      *
      * @return A FTPListParseEngine object that holds the raw information and
      * is capable of providing parsed FTPFile objects, one for each file
@@ -2604,9 +2635,15 @@ implements Configurable
                     String systemType = System.getProperty(FTP_SYSTEM_TYPE);
                     if (systemType == null) {
                         systemType = getSystemType(); // cannot be null
+                        Properties override = getOverrideProperties();
+                        if (override != null) {
+                            String newType = override.getProperty(systemType);
+                            if (newType != null) {
+                                systemType = newType;
+                            }
+                        }
                     }
-                    __entryParser =
-                        __parserFactory.createFileEntryParser(systemType);
+                    __entryParser = __parserFactory.createFileEntryParser(systemType);
                     __entryParserKey = systemType;
                 }
             }
@@ -2615,7 +2652,6 @@ implements Configurable
         return initiateListParsing(__entryParser, pathname);
 
     }
-
 
     /**
      * private method through which all listFiles() and
