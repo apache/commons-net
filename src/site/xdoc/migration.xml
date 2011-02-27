@@ -42,11 +42,11 @@ This how-to lists the migration steps for moving between versions of Commons/Net
 <p>
 This version is a drop in replacement for NetComponents.  Only package names have changed.
 </p>
-<OL>
-  <LI>Change all occurances of <tt>com.oroinc.net.*</tt> to <tt>org.apache.commons.net.*</tt></LI>
-  <LI>Change all occurances of <tt>com.oroinc.io.*</tt> to <tt>org.apache.commons.net.io.*</tt></LI>
-  <LI>Change all occurances of <tt>com.oroinc.util.*</tt> to <tt>org.apache.commons.net.util.*</tt></LI>
-</OL>
+<ol>
+  <li>Change all occurances of <tt>com.oroinc.net.*</tt> to <tt>org.apache.commons.net.*</tt></li>
+  <li>Change all occurances of <tt>com.oroinc.io.*</tt> to <tt>org.apache.commons.net.io.*</tt></li>
+  <li>Change all occurances of <tt>com.oroinc.util.*</tt> to <tt>org.apache.commons.net.util.*</tt></li>
+</ol>
 </section>
 
 
