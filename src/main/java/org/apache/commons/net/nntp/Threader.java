@@ -141,7 +141,7 @@ public class Threader {
                 if ((parentRef != null)
                     && (ref.parent == null)
                     && (parentRef != ref)
-                    && !(parentRef.findChild(ref))) {
+                    && !(ref.findChild(parentRef))) {
                     // Link ref into the parent's child list
                     ref.parent = parentRef;
                     ref.next = parentRef.child;

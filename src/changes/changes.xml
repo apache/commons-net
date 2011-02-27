@@ -54,6 +54,9 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.0" date="TBA" description="TBA">
+            <action issue="NET-289" dev="sebb" type="fix" due-to="Luc Claes">
+            StackOverflowError in Threader.
+            </action>
             <action issue="NET-317" dev="sebb" type="fix">
             POP3MessageInfo fields should be final.
             </action>
