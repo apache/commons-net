@@ -54,6 +54,10 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.0" date="TBA" description="TBA">
+            <action issue="NET-258" dev="sebb" type="fix">
+            Implement A Keepalive Mechanism. Control channel keepalive implemented for the following methods:
+            appendFile, storeFile, storeUniqueFile, retrieveFile.
+            </action>
             <action issue="NET-289" dev="sebb" type="fix" due-to="Luc Claes">
             StackOverflowError in Threader.
             </action>
