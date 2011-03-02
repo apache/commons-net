@@ -207,6 +207,30 @@ public class TelnetClient extends Telnet
     }
     /* Code Section added for supporting AYT (start)*/
 
+    /***
+     * Sends a protocol-specific subnegotiation message to the remote peer.
+     * {@link TelnetClient} will add the IAC SB &amp; IAC SE framing bytes;
+     * the first byte in {@code message} should be the appropriate telnet
+     * option code.
+     *
+     * <p>
+     * This method does not wait for any response. Subnegotiation messages
+     * sent by the remote end can be handled by registering an approrpriate
+     * {@link TelnetOptionHandler}.
+     * </p>
+     *
+     * @param message option code followed by subnegotiation payload
+     * @throws IllegalArgumentException if {@code message} has length zero
+     * @throws IOException if an I/O error occurs while writing the message
+     ***/
+    public void sendSubnegotiation(int[] message)
+    throws IOException, IllegalArgumentException
+    {
+        if (message.length < 1)
+            throw new IllegalArgumentException("zero length message");
+        _sendSubnegotiation(message);
+    }
+
     /* open TelnetOptionHandler functionality (start)*/
 
     /***
