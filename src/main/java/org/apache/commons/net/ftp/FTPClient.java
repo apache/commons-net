@@ -2691,7 +2691,7 @@ implements Configurable
             engine.readServerList(socket.getInputStream(), getControlEncoding());
         }
         finally {
-            socket.close();
+            Util.closeQuietly(socket);
         }
 
         completePendingCommand();
