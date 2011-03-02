@@ -283,7 +283,24 @@ public class FTP extends SocketClient
                 Character.isDigit(line.charAt(0))));
     }
 
-    private void __getReply() throws IOException
+    /**
+     * Get the reply, and pass it to command listeners
+     */
+    private void __getReply()  throws IOException
+    {
+        __getReply(true);
+    }
+
+    /**
+     * Get the reply, but don't pass it to command listeners.
+     * Used for keep-alive processing only.
+     */
+    protected void __getReplyNoReport()  throws IOException
+    {
+        __getReply(false);
+    }
+
+    private void __getReply(boolean reportReply) throws IOException
     {
         int length;
 
@@ -337,7 +354,7 @@ public class FTP extends SocketClient
             while ( isStrictMultilineParsing() ? __strictCheck(line, code) : __lenientCheck(line));
         }
 
-        if (_commandSupport_.getListenerCount() > 0) {
+        if (reportReply && _commandSupport_.getListenerCount() > 0) {
             _commandSupport_.fireReplyReceived(_replyCode, getReplyString());
         }
 
@@ -458,6 +475,18 @@ public class FTP extends SocketClient
             throw new IOException("Connection is not open");
         }
 
+        final String message = __buildMessage(command, args);
+
+        __send(message);
+
+        if (_commandSupport_.getListenerCount() > 0)
+            _commandSupport_.fireCommandSent(command, message);
+
+        __getReply();
+        return _replyCode;
+    }
+
+    private String __buildMessage(String command, String args) {
         final StringBuilder __commandBuffer = new StringBuilder();
 
         __commandBuffer.append(command);
@@ -468,8 +497,11 @@ public class FTP extends SocketClient
             __commandBuffer.append(args);
         }
         __commandBuffer.append(SocketClient.NETASCII_EOL);
+        return __commandBuffer.toString();
+    }
 
-        String message = __commandBuffer.toString();
+    private void __send(String message) throws IOException,
+            FTPConnectionClosedException, SocketException {
         try{
             _controlOutput_.write(message);
             _controlOutput_.flush();
@@ -485,12 +517,12 @@ public class FTP extends SocketClient
                 throw e;
             }
         }
+    }
 
-        if (_commandSupport_.getListenerCount() > 0)
-            _commandSupport_.fireCommandSent(command, message);
-
-        __getReply();
-        return _replyCode;
+    protected void __noop() throws IOException {
+        String msg = __buildMessage(FTPCommand.getCommand(FTPCommand.NOOP), null);
+        __send(msg);
+        __getReplyNoReport(); // This may timeout
     }
 
     /**
