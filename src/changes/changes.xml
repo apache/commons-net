@@ -54,8 +54,11 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.0" date="TBA" description="TBA">
+            <action issue="NET-270" dev="sebb" type="fix">
+            Incorrect error handling in method initiateListParsing of FTPClient.
+            </action>
             <action issue="NET-352" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
-            SASL PLAIN & CRAM-MD5 authentication.
+            SASL PLAIN and CRAM-MD5 authentication.
             </action>
             <action issue="NET-357" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
             The POP3 client does not support SSL/TLS connections.
