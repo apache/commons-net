@@ -2092,40 +2092,6 @@ implements Configurable
 
 
     /***
-     * Fetches the system type name from the server and returns the string.
-     * This value is cached for the duration of the connection after the
-     * first call to this method.  In other words, only the first time
-     * that you invoke this method will it issue a SYST command to the
-     * FTP server.  FTPClient will remember the value and return the
-     * cached value until a call to disconnect.
-     * <p>
-     * @return The system type name obtained from the server.  null if the
-     *       information could not be obtained.
-     * @exception FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
-     *  command to the server or receiving a reply from the server.
-     *  @deprecated Use {@link #getSystemType()} - which does not return null.
-     *  Will be deleted in version 3.0
-     ***/
-    @Deprecated
-    public String getSystemName() throws IOException
-    {
-        //if (syst() == FTPReply.NAME_SYSTEM_TYPE)
-        // Technically, we should expect a NAME_SYSTEM_TYPE response, but
-        // in practice FTP servers deviate, so we soften the condition to
-        // a positive completion.
-        if (__systemName == null && FTPReply.isPositiveCompletion(syst()))
-            __systemName = _replyLines.get(_replyLines.size() - 1).substring(4);
-
-        return __systemName;
-    }
-
-
-    /***
      * Fetches the system type from the server and returns the string.
      * This value is cached for the duration of the connection after the
      * first call to this method.  In other words, only the first time
