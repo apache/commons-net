@@ -42,8 +42,6 @@ import org.apache.commons.net.io.FromNetASCIIInputStream;
 import org.apache.commons.net.io.ToNetASCIIOutputStream;
 import org.apache.commons.net.io.Util;
 
-import examples.util.IOUtil;
-
 /***
  * FTPClient encapsulates all the functionality necessary to store and
  * retrieve files from an FTP server.  This class takes care of all
@@ -478,7 +476,7 @@ implements Configurable
         }
         finally
         {
-            IOUtil.closeQuietly(socket);
+            Util.closeQuietly(socket);
         }
         output.close(); // we want to propagate errors from this
         return completePendingCommand();
@@ -1485,7 +1483,7 @@ implements Configurable
                     CopyStreamEvent.UNKNOWN_STREAM_SIZE, __copyStreamListener,
                     false);
         } finally {
-            IOUtil.closeQuietly(socket);
+            Util.closeQuietly(socket);
         }
         return completePendingCommand();
     }

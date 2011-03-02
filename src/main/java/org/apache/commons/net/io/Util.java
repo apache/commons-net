@@ -17,11 +17,13 @@
 
 package org.apache.commons.net.io;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
+import java.net.Socket;
 
 /***
  * The Util class cannot be instantiated and stores short static convenience
@@ -331,4 +333,33 @@ public final class Util
         return copyReader(source, dest, DEFAULT_COPY_BUFFER_SIZE);
     }
 
+    /**
+     * Closes the object quietly, catching rather than throwing IOException.
+     * Intended for use from finally blocks.
+     * 
+     * @param closeable the object to close, may be {@code null}
+     */
+    public static void closeQuietly(Closeable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (IOException e) {
+            }
+        }
+    }
+
+    /**
+     * Closes the socket quietly, catching rather than throwing IOException.
+     * Intended for use from finally blocks.
+     * 
+     * @param socket the socket to close, may be {@code null}
+     */
+    public static void closeQuietly(Socket socket) {
+        if (socket != null) {
+            try {
+                socket.close();
+            } catch (IOException e) {
+            }
+        }
+    }
 }

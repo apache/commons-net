@@ -17,36 +17,26 @@
 
 package examples.util;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.Socket;
-
 import org.apache.commons.net.io.Util;
 
-/**
+/***
  * This is a utility class providing a reader/writer capability required
  * by the weatherTelnet, rexec, rshell, and rlogin example programs.
+ * The only point of the class is to hold the static method readWrite
+ * which spawns a reader thread and a writer thread.  The reader thread
+ * reads from a local input source (presumably stdin) and writes the
+ * data to a remote output destination.  The writer thread reads from
+ * a remote input source and writes to a local output destination.
+ * The threads terminate when the remote input source closes.
  * <p>
- * It also contains some other common IO methods.
- */
+ ***/
 
 public final class IOUtil
 {
 
-    /**
-     * This method spawns a reader thread and a writer thread. The reader thread
-     * reads from a local input source (presumably stdin) and writes the
-     * data to a remote output destination.  The writer thread reads from
-     * a remote input source and writes to a local output destination.
-     * The threads terminate when the remote input source closes.
-     * 
-     * @param remoteInput
-     * @param remoteOutput
-     * @param localInput
-     * @param localOutput
-     */
     public static final void readWrite(final InputStream remoteInput,
                                        final OutputStream remoteOutput,
                                        final InputStream localInput,
@@ -112,34 +102,5 @@ public final class IOUtil
         }
     }
 
-    /**
-     * Closes the object quietly, catching rather than throwing IOException.
-     * Intended for use from finally blocks.
-     * 
-     * @param closeable the object to close, may be {@code null}
-     */
-    public static void closeQuietly(Closeable closeable) {
-        if (closeable != null) {
-            try {
-                closeable.close();
-            } catch (IOException e) {
-            }
-        }
-    }
-
-    /**
-     * Closes the socket quietly, catching rather than throwing IOException.
-     * Intended for use from finally blocks.
-     * 
-     * @param socket the socket to close, may be {@code null}
-     */
-    public static void closeQuietly(Socket socket) {
-        if (socket != null) {
-            try {
-                socket.close();
-            } catch (IOException e) {
-            }
-        }
-    }
 }
 
