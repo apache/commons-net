@@ -62,6 +62,10 @@ The <action> type attribute can be add,update,fix,remove.
             </action>
             <action dev="sebb" type="fix">
             Removed deprecated unused fields from FTPSClient.
+            Removed deprecated methods FTPClient.getSystemName(), FTPListParseEngine.readServerList(InputStream stream),
+            FTPSSocketFactory.createServerSocket(int port), FTPSSocketFactory.createServerSocket(int port, int backlog),
+            FTPSSocketFactory.createServerSocket(int port, int backlog, InetAddress ifAddress),
+            FTPSSocketFactory.init(ServerSocket socket)
             </action>
             <action issue="NET-258" dev="sebb" type="fix">
             Implement A Keepalive Mechanism. Control channel keepalive implemented for the following methods:

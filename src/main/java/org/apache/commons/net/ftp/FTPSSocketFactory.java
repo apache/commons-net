@@ -60,30 +60,4 @@ public class FTPSSocketFactory extends SocketFactory {
     public Socket createSocket(InetAddress address, int port, InetAddress localAddress, int localPort) throws IOException {
         return this.context.getSocketFactory().createSocket(address, port, localAddress, localPort);
     }
-
-    /** @deprecated (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int) instead} */
-    @Deprecated
-    public ServerSocket createServerSocket(int port) throws IOException {
-        return this.init(this.context.getServerSocketFactory().createServerSocket(port));
-    }
-
-    /** @deprecated  (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int, int) instead} */
-    @Deprecated
-    public ServerSocket createServerSocket(int port, int backlog) throws IOException {
-        return this.init(this.context.getServerSocketFactory().createServerSocket(port, backlog));
-    }
-
-    /** @deprecated  (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int, int, InetAddress) instead} */
-    @Deprecated
-    public ServerSocket createServerSocket(int port, int backlog, InetAddress ifAddress) throws IOException {
-        return this.init(this.context.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
-    }
-        
-    /** @deprecated  (2.2) use {@link FTPSServerSocketFactory#init(ServerSocket)} */
-    @SuppressWarnings("unused")
-    @Deprecated
-    public ServerSocket init(ServerSocket socket) throws IOException {
-        ((SSLServerSocket) socket).setUseClientMode(true);
-        return socket;
-    }
 }
