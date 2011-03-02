@@ -30,6 +30,8 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPConnectionClosedException;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
+import org.apache.commons.net.io.CopyStreamEvent;
+import org.apache.commons.net.io.CopyStreamListener;
 
 /***
  * This is an example program demonstrating how to use the FTPClient class.
@@ -38,17 +40,19 @@ import org.apache.commons.net.ftp.FTPReply;
  * Just so you can see what's happening, all reply strings are printed.
  * If the -b flag is used, a binary transfer is assumed (default is ASCII).
  * <p>
- * Usage: ftp [-s] [-b] <hostname> <username> <password> <remote file> <local file>
+ * Usage: ftp [-s] [-b] [-l] [-#] [-k nnn] <hostname> <username> <password> <remote file> <local file>
  * <p>
  ***/
 public final class FTPClientExample
 {
 
     public static final String USAGE =
-        "Usage: ftp [-s] [-b] <hostname> <username> <password> <remote file> <local file>\n" +
+        "Usage: ftp [-s] [-b] [-l] [-k nnn] [-#] <hostname> <username> <password> <remote file> <local file>\n" +
         "\nDefault behavior is to download a file and use ASCII transfer mode.\n" +
         "\t-s store file on server (upload)\n" +
-        "\t-l list files\n" +
+        "\t-l list files (local file is ignored)\n" +
+        "\t-# add hash display during transfers\n" +
+        "\t-k nnnn use keep-alive timer\n" +
         "\t-b use binary transfer mode\n";
 
     public static final void main(String[] args)
@@ -56,21 +60,31 @@ public final class FTPClientExample
         int base = 0;
         boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false;
         String server, username, password, remote, local;
-        FTPClient ftp;
+        final FTPClient ftp = new FTPClient();
 
         for (base = 0; base < args.length; base++)
         {
-            if (args[base].startsWith("-s"))
+            if (args[base].startsWith("-s")) {
                 storeFile = true;
-            else if (args[base].startsWith("-b"))
+            }
+            else if (args[base].startsWith("-b")) {
                 binaryTransfer = true;
-            else if (args[base].equals("-l"))
+            }
+            else if (args[base].equals("-l")) {
                 listFiles = true;
-            else
+            }
+            else if (args[base].equals("-#")) {
+                ftp.setCopyStreamListener(createListener());
+            }
+            else if (args[base].equals("-k")) {
+                ftp.setControlKeepAliveTimeout(Long.parseLong(args[++base]));
+            } 
+            else {
                 break;
+            }
         }
 
-        if ((args.length - base) != 5)
+        if ((args.length - base) != 5) // server, user, pass, remote, local
         {
             System.err.println(USAGE);
             System.exit(1);
@@ -88,7 +102,6 @@ public final class FTPClientExample
         remote = args[base++];
         local = args[base];
 
-        ftp = new FTPClient();
         ftp.addProtocolCommandListener(new PrintCommandListener(
                                            new PrintWriter(System.out)));
 
@@ -174,6 +187,8 @@ __main:
                 output.close();
             }
 
+            ftp.syst();
+            ftp.feat();
             ftp.logout();
         }
         catch (FTPConnectionClosedException e)
@@ -205,5 +220,22 @@ __main:
         System.exit(error ? 1 : 0);
     } // end main
 
+    private static CopyStreamListener createListener(){
+        return new CopyStreamListener(){
+            private long megsTotal = 0;
+            public void bytesTransferred(CopyStreamEvent event) {
+                bytesTransferred(event.getTotalBytesTransferred(), event.getBytesTransferred(), event.getStreamSize());
+            }
+
+            public void bytesTransferred(long totalBytesTransferred,
+                    int bytesTransferred, long streamSize) {
+                long megs = totalBytesTransferred / 1000000;
+                for (long l = megsTotal; l < megs; l++) {
+                    System.err.print("#");
+                }
+                megsTotal = megs;
+            }
+        };
+    }
 }
 
