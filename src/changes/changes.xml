@@ -54,6 +54,9 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.0" date="TBA" description="TBA">
+            <action issue="NET-357" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
+            The POP3 client does not support SSL/TLS connections.
+            </action>
             <action dev="sebb" type="fix">
             Removed deprecated unused fields from FTPSClient.
             </action>
