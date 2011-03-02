@@ -26,6 +26,8 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -35,6 +37,7 @@ import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory;
 import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
 import org.apache.commons.net.ftp.parser.ParserInitializationException;
+import org.apache.commons.net.io.CopyStreamAdapter;
 import org.apache.commons.net.io.CopyStreamEvent;
 import org.apache.commons.net.io.CopyStreamException;
 import org.apache.commons.net.io.CopyStreamListener;
@@ -224,6 +227,30 @@ import org.apache.commons.net.io.Util;
  *     as in Ant</li>
  * </ul>see {@link  FTPClientConfig  FTPClientConfig}.
  * <p>
+ * <b>Control channel keep-alive feature</b>:<br/>
+ * During file transfers, the data connection is busy, but the control connection is idle.
+ * FTP servers know that the control connection is in use, so won't close it through lack of activity,
+ * but it's a lot harder for network routers to know that the control and data connections are associated
+ * with each other.
+ * Some routers may treat the control connection as idle, and disconnect it if the transfer over the data
+ * connection takes longer than the allowable idle time for the router.
+ * <br/>
+ * One solution to this is to send a safe command (i.e. NOOP) over the control connection to reset the router's
+ * idle timer. This is enabled as follows:
+ * <pre>
+ *     ftpClient.setControlKeepAliveTimeout(300); // set timeout to 5 minutes
+ * </pre>
+ * This will cause the file upload/download methods to send a NOOP approximately every 5 minutes.
+ * <p>
+ * The implementation currently uses a {@link CopyStreamListener} which is passed to the 
+ * {@link Util#copyStream(InputStream, OutputStream, int, long, CopyStreamListener, boolean)}
+ * method, so the timing is partially dependent on how long each block transfer takes.
+ * <p>
+ * <b>Note:</b> this does not apply to the methods where the user is responsible for writing or reading 
+ * the data stream, i.e. {@link #retrieveFileStream(String)} , {@link #storeFileStream(String)} 
+ * and the other xxxFileStream methods
+ * <p>
+ *
  * @author Daniel F. Savarese
  * @author Rory Winston
  * @see FTP
@@ -308,8 +335,15 @@ implements Configurable
 
     private FTPClientConfig __configuration;
 
-    // Listener used by store/retrieve methods
+    // Listener used by store/retrieve methods to handle keepalive
     private CopyStreamListener __copyStreamListener;
+
+    // How long to wait before sending another control keep-alive message
+    private long __controlKeepAliveTimeout;
+
+    // How long to wait (ms) for keepalive message replies before continuing
+    // Most FTP servers don't seem to support concurrent control and data connection usage
+    private int __controlKeepAliveReplyTimeout=1000;
 
     /** Pattern for PASV mode responses */
     private static final String __parms = "\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3}";
@@ -467,19 +501,31 @@ implements Configurable
         );
         if (__fileType == ASCII_FILE_TYPE)
             output = new ToNetASCIIOutputStream(output);
+
+        CSL csl = null;
+        if (__controlKeepAliveTimeout > 0) {
+            csl = new CSL(this, __controlKeepAliveTimeout, __controlKeepAliveReplyTimeout);
+        }
+
         // Treat everything else as binary for now
         try
         {
             Util.copyStream(local, output, getBufferSize(),
-                    CopyStreamEvent.UNKNOWN_STREAM_SIZE, __copyStreamListener,
+                    CopyStreamEvent.UNKNOWN_STREAM_SIZE, __mergeListeners(csl),
                     false);
         }
         finally
         {
             Util.closeQuietly(socket);
         }
-        output.close(); // we want to propagate errors from this
-        return completePendingCommand();
+
+        // Get the transfer response
+        boolean ok = completePendingCommand();
+        if (csl != null) {
+            csl.cleanUp(); // fetch any outstanding keepalive replies
+        }
+        output.close(); // we want to know about close failure
+        return ok;
     }
 
     private OutputStream __storeFileStream(int command, String remote)
@@ -1476,16 +1522,28 @@ implements Configurable
                 getBufferSize());
         if (__fileType == ASCII_FILE_TYPE)
             input = new FromNetASCIIInputStream(input);
+        
+        CSL csl = null;
+        if (__controlKeepAliveTimeout > 0) {
+            csl = new CSL(this, __controlKeepAliveTimeout, __controlKeepAliveReplyTimeout);
+        }
+
         // Treat everything else as binary for now
         try
         {
             Util.copyStream(input, local, getBufferSize(),
-                    CopyStreamEvent.UNKNOWN_STREAM_SIZE, __copyStreamListener,
+                    CopyStreamEvent.UNKNOWN_STREAM_SIZE, __mergeListeners(csl),
                     false);
         } finally {
             Util.closeQuietly(socket);
         }
-        return completePendingCommand();
+
+        // Get the transfer response
+        boolean ok = completePendingCommand();
+        if (csl != null) {
+            csl.cleanUp(); // fetch any outstanding keepalive replies
+        }
+        return ok;
     }
 
     /***
@@ -2876,6 +2934,102 @@ implements Configurable
      */
     public CopyStreamListener getCopyStreamListener(){
         return __copyStreamListener;
+    }
+    
+    /**
+     * Set the time to wait between sending control connection keepalive messages
+     * when processing file upload or download.
+     * 
+     * @param controlIdle the wait (in secs) between keepalive messages. Zero (or less) disables.
+     */
+    public void setControlKeepAliveTimeout(long controlIdle){
+        __controlKeepAliveTimeout = controlIdle * 1000;
+    }
+
+    /**
+     * Get the time to wait between sending control connection keepalive messages.
+     * @return the number of seconds between keepalive messages.
+     */
+    public long getControlKeepAliveTimeout() {
+        return __controlKeepAliveTimeout / 1000;
+    }
+
+    /**
+     * Set how long to wait for control keep-alive message replies.
+     * 
+     * @param timeout number of milliseconds to wait (defaults to 1000)
+     */
+    public void setControlKeepAliveReplyTimeout(int timeout) {
+        __controlKeepAliveReplyTimeout = timeout;
+    }
+
+    /**
+     * Get how long to wait for control keep-alive message replies.
++     */
+    public int getControlKeepAliveReplyTimeout() {
+        return __controlKeepAliveReplyTimeout;
+    }
+
+    private static class CSL implements CopyStreamListener {
+
+        private final FTPClient parent;
+        private final long idle;
+        private final int currentSoTimeout;
+        
+        private long time = System.currentTimeMillis();
+        private int notAcked;
+        
+        CSL(FTPClient parent, long idleTime, int maxWait) throws SocketException {
+            this.idle = idleTime;
+            this.parent = parent;
+            this.currentSoTimeout = parent.getSoTimeout();
+            parent.setSoTimeout(maxWait);
+        }
+        public void bytesTransferred(CopyStreamEvent event) {
+            bytesTransferred(event.getTotalBytesTransferred(), event.getBytesTransferred(), event.getStreamSize());
+        }
+
+        public void bytesTransferred(long totalBytesTransferred,
+                int bytesTransferred, long streamSize) {
+            long now = System.currentTimeMillis();
+            if (now - time > idle) {
+                try {
+                    parent.__noop();
+                } catch (SocketTimeoutException e) {
+                    notAcked++;
+                } catch (IOException e) {
+                }
+                time = now;
+            }
+        }
+        
+        void cleanUp() throws IOException {
+            while(notAcked-- > 0) {
+                parent.__getReplyNoReport();
+            }
+            parent.setSoTimeout(currentSoTimeout);
+        }
+        
+    }
+    
+    /**
+     * Merge two copystream listeners, either or both of which may be null.
+     * 
+     * @param local the listener used by this class, may be null
+     * @return a merged listener or a single listener or null
+     */
+    private CopyStreamListener __mergeListeners(CopyStreamListener local) {
+        if (local == null) {
+            return __copyStreamListener;
+        }
+        if (__copyStreamListener == null) {
+            return local;
+        }
+        // Both are non-null
+        CopyStreamAdapter merged = new CopyStreamAdapter();
+        merged.addCopyStreamListener(local);
+        merged.addCopyStreamListener(__copyStreamListener);
+        return merged;
     }
 }
 
