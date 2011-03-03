@@ -71,6 +71,9 @@ The <action> type attribute can be add,update,fix,remove.
             <action issue="NET-343" dev="sebb" type="add" due-to="Archie Cobbs">
             Telnet client: Support Client-initiated Subnegotiation Messages.
             </action>
+            <action issue="NET-344" dev="sebb" type="add" due-to="Archie Cobbs">
+            Telnet client: Support Listener Notification of Incoming Data.
+            </action>
             <action issue="NET-270" dev="sebb" type="fix">
             Incorrect error handling in method initiateListParsing of FTPClient.
             </action>

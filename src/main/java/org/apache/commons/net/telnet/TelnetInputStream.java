@@ -298,13 +298,15 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     // synchronized(__client) critical sections are to protect against
     // TelnetOutputStream writing through the telnet client at same time
     // as a processDo/Will/etc. command invoked from TelnetInputStream
-    // tries to write.
-    private void __processChar(int ch) throws InterruptedException
+    // tries to write. Returns true if buffer was previously empty.
+    private boolean __processChar(int ch) throws InterruptedException
     {
         // Critical section because we're altering __bytesAvailable,
         // __queueTail, and the contents of _queue.
+        boolean bufferWasEmpty;
         synchronized (__queue)
         {
+            bufferWasEmpty = (__bytesAvailable == 0);
             while (__bytesAvailable >= __queue.length - 1)
             {
                 // The queue is full. We need to wait before adding any more data to it. Hopefully the stream owner
@@ -341,6 +343,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
             if (++__queueTail >= __queue.length)
                 __queueTail = 0;
         }
+        return bufferWasEmpty;
     }
 
     @Override
@@ -615,15 +618,21 @@ _outerLoop:
                     break _outerLoop;
                 }
 
+                // Process new character
+                boolean notify = false;
                 try
                 {
-                    __processChar(ch);
+                    notify = __processChar(ch);
                 }
                 catch (InterruptedException e)
                 {
                     if (__isClosed)
                         break _outerLoop;
                 }
+
+                // Notify input listener if buffer was previously empty
+                if (notify)
+                    __client.notifyInputListener();
             }
         }
         catch (IOException ioe)
@@ -632,6 +641,7 @@ _outerLoop:
             {
                 __ioException = ioe;
             }
+            __client.notifyInputListener();
         }
 
         synchronized (__queue)

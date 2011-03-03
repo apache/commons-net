@@ -53,6 +53,7 @@ public class TelnetClient extends Telnet
     private InputStream __input;
     private OutputStream __output;
     protected boolean readerThread = true;
+    private TelnetInputListener inputListener;
 
     /***
      * Default TelnetClient constructor.
@@ -329,9 +330,29 @@ public class TelnetClient extends Telnet
 
     /***
      * Sets the status of the reader thread.
-     * The reader thread status will apply to all subsequent connections
+     *
      * <p>
-     * @param flag - true switches the reader thread on, false switches it off
+     * When enabled, a seaparate internal reader thread is created for new
+     * connections to read incoming data as it arrives. This results in
+     * immediate handling of option negotiation, notifications, etc.
+     * (at least until the fixed-size internal buffer fills up).
+     * Otherwise, no thread is created an all negotiation and option
+     * handling is deferred until a read() is performed on the
+     * {@link #getInputStream input stream}.
+     * </p>
+     *
+     * <p>
+     * The reader thread must be enabled for {@link TelnetInputListener}
+     * support.
+     * </p>
+     *
+     * <p>
+     * When this method is invoked, the reader thread status will apply to all
+     * subsequent connections; the current connection (if any) is not affected.
+     * </p>
+     *
+     * @param flag true to enable the reader thread, false to disable
+     * @see #registerInputListener
      ***/
     public void setReaderThread(boolean flag)
     {
@@ -341,10 +362,57 @@ public class TelnetClient extends Telnet
     /***
      * Gets the status of the reader thread.
      * <p>
-     * @return true if the reader thread is on, false otherwise
+     * @return true if the reader thread is enabled, false otherwise
      ***/
     public boolean getReaderThread()
     {
         return (readerThread);
+    }
+
+    /***
+     * Register a listener to be notified when new incoming data is
+     * available to be read on the {@link #getInputStream input stream}.
+     * Only one listener is supported at a time.
+     *
+     * <p>
+     * More precisely, notifications are issued whenever the number of
+     * bytes available for immediate reading (i.e., the value returned
+     * by {@link InputStream#available}) transitions from zero to non-zero.
+     * Note that (in general) multiple reads may be required to empty the
+     * buffer and reset this notification, because incoming bytes are being
+     * added to the internal buffer asynchronously.
+     * </p>
+     *
+     * <p>
+     * Notifications are only supported when a {@link #setReaderThread
+     * reader thread} is enabled for the connection.
+     * </p>
+     *
+     * @param listener listener to be registered; replaces any previous
+     * @since 3.0
+     ***/
+    public synchronized void registerInputListener(TelnetInputListener listener)
+    {
+        this.inputListener = listener;
+    }
+
+    /***
+     * Unregisters the current {@link TelnetInputListener}, if any.
+     *
+     * @since 3.0
+     ***/
+    public synchronized void unregisterInputListener()
+    {
+        this.inputListener = null;
+    }
+
+    // Notify input listener
+    void notifyInputListener() {
+        TelnetInputListener listener;
+        synchronized (this) {
+            listener = this.inputListener;
+        }
+        if (listener != null)
+            listener.telnetInputAvailable();
     }
 }
