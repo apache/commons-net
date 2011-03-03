@@ -54,6 +54,9 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.0" date="TBA" description="TBA">
+            <action issue="NET-361" dev="sebb" type="add">
+            Implement Telnet Command sender.
+            </action>
             <action issue="NET-345" dev="sebb" type="fix" due-to="Archie Cobbs">
             Telnet client: not properly handling IAC bytes within subnegotiation messages:
             - failing to double IACs on output

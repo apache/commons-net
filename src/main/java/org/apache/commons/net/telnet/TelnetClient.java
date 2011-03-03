@@ -231,6 +231,24 @@ public class TelnetClient extends Telnet
         _sendSubnegotiation(message);
     }
 
+    /***
+     * Sends a command byte to the remote peer, adding the IAC prefix.
+     *
+     * <p>
+     * This method does not wait for any response. Messages
+     * sent by the remote end can be handled by registering an approrpriate
+     * {@link TelnetOptionHandler}.
+     * </p>
+     *
+     * @param command the code for the command
+     * @throws IOException if an I/O error occurs while writing the message
+     ***/
+    public void sendCommand(byte command)
+    throws IOException, IllegalArgumentException
+    {
+        _sendCommand(command);
+    }
+
     /* open TelnetOptionHandler functionality (start)*/
 
     /***

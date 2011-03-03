@@ -808,6 +808,19 @@ class Telnet extends SocketClient
     }
     /* open TelnetOptionHandler functionality (end)*/
 
+    /**
+     * Sends a command, automatically adds IAC prefix and flushes the output.
+     *
+     * @param cmd - command data to be sent
+     * @throws IOException - Exception in I/O.
+     **/
+    final synchronized void _sendCommand(byte cmd) throws IOException
+    {
+            _output_.write(TelnetCommand.IAC);
+            _output_.write(cmd);
+            _output_.flush();
+    }
+
     /* Code Section added for supporting AYT (start)*/
     /***
      * Processes the response of an AYT
