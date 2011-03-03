@@ -50,6 +50,9 @@ The <action> type attribute can be add,update,fix,remove.
     The Velocity template in resources/templates has been enhanced to replace pairs of adjacent spaces
     with a new-line in the release notes. (These spaces are ignored when displaying HTML).
     If the output is not quite correct, check for invisible trailing spaces!
+    
+    N.B. The release notes template groups actions by type, and only extracts data for the current release.
+    The changes report outputs actions in the order they appear in this file. 
      -->
 
     <body>
@@ -77,7 +80,7 @@ The <action> type attribute can be add,update,fix,remove.
             <action issue="NET-357" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
             The POP3 client does not support SSL/TLS connections.
             </action>
-            <action dev="sebb" type="fix">
+            <action dev="sebb" type="remove">
             Removed deprecated unused fields from FTPSClient.
             Removed deprecated methods FTPClient.getSystemName(), FTPListParseEngine.readServerList(InputStream stream),
             FTPSSocketFactory.createServerSocket(int port), FTPSSocketFactory.createServerSocket(int port, int backlog),
@@ -97,7 +100,7 @@ The <action> type attribute can be add,update,fix,remove.
             <action issue="NET-252" dev="sebb" type="fix">
             Get rid of using deprecated API in VMSFTPEntryParser.
             </action>
-            <action issue="NET-330" dev="sebb" type="fix">
+            <action issue="NET-330" dev="sebb" type="remove">
             The method VMSFTPEntryParser.parseFileList(InputStream listStream) should not be present.
             </action>
             <action issue="NET-303" dev="sebb" type="fix">
@@ -302,6 +305,8 @@ This is primarily a maintenance release, but it also includes new features and e
                 UnixFTPEntryParser fails to parse some entries
             </action>
         </release>
+
+        <release version="2.1" description="Not released"/>
 
         <release version="2.0" date="October 20, 2008" description="Java 5.0 release">
             <action dev="rwinston" type="fix" issue="NET-307">
