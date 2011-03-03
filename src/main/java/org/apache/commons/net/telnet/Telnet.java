@@ -21,6 +21,8 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.OutputStream;
 import java.io.IOException;
+import java.util.Arrays;
+
 import org.apache.commons.net.SocketClient;
 
 /**
@@ -782,22 +784,21 @@ class Telnet extends SocketClient
             System.err.println("SEND SUBNEGOTIATION: ");
             if (subn != null)
             {
-                for (int ii = 0; ii < subn.length; ii++)
-                {
-                    System.err.println("subn["  + ii + "]=" + subn[ii]);
-                }
+                System.err.println(Arrays.toString(subn));
             }
         }
         if (subn != null)
         {
-            byte byteresp[] = new byte[subn.length];
+            _output_.write(_COMMAND_SB);
+            // Note _output_ is buffered, so might as well simplify by writing single bytes
             for (int ii = 0; ii < subn.length; ii++)
             {
-                byteresp[ii] = (byte) subn[ii];
+                byte b = (byte) subn[ii];
+                if (b == TelnetCommand.IAC) {
+                    _output_.write(b); // double any IAC bytes
+                }
+                _output_.write(b);
             }
-
-            _output_.write(_COMMAND_SB);
-            _output_.write(byteresp);
             _output_.write(_COMMAND_SE);
 
             /* Code Section added for sending the negotiation ASAP (start)*/

@@ -211,6 +211,9 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                 case TelnetCommand.IAC:
                     __receiveState = _STATE_DATA;
                     break; // exit to enclosing switch to return IAC from read
+                case TelnetCommand.SE: // unexpected byte! ignore it (don't send it as a command)
+                    __receiveState = _STATE_DATA;
+                    continue;
                 default:
                     __receiveState = _STATE_DATA;
                     __client._processCommand(ch); // Notify the user
@@ -258,12 +261,13 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                     continue;
                 default:
                     // store suboption char
-                    __suboption[__suboption_count++] = ch;
+                    if (__suboption_count < __suboption.length)
+                        __suboption[__suboption_count++] = ch;
                     break;
                 }
                 __receiveState = _STATE_SB;
                 continue;
-            case _STATE_IAC_SB:
+            case _STATE_IAC_SB: // IAC received during SB phase
                 switch (ch)
                 {
                 case TelnetCommand.SE:
@@ -274,11 +278,14 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                     }
                     __receiveState = _STATE_DATA;
                     continue;
-                default:
-                    __receiveState = _STATE_SB;
+                case TelnetCommand.IAC: // De-dup the duplicated IAC
+                    if (__suboption_count < __suboption.length)
+                        __suboption[__suboption_count++] = ch;
+                    break;
+                default:            // unexpected byte! ignore it
                     break;
                 }
-                __receiveState = _STATE_DATA;
+                __receiveState = _STATE_SB;
                 continue;
             /* TERMINAL-TYPE option (end)*/
             }

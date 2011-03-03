@@ -54,7 +54,12 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.0" date="TBA" description="TBA">
-            <action issue="NET-343" dev="sebb" type="add">
+            <action issue="NET-345" dev="sebb" type="fix" due-to="Archie Cobbs">
+            Telnet client: not properly handling IAC bytes within subnegotiation messages:
+            - failing to double IACs on output
+            - failing to de-double IACs in input
+            </action>
+            <action issue="NET-343" dev="sebb" type="add" due-to="Archie Cobbs">
             Telnet client: Support Client-initiated Subnegotiation Messages.
             </action>
             <action issue="NET-270" dev="sebb" type="fix">
