@@ -81,7 +81,8 @@ The <action> type attribute can be add,update,fix,remove.
             The POP3 client does not support SSL/TLS connections.
             </action>
             <action dev="sebb" type="remove">
-            Removed deprecated unused fields from FTPSClient.
+            Removed deprecated unused fields from FTPSClient:
+            - KEYSTORE_ALGORITHM, PROVIDER, STORE_TYPE, TRUSTSTORE_ALGORITHM
             Removed deprecated methods FTPClient.getSystemName(), FTPListParseEngine.readServerList(InputStream stream),
             FTPSSocketFactory.createServerSocket(int port), FTPSSocketFactory.createServerSocket(int port, int backlog),
             FTPSSocketFactory.createServerSocket(int port, int backlog, InetAddress ifAddress),
