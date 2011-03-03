@@ -26,6 +26,10 @@ No changes defined in this version.
 #else
 Changes in this version include:
 
+## indent to be used if there is no issue attribute.
+## should be the same as the indent in the changes.xml file
+## less 2 spaces for the 'o' and trailing space
+#set($indent='          ')
 #if ($release.getActions('add').size() !=0)
 New features:
 #foreach($actionItem in $release.getActions('add'))
@@ -42,7 +46,7 @@ New features:
 #else
 #set($dueto="")
 #end
-o#if($!issue != "") $issue: #end ${action} #if($!dueto != "")Thanks to $dueto. #end
+o#if($!issue != "") $issue: #else$indent#end ${action} #if($!dueto != "")Thanks to $dueto. #end
 
 #set($issue="")
 #set($dueto="")
@@ -65,7 +69,7 @@ Fixed Bugs:
 #else
 #set($dueto="")
 #end
-o#if($!issue != "") $issue: #end ${action} #if($!dueto != "")Thanks to $dueto. #end
+o#if($!issue != "") $issue: #else$indent#end ${action} #if($!dueto != "")Thanks to $dueto. #end
 
 #set($issue="")
 #set($dueto="")
@@ -88,7 +92,7 @@ Changes:
 #else
 #set($dueto="")
 #end
-o#if($!issue != "") $issue: #end ${action} #if($!dueto != "")Thanks to $dueto. #end
+o#if($!issue != "") $issue: #else$indent#end ${action} #if($!dueto != "")Thanks to $dueto. #end
 
 #set($issue="")
 #set($dueto="")
@@ -111,7 +115,7 @@ Removed:
 #else
 #set($dueto="")
 #end
-o#if($!issue != "") $issue: #end ${action} #if($!dueto != "")Thanks to $dueto. #end
+o#if($!issue != "") $issue: #else$indent#end ${action} #if($!dueto != "")Thanks to $dueto. #end
 
 #set($issue="")
 #set($dueto="")
