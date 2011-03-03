@@ -104,6 +104,9 @@ The <action> type attribute can be add,update,fix,remove.
             Commons net ftp cannot handle unknown type parser and should allow override of parser through vm argument.
             The system property "org.apache.commons.net.ftp.systemType" can be used to provide the system type.
             </action>
+            <action issue="NET-286" dev="sebb" type="fix">
+            Unhandled SecurityException in DefaultFTPFileEntryParserFactory.createFileEntryParser when using applets.
+            </action>
             <action issue="NET-360" dev="sebb" type="fix">
             DefaultFTPFileEntryParserFactory.createFileEntryParser(String key) always tries to load a class.
             </action>
