@@ -47,12 +47,13 @@ public final class FTPClientExample
 {
 
     public static final String USAGE =
-        "Usage: ftp [-s] [-b] [-l] [-k nnn] [-#] <hostname> <username> <password> <remote file> <local file>\n" +
+        "Usage: ftp [-s] [-b] [-l] [-k secs [-w msec]] [-#] <hostname> <username> <password> <remote file> <local file>\n" +
         "\nDefault behavior is to download a file and use ASCII transfer mode.\n" +
         "\t-s store file on server (upload)\n" +
         "\t-l list files (local file is ignored)\n" +
         "\t-# add hash display during transfers\n" +
-        "\t-k nnnn use keep-alive timer\n" +
+        "\t-k secs use keep-alive timer (setControlKeepAliveTimeout)\n" +
+        "\t-w msec wait time for keep-alive reply (setControlKeepAliveReplyTimeout)\n" +
         "\t-b use binary transfer mode\n";
 
     public static final void main(String[] args)
@@ -78,6 +79,9 @@ public final class FTPClientExample
             }
             else if (args[base].equals("-k")) {
                 ftp.setControlKeepAliveTimeout(Long.parseLong(args[++base]));
+            } 
+            else if (args[base].equals("-w")) {
+                ftp.setControlKeepAliveReplyTimeout(Integer.parseInt(args[++base]));
             } 
             else {
                 break;
