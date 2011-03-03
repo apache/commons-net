@@ -74,7 +74,7 @@ final class TelnetOutputStream extends OutputStream
                         }
                     } // __convertCRtoCRLF
                     else if (ch != '\n')
-                        __client._sendByte('\0'); // TODO - why add padding?
+                        __client._sendByte('\0'); // RFC854 requires CR NUL for bare CR
                 }
 
                 __lastWasCR = false;
