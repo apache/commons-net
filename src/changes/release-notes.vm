@@ -104,7 +104,7 @@ Removed:
 #if ($actionItem.getIssue())
 #set($issue=$actionItem.getIssue())
 #else
-#set($issue="      ")
+#set($issue="")
 #end
 #if ($actionItem.getDueTo())
 #set($dueto=$actionItem.getDueTo())
