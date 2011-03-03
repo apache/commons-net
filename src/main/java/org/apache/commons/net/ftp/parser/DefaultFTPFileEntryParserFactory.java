@@ -240,6 +240,9 @@ public class DefaultFTPFileEntryParserFactory
         return createOS400FTPEntryParser(null);
     }
 
+    /**
+     * @since 3.0
+     */
     public FTPFileEntryParser createOS400FTPEntryParser(FTPClientConfig config)
         {
         if (config != null &&

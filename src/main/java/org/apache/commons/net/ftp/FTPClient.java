@@ -266,7 +266,8 @@ public class FTPClient extends FTP
 implements Configurable
 {
     /**
-     * The system property ({@value}) which can be used to override the system type. 
+     * The system property ({@value}) which can be used to override the system type.
+     * @since 3.0
      */
     public static final String FTP_SYSTEM_TYPE = "org.apache.commons.net.ftp.systemType";
 
@@ -2419,6 +2420,7 @@ implements Configurable
      * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
      * @see org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory
      * @see org.apache.commons.net.ftp.FTPFileEntryParser
+     * @since 3.0
      */
     public FTPFile[] listDirectories() throws IOException {
         return listDirectories((String) null);
@@ -2459,6 +2461,7 @@ implements Configurable
      * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
      * @see org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory
      * @see org.apache.commons.net.ftp.FTPFileEntryParser
+     * @since 3.0
      */
     public FTPFile[] listDirectories(String parent) throws IOException {
         return listFiles(parent, FTPFileFilters.DIRECTORIES);
@@ -2888,6 +2891,7 @@ implements Configurable
      * The default value (if not set) is {@code null}.
      * 
      * @param listener to be used, may be {@code null} to disable
+     * @since 3.0
      */
     public void setCopyStreamListener(CopyStreamListener listener){
         __copyStreamListener = listener;
@@ -2897,6 +2901,7 @@ implements Configurable
      * Obtain the currently active listener.
      * 
      * @return the listener, may be {@code null}
+     * @since 3.0
      */
     public CopyStreamListener getCopyStreamListener(){
         return __copyStreamListener;
