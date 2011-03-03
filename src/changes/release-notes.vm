@@ -104,14 +104,14 @@ Removed:
 #if ($actionItem.getIssue())
 #set($issue=$actionItem.getIssue())
 #else
-#set($issue="")
+#set($issue="      ")
 #end
 #if ($actionItem.getDueTo())
 #set($dueto=$actionItem.getDueTo())
 #else
 #set($dueto="")
 #end
-o#if($!issue != "") $issue. #end ${action} #if($!dueto != "")Thanks to $dueto. #end
+o#if($!issue != "") $issue: #end ${action} #if($!dueto != "")Thanks to $dueto. #end
 
 #set($issue="")
 #set($dueto="")
