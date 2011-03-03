@@ -20,11 +20,13 @@ package org.apache.commons.net.telnet;
 import java.io.IOException;
 import java.io.OutputStream;
 
-/***
- *
+/**
+ * Wraps an output stream.
  * <p>
- *
+ * In binary mode, the only conversion is to double IAC.
  * <p>
+ * In ASCII mode, if convertCRtoCRLF is true, any CR is converted to CRLF.
+ * IACs are doubled.
  * <p>
  * @author Daniel F. Savarese
  ***/
@@ -58,21 +60,21 @@ final class TelnetOutputStream extends OutputStream
         {
             ch &= 0xff;
 
-            if (__client._requestedWont(TelnetOption.BINARY))
+            if (__client._requestedWont(TelnetOption.BINARY)) // i.e. ASCII
             {
                 if (__lastWasCR)
                 {
                     if (__convertCRtoCRLF)
                     {
                         __client._sendByte('\n');
-                        if (ch == '\n')
+                        if (ch == '\n') // i.e. was CRLF anyway
                         {
                             __lastWasCR = false;
                             return ;
                         }
-                    }
+                    } // __convertCRtoCRLF
                     else if (ch != '\n')
-                        __client._sendByte('\0');
+                        __client._sendByte('\0'); // TODO - why add padding?
                 }
 
                 __lastWasCR = false;
@@ -91,7 +93,7 @@ final class TelnetOutputStream extends OutputStream
                     __client._sendByte(ch);
                     break;
                 }
-            }
+            } // end ASCII
             else if (ch == TelnetCommand.IAC)
             {
                 __client._sendByte(ch);
