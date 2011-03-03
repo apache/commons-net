@@ -17,6 +17,13 @@
 
               Apache ${project.name} ${version} RELEASE NOTES
 
+The ${developmentTeam} is pleased to announce the release of ${finalName}
+  
+${introduction}
+
+## N.B. the available variables are described here:
+## http://maven.apache.org/plugins/maven-changes-plugin/examples/using-a-custom-announcement-template.html
+##
 ## Hack to improve layout: replace all pairs of spaces with a single new-line
 $release.description.replaceAll("  ", "
 ")
