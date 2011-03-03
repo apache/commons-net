@@ -41,6 +41,7 @@ import javax.net.ssl.TrustManager;
  *               SMTPSClient c = new SMTPSClient();
  *               c.connect("127.0.0.1", 25);
  *               if (c.execTLS()) { /rest of the commands here/ }
+ * @since 3.0
  */
 public class SMTPSClient extends SMTPClient
 {

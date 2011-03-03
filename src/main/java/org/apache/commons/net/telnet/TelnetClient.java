@@ -222,6 +222,7 @@ public class TelnetClient extends Telnet
      * @param message option code followed by subnegotiation payload
      * @throws IllegalArgumentException if {@code message} has length zero
      * @throws IOException if an I/O error occurs while writing the message
+     * @since 3.0
      ***/
     public void sendSubnegotiation(int[] message)
     throws IOException, IllegalArgumentException
@@ -242,6 +243,7 @@ public class TelnetClient extends Telnet
      *
      * @param command the code for the command
      * @throws IOException if an I/O error occurs while writing the message
+     * @since 3.0
      ***/
     public void sendCommand(byte command)
     throws IOException, IllegalArgumentException

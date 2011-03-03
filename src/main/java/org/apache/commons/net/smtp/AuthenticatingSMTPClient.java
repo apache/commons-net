@@ -34,6 +34,7 @@ import org.apache.commons.net.util.Base64;
  * An SMTP Client class with authentication support (RFC4954).
  * 
  * @see SMTPClient
+ * @since 3.0
  */
 public class AuthenticatingSMTPClient extends SMTPSClient
 {

@@ -33,6 +33,7 @@ import org.apache.commons.net.util.Base64;
  * A POP3 Cilent class with protocol and authentication extensions support
  * (RFC2449 and RFC2195).
  * @see POP3Client
+ * @since 3.0
  */
 public class ExtendedPOP3Client extends POP3SClient
 {

@@ -2907,6 +2907,7 @@ implements Configurable
      * when processing file upload or download.
      * 
      * @param controlIdle the wait (in secs) between keepalive messages. Zero (or less) disables.
+     * @since 3.0
      */
     public void setControlKeepAliveTimeout(long controlIdle){
         __controlKeepAliveTimeout = controlIdle * 1000;
@@ -2915,6 +2916,7 @@ implements Configurable
     /**
      * Get the time to wait between sending control connection keepalive messages.
      * @return the number of seconds between keepalive messages.
+     * @since 3.0
      */
     public long getControlKeepAliveTimeout() {
         return __controlKeepAliveTimeout / 1000;
@@ -2924,6 +2926,7 @@ implements Configurable
      * Set how long to wait for control keep-alive message replies.
      * 
      * @param timeout number of milliseconds to wait (defaults to 1000)
+     * @since 3.0
      */
     public void setControlKeepAliveReplyTimeout(int timeout) {
         __controlKeepAliveReplyTimeout = timeout;
@@ -2931,11 +2934,13 @@ implements Configurable
 
     /**
      * Get how long to wait for control keep-alive message replies.
-+     */
+     * @since 3.0
+     */
     public int getControlKeepAliveReplyTimeout() {
         return __controlKeepAliveReplyTimeout;
     }
 
+    // @since 3.0
     private static class CSL implements CopyStreamListener {
 
         private final FTPClient parent;
@@ -2983,6 +2988,7 @@ implements Configurable
      * 
      * @param local the listener used by this class, may be null
      * @return a merged listener or a single listener or null
+     * @since 3.0
      */
     private CopyStreamListener __mergeListeners(CopyStreamListener local) {
         if (local == null) {

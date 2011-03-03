@@ -338,6 +338,7 @@ public final class Util
      * Intended for use from finally blocks.
      * 
      * @param closeable the object to close, may be {@code null}
+     * @since 3.0
      */
     public static void closeQuietly(Closeable closeable) {
         if (closeable != null) {
@@ -353,6 +354,7 @@ public final class Util
      * Intended for use from finally blocks.
      * 
      * @param socket the socket to close, may be {@code null}
+     * @since 3.0
      */
     public static void closeQuietly(Socket socket) {
         if (socket != null) {

@@ -41,6 +41,7 @@ import javax.net.ssl.TrustManager;
  *               POP3SClient c = new POP3SClient();
  *               c.connect("127.0.0.1", 110);
  *               if (c.execTLS()) { /rest of the commands here/ }
+ * @since 3.0
  */
 public class POP3SClient extends POP3Client
 {

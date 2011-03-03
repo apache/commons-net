@@ -95,7 +95,10 @@ public class CopyStreamEvent extends EventObject
     {
         return streamSize;
     }
-    
+
+    /**
+      * @since 3.0
+     */
     @Override
     public String toString(){
         return getClass().getName() + "[source=" + source 

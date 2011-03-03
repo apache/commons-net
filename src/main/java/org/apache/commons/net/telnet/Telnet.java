@@ -813,7 +813,8 @@ class Telnet extends SocketClient
      *
      * @param cmd - command data to be sent
      * @throws IOException - Exception in I/O.
-     **/
+     * @since 3.0
+     */
     final synchronized void _sendCommand(byte cmd) throws IOException
     {
             _output_.write(TelnetCommand.IAC);
