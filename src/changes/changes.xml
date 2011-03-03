@@ -256,7 +256,7 @@ This is primarily a maintenance release, but it also includes new features and e
             <action issue="NET-261" dev="rwinston" type="update">
                 SubnetUtils.SubnetInfo.isInRange(...) behaviour not documented
             </action>
-            <action issue="NET-262"> dev="rwinston" type="fix"
+            <action issue="NET-262" dev="rwinston" type="fix">
                 SubnetUtils did not handle /31 and /32 CIDRs well
             </action>
             <action issue="NET-265" dev="rwinston" type="fix">
