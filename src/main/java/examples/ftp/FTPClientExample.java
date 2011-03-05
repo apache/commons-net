@@ -207,8 +207,8 @@ __main:
                 output.close();
             }
 
-            ftp.syst();
-            ftp.feat();
+            ftp.noop(); // check that control connection is working OK
+
             ftp.logout();
         }
         catch (FTPConnectionClosedException e)
