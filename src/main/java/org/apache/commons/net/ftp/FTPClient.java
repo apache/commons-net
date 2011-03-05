@@ -346,11 +346,11 @@ implements Configurable
     // Most FTP servers don't seem to support concurrent control and data connection usage
     private int __controlKeepAliveReplyTimeout=1000;
 
-    /** Pattern for PASV mode responses */
-    private static final String __parms = "\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3}";
-    private static final java.util.regex.Pattern __parms_pat;
+    /** Pattern for PASV mode responses. Groups: (n,n,n,n),(n),(n) */
+    private static final java.util.regex.Pattern __PARMS_PAT;
     static {
-        __parms_pat = java.util.regex.Pattern.compile(__parms);
+        __PARMS_PAT = java.util.regex.Pattern.compile(
+                "(\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3}),(\\d{1,3}),(\\d{1,3})");
     }
 
     private static class PropertiesSingleton {
@@ -430,28 +430,41 @@ implements Configurable
     private void __parsePassiveModeReply(String reply)
     throws MalformedServerReplyException
     {
-        java.util.regex.Matcher m = __parms_pat.matcher(reply);
+        java.util.regex.Matcher m = __PARMS_PAT.matcher(reply);
         if (!m.find()) {
             throw new MalformedServerReplyException(
                     "Could not parse passive host information.\nServer Reply: " + reply);
         }
-        reply = m.group();
-        String parts[] = m.group().split(",");
 
-        __passiveHost = parts[0] + '.' + parts[1] + '.' + parts[2] + '.' + parts[3];
+        __passiveHost = m.group(1).replace(',', '.'); // Fix up to look like IP address
 
         try
         {
-            int oct1 = Integer.parseInt(parts[4]);
-            int oct2 = Integer.parseInt(parts[5]);
+            int oct1 = Integer.parseInt(m.group(2));
+            int oct2 = Integer.parseInt(m.group(3));
             __passivePort = (oct1 << 8) | oct2;
         }
         catch (NumberFormatException e)
         {
             throw new MalformedServerReplyException(
-                    "Could not parse passive host information.\nServer Reply: " + reply);
+                    "Could not parse passive port information.\nServer Reply: " + reply);
         }
 
+        try {
+            InetAddress host = InetAddress.getByName(__passiveHost);
+            // reply is a local address, but target is not - assume NAT box changed the PASV reply
+            if (host.isSiteLocalAddress() && !getRemoteAddress().isSiteLocalAddress()){
+                String hostAddress = getRemoteAddress().getHostAddress();
+                if (_commandSupport_.getListenerCount() > 0) {
+                    _commandSupport_.fireReplyReceived(0, 
+                            "[Replacing site local address "+__passiveHost+" with "+hostAddress+"]\n");
+                }
+                __passiveHost = hostAddress;
+            }
+        } catch (UnknownHostException e) { // Should not happen as we are passing in an IP address
+            throw new MalformedServerReplyException(
+                    "Could not parse passive host information.\nServer Reply: " + reply);            
+        }
     }
 
     private void __parseExtendedPassiveModeReply(String reply)
