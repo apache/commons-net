@@ -47,28 +47,33 @@ public final class FTPClientExample
 {
 
     public static final String USAGE =
-        "Usage: ftp [-s] [-b] [-l] [-k secs [-w msec]] [-#] <hostname> <username> <password> <remote file> <local file>\n" +
+        "Usage: ftp [-s] [-b] [-l] [-a] [-k secs [-w msec]] [-#] <hostname> <username> <password> <remote file> <local file>\n" +
         "\nDefault behavior is to download a file and use ASCII transfer mode.\n" +
         "\t-s store file on server (upload)\n" +
         "\t-l list files (local file is ignored)\n" +
         "\t-# add hash display during transfers\n" +
         "\t-k secs use keep-alive timer (setControlKeepAliveTimeout)\n" +
         "\t-w msec wait time for keep-alive reply (setControlKeepAliveReplyTimeout)\n" +
+        "\t-a use local active mode (default is local passive)\n" +
         "\t-b use binary transfer mode\n";
 
     public static final void main(String[] args)
     {
         int base = 0;
         boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false;
+        boolean localActive = false;
         String server, username, password, remote, local;
         final FTPClient ftp = new FTPClient();
 
         for (base = 0; base < args.length; base++)
         {
-            if (args[base].startsWith("-s")) {
+            if (args[base].equals("-s")) {
                 storeFile = true;
             }
-            else if (args[base].startsWith("-b")) {
+            else if (args[base].equals("-a")) {
+                localActive = true;
+            }
+            else if (args[base].equals("-b")) {
                 binaryTransfer = true;
             }
             else if (args[base].equals("-l")) {
@@ -161,7 +166,11 @@ __main:
 
             // Use passive mode as default because most of us are
             // behind firewalls these days.
-            ftp.enterLocalPassiveMode();
+            if (localActive) {
+                ftp.enterLocalActiveMode();                
+            } else {
+                ftp.enterLocalPassiveMode();
+            }
 
             if (storeFile)
             {
