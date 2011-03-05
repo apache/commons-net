@@ -232,6 +232,11 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                                     <type>jar</type>
                                     <classifier>ftp</classifier>
                                 </artifact>
+                                <artifact>
+                                    <file>target/commons-net-examples-${project.version}.jar</file>
+                                    <type>jar</type>
+                                    <classifier>examples</classifier>
+                                </artifact>
                             </artifacts>
                         </configuration>
                     </execution>
