@@ -47,7 +47,7 @@ public final class FTPClientExample
 {
 
     public static final String USAGE =
-        "Usage: ftp [-s] [-b] [-l] [-a] [-k secs [-w msec]] [-#] <hostname> <username> <password> <remote file> <local file>\n" +
+        "Usage: ftp [-s] [-b] [-l] [-a] [-e] [-k secs [-w msec]] [-#] <hostname> <username> <password> <remote file> <local file>\n" +
         "\nDefault behavior is to download a file and use ASCII transfer mode.\n" +
         "\t-s store file on server (upload)\n" +
         "\t-l list files (local file is ignored)\n" +
@@ -55,6 +55,7 @@ public final class FTPClientExample
         "\t-k secs use keep-alive timer (setControlKeepAliveTimeout)\n" +
         "\t-w msec wait time for keep-alive reply (setControlKeepAliveReplyTimeout)\n" +
         "\t-a use local active mode (default is local passive)\n" +
+        "\t-e use EPSV with IPv4 (default false)\n" +
         "\t-b use binary transfer mode\n";
 
     public static final void main(String[] args)
@@ -62,6 +63,7 @@ public final class FTPClientExample
         int base = 0;
         boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false;
         boolean localActive = false;
+        boolean useEpsvWithIPv4 = false;
         String server, username, password, remote, local;
         final FTPClient ftp = new FTPClient();
 
@@ -75,6 +77,9 @@ public final class FTPClientExample
             }
             else if (args[base].equals("-b")) {
                 binaryTransfer = true;
+            }
+            else if (args[base].equals("-e")) {
+                useEpsvWithIPv4 = true;
             }
             else if (args[base].equals("-l")) {
                 listFiles = true;
@@ -171,6 +176,8 @@ __main:
             } else {
                 ftp.enterLocalPassiveMode();
             }
+
+            ftp.setUseEPSVwithIPv4(useEpsvWithIPv4);
 
             if (storeFile)
             {
