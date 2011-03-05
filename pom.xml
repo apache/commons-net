@@ -163,6 +163,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                     <descriptors>
                         <descriptor>src/assembly/bin.xml</descriptor>
                         <descriptor>src/assembly/src.xml</descriptor>
+                        <descriptor>src/assembly/examples.xml</descriptor>
                     </descriptors>
                     <tarLongFileMode>gnu</tarLongFileMode>
                 </configuration>
@@ -188,6 +189,20 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                                         <attribute name="X-Compile-Target-JDK" value="${maven.compile.target}" />
                                     </manifest>
                                     <fileset dir="target/classes" includes="org/apache/commons/net/ftp/**,org/apache/commons/net/*,org/apache/commons/net/io/*,org/apache/commons/net/util/*" />
+                                </jar>
+                                <jar destfile="target/commons-net-examples-${project.version}.jar">
+                                    <metainf dir="${basedir}" includes="NOTICE.txt,LICENSE.txt" />
+                                    <manifest>
+                                        <attribute name="Extension-Name" value="org.apache.commons.net" />
+                                        <attribute name="Specification-Title" value="${project.name}" />
+                                        <attribute name="Implementation-Title" value="${project.name}" />
+                                        <attribute name="Implementation-Vendor" value="${project.organization.name}" />
+                                        <attribute name="Implementation-Version" value="${project.version}" />
+                                        <attribute name="Implementation-Vendor-Id" value="org.apache" />
+                                        <attribute name="X-Compile-Source-JDK" value="${maven.compile.source}" />
+                                        <attribute name="X-Compile-Target-JDK" value="${maven.compile.target}" />
+                                    </manifest>
+                                    <fileset dir="target/classes" includes="examples/**" />
                                 </jar>
                             </tasks>
                         </configuration>
