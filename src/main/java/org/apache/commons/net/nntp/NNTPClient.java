@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -712,6 +713,27 @@ public class NNTPClient extends NNTP
         return help.toString();
     }
 
+    /**
+     * Send a "LIST OVERVIEW.FMT" command to the server.
+     * 
+     * @return the contents of the Overview format, of {@code null} if the command failed
+     * @throws IOException
+     */
+    public String[] listOverviewFmt() throws IOException
+    {
+        if (!NNTPReply.isPositiveCompletion(sendCommand("LIST", "OVERVIEW.FMT"))){
+            return null;
+        }
+
+        BufferedReader reader = new BufferedReader(new DotTerminatedMessageReader(_reader_));
+        String line;
+        ArrayList<String> list = new ArrayList<String>();
+        while((line=reader.readLine()) != null) {
+            list.add(line);
+        }
+        reader.close();
+        return list.toArray(new String[list.size()]);
+    }
 
     /***
      * Select an article by its unique identifier (including enclosing
