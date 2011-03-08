@@ -38,18 +38,6 @@ public class Threader {
     private int bogusIdCount = 0;
 
     /**
-     * The main threader entry point - The client passes in an array of Threadable objects, and
-     * the Threader constructs a connected 'graph' of messages
-     * @param messages array of messages to thread
-     * @return null if messages == null or root.child == null
-     * @deprecated (2.2) prefer {@link #thread(List)}
-     */
-    @Deprecated
-    public Threadable thread(Threadable[] messages) {
-        return thread(Arrays.asList(messages));
-    }
-
-    /**
      * The main threader entry point - The client passes in a list of Threadable objects, and
      * the Threader constructs a connected 'graph' of messages
      * @param messages list of messages to thread
