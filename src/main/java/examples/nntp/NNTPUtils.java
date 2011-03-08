@@ -21,9 +21,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.StringTokenizer;
-
 import org.apache.commons.net.nntp.Article;
 import org.apache.commons.net.nntp.NNTPClient;
 
@@ -53,60 +50,29 @@ public class NNTPUtils {
                     highArticleNumber);
 
         if (reader != null) {
-            String theInfo = readerToString(reader);
-            StringTokenizer st = new StringTokenizer(theInfo, "\n");
+            BufferedReader bufReader = new BufferedReader(reader);
 
             // Extract the article information
             // Mandatory format (from NNTP RFC 2980) is :
-            // Subject\tAuthor\tDate\tID\tReference(s)\tByte Count\tLine Count
+            // articleNumber\tSubject\tAuthor\tDate\tID\tReference(s)\tByte Count\tLine Count
 
-            while (st.hasMoreTokens()) {
-                String msg = st.nextToken();
+            String msg;
+            while ((msg=bufReader.readLine()) != null) {
                 System.out.println("Message:" + msg);
-                StringTokenizer stt = new StringTokenizer(msg, "\t");
-
-                try {
+                String parts[] = msg.split("\t");
+                if (parts.length > 6) {
+                    int i = 0;
                     Article article = new Article();
-                    article.setArticleNumber(Integer.parseInt(stt.nextToken()));
-                    article.setSubject(stt.nextToken());
-                    article.setFrom(stt.nextToken());
-                    article.setDate(stt.nextToken());
-                    article.setArticleId(stt.nextToken());
-                    article.addHeaderField("References", stt.nextToken());
+                    article.setArticleNumber(Integer.parseInt(parts[i++]));
+                    article.setSubject(parts[i++]);
+                    article.setFrom(parts[i++]);
+                    article.setDate(parts[i++]);
+                    article.setArticleId(parts[i++]);
+                    article.addReference(parts[i++]);
                     articles.add(article);
                 }
-                catch (NoSuchElementException nse) {
-                    // ignore this message
-                }
             }
-        } else {
-            return null;
         }
-
         return articles;
-    }
-
-
-    /**
-     * Convert a {@link Reader} instance to a String
-     * @param reader The Reader instance
-     * @return String
-     */
-    public static String readerToString(Reader reader) {
-        String temp = null;
-        BufferedReader bufReader = new BufferedReader(reader);
-        StringBuilder sb = new StringBuilder();
-        try {
-            temp = bufReader.readLine();
-            while (temp != null) {
-                sb.append(temp);
-                sb.append("\n");
-                temp = bufReader.readLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return sb.toString();
     }
 }
