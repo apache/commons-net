@@ -27,7 +27,6 @@ package org.apache.commons.net.nntp;
  *
  */
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -355,9 +354,11 @@ public class Threader {
                 ThreadContainer tail;
                 for (tail = old.child;
                     tail != null && tail.next != null;
-                    tail = tail.next);
+                    tail = tail.next){}
 
-                tail.next = c.child;
+                if (tail != null) { // protect against possible NPE
+                    tail.next = c.child;
+                }
 
                 for (tail = c.child; tail != null; tail = tail.next)
                     tail.parent = old;
