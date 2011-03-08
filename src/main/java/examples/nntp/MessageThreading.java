@@ -36,18 +36,21 @@ public class MessageThreading {
     
     public static void main(String[] args) throws SocketException, IOException {
         
-        if (args.length != 1 && args.length != 3)
-            usage();
+        if (args.length != 2 && args.length != 4) {
+            System.out.println("Usage: MessageThreading <hostname> <groupname> [<user> <password>]");
+            return;
+        }
         
         String hostname = args[0];
+        String newsgroup = args[1];
         
         NNTPClient client = new NNTPClient();
         client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
         client.connect(hostname);
         
-        if (args.length == 3) { // Optional auth       
-            String user = args[1];
-            String password = args[2];
+        if (args.length == 4) { // Optional auth       
+            String user = args[2];
+            String password = args[3];
             if(!client.authenticate(user, password)) {
                 System.out.println("Authentication failed for user " + user + "!");
                 System.exit(1);
@@ -55,7 +58,7 @@ public class MessageThreading {
         }
 
         NewsgroupInfo group = new NewsgroupInfo();
-        client.selectNewsgroup("alt.test", group);
+        client.selectNewsgroup(newsgroup, group);
         
         int lowArticleNumber = group.getFirstArticle();
         int highArticleNumber = lowArticleNumber + 5000;
@@ -70,9 +73,4 @@ public class MessageThreading {
         Article.printThread(root, 0);
     }
     
-    
-    public static void usage() {
-        System.out.println("Usage: MessageThreading <hostname> [<user> <password>]");
-        System.exit(0);
-    }
 }
