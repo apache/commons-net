@@ -57,6 +57,15 @@ public class MessageThreading {
             }
         }
 
+        String fmt[] = client.listOverviewFmt();
+        if (fmt != null) {
+            System.out.println("LIST OVERVIEW.FMT:");
+            for(String s : fmt) {
+                System.out.println(s);
+            }
+        } else {
+            System.out.println("Failed to get OVERVIEW.FMT");
+        }
         NewsgroupInfo group = new NewsgroupInfo();
         client.selectNewsgroup(newsgroup, group);
         
