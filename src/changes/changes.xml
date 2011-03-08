@@ -57,6 +57,9 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.0" date="TBA" description="TBA">
+            <action issue="NET-314" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
+            The FTP client should autodetect the control encoding.
+            </action>
             <action issue="NET-363" dev="sebb" type="fix" due-to="daniel damon">
             Can't connect to a server behind firewall in passive mode.
             </action>

@@ -18,10 +18,12 @@ package org.apache.commons.net.ftp;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -352,6 +354,9 @@ implements Configurable
         __PARMS_PAT = java.util.regex.Pattern.compile(
                 "(\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3}),(\\d{1,3}),(\\d{1,3})");
     }
+
+    /** Controls the automatic server encoding detection (only UTF-8 supported). */
+    private boolean __autodetectEncoding = false;
 
     private static class PropertiesSingleton {
 
@@ -719,6 +724,38 @@ implements Configurable
     {
         super._connectAction_();
         __initDefaults();
+        // must be after super._connectAction_(), because otherwise we get an
+        // Exception claiming we're not connected
+        if ( __autodetectEncoding )
+        {
+            ArrayList<String> oldReplyLines = new ArrayList<String> (_replyLines);
+            int oldReplyCode = _replyCode;
+            if ( features() )
+            {
+                String[] features = getReplyStrings();
+                if ( features != null )
+                {
+                    for ( int i = 0; i < features.length; i++ )
+                    {
+                        if ( features[i].trim().toUpperCase().equals("UTF8")
+                            || features[i].trim().toUpperCase().equals("UTF-8") )
+                        {
+                            setControlEncoding("UTF-8");
+                            _controlInput_ =
+                                new BufferedReader(new InputStreamReader(_socket_.getInputStream(),
+                                                                        getControlEncoding()));
+                            _controlOutput_ =
+                                new BufferedWriter(new OutputStreamWriter(_socket_.getOutputStream(),
+                                                                        getControlEncoding()));
+                            break;
+                        }
+                    }
+                }
+            }
+            // restore the original reply (server greeting)
+            _replyLines = new ArrayList<String> (oldReplyLines);
+            _replyCode = oldReplyCode;
+        }
     }
 
 
@@ -3021,6 +3058,25 @@ implements Configurable
         merged.addCopyStreamListener(__copyStreamListener);
         return merged;
     }
+
+    /**
+     * Enables or disables automatic server encoding detection (only UTF-8 supported).
+     * @param autodetect If true, automatic server encoding detection will be enabled.
+     */
+    public void setAutodetectUTF8(boolean autodetect)
+    {
+        __autodetectEncoding = autodetect;
+    }
+
+    /**
+     * Tells if automatic server encoding detection is enabled or disabled.
+     * @return true, if automatic server encoding detection is enabled.
+     */
+    public boolean getAutodetectUTF8()
+    {
+        return __autodetectEncoding;
+    }
+
 }
 
 /* Emacs configuration
@@ -3030,3 +3086,4 @@ implements Configurable
  * indent-tabs-mode: nil   **
  * End:                    **
  */
+/* kate: indent-width 4; replace-tabs on; */
