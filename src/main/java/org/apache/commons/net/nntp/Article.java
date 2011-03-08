@@ -18,13 +18,12 @@
 package org.apache.commons.net.nntp;
 
 import java.util.ArrayList;
-import java.util.StringTokenizer;
+import java.util.Arrays;
 
 /**
  * This is a class that contains the basic state needed for message retrieval and threading.
  * With thanks to Jamie  Zawinski <jwz@jwz.org>
  * @author rwinston <rwinston@apache.org>
- *
  */
 public class Article implements Threadable {
     private int articleNumber;
@@ -34,7 +33,7 @@ public class Article implements Threadable {
     private String simplifiedSubject;
     private String from;
     private StringBuffer header;
-    private StringBuffer references;
+    private ArrayList<String> references;
     private boolean isReply = false;
     
     public Article kid, next;
@@ -60,12 +59,16 @@ public class Article implements Threadable {
      * @param msgId
      */
     public void addReference(String msgId) {
-        if (references == null) {
-            references = new StringBuffer();
-            references.append("References: ");
+        if (msgId == null || msgId.length() == 0) {
+            return;
         }
-        references.append(msgId);
-        references.append("\t");
+        if (references == null) {
+            references = new ArrayList<String>();
+        }
+        isReply = true;
+        for(String s : msgId.split(" ")) {
+            references.add(s);            
+        }
     }
 
     /**
@@ -73,16 +76,10 @@ public class Article implements Threadable {
      * @return an array of message-ids
      */
     public String[] getReferences() {
-        if (references == null)
+        if (references == null) {
             return new String[0];
-        ArrayList<String> list = new ArrayList<String>();
-        int terminator = references.toString().indexOf(':');
-        StringTokenizer st =
-            new StringTokenizer(references.substring(terminator), "\t");
-        while (st.hasMoreTokens()) {
-            list.add(st.nextToken());
         }
-        return list.toArray(new String[list.size()]);
+        return references.toArray(new String[references.size()]);
     }
     
     /**
@@ -111,7 +108,6 @@ public class Article implements Threadable {
 
                     if (subject.charAt(start + 2) == ':') {
                         start += 3; // Skip "Re:"
-                        isReply = true;
                         done = false;
                     } else if (
                         start < (len - 2) 
@@ -127,7 +123,6 @@ public class Article implements Threadable {
                             && (subject.charAt(i) == ']' || subject.charAt(i) == ')')
                             && subject.charAt(i + 1) == ':') {
                             start = i + 2;
-                            isReply = true;
                             done = false;
                         }
                     }
@@ -225,8 +220,6 @@ public class Article implements Threadable {
 
     
     public boolean subjectIsReply() {
-        if(simplifiedSubject == null)
-            simplifySubject();
         return isReply;
     }
 
@@ -249,5 +242,10 @@ public class Article implements Threadable {
     
     public Threadable makeDummy() {
         return new Article();
+    }
+    
+    @Override
+    public String toString(){ // Useful for Eclipse debugging
+        return articleNumber + " " +articleId + " " + subject;
     }
 }
