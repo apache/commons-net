@@ -18,7 +18,6 @@
 package org.apache.commons.net.nntp;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * This is a class that contains the basic state needed for message retrieval and threading.
