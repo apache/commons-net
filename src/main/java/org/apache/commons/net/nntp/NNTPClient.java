@@ -23,7 +23,6 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 import java.util.Vector;
 
 import org.apache.commons.net.MalformedServerReplyException;
@@ -91,124 +90,99 @@ import org.apache.commons.net.io.Util;
 public class NNTPClient extends NNTP
 {
 
+    // reply will consist of 22n nnn <aaa>
     private void __parseArticlePointer(String reply, ArticlePointer pointer)
     throws MalformedServerReplyException
     {
-        StringTokenizer tokenizer;
-
-        // Do loop is a kluge to simulate goto
-        do
-        {
-            tokenizer = new StringTokenizer(reply);
-
-            if (tokenizer.countTokens() < 3)
-                break;
-
-            // Skip numeric response value
-            tokenizer.nextToken();
-            // Get article number
+        String tokens[] = reply.split(" ");
+        if (tokens.length >= 3) { // OK, we can parset the line
+            int i = 1; // skip reply code
             try
             {
-                pointer.articleNumber = Integer.parseInt(tokenizer.nextToken());
+                // Get article number
+                pointer.articleNumber = Integer.parseInt(tokens[i++]);
+                // Get article id
+                pointer.articleId = tokens[i++];
+                return; // done
             }
             catch (NumberFormatException e)
             {
-                break;
+                // drop through and raise exception
             }
-
-            // Get article id
-            pointer.articleId = tokenizer.nextToken();
-            return ;
         }
-        while (false);
-
         throw new MalformedServerReplyException(
             "Could not parse article pointer.\nServer reply: " + reply);
     }
 
+    /*
+     * 211 n f l s group selected
+     *     (n = estimated number of articles in group,
+     *     f = first article number in the group,
+     *     l = last article number in the group,
+     *     s = name of the group.)
+     */
 
     private void __parseGroupReply(String reply, NewsgroupInfo info)
     throws MalformedServerReplyException
     {
-        String count, first, last;
-        StringTokenizer tokenizer;
-
-        // Do loop is a kluge to simulate goto
-        do
-        {
-            tokenizer = new StringTokenizer(reply);
-
-            if (tokenizer.countTokens() < 5)
-                break;
-
-            // Skip numeric response value
-            tokenizer.nextToken();
-            // Get estimated article count
-            count = tokenizer.nextToken();
-            // Get first article number
-            first = tokenizer.nextToken();
-            // Get last article number
-            last = tokenizer.nextToken();
-            // Get newsgroup name
-            info._setNewsgroup(tokenizer.nextToken());
-
+        String tokens[] = reply.split(" ");
+        if (tokens.length >= 5) {
+            int i = 1;  // Skip numeric response value
             try
             {
-                info._setArticleCount(Integer.parseInt(count));
-                info._setFirstArticle(Integer.parseInt(first));
-                info._setLastArticle(Integer.parseInt(last));
-            }
-            catch (NumberFormatException e)
-            {
-                break;
-            }
+                // Get estimated article count
+                info._setArticleCount(Integer.parseInt(tokens[i++]));
+                // Get first article number
+                info._setFirstArticle(Integer.parseInt(tokens[i++]));
+                // Get last article number
+                info._setLastArticle(Integer.parseInt(tokens[i++]));
+                // Get newsgroup name
+                info._setNewsgroup(tokens[i++]);
 
-            info._setPostingPermission(NewsgroupInfo.UNKNOWN_POSTING_PERMISSION);
-            return ;
+                info._setPostingPermission(NewsgroupInfo.UNKNOWN_POSTING_PERMISSION);
+                return ;
+            } catch (NumberFormatException e) 
+            {
+               // drop through to report error
+            }
+            
         }
-        while (false);
 
         throw new MalformedServerReplyException(
             "Could not parse newsgroup info.\nServer reply: " + reply);
     }
 
 
+    // Format: group last first p
     private NewsgroupInfo __parseNewsgroupListEntry(String entry)
     {
-        NewsgroupInfo result;
-        StringTokenizer tokenizer;
-        int lastNum, firstNum;
-        String last, first, permission;
-
-        result = new NewsgroupInfo();
-        tokenizer = new StringTokenizer(entry);
-
-        if (tokenizer.countTokens() < 4)
+        String tokens[] = entry.split(" ");
+        if (tokens.length < 4) {
             return null;
+        }
+        NewsgroupInfo result = new NewsgroupInfo();
 
-        result._setNewsgroup(tokenizer.nextToken());
-        last = tokenizer.nextToken();
-        first = tokenizer.nextToken();
-        permission = tokenizer.nextToken();
+        int i = 0;
+
+        result._setNewsgroup(tokens[i++]);
 
         try
         {
-            lastNum = Integer.parseInt(last);
-            firstNum = Integer.parseInt(first);
+            int lastNum = Integer.parseInt(tokens[i++]);
+            int firstNum = Integer.parseInt(tokens[i++]);
             result._setFirstArticle(firstNum);
             result._setLastArticle(lastNum);
-
-        if((firstNum == 0) && (lastNum == 0))
-            result._setArticleCount(0);
-        else
-            result._setArticleCount(lastNum - firstNum + 1);
-        }
+            if((firstNum == 0) && (lastNum == 0))
+                result._setArticleCount(0);
+            else
+                result._setArticleCount(lastNum - firstNum + 1);
+            }
         catch (NumberFormatException e)
         {
             return null;
         }
 
-        switch (permission.charAt(0))
+        switch (tokens[i++].charAt(0))
         {
         case 'y':
         case 'Y':
