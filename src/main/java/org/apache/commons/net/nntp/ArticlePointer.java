@@ -28,7 +28,7 @@ package org.apache.commons.net.nntp;
 public final class ArticlePointer
 {
     /** The number of the referenced article. */
-    public int articleNumber;
+    public long articleNumber;
     /**
      * The unique id of the referenced article, including the enclosing
      * &lt and &gt symbols which are technically not part of the

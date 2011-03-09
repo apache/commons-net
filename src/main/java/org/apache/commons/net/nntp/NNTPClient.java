@@ -100,7 +100,7 @@ public class NNTPClient extends NNTP
             try
             {
                 // Get article number
-                pointer.articleNumber = Integer.parseInt(tokens[i++]);
+                pointer.articleNumber = Long.parseLong(tokens[i++]);
                 // Get article id
                 pointer.articleId = tokens[i++];
                 return; // done
@@ -131,11 +131,11 @@ public class NNTPClient extends NNTP
             try
             {
                 // Get estimated article count
-                info._setArticleCount(Integer.parseInt(tokens[i++]));
+                info._setArticleCount(Long.parseLong(tokens[i++]));
                 // Get first article number
-                info._setFirstArticle(Integer.parseInt(tokens[i++]));
+                info._setFirstArticle(Long.parseLong(tokens[i++]));
                 // Get last article number
-                info._setLastArticle(Integer.parseInt(tokens[i++]));
+                info._setLastArticle(Long.parseLong(tokens[i++]));
                 // Get newsgroup name
                 info._setNewsgroup(tokens[i++]);
 
@@ -168,8 +168,8 @@ public class NNTPClient extends NNTP
 
         try
         {
-            int lastNum = Integer.parseInt(tokens[i++]);
-            int firstNum = Integer.parseInt(tokens[i++]);
+            long lastNum = Long.parseLong(tokens[i++]);
+            long firstNum = Long.parseLong(tokens[i++]);
             result._setFirstArticle(firstNum);
             result._setLastArticle(lastNum);
             if((firstNum == 0) && (lastNum == 0))
@@ -795,7 +795,7 @@ public class NNTPClient extends NNTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean selectArticle(int articleNumber, ArticlePointer pointer)
+    public boolean selectArticle(long articleNumber, ArticlePointer pointer)
     throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(stat(articleNumber)))
@@ -809,7 +809,7 @@ public class NNTPClient extends NNTP
 
 
     /*** Same as <code> selectArticle(articleNumber, null) </code> ***/
-    public boolean selectArticle(int articleNumber) throws IOException
+    public boolean selectArticle(long articleNumber) throws IOException
     {
         return selectArticle(articleNumber, null);
     }
@@ -1208,8 +1208,8 @@ public class NNTPClient extends NNTP
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException
      */
-    public Reader retrieveArticleInfo(int lowArticleNumber,
-                                      int highArticleNumber)
+    public Reader retrieveArticleInfo(long lowArticleNumber,
+            long highArticleNumber)
         throws IOException
     {
         return
@@ -1246,10 +1246,10 @@ public class NNTPClient extends NNTP
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException
      */
-    public Reader retrieveHeader(String header, int articleNumber)
+    public Reader retrieveHeader(String header, long articleNumber)
         throws IOException
     {
-        return __retrieveHeader(header, Integer.toString(articleNumber));
+        return __retrieveHeader(header, Long.toString(articleNumber));
     }
 
     /**
