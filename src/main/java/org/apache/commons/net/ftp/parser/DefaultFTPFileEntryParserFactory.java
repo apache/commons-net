@@ -122,11 +122,11 @@ public class DefaultFTPFileEntryParserFactory
             String ukey = key.toUpperCase(java.util.Locale.ENGLISH);
             if (ukey.indexOf(FTPClientConfig.SYST_UNIX) >= 0) 
             {
-                parser = createUnixFTPEntryParser();
+                parser = new UnixFTPEntryParser(config);
             }
             else if (ukey.indexOf(FTPClientConfig.SYST_VMS) >= 0)
             {
-                parser = createVMSVersioningFTPEntryParser();
+                parser = new VMSVersioningFTPEntryParser(config);
             }
             else if (ukey.indexOf(FTPClientConfig.SYST_NT) >= 0)
             {
@@ -134,7 +134,7 @@ public class DefaultFTPFileEntryParserFactory
             }
             else if (ukey.indexOf(FTPClientConfig.SYST_OS2) >= 0)
             {
-                parser = createOS2FTPEntryParser();
+                parser = new OS2FTPEntryParser(config);
             }
             else if (ukey.indexOf(FTPClientConfig.SYST_OS400) >= 0 ||
                     ukey.indexOf(FTPClientConfig.SYST_AS400) >= 0)
@@ -143,17 +143,17 @@ public class DefaultFTPFileEntryParserFactory
             }
             else if (ukey.indexOf(FTPClientConfig.SYST_MVS) >= 0)
             {
-                parser = createMVSEntryParser();
+                parser = new MVSFTPEntryParser(); // Does not currently support config parameter
             }
             else if (ukey.indexOf(FTPClientConfig.SYST_NETWARE) >= 0)
             {
-                parser = createNetwareFTPEntryParser();
+                parser = new NetwareFTPEntryParser(config);
             }
             else if (ukey.indexOf(FTPClientConfig.SYST_L8) >= 0)
             {
                 // L8 normally means Unix, but move it to the end for some L8 systems that aren't.
                 // This check should be last!
-                parser = createUnixFTPEntryParser();
+                parser = new UnixFTPEntryParser(config);
             }
             else
             {
@@ -215,17 +215,24 @@ public class DefaultFTPFileEntryParserFactory
         return createNTFTPEntryParser(null);
     }
 
+    /**
+     * Creates an NT FTP parser: if the config exists, and the system key equals 
+     * {@link FTPClientConfig.SYST_NT} then a plain {@link NTFTPEntryParser} is used,
+     * otherwise a composite of {@link NTFTPEntryParser} and {@link UnixFTPEntryParser} is used.
+     * @param config the config to use, may be {@code null}
+     * @return the parser
+     */
     private FTPFileEntryParser createNTFTPEntryParser(FTPClientConfig config)
     {
         if (config != null && FTPClientConfig.SYST_NT.equals(
                 config.getServerSystemKey()))
         {
-            return new NTFTPEntryParser();
+            return new NTFTPEntryParser(config);
         } else {
             return new CompositeFileEntryParser(new FTPFileEntryParser[]
                    {
-                       new NTFTPEntryParser(),
-                       new UnixFTPEntryParser()
+                       new NTFTPEntryParser(config),
+                       new UnixFTPEntryParser(config)
                    });
         }
     }
@@ -241,19 +248,23 @@ public class DefaultFTPFileEntryParserFactory
     }
 
     /**
-     * @since 3.0
+     * Creates an OS400 FTP parser: if the config exists, and the system key equals 
+     * {@link FTPClientConfig.SYST_OS400} then a plain {@link OS400FTPEntryParser} is used,
+     * otherwise a composite of {@link OS400FTPEntryParser} and {@link UnixFTPEntryParser} is used.
+     * @param config the config to use, may be {@code null}
+     * @return the parser
      */
-    public FTPFileEntryParser createOS400FTPEntryParser(FTPClientConfig config)
+    private FTPFileEntryParser createOS400FTPEntryParser(FTPClientConfig config)
         {
         if (config != null &&
                 FTPClientConfig.SYST_OS400.equals(config.getServerSystemKey()))
         {
-            return new OS400FTPEntryParser();
+            return new OS400FTPEntryParser(config);
         } else {
             return new CompositeFileEntryParser(new FTPFileEntryParser[]
                 {
-                    new OS400FTPEntryParser(),
-                    new UnixFTPEntryParser()
+                    new OS400FTPEntryParser(config),
+                    new UnixFTPEntryParser(config)
                 });
         }
     }
