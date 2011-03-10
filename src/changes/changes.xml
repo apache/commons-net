@@ -57,8 +57,13 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.0" date="TBA" description="TBA">
+            <action issue="NET-365" dev="sebb" type="fix">
+            FTPClient.listFiles() does not work properly, if remote server speaks German.
+            Match non-space{3} instead of A-Za-z{3}
+            </action>
             <action issue="NET-366" dev="sebb" type="fix">
-            FTPClientConfig: setServerLanguageCode and setShortMonthNames do not work
+            FTPClientConfig: setServerLanguageCode and setShortMonthNames do not work.
+            Ensure that config is passed to all parsers that can use it.
             </action>
             <action issue="NET-276" dev="sebb" type="fix">
             NNTPClient has problems with group listings for large groups.
