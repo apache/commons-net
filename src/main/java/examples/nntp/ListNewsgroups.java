@@ -35,33 +35,35 @@ public final class ListNewsgroups
 
     public final static void main(String[] args)
     {
-        NNTPClient client;
-        NewsgroupInfo[] list;
-
         if (args.length < 1)
         {
             System.err.println("Usage: newsgroups newsserver");
-            System.exit(1);
+            return;
         }
 
-        client = new NNTPClient();
+        NNTPClient client = new NNTPClient();
 
         try
         {
             client.connect(args[0]);
 
-            list = client.listNewsgroups();
+            int j = 0;
+            try {
+                for(String s : client.iterateNewsgroupListing("demon.*")) {
+                    j++;
+//                    System.out.println(s);
+                }
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            System.out.println(j);
 
-            if (list != null)
-            {
-                for (int i = 0; i < list.length; i++)
-                    System.out.println(list[i].getNewsgroup());
+            j = 0;
+            for(NewsgroupInfo n : client.iterateNewsgroups("demon.*")) {
+                j++;
+                //System.out.println(n.getNewsgroup());
             }
-            else
-            {
-                System.err.println("LIST command failed.");
-                System.err.println("Server reply: " + client.getReplyString());
-            }
+            System.out.println(j);
         }
         catch (IOException e)
         {

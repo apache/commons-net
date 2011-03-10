@@ -122,7 +122,7 @@ public class NNTPClient extends NNTP
      *     s = name of the group.)
      */
 
-    private void __parseGroupReply(String reply, NewsgroupInfo info)
+    private static void __parseGroupReply(String reply, NewsgroupInfo info)
     throws MalformedServerReplyException
     {
         String tokens[] = reply.split(" ");
@@ -154,7 +154,7 @@ public class NNTPClient extends NNTP
 
 
     // Format: group last first p
-    private NewsgroupInfo __parseNewsgroupListEntry(String entry)
+    static NewsgroupInfo __parseNewsgroupListEntry(String entry)
     {
         String tokens[] = entry.split(" ");
         if (tokens.length < 4) {
@@ -917,6 +917,8 @@ public class NNTPClient extends NNTP
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
+     * @see #iterateNewsgroupListing()
+     * @see #iterateNewsgroups()
      ***/
     public NewsgroupInfo[] listNewsgroups() throws IOException
     {
@@ -927,9 +929,51 @@ public class NNTPClient extends NNTP
     }
 
     /**
-     * An overloaded listNewsgroups() command that allows us to
-     * specify with a pattern what groups we want to list. Wraps the
-     * LIST ACTIVE command.
+     * List all newsgroups served by the NNTP server.  If no newsgroups
+     * are served, no entries will be returned.
+     * <p>
+     * @return An iterable of NewsgroupInfo instances containing the information
+     *    for each newsgroup served by the NNTP server.   If no newsgroups
+     *    are served, no entries will be returned.
+     * @exception NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     * @since 3.0
+     */
+    public Iterable<String> iterateNewsgroupListing() throws IOException {
+        if (NNTPReply.isPositiveCompletion(list())) {
+            return new ReplyIterator(_reader_);            
+        }
+        throw new IOException(getReplyString());
+    }
+
+    /**
+     * List all newsgroups served by the NNTP server.  If no newsgroups
+     * are served, no entries will be returned.
+     * <p>
+     * @return An iterable of Strings containing the raw information
+     *    for each newsgroup served by the NNTP server.   If no newsgroups
+     *    are served, no entries will be returned.
+     * @exception NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     * @since 3.0
+     */
+    public Iterable<NewsgroupInfo> iterateNewsgroups() throws IOException {
+        return new NewsgroupIterator(iterateNewsgroupListing());
+    }
+
+    /**
+     * List the newsgroups that match a given pattern.
+     * Uses the LIST ACTIVE command.
      * <p>
      * @param wildmat a pseudo-regex pattern (cf. RFC 2980)
      * @return An array of NewsgroupInfo instances containing the information
@@ -937,6 +981,8 @@ public class NNTPClient extends NNTP
      *    supplied pattern.   If no such newsgroups are served, a zero length
      *    array will be returned.  If the command fails, null will be returned.
      * @throws IOException
+     * @see #iterateNewsgroupListing(String)
+     * @see #iterateNewsgroups(String)
      */
     public NewsgroupInfo[] listNewsgroups(String wildmat) throws IOException
     {
@@ -946,6 +992,41 @@ public class NNTPClient extends NNTP
     }
 
 
+    /**
+     * List the newsgroups that match a given pattern.
+     * Uses the LIST ACTIVE command.
+     * <p>
+     * @param wildmat a pseudo-regex pattern (cf. RFC 2980)
+     * @return An iterable of Strings containing the raw information
+     *    for each newsgroup served by the NNTP server corresponding to the
+     *    supplied pattern.   If no such newsgroups are served, no entries
+     *    will be returned.
+     * @throws IOException
+     * @since 3.0
+     */
+    public Iterable<String> iterateNewsgroupListing(String wildmat) throws IOException {
+        if(NNTPReply.isPositiveCompletion(listActive(wildmat))) {
+            return new ReplyIterator(_reader_);            
+        }
+        throw new IOException(getReplyString());
+    }
+
+    /**
+     * List the newsgroups that match a given pattern.
+     * Uses the LIST ACTIVE command.
+     * <p>
+     * @param wildmat a pseudo-regex pattern (cf. RFC 2980)
+     * @return An iterable NewsgroupInfo instances containing the information
+     *    for each newsgroup served by the NNTP server corresponding to the
+     *    supplied pattern.   If no such newsgroups are served, no entries
+     *    will be returned.
+     * @throws IOException
+     * @since 3.0
+     */
+    public Iterable<NewsgroupInfo> iterateNewsgroups(String wildmat) throws IOException {
+        return new NewsgroupIterator(iterateNewsgroupListing(wildmat));
+    }
+    
     /***
      * List all new newsgroups added to the NNTP server since a particular
      * date subject to the conditions of the specified query.  If no new
@@ -964,6 +1045,8 @@ public class NNTPClient extends NNTP
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
+     * @see #iterateNewNewsgroups(NewGroupsOrNewsQuery)  
+     * @see #iterateNewNewsgroupListing(NewGroupsOrNewsQuery) 
      ***/
     public NewsgroupInfo[] listNewNewsgroups(NewGroupsOrNewsQuery query)
     throws IOException
@@ -976,7 +1059,55 @@ public class NNTPClient extends NNTP
         return __readNewsgroupListing();
     }
 
+    /**
+     * List all new newsgroups added to the NNTP server since a particular
+     * date subject to the conditions of the specified query.  If no new
+     * newsgroups were added, no entries will be returned.
+     * <p>
+     * @param query  The query restricting how to search for new newsgroups.
+     * @return An iterable of Strings containing the raw information
+     *    for each new newsgroup added to the NNTP server.   If no newsgroups
+     *    were added, no entries will be returned.
+     * @exception NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     * @since 3.0
+     */
+    public Iterable<String> iterateNewNewsgroupListing(NewGroupsOrNewsQuery query) throws IOException {
+        if (NNTPReply.isPositiveCompletion(newgroups(
+                query.getDate(), query.getTime(),
+                query.isGMT(), query.getDistributions()))) {
+            return new ReplyIterator(_reader_);            
+        }
+        throw new IOException(getReplyString());
+    }
 
+    /**
+     * List all new newsgroups added to the NNTP server since a particular
+     * date subject to the conditions of the specified query.  If no new
+     * newsgroups were added, no entries will be returned.
+     * <p>
+     * @param query  The query restricting how to search for new newsgroups.
+     * @return An iterable of NewsgroupInfo instances containing the information
+     *    for each new newsgroup added to the NNTP server.   If no newsgroups
+     *    were added, no entries will be returned.
+     * @exception NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     * @since 3.0
+     */
+    public Iterable<NewsgroupInfo> iterateNewNewsgroups(NewGroupsOrNewsQuery query) throws IOException {
+        return new NewsgroupIterator(iterateNewNewsgroupListing(query));
+    }
+    
     /***
      * List all new articles added to the NNTP server since a particular
      * date subject to the conditions of the specified query.  If no new
@@ -999,6 +1130,8 @@ public class NNTPClient extends NNTP
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
+     *
+     * @see #iterateNewNews(NewGroupsOrNewsQuery)
      ***/
     public String[] listNewNews(NewGroupsOrNewsQuery query)
     throws IOException
@@ -1029,6 +1162,37 @@ public class NNTPClient extends NNTP
         list.copyInto(result);
 
         return result;
+    }
+
+    /**
+     * List all new articles added to the NNTP server since a particular
+     * date subject to the conditions of the specified query.  If no new
+     * new news is found, no entries will be returned. 
+     * You must add at least one newsgroup to the query, else the command will fail.
+     * Each String which is returned is a unique message identifier including the
+     * enclosing &lt and &gt.
+     * <p>
+     * @param query  The query restricting how to search for new news.  You
+     *    must add at least one newsgroup to the query.
+     * @return An iterator of String instances containing the unique message
+     *    identifiers for each new article added to the NNTP server.  If no
+     *    new news is found, no strings will be returned.
+     * @exception NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     * @since 3.0
+     */
+    public Iterable<String> iterateNewNews(NewGroupsOrNewsQuery query) throws IOException {
+        if (NNTPReply.isPositiveCompletion(newnews(
+                query.getNewsgroups(), query.getDate(), query.getTime(),
+                query.isGMT(), query.getDistributions()))) {
+            return new ReplyIterator(_reader_);            
+        }
+        throw new IOException(getReplyString());
     }
 
     /***
