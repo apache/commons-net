@@ -57,6 +57,10 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.0" date="TBA" description="TBA">
+            <action issue="NET-327" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
+            "Unconnected sockets not implemented" when using FTPSClient
+            Added disconnect() override which resets the socket factories to their defaults
+            </action>
             <action issue="NET-350" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
             "java.net.SocketException: Broken pipe" when calling "TelnetClient.sendAYT()"
             Added SocketClient#isAvailable() method to perform additional checks on a socket.

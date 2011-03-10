@@ -33,6 +33,8 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
+import sun.awt.windows.ThemeReader;
+
 /**
  * FTP over SSL processing. If desired, the JVM property -Djavax.net.debug=all can be used to
  * see wire-level SSL details.
@@ -422,6 +424,11 @@ public class FTPSClient extends FTPClient {
      * S - Safe(SSL protocol only)</br>
      * E - Confidential(SSL protocol only)</br>
      * P - Private
+     * <p>
+     * <b>N.B.</b> the method calls
+     *  {@link #setSocketFactory(javax.net.SocketFactory)} and
+     *  {@link #setServerSocketFactory(javax.net.ServerSocketFactory)}
+     *  
      * @param prot Data Channel Protection Level.
      * @throws SSLException If the server reply code does not equal "200".
      * @throws IOException If an I/O error occurs while sending
@@ -541,4 +548,23 @@ public class FTPSClient extends FTPClient {
     public void setTrustManager(TrustManager trustManager) {
         this.trustManager = trustManager;
     }
+
+    /**
+     * Closes the connection to the FTP server and restores
+     * connection parameters to the default values.
+     * <p>
+     * Calls {@code setSocketFactory(null)} and {@code setServerSocketFactory(null)}
+     * to reset the factories that may have been changed during the session, 
+     * e.g. by {@link #execPROT(String)}
+     * @exception IOException If an error occurs while disconnecting.
+     * @since 3.0
+     */
+    @Override
+    public void disconnect() throws IOException
+    {
+        super.disconnect();
+        setSocketFactory(null);
+        setServerSocketFactory(null);
+    }
 }
+/* kate: indent-width 4; replace-tabs on; */
