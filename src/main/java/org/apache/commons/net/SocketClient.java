@@ -325,6 +325,40 @@ public abstract class SocketClient
         return _socket_.isConnected();
     }
 
+    /**
+     * Make various checks on the socket to test if it is available for use.
+     * Note that the only sure test is to use it, but these checks may help
+     * in some cases.
+     * @see <a href="https://issues.apache.org/jira/browse/NET-350">NET-350</a>
+     * @return {@code true} if the socket appears to be available for use
+     * @since 3.0
+     */
+    public boolean isAvailable(){
+        if (isConnected()) {
+            try
+            {
+                if (_socket_.getInetAddress() == null) return false;
+                if (_socket_.getPort() == 0) return false;
+                if (_socket_.getRemoteSocketAddress() == null) return false;
+                if (_socket_.isClosed()) return false;
+                /* these aren't exact checks (a Socket can be half-open),
+                   but since we usually require two-way data transfer,
+                   we check these here too: */
+                if (_socket_.isInputShutdown()) return false;
+                if (_socket_.isOutputShutdown()) return false;
+                /* ignore the result, catch exceptions: */
+                _socket_.getInputStream();
+                _socket_.getOutputStream();
+            }
+            catch (IOException ioex)
+            {
+                return false;
+            }            
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Sets the default port the SocketClient should connect to when a port
