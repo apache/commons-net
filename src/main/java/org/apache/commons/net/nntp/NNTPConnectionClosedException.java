@@ -37,6 +37,8 @@ import java.io.IOException;
 public final class NNTPConnectionClosedException extends IOException
 {
 
+    private static final long serialVersionUID = 1029785635891040770L;
+
     /*** Constructs a NNTPConnectionClosedException with no message ***/
     public NNTPConnectionClosedException()
     {

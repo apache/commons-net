@@ -39,6 +39,8 @@ package org.apache.commons.net.tftp;
 public class TFTPPacketException extends Exception
 {
 
+    private static final long serialVersionUID = -8114699256840851439L;
+
     /***
      * Simply calls the corresponding constructor of its superclass.
      ***/

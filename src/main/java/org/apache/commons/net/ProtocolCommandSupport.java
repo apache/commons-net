@@ -36,6 +36,8 @@ import org.apache.commons.net.util.ListenerList;
 
 public class ProtocolCommandSupport implements Serializable
 {
+    private static final long serialVersionUID = -8017692739988399978L;
+
     private final Object __source;
     private final ListenerList __listeners;
 

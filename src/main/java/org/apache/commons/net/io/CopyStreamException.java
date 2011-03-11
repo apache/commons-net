@@ -30,6 +30,8 @@ import java.io.IOException;
  */
 public class CopyStreamException extends IOException
 {
+    private static final long serialVersionUID = -2602899129433221532L;
+
     private final long totalBytesTransferred;
     private final IOException ioException;
 

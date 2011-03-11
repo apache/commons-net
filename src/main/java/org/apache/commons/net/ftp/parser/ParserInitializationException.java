@@ -24,6 +24,8 @@ package org.apache.commons.net.ftp.parser;
  */
 public class ParserInitializationException extends RuntimeException {
 
+    private static final long serialVersionUID = 1123380491796734328L;
+
     /**
      * Root exception that caused this to be thrown
      */

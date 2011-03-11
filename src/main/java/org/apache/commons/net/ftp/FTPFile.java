@@ -31,6 +31,8 @@ import java.util.Calendar;
 
 public class FTPFile implements Serializable
 {
+    private static final long serialVersionUID = 9010790363003271996L;
+
     /** A constant indicating an FTPFile is a file. ***/
     public static final int FILE_TYPE = 0;
     /** A constant indicating an FTPFile is a directory. ***/

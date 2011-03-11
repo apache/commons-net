@@ -34,6 +34,8 @@ import java.util.EventObject;
  */
 public class CopyStreamEvent extends EventObject
 {
+    private static final long serialVersionUID = -964927635655051867L;
+
     /**
      * Constant used to indicate the stream size is unknown.
      */
