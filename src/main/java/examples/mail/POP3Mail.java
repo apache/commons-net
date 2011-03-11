@@ -20,6 +20,8 @@ package examples.mail;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Locale;
+
 import org.apache.commons.net.pop3.POP3Client;
 import org.apache.commons.net.pop3.POP3MessageInfo;
 
@@ -45,7 +47,7 @@ public final class POP3Mail
 
         while ((line = reader.readLine()) != null)
         {
-            lower = line.toLowerCase();
+            lower = line.toLowerCase(Locale.ENGLISH);
             if (lower.startsWith("from: "))
                 from = line.substring(6).trim();
             else if (lower.startsWith("subject: "))
