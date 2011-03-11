@@ -52,8 +52,8 @@ public class NtpV3Impl implements NtpV3Packet
     private static final int RECEIVE_TIMESTAMP_INDEX = 32;
     private static final int TRANSMIT_TIMESTAMP_INDEX = 40;
 
-    private static final int KEY_IDENTIFIER_INDEX = 48;
-    private static final int MESSAGE_DIGEST = 54; /* len 16 bytes */
+//    private static final int KEY_IDENTIFIER_INDEX = 48;
+//    private static final int MESSAGE_DIGEST = 54; /* len 16 bytes */
 
     private final byte[] buf = new byte[48];
 
