@@ -61,8 +61,7 @@ public class SubnetUtilsTest extends TestCase {
 
     public void testZeroNetmaskBits() {
         try {
-            @SuppressWarnings("unused")
-            SubnetUtils utils = new SubnetUtils("192.168.0.1/0");
+            new SubnetUtils("192.168.0.1/0");
             fail("Mask /0 should have generated an IllegalArgumentException");
         }
         catch (IllegalArgumentException expected) {
