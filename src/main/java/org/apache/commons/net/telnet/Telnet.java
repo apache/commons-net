@@ -794,7 +794,7 @@ class Telnet extends SocketClient
             for (int ii = 0; ii < subn.length; ii++)
             {
                 byte b = (byte) subn[ii];
-                if (b == TelnetCommand.IAC) {
+                if (b == (byte) TelnetCommand.IAC) { // cast is necessary because IAC is outside the signed byte range
                     _output_.write(b); // double any IAC bytes
                 }
                 _output_.write(b);
