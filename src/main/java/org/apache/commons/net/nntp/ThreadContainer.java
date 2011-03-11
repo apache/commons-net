@@ -27,7 +27,7 @@ package org.apache.commons.net.nntp;
 class ThreadContainer {
     Threadable threadable;
     ThreadContainer parent;
-    ThreadContainer prev;
+    ThreadContainer prev; // TODO currently unused
     ThreadContainer next;
     ThreadContainer child;
 
