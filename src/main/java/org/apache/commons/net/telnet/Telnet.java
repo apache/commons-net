@@ -121,7 +121,7 @@ class Telnet extends SocketClient
     /***
      * flag for AYT
      ***/
-    private boolean aytFlag = true;
+    private volatile boolean aytFlag = true;
     /* Code Section added for supporting AYT (end)*/
 
     /***
