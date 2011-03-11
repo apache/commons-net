@@ -17,6 +17,7 @@
 
 package examples.telnet;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
@@ -236,7 +237,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                             }
                         }
                     }
-                    catch (Exception e)
+                    catch (IOException e)
                     {
                         System.err.println("Exception while reading keyboard:" + e.getMessage());
                         end_loop = true;
