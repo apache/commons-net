@@ -223,13 +223,13 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      */
     private String _convertToHexString(byte[] a)
     {
-        String result = "";
+        StringBuilder result = new StringBuilder(a.length*2);
         for (int i = 0; i < a.length; i++)
         {
-            if ( (a[i] & 0x0FF) <= 15 ) result += "0";
-            result += Integer.toHexString(a[i] & 0x0FF);
+            if ( (a[i] & 0x0FF) <= 15 ) result.append("0");
+            result.append(Integer.toHexString(a[i] & 0x0FF));
         }
-        return result;
+        return result.toString();
     }
 
     /**
