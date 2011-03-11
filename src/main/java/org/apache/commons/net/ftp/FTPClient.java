@@ -32,6 +32,7 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.Random;
 
@@ -737,8 +738,8 @@ implements Configurable
                 {
                     for ( int i = 0; i < features.length; i++ )
                     {
-                        if ( features[i].trim().toUpperCase().equals("UTF8")
-                            || features[i].trim().toUpperCase().equals("UTF-8") )
+                        if ( features[i].trim().toUpperCase(Locale.ENGLISH).equals("UTF8")
+                            || features[i].trim().toUpperCase(Locale.ENGLISH).equals("UTF-8") )
                         {
                             setControlEncoding("UTF-8");
                             _controlInput_ =
