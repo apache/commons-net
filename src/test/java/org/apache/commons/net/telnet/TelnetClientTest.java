@@ -76,8 +76,9 @@ extends TestCase implements TelnetNotificationHandler
     @Override
     protected void setUp() throws Exception 
     {
+        int socket = 0;
         super.setUp();
-        for (int port = 3333, socket = 0; socket < NUM_CONNECTIONS && port < 4000; port++) 
+        for (int port = 3333; socket < NUM_CONNECTIONS && port < 4000; port++) 
         {
             TelnetTestSimpleServer server = null;
             TelnetClient client = null;
@@ -131,8 +132,10 @@ extends TestCase implements TelnetNotificationHandler
                socket++;
            } catch (IOException e) {
                closeConnection(server, client, port);
-               System.err.println("failed to open client-server connection on port " + port);
            }
+       }
+       if (socket < NUM_CONNECTIONS) {
+           System.err.println("Only created "+socket+" clients; wanted "+NUM_CONNECTIONS);
        }
        Thread.sleep(1000);
     }

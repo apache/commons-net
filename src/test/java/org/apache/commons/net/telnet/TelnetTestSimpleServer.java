@@ -101,6 +101,9 @@ public class TelnetTestSimpleServer implements Runnable
      ***/
     public void disconnect()
     {
+        if (clientSocket == null) {
+            return;
+        }
         synchronized (clientSocket)
         {
             try
