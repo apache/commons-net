@@ -81,7 +81,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
         {
             fout = new FileOutputStream ("spy.log", true);
         }
-        catch (Exception e)
+        catch (IOException e)
         {
             System.err.println(
                 "Exception while opening the spy file: "
@@ -144,7 +144,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
 
                                     System.out.println("AYT response:" + tc.sendAYT(5000));
                                 }
-                                catch (Exception e)
+                                catch (IOException e)
                                 {
                                     System.err.println("Exception waiting AYT response: " + e.getMessage());
                                 }
@@ -210,14 +210,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                             }
                             else if((new String(buff, 0, ret_read)).startsWith("SPY"))
                             {
-                                try
-                                {
-                                    tc.registerSpyStream(fout);
-                                }
-                                catch (Exception e)
-                                {
-                                    System.err.println("Error registering the spy");
-                                }
+                                tc.registerSpyStream(fout);
                             }
                             else if((new String(buff, 0, ret_read)).startsWith("UNSPY"))
                             {
@@ -230,7 +223,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                                         outstr.write(buff, 0 , ret_read);
                                         outstr.flush();
                                 }
-                                catch (Exception e)
+                                catch (IOException e)
                                 {
                                         end_loop = true;
                                 }
@@ -249,12 +242,12 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                 {
                     tc.disconnect();
                 }
-                catch (Exception e)
+                catch (IOException e)
                 {
                           System.err.println("Exception while connecting:" + e.getMessage());
                 }
             }
-            catch (Exception e)
+            catch (IOException e)
             {
                     System.err.println("Exception while connecting:" + e.getMessage());
                     System.exit(1);
@@ -319,7 +312,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
             }
             while (ret_read >= 0);
         }
-        catch (Exception e)
+        catch (IOException e)
         {
             System.err.println("Exception while reading socket:" + e.getMessage());
         }
@@ -328,7 +321,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
         {
             tc.disconnect();
         }
-        catch (Exception e)
+        catch (IOException e)
         {
             System.err.println("Exception while closing telnet:" + e.getMessage());
         }
