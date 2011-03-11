@@ -160,11 +160,11 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                                 try
                                 {
                                     st.nextToken();
-                                    int opcode = (new Integer(st.nextToken())).intValue();
-                                    boolean initlocal = (new Boolean(st.nextToken())).booleanValue();
-                                    boolean initremote = (new Boolean(st.nextToken())).booleanValue();
-                                    boolean acceptlocal = (new Boolean(st.nextToken())).booleanValue();
-                                    boolean acceptremote = (new Boolean(st.nextToken())).booleanValue();
+                                    int opcode = Integer.parseInt(st.nextToken());
+                                    boolean initlocal = Boolean.parseBoolean(st.nextToken());
+                                    boolean initremote = Boolean.parseBoolean(st.nextToken());
+                                    boolean acceptlocal = Boolean.parseBoolean(st.nextToken());
+                                    boolean acceptremote = Boolean.parseBoolean(st.nextToken());
                                     SimpleOptionHandler opthand = new SimpleOptionHandler(opcode, initlocal, initremote,
                                                                     acceptlocal, acceptremote);
                                     tc.addOptionHandler(opthand);
