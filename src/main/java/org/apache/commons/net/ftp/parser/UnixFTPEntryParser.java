@@ -174,14 +174,16 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
                  // intentionally do nothing
             }
             
+            // A 'whiteout' file is an ARTIFICIAL entry in any of several types of
+            // 'translucent' filesystems, of which a 'union' filesystem is one.
             
-            // bcdlfmpSs-
+            // bcdelfmpSs-
             switch (typeStr.charAt(0))
             {
             case 'd':
                 type = FTPFile.DIRECTORY_TYPE;
                 break;
-            case 'e':
+            case 'e': // NET-39 => z/OS external link
                 type = FTPFile.SYMBOLIC_LINK_TYPE;
                 break;
             case 'l':
@@ -196,7 +198,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             case '-':
                 type = FTPFile.FILE_TYPE;
                 break;
-            default:
+            default: // e.g. ? and w = whiteout
                 type = FTPFile.UNKNOWN_TYPE;
             }
 
