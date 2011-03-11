@@ -37,11 +37,12 @@ public final class ListNewsgroups
     {
         if (args.length < 1)
         {
-            System.err.println("Usage: newsgroups newsserver");
+            System.err.println("Usage: newsgroups newsserver [pattern]");
             return;
         }
 
         NNTPClient client = new NNTPClient();
+        String pattern = args.length >= 2 ? args[1] : "";
 
         try
         {
@@ -49,9 +50,9 @@ public final class ListNewsgroups
 
             int j = 0;
             try {
-                for(String s : client.iterateNewsgroupListing("demon.*")) {
+                for(String s : client.iterateNewsgroupListing(pattern)) {
                     j++;
-//                    System.out.println(s);
+                    System.out.println(s);
                 }
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -59,9 +60,9 @@ public final class ListNewsgroups
             System.out.println(j);
 
             j = 0;
-            for(NewsgroupInfo n : client.iterateNewsgroups("demon.*")) {
+            for(NewsgroupInfo n : client.iterateNewsgroups(pattern)) {
                 j++;
-                //System.out.println(n.getNewsgroup());
+                System.out.println(n.getNewsgroup());
             }
             System.out.println(j);
         }
