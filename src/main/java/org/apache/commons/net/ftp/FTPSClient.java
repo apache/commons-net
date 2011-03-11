@@ -33,8 +33,6 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
-import sun.awt.windows.ThemeReader;
-
 /**
  * FTP over SSL processing. If desired, the JVM property -Djavax.net.debug=all can be used to
  * see wire-level SSL details.
