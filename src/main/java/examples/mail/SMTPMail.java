@@ -88,14 +88,13 @@ public final class SMTPMail
                 System.out.print("CC <enter one address per line, hit enter to end>: ");
                 System.out.flush();
 
-                // Of course you don't want to do this because readLine() may be null
-                cc = stdin.readLine().trim();
+                cc = stdin.readLine();
 
-                if (cc.length() == 0)
+                if (cc== null || cc.length() == 0)
                     break;
 
-                header.addCC(cc);
-                ccList.add(cc);
+                header.addCC(cc.trim());
+                ccList.add(cc.trim());
             }
 
             System.out.print("Filename: ");
