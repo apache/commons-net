@@ -1419,8 +1419,8 @@ public class NNTPClient extends NNTP
      * <p>
      * @param lowArticleNumber
      * @param highArticleNumber
-     * @return an Iterable of Articles, or {@code null} if the command failed
-     * @throws IOException
+     * @return an Iterable of Articles
+     * @throws IOException if the command failed
      * @since 3.0
      */
     public Iterable<Article> iterateArticleInfo(long lowArticleNumber, long highArticleNumber) 
@@ -1428,7 +1428,7 @@ public class NNTPClient extends NNTP
     {
         Reader info = retrieveArticleInfo(lowArticleNumber,highArticleNumber);
         if (info == null) {
-            return null;
+            throw new IOException(getReplyString());
         }
         // N.B. info is already DotTerminated, so don't rewrap
         return new ArticleIterator(new ReplyIterator(info, false));
