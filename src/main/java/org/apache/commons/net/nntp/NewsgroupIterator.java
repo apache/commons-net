@@ -44,6 +44,7 @@ class NewsgroupIterator implements Iterator<NewsgroupInfo>, Iterable<NewsgroupIn
     public void remove() {
         stringIterator.remove();
     }
+
     public Iterator<NewsgroupInfo> iterator() {
         return this;
     }
