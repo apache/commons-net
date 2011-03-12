@@ -39,6 +39,7 @@ public class Article implements Threadable {
 
     public Article() {
         header = new StringBuffer();
+        articleNumber = -1; // isDummy
     }
 
     /**
@@ -200,7 +201,7 @@ public class Article implements Threadable {
 
     
     public boolean isDummy() {
-        return (getSubject() == null);
+        return (articleNumber == -1);
     }
 
     public String messageThreadId() {

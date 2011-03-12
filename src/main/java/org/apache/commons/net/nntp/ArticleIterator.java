@@ -36,6 +36,11 @@ class ArticleIterator implements Iterator<Article>, Iterable<Article> {
         return stringIterator.hasNext();
     }
 
+    /**
+     * Get the next Article
+     * @return the next {@link Article}, never {@code null}, if unparseable then isDummy() 
+     * will be true, and the subject will contain the raw info.
+     */
     public Article next() {
         String line = stringIterator.next();
         return NNTPClient.__parseArticleEntry(line);
