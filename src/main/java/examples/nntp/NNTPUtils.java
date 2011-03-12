@@ -16,9 +16,7 @@
  */
 package examples.nntp;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.net.nntp.Article;
@@ -43,33 +41,12 @@ public class NNTPUtils {
      */
     public  static List<Article> getArticleInfo(NNTPClient client, long lowArticleNumber, long highArticleNumber)
     throws IOException {
-        Reader reader = null;
         List<Article> articles = new ArrayList<Article>();
-        reader = client.retrieveArticleInfo(
-                    lowArticleNumber,
-                    highArticleNumber);
-
-        if (reader != null) {
-            BufferedReader bufReader = new BufferedReader(reader);
-
-            // Extract the article information
-            // Mandatory format (from NNTP RFC 2980) is :
-            // articleNumber\tSubject\tAuthor\tDate\tID\tReference(s)\tByte Count\tLine Count
-
-            String msg;
-            while ((msg=bufReader.readLine()) != null) {
-                System.out.println("Message:" + msg);
-                String parts[] = msg.split("\t");
-                if (parts.length > 6) {
-                    int i = 0;
-                    Article article = new Article();
-                    article.setArticleNumber(Integer.parseInt(parts[i++]));
-                    article.setSubject(parts[i++]);
-                    article.setFrom(parts[i++]);
-                    article.setDate(parts[i++]);
-                    article.setArticleId(parts[i++]);
-                    article.addReference(parts[i++]);
-                    articles.add(article);
+        Iterable<Article> arts = client.iterateArticleInfo(lowArticleNumber, highArticleNumber);
+        if (arts != null) {
+            for(Article article : arts){
+                if (article != null ) {
+                    articles.add(article);                
                 }
             }
         }
