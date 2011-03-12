@@ -208,6 +208,33 @@ public class NNTPClient extends NNTP
         return result;
     }
 
+    /**
+     * Parse a response line from {@link #retrieveArticleInfo(long, long)}
+     * @param line a response line 
+     * @return the parsed {@link Article} or {@code null} if it cannot be parsed
+     * @since 3.0
+     */
+    static Article __parseArticleEntry(String line) {
+        // Extract the article information
+        // Mandatory format (from NNTP RFC 2980) is :
+        // articleNumber\tSubject\tAuthor\tDate\tID\tReference(s)\tByte Count\tLine Count
+
+        String parts[] = line.split("\t");
+        if (parts.length > 6) {
+            int i = 0;
+            Article article = new Article();
+            article.setArticleNumber(Integer.parseInt(parts[i++]));
+            article.setSubject(parts[i++]);
+            article.setFrom(parts[i++]);
+            article.setDate(parts[i++]);
+            article.setArticleId(parts[i++]);
+            article.addReference(parts[i++]);
+            return article;
+        } else {
+            return null;
+        }
+    }
+
     private NewsgroupInfo[] __readNewsgroupListing() throws IOException
     {
         int size;
@@ -1379,6 +1406,27 @@ public class NNTPClient extends NNTP
         return
             __retrieveArticleInfo(lowArticleNumber + "-" +
                                              highArticleNumber);
+    }
+
+    /**
+     * Return article headers for all articles between lowArticleNumber
+     * and highArticleNumber, inclusively.
+     * <p>
+     * @param lowArticleNumber
+     * @param highArticleNumber
+     * @return an Iterable of Articles, or {@code null} if the command failed
+     * @throws IOException
+     * @since 3.0
+     */
+    public Iterable<Article> iterateArticleInfo(long lowArticleNumber, long highArticleNumber) 
+        throws IOException
+    {
+        Reader info = retrieveArticleInfo(lowArticleNumber,highArticleNumber);
+        if (info == null) {
+            return null;
+        }
+        // N.B. info is already DotTerminated, so don't rewrap
+        return new ArticleIterator(new ReplyIterator(info, false));
     }
 
     /***
