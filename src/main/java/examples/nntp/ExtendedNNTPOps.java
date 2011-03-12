@@ -19,7 +19,6 @@ package examples.nntp;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.nntp.Article;
@@ -43,16 +42,18 @@ public class ExtendedNNTPOps {
     }
 
 
-    public void demo(String host, String user, String password) {
+    private void demo(String host, String user, String password) {
         try {
             client.connect(host);
 
             // AUTHINFO USER/AUTHINFO PASS
-            boolean success = client.authenticate(user, password);
-            if (success) {
-                System.out.println("Authentication succeeded");
-            } else {
-                System.out.println("Authentication failed, error =" + client.getReplyString());
+            if (user != null && password != null) {
+                boolean success = client.authenticate(user, password);
+                if (success) {
+                    System.out.println("Authentication succeeded");
+                } else {
+                    System.out.println("Authentication failed, error =" + client.getReplyString());
+                }
             }
 
             // XOVER
@@ -60,12 +61,13 @@ public class ExtendedNNTPOps {
             client.selectNewsgroup("alt.test", testGroup);
             long lowArticleNumber = testGroup.getFirstArticle();
             long  highArticleNumber = lowArticleNumber + 100;
-            List<Article> articles = NNTPUtils.getArticleInfo(client, lowArticleNumber, highArticleNumber);
+            Iterable<Article> articles = client.iterateArticleInfo(lowArticleNumber, highArticleNumber);
 
-            for (Article article : articles) {
-                System.out.println(article.getSubject());
+            if (articles != null) {
+                for (Article article : articles) {
+                    System.out.println(article.getSubject());
+                }
             }
-
             // LIST ACTIVE
             NewsgroupInfo[] fanGroups = client.listNewsgroups("alt.fan.*");
             for (int i = 0; i < fanGroups.length; ++i) {
@@ -80,13 +82,14 @@ public class ExtendedNNTPOps {
     public static void main(String[] args) {
         ExtendedNNTPOps ops;
 
-        if (args.length != 3) {
-            System.err.println("usage: ExtendedNNTPOps nntpserver username password");
+        int argc = args.length;
+        if (argc < 1) {
+            System.err.println("usage: ExtendedNNTPOps nntpserver [username password]");
             System.exit(1);
         }
 
         ops = new ExtendedNNTPOps();
-        ops.demo(args[0], args[1], args[2]);
+        ops.demo(args[0], argc >=3 ? args[1] : null, argc >=3 ? args[2] : null);
     }
 
 }
