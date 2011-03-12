@@ -227,7 +227,7 @@ public class NNTPClient extends NNTP
         if (parts.length > 6) {
             int i = 0;
             try {
-                article.setArticleNumber(Integer.parseInt(parts[i++]));
+                article.setArticleNumber(Long.parseLong(parts[i++]));
                 article.setSubject(parts[i++]);
                 article.setFrom(parts[i++]);
                 article.setDate(parts[i++]);

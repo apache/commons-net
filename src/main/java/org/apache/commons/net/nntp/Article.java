@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * @author rwinston <rwinston@apache.org>
  */
 public class Article implements Threadable {
-    private int articleNumber;
+    private long articleNumber;
     private String subject;
     private String date;
     private String articleId;
@@ -163,7 +163,7 @@ public class Article implements Threadable {
         return articleId;
     }
 
-    public int getArticleNumber() {
+    public long getArticleNumber() {
         return articleNumber;
     }
 
@@ -183,8 +183,8 @@ public class Article implements Threadable {
         articleId = string;
     }
 
-    public void setArticleNumber(int i) {
-        articleNumber = i;
+    public void setArticleNumber(long l) {
+        articleNumber = l;
     }
 
     public void setDate(String string) {
