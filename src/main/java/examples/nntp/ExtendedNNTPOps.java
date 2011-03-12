@@ -63,15 +63,14 @@ public class ExtendedNNTPOps {
             long  highArticleNumber = lowArticleNumber + 100;
             Iterable<Article> articles = client.iterateArticleInfo(lowArticleNumber, highArticleNumber);
 
-            if (articles != null) {
-                for (Article article : articles) {
-                    if (article.isDummy()) { // Subject will contain raw response
-                        System.out.println("Could not parse: "+article.getSubject());
-                    } else {
-                        System.out.println(article.getSubject());
-                    }
+            for (Article article : articles) {
+                if (article.isDummy()) { // Subject will contain raw response
+                    System.out.println("Could not parse: "+article.getSubject());
+                } else {
+                    System.out.println(article.getSubject());
                 }
             }
+
             // LIST ACTIVE
             NewsgroupInfo[] fanGroups = client.listNewsgroups("alt.fan.*");
             for (int i = 0; i < fanGroups.length; ++i) {

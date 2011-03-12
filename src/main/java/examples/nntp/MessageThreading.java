@@ -21,8 +21,6 @@ package examples.nntp;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.SocketException;
-import java.util.List;
-
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.nntp.Article;
 import org.apache.commons.net.nntp.NNTPClient;
@@ -73,7 +71,7 @@ public class MessageThreading {
         long highArticleNumber = lowArticleNumber + 5000;
         
         System.out.println("Retrieving articles between [" + lowArticleNumber + "] and [" + highArticleNumber + "]");
-        List<Article> articles = NNTPUtils.getArticleInfo(client, lowArticleNumber, highArticleNumber);
+        Iterable<Article> articles = client.iterateArticleInfo(lowArticleNumber, highArticleNumber);
         
         System.out.println("Building message thread tree...");
         Threader threader = new Threader();
