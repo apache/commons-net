@@ -65,7 +65,11 @@ public class ExtendedNNTPOps {
 
             if (articles != null) {
                 for (Article article : articles) {
-                    System.out.println(article.getSubject());
+                    if (article.isDummy()) { // Subject will contain raw response
+                        System.out.println("Could not parse: "+article.getSubject());
+                    } else {
+                        System.out.println(article.getSubject());
+                    }
                 }
             }
             // LIST ACTIVE
