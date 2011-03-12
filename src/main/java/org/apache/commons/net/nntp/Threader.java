@@ -29,7 +29,6 @@ package org.apache.commons.net.nntp;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 public class Threader {
     private ThreadContainer root;
@@ -39,11 +38,11 @@ public class Threader {
     /**
      * The main threader entry point - The client passes in a list of Threadable objects, and
      * the Threader constructs a connected 'graph' of messages
-     * @param messages list of messages to thread
+     * @param messages iterable of messages to thread
      * @return null if messages == null or root.child == null
      * @since 2.2
      */
-    public Threadable thread(List<? extends Threadable> messages) {
+    public Threadable thread(Iterable<? extends Threadable> messages) {
         if (messages == null)
             return null;
 
