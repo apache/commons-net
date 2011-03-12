@@ -40,12 +40,22 @@ class ReplyIterator implements Iterator<String>, Iterable<String> {
     
     private Exception savedException;
 
-    ReplyIterator(Reader _reader) throws IOException {
-        reader = new BufferedReader(new DotTerminatedMessageReader(_reader));
+    /**
+     *
+     * @param _reader the reader to wrap
+     * @param addDotReader whether to additionally wrap the reader in a DotTerminatedMessageReader 
+     * @throws IOException
+     */
+    ReplyIterator(Reader _reader, boolean addDotReader) throws IOException {
+        reader = new BufferedReader(addDotReader ? new DotTerminatedMessageReader(_reader) : _reader);
         line = reader.readLine(); // prime the iterator
         if (line == null) {
             Util.closeQuietly(reader);
         }
+    }
+
+    ReplyIterator(BufferedReader _reader) throws IOException {
+        this(_reader, true);
     }
 
     public boolean hasNext() {
