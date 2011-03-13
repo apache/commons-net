@@ -233,7 +233,7 @@ public class FTPSClient extends FTPClient {
         String ip = _socket_.getInetAddress().getHostAddress();
         int port = _socket_.getPort();
         SSLSocket socket =
-            (SSLSocket) ssf.createSocket(_socket_, ip, port, true);
+            (SSLSocket) ssf.createSocket(_socket_, ip, port, false);
         socket.setEnableSessionCreation(isCreation);
         socket.setUseClientMode(isClientMode);
         // server mode
@@ -476,6 +476,7 @@ public class FTPSClient extends FTPClient {
         /* If CCC is issued, restore socket i/o streams to unsecured versions */
         if (FTPSCommand._commands[FTPSCommand.CCC].equals(command)) {
             if (FTPReply.COMMAND_OK == repCode) {
+                _socket_.close();
                 _socket_ = plainSocket;
                 _controlInput_ = new BufferedReader(
                     new InputStreamReader(
@@ -483,7 +484,6 @@ public class FTPSClient extends FTPClient {
                 _controlOutput_ = new BufferedWriter(
                     new OutputStreamWriter(
                         _socket_.getOutputStream(), getControlEncoding()));
-                setSocketFactory(null);
             } else {
                 throw new SSLException(getReplyString());
             }
