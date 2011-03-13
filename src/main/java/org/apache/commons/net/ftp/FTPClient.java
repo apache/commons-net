@@ -2911,7 +2911,7 @@ implements Configurable
     /**
      * Whether should attempt to use EPSV with IPv4.
      * Default (if not set) is <code>false</code>
-     * @return true if should attempt EPS
+     * @return true if should attempt EPSV
      * @since 2.2
      */
     public boolean isUseEPSVwithIPv4() {
