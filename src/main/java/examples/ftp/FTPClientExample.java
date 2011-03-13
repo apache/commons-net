@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
@@ -32,6 +33,8 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.commons.net.io.CopyStreamEvent;
 import org.apache.commons.net.io.CopyStreamListener;
+
+import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 
 /***
  * This is an example program demonstrating how to use the FTPClient class.
@@ -47,10 +50,11 @@ public final class FTPClientExample
 {
 
     public static final String USAGE =
-        "Usage: ftp [-s] [-b] [-l] [-a] [-e] [-k secs [-w msec]] [-#] <hostname> <username> <password> <remote file> <local file>\n" +
+        "Usage: ftp [-s] [-b] [-l|-f] [-a] [-e] [-k secs [-w msec]] [-#] <hostname> <username> <password> <remote file> <local file>\n" +
         "\nDefault behavior is to download a file and use ASCII transfer mode.\n" +
         "\t-s store file on server (upload)\n" +
         "\t-l list files (local file is ignored)\n" +
+        "\t-f issue FEAT command (local file is ignored)\n" +
         "\t-# add hash display during transfers\n" +
         "\t-k secs use keep-alive timer (setControlKeepAliveTimeout)\n" +
         "\t-w msec wait time for keep-alive reply (setControlKeepAliveReplyTimeout)\n" +
@@ -64,6 +68,7 @@ public final class FTPClientExample
         boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false;
         boolean localActive = false;
         boolean useEpsvWithIPv4 = false;
+        boolean feat = false;
         String server, username, password, remote, local;
         final FTPClient ftp = new FTPClient();
 
@@ -80,6 +85,9 @@ public final class FTPClientExample
             }
             else if (args[base].equals("-e")) {
                 useEpsvWithIPv4 = true;
+            }
+            else if (args[base].equals("-f")) {
+                feat = true;
             }
             else if (args[base].equals("-l")) {
                 listFiles = true;
@@ -195,6 +203,12 @@ __main:
                     System.out.println(f);
                 }
                     
+            }
+            else if (feat)
+            {
+                if (ftp.features()) {
+                    System.out.println(Arrays.toString(ftp.getReplyStrings()));
+                }
             }
             else
             {
