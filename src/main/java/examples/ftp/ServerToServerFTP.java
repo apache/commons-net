@@ -44,6 +44,8 @@ public final class ServerToServerFTP
     {
         String server1, username1, password1, file1;
         String server2, username2, password2, file2;
+        String [] parts;
+        int port1=0, port2=0;
         FTPClient ftp1, ftp2;
         ProtocolCommandListener listener;
 
@@ -56,10 +58,20 @@ public final class ServerToServerFTP
         }
 
         server1 = args[0];
+        parts = server1.split(":");
+        if (parts.length == 2) {
+            server1=parts[0];
+            port1 = Integer.parseInt(parts[1]);
+        }
         username1 = args[1];
         password1 = args[2];
         file1 = args[3];
         server2 = args[4];
+        parts = server2.split(":");
+        if (parts.length == 2) {
+            server2=parts[0];
+            port2 = Integer.parseInt(parts[1]);
+        }
         username2 = args[5];
         password2 = args[6];
         file2 = args[7];
@@ -73,7 +85,11 @@ public final class ServerToServerFTP
         try
         {
             int reply;
-            ftp1.connect(server1);
+            if (port1 > 0) {
+                ftp1.connect(server1, port1);                
+            } else {
+                ftp1.connect(server1);
+            }
             System.out.println("Connected to " + server1 + ".");
 
             reply = ftp1.getReplyCode();
@@ -106,7 +122,11 @@ public final class ServerToServerFTP
         try
         {
             int reply;
-            ftp2.connect(server2);
+            if (port2 > 0) {
+                ftp2.connect(server2, port2);                
+            } else {
+                ftp2.connect(server2);
+            }
             System.out.println("Connected to " + server2 + ".");
 
             reply = ftp2.getReplyCode();
