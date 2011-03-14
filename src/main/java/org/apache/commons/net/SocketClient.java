@@ -353,7 +353,7 @@ public abstract class SocketClient
             catch (IOException ioex)
             {
                 return false;
-            }            
+            }
             return true;
         } else {
             return false;

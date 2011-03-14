@@ -141,7 +141,7 @@ public class FingerClient extends SocketClient
     {
         return getInputStream(longOutput, username, null);
     }
-    
+
     /***
      * Fingers a user and returns the input stream from the network connection
      * of the finger query.  You must first connect to a finger server before
@@ -165,8 +165,8 @@ public class FingerClient extends SocketClient
             buffer.append(__LONG_FLAG);
         buffer.append(username);
         buffer.append(SocketClient.NETASCII_EOL);
-        
-        byte[] encodedQuery = 
+
+        byte[] encodedQuery =
                 (encoding == null ? buffer.toString().getBytes() : buffer.toString().getBytes(encoding));
 
         output = new DataOutputStream(new BufferedOutputStream(_output_, 1024));

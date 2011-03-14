@@ -245,12 +245,12 @@ import org.apache.commons.net.io.Util;
  * </pre>
  * This will cause the file upload/download methods to send a NOOP approximately every 5 minutes.
  * <p>
- * The implementation currently uses a {@link CopyStreamListener} which is passed to the 
+ * The implementation currently uses a {@link CopyStreamListener} which is passed to the
  * {@link Util#copyStream(InputStream, OutputStream, int, long, CopyStreamListener, boolean)}
  * method, so the timing is partially dependent on how long each block transfer takes.
  * <p>
- * <b>Note:</b> this does not apply to the methods where the user is responsible for writing or reading 
- * the data stream, i.e. {@link #retrieveFileStream(String)} , {@link #storeFileStream(String)} 
+ * <b>Note:</b> this does not apply to the methods where the user is responsible for writing or reading
+ * the data stream, i.e. {@link #retrieveFileStream(String)} , {@link #storeFileStream(String)}
  * and the other xxxFileStream methods
  * <p>
  *
@@ -325,7 +325,7 @@ implements Configurable
     private int __bufferSize;
     private boolean __listHiddenFiles;
     private boolean __useEPSVwithIPv4; // whether to attempt EPSV with an IPv4 connection
-    
+
     // __systemName is a cached value that should not be referenced directly
     // except when assigned in getSystemName and __initDefaults.
     private String __systemName;
@@ -333,7 +333,7 @@ implements Configurable
     // __entryParser is a cached value that should not be referenced directly
     // except when assigned in listFiles(String, String) and __initDefaults.
     private FTPFileEntryParser __entryParser;
-    
+
     // Key used to create the parser; necessary to ensure that the parser type is not ignored
     private String __entryParserKey;
 
@@ -362,7 +362,7 @@ implements Configurable
     private static class PropertiesSingleton {
 
         static final Properties PROPERTIES;
-        
+
         static {
             InputStream resourceAsStream = FTPClient.class.getResourceAsStream(SYSTEM_TYPE_PROPERTIES);
             Properties p = null;
@@ -371,11 +371,11 @@ implements Configurable
                 try {
                     p.load(resourceAsStream);
                 } catch (IOException e) {
-                }                            
+                }
             }
             PROPERTIES = p;
         }
-        
+
     }
     private static Properties getOverrideProperties(){
         return PropertiesSingleton.PROPERTIES;
@@ -462,14 +462,14 @@ implements Configurable
             if (host.isSiteLocalAddress() && !getRemoteAddress().isSiteLocalAddress()){
                 String hostAddress = getRemoteAddress().getHostAddress();
                 if (_commandSupport_.getListenerCount() > 0) {
-                    _commandSupport_.fireReplyReceived(0, 
+                    _commandSupport_.fireReplyReceived(0,
                             "[Replacing site local address "+__passiveHost+" with "+hostAddress+"]\n");
                 }
                 __passiveHost = hostAddress;
             }
         } catch (UnknownHostException e) { // Should not happen as we are passing in an IP address
             throw new MalformedServerReplyException(
-                    "Could not parse passive host information.\nServer Reply: " + reply);            
+                    "Could not parse passive host information.\nServer Reply: " + reply);
         }
     }
 
@@ -603,7 +603,7 @@ implements Configurable
             return null;
 
         final boolean isInet6Address = getRemoteAddress() instanceof Inet6Address;
-        
+
         if (__dataConnectionMode == ACTIVE_LOCAL_DATA_CONNECTION_MODE)
         {
             // if no activePortRange was set (correctly) -> getActivePort() = 0
@@ -1032,7 +1032,7 @@ implements Configurable
      * mode is changed by calling some other method such as
      * {@link #enterLocalActiveMode  enterLocalActiveMode() }
      * <p>
-     * <b>N.B.</b> currently calling any connect method will reset the mode to 
+     * <b>N.B.</b> currently calling any connect method will reset the mode to
      * ACTIVE_LOCAL_DATA_CONNECTION_MODE.
      ***/
     public void enterLocalPassiveMode()
@@ -1236,7 +1236,7 @@ implements Configurable
      * it again.  The default file type is <code> FTP.ASCII_FILE_TYPE </code>
      * if this method is never called.
      * <p>
-     * <b>N.B.</b> currently calling any connect method will reset the mode to 
+     * <b>N.B.</b> currently calling any connect method will reset the mode to
      * ACTIVE_LOCAL_DATA_CONNECTION_MODE.
      * @param fileType The <code> _FILE_TYPE </code> constant indcating the
      *                 type of file.
@@ -1274,7 +1274,7 @@ implements Configurable
      * is <code> FTP.NON_PRINT_TEXT_FORMAT </code> if this method is never
      * called.
      * <p>
-     * <b>N.B.</b> currently calling any connect method will reset the mode to 
+     * <b>N.B.</b> currently calling any connect method will reset the mode to
      * ACTIVE_LOCAL_DATA_CONNECTION_MODE.
      * <p>
      * @param fileType The <code> _FILE_TYPE </code> constant indcating the
@@ -1543,7 +1543,7 @@ implements Configurable
      * If the current file type is ASCII, line separators in the file are
      * converted to the local representation.
      * <p>
-     * Note: if you have used {@link #setRestartOffset(long)}, 
+     * Note: if you have used {@link #setRestartOffset(long)},
      * the file data will start from the selected offset.
      * @param remote  The name of the remote file.
      * @param local   The local OutputStream to which to write the file.
@@ -1574,7 +1574,7 @@ implements Configurable
                 getBufferSize());
         if (__fileType == ASCII_FILE_TYPE)
             input = new FromNetASCIIInputStream(input);
-        
+
         CSL csl = null;
         if (__controlKeepAliveTimeout > 0) {
             csl = new CSL(this, __controlKeepAliveTimeout, __controlKeepAliveReplyTimeout);
@@ -1609,9 +1609,9 @@ implements Configurable
      * {@link #completePendingCommand  completePendingCommand } and
      * check its return value to verify success.
      * <p>
-     * Note: if you have used {@link #setRestartOffset(long)}, 
+     * Note: if you have used {@link #setRestartOffset(long)},
      * the file data will start from the selected offset.
-     *  
+     *
      * @param remote  The name of the remote file.
      * @return An InputStream from which the remote file can be read.  If
      *      the data connection cannot be opened (e.g., the file does not
@@ -2446,7 +2446,7 @@ implements Configurable
      * <p>
      * @return The list of directories contained in the current directory
      *         in the format determined by the autodetection mechanism.
-     *         
+     *
      * @exception FTPConnectionClosedException
      *                   If the FTP server prematurely closes the connection
      *                   as a result of the client being idle or some other
@@ -2487,7 +2487,7 @@ implements Configurable
      * <p>
      * @return The list of directories contained in the specified directory
      *         in the format determined by the autodetection mechanism.
-     *         
+     *
      * @exception FTPConnectionClosedException
      *                   If the FTP server prematurely closes the connection
      *                   as a result of the client being idle or some other
@@ -2922,14 +2922,14 @@ implements Configurable
     /**
      * Set whether to use EPSV with IPv4.
      * Might be worth enabling in some circumstances.
-     * 
+     *
      * For example, when using IPv4 with NAT it
      * may work with some rare configurations.
      * E.g. if FTP server has a static PASV address (external network)
      * and the client is coming from another internal network.
      * In that case the data connection after PASV command would fail,
      * while EPSV would make the client succeed by taking just the port.
-     * 
+     *
      * @param selected value to set.
      * @since 2.2
      */
@@ -2940,28 +2940,28 @@ implements Configurable
     /**
      * Set the listener to be used when performing store/retrieve operations.
      * The default value (if not set) is {@code null}.
-     * 
+     *
      * @param listener to be used, may be {@code null} to disable
      * @since 3.0
      */
     public void setCopyStreamListener(CopyStreamListener listener){
         __copyStreamListener = listener;
     }
-    
+
     /**
      * Obtain the currently active listener.
-     * 
+     *
      * @return the listener, may be {@code null}
      * @since 3.0
      */
     public CopyStreamListener getCopyStreamListener(){
         return __copyStreamListener;
     }
-    
+
     /**
      * Set the time to wait between sending control connection keepalive messages
      * when processing file upload or download.
-     * 
+     *
      * @param controlIdle the wait (in secs) between keepalive messages. Zero (or less) disables.
      * @since 3.0
      */
@@ -2980,7 +2980,7 @@ implements Configurable
 
     /**
      * Set how long to wait for control keep-alive message replies.
-     * 
+     *
      * @param timeout number of milliseconds to wait (defaults to 1000)
      * @since 3.0
      */
@@ -3002,10 +3002,10 @@ implements Configurable
         private final FTPClient parent;
         private final long idle;
         private final int currentSoTimeout;
-        
+
         private long time = System.currentTimeMillis();
         private int notAcked;
-        
+
         CSL(FTPClient parent, long idleTime, int maxWait) throws SocketException {
             this.idle = idleTime;
             this.parent = parent;
@@ -3029,19 +3029,19 @@ implements Configurable
                 time = now;
             }
         }
-        
+
         void cleanUp() throws IOException {
             while(notAcked-- > 0) {
                 parent.__getReplyNoReport();
             }
             parent.setSoTimeout(currentSoTimeout);
         }
-        
+
     }
-    
+
     /**
      * Merge two copystream listeners, either or both of which may be null.
-     * 
+     *
      * @param local the listener used by this class, may be null
      * @return a merged listener or a single listener or null
      * @since 3.0

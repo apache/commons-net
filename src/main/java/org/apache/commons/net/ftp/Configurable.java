@@ -27,7 +27,7 @@ public interface Configurable {
 
     /**
      * @param config the object containing the configuration data
-     * @throws IllegalArgumentException if the elements of the 
+     * @throws IllegalArgumentException if the elements of the
      * <code>config</code> are somehow inadequate to configure the
      * Configurable object.
      */
