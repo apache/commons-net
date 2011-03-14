@@ -197,7 +197,7 @@ public class POP3Client extends POP3
             int digit = digest[i] & 0xff;
             if (digit <= 15) digestBuffer.append("0"); // Add leading zero if necessary (NET-351)
             digestBuffer.append(Integer.toHexString(digit));
-	    }
+        }
 
         buffer = new StringBuilder(256);
         buffer.append(username);
