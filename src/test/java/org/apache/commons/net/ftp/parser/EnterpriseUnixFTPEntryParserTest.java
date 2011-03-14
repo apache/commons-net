@@ -94,7 +94,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
                    file.isFile());
         assertEquals("QUADTEST",
                      file.getName());
-        assertEquals(5000000000L, 
+        assertEquals(5000000000L,
                      file.getSize());
         assertEquals("QUA1I1",
                      file.getUser());

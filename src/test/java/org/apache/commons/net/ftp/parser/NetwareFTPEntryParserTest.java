@@ -17,7 +17,7 @@
 package org.apache.commons.net.ftp.parser;
 
 import java.util.Calendar;
- 
+
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
@@ -39,7 +39,7 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
         "- [RWCEAFMS] rwinston                        19968 Mar 12 15:20 Executive Summary.doc",
         "d [RWCEAFMS] rwinston                          512 Nov 24  2005 Favorites"
     };
-    
+
     /**
      * @see junit.framework.TestCase#TestCase(String)
      */
@@ -78,13 +78,13 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
     public void testParseFieldsOnDirectory() throws Exception {
         String reply = "d [-W---F--] testUser                        512 Apr 13 23:12 testFile";
         FTPFile f = getParser().parseFTPEntry(reply);
-        
+
         assertNotNull("Could not parse file", f);
         assertEquals("testFile", f.getName());
         assertEquals(512L, f.getSize());
         assertEquals("testUser", f.getUser());
         assertTrue("Directory flag is not set!", f.isDirectory());
-        
+
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MONTH, 3);
         cal.set(Calendar.DAY_OF_MONTH, 13);
@@ -93,30 +93,30 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
         cal.set(Calendar.YEAR, f.getTimestamp().get(Calendar.YEAR));
-        
+
         assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp()
                 .getTime()));
 
     }
-    
-    
+
+
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
      */
     @Override
     public void testParseFieldsOnFile() throws Exception {
         String reply = "- [R-CEAFMS] rwinston                        19968 Mar 12 15:20 Document name with spaces.doc";
-        
+
         FTPFile f = getParser().parseFTPEntry(reply);
-        
+
         assertNotNull("Could not parse file", f);
         assertEquals("Document name with spaces.doc", f.getName());
         assertEquals(19968L, f.getSize());
         assertEquals("rwinston", f.getUser());
         assertTrue("File flag is not set!", f.isFile());
-        
+
         assertTrue(f.hasPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
         assertFalse(f.hasPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION));
     }
-    
+
 }

@@ -58,7 +58,7 @@ public class WindowSizeOptionHandlerTest extends TelnetOptionHandlerTestAbstract
 
     /***
      * test of client-driven subnegotiation.
-     * 
+     *
      ***/
     public void testStartSubnegotiationLocal()
     {
@@ -66,11 +66,11 @@ public class WindowSizeOptionHandlerTest extends TelnetOptionHandlerTestAbstract
         int[] start1 = opthand1.startSubnegotiationLocal();
         assertEquals(5, start1.length);
         equalInts(exp1, start1);
-        
+
         int[] exp2 = {31, 0, 255, 255, 0, 255, 255};
         int[] start2 = opthand2.startSubnegotiationLocal();
         equalInts(exp2, start2);
-        
+
         int[] exp3 = {31, 255, 255, 255, 255, 0, 255, 255};
         int[] start3 = opthand3.startSubnegotiationLocal();
         equalInts(exp3, start3);

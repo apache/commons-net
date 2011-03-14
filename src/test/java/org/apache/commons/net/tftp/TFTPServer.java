@@ -37,21 +37,21 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
 /**
  * A fully multi-threaded tftp server. Can handle multiple clients at the same time. Implements RFC
  * 1350 and wrapping block numbers for large file support.
- * 
+ *
  * To launch, just create an instance of the class. An IOException will be thrown if the server
  * fails to start for reasons such as port in use, port denied, etc.
- * 
+ *
  * To stop, use the shutdown method.
- * 
+ *
  * To check to see if the server is still running (or if it stopped because of an error), call the
  * isRunning() method.
- * 
+ *
  * By default, events are not logged to stdout/stderr. This can be changed with the
  * setLog and setLogError methods.
- * 
+ *
  * <p>
  * Example usage is below:
- * 
+ *
  * <code>
  * public static void main(String[] args) throws Exception
  *  {
@@ -74,8 +74,8 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
  *  }
  *
  * </code>
- * 
- * 
+ *
+ *
  * @author <A HREF="mailto:daniel.armbrust.list@gmail.com">Dan Armbrust</A>
  * @since 2.0
  */
@@ -94,9 +94,9 @@ public class TFTPServer implements Runnable
     private Exception serverException = null;
     private ServerMode mode_;
 
-    /* /dev/null output stream (default) */ 
+    /* /dev/null output stream (default) */
     private static final PrintStream nullStream = new PrintStream(
-            new OutputStream() { 
+            new OutputStream() {
                 @Override
                 public void write(int b){}
                 @Override
@@ -112,20 +112,20 @@ public class TFTPServer implements Runnable
     private int maxTimeoutRetries_ = 3;
     private int socketTimeout_;
     private Thread serverThread;
-    
-    
+
+
     /**
      * Start a TFTP Server on the default port (69). Gets and Puts occur in the specified
      * directories.
-     * 
+     *
      * The server will start in another thread, allowing this constructor to return immediately.
-     * 
+     *
      * If a get or a put comes in with a relative path that tries to get outside of the
      * serverDirectory, then the get or put will be denied.
-     * 
+     *
      * GET_ONLY mode only allows gets, PUT_ONLY mode only allows puts, and GET_AND_PUT allows both.
      * Modes are defined as int constants in this class.
-     * 
+     *
      * @param serverReadDirectory directory for GET requests
      * @param serverWriteDirectory directory for PUT requests
      * @param mode A value as specified above.
@@ -139,15 +139,15 @@ public class TFTPServer implements Runnable
 
     /**
      * Start a TFTP Server on the specified port. Gets and Puts occur in the specified directory.
-     * 
+     *
      * The server will start in another thread, allowing this constructor to return immediately.
-     * 
+     *
      * If a get or a put comes in with a relative path that tries to get outside of the
      * serverDirectory, then the get or put will be denied.
-     * 
+     *
      * GET_ONLY mode only allows gets, PUT_ONLY mode only allows puts, and GET_AND_PUT allows both.
      * Modes are defined as int constants in this class.
-     * 
+     *
      * @param serverReadDirectory directory for GET requests
      * @param serverWriteDirectory directory for PUT requests
      * @param mode A value as specified above.
@@ -167,7 +167,7 @@ public class TFTPServer implements Runnable
 
     /**
      * Set the max number of retries in response to a timeout. Default 3. Min 0.
-     * 
+     *
      * @param retries
      */
     public void setMaxTimeoutRetries(int retries)
@@ -255,7 +255,7 @@ public class TFTPServer implements Runnable
 
     /**
      * check if the server thread is still running.
-     * 
+     *
      * @return true if running, false if stopped.
      * @throws Exception throws the exception that stopped the server if the server is stopped from
      *             an exception.
@@ -333,7 +333,7 @@ public class TFTPServer implements Runnable
         {
             // noop
         }
-        
+
         try {
             serverThread.join();
         } catch (InterruptedException e) {
@@ -615,7 +615,7 @@ public class TFTPServer implements Runnable
                         return;
                     }
                     bos = new BufferedOutputStream(new FileOutputStream(temp));
-                    
+
                     if (twrp.getMode() == TFTP.NETASCII_MODE)
                     {
                         bos = new FromNetASCIIOutputStream(bos);
@@ -842,7 +842,7 @@ public class TFTPServer implements Runnable
 
     /**
      * Set the stream object to log debug / informational messages. By default, this is a no-op
-     * 
+     *
      * @param log
      */
     public void setLog(PrintStream log)
@@ -852,7 +852,7 @@ public class TFTPServer implements Runnable
 
     /**
      * Set the stream object to log error messsages. By default, this is a no-op
-     * 
+     *
      * @param logError
      */
     public void setLogError(PrintStream logError)

@@ -29,7 +29,7 @@ import java.io.PipedOutputStream;
  * <p>
  * @author Bruno D'Avanzo
  ***/
-public class TelnetClientTest 
+public class TelnetClientTest
 extends TestCase implements TelnetNotificationHandler
 {
     /**
@@ -41,9 +41,9 @@ extends TestCase implements TelnetNotificationHandler
         TelnetClient client;
         int port;
         TestConnection(
-                TelnetTestSimpleServer server, 
-                TelnetClient client, 
-                int port) 
+                TelnetTestSimpleServer server,
+                TelnetClient client,
+                int port)
         {
             this.server = server;
             this.client = client;
@@ -52,19 +52,19 @@ extends TestCase implements TelnetNotificationHandler
         protected void close() {
             TelnetClientTest.this.closeConnection(
                     this.server, this.client, this.port);
-        }  
-    }   
-    
+        }
+    }
+
     // four connections with different properties
     // to use in tests.
     private TestConnection STANDARD;
     private TestConnection OPTIONS;
     private TestConnection ANSI;
     private TestConnection NOREAD;
-    
+
     private int NUM_CONNECTIONS = 4;
-    
- 
+
+
     protected int numdo = 0;
     protected int numdont = 0;
     protected int numwill = 0;
@@ -74,11 +74,11 @@ extends TestCase implements TelnetNotificationHandler
      * open connections needed for the tests for the test.
      ***/
     @Override
-    protected void setUp() throws Exception 
+    protected void setUp() throws Exception
     {
         int socket = 0;
         super.setUp();
-        for (int port = 3333; socket < NUM_CONNECTIONS && port < 4000; port++) 
+        for (int port = 3333; socket < NUM_CONNECTIONS && port < 4000; port++)
         {
             TelnetTestSimpleServer server = null;
             TelnetClient client = null;
@@ -92,11 +92,11 @@ extends TestCase implements TelnetNotificationHandler
                         break;
                     case 1:
                         client = new TelnetClient();
-                        TerminalTypeOptionHandler ttopt = 
+                        TerminalTypeOptionHandler ttopt =
                             new TerminalTypeOptionHandler("VT100", false, false, true, false);
-                        EchoOptionHandler echoopt = 
+                        EchoOptionHandler echoopt =
                             new EchoOptionHandler(true, false, true, false);
-                        SuppressGAOptionHandler gaopt = 
+                        SuppressGAOptionHandler gaopt =
                             new SuppressGAOptionHandler(true, true, true, true);
 
                         client.addOptionHandler(ttopt);
@@ -125,9 +125,9 @@ extends TestCase implements TelnetNotificationHandler
                     case 3:
                         NOREAD = new TestConnection(server, client, port);
                         break;
-                        
+
                }
-               
+
                // only increment socket number on success
                socket++;
            } catch (IOException e) {
@@ -139,8 +139,8 @@ extends TestCase implements TelnetNotificationHandler
        }
        Thread.sleep(1000);
     }
-    
-    /* 
+
+    /*
      * @throws java.lang.Exception
      */
     @Override
@@ -156,9 +156,9 @@ extends TestCase implements TelnetNotificationHandler
         }
         super.tearDown();
     }
-    
 
-   
+
+
     void closeConnection(TelnetTestSimpleServer server, TelnetClient client, int port) {
         if (server != null) {
             server.disconnect();
@@ -172,7 +172,7 @@ extends TestCase implements TelnetNotificationHandler
             System.err.println("failed to close client-server connection on port " + port);
             System.err.println("ERROR in closeConnection(), "+ e.getMessage());
         }
-        
+
     }
 
     /***
@@ -189,11 +189,11 @@ extends TestCase implements TelnetNotificationHandler
         byte buffread2[] = new byte[9];
         byte expected2[] =
         {
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL,
             (byte) TelnetOption.ECHO,
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL,
             (byte) TelnetOption.SUPPRESS_GO_AHEAD,
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO,
             (byte) TelnetOption.SUPPRESS_GO_AHEAD,
         };
 
@@ -278,38 +278,38 @@ extends TestCase implements TelnetNotificationHandler
         byte buffread2[] = new byte[9];
         byte send2[] =
         {
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO,
             (byte) TelnetOption.TERMINAL_TYPE,
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT,
             (byte) TelnetOption.ECHO,
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO,
             (byte) TelnetOption.SUPPRESS_GO_AHEAD,
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT,
             (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
         byte expected2[] =
         {
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL,
             (byte) TelnetOption.TERMINAL_TYPE,
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT,
             (byte) TelnetOption.ECHO,
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT,
             (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
 
         byte buffread2b[] = new byte[11];
         byte send2b[] =
         {
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.SB, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.SB,
             (byte) TelnetOption.TERMINAL_TYPE,
             (byte) 1, (byte) TelnetCommand.IAC, (byte) TelnetCommand.SE,
         };
         byte expected2b[] =
         {
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.SB, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.SB,
             (byte) TelnetOption.TERMINAL_TYPE,
-            (byte) 0, (byte) 'V', (byte) 'T', (byte) '1', (byte) '0', 
-            (byte) '0', 
+            (byte) 0, (byte) 'V', (byte) 'T', (byte) '1', (byte) '0',
+            (byte) '0',
             (byte) TelnetCommand.IAC, (byte) TelnetCommand.SE,
         };
 
@@ -317,30 +317,30 @@ extends TestCase implements TelnetNotificationHandler
         byte buffread3[] = new byte[6];
         byte send3[] =
         {
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO,
             (byte) TelnetOption.TERMINAL_TYPE,
             (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO,
             (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
         byte expected3[] =
         {
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL,
             (byte) TelnetOption.TERMINAL_TYPE,
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT,
             (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
         byte buffread3b[] = new byte[10];
         byte send3b[] =
         {
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.SB, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.SB,
             (byte) TelnetOption.TERMINAL_TYPE,
             (byte) 1, (byte) TelnetCommand.IAC, (byte) TelnetCommand.SE,
         };
         byte expected3b[] =
         {
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.SB, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.SB,
             (byte) TelnetOption.TERMINAL_TYPE,
-            (byte) 0, (byte) 'A', (byte) 'N', (byte) 'S', (byte) 'I', 
+            (byte) 0, (byte) 'A', (byte) 'N', (byte) 'S', (byte) 'I',
             (byte) TelnetCommand.IAC, (byte) TelnetCommand.SE,
         };
 
@@ -444,30 +444,30 @@ extends TestCase implements TelnetNotificationHandler
         byte buffread[] = new byte[6];
         byte send[] =
         {
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO,
             (byte) TelnetOption.ECHO,
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT,
             (byte) TelnetOption.SUPPRESS_GO_AHEAD,
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT,
             (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
         byte expected[] =
         {
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT,
             (byte) TelnetOption.SUPPRESS_GO_AHEAD,
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT,
             (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
 
         byte buffread2[] = new byte[3];
         byte send2[] =
         {
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT,
             (byte) TelnetOption.ECHO,
         };
         byte expected2[] =
         {
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT,
             (byte) TelnetOption.ECHO,
         };
 
@@ -520,13 +520,13 @@ extends TestCase implements TelnetNotificationHandler
         byte buffread2[] = new byte[9];
         byte send2[] =
         {
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO,
             (byte) TelnetOption.TERMINAL_TYPE,
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT,
             (byte) TelnetOption.ECHO,
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO,
             (byte) TelnetOption.SUPPRESS_GO_AHEAD,
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT,
             (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
 
@@ -587,19 +587,19 @@ extends TestCase implements TelnetNotificationHandler
         byte buffread[] = new byte[6];
         byte send[] =
         {
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO,
             (byte) TelnetOption.ECHO,
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DO,
             (byte) TelnetOption.SUPPRESS_GO_AHEAD,
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WILL,
             (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
 
         byte expected[] =
         {
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.WONT,
             (byte) TelnetOption.SUPPRESS_GO_AHEAD,
-            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT, 
+            (byte) TelnetCommand.IAC, (byte) TelnetCommand.DONT,
             (byte) TelnetOption.SUPPRESS_GO_AHEAD
         };
 
@@ -659,7 +659,7 @@ extends TestCase implements TelnetNotificationHandler
 
 
         byte AYT[] = { (byte) TelnetCommand.IAC, (byte) TelnetCommand.AYT };
-        byte response[] = 
+        byte response[] =
             { (byte) '[', (byte) 'Y', (byte) 'e', (byte) 's', (byte) ']' };
         String inputs[] = new String[1];
         String outputs[] = new String[1];
@@ -669,7 +669,7 @@ extends TestCase implements TelnetNotificationHandler
 
         OutputStream os = ANSI.server.getOutputStream();
         InputStream is = ANSI.server.getInputStream();
-        TelnetTestResponder tr = 
+        TelnetTestResponder tr =
             new TelnetTestResponder(is, os, inputs, outputs, 30000);
         assertNotNull(tr);
         boolean res1 = ANSI.client.sendAYT(2000);
@@ -698,9 +698,9 @@ extends TestCase implements TelnetNotificationHandler
         boolean test1spy_ok = false;
         boolean test2spy_ok = false;
         boolean stopspy_ok = false;
-        byte expected1[] = 
+        byte expected1[] =
             { (byte) 't', (byte) 'e', (byte) 's', (byte) 't', (byte) '1' };
-        byte expected2[] = 
+        byte expected2[] =
             { (byte) 't', (byte) 'e', (byte) 's', (byte) 't', (byte) '2' };
 
 
@@ -796,19 +796,19 @@ extends TestCase implements TelnetNotificationHandler
        // if(is1.available() == 6)
         //{
             int read = 0;
-            int pos = 0; 
-            
+            int pos = 0;
+
             byte[] tmp = new byte[16];
             while ( pos < 5 ) {
                 read = is1.read(tmp);
                 System.arraycopy(tmp, 0, buffread1, pos, read);
                 pos+=read;
             }
-            
+
             if(equalBytes(buffread1, expected1))
                 negotiation1_ok = true;
         //}
-        
+
 
         InputStream is2 = STANDARD.server.getInputStream();
         OutputStream os2 = STANDARD.server.getOutputStream();
@@ -817,10 +817,10 @@ extends TestCase implements TelnetNotificationHandler
         os2.write(send1);
         os2.flush();
         Thread.sleep(1000);
-        
+
         tmp = new byte[16];
         while ( pos < 5 ) {
-            read = is2.read(tmp); 
+            read = is2.read(tmp);
             System.arraycopy(tmp, 0, buffread1, pos, read);
             pos+=read;
         }
@@ -854,7 +854,7 @@ extends TestCase implements TelnetNotificationHandler
             boolean result = true;
             for(int ii=0; ii<a1.length; ii++)
             {
-                
+
                 if(a1[ii]!= a2[ii])
                     result = false;
             }

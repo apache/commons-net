@@ -77,20 +77,20 @@ public class FTPClientConfigTest extends TestCase {
         DateFormatSymbols dfs2 = null;
         DateFormatSymbols dfs3 = null;
         DateFormatSymbols dfs4 = null;
-        
-        
+
+
         try {
             dfs1 = FTPClientConfig.lookupDateFormatSymbols("fr");
         } catch (IllegalArgumentException e){
             fail("french");
         }
-        
+
         try {
             dfs2 = FTPClientConfig.lookupDateFormatSymbols("sq");
         } catch (IllegalArgumentException e){
             fail("albanian");
         }
-        
+
         try {
             dfs3 = FTPClientConfig.lookupDateFormatSymbols("ru");
         } catch (IllegalArgumentException e){
@@ -101,7 +101,7 @@ public class FTPClientConfigTest extends TestCase {
         } catch (IllegalArgumentException e){
             fail("not.language.code.but.defaults");
         }
-        
+
         assertEquals(dfs3,dfs4);
 
         SimpleDateFormat sdf1 = new SimpleDateFormat("d MMM yyyy", dfs1);
@@ -131,7 +131,7 @@ public class FTPClientConfigTest extends TestCase {
     }
 
     public void testGetDateFormatSymbols() {
-        
+
         try {
             FTPClientConfig.getDateFormatSymbols(badDelim);
             fail("bad delimiter");
@@ -156,10 +156,10 @@ public class FTPClientConfigTest extends TestCase {
         } catch (Exception e){
             fail("rejected valid short month string");
         }
-        SimpleDateFormat sdf1 = 
+        SimpleDateFormat sdf1 =
             new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
         SimpleDateFormat sdf2 = new SimpleDateFormat("MMM dd, yyyy", dfs2);
-        
+
         Date d1 = null;
         Date d2 = null;
         try {
@@ -172,9 +172,9 @@ public class FTPClientConfigTest extends TestCase {
         } catch (ParseException px) {
             fail("failed.to.parse.weird");
         }
-        
+
         assertEquals("different.parser.same.date",d1, d2);
-        
+
         try {
             d2 = sdf1.parse("hij 31, 2004");
             fail("should.have.failed.to.parse.weird");
@@ -185,8 +185,8 @@ public class FTPClientConfigTest extends TestCase {
             fail("should.have.failed.to.parse.standard");
         } catch (ParseException px) {
         }
-        
-        
+
+
     }
 
 }

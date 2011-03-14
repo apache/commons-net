@@ -61,7 +61,7 @@ public class ListingFunctionalTest extends TestCase
 //                {  // VMS TCPware V5.7-2 does not return (RWED) permissions
 //                    "ftp.process.com", "vms", "windows",
 //                    "[.HA!]", "MESSAGE.;1",
-//                    "[.VMS-FREEWARE.FREE-VMS]" // 
+//                    "[.VMS-FREEWARE.FREE-VMS]" //
 //                },
             };
         Class<?> clasz = ListingFunctionalTest.class;

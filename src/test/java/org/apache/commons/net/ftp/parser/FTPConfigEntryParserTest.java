@@ -26,19 +26,19 @@ import org.apache.commons.net.ftp.FTPFile;
 
 /**
  * This is a simple TestCase that tests entry parsing using the new FTPClientConfig
- * mechanism. The normal FTPClient cannot handle the different date formats in these 
+ * mechanism. The normal FTPClient cannot handle the different date formats in these
  * entries, however using a configurable format, we can handle it easily.
- * 
+ *
  * The original system presenting this issue was an AIX system - see bug #27437 for details.
- * 
+ *
  *  @version $Id$
  */
 public class FTPConfigEntryParserTest extends TestCase {
-    
+
     private SimpleDateFormat df = new SimpleDateFormat();
 
     public void testParseFieldsOnAIX() {
-        
+
         // Set a date format for this server type
         FTPClientConfig config = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
         config.setDefaultDateFormatStr("dd MMM HH:mm");
@@ -81,28 +81,28 @@ public class FTPConfigEntryParserTest extends TestCase {
         assertEquals(814, f.getSize());
 
         Calendar cal = Calendar.getInstance();
-                
+
         cal.set(Calendar.MONTH, Calendar.MARCH);
         cal.set(Calendar.DATE, 2);
         cal.set(Calendar.HOUR_OF_DAY, 16);
         cal.set(Calendar.MINUTE, 27);
         cal.set(Calendar.SECOND, 0);
-        
+
         // With no year specified, it defaults to 1970
         // TODO this is probably a bug - it should default to the current year
         cal.set(Calendar.YEAR, 1970);
-        
+
         assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp()
                 .getTime()));
     }
-    
+
     /**
-     * This is a new format reported on the mailing lists. Parsing this kind of 
+     * This is a new format reported on the mailing lists. Parsing this kind of
      * entry necessitated changing the regex in the parser.
      *
      */
     public void testParseEntryWithSymlink() {
-        
+
         FTPClientConfig config = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
         config.setDefaultDateFormatStr("yyyy-MM-dd HH:mm");
 
@@ -143,17 +143,17 @@ public class FTPConfigEntryParserTest extends TestCase {
         assertEquals(23, f.getSize());
 
         Calendar cal = Calendar.getInstance();
-        
+
         cal.set(Calendar.MONTH, Calendar.MARCH);
         cal.set(Calendar.DATE, 2);
         cal.set(Calendar.HOUR_OF_DAY, 18);
         cal.set(Calendar.MINUTE, 06);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.YEAR, 2005);
-            
+
         assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp()
                 .getTime()));
-        
+
     }
 
 }

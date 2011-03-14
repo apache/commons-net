@@ -149,7 +149,7 @@ public abstract class FTPParseTestFramework extends TestCase
 
     /**
      * Check if FTPFile entry parsing failed; i.e. if entry is null or date is null.
-     * 
+     *
      * @param f FTPFile entry - may be null
      * @return null if f is null or the date is null
      */

@@ -27,7 +27,7 @@ import java.net.Socket;
  * for the Time Protocol described in RFC 868.
  * <p>
  * Listens for TCP socket connections on the time protocol port and writes
- * the local time to socket outputStream as 32-bit integer of seconds 
+ * the local time to socket outputStream as 32-bit integer of seconds
  * since midnight on 1 January 1900 GMT.
  * See <A HREF="ftp://ftp.rfc-editor.org/in-notes/rfc868.txt"> the spec </A> for
  * details.

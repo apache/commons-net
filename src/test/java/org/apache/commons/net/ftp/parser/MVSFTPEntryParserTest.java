@@ -26,7 +26,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
  * Changed on August 31, 2006<br/>
  * Test suite addapted to new MVSFTPEntryParser.java.
  * @author <a href="mailto:henrik.sorensen@balcab.ch">Henrik Sorensen</a>
- * 
+ *
  * Created on Apr 6, 2005<br/>
  * @author <a href="mailto:wnoto@openfinance.com">William Noto</a>
  * @version $Id: MVSFTPEntryParserTest.java,v 1.16 2005/01/02 03:17:50 scohen Exp $
@@ -114,10 +114,10 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
         return new MVSFTPEntryParser();
     }
 
-    /* 
-     * note the testGoodListing has to be the first test invoked, because 
+    /*
+     * note the testGoodListing has to be the first test invoked, because
      * some FTPFile entries are saved for the later tests
-     * 
+     *
      * (non-Javadoc)
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testGoodListing()
      */
@@ -155,7 +155,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
             doAdditionalGoodTests(test, f);
         }
     }
-    
+
     public void testJesLevel2Listing() {
         MVSFTPEntryParser parser = new MVSFTPEntryParser();
         parser.setType(MVSFTPEntryParser.JES_LEVEL_2_LIST_TYPE);
@@ -193,12 +193,12 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
     @Override
     public void testParseFieldsOnFile() throws Exception {
         FTPFile file = null;
-        
-        MVSFTPEntryParser parser = new MVSFTPEntryParser(); 
-        
+
+        MVSFTPEntryParser parser = new MVSFTPEntryParser();
+
         parser.setRegex(MVSFTPEntryParser.FILE_LIST_REGEX);
         parser.setType(MVSFTPEntryParser.FILE_LIST_TYPE);
-        
+
         file = parser.parseFTPEntry("SAVE00 3390   2004/06/23  1    1  FB     128  6144  PS    INCOMING.RPTBM023.D061704");
         assertNotNull("Could not parse entry.", file);
         assertTrue("Should have been a file.", file.isFile());
@@ -207,7 +207,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
 
         parser.setType(MVSFTPEntryParser.MEMBER_LIST_TYPE);
         parser.setRegex(MVSFTPEntryParser.MEMBER_LIST_REGEX);
-        
+
         file = parser.parseFTPEntry("SAVE03    01.03 2002/09/12 2002/10/11 09:37    11    11     0 KIL001");
         assertNotNull("Could not parse entry.", file);
         assertTrue("Should have been a file.", file.isFile());

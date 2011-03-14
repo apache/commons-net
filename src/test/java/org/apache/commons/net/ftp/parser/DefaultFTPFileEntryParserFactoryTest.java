@@ -99,7 +99,7 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
             fail("ParserInitializationException should have been thrown.");
         } catch (ParserInitializationException pie){
             Throwable root = pie.getRootCause();
-            assertTrue(root instanceof InstantiationException);            
+            assertTrue(root instanceof InstantiationException);
         }
         try {
             // Class exists, but is abstract
@@ -107,10 +107,10 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
             fail("ParserInitializationException should have been thrown.");
         } catch (ParserInitializationException pie){
             Throwable root = pie.getRootCause();
-            assertTrue(root instanceof InstantiationException);            
+            assertTrue(root instanceof InstantiationException);
         }
     }
-    
+
     private void checkParserClass(FTPFileEntryParserFactory fact, String key, Class<?> expected){
         FTPClientConfig config = key == null ? new FTPClientConfig() : new FTPClientConfig(key);
         FTPFileEntryParser parser = fact.createFileEntryParser(config);

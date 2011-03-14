@@ -43,7 +43,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
             "05-26-1995  10:57AM               143712 $LDR$",
             // 24hr clock as used on Windows_CE
             "12-05-96  17:03         <DIR>          absoft2",
-            "05-22-97  08:08                    828 AUTOEXEC.BAK",            
+            "05-22-97  08:08                    828 AUTOEXEC.BAK",
             "01-01-98  05:00       <DIR>          Network",
             "01-01-98  05:00       <DIR>          StorageCard",
             "09-13-10  20:08       <DIR>          Recycled",
@@ -142,7 +142,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         assertEquals(0, dir.getSize());
 
     }
-    
+
     public void testParseLeadingDigits() {
             FTPFile file = getParser().parseFTPEntry("05-22-97  12:08AM                  5000000000 10 years and under");
             assertNotNull("Could not parse entry", file);
@@ -151,7 +151,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
             Calendar timestamp = file.getTimestamp();
             assertNotNull("Could not parse time",timestamp);
             assertEquals("Thu May 22 00:08:00 1997",df.format(timestamp.getTime()));
-            
+
             FTPFile dir = getParser().parseFTPEntry("12-03-96  06:38PM       <DIR>           10 years and under");
             assertNotNull("Could not parse entry", dir);
             assertEquals("10 years and under", dir.getName());
@@ -168,7 +168,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         Calendar timestamp = file.getTimestamp();
         assertNotNull("Could not parse time",timestamp);
         assertEquals("Thu May 22 12:08:00 1997",df.format(timestamp.getTime()));
-        
+
         FTPFile dir = getParser().parseFTPEntry("12-03-96  06:38       <DIR>           10 years and under");
         assertNotNull("Could not parse entry", dir);
         assertEquals("10 years and under", dir.getName());
@@ -229,7 +229,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         FTPFile f = getParser().parseFTPEntry(directoryBeginningWithNumber);
         assertEquals("name", "123xyz", f.getName());
     }
-    
+
     public void testDirectoryBeginningWithNumberFollowedBySpaces() throws Exception
     {
         FTPFile f = getParser().parseFTPEntry("12-03-96  06:38AM       <DIR>          123 xyz");
@@ -238,7 +238,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         assertNotNull(f);
         assertEquals("name", "123 abc xyz", f.getName());
     }
-    
+
     /**
      * Test that group names with embedded spaces can be handled correctly
      *
@@ -249,5 +249,5 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         assertEquals("maxm", f.getUser());
         assertEquals("Domain Users", f.getGroup());
     }
-    
+
 }
