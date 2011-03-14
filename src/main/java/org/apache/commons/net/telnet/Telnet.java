@@ -409,7 +409,7 @@ class Telnet extends SocketClient
 
     /**
      * Processes a COMMAND.
-     * 
+     *
      * @param command - option code to be set.
      **/
     void _processCommand(int command)
@@ -428,7 +428,7 @@ class Telnet extends SocketClient
 
     /**
      * Processes a DO request.
-     * 
+     *
      * @param option - option code to be set.
      * @throws IOException - Exception in I/O.
      **/
@@ -525,7 +525,7 @@ class Telnet extends SocketClient
 
     /**
      * Processes a DONT request.
-     * 
+     *
      * @param option - option code to be set.
      * @throws IOException - Exception in I/O.
      **/
@@ -578,7 +578,7 @@ class Telnet extends SocketClient
 
     /**
      * Processes a WILL request.
-     * 
+     *
      * @param option - option code to be set.
      * @throws IOException - Exception in I/O.
      **/
@@ -644,7 +644,7 @@ class Telnet extends SocketClient
 
     /**
      * Processes a WONT request.
-     * 
+     *
      * @param option - option code to be set.
      * @throws IOException - Exception in I/O.
      **/
@@ -699,7 +699,7 @@ class Telnet extends SocketClient
     /* TERMINAL-TYPE option (start)*/
     /**
      * Processes a suboption negotiation.
-     * 
+     *
      * @param suboption - subnegotiation data received
      * @param suboptionLength - length of data received
      * @throws IOException - Exception in I/O.

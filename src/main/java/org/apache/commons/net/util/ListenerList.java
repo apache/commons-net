@@ -29,7 +29,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ListenerList implements Serializable, Iterable<EventListener>
 {
     private static final long serialVersionUID = -1934227607974228213L;
- 
+
     private final CopyOnWriteArrayList<EventListener> __listeners;
 
     public ListenerList()
@@ -51,10 +51,10 @@ public class ListenerList implements Serializable, Iterable<EventListener>
     {
         return __listeners.size();
     }
-    
+
     /**
      * Return an {@link Iterator} for the {@link EventListener} instances
-     * 
+     *
      * @since 2.0
      * TODO Check that this is a good defensive strategy
      */

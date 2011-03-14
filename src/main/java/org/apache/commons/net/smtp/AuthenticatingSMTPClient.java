@@ -32,7 +32,7 @@ import org.apache.commons.net.util.Base64;
 
 /**
  * An SMTP Client class with authentication support (RFC4954).
- * 
+ *
  * @see SMTPClient
  * @since 3.0
  */
@@ -46,7 +46,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
     /**
      * The default AuthenticatingSMTPClient constructor.
      * Creates a new Authenticating SMTP Client.
-     * @throws NoSuchAlgorithmException 
+     * @throws NoSuchAlgorithmException
      */
     public AuthenticatingSMTPClient() throws NoSuchAlgorithmException
     {
@@ -56,7 +56,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
     /**
      * Overloaded constructor that takes an encoding specification
      * @param encoding The encoding to use
-     * @throws NoSuchAlgorithmException 
+     * @throws NoSuchAlgorithmException
      */
     public AuthenticatingSMTPClient(String encoding) throws NoSuchAlgorithmException {
         super(encoding);

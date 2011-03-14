@@ -141,11 +141,10 @@ public class NNTPClient extends NNTP
 
                 info._setPostingPermission(NewsgroupInfo.UNKNOWN_POSTING_PERMISSION);
                 return ;
-            } catch (NumberFormatException e) 
+            } catch (NumberFormatException e)
             {
                // drop through to report error
             }
-            
         }
 
         throw new MalformedServerReplyException(
@@ -211,8 +210,8 @@ public class NNTPClient extends NNTP
     /**
      * Parse a response line from {@link #retrieveArticleInfo(long, long)}.
      *
-     * @param line a response line 
-     * @return the parsed {@link Article}, if unparseable then isDummy() 
+     * @param line a response line
+     * @return the parsed {@link Article}, if unparseable then isDummy()
      * will be true, and the subject will contain the raw info.
      * @since 3.0
      */
@@ -721,7 +720,7 @@ public class NNTPClient extends NNTP
 
     /**
      * Send a "LIST OVERVIEW.FMT" command to the server.
-     * 
+     *
      * @return the contents of the Overview format, of {@code null} if the command failed
      * @throws IOException
      */
@@ -978,7 +977,7 @@ public class NNTPClient extends NNTP
      */
     public Iterable<String> iterateNewsgroupListing() throws IOException {
         if (NNTPReply.isPositiveCompletion(list())) {
-            return new ReplyIterator(_reader_);            
+            return new ReplyIterator(_reader_);
         }
         throw new IOException(getReplyString());
     }
@@ -1038,7 +1037,7 @@ public class NNTPClient extends NNTP
      */
     public Iterable<String> iterateNewsgroupListing(String wildmat) throws IOException {
         if(NNTPReply.isPositiveCompletion(listActive(wildmat))) {
-            return new ReplyIterator(_reader_);            
+            return new ReplyIterator(_reader_);
         }
         throw new IOException(getReplyString());
     }
@@ -1058,7 +1057,7 @@ public class NNTPClient extends NNTP
     public Iterable<NewsgroupInfo> iterateNewsgroups(String wildmat) throws IOException {
         return new NewsgroupIterator(iterateNewsgroupListing(wildmat));
     }
-    
+
     /***
      * List all new newsgroups added to the NNTP server since a particular
      * date subject to the conditions of the specified query.  If no new
@@ -1077,8 +1076,8 @@ public class NNTPClient extends NNTP
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     * @see #iterateNewNewsgroups(NewGroupsOrNewsQuery)  
-     * @see #iterateNewNewsgroupListing(NewGroupsOrNewsQuery) 
+     * @see #iterateNewNewsgroups(NewGroupsOrNewsQuery)
+     * @see #iterateNewNewsgroupListing(NewGroupsOrNewsQuery)
      ***/
     public NewsgroupInfo[] listNewNewsgroups(NewGroupsOrNewsQuery query)
     throws IOException
@@ -1113,7 +1112,7 @@ public class NNTPClient extends NNTP
         if (NNTPReply.isPositiveCompletion(newgroups(
                 query.getDate(), query.getTime(),
                 query.isGMT(), query.getDistributions()))) {
-            return new ReplyIterator(_reader_);            
+            return new ReplyIterator(_reader_);
         }
         throw new IOException(getReplyString());
     }
@@ -1139,7 +1138,7 @@ public class NNTPClient extends NNTP
     public Iterable<NewsgroupInfo> iterateNewNewsgroups(NewGroupsOrNewsQuery query) throws IOException {
         return new NewsgroupIterator(iterateNewNewsgroupListing(query));
     }
-    
+
     /***
      * List all new articles added to the NNTP server since a particular
      * date subject to the conditions of the specified query.  If no new
@@ -1199,7 +1198,7 @@ public class NNTPClient extends NNTP
     /**
      * List all new articles added to the NNTP server since a particular
      * date subject to the conditions of the specified query.  If no new
-     * new news is found, no entries will be returned. 
+     * new news is found, no entries will be returned.
      * You must add at least one newsgroup to the query, else the command will fail.
      * Each String which is returned is a unique message identifier including the
      * enclosing &lt and &gt.
@@ -1222,7 +1221,7 @@ public class NNTPClient extends NNTP
         if (NNTPReply.isPositiveCompletion(newnews(
                 query.getNewsgroups(), query.getDate(), query.getTime(),
                 query.isGMT(), query.getDistributions()))) {
-            return new ReplyIterator(_reader_);            
+            return new ReplyIterator(_reader_);
         }
         throw new IOException(getReplyString());
     }
@@ -1423,7 +1422,7 @@ public class NNTPClient extends NNTP
      * @throws IOException if the command failed
      * @since 3.0
      */
-    public Iterable<Article> iterateArticleInfo(long lowArticleNumber, long highArticleNumber) 
+    public Iterable<Article> iterateArticleInfo(long lowArticleNumber, long highArticleNumber)
         throws IOException
     {
         Reader info = retrieveArticleInfo(lowArticleNumber,highArticleNumber);

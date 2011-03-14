@@ -115,9 +115,9 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     /**
      * Get the next byte of data.
      * IAC commands are processed internally and do not return data.
-     * 
+     *
      * @param mayBlock true if method is allowed to block
-     * @return the next byte of data, 
+     * @return the next byte of data,
      * or -1 (EOF) if end of stread reached,
      * or -2 (WOULD_BLOCK) if mayBlock is false and there is no data available
      */
@@ -127,11 +127,11 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
 
         while (true)
         {
- 
+
             // If there is no more data AND we were told not to block, just return WOULD_BLOCK (-2). (More efficient than exception.)
             if(!mayBlock && super.available() == 0)
                 return WOULD_BLOCK;
-            
+
             // Otherwise, exit only when we reach end of stream.
             if ((ch = super.read()) < 0)
                 return EOF;
@@ -310,7 +310,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
             while (__bytesAvailable >= __queue.length - 1)
             {
                 // The queue is full. We need to wait before adding any more data to it. Hopefully the stream owner
-                // will consume some data soon! 
+                // will consume some data soon!
                 if(__threaded)
                 {
                     __queue.notify();
@@ -326,7 +326,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                 else
                 {
                     // We've been asked to add another character to the queue, but it is already full and there's
-                    // no other thread to drain it. This should not have happened! 
+                    // no other thread to drain it. This should not have happened!
                     throw new IllegalStateException("Queue is full! Cannot process another character.");
                 }
             }
@@ -432,14 +432,14 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                                     return EOF;
                             }
 
-                            // Reads should not block on subsequent iterations. Potentially, this could happen if the 
+                            // Reads should not block on subsequent iterations. Potentially, this could happen if the
                             // remaining buffered socket data consists entirely of Telnet command sequence and no "user" data.
                             mayBlock = false;
-                            
+
                         }
                         // Continue reading as long as there is data available and the queue is not full.
                         while (super.available() > 0 && __bytesAvailable < __queue.length - 1);
-                        
+
                         __readIsWaiting = false;
                     }
                     continue;
@@ -459,7 +459,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
             if(__bytesAvailable == 0 && __threaded) {
                 __queue.notify();
             }
-            
+
                     return ch;
                 }
             }

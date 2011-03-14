@@ -336,7 +336,7 @@ public final class Util
     /**
      * Closes the object quietly, catching rather than throwing IOException.
      * Intended for use from finally blocks.
-     * 
+     *
      * @param closeable the object to close, may be {@code null}
      * @since 3.0
      */
@@ -352,7 +352,7 @@ public final class Util
     /**
      * Closes the socket quietly, catching rather than throwing IOException.
      * Intended for use from finally blocks.
-     * 
+     *
      * @param socket the socket to close, may be {@code null}
      * @since 3.0
      */

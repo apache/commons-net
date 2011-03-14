@@ -32,9 +32,9 @@ public final class POP3Reply
     /*** The reply code indicating failure of an operation. ***/
     public static final int ERROR = 1;
 
-    /** 
+    /**
      * The reply code indicating intermediate response to a command.
-     * @since 3.0 
+     * @since 3.0
      */
     public static final int OK_INT = 2;
 

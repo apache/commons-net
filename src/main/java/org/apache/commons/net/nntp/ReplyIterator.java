@@ -13,7 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.apache.commons.net.nntp;
@@ -34,16 +34,16 @@ import org.apache.commons.net.io.Util;
  */
 class ReplyIterator implements Iterator<String>, Iterable<String> {
 
-    private final BufferedReader reader;        
+    private final BufferedReader reader;
 
     private String line;
-    
+
     private Exception savedException;
 
     /**
      *
      * @param _reader the reader to wrap
-     * @param addDotReader whether to additionally wrap the reader in a DotTerminatedMessageReader 
+     * @param addDotReader whether to additionally wrap the reader in a DotTerminatedMessageReader
      * @throws IOException
      */
     ReplyIterator(Reader _reader, boolean addDotReader) throws IOException {
@@ -60,14 +60,14 @@ class ReplyIterator implements Iterator<String>, Iterable<String> {
 
     public boolean hasNext() {
         if (savedException != null){
-            throw new NoSuchElementException(savedException.toString());            
+            throw new NoSuchElementException(savedException.toString());
         }
         return line != null;
     }
 
     public String next() throws NoSuchElementException {
         if (savedException != null){
-            throw new NoSuchElementException(savedException.toString());            
+            throw new NoSuchElementException(savedException.toString());
         }
         String prev = line;
         if (prev == null) {

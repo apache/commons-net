@@ -238,7 +238,7 @@ _receivePacket:
                                 // wrap the block number
                                 block = 0;
                             }
-                            
+
                             break _receivePacket;
                         }
                         else
@@ -376,7 +376,7 @@ _receivePacket:
         TFTPAckPacket ack;
 
         boolean justStarted = true;
-        
+
         beginBufferedOps();
 
         dataLength = lastBlock = hostPort = bytesRead = totalThisPacket = 0;
@@ -395,12 +395,12 @@ _sendPacket:
             // first time: block is 0, lastBlock is 0, send a request packet.
             // subsequent: block is integer starting at 1, send data packet.
             bufferedSend(sent);
-            
+
             // this is trying to receive an ACK
 _receivePacket:
             while (true)
             {
-                
+
 
                 timeouts = 0;
                 while (timeouts < __maxTimeouts)
@@ -477,7 +477,7 @@ _receivePacket:
                                 block = 0;
                             }
                             if (lastAckWait) {
-                                
+
                               break _sendPacket;
                             }
                             else {
@@ -516,7 +516,7 @@ _receivePacket:
             }
 
             // OK, we have just gotten ACK about the last data we sent. Make another
-            // and send it            
+            // and send it
 
             dataLength = TFTPPacket.SEGMENT_SIZE;
             offset = 4;
@@ -540,8 +540,8 @@ _receivePacket:
         while ( totalThisPacket > 0 || lastAckWait );
         // Note: this was looping while dataLength == 0 || lastAckWait,
         // which was discarding the last packet if it was not full size
-        // Should send the packet. 
-        
+        // Should send the packet.
+
         endBufferedOps();
     }
 

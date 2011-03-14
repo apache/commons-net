@@ -103,10 +103,10 @@ public class CopyStreamEvent extends EventObject
      */
     @Override
     public String toString(){
-        return getClass().getName() + "[source=" + source 
-        + ", total=" + totalBytesTransferred 
-        + ", bytes=" + bytesTransferred 
-        + ", size=" + streamSize 
+        return getClass().getName() + "[source=" + source
+        + ", total=" + totalBytesTransferred
+        + ", bytes=" + bytesTransferred
+        + ", size=" + streamSize
         + "]";
     }
 }

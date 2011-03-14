@@ -130,7 +130,7 @@ public class SMTPClient extends SMTP
      * Default SMTPClient constructor.  Creates a new SMTPClient instance.
      */
     public SMTPClient() {  }
-    
+
     /**
      * Overloaded constructor that takes an encoding specification
      * @param encoding The encoding to use

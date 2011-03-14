@@ -222,10 +222,10 @@ public class SubnetUtilsTest extends TestCase {
         info = utils.getInfo();
         assertEquals("255.255.255.255",info.getNetmask());
         assertEquals(1, info.getAddressCount());
-        
+
         new SubnetUtils("192.168.0.1/1");
     }
-    
+
     public void testInvalidMasks(){
         try {
             new SubnetUtils("192.168.0.1/33");

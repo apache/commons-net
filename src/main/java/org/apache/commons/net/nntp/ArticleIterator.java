@@ -13,7 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.apache.commons.net.nntp;
@@ -38,7 +38,7 @@ class ArticleIterator implements Iterator<Article>, Iterable<Article> {
 
     /**
      * Get the next Article
-     * @return the next {@link Article}, never {@code null}, if unparseable then isDummy() 
+     * @return the next {@link Article}, never {@code null}, if unparseable then isDummy()
      * will be true, and the subject will contain the raw info.
      */
     public Article next() {

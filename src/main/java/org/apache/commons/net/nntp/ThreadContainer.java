@@ -19,7 +19,7 @@ package org.apache.commons.net.nntp;
 
 /**
  * A placeholder utility class, used for constructing a tree of Threadables
- * Original implementation by Jamie Zawinski. 
+ * Original implementation by Jamie Zawinski.
  * See the Grendel source for more details <a href="http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java#511">here</a>
  * Threadable objects
  * @author Rory Winston <rwinston@apache.org>
@@ -32,7 +32,7 @@ class ThreadContainer {
     ThreadContainer child;
 
     /**
-     * 
+     *
      * @param container
      * @return true if child is under self's tree. Detects circular references
      */
@@ -48,7 +48,7 @@ class ThreadContainer {
 
     // Copy the ThreadContainer tree structure down into the underlying Threadable objects
     // (Make the Threadable tree look like the ThreadContainer tree)
-    // TODO convert this to an iterative function - this can blow the stack 
+    // TODO convert this to an iterative function - this can blow the stack
     // with very large Threadable trees
     void flush() {
         if (parent != null && threadable == null)
@@ -91,7 +91,7 @@ class ThreadContainer {
 
             child = prev;
 
-            // Do it for the kids 
+            // Do it for the kids
             for (kid = child; kid != null; kid = kid.next)
                 kid.reverseChildren();
         }

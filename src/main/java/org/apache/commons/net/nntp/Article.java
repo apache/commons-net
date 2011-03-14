@@ -34,7 +34,7 @@ public class Article implements Threadable {
     private StringBuffer header;
     private ArrayList<String> references;
     private boolean isReply = false;
-    
+
     public Article kid, next;
 
     public Article() {
@@ -53,7 +53,7 @@ public class Article implements Threadable {
         header.append(val);
         header.append('\n');
     }
-    
+
     /**
      * Adds a message-id to the list of messages that this message references (i.e. replies to)
      * @param msgId
@@ -67,7 +67,7 @@ public class Article implements Threadable {
         }
         isReply = true;
         for(String s : msgId.split(" ")) {
-            references.add(s);            
+            references.add(s);
         }
     }
 
@@ -81,7 +81,7 @@ public class Article implements Threadable {
         }
         return references.toArray(new String[references.size()]);
     }
-    
+
     /**
      * Attempts to parse the subject line for some typical reply signatures, and strip them out
      *
@@ -110,10 +110,10 @@ public class Article implements Threadable {
                         start += 3; // Skip "Re:"
                         done = false;
                     } else if (
-                        start < (len - 2) 
-                        && 
+                        start < (len - 2)
+                        &&
                         (subject.charAt(start + 2) == '[' || subject.charAt(start + 2) == '(')) {
-                        
+
                         int i = start + 3;
 
                         while (i < len && subject.charAt(i) >= '0' && subject.charAt(i) <= '9')
@@ -142,10 +142,10 @@ public class Article implements Threadable {
                     simplifiedSubject = subject.substring(start, end);
             }
         }
-        
+
     /**
-     * Recursive method that traverses a pre-threaded graph (or tree) 
-     * of connected Article objects and prints them out.  
+     * Recursive method that traverses a pre-threaded graph (or tree)
+     * of connected Article objects and prints them out.
      * @param article the root of the article 'tree'
      * @param depth the current tree depth
      */
@@ -199,7 +199,7 @@ public class Article implements Threadable {
         subject = string;
     }
 
-    
+
     public boolean isDummy() {
         return (articleNumber == -1);
     }
@@ -207,23 +207,23 @@ public class Article implements Threadable {
     public String messageThreadId() {
         return articleId;
     }
-    
+
     public String[] messageThreadReferences() {
         return getReferences();
     }
-    
+
     public String simplifiedSubject() {
         if(simplifiedSubject == null)
             simplifySubject();
         return simplifiedSubject;
     }
 
-    
+
     public boolean subjectIsReply() {
         return isReply;
     }
 
-    
+
     public void setChild(Threadable child) {
         this.kid = (Article) child;
         flushSubjectCache();
@@ -233,17 +233,17 @@ public class Article implements Threadable {
         simplifiedSubject = null;
     }
 
-    
+
     public void setNext(Threadable next) {
         this.next = (Article)next;
         flushSubjectCache();
     }
 
-    
+
     public Threadable makeDummy() {
         return new Article();
     }
-    
+
     @Override
     public String toString(){ // Useful for Eclipse debugging
         return articleNumber + " " +articleId + " " + subject;

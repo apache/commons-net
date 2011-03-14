@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.commons.net.nntp; 
+package org.apache.commons.net.nntp;
 
 /**
  * A placeholder interface for threadable message objects
@@ -28,7 +28,7 @@ public interface Threadable {
     public String[] messageThreadReferences();
     public String simplifiedSubject();
     public boolean subjectIsReply();
-    public void setChild(Threadable child); 
+    public void setChild(Threadable child);
     public void setNext(Threadable next);
     public Threadable makeDummy();
 }

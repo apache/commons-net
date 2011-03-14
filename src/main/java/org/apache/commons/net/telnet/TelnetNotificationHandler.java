@@ -59,7 +59,7 @@ public interface TelnetNotificationHandler
     public static final int RECEIVED_COMMAND = 5;
 
     /***
-     * Callback method called when TelnetClient receives an 
+     * Callback method called when TelnetClient receives an
      * command or option negotiation command
      * <p>
      * @param negotiation_code - type of (negotiation) command received
