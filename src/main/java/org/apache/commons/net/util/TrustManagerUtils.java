@@ -102,7 +102,8 @@ public final class TrustManagerUtils
      * @throws NoSuchAlgorithmException
      */
     public static X509TrustManager getDefaultTrustManager() throws NoSuchAlgorithmException {
-        return (X509TrustManager) TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+        return (X509TrustManager) TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
+        .getTrustManagers()[0];
     }
 
 }
