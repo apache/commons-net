@@ -76,9 +76,14 @@ public final class FTPCommand
     /** @since 2.2 */
     public static final int EPRT = 37;
 
+    /** @since 3.0 */
+    public static final int MLSD = 38;
+    /** @since 3.0 */
+    public static final int MLST = 39;
+
     // Must agree with final entry above; used to check array size
-    private static final int LAST = EPRT;
-    
+    private static final int LAST = MLST;
+
     public static final int USERNAME = USER;
     public static final int PASSWORD = PASS;
     public static final int ACCOUNT = ACCT;
@@ -122,7 +127,7 @@ public final class FTPCommand
     public static final int GET_MOD_TIME = MDTM;
     /** @since 2.2 */
     public static final int SET_MOD_TIME = MFMT;
-    
+
     // Cannot be instantiated
     private FTPCommand()
     {}
@@ -132,10 +137,10 @@ public final class FTPCommand
                                           "PASV", "TYPE", "STRU", "MODE", "RETR", "STOR", "STOU", "APPE", "ALLO",
                                           "REST", "RNFR", "RNTO", "ABOR", "DELE", "RMD", "MKD", "PWD", "LIST",
                                           "NLST", "SITE", "SYST", "STAT", "HELP", "NOOP", "MDTM", "FEAT", "MFMT",
-                                          "EPSV", "EPRT" };
+                                          "EPSV", "EPRT", "MLSD", "MLST" };
 
-    
-    
+
+
     // default access needed for Unit test
     static void checkArray(){
         int expectedLength = LAST+1;

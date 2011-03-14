@@ -523,7 +523,7 @@ public class FTP extends SocketClient
     /**
      * Send a noop and get the reply without reporting to the command listener.
      * Intended for use with keep-alive.
-     * 
+     *
      * @throws IOException
      * @since 3.0
      */
@@ -1459,6 +1459,96 @@ public class FTP extends SocketClient
     public int list(String pathname) throws IOException
     {
         return sendCommand(FTPCommand.LIST, pathname);
+    }
+
+    /**
+     * A convenience method to send the FTP MLSD command to the server,
+     * receive the reply, and return the reply code.  Remember, it is up
+     * to you to manage the data connection.  If you don't need this low
+     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
+     * , which will handle all low level details for you.
+     * <p>
+     * @return The reply code received from the server.
+     * @exception FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     * @since 3.0
+     */
+    public int mlsd() throws IOException
+    {
+        return sendCommand(FTPCommand.MLSD);
+    }
+
+    /**
+     * A convenience method to send the FTP MLSD command to the server,
+     * receive the reply, and return the reply code.  Remember, it is up
+     * to you to manage the data connection.  If you don't need this low
+     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
+     * , which will handle all low level details for you.
+     * <p>
+     * @param path the path to report on
+     * @return The reply code received from the server.
+     * @exception FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     * @since 3.0
+     */
+    public int mlsd(String path) throws IOException
+    {
+        return sendCommand(FTPCommand.MLSD, path);
+    }
+
+    /**
+     * A convenience method to send the FTP MLST command to the server,
+     * receive the reply, and return the reply code.  Remember, it is up
+     * to you to manage the data connection.  If you don't need this low
+     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
+     * , which will handle all low level details for you.
+     * <p>
+     * @return The reply code received from the server.
+     * @exception FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     * @since 3.0
+     */
+    public int mlst() throws IOException
+    {
+        return sendCommand(FTPCommand.MLST);
+    }
+
+    /**
+     * A convenience method to send the FTP MLST command to the server,
+     * receive the reply, and return the reply code.  Remember, it is up
+     * to you to manage the data connection.  If you don't need this low
+     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
+     * , which will handle all low level details for you.
+     * <p>
+     * @param path the path to report on
+     * @return The reply code received from the server.
+     * @exception FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @exception IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     * @since 3.0
+     */
+    public int mlst(String path) throws IOException
+    {
+        return sendCommand(FTPCommand.MLST, path);
     }
 
     /***
