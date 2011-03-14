@@ -28,6 +28,7 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPConnectionClosedException;
+import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.commons.net.ftp.FTPSClient;
 
@@ -45,25 +46,28 @@ public final class FTPSExample
 {
 
     public static final String USAGE =
-        "Usage: ftp [-s] [-b] <hostname> <username> <password> <remote file> <local file>\n" +
+        "Usage: ftp [-s] [-b] [-l] <hostname> <username> <password> <remote file> <local file>\n" +
         "\nDefault behavior is to download a file and use ASCII transfer mode.\n" +
+        "\t-l directory listing (local file is ignored)\n" +
         "\t-s store file on server (upload)\n" +
         "\t-b use binary transfer mode\n";
 
     public static final void main(String[] args) throws NoSuchAlgorithmException
     {
         int base = 0;
-        boolean storeFile = false, binaryTransfer = false, error = false;
+        boolean storeFile = false, binaryTransfer = false, error = false, listing = false;
         String server, username, password, remote, local;
         String protocol = "SSL";    // SSL/TLS
         FTPSClient ftps;
         
         for (base = 0; base < args.length; base++)
         {
-            if (args[base].startsWith("-s"))
+            if (args[base].equals("-s"))
                 storeFile = true;
-            else if (args[base].startsWith("-b"))
+            else if (args[base].equals("-b"))
                 binaryTransfer = true;
+            else if (args[base].equals("-l"))
+                listing = true;
             else
                 break;
         }
@@ -75,6 +79,12 @@ public final class FTPSExample
         }
 
         server = args[base++];
+        String parts[] = server.split(":");
+        int port = 0;
+        if (parts.length == 2) {
+            server = parts[0];
+            port = Integer.parseInt(parts[1]);
+        }
         username = args[base++];
         password = args[base++];
         remote = args[base++];
@@ -88,7 +98,11 @@ public final class FTPSExample
         {
             int reply;
 
-            ftps.connect(server);
+            if (port > 0) {
+                ftps.connect(server, port);
+            } else {
+                ftps.connect(server);
+            }
             System.out.println("Connected to " + server + ".");
 
             // After connection attempt, you should check the reply code to verify
@@ -150,6 +164,12 @@ __main:
                 ftps.storeFile(remote, input);
 
                 input.close();
+            }
+            else if (listing)
+            {
+                for (FTPFile f : ftps.listFiles(remote)) {
+                    System.out.println(f);
+                }
             }
             else
             {
