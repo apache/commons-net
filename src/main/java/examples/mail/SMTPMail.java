@@ -129,7 +129,7 @@ public final class SMTPMail
             client.setSender(sender);
             client.addRecipient(recipient);
 
-           
+
 
             for (String recpt : ccList)
                 client.addRecipient(recpt);

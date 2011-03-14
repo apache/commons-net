@@ -86,7 +86,7 @@ public final class ServerToServerFTP
         {
             int reply;
             if (port1 > 0) {
-                ftp1.connect(server1, port1);                
+                ftp1.connect(server1, port1);
             } else {
                 ftp1.connect(server1);
             }
@@ -123,7 +123,7 @@ public final class ServerToServerFTP
         {
             int reply;
             if (port2 > 0) {
-                ftp2.connect(server2, port2);                
+                ftp2.connect(server2, port2);
             } else {
                 ftp2.connect(server2);
             }

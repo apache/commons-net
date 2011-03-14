@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package examples.ftp;
 
 import java.io.FileInputStream;
@@ -97,10 +97,10 @@ public final class FTPClientExample
             }
             else if (args[base].equals("-k")) {
                 ftp.setControlKeepAliveTimeout(Long.parseLong(args[++base]));
-            } 
+            }
             else if (args[base].equals("-w")) {
                 ftp.setControlKeepAliveReplyTimeout(Integer.parseInt(args[++base]));
-            } 
+            }
             else {
                 break;
             }
@@ -180,7 +180,7 @@ __main:
             // Use passive mode as default because most of us are
             // behind firewalls these days.
             if (localActive) {
-                ftp.enterLocalActiveMode();                
+                ftp.enterLocalActiveMode();
             } else {
                 ftp.enterLocalPassiveMode();
             }
@@ -202,7 +202,7 @@ __main:
                 for (FTPFile f : ftp.listFiles(remote)) {
                     System.out.println(f);
                 }
-                    
+
             }
             else if (feat)
             {

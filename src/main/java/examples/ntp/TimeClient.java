@@ -17,7 +17,7 @@ package examples.ntp;
  * limitations under the License.
  */
 
- 
+
 import java.io.IOException;
 import java.net.InetAddress;
 

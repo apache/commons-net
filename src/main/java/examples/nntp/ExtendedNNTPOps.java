@@ -28,12 +28,12 @@ import org.apache.commons.net.nntp.NewsgroupInfo;
 
 /**
  * Simple class showing some of the extended commands (AUTH, XOVER, LIST ACTIVE)
- * 
+ *
  * @author Rory Winston <rwinston@apache.org>
  */
 public class ExtendedNNTPOps {
 
-    
+
     NNTPClient client;
 
     public ExtendedNNTPOps() {

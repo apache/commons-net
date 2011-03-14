@@ -44,7 +44,7 @@ public class NNTPUtils {
         List<Article> articles = new ArrayList<Article>();
         Iterable<Article> arts = client.iterateArticleInfo(lowArticleNumber, highArticleNumber);
         for(Article article : arts){
-            articles.add(article);                
+            articles.add(article);
         }
         return articles;
     }

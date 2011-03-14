@@ -59,7 +59,7 @@ public final class FTPSExample
         String server, username, password, remote, local;
         String protocol = "SSL";    // SSL/TLS
         FTPSClient ftps;
-        
+
         for (base = 0; base < args.length; base++)
         {
             if (args[base].equals("-s"))
@@ -91,7 +91,7 @@ public final class FTPSExample
         local = args[base];
 
         ftps = new FTPSClient(protocol);
-       
+
         ftps.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
 
         try
@@ -146,7 +146,7 @@ __main:
                 break __main;
             }
 
-            
+
             System.out.println("Remote system is " + ftps.getSystemType());
 
             if (binaryTransfer) ftps.setFileType(FTP.BINARY_FILE_TYPE);
