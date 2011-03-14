@@ -42,16 +42,16 @@ import org.apache.commons.net.ftp.FTPClientConfig;
  * To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates - Comments
  */
-public abstract class ConfigurableFTPFileEntryParserImpl 
-extends RegexFTPFileEntryParserImpl 
-implements Configurable 
+public abstract class ConfigurableFTPFileEntryParserImpl
+extends RegexFTPFileEntryParserImpl
+implements Configurable
 {
 
     private final FTPTimestampParser timestampParser;
-    
+
     /**
      * Only constructor for this abstract class.
-     * @param regex  Regular expression used main parsing of the 
+     * @param regex  Regular expression used main parsing of the
      * file listing.
      */
     public ConfigurableFTPFileEntryParserImpl(String regex)
@@ -64,11 +64,11 @@ implements Configurable
      * This method is called by the concrete parsers to delegate
      * timestamp parsing to the timestamp parser.
      * <p>
-     * @param timestampStr the timestamp string pulled from the 
+     * @param timestampStr the timestamp string pulled from the
      * file listing by the regular expression parser, to be submitted
      * to the <code>timestampParser</code> for extracting the timestamp.
-     * @return a <code>java.util.Calendar</code> containing results of the 
-     * timestamp parse. 
+     * @return a <code>java.util.Calendar</code> containing results of the
+     * timestamp parse.
      */
     public Calendar parseTimestamp(String timestampStr) throws ParseException {
         return this.timestampParser.parseTimestamp(timestampStr);
@@ -82,7 +82,7 @@ implements Configurable
      * passing it the supplied {@link  FTPClientConfig FTPClientConfig}
      * if that is non-null or a default configuration defined by
      * each concrete subclass.
-     * </p> 
+     * </p>
      * @param config the configuration to be used to configure this parser.
      * If it is null, a default configuration defined by
      * each concrete subclass is used instead.
@@ -104,7 +104,7 @@ implements Configurable
             }
         }
     }
-    
+
     /**
      * Each concrete subclass must define this member to create
      * a default configuration to be used when that subclass is

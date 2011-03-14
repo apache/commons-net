@@ -29,7 +29,7 @@ import org.apache.commons.net.ftp.Configurable;
 import org.apache.commons.net.ftp.FTPClientConfig;
 
 /**
- * Default implementation of the {@link  FTPTimestampParser  FTPTimestampParser} 
+ * Default implementation of the {@link  FTPTimestampParser  FTPTimestampParser}
  * interface also implements the {@link  org.apache.commons.net.ftp.Configurable  Configurable}
  * interface to allow the parsing to be configured from the outside.
  *
@@ -37,55 +37,55 @@ import org.apache.commons.net.ftp.FTPClientConfig;
  * @since 1.4
  */
 public class FTPTimestampParserImpl implements
-        FTPTimestampParser, Configurable 
+        FTPTimestampParser, Configurable
 {
 
-    
+
     private SimpleDateFormat defaultDateFormat;
     private SimpleDateFormat recentDateFormat;
     private boolean lenientFutureDates = false;
-    
-    
+
+
     /**
-     * The only constructor for this class. 
+     * The only constructor for this class.
      */
     public FTPTimestampParserImpl() {
         setDefaultDateFormat(DEFAULT_SDF);
         setRecentDateFormat(DEFAULT_RECENT_SDF);
     }
-    
-    /** 
+
+    /**
      * Implements the one {@link  FTPTimestampParser#parseTimestamp(String)  method}
-     * in the {@link  FTPTimestampParser  FTPTimestampParser} interface 
+     * in the {@link  FTPTimestampParser  FTPTimestampParser} interface
      * according to this algorithm:
-     * 
-     * If the recentDateFormat member has been defined, try to parse the 
+     *
+     * If the recentDateFormat member has been defined, try to parse the
      * supplied string with that.  If that parse fails, or if the recentDateFormat
      * member has not been defined, attempt to parse with the defaultDateFormat
      * member.  If that fails, throw a ParseException.
-     * 
+     *
      * This method allows a {@link Calendar} instance to be passed in which represents the
      * current (system) time.
-     * 
+     *
      * @see org.apache.commons.net.ftp.parser.FTPTimestampParser#parseTimestamp(java.lang.String)
-     * 
+     *
      * @param timestampStr The timestamp to be parsed
      */
     public Calendar parseTimestamp(String timestampStr) throws ParseException {
         Calendar now = Calendar.getInstance();
         return parseTimestamp(timestampStr, now);
     }
-    
-    /** 
+
+    /**
      * Implements the one {@link  FTPTimestampParser#parseTimestamp(String)  method}
-     * in the {@link  FTPTimestampParser  FTPTimestampParser} interface 
+     * in the {@link  FTPTimestampParser  FTPTimestampParser} interface
      * according to this algorithm:
-     * 
-     * If the recentDateFormat member has been defined, try to parse the 
+     *
+     * If the recentDateFormat member has been defined, try to parse the
      * supplied string with that.  If that parse fails, or if the recentDateFormat
      * member has not been defined, attempt to parse with the defaultDateFormat
-     * member.  If that fails, throw a ParseException. 
-     * 
+     * member.  If that fails, throw a ParseException.
+     *
      * @see org.apache.commons.net.ftp.parser.FTPTimestampParser#parseTimestamp(java.lang.String)
      * @param timestampStr The timestamp to be parsed
      * @param serverTime The current time for the server
@@ -101,13 +101,13 @@ public class FTPTimestampParserImpl implements
         Date parsed = null;
         if (recentDateFormat != null) {
             if (lenientFutureDates) {
-                // add a day to "now" so that "slop" doesn't cause a date 
+                // add a day to "now" so that "slop" doesn't cause a date
                 // slightly in the future to roll back a full year.  (Bug 35181)
                 now.add(Calendar.DATE, 1);
-            }    
+            }
             parsed = recentDateFormat.parse(timestampStr, pp);
         }
-        if (parsed != null && pp.getIndex() == timestampStr.length()) 
+        if (parsed != null && pp.getIndex() == timestampStr.length())
         {
             working.setTime(parsed);
             working.set(Calendar.YEAR, now.get(Calendar.YEAR));
@@ -118,14 +118,14 @@ public class FTPTimestampParserImpl implements
         } else {
             // Temporarily add the current year to the short date time
             // to cope with short-date leap year strings.
-            // e.g. Java's DateFormatter will assume that "Feb 29 12:00" refers to 
+            // e.g. Java's DateFormatter will assume that "Feb 29 12:00" refers to
             // Feb 29 1970 (an invalid date) rather than a potentially valid leap year date.
             // This is pretty bad hack to work around the deficiencies of the JDK date/time classes.
             if (recentDateFormat != null) {
                 pp = new ParsePosition(0);
                 int year = now.get(Calendar.YEAR);
                 String timeStampStrPlusYear = timestampStr + " " + year;
-                SimpleDateFormat hackFormatter = new SimpleDateFormat(recentDateFormat.toPattern() + " yyyy", 
+                SimpleDateFormat hackFormatter = new SimpleDateFormat(recentDateFormat.toPattern() + " yyyy",
                         recentDateFormat.getDateFormatSymbols());
                 hackFormatter.setLenient(false);
                 hackFormatter.setTimeZone(recentDateFormat.getTimeZone());
@@ -139,16 +139,16 @@ public class FTPTimestampParserImpl implements
                 parsed = defaultDateFormat.parse(timestampStr, pp);
                 // note, length checks are mandatory for us since
                 // SimpleDateFormat methods will succeed if less than
-                // full string is matched.  They will also accept, 
+                // full string is matched.  They will also accept,
                 // despite "leniency" setting, a two-digit number as
-                // a valid year (e.g. 22:04 will parse as 22 A.D.) 
-                // so could mistakenly confuse an hour with a year, 
+                // a valid year (e.g. 22:04 will parse as 22 A.D.)
+                // so could mistakenly confuse an hour with a year,
                 // if we don't insist on full length parsing.
                 if (parsed != null && pp.getIndex() == timestampStr.length()) {
                     working.setTime(parsed);
                 } else {
                     throw new ParseException(
-                            "Timestamp could not be parsed with older or recent DateFormat", 
+                            "Timestamp could not be parsed with older or recent DateFormat",
                             pp.getIndex());
                 }
             }
@@ -176,7 +176,7 @@ public class FTPTimestampParserImpl implements
             this.defaultDateFormat = new SimpleDateFormat(format);
             this.defaultDateFormat.setLenient(false);
         }
-    } 
+    }
     /**
      * @return Returns the recentDateFormat.
      */
@@ -198,7 +198,7 @@ public class FTPTimestampParserImpl implements
             this.recentDateFormat.setLenient(false);
         }
     }
-    
+
     /**
      * @return returns an array of 12 strings representing the short
      * month names used by this parse.
@@ -206,8 +206,8 @@ public class FTPTimestampParserImpl implements
     public String[] getShortMonths() {
         return defaultDateFormat.getDateFormatSymbols().getShortMonths();
     }
-    
-    
+
+
     /**
      * @return Returns the serverTimeZone used by this parser.
      */
@@ -230,7 +230,7 @@ public class FTPTimestampParserImpl implements
             this.recentDateFormat.setTimeZone(serverTimeZone);
         }
     }
-    
+
     /**
      * Implementation of the {@link  Configurable  Configurable}
      * interface. Configures this <code>FTPTimestampParser</code> according
@@ -241,21 +241,21 @@ public class FTPTimestampParserImpl implements
      * to values supplied in the config based on month names configured as follows:
      * </p><p><ul>
      * <li>If a {@link  FTPClientConfig#setShortMonthNames(String) shortMonthString}
-     * has been supplied in the <code>config</code>, use that to parse  parse timestamps.</li> 
+     * has been supplied in the <code>config</code>, use that to parse  parse timestamps.</li>
      * <li>Otherwise, if a {@link  FTPClientConfig#setServerLanguageCode(String) serverLanguageCode}
-     * has been supplied in the <code>config</code>, use the month names represented 
+     * has been supplied in the <code>config</code>, use the month names represented
      * by that {@link  FTPClientConfig#lookupDateFormatSymbols(String) language}
      * to parse timestamps.</li>
      * <li>otherwise use default English month names</li>
      * </ul></p><p>
      * Finally if a {@link  org.apache.commons.net.ftp.FTPClientConfig#setServerTimeZoneId(String) serverTimeZoneId}
-     * has been supplied via the config, set that into all date formats that have 
-     * been configured.  
-     * </p> 
+     * has been supplied via the config, set that into all date formats that have
+     * been configured.
+     * </p>
      */
     public void configure(FTPClientConfig config) {
         DateFormatSymbols dfs = null;
-        
+
         String languageCode = config.getServerLanguageCode();
         String shortmonths = config.getShortMonthNames();
         if (shortmonths != null) {
@@ -265,8 +265,8 @@ public class FTPTimestampParserImpl implements
         } else {
             dfs = FTPClientConfig.lookupDateFormatSymbols("en");
         }
-        
-        
+
+
         String recentFormatString = config.getRecentDateFormatStr();
         if (recentFormatString == null) {
             this.recentDateFormat = null;
@@ -274,16 +274,16 @@ public class FTPTimestampParserImpl implements
             this.recentDateFormat = new SimpleDateFormat(recentFormatString, dfs);
             this.recentDateFormat.setLenient(false);
         }
-            
+
         String defaultFormatString = config.getDefaultDateFormatStr();
         if (defaultFormatString == null) {
             throw new IllegalArgumentException("defaultFormatString cannot be null");
         }
         this.defaultDateFormat = new SimpleDateFormat(defaultFormatString, dfs);
         this.defaultDateFormat.setLenient(false);
-        
+
         setServerTimeZone(config.getServerTimeZoneId());
-        
+
         this.lenientFutureDates = config.isLenientFutureDates();
     }
     /**

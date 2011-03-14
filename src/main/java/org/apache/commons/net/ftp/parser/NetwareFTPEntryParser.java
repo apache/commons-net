@@ -24,7 +24,7 @@ import org.apache.commons.net.ftp.FTPFile;
 
 /**
  * Implementation of FTPFileEntryParser and FTPFileListParser for Netware Systems. Note that some of the proprietary
- * extensions for Novell-specific operations are not supported. See 
+ * extensions for Novell-specific operations are not supported. See
  * <a href="http://www.novell.com/documentation/nw65/index.html?page=/documentation/nw65/ftp_enu/data/fbhbgcfa.html">http://www.novell.com/documentation/nw65/index.html?page=/documentation/nw65/ftp_enu/data/fbhbgcfa.html</a>
  * for more details.
  *
@@ -49,7 +49,7 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * this is the regular expression used by this parser.
      * Example: d [-W---F--] SCION_VOL2                        512 Apr 13 23:12 VOL2
      */
-    private static final String REGEX = "(d|-){1}\\s+"      // Directory/file flag 
+    private static final String REGEX = "(d|-){1}\\s+"      // Directory/file flag
             + "\\[(.*)\\]\\s+"                              // Attributes
             + "(\\S+)\\s+" + "(\\d+)\\s+"                   // Owner and size
             + "(\\S+\\s+\\S+\\s+((\\d+:\\d+)|(\\d{4})))"    // Long/short date format
@@ -68,10 +68,10 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * This constructor allows the creation of an NetwareFTPEntryParser object 
+     * This constructor allows the creation of an NetwareFTPEntryParser object
      * with something other than the default configuration.
      *
-     * @param config The {@link FTPClientConfig configuration} object used to 
+     * @param config The {@link FTPClientConfig configuration} object used to
      * configure this parser.
      * @exception IllegalArgumentException
      * Thrown if the regular expression is unparseable.  Should not be seen
@@ -103,10 +103,10 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * <li><b>F</b> - File Scan; Right to see directory or file listings.
      * <li><b>A</b> - Access Control; Right to modify trustee assignments and the Inherited Rights Mask.
      * </ul>
-     * 
-     * See <a href="http://www.novell.com/documentation/nfap10/index.html?page=/documentation/nfap10/nfaubook/data/abxraws.html">here</a> 
+     *
+     * See <a href="http://www.novell.com/documentation/nfap10/index.html?page=/documentation/nfap10/nfaubook/data/abxraws.html">here</a>
      * for more details
-     * 
+     *
      * @param entry A line of text from the file listing
      * @return An FTPFile instance corresponding to the supplied entry
      */
@@ -143,7 +143,7 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             //set the size
             f.setSize(Long.parseLong(size.trim()));
 
-            // Now set the permissions (or at least a subset thereof - full permissions would probably require 
+            // Now set the permissions (or at least a subset thereof - full permissions would probably require
             // subclassing FTPFile and adding extra metainformation there)
             if (attrib.indexOf("R") != -1) {
                 f.setPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION,

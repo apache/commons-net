@@ -32,8 +32,8 @@ import org.apache.commons.net.ftp.FTPFile;
 public class OS2FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 
 {
-    
-    private static final String DEFAULT_DATE_FORMAT 
+
+    private static final String DEFAULT_DATE_FORMAT
         = "MM-dd-yy HH:mm"; //11-09-01 12:30
     /**
      * this is the regular expression used by this parser.
@@ -59,10 +59,10 @@ public class OS2FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     }
 
     /**
-     * This constructor allows the creation of an OS2FTPEntryParser object 
+     * This constructor allows the creation of an OS2FTPEntryParser object
      * with something other than the default configuration.
      *
-     * @param config The {@link FTPClientConfig configuration} object used to 
+     * @param config The {@link FTPClientConfig configuration} object used to
      * configure this parser.
      * @exception IllegalArgumentException
      * Thrown if the regular expression is unparseable.  Should not be seen

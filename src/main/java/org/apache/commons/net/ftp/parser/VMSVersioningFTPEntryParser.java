@@ -66,10 +66,10 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
     }
 
     /**
-     * This constructor allows the creation of a VMSVersioningFTPEntryParser 
+     * This constructor allows the creation of a VMSVersioningFTPEntryParser
      * object with something other than the default configuration.
      *
-     * @param config The {@link FTPClientConfig configuration} object used to 
+     * @param config The {@link FTPClientConfig configuration} object used to
      * configure this parser.
      * @exception IllegalArgumentException
      * Thrown if the regular expression is unparseable.  Should not be seen

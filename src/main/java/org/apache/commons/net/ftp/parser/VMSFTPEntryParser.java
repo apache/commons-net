@@ -49,7 +49,7 @@ import org.apache.commons.net.ftp.FTPFile;
 public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 {
 
-    private static final String DEFAULT_DATE_FORMAT 
+    private static final String DEFAULT_DATE_FORMAT
         = "d-MMM-yyyy HH:mm:ss"; //9-NOV-2001 12:30:24
 
     /**
@@ -82,7 +82,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * This constructor allows the creation of a VMSFTPEntryParser object with
      * something other than the default configuration.
      *
-     * @param config The {@link FTPClientConfig configuration} object used to 
+     * @param config The {@link FTPClientConfig configuration} object used to
      * configure this parser.
      * @exception IllegalArgumentException
      * Thrown if the regular expression is unparseable.  Should not be seen
@@ -178,11 +178,11 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             f.setUser(user);
             //set group and owner
 
-            //Set file permission. 
+            //Set file permission.
             //VMS has (SYSTEM,OWNER,GROUP,WORLD) users that can contain
             //R (read) W (write) E (execute) D (delete)
 
-            //iterate for OWNER GROUP WORLD permissions 
+            //iterate for OWNER GROUP WORLD permissions
             for (int access = 0; access < 3; access++)
             {
                 String permission = permissions[access];
@@ -235,7 +235,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     protected boolean isVersioning() {
         return false;
     }
-    
+
     /**
      * Defines a default configuration to be used when this class is
      * instantiated without a {@link  FTPClientConfig  FTPClientConfig}

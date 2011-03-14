@@ -33,25 +33,25 @@ import org.apache.commons.net.ftp.FTPFile;
  */
 public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 {
-    
-    static final String DEFAULT_DATE_FORMAT 
+
+    static final String DEFAULT_DATE_FORMAT
         = "MMM d yyyy"; //Nov 9 2001
-    
-    static final String DEFAULT_RECENT_DATE_FORMAT 
+
+    static final String DEFAULT_RECENT_DATE_FORMAT
         = "MMM d HH:mm"; //Nov 9 20:06
 
-    static final String NUMERIC_DATE_FORMAT 
+    static final String NUMERIC_DATE_FORMAT
         = "yyyy-MM-dd HH:mm"; //2001-11-09 20:06
 
     /**
      * Some Linux distributions are now shipping an FTP server which formats
-     * file listing dates in an all-numeric format: 
-     * <code>"yyyy-MM-dd HH:mm</code>.  
-     * This is a very welcome development,  and hopefully it will soon become 
-     * the standard.  However, since it is so new, for now, and possibly 
+     * file listing dates in an all-numeric format:
+     * <code>"yyyy-MM-dd HH:mm</code>.
+     * This is a very welcome development,  and hopefully it will soon become
+     * the standard.  However, since it is so new, for now, and possibly
      * forever, we merely accomodate it, but do not make it the default.
      * <p>
-     * For now end users may specify this format only via 
+     * For now end users may specify this format only via
      * <code>UnixFTPEntryParser(FTPClientConfig)</code>.
      * Steve Cohen - 2005-04-17
      */
@@ -97,12 +97,12 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
          *   diacritics (e.g. umlaut) in some abbreviations.
         */
         + "((?:\\d+[-/]\\d+[-/]\\d+)|(?:\\S{3}\\s+\\d{1,2})|(?:\\d{1,2}\\s+\\S{3}))\\s+"
-        /* 
+        /*
            year (for non-recent standard format) - yyyy
-           or time (for numeric or recent standard format) [h]h:mm  
+           or time (for numeric or recent standard format) [h]h:mm
         */
         + "(\\d+(?::\\d+)?)\\s+"
-        
+
         + "(\\S*)(\\s*.*)"; // the rest
 
 
@@ -123,7 +123,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * This constructor allows the creation of a UnixFTPEntryParser object with
      * something other than the default configuration.
      *
-     * @param config The {@link FTPClientConfig configuration} object used to 
+     * @param config The {@link FTPClientConfig configuration} object used to
      * configure this parser.
      * @exception IllegalArgumentException
      * Thrown if the regular expression is unparseable.  Should not be seen
@@ -173,10 +173,10 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             {
                  // intentionally do nothing
             }
-            
+
             // A 'whiteout' file is an ARTIFICIAL entry in any of several types of
             // 'translucent' filesystems, of which a 'union' filesystem is one.
-            
+
             // bcdelfmpSs-
             switch (typeStr.charAt(0))
             {
@@ -247,7 +247,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             {
                 // intentionally do nothing
             }
-            
+
             if (null == endtoken)
             {
                 file.setName(name);
@@ -297,5 +297,5 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
                 DEFAULT_RECENT_DATE_FORMAT,
                 null, null, null);
     }
-    
+
 }

@@ -28,19 +28,19 @@ import org.apache.commons.net.ftp.FTPFile;
 
 public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 {
-    private static final String DEFAULT_DATE_FORMAT 
+    private static final String DEFAULT_DATE_FORMAT
         = "yy/MM/dd HH:mm:ss"; //01/11/09 12:30:24
-    
+
 
 
     private static final String REGEX =
         "(\\S+)\\s+"                // user
         + "(\\d+)\\s+"              // size
-        + "(\\S+)\\s+(\\S+)\\s+"    // date stuff 
+        + "(\\S+)\\s+(\\S+)\\s+"    // date stuff
         + "(\\*\\S+)\\s+"               // *STMF/*DIR
         + "(\\S+/?)\\s*";               // filename
 
-    
+
     /**
      * The default constructor for a OS400FTPEntryParser object.
      *
@@ -55,10 +55,10 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     }
 
     /**
-     * This constructor allows the creation of an OS400FTPEntryParser object 
+     * This constructor allows the creation of an OS400FTPEntryParser object
      * with something other than the default configuration.
      *
-     * @param config The {@link FTPClientConfig configuration} object used to 
+     * @param config The {@link FTPClientConfig configuration} object used to
      * configure this parser.
      * @exception IllegalArgumentException
      * Thrown if the regular expression is unparseable.  Should not be seen
@@ -87,7 +87,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             String datestr = group(3)+" "+group(4);
             String typeStr = group(5);
             String name = group(6);
-            
+
             try
             {
                 file.setTimestamp(super.parseTimestamp(datestr));

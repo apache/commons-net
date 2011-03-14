@@ -90,7 +90,7 @@ public abstract class RegexFTPFileEntryParserImpl extends
     }
 
     /**
-     * Convenience method 
+     * Convenience method
      *
      * @return the number of groups() in the internal MatchResult.
      */
@@ -136,7 +136,7 @@ public abstract class RegexFTPFileEntryParserImpl extends
     }
 
     /**
-     * Alter the current regular expression being utilised for entry parsing 
+     * Alter the current regular expression being utilised for entry parsing
      * and create a new {@link Pattern} instance.
      * @param regex The new regular expression
      * @return  true if the compiled pattern is not null

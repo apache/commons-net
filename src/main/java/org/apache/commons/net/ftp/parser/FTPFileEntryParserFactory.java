@@ -39,7 +39,7 @@ public interface FTPFileEntryParserFactory
      */
     public FTPFileEntryParser createFileEntryParser(String key)
         throws ParserInitializationException;
-    
+
     /**
      *<p>
      * Implementation should be a method that extracts
@@ -54,7 +54,7 @@ public interface FTPFileEntryParserFactory
      * and knows what that configuration is.
      * </p>
      *
-     * @param config  A {@link  FTPClientConfig FTPClientConfig}  
+     * @param config  A {@link  FTPClientConfig FTPClientConfig}
      * used to configure the parser created
      *
      * @return the @link  FTPFileEntryParser FTPFileEntryParser} so created.

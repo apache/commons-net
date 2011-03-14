@@ -32,8 +32,8 @@ import org.apache.commons.net.ftp.FTPFile;
  */
 public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 {
-    
-    private static final String DEFAULT_DATE_FORMAT 
+
+    private static final String DEFAULT_DATE_FORMAT
         = "MM-dd-yy hh:mma"; //11-09-01 12:30PM
 
     private static final String DEFAULT_DATE_FORMAT2
@@ -63,10 +63,10 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     }
 
     /**
-     * This constructor allows the creation of an NTFTPEntryParser object 
+     * This constructor allows the creation of an NTFTPEntryParser object
      * with something other than the default configuration.
      *
-     * @param config The {@link FTPClientConfig configuration} object used to 
+     * @param config The {@link FTPClientConfig configuration} object used to
      * configure this parser.
      * @exception IllegalArgumentException
      * Thrown if the regular expression is unparseable.  Should not be seen
@@ -149,7 +149,7 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         }
         return null;
     }
-    
+
     /**
      * Defines a default configuration to be used when this class is
      * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
