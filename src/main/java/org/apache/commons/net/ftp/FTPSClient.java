@@ -41,7 +41,7 @@ import javax.net.ssl.TrustManager;
  * @since 2.0
  */
 public class FTPSClient extends FTPClient {
-    
+
     /** The value that I can set in PROT command  (C = Clear, P = Protected) */
     private static final String[] PROT_COMMAND_VALUE = {"C","E","S","P"};
     /** Default PROT Command */
@@ -211,7 +211,7 @@ public class FTPSClient extends FTPClient {
                 TrustManager trustMgr = getTrustManager();
                 context.init(
                         keyMgr == null ? null : new KeyManager[] { keyMgr } ,
-                        trustMgr == null ? null : new TrustManager[] { trustMgr } , 
+                        trustMgr == null ? null : new TrustManager[] { trustMgr } ,
                         null); // use default random implementation
             } catch (KeyManagementException e) {
                 IOException ioe = new IOException("Could not initialize SSL context");
@@ -431,7 +431,7 @@ public class FTPSClient extends FTPClient {
      * <b>N.B.</b> the method calls
      *  {@link #setSocketFactory(javax.net.SocketFactory)} and
      *  {@link #setServerSocketFactory(javax.net.ServerSocketFactory)}
-     *  
+     *
      * @param prot Data Channel Protection Level.
      * @throws SSLException If the server reply code does not equal "200".
      * @throws IOException If an I/O error occurs while sending
@@ -557,7 +557,7 @@ public class FTPSClient extends FTPClient {
      * connection parameters to the default values.
      * <p>
      * Calls {@code setSocketFactory(null)} and {@code setServerSocketFactory(null)}
-     * to reset the factories that may have been changed during the session, 
+     * to reset the factories that may have been changed during the session,
      * e.g. by {@link #execPROT(String)}
      * @exception IOException If an error occurs while disconnecting.
      * @since 3.0

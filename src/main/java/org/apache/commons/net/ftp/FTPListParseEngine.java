@@ -102,7 +102,7 @@ public class FTPListParseEngine {
         this.parser.preParse(this.entries);
         resetIterator();
     }
-    
+
     /**
      * Internal method for reading the input into the <code>entries</code> list.
      * After this method has completed, <code>entries</code> will contain a
@@ -128,7 +128,7 @@ public class FTPListParseEngine {
         {
             reader = new BufferedReader(new InputStreamReader(stream, encoding));
         }
-        
+
         String line = this.parser.readNextEntry(reader);
 
         while (line != null)
@@ -157,9 +157,9 @@ public class FTPListParseEngine {
      * objects starting at the current position of this iterator within its
      * list and at least the number of elements which  exist in the list at
      * and after its current position.
-     * <p><b> 
-     * NOTE:</b> This array may contain null members if any of the 
-     * individual file listings failed to parse.  The caller should 
+     * <p><b>
+     * NOTE:</b> This array may contain null members if any of the
+     * individual file listings failed to parse.  The caller should
      * check each entry for null before referencing it.
      */
     public FTPFile[] getNext(int quantityRequested) {
@@ -196,9 +196,9 @@ public class FTPListParseEngine {
      * list and at least the number of elements which  exist in the list at
      * and after its current position.  This array will be in the same order
      * as the underlying list (not reversed).
-     * <p><b> 
-     * NOTE:</b> This array may contain null members if any of the 
-     * individual file listings failed to parse.  The caller should 
+     * <p><b>
+     * NOTE:</b> This array may contain null members if any of the
+     * individual file listings failed to parse.  The caller should
      * check each entry for null before referencing it.
      */
     public FTPFile[] getPrevious(int quantityRequested) {
@@ -219,9 +219,9 @@ public class FTPListParseEngine {
      *
      * @return an array of FTPFile objects containing the whole list of
      *         files returned by the server as read by this object's parser.
-     * <p><b> 
-     * NOTE:</b> This array may contain null members if any of the 
-     * individual file listings failed to parse.  The caller should 
+     * <p><b>
+     * NOTE:</b> This array may contain null members if any of the
+     * individual file listings failed to parse.  The caller should
      * check each entry for null before referencing it.
      * @exception IOException
      */
@@ -235,16 +235,16 @@ public class FTPListParseEngine {
      * Returns an array of FTPFile objects containing the whole list of
      * files returned by the server as read by this object's parser.
      * The files are filtered before being added to the array.
-     * 
+     *
      * @param filter FTPFileFilter, must not be <code>null</code>.
-     * 
+     *
      * @return an array of FTPFile objects containing the whole list of
      *         files returned by the server as read by this object's parser.
-     * <p><b> 
-     * NOTE:</b> This array may contain null members if any of the 
-     * individual file listings failed to parse.  The caller should 
+     * <p><b>
+     * NOTE:</b> This array may contain null members if any of the
+     * individual file listings failed to parse.  The caller should
      * check each entry for null before referencing it, or use the
-     * a filter such as {@link FTPFileFilters#NON_NULL} which does not 
+     * a filter such as {@link FTPFileFilters#NON_NULL} which does not
      * allow null entries.
      * @since 2.2
      * @exception IOException

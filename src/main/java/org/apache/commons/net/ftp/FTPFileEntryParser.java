@@ -73,7 +73,7 @@ import java.util.List;
  *
  * For an alternative approach, see the {@link FTPListParseEngine} class
  * which provides iterative access.
- * 
+ *
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @version $Id$
  * @see org.apache.commons.net.ftp.FTPFile

@@ -117,7 +117,7 @@ public final class FTPReply
     public static final int PAGE_TYPE_UNKNOWN = CODE_551;
     public static final int STORAGE_ALLOCATION_EXCEEDED = CODE_552;
     public static final int FILE_NAME_NOT_ALLOWED = CODE_553;
-    
+
     // FTPS Reply Codes
     /** @since 2.0 */
     public static final int CODE_234 = 234;
@@ -139,7 +139,7 @@ public final class FTPReply
     public static final int CODE_535 = 535;
     /** @since 2.0 */
     public static final int CODE_536 = 536;
-    
+
     /** @since 2.0 */
     public static final int SECURITY_DATA_EXCHANGE_COMPLETE = CODE_234;
     /** @since 2.0 */
@@ -160,7 +160,7 @@ public final class FTPReply
     public static final int FAILED_SECURITY_CHECK = CODE_535;
     /** @since 2.0 */
     public static final int REQUESTED_PROT_LEVEL_NOT_SUPPORTED = CODE_536;
-    
+
     // IPv6 error codes
     // Note this is also used as an FTPS error code reply
     /** @since 2.2 */

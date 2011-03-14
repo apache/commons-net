@@ -13,7 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.apache.commons.net.ftp;
@@ -25,7 +25,7 @@ package org.apache.commons.net.ftp;
 public interface FTPFileFilter {
     /**
      * Checks if an FTPFile entry should be included or not.
-     * 
+     *
      * @param file entry to be checked for inclusion. May be <code>null</code>.
      * @return <code>true</code> if the file is to be included, <code>false</code> otherwise
      */
