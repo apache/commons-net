@@ -936,6 +936,7 @@ public class NNTPClient extends NNTP
      * List all newsgroups served by the NNTP server.  If no newsgroups
      * are served, a zero length array will be returned.  If the command
      * fails, null will be returned.
+     * The method uses the "LIST" command.
      * <p>
      * @return An array of NewsgroupInfo instances containing the information
      *    for each newsgroup served by the NNTP server.   If no newsgroups
@@ -962,6 +963,7 @@ public class NNTPClient extends NNTP
     /**
      * List all newsgroups served by the NNTP server.  If no newsgroups
      * are served, no entries will be returned.
+     * The method uses the "LIST" command.
      * <p>
      * @return An iterable of NewsgroupInfo instances containing the information
      *    for each newsgroup served by the NNTP server.   If no newsgroups
@@ -985,6 +987,7 @@ public class NNTPClient extends NNTP
     /**
      * List all newsgroups served by the NNTP server.  If no newsgroups
      * are served, no entries will be returned.
+     * The method uses the "LIST" command.
      * <p>
      * @return An iterable of Strings containing the raw information
      *    for each newsgroup served by the NNTP server.   If no newsgroups
@@ -1004,7 +1007,7 @@ public class NNTPClient extends NNTP
 
     /**
      * List the newsgroups that match a given pattern.
-     * Uses the LIST ACTIVE command.
+     * Uses the "LIST ACTIVE" command.
      * <p>
      * @param wildmat a pseudo-regex pattern (cf. RFC 2980)
      * @return An array of NewsgroupInfo instances containing the information
@@ -1025,7 +1028,7 @@ public class NNTPClient extends NNTP
 
     /**
      * List the newsgroups that match a given pattern.
-     * Uses the LIST ACTIVE command.
+     * Uses the "LIST ACTIVE" command.
      * <p>
      * @param wildmat a pseudo-regex pattern (cf. RFC 2980)
      * @return An iterable of Strings containing the raw information
@@ -1044,7 +1047,7 @@ public class NNTPClient extends NNTP
 
     /**
      * List the newsgroups that match a given pattern.
-     * Uses the LIST ACTIVE command.
+     * Uses the "LIST ACTIVE" command.
      * <p>
      * @param wildmat a pseudo-regex pattern (cf. RFC 2980)
      * @return An iterable NewsgroupInfo instances containing the information
@@ -1063,6 +1066,7 @@ public class NNTPClient extends NNTP
      * date subject to the conditions of the specified query.  If no new
      * newsgroups were added, a zero length array will be returned.  If the
      * command fails, null will be returned.
+     * This uses the "NEWGROUPS" command.
      * <p>
      * @param query  The query restricting how to search for new newsgroups.
      * @return An array of NewsgroupInfo instances containing the information
@@ -1094,6 +1098,7 @@ public class NNTPClient extends NNTP
      * List all new newsgroups added to the NNTP server since a particular
      * date subject to the conditions of the specified query.  If no new
      * newsgroups were added, no entries will be returned.
+     * This uses the "NEWGROUPS" command.
      * <p>
      * @param query  The query restricting how to search for new newsgroups.
      * @return An iterable of Strings containing the raw information
@@ -1114,13 +1119,14 @@ public class NNTPClient extends NNTP
                 query.isGMT(), query.getDistributions()))) {
             return new ReplyIterator(_reader_);
         }
-        throw new IOException("NEWSGROUPS command failed: "+getReplyString());
+        throw new IOException("NEWGROUPS command failed: "+getReplyString());
     }
 
     /**
      * List all new newsgroups added to the NNTP server since a particular
      * date subject to the conditions of the specified query.  If no new
      * newsgroups were added, no entries will be returned.
+     * This uses the "NEWGROUPS" command.
      * <p>
      * @param query  The query restricting how to search for new newsgroups.
      * @return An iterable of NewsgroupInfo instances containing the information
@@ -1147,6 +1153,7 @@ public class NNTPClient extends NNTP
      * newsgroup to the query, else the command will fail.  Each String
      * in the returned array is a unique message identifier including the
      * enclosing &lt and &gt.
+     * This uses the "NEWNEWS" command.
      * <p>
      * @param query  The query restricting how to search for new news.  You
      *    must add at least one newsgroup to the query.
