@@ -979,7 +979,7 @@ public class NNTPClient extends NNTP
         if (NNTPReply.isPositiveCompletion(list())) {
             return new ReplyIterator(_reader_);
         }
-        throw new IOException(getReplyString());
+        throw new IOException("LIST command failed: "+getReplyString());
     }
 
     /**
@@ -1039,7 +1039,7 @@ public class NNTPClient extends NNTP
         if(NNTPReply.isPositiveCompletion(listActive(wildmat))) {
             return new ReplyIterator(_reader_);
         }
-        throw new IOException(getReplyString());
+        throw new IOException("LIST ACTIVE "+wildmat+" command failed: "+getReplyString());
     }
 
     /**
@@ -1114,7 +1114,7 @@ public class NNTPClient extends NNTP
                 query.isGMT(), query.getDistributions()))) {
             return new ReplyIterator(_reader_);
         }
-        throw new IOException(getReplyString());
+        throw new IOException("NEWSGROUPS command failed: "+getReplyString());
     }
 
     /**
@@ -1199,6 +1199,7 @@ public class NNTPClient extends NNTP
      * List all new articles added to the NNTP server since a particular
      * date subject to the conditions of the specified query.  If no new
      * new news is found, no entries will be returned.
+     * This uses the "NEWNEWS" command.
      * You must add at least one newsgroup to the query, else the command will fail.
      * Each String which is returned is a unique message identifier including the
      * enclosing &lt and &gt.
@@ -1223,7 +1224,7 @@ public class NNTPClient extends NNTP
                 query.isGMT(), query.getDistributions()))) {
             return new ReplyIterator(_reader_);
         }
-        throw new IOException(getReplyString());
+        throw new IOException("NEWNEWS command failed: "+getReplyString());
     }
 
     /***
@@ -1396,7 +1397,7 @@ public class NNTPClient extends NNTP
 
     /**
      * Return article headers for all articles between lowArticleNumber
-     * and highArticleNumber, inclusively.
+     * and highArticleNumber, inclusively. Uses the XOVER command.
      * <p>
      * @param lowArticleNumber
      * @param highArticleNumber
@@ -1414,7 +1415,7 @@ public class NNTPClient extends NNTP
 
     /**
      * Return article headers for all articles between lowArticleNumber
-     * and highArticleNumber, inclusively.
+     * and highArticleNumber, inclusively, using the XOVER command.
      * <p>
      * @param lowArticleNumber
      * @param highArticleNumber
@@ -1427,7 +1428,7 @@ public class NNTPClient extends NNTP
     {
         Reader info = retrieveArticleInfo(lowArticleNumber,highArticleNumber);
         if (info == null) {
-            throw new IOException(getReplyString());
+            throw new IOException("XOVER command failed: "+getReplyString());
         }
         // N.B. info is already DotTerminated, so don't rewrap
         return new ArticleIterator(new ReplyIterator(info, false));
