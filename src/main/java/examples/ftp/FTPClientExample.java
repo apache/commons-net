@@ -34,8 +34,6 @@ import org.apache.commons.net.ftp.FTPReply;
 import org.apache.commons.net.io.CopyStreamEvent;
 import org.apache.commons.net.io.CopyStreamListener;
 
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
-
 /***
  * This is an example program demonstrating how to use the FTPClient class.
  * This program connects to an FTP server and retrieves the specified
