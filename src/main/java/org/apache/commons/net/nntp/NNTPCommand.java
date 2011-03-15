@@ -52,7 +52,7 @@ public final class NNTPCommand
     private NNTPCommand()
     {}
 
-    static final String[] _commands = {
+    private static final String[] _commands = {
         "ARTICLE", "BODY", "GROUP", "HEAD", "HELP", "IHAVE", "LAST", "LIST",
         "NEWGROUPS", "NEWNEWS", "NEXT", "POST", "QUIT", "SLAVE", "STAT",
         "AUTHINFO", "XOVER", "XHDR"
@@ -67,7 +67,7 @@ public final class NNTPCommand
      * @return The NNTP protcol command string corresponding to a specified
      *         command code.
      ***/
-    public static final String getCommand(int command)
+    static final String getCommand(int command)
     {
         return _commands[command];
     }

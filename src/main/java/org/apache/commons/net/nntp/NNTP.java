@@ -307,7 +307,7 @@ public class NNTP extends SocketClient
      ***/
     public int sendCommand(int command, String args) throws IOException
     {
-        return sendCommand(NNTPCommand._commands[command], args);
+        return sendCommand(NNTPCommand.getCommand(command), args);
     }
 
 
