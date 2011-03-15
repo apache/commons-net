@@ -768,7 +768,7 @@ public class NNTP extends SocketClient
 
 
     /***
-     * A convenience method to send the NNTP NEWGROUPS command to the server,
+     * A convenience method to send the "NEWGROUPS" command to the server,
      * receive the reply, and return the reply code.
      * <p>
      * @param date The date after which to check for new groups.
@@ -814,7 +814,7 @@ public class NNTP extends SocketClient
 
 
     /***
-     * A convenience method to send the NNTP NEWGROUPS command to the server,
+     * A convenience method to send the "NEWNEWS" command to the server,
      * receive the reply, and return the reply code.
      * <p>
      * @param newsgroups A comma-separated list of newsgroups to check for new
