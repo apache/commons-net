@@ -79,4 +79,33 @@ public class DotTerminatedMessageReaderTest extends TestCase {
         assertEquals("Hello World!\r" + SEP,str.toString());
     }
 
+    public void testLeadingDot() throws IOException {
+        final String test = "Hello World!\r\n..text\r\n.\r\n";
+        reader = new DotTerminatedMessageReader(new StringReader(test));
+
+        int read = 0;
+        while ((read = reader.read(buf)) != -1) {
+            str.append(buf, 0, read);
+        }
+
+        assertEquals("Hello World!" + SEP+".text"+SEP,str.toString());
+    }
+
+    // This test agrees with the Javadoc.
+    // However the sequence should not happen for well-behaved NNTP and POP3 servers
+    public void testSingleDotWithTrailingText() throws IOException {
+        final String test = "Hello World!\r\n.text\r\n";
+        reader = new DotTerminatedMessageReader(new StringReader(test));
+
+        int read = 0;
+        while ((read = reader.read(buf)) != -1) {
+            str.append(buf, 0, read);
+        }
+
+        assertEquals("Hello World!" + SEP,str.toString());
+        
+        // Note: the StringReader input will still contain "xt\r\n"
+        // because DTMR treats the "te" as CRLF
+    }
+
 }
