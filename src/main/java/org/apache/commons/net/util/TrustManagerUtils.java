@@ -17,7 +17,8 @@
 
 package org.apache.commons.net.util;
 
-import java.security.NoSuchAlgorithmException;
+import java.security.GeneralSecurityException;
+import java.security.KeyStore;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
@@ -99,11 +100,13 @@ public final class TrustManagerUtils
      * SSLContext#init(KeyManager[], TrustManager[], SecureRandom)}
      * when the TrustManager parameter is set to {@code null}
      * @return the default TrustManager
-     * @throws NoSuchAlgorithmException
+     * @throws GeneralSecurityException
      */
-    public static X509TrustManager getDefaultTrustManager() throws NoSuchAlgorithmException {
-        return (X509TrustManager) TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
-        .getTrustManagers()[0];
+    public static X509TrustManager getDefaultTrustManager() throws GeneralSecurityException {
+        String defaultAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+        TrustManagerFactory instance = TrustManagerFactory.getInstance(defaultAlgorithm);
+        instance.init((KeyStore)null);
+        return (X509TrustManager) instance.getTrustManagers()[0];
     }
 
 }
