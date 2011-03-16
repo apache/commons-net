@@ -17,8 +17,8 @@
 
 package org.apache.commons.net.io;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PushbackReader;
 import java.io.Reader;
 
 /**
@@ -30,22 +30,23 @@ import java.io.Reader;
  * protocols such as NNTP and POP3 produce messages of this type.
  * <p>
  * This class handles stripping of the duplicate period at the beginning
- * of lines starting with a period, converts NETASCII newlines to the
- * local line separator format, truncates the end of message indicator,
- * and ensures you cannot read past the end of the message.
+ * of lines starting with a period, and ensures you cannot read past the end of the message.
+ * <p>
+ * Note: versions since 3.0 extend BufferedReader rather than Reader,
+ * and no longer change the CRLF into the local EOL. Also only DOT CR LF
+ * acts as EOF.
  * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
  * @version $Id$
  */
-public final class DotTerminatedMessageReader extends Reader
+public final class DotTerminatedMessageReader extends BufferedReader
 {
-    private static final String LS = System.getProperty("line.separator");
-    char[] LS_CHARS;
+    private static final char LF = '\n';
+    private static final char CR = '\r';
+    private static final int DOT = '.';
 
     private boolean atBeginning;
     private boolean eof;
-    private int pos;
-    private char[] internalBuffer;
-    private PushbackReader internalReader;
+    private boolean seenCR; // was last character CR?
 
     /**
      * Creates a DotTerminatedMessageReader that wraps an existing Reader
@@ -55,13 +56,9 @@ public final class DotTerminatedMessageReader extends Reader
     public DotTerminatedMessageReader(Reader reader)
     {
         super(reader);
-        LS_CHARS = LS.toCharArray();
-        internalBuffer = new char[LS_CHARS.length + 3];
-        pos = internalBuffer.length;
         // Assumes input is at start of message
         atBeginning = true;
         eof = false;
-        internalReader = new PushbackReader(reader);
     }
 
     /**
@@ -77,95 +74,65 @@ public final class DotTerminatedMessageReader extends Reader
      *            stream.
      */
     @Override
-    public int read() throws IOException
-    {
-        int ch;
-
-        synchronized (lock)
-        {
-            if (pos < internalBuffer.length)
-            {
-                return internalBuffer[pos++];
+    public int read() throws IOException {
+        synchronized (lock) {
+            if (eof) {
+                return -1; // Don't allow read past EOF
             }
-
-            if (eof)
-            {
-                return -1;
-            }
-
-            if ((ch = internalReader.read()) == -1)
-            {
+            int chint = super.read();
+            if (chint == -1) { // True EOF
                 eof = true;
                 return -1;
             }
-
-            if (atBeginning)
-            {
+            if (atBeginning) {
                 atBeginning = false;
-                if (ch == '.')
-                {
-                    ch = internalReader.read();
-
-                    if (ch != '.')
-                    {
-                        // read newline
+                if (chint == DOT) { // Have DOT
+                    mark(2); // need to check for CR LF or DOT
+                    chint = super.read();
+                    if (chint == -1) { // Should not happen
+                        // new Throwable("Trailing DOT").printStackTrace();
                         eof = true;
-                        internalReader.read();
-                        return -1;
+                        return DOT; // return the trailing DOT
                     }
-                    else
-                    {
-                        return '.';
-                    }
-                }
-            }
-
-            if (ch == '\r')
-            {
-                ch = internalReader.read();
-
-                if (ch == '\n')
-                {
-                    ch = internalReader.read();
-
-                    if (ch == '.')
-                    {
-                        ch = internalReader.read();
-
-                        if (ch != '.')
-                        {
-                            // read newline and indicate end of file
-                            internalReader.read();
+                    if (chint == DOT) { // Have DOT DOT
+                        // no need to reset as we want to lose the first DOT
+                        return chint; // i.e. DOT
+                    } 
+                    if (chint == CR) { // Have DOT CR
+                        chint = super.read();
+                        if (chint == -1) { // Still only DOT CR - should not happen
+                            //new Throwable("Trailing DOT CR").printStackTrace();
+                            reset(); // So CR is picked up next time
+                            return DOT; // return the trailing DOT
+                        }
+                        if (chint == LF) { // DOT CR LF
+                            atBeginning = true;
                             eof = true;
-                        }
-                        else
-                        {
-                            internalBuffer[--pos] = (char) ch;
+                            // Do we need to clear the mark somehow?
+                            return -1;
                         }
                     }
-                    else
-                    {
-                        internalReader.unread(ch);
-                    }
+                    // Should not happen - lone DOT at beginning
+                    //new Throwable("Lone DOT followed by "+(char)chint).printStackTrace();
+                    reset();
+                    return DOT;
+                } // have DOT
+            } // atBeginning
 
-                    pos -= LS_CHARS.length;
-                    System.arraycopy(LS_CHARS, 0, internalBuffer, pos,
-                                     LS_CHARS.length);
-                    ch = internalBuffer[pos++];
-                }
-                else if (ch == '\r') {
-                    internalReader.unread(ch);
-                }
-                else
-                {
-                    internalBuffer[--pos] = (char) ch;
-                    return '\r';
+            // Handle CRLF in normal flow
+            if (seenCR) {
+                seenCR = false;
+                if (chint == LF) {
+                    atBeginning = true;
                 }
             }
-
-            return ch;
+            if (chint == CR) {
+                seenCR = true;
+            }
+            return chint;
         }
     }
+
 
     /**
      * Reads the next characters from the message into an array and
@@ -224,21 +191,6 @@ public final class DotTerminatedMessageReader extends Reader
     }
 
     /**
-     * Determines if the message is ready to be read.
-     * @return True if the message is ready to be read, false if not.
-     * @exception IOException If an error occurs while checking the underlying
-     *            stream.
-     */
-    @Override
-    public boolean ready() throws IOException
-    {
-        synchronized (lock)
-        {
-            return (pos < internalBuffer.length || internalReader.ready());
-        }
-    }
-
-    /**
      * Closes the message for reading.  This doesn't actually close the
      * underlying stream.  The underlying stream may still be used for
      * communicating with the server and therefore is not closed.
@@ -257,11 +209,6 @@ public final class DotTerminatedMessageReader extends Reader
     {
         synchronized (lock)
         {
-            if (internalReader == null)
-            {
-                return;
-            }
-
             if (!eof)
             {
                 while (read() != -1)
@@ -271,8 +218,34 @@ public final class DotTerminatedMessageReader extends Reader
             }
             eof = true;
             atBeginning = false;
-            pos = internalBuffer.length;
-            internalReader = null;
         }
+    }
+
+    /**
+     * Read a line of text. 
+     * A line is considered to be terminated by carriage return followed immediately by a linefeed.
+     * This contrasts with BufferedReader which also allows other combinations.
+     * @since 3.0
+     */
+    @Override
+    public String readLine() throws IOException {
+        StringBuilder sb = new StringBuilder();
+        int intch;
+        synchronized(lock) { // make thread-safe (hopefully!)
+            while((intch = read()) != -1) 
+            {
+                if (intch == LF && atBeginning) {
+                    return sb.substring(0, sb.length()-1);
+                }
+                sb.append((char) intch);
+            }
+        }
+        String string = sb.toString();
+        if (string.length() == 0) { // immediate EOF
+            return null;
+        }
+        // Should not happen - EOF without CRLF
+        //new Throwable(string).printStackTrace();
+        return string;
     }
 }
