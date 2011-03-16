@@ -99,13 +99,14 @@ public final class TrustManagerUtils
      * This should be the same as the default used by {@link javax.net.ssl.SSLContext#init(javax.net.ssl.KeyManager[], javax.net.ssl.TrustManager[], java.security.SecureRandom)
      * SSLContext#init(KeyManager[], TrustManager[], SecureRandom)}
      * when the TrustManager parameter is set to {@code null}
+     * @param keyStore the KeyStore to use, may be {@code null}
      * @return the default TrustManager
      * @throws GeneralSecurityException
      */
-    public static X509TrustManager getDefaultTrustManager() throws GeneralSecurityException {
+    public static X509TrustManager getDefaultTrustManager(KeyStore keyStore) throws GeneralSecurityException {
         String defaultAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
         TrustManagerFactory instance = TrustManagerFactory.getInstance(defaultAlgorithm);
-        instance.init((KeyStore)null);
+        instance.init(keyStore);
         return (X509TrustManager) instance.getTrustManagers()[0];
     }
 
