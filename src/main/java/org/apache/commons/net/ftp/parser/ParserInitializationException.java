@@ -24,12 +24,7 @@ package org.apache.commons.net.ftp.parser;
  */
 public class ParserInitializationException extends RuntimeException {
 
-    private static final long serialVersionUID = 1123380491796734328L;
-
-    /**
-     * Root exception that caused this to be thrown
-     */
-    private final Throwable rootCause;
+    private static final long serialVersionUID = 5563335279583210658L;
 
     /**
      * Constucts a ParserInitializationException with just a message
@@ -38,7 +33,6 @@ public class ParserInitializationException extends RuntimeException {
      */
     public ParserInitializationException(String message) {
         super(message);
-        this.rootCause = null;
     }
 
     /**
@@ -50,8 +44,7 @@ public class ParserInitializationException extends RuntimeException {
      * this to be thrown
      */
     public ParserInitializationException(String message, Throwable rootCause) {
-        super(message);
-        this.rootCause = rootCause;
+        super(message, rootCause);
     }
 
     /**
@@ -59,9 +52,11 @@ public class ParserInitializationException extends RuntimeException {
      * if no root cause was specified.
      *
      * @return the root cause of this exception being thrown
+     * @deprecated use {@link #getCause()} instead
      */
+    @Deprecated
     public Throwable getRootCause() {
-        return this.rootCause;
+        return super.getCause();
     }
 
 }
