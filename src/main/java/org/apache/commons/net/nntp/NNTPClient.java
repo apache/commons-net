@@ -19,7 +19,6 @@ package org.apache.commons.net.nntp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -241,77 +240,73 @@ public class NNTPClient extends NNTP
 
     private NewsgroupInfo[] __readNewsgroupListing() throws IOException
     {
-        int size;
-        String line;
-        Vector<NewsgroupInfo> list;
-        BufferedReader reader;
-        NewsgroupInfo tmp, info[];
 
-        reader = new BufferedReader(new DotTerminatedMessageReader(_reader_));
+        BufferedReader reader = new DotTerminatedMessageReader(_reader_);
         // Start of with a big vector because we may be reading a very large
         // amount of groups.
-        list = new Vector<NewsgroupInfo>(2048);
+        Vector<NewsgroupInfo> list = new Vector<NewsgroupInfo>(2048);
 
+        String line;
         while ((line = reader.readLine()) != null)
         {
-            tmp = __parseNewsgroupListEntry(line);
+            NewsgroupInfo tmp = __parseNewsgroupListEntry(line);
             if (tmp != null)
                 list.addElement(tmp);
             else
                 throw new MalformedServerReplyException(line);
         }
 
+        int size;
         if ((size = list.size()) < 1)
             return new NewsgroupInfo[0];
 
-        info = new NewsgroupInfo[size];
+        NewsgroupInfo[] info = new NewsgroupInfo[size];
         list.copyInto(info);
 
         return info;
     }
 
 
-    private Reader __retrieve(int command,
+    private BufferedReader __retrieve(int command,
                               String articleId, ArticlePointer pointer)
     throws IOException
     {
-        Reader reader;
-
         if (articleId != null)
         {
-            if (!NNTPReply.isPositiveCompletion(sendCommand(command, articleId)))
+            if (!NNTPReply.isPositiveCompletion(sendCommand(command, articleId))) {
                 return null;
+            }
         }
         else
         {
-            if (!NNTPReply.isPositiveCompletion(sendCommand(command)))
+            if (!NNTPReply.isPositiveCompletion(sendCommand(command))) {
                 return null;
+            }
         }
 
 
-        if (pointer != null)
+        if (pointer != null) {
             __parseArticlePointer(getReplyString(), pointer);
+        }
 
-        reader = new DotTerminatedMessageReader(_reader_);
-        return reader;
+        return new DotTerminatedMessageReader(_reader_);
     }
 
 
-    private Reader __retrieve(int command,
+    private BufferedReader __retrieve(int command,
                               int articleNumber, ArticlePointer pointer)
     throws IOException
     {
-        Reader reader;
-
         if (!NNTPReply.isPositiveCompletion(sendCommand(command,
-                                            Integer.toString(articleNumber))))
+                                            Integer.toString(articleNumber)))) {
             return null;
+        }
 
-        if (pointer != null)
+        if (pointer != null) {
             __parseArticlePointer(getReplyString(), pointer);
+        }
 
-        reader = new DotTerminatedMessageReader(_reader_);
-        return reader;
+        return new DotTerminatedMessageReader(_reader_);
     }
 
 
@@ -329,9 +324,9 @@ public class NNTPClient extends NNTP
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any
      * other methods) until you finish reading the message from the returned
-     * Reader instance.
+     * BufferedReader instance.
      * The NNTP protocol uses the same stream for issuing commands as it does
-     * for returning results.  Therefore the returned Reader actually reads
+     * for returning results.  Therefore the returned BufferedReader actually reads
      * directly from the NNTP connection.  After the end of message has been
      * reached, new commands can be executed and their replies read.  If
      * you do not follow these requirements, your program will not work
@@ -355,7 +350,7 @@ public class NNTPClient extends NNTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public Reader retrieveArticle(String articleId, ArticlePointer pointer)
+    public BufferedReader retrieveArticle(String articleId, ArticlePointer pointer)
     throws IOException
     {
         return __retrieve(NNTPCommand.ARTICLE, articleId, pointer);
@@ -363,13 +358,13 @@ public class NNTPClient extends NNTP
     }
 
     /*** Same as <code> retrieveArticle(articleId, null) </code> ***/
-    public Reader retrieveArticle(String articleId) throws IOException
+    public BufferedReader retrieveArticle(String articleId) throws IOException
     {
         return retrieveArticle(articleId, null);
     }
 
     /*** Same as <code> retrieveArticle(null) </code> ***/
-    public Reader retrieveArticle() throws IOException
+    public BufferedReader retrieveArticle() throws IOException
     {
         return retrieveArticle(null);
     }
@@ -388,9 +383,9 @@ public class NNTPClient extends NNTP
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any
      * other methods) until you finish reading the message from the returned
-     * Reader instance.
+     * BufferedReader instance.
      * The NNTP protocol uses the same stream for issuing commands as it does
-     * for returning results.  Therefore the returned Reader actually reads
+     * for returning results.  Therefore the returned BufferedReader actually reads
      * directly from the NNTP connection.  After the end of message has been
      * reached, new commands can be executed and their replies read.  If
      * you do not follow these requirements, your program will not work
@@ -413,14 +408,14 @@ public class NNTPClient extends NNTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public Reader retrieveArticle(int articleNumber, ArticlePointer pointer)
+    public BufferedReader retrieveArticle(int articleNumber, ArticlePointer pointer)
     throws IOException
     {
         return __retrieve(NNTPCommand.ARTICLE, articleNumber, pointer);
     }
 
     /*** Same as <code> retrieveArticle(articleNumber, null) </code> ***/
-    public Reader retrieveArticle(int articleNumber) throws IOException
+    public BufferedReader retrieveArticle(int articleNumber) throws IOException
     {
         return retrieveArticle(articleNumber, null);
     }
@@ -441,9 +436,9 @@ public class NNTPClient extends NNTP
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any
      * other methods) until you finish reading the message from the returned
-     * Reader instance.
+     * BufferedReader instance.
      * The NNTP protocol uses the same stream for issuing commands as it does
-     * for returning results.  Therefore the returned Reader actually reads
+     * for returning results.  Therefore the returned BufferedReader actually reads
      * directly from the NNTP connection.  After the end of message has been
      * reached, new commands can be executed and their replies read.  If
      * you do not follow these requirements, your program will not work
@@ -467,7 +462,7 @@ public class NNTPClient extends NNTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public Reader retrieveArticleHeader(String articleId, ArticlePointer pointer)
+    public BufferedReader retrieveArticleHeader(String articleId, ArticlePointer pointer)
     throws IOException
     {
         return __retrieve(NNTPCommand.HEAD, articleId, pointer);
@@ -475,13 +470,13 @@ public class NNTPClient extends NNTP
     }
 
     /*** Same as <code> retrieveArticleHeader(articleId, null) </code> ***/
-    public Reader retrieveArticleHeader(String articleId) throws IOException
+    public BufferedReader retrieveArticleHeader(String articleId) throws IOException
     {
         return retrieveArticleHeader(articleId, null);
     }
 
     /*** Same as <code> retrieveArticleHeader(null) </code> ***/
-    public Reader retrieveArticleHeader() throws IOException
+    public BufferedReader retrieveArticleHeader() throws IOException
     {
         return retrieveArticleHeader(null);
     }
@@ -500,9 +495,9 @@ public class NNTPClient extends NNTP
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any
      * other methods) until you finish reading the message from the returned
-     * Reader instance.
+     * BufferedReader instance.
      * The NNTP protocol uses the same stream for issuing commands as it does
-     * for returning results.  Therefore the returned Reader actually reads
+     * for returning results.  Therefore the returned BufferedReader actually reads
      * directly from the NNTP connection.  After the end of message has been
      * reached, new commands can be executed and their replies read.  If
      * you do not follow these requirements, your program will not work
@@ -525,7 +520,7 @@ public class NNTPClient extends NNTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public Reader retrieveArticleHeader(int articleNumber,
+    public BufferedReader retrieveArticleHeader(int articleNumber,
                                         ArticlePointer pointer)
     throws IOException
     {
@@ -534,7 +529,7 @@ public class NNTPClient extends NNTP
 
 
     /*** Same as <code> retrieveArticleHeader(articleNumber, null) </code> ***/
-    public Reader retrieveArticleHeader(int articleNumber) throws IOException
+    public BufferedReader retrieveArticleHeader(int articleNumber) throws IOException
     {
         return retrieveArticleHeader(articleNumber, null);
     }
@@ -555,9 +550,9 @@ public class NNTPClient extends NNTP
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any
      * other methods) until you finish reading the message from the returned
-     * Reader instance.
+     * BufferedReader instance.
      * The NNTP protocol uses the same stream for issuing commands as it does
-     * for returning results.  Therefore the returned Reader actually reads
+     * for returning results.  Therefore the returned BufferedReader actually reads
      * directly from the NNTP connection.  After the end of message has been
      * reached, new commands can be executed and their replies read.  If
      * you do not follow these requirements, your program will not work
@@ -581,7 +576,7 @@ public class NNTPClient extends NNTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public Reader retrieveArticleBody(String articleId, ArticlePointer pointer)
+    public BufferedReader retrieveArticleBody(String articleId, ArticlePointer pointer)
     throws IOException
     {
         return __retrieve(NNTPCommand.BODY, articleId, pointer);
@@ -589,13 +584,13 @@ public class NNTPClient extends NNTP
     }
 
     /*** Same as <code> retrieveArticleBody(articleId, null) </code> ***/
-    public Reader retrieveArticleBody(String articleId) throws IOException
+    public BufferedReader retrieveArticleBody(String articleId) throws IOException
     {
         return retrieveArticleBody(articleId, null);
     }
 
     /*** Same as <code> retrieveArticleBody(null) </code> ***/
-    public Reader retrieveArticleBody() throws IOException
+    public BufferedReader retrieveArticleBody() throws IOException
     {
         return retrieveArticleBody(null);
     }
@@ -614,9 +609,9 @@ public class NNTPClient extends NNTP
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any
      * other methods) until you finish reading the message from the returned
-     * Reader instance.
+     * BufferedReader instance.
      * The NNTP protocol uses the same stream for issuing commands as it does
-     * for returning results.  Therefore the returned Reader actually reads
+     * for returning results.  Therefore the returned BufferedReader actually reads
      * directly from the NNTP connection.  After the end of message has been
      * reached, new commands can be executed and their replies read.  If
      * you do not follow these requirements, your program will not work
@@ -639,7 +634,7 @@ public class NNTPClient extends NNTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public Reader retrieveArticleBody(int articleNumber,
+    public BufferedReader retrieveArticleBody(int articleNumber,
                                       ArticlePointer pointer)
     throws IOException
     {
@@ -648,7 +643,7 @@ public class NNTPClient extends NNTP
 
 
     /*** Same as <code> retrieveArticleBody(articleNumber, null) </code> ***/
-    public Reader retrieveArticleBody(int articleNumber) throws IOException
+    public BufferedReader retrieveArticleBody(int articleNumber) throws IOException
     {
         return retrieveArticleBody(articleNumber, null);
     }
@@ -704,14 +699,12 @@ public class NNTPClient extends NNTP
      ***/
     public String listHelp() throws IOException
     {
-        StringWriter help;
-        Reader reader;
-
-        if (!NNTPReply.isInformational(help()))
+        if (!NNTPReply.isInformational(help())) {
             return null;
+        }
 
-        help = new StringWriter();
-        reader = new DotTerminatedMessageReader(_reader_);
+        StringWriter help = new StringWriter();
+        BufferedReader reader = new DotTerminatedMessageReader(_reader_);
         Util.copyReader(reader, help);
         reader.close();
         help.close();
@@ -730,7 +723,7 @@ public class NNTPClient extends NNTP
             return null;
         }
 
-        BufferedReader reader = new BufferedReader(new DotTerminatedMessageReader(_reader_));
+        BufferedReader reader = new DotTerminatedMessageReader(_reader_);
         String line;
         ArrayList<String> list = new ArrayList<String>();
         while((line=reader.readLine()) != null) {
@@ -1174,29 +1167,26 @@ public class NNTPClient extends NNTP
     public String[] listNewNews(NewGroupsOrNewsQuery query)
     throws IOException
     {
-        int size;
-        String line;
-        Vector<String> list;
-        String[] result;
-        BufferedReader reader;
-
-        if (!NNTPReply.isPositiveCompletion(newnews(
-                                                query.getNewsgroups(), query.getDate(), query.getTime(),
-                                                query.isGMT(), query.getDistributions())))
+        if (!NNTPReply.isPositiveCompletion(
+                newnews(query.getNewsgroups(), query.getDate(), query.getTime(),
+                        query.isGMT(), query.getDistributions()))) {
             return null;
+        }
 
-        list = new Vector<String>();
-        reader = new BufferedReader(new DotTerminatedMessageReader(_reader_));
+        Vector<String> list = new Vector<String>();
+        BufferedReader reader = new DotTerminatedMessageReader(_reader_);
 
-        while ((line = reader.readLine()) != null)
+        String line;
+        while ((line = reader.readLine()) != null) {
             list.addElement(line);
+        }
 
-        size = list.size();
-
-        if (size < 1)
+        int size = list.size();
+        if (size < 1) {
             return new String[0];
+        }
 
-        result = new String[size];
+        String[] result = new String[size];
         list.copyInto(result);
 
         return result;
@@ -1381,11 +1371,12 @@ public class NNTPClient extends NNTP
      *         otherwise
      * @exception IOException
      */
-    private Reader __retrieveArticleInfo(String articleRange)
+    private BufferedReader __retrieveArticleInfo(String articleRange)
         throws IOException
     {
-        if (!NNTPReply.isPositiveCompletion(xover(articleRange)))
+        if (!NNTPReply.isPositiveCompletion(xover(articleRange))) {
             return null;
+        }
 
         return new DotTerminatedMessageReader(_reader_);
     }
@@ -1397,7 +1388,7 @@ public class NNTPClient extends NNTP
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException
      */
-    public Reader retrieveArticleInfo(int articleNumber) throws IOException
+    public BufferedReader retrieveArticleInfo(int articleNumber) throws IOException
     {
         return __retrieveArticleInfo(Integer.toString(articleNumber));
     }
@@ -1411,7 +1402,7 @@ public class NNTPClient extends NNTP
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException
      */
-    public Reader retrieveArticleInfo(long lowArticleNumber,
+    public BufferedReader retrieveArticleInfo(long lowArticleNumber,
             long highArticleNumber)
         throws IOException
     {
@@ -1433,7 +1424,7 @@ public class NNTPClient extends NNTP
     public Iterable<Article> iterateArticleInfo(long lowArticleNumber, long highArticleNumber)
         throws IOException
     {
-        Reader info = retrieveArticleInfo(lowArticleNumber,highArticleNumber);
+        BufferedReader info = retrieveArticleInfo(lowArticleNumber,highArticleNumber);
         if (info == null) {
             throw new IOException("XOVER command failed: "+getReplyString());
         }
@@ -1453,11 +1444,12 @@ public class NNTPClient extends NNTP
      *         otherwise
      * @exception IOException
      */
-    private Reader __retrieveHeader(String header, String articleRange)
+    private BufferedReader __retrieveHeader(String header, String articleRange)
         throws IOException
     {
-        if (!NNTPReply.isPositiveCompletion(xhdr(header, articleRange)))
+        if (!NNTPReply.isPositiveCompletion(xhdr(header, articleRange))) {
             return null;
+        }
 
         return new DotTerminatedMessageReader(_reader_);
     }
@@ -1470,7 +1462,7 @@ public class NNTPClient extends NNTP
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException
      */
-    public Reader retrieveHeader(String header, long articleNumber)
+    public BufferedReader retrieveHeader(String header, long articleNumber)
         throws IOException
     {
         return __retrieveHeader(header, Long.toString(articleNumber));
@@ -1486,7 +1478,7 @@ public class NNTPClient extends NNTP
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException
      */
-    public Reader retrieveHeader(String header, int lowArticleNumber,
+    public BufferedReader retrieveHeader(String header, int lowArticleNumber,
                                  int highArticleNumber)
         throws IOException
     {

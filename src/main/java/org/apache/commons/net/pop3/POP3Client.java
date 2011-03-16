@@ -17,8 +17,8 @@
 
 package org.apache.commons.net.pop3;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Enumeration;
@@ -479,9 +479,9 @@ public class POP3Client extends POP3
      * <p>
      * You must not issue any commands to the POP3 server (i.e., call any
      * other methods) until you finish reading the message from the
-     * returned Reader instance.
+     * returned BufferedReader instance.
      * The POP3 protocol uses the same stream for issuing commands as it does
-     * for returning results.  Therefore the returned Reader actually reads
+     * for returning results.  Therefore the returned BufferedReader actually reads
      * directly from the POP3 connection.  After the end of message has been
      * reached, new commands can be executed and their replies read.  If
      * you do not follow these requirements, your program will not work
@@ -495,13 +495,14 @@ public class POP3Client extends POP3
      * @exception IOException If a network I/O error occurs in the process of
      *        sending the retrieve message command.
      ***/
-    public Reader retrieveMessage(int messageId) throws IOException
+    public BufferedReader retrieveMessage(int messageId) throws IOException
     {
-        if (getState() != TRANSACTION_STATE)
+        if (getState() != TRANSACTION_STATE) {
             return null;
-        if (sendCommand(POP3Command.RETR, Integer.toString(messageId))
-                != POP3Reply.OK)
+        }
+        if (sendCommand(POP3Command.RETR, Integer.toString(messageId)) != POP3Reply.OK) {
             return null;
+        }
 
         return new DotTerminatedMessageReader(_reader);
     }
@@ -520,9 +521,9 @@ public class POP3Client extends POP3
      * <p>
      * You must not issue any commands to the POP3 server (i.e., call any
      * other methods) until you finish reading the message from the returned
-     * Reader instance.
+     * BufferedReader instance.
      * The POP3 protocol uses the same stream for issuing commands as it does
-     * for returning results.  Therefore the returned Reader actually reads
+     * for returning results.  Therefore the returned BufferedReader actually reads
      * directly from the POP3 connection.  After the end of message has been
      * reached, new commands can be executed and their replies read.  If
      * you do not follow these requirements, your program will not work
@@ -538,14 +539,16 @@ public class POP3Client extends POP3
      * @exception IOException If a network I/O error occurs in the process of
      *       sending the top command.
      ***/
-    public Reader retrieveMessageTop(int messageId, int numLines)
+    public BufferedReader retrieveMessageTop(int messageId, int numLines)
     throws IOException
     {
-        if (numLines < 0 || getState() != TRANSACTION_STATE)
+        if (numLines < 0 || getState() != TRANSACTION_STATE) {
             return null;
+        }
         if (sendCommand(POP3Command.TOP, Integer.toString(messageId) + " " +
-                        Integer.toString(numLines)) != POP3Reply.OK)
+                        Integer.toString(numLines)) != POP3Reply.OK) {
             return null;
+        }
 
         return new DotTerminatedMessageReader(_reader);
     }
