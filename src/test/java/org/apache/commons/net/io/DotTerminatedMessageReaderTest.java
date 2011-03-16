@@ -91,6 +91,54 @@ public class DotTerminatedMessageReaderTest extends TestCase {
         assertEquals("Hello World!" + SEP+".text"+SEP,str.toString());
     }
 
+    public void testEmbeddedDot1() throws IOException {
+        final String test = "Hello . World!\r\n.\r\n";
+        reader = new DotTerminatedMessageReader(new StringReader(test));
+
+        int read = 0;
+        while ((read = reader.read(buf)) != -1) {
+            str.append(buf, 0, read);
+        }
+
+        assertEquals("Hello . World!" + SEP,str.toString());
+    }
+
+    public void testEmbeddedDot2() throws IOException {
+        final String test = "Hello .. World!\r\n.\r\n";
+        reader = new DotTerminatedMessageReader(new StringReader(test));
+
+        int read = 0;
+        while ((read = reader.read(buf)) != -1) {
+            str.append(buf, 0, read);
+        }
+
+        assertEquals("Hello .. World!" + SEP,str.toString());
+    }
+
+    public void testEmbeddedDot3() throws IOException {
+        final String test = "Hello World.\r\nmore\r\n.\r\n";
+        reader = new DotTerminatedMessageReader(new StringReader(test));
+
+        int read = 0;
+        while ((read = reader.read(buf)) != -1) {
+            str.append(buf, 0, read);
+        }
+
+        assertEquals("Hello World." + SEP+"more"+SEP,str.toString());
+    }
+
+    public void testEmbeddedDot4() throws IOException {
+        final String test = "Hello World\r.\nmore\r\n.\r\n";
+        reader = new DotTerminatedMessageReader(new StringReader(test));
+
+        int read = 0;
+        while ((read = reader.read(buf)) != -1) {
+            str.append(buf, 0, read);
+        }
+
+        assertEquals("Hello World\r.\nmore" + SEP,str.toString());
+    }
+
     // This test agrees with the Javadoc.
     // However the sequence should not happen for well-behaved NNTP and POP3 servers
     public void testSingleDotWithTrailingText() throws IOException {
