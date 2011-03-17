@@ -138,6 +138,7 @@ public class ProtocolCommandEvent extends EventObject
 
     /***
      * Returns the entire message sent to or received from the server.
+     * Includes the line terminator.
      * <p>
      * @return The entire message sent to or received from the server.
      ***/
