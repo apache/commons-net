@@ -33,15 +33,45 @@ import org.apache.commons.net.ProtocolCommandListener;
 public class PrintCommandListener implements ProtocolCommandListener
 {
     private final PrintWriter __writer;
+    private final boolean __nologin;
 
+    /**
+     * Create the default instance which prints everything.
+     * 
+     * @param writer where to write the commands and responses
+     */
     public PrintCommandListener(PrintWriter writer)
     {
+        this(writer, false);
+    }
+
+    /**
+     * Create an instance which optionally suppresses login command text.
+     * 
+     * @param writer where to write the commands and responses
+     * @param suppressLogin if {@code true}, only print command name for login
+     * 
+     * @since 3.0
+     */
+    public PrintCommandListener(PrintWriter writer, boolean suppressLogin)
+    {
         __writer = writer;
+        __nologin = suppressLogin;
     }
 
     public void protocolCommandSent(ProtocolCommandEvent event)
     {
-        __writer.print(event.getMessage());
+        if (__nologin) {
+            String cmd = event.getCommand();
+            if ("PASS".equalsIgnoreCase(cmd) || "USER".equalsIgnoreCase(cmd)) {
+                __writer.print(cmd);
+                __writer.println(" *******");
+            } else {
+                __writer.print(event.getMessage());
+            }
+        } else {
+            __writer.print(event.getMessage());
+        }
         __writer.flush();
     }
 
