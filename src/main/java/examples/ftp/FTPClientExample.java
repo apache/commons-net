@@ -49,10 +49,11 @@ public final class FTPClientExample
 {
 
     public static final String USAGE =
-        "Usage: ftp [-s] [-b] [-l|-f] [-a] [-e] [-k secs [-w msec]] [-#] <hostname> <username> <password> <remote file> <local file> [TLS|etc.]\n" +
+        "Usage: ftp [-s] [-b] [-l|-n|-f] [-a] [-e] [-k secs [-w msec]] [-#] <hostname> <username> <password> <remote file> <local file> [TLS|etc.]\n" +
         "\nDefault behavior is to download a file and use ASCII transfer mode.\n" +
         "\t-s store file on server (upload)\n" +
-        "\t-l list files (local file is ignored)\n" +
+        "\t-l list files using LIST (local file is ignored)\n" +
+        "\t-n list file names using NLST (local file is ignored)\n" +
         "\t-f issue FEAT command (local file is ignored)\n" +
         "\t-# add hash display during transfers\n" +
         "\t-k secs use keep-alive timer (setControlKeepAliveTimeout)\n" +
@@ -64,7 +65,7 @@ public final class FTPClientExample
     public static final void main(String[] args)
     {
         int base = 0;
-        boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false;
+        boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false, listNames = false;
         boolean localActive = false;
         boolean useEpsvWithIPv4 = false;
         boolean feat = false;
@@ -91,6 +92,9 @@ public final class FTPClientExample
             }
             else if (args[base].equals("-l")) {
                 listFiles = true;
+            }
+            else if (args[base].equals("-n")) {
+                listNames = true;
             }
             else if (args[base].equals("-#")) {
                 printHash = true;
@@ -145,6 +149,9 @@ public final class FTPClientExample
             ftp.setControlKeepAliveReplyTimeout(controlKeepAliveReplyTimeout);
         }
 
+        // suppress login details
+        ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
+
         try
         {
             int reply;
@@ -196,8 +203,6 @@ __main:
 
             System.out.println("Remote system is " + ftp.getSystemType());
 
-            // After authentication
-            ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
             if (binaryTransfer)
                 ftp.setFileType(FTP.BINARY_FILE_TYPE);
 
@@ -225,6 +230,13 @@ __main:
             {
                 for (FTPFile f : ftp.listFiles(remote)) {
                     System.out.println(f);
+                }
+
+            }
+            else if (listNames)
+            {
+                for (String s : ftp.listNames(remote)) {
+                    System.out.println(s);
                 }
 
             }
