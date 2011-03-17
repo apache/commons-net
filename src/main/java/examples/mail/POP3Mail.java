@@ -20,7 +20,6 @@ package examples.mail;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 
 import org.apache.commons.net.PrintCommandListener;
