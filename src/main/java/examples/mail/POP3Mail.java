@@ -19,65 +19,65 @@ package examples.mail;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
+import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 
 import org.apache.commons.net.pop3.POP3Client;
 import org.apache.commons.net.pop3.POP3MessageInfo;
+import org.apache.commons.net.pop3.POP3SClient;
 
-/***
- * This is an example program demonstrating how to use the POP3Client class.
- * This program connects to a POP3 server and retrieves the message
+/**
+ * This is an example program demonstrating how to use the POP3[S]Client class.
+ * This program connects to a POP3[S] server and retrieves the message
  * headers of all the messages, printing the From: and Subject: header
  * entries for each message.
  * <p>
- * Usage: messages <pop3 server hostname> <username> <password>
+ * Usage: POP3Mail <pop3[s] server hostname> <username> <password> [secure protocol, e.g. TLS]
  * <p>
- ***/
+ */
 public final class POP3Mail
 {
 
-    public static final void printMessageInfo(BufferedReader reader, int id)
-    throws IOException
-    {
-        String line, lower, from, subject;
-
-        from = "";
-        subject = "";
-
+    public static final void printMessageInfo(BufferedReader reader, int id) throws IOException  {
+        String from = "";
+        String subject = "";
+        String line;
         while ((line = reader.readLine()) != null)
         {
-            lower = line.toLowerCase(Locale.ENGLISH);
-            if (lower.startsWith("from: "))
+            String lower = line.toLowerCase(Locale.ENGLISH);
+            if (lower.startsWith("from: ")) {
                 from = line.substring(6).trim();
-            else if (lower.startsWith("subject: "))
+            }  else if (lower.startsWith("subject: ")) {
                 subject = line.substring(9).trim();
+            }
         }
 
-        System.out.println(Integer.toString(id) + " From: " + from +
-                           "  Subject: " + subject);
+        System.out.println(Integer.toString(id) + " From: " + from + "  Subject: " + subject);
     }
 
-    public static final void main(String[] args)
+    public static final void main(String[] args) throws NoSuchAlgorithmException
     {
-        int message;
-        String server, username, password;
-        POP3Client pop3;
-        Reader reader;
-        POP3MessageInfo[] messages;
-
         if (args.length < 3)
         {
             System.err.println(
-                "Usage: messages <pop3 server hostname> <username> <password>");
+                "Usage: POP3Mail <pop3 server hostname> <username> <password> [TLS]");
             System.exit(1);
         }
+       
+        String server = args[0];
+        String username = args[1];
+        String password = args[2];
 
-        server = args[0];
-        username = args[1];
-        password = args[2];
-
-        pop3 = new POP3Client();
+        String proto = args.length > 3 ? args[3] : null;
+        
+        POP3Client pop3;
+        
+        if (proto != null) {
+            System.out.println("Using secure protocol: "+proto);
+            pop3 = new POP3SClient(proto);
+        } else {
+            pop3 = new POP3Client();
+        }
         // We want to timeout if a response takes longer than 60 seconds
         pop3.setDefaultTimeout(60000);
 
@@ -101,34 +101,31 @@ public final class POP3Mail
                 System.exit(1);
             }
 
-            messages = pop3.listMessages();
+            POP3MessageInfo[] messages = pop3.listMessages();
 
             if (messages == null)
             {
                 System.err.println("Could not retrieve message list.");
                 pop3.disconnect();
-                System.exit(1);
+                return;
             }
             else if (messages.length == 0)
             {
                 System.out.println("No messages");
                 pop3.logout();
                 pop3.disconnect();
-                System.exit(1);
+                return;
             }
 
-            for (message = 0; message < messages.length; message++) // messages cannot be null here
-            {
-                reader = pop3.retrieveMessageTop(messages[message].number, 0);
+            for (POP3MessageInfo msginfo : messages) {
+                BufferedReader reader = pop3.retrieveMessageTop(msginfo.number, 0);
 
-                if (reader == null)
-                {
+                if (reader == null) {
                     System.err.println("Could not retrieve message header.");
                     pop3.disconnect();
                     System.exit(1);
                 }
-
-                printMessageInfo(new BufferedReader(reader), messages[message].number);
+                printMessageInfo(reader, msginfo.number);
             }
 
             pop3.logout();
@@ -137,7 +134,7 @@ public final class POP3Mail
         catch (IOException e)
         {
             e.printStackTrace();
-            System.exit(1);
+            return;
         }
     }
 }
