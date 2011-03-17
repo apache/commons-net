@@ -45,6 +45,11 @@ import javax.net.ssl.TrustManager;
  */
 public class POP3SClient extends POP3Client
 {
+//    pop3s           995/tcp    pop3 protocol over TLS/SSL (was spop3)
+//    pop3s           995/udp    pop3 protocol over TLS/SSL (was spop3)
+
+    private static final int DEFAULT_POP3S_PORT = 995;
+
     /** The TLS start command. */
     private static final String tlsCommand = "STLS";
     /** Default secure socket protocol name, like TLS */
@@ -72,10 +77,9 @@ public class POP3SClient extends POP3Client
     /**
      * Constructor for POP3SClient.
      * Sets security mode to explicit (isImplicit = false).
-     * @throws NoSuchAlgorithmException A requested cryptographic algorithm
      * is not available in the environment.
      */
-    public POP3SClient() throws NoSuchAlgorithmException
+    public POP3SClient()
     {
         this(DEFAULT_PROTOCOL, false);
     }
@@ -83,10 +87,9 @@ public class POP3SClient extends POP3Client
     /**
      * Constructor for POP3SClient.
      * @param implicit The security mode (Implicit/Explicit).
-     * @throws NoSuchAlgorithmException A requested cryptographic algorithm
      * is not available in the environment.
      */
-    public POP3SClient(boolean implicit) throws NoSuchAlgorithmException
+    public POP3SClient(boolean implicit)
     {
         this(DEFAULT_PROTOCOL, implicit);
     }
@@ -94,10 +97,9 @@ public class POP3SClient extends POP3Client
     /**
      * Constructor for POP3SClient.
      * @param proto the protocol.
-     * @throws NoSuchAlgorithmException A requested cryptographic algorithm
      * is not available in the environment.
      */
-    public POP3SClient(String proto) throws NoSuchAlgorithmException
+    public POP3SClient(String proto)
     {
         this(proto, false);
     }
@@ -106,14 +108,26 @@ public class POP3SClient extends POP3Client
      * Constructor for POP3SClient.
      * @param proto the protocol.
      * @param implicit The security mode(Implicit/Explicit).
-     * @throws NoSuchAlgorithmException A requested cryptographic algorithm
      * is not available in the environment.
      */
     public POP3SClient(String proto, boolean implicit)
-            throws NoSuchAlgorithmException
     {
+        this(proto, implicit, null);
+    }
+
+    /**
+     * Constructor for POP3SClient.
+     * @param proto the protocol.
+     * @param implicit The security mode(Implicit/Explicit).
+     * is not available in the environment.
+     */
+    public POP3SClient(String proto, boolean implicit, SSLContext ctx)
+    {
+        super();
+        setDefaultPort(DEFAULT_POP3S_PORT);
         protocol = proto;
         isImplicit = implicit;
+        context = ctx;
     }
 
     /**
@@ -123,9 +137,7 @@ public class POP3SClient extends POP3Client
      */
     public POP3SClient(boolean implicit, SSLContext ctx)
     {
-        isImplicit = implicit;
-        context = ctx;
-        protocol = DEFAULT_PROTOCOL;
+        this(DEFAULT_PROTOCOL, implicit, ctx);
     }
 
     /**
