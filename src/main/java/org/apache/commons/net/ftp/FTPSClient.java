@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
 import javax.net.ssl.KeyManager;
@@ -32,6 +31,8 @@ import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
+
+import org.apache.commons.net.util.SSLContextUtils;
 
 /**
  * FTP over SSL processing. If desired, the JVM property -Djavax.net.debug=all can be used to
@@ -205,23 +206,7 @@ public class FTPSClient extends FTPClient {
      */
     private void initSslContext() throws IOException {
         if(context == null) {
-            try  {
-                context = SSLContext.getInstance(protocol);
-                KeyManager keyMgr = getKeyManager();
-                TrustManager trustMgr = getTrustManager();
-                context.init(
-                        keyMgr == null ? null : new KeyManager[] { keyMgr } ,
-                        trustMgr == null ? null : new TrustManager[] { trustMgr } ,
-                        null); // use default random implementation
-            } catch (KeyManagementException e) {
-                IOException ioe = new IOException("Could not initialize SSL context");
-                ioe.initCause(e);
-                throw ioe;
-            } catch (NoSuchAlgorithmException e) {
-                IOException ioe = new IOException("Could not initialize SSL context");
-                ioe.initCause(e);
-                throw ioe;
-            }
+            context = SSLContextUtils.createSSLContext(protocol, getKeyManager(), getTrustManager());
         }
     }
 
