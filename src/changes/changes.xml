@@ -60,7 +60,10 @@ The <action> type attribute can be add,update,fix,remove.
             <action issue="NET-377" dev="sebb" type="update">
             NLST does not take notice of HiddenFiles setting.
             </action>
-            <action issue="NET-375" dev="sebb" type="fix">
+            <action issue="NET-373" dev="sebb" type="update">
+            NNTP Listgroups not working - broken server implementation.
+            </action>
+            <action issue="NET-375" dev="sebb" type="update">
             DotTerminatedMessageReader should extend BufferedReader, rather than Reader.
             </action>
             <action issue="NET-374" dev="sebb" type="update">
