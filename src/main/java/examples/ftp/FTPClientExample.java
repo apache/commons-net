@@ -42,19 +42,20 @@ import org.apache.commons.net.io.CopyStreamListener;
  * Just so you can see what's happening, all reply strings are printed.
  * If the -b flag is used, a binary transfer is assumed (default is ASCII).
  * <p>
- * Usage: ftp [-s] [-b] [-l] [-#] [-k nnn] <hostname> <username> <password> <remote file> <local file> [<SSLprotocol>]
+ * Usage: ftp [-s] [-b] [-l] [-#] [-k nnn] <hostname> <username> <password> [<remote file> <local file> [<SSLprotocol>] ]
  * <p>
  ***/
 public final class FTPClientExample
 {
 
     public static final String USAGE =
-        "Usage: ftp [-s] [-b] [-l|-n|-f] [-a] [-e] [-k secs [-w msec]] [-#] <hostname> <username> <password> <remote file> <local file> [TLS|etc.]\n" +
+        "Usage: ftp [-s] [-b] [-l|-n|-f] [-a] [-e] [-k secs [-w msec]] [-#] <hostname> <username> <password> [<remote file> <local file> [TLS|etc.] ]\n" +
         "\nDefault behavior is to download a file and use ASCII transfer mode.\n" +
         "\t-s store file on server (upload)\n" +
-        "\t-l list files using LIST (local file is ignored)\n" +
-        "\t-n list file names using NLST (local file is ignored)\n" +
-        "\t-f issue FEAT command (local file is ignored)\n" +
+        "\t-h list hidden files (applies to -l and -n only)\n" +
+        "\t-l list files using LIST (remote is used as the pathname if provided)\n" +
+        "\t-n list file names using NLST (remote is used as the pathname if provided)\n" +
+        "\t-f issue FEAT command (remote and local files are ignored)\n" +
         "\t-# add hash display during transfers\n" +
         "\t-k secs use keep-alive timer (setControlKeepAliveTimeout)\n" +
         "\t-w msec wait time for keep-alive reply (setControlKeepAliveReplyTimeout)\n" +
@@ -65,13 +66,14 @@ public final class FTPClientExample
     public static final void main(String[] args)
     {
         int base = 0;
-        boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false, listNames = false;
+        boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false, listNames = false, hidden = false;
         boolean localActive = false;
         boolean useEpsvWithIPv4 = false;
         boolean feat = false;
         boolean printHash = false;
         long keepAliveTimeout = -1;
         int controlKeepAliveReplyTimeout = -1;
+        int minParams = 5; // listings require 3 params
 
         for (base = 0; base < args.length; base++)
         {
@@ -89,12 +91,18 @@ public final class FTPClientExample
             }
             else if (args[base].equals("-f")) {
                 feat = true;
+                minParams = 3;
             }
             else if (args[base].equals("-l")) {
                 listFiles = true;
+                minParams = 3;
+            }
+            else if (args[base].equals("-h")) {
+                hidden = true;
             }
             else if (args[base].equals("-n")) {
                 listNames = true;
+                minParams = 3;
             }
             else if (args[base].equals("-#")) {
                 printHash = true;
@@ -110,7 +118,8 @@ public final class FTPClientExample
             }
         }
 
-        if ((args.length - base) < 5) // server, user, pass, remote, local [protocol]
+        int remain = args.length - base;
+        if (remain < minParams) // server, user, pass, remote, local [protocol]
         {
             System.err.println(USAGE);
             System.exit(1);
@@ -125,8 +134,14 @@ public final class FTPClientExample
         }
         String username = args[base++];
         String password = args[base++];
-        String remote = args[base++];
-        String local = args[base++];
+        String remote = null;
+        if (args.length - base > 0) {
+            remote = args[base++];
+        }
+        String local = null;
+        if (args.length - base > 0) {
+            local = args[base++];
+        }
         String protocol = null;
         if (args.length - base > 0) {
             protocol = args[base++];
@@ -148,6 +163,7 @@ public final class FTPClientExample
         if (controlKeepAliveReplyTimeout >= 0) {
             ftp.setControlKeepAliveReplyTimeout(controlKeepAliveReplyTimeout);
         }
+        ftp.setListHiddenFiles(hidden);
 
         // suppress login details
         ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
