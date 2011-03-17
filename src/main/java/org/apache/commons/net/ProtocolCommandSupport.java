@@ -42,8 +42,8 @@ public class ProtocolCommandSupport implements Serializable
     private final ListenerList __listeners;
 
     /***
-     * Creates a ProtocolCommandSupport instant using the indicated source
-     * as the source of fired ProtocolCommandEvents.
+     * Creates a ProtocolCommandSupport instance using the indicated source
+     * as the source of ProtocolCommandEvents.
      * <p>
      * @param source  The source to use for all generated ProtocolCommandEvents.
      ***/
