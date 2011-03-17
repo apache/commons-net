@@ -31,6 +31,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPConnectionClosedException;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
+import org.apache.commons.net.ftp.FTPSClient;
 import org.apache.commons.net.io.CopyStreamEvent;
 import org.apache.commons.net.io.CopyStreamListener;
 
@@ -41,14 +42,14 @@ import org.apache.commons.net.io.CopyStreamListener;
  * Just so you can see what's happening, all reply strings are printed.
  * If the -b flag is used, a binary transfer is assumed (default is ASCII).
  * <p>
- * Usage: ftp [-s] [-b] [-l] [-#] [-k nnn] <hostname> <username> <password> <remote file> <local file>
+ * Usage: ftp [-s] [-b] [-l] [-#] [-k nnn] <hostname> <username> <password> <remote file> <local file> [<SSLprotocol>]
  * <p>
  ***/
 public final class FTPClientExample
 {
 
     public static final String USAGE =
-        "Usage: ftp [-s] [-b] [-l|-f] [-a] [-e] [-k secs [-w msec]] [-#] <hostname> <username> <password> <remote file> <local file>\n" +
+        "Usage: ftp [-s] [-b] [-l|-f] [-a] [-e] [-k secs [-w msec]] [-#] <hostname> <username> <password> <remote file> <local file> [TLS|etc.]\n" +
         "\nDefault behavior is to download a file and use ASCII transfer mode.\n" +
         "\t-s store file on server (upload)\n" +
         "\t-l list files (local file is ignored)\n" +
@@ -67,8 +68,9 @@ public final class FTPClientExample
         boolean localActive = false;
         boolean useEpsvWithIPv4 = false;
         boolean feat = false;
-        String server, username, password, remote, local;
-        final FTPClient ftp = new FTPClient();
+        boolean printHash = false;
+        long keepAliveTimeout = -1;
+        int controlKeepAliveReplyTimeout = -1;
 
         for (base = 0; base < args.length; base++)
         {
@@ -91,45 +93,69 @@ public final class FTPClientExample
                 listFiles = true;
             }
             else if (args[base].equals("-#")) {
-                ftp.setCopyStreamListener(createListener());
+                printHash = true;
             }
             else if (args[base].equals("-k")) {
-                ftp.setControlKeepAliveTimeout(Long.parseLong(args[++base]));
+                keepAliveTimeout = Long.parseLong(args[++base]);
             }
             else if (args[base].equals("-w")) {
-                ftp.setControlKeepAliveReplyTimeout(Integer.parseInt(args[++base]));
+                controlKeepAliveReplyTimeout = Integer.parseInt(args[++base]);
             }
             else {
                 break;
             }
         }
 
-        if ((args.length - base) != 5) // server, user, pass, remote, local
+        if ((args.length - base) < 5) // server, user, pass, remote, local [protocol]
         {
             System.err.println(USAGE);
             System.exit(1);
         }
 
-        server = args[base++];
-        int port = 21;
+        String server = args[base++];
+        int port = 0;
         String parts[] = server.split(":");
         if (parts.length == 2){
             server=parts[0];
             port=Integer.parseInt(parts[1]);
         }
-        username = args[base++];
-        password = args[base++];
-        remote = args[base++];
-        local = args[base];
+        String username = args[base++];
+        String password = args[base++];
+        String remote = args[base++];
+        String local = args[base++];
+        String protocol = null;
+        if (args.length - base > 0) {
+            protocol = args[base++];
+        }
 
+        final FTPClient ftp;
+        if (protocol == null ) {
+            ftp = new FTPClient();            
+        } else {
+            ftp = new FTPSClient(protocol);
+        }
+
+        if (printHash) {
+            ftp.setCopyStreamListener(createListener());
+        }
+        if (keepAliveTimeout >= 0) {
+            ftp.setControlKeepAliveTimeout(keepAliveTimeout);
+        }
+        if (controlKeepAliveReplyTimeout >= 0) {
+            ftp.setControlKeepAliveReplyTimeout(controlKeepAliveReplyTimeout);
+        }
         ftp.addProtocolCommandListener(new PrintCommandListener(
                                            new PrintWriter(System.out)));
 
         try
         {
             int reply;
-            ftp.connect(server, port);
-            System.out.println("Connected to " + server + ".");
+            if (port > 0) {
+                ftp.connect(server, port);                
+            } else {
+                ftp.connect(server);
+            }
+            System.out.println("Connected to " + server + " on "+ftp.getRemotePort());
 
             // After connection attempt, you should check the reply code to verify
             // success.
