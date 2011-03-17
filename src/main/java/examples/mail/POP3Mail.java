@@ -19,9 +19,11 @@ package examples.mail;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 
+import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.pop3.POP3Client;
 import org.apache.commons.net.pop3.POP3MessageInfo;
 import org.apache.commons.net.pop3.POP3SClient;
@@ -55,7 +57,7 @@ public final class POP3Mail
         System.out.println(Integer.toString(id) + " From: " + from + "  Subject: " + subject);
     }
 
-    public static final void main(String[] args) throws NoSuchAlgorithmException
+    public static final void main(String[] args)
     {
         if (args.length < 3)
         {
@@ -78,6 +80,8 @@ public final class POP3Mail
         } else {
             pop3 = new POP3Client();
         }
+        System.out.println("Connecting to server "+server+" on "+pop3.getDefaultPort());
+        
         // We want to timeout if a response takes longer than 60 seconds
         pop3.setDefaultTimeout(60000);
 
@@ -100,6 +104,9 @@ public final class POP3Mail
                 pop3.disconnect();
                 System.exit(1);
             }
+
+            // Do this after authentication
+            pop3.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
 
             POP3MessageInfo[] messages = pop3.listMessages();
 
