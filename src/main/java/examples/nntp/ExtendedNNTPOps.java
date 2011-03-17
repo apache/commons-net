@@ -38,7 +38,7 @@ public class ExtendedNNTPOps {
 
     public ExtendedNNTPOps() {
         client = new NNTPClient();
-        client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
+        client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
     }
 
 

@@ -113,7 +113,7 @@ public final class SMTPMail
 
             client = new SMTPClient();
             client.addProtocolCommandListener(new PrintCommandListener(
-                                                  new PrintWriter(System.out)));
+                                                  new PrintWriter(System.out), true));
 
             client.connect(server);
 

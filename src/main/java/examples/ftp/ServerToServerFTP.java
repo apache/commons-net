@@ -76,7 +76,7 @@ public final class ServerToServerFTP
         password2 = args[6];
         file2 = args[7];
 
-        listener = new PrintCommandListener(new PrintWriter(System.out));
+        listener = new PrintCommandListener(new PrintWriter(System.out), true);
         ftp1 = new FTPClient();
         ftp1.addProtocolCommandListener(listener);
         ftp2 = new FTPClient();

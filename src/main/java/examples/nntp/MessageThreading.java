@@ -43,7 +43,7 @@ public class MessageThreading {
         String newsgroup = args[1];
 
         NNTPClient client = new NNTPClient();
-        client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
+        client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
         client.connect(hostname);
 
         if (args.length == 4) { // Optional auth

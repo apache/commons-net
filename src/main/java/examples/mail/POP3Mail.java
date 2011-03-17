@@ -85,6 +85,9 @@ public final class POP3Mail
         // We want to timeout if a response takes longer than 60 seconds
         pop3.setDefaultTimeout(60000);
 
+        // suppress login details
+        pop3.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
+
         try
         {
             pop3.connect(server);
@@ -104,9 +107,6 @@ public final class POP3Mail
                 pop3.disconnect();
                 System.exit(1);
             }
-
-            // Do this after authentication
-            pop3.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
 
             POP3MessageInfo[] messages = pop3.listMessages();
 

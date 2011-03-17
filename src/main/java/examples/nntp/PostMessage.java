@@ -130,7 +130,7 @@ public final class PostMessage
 
             client = new NNTPClient();
             client.addProtocolCommandListener(new PrintCommandListener(
-                                                  new PrintWriter(System.out)));
+                                                  new PrintWriter(System.out), true));
 
             client.connect(server);
 
