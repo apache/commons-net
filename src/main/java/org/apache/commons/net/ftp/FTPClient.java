@@ -2273,7 +2273,7 @@ implements Configurable
         BufferedReader reader;
         ArrayList<String> results;
 
-        if ((socket = _openDataConnection_(FTPCommand.NLST, pathname)) == null)
+        if ((socket = _openDataConnection_(FTPCommand.NLST, getListArguments(pathname))) == null)
             return null;
 
         reader =
