@@ -63,11 +63,11 @@ public class POP3SClient extends POP3Client
     private String[] protocols = //null;
         null;//{"SSLv2", "SSLv3", "TLSv1", "TLSv1.1", "SSLv2Hello"};
 
-    /** The FTPS {@link TrustManager} implementation. */
-    private TrustManager trustManager = new POP3STrustManager();
+    /** The FTPS {@link TrustManager} implementation, default null. */
+    private TrustManager trustManager = null;
 
-    /** The {@link KeyManager}. */
-    private KeyManager keyManager = null; // seems not to be required
+    /** The {@link KeyManager}, default null. */
+    private KeyManager keyManager = null;
 
     /**
      * Constructor for POP3SClient.
@@ -222,6 +222,7 @@ public class POP3SClient extends POP3Client
     /**
      * Set a {@link KeyManager} to use.
      * @param newKeyManager The KeyManager implementation to set.
+     * @see org.apache.commons.net.util.KeyManagerUtils
      */
     public void setKeyManager(KeyManager newKeyManager)
     {
@@ -310,6 +311,7 @@ public class POP3SClient extends POP3Client
     /**
      * Override the default {@link TrustManager} to use.
      * @param newTrustManager The TrustManager implementation to set.
+     * @see org.apache.commons.net.util.TrustManagerUtils
      */
     public void setTrustManager(TrustManager newTrustManager)
     {
