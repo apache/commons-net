@@ -144,8 +144,6 @@ public final class FTPClientExample
         if (controlKeepAliveReplyTimeout >= 0) {
             ftp.setControlKeepAliveReplyTimeout(controlKeepAliveReplyTimeout);
         }
-        ftp.addProtocolCommandListener(new PrintCommandListener(
-                                           new PrintWriter(System.out)));
 
         try
         {
@@ -198,6 +196,8 @@ __main:
 
             System.out.println("Remote system is " + ftp.getSystemType());
 
+            // After authentication
+            ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
             if (binaryTransfer)
                 ftp.setFileType(FTP.BINARY_FILE_TYPE);
 
