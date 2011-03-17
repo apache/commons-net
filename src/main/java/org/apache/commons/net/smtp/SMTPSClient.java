@@ -19,15 +19,14 @@ package org.apache.commons.net.smtp;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
+
+import org.apache.commons.net.util.SSLContextUtils;
 
 /**
  * SMTP over SSL processing. Copied from FTPSClient.java and modified to suit SMTP.
@@ -62,19 +61,18 @@ public class SMTPSClient extends SMTPClient
     /** The protocol versions. */
     private String[] protocols = null;
 
-    /** The {@link TrustManager} implementation, default {@link SMTPSTrustManager}. */
-    private TrustManager trustManager = new SMTPSTrustManager();
+    /** The {@link TrustManager} implementation, default null (i.e. use system managers). */
+    private TrustManager trustManager = null;
 
-    /** The {@link KeyManager}. */
+    /** The {@link KeyManager}, default null (i.e. use system managers). */
     private KeyManager keyManager = null; // seems not to be required
 
     /**
      * Constructor for SMTPSClient.
      * Sets security mode to explicit (isImplicit = false).
-     * @throws NoSuchAlgorithmException A requested cryptographic algorithm
      * is not available in the environment.
      */
-    public SMTPSClient() throws NoSuchAlgorithmException
+    public SMTPSClient()
     {
         this(DEFAULT_PROTOCOL, false);
     }
@@ -82,10 +80,9 @@ public class SMTPSClient extends SMTPClient
     /**
      * Constructor for SMTPSClient.
      * @param implicit The security mode (Implicit/Explicit).
-     * @throws NoSuchAlgorithmException A requested cryptographic algorithm
      * is not available in the environment.
      */
-    public SMTPSClient(boolean implicit) throws NoSuchAlgorithmException
+    public SMTPSClient(boolean implicit)
     {
         this(DEFAULT_PROTOCOL, implicit);
     }
@@ -93,10 +90,9 @@ public class SMTPSClient extends SMTPClient
     /**
      * Constructor for SMTPSClient.
      * @param proto the protocol.
-     * @throws NoSuchAlgorithmException A requested cryptographic algorithm
      * is not available in the environment.
      */
-    public SMTPSClient(String proto) throws NoSuchAlgorithmException
+    public SMTPSClient(String proto)
     {
         this(proto, false);
     }
@@ -105,11 +101,9 @@ public class SMTPSClient extends SMTPClient
      * Constructor for SMTPSClient.
      * @param proto the protocol.
      * @param implicit The security mode(Implicit/Explicit).
-     * @throws NoSuchAlgorithmException A requested cryptographic algorithm
      * is not available in the environment.
      */
     public SMTPSClient(String proto, boolean implicit)
-            throws NoSuchAlgorithmException
     {
         protocol = proto;
         isImplicit = implicit;
@@ -161,25 +155,7 @@ public class SMTPSClient extends SMTPClient
     {
         if (context == null)
         {
-            try
-            {
-                context = SSLContext.getInstance(protocol);
-                context.init(new KeyManager[] { getKeyManager() },
-                             new TrustManager[] { getTrustManager() },
-                             null);
-            }
-            catch (KeyManagementException e)
-            {
-                IOException ioe = new IOException("Could not initialize SSL context");
-                ioe.initCause(e);
-                throw ioe;
-            }
-            catch (NoSuchAlgorithmException e)
-            {
-                IOException ioe = new IOException("Could not initialize SSL context");
-                ioe.initCause(e);
-                throw ioe;
-            }
+            context = SSLContextUtils.createSSLContext(protocol, getKeyManager(), getTrustManager());
         }
     }
 
@@ -213,7 +189,7 @@ public class SMTPSClient extends SMTPClient
      * Get the {@link KeyManager} instance.
      * @return The current {@link KeyManager} instance.
      */
-    private KeyManager getKeyManager()
+    public KeyManager getKeyManager()
     {
         return keyManager;
     }
@@ -221,6 +197,7 @@ public class SMTPSClient extends SMTPClient
     /**
      * Set a {@link KeyManager} to use.
      * @param newKeyManager The KeyManager implementation to set.
+     * @see org.apache.commons.net.util.KeyManagerUtils
      */
     public void setKeyManager(KeyManager newKeyManager)
     {
@@ -309,6 +286,7 @@ public class SMTPSClient extends SMTPClient
     /**
      * Override the default {@link TrustManager} to use.
      * @param newTrustManager The TrustManager implementation to set.
+     * @see org.apache.commons.net.util.TrustManagerUtils
      */
     public void setTrustManager(TrustManager newTrustManager)
     {
