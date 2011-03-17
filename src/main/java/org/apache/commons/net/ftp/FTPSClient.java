@@ -23,8 +23,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.security.NoSuchAlgorithmException;
-
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
@@ -42,6 +40,16 @@ import org.apache.commons.net.util.SSLContextUtils;
  * @since 2.0
  */
 public class FTPSClient extends FTPClient {
+
+// From http://www.iana.org/assignments/port-numbers
+
+//    ftps-data   989/tcp    ftp protocol, data, over TLS/SSL
+//    ftps-data   989/udp    ftp protocol, data, over TLS/SSL
+//    ftps        990/tcp    ftp protocol, control, over TLS/SSL
+//    ftps        990/udp    ftp protocol, control, over TLS/SSL
+
+    public static final int DEFAULT_FTPS_DATA_PORT = 989;
+    public static final int DEFAULT_FTPS_PORT = 990;
 
     /** The value that I can set in PROT command  (C = Clear, P = Protected) */
     private static final String[] PROT_COMMAND_VALUE = {"C","E","S","P"};
@@ -73,54 +81,48 @@ public class FTPSClient extends FTPClient {
     /** The protocol versions */
     private String[] protocols = null;
 
-    /** The FTPS {@link TrustManager} implementation. */
-    private TrustManager trustManager = new FTPSTrustManager();
+    /** The FTPS {@link TrustManager} implementation, default null (i.e. use system default). */
+    private TrustManager trustManager = null;
 
-    /** The {@link KeyManager} */
-    private KeyManager keyManager;
+    /** The {@link KeyManager}, default null (i.e. use system default). */
+    private KeyManager keyManager = null;
 
     /**
      * Constructor for FTPSClient.
      * Sets security mode to explicit (isImplicit = false)
-     * @throws NoSuchAlgorithmException A requested cryptographic algorithm
      * is not available in the environment.
      */
-    public FTPSClient() throws NoSuchAlgorithmException {
-        this.protocol = DEFAULT_PROTOCOL;
-        this.isImplicit = false;
+    public FTPSClient() {
+        this(DEFAULT_PROTOCOL, false);
     }
 
     /**
      * Constructor for FTPSClient.
      * @param isImplicit The security mode (Implicit/Explicit).
-     * @throws NoSuchAlgorithmException A requested cryptographic algorithm
      * is not available in the environment.
      */
-    public FTPSClient(boolean isImplicit) throws NoSuchAlgorithmException {
-        this.protocol = DEFAULT_PROTOCOL;
-        this.isImplicit = isImplicit;
+    public FTPSClient(boolean isImplicit) {
+        this(DEFAULT_PROTOCOL, isImplicit);
     }
 
     /**
      * Constructor for FTPSClient.
      * @param protocol the protocol
-     * @throws NoSuchAlgorithmException A requested cryptographic algorithm
      * is not available in the environment.
      */
-    public FTPSClient(String protocol) throws NoSuchAlgorithmException {
-        this.protocol = protocol;
-        this.isImplicit = false;
+    public FTPSClient(String protocol) {
+        this(protocol, false);
     }
 
     /**
      * Constructor for FTPSClient.
      * @param protocol the protocol
      * @param isImplicit The security mode(Implicit/Explicit).
-     * @throws NoSuchAlgorithmException A requested cryptographic algorithm
      * is not available in the environment.
      */
-    public FTPSClient(String protocol, boolean isImplicit)
-            throws NoSuchAlgorithmException {
+    public FTPSClient(String protocol, boolean isImplicit) {
+        super();
+        setDefaultPort(DEFAULT_FTPS_PORT);
         this.protocol = protocol;
         this.isImplicit = isImplicit;
     }
@@ -131,9 +133,8 @@ public class FTPSClient extends FTPClient {
      * @param context A pre-configured SSL Context
      */
     public FTPSClient(boolean isImplicit, SSLContext context) {
-        this.isImplicit = isImplicit;
+        this(DEFAULT_PROTOCOL, isImplicit);
         this.context = context;
-        this.protocol = DEFAULT_PROTOCOL;
     }
 
     /**
@@ -255,6 +256,7 @@ public class FTPSClient extends FTPClient {
     * Set a {@link KeyManager} to use
     *
     * @param keyManager The KeyManager implementation to set.
+    * @see org.apache.commons.net.util.KeyManagerUtils
     */
     public void setKeyManager(KeyManager keyManager) {
         this.keyManager = keyManager;
@@ -532,6 +534,7 @@ public class FTPSClient extends FTPClient {
      * Override the default {@link TrustManager} to use.
      *
      * @param trustManager The TrustManager implementation to set.
+    * @see org.apache.commons.net.util.TrustManagerUtils
      */
     public void setTrustManager(TrustManager trustManager) {
         this.trustManager = trustManager;
