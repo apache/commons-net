@@ -34,6 +34,7 @@ public class PrintCommandListener implements ProtocolCommandListener
 {
     private final PrintWriter __writer;
     private final boolean __nologin;
+    private final char __eolMarker;
 
     /**
      * Create the default instance which prints everything.
@@ -55,8 +56,24 @@ public class PrintCommandListener implements ProtocolCommandListener
      */
     public PrintCommandListener(PrintWriter writer, boolean suppressLogin)
     {
+        this(writer, suppressLogin, (char) 0);
+    }
+
+    /**
+     * Create an instance which optionally suppresses login command text
+     * and indicates where the EOL starts with the specified character.
+     * 
+     * @param writer where to write the commands and responses
+     * @param suppressLogin if {@code true}, only print command name for login
+     * @param eolMarker if non-zero, add a marker just before the EOL.
+     * 
+     * @since 3.0
+     */
+    public PrintCommandListener(PrintWriter writer, boolean suppressLogin, char eolMarker)
+    {
         __writer = writer;
         __nologin = suppressLogin;
+        __eolMarker = eolMarker;
     }
 
     public void protocolCommandSent(ProtocolCommandEvent event)
@@ -65,16 +82,30 @@ public class PrintCommandListener implements ProtocolCommandListener
             String cmd = event.getCommand();
             if ("PASS".equalsIgnoreCase(cmd) || "USER".equalsIgnoreCase(cmd)) {
                 __writer.print(cmd);
-                __writer.println(" *******");
+                __writer.println(" *******"); // Don't bother with EOL marker for this!
             } else {
-                __writer.print(event.getMessage());
+                __writer.print(getPrintableString(event.getMessage()));
             }
         } else {
-            __writer.print(event.getMessage());
+            __writer.print(getPrintableString(event.getMessage()));
         }
         __writer.flush();
     }
 
+    private String getPrintableString(String msg){
+        if (__eolMarker == 0) {
+            return msg;            
+        }
+        int pos = msg.indexOf(SocketClient.NETASCII_EOL);
+        if (pos > 0) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(msg.substring(0,pos));
+            sb.append(__eolMarker);
+            sb.append(msg.substring(pos));
+            return sb.toString();
+        }
+        return msg;
+    }
     public void protocolReplyReceived(ProtocolCommandEvent event)
     {
         __writer.print(event.getMessage());
