@@ -281,26 +281,41 @@ __main:
                 for (String s : ftp.listNames(remote)) {
                     System.out.println(s);
                 }
-
             }
             else if (feat)
             {
-                if (ftp.features()) {
-//                    Command listener has already printed the output
-//                    for(String s : ftp.getReplyStrings()) {
-//                        System.out.println(s);
-//                    }
-                    if (remote != null) { // See if the command is present
-                      for(String s : ftp.getReplyStrings()) {
-                          if (s.indexOf(remote) == 1) { // After first space
-                              System.out.println("FEAT supports: "+s);
-                          }
-                      }
+                // boolean feature check
+                if (remote != null) { // See if the command is present
+                    if (ftp.hasFeature(remote)) {
+                        System.out.println("Has feature: "+remote);
+                    } else {
+                        if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
+                            System.out.println("FEAT "+remote+" was not detected");
+                        } else {
+                            System.out.println("Command failed: "+ftp.getReplyString());
+                        }                        
                     }
-
+                    
+                    // Strings feature check
+                    String []features = ftp.featureValues(remote);
+                    if (features != null) {
+                        for(String f : features) {
+                            System.out.println("FEAT "+remote+"="+f+".");
+                        }
+                    } else {
+                        if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
+                            System.out.println("FEAT "+remote+" is not present");
+                        } else {
+                            System.out.println("Command failed: "+ftp.getReplyString());
+                        }
+                    }
                 } else {
-                    System.out.println("Failed: "+ftp.getReplyString());
-                } 
+                    if (ftp.features()) {
+//                        Command listener has already printed the output
+                    } else {
+                        System.out.println("Failed: "+ftp.getReplyString());
+                    } 
+                }
             }
             else if (doCommand != null)
             {
