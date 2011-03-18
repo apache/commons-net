@@ -153,7 +153,7 @@ public class FTPClientConfigFunctionalTest extends TestCase {
         // by the parser and therefore been relegated to the same date a
         // year ago.
         first.add(Calendar.DATE, 2);
-        assertTrue(lastfile.getTimestamp().before(first));
+        assertTrue(lastfile.getTimestamp().getTime().toString()+" before "+ first.getTime().toString(),lastfile.getTimestamp().before(first));
 
     }
 }
