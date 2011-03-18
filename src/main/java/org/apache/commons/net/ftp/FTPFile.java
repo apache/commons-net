@@ -380,4 +380,14 @@ public class FTPFile implements Serializable
         return _rawListing;
     }
 
+    /** @since 3.0 */
+    public String toFormattedString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(getName());
+        sb.append(' ');
+        sb.append(getSize());
+        sb.append(' ');
+        sb.append(getTimestamp().getTime().toString());
+        return sb.toString();
+    }
 }
