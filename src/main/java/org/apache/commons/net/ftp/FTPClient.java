@@ -32,9 +32,12 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Random;
+import java.util.Set;
 
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory;
@@ -360,6 +363,9 @@ implements Configurable
     /** Controls the automatic server encoding detection (only UTF-8 supported). */
     private boolean __autodetectEncoding = false;
 
+    /** Map of FEAT responses. If null, has not been initialised. */
+    private HashMap<String, Set<String>> __featuresMap;
+
     private static class PropertiesSingleton {
 
         static final Properties PROPERTIES;
@@ -421,6 +427,7 @@ implements Configurable
         __entryParser        = null;
         __entryParserKey    = "";
         __bufferSize         = Util.DEFAULT_COPY_BUFFER_SIZE;
+        __featuresMap = null;
     }
 
     private String __parsePathname(String reply)
@@ -732,27 +739,15 @@ implements Configurable
         {
             ArrayList<String> oldReplyLines = new ArrayList<String> (_replyLines);
             int oldReplyCode = _replyCode;
-            if ( features() )
+            if ( hasFeature("UTF8") || hasFeature("UTF-8")) // UTF8 appears to be the default
             {
-                String[] features = getReplyStrings();
-                if ( features != null )
-                {
-                    for ( int i = 0; i < features.length; i++ )
-                    {
-                        if ( features[i].trim().toUpperCase(Locale.ENGLISH).equals("UTF8")
-                            || features[i].trim().toUpperCase(Locale.ENGLISH).equals("UTF-8") )
-                        {
-                            setControlEncoding("UTF-8");
-                            _controlInput_ =
-                                new BufferedReader(new InputStreamReader(_socket_.getInputStream(),
-                                                                        getControlEncoding()));
-                            _controlOutput_ =
-                                new BufferedWriter(new OutputStreamWriter(_socket_.getOutputStream(),
-                                                                        getControlEncoding()));
-                            break;
-                        }
-                    }
-                }
+                 setControlEncoding("UTF-8");
+                 _controlInput_ =
+                     new BufferedReader(new InputStreamReader(_socket_.getInputStream(),
+                                                            getControlEncoding()));
+                 _controlOutput_ =
+                    new BufferedWriter(new OutputStreamWriter(_socket_.getOutputStream(),
+                                                                            getControlEncoding()));
             }
             // restore the original reply (server greeting)
             _replyLines.clear();
@@ -1914,7 +1909,7 @@ implements Configurable
 
     /**
      * Query the server for supported features. The server may reply with a list of server-supported exensions.
-     * For example, a typical client-server interaction might be (from RFC     2289):
+     * For example, a typical client-server interaction might be (from RFC 2389):
      * <pre>
         C> feat
         S> 211-Extensions supported:
@@ -1933,6 +1928,126 @@ implements Configurable
         return FTPReply.isPositiveCompletion(feat());
     }
 
+    /**
+     * Query the server for a supported feature, and returns its values (if any).
+     * Caches the parsed response to avoid resending the command repeatedly.
+     * 
+     * @return if the feature is present, returns the feature values (empty array if none)
+     * Returns {@code null} if the feature is not found or the command failed.
+     * Check {@link #getReplyCode()} or {@link #getReplyString()} if so.
+     * @throws IOException
+     * @since 3.0
+     */
+    public String[] featureValues(String feature) throws IOException {
+        if (!initFeatureMap()) {
+            return null;
+        }
+        Set<String> entries = __featuresMap.get(feature.toUpperCase(Locale.ENGLISH));
+        if (entries != null) {
+            return entries.toArray(new String[entries.size()]);
+        }
+        return null;
+    }
+    
+    /**
+     * Query the server for a supported feature, and returns the its value (if any).
+     * Caches the parsed response to avoid resending the command repeatedly.
+     * 
+     * @return if the feature is present, returns the feature value or the empty string
+     * if the feature exists but has no value.
+     * Returns {@code null} if the feature is not found or the command failed.
+     * Check {@link #getReplyCode()} or {@link #getReplyString()} if so.
+     * @throws IOException
+     * @since 3.0
+     */
+    public String featureValue(String feature) throws IOException {
+        String [] values = featureValues(feature);
+        if (values != null) {
+            return values[0];
+        }
+        return null;
+    }
+
+    /**
+     * Query the server for a supported feature. 
+     * Caches the parsed response to avoid resending the command repeatedly.
+     * 
+     * @param feature the name of the feature; it is converted to upper case.
+     * @return {@code true} if the feature is present, {@code false} if the feature is not present
+     * or the {@link #feat()} command failed. Check {@link #getReplyCode()} or {@link #getReplyString()}
+     * if it is necessary to distinguish these cases.
+     * 
+     * @throws IOException
+     * @since 3.0
+     */
+    public boolean hasFeature(String feature) throws IOException {
+        if (!initFeatureMap()) {
+            return false;
+        }
+        return __featuresMap.containsKey(feature.toUpperCase(Locale.ENGLISH));
+    }
+
+    /**
+     * Query the server for a supported feature with particular value,
+     * for example "AUTH SSL" or "AUTH TLS". 
+     * Caches the parsed response to avoid resending the command repeatedly.
+     * 
+     * @param feature the name of the feature; it is converted to upper case.
+     * @param value the value to find.
+     * 
+     * @return {@code true} if the feature is present, {@code false} if the feature is not present
+     * or the {@link #feat()} command failed. Check {@link #getReplyCode()} or {@link #getReplyString()}
+     * if it is necessary to distinguish these cases.
+     * 
+     * @throws IOException
+     * @since 3.0
+     */
+    public boolean hasFeature(String feature, String value) throws IOException {
+        if (!initFeatureMap()) {
+            return false;
+        }
+        Set<String> entries = __featuresMap.get(feature.toUpperCase(Locale.ENGLISH));
+        if (entries != null) {
+            return entries.contains(value);
+        }
+        return false;
+    }
+
+    /*
+     * Create the feature map if not already created.
+     */
+    private boolean initFeatureMap() throws IOException {
+        if (__featuresMap == null) {
+            // Don't create map here, because next line may throw exception
+            boolean success = FTPReply.isPositiveCompletion(feat());
+            // we init the map here, so we don't keep trying if we know the command will fail
+            __featuresMap = new HashMap<String, Set<String>>();  
+            if (!success) {
+                return false;
+            }
+            for (String l : getReplyStrings()) {
+                if (l.startsWith(" ")) { // it's a FEAT entry
+                    String key;
+                    String value="";
+                    int varsep = l.indexOf(' ', 1);
+                    if (varsep > 0) {
+                        key = l.substring(1, varsep);
+                        value = l.substring(varsep+1);
+                    } else {
+                        key = l.substring(1);
+                    }
+                    key = key.toUpperCase(Locale.ENGLISH);
+                    Set<String> entries = __featuresMap.get(key);
+                    if (entries == null) {
+                        entries = new HashSet<String>();
+                        __featuresMap.put(key, entries);                        
+                    }
+                    entries.add(value);
+                }
+            }
+        }    
+        return true;
+    }
 
     /**
      * Reserve space on the server for the next file transfer.
