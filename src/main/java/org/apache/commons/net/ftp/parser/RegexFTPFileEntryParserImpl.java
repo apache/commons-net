@@ -30,7 +30,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
  * newer FTPFileEntryParser interfaces with default functionality.
  * All the classes in the parser subpackage inherit from this.
  *
- * This is the base for all regular based FTPFileEntryParser
+ * This is the base class for all regular expression based FTPFileEntryParser classes
  *
  * @author Steve Cohen <scohen@apache.org>
  */
