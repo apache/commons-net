@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.Arrays;
 
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
@@ -35,46 +34,48 @@ import org.apache.commons.net.ftp.FTPSClient;
 import org.apache.commons.net.io.CopyStreamEvent;
 import org.apache.commons.net.io.CopyStreamListener;
 
-/***
+/**
  * This is an example program demonstrating how to use the FTPClient class.
  * This program connects to an FTP server and retrieves the specified
  * file.  If the -s flag is used, it stores the local file at the FTP server.
  * Just so you can see what's happening, all reply strings are printed.
  * If the -b flag is used, a binary transfer is assumed (default is ASCII).
- * <p>
- * Usage: ftp [-s] [-b] [-l] [-#] [-k nnn] <hostname> <username> <password> [<remote file> <local file> [<SSLprotocol>] ]
- * <p>
- ***/
+ * See below for further options.
+ */
 public final class FTPClientExample
 {
 
     public static final String USAGE =
-        "Usage: ftp [-s] [-b] [-l|-n|-f] [-a] [-e] [-k secs [-w msec]] [-#] <hostname> <username> <password> [<remote file> <local file> [TLS|etc.] ]\n" +
+        "Usage: ftp [options] <hostname> <username> <password> [<remote file> [<local file>]]\n" +
         "\nDefault behavior is to download a file and use ASCII transfer mode.\n" +
-        "\t-s store file on server (upload)\n" +
-        "\t-h list hidden files (applies to -l and -n only)\n" +
-        "\t-l list files using LIST (remote is used as the pathname if provided)\n" +
-        "\t-n list file names using NLST (remote is used as the pathname if provided)\n" +
-        "\t-f issue FEAT command (remote and local files are ignored)\n" +
-        "\t-# add hash display during transfers\n" +
-        "\t-k secs use keep-alive timer (setControlKeepAliveTimeout)\n" +
-        "\t-w msec wait time for keep-alive reply (setControlKeepAliveReplyTimeout)\n" +
-        "\t-a use local active mode (default is local passive)\n" +
-        "\t-e use EPSV with IPv4 (default false)\n" +
-        "\t-b use binary transfer mode\n";
+        "\t-a - use local active mode (default is local passive)\n" +
+        "\t-b - use binary transfer mode\n" +
+        "\t-c cmd - issue arbitrary command (remote is used as a parameter if provided) \n" +
+        "\t-d - list directory details using MLSD (remote is used as the pathname if provided)\n" +
+        "\t-e - use EPSV with IPv4 (default false)\n" +
+        "\t-f - issue FEAT command (remote and local files are ignored)\n" +
+        "\t-h - list hidden files (applies to -l and -n only)\n" +
+        "\t-k secs - use keep-alive timer (setControlKeepAliveTimeout)\n" +
+        "\t-l - list files using LIST (remote is used as the pathname if provided)\n" +
+        "\t-n - list file names using NLST (remote is used as the pathname if provided)\n" +
+        "\t-p protocol - use FTPSClient with the specified protocol \n" +
+        "\t-s - store file on server (upload)\n" +
+        "\t-t - list file details using MLST (remote is used as the pathname if provided)\n" +
+        "\t-w msec - wait time for keep-alive reply (setControlKeepAliveReplyTimeout)\n" +
+        "\t-# - add hash display during transfers\n";
 
     public static final void main(String[] args)
     {
-        int base = 0;
         boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false, listNames = false, hidden = false;
-        boolean localActive = false;
-        boolean useEpsvWithIPv4 = false;
-        boolean feat = false;
-        boolean printHash = false;
+        boolean localActive = false, useEpsvWithIPv4 = false, feat = false, printHash = false;
+        boolean mlst = false, mlsd = false;
         long keepAliveTimeout = -1;
         int controlKeepAliveReplyTimeout = -1;
         int minParams = 5; // listings require 3 params
+        String protocol = null; // SSL protocol
+        String doCommand = null;
 
+        int base = 0;
         for (base = 0; base < args.length; base++)
         {
             if (args[base].equals("-s")) {
@@ -86,6 +87,14 @@ public final class FTPClientExample
             else if (args[base].equals("-b")) {
                 binaryTransfer = true;
             }
+            else if (args[base].equals("-c")) {
+                doCommand = args[++base];
+                minParams = 3;
+            }
+            else if (args[base].equals("-d")) {
+                mlsd = true;
+                minParams = 3;
+            }
             else if (args[base].equals("-e")) {
                 useEpsvWithIPv4 = true;
             }
@@ -93,25 +102,32 @@ public final class FTPClientExample
                 feat = true;
                 minParams = 3;
             }
+            else if (args[base].equals("-h")) {
+                hidden = true;
+            }
+            else if (args[base].equals("-k")) {
+                keepAliveTimeout = Long.parseLong(args[++base]);
+            }
             else if (args[base].equals("-l")) {
                 listFiles = true;
                 minParams = 3;
-            }
-            else if (args[base].equals("-h")) {
-                hidden = true;
             }
             else if (args[base].equals("-n")) {
                 listNames = true;
                 minParams = 3;
             }
-            else if (args[base].equals("-#")) {
-                printHash = true;
+            else if (args[base].equals("-p")) {
+                protocol = args[++base];
             }
-            else if (args[base].equals("-k")) {
-                keepAliveTimeout = Long.parseLong(args[++base]);
+            else if (args[base].equals("-t")) {
+                mlst = true;
+                minParams = 3;
             }
             else if (args[base].equals("-w")) {
                 controlKeepAliveReplyTimeout = Integer.parseInt(args[++base]);
+            }
+            else if (args[base].equals("-#")) {
+                printHash = true;
             }
             else {
                 break;
@@ -134,17 +150,15 @@ public final class FTPClientExample
         }
         String username = args[base++];
         String password = args[base++];
+
         String remote = null;
         if (args.length - base > 0) {
             remote = args[base++];
         }
+
         String local = null;
         if (args.length - base > 0) {
             local = args[base++];
-        }
-        String protocol = null;
-        if (args.length - base > 0) {
-            protocol = args[base++];
         }
 
         final FTPClient ftp;
@@ -247,7 +261,20 @@ __main:
                 for (FTPFile f : ftp.listFiles(remote)) {
                     System.out.println(f);
                 }
-
+            }
+            else if (mlsd)
+            {
+                for (FTPFile f : ftp.mlistDir(remote)) {
+                    System.out.println(f.getRawListing());
+                    System.out.println(f.toFormattedString());
+                }
+            }
+            else if (mlst)
+            {
+                FTPFile f = ftp.mlistFile(remote);
+                if (f != null){
+                    System.out.println(f.toFormattedString());
+                }
             }
             else if (listNames)
             {
@@ -259,7 +286,31 @@ __main:
             else if (feat)
             {
                 if (ftp.features()) {
-                    System.out.println(Arrays.toString(ftp.getReplyStrings()));
+//                    Command listener has already printed the output
+//                    for(String s : ftp.getReplyStrings()) {
+//                        System.out.println(s);
+//                    }
+                    if (remote != null) { // See if the command is present
+                      for(String s : ftp.getReplyStrings()) {
+                          if (s.indexOf(remote) == 1) { // After first space
+                              System.out.println("FEAT supports: "+s);
+                          }
+                      }
+                    }
+
+                } else {
+                    System.out.println("Failed: "+ftp.getReplyString());
+                } 
+            }
+            else if (doCommand != null)
+            {
+                if (ftp.doCommand(doCommand, remote)) {
+//                  Command listener has already printed the output
+//                    for(String s : ftp.getReplyStrings()) {
+//                        System.out.println(s);
+//                    }
+                } else {
+                    System.out.println("Failed: "+ftp.getReplyString());
                 }
             }
             else
