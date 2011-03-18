@@ -1955,6 +1955,53 @@ implements Configurable
 
 
     /**
+     * Issue a command and wait for the reply.
+     * <p>
+     * Should only be used with commands that return replies on the
+     * command channel - do not use for LIST, NLST, MLSD etc.
+     * <p>
+     * @param command  The command to invoke
+     * @param params  The parameters string, may be {@code null}
+     * @return True if successfully completed, false if not, in which case
+     * call {@link #getReplyCode()} or {@link #getReplyString()}
+     * to get the reason.
+     * 
+     * @exception IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     * @since 3.0
+     */
+    public boolean doCommand(String command, String params) throws IOException
+    {
+        return FTPReply.isPositiveCompletion(sendCommand(command, params));
+    }
+
+    /**
+     * Issue a command and wait for the reply, returning it as an array of strings.
+     * <p>
+     * Should only be used with commands that return replies on the
+     * command channel - do not use for LIST, NLST, MLSD etc.
+     * <p>
+     * @param command  The command to invoke
+     * @param params  The parameters string, may be {@code null}
+     * @return The array of replies, or {@code null} if the command failed, in which case
+     * call {@link #getReplyCode()} or {@link #getReplyString()}
+     * to get the reason.
+     * 
+     * @exception IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     * @since 3.0
+     */
+    public String[] doCommandAsStrings(String command, String params) throws IOException
+    {
+        boolean success = FTPReply.isPositiveCompletion(sendCommand(command, params));
+        if (success){
+            return getReplyStrings();
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Get file details using the MLST command
      * 
      * @param pathname the file or directory to list, may be {@code} null
