@@ -1446,7 +1446,7 @@ public class FTP extends SocketClient
      * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
      * , which will handle all low level details for you.
      * <p>
-     * @param pathname  The pathname to list, 
+     * @param pathname  The pathname to list,
      * may be {@code null} in which case the command is sent with no parameters
      * @return The reply code received from the server.
      * @exception FTPConnectionClosedException

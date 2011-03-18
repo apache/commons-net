@@ -97,7 +97,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
                     if (chint == DOT) { // Have DOT DOT
                         // no need to reset as we want to lose the first DOT
                         return chint; // i.e. DOT
-                    } 
+                    }
                     if (chint == CR) { // Have DOT CR
                         chint = super.read();
                         if (chint == -1) { // Still only DOT CR - should not happen
@@ -222,7 +222,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
     }
 
     /**
-     * Read a line of text. 
+     * Read a line of text.
      * A line is considered to be terminated by carriage return followed immediately by a linefeed.
      * This contrasts with BufferedReader which also allows other combinations.
      * @since 3.0
@@ -232,7 +232,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
         StringBuilder sb = new StringBuilder();
         int intch;
         synchronized(lock) { // make thread-safe (hopefully!)
-            while((intch = read()) != -1) 
+            while((intch = read()) != -1)
             {
                 if (intch == LF && atBeginning) {
                     return sb.substring(0, sb.length()-1);
