@@ -57,6 +57,9 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.0" date="TBA" description="TBA">
+            <action issue="NET-378" dev="sebb" type="add">
+            FTP listing should support MLST and MLSD.
+            </action>
             <action issue="NET-377" dev="sebb" type="update">
             NLST does not take notice of HiddenFiles setting.
             </action>

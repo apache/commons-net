@@ -39,6 +39,7 @@ import java.util.Random;
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory;
 import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
+import org.apache.commons.net.ftp.parser.MLSxEntryParser;
 import org.apache.commons.net.ftp.parser.ParserInitializationException;
 import org.apache.commons.net.io.CopyStreamAdapter;
 import org.apache.commons.net.io.CopyStreamEvent;
@@ -754,7 +755,8 @@ implements Configurable
                 }
             }
             // restore the original reply (server greeting)
-            _replyLines = new ArrayList<String> (oldReplyLines);
+            _replyLines.clear();
+            _replyLines.addAll(oldReplyLines);
             _replyCode = oldReplyCode;
         }
     }
@@ -1952,6 +1954,54 @@ implements Configurable
     }
 
 
+    /**
+     * Get file details using the MLST command
+     * 
+     * @param pathname the file or directory to list, may be {@code} null
+     * @return the file details, may be {@code null}
+     * @throws IOException
+     * @since 3.0
+     */
+    public FTPFile mlistFile(String pathname) throws IOException
+    {
+        boolean success = FTPReply.isPositiveCompletion(sendCommand(FTPCommand.MLST, pathname));
+        if (success){
+            String entry = getReplyStrings()[1].substring(1); // skip leading space for parser
+            return MLSxEntryParser.parseEntry(entry);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Generate a directory listing using the MSLD command.
+     * 
+     * @param pathname the directory name, may be {@code null}
+     * @return the array of file entries
+     * @throws IOException
+     * @since 3.0
+     */
+    public FTPFile[] mlistDir(String pathname) throws IOException
+    {
+        FTPListParseEngine engine = initiateMListParsing( pathname);
+        return engine.getFiles();
+    }
+
+    /**
+     * Generate a directory listing using the MSLD command.
+     * 
+     * @param pathname the directory name, may be {@code null}
+     * @param filter the filter to apply to the responses
+     * @return the array of file entries
+     * @throws IOException
+     * @since 3.0
+     */
+    public FTPFile[] mlistDir(String pathname, FTPFileFilter filter) throws IOException
+    {
+        FTPListParseEngine engine = initiateMListParsing( pathname);
+        return engine.getFiles(filter);
+    }
+
     /***
      * Restart a <code>STREAM_TRANSFER_MODE</code> file transfer starting
      * from the given offset.  This will only work on FTP servers supporting
@@ -2374,6 +2424,7 @@ implements Configurable
         return engine.getFiles();
 
     }
+
     /**
      * Using the default system autodetect mechanism, obtain a
      * list of file information for the current working directory.
@@ -2749,6 +2800,32 @@ implements Configurable
         }
 
         completePendingCommand();
+        return engine;
+    }
+    
+    /**
+     * Initiate list parsing for MLSD listings.
+     * 
+     * @param pathname
+     * @return the engine
+     * @throws IOException
+     */
+    private FTPListParseEngine initiateMListParsing(String pathname) throws IOException
+    {
+        Socket socket;
+        FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance());
+        if ((socket = _openDataConnection_(FTPCommand.MLSD, pathname)) == null)
+        {
+            return engine;
+        }
+
+        try {
+            engine.readServerList(socket.getInputStream(), getControlEncoding());
+        }
+        finally {
+            Util.closeQuietly(socket);
+            completePendingCommand();
+        }
         return engine;
     }
 
