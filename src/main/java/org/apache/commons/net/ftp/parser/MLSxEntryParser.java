@@ -28,13 +28,13 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
 
 /**
  * Parser class for MSLT and MLSD replies.
- * 
+ *
  * @since 3.0
  */
 public class MLSxEntryParser extends FTPFileEntryParserImpl
 {
     //    Format taken from RFC 3659:
-    
+
     //    entry            = [ facts ] SP pathname
     //    facts            = 1*( fact ";" )
     //    fact             = factname "=" value
@@ -48,7 +48,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
 
     // Sample os-depend-fact:
     //    UNIX.group=0;UNIX.mode=0755;UNIX.owner=0;
-    
+
     // A single control response entry (MLST) is returned with a leading space;
     // multiple (data) entries are returned without any leading spaces.
 
@@ -62,7 +62,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
         TYPE_TO_INT.put("dir", Integer.valueOf(FTPFile.DIRECTORY_TYPE)); // dir or sub-dir
     }
 
-    private static int UNIX_GROUPS[] = { // Groups in order of mode digits 
+    private static int UNIX_GROUPS[] = { // Groups in order of mode digits
         FTPFile.USER_ACCESS,
         FTPFile.GROUP_ACCESS,
         FTPFile.WORLD_ACCESS,
@@ -105,11 +105,11 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                 // YYYYMMDDHHMMSS[.sss]
                 SimpleDateFormat sdf; // Not thread-safe
                 if (factvalue.contains(".")){
-                    sdf = new SimpleDateFormat("yyyyMMddHHmmss.SSS");                    
-                } else { 
+                    sdf = new SimpleDateFormat("yyyyMMddHHmmss.SSS");
+                } else {
                     sdf = new SimpleDateFormat("yyyyMMddHHmmss");
                 }
-                
+
                 GregorianCalendar gc = new GregorianCalendar(TimeZone.getTimeZone("GMT")); // TODO are these thread-safe?
                 try {
                     gc.setTime(sdf.parse(factvalue));
@@ -131,12 +131,12 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                     for(int i=1; i<=3; i++){
                         int ch = factvalue.charAt(i)-'0';
                         for(int p : UNIX_PERMS[ch]) {
-                            file.setPermission(UNIX_GROUPS[i-1], p, true);                            
+                            file.setPermission(UNIX_GROUPS[i-1], p, true);
                         }
                     }
                     file.setUser(factvalue);
                 }
-            } 
+            }
             else if (!hasUnixMode && "perm".equals(factname)) { // skip if we have the UNIX.mode
                 //              perm-fact    = "Perm" "=" *pvals
                 //              pvals        = "a" / "c" / "d" / "e" / "f" /

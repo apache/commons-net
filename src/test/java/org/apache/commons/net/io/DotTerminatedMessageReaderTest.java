@@ -150,7 +150,7 @@ public class DotTerminatedMessageReaderTest extends TestCase {
         }
 
         assertEquals("Hello World#more#",str.toString());
-        
+
     }
 
     public void testReadLine2() throws Exception {
@@ -164,7 +164,7 @@ public class DotTerminatedMessageReaderTest extends TestCase {
         }
 
         assertEquals("Hello World\r.\nmore#",str.toString());
-        
+
     }
 
     public void testSingleDotWithTrailingText() throws IOException {

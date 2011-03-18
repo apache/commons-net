@@ -38,7 +38,7 @@ public class PrintCommandListener implements ProtocolCommandListener
 
     /**
      * Create the default instance which prints everything.
-     * 
+     *
      * @param writer where to write the commands and responses
      */
     public PrintCommandListener(PrintWriter writer)
@@ -48,10 +48,10 @@ public class PrintCommandListener implements ProtocolCommandListener
 
     /**
      * Create an instance which optionally suppresses login command text.
-     * 
+     *
      * @param writer where to write the commands and responses
      * @param suppressLogin if {@code true}, only print command name for login
-     * 
+     *
      * @since 3.0
      */
     public PrintCommandListener(PrintWriter writer, boolean suppressLogin)
@@ -62,11 +62,11 @@ public class PrintCommandListener implements ProtocolCommandListener
     /**
      * Create an instance which optionally suppresses login command text
      * and indicates where the EOL starts with the specified character.
-     * 
+     *
      * @param writer where to write the commands and responses
      * @param suppressLogin if {@code true}, only print command name for login
      * @param eolMarker if non-zero, add a marker just before the EOL.
-     * 
+     *
      * @since 3.0
      */
     public PrintCommandListener(PrintWriter writer, boolean suppressLogin, char eolMarker)
@@ -94,7 +94,7 @@ public class PrintCommandListener implements ProtocolCommandListener
 
     private String getPrintableString(String msg){
         if (__eolMarker == 0) {
-            return msg;            
+            return msg;
         }
         int pos = msg.indexOf(SocketClient.NETASCII_EOL);
         if (pos > 0) {

@@ -64,15 +64,15 @@ public final class POP3Mail
                 "Usage: POP3Mail <pop3 server hostname> <username> <password> [TLS]");
             System.exit(1);
         }
-       
+
         String server = args[0];
         String username = args[1];
         String password = args[2];
 
         String proto = args.length > 3 ? args[3] : null;
-        
+
         POP3Client pop3;
-        
+
         if (proto != null) {
             System.out.println("Using secure protocol: "+proto);
             pop3 = new POP3SClient(proto);
@@ -80,7 +80,7 @@ public final class POP3Mail
             pop3 = new POP3Client();
         }
         System.out.println("Connecting to server "+server+" on "+pop3.getDefaultPort());
-        
+
         // We want to timeout if a response takes longer than 60 seconds
         pop3.setDefaultTimeout(60000);
 

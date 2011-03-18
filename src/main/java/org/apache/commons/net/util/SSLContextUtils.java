@@ -13,7 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.apache.commons.net.util;
@@ -33,7 +33,7 @@ public class SSLContextUtils {
     private SSLContextUtils() {
         // Not instantiable
     }
-    
+
     /**
      * Create and initialise sn SSLContext.
      * @param protocol the protocol used to instatiate the context
@@ -43,11 +43,11 @@ public class SSLContextUtils {
      * @throws IOException this is used to wrap any {@link GeneralSecurityException} that occurs
      */
     public static SSLContext createSSLContext(String protocol, KeyManager keyManager, TrustManager trustManager) throws IOException {
-        return createSSLContext(protocol, 
-                keyManager == null ? null : new KeyManager[] { keyManager }, 
+        return createSSLContext(protocol,
+                keyManager == null ? null : new KeyManager[] { keyManager },
                 trustManager == null ? null : new TrustManager[] { trustManager });
     }
-    
+
     /**
      * Create and initialise sn SSLContext.
      * @param protocol the protocol used to instatiate the context
@@ -56,7 +56,7 @@ public class SSLContextUtils {
      * @return the initialised context.
      * @throws IOException this is used to wrap any {@link GeneralSecurityException} that occurs
      */
-    public static SSLContext createSSLContext(String protocol, KeyManager[] keyManagers, TrustManager[] trustManagers) 
+    public static SSLContext createSSLContext(String protocol, KeyManager[] keyManagers, TrustManager[] trustManagers)
         throws IOException {
         SSLContext ctx;
         try {

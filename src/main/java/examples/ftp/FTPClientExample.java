@@ -163,7 +163,7 @@ public final class FTPClientExample
 
         final FTPClient ftp;
         if (protocol == null ) {
-            ftp = new FTPClient();            
+            ftp = new FTPClient();
         } else {
             ftp = new FTPSClient(protocol);
         }
@@ -186,7 +186,7 @@ public final class FTPClientExample
         {
             int reply;
             if (port > 0) {
-                ftp.connect(server, port);                
+                ftp.connect(server, port);
             } else {
                 ftp.connect(server);
             }
@@ -293,9 +293,9 @@ __main:
                             System.out.println("FEAT "+remote+" was not detected");
                         } else {
                             System.out.println("Command failed: "+ftp.getReplyString());
-                        }                        
+                        }
                     }
-                    
+
                     // Strings feature check
                     String []features = ftp.featureValues(remote);
                     if (features != null) {
@@ -314,7 +314,7 @@ __main:
 //                        Command listener has already printed the output
                     } else {
                         System.out.println("Failed: "+ftp.getReplyString());
-                    } 
+                    }
                 }
             }
             else if (doCommand != null)

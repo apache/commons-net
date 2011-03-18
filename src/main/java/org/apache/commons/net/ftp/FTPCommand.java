@@ -77,14 +77,14 @@ public final class FTPCommand
     public static final int EPRT = 37;
 
     /**
-     *  Machine parseable list for a directory 
-     * @since 3.0 
+     *  Machine parseable list for a directory
+     * @since 3.0
      */
     public static final int MLSD = 38;
 
-    /** 
-     * Machine parseable list for a single file 
-     * @since 3.0 
+    /**
+     * Machine parseable list for a single file
+     * @since 3.0
      */
     public static final int MLST = 39;
 

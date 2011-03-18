@@ -1931,7 +1931,7 @@ implements Configurable
     /**
      * Query the server for a supported feature, and returns its values (if any).
      * Caches the parsed response to avoid resending the command repeatedly.
-     * 
+     *
      * @return if the feature is present, returns the feature values (empty array if none)
      * Returns {@code null} if the feature is not found or the command failed.
      * Check {@link #getReplyCode()} or {@link #getReplyString()} if so.
@@ -1948,11 +1948,11 @@ implements Configurable
         }
         return null;
     }
-    
+
     /**
      * Query the server for a supported feature, and returns the its value (if any).
      * Caches the parsed response to avoid resending the command repeatedly.
-     * 
+     *
      * @return if the feature is present, returns the feature value or the empty string
      * if the feature exists but has no value.
      * Returns {@code null} if the feature is not found or the command failed.
@@ -1969,14 +1969,14 @@ implements Configurable
     }
 
     /**
-     * Query the server for a supported feature. 
+     * Query the server for a supported feature.
      * Caches the parsed response to avoid resending the command repeatedly.
-     * 
+     *
      * @param feature the name of the feature; it is converted to upper case.
      * @return {@code true} if the feature is present, {@code false} if the feature is not present
      * or the {@link #feat()} command failed. Check {@link #getReplyCode()} or {@link #getReplyString()}
      * if it is necessary to distinguish these cases.
-     * 
+     *
      * @throws IOException
      * @since 3.0
      */
@@ -1989,16 +1989,16 @@ implements Configurable
 
     /**
      * Query the server for a supported feature with particular value,
-     * for example "AUTH SSL" or "AUTH TLS". 
+     * for example "AUTH SSL" or "AUTH TLS".
      * Caches the parsed response to avoid resending the command repeatedly.
-     * 
+     *
      * @param feature the name of the feature; it is converted to upper case.
      * @param value the value to find.
-     * 
+     *
      * @return {@code true} if the feature is present, {@code false} if the feature is not present
      * or the {@link #feat()} command failed. Check {@link #getReplyCode()} or {@link #getReplyString()}
      * if it is necessary to distinguish these cases.
-     * 
+     *
      * @throws IOException
      * @since 3.0
      */
@@ -2021,7 +2021,7 @@ implements Configurable
             // Don't create map here, because next line may throw exception
             boolean success = FTPReply.isPositiveCompletion(feat());
             // we init the map here, so we don't keep trying if we know the command will fail
-            __featuresMap = new HashMap<String, Set<String>>();  
+            __featuresMap = new HashMap<String, Set<String>>();
             if (!success) {
                 return false;
             }
@@ -2040,12 +2040,12 @@ implements Configurable
                     Set<String> entries = __featuresMap.get(key);
                     if (entries == null) {
                         entries = new HashSet<String>();
-                        __featuresMap.put(key, entries);                        
+                        __featuresMap.put(key, entries);
                     }
                     entries.add(value);
                 }
             }
-        }    
+        }
         return true;
     }
 
@@ -2080,7 +2080,7 @@ implements Configurable
      * @return True if successfully completed, false if not, in which case
      * call {@link #getReplyCode()} or {@link #getReplyString()}
      * to get the reason.
-     * 
+     *
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      * @since 3.0
@@ -2101,7 +2101,7 @@ implements Configurable
      * @return The array of replies, or {@code null} if the command failed, in which case
      * call {@link #getReplyCode()} or {@link #getReplyString()}
      * to get the reason.
-     * 
+     *
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      * @since 3.0
@@ -2118,7 +2118,7 @@ implements Configurable
 
     /**
      * Get file details using the MLST command
-     * 
+     *
      * @param pathname the file or directory to list, may be {@code} null
      * @return the file details, may be {@code null}
      * @throws IOException
@@ -2137,7 +2137,7 @@ implements Configurable
 
     /**
      * Generate a directory listing using the MSLD command.
-     * 
+     *
      * @param pathname the directory name, may be {@code null}
      * @return the array of file entries
      * @throws IOException
@@ -2151,7 +2151,7 @@ implements Configurable
 
     /**
      * Generate a directory listing using the MSLD command.
-     * 
+     *
      * @param pathname the directory name, may be {@code null}
      * @param filter the filter to apply to the responses
      * @return the array of file entries
@@ -2964,10 +2964,10 @@ implements Configurable
         completePendingCommand();
         return engine;
     }
-    
+
     /**
      * Initiate list parsing for MLSD listings.
-     * 
+     *
      * @param pathname
      * @return the engine
      * @throws IOException
