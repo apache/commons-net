@@ -76,9 +76,16 @@ public final class FTPCommand
     /** @since 2.2 */
     public static final int EPRT = 37;
 
-    /** @since 3.0 */
+    /**
+     *  Machine parseable list for a directory 
+     * @since 3.0 
+     */
     public static final int MLSD = 38;
-    /** @since 3.0 */
+
+    /** 
+     * Machine parseable list for a single file 
+     * @since 3.0 
+     */
     public static final int MLST = 39;
 
     // Must agree with final entry above; used to check array size
