@@ -314,6 +314,7 @@ public abstract class SocketClient
     /**
      * Returns true if the client is currently connected to a server.
      * <p>
+     * Delegates to {@link Socket#isConnected()}
      * @return True if the client is currently connected to a server,
      *         false otherwise.
      */
@@ -508,7 +509,7 @@ public abstract class SocketClient
 
     /**
      * Returns the current value of the SO_KEEPALIVE flag on the currently opened socket.
-     *
+     * Delegates to {@link Socket#getKeepAlive()}
      * @return True if SO_KEEPALIVE is enabled.
      * @throws SocketException
      * @since 2.2
@@ -546,6 +547,7 @@ public abstract class SocketClient
     /**
      * Returns the port number of the open socket on the local host used
      * for the connection.
+     * Delegates to {@link Socket#getLocalPort()}
      * <p>
      * @return The port number of the open socket on the local host used
      *         for the connection.
@@ -557,7 +559,8 @@ public abstract class SocketClient
 
 
     /**
-     * Returns the local address to which the client's socket is bound.
+     * Returns the local address  to which the client's socket is bound.
+     * Delegates to {@link Socket#getLocalAddress()}
      * <p>
      * @return The local address to which the client's socket is bound.
      */
@@ -569,6 +572,7 @@ public abstract class SocketClient
     /**
      * Returns the port number of the remote host to which the client is
      * connected.
+     * Delegates to {@link Socket#getPort()}
      * <p>
      * @return The port number of the remote host to which the client is
      *         connected.
@@ -581,6 +585,7 @@ public abstract class SocketClient
 
     /**
      * @return The remote address to which the client is connected.
+     * Delegates to {@link Socket#getInetAddress()}
      */
     public InetAddress getRemoteAddress()
     {
