@@ -731,7 +731,7 @@ implements Configurable
     @Override
     protected void _connectAction_() throws IOException
     {
-        super._connectAction_();
+        super._connectAction_(); // sets up _input_ and _output_
         __initDefaults();
         // must be after super._connectAction_(), because otherwise we get an
         // Exception claiming we're not connected
@@ -743,11 +743,9 @@ implements Configurable
             {
                  setControlEncoding("UTF-8");
                  _controlInput_ =
-                     new BufferedReader(new InputStreamReader(_socket_.getInputStream(),
-                                                            getControlEncoding()));
+                     new BufferedReader(new InputStreamReader(_input_, getControlEncoding()));
                  _controlOutput_ =
-                    new BufferedWriter(new OutputStreamWriter(_socket_.getOutputStream(),
-                                                                            getControlEncoding()));
+                    new BufferedWriter(new OutputStreamWriter(_output_, getControlEncoding()));
             }
             // restore the original reply (server greeting)
             _replyLines.clear();
