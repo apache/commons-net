@@ -24,7 +24,6 @@ import java.io.OutputStreamWriter;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 
@@ -371,13 +370,11 @@ public class FTP extends SocketClient
     @Override
     protected void _connectAction_() throws IOException
     {
-        super._connectAction_();
+        super._connectAction_(); // sets up _input_ and _output_
         _controlInput_ =
-            new BufferedReader(new InputStreamReader(_socket_.getInputStream(),
-                                                     getControlEncoding()));
+            new BufferedReader(new InputStreamReader(_input_, getControlEncoding()));
         _controlOutput_ =
-            new BufferedWriter(new OutputStreamWriter(_socket_.getOutputStream(),
-                                                      getControlEncoding()));
+            new BufferedWriter(new OutputStreamWriter(_output_, getControlEncoding()));
         __getReply();
         // If we received code 120, we have to fetch completion reply.
         if (FTPReply.isPositivePreliminary(_replyCode))
@@ -509,7 +506,7 @@ public class FTP extends SocketClient
         }
         catch (SocketException e)
         {
-            if (!isConnected() || !socketIsConnected(_socket_))
+            if (!isConnected())
             {
                 throw new FTPConnectionClosedException("Connection unexpectedly closed.");
             }
@@ -531,21 +528,6 @@ public class FTP extends SocketClient
         String msg = __buildMessage(FTPCommand.getCommand(FTPCommand.NOOP), null);
         __send(msg);
         __getReplyNoReport(); // This may timeout
-    }
-
-    /**
-     * Checks if the socket is connected
-     *
-     * @param socket
-     * @return true if connected
-     */
-    private boolean socketIsConnected(Socket socket)
-    {
-        if (socket == null)
-        {
-            return false;
-        }
-        return socket.isConnected();
     }
 
     /***
