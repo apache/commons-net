@@ -206,8 +206,8 @@ public class POP3SClient extends POP3Client
         initSSLContext();
 
         SSLSocketFactory ssf = context.getSocketFactory();
-        String ip = _socket_.getInetAddress().getHostAddress();
-        int port = _socket_.getPort();
+        String ip = getRemoteAddress().getHostAddress();
+        int port = getRemotePort();
         SSLSocket socket =
             (SSLSocket) ssf.createSocket(_socket_, ip, port, true);
         socket.setEnableSessionCreation(true);
