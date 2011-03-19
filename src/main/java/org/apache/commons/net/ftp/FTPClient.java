@@ -2136,6 +2136,18 @@ implements Configurable
     }
 
     /**
+     * Generate a directory listing for the current directory using the MSLD command.
+     *
+     * @return the array of file entries
+     * @throws IOException
+     * @since 3.0
+     */
+    public FTPFile[] mlistDir() throws IOException
+    {
+        return mlistDir(null);
+    }
+
+    /**
      * Generate a directory listing using the MSLD command.
      *
      * @param pathname the directory name, may be {@code null}
@@ -2580,9 +2592,7 @@ implements Configurable
     public FTPFile[] listFiles(String pathname)
     throws IOException
     {
-        String key = null;
-        FTPListParseEngine engine =
-            initiateListParsing(key, pathname);
+        FTPListParseEngine engine = initiateListParsing((String) null, pathname);
         return engine.getFiles();
 
     }
