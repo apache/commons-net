@@ -17,6 +17,7 @@
 
 package org.apache.commons.net;
 
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import org.apache.commons.net.ProtocolCommandEvent;
 import org.apache.commons.net.ProtocolCommandListener;
@@ -35,6 +36,45 @@ public class PrintCommandListener implements ProtocolCommandListener
     private final PrintWriter __writer;
     private final boolean __nologin;
     private final char __eolMarker;
+
+    /**
+     * Create the default instance which prints everything.
+     *
+     * @param stream where to write the commands and responses
+     * e.g. System.out
+     * @since 3.0
+     */
+    public PrintCommandListener(PrintStream stream)
+    {
+        this(new PrintWriter(stream));
+    }
+
+    /**
+     * Create an instance which optionally suppresses login command text
+     * and indicates where the EOL starts with the specified character.
+     *
+     * @param stream where to write the commands and responses
+     * @param suppressLogin if {@code true}, only print command name for login
+     *
+     * @since 3.0
+     */
+    public PrintCommandListener(PrintStream stream, boolean suppressLogin) {
+        this(new PrintWriter(stream), suppressLogin);
+    }
+
+    /**
+     * Create an instance which optionally suppresses login command text
+     * and indicates where the EOL starts with the specified character.
+     *
+     * @param stream where to write the commands and responses
+     * @param suppressLogin if {@code true}, only print command name for login
+     * @param eolMarker if non-zero, add a marker just before the EOL.
+     *
+     * @since 3.0
+     */
+    public PrintCommandListener(PrintStream stream, boolean suppressLogin, char eolMarker) {
+        this(new PrintWriter(stream), suppressLogin, eolMarker);
+    }
 
     /**
      * Create the default instance which prints everything.
