@@ -28,32 +28,35 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
 
 /**
- * Parser class for MSLT and MLSD replies.
- *
+ * Parser class for MSLT and MLSD replies. See RFC 3659.
+ * <p>
+ * Format is as follows:
+ * <pre>
+ * entry            = [ facts ] SP pathname
+ * facts            = 1*( fact ";" )
+ * fact             = factname "=" value
+ * factname         = "Size" / "Modify" / "Create" /
+ *                    "Type" / "Unique" / "Perm" /
+ *                    "Lang" / "Media-Type" / "CharSet" /
+ * os-depend-fact / local-fact
+ * os-depend-fact   = <IANA assigned OS name> "." token
+ * local-fact       = "X." token
+ * value            = *SCHAR
+ * 
+ * Sample os-depend-fact:
+ * UNIX.group=0;UNIX.mode=0755;UNIX.owner=0;
+ * </pre>
+ * A single control response entry (MLST) is returned with a leading space;
+ * multiple (data) entries are returned without any leading spaces.
+ * The parser requires that the leading space from the MLST entry is removed.
+ * MLSD entries can begin with a single space if there are no facts.
+ * 
  * @since 3.0
  */
 public class MLSxEntryParser extends FTPFileEntryParserImpl
 {
-    //    Format taken from RFC 3659:
-
-    //    entry            = [ facts ] SP pathname
-    //    facts            = 1*( fact ";" )
-    //    fact             = factname "=" value
-    //    factname         = "Size" / "Modify" / "Create" /
-    //                       "Type" / "Unique" / "Perm" /
-    //                       "Lang" / "Media-Type" / "CharSet" /
-    //                       os-depend-fact / local-fact
-    //    os-depend-fact   = <IANA assigned OS name> "." token
-    //    local-fact       = "X." token
-    //    value            = *SCHAR
-
-    // Sample os-depend-fact:
-    //    UNIX.group=0;UNIX.mode=0755;UNIX.owner=0;
-
-    // A single control response entry (MLST) is returned with a leading space;
-    // multiple (data) entries are returned without any leading spaces.
-
-   private static final MLSxEntryParser PARSER = new MLSxEntryParser();
+    // This class is immutable, so a single instance can be shared.
+    private static final MLSxEntryParser PARSER = new MLSxEntryParser();
 
     private static final HashMap<String, Integer> TYPE_TO_INT = new HashMap<String, Integer>();
     static {
@@ -69,7 +72,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
         FTPFile.WORLD_ACCESS,
     };
 
-    private static int UNIX_PERMS[][] = { // perm bits, broken down
+    private static int UNIX_PERMS[][] = { // perm bits, broken down by octal int value
 /* 0 */  {},
 /* 1 */  {FTPFile.EXECUTE_PERMISSION},
 /* 2 */  {FTPFile.WRITE_PERMISSION},
@@ -80,6 +83,10 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
 /* 7 */  {FTPFile.READ_PERMISSION, FTPFile.WRITE_PERMISSION, FTPFile.EXECUTE_PERMISSION},
     };
 
+    /**
+     * Create the parser for MSLT and MSLD listing entries
+     * This class is immutable, so one can use {@link #getInstance()} instead.
+     */
     public MLSxEntryParser()
     {
         super();
@@ -130,7 +137,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                     sdf = new SimpleDateFormat("yyyyMMddHHmmss");
                 }
 
-                GregorianCalendar gc = new GregorianCalendar(TimeZone.getTimeZone("GMT")); // TODO are these thread-safe?
+                GregorianCalendar gc = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
                 try {
                     gc.setTime(sdf.parse(factvalue));
                 } catch (ParseException e) {
