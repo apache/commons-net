@@ -58,7 +58,7 @@ public final class FTPClientExample
         "\t-k secs - use keep-alive timer (setControlKeepAliveTimeout)\n" +
         "\t-l - list files using LIST (remote is used as the pathname if provided)\n" +
         "\t-n - list file names using NLST (remote is used as the pathname if provided)\n" +
-        "\t-p protocol - use FTPSClient with the specified protocol \n" +
+        "\t-p true|false|protocol[,true|false] - use FTPSClient with the specified protocol and/or isImplicit setting\n" +
         "\t-s - store file on server (upload)\n" +
         "\t-t - list file details using MLST (remote is used as the pathname if provided)\n" +
         "\t-w msec - wait time for keep-alive reply (setControlKeepAliveReplyTimeout)\n" +
@@ -165,7 +165,18 @@ public final class FTPClientExample
         if (protocol == null ) {
             ftp = new FTPClient();
         } else {
-            ftp = new FTPSClient(protocol);
+            if (protocol.equals("true")) {
+                ftp = new FTPSClient(true);
+            } else if (protocol.equals("false")) {
+                ftp = new FTPSClient(false);
+            } else {
+                String prot[] = protocol.split(",");
+                if (prot.length == 1) { // Just protocol
+                    ftp = new FTPSClient(protocol);
+                } else { // protocol,true|false
+                    ftp = new FTPSClient(prot[0], Boolean.parseBoolean(prot[1]));                    
+                }
+            }
         }
 
         if (printHash) {
