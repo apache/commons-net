@@ -122,9 +122,11 @@ public class FTPSClient extends FTPClient {
      */
     public FTPSClient(String protocol, boolean isImplicit) {
         super();
-        setDefaultPort(DEFAULT_FTPS_PORT);
         this.protocol = protocol;
         this.isImplicit = isImplicit;
+        if (isImplicit) {
+            setDefaultPort(DEFAULT_FTPS_PORT);            
+        }
     }
 
     /**
