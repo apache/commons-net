@@ -114,6 +114,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
             }
             String factname = factparts[0].toLowerCase(Locale.ENGLISH);
             String factvalue = factparts[1];
+            String valueLowerCase = factvalue.toLowerCase(Locale.ENGLISH);
             if ("size".equals(factname)) {
                 file.setSize(Long.parseLong(factvalue));
             }
@@ -138,7 +139,12 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                 file.setTimestamp(gc);
             }
             else if ("type".equals(factname)) {
-                file.setType(TYPE_TO_INT.get(factvalue.toLowerCase(Locale.ENGLISH)).intValue());
+                    Integer intType = TYPE_TO_INT.get(valueLowerCase);
+                    if (intType == null) {
+                        // TODO System.out.println(factvalue+ "? in "+entry);
+                    } else {
+                        file.setType(intType.intValue());
+                    }
             }
             else if (factname.startsWith("unix.")) {
                 String unixfact = factname.substring("unix.".length()).toLowerCase(Locale.ENGLISH);
@@ -155,13 +161,13 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                         }
                     }
                     file.setUser(factvalue);
-                }
-            }
+                } // mode
+            } // unix.
             else if (!hasUnixMode && "perm".equals(factname)) { // skip if we have the UNIX.mode
                 //              perm-fact    = "Perm" "=" *pvals
                 //              pvals        = "a" / "c" / "d" / "e" / "f" /
                 //                             "l" / "m" / "p" / "r" / "w"
-                for(char c : factvalue.toLowerCase(Locale.ENGLISH).toCharArray()) {
+                for(char c : valueLowerCase.toCharArray()) {
                     // TODO these are mostly just guesses at present
                     switch (c) {
                         case 'a':     // (file) may APPEnd
@@ -198,7 +204,6 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                             return null; // TODO?
                     }
                 }
-                file.setType(TYPE_TO_INT.get(factvalue.toLowerCase(Locale.ENGLISH)).intValue());
             }
         }
         return file;
