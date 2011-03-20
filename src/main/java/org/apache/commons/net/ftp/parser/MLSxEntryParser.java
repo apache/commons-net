@@ -171,49 +171,53 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                 } // mode
             } // unix.
             else if (!hasUnixMode && "perm".equals(factname)) { // skip if we have the UNIX.mode
-                //              perm-fact    = "Perm" "=" *pvals
-                //              pvals        = "a" / "c" / "d" / "e" / "f" /
-                //                             "l" / "m" / "p" / "r" / "w"
-                for(char c : valueLowerCase.toCharArray()) {
-                    // TODO these are mostly just guesses at present
-                    switch (c) {
-                        case 'a':     // (file) may APPEnd
-                            file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
-                            break;
-                        case 'c':     // (dir) files may be created in the dir
-                            file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
-                            break;
-                        case 'd':     // deletable
-                            file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
-                            break;
-                        case 'e':     // (dir) can change to this dir
-                            file.setPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION, true);
-                            break;
-                        case 'f':     // (file) renamable
-                            // ?? file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
-                            break;
-                        case 'l':     // (dir) can be listed
-                            file.setPermission(FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION, true);
-                            break;
-                        case 'm':     // (dir) can create directory here
-                            file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
-                            break;
-                        case 'p':     // (dir) entries may be deleted
-                            file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
-                            break;
-                        case 'r':     // (files) file may be RETRieved
-                            file.setPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION, true);
-                            break;
-                        case 'w':     // (files) file may be STORed
-                            file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
-                            break;
-                        default:
-                            return null; // TODO?
-                    }
-                }
-            }
-        }
+                doUnixPerms(file, valueLowerCase);
+            } // process "perm"
+        } // each fact
         return file;
+    }
+
+    //              perm-fact    = "Perm" "=" *pvals
+    //              pvals        = "a" / "c" / "d" / "e" / "f" /
+    //                             "l" / "m" / "p" / "r" / "w"
+    private void doUnixPerms(FTPFile file, String valueLowerCase) {
+        for(char c : valueLowerCase.toCharArray()) {
+            // TODO these are mostly just guesses at present
+            switch (c) {
+                case 'a':     // (file) may APPEnd
+                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
+                    break;
+                case 'c':     // (dir) files may be created in the dir
+                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
+                    break;
+                case 'd':     // deletable
+                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
+                    break;
+                case 'e':     // (dir) can change to this dir
+                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION, true);
+                    break;
+                case 'f':     // (file) renamable
+                    // ?? file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
+                    break;
+                case 'l':     // (dir) can be listed
+                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION, true);
+                    break;
+                case 'm':     // (dir) can create directory here
+                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
+                    break;
+                case 'p':     // (dir) entries may be deleted
+                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
+                    break;
+                case 'r':     // (files) file may be RETRieved
+                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION, true);
+                    break;
+                case 'w':     // (files) file may be STORed
+                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
+                    break;
+                default:
+                    // ignore unexpected flag for now.
+            } // switch
+        } // each char
     }
 
     public static FTPFile parseEntry(String entry) {
