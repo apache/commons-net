@@ -148,7 +148,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
             else if ("type".equals(factname)) {
                     Integer intType = TYPE_TO_INT.get(valueLowerCase);
                     if (intType == null) {
-                        // TODO System.out.println(factvalue+ "? in "+entry);
+                        file.setType(FTPFile.UNKNOWN_TYPE);
                     } else {
                         file.setType(intType.intValue());
                     }
@@ -163,8 +163,12 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                     int off = factvalue.length()-4; // only parse last 3 digits
                     for(int i=1; i<=3; i++){
                         int ch = factvalue.charAt(off+i)-'0';
-                        for(int p : UNIX_PERMS[ch]) {
-                            file.setPermission(UNIX_GROUPS[i-1], p, true);
+                        if (ch >= 0 && ch <= 7) { // Check it's valid octal
+                            for(int p : UNIX_PERMS[ch]) {
+                                file.setPermission(UNIX_GROUPS[i-1], p, true);
+                            }
+                        } else {
+                            // TODO should this cause failure, or can it be reported somehow?
                         }
                     }
                     file.setUser(factvalue);
