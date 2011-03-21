@@ -25,6 +25,7 @@ import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 import org.apache.commons.net.MalformedServerReplyException;
@@ -375,10 +376,22 @@ public class FTP extends SocketClient
             new BufferedReader(new InputStreamReader(_input_, getControlEncoding()));
         _controlOutput_ =
             new BufferedWriter(new OutputStreamWriter(_output_, getControlEncoding()));
-        __getReply();
-        // If we received code 120, we have to fetch completion reply.
-        if (FTPReply.isPositivePreliminary(_replyCode))
-            __getReply();
+        if (connectTimeout > 0) { // NET-385
+            int original = _socket_.getSoTimeout();
+            _socket_.setSoTimeout(connectTimeout); 
+            try {
+                __getReply();
+                // If we received code 120, we have to fetch completion reply.
+                if (FTPReply.isPositivePreliminary(_replyCode))
+                    __getReply();
+            } catch (SocketTimeoutException e) {
+                IOException ioe = new IOException("Timed out waiting for initial connect reply");
+                ioe.initCause(e);
+                throw ioe;
+            } finally {
+                _socket_.setSoTimeout(original);
+            }
+        }
     }
 
 
