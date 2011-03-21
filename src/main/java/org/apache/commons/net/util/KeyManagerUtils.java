@@ -33,8 +33,16 @@ import javax.net.ssl.X509ExtendedKeyManager;
 import org.apache.commons.net.io.Util;
 
 /**
- * General KeyManager utilities        *INITIAL IMPLEMENTATION*  *MAY CHANGE RADICALLY*
- *
+ * General KeyManager utilities
+ * <p>
+ * How to use with a client certificate:
+ * <pre>
+ * KeyStore ks = KeyManagerUtils.createKeyStore("JKS","/path/to/privatekeystore.jks","storepassword");
+ * KeyManager km = KeyManagerUtils.createClientKeyManager(ks, "privatekeyalias", "keypassword");
+ * FTPSClient cl = new FTPSClient();
+ * cl.setKeyManager(km);
+ * cl.connect(...);
+ * </pre>
  * @since 3.0
  */
 public final class KeyManagerUtils {
@@ -121,12 +129,10 @@ public final class KeyManagerUtils {
         }
 
         public String[] getServerAliases(String keyType, Principal[] issuers) {
-//            new Throwable(keyType).printStackTrace();
             return null;
         }
 
         public String chooseServerAlias(String keyType, Principal[] issuers, Socket socket) {
-//            new Throwable(keyType).printStackTrace();
             return null;
         }
 
