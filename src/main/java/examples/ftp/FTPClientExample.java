@@ -33,6 +33,7 @@ import org.apache.commons.net.ftp.FTPReply;
 import org.apache.commons.net.ftp.FTPSClient;
 import org.apache.commons.net.io.CopyStreamEvent;
 import org.apache.commons.net.io.CopyStreamListener;
+import org.apache.commons.net.util.TrustManagerUtils;
 
 /**
  * This is an example program demonstrating how to use the FTPClient class.
@@ -62,6 +63,7 @@ public final class FTPClientExample
         "\t-s - store file on server (upload)\n" +
         "\t-t - list file details using MLST (remote is used as the pathname if provided)\n" +
         "\t-w msec - wait time for keep-alive reply (setControlKeepAliveReplyTimeout)\n" +
+        "\t-T  all|valid - use one of the built-in TrustManager implementations\n" +        
         "\t-# - add hash display during transfers\n";
 
     public static final void main(String[] args)
@@ -74,6 +76,7 @@ public final class FTPClientExample
         int minParams = 5; // listings require 3 params
         String protocol = null; // SSL protocol
         String doCommand = null;
+        String trustmgr = null;
 
         int base = 0;
         for (base = 0; base < args.length; base++)
@@ -126,6 +129,9 @@ public final class FTPClientExample
             else if (args[base].equals("-w")) {
                 controlKeepAliveReplyTimeout = Integer.parseInt(args[++base]);
             }
+            else if (args[base].equals("-T")) {
+                trustmgr = args[++base];
+            }
             else if (args[base].equals("-#")) {
                 printHash = true;
             }
@@ -165,17 +171,24 @@ public final class FTPClientExample
         if (protocol == null ) {
             ftp = new FTPClient();
         } else {
+            FTPSClient ftps;
             if (protocol.equals("true")) {
-                ftp = new FTPSClient(true);
+                ftps = new FTPSClient(true);
             } else if (protocol.equals("false")) {
-                ftp = new FTPSClient(false);
+                ftps = new FTPSClient(false);
             } else {
                 String prot[] = protocol.split(",");
                 if (prot.length == 1) { // Just protocol
-                    ftp = new FTPSClient(protocol);
+                    ftps = new FTPSClient(protocol);
                 } else { // protocol,true|false
-                    ftp = new FTPSClient(prot[0], Boolean.parseBoolean(prot[1]));                    
+                    ftps = new FTPSClient(prot[0], Boolean.parseBoolean(prot[1]));                    
                 }
+            }
+            ftp = ftps;
+            if ("all".equals(trustmgr)) {
+                ftps.setTrustManager(TrustManagerUtils.getAcceptAllTrustManager());
+            } else if ("valid".equals(trustmgr)) {
+                ftps.setTrustManager(TrustManagerUtils.getValidateServerCertificateTrustManager());                
             }
         }
 
