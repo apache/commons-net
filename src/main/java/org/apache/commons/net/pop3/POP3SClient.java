@@ -45,8 +45,10 @@ import javax.net.ssl.TrustManager;
  */
 public class POP3SClient extends POP3Client
 {
-//    pop3s           995/tcp    pop3 protocol over TLS/SSL (was spop3)
-//    pop3s           995/udp    pop3 protocol over TLS/SSL (was spop3)
+    // from http://www.iana.org/assignments/port-numbers
+
+    //    pop3s           995/tcp    pop3 protocol over TLS/SSL (was spop3)
+    //    pop3s           995/udp    pop3 protocol over TLS/SSL (was spop3)
 
     private static final int DEFAULT_POP3S_PORT = 995;
 
@@ -75,9 +77,8 @@ public class POP3SClient extends POP3Client
     private KeyManager keyManager = null;
 
     /**
-     * Constructor for POP3SClient.
-     * Sets security mode to explicit (isImplicit = false).
-     * is not available in the environment.
+     * Constructor for POP3SClient, using {@link #DEFAULT_PROTOCOL} i.e. TLS
+     * Sets security mode to explicit.
      */
     public POP3SClient()
     {
@@ -85,9 +86,8 @@ public class POP3SClient extends POP3Client
     }
 
     /**
-     * Constructor for POP3SClient.
-     * @param implicit The security mode (Implicit/Explicit).
-     * is not available in the environment.
+     * Constructor for POP3SClient, using {@link #DEFAULT_PROTOCOL} i.e. TLS
+     * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      */
     public POP3SClient(boolean implicit)
     {
@@ -96,8 +96,8 @@ public class POP3SClient extends POP3Client
 
     /**
      * Constructor for POP3SClient.
+     * Sets security mode to explicit.
      * @param proto the protocol.
-     * is not available in the environment.
      */
     public POP3SClient(String proto)
     {
@@ -107,8 +107,7 @@ public class POP3SClient extends POP3Client
     /**
      * Constructor for POP3SClient.
      * @param proto the protocol.
-     * @param implicit The security mode(Implicit/Explicit).
-     * is not available in the environment.
+     * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      */
     public POP3SClient(String proto, boolean implicit)
     {
@@ -117,22 +116,25 @@ public class POP3SClient extends POP3Client
 
     /**
      * Constructor for POP3SClient.
+     * Sets the default port to {@link #DEFAULT_POP3S_PORT} - 995 - if using implicit mode
      * @param proto the protocol.
-     * @param implicit The security mode(Implicit/Explicit).
-     * is not available in the environment.
+     * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
+     * @param ctx the context to be used
      */
     public POP3SClient(String proto, boolean implicit, SSLContext ctx)
     {
         super();
-        setDefaultPort(DEFAULT_POP3S_PORT);
         protocol = proto;
         isImplicit = implicit;
         context = ctx;
+        if (isImplicit) {
+            setDefaultPort(DEFAULT_POP3S_PORT);
+        }
     }
 
     /**
-     * Constructor for POP3SClient.
-     * @param implicit The security mode(Implicit/Explicit).
+     * Constructor for POP3SClient, using {@link #DEFAULT_PROTOCOL} i.e. TLS
+     * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      * @param ctx A pre-configured SSL Context.
      */
     public POP3SClient(boolean implicit, SSLContext ctx)
@@ -141,8 +143,9 @@ public class POP3SClient extends POP3Client
     }
 
     /**
-     * Constructor for POP3SClient.
+     * Constructor for POP3SClient, using {@link #DEFAULT_PROTOCOL} - TLS - and isImplicit = false
      * @param context A pre-configured SSL Context.
+     * @see #POP3SClient(boolean, SSLContext)
      */
     public POP3SClient(SSLContext context)
     {

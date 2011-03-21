@@ -68,9 +68,8 @@ public class SMTPSClient extends SMTPClient
     private KeyManager keyManager = null; // seems not to be required
 
     /**
-     * Constructor for SMTPSClient.
+     * Constructor for SMTPSClient, using {@link #DEFAULT_PROTOCOL} i.e. TLS
      * Sets security mode to explicit (isImplicit = false).
-     * is not available in the environment.
      */
     public SMTPSClient()
     {
@@ -78,9 +77,8 @@ public class SMTPSClient extends SMTPClient
     }
 
     /**
-     * Constructor for SMTPSClient.
-     * @param implicit The security mode (Implicit/Explicit).
-     * is not available in the environment.
+     * Constructor for SMTPSClient, using {@link #DEFAULT_PROTOCOL} i.e. TLS
+     * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      */
     public SMTPSClient(boolean implicit)
     {
@@ -88,9 +86,8 @@ public class SMTPSClient extends SMTPClient
     }
 
     /**
-     * Constructor for SMTPSClient.
+     * Constructor for SMTPSClient, using explicit security mode.
      * @param proto the protocol.
-     * is not available in the environment.
      */
     public SMTPSClient(String proto)
     {
@@ -100,8 +97,7 @@ public class SMTPSClient extends SMTPClient
     /**
      * Constructor for SMTPSClient.
      * @param proto the protocol.
-     * @param implicit The security mode(Implicit/Explicit).
-     * is not available in the environment.
+     * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      */
     public SMTPSClient(String proto, boolean implicit)
     {
@@ -110,8 +106,8 @@ public class SMTPSClient extends SMTPClient
     }
 
     /**
-     * Constructor for SMTPSClient.
-     * @param implicit The security mode(Implicit/Explicit).
+     * Constructor for SMTPSClient, using {@link #DEFAULT_PROTOCOL} i.e. TLS
+     * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      * @param ctx A pre-configured SSL Context.
      */
     public SMTPSClient(boolean implicit, SSLContext ctx)
@@ -124,6 +120,7 @@ public class SMTPSClient extends SMTPClient
     /**
      * Constructor for SMTPSClient.
      * @param context A pre-configured SSL Context.
+     * @see #SMTPSClient(boolean, SSLContext)
      */
     public SMTPSClient(SSLContext context)
     {
