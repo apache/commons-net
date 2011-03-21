@@ -170,8 +170,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                         } else {
                             // TODO should this cause failure, or can it be reported somehow?
                         }
-                    }
-                    file.setUser(factvalue);
+                    } // digits
                 } // mode
             } // unix.
             else if (!hasUnixMode && "perm".equals(factname)) { // skip if we have the UNIX.mode
