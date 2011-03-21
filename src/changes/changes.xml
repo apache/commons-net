@@ -57,6 +57,10 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.0" date="TBA" description="TBA">
+            <action issue="NET-326" dev="sebb" type="add">
+            A KeyManager is required when the protection level is set to 'P' with FTPSClient on active mode.
+            Added KeyManagerUtils class to simplify provision of client certificates.
+            </action>
             <action issue="NET-273" dev="sebb" type="add">
             FEAT response parsing. Added FTPClient methods: boolean hasFeature(feature [,option]),
             String fetaureValue(feature), String[] featureValues(feature) 
