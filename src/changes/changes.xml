@@ -57,6 +57,9 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.0" date="TBA" description="TBA">
+            <action issue="NET-383" dev="sebb" type="update">
+            KeyManagerUtils - allow alias to be omitted when there is only one private key in the store
+            </action>
             <action issue="NET-326" dev="sebb" type="add">
             A KeyManager is required when the protection level is set to 'P' with FTPSClient on active mode.
             Added KeyManagerUtils class to simplify provision of client certificates.

@@ -23,9 +23,11 @@ import java.io.IOException;
 import java.net.Socket;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.security.Principal;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
+import java.util.Enumeration;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.X509ExtendedKeyManager;
@@ -80,7 +82,7 @@ public final class KeyManagerUtils {
      * Does not handle server keys.
      *  
      * @param keyStore the keystore
-     * @param keyAlias the alias of the key to use
+     * @param keyAlias the alias of the key to use, may be {@code null} in which case the first key entry alias is used
      * @param keyPass the password of the key to use
      * @return the customised X509KeyManager
      */
@@ -97,17 +99,42 @@ public final class KeyManagerUtils {
 
         private final String keyPass;
 
-        X509KeyManager(String keyAlias, KeyStore keyStore, String keyPass){
-            this.keyAlias = keyAlias;
+        /**
+         * Creates a key manager to handle a specific client key
+         * @param keyAlias the key alias, may be {@code null} in which case the first key entry alias is used
+         * @param keyStore the keystore to use, which has already been loaded
+         * @param keyPass the key password, does not have to be the same as the store password
+         */
+        X509KeyManager(final String keyAlias, final KeyStore keyStore, final String keyPass){
             this.keyStore = keyStore;
+            if (keyAlias == null) {
+                String alias = null;
+                try {
+                    Enumeration<String> e = keyStore.aliases();
+                    while(e.hasMoreElements()) {
+                        String entry = e.nextElement();
+                        if (keyStore.isKeyEntry(entry)) {
+                            alias = entry;
+                            break;
+                        }
+                    }
+                } catch (KeyStoreException e) {
+                    // ignore
+                }
+                this.keyAlias = alias;
+            } else {
+                this.keyAlias = keyAlias;
+            }
             this.keyPass = keyPass;
         }
 
+        // Call sequence: 1
         public String chooseClientAlias(String[] keyType, Principal[] issuers,
                 Socket socket) {
             return keyAlias;
         }
 
+        // Call sequence: 2
         public X509Certificate[] getCertificateChain(String alias) {
             try {
                 return new X509Certificate[]{(X509Certificate) keyStore.getCertificate(alias)};
@@ -120,6 +147,7 @@ public final class KeyManagerUtils {
             return new String[]{ keyAlias};
         }
 
+        // Call sequence: 3
         public PrivateKey getPrivateKey(String alias) {
             try {
                 return (PrivateKey) keyStore.getKey(alias, keyPass.toCharArray());
