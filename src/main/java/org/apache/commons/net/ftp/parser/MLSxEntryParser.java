@@ -136,8 +136,9 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                 } else {
                     sdf = new SimpleDateFormat("yyyyMMddHHmmss");
                 }
-
-                GregorianCalendar gc = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
+                TimeZone GMT = TimeZone.getTimeZone("GMT"); // both need to be set for the parse to work OK
+                sdf.setTimeZone(GMT);
+                GregorianCalendar gc = new GregorianCalendar(GMT);
                 try {
                     gc.setTime(sdf.parse(factvalue));
                 } catch (ParseException e) {
@@ -160,12 +161,12 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                 } else if ("owner".equals(unixfact)){
                     file.setUser(factvalue);
                 } else if ("mode".equals(unixfact)){ // e.g. 0[1]755
-                    int off = factvalue.length()-4; // only parse last 3 digits
-                    for(int i=1; i<=3; i++){
+                    int off = factvalue.length()-3; // only parse last 3 digits
+                    for(int i=0; i < 3; i++){
                         int ch = factvalue.charAt(off+i)-'0';
                         if (ch >= 0 && ch <= 7) { // Check it's valid octal
                             for(int p : UNIX_PERMS[ch]) {
-                                file.setPermission(UNIX_GROUPS[i-1], p, true);
+                                file.setPermission(UNIX_GROUPS[i], p, true);
                             }
                         } else {
                             // TODO should this cause failure, or can it be reported somehow?
