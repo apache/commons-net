@@ -89,36 +89,35 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Constructor for FTPSClient.
-     * Sets security mode to explicit (isImplicit = false)
-     * is not available in the environment.
+     * Sets protocol to {@link #DEFAULT_PROTOCOL} - i.e. TLS - and security mode to explicit (isImplicit = false)
      */
     public FTPSClient() {
         this(DEFAULT_PROTOCOL, false);
     }
 
     /**
-     * Constructor for FTPSClient.
+     * Constructor for FTPSClient, using {@link #DEFAULT_PROTOCOL} - i.e. TLS
      * @param isImplicit The security mode (Implicit/Explicit).
-     * is not available in the environment.
      */
     public FTPSClient(boolean isImplicit) {
         this(DEFAULT_PROTOCOL, isImplicit);
     }
 
     /**
-     * Constructor for FTPSClient.
-     * @param protocol the protocol
-     * is not available in the environment.
+     * Constructor for FTPSClient, using explict mode
+     * @param protocol the protocol to use
      */
     public FTPSClient(String protocol) {
         this(protocol, false);
     }
 
     /**
-     * Constructor for FTPSClient.
+     * Constructor for FTPSClient allowing specification of protocol
+     * and security mode. If isImplicit is true, the port is set to
+     * {@link #DEFAULT_FTPS_PORT} i.e. 990.
+     * 
      * @param protocol the protocol
      * @param isImplicit The security mode(Implicit/Explicit).
-     * is not available in the environment.
      */
     public FTPSClient(String protocol, boolean isImplicit) {
         super();
@@ -130,7 +129,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Constructor for FTPSClient.
+     * Constructor for FTPSClient, using {@link #DEFAULT_PROTOCOL} - i.e. TLS
      * @param isImplicit The security mode(Implicit/Explicit).
      * @param context A pre-configured SSL Context
      */
@@ -140,7 +139,9 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Constructor for FTPSClient.
+     * Constructor for FTPSClient, using {@link #DEFAULT_PROTOCOL} - i.e. TLS
+     * and isImplicit {@code false}
+     * 
      * @param context A pre-configured SSL Context
      */
     public FTPSClient(SSLContext context) {
