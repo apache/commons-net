@@ -92,15 +92,6 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
         super();
     }
 
-    /**
-     * Override preParse() phase as it is not needed.
-     */
-    // TODO can be removed if NET-381 is implemented
-    @Override
-    public List<String> preParse(List<String> orig) {
-        return orig;
-    }
-
     public FTPFile parseFTPEntry(String entry) {
         String parts[] = entry.split(" ",2); // Path may contain space
         if (parts.length != 2) {
