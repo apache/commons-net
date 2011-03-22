@@ -70,9 +70,6 @@ The <action> type attribute can be add,update,fix,remove.
             <action issue="NET-388" dev="sebb" type="fix">
             VMSVersioningFTPEntryParser#preParse should not call super.preParse().
             </action>
-            <action issue="NET-388" dev="sebb" type="fix">
-            VMSVersioningFTPEntryParser#preParse should not call super.preParse().
-            </action>
             <action issue="NET-362" dev="sebb" type="fix">
             TelnetInputStream has various threading bugs.
             </action>
