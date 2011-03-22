@@ -57,6 +57,10 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.0" date="TBA" description="TBA">
+            <action issue="NET-369" dev="sebb" type="remove">
+            Article.addHeaderField() is currently write-only - there is no way to retrieve the headers - is it needed?
+            Method was removed, along with the field.
+            </action>
             <action issue="NET-367" dev="sebb" type="fix">
             ntp.TimeStamp uses incorrect lazy initialisation of static fields simpleFormatter and utcFormatter.
             </action>

@@ -31,27 +31,13 @@ public class Article implements Threadable {
     private String articleId;
     private String simplifiedSubject;
     private String from;
-    private StringBuffer header;
     private ArrayList<String> references;
     private boolean isReply = false;
 
     public Article kid, next;
 
     public Article() {
-        header = new StringBuffer();
         articleNumber = -1; // isDummy
-    }
-
-    /**
-     * Adds an arbitrary header key and value to this message's header.
-     * @param name the header name
-     * @param val the header value
-     */
-    public void addHeaderField(String name, String val) {
-        header.append(name);
-        header.append(": ");
-        header.append(val);
-        header.append('\n');
     }
 
     /**
