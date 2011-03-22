@@ -57,6 +57,9 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.0" date="TBA" description="TBA">
+            <action issue="NET-362" dev="sebb" type="fix">
+            TelnetInputStream has various threading bugs.
+            </action>
             <action issue="NET-89" dev="sebb" type="fix">
             TelnetClient use of FromNetASCIIInputStream and ToNetASCIIOutputStream breaks binary mode.
             See also NET-387.
