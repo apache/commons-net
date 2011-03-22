@@ -22,9 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.commons.net.io.FromNetASCIIInputStream;
-import org.apache.commons.net.io.ToNetASCIIOutputStream;
-
 /***
  * The TelnetClient class implements the simple network virtual
  * terminal (NVT) for the Telnet protocol according to RFC 854.  It
@@ -94,16 +91,7 @@ public class TelnetClient extends Telnet
     protected void _connectAction_() throws IOException
     {
         super._connectAction_();
-        InputStream input;
-        TelnetInputStream tmp;
-
-        if (FromNetASCIIInputStream.isConversionRequired())
-            input = new FromNetASCIIInputStream(_input_);
-        else
-            input = _input_;
-
-
-        tmp = new TelnetInputStream(input, this, readerThread);
+        TelnetInputStream tmp = new TelnetInputStream(_input_, this, readerThread);
         if(readerThread)
         {
             tmp._start();
@@ -115,7 +103,7 @@ public class TelnetClient extends Telnet
         // now it looks like classes like InputStreamReader are not implemented
         // in a safe manner.
         __input = new BufferedInputStream(tmp);
-        __output = new ToNetASCIIOutputStream(new TelnetOutputStream(this));
+        __output = new TelnetOutputStream(this);
     }
 
     /***
