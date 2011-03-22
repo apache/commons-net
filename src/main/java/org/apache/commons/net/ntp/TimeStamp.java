@@ -18,7 +18,6 @@ package org.apache.commons.net.ntp;
 
 
 
-import java.lang.ref.SoftReference;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,6 +44,7 @@ import java.util.TimeZone;
  */
 public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
 {
+    private static final long serialVersionUID = 8139806907588338737L;
 
     /**
      * baseline NTP time if bit-0=0 -> 7-Feb-2036 @ 06:28:16 UTC
@@ -62,12 +62,6 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
      */
     public final static String NTP_DATE_FORMAT = "EEE, MMM dd yyyy HH:mm:ss.SSS";
 
-    /*
-     * Caches for the DateFormatters used by various toString methods.
-     */
-    private static SoftReference<DateFormat> simpleFormatter = null;
-    private static SoftReference<DateFormat> utcFormatter = null;
-
     /**
      * NTP timestamp value: 64-bit unsigned fixed-point number as defined in RFC-1305
      * with high-order 32 bits the seconds field and the low-order 32-bits the
@@ -75,7 +69,8 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
      */
     private final long ntpTime;
 
-    private static final long serialVersionUID = 8139806907588338737L;
+    private DateFormat simpleFormatter;
+    private DateFormat utcFormatter;
 
     // initialization of static time bases
     /*
@@ -404,20 +399,12 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
      */
     public String toDateString()
     {
-        DateFormat formatter = null;
-        if (simpleFormatter != null) {
-            formatter = simpleFormatter.get();
-        }
-        if (formatter == null) {
-            // No cache yet, or cached formatter GC'd
-            formatter = new SimpleDateFormat(NTP_DATE_FORMAT, Locale.US);
-            formatter.setTimeZone(TimeZone.getDefault());
-            simpleFormatter = new SoftReference<DateFormat>(formatter);
+        if (simpleFormatter == null) {
+            simpleFormatter = new SimpleDateFormat(NTP_DATE_FORMAT, Locale.US);
+            simpleFormatter.setTimeZone(TimeZone.getDefault());
         }
         Date ntpDate = getDate();
-        synchronized (formatter) {
-            return formatter.format(ntpDate);
-        }
+        return simpleFormatter.format(ntpDate);
     }
 
     /***
@@ -431,20 +418,13 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
      */
     public String toUTCString()
     {
-        DateFormat formatter = null;
-        if (utcFormatter != null)
-            formatter = utcFormatter.get();
-        if (formatter == null) {
-            // No cache yet, or cached formatter GC'd
-            formatter = new SimpleDateFormat(NTP_DATE_FORMAT + " 'UTC'",
+        if (utcFormatter == null) {
+            utcFormatter = new SimpleDateFormat(NTP_DATE_FORMAT + " 'UTC'",
                     Locale.US);
-            formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
-            utcFormatter = new SoftReference<DateFormat>(formatter);
+            utcFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
         }
         Date ntpDate = getDate();
-        synchronized (formatter) {
-            return formatter.format(ntpDate);
-        }
+        return utcFormatter.format(ntpDate);
     }
 
     /***
