@@ -63,7 +63,7 @@ public final class IMAPMail
         imap.setDefaultTimeout(60000);
 
         // suppress login details
-        imap.addProtocolCommandListener(new PrintCommandListener(System.out, true));
+        imap.addProtocolCommandListener(new PrintCommandListener(System.out, true, (char) 0, true));
 
         try
         {
