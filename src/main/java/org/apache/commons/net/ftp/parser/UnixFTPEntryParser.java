@@ -17,6 +17,8 @@
 
 package org.apache.commons.net.ftp.parser;
 import java.text.ParseException;
+import java.util.List;
+import java.util.ListIterator;
 
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
@@ -137,6 +139,20 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         configure(config);
     }
 
+    /**
+     * Preparse the list to discard "total nnn" lines
+     */
+    @Override
+    public List<String> preParse(List<String> original) {
+        ListIterator<String> iter = original.listIterator();
+        while (iter.hasNext()) {
+            String entry = iter.next();
+            if (entry.matches("^total \\d+$")) { // NET-389
+                iter.remove();
+            }
+        }
+        return original;
+    }
 
     /**
      * Parses a line of a unix (standard) FTP server file listing and converts
