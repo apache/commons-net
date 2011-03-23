@@ -18,6 +18,7 @@
 package org.apache.commons.net.ftp;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Formatter;
 
 /***
  * The FTPFile class is used to represent information about files stored
@@ -63,7 +64,7 @@ public class FTPFile implements Serializable
     long _size;
     String _rawListing, _user, _group, _name, _link;
     Calendar _date;
-    boolean[] _permissions[];
+    boolean[] _permissions[]; // e.g. _permissions[USER_ACCESS][READ_PERMISSION]
 
     /*** Creates an empty FTPFile. ***/
     public FTPFile()
@@ -73,8 +74,8 @@ public class FTPFile implements Serializable
         _type = UNKNOWN_TYPE;
         _hardLinkCount = 0;
         _size = 0;
-        _user = null;
-        _group = null;
+        _user = "";
+        _group = "";
         _date = null;
         _name = null;
     }
@@ -368,26 +369,61 @@ public class FTPFile implements Serializable
 
 
     /***
-     * Returns a string representation of the FTPFile information.  This
-     * will be the raw FTP server listing that was used to initialize the
-     * FTPFile instance.
-     * <p>
+     * Returns a string representation of the FTPFile information.
+     *
      * @return A string representation of the FTPFile information.
-     ***/
+     */
     @Override
     public String toString()
     {
-        return _rawListing;
+        StringBuilder sb = new StringBuilder();
+        Formatter fmt = new Formatter(sb);
+        sb.append(formatType());
+        sb.append(permissionToString(USER_ACCESS));
+        sb.append(permissionToString(GROUP_ACCESS));
+        sb.append(permissionToString(WORLD_ACCESS));
+        fmt.format(" %4d %-8s %-8s", Integer.valueOf(getHardLinkCount()), getGroup(), getUser());
+        fmt.format(" %8d", Long.valueOf(getSize()));
+        Calendar timestamp = getTimestamp();
+        if (timestamp != null) {
+            fmt.format(" %1$tb %1$td  %1$tY", timestamp);
+            fmt.format(" %1$tZ", timestamp);
+            sb.append(' ');
+        }
+        sb.append(' ');
+        sb.append(getName());
+        return sb.toString();
     }
 
-    /** @since 3.0 */
-    public String toFormattedString(){
+    private char formatType(){
+        switch(_type) {
+            case FILE_TYPE:
+                return '-';
+            case DIRECTORY_TYPE:
+                return 'd';
+            case SYMBOLIC_LINK_TYPE:
+                return 'l';
+        }
+        return '?';
+    }
+
+    private String permissionToString(int access ){
         StringBuilder sb = new StringBuilder();
-        sb.append(getName());
-        sb.append(' ');
-        sb.append(getSize());
-        sb.append(' ');
-        sb.append(getTimestamp().getTime().toString());
+        if (hasPermission(access, READ_PERMISSION)) {
+            sb.append('r');
+        } else {
+            sb.append('-');
+        }
+        if (hasPermission(access, WRITE_PERMISSION)) {
+            sb.append('w');
+        } else {
+            sb.append('-');
+        }
+        if (hasPermission(access, EXECUTE_PERMISSION)) {
+            sb.append('x');
+        } else {
+            sb.append('-');
+        }
         return sb.toString();
     }
 }
