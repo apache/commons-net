@@ -60,11 +60,11 @@ public class FTPFile implements Serializable
      ***/
     public static final int EXECUTE_PERMISSION = 2;
 
-    int _type, _hardLinkCount;
-    long _size;
-    String _rawListing, _user, _group, _name, _link;
-    Calendar _date;
-    boolean[] _permissions[]; // e.g. _permissions[USER_ACCESS][READ_PERMISSION]
+    private int _type, _hardLinkCount;
+    private long _size;
+    private String _rawListing, _user, _group, _name, _link;
+    private Calendar _date;
+    private boolean[] _permissions[]; // e.g. _permissions[USER_ACCESS][READ_PERMISSION]
 
     /*** Creates an empty FTPFile. ***/
     public FTPFile()
