@@ -63,7 +63,7 @@ public final class FTPClientExample
         "\t-s - store file on server (upload)\n" +
         "\t-t - list file details using MLST (remote is used as the pathname if provided)\n" +
         "\t-w msec - wait time for keep-alive reply (setControlKeepAliveReplyTimeout)\n" +
-        "\t-T  all|valid - use one of the built-in TrustManager implementations\n" +        
+        "\t-T  all|valid - use one of the built-in TrustManager implementations\n" +
         "\t-# - add hash display during transfers\n";
 
     public static final void main(String[] args)
@@ -181,14 +181,14 @@ public final class FTPClientExample
                 if (prot.length == 1) { // Just protocol
                     ftps = new FTPSClient(protocol);
                 } else { // protocol,true|false
-                    ftps = new FTPSClient(prot[0], Boolean.parseBoolean(prot[1]));                    
+                    ftps = new FTPSClient(prot[0], Boolean.parseBoolean(prot[1]));
                 }
             }
             ftp = ftps;
             if ("all".equals(trustmgr)) {
                 ftps.setTrustManager(TrustManagerUtils.getAcceptAllTrustManager());
             } else if ("valid".equals(trustmgr)) {
-                ftps.setTrustManager(TrustManagerUtils.getValidateServerCertificateTrustManager());                
+                ftps.setTrustManager(TrustManagerUtils.getValidateServerCertificateTrustManager());
             }
         }
 
@@ -290,14 +290,14 @@ __main:
             {
                 for (FTPFile f : ftp.mlistDir(remote)) {
                     System.out.println(f.getRawListing());
-                    System.out.println(f.toFormattedString());
+                    System.out.println(f.toString());
                 }
             }
             else if (mlst)
             {
                 FTPFile f = ftp.mlistFile(remote);
                 if (f != null){
-                    System.out.println(f.toFormattedString());
+                    System.out.println(f.toString());
                 }
             }
             else if (listNames)
