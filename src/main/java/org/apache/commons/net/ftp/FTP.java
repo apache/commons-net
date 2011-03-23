@@ -378,7 +378,7 @@ public class FTP extends SocketClient
             new BufferedWriter(new OutputStreamWriter(_output_, getControlEncoding()));
         if (connectTimeout > 0) { // NET-385
             int original = _socket_.getSoTimeout();
-            _socket_.setSoTimeout(connectTimeout); 
+            _socket_.setSoTimeout(connectTimeout);
             try {
                 __getReply();
                 // If we received code 120, we have to fetch completion reply.
@@ -391,6 +391,11 @@ public class FTP extends SocketClient
             } finally {
                 _socket_.setSoTimeout(original);
             }
+        } else {
+            __getReply();
+            // If we received code 120, we have to fetch completion reply.
+            if (FTPReply.isPositivePreliminary(_replyCode))
+                __getReply();            
         }
     }
 
