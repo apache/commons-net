@@ -29,6 +29,8 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
+import org.apache.commons.net.util.SSLContextUtils;
+
 /**
  * POP3 over SSL processing. Copied from FTPSClient.java and modified to suit POP3.
  * If implicit mode is selected (NOT the default), SSL/TLS negotiation starts right
@@ -177,25 +179,7 @@ public class POP3SClient extends POP3Client
     {
         if (context == null)
         {
-            try
-            {
-                context = SSLContext.getInstance(protocol);
-                context.init(new KeyManager[] { getKeyManager() },
-                             new TrustManager[] { getTrustManager() },
-                             null);
-            }
-            catch (KeyManagementException e)
-            {
-                IOException ioe = new IOException("Could not initialize SSL context");
-                ioe.initCause(e);
-                throw ioe;
-            }
-            catch (NoSuchAlgorithmException e)
-            {
-                IOException ioe = new IOException("Could not initialize SSL context");
-                ioe.initCause(e);
-                throw ioe;
-            }
+            context = SSLContextUtils.createSSLContext(protocol, getKeyManager(), getTrustManager());
         }
     }
 
