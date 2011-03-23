@@ -19,6 +19,7 @@ package examples.mail;
 
 import java.io.IOException;
 
+import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.imap.IMAPClient;
 import org.apache.commons.net.imap.IMAPSClient;
 
@@ -60,6 +61,9 @@ public final class IMAPMail
 
         // We want to timeout if a response takes longer than 60 seconds
         imap.setDefaultTimeout(60000);
+
+        // suppress login details
+        imap.addProtocolCommandListener(new PrintCommandListener(System.out, true));
 
         try
         {
