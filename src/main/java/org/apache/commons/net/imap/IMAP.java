@@ -168,7 +168,7 @@ public class IMAP extends SocketClient
 
     /**
      * Performs connection initialization and sets state to
-     * <code> AUTHORIZATION_STATE </code>.
+     * {@link IMAPState.NOT_AUTH_STATE}.
      */
     @Override
     protected void _connectAction_() throws IOException
