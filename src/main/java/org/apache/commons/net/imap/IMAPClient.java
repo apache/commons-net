@@ -1,0 +1,613 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.apache.commons.net.imap;
+
+import java.io.IOException;
+
+/**
+ * The IMAPClient class provides the basic functionalities found in an
+ * IMAP client.
+ */
+public class IMAPClient extends IMAP
+{
+
+    // --------- commands available in all states
+
+    /**
+     * Send a CAPABILITY command to the server.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean capability() throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.CAPABILITY))
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send a NOOP command to the server.  This is useful for keeping
+     * a connection alive since most IMAP servers will timeout after 10
+     * minutes of inactivity.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean noop() throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.NOOP))
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send a LOGOUT command to the server.  To fully disconnect from the server
+     * you must call disconnect().
+     * A logout attempt is valid in any state.  If
+     * the client is in the not authenticated or authenticated state, it enters the
+     * logout on a successful logout.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean logout() throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.LOGOUT))
+            == IMAPReply.OK;
+    }
+
+    // --------- commands available in the not-authenticated state
+    // STARTTLS skipped - see IMAPSClient.
+    // AUTHENTICATE skipped - see AuthenticatingIMAPClient.
+
+    /**
+     * Login to the IMAP server with the given username and password.  You
+     * must first connect to the server with
+     * {@link org.apache.commons.net.SocketClient#connect  connect }
+     * before attempting to login.  A login attempt is only valid if
+     * the client is in the NOT_AUTH_STATE.
+     * After logging in, the client enters the AUTH_STATE.
+     * <p>
+     * @param username  The account name being logged in to.
+     * @param password  The plain text password of the account.
+     * @return True if the login attempt was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean login(String username, String password) throws IOException
+    {
+        if (getState() != IMAP.IMAPState.NOT_AUTH_STATE)
+        {
+            return false;
+        }
+
+        if (sendCommand(IMAPCommand.getCommand(IMAPCommand.LOGIN),
+            username + " " + password) != IMAPReply.OK)
+        {
+            return false;
+        }
+
+        setState(IMAP.IMAPState.AUTH_STATE);
+
+        return true;
+    }
+
+    // --------- commands available in the authenticated state
+
+    /**
+     * Send a SELECT command to the server.
+     * @param mailboxName The mailbox name to select.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean select(String mailboxName) throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.SELECT),
+                            mailboxName)
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send an EXAMINE command to the server.
+     * @param mailboxName The mailbox name to examine.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean examine(String mailboxName) throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.EXAMINE),
+                            mailboxName)
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send a CREATE command to the server.
+     * @param mailboxName The mailbox name to create.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean create(String mailboxName) throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.CREATE),
+                            mailboxName)
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send a DELETE command to the server.
+     * @param mailboxName The mailbox name to delete.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean delete(String mailboxName) throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.DELETE),
+                            mailboxName)
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send a RENAME command to the server.
+     * @param oldMailboxName The existing mailbox name to rename.
+     * @param newMailboxName The new mailbox name.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean rename(String oldMailboxName, String newMailboxName) throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.RENAME),
+                            oldMailboxName + " " + newMailboxName)
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send a SUBSCRIBE command to the server.
+     * @param mailboxName The mailbox name to subscribe to.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean subscribe(String mailboxName) throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.SUBSCRIBE),
+                            mailboxName)
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send a UNSUBSCRIBE command to the server.
+     * @param mailboxName The mailbox name to unsubscribe from.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean unsubscribe(String mailboxName) throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.UNSUBSCRIBE),
+                            mailboxName)
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send a LIST command to the server.
+     * @param refName The reference name.
+     * @param mailboxName The mailbox name.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean list(String refName, String mailboxName) throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.LIST),
+                            refName + " " + mailboxName)
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send an LSUB command to the server.
+     * @param refName The reference name.
+     * @param mailboxName The mailbox name.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean lsub(String refName, String mailboxName) throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.LSUB),
+                            refName + " " + mailboxName)
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send a STATUS command to the server.
+     * @param mailboxName The reference name.
+     * @param itemNames The status data item names.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean status(String mailboxName, String[] itemNames) throws IOException
+    {
+        String statusNames = "";
+        if (itemNames != null)
+        {
+            statusNames += " (";
+            for ( int i = 0; i < itemNames.length; i++ )
+            {
+                statusNames += itemNames[i];
+                if (i < itemNames.length-1) statusNames += " ";
+            }
+            statusNames += ")";
+        }
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.STATUS),
+                            statusNames)
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send an APPEND command to the server.
+     * @param mailboxName The mailbox name.
+     * @param flags The flag parenthesized list (optional).
+     * @param datetime The date/time string (optional).
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean append(String mailboxName, String flags, String datetime) throws IOException
+    {
+        String args = mailboxName;
+        if (flags != null) args += " " + flags;
+        if (datetime != null)
+        {
+            if (datetime.charAt(0) == '{') args += " " + datetime;
+            else args += " {" + datetime + "}";
+        }
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.APPEND), args)
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send an APPEND command to the server.
+     * @param mailboxName The mailbox name.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean append(String mailboxName) throws IOException
+    {
+        return append(mailboxName, null, null);
+    }
+
+    // --------- commands available in the selected state
+
+    /**
+     * Send a CHECK command to the server.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean check() throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.CHECK))
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send a CLOSE command to the server.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean close() throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.CLOSE))
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send an EXPUNGE command to the server.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean expunge() throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.EXPUNGE))
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send a SEARCH command to the server.
+     * @param charset The charset (optional).
+     * @param criteria The search criteria.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean search(String charset, String criteria) throws IOException
+    {
+        String args = "";
+        if (charset != null) args += "CHARSET " + charset;
+        args += criteria;
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.SEARCH), args)
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send a SEARCH command to the server.
+     * @param criteria The search criteria.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean search(String criteria) throws IOException
+    {
+        return search(null, criteria);
+    }
+
+    /**
+     * Send a FETCH command to the server.
+     * @param sequenceSet The sequence set to fetch.
+     * @param itemNames The item names for the FETCH command.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean fetch(String sequenceSet, String itemNames) throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.FETCH),
+                            sequenceSet + " " + itemNames)
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send a STORE command to the server.
+     * @param sequenceSet The sequence set to store.
+     * @param itemNames The item names for the STORE command.
+     * @param itemValues The item values for the STORE command.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean store(String sequenceSet, String itemNames, String itemValues)
+        throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.STORE),
+                            sequenceSet + " " + itemNames + " " + itemValues)
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send a COPY command to the server.
+     * @param sequenceSet The sequence set to fetch.
+     * @param mailboxName The mailbox name.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean copy(String sequenceSet, String mailboxName) throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.COPY),
+                            sequenceSet + " " + mailboxName)
+            == IMAPReply.OK;
+    }
+
+    /**
+     * Send a UID command to the server.
+     * @param command The command for UID.
+     * @param commandArgs The arguments for the command.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *            logging in.
+     */
+    public boolean uid(String command, String commandArgs) throws IOException
+    {
+        return sendCommand (IMAPCommand.getCommand(IMAPCommand.UID),
+                            command + " " + commandArgs)
+            == IMAPReply.OK;
+    }
+
+    /**
+     * The status data items defined in RFC 3501.
+     */
+    public enum STATUS_DATA_ITEMS
+    {
+        /** The number of messages in the mailbox. */
+        MESSAGES,
+        /** The number of messages with the \Recent flag set. */
+        RECENT,
+        /** The next unique identifier value of the mailbox. */
+        UIDNEXT,
+        /** The unique identifier validity value of the mailbox. */
+        UIDVALIDITY,
+        /** The number of messages which do not have the \Seen flag set. */
+        UNSEEN;
+    }
+
+    /**
+     * The search criteria defined in RFC 3501.
+     */
+    public enum SEARCH_CRITERIA
+    {
+        /** All messages in the mailbox. */
+        ALL,
+        /** Messages with the \Answered flag set. */
+        ANSWERED,
+        /**
+         * Messages that contain the specified string in the envelope
+         * structure's BCC field.
+         */
+        BCC,
+        /**
+         * Messages whose internal date (disregarding time and timezone)
+         * is earlier than the specified date.
+         */
+        BEFORE,
+        /**
+         * Messages that contain the specified string in the body of the
+         * message.
+         */
+        BODY,
+        /**
+         * Messages that contain the specified string in the envelope
+         * structure's CC field.
+         */
+        CC,
+        /** Messages with the \Deleted flag set. */
+        DELETED,
+        /** Messages with the \Draft flag set. */
+        DRAFT,
+        /** Messages with the \Flagged flag set. */
+        FLAGGED,
+        /**
+         * Messages that contain the specified string in the envelope
+         * structure's FROM field.
+         */
+        FROM,
+        /**
+         * Messages that have a header with the specified field-name (as
+         * defined in [RFC-2822]) and that contains the specified string
+         * in the text of the header (what comes after the colon).  If the
+         * string to search is zero-length, this matches all messages that
+         * have a header line with the specified field-name regardless of
+         * the contents.
+         */
+        HEADER,
+        /** Messages with the specified keyword flag set. */
+        KEYWORD,
+        /**
+         * Messages with an [RFC-2822] size larger than the specified
+         * number of octets.
+         */
+        LARGER,
+        /**
+         * Messages that have the \Recent flag set but not the \Seen flag.
+         * This is functionally equivalent to "(RECENT UNSEEN)".
+         */
+        NEW,
+        /** Messages that do not match the specified search key. */
+        NOT,
+        /**
+         * Messages that do not have the \Recent flag set.  This is
+         * functionally equivalent to "NOT RECENT" (as opposed to "NOT
+         * NEW").
+         */
+        OLD,
+        /**
+         * Messages whose internal date (disregarding time and timezone)
+         * is within the specified date.
+         */
+        ON,
+        /** Messages that match either search key. */
+        OR,
+        /** Messages that have the \Recent flag set. */
+        RECENT,
+        /** Messages that have the \Seen flag set. */
+        SEEN,
+        /**
+         * Messages whose [RFC-2822] Date: header (disregarding time and
+         * timezone) is earlier than the specified date.
+         */
+        SENTBEFORE,
+        /**
+         * Messages whose [RFC-2822] Date: header (disregarding time and
+         * timezone) is within the specified date.
+         */
+        SENTON,
+        /**
+         * Messages whose [RFC-2822] Date: header (disregarding time and
+         * timezone) is within or later than the specified date.
+         */
+        SENTSINCE,
+        /**
+         * Messages whose internal date (disregarding time and timezone)
+         * is within or later than the specified date.
+         */
+        SINCE,
+        /**
+         * Messages with an [RFC-2822] size smaller than the specified
+         * number of octets.
+         */
+        SMALLER,
+        /**
+         * Messages that contain the specified string in the envelope
+         * structure's SUBJECT field.
+         */
+        SUBJECT,
+        /**
+         * Messages that contain the specified string in the header or
+         * body of the message.
+         */
+        TEXT,
+        /**
+         * Messages that contain the specified string in the envelope
+         * structure's TO field.
+         */
+        TO,
+        /**
+         * Messages with unique identifiers corresponding to the specified
+         * unique identifier set.  Sequence set ranges are permitted.
+         */
+        UID,
+        /** Messages that do not have the \Answered flag set. */
+        UNANSWERED,
+        /** Messages that do not have the \Deleted flag set. */
+        UNDELETED,
+        /** Messages that do not have the \Draft flag set. */
+        UNDRAFT,
+        /** Messages that do not have the \Flagged flag set. */
+        UNFLAGGED,
+        /** Messages that do not have the specified keyword flag set. */
+        UNKEYWORD,
+        /** Messages that do not have the \Seen flag set. */
+        UNSEEN;
+    }
+
+    /**
+     * The message data item names for the FETCH command defined in RFC 3501.
+     */
+    public enum FETCH_ITEM_NAMES
+    {
+        /** Macro equivalent to: (FLAGS INTERNALDATE RFC822.SIZE ENVELOPE). */
+        ALL,
+        /** Macro equivalent to: (FLAGS INTERNALDATE RFC822.SIZE). */
+        FAST,
+        /** Macro equivalent to: (FLAGS INTERNALDATE RFC822.SIZE ENVELOPE BODY). */
+        FULL,
+        /** Non-extensible form of BODYSTRUCTURE or the text of a particular body section. */
+        BODY,
+        /** The [MIME-IMB] body structure of the message. */
+        BODYSTRUCTURE,
+        /** The envelope structure of the message. */
+        ENVELOPE,
+        /** The flags that are set for this message. */
+        FLAGS,
+        /** The internal date of the message. */
+        INTERNALDATE,
+        /** A prefix for RFC-822 item names. */
+        RFC822,
+        /** The unique identifier for the message. */
+        UID;
+    }
+
+}
+/* kate: indent-width 4; replace-tabs on; */
