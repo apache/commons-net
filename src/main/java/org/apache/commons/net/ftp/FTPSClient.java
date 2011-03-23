@@ -115,7 +115,7 @@ public class FTPSClient extends FTPClient {
      * Constructor for FTPSClient allowing specification of protocol
      * and security mode. If isImplicit is true, the port is set to
      * {@link #DEFAULT_FTPS_PORT} i.e. 990.
-     * 
+     *
      * @param protocol the protocol
      * @param isImplicit The security mode(Implicit/Explicit).
      */
@@ -124,7 +124,7 @@ public class FTPSClient extends FTPClient {
         this.protocol = protocol;
         this.isImplicit = isImplicit;
         if (isImplicit) {
-            setDefaultPort(DEFAULT_FTPS_PORT);            
+            setDefaultPort(DEFAULT_FTPS_PORT);
         }
     }
 
@@ -141,7 +141,7 @@ public class FTPSClient extends FTPClient {
     /**
      * Constructor for FTPSClient, using {@link #DEFAULT_PROTOCOL} - i.e. TLS
      * and isImplicit {@code false}
-     * 
+     *
      * @param context A pre-configured SSL Context
      */
     public FTPSClient(SSLContext context) {
