@@ -36,6 +36,7 @@ public class PrintCommandListener implements ProtocolCommandListener
     private final PrintWriter __writer;
     private final boolean __nologin;
     private final char __eolMarker;
+    private final boolean __directionMarker;
 
     /**
      * Create the default instance which prints everything.
@@ -77,6 +78,21 @@ public class PrintCommandListener implements ProtocolCommandListener
     }
 
     /**
+     * Create an instance which optionally suppresses login command text
+     * and indicates where the EOL starts with the specified character.
+     *
+     * @param stream where to write the commands and responses
+     * @param suppressLogin if {@code true}, only print command name for login
+     * @param eolMarker if non-zero, add a marker just before the EOL.
+     * @param showDirection if {@code true}, add "> " or "< " as appropriate to the output
+     *
+     * @since 3.0
+     */
+    public PrintCommandListener(PrintStream stream, boolean suppressLogin, char eolMarker, boolean showDirection) {
+        this(new PrintWriter(stream), suppressLogin, eolMarker, showDirection);
+    }
+
+    /**
      * Create the default instance which prints everything.
      *
      * @param writer where to write the commands and responses
@@ -111,13 +127,33 @@ public class PrintCommandListener implements ProtocolCommandListener
      */
     public PrintCommandListener(PrintWriter writer, boolean suppressLogin, char eolMarker)
     {
+        this(writer, suppressLogin, eolMarker, false);
+    }
+
+    /**
+     * Create an instance which optionally suppresses login command text
+     * and indicates where the EOL starts with the specified character.
+     *
+     * @param writer where to write the commands and responses
+     * @param suppressLogin if {@code true}, only print command name for login
+     * @param eolMarker if non-zero, add a marker just before the EOL.
+     * @param showDirection if {@code true}, add "> " or "< " as appropriate to the output
+     *
+     * @since 3.0
+     */
+    public PrintCommandListener(PrintWriter writer, boolean suppressLogin, char eolMarker, boolean showDirection)
+    {
         __writer = writer;
         __nologin = suppressLogin;
         __eolMarker = eolMarker;
+        __directionMarker = showDirection;
     }
 
     public void protocolCommandSent(ProtocolCommandEvent event)
     {
+        if (__directionMarker) {
+            __writer.print("> ");
+        }
         if (__nologin) {
             String cmd = event.getCommand();
             if ("PASS".equalsIgnoreCase(cmd) || "USER".equalsIgnoreCase(cmd)) {
@@ -156,6 +192,9 @@ public class PrintCommandListener implements ProtocolCommandListener
     }
     public void protocolReplyReceived(ProtocolCommandEvent event)
     {
+        if (__directionMarker) {
+            __writer.print("< ");
+        }
         __writer.print(event.getMessage());
         __writer.flush();
     }
