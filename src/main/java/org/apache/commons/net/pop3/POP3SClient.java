@@ -19,8 +19,6 @@ package org.apache.commons.net.pop3;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
