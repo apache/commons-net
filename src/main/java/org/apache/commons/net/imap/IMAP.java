@@ -179,9 +179,14 @@ public class IMAP extends SocketClient
         __writer =
           new BufferedWriter(new OutputStreamWriter(_output_,
                                                     __DEFAULT_ENCODING));
-        setSoTimeout(connectTimeout); // TODO
-        System.out.println("Connected");
+        int tmo = getSoTimeout();
+        if (tmo <= 0) { // none set currently
+            setSoTimeout(connectTimeout); // use connect timeout to ensure we don't block forever
+        }
         __getReply();
+        if (tmo <= 0) {
+            setSoTimeout(tmo); // restore the original value
+        }
         setState(IMAPState.NOT_AUTH_STATE);
     }
 
