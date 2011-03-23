@@ -219,16 +219,13 @@ public class FTPListParseEngine {
      *
      * @return an array of FTPFile objects containing the whole list of
      *         files returned by the server as read by this object's parser.
-     * <p><b>
-     * NOTE:</b> This array may contain null members if any of the
-     * individual file listings failed to parse.  The caller should
-     * check each entry for null before referencing it.
+     * None of the entries will be null
      * @exception IOException
      */
     public FTPFile[] getFiles()
     throws IOException
     {
-        return getFiles(FTPFileFilters.ALL);
+        return getFiles(FTPFileFilters.NON_NULL);
     }
 
     /**
