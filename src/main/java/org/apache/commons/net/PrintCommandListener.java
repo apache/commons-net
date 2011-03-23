@@ -124,7 +124,15 @@ public class PrintCommandListener implements ProtocolCommandListener
                 __writer.print(cmd);
                 __writer.println(" *******"); // Don't bother with EOL marker for this!
             } else {
-                __writer.print(getPrintableString(event.getMessage()));
+                final String IMAP_LOGIN = "LOGIN";
+                if (IMAP_LOGIN.equalsIgnoreCase(cmd)) { // IMAP
+                    String msg = event.getMessage();
+                    msg=msg.substring(0, msg.indexOf(IMAP_LOGIN)+IMAP_LOGIN.length());
+                    __writer.print(msg);
+                    __writer.println(" *******"); // Don't bother with EOL marker for this!
+                } else {
+                    __writer.print(getPrintableString(event.getMessage()));
+                }
             }
         } else {
             __writer.print(getPrintableString(event.getMessage()));
