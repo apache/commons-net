@@ -367,7 +367,6 @@ public class FTPFile implements Serializable
         return _permissions[access][permission];
     }
 
-
     /***
      * Returns a string representation of the FTPFile information.
      *
@@ -375,6 +374,18 @@ public class FTPFile implements Serializable
      */
     @Override
     public String toString()
+    {
+        return getRawListing();
+    }
+
+    /***
+     * Returns a string representation of the FTPFile information.
+     * This currently mimics the Unix listing format.
+     *
+     * @return A string representation of the FTPFile information.
+     * @since 3.0
+     */
+    public String toFormattedString()
     {
         StringBuilder sb = new StringBuilder();
         Formatter fmt = new Formatter(sb);
