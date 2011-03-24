@@ -72,8 +72,10 @@ public class FTPFile implements Serializable
         _permissions = new boolean[3][3];
         _rawListing = null;
         _type = UNKNOWN_TYPE;
-        _hardLinkCount = 0;
-        _size = 0;
+        // init these to values that do not occur in listings
+        // so can distinguish which fields are unset
+        _hardLinkCount = 0; // 0 is invalid as a link count
+        _size = -1; // 0 is valid, so use -1
         _user = "";
         _group = "";
         _date = null;
