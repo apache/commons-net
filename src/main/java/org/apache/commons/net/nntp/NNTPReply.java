@@ -158,6 +158,88 @@ public final class NNTPReply
         return (reply >= 500 && reply < 600);
     }
 
+    // DEPRECATED for API compatibility only - DO NOT USE
+
+    @Deprecated // 3.0
+    public static final int CODE_100 = 100;
+    @Deprecated
+    public static final int CODE_199 = 199;
+    @Deprecated
+    public static final int CODE_200 = 200;
+    @Deprecated
+    public static final int CODE_201 = 201;
+    @Deprecated
+    public static final int CODE_202 = 202;
+    @Deprecated
+    public static final int CODE_205 = 205;
+    @Deprecated
+    public static final int CODE_211 = 211;
+    @Deprecated
+    public static final int CODE_215 = 215;
+    @Deprecated
+    public static final int CODE_220 = 220;
+    @Deprecated
+    public static final int CODE_221 = 221;
+    @Deprecated
+    public static final int CODE_222 = 222;
+    @Deprecated
+    public static final int CODE_223 = 223;
+    @Deprecated
+    public static final int CODE_230 = 230;
+    @Deprecated
+    public static final int CODE_231 = 231;
+    @Deprecated
+    public static final int CODE_235 = 235;
+    @Deprecated
+    public static final int CODE_240 = 240;
+    @Deprecated
+    public static final int CODE_281 = 281;
+    @Deprecated
+    public static final int CODE_335 = 335;
+    @Deprecated
+    public static final int CODE_340 = 340;
+    @Deprecated
+    public static final int CODE_381 = 381;
+    @Deprecated
+    public static final int CODE_400 = 400;
+    @Deprecated
+    public static final int CODE_408 = 408; // Not actually needed; kept for API compatibility
+    @Deprecated
+    public static final int CODE_411 = 411;
+    @Deprecated
+    public static final int CODE_412 = 412;
+    @Deprecated
+    public static final int CODE_420 = 420;
+    @Deprecated
+    public static final int CODE_421 = 421;
+    @Deprecated
+    public static final int CODE_422 = 422;
+    @Deprecated
+    public static final int CODE_423 = 423;
+    @Deprecated
+    public static final int CODE_430 = 430;
+    @Deprecated
+    public static final int CODE_435 = 435;
+    @Deprecated
+    public static final int CODE_436 = 436;
+    @Deprecated
+    public static final int CODE_437 = 437;
+    @Deprecated
+    public static final int CODE_440 = 440;
+    @Deprecated
+    public static final int CODE_441 = 441;
+    @Deprecated
+    public static final int CODE_480 = 480;
+    @Deprecated
+    public static final int CODE_482 = 482;
+    @Deprecated
+    public static final int CODE_500 = 500;
+    @Deprecated
+    public static final int CODE_501 = 501;
+    @Deprecated
+    public static final int CODE_502 = 502;
+    @Deprecated
+    public static final int CODE_503 = 503;
 }
 
 /* Emacs configuration

@@ -29,6 +29,7 @@ package org.apache.commons.net.nntp;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 public class Threader {
     private ThreadContainer root;
@@ -36,13 +37,24 @@ public class Threader {
     private int bogusIdCount = 0;
 
     /**
-     * The main threader entry point - The client passes in a list of Threadable objects, and
+     * The client passes in a list of Threadable objects, and
      * the Threader constructs a connected 'graph' of messages
-     * @param messages iterable of messages to thread
+     * @param messages list of messages to thread
      * @return null if messages == null or root.child == null
      * @since 2.2
      */
-    public Threadable thread(Iterable<? extends Threadable> messages) {
+    public Threadable thread(List<? extends Threadable> messages) {
+        return thread((Iterable<? extends Threadable>)messages);
+    }
+
+    /**
+     * The client passes in a list of Iterable objects, and
+     * the Threader constructs a connected 'graph' of messages
+     * @param messages iterable of messages to thread
+     * @return null if messages == null or root.child == null
+     * @since 3.0
+     */
+    public Threadable thread(Iterable<? extends Threadable> messages) {       
         if (messages == null)
             return null;
 
@@ -402,4 +414,20 @@ public class Threader {
         subjectTable = null;
 
     }
+    
+
+    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
+
+    /**
+     * The client passes in an array of Threadable objects, and
+     * the Threader constructs a connected 'graph' of messages
+     * @param messages array of messages to thread
+     * @return null if messages == null or root.child == null
+     * @deprecated (2.2) prefer {@link #thread(List)}
+     */
+    @Deprecated
+    public Threadable thread(Threadable[] messages) {
+        return thread(java.util.Arrays.asList(messages));
+    }
+
 }

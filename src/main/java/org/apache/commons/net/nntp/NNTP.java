@@ -1011,6 +1011,33 @@ public class NNTP extends SocketClient
         command.append(wildmat);
         return sendCommand(NNTPCommand.LIST, command.toString());
     }
+
+    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
+
+    @Deprecated
+    public int article(int a) throws IOException
+    {
+        return article((long) a);
+    }
+
+    @Deprecated
+    public int body(int a) throws IOException
+    {
+        return body((long) a);
+    }
+
+    @Deprecated
+    public int head(int a) throws IOException
+    {
+        return head((long) a);
+    }
+
+    @Deprecated
+    public int stat(int a) throws IOException
+    {
+        return stat((long) a);
+    }
+
 }
 
 /* Emacs configuration

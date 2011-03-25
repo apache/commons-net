@@ -19,6 +19,7 @@ package org.apache.commons.net.nntp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -89,8 +90,15 @@ import org.apache.commons.net.io.Util;
 public class NNTPClient extends NNTP
 {
 
-    // reply will consist of 22n nnn <aaa>
-    private void __parseArticlePointer(String reply, ArticlePointer pointer)
+    /**
+     * Parse the reply and store the id and number in the pointer.
+     * 
+     * @param reply the reply to parse "22n nnn <aaa>"
+     * @param pointer the pointer to update
+     * 
+     * @throws MalformedServerReplyException
+     */
+    private void __parseArticlePointer(String reply, ArticleInfo pointer)
     throws MalformedServerReplyException
     {
         String tokens[] = reply.split(" ");
@@ -268,7 +276,7 @@ public class NNTPClient extends NNTP
 
 
     private BufferedReader __retrieve(int command,
-                              String articleId, ArticlePointer pointer)
+                              String articleId, ArticleInfo pointer)
     throws IOException
     {
         if (articleId != null)
@@ -294,11 +302,11 @@ public class NNTPClient extends NNTP
 
 
     private BufferedReader __retrieve(int command,
-                              int articleNumber, ArticlePointer pointer)
+                              long articleNumber, ArticleInfo pointer)
     throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(sendCommand(command,
-                                            Integer.toString(articleNumber)))) {
+                                            Long.toString(articleNumber)))) {
             return null;
         }
 
@@ -315,8 +323,8 @@ public class NNTPClient extends NNTP
      * Retrieves an article from the NNTP server.  The article is referenced
      * by its unique article identifier (including the enclosing &lt and &gt).
      * The article number and identifier contained in the server reply
-     * are returned through an ArticlePointer.  The <code> articleId </code>
-     * field of the ArticlePointer cannot always be trusted because some
+     * are returned through an ArticleInfo.  The <code> articleId </code>
+     * field of the ArticleInfo cannot always be trusted because some
      * NNTP servers do not correctly follow the RFC 977 reply format.
      * <p>
      * A DotTerminatedMessageReader is returned from which the article can
@@ -350,23 +358,29 @@ public class NNTPClient extends NNTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public BufferedReader retrieveArticle(String articleId, ArticlePointer pointer)
+    public BufferedReader retrieveArticle(String articleId, ArticleInfo pointer)
     throws IOException
     {
         return __retrieve(NNTPCommand.ARTICLE, articleId, pointer);
 
     }
 
-    /*** Same as <code> retrieveArticle(articleId, null) </code> ***/
-    public BufferedReader retrieveArticle(String articleId) throws IOException
+    /**
+     * Same as <code> retrieveArticle(articleId, (ArticleInfo) null) </code>
+     * Note: the return can be cast to a {@link BufferedReader} 
+     */
+    public Reader retrieveArticle(String articleId) throws IOException
     {
-        return retrieveArticle(articleId, null);
+        return retrieveArticle(articleId, (ArticleInfo) null);
     }
 
-    /*** Same as <code> retrieveArticle(null) </code> ***/
-    public BufferedReader retrieveArticle() throws IOException
+    /** 
+     * Same as <code> retrieveArticle((String) null) </code>
+     * Note: the return can be cast to a {@link BufferedReader} 
+     */
+    public Reader retrieveArticle() throws IOException
     {
-        return retrieveArticle(null);
+        return retrieveArticle((String) null);
     }
 
 
@@ -374,8 +388,8 @@ public class NNTPClient extends NNTP
      * Retrieves an article from the currently selected newsgroup.  The
      * article is referenced by its article number.
      * The article number and identifier contained in the server reply
-     * are returned through an ArticlePointer.  The <code> articleId </code>
-     * field of the ArticlePointer cannot always be trusted because some
+     * are returned through an ArticleInfo.  The <code> articleId </code>
+     * field of the ArticleInfo cannot always be trusted because some
      * NNTP servers do not correctly follow the RFC 977 reply format.
      * <p>
      * A DotTerminatedMessageReader is returned from which the article can
@@ -408,14 +422,14 @@ public class NNTPClient extends NNTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public BufferedReader retrieveArticle(int articleNumber, ArticlePointer pointer)
+    public BufferedReader retrieveArticle(long articleNumber, ArticleInfo pointer)
     throws IOException
     {
         return __retrieve(NNTPCommand.ARTICLE, articleNumber, pointer);
     }
 
     /*** Same as <code> retrieveArticle(articleNumber, null) </code> ***/
-    public BufferedReader retrieveArticle(int articleNumber) throws IOException
+    public BufferedReader retrieveArticle(long articleNumber) throws IOException
     {
         return retrieveArticle(articleNumber, null);
     }
@@ -427,8 +441,8 @@ public class NNTPClient extends NNTP
      * referenced
      * by its unique article identifier (including the enclosing &lt and &gt).
      * The article number and identifier contained in the server reply
-     * are returned through an ArticlePointer.  The <code> articleId </code>
-     * field of the ArticlePointer cannot always be trusted because some
+     * are returned through an ArticleInfo.  The <code> articleId </code>
+     * field of the ArticleInfo cannot always be trusted because some
      * NNTP servers do not correctly follow the RFC 977 reply format.
      * <p>
      * A DotTerminatedMessageReader is returned from which the article can
@@ -462,23 +476,29 @@ public class NNTPClient extends NNTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public BufferedReader retrieveArticleHeader(String articleId, ArticlePointer pointer)
+    public BufferedReader retrieveArticleHeader(String articleId, ArticleInfo pointer)
     throws IOException
     {
         return __retrieve(NNTPCommand.HEAD, articleId, pointer);
 
     }
 
-    /*** Same as <code> retrieveArticleHeader(articleId, null) </code> ***/
-    public BufferedReader retrieveArticleHeader(String articleId) throws IOException
+    /**
+     * Same as <code> retrieveArticleHeader(articleId, (ArticleInfo) null) </code> 
+     *  Note: the return can be cast to a {@link BufferedReader}
+     */
+    public Reader retrieveArticleHeader(String articleId) throws IOException
     {
-        return retrieveArticleHeader(articleId, null);
+        return retrieveArticleHeader(articleId, (ArticleInfo) null);
     }
 
-    /*** Same as <code> retrieveArticleHeader(null) </code> ***/
-    public BufferedReader retrieveArticleHeader() throws IOException
+    /**
+     * Same as <code> retrieveArticleHeader((String) null) </code>
+     *  Note: the return can be cast to a {@link BufferedReader}
+     */
+    public Reader retrieveArticleHeader() throws IOException
     {
-        return retrieveArticleHeader(null);
+        return retrieveArticleHeader((String) null);
     }
 
 
@@ -486,8 +506,8 @@ public class NNTPClient extends NNTP
      * Retrieves an article header from the currently selected newsgroup.  The
      * article is referenced by its article number.
      * The article number and identifier contained in the server reply
-     * are returned through an ArticlePointer.  The <code> articleId </code>
-     * field of the ArticlePointer cannot always be trusted because some
+     * are returned through an ArticleInfo.  The <code> articleId </code>
+     * field of the ArticleInfo cannot always be trusted because some
      * NNTP servers do not correctly follow the RFC 977 reply format.
      * <p>
      * A DotTerminatedMessageReader is returned from which the article can
@@ -520,8 +540,8 @@ public class NNTPClient extends NNTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public BufferedReader retrieveArticleHeader(int articleNumber,
-                                        ArticlePointer pointer)
+    public BufferedReader retrieveArticleHeader(long articleNumber,
+                                        ArticleInfo pointer)
     throws IOException
     {
         return __retrieve(NNTPCommand.HEAD, articleNumber, pointer);
@@ -529,7 +549,7 @@ public class NNTPClient extends NNTP
 
 
     /*** Same as <code> retrieveArticleHeader(articleNumber, null) </code> ***/
-    public BufferedReader retrieveArticleHeader(int articleNumber) throws IOException
+    public BufferedReader retrieveArticleHeader(long articleNumber) throws IOException
     {
         return retrieveArticleHeader(articleNumber, null);
     }
@@ -541,8 +561,8 @@ public class NNTPClient extends NNTP
      * referenced
      * by its unique article identifier (including the enclosing &lt and &gt).
      * The article number and identifier contained in the server reply
-     * are returned through an ArticlePointer.  The <code> articleId </code>
-     * field of the ArticlePointer cannot always be trusted because some
+     * are returned through an ArticleInfo.  The <code> articleId </code>
+     * field of the ArticleInfo cannot always be trusted because some
      * NNTP servers do not correctly follow the RFC 977 reply format.
      * <p>
      * A DotTerminatedMessageReader is returned from which the article can
@@ -576,21 +596,27 @@ public class NNTPClient extends NNTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public BufferedReader retrieveArticleBody(String articleId, ArticlePointer pointer)
+    public BufferedReader retrieveArticleBody(String articleId, ArticleInfo pointer)
     throws IOException
     {
         return __retrieve(NNTPCommand.BODY, articleId, pointer);
 
     }
 
-    /*** Same as <code> retrieveArticleBody(articleId, null) </code> ***/
-    public BufferedReader retrieveArticleBody(String articleId) throws IOException
+    /**
+     * Same as <code> retrieveArticleBody(articleId, (ArticleInfo) null) </code> 
+     *  Note: the return can be cast to a {@link BufferedReader}
+     */
+    public Reader retrieveArticleBody(String articleId) throws IOException
     {
-        return retrieveArticleBody(articleId, null);
+        return retrieveArticleBody(articleId, (ArticleInfo) null);
     }
 
-    /*** Same as <code> retrieveArticleBody(null) </code> ***/
-    public BufferedReader retrieveArticleBody() throws IOException
+    /**
+     * Same as <code> retrieveArticleBody(null) </code> 
+     *  Note: the return can be cast to a {@link BufferedReader} 
+     */
+    public Reader retrieveArticleBody() throws IOException
     {
         return retrieveArticleBody(null);
     }
@@ -600,8 +626,8 @@ public class NNTPClient extends NNTP
      * Retrieves an article body from the currently selected newsgroup.  The
      * article is referenced by its article number.
      * The article number and identifier contained in the server reply
-     * are returned through an ArticlePointer.  The <code> articleId </code>
-     * field of the ArticlePointer cannot always be trusted because some
+     * are returned through an ArticleInfo.  The <code> articleId </code>
+     * field of the ArticleInfo cannot always be trusted because some
      * NNTP servers do not correctly follow the RFC 977 reply format.
      * <p>
      * A DotTerminatedMessageReader is returned from which the article can
@@ -634,8 +660,8 @@ public class NNTPClient extends NNTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public BufferedReader retrieveArticleBody(int articleNumber,
-                                      ArticlePointer pointer)
+    public BufferedReader retrieveArticleBody(long articleNumber,
+                                      ArticleInfo pointer)
     throws IOException
     {
         return __retrieve(NNTPCommand.BODY, articleNumber, pointer);
@@ -643,7 +669,7 @@ public class NNTPClient extends NNTP
 
 
     /*** Same as <code> retrieveArticleBody(articleNumber, null) </code> ***/
-    public BufferedReader retrieveArticleBody(int articleNumber) throws IOException
+    public BufferedReader retrieveArticleBody(long articleNumber) throws IOException
     {
         return retrieveArticleBody(articleNumber, null);
     }
@@ -758,7 +784,7 @@ public class NNTPClient extends NNTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean selectArticle(String articleId, ArticlePointer pointer)
+    public boolean selectArticle(String articleId, ArticleInfo pointer)
     throws IOException
     {
         if (articleId != null)
@@ -778,17 +804,17 @@ public class NNTPClient extends NNTP
         return true;
     }
 
-    /**** Same as <code> selectArticle(articleId, null) </code> ***/
+    /**** Same as <code> selectArticle(articleId, (ArticleInfo) null) </code> ***/
     public boolean selectArticle(String articleId) throws IOException
     {
-        return selectArticle(articleId, null);
+        return selectArticle(articleId, (ArticleInfo) null);
     }
 
     /****
-     * Same as <code> selectArticle(null, articleId) </code>.  Useful
+     * Same as <code> selectArticle((String) null, articleId) </code>.  Useful
      * for retrieving the current article number.
      ***/
-    public boolean selectArticle(ArticlePointer pointer) throws IOException
+    public boolean selectArticle(ArticleInfo pointer) throws IOException
     {
         return selectArticle(null, pointer);
     }
@@ -819,7 +845,7 @@ public class NNTPClient extends NNTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean selectArticle(long articleNumber, ArticlePointer pointer)
+    public boolean selectArticle(long articleNumber, ArticleInfo pointer)
     throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(stat(articleNumber)))
@@ -863,7 +889,7 @@ public class NNTPClient extends NNTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean selectPreviousArticle(ArticlePointer pointer)
+    public boolean selectPreviousArticle(ArticleInfo pointer)
     throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(last()))
@@ -875,10 +901,10 @@ public class NNTPClient extends NNTP
         return true;
     }
 
-    /*** Same as <code> selectPreviousArticle(null) </code> ***/
+    /*** Same as <code> selectPreviousArticle((ArticleInfo) null) </code> ***/
     public boolean selectPreviousArticle() throws IOException
     {
-        return selectPreviousArticle(null);
+        return selectPreviousArticle((ArticleInfo) null);
     }
 
 
@@ -906,7 +932,7 @@ public class NNTPClient extends NNTP
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean selectNextArticle(ArticlePointer pointer) throws IOException
+    public boolean selectNextArticle(ArticleInfo pointer) throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(next()))
             return false;
@@ -918,10 +944,10 @@ public class NNTPClient extends NNTP
     }
 
 
-    /*** Same as <code> selectNextArticle(null) </code> ***/
+    /*** Same as <code> selectNextArticle((ArticleInfo) null) </code> ***/
     public boolean selectNextArticle() throws IOException
     {
-        return selectNextArticle(null);
+        return selectNextArticle((ArticleInfo) null);
     }
 
 
@@ -1388,9 +1414,9 @@ public class NNTPClient extends NNTP
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException
      */
-    public BufferedReader retrieveArticleInfo(int articleNumber) throws IOException
+    public BufferedReader retrieveArticleInfo(long articleNumber) throws IOException
     {
-        return __retrieveArticleInfo(Integer.toString(articleNumber));
+        return __retrieveArticleInfo(Long.toString(articleNumber));
     }
 
     /**
@@ -1478,12 +1504,227 @@ public class NNTPClient extends NNTP
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException
      */
-    public BufferedReader retrieveHeader(String header, int lowArticleNumber,
-                                 int highArticleNumber)
+    public BufferedReader retrieveHeader(String header, long lowArticleNumber,
+                                 long highArticleNumber)
         throws IOException
     {
         return
             __retrieveHeader(header,lowArticleNumber + "-" + highArticleNumber);
+    }
+
+
+    
+    
+
+    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
+    // ============================================================
+    
+    
+
+    /** 
+     * @deprecated 3.0 use {@link #retrieveHeader(String, long, long)} instead
+     */
+    @Deprecated
+    public Reader retrieveHeader(String s, int l, int h)
+        throws IOException 
+    {
+        return retrieveHeader(s, (long) l, (long) h);
+    }
+
+    /**
+     * @deprecated 3.0 use {@link #retrieveArticleInfo(long, long)} instead
+     */
+    @Deprecated
+    public Reader retrieveArticleInfo(int a, int b) throws IOException {
+        return retrieveArticleInfo((long) a, (long) b);
+    }
+    
+    /**
+     * @deprecated 3.0 use {@link #retrieveHeader(String, long)} instead
+     */
+    @Deprecated
+    public Reader retrieveHeader(String a, int b) throws IOException {
+        return retrieveHeader(a, (long) b);
+    }
+    
+    /**
+     * @deprecated 3.0 use {@link #selectArticle(long, ArticleInfo)} instead
+     */
+    @Deprecated
+    public boolean selectArticle(int a, ArticlePointer ap) throws IOException {
+        ArticleInfo ai =  __ap2ai(ap);
+        boolean b = selectArticle(a, ai);
+        __ai2ap(ai, ap);
+        return b;
+    }
+    
+    /**
+     * @deprecated 3.0 use {@link #retrieveArticleInfo(long)} instead
+     */
+    @Deprecated
+    public Reader retrieveArticleInfo(int a) throws IOException {
+        return retrieveArticleInfo((long) a);
+    }
+
+    /**
+     * @deprecated 3.0 use {@link #selectArticle(long)} instead
+     */
+    @Deprecated
+    public boolean selectArticle(int a) throws IOException {
+        return selectArticle((long) a);
+    }
+
+    /**
+     * @deprecated 3.0 use {@link #retrieveArticleHeader(long)} instead
+     */
+    @Deprecated
+    public Reader retrieveArticleHeader(int a) throws IOException {
+        return retrieveArticleHeader((long) a);
+    }
+
+    /**
+     * @deprecated 3.0 use {@link #retrieveArticleHeader(long, ArticleInfo)} instead
+     */
+    @Deprecated
+    public Reader retrieveArticleHeader(int a, ArticlePointer ap) throws IOException {
+        ArticleInfo ai =  __ap2ai(ap);
+        Reader rdr = retrieveArticleHeader(a, ai);
+        __ai2ap(ai, ap);
+        return rdr;
+    }
+
+    /**
+     * @deprecated 3.0 use {@link #retrieveArticleBody(long)} instead
+     */
+    @Deprecated
+    public Reader retrieveArticleBody(int a) throws IOException {
+        return retrieveArticleBody((long) a);
+    }
+
+    /**
+     * @deprecated 3.0 use {@link #retrieveArticle(long, ArticleInfo)} instead
+     */
+    @Deprecated
+    public Reader retrieveArticle(int a, ArticlePointer ap) throws IOException {
+        ArticleInfo ai =  __ap2ai(ap);
+        Reader rdr = retrieveArticle(a, ai);
+        __ai2ap(ai, ap);
+        return rdr;
+    }
+
+    /**
+     * @deprecated 3.0 use {@link #retrieveArticle(long)} instead
+     */
+    @Deprecated
+    public Reader retrieveArticle(int a) throws IOException {
+        return retrieveArticle((long) a);        
+    }
+
+    /**
+     * @deprecated 3.0 use {@link #retrieveArticleBody(long, ArticleInfo)} instead
+     */
+    @Deprecated
+    public Reader retrieveArticleBody(int a, ArticlePointer ap) throws IOException {
+        ArticleInfo ai =  __ap2ai(ap);
+        Reader rdr = retrieveArticleBody(a, ai);
+        __ai2ap(ai, ap);
+        return rdr;
+    }
+    
+    /**
+     * @deprecated 3.0 use {@link #retrieveArticle(String, ArticleInfo)} instead
+     */
+    @Deprecated
+    public Reader retrieveArticle(String a, ArticlePointer ap) throws IOException {
+        ArticleInfo ai =  __ap2ai(ap);
+        Reader rdr = retrieveArticle(a, ai);
+        __ai2ap(ai, ap);
+        return rdr;        
+    }
+
+    /**
+     * @deprecated 3.0 use {@link #retrieveArticleBody(String, ArticleInfo)} instead
+     */
+    @Deprecated
+    public Reader retrieveArticleBody(String a, ArticlePointer ap) throws IOException {
+        ArticleInfo ai =  __ap2ai(ap);
+        Reader rdr = retrieveArticleBody(a, ai);
+        __ai2ap(ai, ap);
+        return rdr;                
+    }
+    
+    /**
+     * @deprecated 3.0 use {@link #retrieveArticleHeader(String, ArticleInfo)} instead
+     */
+    @Deprecated
+    public Reader retrieveArticleHeader(String a, ArticlePointer ap) throws IOException {
+        ArticleInfo ai =  __ap2ai(ap);
+        Reader rdr = retrieveArticleHeader(a, ai);
+        __ai2ap(ai, ap);
+        return rdr;                        
+    }
+    
+    /**
+     * @deprecated 3.0 use {@link #selectArticle(String, ArticleInfo)} instead
+     */
+    @Deprecated
+    public boolean selectArticle(String a, ArticlePointer ap) throws IOException {
+        ArticleInfo ai =  __ap2ai(ap);
+        boolean b = selectArticle(a, ai);
+        __ai2ap(ai, ap);
+        return b;
+        
+    }
+    
+    /**
+     * @deprecated 3.0 use {@link #selectArticle(ArticleInfo)} instead
+     */
+    @Deprecated
+    public boolean selectArticle(ArticlePointer ap) throws IOException {
+        ArticleInfo ai =  __ap2ai(ap);
+        boolean b = selectArticle(ai);
+        __ai2ap(ai, ap);
+        return b;
+        
+    }
+    
+    /**
+     * @deprecated 3.0 use {@link #selectNextArticle(ArticleInfo)} instead
+     */
+    @Deprecated
+    public boolean selectNextArticle(ArticlePointer ap) throws IOException {
+        ArticleInfo ai =  __ap2ai(ap);
+        boolean b = selectNextArticle(ai);
+        __ai2ap(ai, ap);
+        return b;
+        
+    }
+    
+    /**
+     * @deprecated 3.0 use {@link #selectPreviousArticle(ArticleInfo)} instead
+     */
+    @Deprecated
+    public boolean selectPreviousArticle(ArticlePointer ap) throws IOException {
+        ArticleInfo ai =  __ap2ai(ap);
+        boolean b = selectPreviousArticle(ai);
+        __ai2ap(ai, ap);
+        return b;        
+    }
+
+   // Helper methods
+    
+    private ArticleInfo __ap2ai(@SuppressWarnings("deprecation") ArticlePointer ap) {
+        if (ap == null) return null;
+        ArticleInfo ai = new ArticleInfo();
+        return ai;
+    }
+
+    @SuppressWarnings("deprecation")
+    private void __ai2ap(ArticleInfo ai, ArticlePointer ap){
+        if (ap != null) { // ai cannot be null
+            ap.articleId = ai.articleId;
+            ap.articleNumber = (int) ai.articleNumber;
+        }
     }
 }
 

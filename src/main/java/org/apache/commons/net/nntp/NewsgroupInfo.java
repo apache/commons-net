@@ -100,7 +100,7 @@ public final class NewsgroupInfo
      * <p>
      * @return The estimated number of articles in the newsgroup.
      ***/
-    public long getArticleCount()
+    public long getArticleCountLong()
     {
         return __estimatedArticleCount;
     }
@@ -110,7 +110,7 @@ public final class NewsgroupInfo
      * <p>
      * @return The number of the first article in the newsgroup.
      ***/
-    public long getFirstArticle()
+    public long getFirstArticleLong()
     {
         return __firstArticle;
     }
@@ -120,7 +120,7 @@ public final class NewsgroupInfo
      * <p>
      * @return The number of the last article in the newsgroup.
      ***/
-    public long getLastArticle()
+    public long getLastArticleLong()
     {
         return __lastArticle;
     }
@@ -153,4 +153,21 @@ public final class NewsgroupInfo
       return buffer.toString();
 }
     */
+    
+    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
+
+    @Deprecated
+    public int getArticleCount() {
+        return (int) __estimatedArticleCount;
+    }
+
+    @Deprecated
+    public int getFirstArticle() {
+        return (int) __firstArticle;
+    }
+
+    @Deprecated
+    public int getLastArticle() {
+        return (int) __lastArticle;
+    }
 }

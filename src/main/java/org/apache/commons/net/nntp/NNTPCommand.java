@@ -67,7 +67,7 @@ public final class NNTPCommand
      * @return The NNTP protcol command string corresponding to a specified
      *         command code.
      ***/
-    static final String getCommand(int command)
+    public static final String getCommand(int command)
     {
         return _commands[command];
     }
