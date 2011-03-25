@@ -124,7 +124,7 @@ public final class POP3Mail
             }
 
             for (POP3MessageInfo msginfo : messages) {
-                BufferedReader reader = pop3.retrieveMessageTop(msginfo.number, 0);
+                BufferedReader reader = (BufferedReader) pop3.retrieveMessageTop(msginfo.number, 0);
 
                 if (reader == null) {
                     System.err.println("Could not retrieve message header.");

@@ -41,9 +41,9 @@ package org.apache.commons.net.pop3;
 
 public final class POP3MessageInfo
 {
-    public final int number;
-    public final int size;
-    public final String identifier;
+    public int number;
+    public int size;
+    public String identifier;
 
     /***
      * Creates a POP3MessageInfo instance with <code>number</code> and
@@ -52,8 +52,7 @@ public final class POP3MessageInfo
      ***/
     public POP3MessageInfo()
     {
-        number = size = 0;
-        identifier = null;
+        this(0, null, 0);
     }
 
     /***
@@ -63,9 +62,7 @@ public final class POP3MessageInfo
      ***/
     public POP3MessageInfo(int num, int octets)
     {
-        number = num;
-        size = octets;
-        identifier = null;
+        this(num, null, octets);
     }
 
     /***
@@ -75,8 +72,12 @@ public final class POP3MessageInfo
      ***/
     public POP3MessageInfo(int num, String uid)
     {
-        number = num;
-        size = -1;
-        identifier = uid;
+        this(num, uid, -1);
+    }
+    
+    private POP3MessageInfo(int num, String uid, int size) {
+        this.number = num;
+        this.size = size;
+        this.identifier = uid;        
     }
 }

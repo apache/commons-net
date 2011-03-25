@@ -19,6 +19,7 @@ package org.apache.commons.net.pop3;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Enumeration;
@@ -468,14 +469,10 @@ public class POP3Client extends POP3
     }
 
 
-    /***
+    /**
      * Retrieve a message from the POP3 server.  A retrieve message attempt
      * can only succeed if the client is in the
      * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
-     * .  Returns a DotTerminatedMessageReader instance
-     * from which the entire message can be read.
-     * Returns null if the retrieval attempt fails  (e.g., if the specified
-     * message number does not exist).
      * <p>
      * You must not issue any commands to the POP3 server (i.e., call any
      * other methods) until you finish reading the message from the
@@ -490,12 +487,14 @@ public class POP3Client extends POP3
      * @param messageId  The number of the message to fetch.
      * @return A DotTerminatedMessageReader instance
      * from which the entire message can be read.
+     * This can safely be cast to a {@link BufferedReader} in order to
+     * use the {@link BufferedReader#readLine()} method.
      * Returns null if the retrieval attempt fails  (e.g., if the specified
-     * message number does not exist).
+     * message number does not exist). 
      * @exception IOException If a network I/O error occurs in the process of
      *        sending the retrieve message command.
-     ***/
-    public BufferedReader retrieveMessage(int messageId) throws IOException
+     */
+    public Reader retrieveMessage(int messageId) throws IOException
     {
         if (getState() != TRANSACTION_STATE) {
             return null;
@@ -508,16 +507,11 @@ public class POP3Client extends POP3
     }
 
 
-    /***
+    /**
      * Retrieve only the specified top number of lines of a message from the
      * POP3 server.  A retrieve top lines attempt
      * can only succeed if the client is in the
      * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
-     * .  Returns a DotTerminatedMessageReader instance
-     * from which the specified top number of lines of the message can be
-     * read.
-     * Returns null if the retrieval attempt fails  (e.g., if the specified
-     * message number does not exist).
      * <p>
      * You must not issue any commands to the POP3 server (i.e., call any
      * other methods) until you finish reading the message from the returned
@@ -534,12 +528,14 @@ public class POP3Client extends POP3
      * @return  A DotTerminatedMessageReader instance
      * from which the specified top number of lines of the message can be
      * read.
+     * This can safely be cast to a {@link BufferedReader} in order to
+     * use the {@link BufferedReader#readLine()} method.
      * Returns null if the retrieval attempt fails  (e.g., if the specified
      * message number does not exist).
      * @exception IOException If a network I/O error occurs in the process of
      *       sending the top command.
-     ***/
-    public BufferedReader retrieveMessageTop(int messageId, int numLines)
+     */
+    public Reader retrieveMessageTop(int messageId, int numLines)
     throws IOException
     {
         if (numLines < 0 || getState() != TRANSACTION_STATE) {
