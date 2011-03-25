@@ -290,4 +290,18 @@ public class FTPListParseEngine {
     public void resetIterator() {
         this._internalIterator = this.entries.listIterator();
     }
+
+    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
+
+    /**
+     * Do not use.
+     * @deprecated use {@link #readServerList(InputStream, String)} instead
+    */
+    @Deprecated
+    public void readServerList(InputStream stream)
+    throws IOException
+    {
+        readServerList(stream, null);
+    }
+
 }

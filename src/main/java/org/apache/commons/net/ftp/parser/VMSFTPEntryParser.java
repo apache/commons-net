@@ -250,6 +250,18 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
                 null, null, null, null);
     }
 
+    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
+
+    /**
+     * DO NOT USE
+     * @deprecated (2.2) No other FTPFileEntryParser implementations have this method.
+     */
+    @Deprecated
+    public FTPFile[] parseFileList(java.io.InputStream listStream) throws IOException {
+        org.apache.commons.net.ftp.FTPListParseEngine engine = new org.apache.commons.net.ftp.FTPListParseEngine(this);
+        engine.readServerList(listStream, null);
+        return engine.getFiles();
+    }
 
 }
 
