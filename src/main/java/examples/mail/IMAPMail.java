@@ -63,7 +63,7 @@ public final class IMAPMail
         imap.setDefaultTimeout(60000);
 
         // suppress login details
-        imap.addProtocolCommandListener(new PrintCommandListener(System.out, true, (char) 0, true));
+        imap.addProtocolCommandListener(new PrintCommandListener(System.out, true));
 
         try
         {
@@ -85,35 +85,44 @@ public final class IMAPMail
                 System.exit(3);
             }
 
+            imap.setSoTimeout(6000);
+            
             if (imap.capability())
             {
-                System.out.println("Server capabilities:");
-                System.out.println(imap.getReplyString());
+//                System.out.println("Server capabilities:");
+//                System.out.println(imap.getReplyString());
             }
 
             if (imap.select("inbox"))
             {
-                System.out.println("Selected inbox:");
-                System.out.println(imap.getReplyString());
+//                System.out.println("Selected inbox:");
+//                System.out.println(imap.getReplyString());
             }
 
-            if (imap.examine("inbox"))
+//            if (imap.examine("inbox"))
             {
-                System.out.println("Examined inbox:");
-                System.out.println(imap.getReplyString());
+//                System.out.println("Examined inbox:");
+//                System.out.println(imap.getReplyString());
             }
 
-            if (imap.status("inbox", null))
+//            if (imap.status("inbox", null))
             {
-                System.out.println("Inbox status:");
-                System.out.println(imap.getReplyString());
+//                System.out.println("Inbox status:");
+//                System.out.println(imap.getReplyString());
             }
+//            imap.sendCommand("EXAMINE","more");
+            {
+//                System.out.println(imap.getReplyString());
+            } 
+
+            imap.getAdditionalReply();
 
             imap.logout();
             imap.disconnect();
         }
         catch (IOException e)
         {
+            System.out.println(imap.getReplyString());
             e.printStackTrace();
             System.exit(10);
             return;
