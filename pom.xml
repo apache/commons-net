@@ -175,7 +175,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                     <execution>
                         <phase>package</phase>
                         <configuration>
-                            <tasks>
+                            <target>
                                 <jar destfile="target/commons-net-ftp-${project.version}.jar">
                                     <metainf dir="${basedir}" includes="NOTICE.txt,LICENSE.txt" />
                                     <manifest>
@@ -204,7 +204,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                                     </manifest>
                                     <fileset dir="target/classes" includes="examples/**" />
                                 </jar>
-                            </tasks>
+                            </target>
                         </configuration>
                         <goals>
                             <goal>run</goal>
