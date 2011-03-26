@@ -273,15 +273,28 @@ public class FTPClient extends FTP
 implements Configurable
 {
     /**
-     * The system property ({@value}) which can be used to override the system type.
+     * The system property ({@value}) which can be used to override the system type.<br/>
+     * If defined, the value will be used to create any automatically created parsers.
+     *
      * @since 3.0
      */
     public static final String FTP_SYSTEM_TYPE = "org.apache.commons.net.ftp.systemType";
 
     /**
-     * The name of the systemType properties file ({@value}).
+     * The name of an optional systemType properties file ({@value}), which is loaded
+     * using {@link Class#getResourceAsStream(String)}.<br/>
+     * The entries are the systemType (as determined by {@link FTPClient#getSystemType})
+     * and the values are the replacement type or parserClass, which is passed to
+     * {@link FTPFileEntryParserFactory#createFileEntryParser(String)}.<br/>
+     * For example:
+     * <pre>
+     * Plan 9=Unix
+     * OS410=org.apache.commons.net.ftp.parser.OS400FTPEntryParser
+     * </pre>
+     *
+     * @since 3.0
      */
-    private static final String SYSTEM_TYPE_PROPERTIES = "/systemType.properties";
+    public static final String SYSTEM_TYPE_PROPERTIES = "/systemType.properties";
 
     /***
      * A constant indicating the FTP session is expecting all transfers
