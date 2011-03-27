@@ -26,7 +26,6 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ProtocolCommandListener;
 import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
@@ -95,6 +94,11 @@ public class IMAP extends SocketClient
 
     private void __getReply() throws IOException
     {
+        __getReply(true); // default to tagged response
+    }
+
+    private void __getReply(boolean wantTag) throws IOException
+    {
         String line;
 
         _replyLines.clear();
@@ -105,61 +109,18 @@ public class IMAP extends SocketClient
 
         _replyLines.add(line);
 
-        // Get extra lines if message continues.
-        if (line.charAt(0) == IMAPReply.OK_INT_String.charAt(0)
-            // can be untagged:
-            && ! line.substring(2).startsWith(IMAPReply.OK_String))
-        {
-            do
-            {
+        if (wantTag) {
+            while(IMAPReply.isUntagged(line)) {
                 line = _reader.readLine();
-
-                if (line == null)
-                    throw new EOFException(
-                        "Connection closed without indication.");
-
+                if (line == null) {
+                    throw new EOFException("Connection closed without indication.");
+                }
                 _replyLines.add(line);
-
-                // The length() check handles problems that could arise from readLine()
-                // returning too soon after encountering a naked CR or some other
-                // anomaly.
             }
-            while (line.charAt(0) == IMAPReply.OK_INT_String.charAt(0)
-                // can be untagged:
-                && ! line.substring(2).startsWith(IMAPReply.OK_String));
-        }
-
-        String _lastReplyLine = line;
-        _lastReplyLine = _lastReplyLine.substring(_lastReplyLine.indexOf(' ')+1).toUpperCase();
-
-        // check the response code on the last line
-        if (_lastReplyLine.startsWith(IMAPReply.OK_String))
-        {
-            _replyCode = IMAPReply.OK;
-        }
-        else if (_lastReplyLine.startsWith(IMAPReply.NO_String))
-        {
-            _replyCode = IMAPReply.NO;
-        }
-        else if (_lastReplyLine.startsWith(IMAPReply.BAD_String))
-        {
-            _replyCode = IMAPReply.BAD;
-        }
-        // response code not found - read the last line's type
-        else if (line.startsWith(IMAPReply.OK_INT_String))
-        {
-            _replyCode = IMAPReply.OK_INT;
-        }
-        else if (line.startsWith(IMAPReply.CONT_String))
-        {
-            _replyCode = IMAPReply.CONT;
-        }
-        else
-        {
-            throw new
-            MalformedServerReplyException(
-                "Received invalid IMAP protocol response from server: '"
-                + getReplyString() + "'.");
+            // check the response code on the last line
+            _replyCode = IMAPReply.getReplyCode(line);
+        } else {
+            _replyCode = IMAPReply.getUntaggedReplyCode(line);
         }
 
         if (_commandSupport_.getListenerCount() > 0)
@@ -184,7 +145,7 @@ public class IMAP extends SocketClient
         if (tmo <= 0) { // none set currently
             setSoTimeout(connectTimeout); // use connect timeout to ensure we don't block forever
         }
-        __getReply();
+        __getReply(false); // untagged response
         if (tmo <= 0) {
             setSoTimeout(tmo); // restore the original value
         }
