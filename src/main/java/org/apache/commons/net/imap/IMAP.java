@@ -334,11 +334,11 @@ public class IMAP extends SocketClient
      */
     public int sendCommand(String command) throws IOException
     {
-        return sendCommandWithID(generateCommandID(), command, null);
+        return sendCommand(command, null);
     }
 
     /**
-     * Sends a command an arguments to the server and returns the reply code.
+     * Sends a command and arguments to the server and returns the reply code.
      * <p>
      * @param command  The IMAP command to send
      *                  (one of the IMAPCommand constants).
@@ -351,16 +351,41 @@ public class IMAP extends SocketClient
     }
 
     /**
+     * Sends a command and arguments to the server and return whether successful.
+     * <p>
+     * @param command  The IMAP command to send
+     *                  (one of the IMAPCommand constants).
+     * @param args     The command arguments.
+     * @return  {@code true} if the command was successful
+     */
+    public boolean doCommand(int command, String args) throws IOException
+    {
+        return IMAPReply.isSuccess(sendCommand(command, args));
+    }
+
+    /**
      * Sends a command with no arguments to the server and returns the
      * reply code.
-     * <p>
+     *
      * @param command  The IMAP command to send
      *                  (one of the IMAPCommand constants).
      * @return  The server reply code (see IMAPReply).
     **/
     public int sendCommand(int command) throws IOException
     {
-        return sendCommandWithID(generateCommandID(), IMAPCommand.getCommand(command), null);
+        return sendCommand(command, null);
+    }
+
+    /**
+     * Sends a command to the server and return whether successful.
+     *
+     * @param command  The IMAP command to send
+     *                  (one of the IMAPCommand constants).
+     * @return  {@code true} if the command was successful
+     */
+    public boolean doCommand(int command) throws IOException
+    {
+        return IMAPReply.isSuccess(sendCommand(command));
     }
 
     /**
