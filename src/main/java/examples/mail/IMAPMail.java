@@ -84,7 +84,7 @@ public final class IMAPMail
             }
 
             imap.setSoTimeout(6000);
-            
+
             imap.capability();
 
             imap.select("inbox");
