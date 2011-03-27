@@ -24,43 +24,71 @@ public enum IMAPCommand
 {
     // These enums must either use the same name as the IMAP command
     // or must provide the correct string as the parameter.
-    CAPABILITY,
-    NOOP,
-    LOGOUT,
-    STARTTLS,
-    AUTHENTICATE,
-    LOGIN,
-    SELECT,
-    EXAMINE,
-    CREATE,
-    DELETE,
-    RENAME,
-    SUBSCRIBE,
-    UNSUBSCRIBE,
-    LIST,
-    LSUB,
-    STATUS,
-    APPEND,
-    CHECK,
-    CLOSE,
-    EXPUNGE,
-    SEARCH,
-    FETCH,
-    STORE,
-    COPY,
-    UID,
+    
+    // Commands valid in any state:
+    
+    CAPABILITY(0),
+    NOOP(0),
+    LOGOUT(0),
+    
+    // Commands valid in Not Authenticated state
+    STARTTLS(0),
+    AUTHENTICATE(1),
+    LOGIN(2),
+    
+    // commands valid in authenticated state
+    SELECT(1),
+    EXAMINE(1),
+    CREATE(1),
+    DELETE(1),
+    RENAME(2),
+    SUBSCRIBE(1),
+    UNSUBSCRIBE(1),
+    LIST(2),
+    LSUB(2),
+    STATUS(2), // P2 = list in ()
+    APPEND(2,4), // mbox [(flags)] [date-time] literal
+    
+    // commands valid in selected state (substate of authenticated)
+    CHECK(0),
+    CLOSE(0),
+    EXPUNGE(0),
+    SEARCH(1, Integer.MAX_VALUE),
+    FETCH(2),
+    STORE(3),
+    COPY(2),
+    UID(2, Integer.MAX_VALUE),
     ;
     
     private final String imapCommand;
+    private final int minParamCount;
+    private final int maxParamCount;
 
     IMAPCommand(){
-        imapCommand = name();
+        this(null);
     }
     
     IMAPCommand(String name){
-        imapCommand = name;
+        this(name, 0);
     }
     
+    IMAPCommand(int paramCount){
+        this(null, paramCount, paramCount);
+   }
+    
+    IMAPCommand(int minCount, int maxCount){
+        this(null, minCount, maxCount);
+   }
+    
+    IMAPCommand(String name, int paramCount){
+        this(name, paramCount, paramCount);
+    }
+    
+    IMAPCommand(String name, int minCount, int maxCount){
+        this.imapCommand = name;
+        this.minParamCount = minCount;
+        this.maxParamCount = maxCount;
+    }
     /**
      * Get the IMAP protocol string command corresponding to a command code.
      *
@@ -68,7 +96,11 @@ public enum IMAPCommand
      * @return The IMAP protocol string command corresponding to a command code.
      */
     public static final String getCommand(IMAPCommand command) {
-        return command.imapCommand;
+        return command.getIMAPCommand();
+    }
+
+    private String getIMAPCommand() {
+        return imapCommand != null ? imapCommand : name();
     }
 
 }
