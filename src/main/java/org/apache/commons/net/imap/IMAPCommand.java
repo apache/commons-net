@@ -75,7 +75,7 @@ public class IMAPCommand
 
 
 
-    static final String[] _commands = {
+    private static final String[] _commands = {
                                           "CAPABILITY",
                                           "NOOP",
                                           "LOGOUT",

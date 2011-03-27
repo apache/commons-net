@@ -335,7 +335,7 @@ public class IMAP extends SocketClient
      */
     public int sendCommandWithID(String commandID, int command, String args) throws IOException
     {
-        return sendCommandWithID(commandID, IMAPCommand._commands[command], args);
+        return sendCommandWithID(commandID, IMAPCommand.getCommand(command), args);
     }
 
     /**
@@ -349,7 +349,7 @@ public class IMAP extends SocketClient
     **/
     public int sendCommandWithID(String commandID, int command) throws IOException
     {
-        return sendCommandWithID(commandID, IMAPCommand._commands[command], null);
+        return sendCommandWithID(commandID, IMAPCommand.getCommand(command), null);
     }
 
     /**
@@ -386,7 +386,7 @@ public class IMAP extends SocketClient
      */
     public int sendCommand(int command, String args) throws IOException
     {
-        return sendCommandWithID(generateCommandID(), IMAPCommand._commands[command], args);
+        return sendCommandWithID(generateCommandID(), IMAPCommand.getCommand(command), args);
     }
 
     /**
@@ -399,7 +399,7 @@ public class IMAP extends SocketClient
     **/
     public int sendCommand(int command) throws IOException
     {
-        return sendCommandWithID(generateCommandID(), IMAPCommand._commands[command], null);
+        return sendCommandWithID(generateCommandID(), IMAPCommand.getCommand(command), null);
     }
 
     /**
@@ -436,7 +436,7 @@ public class IMAP extends SocketClient
      */
     public int sendUntaggedCommand(int command, String args) throws IOException
     {
-        return sendCommandWithID(null, IMAPCommand._commands[command], args);
+        return sendCommandWithID(null, IMAPCommand.getCommand(command), args);
     }
 
     /**
@@ -449,7 +449,7 @@ public class IMAP extends SocketClient
     **/
     public int sendUntaggedCommand(int command) throws IOException
     {
-        return sendCommandWithID(null, IMAPCommand._commands[command], null);
+        return sendCommandWithID(null, IMAPCommand.getCommand(command), null);
     }
 
     /**
