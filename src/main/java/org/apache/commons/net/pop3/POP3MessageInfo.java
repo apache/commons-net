@@ -74,10 +74,10 @@ public final class POP3MessageInfo
     {
         this(num, uid, -1);
     }
-    
+
     private POP3MessageInfo(int num, String uid, int size) {
         this.number = num;
         this.size = size;
-        this.identifier = uid;        
+        this.identifier = uid;
     }
 }

@@ -42,7 +42,7 @@ import org.apache.commons.net.io.Util;
  * How to use with a client certificate:
  * <pre>
  * KeyManager km = KeyManagerUtils.createClientKeyManager("JKS",
- *     "/path/to/privatekeystore.jks","storepassword", 
+ *     "/path/to/privatekeystore.jks","storepassword",
  *     "privatekeyalias", "keypassword");
  * FTPSClient cl = new FTPSClient();
  * cl.setKeyManager(km);
@@ -59,7 +59,7 @@ import org.apache.commons.net.io.Util;
  * cl.setKeyManager(km);
  * cl.connect(...);
  * </pre>
- * 
+ *
  * @since 3.0
  */
 public final class KeyManagerUtils {
@@ -92,7 +92,7 @@ public final class KeyManagerUtils {
      *
      * @param storeType the type of the keyStore, e.g. "JKS"
      * @param storePath the path to the keyStore
-     * @param storePass the keyStore password 
+     * @param storePass the keyStore password
      * @param keyAlias the alias of the key to use, may be {@code null} in which case the first key entry alias is used
      * @param keyPass the password of the key to use
      * @return the customised KeyManager
@@ -110,7 +110,7 @@ public final class KeyManagerUtils {
      * Uses the default store type and assumes the key password is the same as the store password
      *
      * @param storePath the path to the keyStore
-     * @param storePass the keyStore password 
+     * @param storePass the keyStore password
      * @param keyAlias the alias of the key to use, may be {@code null} in which case the first key entry alias is used
      * @return the customised KeyManager
      */
@@ -127,7 +127,7 @@ public final class KeyManagerUtils {
      * The key alias is found by searching the keystore for the first private key entry
      *
      * @param storePath the path to the keyStore
-     * @param storePass the keyStore password 
+     * @param storePass the keyStore password
      * @return the customised KeyManager
      */
     public static KeyManager createClientKeyManager(File storePath, String storePass)
@@ -136,7 +136,7 @@ public final class KeyManagerUtils {
         return createClientKeyManager(DEFAULT_STORE_TYPE, storePath, storePass, null, storePass);
     }
 
-    private static KeyStore loadStore(String storeType, File storePath, String storePass) 
+    private static KeyStore loadStore(String storeType, File storePath, String storePass)
         throws KeyStoreException,  IOException, GeneralSecurityException {
         KeyStore ks = KeyStore.getInstance(storeType);
         FileInputStream stream = null;
@@ -209,7 +209,7 @@ public final class KeyManagerUtils {
         public X509Certificate[] getCertificateChain(String alias) {
             return keyStore.getCertificateChain();
         }
-        
+
         public String[] getClientAliases(String keyType, Principal[] issuers) {
             return new String[]{ keyStore.getAlias()};
         }

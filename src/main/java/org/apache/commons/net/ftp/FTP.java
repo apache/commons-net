@@ -395,7 +395,7 @@ public class FTP extends SocketClient
             __getReply();
             // If we received code 120, we have to fetch completion reply.
             if (FTPReply.isPositivePreliminary(_replyCode))
-                __getReply();            
+                __getReply();
         }
     }
 

@@ -13,7 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.apache.commons.net.nntp;
@@ -21,14 +21,14 @@ package org.apache.commons.net.nntp;
  * Class contains details about an article.
  * Create an instance of the class and pass it to the appropriate NNTP method.
  * The values will be populated on return.
- * 
+ *
  */
 public class ArticleInfo {
 
     public String articleId;
-    
+
     public long articleNumber;
-    
+
     public ArticleInfo() {
     }
 }

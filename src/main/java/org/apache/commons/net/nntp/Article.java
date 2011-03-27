@@ -234,14 +234,14 @@ public class Article implements Threadable {
     public String toString(){ // Useful for Eclipse debugging
         return articleNumber + " " +articleId + " " + subject;
     }
-    
+
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE
 
     @Deprecated
     public int getArticleNumber() {
         return (int) articleNumber;
     }
-    
+
     @Deprecated
     public void setArticleNumber(int a) {
         articleNumber = a;

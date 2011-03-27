@@ -54,7 +54,7 @@ public class Threader {
      * @return null if messages == null or root.child == null
      * @since 3.0
      */
-    public Threadable thread(Iterable<? extends Threadable> messages) {       
+    public Threadable thread(Iterable<? extends Threadable> messages) {
         if (messages == null)
             return null;
 
@@ -414,7 +414,7 @@ public class Threader {
         subjectTable = null;
 
     }
-    
+
 
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE
 

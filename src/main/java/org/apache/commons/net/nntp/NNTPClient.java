@@ -92,10 +92,10 @@ public class NNTPClient extends NNTP
 
     /**
      * Parse the reply and store the id and number in the pointer.
-     * 
+     *
      * @param reply the reply to parse "22n nnn <aaa>"
      * @param pointer the pointer to update
-     * 
+     *
      * @throws MalformedServerReplyException
      */
     private void __parseArticlePointer(String reply, ArticleInfo pointer)
@@ -367,16 +367,16 @@ public class NNTPClient extends NNTP
 
     /**
      * Same as <code> retrieveArticle(articleId, (ArticleInfo) null) </code>
-     * Note: the return can be cast to a {@link BufferedReader} 
+     * Note: the return can be cast to a {@link BufferedReader}
      */
     public Reader retrieveArticle(String articleId) throws IOException
     {
         return retrieveArticle(articleId, (ArticleInfo) null);
     }
 
-    /** 
+    /**
      * Same as <code> retrieveArticle((String) null) </code>
-     * Note: the return can be cast to a {@link BufferedReader} 
+     * Note: the return can be cast to a {@link BufferedReader}
      */
     public Reader retrieveArticle() throws IOException
     {
@@ -484,7 +484,7 @@ public class NNTPClient extends NNTP
     }
 
     /**
-     * Same as <code> retrieveArticleHeader(articleId, (ArticleInfo) null) </code> 
+     * Same as <code> retrieveArticleHeader(articleId, (ArticleInfo) null) </code>
      *  Note: the return can be cast to a {@link BufferedReader}
      */
     public Reader retrieveArticleHeader(String articleId) throws IOException
@@ -604,7 +604,7 @@ public class NNTPClient extends NNTP
     }
 
     /**
-     * Same as <code> retrieveArticleBody(articleId, (ArticleInfo) null) </code> 
+     * Same as <code> retrieveArticleBody(articleId, (ArticleInfo) null) </code>
      *  Note: the return can be cast to a {@link BufferedReader}
      */
     public Reader retrieveArticleBody(String articleId) throws IOException
@@ -613,8 +613,8 @@ public class NNTPClient extends NNTP
     }
 
     /**
-     * Same as <code> retrieveArticleBody(null) </code> 
-     *  Note: the return can be cast to a {@link BufferedReader} 
+     * Same as <code> retrieveArticleBody(null) </code>
+     *  Note: the return can be cast to a {@link BufferedReader}
      */
     public Reader retrieveArticleBody() throws IOException
     {
@@ -1513,20 +1513,20 @@ public class NNTPClient extends NNTP
     }
 
 
-    
-    
+
+
 
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE
     // ============================================================
-    
-    
 
-    /** 
+
+
+    /**
      * @deprecated 3.0 use {@link #retrieveHeader(String, long, long)} instead
      */
     @Deprecated
     public Reader retrieveHeader(String s, int l, int h)
-        throws IOException 
+        throws IOException
     {
         return retrieveHeader(s, (long) l, (long) h);
     }
@@ -1538,7 +1538,7 @@ public class NNTPClient extends NNTP
     public Reader retrieveArticleInfo(int a, int b) throws IOException {
         return retrieveArticleInfo((long) a, (long) b);
     }
-    
+
     /**
      * @deprecated 3.0 use {@link #retrieveHeader(String, long)} instead
      */
@@ -1546,7 +1546,7 @@ public class NNTPClient extends NNTP
     public Reader retrieveHeader(String a, int b) throws IOException {
         return retrieveHeader(a, (long) b);
     }
-    
+
     /**
      * @deprecated 3.0 use {@link #selectArticle(long, ArticleInfo)} instead
      */
@@ -1557,7 +1557,7 @@ public class NNTPClient extends NNTP
         __ai2ap(ai, ap);
         return b;
     }
-    
+
     /**
      * @deprecated 3.0 use {@link #retrieveArticleInfo(long)} instead
      */
@@ -1617,7 +1617,7 @@ public class NNTPClient extends NNTP
      */
     @Deprecated
     public Reader retrieveArticle(int a) throws IOException {
-        return retrieveArticle((long) a);        
+        return retrieveArticle((long) a);
     }
 
     /**
@@ -1630,7 +1630,7 @@ public class NNTPClient extends NNTP
         __ai2ap(ai, ap);
         return rdr;
     }
-    
+
     /**
      * @deprecated 3.0 use {@link #retrieveArticle(String, ArticleInfo)} instead
      */
@@ -1639,7 +1639,7 @@ public class NNTPClient extends NNTP
         ArticleInfo ai =  __ap2ai(ap);
         Reader rdr = retrieveArticle(a, ai);
         __ai2ap(ai, ap);
-        return rdr;        
+        return rdr;
     }
 
     /**
@@ -1650,9 +1650,9 @@ public class NNTPClient extends NNTP
         ArticleInfo ai =  __ap2ai(ap);
         Reader rdr = retrieveArticleBody(a, ai);
         __ai2ap(ai, ap);
-        return rdr;                
+        return rdr;
     }
-    
+
     /**
      * @deprecated 3.0 use {@link #retrieveArticleHeader(String, ArticleInfo)} instead
      */
@@ -1661,9 +1661,9 @@ public class NNTPClient extends NNTP
         ArticleInfo ai =  __ap2ai(ap);
         Reader rdr = retrieveArticleHeader(a, ai);
         __ai2ap(ai, ap);
-        return rdr;                        
+        return rdr;
     }
-    
+
     /**
      * @deprecated 3.0 use {@link #selectArticle(String, ArticleInfo)} instead
      */
@@ -1673,9 +1673,9 @@ public class NNTPClient extends NNTP
         boolean b = selectArticle(a, ai);
         __ai2ap(ai, ap);
         return b;
-        
+
     }
-    
+
     /**
      * @deprecated 3.0 use {@link #selectArticle(ArticleInfo)} instead
      */
@@ -1685,9 +1685,9 @@ public class NNTPClient extends NNTP
         boolean b = selectArticle(ai);
         __ai2ap(ai, ap);
         return b;
-        
+
     }
-    
+
     /**
      * @deprecated 3.0 use {@link #selectNextArticle(ArticleInfo)} instead
      */
@@ -1697,9 +1697,9 @@ public class NNTPClient extends NNTP
         boolean b = selectNextArticle(ai);
         __ai2ap(ai, ap);
         return b;
-        
+
     }
-    
+
     /**
      * @deprecated 3.0 use {@link #selectPreviousArticle(ArticleInfo)} instead
      */
@@ -1708,11 +1708,11 @@ public class NNTPClient extends NNTP
         ArticleInfo ai =  __ap2ai(ap);
         boolean b = selectPreviousArticle(ai);
         __ai2ap(ai, ap);
-        return b;        
+        return b;
     }
 
    // Helper methods
-    
+
     private ArticleInfo __ap2ai(@SuppressWarnings("deprecation") ArticlePointer ap) {
         if (ap == null) return null;
         ArticleInfo ai = new ArticleInfo();

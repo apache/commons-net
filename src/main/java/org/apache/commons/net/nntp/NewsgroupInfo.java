@@ -153,7 +153,7 @@ public final class NewsgroupInfo
       return buffer.toString();
 }
     */
-    
+
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE
 
     @Deprecated
