@@ -149,7 +149,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
             case PLAIN:
             {
                 // the server sends an empty response ("+ "), so we don't have to read it.
-                int result = sendUntaggedCommand(
+                int result = sendData(
                     new String(
                         Base64.encodeBase64(("\000" + username + "\000" + password).getBytes())
                         )
@@ -176,7 +176,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
                 toEncode[usernameBytes.length] = ' ';
                 System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
                 // send the reply and read the server code:
-                int result = sendUntaggedCommand(new String(Base64.encodeBase64(toEncode)));
+                int result = sendData(new String(Base64.encodeBase64(toEncode)));
                 if (result == IMAPReply.OK)
                 {
                     setState(IMAP.IMAPState.AUTH_STATE);
@@ -187,12 +187,12 @@ public class AuthenticatingIMAPClient extends IMAPSClient
             {
                 // the server sends fixed responses (base64("Username") and
                 // base64("Password")), so we don't have to read them.
-                if (sendUntaggedCommand(
+                if (sendData(
                     new String(Base64.encodeBase64(username.getBytes()))) != IMAPReply.CONT)
                 {
                     return false;
                 }
-                int result = sendUntaggedCommand(
+                int result = sendData(
                     new String(Base64.encodeBase64(password.getBytes())));
                 if (result == IMAPReply.OK)
                 {

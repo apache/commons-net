@@ -57,6 +57,10 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.0" date="TBA" description="TBA">
+            <action issue="NET-394" dev="sebb" type="update">
+            Are the sendUntaggedCommand() methods needed?
+            Renamed the method as sendData(), as it's not a command.
+            </action>
             <action issue="NET-392" dev="sebb" type="update">
             Use enum for IMAPCommand.
             </action>

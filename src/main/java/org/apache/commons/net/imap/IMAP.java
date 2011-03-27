@@ -368,53 +368,14 @@ public class IMAP extends SocketClient
     }
 
     /**
-     * Sends an untagged command an arguments to the server and returns the reply code.
-     * <p>
-     * @param command  The IMAP command to send.
-     * @param args     The command arguments.
-     * @return  The server reply code (see IMAPReply).
-     */
-    public int sendUntaggedCommand(String command, String args) throws IOException
-    {
-        return sendCommandWithID(null, command, args);
-    }
-
-    /**
-     * Sends an untagged command with no arguments to the server and returns the
-     * reply code.
+     * Sends data to the server and returns the reply code.
      * <p>
      * @param command  The IMAP command to send.
      * @return  The server reply code (see IMAPReply).
      */
-    public int sendUntaggedCommand(String command) throws IOException
+    public int sendData(String command) throws IOException
     {
         return sendCommandWithID(null, command, null);
-    }
-
-    /**
-     * Sends an untagged command an arguments to the server and returns the reply code.
-     * <p>
-     * @param command  The IMAP command to send
-     *                  (one of the IMAPCommand constants).
-     * @param args     The command arguments.
-     * @return  The server reply code (see IMAPReply).
-     */
-    public int sendUntaggedCommand(IMAPCommand command, String args) throws IOException
-    {
-        return sendCommandWithID(null, IMAPCommand.getCommand(command), args);
-    }
-
-    /**
-     * Sends an untagged command with no arguments to the server and returns the
-     * reply code.
-     * <p>
-     * @param command  The IMAP command to send
-     *                  (one of the IMAPCommand constants).
-     * @return  The server reply code (see IMAPReply).
-    **/
-    public int sendUntaggedCommand(IMAPCommand command) throws IOException
-    {
-        return sendCommandWithID(null, IMAPCommand.getCommand(command), null);
     }
 
     /**
