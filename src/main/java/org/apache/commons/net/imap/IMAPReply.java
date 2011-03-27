@@ -56,7 +56,7 @@ public final class IMAPReply
     // Cannot be instantiated.
     private IMAPReply()
     {}
-    
+
     /**
      * Checks if the reply line is untagged - e.g. "* OK ..."
      * @param line to be checked
@@ -65,23 +65,23 @@ public final class IMAPReply
     public static boolean isUntagged(String line) {
         return line.startsWith(IMAP_UNTAGGED_PREFIX);
     }
-    
+
     /**
      * Checks if the reply line is a continuation, i.e. starts with "+ "
      * @param line the line to be checked
      * @return {@code true} if the line is untagged
      */
     public static boolean isContinuation(String line) {
-        return line.startsWith(IMAP_CONTINUATION_PREFIX);        
+        return line.startsWith(IMAP_CONTINUATION_PREFIX);
     }
 
     private static final String TAGGED_RESPONSE = "^\\w+ (\\S+).*"; // TODO perhaps be less strict on tag match?
     // tag cannot contain: + ( ) { SP CTL % * " \ ]
     private static final Pattern TAGGED_PATTERN = Pattern.compile(TAGGED_RESPONSE);
-    
+
     /**
      * Intepret the String reply code - OK, NO, BAD - in a tagged response as a integer.
-     * 
+     *
      * @param line the tagged line to be checked
      * @return {@link #OK} or {@link #NO} or {@link #BAD}
      * @throws IOException if the input has an unexpected format
@@ -89,13 +89,13 @@ public final class IMAPReply
     public static int getReplyCode(String line) throws IOException {
         return getReplyCode(line, TAGGED_PATTERN);
     }
-    
-    private static final String UNTAGGED_RESPONSE = "^\\* (\\S+).*";    
+
+    private static final String UNTAGGED_RESPONSE = "^\\* (\\S+).*";
     private static final Pattern UNTAGGED_PATTERN = Pattern.compile(UNTAGGED_RESPONSE);
 
     /**
      * Intepret the String reply code - OK, NO, BAD - in an untagged response as a integer.
-     * 
+     *
      * @param line the untagged line to be checked
      * @return {@link #OK} or {@link #NO} or {@link #BAD}
      * @throws IOException if the input has an unexpected format
@@ -125,7 +125,7 @@ public final class IMAPReply
 
     /**
      * Checks whether the reply code indicates success or not
-     * 
+     *
      * @param replyCode the code to check
      * @return {@code true} if the code equals {@link #OK}
      */
