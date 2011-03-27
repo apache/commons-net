@@ -45,8 +45,6 @@ public class IMAP extends SocketClient
     {
         /** A constant representing the state where the client is not yet connected to a server. */
         DISCONNECTED_STATE,
-        /**  A constant representing the initial state. */
-        INITIAL_STATE,
         /**  A constant representing the "not authenticated" state. */
         NOT_AUTH_STATE,
         /**  A constant representing the "authenticated" state. */
@@ -291,7 +289,7 @@ public class IMAP extends SocketClient
     **/
     public int sendCommandWithID(String commandID, int command) throws IOException
     {
-        return sendCommandWithID(commandID, IMAPCommand.getCommand(command), null);
+        return sendCommandWithID(commandID, command, null);
     }
 
     /**
