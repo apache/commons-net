@@ -23,8 +23,8 @@ import java.io.EOFException;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ProtocolCommandListener;
@@ -68,7 +68,7 @@ public class IMAP extends SocketClient
 
     protected BufferedReader _reader;
     private int _replyCode;
-    private Vector<String> _replyLines;
+    private List<String> _replyLines;
 
     private char[] _initialID = { 'A', 'A', 'A', 'A' };
 
@@ -89,7 +89,7 @@ public class IMAP extends SocketClient
         __state = IMAPState.DISCONNECTED_STATE;
         _reader = null;
         __writer = null;
-        _replyLines = new Vector<String>();
+        _replyLines = new ArrayList<String>();
         _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
@@ -97,7 +97,7 @@ public class IMAP extends SocketClient
     {
         String line;
 
-        _replyLines.setSize(0);
+        _replyLines.clear();
         line = _reader.readLine();
 
         if (line == null)
@@ -129,7 +129,7 @@ public class IMAP extends SocketClient
                 && ! line.substring(2).startsWith(IMAPReply.OK_String));
         }
 
-        String _lastReplyLine = _replyLines.lastElement();
+        String _lastReplyLine = line;
         _lastReplyLine = _lastReplyLine.substring(_lastReplyLine.indexOf(' ')+1).toUpperCase();
 
         // check the response code on the last line
@@ -247,7 +247,7 @@ public class IMAP extends SocketClient
         line = _reader.readLine();
         while (line != null)
         {
-            _replyLines.addElement(line);
+            _replyLines.add(line);
             if (line.equals("."))
                 break;
             line = _reader.readLine();
@@ -269,7 +269,7 @@ public class IMAP extends SocketClient
         super.disconnect();
         _reader = null;
         __writer = null;
-        _replyLines.setSize(0);
+        _replyLines.clear();
         setState(IMAPState.DISCONNECTED_STATE);
     }
 
@@ -459,10 +459,7 @@ public class IMAP extends SocketClient
      */
     public String[] getReplyStrings()
     {
-        String[] lines;
-        lines = new String[_replyLines.size()];
-        _replyLines.copyInto(lines);
-        return lines;
+        return _replyLines.toArray(new String[_replyLines.size()]);
     }
 
     /**
@@ -474,13 +471,10 @@ public class IMAP extends SocketClient
      */
     public String getReplyString()
     {
-        Enumeration<String> en;
         StringBuilder buffer = new StringBuilder(256);
-
-        en = _replyLines.elements();
-        while (en.hasMoreElements())
+        for (String s : _replyLines)
         {
-            buffer.append(en.nextElement());
+            buffer.append(s);
             buffer.append(SocketClient.NETASCII_EOL);
         }
 
