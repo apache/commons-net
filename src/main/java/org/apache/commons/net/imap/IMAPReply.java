@@ -38,6 +38,9 @@ public final class IMAPReply
     /** The reply code indicating command rejection. */
     public static final int BAD = 2;
 
+    /** The reply code indicating command continuation. */
+    public static final int CONT = 3;
+
     /** The IMAP reply String indicating success of an operation. */
     private static final String IMAP_OK = "OK";
 
@@ -51,7 +54,7 @@ public final class IMAPReply
     private static final String IMAP_UNTAGGED_PREFIX = "* ";
 
     // Start of line for continuation replies
-    private static final String IMAP_CONTINUATION_PREFIX = "+ ";
+    private static final String IMAP_CONTINUATION_PREFIX = "+";
 
     // Cannot be instantiated.
     private IMAPReply()
@@ -67,7 +70,7 @@ public final class IMAPReply
     }
 
     /**
-     * Checks if the reply line is a continuation, i.e. starts with "+ "
+     * Checks if the reply line is a continuation, i.e. starts with "+"
      * @param line the line to be checked
      * @return {@code true} if the line is untagged
      */
@@ -106,6 +109,9 @@ public final class IMAPReply
 
     // Helper method to process both tagged and untagged replies.
     private static int getReplyCode(String line, Pattern pattern) throws IOException{
+        if (isContinuation(line)) {
+            return CONT;
+        }
         Matcher m = pattern.matcher(line);
         if (m.matches()) {
             String code = m.group(1);
