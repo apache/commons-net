@@ -29,7 +29,7 @@ import org.apache.commons.net.util.Base64;
 
 /**
  * An IMAP Client class with authentication support.
- * @see IMAPClient
+ * @see IMAPSClient
  */
 public class AuthenticatingIMAPClient extends IMAPSClient
 {
@@ -140,66 +140,68 @@ public class AuthenticatingIMAPClient extends IMAPSClient
                         throws IOException, NoSuchAlgorithmException,
                         InvalidKeyException, InvalidKeySpecException
     {
-        if (!IMAPReply.isContinuation(sendCommand(IMAPCommand.AUTHENTICATE, AUTH_METHOD.getAuthName(method))))
-	{
+        if (!IMAPReply.isContinuation(sendCommand(IMAPCommand.AUTHENTICATE, method.getAuthName())))
+	    {
             return false;
-	}
+	    }
 
-        if (method.equals(AUTH_METHOD.PLAIN))
-        {
-            // the server sends an empty response ("+ "), so we don't have to read it.
-            int result = sendUntaggedCommand(
-                new String(
-                    Base64.encodeBase64(("\000" + username + "\000" + password).getBytes())
-                    )
-                );
-            if (result == IMAPReply.OK)
+        switch (method) {
+            case PLAIN:
             {
-                setState(IMAP.IMAPState.AUTH_STATE);
+                // the server sends an empty response ("+ "), so we don't have to read it.
+                int result = sendUntaggedCommand(
+                    new String(
+                        Base64.encodeBase64(("\000" + username + "\000" + password).getBytes())
+                        )
+                    );
+                if (result == IMAPReply.OK)
+                {
+                    setState(IMAP.IMAPState.AUTH_STATE);
+                }
+                return result == IMAPReply.OK;
             }
-            return result == IMAPReply.OK;
+            case CRAM_MD5:
+            {
+                // get the CRAM challenge (after "+ ")
+                byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(2).trim());
+                // get the Mac instance
+                Mac hmac_md5 = Mac.getInstance("HmacMD5");
+                hmac_md5.init(new SecretKeySpec(password.getBytes(), "HmacMD5"));
+                // compute the result:
+                byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes();
+                // join the byte arrays to form the reply
+                byte[] usernameBytes = username.getBytes();
+                byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
+                System.arraycopy(usernameBytes, 0, toEncode, 0, usernameBytes.length);
+                toEncode[usernameBytes.length] = ' ';
+                System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
+                // send the reply and read the server code:
+                int result = sendUntaggedCommand(new String(Base64.encodeBase64(toEncode)));
+                if (result == IMAPReply.OK)
+                {
+                    setState(IMAP.IMAPState.AUTH_STATE);
+                }
+                return result == IMAPReply.OK;
+            }
+            case LOGIN:
+            {
+                // the server sends fixed responses (base64("Username") and
+                // base64("Password")), so we don't have to read them.
+                if (sendUntaggedCommand(
+                    new String(Base64.encodeBase64(username.getBytes()))) != IMAPReply.CONT)
+                {
+                    return false;
+                }
+                int result = sendUntaggedCommand(
+                    new String(Base64.encodeBase64(password.getBytes())));
+                if (result == IMAPReply.OK)
+                {
+                    setState(IMAP.IMAPState.AUTH_STATE);
+                }
+                return result == IMAPReply.OK;
+            }
         }
-        else if (method.equals(AUTH_METHOD.CRAM_MD5))
-        {
-            // get the CRAM challenge (after "+ ")
-            byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(2).trim());
-            // get the Mac instance
-            Mac hmac_md5 = Mac.getInstance("HmacMD5");
-            hmac_md5.init(new SecretKeySpec(password.getBytes(), "HmacMD5"));
-            // compute the result:
-            byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes();
-            // join the byte arrays to form the reply
-            byte[] usernameBytes = username.getBytes();
-            byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
-            System.arraycopy(usernameBytes, 0, toEncode, 0, usernameBytes.length);
-            toEncode[usernameBytes.length] = ' ';
-            System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
-            // send the reply and read the server code:
-            int result = sendUntaggedCommand(new String(Base64.encodeBase64(toEncode)));
-            if (result == IMAPReply.OK)
-            {
-                setState(IMAP.IMAPState.AUTH_STATE);
-            }
-            return result == IMAPReply.OK;
-        }
-        else if (method.equals(AUTH_METHOD.LOGIN))
-        {
-            // the server sends fixed responses (base64("Username") and
-            // base64("Password")), so we don't have to read them.
-            if (sendUntaggedCommand(
-                new String(Base64.encodeBase64(username.getBytes()))) != IMAPReply.CONT)
-            {
-                return false;
-            }
-            int result = sendUntaggedCommand(
-                new String(Base64.encodeBase64(password.getBytes())));
-            if (result == IMAPReply.OK)
-            {
-                setState(IMAP.IMAPState.AUTH_STATE);
-            }
-            return result == IMAPReply.OK;
-        }
-        else return false; // safety check
+        return false; // safety check
     }
 
     /**
@@ -226,23 +228,24 @@ public class AuthenticatingIMAPClient extends IMAPSClient
     public static enum AUTH_METHOD
     {
         /** The standarised (RFC4616) PLAIN method, which sends the password unencrypted (insecure). */
-        PLAIN,
+        PLAIN("PLAIN"),
         /** The standarised (RFC2195) CRAM-MD5 method, which doesn't send the password (secure). */
-        CRAM_MD5,
+        CRAM_MD5("CRAM-MD5"),
         /** The unstandarised Microsoft LOGIN method, which sends the password unencrypted (insecure). */
-        LOGIN;
+        LOGIN("LOGIN");
 
+        private final String authName;
+        
+        private AUTH_METHOD(String name){
+            this.authName=name;
+        }
         /**
          * Gets the name of the given authentication method suitable for the server.
-         * @param method The authentication method to get the name for.
          * @return The name of the given authentication method suitable for the server.
          */
-        public static final String getAuthName(AUTH_METHOD method)
+        public final String getAuthName()
         {
-            if (method.equals(AUTH_METHOD.PLAIN)) return "PLAIN";
-            else if (method.equals(AUTH_METHOD.CRAM_MD5)) return "CRAM-MD5";
-            else if (method.equals(AUTH_METHOD.LOGIN)) return "LOGIN";
-            else return null;
+            return authName;
         }
     }
 }
