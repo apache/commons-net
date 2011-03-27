@@ -91,7 +91,7 @@ public final class IMAPMail
 
             imap.examine("inbox");
 
-            imap.status("inbox", null);
+            imap.status("inbox", new String[]{"MESSAGES"});
 
             imap.logout();
             imap.disconnect();
