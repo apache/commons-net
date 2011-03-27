@@ -197,25 +197,6 @@ public class IMAP extends SocketClient
         return __state;
     }
 
-
-    /**
-     * Retrieves the additional lines of a multi-line server reply.
-     */
-    public void getAdditionalReply() throws IOException
-    {
-        String line;
-
-        line = _reader.readLine();
-        while (line != null)
-        {
-            _replyLines.add(line);
-            if (line.equals("."))
-                break;
-            line = _reader.readLine();
-        }
-    }
-
-
     /**
      * Disconnects the client from the server, and sets the state to
      * <code> DISCONNECTED_STATE </code>.  The reply text information
