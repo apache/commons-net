@@ -222,7 +222,7 @@ public class IMAP extends SocketClient
      * @param args     The command arguments.
      * @return  The server reply code (either IMAPReply.OK, IMAPReply.NO or IMAPReply.BAD).
      */
-    public int sendCommandWithID(String commandID, String command, String args) throws IOException
+    private int sendCommandWithID(String commandID, String command, String args) throws IOException
     {
         String message;
 
@@ -249,47 +249,6 @@ public class IMAP extends SocketClient
 
         __getReply();
         return _replyCode;
-    }
-
-    /**
-     * Sends a command with no arguments to the server and returns the
-     * reply code.
-     * <p>
-     * @param commandID The ID (tag) of the command.
-     * @param command  The IMAP command to send.
-     * @return  The server reply code (see IMAPReply).
-     */
-    public int sendCommandWithID(String commandID, String command) throws IOException
-    {
-        return sendCommandWithID(commandID, command, null);
-    }
-
-    /**
-     * Sends a command an arguments to the server and returns the reply code.
-     * <p>
-     * @param commandID The ID (tag) of the command.
-     * @param command  The IMAP command to send
-     *                  (one of the IMAPCommand constants).
-     * @param args     The command arguments.
-     * @return  The server reply code (see IMAPReply).
-     */
-    public int sendCommandWithID(String commandID, IMAPCommand command, String args) throws IOException
-    {
-        return sendCommandWithID(commandID, IMAPCommand.getCommand(command), args);
-    }
-
-    /**
-     * Sends a command with no arguments to the server and returns the
-     * reply code.
-     * <p>
-     * @param commandID The ID (tag) of the command.
-     * @param command  The IMAP command to send
-     *                  (one of the IMAPCommand constants).
-     * @return  The server reply code (see IMAPReply).
-    **/
-    public int sendCommandWithID(String commandID, IMAPCommand command) throws IOException
-    {
-        return sendCommandWithID(commandID, command, null);
     }
 
     /**
