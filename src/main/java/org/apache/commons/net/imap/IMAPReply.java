@@ -138,6 +138,15 @@ public final class IMAPReply
     public static boolean isSuccess(int replyCode) {
         return replyCode == OK;
     }
+    /**
+     * Checks if the reply line is a continuation, i.e. starts with "+"
+     * @param replyCode the code to be checked
+     * @return {@code true} if the response was a continuation
+     */
+    public static boolean isContinuation(int replyCode) {
+        return replyCode == CONT;
+    }
+
 }
 
 /* kate: indent-width 4; replace-tabs on; */
