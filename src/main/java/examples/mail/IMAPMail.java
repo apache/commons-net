@@ -71,9 +71,7 @@ public final class IMAPMail
         }
         catch (IOException e)
         {
-            System.err.println("Could not connect to server.");
-            e.printStackTrace();
-            System.exit(2);
+            throw new RuntimeException("Could not connect to server.", e);
         }
 
         try
@@ -87,35 +85,13 @@ public final class IMAPMail
 
             imap.setSoTimeout(6000);
             
-            if (imap.capability())
-            {
-//                System.out.println("Server capabilities:");
-//                System.out.println(imap.getReplyString());
-            }
+            imap.capability();
 
-            if (imap.select("inbox"))
-            {
-//                System.out.println("Selected inbox:");
-//                System.out.println(imap.getReplyString());
-            }
+            imap.select("inbox");
 
-//            if (imap.examine("inbox"))
-            {
-//                System.out.println("Examined inbox:");
-//                System.out.println(imap.getReplyString());
-            }
+            imap.examine("inbox");
 
-//            if (imap.status("inbox", null))
-            {
-//                System.out.println("Inbox status:");
-//                System.out.println(imap.getReplyString());
-            }
-//            imap.sendCommand("EXAMINE","more");
-            {
-//                System.out.println(imap.getReplyString());
-            } 
-
-            imap.getAdditionalReply();
+            imap.status("inbox", null);
 
             imap.logout();
             imap.disconnect();
