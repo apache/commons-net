@@ -225,18 +225,24 @@ public class IMAPClient extends IMAP
      */
     public boolean status(String mailboxName, String[] itemNames) throws IOException
     {
-        String statusNames = "";
-        if (itemNames != null)
-        {
-            statusNames += " (";
-            for ( int i = 0; i < itemNames.length; i++ )
-            {
-                statusNames += itemNames[i];
-                if (i < itemNames.length-1) statusNames += " ";
-            }
-            statusNames += ")";
+        if (itemNames == null || itemNames.length < 1) {
+            throw new IllegalArgumentException("STATUS command requires at least one data item name");
         }
-        return doCommand (IMAPCommand.STATUS, statusNames);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(mailboxName);
+
+        sb.append(" (");
+        for ( int i = 0; i < itemNames.length; i++ )
+        {
+            if (i > 0) {
+                sb.append(" ");
+            }
+            sb.append(itemNames[i]);
+        }
+        sb.append(")");
+
+        return doCommand (IMAPCommand.STATUS, sb.toString());
     }
 
     /**
