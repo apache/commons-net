@@ -36,8 +36,7 @@ public class IMAPClient extends IMAP
      */
     public boolean capability() throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.CAPABILITY))
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.CAPABILITY);
     }
 
     /**
@@ -50,8 +49,7 @@ public class IMAPClient extends IMAP
      */
     public boolean noop() throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.NOOP))
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.NOOP);
     }
 
     /**
@@ -66,8 +64,7 @@ public class IMAPClient extends IMAP
      */
     public boolean logout() throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.LOGOUT))
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.LOGOUT);
     }
 
     // --------- commands available in the not-authenticated state
@@ -95,8 +92,7 @@ public class IMAPClient extends IMAP
             return false;
         }
 
-        if (sendCommand(IMAPCommand.getCommand(IMAPCommand.LOGIN),
-            username + " " + password) != IMAPReply.OK)
+        if (!doCommand(IMAPCommand.LOGIN, username + " " + password))
         {
             return false;
         }
@@ -117,9 +113,7 @@ public class IMAPClient extends IMAP
      */
     public boolean select(String mailboxName) throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.SELECT),
-                            mailboxName)
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.SELECT, mailboxName);
     }
 
     /**
@@ -131,9 +125,7 @@ public class IMAPClient extends IMAP
      */
     public boolean examine(String mailboxName) throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.EXAMINE),
-                            mailboxName)
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.EXAMINE, mailboxName);
     }
 
     /**
@@ -145,9 +137,7 @@ public class IMAPClient extends IMAP
      */
     public boolean create(String mailboxName) throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.CREATE),
-                            mailboxName)
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.CREATE, mailboxName);
     }
 
     /**
@@ -159,9 +149,7 @@ public class IMAPClient extends IMAP
      */
     public boolean delete(String mailboxName) throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.DELETE),
-                            mailboxName)
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.DELETE, mailboxName);
     }
 
     /**
@@ -174,9 +162,7 @@ public class IMAPClient extends IMAP
      */
     public boolean rename(String oldMailboxName, String newMailboxName) throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.RENAME),
-                            oldMailboxName + " " + newMailboxName)
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.RENAME, oldMailboxName + " " + newMailboxName);
     }
 
     /**
@@ -188,9 +174,7 @@ public class IMAPClient extends IMAP
      */
     public boolean subscribe(String mailboxName) throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.SUBSCRIBE),
-                            mailboxName)
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.SUBSCRIBE, mailboxName);
     }
 
     /**
@@ -202,9 +186,7 @@ public class IMAPClient extends IMAP
      */
     public boolean unsubscribe(String mailboxName) throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.UNSUBSCRIBE),
-                            mailboxName)
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.UNSUBSCRIBE, mailboxName);
     }
 
     /**
@@ -217,9 +199,7 @@ public class IMAPClient extends IMAP
      */
     public boolean list(String refName, String mailboxName) throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.LIST),
-                            refName + " " + mailboxName)
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.LIST, refName + " " + mailboxName);
     }
 
     /**
@@ -232,9 +212,7 @@ public class IMAPClient extends IMAP
      */
     public boolean lsub(String refName, String mailboxName) throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.LSUB),
-                            refName + " " + mailboxName)
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.LSUB, refName + " " + mailboxName);
     }
 
     /**
@@ -258,9 +236,7 @@ public class IMAPClient extends IMAP
             }
             statusNames += ")";
         }
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.STATUS),
-                            statusNames)
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.STATUS, statusNames);
     }
 
     /**
@@ -281,8 +257,7 @@ public class IMAPClient extends IMAP
             if (datetime.charAt(0) == '{') args += " " + datetime;
             else args += " {" + datetime + "}";
         }
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.APPEND), args)
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.APPEND, args);
     }
 
     /**
@@ -307,8 +282,7 @@ public class IMAPClient extends IMAP
      */
     public boolean check() throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.CHECK))
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.CHECK);
     }
 
     /**
@@ -319,8 +293,7 @@ public class IMAPClient extends IMAP
      */
     public boolean close() throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.CLOSE))
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.CLOSE);
     }
 
     /**
@@ -331,8 +304,7 @@ public class IMAPClient extends IMAP
      */
     public boolean expunge() throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.EXPUNGE))
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.EXPUNGE);
     }
 
     /**
@@ -348,8 +320,7 @@ public class IMAPClient extends IMAP
         String args = "";
         if (charset != null) args += "CHARSET " + charset;
         args += criteria;
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.SEARCH), args)
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.SEARCH, args);
     }
 
     /**
@@ -374,9 +345,7 @@ public class IMAPClient extends IMAP
      */
     public boolean fetch(String sequenceSet, String itemNames) throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.FETCH),
-                            sequenceSet + " " + itemNames)
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.FETCH, sequenceSet + " " + itemNames);
     }
 
     /**
@@ -391,9 +360,7 @@ public class IMAPClient extends IMAP
     public boolean store(String sequenceSet, String itemNames, String itemValues)
         throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.STORE),
-                            sequenceSet + " " + itemNames + " " + itemValues)
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.STORE, sequenceSet + " " + itemNames + " " + itemValues);
     }
 
     /**
@@ -406,9 +373,7 @@ public class IMAPClient extends IMAP
      */
     public boolean copy(String sequenceSet, String mailboxName) throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.COPY),
-                            sequenceSet + " " + mailboxName)
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.COPY, sequenceSet + " " + mailboxName);
     }
 
     /**
@@ -421,9 +386,7 @@ public class IMAPClient extends IMAP
      */
     public boolean uid(String command, String commandArgs) throws IOException
     {
-        return sendCommand (IMAPCommand.getCommand(IMAPCommand.UID),
-                            command + " " + commandArgs)
-            == IMAPReply.OK;
+        return doCommand (IMAPCommand.UID, command + " " + commandArgs);
     }
 
     /**
