@@ -273,7 +273,7 @@ public class IMAP extends SocketClient
      * @param args     The command arguments.
      * @return  The server reply code (see IMAPReply).
      */
-    public int sendCommandWithID(String commandID, int command, String args) throws IOException
+    public int sendCommandWithID(String commandID, IMAPCommand command, String args) throws IOException
     {
         return sendCommandWithID(commandID, IMAPCommand.getCommand(command), args);
     }
@@ -287,7 +287,7 @@ public class IMAP extends SocketClient
      *                  (one of the IMAPCommand constants).
      * @return  The server reply code (see IMAPReply).
     **/
-    public int sendCommandWithID(String commandID, int command) throws IOException
+    public int sendCommandWithID(String commandID, IMAPCommand command) throws IOException
     {
         return sendCommandWithID(commandID, command, null);
     }
@@ -324,7 +324,7 @@ public class IMAP extends SocketClient
      * @param args     The command arguments.
      * @return  The server reply code (see IMAPReply).
      */
-    public int sendCommand(int command, String args) throws IOException
+    public int sendCommand(IMAPCommand command, String args) throws IOException
     {
         return sendCommandWithID(generateCommandID(), IMAPCommand.getCommand(command), args);
     }
@@ -337,7 +337,7 @@ public class IMAP extends SocketClient
      * @param args     The command arguments.
      * @return  {@code true} if the command was successful
      */
-    public boolean doCommand(int command, String args) throws IOException
+    public boolean doCommand(IMAPCommand command, String args) throws IOException
     {
         return IMAPReply.isSuccess(sendCommand(command, args));
     }
@@ -350,7 +350,7 @@ public class IMAP extends SocketClient
      *                  (one of the IMAPCommand constants).
      * @return  The server reply code (see IMAPReply).
     **/
-    public int sendCommand(int command) throws IOException
+    public int sendCommand(IMAPCommand command) throws IOException
     {
         return sendCommand(command, null);
     }
@@ -362,7 +362,7 @@ public class IMAP extends SocketClient
      *                  (one of the IMAPCommand constants).
      * @return  {@code true} if the command was successful
      */
-    public boolean doCommand(int command) throws IOException
+    public boolean doCommand(IMAPCommand command) throws IOException
     {
         return IMAPReply.isSuccess(sendCommand(command));
     }
@@ -399,7 +399,7 @@ public class IMAP extends SocketClient
      * @param args     The command arguments.
      * @return  The server reply code (see IMAPReply).
      */
-    public int sendUntaggedCommand(int command, String args) throws IOException
+    public int sendUntaggedCommand(IMAPCommand command, String args) throws IOException
     {
         return sendCommandWithID(null, IMAPCommand.getCommand(command), args);
     }
@@ -412,7 +412,7 @@ public class IMAP extends SocketClient
      *                  (one of the IMAPCommand constants).
      * @return  The server reply code (see IMAPReply).
     **/
-    public int sendUntaggedCommand(int command) throws IOException
+    public int sendUntaggedCommand(IMAPCommand command) throws IOException
     {
         return sendCommandWithID(null, IMAPCommand.getCommand(command), null);
     }

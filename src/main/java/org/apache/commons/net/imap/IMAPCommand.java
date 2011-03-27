@@ -18,103 +18,57 @@
 package org.apache.commons.net.imap;
 
 /**
- * IMAPCommand stores IMAP command code constants.
+ * IMAPCommand stores IMAP command codes.
  */
-public class IMAPCommand
+public enum IMAPCommand
 {
-    /** The  command. */
-    public static final int CAPABILITY = 0;
-    /** The  command. */
-    public static final int NOOP = 1;
-    /** The  command. */
-    public static final int LOGOUT = 2;
-    /** The  command. */
-    public static final int STARTTLS = 3;
-    /** The  command. */
-    public static final int AUTHENTICATE = 4;
-    /** The  command. */
-    public static final int LOGIN = 5;
-    /** The  command. */
-    public static final int SELECT = 6;
-    /** The  command. */
-    public static final int EXAMINE = 7;
-    /** The  command. */
-    public static final int CREATE = 8;
-    /** The  command. */
-    public static final int DELETE = 9;
-    /** The  command. */
-    public static final int RENAME = 10;
-    /** The  command. */
-    public static final int SUBSCRIBE = 11;
-    /** The  command. */
-    public static final int UNSUBSCRIBE = 12;
-    /** The  command. */
-    public static final int LIST = 13;
-    /** The  command. */
-    public static final int LSUB = 14;
-    /** The  command. */
-    public static final int STATUS = 15;
-    /** The  command. */
-    public static final int APPEND = 16;
-    /** The  command. */
-    public static final int CHECK = 17;
-    /** The  command. */
-    public static final int CLOSE = 18;
-    /** The  command. */
-    public static final int EXPUNGE = 19;
-    /** The  command. */
-    public static final int SEARCH = 20;
-    /** The  command. */
-    public static final int FETCH = 21;
-    /** The  command. */
-    public static final int STORE = 22;
-    /** The  command. */
-    public static final int COPY = 23;
-    /** The  command. */
-    public static final int UID = 24;
+    // These enums must either use the same name as the IMAP command
+    // or must provide the correct string as the parameter.
+    CAPABILITY,
+    NOOP,
+    LOGOUT,
+    STARTTLS,
+    AUTHENTICATE,
+    LOGIN,
+    SELECT,
+    EXAMINE,
+    CREATE,
+    DELETE,
+    RENAME,
+    SUBSCRIBE,
+    UNSUBSCRIBE,
+    LIST,
+    LSUB,
+    STATUS,
+    APPEND,
+    CHECK,
+    CLOSE,
+    EXPUNGE,
+    SEARCH,
+    FETCH,
+    STORE,
+    COPY,
+    UID,
+    ;
+    
+    private final String imapCommand;
 
-
-
-    private static final String[] _commands = {
-                                          "CAPABILITY",
-                                          "NOOP",
-                                          "LOGOUT",
-                                          "STARTTLS",
-                                          "AUTHENTICATE",
-                                          "LOGIN",
-                                          "SELECT",
-                                          "EXAMINE",
-                                          "CREATE",
-                                          "DELETE",
-                                          "RENAME",
-                                          "SUBSCRIBE",
-                                          "UNSUBSCRIBE",
-                                          "LIST",
-                                          "LSUB",
-                                          "STATUS",
-                                          "APPEND",
-                                          "CHECK",
-                                          "CLOSE",
-                                          "EXPUNGE",
-                                          "SEARCH",
-                                          "FETCH",
-                                          "STORE",
-                                          "COPY",
-                                          "UID",
-                                      };
-
-    // Cannot be instantiated.
-    private IMAPCommand()
-    {}
-
+    IMAPCommand(){
+        imapCommand = name();
+    }
+    
+    IMAPCommand(String name){
+        imapCommand = name;
+    }
+    
     /**
      * Get the IMAP protocol string command corresponding to a command code.
-     * <p>
+     *
+     * @param command the IMAPCommand whose command string is required.
      * @return The IMAP protocol string command corresponding to a command code.
      */
-    public static final String getCommand(int command)
-    {
-        return _commands[command];
+    public static final String getCommand(IMAPCommand command) {
+        return command.imapCommand;
     }
 
 }

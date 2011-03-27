@@ -57,6 +57,9 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.0" date="TBA" description="TBA">
+            <action issue="NET-392" dev="sebb" type="update">
+            Use enum for IMAPCommand.
+            </action>
             <action issue="NET-333" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
             would you provide a class used for imap protocol?
             </action>
