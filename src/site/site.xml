@@ -25,6 +25,7 @@
 
   <body>
     <menu name="Documentation">
+      <item name="Overview"              href="index.html"/>
       <item name="Migration How-to"      href="migration.html"/>
       <item name="FAQ"                   href="faq.html"/>
       <item name="Download"              href="http://commons.apache.org/net/download_net.cgi"/>
