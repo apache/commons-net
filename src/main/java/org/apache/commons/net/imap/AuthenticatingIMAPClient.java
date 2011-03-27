@@ -140,9 +140,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
                         throws IOException, NoSuchAlgorithmException,
                         InvalidKeyException, InvalidKeySpecException
     {
-        if (sendCommand(IMAPCommand.getCommand(IMAPCommand.AUTHENTICATE)
-                + " " + AUTH_METHOD.getAuthName(method))
-            != IMAPReply.CONT)
+        if (!IMAPReply.isContinuation(sendCommand(IMAPCommand.AUTHENTICATE, AUTH_METHOD.getAuthName(method))))
 	{
             return false;
 	}
