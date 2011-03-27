@@ -23,8 +23,8 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ProtocolCommandListener;
@@ -86,7 +86,7 @@ public class POP3 extends SocketClient
     BufferedReader _reader;
     int _replyCode;
     String _lastReplyLine;
-    Vector<String> _replyLines;
+    List<String> _replyLines;
 
     /***
      * A ProtocolCommandSupport object used to manage the registering of
@@ -105,7 +105,7 @@ public class POP3 extends SocketClient
         __popState = DISCONNECTED_STATE;
         _reader = null;
         __writer = null;
-        _replyLines = new Vector<String>();
+        _replyLines = new ArrayList<String>();
         _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
@@ -113,7 +113,7 @@ public class POP3 extends SocketClient
     {
         String line;
 
-        _replyLines.setSize(0);
+        _replyLines.clear();
         line = _reader.readLine();
 
         if (line == null)
@@ -130,7 +130,7 @@ public class POP3 extends SocketClient
             MalformedServerReplyException(
                 "Received invalid POP3 protocol response from server.");
 
-        _replyLines.addElement(line);
+        _replyLines.add(line);
         _lastReplyLine = line;
 
         if (_commandSupport_.getListenerCount() > 0)
@@ -213,7 +213,7 @@ public class POP3 extends SocketClient
         line = _reader.readLine();
         while (line != null)
         {
-            _replyLines.addElement(line);
+            _replyLines.add(line);
             if (line.equals("."))
                 break;
             line = _reader.readLine();
@@ -236,7 +236,7 @@ public class POP3 extends SocketClient
         _reader = null;
         __writer = null;
         _lastReplyLine = null;
-        _replyLines.setSize(0);
+        _replyLines.clear();
         setState(DISCONNECTED_STATE);
     }
 
@@ -325,10 +325,7 @@ public class POP3 extends SocketClient
      ***/
     public String[] getReplyStrings()
     {
-        String[] lines;
-        lines = new String[_replyLines.size()];
-        _replyLines.copyInto(lines);
-        return lines;
+        return _replyLines.toArray(new String[_replyLines.size()]);
     }
 
     /***
@@ -345,13 +342,11 @@ public class POP3 extends SocketClient
      ***/
     public String getReplyString()
     {
-        Enumeration<String> en;
         StringBuilder buffer = new StringBuilder(256);
 
-        en = _replyLines.elements();
-        while (en.hasMoreElements())
+        for (String entry : _replyLines)
         {
-            buffer.append(en.nextElement());
+            buffer.append(entry);
             buffer.append(SocketClient.NETASCII_EOL);
         }
 
