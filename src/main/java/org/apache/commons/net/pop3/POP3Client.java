@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Enumeration;
+import java.util.ListIterator;
 import java.util.StringTokenizer;
 
 import org.apache.commons.net.io.DotTerminatedMessageReader;
@@ -372,10 +372,6 @@ public class POP3Client extends POP3
      ***/
     public POP3MessageInfo[] listMessages() throws IOException
     {
-        POP3MessageInfo[] messages;
-        Enumeration<String> en;
-        int line;
-
         if (getState() != TRANSACTION_STATE)
             return null;
         if (sendCommand(POP3Command.LIST) != POP3Reply.OK)
@@ -383,15 +379,13 @@ public class POP3Client extends POP3
         getAdditionalReply();
 
         // This could be a zero length array if no messages present
-        messages = new POP3MessageInfo[_replyLines.size() - 2];
-        en = _replyLines.elements();
+        POP3MessageInfo[] messages = new POP3MessageInfo[_replyLines.size() - 2]; // skip first and last lines
 
-        // Skip first line
-        en.nextElement();
+        ListIterator<String> en = _replyLines.listIterator(1); // Skip first line
 
         // Fetch lines.
-        for (line = 0; line < messages.length; line++)
-            messages[line] = __parseStatus(en.nextElement());
+        for (int line = 0; line < messages.length; line++)
+            messages[line] = __parseStatus(en.next());
 
         return messages;
     }
@@ -444,10 +438,6 @@ public class POP3Client extends POP3
      ***/
     public POP3MessageInfo[] listUniqueIdentifiers() throws IOException
     {
-        POP3MessageInfo[] messages;
-        Enumeration<String> en;
-        int line;
-
         if (getState() != TRANSACTION_STATE)
             return null;
         if (sendCommand(POP3Command.UIDL) != POP3Reply.OK)
@@ -455,15 +445,13 @@ public class POP3Client extends POP3
         getAdditionalReply();
 
         // This could be a zero length array if no messages present
-        messages = new POP3MessageInfo[_replyLines.size() - 2];
-        en = _replyLines.elements();
-
-        // Skip first line
-        en.nextElement();
+        POP3MessageInfo[] messages = new POP3MessageInfo[_replyLines.size() - 2]; // skip first and last lines
+        
+        ListIterator<String> en = _replyLines.listIterator(1); // skip first line
 
         // Fetch lines.
-        for (line = 0; line < messages.length; line++)
-            messages[line] = __parseUID(en.nextElement());
+        for (int line = 0; line < messages.length; line++)
+            messages[line] = __parseUID(en.next());
 
         return messages;
     }
