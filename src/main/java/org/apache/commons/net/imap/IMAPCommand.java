@@ -61,7 +61,10 @@ public enum IMAPCommand
     ;
     
     private final String imapCommand;
+    
+    @SuppressWarnings("unused") // not yet used
     private final int minParamCount;
+    @SuppressWarnings("unused") // not yet used
     private final int maxParamCount;
 
     IMAPCommand(){
@@ -89,6 +92,7 @@ public enum IMAPCommand
         this.minParamCount = minCount;
         this.maxParamCount = maxCount;
     }
+
     /**
      * Get the IMAP protocol string command corresponding to a command code.
      *
@@ -99,7 +103,12 @@ public enum IMAPCommand
         return command.getIMAPCommand();
     }
 
-    private String getIMAPCommand() {
+    /**
+     * Get the IMAP protocol string command for this command
+     *
+     * @return The IMAP protocol string command corresponding to this command
+     */
+    public String getIMAPCommand() {
         return imapCommand != null ? imapCommand : name();
     }
 
