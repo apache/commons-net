@@ -25,8 +25,6 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import org.apache.commons.net.MalformedServerReplyException;
-import org.apache.commons.net.ProtocolCommandListener;
-import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
 
 /***
@@ -104,12 +102,6 @@ public class SMTP extends SocketClient
     String _replyString;
 
     /***
-     * A ProtocolCommandSupport object used to manage the registering of
-     * ProtocolCommandListeners and te firing of ProtocolCommandEvents.
-     ***/
-    protected ProtocolCommandSupport _commandSupport_;
-
-    /***
      * The default SMTP constructor.  Sets the default port to
      * <code>DEFAULT_PORT</code> and initializes internal data structures
      * for saving SMTP reply information.
@@ -120,7 +112,6 @@ public class SMTP extends SocketClient
         _replyLines = new ArrayList<String>();
         _newReplyString = false;
         _replyString = null;
-        _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
     /**
@@ -152,8 +143,7 @@ public class SMTP extends SocketClient
         _writer.write(message = __commandBuffer.toString());
         _writer.flush();
 
-        if (_commandSupport_.getListenerCount() > 0)
-            _commandSupport_.fireCommandSent(command, message);
+        fireCommandSent(command, message);
 
         __getReply();
         return _replyCode;
@@ -222,8 +212,7 @@ public class SMTP extends SocketClient
             // line.startsWith(code)));
         }
 
-        if (_commandSupport_.getListenerCount() > 0)
-            _commandSupport_.fireReplyReceived(_replyCode, getReplyString());
+        fireReplyReceived(_replyCode, getReplyString());
 
         if (_replyCode == SMTPReply.SERVICE_NOT_AVAILABLE)
             throw new SMTPConnectionClosedException(
@@ -243,29 +232,6 @@ public class SMTP extends SocketClient
                                                       encoding));
         __getReply();
 
-    }
-
-
-    /***
-     * Adds a ProtocolCommandListener.  Delegates this task to
-     * {@link #_commandSupport_  _commandSupport_ }.
-     * <p>
-     * @param listener  The ProtocolCommandListener to add.
-     ***/
-    public void addProtocolCommandListener(ProtocolCommandListener listener)
-    {
-        _commandSupport_.addProtocolCommandListener(listener);
-    }
-
-    /***
-     * Removes a ProtocolCommandListener.  Delegates this task to
-     * {@link #_commandSupport_  _commandSupport_ }.
-     * <p>
-     * @param listener  The ProtocolCommandListener to remove.
-     ***/
-    public void removeProtocolCommandistener(ProtocolCommandListener listener)
-    {
-        _commandSupport_.removeProtocolCommandListener(listener);
     }
 
 

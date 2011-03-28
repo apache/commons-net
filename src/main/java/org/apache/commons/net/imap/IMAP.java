@@ -26,8 +26,6 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.net.ProtocolCommandListener;
-import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
 import org.apache.commons.net.io.CRLFLineReader;
 
@@ -69,12 +67,6 @@ public class IMAP extends SocketClient
     private char[] _initialID = { 'A', 'A', 'A', 'A' };
 
     /**
-     * A ProtocolCommandSupport object used to manage the registering of
-     * ProtocolCommandListeners and te firing of ProtocolCommandEvents.
-     */
-    protected ProtocolCommandSupport _commandSupport_;
-
-    /**
      * The default IMAPClient constructor.  Initializes the state
      * to <code>DISCONNECTED_STATE</code>.
      */
@@ -85,7 +77,6 @@ public class IMAP extends SocketClient
         _reader = null;
         __writer = null;
         _replyLines = new ArrayList<String>();
-        _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
     /**
@@ -129,8 +120,7 @@ public class IMAP extends SocketClient
             _replyCode = IMAPReply.getUntaggedReplyCode(line);
         }
 
-        if (_commandSupport_.getListenerCount() > 0)
-            _commandSupport_.fireReplyReceived(_replyCode, getReplyString());
+        fireReplyReceived(_replyCode, getReplyString());
     }
 
     /**
@@ -157,29 +147,6 @@ public class IMAP extends SocketClient
         }
         setState(IMAPState.NOT_AUTH_STATE);
     }
-
-    /**
-     * Adds a ProtocolCommandListener.  Delegates this task to
-     * {@link #_commandSupport_  _commandSupport_ }.
-     * <p>
-     * @param listener  The ProtocolCommandListener to add.
-     */
-    public void addProtocolCommandListener(ProtocolCommandListener listener)
-    {
-        _commandSupport_.addProtocolCommandListener(listener);
-    }
-
-    /**
-     * Removes a ProtocolCommandListener.  Delegates this task to
-     * {@link #_commandSupport_  _commandSupport_ }.
-     * <p>
-     * @param listener  The ProtocolCommandListener to remove.
-     */
-    public void removeProtocolCommandistener(ProtocolCommandListener listener)
-    {
-        _commandSupport_.removeProtocolCommandListener(listener);
-    }
-
 
     /**
      * Sets IMAP client state.  This must be one of the
@@ -251,8 +218,7 @@ public class IMAP extends SocketClient
         __writer.write(message);
         __writer.flush();
 
-        if (_commandSupport_.getListenerCount() > 0)
-            _commandSupport_.fireCommandSent(command, message);
+        fireCommandSent(command, message);
 
         __getReply();
         return _replyCode;

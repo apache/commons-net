@@ -29,8 +29,6 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 import org.apache.commons.net.MalformedServerReplyException;
-import org.apache.commons.net.ProtocolCommandListener;
-import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
 
 /***
@@ -247,12 +245,6 @@ public class FTP extends SocketClient
     protected BufferedWriter _controlOutput_;
 
     /***
-     * A ProtocolCommandSupport object used to manage the registering of
-     * ProtocolCommandListeners and te firing of ProtocolCommandEvents.
-     ***/
-    protected ProtocolCommandSupport _commandSupport_;
-
-    /***
      * The default FTP constructor.  Sets the default port to
      * <code>DEFAULT_PORT</code> and initializes internal data structures
      * for saving FTP reply information.
@@ -264,7 +256,6 @@ public class FTP extends SocketClient
         _replyLines = new ArrayList<String>();
         _newReplyString = false;
         _replyString = null;
-        _commandSupport_ = new ProtocolCommandSupport(this);
         _controlEncoding = DEFAULT_CONTROL_ENCODING;
     }
 
@@ -355,9 +346,7 @@ public class FTP extends SocketClient
             while ( isStrictMultilineParsing() ? __strictCheck(line, code) : __lenientCheck(line));
         }
 
-        if (reportReply && _commandSupport_.getListenerCount() > 0) {
-            _commandSupport_.fireReplyReceived(_replyCode, getReplyString());
-        }
+        fireReplyReceived(_replyCode, getReplyString());
 
         if (_replyCode == FTPReply.SERVICE_NOT_AVAILABLE) {
             throw new FTPConnectionClosedException("FTP response 421 received.  Server closed connection.");
@@ -423,29 +412,6 @@ public class FTP extends SocketClient
 
 
     /***
-     * Adds a ProtocolCommandListener.  Delegates this task to
-     * {@link #_commandSupport_  _commandSupport_ }.
-     * <p>
-     * @param listener  The ProtocolCommandListener to add.
-     ***/
-    public void addProtocolCommandListener(ProtocolCommandListener listener)
-    {
-        _commandSupport_.addProtocolCommandListener(listener);
-    }
-
-    /***
-     * Removes a ProtocolCommandListener.  Delegates this task to
-     * {@link #_commandSupport_  _commandSupport_ }.
-     * <p>
-     * @param listener  The ProtocolCommandListener to remove.
-     ***/
-    public void removeProtocolCommandListener(ProtocolCommandListener listener)
-    {
-        _commandSupport_.removeProtocolCommandListener(listener);
-    }
-
-
-    /***
      * Closes the control connection to the FTP server and sets to null
      * some internal data so that the memory may be reclaimed by the
      * garbage collector.  The reply text and code information from the
@@ -495,8 +461,7 @@ public class FTP extends SocketClient
 
         __send(message);
 
-        if (_commandSupport_.getListenerCount() > 0)
-            _commandSupport_.fireCommandSent(command, message);
+        fireCommandSent(command, message);
 
         __getReply();
         return _replyCode;

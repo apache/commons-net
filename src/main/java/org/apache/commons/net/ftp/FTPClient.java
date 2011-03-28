@@ -482,10 +482,8 @@ implements Configurable
             // reply is a local address, but target is not - assume NAT box changed the PASV reply
             if (host.isSiteLocalAddress() && !getRemoteAddress().isSiteLocalAddress()){
                 String hostAddress = getRemoteAddress().getHostAddress();
-                if (_commandSupport_.getListenerCount() > 0) {
-                    _commandSupport_.fireReplyReceived(0,
+                fireReplyReceived(0,
                             "[Replacing site local address "+__passiveHost+" with "+hostAddress+"]\n");
-                }
                 __passiveHost = hostAddress;
             }
         } catch (UnknownHostException e) { // Should not happen as we are passing in an IP address

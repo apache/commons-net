@@ -100,6 +100,12 @@ public abstract class SocketClient
     int sendBufferSize = -1;
 
     /**
+     * A ProtocolCommandSupport object used to manage the registering of
+     * ProtocolCommandListeners and te firing of ProtocolCommandEvents.
+     */
+    private ProtocolCommandSupport _commandSupport_;
+
+    /**
      * Default constructor for SocketClient.  Initializes
      * _socket_ to null, _timeout_ to 0, _defaultPort to 0,
      * _isConnected_ to false, and _socketFactory_ to a shared instance of
@@ -114,6 +120,7 @@ public abstract class SocketClient
         _defaultPort_ = 0;
         _socketFactory_ = __DEFAULT_SOCKET_FACTORY;
         _serverSocketFactory_ = __DEFAULT_SERVER_SOCKET_FACTORY;
+        _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
 
@@ -673,6 +680,39 @@ public abstract class SocketClient
         return _serverSocketFactory_;
     }
 
+
+    /**
+     * Adds a ProtocolCommandListener.  Delegates this task to
+     * {@link #_commandSupport_  _commandSupport_ }.
+     * <p>
+     * @param listener  The ProtocolCommandListener to add.
+     */
+    public void addProtocolCommandListener(ProtocolCommandListener listener) {
+        _commandSupport_.addProtocolCommandListener(listener);
+    }
+
+    /***
+     * Removes a ProtocolCommandListener.  Delegates this task to
+     * {@link #_commandSupport_  _commandSupport_ }.
+     * <p>
+     * @param listener  The ProtocolCommandListener to remove.
+     ***/
+    public void removeProtocolCommandListener(ProtocolCommandListener listener) {
+        _commandSupport_.removeProtocolCommandListener(listener);
+    }
+
+    protected void fireReplyReceived(int replyCode, String reply) {
+        if (_commandSupport_.getListenerCount() > 0) {
+            _commandSupport_.fireReplyReceived(replyCode, reply);
+        }
+    }
+
+    protected void fireCommandSent(String command, String message) {
+        if (_commandSupport_.getListenerCount() > 0) {
+            _commandSupport_.fireCommandSent(command, message);
+        }
+    }
+    
 }
 
 

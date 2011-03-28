@@ -24,8 +24,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import org.apache.commons.net.MalformedServerReplyException;
-import org.apache.commons.net.ProtocolCommandListener;
-import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
 
 /***
@@ -110,12 +108,6 @@ public class NNTP extends SocketClient
     protected BufferedWriter _writer_;
 
     /***
-     * A ProtocolCommandSupport object used to manage the registering of
-     * ProtocolCommandListeners and te firing of ProtocolCommandEvents.
-     ***/
-    protected ProtocolCommandSupport _commandSupport_;
-
-    /***
      * The default NNTP constructor.  Sets the default port to
      * <code>DEFAULT_PORT</code> and initializes internal data structures
      * for saving NNTP reply information.
@@ -127,7 +119,6 @@ public class NNTP extends SocketClient
         _reader_ = null;
         _writer_ = null;
         _isAllowedToPost = false;
-        _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
     private void __getReply() throws IOException
@@ -153,9 +144,7 @@ public class NNTP extends SocketClient
                 "Could not parse response code.\nServer Reply: " + _replyString);
         }
 
-        if (_commandSupport_.getListenerCount() > 0)
-            _commandSupport_.fireReplyReceived(_replyCode, _replyString +
-                                               SocketClient.NETASCII_EOL);
+        fireReplyReceived(_replyCode, _replyString + SocketClient.NETASCII_EOL);
 
         if (_replyCode == NNTPReply.SERVICE_DISCONTINUED)
             throw new NNTPConnectionClosedException(
@@ -181,28 +170,6 @@ public class NNTP extends SocketClient
         __getReply();
 
         _isAllowedToPost = (_replyCode == NNTPReply.SERVER_READY_POSTING_ALLOWED);
-    }
-
-    /***
-     * Adds a ProtocolCommandListener.  Delegates this task to
-     * {@link #_commandSupport_  _commandSupport_ }.
-     * <p>
-     * @param listener  The ProtocolCommandListener to add.
-     ***/
-    public void addProtocolCommandListener(ProtocolCommandListener listener)
-    {
-        _commandSupport_.addProtocolCommandListener(listener);
-    }
-
-    /***
-     * Removes a ProtocolCommandListener.  Delegates this task to
-     * {@link #_commandSupport_  _commandSupport_ }.
-     * <p>
-     * @param listener  The ProtocolCommandListener to remove.
-     ***/
-    public void removeProtocolCommandListener(ProtocolCommandListener listener)
-    {
-        _commandSupport_.removeProtocolCommandListener(listener);
     }
 
     /***
@@ -272,8 +239,7 @@ public class NNTP extends SocketClient
         _writer_.write(message = __commandBuffer.toString());
         _writer_.flush();
 
-        if (_commandSupport_.getListenerCount() > 0)
-            _commandSupport_.fireCommandSent(command, message);
+        fireCommandSent(command, message);
 
         __getReply();
         return _replyCode;

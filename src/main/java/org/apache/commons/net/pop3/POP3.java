@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.net.MalformedServerReplyException;
-import org.apache.commons.net.ProtocolCommandListener;
-import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
 
 /***
@@ -88,12 +86,6 @@ public class POP3 extends SocketClient
     List<String> _replyLines;
 
     /***
-     * A ProtocolCommandSupport object used to manage the registering of
-     * ProtocolCommandListeners and te firing of ProtocolCommandEvents.
-     ***/
-    protected ProtocolCommandSupport _commandSupport_;
-
-    /***
      * The default POP3Client constructor.  Initializes the state
      * to <code>DISCONNECTED_STATE</code>.
      ***/
@@ -104,7 +96,6 @@ public class POP3 extends SocketClient
         _reader = null;
         __writer = null;
         _replyLines = new ArrayList<String>();
-        _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
     private void __getReply() throws IOException
@@ -131,8 +122,7 @@ public class POP3 extends SocketClient
         _replyLines.add(line);
         _lastReplyLine = line;
 
-        if (_commandSupport_.getListenerCount() > 0)
-            _commandSupport_.fireReplyReceived(_replyCode, getReplyString());
+        fireReplyReceived(_replyCode, getReplyString());
     }
 
 
@@ -152,29 +142,6 @@ public class POP3 extends SocketClient
                                                     __DEFAULT_ENCODING));
         __getReply();
         setState(AUTHORIZATION_STATE);
-    }
-
-
-    /***
-     * Adds a ProtocolCommandListener.  Delegates this task to
-     * {@link #_commandSupport_  _commandSupport_ }.
-     * <p>
-     * @param listener  The ProtocolCommandListener to add.
-     ***/
-    public void addProtocolCommandListener(ProtocolCommandListener listener)
-    {
-        _commandSupport_.addProtocolCommandListener(listener);
-    }
-
-    /***
-     * Removes a ProtocolCommandListener.  Delegates this task to
-     * {@link #_commandSupport_  _commandSupport_ }.
-     * <p>
-     * @param listener  The ProtocolCommandListener to remove.
-     ***/
-    public void removeProtocolCommandistener(ProtocolCommandListener listener)
-    {
-        _commandSupport_.removeProtocolCommandListener(listener);
     }
 
 
@@ -262,8 +229,7 @@ public class POP3 extends SocketClient
         __writer.write(message = __commandBuffer.toString());
         __writer.flush();
 
-        if (_commandSupport_.getListenerCount() > 0)
-            _commandSupport_.fireCommandSent(command, message);
+        fireCommandSent(command, message);
 
         __getReply();
         return _replyCode;
