@@ -67,7 +67,7 @@ public class MessageThreading {
         NewsgroupInfo group = new NewsgroupInfo();
         client.selectNewsgroup(newsgroup, group);
 
-        long lowArticleNumber = group.getFirstArticle();
+        long lowArticleNumber = group.getFirstArticleLong();
         long highArticleNumber = lowArticleNumber + 5000;
 
         System.out.println("Retrieving articles between [" + lowArticleNumber + "] and [" + highArticleNumber + "]");
