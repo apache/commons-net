@@ -26,7 +26,7 @@
  
    <section name="Apache Commons Net">
    <p>
-     Apache Commons Net&#x2122; software implements the client side of many basic
+     Apache Commons Net&#x2122; library implements the client side of many basic
      Internet protocols.  The purpose of the library is to provide
      fundamental protocol access, not higher-level
      abstractions. Therefore, some of the design violates
