@@ -54,6 +54,10 @@ public final class IMAPMail
         if (proto != null) {
             System.out.println("Using secure protocol: " + proto);
             imap = new IMAPSClient(proto, true); // implicit
+            // enable the next line if the server certificate has expired:
+//            ((IMAPSClient) imap).setTrustManager(TrustManagerUtils.getValidateServerCertificateTrustManager());
+            // OR enable the next line if the server uses a self-signed certificate
+//            ((IMAPSClient) imap).setTrustManager(TrustManagerUtils.getAcceptAllTrustManager());
         } else {
             imap = new IMAPClient();
         }
