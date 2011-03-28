@@ -247,8 +247,8 @@ public class IMAP extends SocketClient
         }
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
-        String message;
-        __writer.write(message = __commandBuffer.toString());
+        String message = __commandBuffer.toString();
+        __writer.write(message);
         __writer.flush();
 
         if (_commandSupport_.getListenerCount() > 0)
@@ -381,22 +381,17 @@ public class IMAP extends SocketClient
     {
         String res = new String (_initialID);
         // "increase" the ID for the next call
-        boolean wasIncr = false;
-        for (int i = _initialID.length-1; i>=0; i--)
+        boolean carry = true; // want to increment initially
+        for (int i = _initialID.length-1; carry && i>=0; i--)
         {
-            if (_initialID[i] >= 'Z')
+            if (_initialID[i] == 'Z')
             {
                 _initialID[i] = 'A';
-                if ( i > 0 )
-                {
-                    _initialID[i-1]++;
-                    wasIncr = true;
-                }
             }
             else
             {
-                if (! wasIncr) _initialID[i]++;
-                break;
+                _initialID[i]++;
+                carry = false; // did not wrap round
             }
         }
         return res;
