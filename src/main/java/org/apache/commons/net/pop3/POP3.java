@@ -81,7 +81,6 @@ public class POP3 extends SocketClient
 
     private int __popState;
     private BufferedWriter __writer;
-    private StringBuffer __commandBuffer;
 
     BufferedReader _reader;
     int _replyCode;
@@ -101,7 +100,6 @@ public class POP3 extends SocketClient
     public POP3()
     {
         setDefaultPort(DEFAULT_PORT);
-        __commandBuffer = new StringBuffer();
         __popState = DISCONNECTED_STATE;
         _reader = null;
         __writer = null;
@@ -250,9 +248,7 @@ public class POP3 extends SocketClient
      ***/
     public int sendCommand(String command, String args) throws IOException
     {
-        String message;
-
-        __commandBuffer.setLength(0);
+        StringBuilder __commandBuffer = new StringBuilder();
         __commandBuffer.append(command);
 
         if (args != null)
@@ -262,6 +258,7 @@ public class POP3 extends SocketClient
         }
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
+        String message;
         __writer.write(message = __commandBuffer.toString());
         __writer.flush();
 

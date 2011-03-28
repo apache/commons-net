@@ -91,8 +91,6 @@ public class NNTP extends SocketClient
     // the wire.
     private static final String __DEFAULT_ENCODING = "ISO-8859-1";
 
-    private StringBuffer __commandBuffer;
-
     boolean _isAllowedToPost;
     int _replyCode;
     String _replyString;
@@ -125,7 +123,6 @@ public class NNTP extends SocketClient
     public NNTP()
     {
         setDefaultPort(DEFAULT_PORT);
-        __commandBuffer = new StringBuffer();
         _replyString = null;
         _reader_ = null;
         _writer_ = null;
@@ -261,9 +258,7 @@ public class NNTP extends SocketClient
      ***/
     public int sendCommand(String command, String args) throws IOException
     {
-        String message;
-
-        __commandBuffer.setLength(0);
+        StringBuilder __commandBuffer = new StringBuilder();
         __commandBuffer.append(command);
 
         if (args != null)
@@ -273,6 +268,7 @@ public class NNTP extends SocketClient
         }
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
+        String message;
         _writer_.write(message = __commandBuffer.toString());
         _writer_.flush();
 

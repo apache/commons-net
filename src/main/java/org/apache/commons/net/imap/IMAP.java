@@ -61,7 +61,6 @@ public class IMAP extends SocketClient
 
     private IMAPState __state;
     protected BufferedWriter __writer;
-    private StringBuffer __commandBuffer;
 
     protected BufferedReader _reader;
     private int _replyCode;
@@ -82,7 +81,6 @@ public class IMAP extends SocketClient
     public IMAP()
     {
         setDefaultPort(DEFAULT_PORT);
-        __commandBuffer = new StringBuffer();
         __state = IMAPState.DISCONNECTED_STATE;
         _reader = null;
         __writer = null;
@@ -234,9 +232,7 @@ public class IMAP extends SocketClient
      */
     private int sendCommandWithID(String commandID, String command, String args) throws IOException
     {
-        String message;
-
-        __commandBuffer.setLength(0);
+        StringBuilder __commandBuffer = new StringBuilder();
         if (commandID != null)
         {
             __commandBuffer.append(commandID);
@@ -251,6 +247,7 @@ public class IMAP extends SocketClient
         }
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
+        String message;
         __writer.write(message = __commandBuffer.toString());
         __writer.flush();
 

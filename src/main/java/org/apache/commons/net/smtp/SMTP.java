@@ -96,8 +96,6 @@ public class SMTP extends SocketClient
     /** The encoding to use (user-settable) */
     private String encoding = __DEFAULT_ENCODING;
 
-    private StringBuffer __commandBuffer;
-
     BufferedReader _reader;
     BufferedWriter _writer;
     int _replyCode;
@@ -119,7 +117,6 @@ public class SMTP extends SocketClient
     public SMTP()
     {
         setDefaultPort(DEFAULT_PORT);
-        __commandBuffer = new StringBuffer();
         _replyLines = new ArrayList<String>();
         _newReplyString = false;
         _replyString = null;
@@ -139,9 +136,7 @@ public class SMTP extends SocketClient
     private int __sendCommand(String command, String args, boolean includeSpace)
     throws IOException
     {
-        String message;
-
-        __commandBuffer.setLength(0);
+        StringBuilder __commandBuffer = new StringBuilder();
         __commandBuffer.append(command);
 
         if (args != null)
@@ -153,6 +148,7 @@ public class SMTP extends SocketClient
 
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
+        String message;
         _writer.write(message = __commandBuffer.toString());
         _writer.flush();
 
