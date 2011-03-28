@@ -701,12 +701,24 @@ public abstract class SocketClient
         _commandSupport_.removeProtocolCommandListener(listener);
     }
 
+    /**
+     * If there are any listeners, send them the reply details.
+     * 
+     * @param replyCode the code extracted from the reply
+     * @param reply the full reply text
+     */
     protected void fireReplyReceived(int replyCode, String reply) {
         if (_commandSupport_.getListenerCount() > 0) {
             _commandSupport_.fireReplyReceived(replyCode, reply);
         }
     }
 
+    /**
+     * If there are any listeners, send them the command details.
+     * 
+     * @param command the command name
+     * @param message the complete message, including command name
+     */
     protected void fireCommandSent(String command, String message) {
         if (_commandSupport_.getListenerCount() > 0) {
             _commandSupport_.fireCommandSent(command, message);
