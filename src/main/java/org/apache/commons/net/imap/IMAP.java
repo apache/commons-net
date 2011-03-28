@@ -90,17 +90,27 @@ public class IMAP extends SocketClient
         _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
+    /**
+     * Get the reply for a command that expects a tagged response.
+     * 
+     * @throws IOException
+     */
     private void __getReply() throws IOException
     {
-        __getReply(true); // default to tagged response
+        __getReply(true); // tagged response
     }
 
+    /**
+     * Get the reply for a command, reading the response until the
+     * reply is found.
+     * 
+     * @param wantTag {@code true} if the command expects a tagged response.
+     * @throws IOException
+     */
     private void __getReply(boolean wantTag) throws IOException
     {
-        String line;
-
         _replyLines.clear();
-        line = _reader.readLine();
+        String line = _reader.readLine();
 
         if (line == null)
             throw new EOFException("Connection closed without indication.");

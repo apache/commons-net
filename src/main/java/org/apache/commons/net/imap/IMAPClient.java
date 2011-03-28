@@ -30,9 +30,8 @@ public class IMAPClient extends IMAP
 
     /**
      * Send a CAPABILITY command to the server.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs
      */
     public boolean capability() throws IOException
     {
@@ -43,9 +42,8 @@ public class IMAPClient extends IMAP
      * Send a NOOP command to the server.  This is useful for keeping
      * a connection alive since most IMAP servers will timeout after 10
      * minutes of inactivity.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean noop() throws IOException
     {
@@ -58,9 +56,8 @@ public class IMAPClient extends IMAP
      * A logout attempt is valid in any state.  If
      * the client is in the not authenticated or authenticated state, it enters the
      * logout on a successful logout.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean logout() throws IOException
     {
@@ -107,9 +104,8 @@ public class IMAPClient extends IMAP
     /**
      * Send a SELECT command to the server.
      * @param mailboxName The mailbox name to select.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean select(String mailboxName) throws IOException
     {
@@ -119,9 +115,8 @@ public class IMAPClient extends IMAP
     /**
      * Send an EXAMINE command to the server.
      * @param mailboxName The mailbox name to examine.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean examine(String mailboxName) throws IOException
     {
@@ -131,9 +126,8 @@ public class IMAPClient extends IMAP
     /**
      * Send a CREATE command to the server.
      * @param mailboxName The mailbox name to create.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean create(String mailboxName) throws IOException
     {
@@ -143,9 +137,8 @@ public class IMAPClient extends IMAP
     /**
      * Send a DELETE command to the server.
      * @param mailboxName The mailbox name to delete.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean delete(String mailboxName) throws IOException
     {
@@ -156,9 +149,8 @@ public class IMAPClient extends IMAP
      * Send a RENAME command to the server.
      * @param oldMailboxName The existing mailbox name to rename.
      * @param newMailboxName The new mailbox name.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean rename(String oldMailboxName, String newMailboxName) throws IOException
     {
@@ -168,9 +160,8 @@ public class IMAPClient extends IMAP
     /**
      * Send a SUBSCRIBE command to the server.
      * @param mailboxName The mailbox name to subscribe to.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean subscribe(String mailboxName) throws IOException
     {
@@ -180,9 +171,8 @@ public class IMAPClient extends IMAP
     /**
      * Send a UNSUBSCRIBE command to the server.
      * @param mailboxName The mailbox name to unsubscribe from.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean unsubscribe(String mailboxName) throws IOException
     {
@@ -193,9 +183,8 @@ public class IMAPClient extends IMAP
      * Send a LIST command to the server.
      * @param refName The reference name.
      * @param mailboxName The mailbox name.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean list(String refName, String mailboxName) throws IOException
     {
@@ -206,9 +195,8 @@ public class IMAPClient extends IMAP
      * Send an LSUB command to the server.
      * @param refName The reference name.
      * @param mailboxName The mailbox name.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean lsub(String refName, String mailboxName) throws IOException
     {
@@ -219,9 +207,8 @@ public class IMAPClient extends IMAP
      * Send a STATUS command to the server.
      * @param mailboxName The reference name.
      * @param itemNames The status data item names.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean status(String mailboxName, String[] itemNames) throws IOException
     {
@@ -250,9 +237,8 @@ public class IMAPClient extends IMAP
      * @param mailboxName The mailbox name.
      * @param flags The flag parenthesized list (optional).
      * @param datetime The date/time string (optional).
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean append(String mailboxName, String flags, String datetime) throws IOException
     {
@@ -269,9 +255,8 @@ public class IMAPClient extends IMAP
     /**
      * Send an APPEND command to the server.
      * @param mailboxName The mailbox name.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean append(String mailboxName) throws IOException
     {
@@ -282,9 +267,8 @@ public class IMAPClient extends IMAP
 
     /**
      * Send a CHECK command to the server.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean check() throws IOException
     {
@@ -293,9 +277,8 @@ public class IMAPClient extends IMAP
 
     /**
      * Send a CLOSE command to the server.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean close() throws IOException
     {
@@ -304,9 +287,8 @@ public class IMAPClient extends IMAP
 
     /**
      * Send an EXPUNGE command to the server.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean expunge() throws IOException
     {
@@ -317,9 +299,8 @@ public class IMAPClient extends IMAP
      * Send a SEARCH command to the server.
      * @param charset The charset (optional).
      * @param criteria The search criteria.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean search(String charset, String criteria) throws IOException
     {
@@ -332,9 +313,8 @@ public class IMAPClient extends IMAP
     /**
      * Send a SEARCH command to the server.
      * @param criteria The search criteria.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean search(String criteria) throws IOException
     {
@@ -345,9 +325,8 @@ public class IMAPClient extends IMAP
      * Send a FETCH command to the server.
      * @param sequenceSet The sequence set to fetch.
      * @param itemNames The item names for the FETCH command.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean fetch(String sequenceSet, String itemNames) throws IOException
     {
@@ -359,9 +338,8 @@ public class IMAPClient extends IMAP
      * @param sequenceSet The sequence set to store.
      * @param itemNames The item names for the STORE command.
      * @param itemValues The item values for the STORE command.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean store(String sequenceSet, String itemNames, String itemValues)
         throws IOException
@@ -373,9 +351,8 @@ public class IMAPClient extends IMAP
      * Send a COPY command to the server.
      * @param sequenceSet The sequence set to fetch.
      * @param mailboxName The mailbox name.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean copy(String sequenceSet, String mailboxName) throws IOException
     {
@@ -386,9 +363,8 @@ public class IMAPClient extends IMAP
      * Send a UID command to the server.
      * @param command The command for UID.
      * @param commandArgs The arguments for the command.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *            logging in.
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
      */
     public boolean uid(String command, String commandArgs) throws IOException
     {
