@@ -285,7 +285,7 @@ public class IMAP extends SocketClient
      */
     public int sendCommand(IMAPCommand command, String args) throws IOException
     {
-        return sendCommandWithID(generateCommandID(), IMAPCommand.getCommand(command), args);
+        return sendCommand(command.getIMAPCommand(), args);
     }
 
     /**
