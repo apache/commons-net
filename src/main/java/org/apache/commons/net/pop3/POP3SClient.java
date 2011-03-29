@@ -52,8 +52,6 @@ public class POP3SClient extends POP3Client
 
     private static final int DEFAULT_POP3S_PORT = 995;
 
-    /** The TLS start command. */
-    private static final String tlsCommand = "STLS";
     /** Default secure socket protocol name, like TLS */
     private static final String DEFAULT_PROTOCOL = "TLS";
 
@@ -287,7 +285,7 @@ public class POP3SClient extends POP3Client
      */
     public boolean execTLS() throws SSLException, IOException
     {
-        if (sendCommand(tlsCommand) != POP3Reply.OK)
+        if (sendCommand(POP3Command.STLS) != POP3Reply.OK)
         {
             return false;
             //throw new SSLException(getReplyString());
