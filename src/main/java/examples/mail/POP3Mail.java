@@ -61,7 +61,7 @@ public final class POP3Mail
         if (args.length < 3)
         {
             System.err.println(
-                "Usage: POP3Mail <pop3 server hostname> <username> <password> [TLS]");
+                "Usage: POP3Mail <pop3 server hostname> <username> <password> [TLS [true=implicit]]");
             System.exit(1);
         }
 
@@ -70,12 +70,13 @@ public final class POP3Mail
         String password = args[2];
 
         String proto = args.length > 3 ? args[3] : null;
+        boolean implicit = args.length > 4 ? Boolean.parseBoolean(args[4]) : false;
 
         POP3Client pop3;
 
         if (proto != null) {
             System.out.println("Using secure protocol: "+proto);
-            pop3 = new POP3SClient(proto);
+            pop3 = new POP3SClient(proto, implicit);
         } else {
             pop3 = new POP3Client();
         }
