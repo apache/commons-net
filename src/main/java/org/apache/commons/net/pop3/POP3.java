@@ -117,7 +117,7 @@ public class POP3 extends SocketClient
         else
             throw new
             MalformedServerReplyException(
-                "Received invalid POP3 protocol response from server.");
+                "Received invalid POP3 protocol response from server." + line);
 
         _replyLines.add(line);
         _lastReplyLine = line;
