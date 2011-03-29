@@ -50,11 +50,29 @@ public final class POP3Command
     public static final int TOP = 10;
     /*** List unique message identifier(s). ***/
     public static final int UIDL = 11;
+    /** 
+     * The capabilities command.
+     * @since 3.0
+     */
+    public static final int CAPA = 12;
+    /**
+     * Authentication
+     * @since 3.0 
+     */
+    public static final int AUTH = 13;
+    
+    private static final int _NEXT_ = AUTH + 1; // update as necessary when adding new entries
 
     static final String[] _commands = {
                                           "USER", "PASS", "QUIT", "STAT", "LIST", "RETR", "DELE", "NOOP", "RSET",
-                                          "APOP", "TOP", "UIDL"
+                                          "APOP", "TOP", "UIDL", "CAPA", "AUTH"
                                       };
+
+    static {
+        if (_commands.length != _NEXT_) {
+            throw new RuntimeException("Error in array definition");
+        }        
+    }
 
     // Cannot be instantiated.
     private POP3Command()

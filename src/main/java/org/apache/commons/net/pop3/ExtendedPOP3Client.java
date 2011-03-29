@@ -37,11 +37,6 @@ import org.apache.commons.net.util.Base64;
  */
 public class ExtendedPOP3Client extends POP3SClient
 {
-    /** The CAPA command. */
-    public static final String capaCommand = "CAPA";
-    /** The AUTH command. */
-    public static final String authCommand = "AUTH";
-
     /**
      * The default ExtendedPOP3Client constructor.
      * Creates a new Extended POP3 Client.
@@ -60,7 +55,7 @@ public class ExtendedPOP3Client extends POP3SClient
      ***/
     public boolean capa() throws IOException
     {
-        return (sendCommand(capaCommand) == POP3Reply.OK);
+        return (sendCommand(POP3Command.CAPA) == POP3Reply.OK);
     }
 
     /***
@@ -85,7 +80,7 @@ public class ExtendedPOP3Client extends POP3SClient
                         throws IOException, NoSuchAlgorithmException,
                         InvalidKeyException, InvalidKeySpecException
     {
-        if (sendCommand(authCommand, method.getAuthName())
+        if (sendCommand(POP3Command.AUTH, method.getAuthName())
         != POP3Reply.OK_INT) return false;
 
         switch(method) {
