@@ -44,8 +44,6 @@ import org.apache.commons.net.util.SSLContextUtils;
  */
 public class SMTPSClient extends SMTPClient
 {
-    /** The TLS start command. */
-    private static final String tlsCommand = "STARTTLS";
     /** Default secure socket protocol name, like TLS */
     private static final String DEFAULT_PROTOCOL = "TLS";
 
@@ -255,14 +253,13 @@ public class SMTPSClient extends SMTPClient
 
     /**
      * The TLS command execution.
-     * @throws SSLException If the server reply code is not positive.
      * @throws IOException If an I/O error occurs while sending
      * the command or performing the negotiation.
      * @return TRUE if the command and negotiation succeeded.
      */
     public boolean execTLS() throws SSLException, IOException
     {
-        if (!SMTPReply.isPositiveCompletion(sendCommand(tlsCommand)))
+        if (!SMTPReply.isPositiveCompletion(sendCommand(SMTPCommand.STLS)))
         {
             return false;
             //throw new SSLException(getReplyString());

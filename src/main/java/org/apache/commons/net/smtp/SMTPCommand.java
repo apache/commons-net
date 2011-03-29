@@ -48,7 +48,13 @@ public final class SMTPCommand
     public static final int TURN = 12;
     public static final int QUIT = 13;
 
-    private static final int _NEXT_ = QUIT + 1; // update as necessary when adding new entries
+    /** 
+     * The TLS start command.
+     * @since 3.0 
+     */
+    public static final int STLS = 14 ;
+    
+    private static final int _NEXT_ = STLS + 1; // update as necessary when adding new entries
 
     public static final int HELLO = HELO;
     public static final int LOGIN = HELO;
@@ -73,7 +79,8 @@ public final class SMTPCommand
 
     private static final String[] _commands = {
                                           "HELO", "MAIL FROM:", "RCPT TO:", "DATA", "SEND FROM:", "SOML FROM:",
-                                          "SAML FROM:", "RSET", "VRFY", "EXPN", "HELP", "NOOP", "TURN", "QUIT"
+                                          "SAML FROM:", "RSET", "VRFY", "EXPN", "HELP", "NOOP", "TURN", "QUIT",
+                                          "STARTTLS"
                                       };
 
 
