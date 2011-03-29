@@ -48,6 +48,8 @@ public final class SMTPCommand
     public static final int TURN = 12;
     public static final int QUIT = 13;
 
+    private static final int _NEXT_ = QUIT + 1; // update as necessary when adding new entries
+
     public static final int HELLO = HELO;
     public static final int LOGIN = HELO;
     public static final int MAIL_FROM = MAIL;
@@ -69,11 +71,17 @@ public final class SMTPCommand
     private SMTPCommand()
     {}
 
-    static final String[] _commands = {
+    private static final String[] _commands = {
                                           "HELO", "MAIL FROM:", "RCPT TO:", "DATA", "SEND FROM:", "SOML FROM:",
                                           "SAML FROM:", "RSET", "VRFY", "EXPN", "HELP", "NOOP", "TURN", "QUIT"
                                       };
 
+
+    static {
+        if (_commands.length != _NEXT_) {
+            throw new RuntimeException("Error in array definition");
+        }        
+    }
 
     /***
      * Retrieve the SMTP protocol command string corresponding to a specified

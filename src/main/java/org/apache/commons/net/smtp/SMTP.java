@@ -152,7 +152,7 @@ public class SMTP extends SocketClient
     private int __sendCommand(int command, String args, boolean includeSpace)
     throws IOException
     {
-        return __sendCommand(SMTPCommand._commands[command], args, includeSpace);
+        return __sendCommand(SMTPCommand.getCommand(command), args, includeSpace);
     }
 
     private void __getReply() throws IOException
@@ -304,7 +304,7 @@ public class SMTP extends SocketClient
      ***/
     public int sendCommand(int command, String args) throws IOException
     {
-        return sendCommand(SMTPCommand._commands[command], args);
+        return sendCommand(SMTPCommand.getCommand(command), args);
     }
 
 
