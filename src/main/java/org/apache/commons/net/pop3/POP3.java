@@ -215,6 +215,9 @@ public class POP3 extends SocketClient
      ***/
     public int sendCommand(String command, String args) throws IOException
     {
+        if (__writer == null) {
+            throw new IllegalStateException("Socket is not connected");
+        }
         StringBuilder __commandBuffer = new StringBuilder();
         __commandBuffer.append(command);
 
@@ -225,8 +228,8 @@ public class POP3 extends SocketClient
         }
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
-        String message;
-        __writer.write(message = __commandBuffer.toString());
+        String message = __commandBuffer.toString();
+        __writer.write(message);
         __writer.flush();
 
         fireCommandSent(command, message);
