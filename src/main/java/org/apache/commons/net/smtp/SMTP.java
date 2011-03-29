@@ -124,6 +124,15 @@ public class SMTP extends SocketClient
         this.encoding = encoding;
     }
 
+    /**
+     * Send a command to the server. May also be used to send text data.
+     * 
+     * @param command the command to send (as a plain String)
+     * @param args the command arguments, may be {@code null}
+     * @param includeSpace if {@code true}, add a space between the command and its arguments
+     * @return the reply code
+     * @throws IOException
+     */
     private int __sendCommand(String command, String args, boolean includeSpace)
     throws IOException
     {
@@ -149,6 +158,14 @@ public class SMTP extends SocketClient
         return _replyCode;
     }
 
+    /**
+     * 
+     * @param command the command to send (as an int defined in {@link SMPTCommand})
+     * @param args the command arguments, may be {@code null}
+     * @param includeSpace if {@code true}, add a space between the command and its arguments
+     * @return the reply code
+     * @throws IOException
+     */
     private int __sendCommand(int command, String args, boolean includeSpace)
     throws IOException
     {

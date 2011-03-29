@@ -38,11 +38,6 @@ import org.apache.commons.net.util.Base64;
  */
 public class AuthenticatingSMTPClient extends SMTPSClient
 {
-    /** The AUTH command. */
-    public static final String authCommand = "AUTH";
-    /** The EHLO command. */
-    public static final String ehloCommand = "EHLO";
-
     /**
      * The default AuthenticatingSMTPClient constructor.
      * Creates a new Authenticating SMTP Client.
@@ -78,7 +73,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      ***/
     public int ehlo(String hostname) throws IOException
     {
-        return sendCommand(ehloCommand, hostname);
+        return sendCommand(SMTPCommand.EHLO, hostname);
     }
 
     /***
@@ -171,8 +166,8 @@ public class AuthenticatingSMTPClient extends SMTPSClient
                         throws IOException, NoSuchAlgorithmException,
                         InvalidKeyException, InvalidKeySpecException
     {
-        if (!SMTPReply.isPositiveIntermediate(sendCommand(
-            authCommand + " " + AUTH_METHOD.getAuthName(method)))) return false;
+        if (!SMTPReply.isPositiveIntermediate(sendCommand(SMTPCommand.AUTH,
+                AUTH_METHOD.getAuthName(method)))) return false;
 
         if (method.equals(AUTH_METHOD.PLAIN))
         {
