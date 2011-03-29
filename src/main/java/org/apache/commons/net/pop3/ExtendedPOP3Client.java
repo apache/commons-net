@@ -67,6 +67,9 @@ public class ExtendedPOP3Client extends POP3SClient
      * Authenticate to the POP3 server by sending the AUTH command with the
      * selected mechanism, using the given username and the given password.
      * <p>
+     * @param method the {@link AUTH_METHOD} to use
+     * @param username the user name
+     * @param password the password
      * @return True if successfully completed, false if not.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
@@ -77,42 +80,41 @@ public class ExtendedPOP3Client extends POP3SClient
      * @exception InvalidKeySpecException If the CRAM hash algorithm
      *      failed to use the given password.
      ***/
-    public boolean auth(ExtendedPOP3Client.AUTH_METHOD method,
+    public boolean auth(AUTH_METHOD method,
                         String username, String password)
                         throws IOException, NoSuchAlgorithmException,
                         InvalidKeyException, InvalidKeySpecException
     {
-        if (sendCommand(authCommand + " " + AUTH_METHOD.getAuthName(method))
+        if (sendCommand(authCommand, method.getAuthName())
         != POP3Reply.OK_INT) return false;
 
-        if (method.equals(AUTH_METHOD.PLAIN))
-        {
-            // the server sends an empty response ("+ "), so we don't have to read it.
-            return sendCommand(
-                new String(
-                    Base64.encodeBase64(("\000" + username + "\000" + password).getBytes())
-                    )
-                ) == POP3Reply.OK;
+        switch(method) {
+            case PLAIN:
+                // the server sends an empty response ("+ "), so we don't have to read it.
+                return sendCommand(
+                    new String(
+                        Base64.encodeBase64(("\000" + username + "\000" + password).getBytes())
+                        )
+                    ) == POP3Reply.OK;
+            case CRAM_MD5:
+                // get the CRAM challenge
+                byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(2).trim());
+                // get the Mac instance
+                Mac hmac_md5 = Mac.getInstance("HmacMD5");
+                hmac_md5.init(new SecretKeySpec(password.getBytes(), "HmacMD5"));
+                // compute the result:
+                byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes();
+                // join the byte arrays to form the reply
+                byte[] usernameBytes = username.getBytes();
+                byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
+                System.arraycopy(usernameBytes, 0, toEncode, 0, usernameBytes.length);
+                toEncode[usernameBytes.length] = ' ';
+                System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
+                // send the reply and read the server code:
+                return sendCommand(new String(Base64.encodeBase64(toEncode))) == POP3Reply.OK;
+            default:
+                return false;
         }
-        else if (method.equals(AUTH_METHOD.CRAM_MD5))
-        {
-            // get the CRAM challenge
-            byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(2).trim());
-            // get the Mac instance
-            Mac hmac_md5 = Mac.getInstance("HmacMD5");
-            hmac_md5.init(new SecretKeySpec(password.getBytes(), "HmacMD5"));
-            // compute the result:
-            byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes();
-            // join the byte arrays to form the reply
-            byte[] usernameBytes = username.getBytes();
-            byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
-            System.arraycopy(usernameBytes, 0, toEncode, 0, usernameBytes.length);
-            toEncode[usernameBytes.length] = ' ';
-            System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
-            // send the reply and read the server code:
-            return sendCommand(new String(Base64.encodeBase64(toEncode))) == POP3Reply.OK;
-        }
-        else return false; // safety check
     }
 
     /**
@@ -142,7 +144,7 @@ public class ExtendedPOP3Client extends POP3SClient
         PLAIN("PLAIN"),
 
         /** The standarised (RFC2195) CRAM-MD5 method, which doesn't send the password (secure). */
-        CRAM_MD5("CRAM_MD5");
+        CRAM_MD5("CRAM-MD5");
 
         private final String methodName;
 
@@ -151,12 +153,11 @@ public class ExtendedPOP3Client extends POP3SClient
         }
         /**
          * Gets the name of the given authentication method suitable for the server.
-         * @param method The authentication method to get the name for.
          * @return The name of the given authentication method suitable for the server.
          */
-        public static final String getAuthName(AUTH_METHOD method)
+        public final String getAuthName()
         {
-            return method.methodName;
+            return this.methodName;
         }
     }
 }
