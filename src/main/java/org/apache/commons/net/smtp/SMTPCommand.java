@@ -49,22 +49,16 @@ public final class SMTPCommand
     public static final int QUIT = 13;
 
     /** 
-     * The TLS start command.
-     * @since 3.0 
-     */
-    public static final int STLS = 14 ;
-
-    /** 
      * The authorization command
      * @since 3.0 
      */
-    public static final int AUTH = 15 ;
+    public static final int AUTH = 14 ;
 
     /** 
      * The extended hello command
      * @since 3.0 
      */
-    public static final int EHLO = 16 ;
+    public static final int EHLO = 15 ;
 
     private static final int _NEXT_ = EHLO + 1; // update as necessary when adding new entries
 
@@ -92,7 +86,7 @@ public final class SMTPCommand
     private static final String[] _commands = {
                                           "HELO", "MAIL FROM:", "RCPT TO:", "DATA", "SEND FROM:", "SOML FROM:",
                                           "SAML FROM:", "RSET", "VRFY", "EXPN", "HELP", "NOOP", "TURN", "QUIT",
-                                          "STARTTLS", "AUTH", "EHLO"
+                                          "AUTH", "EHLO"
                                       };
 
 

@@ -259,7 +259,7 @@ public class SMTPSClient extends SMTPClient
      */
     public boolean execTLS() throws SSLException, IOException
     {
-        if (!SMTPReply.isPositiveCompletion(sendCommand(SMTPCommand.STLS)))
+        if (!SMTPReply.isPositiveCompletion(sendCommand("STARTTLS")))
         {
             return false;
             //throw new SSLException(getReplyString());
