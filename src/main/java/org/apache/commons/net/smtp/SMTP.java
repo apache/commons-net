@@ -741,6 +741,16 @@ public class SMTP extends SocketClient
         return sendCommand(SMTPCommand.QUIT);
     }
 
+    /**
+     * Removes a ProtocolCommandListener.
+     * 
+     * Delegates this incorrectly named method - removeProtocolCommandistener (note the missing "L")- to 
+     * the correct method {@link SocketClient#removeProtocolCommandListener}
+     * @param listener The ProtocolCommandListener to remove
+     */
+    public void removeProtocolCommandistener(org.apache.commons.net.ProtocolCommandListener listener){
+        removeProtocolCommandListener(listener);
+    }
 }
 
 /* Emacs configuration
