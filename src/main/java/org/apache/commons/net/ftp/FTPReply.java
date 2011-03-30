@@ -76,47 +76,47 @@ public final class FTPReply
     public static final int CODE_552 = 552;
     public static final int CODE_553 = 553;
 
-    public static final int RESTART_MARKER = CODE_110;
-    public static final int SERVICE_NOT_READY = CODE_120;
-    public static final int DATA_CONNECTION_ALREADY_OPEN = CODE_125;
-    public static final int FILE_STATUS_OK = CODE_150;
-    public static final int COMMAND_OK = CODE_200;
-    public static final int COMMAND_IS_SUPERFLUOUS = CODE_202;
-    public static final int SYSTEM_STATUS = CODE_211;
-    public static final int DIRECTORY_STATUS = CODE_212;
-    public static final int FILE_STATUS = CODE_213;
-    public static final int HELP_MESSAGE = CODE_214;
-    public static final int NAME_SYSTEM_TYPE = CODE_215;
-    public static final int SERVICE_READY = CODE_220;
-    public static final int SERVICE_CLOSING_CONTROL_CONNECTION = CODE_221;
-    public static final int DATA_CONNECTION_OPEN = CODE_225;
-    public static final int CLOSING_DATA_CONNECTION = CODE_226;
-    public static final int ENTERING_PASSIVE_MODE = CODE_227;
+    public static final int RESTART_MARKER = 110;
+    public static final int SERVICE_NOT_READY = 120;
+    public static final int DATA_CONNECTION_ALREADY_OPEN = 125;
+    public static final int FILE_STATUS_OK = 150;
+    public static final int COMMAND_OK = 200;
+    public static final int COMMAND_IS_SUPERFLUOUS = 202;
+    public static final int SYSTEM_STATUS = 211;
+    public static final int DIRECTORY_STATUS = 212;
+    public static final int FILE_STATUS = 213;
+    public static final int HELP_MESSAGE = 214;
+    public static final int NAME_SYSTEM_TYPE = 215;
+    public static final int SERVICE_READY = 220;
+    public static final int SERVICE_CLOSING_CONTROL_CONNECTION = 221;
+    public static final int DATA_CONNECTION_OPEN = 225;
+    public static final int CLOSING_DATA_CONNECTION = 226;
+    public static final int ENTERING_PASSIVE_MODE = 227;
     /** @since 2.2 */
-    public static final int ENTERING_EPSV_MODE = CODE_229;
-    public static final int USER_LOGGED_IN = CODE_230;
-    public static final int FILE_ACTION_OK = CODE_250;
-    public static final int PATHNAME_CREATED = CODE_257;
-    public static final int NEED_PASSWORD = CODE_331;
-    public static final int NEED_ACCOUNT = CODE_332;
-    public static final int FILE_ACTION_PENDING = CODE_350;
-    public static final int SERVICE_NOT_AVAILABLE = CODE_421;
-    public static final int CANNOT_OPEN_DATA_CONNECTION = CODE_425;
-    public static final int TRANSFER_ABORTED = CODE_426;
-    public static final int FILE_ACTION_NOT_TAKEN = CODE_450;
-    public static final int ACTION_ABORTED = CODE_451;
-    public static final int INSUFFICIENT_STORAGE = CODE_452;
-    public static final int UNRECOGNIZED_COMMAND = CODE_500;
-    public static final int SYNTAX_ERROR_IN_ARGUMENTS = CODE_501;
-    public static final int COMMAND_NOT_IMPLEMENTED = CODE_502;
-    public static final int BAD_COMMAND_SEQUENCE = CODE_503;
-    public static final int COMMAND_NOT_IMPLEMENTED_FOR_PARAMETER = CODE_504;
-    public static final int NOT_LOGGED_IN = CODE_530;
-    public static final int NEED_ACCOUNT_FOR_STORING_FILES = CODE_532;
-    public static final int FILE_UNAVAILABLE = CODE_550;
-    public static final int PAGE_TYPE_UNKNOWN = CODE_551;
-    public static final int STORAGE_ALLOCATION_EXCEEDED = CODE_552;
-    public static final int FILE_NAME_NOT_ALLOWED = CODE_553;
+    public static final int ENTERING_EPSV_MODE = 229;
+    public static final int USER_LOGGED_IN = 230;
+    public static final int FILE_ACTION_OK = 250;
+    public static final int PATHNAME_CREATED = 257;
+    public static final int NEED_PASSWORD = 331;
+    public static final int NEED_ACCOUNT = 332;
+    public static final int FILE_ACTION_PENDING = 350;
+    public static final int SERVICE_NOT_AVAILABLE = 421;
+    public static final int CANNOT_OPEN_DATA_CONNECTION = 425;
+    public static final int TRANSFER_ABORTED = 426;
+    public static final int FILE_ACTION_NOT_TAKEN = 450;
+    public static final int ACTION_ABORTED = 451;
+    public static final int INSUFFICIENT_STORAGE = 452;
+    public static final int UNRECOGNIZED_COMMAND = 500;
+    public static final int SYNTAX_ERROR_IN_ARGUMENTS = 501;
+    public static final int COMMAND_NOT_IMPLEMENTED = 502;
+    public static final int BAD_COMMAND_SEQUENCE = 503;
+    public static final int COMMAND_NOT_IMPLEMENTED_FOR_PARAMETER = 504;
+    public static final int NOT_LOGGED_IN = 530;
+    public static final int NEED_ACCOUNT_FOR_STORING_FILES = 532;
+    public static final int FILE_UNAVAILABLE = 550;
+    public static final int PAGE_TYPE_UNKNOWN = 551;
+    public static final int STORAGE_ALLOCATION_EXCEEDED = 552;
+    public static final int FILE_NAME_NOT_ALLOWED = 553;
 
     // FTPS Reply Codes
     /** @since 2.0 */
@@ -141,30 +141,30 @@ public final class FTPReply
     public static final int CODE_536 = 536;
 
     /** @since 2.0 */
-    public static final int SECURITY_DATA_EXCHANGE_COMPLETE = CODE_234;
+    public static final int SECURITY_DATA_EXCHANGE_COMPLETE = 234;
     /** @since 2.0 */
-    public static final int SECURITY_DATA_EXCHANGE_SUCCESSFULLY = CODE_235;
+    public static final int SECURITY_DATA_EXCHANGE_SUCCESSFULLY = 235;
     /** @since 2.0 */
-    public static final int SECURITY_MECHANISM_IS_OK = CODE_334;
+    public static final int SECURITY_MECHANISM_IS_OK = 334;
     /** @since 2.0 */
-    public static final int SECURITY_DATA_IS_ACCEPTABLE = CODE_335;
+    public static final int SECURITY_DATA_IS_ACCEPTABLE = 335;
     /** @since 2.0 */
-    public static final int UNAVAILABLE_RESOURCE = CODE_431;
+    public static final int UNAVAILABLE_RESOURCE = 431;
     /** @since 2.2 */
-    public static final int BAD_TLS_NEGOTIATION_OR_DATA_ENCRYPTION_REQUIRED = CODE_522;
+    public static final int BAD_TLS_NEGOTIATION_OR_DATA_ENCRYPTION_REQUIRED = 522;
     /** @since 2.0 */
-    public static final int DENIED_FOR_POLICY_REASONS = CODE_533;
+    public static final int DENIED_FOR_POLICY_REASONS = 533;
     /** @since 2.0 */
-    public static final int REQUEST_DENIED = CODE_534;
+    public static final int REQUEST_DENIED = 534;
     /** @since 2.0 */
-    public static final int FAILED_SECURITY_CHECK = CODE_535;
+    public static final int FAILED_SECURITY_CHECK = 535;
     /** @since 2.0 */
-    public static final int REQUESTED_PROT_LEVEL_NOT_SUPPORTED = CODE_536;
+    public static final int REQUESTED_PROT_LEVEL_NOT_SUPPORTED = 536;
 
     // IPv6 error codes
     // Note this is also used as an FTPS error code reply
     /** @since 2.2 */
-    public static final int EXTENDED_PORT_FAILURE = CODE_522;
+    public static final int EXTENDED_PORT_FAILURE = 522;
 
     // Cannot be instantiated
     private FTPReply()
