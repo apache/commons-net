@@ -61,17 +61,11 @@ public final class POP3Command
      */
     public static final int AUTH = 13;
 
-    /** 
-     * The TLS start command.
-     * @since 3.0
-     */
-    public static final int STLS = 14;
-
-    private static final int _NEXT_ = STLS + 1; // update as necessary when adding new entries
+    private static final int _NEXT_ = AUTH + 1; // update as necessary when adding new entries
 
     static final String[] _commands = {
                                           "USER", "PASS", "QUIT", "STAT", "LIST", "RETR", "DELE", "NOOP", "RSET",
-                                          "APOP", "TOP", "UIDL", "CAPA", "AUTH", "STLS"
+                                          "APOP", "TOP", "UIDL", "CAPA", "AUTH",
                                       };
 
     static {

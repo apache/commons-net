@@ -285,7 +285,7 @@ public class POP3SClient extends POP3Client
      */
     public boolean execTLS() throws SSLException, IOException
     {
-        if (sendCommand(POP3Command.STLS) != POP3Reply.OK)
+        if (sendCommand("STLS") != POP3Reply.OK)
         {
             return false;
             //throw new SSLException(getReplyString());
