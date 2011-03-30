@@ -29,6 +29,7 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 import org.apache.commons.net.MalformedServerReplyException;
+import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
 
 /***
@@ -1709,6 +1710,14 @@ public class FTP extends SocketClient
     public void setStrictMultilineParsing(boolean strictMultilineParsing) {
         this.strictMultilineParsing = strictMultilineParsing;
     }
+
+    /**
+     * Copy of commandSupport needed to maintain binary compatibility.
+     * Do not use.
+     * @deprecated 3.0 use {@link #getCommandSupport()} instead
+     */
+    @Deprecated
+    protected ProtocolCommandSupport _commandSupport_= getCommandSupport();
 }
 
 /* Emacs configuration

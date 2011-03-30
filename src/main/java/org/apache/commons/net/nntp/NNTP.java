@@ -24,6 +24,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import org.apache.commons.net.MalformedServerReplyException;
+import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
 
 /***
@@ -1000,6 +1001,13 @@ public class NNTP extends SocketClient
         return stat((long) a);
     }
 
+    /**
+     * Copy of commandSupport needed to maintain binary compatibility.
+     * Do not use.
+     * @deprecated 3.0 use {@link #getCommandSupport()} instead
+     */
+    @Deprecated
+    protected ProtocolCommandSupport _commandSupport_= getCommandSupport();
 }
 
 /* Emacs configuration

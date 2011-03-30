@@ -725,6 +725,11 @@ public abstract class SocketClient
         }
     }
     
+    // Provide read-only access (mainly for use in restoring binary compatibility)
+    protected ProtocolCommandSupport getCommandSupport() {
+        return _commandSupport_;
+    }
+
 }
 
 

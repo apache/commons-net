@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.net.MalformedServerReplyException;
+import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
 
 /***
@@ -329,5 +330,13 @@ public class POP3 extends SocketClient
     public void removeProtocolCommandistener(org.apache.commons.net.ProtocolCommandListener listener){
         removeProtocolCommandListener(listener);
     }
+
+    /**
+     * Copy of commandSupport needed to maintain binary compatibility.
+     * Do not use.
+     * @deprecated 3.0 use {@link #getCommandSupport()} instead
+     */
+    @Deprecated
+    protected ProtocolCommandSupport _commandSupport_= getCommandSupport();
 }
 
