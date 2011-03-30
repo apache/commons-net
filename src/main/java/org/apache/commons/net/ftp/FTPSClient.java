@@ -195,7 +195,7 @@ public class FTPSClient extends FTPClient {
      */
     private void execAUTH() throws SSLException, IOException {
         int replyCode = sendCommand(
-                FTPSCommand._commands[FTPSCommand.AUTH], auth);
+                FTPSCommand.getCommand(FTPSCommand.AUTH), auth);
         if (FTPReply.SECURITY_MECHANISM_IS_OK == replyCode) {
             // replyCode = 334
             // I carry out an ADAT command.
@@ -407,7 +407,7 @@ public class FTPSClient extends FTPClient {
         if (pbsz < 0 || 4294967295L < pbsz)
             throw new IllegalArgumentException();
         if (FTPReply.COMMAND_OK != sendCommand(
-                FTPSCommand._commands[FTPSCommand.PBSZ],String.valueOf(pbsz)))
+                FTPSCommand.getCommand(FTPSCommand.PBSZ),String.valueOf(pbsz)))
             throw new SSLException(getReplyString());
     }
 
@@ -431,7 +431,7 @@ public class FTPSClient extends FTPClient {
         if (prot == null) prot = DEFAULT_PROT;
         if (!checkPROTValue(prot)) throw new IllegalArgumentException();
         if (FTPReply.COMMAND_OK != sendCommand(
-                FTPSCommand._commands[FTPSCommand.PROT], prot))
+                FTPSCommand.getCommand(FTPSCommand.PROT), prot))
             throw new SSLException(getReplyString());
         if (DEFAULT_PROT.equals(prot)) {
             setSocketFactory(null);
@@ -469,7 +469,7 @@ public class FTPSClient extends FTPClient {
     public int sendCommand(String command, String args) throws IOException {
         int repCode = super.sendCommand(command, args);
         /* If CCC is issued, restore socket i/o streams to unsecured versions */
-        if (FTPSCommand._commands[FTPSCommand.CCC].equals(command)) {
+        if (FTPSCommand.getCommand(FTPSCommand.CCC).equals(command)) {
             if (FTPReply.COMMAND_OK == repCode) {
                 _socket_.close();
                 _socket_ = plainSocket;
