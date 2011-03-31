@@ -77,6 +77,7 @@ public class IMAP extends SocketClient
         _reader = null;
         __writer = null;
         _replyLines = new ArrayList<String>();
+        createCommandSupport();
     }
 
     /**
@@ -363,5 +364,4 @@ public class IMAP extends SocketClient
         return res;
     }
 }
-
 /* kate: indent-width 4; replace-tabs on; */
