@@ -103,10 +103,11 @@ public class SMTP extends SocketClient
 
     BufferedReader _reader;
     BufferedWriter _writer;
-    int _replyCode;
-    ArrayList<String> _replyLines;
-    boolean _newReplyString;
-    String _replyString;
+    
+    private int _replyCode;
+    private final ArrayList<String> _replyLines;
+    private boolean _newReplyString;
+    private String _replyString;
 
     /***
      * The default SMTP constructor.  Sets the default port to
