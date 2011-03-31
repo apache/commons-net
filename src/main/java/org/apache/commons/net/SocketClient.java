@@ -684,16 +684,18 @@ public abstract class SocketClient
      * Adds a ProtocolCommandListener. 
      *
      * @param listener  The ProtocolCommandListener to add.
+     * @since 3.0
      */
     public void addProtocolCommandListener(ProtocolCommandListener listener) {
         getCommandSupport().addProtocolCommandListener(listener);
     }
 
-    /***
+    /**
      * Removes a ProtocolCommandListener.
      *
      * @param listener  The ProtocolCommandListener to remove.
-     ***/
+     * @since 3.0
+     */
     public void removeProtocolCommandListener(ProtocolCommandListener listener) {
         getCommandSupport().removeProtocolCommandListener(listener);
     }
@@ -703,6 +705,7 @@ public abstract class SocketClient
      * 
      * @param replyCode the code extracted from the reply
      * @param reply the full reply text
+     * @since 3.0
      */
     protected void fireReplyReceived(int replyCode, String reply) {
         if (getCommandSupport().getListenerCount() > 0) {
