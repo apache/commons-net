@@ -100,10 +100,10 @@ public abstract class SocketClient
     protected int connectTimeout = DEFAULT_CONNECT_TIMEOUT;
 
     /** Hint for SO_RCVBUF size */
-    int receiveBufferSize = -1;
+    private int receiveBufferSize = -1;
 
     /** Hint for SO_SNDBUF size */
-    int sendBufferSize = -1;
+    private int sendBufferSize = -1;
 
     /**
      * Default constructor for SocketClient.  Initializes
@@ -448,6 +448,14 @@ public abstract class SocketClient
         sendBufferSize = size;
     }
 
+    /**
+     * Get the current sendBuffer size
+     * @return the size, or -1 if not initialised
+     * @since 3.0 
+     */
+    protected int getSendBufferSize(){
+        return sendBufferSize;
+    }
 
     /**
      * Sets the underlying socket receive buffer size.
@@ -460,6 +468,14 @@ public abstract class SocketClient
         receiveBufferSize = size;
     }
 
+    /**
+     * Get the current receivedBuffer size
+     * @return the size, or -1 if not initialised
+     * @since 3.0 
+     */
+    protected int getReceiveBufferSize(){
+        return receiveBufferSize;
+    }
 
     /**
      * Returns the timeout in milliseconds of the currently opened socket.
@@ -729,7 +745,7 @@ public abstract class SocketClient
     /**
      * Create the CommandSupport instance if required
      */
-    protected final void createCommandSupport(){
+    protected void createCommandSupport(){
         __commandSupport = new ProtocolCommandSupport(this);
     }
 
