@@ -93,7 +93,7 @@ public class SMTP extends SocketClient
     private static final String __DEFAULT_ENCODING = "ISO-8859-1";
 
     /** The encoding to use (user-settable) */
-    private String encoding = __DEFAULT_ENCODING;
+    private final String encoding;
 
     /**
      * A ProtocolCommandSupport object used to manage the registering of
@@ -115,11 +115,7 @@ public class SMTP extends SocketClient
      ***/
     public SMTP()
     {
-        setDefaultPort(DEFAULT_PORT);
-        _replyLines = new ArrayList<String>();
-        _newReplyString = false;
-        _replyString = null;
-        _commandSupport_ = new ProtocolCommandSupport(this);
+        this(__DEFAULT_ENCODING);
     }
 
     /**
@@ -128,7 +124,11 @@ public class SMTP extends SocketClient
      * @since 2.0
      */
     public SMTP(String encoding) {
-        this();
+        setDefaultPort(DEFAULT_PORT);
+        _replyLines = new ArrayList<String>();
+        _newReplyString = false;
+        _replyString = null;
+        _commandSupport_ = new ProtocolCommandSupport(this);
         this.encoding = encoding;
     }
 
