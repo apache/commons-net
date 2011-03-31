@@ -95,6 +95,12 @@ public class SMTP extends SocketClient
     /** The encoding to use (user-settable) */
     private String encoding = __DEFAULT_ENCODING;
 
+    /**
+     * A ProtocolCommandSupport object used to manage the registering of
+     * ProtocolCommandListeners and te firing of ProtocolCommandEvents.
+     */
+    protected ProtocolCommandSupport _commandSupport_;
+
     BufferedReader _reader;
     BufferedWriter _writer;
     int _replyCode;
@@ -113,6 +119,7 @@ public class SMTP extends SocketClient
         _replyLines = new ArrayList<String>();
         _newReplyString = false;
         _replyString = null;
+        _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
     /**
@@ -754,12 +761,12 @@ public class SMTP extends SocketClient
     }
 
     /**
-     * Copy of commandSupport needed to maintain binary compatibility.
-     * Do not use.
-     * @deprecated 3.0 use {@link #getCommandSupport()} instead
+     * Provide command support to super-class
      */
-    @Deprecated
-    protected ProtocolCommandSupport _commandSupport_= getCommandSupport();
+    @Override
+    protected ProtocolCommandSupport getCommandSupport() {
+        return _commandSupport_;
+    }
 }
 
 /* Emacs configuration

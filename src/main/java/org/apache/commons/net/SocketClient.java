@@ -68,6 +68,12 @@ public abstract class SocketClient
     private static final ServerSocketFactory __DEFAULT_SERVER_SOCKET_FACTORY =
             ServerSocketFactory.getDefault();
 
+    /**
+     * A ProtocolCommandSupport object used to manage the registering of
+     * ProtocolCommandListeners and te firing of ProtocolCommandEvents.
+     */
+    private ProtocolCommandSupport __commandSupport;
+
     /** The timeout to use after opening a socket. */
     protected int _timeout_;
 
@@ -100,12 +106,6 @@ public abstract class SocketClient
     int sendBufferSize = -1;
 
     /**
-     * A ProtocolCommandSupport object used to manage the registering of
-     * ProtocolCommandListeners and te firing of ProtocolCommandEvents.
-     */
-    private ProtocolCommandSupport _commandSupport_;
-
-    /**
      * Default constructor for SocketClient.  Initializes
      * _socket_ to null, _timeout_ to 0, _defaultPort to 0,
      * _isConnected_ to false, and _socketFactory_ to a shared instance of
@@ -120,7 +120,6 @@ public abstract class SocketClient
         _defaultPort_ = 0;
         _socketFactory_ = __DEFAULT_SOCKET_FACTORY;
         _serverSocketFactory_ = __DEFAULT_SERVER_SOCKET_FACTORY;
-        _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
 
@@ -682,23 +681,21 @@ public abstract class SocketClient
 
 
     /**
-     * Adds a ProtocolCommandListener.  Delegates this task to
-     * {@link #_commandSupport_  _commandSupport_ }.
-     * <p>
+     * Adds a ProtocolCommandListener. 
+     *
      * @param listener  The ProtocolCommandListener to add.
      */
     public void addProtocolCommandListener(ProtocolCommandListener listener) {
-        _commandSupport_.addProtocolCommandListener(listener);
+        getCommandSupport().addProtocolCommandListener(listener);
     }
 
     /***
-     * Removes a ProtocolCommandListener.  Delegates this task to
-     * {@link #_commandSupport_  _commandSupport_ }.
-     * <p>
+     * Removes a ProtocolCommandListener.
+     *
      * @param listener  The ProtocolCommandListener to remove.
      ***/
     public void removeProtocolCommandListener(ProtocolCommandListener listener) {
-        _commandSupport_.removeProtocolCommandListener(listener);
+        getCommandSupport().removeProtocolCommandListener(listener);
     }
 
     /**
@@ -708,8 +705,8 @@ public abstract class SocketClient
      * @param reply the full reply text
      */
     protected void fireReplyReceived(int replyCode, String reply) {
-        if (_commandSupport_.getListenerCount() > 0) {
-            _commandSupport_.fireReplyReceived(replyCode, reply);
+        if (getCommandSupport().getListenerCount() > 0) {
+            getCommandSupport().fireReplyReceived(replyCode, reply);
         }
     }
 
@@ -718,18 +715,36 @@ public abstract class SocketClient
      * 
      * @param command the command name
      * @param message the complete message, including command name
+     * @since 3.0
      */
     protected void fireCommandSent(String command, String message) {
-        if (_commandSupport_.getListenerCount() > 0) {
-            _commandSupport_.fireCommandSent(command, message);
+        if (getCommandSupport().getListenerCount() > 0) {
+            getCommandSupport().fireCommandSent(command, message);
         }
     }
-    
-    // Provide read-only access (mainly for use in restoring binary compatibility)
-    protected ProtocolCommandSupport getCommandSupport() {
-        return _commandSupport_;
+
+    /**
+     * Create the CommandSupport instance if required
+     */
+    protected final void createCommandSupport(){
+        __commandSupport = new ProtocolCommandSupport(this);
     }
 
+    /**
+     * Subclasses can override this if they need to provide their own
+     * instance field for backwards compatibilty.
+     * 
+     * @return the CommandSupport instance, may be {@code null}
+     * @since 3.0
+     */
+    protected ProtocolCommandSupport getCommandSupport() {
+        return __commandSupport;
+    }
+
+    /*
+     *  N.B. Fields cannot be pulled up into a super-class without breaking binary compatibility,
+     *  so the abstract method is needed to pass the instance to the methods which were moved here.
+     */
 }
 
 

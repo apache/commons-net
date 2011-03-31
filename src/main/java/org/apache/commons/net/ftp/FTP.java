@@ -221,6 +221,12 @@ public class FTP extends SocketClient
     protected String _controlEncoding;
 
     /**
+     * A ProtocolCommandSupport object used to manage the registering of
+     * ProtocolCommandListeners and te firing of ProtocolCommandEvents.
+     */
+    protected ProtocolCommandSupport _commandSupport_;
+
+    /**
      * This is used to signal whether a block of multiline responses beginning
      * with xxx must be terminated by the same numeric code xxx
      * See section 4.2 of RFC 959 for details.
@@ -258,6 +264,7 @@ public class FTP extends SocketClient
         _newReplyString = false;
         _replyString = null;
         _controlEncoding = DEFAULT_CONTROL_ENCODING;
+        _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
     // The RFC-compliant multiline termination check
@@ -1712,12 +1719,12 @@ public class FTP extends SocketClient
     }
 
     /**
-     * Copy of commandSupport needed to maintain binary compatibility.
-     * Do not use.
-     * @deprecated 3.0 use {@link #getCommandSupport()} instead
+     * Provide command support to super-class
      */
-    @Deprecated
-    protected ProtocolCommandSupport _commandSupport_= getCommandSupport();
+    @Override
+    protected ProtocolCommandSupport getCommandSupport() {
+        return _commandSupport_;
+    }
 }
 
 /* Emacs configuration

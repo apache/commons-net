@@ -108,6 +108,12 @@ public class NNTP extends SocketClient
      */
     protected BufferedWriter _writer_;
 
+    /**
+     * A ProtocolCommandSupport object used to manage the registering of
+     * ProtocolCommandListeners and te firing of ProtocolCommandEvents.
+     */
+    protected ProtocolCommandSupport _commandSupport_;
+
     /***
      * The default NNTP constructor.  Sets the default port to
      * <code>DEFAULT_PORT</code> and initializes internal data structures
@@ -120,6 +126,7 @@ public class NNTP extends SocketClient
         _reader_ = null;
         _writer_ = null;
         _isAllowedToPost = false;
+        _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
     private void __getReply() throws IOException
@@ -1002,12 +1009,12 @@ public class NNTP extends SocketClient
     }
 
     /**
-     * Copy of commandSupport needed to maintain binary compatibility.
-     * Do not use.
-     * @deprecated 3.0 use {@link #getCommandSupport()} instead
+     * Provide command support to super-class
      */
-    @Deprecated
-    protected ProtocolCommandSupport _commandSupport_= getCommandSupport();
+    @Override
+    protected ProtocolCommandSupport getCommandSupport() {
+        return _commandSupport_;
+    }
 }
 
 /* Emacs configuration
