@@ -46,6 +46,53 @@ public class SubnetUtilsTest extends TestCase {
         }
     }
 
+    public void testParseSimpleNetmaskInclusive() {
+         String address = "192.168.15.7";
+         String masks[]=new String[]{ "255.255.255.252",  "255.255.255.254",  "255.255.255.255"};
+         String bcast[]=new String[]{ "192.168.15.7",     "192.168.15.7",     "192.168.15.7"};
+         String netwk[]=new String[]{ "192.168.15.4",     "192.168.15.6",     "192.168.15.7" };
+         String lowAd[]=new String[]{ "192.168.15.4",     "192.168.15.6",     "192.168.15.7" };
+         String highA[]=new String[]{ "192.168.15.7",     "192.168.15.7",     "192.168.15.7" };
+         String cidrS[]=new String[]{ "192.168.15.7/30",  "192.168.15.7/31",  "192.168.15.7/32"};
+         int usableAd[]=new int[]   { 4 ,                 2,                  1};
+
+         for (int i = 0; i < masks.length; ++i) {
+             SubnetUtils utils = new SubnetUtils(address, masks[i]);
+             utils.setInclusiveHostCount(true);
+             SubnetInfo info = utils.getInfo();
+             assertEquals("ci "+masks[i], cidrS[i], info.getCidrSignature());
+             assertEquals("bc "+masks[i], bcast[i], info.getBroadcastAddress());
+             assertEquals("ac "+masks[i], usableAd[i], info.getAddressCount());
+             assertEquals("nw "+masks[i], netwk[i], info.getNetworkAddress());
+             assertEquals("lo "+masks[i], lowAd[i], info.getLowAddress());
+             assertEquals("hi "+masks[i], highA[i], info.getHighAddress());
+         }
+     }
+
+    public void testParseSimpleNetmaskExclusive() {
+        String address = "192.168.15.7";
+        String masks[]=new String[]{ "255.255.255.252",  "255.255.255.254",  "255.255.255.255"};
+        String bcast[]=new String[]{ "192.168.15.7",     "192.168.15.7",     "192.168.15.7"};
+        String netwk[]=new String[]{ "192.168.15.4",     "192.168.15.6",     "192.168.15.7" };
+        String lowAd[]=new String[]{ "192.168.15.5",     "0.0.0.0",          "0.0.0.0"    };
+        String highA[]=new String[]{ "192.168.15.6",     "0.0.0.0",          "0.0.0.0"    };
+        String cidrS[]=new String[]{ "192.168.15.7/30",  "192.168.15.7/31",  "192.168.15.7/32"};
+        int usableAd[]=new int[]   { 2 ,                 0,                  0};
+       // low and high addresses don't exist
+
+        for (int i = 0; i < masks.length; ++i) {
+            SubnetUtils utils = new SubnetUtils(address, masks[i]);
+            utils.setInclusiveHostCount(false);
+            SubnetInfo info = utils.getInfo();
+            assertEquals("ci "+masks[i], cidrS[i], info.getCidrSignature());
+            assertEquals("bc "+masks[i], bcast[i], info.getBroadcastAddress());
+            assertEquals("nw "+masks[i], netwk[i], info.getNetworkAddress());
+            assertEquals("ac "+masks[i], usableAd[i], info.getAddressCount());
+            assertEquals("lo "+masks[i], lowAd[i], info.getLowAddress());
+            assertEquals("hi "+masks[i], highA[i], info.getHighAddress());
+        }
+    }
+
     // TODO Lower address test
     public void testAddresses() {
         SubnetUtils utils = new SubnetUtils("192.168.0.1/29");

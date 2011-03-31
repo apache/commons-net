@@ -96,8 +96,15 @@ public class SubnetUtils {
         private int network()       { return network; }
         private int address()       { return address; }
         private int broadcast()     { return broadcast; }
-        private int low()           { return network() + (isInclusiveHostCount() ? 0 : 1); }
-        private int high()          { return broadcast() - (isInclusiveHostCount() ? 0 : 1); }
+
+        private int low() {
+            return (isInclusiveHostCount() ? network() :
+                broadcast() - network() > 1 ? network() + 1 : 0); 
+        }
+        private int high() { 
+            return (isInclusiveHostCount() ? broadcast() :
+                broadcast() - network() > 1 ? broadcast() -1  : 0); 
+        }
 
         /**
          * Returns true if the parameter <code>address</code> is in the
@@ -117,9 +124,32 @@ public class SubnetUtils {
         public String getNetworkAddress()           { return format(toArray(network())); }
         public String getNetmask()                  { return format(toArray(netmask())); }
         public String getAddress()                  { return format(toArray(address())); }
+
+        /**
+         * Return the low address as a dotted IP address.
+         * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
+         * 
+         * @return the IP address in dotted format, may be "0.0.0.0" if there is no valid address
+         */
         public String getLowAddress()               { return format(toArray(low())); }
+
+        /**
+         * Return the high address as a dotted IP address.
+         * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
+         * 
+         * @return the IP address in dotted format, may be "0.0.0.0" if there is no valid address
+         */
         public String getHighAddress()              { return format(toArray(high())); }
-        public int getAddressCount()                { return (broadcast() - low() + (isInclusiveHostCount() ? 1 : 0)); }
+        
+        /**
+         * Get the count of available addresses.
+         * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
+         * @return the count of addresses, may be zero.
+         */
+        public int getAddressCount()                { 
+            int count = broadcast() - network() + (isInclusiveHostCount() ? 1 : -1);
+            return count < 0 ? 0 : count;
+        }
 
         public int asInteger(String address)        { return toInteger(address); }
 
