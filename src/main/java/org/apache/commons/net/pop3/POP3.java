@@ -86,6 +86,12 @@ public class POP3 extends SocketClient
     String _lastReplyLine;
     List<String> _replyLines;
 
+    /**
+     * A ProtocolCommandSupport object used to manage the registering of
+     * ProtocolCommandListeners and te firing of ProtocolCommandEvents.
+     */
+    protected ProtocolCommandSupport _commandSupport_;
+
     /***
      * The default POP3Client constructor.  Initializes the state
      * to <code>DISCONNECTED_STATE</code>.
@@ -97,6 +103,7 @@ public class POP3 extends SocketClient
         _reader = null;
         __writer = null;
         _replyLines = new ArrayList<String>();
+        _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
     private void __getReply() throws IOException
@@ -332,11 +339,11 @@ public class POP3 extends SocketClient
     }
 
     /**
-     * Copy of commandSupport needed to maintain binary compatibility.
-     * Do not use.
-     * @deprecated 3.0 use {@link #getCommandSupport()} instead
+     * Provide command support to super-class
      */
-    @Deprecated
-    protected ProtocolCommandSupport _commandSupport_= getCommandSupport();
+    @Override
+    protected ProtocolCommandSupport getCommandSupport() {
+        return _commandSupport_;
+    }
 }
 
