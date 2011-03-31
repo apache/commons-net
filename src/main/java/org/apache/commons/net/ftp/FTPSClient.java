@@ -30,6 +30,7 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
+import org.apache.commons.net.util.Base64;
 import org.apache.commons.net.util.SSLContextUtils;
 
 /**
@@ -57,6 +58,23 @@ public class FTPSClient extends FTPClient {
     private static final String DEFAULT_PROT = "C";
     /** Default secure socket protocol name, i.e. TLS */
     private static final String DEFAULT_PROTOCOL = "TLS";
+
+    /** The AUTH (Authentication/Security Mechanism) command. */
+    private static final String CMD_AUTH = "AUTH";
+    /**  The ADAT (Authentication/Security Data) command. */
+    private static final String CMD_ADAT = "ADAT";
+    /**  The PROT (Data Channel Protection Level) command. */
+    private static final String CMD_PROT = "PROT";
+    /**  The PBSZ (Protection Buffer Size) command. */
+    private static final String CMD_PBSZ = "PBSZ";
+    /**  The MIC (Integrity Protected Command) command. */
+    private static final String CMD_MIC = "MIC";
+    /**  The CONF (Confidentiality Protected Command) command. */
+    private static final String CMD_CONF = "CONF";
+    /**  The ENC (Privacy Protected Command) command. */
+    private static final String CMD_ENC = "ENC";
+    /**  The CCC (Clear Command Channel) command. */
+    private static final String CMD_CCC = "CCC";
 
     /** The security mode. (True - Implicit Mode / False - Explicit Mode) */
     private final boolean isImplicit;
@@ -194,8 +212,7 @@ public class FTPSClient extends FTPClient {
      * the command.
      */
     private void execAUTH() throws SSLException, IOException {
-        int replyCode = sendCommand(
-                FTPSCommand.getCommand(FTPSCommand.AUTH), auth);
+        int replyCode = sendCommand(CMD_AUTH, auth);
         if (FTPReply.SECURITY_MECHANISM_IS_OK == replyCode) {
             // replyCode = 334
             // I carry out an ADAT command.
@@ -402,15 +419,42 @@ public class FTPSClient extends FTPClient {
      * @throws SSLException If the server reply code does not equal "200".
      * @throws IOException If an I/O error occurs while sending
      * the command.
+     * @see #parsePBSZ(long)
      */
     public void execPBSZ(long pbsz) throws SSLException, IOException {
-        if (pbsz < 0 || 4294967295L < pbsz)
+        if (pbsz < 0 || 4294967295L < pbsz) // 32-bit unsigned number
             throw new IllegalArgumentException();
-        if (FTPReply.COMMAND_OK != sendCommand(
-                FTPSCommand.getCommand(FTPSCommand.PBSZ),String.valueOf(pbsz)))
+        int status = sendCommand(CMD_PBSZ, String.valueOf(pbsz));
+        if (FTPReply.COMMAND_OK != status) {
             throw new SSLException(getReplyString());
+        }
     }
 
+    /**
+     * PBSZ command. pbsz value: 0 to (2^32)-1 decimal integer.
+     * Issues the command and parses the response to return the negotiated value.
+     * 
+     * @param pbsz Protection Buffer Size.
+     * @throws SSLException If the server reply code does not equal "200".
+     * @throws IOException If an I/O error occurs while sending
+     * the command.
+     * @return the negotiated value.
+     * @see #execPBSZ(long)
+     * @since 3.0
+     */
+    public long parsePBSZ(long pbsz) throws SSLException, IOException {
+        execPBSZ(pbsz);
+        long minvalue = pbsz;
+        String remainder = extractPrefixedData("PBSZ=", getReplyString());
+        if (remainder != null) {
+            long replysz = Long.parseLong(remainder);
+            if (replysz < minvalue) {
+                minvalue = replysz;
+            }
+        }
+        return minvalue;
+    }
+    
     /**
      * PROT command.</br>
      * C - Clear</br>
@@ -430,8 +474,7 @@ public class FTPSClient extends FTPClient {
     public void execPROT(String prot) throws SSLException, IOException {
         if (prot == null) prot = DEFAULT_PROT;
         if (!checkPROTValue(prot)) throw new IllegalArgumentException();
-        if (FTPReply.COMMAND_OK != sendCommand(
-                FTPSCommand.getCommand(FTPSCommand.PROT), prot))
+        if (FTPReply.COMMAND_OK != sendCommand(CMD_PROT, prot))
             throw new SSLException(getReplyString());
         if (DEFAULT_PROT.equals(prot)) {
             setSocketFactory(null);
@@ -465,11 +508,12 @@ public class FTPSClient extends FTPClient {
      * the command.
      * @see org.apache.commons.net.ftp.FTP#sendCommand(java.lang.String)
      */
+    // Would like to remove this method, but that will break any existing clients that are using CCC
     @Override
     public int sendCommand(String command, String args) throws IOException {
         int repCode = super.sendCommand(command, args);
         /* If CCC is issued, restore socket i/o streams to unsecured versions */
-        if (FTPSCommand.getCommand(FTPSCommand.CCC).equals(command)) {
+        if (CMD_CCC.equals(command)) {
             if (FTPReply.COMMAND_OK == repCode) {
                 _socket_.close();
                 _socket_ = plainSocket;
@@ -559,6 +603,154 @@ public class FTPSClient extends FTPClient {
         super.disconnect();
         setSocketFactory(null);
         setServerSocketFactory(null);
+    }
+
+    /**
+     * Send the AUTH command with the specified mechanism.
+     * @param mechanism The mechanism name to send with the command.
+     * @return server reply.
+     * @throws IOException If an I/O error occurs while sending
+     * the command.
+     * @since 3.0
+     */
+    public int execAUTH(String mechanism) throws IOException
+    {
+        return sendCommand(CMD_AUTH, mechanism);
+    }
+
+    /**
+     * Send the ADAT command with the specified authentication data.
+     * @param data The data to send with the command.
+     * @return server reply.
+     * @throws IOException If an I/O error occurs while sending
+     * the command.
+     * @since 3.0
+     */
+    public int execADAT(byte[] data) throws IOException
+    {
+        if (data != null)
+        {
+            return sendCommand(CMD_ADAT, new String(Base64.encodeBase64(data)));
+        }
+        else
+        {
+            return sendCommand(CMD_ADAT);
+        }
+    }
+
+    /**
+     * Send the CCC command to the server.
+     * The CCC (Clear Command Channel) command causes the underlying {@link SSLSocket} instance  to be assigned
+     * to a plain {@link Socket} instances
+     * @return server reply.
+     * @throws IOException If an I/O error occurs while sending
+     * the command.
+     * @since 3.0
+     */
+    public int execCCC() throws IOException
+    {
+        int repCode = sendCommand(CMD_CCC);
+// This will be performed by sendCommand(String, String)
+//        if (FTPReply.isPositiveCompletion(repCode)) {
+//            _socket_.close();
+//            _socket_ = plainSocket;
+//            _controlInput_ = new BufferedReader(
+//                new InputStreamReader(
+//                    _socket_.getInputStream(), getControlEncoding()));
+//            _controlOutput_ = new BufferedWriter(
+//                new OutputStreamWriter(
+//                    _socket_.getOutputStream(), getControlEncoding()));
+//        }
+        return repCode;
+    }
+
+    /**
+     * Send the MIC command with the specified data.
+     * @param data The data to send with the command.
+     * @return server reply.
+     * @throws IOException If an I/O error occurs while sending
+     * the command.
+     * @since 3.0
+     */
+    public int execMIC(byte[] data) throws IOException
+    {
+        if (data != null)
+        {
+            return sendCommand(CMD_MIC, new String(Base64.encodeBase64(data)));
+        }
+        else
+        {
+            return sendCommand(CMD_MIC, ""); // perhaps "=" or just sendCommand(String)?
+        }
+    }
+
+    /**
+     * Send the CONF command with the specified data.
+     * @param data The data to send with the command.
+     * @return server reply.
+     * @throws IOException If an I/O error occurs while sending
+     * the command.
+     * @since 3.0
+     */
+    public int execCONF(byte[] data) throws IOException
+    {
+        if (data != null)
+        {
+            return sendCommand(CMD_CONF, new String(Base64.encodeBase64(data)));
+        }
+        else
+        {
+            return sendCommand(CMD_CONF, ""); // perhaps "=" or just sendCommand(String)?
+        }
+    }
+
+    /**
+     * Send the ENC command with the specified data.
+     * @param data The data to send with the command.
+     * @return server reply.
+     * @throws IOException If an I/O error occurs while sending
+     * the command.
+     * @since 3.0
+     */
+    public int execENC(byte[] data) throws IOException
+    {
+        if (data != null)
+        {
+            return sendCommand(CMD_ENC, new String(Base64.encodeBase64(data)));
+        }
+        else
+        {
+            return sendCommand(CMD_ENC, ""); // perhaps "=" or just sendCommand(String)?
+        }
+    }
+
+    /**
+     * Parses the given ADAT response line and base64-decodes the data.
+     * @param reply The ADAT reply to parse.
+     * @return the data in the reply, base64-decoded.
+     * @since 3.0
+     */
+    public byte[] parseADATReply(String reply)
+    {
+        if (reply == null) return null;
+        else {
+            return Base64.decodeBase64(extractPrefixedData("ADAT=", reply));
+        }
+    }
+
+    /**
+     * Extract the data from a reply with a prefix, e.g. PBSZ=1234 => 1234
+     * @param prefix the prefix to find
+     * @param reply where to find the prefix
+     * @return the remainder of the string after the prefix, or null if the prefix was not present.
+     */
+    private String extractPrefixedData(String prefix, String reply) {
+        int idx = reply.indexOf(prefix);
+        if (idx == -1) { 
+            return null;
+        }
+        // N.B. Cannot use trim before substring as leading space would affect the offset.
+        return reply.substring(idx+prefix.length()).trim();
     }
 
     // DEPRECATED - for API compatibility only - DO NOT USE

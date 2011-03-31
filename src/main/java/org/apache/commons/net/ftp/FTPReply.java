@@ -250,4 +250,19 @@ public final class FTPReply
         return (reply >= 500 && reply < 600);
     }
 
+    /**
+     * Determine if a reply code is a protected response.
+     * @param reply  The reply code to test.
+     * @return True if a reply code is a protected response, false
+     *         if not.
+     * @since 3.0
+     */
+    public static boolean isProtectedReplyCode(int reply)
+    {
+        // actually, only 3 protected reply codes are
+        // defined in RFC 2228: 631, 632 and 633.
+        return (reply >= 600 && reply < 700);
+    }
+
+
 }

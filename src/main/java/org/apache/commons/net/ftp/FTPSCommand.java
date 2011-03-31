@@ -18,9 +18,11 @@
 package org.apache.commons.net.ftp;
 
 /**
- * FTPS-specific command
+ * FTPS-specific commands.
  * @since 2.0
+ * @deprecated 3.0 DO NOT USE
  */
+@Deprecated
 public final class FTPSCommand {
     public static final int AUTH = 0;
     public static final int ADAT = 1;
