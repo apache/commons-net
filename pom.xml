@@ -307,6 +307,9 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 <configuration>
                     <comparisonVersion>2.2</comparisonVersion>
                     <minSeverity>info</minSeverity>
+                    <excludes>
+                      <exclude>examples/**</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
