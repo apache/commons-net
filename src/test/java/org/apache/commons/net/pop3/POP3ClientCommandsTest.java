@@ -102,7 +102,7 @@ public class POP3ClientCommandsTest extends TestCase
         assertTrue(p.noop());
 
         //Should fail in update state
-        p.setState(POP3.UPDATE_STATE);
+        p._setState(POP3.UPDATE_STATE);
         assertFalse(p.noop());
     }
 
@@ -140,7 +140,7 @@ public class POP3ClientCommandsTest extends TestCase
         reset();
         connect();
         login();
-        p.setState(POP3.UPDATE_STATE);
+        p._setState(POP3.UPDATE_STATE);
         assertNull(p.status());
     }
 
@@ -166,7 +166,7 @@ public class POP3ClientCommandsTest extends TestCase
         }
 
         //Now test from the update state
-        p.setState(POP3.UPDATE_STATE);
+        p._setState(POP3.UPDATE_STATE);
         msg = p.listMessages();
         assertNull(msg);
     }
@@ -201,7 +201,7 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(msg);
 
         //Now try to get a valid message from the update state
-        p.setState(POP3.UPDATE_STATE);
+        p._setState(POP3.UPDATE_STATE);
         msg = p.listMessage(1);
         assertNull(msg);
     }
@@ -220,7 +220,7 @@ public class POP3ClientCommandsTest extends TestCase
         assertEquals(0, msg.length);
 
         //Now test from the update state
-        p.setState(POP3.UPDATE_STATE);
+        p._setState(POP3.UPDATE_STATE);
         msg = p.listMessages();
         assertNull(msg);
     }
@@ -261,7 +261,7 @@ public class POP3ClientCommandsTest extends TestCase
         }
 
         //Now test from the update state
-        p.setState(POP3.UPDATE_STATE);
+        p._setState(POP3.UPDATE_STATE);
         msg = p.listUniqueIdentifiers();
         assertNull(msg);
     }
@@ -295,7 +295,7 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(msg);
 
         //Now try to get a valid message from the update state
-        p.setState(POP3.UPDATE_STATE);
+        p._setState(POP3.UPDATE_STATE);
         msg = p.listUniqueIdentifier(1);
         assertNull(msg);
     }
@@ -314,7 +314,7 @@ public class POP3ClientCommandsTest extends TestCase
         assertEquals(0, msg.length);
 
         //Now test from the update state
-        p.setState(POP3.UPDATE_STATE);
+        p._setState(POP3.UPDATE_STATE);
         msg = p.listUniqueIdentifiers();
         assertNull(msg);
     }
@@ -414,7 +414,7 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(p.retrieveMessage(100000));
 
         //Change states and try to get a valid message
-        p.setState(POP3.UPDATE_STATE);
+        p._setState(POP3.UPDATE_STATE);
         assertNull(p.retrieveMessage(1));
     }
 
@@ -518,7 +518,7 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(p.retrieveMessageTop(100000, 10));
 
         //Change states and try to get a valid message
-        p.setState(POP3.UPDATE_STATE);
+        p._setState(POP3.UPDATE_STATE);
         assertNull(p.retrieveMessageTop(1, 10));
     }
 
@@ -593,7 +593,7 @@ public class POP3ClientCommandsTest extends TestCase
         connect();
         login();
 
-        p.setState(POP3.UPDATE_STATE);
+        p._setState(POP3.UPDATE_STATE);
         assertFalse(p.reset());
 
         assertFalse(p.deleteMessage(1));
