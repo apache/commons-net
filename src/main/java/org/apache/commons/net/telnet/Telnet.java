@@ -264,8 +264,9 @@ class Telnet extends SocketClient
      * Sets the state of the option.
      * <p>
      * @param option - option code to be set.
+     * @throws IOException 
      ***/
-    void _setWill(int option)
+    void _setWill(int option) throws IOException
     {
         _options[option] |= _WILL_MASK;
 
@@ -281,16 +282,7 @@ class Telnet extends SocketClient
 
                 if (subneg != null)
                 {
-                    try
-                    {
-                        _sendSubnegotiation(subneg);
-                    }
-                    catch (IOException e)
-                    {
-                        System.err.println(
-                            "Exception in option subnegotiation"
-                            + e.getMessage());
-                    }
+                    _sendSubnegotiation(subneg);
                 }
             }
         }
@@ -301,8 +293,9 @@ class Telnet extends SocketClient
      * Sets the state of the option.
      * <p>
      * @param option - option code to be set.
+     * @throws IOException 
      ***/
-    void _setDo(int option)
+    void _setDo(int option) throws IOException
     {
         _options[option] |= _DO_MASK;
 
@@ -318,15 +311,7 @@ class Telnet extends SocketClient
 
                 if (subneg != null)
                 {
-                    try
-                    {
-                        _sendSubnegotiation(subneg);
-                    }
-                    catch (IOException e)
-                    {
-                        System.err.println("Exception in option subnegotiation"
-                            + e.getMessage());
-                    }
+                    _sendSubnegotiation(subneg);
                 }
             }
         }
@@ -833,14 +818,7 @@ class Telnet extends SocketClient
             synchronized (aytMonitor)
             {
                 aytFlag = true;
-                try
-                {
-                    aytMonitor.notifyAll();
-                }
-                catch (IllegalMonitorStateException e)
-                {
-                    System.err.println("Exception notifying:" + e.getMessage());
-                }
+                aytMonitor.notifyAll();
             }
         }
     }
@@ -879,30 +857,12 @@ class Telnet extends SocketClient
             {
                 if (optionHandlers[ii].getInitLocal())
                 {
-                    try
-                    {
-                        _requestWill(optionHandlers[ii].getOptionCode());
-                    }
-                    catch (IOException e)
-                    {
-                        System.err.println(
-                            "Exception while initializing option: "
-                            + e.getMessage());
-                    }
+                    _requestWill(optionHandlers[ii].getOptionCode());
                 }
 
                 if (optionHandlers[ii].getInitRemote())
                 {
-                    try
-                    {
-                        _requestDo(optionHandlers[ii].getOptionCode());
-                    }
-                    catch (IOException e)
-                    {
-                        System.err.println(
-                            "Exception while initializing option: "
-                            + e.getMessage());
-                    }
+                    _requestDo(optionHandlers[ii].getOptionCode());
                 }
             }
         }
@@ -1109,24 +1069,15 @@ class Telnet extends SocketClient
                 _output_.write(_COMMAND_AYT);
                 _output_.flush();
             }
-
-            try
+            aytMonitor.wait(timeout);
+            if (aytFlag == false)
             {
-                aytMonitor.wait(timeout);
-                if (aytFlag == false)
-                {
-                    retValue = false;
-                    aytFlag = true;
-                }
-                else
-                {
-                    retValue = true;
-                }
+                retValue = false;
+                aytFlag = true;
             }
-            catch (IllegalMonitorStateException e)
+            else
             {
-                System.err.println("Exception processing AYT:"
-                    + e.getMessage());
+                retValue = true;
             }
         }
 
@@ -1141,9 +1092,10 @@ class Telnet extends SocketClient
      *
      * @param opthand - option handler to be registered.
      * @throws InvalidTelnetOptionException - The option code is invalid.
+     * @throws IOException 
      **/
     void addOptionHandler(TelnetOptionHandler opthand)
-    throws InvalidTelnetOptionException
+    throws InvalidTelnetOptionException, IOException
     {
         int optcode = opthand.getOptionCode();
         if (TelnetOption.isValidOption(optcode))
@@ -1155,30 +1107,12 @@ class Telnet extends SocketClient
                 {
                     if (opthand.getInitLocal())
                     {
-                        try
-                        {
-                            _requestWill(optcode);
-                        }
-                        catch (IOException e)
-                        {
-                            System.err.println(
-                                "Exception while initializing option: "
-                                + e.getMessage());
-                        }
+                        _requestWill(optcode);
                     }
 
                     if (opthand.getInitRemote())
                     {
-                        try
-                        {
-                            _requestDo(optcode);
-                        }
-                        catch (IOException e)
-                        {
-                            System.err.println(
-                                "Exception while initializing option: "
-                                + e.getMessage());
-                        }
+                        _requestDo(optcode);
                     }
                 }
             }
@@ -1200,9 +1134,10 @@ class Telnet extends SocketClient
      *
      * @param optcode - Code of the option to be unregistered.
      * @throws InvalidTelnetOptionException - The option code is invalid.
+     * @throws IOException 
      **/
     void deleteOptionHandler(int optcode)
-    throws InvalidTelnetOptionException
+    throws InvalidTelnetOptionException, IOException
     {
         if (TelnetOption.isValidOption(optcode))
         {
@@ -1218,30 +1153,12 @@ class Telnet extends SocketClient
 
                 if (opthand.getWill())
                 {
-                    try
-                    {
-                        _requestWont(optcode);
-                    }
-                    catch (IOException e)
-                    {
-                        System.err.println(
-                            "Exception while turning off option: "
-                            + e.getMessage());
-                    }
+                    _requestWont(optcode);
                 }
 
                 if (opthand.getDo())
                 {
-                    try
-                    {
-                        _requestDont(optcode);
-                    }
-                    catch (IOException e)
-                    {
-                        System.err.println(
-                            "Exception while turning off option: "
-                            + e.getMessage());
-                    }
+                    _requestDont(optcode);
                 }
             }
         }

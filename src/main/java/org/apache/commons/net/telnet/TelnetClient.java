@@ -248,10 +248,11 @@ public class TelnetClient extends Telnet
      * @param opthand - option handler to be registered.
      * <p>
      * @throws InvalidTelnetOptionException
+     * @throws IOException 
      ***/
     @Override
     public void addOptionHandler(TelnetOptionHandler opthand)
-    throws InvalidTelnetOptionException
+    throws InvalidTelnetOptionException, IOException
     {
         super.addOptionHandler(opthand);
     }
@@ -263,10 +264,11 @@ public class TelnetClient extends Telnet
      * @param optcode - Code of the option to be unregistered.
      * <p>
      * @throws InvalidTelnetOptionException
+     * @throws IOException 
      ***/
     @Override
     public void deleteOptionHandler(int optcode)
-    throws InvalidTelnetOptionException
+    throws InvalidTelnetOptionException, IOException
     {
         super.deleteOptionHandler(optcode);
     }
