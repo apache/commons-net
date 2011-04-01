@@ -202,12 +202,10 @@ public class SubnetUtils {
             address = matchAddress(matcher);
 
             /* Create a binary netmask from the number of bits specification /x */
-            int cidrPart = rangeCheck(Integer.parseInt(matcher.group(5)), -1, NBITS);
+            int cidrPart = rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
             for (int j = 0; j < cidrPart; ++j) {
                 netmask |= (1 << 31-j);
             }
-
-            rangeCheck(pop(netmask),0, NBITS);
 
             /* Calculate base network address */
             network = (address & netmask);
