@@ -158,7 +158,7 @@ public class POP3 extends SocketClient
      * @deprecated 3.0 DO NOT USE. Does nothing.
      */
     @Deprecated
-    public void xsetState(int state)
+    public void setState(int state)
     {
     }
 
