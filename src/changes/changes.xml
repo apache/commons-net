@@ -56,7 +56,17 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
     <body>
-        <release version="3.0" date="TBA" description="TBA">
+        <release version="3.0" date="TBA" description="
+This release fixes many bugs (see below), and adds new functionality:
+  - basic support for IMAP and IMAPS
+  - support for SMTPS and POP3S
+    
+This release is binary-compatible with 2.2, but there are some minor changes to source compatibility:
+  - telnet.TelnetClient#addOptionHandler(TelnetOptionHandler) now additionally throws IOException
+  - telnet.TelnetClient#deleteOptionHandler() now additionally throws IOException
+  - ftp.FTPSClient ctors no longer throw NoSuchAlgorithmException
+  All users are recommended to upgrade.
+">
             <action issue="NET-269" dev="sebb" type="update">
             Remove semi-redundant check in SubnetUtils.calculate().
             </action>
