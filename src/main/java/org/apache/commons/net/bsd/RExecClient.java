@@ -58,7 +58,6 @@ import org.apache.commons.net.io.SocketInputStream;
  * {@link #getOutputStream  getOutputSream() }.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see SocketClient
  * @see RCommandClient
  * @see RLoginClient

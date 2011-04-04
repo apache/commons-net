@@ -34,7 +34,6 @@ import java.util.EventListener;
  * <p>
  * @see ProtocolCommandEvent
  * @see ProtocolCommandSupport
- * @author Daniel F. Savarese
  ***/
 
 public interface ProtocolCommandListener extends EventListener

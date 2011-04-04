@@ -28,7 +28,6 @@ import java.io.OutputStream;
  * In ASCII mode, if convertCRtoCRLF is true, any CR is converted to CRLF.
  * IACs are doubled.
  * <p>
- * @author Daniel F. Savarese
  ***/
 
 

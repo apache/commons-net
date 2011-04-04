@@ -48,7 +48,6 @@ import org.apache.commons.net.SocketClient;
  * </pre>
  * <p>
  * <p>
- * @author Daniel F. Savarese
  ***/
 
 public class FingerClient extends SocketClient

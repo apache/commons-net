@@ -36,7 +36,6 @@ package org.apache.commons.net.pop3;
  * <code> identifier </code> contains the message's unique identifier.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  ***/
 
 public final class POP3MessageInfo

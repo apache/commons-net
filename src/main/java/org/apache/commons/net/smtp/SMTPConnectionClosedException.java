@@ -29,7 +29,6 @@ import java.io.IOException;
  * SMTPConnectionClosedException.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see SMTP
  * @see SMTPClient
  ***/

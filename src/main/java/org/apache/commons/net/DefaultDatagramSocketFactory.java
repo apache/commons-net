@@ -29,7 +29,6 @@ import java.net.SocketException;
  *  implementations.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see DatagramSocketFactory
  * @see DatagramSocketClient
  * @see DatagramSocketClient#setDatagramSocketFactory

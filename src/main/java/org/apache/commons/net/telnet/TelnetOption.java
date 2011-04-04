@@ -24,7 +24,6 @@ package org.apache.commons.net.telnet;
  * Details regarding Telnet option specification can be found in RFC 855.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see org.apache.commons.net.telnet.Telnet
  * @see org.apache.commons.net.telnet.TelnetClient
  ***/

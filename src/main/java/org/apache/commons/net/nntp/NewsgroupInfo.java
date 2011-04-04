@@ -28,7 +28,6 @@ package org.apache.commons.net.nntp;
  *  respectively.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see NNTPClient
  ***/
 

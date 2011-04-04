@@ -42,7 +42,6 @@ package org.apache.commons.net.nntp;
  * </pre>
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see NNTPClient
  ***/
 

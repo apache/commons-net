@@ -34,7 +34,6 @@ import org.apache.commons.net.SocketClient;
  * to close the connection properly.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see DaytimeUDPClient
  ***/
 

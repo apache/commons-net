@@ -29,7 +29,6 @@ import java.util.EventObject;
  * @see CopyStreamListener
  * @see CopyStreamAdapter
  * @see Util
- * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
  * @version $Id$
  */
 public class CopyStreamEvent extends EventObject

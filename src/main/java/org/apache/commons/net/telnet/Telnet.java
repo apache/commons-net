@@ -26,7 +26,6 @@ import java.util.Arrays;
 import org.apache.commons.net.SocketClient;
 
 /**
- * @author Daniel F. Savarese
  * @author Bruno D'Avanzo
  */
 

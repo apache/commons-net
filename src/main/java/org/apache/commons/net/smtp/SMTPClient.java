@@ -115,7 +115,6 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  * attempts to be as lenient as possible.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see SMTP
  * @see SimpleSMTPHeader
  * @see RelayPath

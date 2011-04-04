@@ -34,7 +34,6 @@ import java.io.Writer;
  * sequence.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  ***/
 
 public final class DotTerminatedMessageWriter extends Writer

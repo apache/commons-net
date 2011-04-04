@@ -31,7 +31,6 @@ import org.apache.commons.net.util.ListenerList;
  * <p>
  * @see ProtocolCommandEvent
  * @see ProtocolCommandListener
- * @author Daniel F. Savarese
  ***/
 
 public class ProtocolCommandSupport implements Serializable

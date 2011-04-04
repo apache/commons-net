@@ -29,7 +29,6 @@ import java.io.PushbackInputStream;
  * implement ASCII file transfers requiring conversion from NETASCII.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  ***/
 
 public final class FromNetASCIIInputStream extends PushbackInputStream

@@ -48,7 +48,6 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
  * from having to worry about the internals.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see TFTP
  * @see TFTPPacket
  * @see TFTPPacketException

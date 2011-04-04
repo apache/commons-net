@@ -39,7 +39,6 @@ import java.net.InetAddress;
  * methods.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see TFTPPacketException
  * @see TFTP
  ***/

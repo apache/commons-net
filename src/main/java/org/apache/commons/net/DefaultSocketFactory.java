@@ -33,7 +33,6 @@ import javax.net.SocketFactory;
  * implementations.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see SocketFactory
  * @see SocketClient
  * @see SocketClient#setSocketFactory

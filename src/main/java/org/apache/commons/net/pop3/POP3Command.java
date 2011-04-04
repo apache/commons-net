@@ -21,7 +21,6 @@ package org.apache.commons.net.pop3;
  * POP3Command stores POP3 command code constants.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  ***/
 
 public final class POP3Command

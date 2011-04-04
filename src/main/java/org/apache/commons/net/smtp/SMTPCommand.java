@@ -26,7 +26,6 @@ package org.apache.commons.net.smtp;
  * where the constant name is the same as the SMTP command.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  ***/
 
 public final class SMTPCommand

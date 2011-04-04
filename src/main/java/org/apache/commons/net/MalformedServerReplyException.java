@@ -30,7 +30,6 @@ import java.io.IOException;
  * In these cases, a MalformedServerReplyException should be thrown.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  ***/
 
 public class MalformedServerReplyException extends IOException

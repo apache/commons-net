@@ -76,7 +76,6 @@ import org.apache.commons.net.SocketClient;
  * attempts to be as lenient as possible.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see SMTPClient
  * @see SMTPConnectionClosedException
  * @see org.apache.commons.net.MalformedServerReplyException

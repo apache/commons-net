@@ -44,7 +44,6 @@ import org.apache.commons.net.io.DotTerminatedMessageReader;
  * attempts to be as lenient as possible.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see POP3MessageInfo
  * @see org.apache.commons.net.io.DotTerminatedMessageReader
  * @see org.apache.commons.net.MalformedServerReplyException

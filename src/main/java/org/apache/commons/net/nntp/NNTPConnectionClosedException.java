@@ -29,7 +29,6 @@ import java.io.IOException;
  * NNTPConnectionClosedException.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see NNTP
  * @see NNTPClient
  ***/

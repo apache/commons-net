@@ -31,7 +31,6 @@ import java.net.Socket;
  * stream closes.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see SocketOutputStream
  ***/
 

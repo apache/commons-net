@@ -38,7 +38,6 @@ import org.apache.commons.net.DatagramSocketClient;
  * connectionless protocol and the Daytime protocol is stateless.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see DaytimeTCPClient
  ***/
 

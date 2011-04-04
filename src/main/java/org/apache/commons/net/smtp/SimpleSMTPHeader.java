@@ -43,7 +43,6 @@ package org.apache.commons.net.smtp;
  * </pre>
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see SMTPClient
  ***/
 

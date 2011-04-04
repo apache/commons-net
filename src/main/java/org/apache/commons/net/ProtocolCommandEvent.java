@@ -30,7 +30,6 @@ import java.util.EventObject;
  * <p>
  * @see ProtocolCommandListener
  * @see ProtocolCommandSupport
- * @author Daniel F. Savarese
  ***/
 
 public class ProtocolCommandEvent extends EventObject

@@ -39,7 +39,6 @@ import org.apache.commons.net.DatagramSocketClient;
  * from having to worry about the internals.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see org.apache.commons.net.DatagramSocketClient
  * @see TFTPPacket
  * @see TFTPPacketException

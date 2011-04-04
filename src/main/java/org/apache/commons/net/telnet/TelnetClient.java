@@ -41,7 +41,6 @@ import java.io.OutputStream;
  * closing the streams.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @author Bruno D'Avanzo
  ***/
 

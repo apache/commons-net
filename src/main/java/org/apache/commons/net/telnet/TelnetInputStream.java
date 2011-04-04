@@ -28,7 +28,6 @@ import java.io.InterruptedIOException;
  *
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @author Bruno D'Avanzo
  ***/
 

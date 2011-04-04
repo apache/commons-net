@@ -26,7 +26,6 @@ package org.apache.commons.net.nntp;
  * of the code.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  ***/
 
 public final class NNTPReply

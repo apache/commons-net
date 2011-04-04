@@ -40,7 +40,6 @@ import org.apache.commons.net.SocketClient;
  * to clean up properly.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see CharGenUDPClient
  ***/
 

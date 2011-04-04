@@ -37,7 +37,6 @@ import java.util.EventListener;
  * @see CopyStreamEvent
  * @see CopyStreamAdapter
  * @see Util
- * @author <a href="mailto:savarese@apache.org">Daniel F. Savarese</a>
  * @version $Id$
  */
 public interface CopyStreamListener extends EventListener

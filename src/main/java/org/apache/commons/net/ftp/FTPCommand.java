@@ -26,7 +26,6 @@ package org.apache.commons.net.ftp;
  * where the constant name is the same as the FTP command.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  ***/
 /** TODO replace this with an enum */
 public final class FTPCommand

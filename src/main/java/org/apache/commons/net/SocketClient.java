@@ -49,7 +49,6 @@ import javax.net.SocketFactory;
  * them by directly invoking a constructor.  By honoring this contract
  * you guarantee that a user will always be able to provide his own
  * Socket implementations by substituting his own SocketFactory.
- * @author Daniel F. Savarese
  * @see SocketFactory
  */
 public abstract class SocketClient

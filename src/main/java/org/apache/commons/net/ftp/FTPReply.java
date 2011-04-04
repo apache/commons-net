@@ -26,7 +26,6 @@ package org.apache.commons.net.ftp;
  * of the code.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * TODO replace with an enum
  ***/
 

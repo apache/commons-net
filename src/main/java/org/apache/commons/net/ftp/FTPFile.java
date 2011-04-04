@@ -25,7 +25,6 @@ import java.util.Formatter;
  * on an FTP server.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see FTPFileEntryParser
  * @see FTPClient#listFiles
  ***/

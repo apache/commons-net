@@ -258,7 +258,6 @@ import org.apache.commons.net.io.Util;
  * and the other xxxFileStream methods
  * <p>
  *
- * @author Daniel F. Savarese
  * @author Rory Winston
  * @see FTP
  * @see FTPConnectionClosedException

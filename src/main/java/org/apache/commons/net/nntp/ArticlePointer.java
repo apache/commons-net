@@ -22,7 +22,6 @@ package org.apache.commons.net.nntp;
  * id information extracted from an NNTP server reply.  You will normally
  * want this information when issuing a STAT command, implemented by
  * {@link NNTPClient#selectArticle selectArticle}.
- * @author Daniel F. Savarese
  * @see NNTPClient
  * 
  * @deprecated 3.0 use {@link ArticleInfo} instead

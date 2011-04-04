@@ -35,7 +35,6 @@ import org.apache.commons.net.discard.DiscardTCPClient;
  * to clean up properly.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see EchoUDPClient
  * @see DiscardTCPClient
  ***/

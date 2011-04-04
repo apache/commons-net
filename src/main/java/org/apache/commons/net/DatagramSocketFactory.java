@@ -33,7 +33,6 @@ import java.net.SocketException;
  * creating a DatagramSocket.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  ***/
 
 public interface DatagramSocketFactory

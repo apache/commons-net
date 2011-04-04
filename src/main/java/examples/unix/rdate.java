@@ -35,7 +35,6 @@ import org.apache.commons.net.time.TimeUDPClient;
  * Usage: rdate [-udp] <hostname>
  * <p>
  * <p>
- * @author Daniel F. Savarese
  ***/
 public final class rdate
 {

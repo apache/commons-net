@@ -72,7 +72,6 @@ import org.apache.commons.net.SocketClient;
  * attempts to be as lenient as possible.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @author Rory Winston
  * @author Ted Wise
  * @see NNTPClient

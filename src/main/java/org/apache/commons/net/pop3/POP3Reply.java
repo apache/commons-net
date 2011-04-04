@@ -21,7 +21,6 @@ package org.apache.commons.net.pop3;
  * POP3Reply stores POP3 reply code constants.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  ***/
 
 public final class POP3Reply

@@ -34,7 +34,6 @@ import java.io.OutputStream;
  * flush the carriage return.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  ***/
 
 public final class FromNetASCIIOutputStream extends FilterOutputStream

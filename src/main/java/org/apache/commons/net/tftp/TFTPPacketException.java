@@ -31,7 +31,6 @@ package org.apache.commons.net.tftp;
  * methods provide.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see TFTPPacket
  * @see TFTP
  ***/

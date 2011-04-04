@@ -43,7 +43,6 @@ import java.net.SocketException;
  * Socket implementations by substituting his own SocketFactory.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see DatagramSocketFactory
  ***/
 

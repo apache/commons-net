@@ -46,7 +46,6 @@ import org.apache.commons.net.finger.FingerClient;
  *
  * <p>
  * <p>
- * @author Daniel F. Savarese
  ***/
 
 public final class WhoisClient extends FingerClient

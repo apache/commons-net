@@ -58,7 +58,6 @@ import java.io.IOException;
  * .
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see org.apache.commons.net.SocketClient
  * @see RExecClient
  * @see RCommandClient

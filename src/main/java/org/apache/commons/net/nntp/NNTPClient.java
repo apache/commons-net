@@ -79,7 +79,6 @@ import org.apache.commons.net.io.Util;
  * attempts to be as lenient as possible.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @author Rory Winston
  * @author Ted Wise
  * @see NNTP

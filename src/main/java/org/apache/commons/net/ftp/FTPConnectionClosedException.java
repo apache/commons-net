@@ -28,7 +28,6 @@ import java.io.IOException;
  * FTPConnectionClosedException.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see FTP
  * @see FTPClient
  ***/

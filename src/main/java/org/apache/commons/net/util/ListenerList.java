@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * @author Daniel F. Savarese
  */
 
 public class ListenerList implements Serializable, Iterable<EventListener>

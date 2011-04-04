@@ -30,7 +30,6 @@ import java.io.InputStream;
  * conversion to NETASCII.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  ***/
 
 public final class ToNetASCIIInputStream extends FilterInputStream

@@ -47,7 +47,6 @@ import org.apache.commons.net.DatagramSocketClient;
  * to clean up properly.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see CharGenTCPClient
  ***/
 

@@ -38,7 +38,6 @@ import java.util.Calendar;
  * distribution prefix created since midnight 11/15/97.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see NNTPClient
  ***/
 

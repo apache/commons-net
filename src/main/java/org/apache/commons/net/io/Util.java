@@ -33,7 +33,6 @@ import java.net.Socket;
  * @see CopyStreamException
  * @see CopyStreamListener
  * @see CopyStreamAdapter
- * @author Daniel F. Savarese
  ***/
 
 public final class Util

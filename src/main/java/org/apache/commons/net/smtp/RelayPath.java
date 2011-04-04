@@ -27,7 +27,6 @@ import java.util.Vector;
  * In general, you will not have to deal with relay paths.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see SMTPClient
  ***/
 

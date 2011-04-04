@@ -81,7 +81,6 @@ import org.apache.commons.net.io.SocketInputStream;
  * .
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see org.apache.commons.net.SocketClient
  * @see RExecClient
  * @see RLoginClient

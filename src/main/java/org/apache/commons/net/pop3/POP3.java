@@ -47,7 +47,6 @@ import org.apache.commons.net.SocketClient;
  * attempts to be as lenient as possible.
  * <p>
  * <p>
- * @author Daniel F. Savarese
  * @see POP3Client
  * @see org.apache.commons.net.MalformedServerReplyException
  ***/
