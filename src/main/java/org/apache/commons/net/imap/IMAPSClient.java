@@ -17,7 +17,6 @@
 
 package org.apache.commons.net.imap;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.IOException;
