@@ -31,6 +31,7 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
+import org.apache.commons.net.io.CRLFLineReader;
 import org.apache.commons.net.util.SSLContextUtils;
 
 /**
@@ -198,7 +199,7 @@ public class IMAPSClient extends IMAPClient
         _input_ = socket.getInputStream();
         _output_ = socket.getOutputStream();
         _reader =
-          new BufferedReader(new InputStreamReader(_input_,
+          new CRLFLineReader(new InputStreamReader(_input_,
                                                    __DEFAULT_ENCODING));
         __writer =
           new BufferedWriter(new OutputStreamWriter(_output_,

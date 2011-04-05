@@ -29,6 +29,7 @@ import java.util.List;
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
+import org.apache.commons.net.io.CRLFLineReader;
 
 /***
  * The POP3 class is not meant to be used by itself and is provided
@@ -142,7 +143,7 @@ public class POP3 extends SocketClient
     {
         super._connectAction_();
         _reader =
-          new BufferedReader(new InputStreamReader(_input_,
+          new CRLFLineReader(new InputStreamReader(_input_,
                                                    __DEFAULT_ENCODING));
         __writer =
           new BufferedWriter(new OutputStreamWriter(_output_,

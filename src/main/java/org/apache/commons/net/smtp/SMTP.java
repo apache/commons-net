@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
+import org.apache.commons.net.io.CRLFLineReader;
 
 /***
  * SMTP provides the basic the functionality necessary to implement your
@@ -250,7 +251,7 @@ public class SMTP extends SocketClient
     {
         super._connectAction_();
         _reader =
-            new BufferedReader(new InputStreamReader(_input_,
+            new CRLFLineReader(new InputStreamReader(_input_,
                                                     encoding));
         _writer =
             new BufferedWriter(new OutputStreamWriter(_output_,
