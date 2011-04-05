@@ -67,6 +67,9 @@ This release is binary-compatible with 2.2, but there are some minor changes to 
   - ftp.FTPSClient ctors no longer throw NoSuchAlgorithmException
   All users are recommended to upgrade.
 ">
+            <action issue="NET-400" dev="sebb" type="update" due-to="David Kocher">
+            Option to override SSL negotiation. Make FTPSClient#execAuth() and FTPSClient#sslNegotiation() protected
+            </action>
             <action issue="NET-402" dev="sebb" type="fix">
             IMAP, NNTP, POP3 and SMTP classes uses BufferedReader for control channel, which does not follow the standard.
             Changed reader to CRLFLineReader.

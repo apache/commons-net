@@ -211,7 +211,7 @@ public class FTPSClient extends FTPClient {
      * @throws IOException If an I/O error occurs while either sending
      * the command.
      */
-    private void execAUTH() throws SSLException, IOException {
+    protected void execAUTH() throws SSLException, IOException {
         int replyCode = sendCommand(CMD_AUTH, auth);
         if (FTPReply.SECURITY_MECHANISM_IS_OK == replyCode) {
             // replyCode = 334
@@ -236,7 +236,7 @@ public class FTPSClient extends FTPClient {
      * connection and carries out handshake processing.
      * @throws IOException If server negotiation fails
      */
-    private void sslNegotiation() throws IOException {
+    protected void sslNegotiation() throws IOException {
         plainSocket = _socket_;
         initSslContext();
 
