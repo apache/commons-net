@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
+import org.apache.commons.net.io.CRLFLineReader;
 
 /***
  * FTP provides the basic the functionality necessary to implement your
@@ -369,7 +370,7 @@ public class FTP extends SocketClient
     {
         super._connectAction_(); // sets up _input_ and _output_
         _controlInput_ =
-            new BufferedReader(new InputStreamReader(_input_, getControlEncoding()));
+            new CRLFLineReader(new InputStreamReader(_input_, getControlEncoding()));
         _controlOutput_ =
             new BufferedWriter(new OutputStreamWriter(_output_, getControlEncoding()));
         if (connectTimeout > 0) { // NET-385
