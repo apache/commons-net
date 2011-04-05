@@ -26,6 +26,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -704,7 +705,8 @@ implements Configurable
                 __parsePassiveModeReply(_replyLines.get(0));
             }
 
-            socket = _socketFactory_.createSocket(__passiveHost, __passivePort);
+            socket = _socketFactory_.createSocket();
+            socket.connect(new InetSocketAddress(__passiveHost, __passivePort), connectTimeout);
             if ((__restartOffset > 0) && !restart(__restartOffset))
             {
                 socket.close();

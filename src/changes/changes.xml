@@ -67,6 +67,9 @@ This release is binary-compatible with 2.2, but there are some minor changes to 
   - ftp.FTPSClient ctors no longer throw NoSuchAlgorithmException
   All users are recommended to upgrade.
 ">
+            <action issue="NET-399" dev="sebb" type="fix" due-to="Noah Levitt">
+            ftp data connection does not use connectTimeout.
+            </action>
             <action issue="NET-400" dev="sebb" type="update" due-to="David Kocher">
             Option to override SSL negotiation. Make FTPSClient#execAuth() and FTPSClient#sslNegotiation() protected
             </action>
