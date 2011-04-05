@@ -44,6 +44,7 @@ import org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory;
 import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
 import org.apache.commons.net.ftp.parser.MLSxEntryParser;
 import org.apache.commons.net.ftp.parser.ParserInitializationException;
+import org.apache.commons.net.io.CRLFLineReader;
 import org.apache.commons.net.io.CopyStreamAdapter;
 import org.apache.commons.net.io.CopyStreamEvent;
 import org.apache.commons.net.io.CopyStreamException;
@@ -753,7 +754,7 @@ implements Configurable
             {
                  setControlEncoding("UTF-8");
                  _controlInput_ =
-                     new BufferedReader(new InputStreamReader(_input_, getControlEncoding()));
+                     new CRLFLineReader(new InputStreamReader(_input_, getControlEncoding()));
                  _controlOutput_ =
                     new BufferedWriter(new OutputStreamWriter(_output_, getControlEncoding()));
             }
