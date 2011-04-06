@@ -3224,6 +3224,7 @@ implements Configurable
      *
      * @param controlIdle the wait (in secs) between keepalive messages. Zero (or less) disables.
      * @since 3.0
+     * @see #setControlKeepAliveReplyTimeout(int)
      */
     public void setControlKeepAliveTimeout(long controlIdle){
         __controlKeepAliveTimeout = controlIdle * 1000;
@@ -3243,6 +3244,7 @@ implements Configurable
      *
      * @param timeout number of milliseconds to wait (defaults to 1000)
      * @since 3.0
+     * @see #setControlKeepAliveTimeout(long)
      */
     public void setControlKeepAliveReplyTimeout(int timeout) {
         __controlKeepAliveReplyTimeout = timeout;
