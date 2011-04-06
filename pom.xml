@@ -134,12 +134,13 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
     <build>
         <plugins>
 
+            <!-- Exclude examples from binary jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
+                <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <excludes>
-                        <exclude>**/examples/**/*.java</exclude>
+                        <exclude>examples/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
