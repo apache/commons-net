@@ -3343,7 +3343,7 @@ implements Configurable
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE
 
     /**
-     * @deprecated, use {@link #getSystemType()} instead
+     * @deprecated use {@link #getSystemType()} instead
      */
     @Deprecated
     public String getSystemName() throws IOException
