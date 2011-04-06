@@ -392,6 +392,12 @@ implements Configurable
                 try {
                     p.load(resourceAsStream);
                 } catch (IOException e) {
+                } finally {
+                    try {
+                        resourceAsStream.close();
+                    } catch (IOException e) {
+                        // Ignored
+                    }
                 }
             }
             PROPERTIES = p;
