@@ -60,11 +60,29 @@ The <action> type attribute can be add,update,fix,remove.
 This release fixes many bugs (see below), and adds new functionality:
   - basic support for IMAP and IMAPS
   - support for SMTPS and POP3S
-    
-This release is binary-compatible with 2.2, but there are some minor changes to source compatibility:
+
+    FTP changes:
+  - no longer parses every response line twice
+  - OS auto-detection can be overriden by defining the property 'org.apache.commons.net.ftp.systemType';
+  - or by creating a properties file '/systemType.properties' which provides a mapping from getSystemType() to parser name
+  See the Javadoc for FTPClient.initiateListParsing(String parserKey, String pathname).
+  - SASL, PLAIN and CRAM-MD5 authentication added
+  - added control channel keep-alive for use with misbehaving routers, see FTPClient.setControlKeepAliveTimeout(long controlIdle)
+
+    NNTP changes:
+  - reworked to use long for article numbers
+  - added streaming equivalents for the array methods
+
+  Added TrustManagerUtils and KeyManagerUtils classes to simplify setting up trust and key namagers.
+KeyManagerUtils can be used to provide client certificates.
+
+  This release is binary-compatible with 2.2, but there are some minor changes to source compatibility:
   - telnet.TelnetClient#addOptionHandler(TelnetOptionHandler) now additionally throws IOException
   - telnet.TelnetClient#deleteOptionHandler() now additionally throws IOException
   - ftp.FTPSClient ctors no longer throw NoSuchAlgorithmException
+  - Redundant CODE_nnn definitions have been removed from FTPReply, SMTPReply and NNTPReply classes
+  - Unused String constants KEYSTORE_ALGORITHM, PROVIDER, STORE_TYPE, TRUSTSTORE_ALGORITHM removed from FTPSClient
+
   All users are recommended to upgrade.
 ">
             <action issue="NET-399" dev="sebb" type="fix" due-to="Noah Levitt">
@@ -117,10 +135,7 @@ This release is binary-compatible with 2.2, but there are some minor changes to 
             Use enum for IMAPCommand.
             </action>
             <action issue="NET-333" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
-            would you provide a class used for imap protocol?
-            </action>
-            <action issue="NET-390" dev="sebb" type="update">
-            FTPFile.toString() should return formatted version of its fields, not the unformatted original
+            Added basic IMAP/IMAPS implementation.
             </action>
             <action issue="NET-389" dev="sebb" type="fix">
             Unix parser should ignore "total nnn" lines.
@@ -255,10 +270,6 @@ This release is binary-compatible with 2.2, but there are some minor changes to 
             <action dev="sebb" type="remove">
             Removed deprecated unused fields from FTPSClient:
             - KEYSTORE_ALGORITHM, PROVIDER, STORE_TYPE, TRUSTSTORE_ALGORITHM
-            Removed deprecated methods FTPClient.getSystemName(), FTPListParseEngine.readServerList(InputStream stream),
-            FTPSSocketFactory.createServerSocket(int port), FTPSSocketFactory.createServerSocket(int port, int backlog),
-            FTPSSocketFactory.createServerSocket(int port, int backlog, InetAddress ifAddress),
-            FTPSSocketFactory.init(ServerSocket socket)
             </action>
             <action issue="NET-258" dev="sebb" type="fix">
             Implement A Keepalive Mechanism. Control channel keepalive implemented for the following methods:
@@ -280,7 +291,7 @@ This release is binary-compatible with 2.2, but there are some minor changes to 
             FTPFileEntryParser API samples are wrong.
             </action>
             <action issue="NET-229" dev="sebb" type="add">
-            Use properties file to handle new OS-type auto-detection.
+            Use properties file (/systemType.properties) to handle new OS-type auto-detection.
             </action>
             <action issue="NET-332" dev="sebb" type="add">
             Commons net ftp cannot handle unknown type parser and should allow override of parser through vm argument.
