@@ -30,6 +30,18 @@
     <Bug code="BC" />
   </Match>
 
+  <!-- Unchecked cast is deliberate -->
+  <Match>
+    <Class name="org.apache.commons.net.ftp.FTPSSocketFactory" />
+    <Method name="init" />
+    <Bug code="BC" />
+  </Match>
+
+  <!-- Don't bother with EI - expose internal representation -->
+  <Match>
+    <Bug code="EI,EI2" />
+  </Match>
+
   <!-- future FTPClientConfig instances may not implement configurable -->
   <Match>
     <Class name="org.apache.commons.net.ftp.parser.ConfigurableFTPFileEntryParserImpl" />
@@ -56,6 +68,11 @@
     <Class name="org.apache.commons.net.io.ToNetASCIIOutputStream" />
     <Method name="write" />
     <Bug code="SF" />
+  </Match>
+
+  <!-- Don't check examples -->
+  <Match>
+    <Package name="~examples\..*" />
   </Match>
 
 </FindBugsFilter>
