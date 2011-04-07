@@ -105,6 +105,10 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
             <name>Ted Wise</name>
             <email>ctwise@bellsouth.net</email>
         </contributor>
+        <contributor>
+            <name>Bogdan Drozdowski</name>
+            <email>bogdandr # op dot pl</email>
+        </contributor>
     </contributors>
 
     <dependencies>
