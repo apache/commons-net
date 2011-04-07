@@ -95,7 +95,7 @@ public class FTPTimestampParserImpl implements
         Calendar now = (Calendar) serverTime.clone();// Copy this, because we may change it
         now.setTimeZone(this.getServerTimeZone());
         Calendar working = (Calendar) now.clone();
-        working.setTimeZone(getServerTimeZone());
+        working.setTimeZone(getServerTimeZone()); // is this needed?
         ParsePosition pp = new ParsePosition(0);
 
         Date parsed = null;
@@ -149,7 +149,7 @@ public class FTPTimestampParserImpl implements
                 } else {
                     throw new ParseException(
                             "Timestamp could not be parsed with older or recent DateFormat",
-                            pp.getIndex());
+                            pp.getErrorIndex());
                 }
             }
         }
