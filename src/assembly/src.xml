@@ -18,7 +18,6 @@ Licensed to the Apache Software Foundation (ASF) under one or more
   <id>src</id>
   <formats>
     <format>tar.gz</format>
-    <format>tar.bz2</format>
     <format>zip</format>
   </formats>
   <baseDirectory>${artifactId}-${version}-src</baseDirectory>
