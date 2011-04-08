@@ -149,6 +149,17 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 </configuration>
             </plugin>
 
+            <!-- Exclude examples from source jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>examples/**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -168,7 +179,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                     <descriptors>
                         <descriptor>src/assembly/bin.xml</descriptor>
                         <descriptor>src/assembly/src.xml</descriptor>
-                        <descriptor>src/assembly/examples.xml</descriptor>
                     </descriptors>
                     <tarLongFileMode>gnu</tarLongFileMode>
                 </configuration>
@@ -195,6 +205,10 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                                     </manifest>
                                     <fileset dir="target/classes" includes="org/apache/commons/net/ftp/**,org/apache/commons/net/*,org/apache/commons/net/io/*,org/apache/commons/net/util/*" />
                                 </jar>
+                                <!-- 
+                                    Create the binary examples jar, which will be added to the binary zip/tgz, 
+                                    but not deployed independently to Maven
+                                -->
                                 <jar destfile="target/commons-net-examples-${project.version}.jar">
                                     <metainf dir="${basedir}" includes="NOTICE.txt,LICENSE.txt" />
                                     <manifest>
@@ -236,11 +250,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                                     <file>target/commons-net-ftp-${project.version}.jar</file>
                                     <type>jar</type>
                                     <classifier>ftp</classifier>
-                                </artifact>
-                                <artifact>
-                                    <file>target/commons-net-examples-${project.version}.jar</file>
-                                    <type>jar</type>
-                                    <classifier>examples</classifier>
                                 </artifact>
                             </artifacts>
                         </configuration>
