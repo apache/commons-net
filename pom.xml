@@ -264,6 +264,16 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                     <templateDirectory>src/changes</templateDirectory>
                 </configuration>
             </plugin>
+
+            <!-- Exclude examples from Javadoc jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <excludePackageNames>examples.*</excludePackageNames>
+                </configuration>
+            </plugin>
+
         </plugins>
 
         <testResources>
@@ -320,6 +330,15 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                     </excludes>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <excludePackageNames>examples.*</excludePackageNames>
+                </configuration>
+            </plugin>
+
         </plugins>
     </reporting>
 
