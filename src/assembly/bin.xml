@@ -43,6 +43,23 @@ Licensed to the Apache Software Foundation (ASF) under one or more
                 <include>**/*</include>
             </includes>
         </fileSet>
+        <!-- Include sources jar for IDEs -->
+        <fileSet>
+            <directory>target</directory>
+            <outputDirectory></outputDirectory>
+            <includes>
+                <include>commons-net-${project.version}-sources.jar</include>
+            </includes>
+        </fileSet>
+        <!-- Include examples as binary jar -->
+        <fileSet>
+            <directory>target</directory>
+            <outputDirectory></outputDirectory>
+            <includes>
+                <include>commons-net-examples-${project.version}.jar</include>
+            </includes>
+        </fileSet>
+        <!-- Include example sources for developers -->
         <fileSet>
             <directory>src/main/java/examples</directory>
             <outputDirectory>examples</outputDirectory>
