@@ -154,7 +154,9 @@ public abstract class DatagramSocketClient
      ***/
     public void close()
     {
-        _socket_.close();
+        if (_socket_ != null) {
+            _socket_.close();
+        }
         _socket_ = null;
         _isOpen_ = false;
     }
