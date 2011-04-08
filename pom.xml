@@ -276,15 +276,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
 
         </plugins>
 
-        <testResources>
-            <testResource>
-                <directory>${basedir}/src/test/java</directory>
-                <includes>
-                    <include>**/*Test.java</include>
-                </includes>
-            </testResource>
-        </testResources>
-
     </build>
 
     <reporting>
