@@ -29,6 +29,7 @@ Licensed to the Apache Software Foundation (ASF) under one or more
         <include>NOTICE*</include>
         <include>RELEASE-NOTES.txt</include>
         <include>pom.xml</include>
+        <include>findbugs-exclude-filter.xml</include>
       </includes>
     </fileSet>
     <fileSet>
