@@ -85,6 +85,9 @@ KeyManagerUtils can be used to provide client certificates.
 
   All users are recommended to upgrade.
 ">
+            <action issue="NET-404" dev="sebb" type="fix">
+            FTPSSocketFactory does not override createSocket(); causes java.net.SocketException: Unconnected sockets not implemented.
+            </action>
             <action issue="NET-399" dev="sebb" type="fix" due-to="Noah Levitt">
             ftp data connection does not use connectTimeout.
             </action>

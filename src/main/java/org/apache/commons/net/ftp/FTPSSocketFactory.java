@@ -39,6 +39,12 @@ public class FTPSSocketFactory extends SocketFactory {
         this.context = context;
     }
 
+    // Override the default implementation
+    @Override
+    public Socket createSocket() throws IOException{
+        return this.context.getSocketFactory().createSocket();
+    }
+
     @Override
     public Socket createSocket(String address, int port) throws UnknownHostException, IOException {
         return this.context.getSocketFactory().createSocket(address, port);
