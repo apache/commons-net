@@ -105,10 +105,6 @@ KeyManagerUtils can be used to provide client certificates.
             <action issue="NET-269" dev="sebb" type="update">
             Remove semi-redundant check in SubnetUtils.calculate().
             </action>
-            <action issue="NET-396" dev="sebb" type="update">
-            POP3.setState() should not be public.
-            Deprecated, and changed to do nothing. Added package-private method for use by POP3 classes.
-            </action>
             <action issue="NET-219" dev="sebb" type="update">
             Should Telnet class Exception blocks write to System.err?
             Catch blocks removed, and throws clauses added to allow caller to more easily detect and recover.

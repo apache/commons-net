@@ -149,30 +149,19 @@ public class POP3 extends SocketClient
           new BufferedWriter(new OutputStreamWriter(_output_,
                                                     __DEFAULT_ENCODING));
         __getReply();
-        _setState(AUTHORIZATION_STATE);
+        setState(AUTHORIZATION_STATE);
     }
 
 
     /**
-     * No longer used, as the state must only be changed by POP3 classes.
-     * @deprecated 3.0 DO NOT USE. Does nothing.
+     * Set the internal POP3 state.
+     * @param state the new state. This must be one of the <code>_STATE</code> constants.
      */
-    @Deprecated
     public void setState(int state)
-    {
-    }
-
-
-    /**
-     * Internal method to set POP3 client state.
-     * This must be one of the <code>_STATE</code> constants.
-     *
-     * @param state  The new state.
-     */
-    void _setState(int state)
     {
         __popState = state;
     }
+
 
     /***
      * Returns the current POP3 client state.
@@ -219,7 +208,7 @@ public class POP3 extends SocketClient
         __writer = null;
         _lastReplyLine = null;
         _replyLines.clear();
-        _setState(DISCONNECTED_STATE);
+        setState(DISCONNECTED_STATE);
     }
 
 

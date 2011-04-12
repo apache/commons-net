@@ -138,7 +138,7 @@ public class POP3Client extends POP3
         if (sendCommand(POP3Command.PASS, password) != POP3Reply.OK)
             return false;
 
-        _setState(TRANSACTION_STATE);
+        setState(TRANSACTION_STATE);
 
         return true;
     }
@@ -207,7 +207,7 @@ public class POP3Client extends POP3
         if (sendCommand(POP3Command.APOP, buffer.toString()) != POP3Reply.OK)
             return false;
 
-        _setState(TRANSACTION_STATE);
+        setState(TRANSACTION_STATE);
 
         return true;
     }
@@ -231,7 +231,7 @@ public class POP3Client extends POP3
     public boolean logout() throws IOException
     {
         if (getState() == TRANSACTION_STATE)
-            _setState(UPDATE_STATE);
+            setState(UPDATE_STATE);
         sendCommand(POP3Command.QUIT);
         return (_replyCode == POP3Reply.OK);
     }
