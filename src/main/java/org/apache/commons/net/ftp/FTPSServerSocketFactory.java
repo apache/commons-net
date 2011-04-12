@@ -38,6 +38,12 @@ public class FTPSServerSocketFactory extends ServerSocketFactory {
         this.context = context;
     }
 
+    // Override the default superclass method
+    @Override
+    public ServerSocket createServerSocket() throws IOException {
+        return init(this.context.getServerSocketFactory().createServerSocket());
+    }
+
     @Override
     public ServerSocket createServerSocket(int port) throws IOException {
         return init(this.context.getServerSocketFactory().createServerSocket(port));
