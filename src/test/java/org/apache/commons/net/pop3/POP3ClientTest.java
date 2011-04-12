@@ -136,13 +136,13 @@ public class POP3ClientTest extends TestCase
 
         //Now connect and set the state to 'transaction' and try again
         connect();
-        p._setState(POP3.TRANSACTION_STATE);
+        p.setState(POP3.TRANSACTION_STATE);
         assertFalse(p.login(user, password));
         p.disconnect();
 
         //Now connect and set the state to 'update' and try again
         connect();
-        p._setState(POP3.UPDATE_STATE);
+        p.setState(POP3.UPDATE_STATE);
         assertFalse(p.login(user, password));
         p.disconnect();
     }
@@ -164,7 +164,7 @@ public class POP3ClientTest extends TestCase
         reset();
         connect();
         login();
-        p._setState(POP3.UPDATE_STATE);
+        p.setState(POP3.UPDATE_STATE);
         assertTrue(p.logout());
     }
 }
