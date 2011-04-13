@@ -299,7 +299,7 @@ __main:
             {
                 FTPFile f = ftp.mlistFile(remote);
                 if (f != null){
-                    System.out.println(f.toString());
+                    System.out.println(f.toFormattedString());
                 }
             }
             else if (listNames)
