@@ -32,6 +32,7 @@ import javax.net.ssl.TrustManager;
 
 import org.apache.commons.net.util.Base64;
 import org.apache.commons.net.util.SSLContextUtils;
+import org.apache.commons.net.util.TrustManagerUtils;
 
 /**
  * FTP over SSL processing. If desired, the JVM property -Djavax.net.debug=all can be used to
@@ -99,8 +100,8 @@ public class FTPSClient extends FTPClient {
     /** The protocol versions */
     private String[] protocols = null;
 
-    /** The FTPS {@link TrustManager} implementation, default null (i.e. use system default). */
-    private TrustManager trustManager = null;
+    /** The FTPS {@link TrustManager} implementation, default validate only: {@link TrustManagerUtils#getValidateServerCertificateTrustManager()}. */
+    private TrustManager trustManager = TrustManagerUtils.getValidateServerCertificateTrustManager();
 
     /** The {@link KeyManager}, default null (i.e. use system default). */
     private KeyManager keyManager = null;
