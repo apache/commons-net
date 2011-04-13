@@ -292,7 +292,7 @@ __main:
             {
                 for (FTPFile f : ftp.mlistDir(remote)) {
                     System.out.println(f.getRawListing());
-                    System.out.println(f.toString());
+                    System.out.println(f.toFormattedString());
                 }
             }
             else if (mlst)
