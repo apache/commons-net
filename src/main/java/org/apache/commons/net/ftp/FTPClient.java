@@ -408,7 +408,7 @@ implements Configurable
         return PropertiesSingleton.PROPERTIES;
     }
 
-    /***
+    /**
      * Default FTPClient constructor.  Creates a new FTPClient instance
      * with the data connection mode set to
      * <code> ACTIVE_LOCAL_DATA_CONNECTION_MODE </code>, the file type
@@ -416,7 +416,16 @@ implements Configurable
      * file format set to <code> FTP.NON_PRINT_TEXT_FORMAT </code>,
      * the file structure set to <code> FTP.FILE_STRUCTURE </code>, and
      * the transfer mode set to <code> FTP.STREAM_TRANSFER_MODE </code>.
-     ***/
+     * <p>
+     * The list parsing auto-detect feature can be configured to use lenient future
+     * dates (short dates may be up to one day in the future) as follows:
+     * <pre>
+     * FTPClient ftp = new FTPClient();
+     * FTPClientConfig config = new FTPClientConfig();
+     * config.setLenientFutureDates(true);
+     * ftp.configure(config );
+     * </pre>
+     **/
     public FTPClient()
     {
         __initDefaults();
