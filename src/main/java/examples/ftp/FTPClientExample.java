@@ -63,7 +63,7 @@ public final class FTPClientExample
         "\t-s - store file on server (upload)\n" +
         "\t-t - list file details using MLST (remote is used as the pathname if provided)\n" +
         "\t-w msec - wait time for keep-alive reply (setControlKeepAliveReplyTimeout)\n" +
-        "\t-T  all|valid - use one of the built-in TrustManager implementations\n" +
+        "\t-T  all|valid|none - use one of the built-in TrustManager implementations (none = JVM default)\n" +
         "\t-# - add hash display during transfers\n";
 
     public static final void main(String[] args)
@@ -189,6 +189,8 @@ public final class FTPClientExample
                 ftps.setTrustManager(TrustManagerUtils.getAcceptAllTrustManager());
             } else if ("valid".equals(trustmgr)) {
                 ftps.setTrustManager(TrustManagerUtils.getValidateServerCertificateTrustManager());
+            } else if ("none".equals(trustmgr)) {
+                ftps.setTrustManager(null);
             }
         }
 
