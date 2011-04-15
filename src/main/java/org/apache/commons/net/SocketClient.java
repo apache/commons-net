@@ -45,7 +45,7 @@ import javax.net.SocketFactory;
  * requests browser security capabilities before creating a socket.
  * All classes derived from SocketClient should use the
  * {@link #_socketFactory_  _socketFactory_ } member variable to
- * create Socket and ServerSocket instances rather than instanting
+ * create Socket and ServerSocket instances rather than instantiating
  * them by directly invoking a constructor.  By honoring this contract
  * you guarantee that a user will always be able to provide his own
  * Socket implementations by substituting his own SocketFactory.
