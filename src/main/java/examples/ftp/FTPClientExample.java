@@ -27,6 +27,7 @@ import java.io.PrintWriter;
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPConnectionClosedException;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
@@ -285,7 +286,8 @@ __main:
             else if (listFiles)
             {
                 for (FTPFile f : ftp.listFiles(remote)) {
-                    System.out.println(f);
+                    System.out.println(f.getRawListing());
+                    System.out.println(f.toFormattedString());
                 }
             }
             else if (mlsd)
