@@ -59,6 +59,7 @@ public final class FTPClientExample
         "\t-h - list hidden files (applies to -l and -n only)\n" +
         "\t-k secs - use keep-alive timer (setControlKeepAliveTimeout)\n" +
         "\t-l - list files using LIST (remote is used as the pathname if provided)\n" +
+        "\t-L - use lenient future dates (server dates may be up to 1 day into future)\n" +
         "\t-n - list file names using NLST (remote is used as the pathname if provided)\n" +
         "\t-p true|false|protocol[,true|false] - use FTPSClient with the specified protocol and/or isImplicit setting\n" +
         "\t-s - store file on server (upload)\n" +
@@ -72,6 +73,7 @@ public final class FTPClientExample
         boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false, listNames = false, hidden = false;
         boolean localActive = false, useEpsvWithIPv4 = false, feat = false, printHash = false;
         boolean mlst = false, mlsd = false;
+        boolean lenient = false;
         long keepAliveTimeout = -1;
         int controlKeepAliveReplyTimeout = -1;
         int minParams = 5; // listings require 3 params
@@ -115,6 +117,9 @@ public final class FTPClientExample
             else if (args[base].equals("-l")) {
                 listFiles = true;
                 minParams = 3;
+            }
+            else if (args[base].equals("-L")) {
+                lenient = true;
             }
             else if (args[base].equals("-n")) {
                 listNames = true;
@@ -285,6 +290,12 @@ __main:
             }
             else if (listFiles)
             {
+                if (lenient) {
+                    FTPClientConfig config = new FTPClientConfig();
+                    config.setLenientFutureDates(true);
+                    ftp.configure(config );
+                }
+
                 for (FTPFile f : ftp.listFiles(remote)) {
                     System.out.println(f.getRawListing());
                     System.out.println(f.toFormattedString());
