@@ -501,12 +501,12 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Send an FTP command.
-     * The CCC (Clear Command Channel) command causes the underlying {@link SSLSocket} instance  to be assigned
-     * to a plain {@link Socket} instances
+     * A successful CCC (Clear Command Channel) command causes the underlying {@link SSLSocket} 
+     * instance to be assigned to a plain {@link Socket}
      * @param command The FTP command.
      * @return server reply.
-     * @throws IOException If an I/O error occurs while sending
-     * the command.
+     * @throws IOException If an I/O error occurs while sending the command.
+     * @throws SSLException if a CCC command fails
      * @see org.apache.commons.net.ftp.FTP#sendCommand(java.lang.String)
      */
     // Would like to remove this method, but that will break any existing clients that are using CCC
