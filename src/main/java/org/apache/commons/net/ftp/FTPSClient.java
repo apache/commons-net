@@ -754,5 +754,23 @@ public class FTPSClient extends FTPClient {
         return reply.substring(idx+prefix.length()).trim();
     }
 
+    // DEPRECATED - for API compatibility only - DO NOT USE
+
+    /** @deprecated - not used - may be removed in a future release */
+    @Deprecated
+    public static String KEYSTORE_ALGORITHM;
+
+    /** @deprecated - not used - may be removed in a future release */
+    @Deprecated
+    public static String TRUSTSTORE_ALGORITHM;
+
+    /** @deprecated - not used - may be removed in a future release */
+    @Deprecated
+    public static String PROVIDER;
+
+    /** @deprecated - not used - may be removed in a future release */
+    @Deprecated
+    public static String STORE_TYPE;
+
 }
 /* kate: indent-width 4; replace-tabs on; */
