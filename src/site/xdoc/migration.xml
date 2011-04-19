@@ -31,6 +31,31 @@ This how-to lists the migration steps for moving between versions of Commons Net
 </p>
 </section>
 
+<section name="Commons Net 2.x to Commons Net 3.0">
+    <p>
+        Version 3.0 is binary compatible with version 2.0. There should be no changes required to existing binary code.
+    </p>
+    <p>        
+        However, version 3.0 is <b>not source compatible</b> with 2.0.
+    </p>
+    <p>        
+        Several obsolete/unused constants have been removed.<br/>
+        (Such changes do not affect binary code, because compilers are required to localise constants).<br/>
+        The <a href="clirr-report.html">clirr report</a> shows which constants have been removed.
+        If any source code happens to be using one of these constants, then the source will have to be updated.
+    </p>
+    <p>
+        Also, some throws clauses have been removed from methods which did not actually throw them.<br/>
+        Throws clauses are not part of method signatures, so do not affect binary compatibility.<br/>
+        The following public methods no longer throw IOException:
+        <ul>
+        <li>TelnetClient#addOptionHandler(TelnetOptionHandler)</li>
+        <li>TelnetClient#deleteOptionHandler(int)</li>
+        </ul>
+        Source code using these methods will need to be updated.
+    </p>
+</section>
+
 <section name="Commons Net 1.4.x to Commons Net 2.0">
     <p>
         Version 2.0 requires a JDK 5.0+ runtime. It has also been tested on JDK 6.0. There should
