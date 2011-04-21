@@ -70,6 +70,7 @@ o NET-351:  APOP authentication fails most of the time.
             Fix by adding leading 0 if necessary. Thanks to Bogdan Drozdowski. 
 
 Fixed Bugs:
+o NET-404:  FTPSSocketFactory does not override createSocket(); causes java.net.SocketException: Unconnected sockets not implemented. 
 o NET-399:  ftp data connection does not use connectTimeout. Thanks to Noah Levitt. 
 o NET-402:  IMAP, NNTP, POP3 and SMTP classes uses BufferedReader for control channel, which does not follow the standard.
             Changed reader to CRLFLineReader. 
@@ -112,8 +113,6 @@ Changes:
 o NET-400:  Option to override SSL negotiation. Make FTPSClient#execAuth() and FTPSClient#sslNegotiation() protected Thanks to David Kocher. 
 o NET-331:  AS400 file timestamp format is wrong. Workround exists. 
 o NET-269:  Remove semi-redundant check in SubnetUtils.calculate(). 
-o NET-396:  POP3.setState() should not be public.
-            Deprecated, and changed to do nothing. Added package-private method for use by POP3 classes. 
 o NET-219:  Should Telnet class Exception blocks write to System.err?
             Catch blocks removed, and throws clauses added to allow caller to more easily detect and recover. 
 o NET-397:  FTPSClient does not handle AUTH or ADAT and only partially handles PBSZ. FTPSCommand should be deprecated. Thanks to Bogdan Drozdowski. 
