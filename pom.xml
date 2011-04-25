@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-parent</artifactId>
-        <version>20</version>
+        <version>21</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>commons-net</groupId>
@@ -355,70 +355,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         </plugins>
     </reporting>
 
-    <profiles>
-      <!-- TEMPORARY until new Commons Parent is released -->
-      <profile>
-        <id>apache-release</id>
-        <build>
-          <plugins>
-      <plugin>
-        <!--
-          - Copy LICENSE.txt and NOTICE.txt so that they are included
-          - in the -javadoc jar file for the component.
-          -->
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>tests.resources</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <configuration>
-              <target>
-                <copy todir="${project.build.directory}/test-classes/META-INF">
-                  <fileset dir="${basedir}">
-                    <include name="LICENSE.txt" />
-                    <include name="NOTICE.txt" />
-                  </fileset>
-                </copy>
-              </target>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-source-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-test-sources</id>
-                <goals>
-                  <goal>test-jar</goal>
-                </goals>
-                <phase>generate-sources</phase>
-              </execution>
-            </executions>
-          </plugin>
-
-            <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>test-jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>          
-        </plugins>
-      </build>
-    </profile>
-    <!-- END of temporary addition -->
-    
+    <profiles>   
       <profile>
         <id>rc</id>
         <distributionManagement>
