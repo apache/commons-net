@@ -70,7 +70,8 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
             "drwxrwx---+ 23 500     500    0 Jan 10 13:09 testACL",
             "-rw-r--r--   1 1        3518644 May 25 12:12 std",
             "lrwxrwxrwx   1 neeme neeme             23 Mar  2 18:06 macros -> ./../../global/macros/.",
-            "-rw-r--r--   1 ftp      group with spaces in it as allowed in cygwin see bug 38634   83853 Jan 22  2001 zxJDBC-1.2.4.tar.gz",
+            "-rw-r--r--   1 ftp      group with spaces in it as allowed in cygwin see bug 38634   83853 Jan 22  2001 zxJDBC-1.2.4.tar.gz", 
+                                                                                   // Bug 38634 => NET-16
             "crw-r----- 1 root kmem 0, 27 Jan 30 11:42 kmem",  //FreeBSD device
             "crw-------   1 root     sys      109,767 Jul  2  2004 pci@1c,600000:devctl", //Solaris device
             "-rwxrwx---   1 ftp      ftp-admin 816026400 Oct  5  2008 bloplab 7 cd1.img", // NET-294

@@ -218,7 +218,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
     }
 
     /**
-     * test condition reported as bug 20259.
+     * test condition reported as bug 20259 => NET-106.
      * directory with name beginning with a numeric character
      * was not parsing correctly
      *

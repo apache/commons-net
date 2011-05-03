@@ -102,7 +102,7 @@ public class FTPTimestampParserImpl implements
         if (recentDateFormat != null) {
             if (lenientFutureDates) {
                 // add a day to "now" so that "slop" doesn't cause a date
-                // slightly in the future to roll back a full year.  (Bug 35181)
+                // slightly in the future to roll back a full year.  (Bug 35181 => NET-83)
                 now.add(Calendar.DATE, 1);
             }
             parsed = recentDateFormat.parse(timestampStr, pp);
