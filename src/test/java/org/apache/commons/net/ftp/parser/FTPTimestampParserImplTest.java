@@ -120,6 +120,7 @@ public class FTPTimestampParserImplTest extends TestCase {
         config.setRecentDateFormatStr(FTPTimestampParser.DEFAULT_RECENT_SDF);
         // 2 hours difference
         config.setServerTimeZoneId("America/Chicago");
+        config.setLenientFutureDates(false); // NET-407
         parser.configure(config);
 
         SimpleDateFormat sdf = (SimpleDateFormat)
