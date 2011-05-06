@@ -12,6 +12,7 @@ This release fixes many bugs (see below), and adds new functionality:
 
 
 FTP changes:
+ - default for lenient future dates is now true, which fixes short date parsing where host clock is ahead of client clock
  - no longer parses every response line twice
  - OS auto-detection can be overriden by defining the property 'org.apache.commons.net.ftp.systemType';
  - or by creating a properties file '/systemType.properties' which provides a mapping from getSystemType() to parser name
@@ -110,6 +111,8 @@ o NET-359:  CopyStreamAdapter unconditionally resets the CopyStreamEvent source 
 o NET-355:  examples.nntp.NNTPUtils does not compile 
 
 Changes:
+o NET-407:  Change lenientFutureDates to default to true.
+            This means short dates will be parsed as the current year when the host clock is up to 1 day ahead of the client clock. 
 o NET-400:  Option to override SSL negotiation. Make FTPSClient#execAuth() and FTPSClient#sslNegotiation() protected Thanks to David Kocher. 
 o NET-331:  AS400 file timestamp format is wrong. Workround exists. 
 o NET-269:  Remove semi-redundant check in SubnetUtils.calculate(). 

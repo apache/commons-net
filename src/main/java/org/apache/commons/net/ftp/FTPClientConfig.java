@@ -208,7 +208,7 @@ public class FTPClientConfig
     private final String serverSystemKey;
     private String defaultDateFormatStr = null;
     private String recentDateFormatStr = null;
-    private boolean lenientFutureDates = false;
+    private boolean lenientFutureDates = true; // NET-407
     private String serverLanguageCode = null;
     private String shortMonthNames = null;
     private String serverTimeZoneId = null;

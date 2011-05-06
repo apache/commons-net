@@ -62,6 +62,7 @@ This release fixes many bugs (see below), and adds new functionality:
   - support for SMTPS and POP3S
 
     FTP changes:
+  - default for lenient future dates is now true, which fixes short date parsing where host clock is ahead of client clock
   - no longer parses every response line twice
   - OS auto-detection can be overriden by defining the property 'org.apache.commons.net.ftp.systemType';
   - or by creating a properties file '/systemType.properties' which provides a mapping from getSystemType() to parser name
@@ -85,6 +86,10 @@ KeyManagerUtils can be used to provide client certificates.
 
   All users are recommended to upgrade.
 ">
+            <action issue="NET-407" dev="sebb" type="update">
+            Change lenientFutureDates to default to true.
+            This means short dates will be parsed as the current year when the host clock is up to 1 day ahead of the client clock.
+            </action>
             <action issue="NET-404" dev="sebb" type="fix">
             FTPSSocketFactory does not override createSocket(); causes java.net.SocketException: Unconnected sockets not implemented.
             </action>
