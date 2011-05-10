@@ -45,15 +45,15 @@ limitations under the License.
 -->
 <document>
   <properties>
-    <title>Download</title>
+    <title>Download Commons Net</title>
     <author email="dev@commons.apache.org">Commons Documentation Team</author>
   </properties>
   <body>
     <section name="Download Commons Net">
     <subsection name="Using a Mirror">
       <p>
-        Please use a mirror to download our release builds.
-        You <strong>must</strong> verify the integrity of
+        We recommend you use a mirror to download our release
+        builds, but you <strong>must</strong> verify the integrity of
         the downloaded files using signatures downloaded from our main 
         distribution directories. Recent releases (48 hours) may not yet
         be available from the mirrors.
@@ -95,32 +95,32 @@ limitations under the License.
       </p>
     </subsection>
     </section>
-    <section name="Commons Net 2.2 (Requires Java 1.5 or later)">
+    <section name="Commons Net 3.0 (Requires Java 1.5 or later)">
       <subsection name="Binaries">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/net/binaries/commons-net-2.2.tar.gz">commons-net-2.2.tar.gz</a></td>
-              <td><a href="http://www.apache.org/dist/commons/net/binaries/commons-net-2.2.tar.gz.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/net/binaries/commons-net-2.2.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/net/binaries/commons-net-3.0.tar.gz">commons-net-3.0.tar.gz</a></td>
+              <td><a href="http://www.apache.org/dist/commons/net/binaries/commons-net-3.0.tar.gz.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/net/binaries/commons-net-3.0.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/net/binaries/commons-net-2.2.zip">commons-net-2.2.zip</a></td>
-              <td><a href="http://www.apache.org/dist/commons/net/binaries/commons-net-2.2.zip.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/net/binaries/commons-net-2.2.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/net/binaries/commons-net-3.0.zip">commons-net-3.0.zip</a></td>
+              <td><a href="http://www.apache.org/dist/commons/net/binaries/commons-net-3.0.zip.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/net/binaries/commons-net-3.0.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
       <subsection name="Source">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/net/source/commons-net-2.2-src.tar.gz">commons-net-2.2-src.tar.gz</a></td>
-              <td><a href="http://www.apache.org/dist/commons/net/source/commons-net-2.2-src.tar.gz.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/net/source/commons-net-2.2-src.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/net/source/commons-net-3.0-src.tar.gz">commons-net-3.0-src.tar.gz</a></td>
+              <td><a href="http://www.apache.org/dist/commons/net/source/commons-net-3.0-src.tar.gz.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/net/source/commons-net-3.0-src.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/net/source/commons-net-2.2-src.zip">commons-net-2.2-src.zip</a></td>
-              <td><a href="http://www.apache.org/dist/commons/net/source/commons-net-2.2-src.zip.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/net/source/commons-net-2.2-src.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/net/source/commons-net-3.0-src.zip">commons-net-3.0-src.zip</a></td>
+              <td><a href="http://www.apache.org/dist/commons/net/source/commons-net-3.0-src.zip.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/net/source/commons-net-3.0-src.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
