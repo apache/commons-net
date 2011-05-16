@@ -21,11 +21,7 @@ package org.apache.commons.net.smtp;
  * SMTPReply stores a set of constants for SMTP reply codes.  To interpret
  * the meaning of the codes, familiarity with RFC 821 is assumed.
  * The mnemonic constant names are transcriptions from the code descriptions
- * of RFC 821.  For those who think in terms of the actual reply code values,
- * a set of CODE_NUM constants are provided where NUM is the numerical value
- * of the code.
- * <p>
- * <p>
+ * of RFC 821.
  ***/
 
 public final class SMTPReply

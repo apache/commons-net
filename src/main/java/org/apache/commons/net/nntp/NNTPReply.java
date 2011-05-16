@@ -21,11 +21,7 @@ package org.apache.commons.net.nntp;
  * NNTPReply stores a set of constants for NNTP reply codes.  To interpret
  * the meaning of the codes, familiarity with RFC 977 is assumed.
  * The mnemonic constant names are transcriptions from the code descriptions
- * of RFC 977.  For those who think in terms of the actual reply code values,
- * a set of NUM constants are provided where NUM is the numerical value
- * of the code.
- * <p>
- * <p>
+ * of RFC 977.
  ***/
 
 public final class NNTPReply

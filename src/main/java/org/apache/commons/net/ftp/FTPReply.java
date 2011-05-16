@@ -21,10 +21,7 @@ package org.apache.commons.net.ftp;
  * FTPReply stores a set of constants for FTP reply codes.  To interpret
  * the meaning of the codes, familiarity with RFC 959 is assumed.
  * The mnemonic constant names are transcriptions from the code descriptions
- * of RFC 959.  For those who think in terms of the actual reply code values,
- * a set of CODE_NUM constants are provided where NUM is the numerical value
- * of the code.
- * <p>
+ * of RFC 959.
  * <p>
  * TODO replace with an enum
  ***/
