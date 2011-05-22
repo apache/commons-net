@@ -87,7 +87,7 @@ public class FTPSClient extends FTPClient {
     private SSLContext context;
     /** The socket object. */
     private Socket plainSocket;
-    /** The established socket flag. */
+    /** Controls whether a new SSL session may be established by this socket. Default true. */
     private boolean isCreation = true;
     /** The use client mode flag. */
     private boolean isClientMode = true;
@@ -284,7 +284,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Controls whether new a SSL session may be established by this socket.
+     * Controls whether a new SSL session may be established by this socket.
      * @param isCreation The established socket flag.
      */
     public void setEnabledSessionCreation(boolean isCreation) {
