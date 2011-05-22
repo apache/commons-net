@@ -548,7 +548,7 @@ public class FTPSClient extends FTPClient {
     protected Socket _openDataConnection_(int command, String arg)
             throws IOException {
         Socket socket = super._openDataConnection_(command, arg);
-        if (socket != null && socket instanceof SSLSocket) {
+        if (socket instanceof SSLSocket) {
             SSLSocket sslSocket = (SSLSocket)socket;
 
             sslSocket.setUseClientMode(isClientMode);
@@ -559,10 +559,12 @@ public class FTPSClient extends FTPClient {
                 sslSocket.setNeedClientAuth(isNeedClientAuth);
                 sslSocket.setWantClientAuth(isWantClientAuth);
             }
-            if (suites != null)
+            if (suites != null) {
                 sslSocket.setEnabledCipherSuites(suites);
-            if (protocols != null)
+            }
+            if (protocols != null) {
                 sslSocket.setEnabledProtocols(protocols);
+            }
             sslSocket.startHandshake();
         }
 
