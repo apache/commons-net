@@ -569,17 +569,19 @@ implements Configurable
                     CopyStreamEvent.UNKNOWN_STREAM_SIZE, __mergeListeners(csl),
                     false);
         }
-        finally
+        catch (IOException e)
         {
-            Util.closeQuietly(socket);
+            Util.closeQuietly(socket); // ignore close errors here
+            throw e;
         }
 
+        output.close(); // ensure the file is fully written
+        socket.close(); // done writing the file
         // Get the transfer response
         boolean ok = completePendingCommand();
         if (csl != null) {
             csl.cleanUp(); // fetch any outstanding keepalive replies
         }
-        output.close(); // we want to know about close failure
         return ok;
     }
 

@@ -56,6 +56,14 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
     <body>
+        <release version="3.0.1" date="June 2011" description="
+This is a bug-fix release.
+        ">
+            <action issue="NET-409" dev="sebb" type="fix">
+            FTPClient truncates file (storeFile method).
+            Fix bug introduced in release 3.0.
+            </action>
+        </release>
         <release version="3.0" date="May 2011" description="
 This release fixes many bugs (see below), and adds new functionality:
   - basic support for IMAP and IMAPS
