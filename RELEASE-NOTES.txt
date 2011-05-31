@@ -1,146 +1,21 @@
 
-              Apache Commons Net 3.0-SNAPSHOT RELEASE NOTES
+              Apache Commons Net 3.0.1-SNAPSHOT RELEASE NOTES
 
-The Commons Net team is pleased to announce the release of commons-net-3.0-SNAPSHOT
+The Commons Net team is pleased to announce the release of commons-net-3.0.1-SNAPSHOT
   
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
 Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
 
-This release fixes many bugs (see below), and adds new functionality:
- - basic support for IMAP and IMAPS
- - support for SMTPS and POP3S
-
-
-FTP changes:
- - default for lenient future dates is now true, which fixes short date parsing where host clock is ahead of client clock
- - no longer parses every response line twice
- - OS auto-detection can be overriden by defining the property 'org.apache.commons.net.ftp.systemType';
- - or by creating a properties file '/systemType.properties' which provides a mapping from getSystemType() to parser name
- See the Javadoc for FTPClient.initiateListParsing(String parserKey, String pathname).
- - SASL, PLAIN and CRAM-MD5 authentication added
- - added control channel keep-alive for use with misbehaving routers, see FTPClient.setControlKeepAliveTimeout(long controlIdle)
-
-
-NNTP changes:
- - reworked to use long for article numbers
- - added streaming equivalents for the array methods
-
-Added TrustManagerUtils and KeyManagerUtils classes to simplify setting up trust and key namagers. KeyManagerUtils can be used to provide client certificates.
-
-This release is binary-compatible with 2.2, but there are some minor changes to source compatibility:
- - telnet.TelnetClient#addOptionHandler(TelnetOptionHandler) now additionally throws IOException
- - telnet.TelnetClient#deleteOptionHandler() now additionally throws IOException
- - ftp.FTPSClient ctors no longer throw NoSuchAlgorithmException
- - Redundant CODE_nnn definitions have been removed from FTPReply, SMTPReply and NNTPReply classes
- - Unused String constants KEYSTORE_ALGORITHM, PROVIDER, STORE_TYPE, TRUSTSTORE_ALGORITHM removed from FTPSClient
-
-All users are recommended to upgrade.
+This is a bug-fix release.
 
 Changes in this version include:
 
-New features:
-o NET-333:  Added basic IMAP/IMAPS implementation. Thanks to Bogdan Drozdowski. 
-o NET-326:  A KeyManager is required when the protection level is set to 'P' with FTPSClient on active mode.
-            Added KeyManagerUtils class to simplify provision of client certificates. 
-o NET-273:  FEAT response parsing. Added FTPClient methods: boolean hasFeature(feature [,option]),
-            String fetaureValue(feature), String[] featureValues(feature) 
-o NET-379:  FTPClient - support for processing arbitrary commands that only use the control channel 
-o NET-378:  FTP listing should support MLST and MLSD. 
-o NET-372:  FTPSClient: java.security.cert.CertificateException: No X509TrustManager implementation available if trustManager == null 
-o NET-371:  Create TrustManagerFactory to provide custom TrustManagers. 
-o NET-327:  "Unconnected sockets not implemented" when using FTPSClient
-            Added disconnect() override which resets the socket factories to their defaults Thanks to Bogdan Drozdowski. 
-o NET-350:  "java.net.SocketException: Broken pipe" when calling "TelnetClient.sendAYT()"
-            Added SocketClient#isAvailable() method to perform additional checks on a socket. Thanks to Bogdan Drozdowski. 
-o NET-237:  Add streaming methods (corresponding to array methods) to NNTPClient. 
-o NET-314:  The FTP client should autodetect the control encoding. Thanks to Bogdan Drozdowski. 
-o NET-361:  Implement Telnet Command sender. 
-o NET-343:  Telnet client: Support Client-initiated Subnegotiation Messages. Thanks to Archie Cobbs. 
-o NET-344:  Telnet client: Support Listener Notification of Incoming Data. Thanks to Archie Cobbs. 
-o NET-352:  SASL PLAIN and CRAM-MD5 authentication. Thanks to Bogdan Drozdowski. 
-o NET-357:  The POP3 client does not support SSL/TLS connections. Thanks to Bogdan Drozdowski. 
-o NET-229:  Use properties file (/systemType.properties) to handle new OS-type auto-detection. 
-o NET-332:  Commons net ftp cannot handle unknown type parser and should allow override of parser through vm argument.
-            The system property "org.apache.commons.net.ftp.systemType" can be used to provide the system type. 
-o NET-156:  New FTPClient method to retrieve all directory names in the current working directory.
-            Added methods listDirectories(), listDirectories(String path). 
-o NET-353:  The SMTPClient does not support authentication. Thanks to Bogdan Drozdowski. 
-o NET-356:  The SMTP client does not support SSL/TLS connections. Thanks to Bogdan Drozdowski. 
-o NET-358:  Implement copy Listener in FTPClient file operations. 
-o NET-351:  APOP authentication fails most of the time.
-            Fix by adding leading 0 if necessary. Thanks to Bogdan Drozdowski. 
 
 Fixed Bugs:
-o NET-404:  FTPSSocketFactory does not override createSocket(); causes java.net.SocketException: Unconnected sockets not implemented. 
-o NET-399:  ftp data connection does not use connectTimeout. Thanks to Noah Levitt. 
-o NET-402:  IMAP, NNTP, POP3 and SMTP classes uses BufferedReader for control channel, which does not follow the standard.
-            Changed reader to CRLFLineReader. 
-o NET-401:  FTP class uses BufferedReader for control channel, which does not follow the standard.
-            Changed reader to CRLFLineReader. 
-o NET-268:  Better handling of CIDR/31 and CIDR/32 where isInclusive = false.
-            Return 0 for address count, and 0.0.0.0 for each of the addresses 
-o NET-389:  Unix parser should ignore "total nnn" lines. 
-o NET-367:  ntp.TimeStamp uses incorrect lazy initialisation of static fields simpleFormatter and utcFormatter. 
-o NET-388:  VMSVersioningFTPEntryParser#preParse should not call super.preParse(). 
-o NET-362:  TelnetInputStream has various threading bugs. 
-o NET-89:  TelnetClient use of FromNetASCIIInputStream and ToNetASCIIOutputStream breaks binary mode.
-            See also NET-387. 
-o NET-354:  FTPSClient not properly supporting CCC and PROT P. Thanks to Leif John Korshavn. 
-o NET-365:  FTPClient.listFiles() does not work properly, if remote server speaks German.
-            Match non-space{3} instead of A-Za-z{3} 
-o NET-366:  FTPClientConfig: setServerLanguageCode and setShortMonthNames do not work.
-            Ensure that config is passed to all parsers that can use it. 
-o NET-276:  NNTPClient has problems with group listings for large groups. 
-o NET-185:  Possible NPE in Threader.java 
-o NET-364:  nntp.Article is very inefficient and incorrect. 
-o NET-363:  Can't connect to a server behind firewall in passive mode. Thanks to daniel damon. 
-o NET-348:  Queue is full TelnetInputStream. 
-o NET-345:  Telnet client: not properly handling IAC bytes within subnegotiation messages:
-            - failing to double IACs on output
-            - failing to de-double IACs in input Thanks to Archie Cobbs. 
-o NET-270:  Incorrect error handling in method initiateListParsing of FTPClient. 
-o NET-258:  Implement A Keepalive Mechanism. Control channel keepalive implemented for the following methods:
-            appendFile, storeFile, storeUniqueFile, retrieveFile. 
-o NET-289:  StackOverflowError in Threader. Thanks to Luc Claes. 
-o NET-317:  POP3MessageInfo fields should be final. 
-o NET-252:  Get rid of using deprecated API in VMSFTPEntryParser. 
-o NET-303:  FTPFileEntryParser API samples are wrong. 
-o NET-286:  Unhandled SecurityException in DefaultFTPFileEntryParserFactory.createFileEntryParser when using applets. 
-o NET-360:  DefaultFTPFileEntryParserFactory.createFileEntryParser(String key) always tries to load a class. 
-o NET-359:  CopyStreamAdapter unconditionally resets the CopyStreamEvent source and is inefficient. 
-o NET-355:  examples.nntp.NNTPUtils does not compile 
+o NET-409:  FTPClient truncates file (storeFile method).
+            Fix bug introduced in release 3.0. 
 
-Changes:
-o NET-407:  Change lenientFutureDates to default to true.
-            This means short dates will be parsed as the current year when the host clock is up to 1 day ahead of the client clock. 
-o NET-400:  Option to override SSL negotiation. Make FTPSClient#execAuth() and FTPSClient#sslNegotiation() protected Thanks to David Kocher. 
-o NET-331:  AS400 file timestamp format is wrong. Workround exists. 
-o NET-269:  Remove semi-redundant check in SubnetUtils.calculate(). 
-o NET-219:  Should Telnet class Exception blocks write to System.err?
-            Catch blocks removed, and throws clauses added to allow caller to more easily detect and recover. 
-o NET-397:  FTPSClient does not handle AUTH or ADAT and only partially handles PBSZ. FTPSCommand should be deprecated. Thanks to Bogdan Drozdowski. 
-o NET-395:  Move ProtocolCommandSupport to SocketClient. 
-o NET-393:  Should the sendCommandWithID() methods be public?
-            Made methods private, and deleted currently unused ones. 
-o NET-394:  Are the sendUntaggedCommand() methods needed?
-            Renamed the method as sendData(), as it's not a command. 
-o NET-392:  Use enum for IMAPCommand. 
-o NET-381:  Parsing is inefficient, as it parses everything twice. 
-o NET-385:  FTP does not apply timeout to initial responses. 
-o NET-384:  KeyManagerUtils - the KeyManager is not efficient. 
-o NET-383:  KeyManagerUtils - allow alias to be omitted when there is only one private key in the store 
-o NET-377:  NLST does not take notice of HiddenFiles setting. 
-o NET-373:  NNTP Listgroups not working - broken server implementation. 
-o NET-375:  DotTerminatedMessageReader should extend BufferedReader, rather than Reader. 
-o NET-374:  ParserInitializationException doesn't use standard JDK exception chaining 
-o NET-368:  Threader.thread should accept an Iterable rather than a List. 
 
-Removed:
-o NET-369:  Article.addHeaderField() is currently write-only - there is no way to retrieve the headers - is it needed?
-            Method was removed, along with the field. 
-o           Removed deprecated unused fields from FTPSClient:
-            - KEYSTORE_ALGORITHM, PROVIDER, STORE_TYPE, TRUSTSTORE_ALGORITHM 
-o NET-330:  The method VMSFTPEntryParser.parseFileList(InputStream listStream) should not be present. 
  
 For complete information on Commons Net, including instructions on how to submit bug reports,
 patches, or suggestions for improvement, see the Apache Commons Net website:
