@@ -1,7 +1,7 @@
 
-              Apache Commons Net 3.0.1-SNAPSHOT RELEASE NOTES
+              Apache Commons Net 3.0.1 RELEASE NOTES
 
-The Commons Net team is pleased to announce the release of commons-net-3.0.1-SNAPSHOT
+The Commons Net team is pleased to announce the release of commons-net-3.0.1
   
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
 Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
