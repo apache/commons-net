@@ -37,9 +37,9 @@ extends TestCase implements TelnetNotificationHandler
      * used in testing for clarity.
      */
     private class TestConnection {
-        TelnetTestSimpleServer server;
-        TelnetClient client;
-        int port;
+        private final TelnetTestSimpleServer server;
+        private final TelnetClient client;
+        private final int port;
         TestConnection(
                 TelnetTestSimpleServer server,
                 TelnetClient client,
@@ -89,6 +89,8 @@ extends TestCase implements TelnetNotificationHandler
                         client = new TelnetClient();
                         // redundant but makes code clearer.
                         client.setReaderThread(true);
+                        client.connect("127.0.0.1", port);
+                        STANDARD = new TestConnection(server, client, port);
                         break;
                     case 1:
                         client = new TelnetClient();
@@ -102,32 +104,21 @@ extends TestCase implements TelnetNotificationHandler
                         client.addOptionHandler(ttopt);
                         client.addOptionHandler(echoopt);
                         client.addOptionHandler(gaopt);
+                        client.connect("127.0.0.1", port);
+                        OPTIONS = new TestConnection(server, client, port);
                         break;
                     case 2:
                         client = new TelnetClient("ANSI");
+                        client.connect("127.0.0.1", port);
+                        ANSI = new TestConnection(server, client, port);
                         break;
                     case 3:
                         client = new TelnetClient();
                         client.setReaderThread(false);
-                        break;
-               }
-               client.connect("127.0.0.1", port);
-               switch (socket) {
-                    case 0:
-                        STANDARD = new TestConnection(server, client, port);
-                        break;
-                    case 1:
-                        OPTIONS = new TestConnection(server, client, port);
-                        break;
-                    case 2:
-                        ANSI = new TestConnection(server, client, port);
-                        break;
-                    case 3:
+                        client.connect("127.0.0.1", port);
                         NOREAD = new TestConnection(server, client, port);
                         break;
-
                }
-
                // only increment socket number on success
                socket++;
            } catch (IOException e) {
