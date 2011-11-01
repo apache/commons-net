@@ -55,7 +55,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     private IOException __ioException;
 
     /* TERMINAL-TYPE option (start)*/
-    private final int __suboption[] = new int[256];
+    private final int __suboption[] = new int[512];
     private int __suboption_count = 0;
     /* TERMINAL-TYPE option (end)*/
 
