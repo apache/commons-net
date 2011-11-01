@@ -648,6 +648,24 @@ implements Configurable
     	return _openDataConnection_(FTPCommand.getCommand(command), arg);
     }
 
+    /**
+     * Establishes a data connection with the FTP server, returning
+     * a Socket for the connection if successful.  If a restart
+     * offset has been set with {@link #setRestartOffset(long)},
+     * a REST command is issued to the server with the offset as
+     * an argument before establishing the data connection.  Active
+     * mode connections also cause a local PORT command to be issued.
+     * <p>
+     * @param command  The text representation of the FTP command to send.
+     * @param arg The arguments to the FTP command.  If this parameter is
+     *             set to null, then the command is sent with no argument.
+     * @return A Socket corresponding to the established data connection.
+     *         Null is returned if an FTP protocol error is reported at
+     *         any point during the establishment and initialization of
+     *         the connection.
+     * @exception IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     */
     protected Socket _openDataConnection_(String command, String arg)
     throws IOException
     {
