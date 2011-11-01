@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-parent</artifactId>
-        <version>21</version>
+        <version>22</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>commons-net</groupId>
@@ -201,6 +201,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                                         <attribute name="Implementation-Vendor" value="${project.organization.name}" />
                                         <attribute name="Implementation-Version" value="${project.version}" />
                                         <attribute name="Implementation-Vendor-Id" value="org.apache" />
+                                        <attribute name="Implementation-Build" value="${implementation.build}"/>
                                         <attribute name="X-Compile-Source-JDK" value="${maven.compile.source}" />
                                         <attribute name="X-Compile-Target-JDK" value="${maven.compile.target}" />
                                     </manifest>
@@ -219,6 +220,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                                         <attribute name="Implementation-Vendor" value="${project.organization.name}" />
                                         <attribute name="Implementation-Version" value="${project.version}" />
                                         <attribute name="Implementation-Vendor-Id" value="org.apache" />
+                                        <attribute name="Implementation-Build" value="${implementation.build}"/>
                                         <attribute name="X-Compile-Source-JDK" value="${maven.compile.source}" />
                                         <attribute name="X-Compile-Target-JDK" value="${maven.compile.target}" />
                                     </manifest>
