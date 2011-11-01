@@ -49,12 +49,12 @@ public class AuthenticatingSMTPClient extends SMTPSClient
     }
 
     /**
-     * Overloaded constructor that takes an encoding specification
-     * @param encoding The encoding to use
+     * Overloaded constructor that takes a protocol specification
+     * @param protocol The encoding to use
      * @throws NoSuchAlgorithmException
      */
-    public AuthenticatingSMTPClient(String encoding) throws NoSuchAlgorithmException {
-        super(encoding);
+    public AuthenticatingSMTPClient(String protocol) throws NoSuchAlgorithmException {
+        super(protocol);
     }
 
     /***
