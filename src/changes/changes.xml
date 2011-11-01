@@ -56,7 +56,7 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
     <body>
-        <release version="3.0.2-SNAPSHOT" date="TBA" description="
+        <release version="3.1-SNAPSHOT" date="TBA" description="
 TBA
         ">
             <action issue="NET-425" dev="sebb" type="add">
