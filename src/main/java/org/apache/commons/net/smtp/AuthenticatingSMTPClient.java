@@ -50,7 +50,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
 
     /**
      * Overloaded constructor that takes a protocol specification
-     * @param protocol The encoding to use
+     * @param protocol The protocol to use
      * @throws NoSuchAlgorithmException
      */
     public AuthenticatingSMTPClient(String protocol) throws NoSuchAlgorithmException {
