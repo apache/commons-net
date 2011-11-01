@@ -32,7 +32,6 @@ public class CopyStreamException extends IOException
     private static final long serialVersionUID = -2602899129433221532L;
 
     private final long totalBytesTransferred;
-    private final IOException ioException;
 
     /**
      * Creates a new CopyStreamException instance.
@@ -46,8 +45,8 @@ public class CopyStreamException extends IOException
                                IOException exception)
     {
         super(message);
+        initCause(exception); // merge this into super() call once we need 1.6+
         totalBytesTransferred = bytesTransferred;
-        ioException = exception;
     }
 
     /**
@@ -67,6 +66,6 @@ public class CopyStreamException extends IOException
      */
     public IOException getIOException()
     {
-        return ioException;
+        return (IOException) getCause(); // cast is OK because it was initialised with an IOException
     }
 }
