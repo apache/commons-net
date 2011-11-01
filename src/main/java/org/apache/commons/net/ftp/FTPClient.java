@@ -545,6 +545,12 @@ implements Configurable
     private boolean __storeFile(int command, String remote, InputStream local)
     throws IOException
     {
+    	return _storeFile(FTPCommand.getCommand(command), remote, local);
+    }
+    
+    protected boolean _storeFile(String command, String remote, InputStream local)
+    throws IOException
+    {
         OutputStream output;
         Socket socket;
 
@@ -586,6 +592,12 @@ implements Configurable
     }
 
     private OutputStream __storeFileStream(int command, String remote)
+    throws IOException
+    {
+    	return _storeFileStream(FTPCommand.getCommand(command), remote);
+    }
+
+    protected OutputStream _storeFileStream(String command, String remote)
     throws IOException
     {
         OutputStream output;
@@ -631,6 +643,12 @@ implements Configurable
      *      command to the server or receiving a reply from the server.
      */
     protected Socket _openDataConnection_(int command, String arg)
+    throws IOException
+    {
+    	return _openDataConnection_(FTPCommand.getCommand(command), arg);
+    }
+
+    protected Socket _openDataConnection_(String command, String arg)
     throws IOException
     {
         Socket socket;

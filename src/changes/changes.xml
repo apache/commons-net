@@ -59,6 +59,9 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.0.2-SNAPSHOT" date="TBA" description="
 TBA
         ">
+            <action issue="NET-425" dev="sebb" type="add">
+            _openDataConnection_, __storeFile, and __storeFileStream should be protected and take String for FTP command.
+            </action>
             <action issue="NET-416" dev="sebb" type="update">
             Increasing sub-negotiation message holder array size
             </action>
