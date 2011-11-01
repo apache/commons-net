@@ -632,7 +632,7 @@ implements Configurable
      * an argument before establishing the data connection.  Active
      * mode connections also cause a local PORT command to be issued.
      * <p>
-     * @param command  The text representation of the FTP command to send.
+     * @param command  The int representation of the FTP command to send.
      * @param arg The arguments to the FTP command.  If this parameter is
      *             set to null, then the command is sent with no argument.
      * @return A Socket corresponding to the established data connection.
