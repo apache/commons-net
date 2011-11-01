@@ -161,7 +161,11 @@ public class SubnetUtils {
         }
 
         public String[] getAllAddresses() {
-            String[] addresses = new String[getAddressCount()];
+            int ct = getAddressCount();
+            String[] addresses = new String[ct];
+            if (ct == 0) {
+                return addresses;
+            }
             for (int add = low(), j=0; add <= high(); ++add, ++j) {
                 addresses[j] = format(toArray(add));
             }

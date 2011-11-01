@@ -59,6 +59,9 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.0.2-SNAPSHOT" date="TBA" description="
 TBA
         ">
+            <action issue="NET-428" dev="sebb" type="fix">
+            SubnetUtils throws ArrayIndexOutOfBoundsException for new SubnetUtils( "1.2.3.4/32" ).getInfo().getAllAddresses()
+            </action>
             <action issue="NET-421" dev="sebb" type="fix" due-to="Oliver Saggau">
             Problem connecting to TLS/SSL SMTP server using explicit mode.
             </action>

@@ -290,4 +290,20 @@ public class SubnetUtilsTest extends TestCase {
         } catch (IllegalArgumentException expected) {
         }
     }
+
+    public void testNET428_31() throws Exception {
+        final SubnetUtils subnetUtils = new SubnetUtils("1.2.3.4/31");
+        assertEquals(0,subnetUtils.getInfo().getAddressCount());
+        String[] address = subnetUtils.getInfo().getAllAddresses();
+        assertNotNull(address);
+        assertEquals(0,address.length);
+    }
+
+    public void testNET428_32() throws Exception {
+        final SubnetUtils subnetUtils = new SubnetUtils("1.2.3.4/32");
+        assertEquals(0,subnetUtils.getInfo().getAddressCount());
+        String[] address = subnetUtils.getInfo().getAllAddresses();
+        assertNotNull(address);
+        assertEquals(0,address.length);
+    }
 }
