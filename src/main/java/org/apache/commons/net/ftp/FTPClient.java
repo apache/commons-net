@@ -1625,10 +1625,16 @@ implements Configurable
     public boolean retrieveFile(String remote, OutputStream local)
     throws IOException
     {
+    	return _retrieveFile(FTPCommand.getCommand(FTPCommand.RETR), remote, local);
+    }
+
+    protected boolean _retrieveFile(String command, String remote, OutputStream local)
+    throws IOException
+    {
         InputStream input;
         Socket socket;
 
-        if ((socket = _openDataConnection_(FTPCommand.RETR, remote)) == null)
+        if ((socket = _openDataConnection_(command, remote)) == null)
             return false;
 
         input = new BufferedInputStream(socket.getInputStream(),
@@ -1688,10 +1694,16 @@ implements Configurable
      ***/
     public InputStream retrieveFileStream(String remote) throws IOException
     {
+    	return _retrieveFileStream(FTPCommand.getCommand(FTPCommand.RETR), remote);
+    }
+
+    protected InputStream _retrieveFileStream(String command, String remote)
+    throws IOException
+    {
         InputStream input;
         Socket socket;
 
-        if ((socket = _openDataConnection_(FTPCommand.RETR, remote)) == null)
+        if ((socket = _openDataConnection_(command, remote)) == null)
             return null;
 
         input = socket.getInputStream();
