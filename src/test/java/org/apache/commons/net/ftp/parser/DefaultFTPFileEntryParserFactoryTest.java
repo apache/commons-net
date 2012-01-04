@@ -139,6 +139,7 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
         checkParserClass(factory, FTPClientConfig.SYST_OS2, OS2FTPEntryParser.class);
         checkParserClass(factory, FTPClientConfig.SYST_UNIX, UnixFTPEntryParser.class);
         checkParserClass(factory, FTPClientConfig.SYST_VMS, VMSFTPEntryParser.class);
+        checkParserClass(factory, FTPClientConfig.SYST_MACOS_PETER, MacOsPeterFTPEntryParser.class);
 
         checkParserClass(factory, "WINDOWS", NTFTPEntryParser.class); // Same as SYST_NT
         // This is the way it works at present; config matching is exact

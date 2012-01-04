@@ -149,6 +149,10 @@ public class DefaultFTPFileEntryParserFactory
             {
                 parser = new NetwareFTPEntryParser(config);
             }
+            else if (ukey.indexOf(FTPClientConfig.SYST_MACOS_PETER) >= 0)
+            {
+                parser = new MacOsPeterFTPEntryParser(config);
+            }
             else if (ukey.indexOf(FTPClientConfig.SYST_L8) >= 0)
             {
                 // L8 normally means Unix, but move it to the end for some L8 systems that aren't.

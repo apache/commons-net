@@ -205,6 +205,15 @@ public class FTPClientConfig
      */
     public static final String SYST_NETWARE = "NETWARE";
 
+    /**
+     * Identifier by which a Mac pre OS-X -based ftp server is known throughout
+     * the commons-net ftp system.
+     *
+     * @since 3.1
+     */
+    // Full string is "MACOS Peter's Server"; the substring below should be enough
+    public static final String SYST_MACOS_PETER  = "MACOS PETER"; // NET-436
+
     private final String serverSystemKey;
     private String defaultDateFormatStr = null;
     private String recentDateFormatStr = null;
