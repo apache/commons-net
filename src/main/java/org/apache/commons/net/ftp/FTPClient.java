@@ -688,50 +688,39 @@ implements Configurable
             // -> new ServerSocket(0) -> bind to any free local port
             ServerSocket server = _serverSocketFactory_.createServerSocket(getActivePort(), 1, getHostAddress());
 
-            // Try EPRT only if remote server is over IPv6, if not use PORT,
-            // because EPRT has no advantage over PORT on IPv4.
-            // It could even have the disadvantage,
-            // that EPRT will make the data connection fail, because
-            // today's intelligent NAT Firewalls are able to
-            // substitute IP addresses in the PORT command,
-            // but might not be able to recognize the EPRT command.
-            if (isInet6Address)
-            {
-                if (!FTPReply.isPositiveCompletion(eprt(getHostAddress(), server.getLocalPort())))
-                {
-                    server.close();
-                    return null;
-                }
-            }
-            else
-            {
-                if (!FTPReply.isPositiveCompletion(port(getHostAddress(), server.getLocalPort())))
-                {
-                    server.close();
-                    return null;
-                }
-            }
-
-            if ((__restartOffset > 0) && !restart(__restartOffset))
-            {
-                server.close();
-                return null;
-            }
-
-            if (!FTPReply.isPositivePreliminary(sendCommand(command, arg)))
-            {
-                server.close();
-                return null;
-            }
-
-            // For now, let's just use the data timeout value for waiting for
-            // the data connection.  It may be desirable to let this be a
-            // separately configurable value.  In any case, we really want
-            // to allow preventing the accept from blocking indefinitely.
-            if (__dataTimeout >= 0) {
-                server.setSoTimeout(__dataTimeout);
-            }
             try {
+                // Try EPRT only if remote server is over IPv6, if not use PORT,
+                // because EPRT has no advantage over PORT on IPv4.
+                // It could even have the disadvantage,
+                // that EPRT will make the data connection fail, because
+                // today's intelligent NAT Firewalls are able to
+                // substitute IP addresses in the PORT command,
+                // but might not be able to recognize the EPRT command.
+                if (isInet6Address) {
+                    if (!FTPReply.isPositiveCompletion(eprt(getHostAddress(), server.getLocalPort()))) {
+                        return null;
+                    }
+                } else {
+                    if (!FTPReply.isPositiveCompletion(port(getHostAddress(), server.getLocalPort()))) {
+                        return null;
+                    }
+                }
+    
+                if ((__restartOffset > 0) && !restart(__restartOffset)) {
+                    return null;
+                }
+
+                if (!FTPReply.isPositivePreliminary(sendCommand(command, arg))) {
+                    return null;
+                }
+
+                // For now, let's just use the data timeout value for waiting for
+                // the data connection.  It may be desirable to let this be a
+                // separately configurable value.  In any case, we really want
+                // to allow preventing the accept from blocking indefinitely.
+                if (__dataTimeout >= 0) {
+                    server.setSoTimeout(__dataTimeout);
+                }
                 socket = server.accept();
             } finally {
                 server.close();
