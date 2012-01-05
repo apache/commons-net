@@ -523,9 +523,10 @@ implements Configurable
         delim4 = reply.charAt(reply.length()-1);
 
         if (!(delim1 == delim2) || !(delim2 == delim3)
-                || !(delim3 == delim4))
+                || !(delim3 == delim4)) {
             throw new MalformedServerReplyException(
                     "Could not parse extended passive host information.\nServer Reply: " + reply);
+        }
         try
         {
             port = Integer.parseInt(reply.substring(3, reply.length()-1));
@@ -554,14 +555,16 @@ implements Configurable
         OutputStream output;
         Socket socket;
 
-        if ((socket = _openDataConnection_(command, remote)) == null)
+        if ((socket = _openDataConnection_(command, remote)) == null) {
             return false;
+        }
 
         output = new BufferedOutputStream(socket.getOutputStream(),
                 getBufferSize()
         );
-        if (__fileType == ASCII_FILE_TYPE)
+        if (__fileType == ASCII_FILE_TYPE) {
             output = new ToNetASCIIOutputStream(output);
+        }
 
         CSL csl = null;
         if (__controlKeepAliveTimeout > 0) {
@@ -603,8 +606,9 @@ implements Configurable
         OutputStream output;
         Socket socket;
 
-        if ((socket = _openDataConnection_(command, remote)) == null)
+        if ((socket = _openDataConnection_(command, remote)) == null) {
             return null;
+        }
 
         output = socket.getOutputStream();
         if (__fileType == ASCII_FILE_TYPE) {
@@ -672,8 +676,9 @@ implements Configurable
         Socket socket;
 
         if (__dataConnectionMode != ACTIVE_LOCAL_DATA_CONNECTION_MODE &&
-                __dataConnectionMode != PASSIVE_LOCAL_DATA_CONNECTION_MODE)
+                __dataConnectionMode != PASSIVE_LOCAL_DATA_CONNECTION_MODE) {
             return null;
+        }
 
         final boolean isInet6Address = getRemoteAddress() instanceof Inet6Address;
 
@@ -723,8 +728,9 @@ implements Configurable
             // the data connection.  It may be desirable to let this be a
             // separately configurable value.  In any case, we really want
             // to allow preventing the accept from blocking indefinitely.
-            if (__dataTimeout >= 0)
+            if (__dataTimeout >= 0) {
                 server.setSoTimeout(__dataTimeout);
+            }
             try {
                 socket = server.accept();
             } finally {
@@ -787,8 +793,9 @@ implements Configurable
                     " is not same as server " + host2.getHostAddress());
         }
 
-        if (__dataTimeout >= 0)
+        if (__dataTimeout >= 0) {
             socket.setSoTimeout(__dataTimeout);
+        }
 
         return socket;
     }
@@ -907,13 +914,15 @@ implements Configurable
 
         user(username);
 
-        if (FTPReply.isPositiveCompletion(_replyCode))
+        if (FTPReply.isPositiveCompletion(_replyCode)) {
             return true;
+        }
 
         // If we get here, we either have an error code, or an intermmediate
         // reply requesting password.
-        if (!FTPReply.isPositiveIntermediate(_replyCode))
+        if (!FTPReply.isPositiveIntermediate(_replyCode)) {
             return false;
+        }
 
         return FTPReply.isPositiveCompletion(pass(password));
     }
@@ -941,21 +950,25 @@ implements Configurable
     {
         user(username);
 
-        if (FTPReply.isPositiveCompletion(_replyCode))
+        if (FTPReply.isPositiveCompletion(_replyCode)) {
             return true;
+        }
 
         // If we get here, we either have an error code, or an intermmediate
         // reply requesting password.
-        if (!FTPReply.isPositiveIntermediate(_replyCode))
+        if (!FTPReply.isPositiveIntermediate(_replyCode)) {
             return false;
+        }
 
         pass(password);
 
-        if (FTPReply.isPositiveCompletion(_replyCode))
+        if (FTPReply.isPositiveCompletion(_replyCode)) {
             return true;
+        }
 
-        if (!FTPReply.isPositiveIntermediate(_replyCode))
+        if (!FTPReply.isPositiveIntermediate(_replyCode)) {
             return false;
+        }
 
         return FTPReply.isPositiveCompletion(acct(account));
     }
@@ -1167,8 +1180,9 @@ implements Configurable
      ***/
     public boolean enterRemotePassiveMode() throws IOException
     {
-        if (pasv() != FTPReply.ENTERING_PASSIVE_MODE)
+        if (pasv() != FTPReply.ENTERING_PASSIVE_MODE) {
             return false;
+        }
 
         __dataConnectionMode = PASSIVE_REMOTE_DATA_CONNECTION_MODE;
         __parsePassiveModeReply(_replyLines.get(0));
@@ -1232,8 +1246,9 @@ implements Configurable
     {
         if (__activeMinPort > 0 && __activeMaxPort >= __activeMinPort)
         {
-            if (__activeMaxPort == __activeMinPort)
+            if (__activeMaxPort == __activeMinPort) {
                 return __activeMaxPort;
+            }
             // Get a random port between the min and max port range
             return __random.nextInt(__activeMaxPort - __activeMinPort + 1) + __activeMinPort;
         }
@@ -1436,8 +1451,9 @@ implements Configurable
     public boolean remoteRetrieve(String filename) throws IOException
     {
         if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
-                __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE)
+                __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
             return FTPReply.isPositivePreliminary(retr(filename));
+        }
         return false;
     }
 
@@ -1462,8 +1478,9 @@ implements Configurable
     public boolean remoteStore(String filename) throws IOException
     {
         if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
-                __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE)
+                __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
             return FTPReply.isPositivePreliminary(stor(filename));
+        }
         return false;
     }
 
@@ -1489,8 +1506,9 @@ implements Configurable
     public boolean remoteStoreUnique(String filename) throws IOException
     {
         if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
-                __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE)
+                __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
             return FTPReply.isPositivePreliminary(stou(filename));
+        }
         return false;
     }
 
@@ -1516,8 +1534,9 @@ implements Configurable
     public boolean remoteStoreUnique() throws IOException
     {
         if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
-                __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE)
+                __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
             return FTPReply.isPositivePreliminary(stou());
+        }
         return false;
     }
 
@@ -1543,8 +1562,9 @@ implements Configurable
     public boolean remoteAppend(String filename) throws IOException
     {
         if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
-                __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE)
+                __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
             return FTPReply.isPositivePreliminary(appe(filename));
+        }
         return false;
     }
 
@@ -1634,13 +1654,15 @@ implements Configurable
         InputStream input;
         Socket socket;
 
-        if ((socket = _openDataConnection_(command, remote)) == null)
+        if ((socket = _openDataConnection_(command, remote)) == null) {
             return false;
+        }
 
         input = new BufferedInputStream(socket.getInputStream(),
                 getBufferSize());
-        if (__fileType == ASCII_FILE_TYPE)
+        if (__fileType == ASCII_FILE_TYPE) {
             input = new FromNetASCIIInputStream(input);
+        }
 
         CSL csl = null;
         if (__controlKeepAliveTimeout > 0) {
@@ -1703,8 +1725,9 @@ implements Configurable
         InputStream input;
         Socket socket;
 
-        if ((socket = _openDataConnection_(command, remote)) == null)
+        if ((socket = _openDataConnection_(command, remote)) == null) {
             return null;
+        }
 
         input = socket.getInputStream();
         if (__fileType == ASCII_FILE_TYPE) {
@@ -2287,8 +2310,9 @@ implements Configurable
      ***/
     public void setRestartOffset(long offset)
     {
-        if (offset >= 0)
+        if (offset >= 0) {
             __restartOffset = offset;
+        }
     }
 
     /***
@@ -2320,8 +2344,9 @@ implements Configurable
      ***/
     public boolean rename(String from, String to) throws IOException
     {
-        if (!FTPReply.isPositiveIntermediate(rnfr(from)))
+        if (!FTPReply.isPositiveIntermediate(rnfr(from))) {
             return false;
+        }
 
         return FTPReply.isPositiveCompletion(rnto(to));
     }
@@ -2418,8 +2443,9 @@ implements Configurable
      ***/
     public String printWorkingDirectory() throws IOException
     {
-        if (pwd() != FTPReply.PATHNAME_CREATED)
+        if (pwd() != FTPReply.PATHNAME_CREATED) {
             return null;
+        }
 
         return __parsePathname(_replyLines.get( _replyLines.size() - 1));
     }
@@ -2495,8 +2521,9 @@ implements Configurable
      ***/
     public String listHelp() throws IOException
     {
-        if (FTPReply.isPositiveCompletion(help()))
+        if (FTPReply.isPositiveCompletion(help())) {
             return getReplyString();
+        }
         return null;
     }
 
@@ -2517,8 +2544,9 @@ implements Configurable
      */
     public String listHelp(String command) throws IOException
     {
-        if (FTPReply.isPositiveCompletion(help(command)))
+        if (FTPReply.isPositiveCompletion(help(command))) {
             return getReplyString();
+        }
         return null;
     }
 
@@ -2573,15 +2601,17 @@ implements Configurable
         BufferedReader reader;
         ArrayList<String> results;
 
-        if ((socket = _openDataConnection_(FTPCommand.NLST, getListArguments(pathname))) == null)
+        if ((socket = _openDataConnection_(FTPCommand.NLST, getListArguments(pathname))) == null) {
             return null;
+        }
 
         reader =
             new BufferedReader(new InputStreamReader(socket.getInputStream(), getControlEncoding()));
 
         results = new ArrayList<String>();
-        while ((line = reader.readLine()) != null)
+        while ((line = reader.readLine()) != null) {
             results.add(line);
+        }
 
         reader.close();
         socket.close();
@@ -3114,8 +3144,9 @@ implements Configurable
      ***/
     public String getStatus() throws IOException
     {
-        if (FTPReply.isPositiveCompletion(stat()))
+        if (FTPReply.isPositiveCompletion(stat())) {
             return getReplyString();
+        }
         return null;
     }
 
@@ -3135,8 +3166,9 @@ implements Configurable
      ***/
     public String getStatus(String pathname) throws IOException
     {
-        if (FTPReply.isPositiveCompletion(stat(pathname)))
+        if (FTPReply.isPositiveCompletion(stat(pathname))) {
             return getReplyString();
+        }
         return null;
     }
 
@@ -3153,8 +3185,9 @@ implements Configurable
      * @since 2.0
      */
     public String getModificationTime(String pathname) throws IOException {
-        if (FTPReply.isPositiveCompletion(mdtm(pathname)))
+        if (FTPReply.isPositiveCompletion(mdtm(pathname))) {
             return getReplyString();
+        }
         return null;
     }
 
@@ -3413,8 +3446,9 @@ implements Configurable
     @Deprecated
     public String getSystemName() throws IOException
     {
-        if (__systemName == null && FTPReply.isPositiveCompletion(syst()))
+        if (__systemName == null && FTPReply.isPositiveCompletion(syst())) {
             __systemName = _replyLines.get(_replyLines.size() - 1).substring(4);
+        }
         return __systemName;
     }
 }
