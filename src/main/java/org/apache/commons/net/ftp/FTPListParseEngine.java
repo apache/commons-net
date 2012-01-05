@@ -90,6 +90,7 @@ public class FTPListParseEngine {
      * on the server.
      *
      * @param stream input stream provided by the server socket.
+     * @param encoding the encoding to be used for reading the stream
      *
      * @exception IOException
      *                   thrown on any failure to read from the sever.
@@ -220,10 +221,10 @@ public class FTPListParseEngine {
      * @return an array of FTPFile objects containing the whole list of
      *         files returned by the server as read by this object's parser.
      * None of the entries will be null
-     * @exception IOException
+     * @exception IOException - not ever thrown, may be removed in a later release
      */
     public FTPFile[] getFiles()
-    throws IOException
+    throws IOException // TODO remove; not actually thrown
     {
         return getFiles(FTPFileFilters.NON_NULL);
     }
@@ -244,10 +245,10 @@ public class FTPListParseEngine {
      * a filter such as {@link FTPFileFilters#NON_NULL} which does not
      * allow null entries.
      * @since 2.2
-     * @exception IOException
+     * @exception IOException - not ever thrown, may be removed in a later release
      */
     public FTPFile[] getFiles(FTPFileFilter filter)
-    throws IOException
+    throws IOException // TODO remove; not actually thrown
     {
         List<FTPFile> tmpResults = new ArrayList<FTPFile>();
         Iterator<String> iter = this.entries.iterator();
