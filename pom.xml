@@ -234,8 +234,8 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                     </execution>
                 </executions>
             </plugin>
-            <!--  Attaches the commons-net-ftp JAR to the Maven lifecycle
-                  to ensure that it will be signed and deployed as normal -->
+            <!--  Attaches the commons-net-ftp and examples JARs to the Maven lifecycle
+                  to ensure they will be signed and deployed as normal -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -253,6 +253,11 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                                     <file>target/commons-net-ftp-${project.version}.jar</file>
                                     <type>jar</type>
                                     <classifier>ftp</classifier>
+                                </artifact>
+                                <artifact>
+                                    <file>target/commons-net-examples-${project.version}.jar</file>
+                                    <type>jar</type>
+                                    <classifier>examples</classifier>
                                 </artifact>
                             </artifacts>
                         </configuration>
