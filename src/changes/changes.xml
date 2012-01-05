@@ -59,6 +59,9 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.1-SNAPSHOT" date="TBA" description="
 TBA
         ">
+            <action issue="NET-423" dev="sebb" type="fix" due-to="Jens Koch">
+            FTPClient.storeFIle might fail when ControlKeepAliveTimeout is set (ditto for FTPCLient.retrieveFile)
+            </action>
             <action issue="NET-426" dev="sebb" type="add" due-to="Ketan">
             FTPS: Hook to customize _openDataConnection_ SSLSocket before startHandshake() is called
             </action>

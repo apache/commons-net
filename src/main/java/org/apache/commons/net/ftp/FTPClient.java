@@ -586,11 +586,11 @@ implements Configurable
 
         output.close(); // ensure the file is fully written
         socket.close(); // done writing the file
-        // Get the transfer response
-        boolean ok = completePendingCommand();
         if (csl != null) {
             csl.cleanUp(); // fetch any outstanding keepalive replies
         }
+        // Get the transfer response
+        boolean ok = completePendingCommand();
         return ok;
     }
 
@@ -1668,11 +1668,11 @@ implements Configurable
             Util.closeQuietly(socket);
         }
 
-        // Get the transfer response
-        boolean ok = completePendingCommand();
         if (csl != null) {
             csl.cleanUp(); // fetch any outstanding keepalive replies
         }
+        // Get the transfer response
+        boolean ok = completePendingCommand();
         return ok;
     }
 
