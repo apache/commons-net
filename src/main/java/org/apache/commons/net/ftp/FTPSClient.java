@@ -548,6 +548,7 @@ public class FTPSClient extends FTPClient {
     protected Socket _openDataConnection_(int command, String arg)
             throws IOException {
         Socket socket = super._openDataConnection_(command, arg);
+        _prepareDataSocket_(socket);
         if (socket instanceof SSLSocket) {
             SSLSocket sslSocket = (SSLSocket)socket;
 
@@ -569,6 +570,18 @@ public class FTPSClient extends FTPClient {
         }
 
         return socket;
+    }
+
+    /**
+    * Performs any custom initialization for a newly created SSLSocket (before
+    * the SSL handshake happens).
+    * Called by {@link #_openDataConnection_(int, String)} immediately 
+    * after creating the socket.
+    * The default implementation is a no-op
+    * @throws IOException 
+    */
+    protected void _prepareDataSocket_(Socket socket)
+            throws IOException {
     }
 
     /**
