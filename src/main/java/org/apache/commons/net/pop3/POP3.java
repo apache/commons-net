@@ -76,10 +76,10 @@ public class POP3 extends SocketClient
     // We have to ensure that the protocol communication is in ASCII
     // but we use ISO-8859-1 just in case 8-bit characters cross
     // the wire.
-    private static final String __DEFAULT_ENCODING = "ISO-8859-1";
+    static final String _DEFAULT_ENCODING = "ISO-8859-1";
 
     private int __popState;
-    private BufferedWriter __writer;
+    BufferedWriter _writer;
 
     BufferedReader _reader;
     int _replyCode;
@@ -101,7 +101,7 @@ public class POP3 extends SocketClient
         setDefaultPort(DEFAULT_PORT);
         __popState = DISCONNECTED_STATE;
         _reader = null;
-        __writer = null;
+        _writer = null;
         _replyLines = new ArrayList<String>();
         _commandSupport_ = new ProtocolCommandSupport(this);
     }
@@ -144,10 +144,10 @@ public class POP3 extends SocketClient
         super._connectAction_();
         _reader =
           new CRLFLineReader(new InputStreamReader(_input_,
-                                                   __DEFAULT_ENCODING));
-        __writer =
+                                                   _DEFAULT_ENCODING));
+        _writer =
           new BufferedWriter(new OutputStreamWriter(_output_,
-                                                    __DEFAULT_ENCODING));
+                                                    _DEFAULT_ENCODING));
         __getReply();
         setState(AUTHORIZATION_STATE);
     }
@@ -205,7 +205,7 @@ public class POP3 extends SocketClient
     {
         super.disconnect();
         _reader = null;
-        __writer = null;
+        _writer = null;
         _lastReplyLine = null;
         _replyLines.clear();
         setState(DISCONNECTED_STATE);
@@ -221,7 +221,7 @@ public class POP3 extends SocketClient
      ***/
     public int sendCommand(String command, String args) throws IOException
     {
-        if (__writer == null) {
+        if (_writer == null) {
             throw new IllegalStateException("Socket is not connected");
         }
         StringBuilder __commandBuffer = new StringBuilder();
@@ -235,8 +235,8 @@ public class POP3 extends SocketClient
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
         String message = __commandBuffer.toString();
-        __writer.write(message);
-        __writer.flush();
+        _writer.write(message);
+        _writer.flush();
 
         fireCommandSent(command, message);
 

@@ -59,6 +59,9 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.1-SNAPSHOT" date="TBA" description="
 TBA
         ">
+            <action issue="NET-430" dev="sebb" type="fix">
+            Can't login to POP3S Server using explicit mode
+            </action>
             <action issue="NET-434" dev="sebb" type="fix">
             FTPClient fails to close local listener socket when command socket channel encounter "ReadTimeoutException"
             </action>

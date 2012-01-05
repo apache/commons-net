@@ -17,7 +17,10 @@
 
 package org.apache.commons.net.pop3;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 import javax.net.ssl.KeyManager;
@@ -27,6 +30,7 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
+import org.apache.commons.net.io.CRLFLineReader;
 import org.apache.commons.net.util.SSLContextUtils;
 
 /**
@@ -203,6 +207,8 @@ public class POP3SClient extends POP3Client
         _socket_ = socket;
         _input_ = socket.getInputStream();
         _output_ = socket.getOutputStream();
+        _reader = new CRLFLineReader(new InputStreamReader(_input_, _DEFAULT_ENCODING));
+        _writer = new BufferedWriter(new OutputStreamWriter(_output_, _DEFAULT_ENCODING));    
     }
 
     /**
