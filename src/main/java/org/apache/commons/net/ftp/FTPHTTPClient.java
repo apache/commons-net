@@ -57,12 +57,17 @@ public class FTPHTTPClient extends FTPClient {
     }
 
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalStateException if connection mode is not passive
+     */
     @Override
     protected Socket _openDataConnection_(int command, String arg) 
     throws IOException {
         //Force local passive mode, active mode not supported by through proxy
         if (getDataConnectionMode() != PASSIVE_LOCAL_DATA_CONNECTION_MODE) {
-            enterLocalPassiveMode();
+            throw new IllegalStateException("Only passive connection mode supported");
         }
 
         final boolean isInet6Address = getRemoteAddress() instanceof Inet6Address;
@@ -120,7 +125,7 @@ public class FTPHTTPClient extends FTPClient {
         final String connectString = "CONNECT "  + host + ":" + port  + " HTTP/1.1";
         final String hostString = "Host: " + host + ":" + port;
 
-        output.write(connectString.getBytes("UTF-8"));
+        output.write(connectString.getBytes("UTF-8")); // TODO what is the correct encoding?
         output.write(CRLF);
         output.write(hostString.getBytes("UTF-8"));
  	    output.write(CRLF);
