@@ -42,7 +42,7 @@ public class FTPHTTPClient extends FTPClient {
     private final String proxyUsername;
     private final String proxyPassword;
 
-    private final byte[] CRLF;
+    private static final byte[] CRLF={'\r', '\n'};
     private final Base64 base64 = new Base64();
 
     public FTPHTTPClient(String proxyHost, int proxyPort, String proxyUser, String proxyPass) {
@@ -50,12 +50,6 @@ public class FTPHTTPClient extends FTPClient {
         this.proxyPort = proxyPort;
         this.proxyUsername = proxyUser;
         this.proxyPassword = proxyPass;
-
-        try {
-            CRLF = "\r\n".getBytes(getControlEncoding());
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public FTPHTTPClient(String proxyHost, int proxyPort) {
@@ -66,8 +60,6 @@ public class FTPHTTPClient extends FTPClient {
     @Override
     protected Socket _openDataConnection_(int command, String arg) 
     throws IOException {
-        Socket socket;
-
         //Force local passive mode, active mode not supported by through proxy
         if (getDataConnectionMode() != PASSIVE_LOCAL_DATA_CONNECTION_MODE) {
             enterLocalPassiveMode();
@@ -89,7 +81,7 @@ public class FTPHTTPClient extends FTPClient {
             _parsePassiveModeReply(_replyLines.get(0));
         }
 
-        socket = new Socket(proxyHost, proxyPort);
+        Socket socket = new Socket(proxyHost, proxyPort);
         InputStream is = socket.getInputStream();
         OutputStream os = socket.getOutputStream();
         tunnelHandshake(this.getPassiveHost(), this.getPassivePort(), is, os);
