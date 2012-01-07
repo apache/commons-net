@@ -291,6 +291,29 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 </configuration>
             </plugin>
 
+            <!-- Copy the examples sources -->
+            <plugin>
+              <artifactId>maven-resources-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>copy-resources</id>
+                  <phase>pre-site</phase>
+                  <goals>
+                    <goal>copy-resources</goal>
+                  </goals>
+                  <configuration>
+                    <outputDirectory>${basedir}/target/site/examples</outputDirectory>
+                    <resources>
+                      <resource>
+                        <directory>src/main/java/examples</directory>
+                        <filtering>false</filtering>
+                      </resource>
+                    </resources>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+
         </plugins>
 
     </build>

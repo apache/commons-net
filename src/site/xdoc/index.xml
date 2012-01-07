@@ -41,12 +41,14 @@
    </section>
    <section name="Features">
    <p>
-     Supported protocols are:
+     Supported protocols include:
      <ul>
        <li>FTP/FTPS</li>
+       <li>FTP over HTTP (experimental)</li>
        <li>NNTP</li>
        <li>SMTP(S)</li>
        <li>POP3(S)</li>
+       <li>IMAP(S)</li>
        <li>Telnet</li>
        <li>TFTP</li>
        <li>Finger</li>
@@ -72,6 +74,145 @@
     NetComponents 1.3.8.
     Apache Jakarta Commons is now an independent project and is called Apache Commons.
    </p>
+   </section>
+   <section name="Examples">
+       <p>
+           Commons NET includes several working sample applications that you can use.
+           Source files are included in the source (and binary) archives, and a compiled jar is provided.
+       </p>
+           To use one of the sample applications, ensure that you have both the examples and main jars on the classpath.
+           For example:
+           <pre>java -cp commons-net-examples-3.1.jar;commons-net-3.1.jar examples/ftp/FTPClientExample</pre>
+
+       <subsection name="FTP (package: examples/ftp)">
+           <ul>
+               <li><a href="examples/ftp/FTPClientExample.java">FTPClientExample</a>
+                   demonstrates file download and upload, LIST, MLST etc over FTP(S) and FTP over HTTP
+               </li>
+               <li><a href="examples/ftp/ServerToServerFTP.java">ServerToServerFTP</a>
+                   This program arranges a server to server file transfer that transfers a file from host1 to host2.
+               </li>
+               <li><a href="examples/ftp/TFTPExample.java">TFTPExample</a>
+                   This is an example of a simple Java tftp client
+               </li>
+           </ul>
+       </subsection>
+
+       <subsection name="MAIL (package: examples/mail)">
+           <ul>
+               <li><a href="examples/mail/IMAPMail.java">IMAPMail</a>
+                   This is an example program demonstrating how to use the IMAP[S]Client class.
+               </li>
+               <li><a href="examples/mail/POP3Mail.java">POP3Mail</a>
+                   This is an example program demonstrating how to use the POP3[S]Client class.
+               </li>
+               <li><a href="examples/mail/SMTPMail.java">SMTPMail</a>
+                   This is an example program demonstrating how to use the SMTP[S]Client class.
+               </li>
+           </ul>
+       </subsection>
+
+       <subsection name="MAIL (package: examples/mail)">
+           <ul>
+               <li><a href="examples/mail/IMAPMail.java">IMAPMail</a>
+                   This is an example program demonstrating how to use the IMAP[S]Client class.
+               </li>
+               <li><a href="examples/mail/POP3Mail.java">POP3Mail</a>
+                   This is an example program demonstrating how to use the POP3[S]Client class.
+               </li>
+               <li><a href="examples/mail/SMTPMail.java">SMTPMail</a>
+                   This is an example program demonstrating how to use the SMTP[S]Client class.
+               </li>
+           </ul>
+       </subsection>
+
+       <subsection name="MAIL (package: examples/nntp)">
+           <ul>
+               <li><a href="examples/nntp/ExtendedNNTPOps.java">ExtendedNNTPOps</a>
+                   Simple class showing some of the extended commands (AUTH, XOVER, LIST ACTIVE)
+               </li>
+               <li><a href="examples/nntp/ListNewsgroups.java">ListNewsgroups</a>
+                   This is a simple example using the NNTP package to approximate the
+                   Unix newsgroups command.  It connects to the specified news
+                   server and issues fetches the list of newsgroups stored by the server.
+                   On servers that store a lot of newsgroups, this command can take a very
+                   long time (listing upwards of 30,000 groups).
+               </li>
+               <li><a href="examples/nntp/MessageThreading.java">MessageThreading</a>
+                   Sample program demonstrating the use of article iteration and threading.
+               </li>
+               <li><a href="examples/nntp/PostMessage.java">PostMessage</a>
+                   This is an example program using the NNTP package to post an article to the specified newsgroup(s).
+                   It prompts you for header information and a filename to post.
+               </li>
+           </ul>
+       </subsection>
+
+       <subsection name="MAIL (package: examples/ntp)">
+           <ul>
+               <li><a href="examples/ntp/NTPClient.java">NTPClient</a>
+                   This is an example program demonstrating how to use the NTPUDPClient
+                   class. This program sends a Datagram client request packet to a
+                   Network time Protocol (NTP) service port on a specified server,
+                   retrieves the time, and prints it to standard output along with
+                   the fields from the NTP message header (e.g. stratum level, reference id,
+                   poll interval, root delay, mode, ...)
+               </li>
+               <li><a href="examples/ntp/TimeClient.java">TimeClient</a>
+                   This is an example program demonstrating how to use the TimeTCPClient
+                   and TimeUDPClient classes.
+                   This program connects to the default time service port of a
+                   specified server, retrieves the time, and prints it to standard output.
+                </li>
+           </ul>
+       </subsection>
+
+       <subsection name="MAIL (package: examples/telnet)">
+           <ul>
+               <li><a href="examples/telnet/TelnetClientExample.java">TelnetClientExample</a>
+                   This is a simple example of use of TelnetClient.
+               </li>
+               <li><a href="examples/telnet/WeatherTelnet.java">WeatherTelnet</a>
+                    This is an example of a trivial use of the TelnetClient class.
+                    It connects to the weather server at the University of Michigan,
+                    um-weather.sprl.umich.edu port 3000, and allows the user to interact
+                    with the server via standard input.
+                </li>
+           </ul>
+       </subsection>
+
+       <subsection name="Unix utilities (package: examples/unix)">
+           <ul>
+               <li><a href="examples/unix/chargen.java">chargen</a>
+                   This is a simple example of use of chargen.
+               </li>
+               <li><a href="examples/unix/daytime.java">daytime</a>
+                   This is a simple example of use of daytime.
+               </li>
+               <li><a href="examples/unix/echo.java">echo</a>
+                   This is a simple example of use of echo.
+               </li>
+               <li><a href="examples/unix/finger.java">finger</a>
+                   This is a simple example of use of finger.
+               </li>
+               <li><a href="examples/unix/fwhois.java">fwhois</a>
+                   This is a simple example of use of fwhois.
+               </li>
+               <li><a href="examples/unix/rdate.java">rdate</a>
+                   This is a simple example of use of rdate.
+               </li>
+               <li><a href="examples/unix/rexec.java">rexec</a>
+                   This is a simple example of use of rexec.
+               </li>
+               <li><a href="examples/unix/rlogin.java">rlogin</a>
+                   This is a simple example of use of rlogin.
+               </li>
+               <li><a href="examples/unix/rshell.java">rshell</a>
+                   This is a simple example of use of rshell.
+               </li>
+           </ul>
+       </subsection>
+
    </section>
    <section name="Further Information">
        <p>
