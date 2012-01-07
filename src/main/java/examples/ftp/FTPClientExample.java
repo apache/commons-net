@@ -27,6 +27,7 @@ import java.io.PrintWriter;
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPHTTPClient;
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPConnectionClosedException;
 import org.apache.commons.net.ftp.FTPFile;
@@ -66,6 +67,9 @@ public final class FTPClientExample
         "\t-t - list file details using MLST (remote is used as the pathname if provided)\n" +
         "\t-w msec - wait time for keep-alive reply (setControlKeepAliveReplyTimeout)\n" +
         "\t-T  all|valid|none - use one of the built-in TrustManager implementations (none = JVM default)\n" +
+        "\t-PrH server[:port] - HTTP Proxy host and optional port[80] \n" +
+        "\t-PrU user - HTTP Proxy server username\n" +
+        "\t-PrP password - HTTP Proxy server password\n" +
         "\t-# - add hash display during transfers\n";
 
     public static final void main(String[] args)
@@ -80,6 +84,10 @@ public final class FTPClientExample
         String protocol = null; // SSL protocol
         String doCommand = null;
         String trustmgr = null;
+        String proxyHost = null;
+        int proxyPort = 80;
+        String proxyUser = null;
+        String proxyPassword = null;
 
         int base = 0;
         for (base = 0; base < args.length; base++)
@@ -138,6 +146,20 @@ public final class FTPClientExample
             else if (args[base].equals("-T")) {
                 trustmgr = args[++base];
             }
+            else if (args[base].equals("-PrH")) {
+                proxyHost = args[++base]; 
+                String parts[] = proxyHost.split(":");
+                if (parts.length == 2){
+                    proxyHost=parts[0];
+                    proxyPort=Integer.parseInt(parts[1]);
+                }
+            }
+            else if (args[base].equals("-PrU")) {
+                proxyUser = args[++base];
+            }
+            else if (args[base].equals("-PrP")) {
+                proxyPassword = args[++base];
+            }
             else if (args[base].equals("-#")) {
                 printHash = true;
             }
@@ -175,7 +197,13 @@ public final class FTPClientExample
 
         final FTPClient ftp;
         if (protocol == null ) {
-            ftp = new FTPClient();
+            if(proxyHost !=null) {
+                System.out.println("Using HTTP proxy server: " + proxyHost);
+                ftp = new FTPHTTPClient(proxyHost, proxyPort, proxyUser, proxyPassword);
+            }
+            else {
+                ftp = new FTPClient();
+            }
         } else {
             FTPSClient ftps;
             if (protocol.equals("true")) {
@@ -222,7 +250,7 @@ public final class FTPClientExample
             } else {
                 ftp.connect(server);
             }
-            System.out.println("Connected to " + server + " on "+ftp.getRemotePort());
+            System.out.println("Connected to " + server + " on " + (port>0 ? port : ftp.getDefaultPort()));
 
             // After connection attempt, you should check the reply code to verify
             // success.

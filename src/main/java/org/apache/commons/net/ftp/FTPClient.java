@@ -470,7 +470,7 @@ implements Configurable
     }
 
 
-    private void __parsePassiveModeReply(String reply)
+    protected void _parsePassiveModeReply(String reply)
     throws MalformedServerReplyException
     {
         java.util.regex.Matcher m = __PARMS_PAT.matcher(reply);
@@ -508,7 +508,7 @@ implements Configurable
         }
     }
 
-    private void __parseExtendedPassiveModeReply(String reply)
+    protected void _parseExtendedPassiveModeReply(String reply)
     throws MalformedServerReplyException
     {
         int port;
@@ -739,7 +739,7 @@ implements Configurable
             boolean attemptEPSV = isUseEPSVwithIPv4() || isInet6Address;
             if (attemptEPSV && epsv() == FTPReply.ENTERING_EPSV_MODE)
             {
-                __parseExtendedPassiveModeReply(_replyLines.get(0));
+                _parseExtendedPassiveModeReply(_replyLines.get(0));
             }
             else
             {
@@ -750,7 +750,7 @@ implements Configurable
                 if (pasv() != FTPReply.ENTERING_PASSIVE_MODE) {
                     return null;
                 }
-                __parsePassiveModeReply(_replyLines.get(0));
+                _parsePassiveModeReply(_replyLines.get(0));
             }
 
             socket = _socketFactory_.createSocket();
@@ -1174,7 +1174,7 @@ implements Configurable
         }
 
         __dataConnectionMode = PASSIVE_REMOTE_DATA_CONNECTION_MODE;
-        __parsePassiveModeReply(_replyLines.get(0));
+        _parsePassiveModeReply(_replyLines.get(0));
 
         return true;
     }
@@ -2282,7 +2282,7 @@ implements Configurable
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    private boolean restart(long offset) throws IOException
+    protected boolean restart(long offset) throws IOException
     {
         __restartOffset = 0;
         return FTPReply.isPositiveIntermediate(rest(Long.toString(offset)));

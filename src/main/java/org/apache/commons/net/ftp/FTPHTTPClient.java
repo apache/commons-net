@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.Inet6Address;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
@@ -33,7 +34,6 @@ import org.apache.commons.net.util.Base64;
 /**
  * Experimental attempt at FTP client that tunnels over an HTTP proxy connection.
  *
- * @author rory
  * @since 2.2
  */
 public class FTPHTTPClient extends FTPClient {
@@ -41,8 +41,6 @@ public class FTPHTTPClient extends FTPClient {
     private final int proxyPort;
     private final String proxyUsername;
     private final String proxyPassword;
-    private String host;
-    private int port;
 
     private final byte[] CRLF;
     private final Base64 base64 = new Base64();
@@ -66,22 +64,50 @@ public class FTPHTTPClient extends FTPClient {
 
 
     @Override
-    protected Socket _openDataConnection_(int command, String arg)
+    protected Socket _openDataConnection_(int command, String arg) 
     throws IOException {
-        Socket socket = new Socket(host, port);
+        Socket socket;
+
+        //Force local passive mode, active mode not supported by through proxy
+        if (getDataConnectionMode() != PASSIVE_LOCAL_DATA_CONNECTION_MODE) {
+            enterLocalPassiveMode();
+        }
+
+        final boolean isInet6Address = getRemoteAddress() instanceof Inet6Address;
+        
+        boolean attemptEPSV = isUseEPSVwithIPv4() || isInet6Address;
+        if (attemptEPSV && epsv() == FTPReply.ENTERING_EPSV_MODE) {
+            _parseExtendedPassiveModeReply(_replyLines.get(0));
+        } else {
+            if (isInet6Address) {
+                return null; // Must use EPSV for IPV6
+            }
+            // If EPSV failed on IPV4, revert to PASV
+            if (pasv() != FTPReply.ENTERING_PASSIVE_MODE) {
+                return null;
+            }
+            _parsePassiveModeReply(_replyLines.get(0));
+        }
+
+        socket = new Socket(proxyHost, proxyPort);
         InputStream is = socket.getInputStream();
         OutputStream os = socket.getOutputStream();
+        tunnelHandshake(this.getPassiveHost(), this.getPassivePort(), is, os);
+        if ((getRestartOffset() > 0) && !restart(getRestartOffset())) {
+            socket.close();
+            return null;
+        }
 
-        tunnelHandshake(host, port, is, os);
+        if (!FTPReply.isPositivePreliminary(sendCommand(command, arg))) {
+            socket.close();
+            return null;
+        }
 
         return socket;
     }
 
     @Override
-    public void connect(String host, int port) throws SocketException,
-    IOException {
-        this.host = host;
-        this.port = port;
+    public void connect(String host, int port) throws SocketException, IOException {
 
         _socket_ = new Socket(proxyHost, proxyPort);
         _input_ = _socket_.getInputStream();
@@ -90,57 +116,62 @@ public class FTPHTTPClient extends FTPClient {
             tunnelHandshake(host, port, _input_, _output_);
         }
         catch (Exception e) {
-            IOException ioe = new IOException("Could not connect to " + host);
+            IOException ioe = new IOException("Could not connect to " + host+ " using port " + port);
             ioe.initCause(e);
             throw ioe;
         }
+        super._connectAction_();
     }
 
     private void tunnelHandshake(String host, int port, InputStream input, OutputStream output) throws IOException,
     UnsupportedEncodingException {
         final String connectString = "CONNECT "  + host + ":" + port  + " HTTP/1.1";
+        final String hostString = "Host: " + host + ":" + port;
 
-        _output_.write(connectString.getBytes(getControlEncoding()));
-        _output_.write(CRLF);
+        output.write(connectString.getBytes("UTF-8"));
+        output.write(CRLF);
+        output.write(hostString.getBytes("UTF-8"));
+ 	    output.write(CRLF);
 
         if (proxyUsername != null && proxyPassword != null) {
+            final String auth = proxyUsername + ":" + proxyPassword;
             final String header = "Proxy-Authorization: Basic "
-                + base64.encode(proxyUsername + ":" + proxyPassword) + "\r\n";
-            _output_.write(header.getBytes("UTF-8"));
-            _output_.write(CRLF);
+                + base64.encodeToString(auth.getBytes("UTF-8"));
+            output.write(header.getBytes("UTF-8"));
+        }
+        output.write(CRLF);
 
-            List<String> response = new ArrayList<String>();
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(_input_));
+        List<String> response = new ArrayList<String>();
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(input));
 
-            for (String line = reader.readLine(); line != null
-            && line.length() > 0; line = reader.readLine()) {
-                response.add(line);
+        for (String line = reader.readLine(); line != null
+        && line.length() > 0; line = reader.readLine()) {
+            response.add(line);
+        }
+
+        int size = response.size();
+        if (size == 0) {
+            throw new IOException("No response from proxy");
+        }
+
+        String code = null;
+        String resp = response.get(0);
+        if (resp.startsWith("HTTP/") && resp.length() >= 12) {
+            code = resp.substring(9, 12);
+        } else {
+            throw new IOException("Invalid response from proxy: " + resp);
+        }
+
+        if (!"200".equals(code)) {
+            StringBuilder msg = new StringBuilder();
+            msg.append("HTTPTunnelConnector: connection failed\r\n");
+            msg.append("Response received from the proxy:\r\n");
+            for (String line : response) {
+                msg.append(line);
+                msg.append("\r\n");
             }
-
-            int size = response.size();
-            if (size == 0) {
-                throw new IOException("No response from proxy");
-            }
-
-            String code = null;
-            String resp = response.get(0);
-            if (resp.startsWith("HTTP/") && resp.length() >= 12) {
-                code = resp.substring(9, 12);
-            } else {
-                throw new IOException("Invalid response from proxy: " + resp);
-            }
-
-            if (!"200".equals(code)) {
-                StringBuilder msg = new StringBuilder();
-                msg.append("HTTPTunnelConnector: connection failed\r\n");
-                msg.append("Response received from the proxy:\r\n");
-                for (String line : response) {
-                    msg.append(line);
-                    msg.append("\r\n");
-                }
-                throw new IOException(msg.toString());
-            }
+            throw new IOException(msg.toString());
         }
     }
 }
