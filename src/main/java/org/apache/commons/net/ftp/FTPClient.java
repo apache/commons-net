@@ -461,10 +461,8 @@ implements Configurable
 
     private String __parsePathname(String reply)
     {
-        int begin, end;
-
-        begin = reply.indexOf('"') + 1;
-        end = reply.indexOf('"', begin);
+        int begin = reply.indexOf('"') + 1;
+        int end = reply.indexOf('"', begin);
 
         return reply.substring(begin, end);
     }
@@ -511,8 +509,6 @@ implements Configurable
     protected void _parseExtendedPassiveModeReply(String reply)
     throws MalformedServerReplyException
     {
-        int port;
-
         reply = reply.substring(reply.indexOf('(') + 1,
                 reply.indexOf(')')).trim();
 
@@ -527,6 +523,8 @@ implements Configurable
             throw new MalformedServerReplyException(
                     "Could not parse extended passive host information.\nServer Reply: " + reply);
         }
+
+        int port;
         try
         {
             port = Integer.parseInt(reply.substring(3, reply.length()-1));
@@ -552,16 +550,14 @@ implements Configurable
     protected boolean _storeFile(String command, String remote, InputStream local)
     throws IOException
     {
-        OutputStream output;
         Socket socket;
 
         if ((socket = _openDataConnection_(command, remote)) == null) {
             return false;
         }
 
-        output = new BufferedOutputStream(socket.getOutputStream(),
-                getBufferSize()
-        );
+        OutputStream output = new BufferedOutputStream(socket.getOutputStream(), getBufferSize());
+
         if (__fileType == ASCII_FILE_TYPE) {
             output = new ToNetASCIIOutputStream(output);
         }
@@ -603,14 +599,13 @@ implements Configurable
     protected OutputStream _storeFileStream(String command, String remote)
     throws IOException
     {
-        OutputStream output;
         Socket socket;
 
         if ((socket = _openDataConnection_(command, remote)) == null) {
             return null;
         }
 
-        output = socket.getOutputStream();
+        OutputStream output = socket.getOutputStream();
         if (__fileType == ASCII_FILE_TYPE) {
             // We buffer ascii transfers because the buffering has to
             // be interposed between ToNetASCIIOutputSream and the underlying
@@ -673,14 +668,14 @@ implements Configurable
     protected Socket _openDataConnection_(String command, String arg)
     throws IOException
     {
-        Socket socket;
-
         if (__dataConnectionMode != ACTIVE_LOCAL_DATA_CONNECTION_MODE &&
                 __dataConnectionMode != PASSIVE_LOCAL_DATA_CONNECTION_MODE) {
             return null;
         }
 
         final boolean isInet6Address = getRemoteAddress() instanceof Inet6Address;
+
+        Socket socket;
 
         if (__dataConnectionMode == ACTIVE_LOCAL_DATA_CONNECTION_MODE)
         {
@@ -770,16 +765,11 @@ implements Configurable
 
         if (__remoteVerificationEnabled && !verifyRemote(socket))
         {
-            InetAddress host1, host2;
-
-            host1 = socket.getInetAddress();
-            host2 = getRemoteAddress();
-
             socket.close();
 
             throw new IOException(
-                    "Host attempting data connection " + host1.getHostAddress() +
-                    " is not same as server " + host2.getHostAddress());
+                    "Host attempting data connection " + socket.getInetAddress().getHostAddress() +
+                    " is not same as server " + getRemoteAddress().getHostAddress());
         }
 
         if (__dataTimeout >= 0) {
@@ -1640,14 +1630,13 @@ implements Configurable
     protected boolean _retrieveFile(String command, String remote, OutputStream local)
     throws IOException
     {
-        InputStream input;
         Socket socket;
 
         if ((socket = _openDataConnection_(command, remote)) == null) {
             return false;
         }
 
-        input = new BufferedInputStream(socket.getInputStream(),
+        InputStream input = new BufferedInputStream(socket.getInputStream(),
                 getBufferSize());
         if (__fileType == ASCII_FILE_TYPE) {
             input = new FromNetASCIIInputStream(input);
@@ -1711,14 +1700,13 @@ implements Configurable
     protected InputStream _retrieveFileStream(String command, String remote)
     throws IOException
     {
-        InputStream input;
         Socket socket;
 
         if ((socket = _openDataConnection_(command, remote)) == null) {
             return null;
         }
 
-        input = socket.getInputStream();
+        InputStream input = socket.getInputStream();
         if (__fileType == ASCII_FILE_TYPE) {
             // We buffer ascii transfers because the buffering has to
             // be interposed between FromNetASCIIOutputSream and the underlying
@@ -2585,19 +2573,17 @@ implements Configurable
      ***/
     public String[] listNames(String pathname) throws IOException
     {
-        String line;
         Socket socket;
-        BufferedReader reader;
-        ArrayList<String> results;
 
         if ((socket = _openDataConnection_(FTPCommand.NLST, getListArguments(pathname))) == null) {
             return null;
         }
 
-        reader =
+        BufferedReader reader =
             new BufferedReader(new InputStreamReader(socket.getInputStream(), getControlEncoding()));
 
-        results = new ArrayList<String>();
+        ArrayList<String> results = new ArrayList<String>();
+        String line;
         while ((line = reader.readLine()) != null) {
             results.add(line);
         }
@@ -2928,8 +2914,7 @@ implements Configurable
             String pathname)
     throws IOException
     {
-        String key = null;
-        return initiateListParsing(key, pathname);
+        return initiateListParsing((String) null, pathname);
     }
 
     /**
@@ -3361,6 +3346,7 @@ implements Configurable
             this.currentSoTimeout = parent.getSoTimeout();
             parent.setSoTimeout(maxWait);
         }
+
         public void bytesTransferred(CopyStreamEvent event) {
             bytesTransferred(event.getTotalBytesTransferred(), event.getBytesTransferred(), event.getStreamSize());
         }
