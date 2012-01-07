@@ -334,6 +334,8 @@ implements Configurable
     private final Random __random;
     private int __activeMinPort, __activeMaxPort;
     private InetAddress __activeExternalHost;
+    private InetAddress __reportActiveExternalHost; // overrides __activeExternalHost in EPRT/PORT commands
+
     private int __fileType;
     @SuppressWarnings("unused") // fields are written, but currently not read
     private int __fileFormat, __fileStructure, __fileTransferMode;
@@ -445,6 +447,7 @@ implements Configurable
         __passiveHost        = null;
         __passivePort        = -1;
         __activeExternalHost = null;
+        __reportActiveExternalHost = null;
         __activeMinPort = 0;
         __activeMaxPort = 0;
         __fileType           = FTP.ASCII_FILE_TYPE;
@@ -692,11 +695,11 @@ implements Configurable
                 // substitute IP addresses in the PORT command,
                 // but might not be able to recognize the EPRT command.
                 if (isInet6Address) {
-                    if (!FTPReply.isPositiveCompletion(eprt(getHostAddress(), server.getLocalPort()))) {
+                    if (!FTPReply.isPositiveCompletion(eprt(getReportHostAddress(), server.getLocalPort()))) {
                         return null;
                     }
                 } else {
-                    if (!FTPReply.isPositiveCompletion(port(getHostAddress(), server.getLocalPort()))) {
+                    if (!FTPReply.isPositiveCompletion(port(getReportHostAddress(), server.getLocalPort()))) {
                         return null;
                     }
                 }
@@ -1239,9 +1242,10 @@ implements Configurable
     }
 
     /**
-     * Get the host address for active mode.
+     * Get the host address for active mode; allows the local address to be overridden.
      * <p>
-     * @return The host address for active mode.
+     * @return __activeExternalHost if non-null, else getLocalAddress()
+     * @see #setActiveExternalIPAddress(String)
      */
     private InetAddress getHostAddress()
     {
@@ -1253,6 +1257,22 @@ implements Configurable
         {
             // default local address
             return getLocalAddress();
+        }
+    }
+    
+    /**
+     * Get the reported host address for active mode EPRT/PORT commands;
+     * allows override of {@link #getHostAddress()}.
+     * 
+     * Useful for FTP Client behind Firewall NAT.
+     * <p>
+     * @return __reportActiveExternalHost if non-null, else getHostAddress();
+     */
+    private InetAddress getReportHostAddress() {
+        if (__reportActiveExternalHost != null) {
+            return __reportActiveExternalHost ;
+        } else {
+            return getHostAddress();
         }
     }
 
@@ -1280,6 +1300,20 @@ implements Configurable
     public void setActiveExternalIPAddress(String ipAddress) throws UnknownHostException
     {
         this.__activeExternalHost = InetAddress.getByName(ipAddress);
+    }
+
+    /**
+     * Set the external IP address to report in EPRT/PORT commands in active mode.
+     * Useful when there are multiple network cards.
+     * <p>
+     * @param ipAddress The external IP address of this machine.
+     * @throws UnknownHostException
+     * @since 3.1
+     * @see #getReportHostAddress()
+     */
+    public void setReportActiveExternalIPAddress(String ipAddress) throws UnknownHostException
+    {
+        this.__reportActiveExternalHost = InetAddress.getByName(ipAddress);
     }
 
 
