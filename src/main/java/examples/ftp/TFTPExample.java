@@ -27,7 +27,7 @@ import org.apache.commons.net.tftp.TFTP;
 import org.apache.commons.net.tftp.TFTPClient;
 
 /***
- * This is an example of a simple Java tftp client using NetComponents.
+ * This is an example of a simple Java tftp client.
  * Notice how all of the code is really just argument processing and
  * error handling.
  * <p>
