@@ -27,7 +27,9 @@ import org.apache.commons.net.nntp.NNTPClient;
 import org.apache.commons.net.nntp.NewsgroupInfo;
 import org.apache.commons.net.nntp.Threader;
 
-
+/**
+ * Sample program demonstrating the use of article iteration and threading.
+ */
 public class MessageThreading {
     public MessageThreading() {
     }
