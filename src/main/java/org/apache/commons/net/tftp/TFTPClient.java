@@ -150,8 +150,7 @@ _receivePacket:
             while (true)
             {
                 timeouts = 0;
-                while (timeouts < __maxTimeouts)
-                {
+                do {
                     try
                     {
                         received = bufferedReceive();
@@ -180,7 +179,7 @@ _receivePacket:
                         endBufferedOps();
                         throw new IOException("Bad packet: " + e.getMessage());
                     }
-                }
+                } while (timeouts < __maxTimeouts); // __maxTimeouts >=1 so will always do loop at least once
 
                 // The first time we receive we get the port number and
                 // answering host address (for hosts with multiple IPs)
@@ -402,8 +401,7 @@ _receivePacket:
 
 
                 timeouts = 0;
-                while (timeouts < __maxTimeouts)
-                {
+                do {
                     try
                     {
                         received = bufferedReceive();
@@ -433,9 +431,11 @@ _receivePacket:
                         throw new IOException("Bad packet: " + e.getMessage());
                     }
                 } // end of while loop over tries to receive
+                while (timeouts < __maxTimeouts); // __maxTimeouts >=1 so will always do loop at least once
+
 
                 // The first time we receive we get the port number and
-        // answering host address (for hosts with multiple IPs)
+                // answering host address (for hosts with multiple IPs)
                 if (justStarted)
                 {
                     justStarted = false;
