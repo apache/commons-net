@@ -164,7 +164,7 @@ _receivePacket:
                             endBufferedOps();
                             throw new IOException("Connection timed out.");
                         }
-                        continue;
+                        continue _sendPacket;
                     }
                     catch (InterruptedIOException e)
                     {
@@ -173,7 +173,7 @@ _receivePacket:
                             endBufferedOps();
                             throw new IOException("Connection timed out.");
                         }
-                        continue;
+                        continue _sendPacket;
                     }
                     catch (TFTPPacketException e)
                     {
@@ -416,7 +416,7 @@ _receivePacket:
                             endBufferedOps();
                             throw new IOException("Connection timed out.");
                         }
-                        continue;
+                        continue _sendPacket;
                     }
                     catch (InterruptedIOException e)
                     {
@@ -425,7 +425,7 @@ _receivePacket:
                             endBufferedOps();
                             throw new IOException("Connection timed out.");
                         }
-                        continue;
+                        continue _sendPacket;
                     }
                     catch (TFTPPacketException e)
                     {
