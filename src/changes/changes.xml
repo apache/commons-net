@@ -59,7 +59,10 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.1-SNAPSHOT" date="TBA" description="
 TBA
         ">
-            <action issue="NET346" dev="sebb" type="add" due-to="Kevin Samuel">
+            <action issue="NET-437" dev="sebb" type="fix" due-to="Gavin Camp">
+            TelnetInputStream doesn't support non-blocking IO when reader thread is not enabled
+            </action>
+            <action issue="NET-346" dev="sebb" type="add" due-to="Kevin Samuel">
             FTP should support reporting NATed external IP address
             </action>
             <action issue="NET-433" dev="sebb" type="add">

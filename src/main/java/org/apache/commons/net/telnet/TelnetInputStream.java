@@ -543,7 +543,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         // Critical section because run() may change __bytesAvailable
         synchronized (__queue)
         {
-            return __bytesAvailable;
+            return __bytesAvailable + super.available();
         }
     }
 
