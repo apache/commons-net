@@ -59,6 +59,9 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.1-SNAPSHOT" date="TBA" description="
 TBA
         ">
+            <action issue="NET-412" dev="sebb" type="fix" due-to="Chuck Wolber">
+            Apache Commons TFTP implementation subject to Sorcerer's Apprentice Syndrome
+            </action>
             <action issue="NET-410" dev="sebb" type="fix" due-to="Chuck Wolber">
             Apache Commons TFTP does not handle RFC 783 retransmits
             </action>

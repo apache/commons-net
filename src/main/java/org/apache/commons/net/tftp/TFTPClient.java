@@ -487,9 +487,6 @@ _receivePacket:
                         {
                             discardPackets();
 
-                            if (lastBlock == (block == 0 ? 65535 : (block - 1)))
-                                continue _sendPacket;  // Resend last acknowledgement.
-
                             continue _receivePacket; // Start fetching packets again.
                         }
                         //break;
