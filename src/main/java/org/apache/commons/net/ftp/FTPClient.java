@@ -547,7 +547,7 @@ implements Configurable
     private boolean __storeFile(int command, String remote, InputStream local)
     throws IOException
     {
-    	return _storeFile(FTPCommand.getCommand(command), remote, local);
+        return _storeFile(FTPCommand.getCommand(command), remote, local);
     }
     
     protected boolean _storeFile(String command, String remote, InputStream local)
@@ -596,7 +596,7 @@ implements Configurable
     private OutputStream __storeFileStream(int command, String remote)
     throws IOException
     {
-    	return _storeFileStream(FTPCommand.getCommand(command), remote);
+        return _storeFileStream(FTPCommand.getCommand(command), remote);
     }
 
     protected OutputStream _storeFileStream(String command, String remote)
@@ -647,7 +647,7 @@ implements Configurable
     protected Socket _openDataConnection_(int command, String arg)
     throws IOException
     {
-    	return _openDataConnection_(FTPCommand.getCommand(command), arg);
+        return _openDataConnection_(FTPCommand.getCommand(command), arg);
     }
 
     /**
@@ -1658,7 +1658,7 @@ implements Configurable
     public boolean retrieveFile(String remote, OutputStream local)
     throws IOException
     {
-    	return _retrieveFile(FTPCommand.getCommand(FTPCommand.RETR), remote, local);
+        return _retrieveFile(FTPCommand.getCommand(FTPCommand.RETR), remote, local);
     }
 
     protected boolean _retrieveFile(String command, String remote, OutputStream local)
@@ -1728,7 +1728,7 @@ implements Configurable
      ***/
     public InputStream retrieveFileStream(String remote) throws IOException
     {
-    	return _retrieveFileStream(FTPCommand.getCommand(FTPCommand.RETR), remote);
+        return _retrieveFileStream(FTPCommand.getCommand(FTPCommand.RETR), remote);
     }
 
     protected InputStream _retrieveFileStream(String command, String remote)
