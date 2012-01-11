@@ -23,7 +23,11 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.text.NumberFormat;
 
-import org.apache.commons.net.ntp.*;
+import org.apache.commons.net.ntp.NTPUDPClient;
+import org.apache.commons.net.ntp.NtpUtils;
+import org.apache.commons.net.ntp.NtpV3Packet;
+import org.apache.commons.net.ntp.TimeInfo;
+import org.apache.commons.net.ntp.TimeStamp;
 
 /***
  * This is an example program demonstrating how to use the NTPUDPClient
