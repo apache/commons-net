@@ -36,8 +36,33 @@
     <release>
       <Version>
         <name>commons-net</name>
-        <created>2005-12-03</created>
+        <created>2011-06-06</created>
+        <revision>3.0.1</revision>
+      </Version>
+      <Version>
+        <name>commons-net</name>
+        <created>2011-05-16</created>
+        <revision>3.0</revision>
+      </Version>
+      <Version>
+        <name>commons-net</name>
+        <created>2010-11-22</created>
+        <revision>2.2</revision>
+      </Version>
+      <Version>
+        <name>commons-net</name>
+        <created>2008-10-21</created>
         <revision>2.0</revision>
+      </Version>
+      <Version>
+        <name>commons-net</name>
+        <created>2005-12-03</created>
+        <revision>1.4.1</revision>
+      </Version>
+      <Version>
+        <name>commons-net</name>
+        <created>2005-05-10</created>
+        <revision>1.4.0</revision>
       </Version>
     </release>
     <mailing-list rdf:resource="http://commons.apache.org/mail-lists.html"/>

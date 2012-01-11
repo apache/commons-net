@@ -110,7 +110,7 @@ TBA
             </action>
         </release>
 
-        <release version="3.0.1" date="June 2011" description="
+        <release version="3.0.1" date="June 6, 2011" description="
 This is a bug-fix release.
         ">
             <action issue="NET-409" dev="sebb" type="fix">
@@ -118,7 +118,7 @@ This is a bug-fix release.
             Fix bug introduced in release 3.0.
             </action>
         </release>
-        <release version="3.0" date="May 2011" description="
+        <release version="3.0" date="May 16, 2011" description="
 This release fixes many bugs (see below), and adds new functionality:
   - basic support for IMAP and IMAPS
   - support for SMTPS and POP3S
@@ -393,7 +393,7 @@ KeyManagerUtils can be used to provide client certificates.
             Fix by adding leading 0 if necessary.
             </action>
         </release>
-        <release version="2.2" date="Nov 2010" description="
+        <release version="2.2" date="Nov 22, 2010" description="
 This is primarily a maintenance release, but it also includes new features and enhancements.
 
   Users of version 2.0 are encouraged to upgrade to 2.2, as this release includes some important bug fixes.
