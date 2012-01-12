@@ -141,9 +141,9 @@ public class AuthenticatingIMAPClient extends IMAPSClient
                         InvalidKeyException, InvalidKeySpecException
     {
         if (!IMAPReply.isContinuation(sendCommand(IMAPCommand.AUTHENTICATE, method.getAuthName())))
-	    {
+        {
             return false;
-	    }
+        }
 
         switch (method) {
             case PLAIN:
