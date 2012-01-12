@@ -17,7 +17,6 @@
 
 package org.apache.commons.net.pop3;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.security.MessageDigest;
@@ -501,8 +500,8 @@ public class POP3Client extends POP3
      * @param messageId  The number of the message to fetch.
      * @return A DotTerminatedMessageReader instance
      * from which the entire message can be read.
-     * This can safely be cast to a {@link BufferedReader} in order to
-     * use the {@link BufferedReader#readLine()} method.
+     * This can safely be cast to a {@link java.io.BufferedReader BufferedReader} in order to
+     * use the {@link java.io.BufferedReader#readLine() BufferedReader#readLine()} method.
      * Returns null if the retrieval attempt fails  (e.g., if the specified
      * message number does not exist). 
      * @exception IOException If a network I/O error occurs in the process of
@@ -542,8 +541,8 @@ public class POP3Client extends POP3
      * @return  A DotTerminatedMessageReader instance
      * from which the specified top number of lines of the message can be
      * read.
-     * This can safely be cast to a {@link BufferedReader} in order to
-     * use the {@link BufferedReader#readLine()} method.
+     * This can safely be cast to a {@link java.io.BufferedReader BufferedReader} in order to
+     * use the {@link java.io.BufferedReader#readLine() BufferedReader#readLine()} method.
      * Returns null if the retrieval attempt fails  (e.g., if the specified
      * message number does not exist).
      * @exception IOException If a network I/O error occurs in the process of

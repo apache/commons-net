@@ -25,7 +25,6 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
-import java.net.UnknownHostException;
 
 import javax.net.ServerSocketFactory;
 import javax.net.SocketFactory;
@@ -185,7 +184,7 @@ public abstract class SocketClient
      * @exception IOException If the socket could not be opened.  In most
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
-     * @exception UnknownHostException If the hostname cannot be resolved.
+     * @exception java.net.UnknownHostException If the hostname cannot be resolved.
      */
     public void connect(String hostname, int port)
     throws SocketException, IOException
@@ -240,7 +239,7 @@ public abstract class SocketClient
      * @exception IOException If the socket could not be opened.  In most
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
-     * @exception UnknownHostException If the hostname cannot be resolved.
+     * @exception java.net.UnknownHostException If the hostname cannot be resolved.
      */
     public void connect(String hostname, int port,
                         InetAddress localAddr, int localPort)
@@ -279,7 +278,7 @@ public abstract class SocketClient
      * @exception IOException If the socket could not be opened.  In most
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
-     * @exception UnknownHostException If the hostname cannot be resolved.
+     * @exception java.net.UnknownHostException If the hostname cannot be resolved.
      */
     public void connect(String hostname) throws SocketException, IOException
     {

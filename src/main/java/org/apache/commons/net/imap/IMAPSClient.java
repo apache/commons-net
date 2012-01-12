@@ -21,7 +21,6 @@ import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.net.Socket;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
@@ -244,7 +243,7 @@ public class IMAPSClient extends IMAPClient
     /**
      * Returns the names of the cipher suites which could be enabled
      * for use on this connection.
-     * When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns null.
+     * When the underlying {@link java.net.Socket Socket} is not an {@link SSLSocket} instance, returns null.
      * @return An array of cipher suite names, or <code>null</code>.
      */
     public String[] getEnabledCipherSuites()
@@ -270,7 +269,7 @@ public class IMAPSClient extends IMAPClient
     /**
      * Returns the names of the protocol versions which are currently
      * enabled for use on this connection.
-     * When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns null.
+     * When the underlying {@link java.net.Socket Socket} is not an {@link SSLSocket} instance, returns null.
      * @return An array of protocols, or <code>null</code>.
      */
     public String[] getEnabledProtocols()

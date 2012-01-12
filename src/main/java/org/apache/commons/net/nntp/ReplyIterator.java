@@ -20,7 +20,6 @@ package org.apache.commons.net.nntp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -28,7 +27,7 @@ import org.apache.commons.net.io.DotTerminatedMessageReader;
 import org.apache.commons.net.io.Util;
 
 /**
- * Wraps a {@link Reader} and returns an {@code Iterable<String>}
+ * Wraps a {@link BufferedReader} and returns an {@code Iterable<String>}
  * which returns the individual lines from the reader.
  * @since 3.0
  */

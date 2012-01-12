@@ -44,11 +44,9 @@ import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory;
 import org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory;
 import org.apache.commons.net.ftp.parser.MLSxEntryParser;
-import org.apache.commons.net.ftp.parser.ParserInitializationException;
 import org.apache.commons.net.io.CRLFLineReader;
 import org.apache.commons.net.io.CopyStreamAdapter;
 import org.apache.commons.net.io.CopyStreamEvent;
-import org.apache.commons.net.io.CopyStreamException;
 import org.apache.commons.net.io.CopyStreamListener;
 import org.apache.commons.net.io.FromNetASCIIInputStream;
 import org.apache.commons.net.io.ToNetASCIIOutputStream;
@@ -1294,7 +1292,7 @@ implements Configurable
      * Useful when there are multiple network cards.
      * <p>
      * @param ipAddress The external IP address of this machine.
-     * @throws UnknownHostException
+     * @throws UnknownHostException if the ipAddress cannot be resolved
      * @since 2.2
      ***/
     public void setActiveExternalIPAddress(String ipAddress) throws UnknownHostException
@@ -1307,7 +1305,7 @@ implements Configurable
      * Useful when there are multiple network cards.
      * <p>
      * @param ipAddress The external IP address of this machine.
-     * @throws UnknownHostException
+     * @throws UnknownHostException if the ipAddress cannot be resolved
      * @since 3.1
      * @see #getReportHostAddress()
      */
@@ -1647,7 +1645,8 @@ implements Configurable
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception CopyStreamException  If an I/O error occurs while actually
+     * @exception org.apache.commons.net.io.CopyStreamException  
+     *      If an I/O error occurs while actually
      *      transferring the file.  The CopyStreamException allows you to
      *      determine the number of bytes transferred and the IOException
      *      causing the error.  This exception may be caught either
@@ -1772,7 +1771,8 @@ implements Configurable
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception CopyStreamException  If an I/O error occurs while actually
+     * @exception org.apache.commons.net.io.CopyStreamException  
+     *      If an I/O error occurs while actually
      *      transferring the file.  The CopyStreamException allows you to
      *      determine the number of bytes transferred and the IOException
      *      causing the error.  This exception may be caught either
@@ -1833,7 +1833,8 @@ implements Configurable
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception CopyStreamException  If an I/O error occurs while actually
+     * @exception org.apache.commons.net.io.CopyStreamException
+     *      If an I/O error occurs while actually
      *      transferring the file.  The CopyStreamException allows you to
      *      determine the number of bytes transferred and the IOException
      *      causing the error.  This exception may be caught either
@@ -1894,7 +1895,8 @@ implements Configurable
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception CopyStreamException  If an I/O error occurs while actually
+     * @exception org.apache.commons.net.io.CopyStreamException
+     *      If an I/O error occurs while actually
      *      transferring the file.  The CopyStreamException allows you to
      *      determine the number of bytes transferred and the IOException
      *      causing the error.  This exception may be caught either
@@ -1956,7 +1958,8 @@ implements Configurable
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception CopyStreamException  If an I/O error occurs while actually
+     * @exception org.apache.commons.net.io.CopyStreamException
+     *      If an I/O error occurs while actually
      *      transferring the file.  The CopyStreamException allows you to
      *      determine the number of bytes transferred and the IOException
      *      causing the error.  This exception may be caught either
@@ -2689,7 +2692,7 @@ implements Configurable
      *                   If an I/O error occurs while either sending a
      *                   command to the server or receiving a reply
      *                   from the server.
-     * @exception ParserInitializationException
+     * @exception org.apache.commons.net.ftp.parser.ParserInitializationException
      *                   Thrown if the parserKey parameter cannot be
      *                   resolved by the selected parser factory.
      *                   In the DefaultFTPEntryParserFactory, this will
@@ -2736,7 +2739,7 @@ implements Configurable
      *                   If an I/O error occurs while either sending a
      *                   command to the server or receiving a reply
      *                   from the server.
-     * @exception ParserInitializationException
+     * @exception org.apache.commons.net.ftp.parser.ParserInitializationException
      *                   Thrown if the parserKey parameter cannot be
      *                   resolved by the selected parser factory.
      *                   In the DefaultFTPEntryParserFactory, this will
@@ -2795,7 +2798,7 @@ implements Configurable
      *                   If an I/O error occurs while either sending a
      *                   command to the server or receiving a reply
      *                   from the server.
-     * @exception ParserInitializationException
+     * @exception org.apache.commons.net.ftp.parser.ParserInitializationException
      *                   Thrown if the parserKey parameter cannot be
      *                   resolved by the selected parser factory.
      *                   In the DefaultFTPEntryParserFactory, this will
@@ -2836,7 +2839,7 @@ implements Configurable
      *                   If an I/O error occurs while either sending a
      *                   command to the server or receiving a reply
      *                   from the server.
-     * @exception ParserInitializationException
+     * @exception org.apache.commons.net.ftp.parser.ParserInitializationException
      *                   Thrown if the parserKey parameter cannot be
      *                   resolved by the selected parser factory.
      *                   In the DefaultFTPEntryParserFactory, this will
@@ -2884,7 +2887,7 @@ implements Configurable
      * @exception IOException
      *                   If an I/O error occurs while either sending a
      *                   command to the server or receiving a reply from the server.
-     * @exception ParserInitializationException
+     * @exception org.apache.commons.net.ftp.parser.ParserInitializationException
      *                   Thrown if the autodetect mechanism cannot
      *                   resolve the type of system we are connected with.
      * @see FTPListParseEngine
@@ -2939,7 +2942,7 @@ implements Configurable
      * @exception IOException
      *                   If an I/O error occurs while either sending a
      *                   command to the server or receiving a reply from the server.
-     * @exception ParserInitializationException
+     * @exception org.apache.commons.net.ftp.parser.ParserInitializationException
      *                   Thrown if the autodetect mechanism cannot
      *                   resolve the type of system we are connected with.
      * @see FTPListParseEngine
@@ -2992,7 +2995,7 @@ implements Configurable
      * @exception IOException
      *                   If an I/O error occurs while either sending a
      *                   command to the server or receiving a reply from the server.
-     * @exception ParserInitializationException
+     * @exception org.apache.commons.net.ftp.parser.ParserInitializationException
      *                   Thrown if the parserKey parameter cannot be
      *                   resolved by the selected parser factory.
      *                   In the DefaultFTPEntryParserFactory, this will
