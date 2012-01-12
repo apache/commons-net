@@ -128,7 +128,7 @@ public class FTPHTTPClient extends FTPClient {
         output.write(connectString.getBytes("UTF-8")); // TODO what is the correct encoding?
         output.write(CRLF);
         output.write(hostString.getBytes("UTF-8"));
- 	    output.write(CRLF);
+        output.write(CRLF);
 
         if (proxyUsername != null && proxyPassword != null) {
             final String auth = proxyUsername + ":" + proxyPassword;
