@@ -24,8 +24,6 @@ import java.security.spec.InvalidKeySpecException;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.net.pop3.POP3Client;
-import org.apache.commons.net.pop3.POP3Reply;
 import org.apache.commons.net.util.Base64;
 
 
