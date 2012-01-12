@@ -108,7 +108,7 @@ public abstract class RegexFTPFileEntryParserImpl extends
      *
      * @param matchnum match group number to be retrieved
      *
-     * @return the content of the <code>matchnum'th<code> group of the internal
+     * @return the content of the <code>matchnum'th</code> group of the internal
      *         match or null if this method is called without a match having
      *         been made.
      */

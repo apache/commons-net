@@ -132,7 +132,7 @@ import java.util.TreeMap;
  *    f.login(username, password);
  *    FTPFile[] files = listFiles(directory);
  * </pre>
- * </p>
+ * 
  * @since 1.4
  * @see org.apache.commons.net.ftp.Configurable
  * @see org.apache.commons.net.ftp.FTPClient
@@ -399,8 +399,10 @@ public class FTPClientConfig
      * those less than a year old.  If this is  not specified, such a parser
      * will not attempt to parse using an alternate format.
      * </p>
+     * <p>
      * This is used primarily in unix-based systems.
      * </p>
+     * <p>
      * This should be in the format described for
      * <code>java.text.SimpleDateFormat</code>.
      * </p>

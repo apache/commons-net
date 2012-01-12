@@ -470,10 +470,10 @@ public class FTPSClient extends FTPClient {
     }
     
     /**
-     * PROT command.</br>
-     * C - Clear</br>
-     * S - Safe(SSL protocol only)</br>
-     * E - Confidential(SSL protocol only)</br>
+     * PROT command.<br/>
+     * C - Clear<br/>
+     * S - Safe(SSL protocol only)<br/>
+     * E - Confidential(SSL protocol only)<br/>
      * P - Private
      * <p>
      * <b>N.B.</b> the method calls

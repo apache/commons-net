@@ -82,7 +82,7 @@ implements Configurable
      * passing it the supplied {@link  FTPClientConfig FTPClientConfig}
      * if that is non-null or a default configuration defined by
      * each concrete subclass.
-     * </p>
+     *
      * @param config the configuration to be used to configure this parser.
      * If it is null, a default configuration defined by
      * each concrete subclass is used instead.
