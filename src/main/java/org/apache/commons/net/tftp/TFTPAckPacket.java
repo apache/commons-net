@@ -77,8 +77,9 @@ public final class TFTPAckPacket extends TFTPPacket
 
         data = datagram.getData();
 
-        if (getType() != data[1])
+        if (getType() != data[1]) {
             throw new TFTPPacketException("TFTP operator code does not match type.");
+        }
 
         _blockNumber = (((data[2] & 0xff) << 8) | (data[3] & 0xff));
     }

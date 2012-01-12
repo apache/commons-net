@@ -83,15 +83,17 @@ public final class DotTerminatedMessageWriter extends Writer
                 __output.write('\r');
                 return ;
             case '\n':
-                if (__state != __LAST_WAS_CR_STATE)
+                if (__state != __LAST_WAS_CR_STATE) {
                     __output.write('\r');
+                }
                 __output.write('\n');
                 __state = __LAST_WAS_NL_STATE;
                 return ;
             case '.':
                 // Double the dot at the beginning of a line
-                if (__state == __LAST_WAS_NL_STATE)
+                if (__state == __LAST_WAS_NL_STATE) {
                     __output.write('.');
+                }
                 //$FALL-THROUGH$
             default:
                 __state = __NOTHING_SPECIAL_STATE;
@@ -117,8 +119,9 @@ public final class DotTerminatedMessageWriter extends Writer
     {
         synchronized (lock)
         {
-            while (length-- > 0)
+            while (length-- > 0) {
                 write(buffer[offset++]);
+            }
         }
     }
 
@@ -196,13 +199,15 @@ public final class DotTerminatedMessageWriter extends Writer
     {
         synchronized (lock)
         {
-            if (__output == null)
+            if (__output == null) {
                 return ;
+            }
 
-            if (__state == __LAST_WAS_CR_STATE)
+            if (__state == __LAST_WAS_CR_STATE) {
                 __output.write('\n');
-            else if (__state != __LAST_WAS_NL_STATE)
+            } else if (__state != __LAST_WAS_NL_STATE) {
                 __output.write("\r\n");
+            }
 
             __output.write(".\r\n");
 

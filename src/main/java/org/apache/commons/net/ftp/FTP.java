@@ -309,16 +309,18 @@ public class FTP extends SocketClient
 
         String line = _controlInput_.readLine();
 
-        if (line == null)
+        if (line == null) {
             throw new FTPConnectionClosedException(
-                "Connection closed without indication.");
+                    "Connection closed without indication.");
+        }
 
         // In case we run into an anomaly we don't want fatal index exceptions
         // to be thrown.
         length = line.length();
-        if (length < 3)
+        if (length < 3) {
             throw new MalformedServerReplyException(
                 "Truncated server reply: " + line);
+        }
 
         String code = null;
         try
@@ -341,9 +343,10 @@ public class FTP extends SocketClient
             {
                 line = _controlInput_.readLine();
 
-                if (line == null)
+                if (line == null) {
                     throw new FTPConnectionClosedException(
                         "Connection closed without indication.");
+                }
 
                 _replyLines.add(line);
 
@@ -379,8 +382,9 @@ public class FTP extends SocketClient
             try {
                 __getReply();
                 // If we received code 120, we have to fetch completion reply.
-                if (FTPReply.isPositivePreliminary(_replyCode))
+                if (FTPReply.isPositivePreliminary(_replyCode)) {
                     __getReply();
+                }
             } catch (SocketTimeoutException e) {
                 IOException ioe = new IOException("Timed out waiting for initial connect reply");
                 ioe.initCause(e);
@@ -391,8 +395,9 @@ public class FTP extends SocketClient
         } else {
             __getReply();
             // If we received code 120, we have to fetch completion reply.
-            if (FTPReply.isPositivePreliminary(_replyCode))
+            if (FTPReply.isPositivePreliminary(_replyCode)) {
                 __getReply();
+            }
         }
     }
 
@@ -907,15 +912,17 @@ public class FTP extends SocketClient
         // If IPv6, trim the zone index
         h = host.getHostAddress();
         num = h.indexOf("%");
-        if (num > 0)
+        if (num > 0) {
             h = h.substring(0, num);
+        }
 
         info.append("|");
 
-        if (host instanceof Inet4Address)
+        if (host instanceof Inet4Address) {
             info.append("1");
-        else if (host instanceof Inet6Address)
+        } else if (host instanceof Inet6Address) {
             info.append("2");
+        }
         info.append("|");
         info.append(h);
         info.append("|");
@@ -989,10 +996,11 @@ public class FTP extends SocketClient
 
         arg.append(__modes.charAt(fileType));
         arg.append(' ');
-        if (fileType == LOCAL_FILE_TYPE)
+        if (fileType == LOCAL_FILE_TYPE) {
             arg.append(formatOrByteSize);
-        else
+        } else {
             arg.append(__modes.charAt(formatOrByteSize));
+        }
 
         return sendCommand(FTPCommand.TYPE, arg.toString());
     }

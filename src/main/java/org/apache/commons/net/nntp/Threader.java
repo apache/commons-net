@@ -55,15 +55,17 @@ public class Threader {
      * @since 3.0
      */
     public Threadable thread(Iterable<? extends Threadable> messages) {
-        if (messages == null)
+        if (messages == null) {
             return null;
+        }
 
         idTable = new HashMap<String,ThreadContainer>();
 
         // walk through each Threadable element
         for (Threadable t : messages) {
-            if (!t.isDummy())
+            if (!t.isDummy()) {
                 buildContainer(t);
+            }
         }
 
         root = findRootSet();
@@ -75,12 +77,14 @@ public class Threader {
         root.reverseChildren();
         gatherSubjects();
 
-        if (root.next != null)
+        if (root.next != null) {
             throw new RuntimeException("root node has a next:" + root);
+        }
 
         for (ThreadContainer r = root.child; r != null; r = r.next) {
-            if (r.threadable == null)
+            if (r.threadable == null) {
                 r.threadable = r.child.threadable.makeDummy();
+            }
         }
 
         Threadable result = (root.child == null ? null : root.child.threadable);
@@ -153,7 +157,9 @@ public class Threader {
         // be the parent of this container, unless doing so causes a circular reference
         if (parentRef != null
             && (parentRef == container || container.findChild(parentRef)))
+        {
             parentRef = null;
+        }
 
         // if it has a parent already, its because we saw this message in a References: field, and presumed
         // a parent based on the other entries in that field. Now that we have the actual message, we can
@@ -164,8 +170,9 @@ public class Threader {
             for (prev = null, rest = container.parent.child;
                 rest != null;
                 prev = rest, rest = rest.next) {
-                if (rest == container)
+                if (rest == container) {
                     break;
+                }
             }
 
             if (rest == null) {
@@ -177,10 +184,11 @@ public class Threader {
             }
 
             // Unlink this container from the parent's child list
-            if (prev == null)
+            if (prev == null) {
                 container.parent.child = container.next;
-            else
+            } else {
                 prev.next = container.next;
+            }
 
             container.next = null;
             container.parent = null;
@@ -206,9 +214,10 @@ public class Threader {
             Object key = iter.next();
             ThreadContainer c = idTable.get(key);
             if (c.parent == null) {
-                if (c.next != null)
+                if (c.next != null) {
                     throw new RuntimeException(
-                        "c.next is " + c.next.toString());
+                            "c.next is " + c.next.toString());
+                }
                 c.next = root.child;
                 root.child = c;
             }
@@ -230,10 +239,11 @@ public class Threader {
 
             // Is it empty and without any children? If so,delete it
             if (container.threadable == null && container.child == null) {
-                if (prev == null)
+                if (prev == null) {
                     parent.child = container.next;
-                else
+                } else {
                     prev.next = container.next;
+                }
 
                 // Set container to prev so that prev keeps its same value the next time through the loop
                 container = prev;
@@ -250,15 +260,17 @@ public class Threader {
                 ThreadContainer kids = container.child;
 
                 // Remove this container and replace with 'kids'.
-                if (prev == null)
+                if (prev == null) {
                     parent.child = kids;
-                else
+                } else {
                     prev.next = kids;
+                }
 
                 // Make each child's parent be this level's parent -> i.e. promote the children. Make the last child's next point to this container's next
                 // i.e. splice kids into the list in place of container
-                for (tail = kids; tail.next != null; tail = tail.next)
+                for (tail = kids; tail.next != null; tail = tail.next) {
                     tail.parent = container.parent;
+                }
 
                 tail.parent = container.parent;
                 tail.next = container.next;
@@ -284,8 +296,9 @@ public class Threader {
 
         int count = 0;
 
-        for (ThreadContainer c = root.child; c != null; c = c.next)
+        for (ThreadContainer c = root.child; c != null; c = c.next) {
             count++;
+        }
 
         // TODO verify this will avoid rehashing
         HashMap<String, ThreadContainer> subjectTable = new HashMap<String, ThreadContainer>((int) (count * 1.2), (float) 0.9);
@@ -297,13 +310,15 @@ public class Threader {
             // No threadable? If so, it is a dummy node in the root set.
             // Only root set members may be dummies, and they alway have at least 2 kids
             // Take the first kid as representative of the subject
-            if (threadable == null)
+            if (threadable == null) {
                 threadable = c.child.threadable;
+            }
 
             String subj = threadable.simplifiedSubject();
 
-            if (subj == null || subj == "")
+            if (subj == null || subj == "") {
                 continue;
+            }
 
             ThreadContainer old = subjectTable.get(subj);
 
@@ -326,8 +341,9 @@ public class Threader {
         }
 
         // If the table is empty, we're done
-        if (count == 0)
+        if (count == 0) {
             return;
+        }
 
         // subjectTable is now populated with one entry for each subject which occurs in the
         // root set. Iterate over the root set, and gather together the difference.
@@ -338,26 +354,30 @@ public class Threader {
             Threadable threadable = c.threadable;
 
             // is it a dummy node?
-            if (threadable == null)
+            if (threadable == null) {
                 threadable = c.child.threadable;
+            }
 
             String subj = threadable.simplifiedSubject();
 
             // Dont thread together all subjectless messages
-            if (subj == null || subj == "")
+            if (subj == null || subj == "") {
                 continue;
+            }
 
             ThreadContainer old = subjectTable.get(subj);
 
-            if (old == c) // That's us
+            if (old == c) { // That's us
                 continue;
+            }
 
             // We have now found another container in the root set with the same subject
             // Remove the "second" message from the root set
-            if (prev == null)
+            if (prev == null) {
                 root.child = c.next;
-            else
+            } else {
                 prev.next = c.next;
+            }
             c.next = null;
 
             if (old.threadable == null && c.threadable == null) {
@@ -365,14 +385,17 @@ public class Threader {
                 ThreadContainer tail;
                 for (tail = old.child;
                     tail != null && tail.next != null;
-                    tail = tail.next){}
+                    tail = tail.next) {
+                    // do nothing
+                }
 
                 if (tail != null) { // protect against possible NPE
                     tail.next = c.child;
                 }
 
-                for (tail = c.child; tail != null; tail = tail.next)
+                for (tail = c.child; tail != null; tail = tail.next) {
                     tail.parent = old;
+                }
 
                 c.child = null;
             } else if (
@@ -393,8 +416,10 @@ public class Threader {
 
                 for (ThreadContainer tail = newc.child;
                     tail != null;
-                    tail = tail.next)
+                    tail = tail.next) 
+                {
                     tail.parent = newc;
+                }
 
                 old.threadable = null;
                 old.child = null;

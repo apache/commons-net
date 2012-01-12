@@ -163,8 +163,12 @@ public abstract class SocketClient
     throws SocketException, IOException
     {
         _socket_ = _socketFactory_.createSocket();
-        if (receiveBufferSize != -1) _socket_.setReceiveBufferSize(receiveBufferSize);
-        if (sendBufferSize != -1) _socket_.setSendBufferSize(sendBufferSize);
+        if (receiveBufferSize != -1) {
+            _socket_.setReceiveBufferSize(receiveBufferSize);
+        }
+        if (sendBufferSize != -1) {
+            _socket_.setSendBufferSize(sendBufferSize);
+        }
         _socket_.connect(new InetSocketAddress(host, port), connectTimeout);
         _connectAction_();
     }
@@ -210,8 +214,12 @@ public abstract class SocketClient
     throws SocketException, IOException
     {
         _socket_ = _socketFactory_.createSocket();
-        if (receiveBufferSize != -1) _socket_.setReceiveBufferSize(receiveBufferSize);
-        if (sendBufferSize != -1) _socket_.setSendBufferSize(sendBufferSize);
+        if (receiveBufferSize != -1) {
+            _socket_.setReceiveBufferSize(receiveBufferSize);
+        }
+        if (sendBufferSize != -1) {
+            _socket_.setSendBufferSize(sendBufferSize);
+        }
         _socket_.bind(new InetSocketAddress(localAddr, localPort));
         _socket_.connect(new InetSocketAddress(host, port), connectTimeout);
         _connectAction_();
@@ -325,8 +333,9 @@ public abstract class SocketClient
      */
     public boolean isConnected()
     {
-        if (_socket_ == null)
+        if (_socket_ == null) {
             return false;
+        }
 
         return _socket_.isConnected();
     }
@@ -343,15 +352,27 @@ public abstract class SocketClient
         if (isConnected()) {
             try
             {
-                if (_socket_.getInetAddress() == null) return false;
-                if (_socket_.getPort() == 0) return false;
-                if (_socket_.getRemoteSocketAddress() == null) return false;
-                if (_socket_.isClosed()) return false;
+                if (_socket_.getInetAddress() == null) {
+                    return false;
+                }
+                if (_socket_.getPort() == 0) {
+                    return false;
+                }
+                if (_socket_.getRemoteSocketAddress() == null) {
+                    return false;
+                }
+                if (_socket_.isClosed()) {
+                    return false;
+                }
                 /* these aren't exact checks (a Socket can be half-open),
                    but since we usually require two-way data transfer,
                    we check these here too: */
-                if (_socket_.isInputShutdown()) return false;
-                if (_socket_.isOutputShutdown()) return false;
+                if (_socket_.isInputShutdown()) {
+                    return false;
+                }
+                if (_socket_.isOutputShutdown()) {
+                    return false;
+                }
                 /* ignore the result, catch exceptions: */
                 _socket_.getInputStream();
                 _socket_.getOutputStream();
@@ -644,10 +665,11 @@ public abstract class SocketClient
      */
     public void setSocketFactory(SocketFactory factory)
     {
-        if (factory == null)
+        if (factory == null) {
             _socketFactory_ = __DEFAULT_SOCKET_FACTORY;
-        else
+        } else {
             _socketFactory_ = factory;
+        }
     }
 
     /**
@@ -660,10 +682,11 @@ public abstract class SocketClient
      * @since 2.0
      */
     public void setServerSocketFactory(ServerSocketFactory factory) {
-        if (factory == null)
+        if (factory == null) {
             _serverSocketFactory_ = __DEFAULT_SERVER_SOCKET_FACTORY;
-        else
+        } else {
             _serverSocketFactory_ = factory;
+        }
     }
 
     /**

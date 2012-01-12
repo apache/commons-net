@@ -106,23 +106,28 @@ public final class Util
                 if (bytes == 0)
                 {
                     bytes = source.read();
-                    if (bytes < 0)
+                    if (bytes < 0) {
                         break;
+                    }
                     dest.write(bytes);
-                    if(flush)
-                      dest.flush();
+                    if(flush) {
+                        dest.flush();
+                    }
                     ++total;
-                    if (listener != null)
+                    if (listener != null) {
                         listener.bytesTransferred(total, 1, streamSize);
+                    }
                     continue;
                 }
 
                 dest.write(buffer, 0, bytes);
-                if(flush)
-                  dest.flush();
+                if(flush) {
+                    dest.flush();
+                }
                 total += bytes;
-                if (listener != null)
+                if (listener != null) {
                     listener.bytesTransferred(total, bytes, streamSize);
+                }
             }
         }
         catch (IOException e)
@@ -267,21 +272,24 @@ public final class Util
                 if (chars == 0)
                 {
                     chars = source.read();
-                    if (chars < 0)
+                    if (chars < 0) {
                         break;
+                    }
                     dest.write(chars);
                     dest.flush();
                     ++total;
-                    if (listener != null)
+                    if (listener != null) {
                         listener.bytesTransferred(total, chars, streamSize);
+                    }
                     continue;
                 }
 
                 dest.write(buffer, 0, chars);
                 dest.flush();
                 total += chars;
-                if (listener != null)
+                if (listener != null) {
                     listener.bytesTransferred(total, chars, streamSize);
+                }
             }
         }
         catch (IOException e)

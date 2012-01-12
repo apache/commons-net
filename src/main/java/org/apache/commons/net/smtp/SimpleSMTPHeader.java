@@ -99,10 +99,11 @@ public class SimpleSMTPHeader
      ***/
     public void addCC(String address)
     {
-        if (__cc == null)
+        if (__cc == null) {
             __cc = new StringBuffer();
-        else
+        } else {
             __cc.append(", ");
+        }
 
         __cc.append(address);
     }
@@ -121,8 +122,9 @@ public class SimpleSMTPHeader
     {
         StringBuilder header = new StringBuilder();
 
-        if (__headerFields.length() > 0)
+        if (__headerFields.length() > 0) {
             header.append(__headerFields.toString());
+        }
 
         header.append("From: ");
         header.append(__from);

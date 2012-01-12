@@ -87,8 +87,9 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
             }
             else
             {
-                if (ch != -1)
+                if (ch != -1) {
                     unread(ch);
+                }
                 return '\r';
             }
         }
@@ -113,8 +114,9 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
     @Override
     public int read() throws IOException
     {
-        if (_noConversionRequired)
+        if (_noConversionRequired) {
             return super.read();
+        }
 
         return __read();
     }
@@ -155,11 +157,13 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
     @Override
     public int read(byte buffer[], int offset, int length) throws IOException
     {
-        if (_noConversionRequired)
+        if (_noConversionRequired) {
             return super.read(buffer, offset, length);
+        }
 
-        if (length < 1)
+        if (length < 1) {
             return 0;
+        }
 
         int ch, off;
 
@@ -168,12 +172,14 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
         __length = (length > ch ? ch : length);
 
         // If nothing is available, block to read only one character
-        if (__length < 1)
+        if (__length < 1) {
             __length = 1;
+        }
 
 
-        if ((ch = __read()) == -1)
+        if ((ch = __read()) == -1) {
             return -1;
+        }
 
         off = offset;
 

@@ -85,10 +85,11 @@ public final class TFTPDataPacket extends TFTPPacket
         _data = data;
         _offset = offset;
 
-        if (length > MAX_DATA_LENGTH)
+        if (length > MAX_DATA_LENGTH) {
             _length = MAX_DATA_LENGTH;
-        else
+        } else {
             _length = length;
+        }
     }
 
     public TFTPDataPacket(InetAddress destination, int port, int blockNumber,
@@ -114,15 +115,17 @@ public final class TFTPDataPacket extends TFTPPacket
         _data = datagram.getData();
         _offset = 4;
 
-        if (getType() != _data[1])
+        if (getType() != _data[1]) {
             throw new TFTPPacketException("TFTP operator code does not match type.");
+        }
 
         _blockNumber = (((_data[2] & 0xff) << 8) | (_data[3] & 0xff));
 
         _length = datagram.getLength() - 4;
 
-        if (_length > MAX_DATA_LENGTH)
+        if (_length > MAX_DATA_LENGTH) {
             _length = MAX_DATA_LENGTH;
+        }
     }
 
     /***
@@ -145,8 +148,9 @@ public final class TFTPDataPacket extends TFTPPacket
         data[3] = (byte)(_blockNumber & 0xff);
 
         // Doublecheck we're not the same
-        if (data != _data)
+        if (data != _data) {
             System.arraycopy(_data, _offset, data, 4, _length);
+        }
 
         datagram.setAddress(_address);
         datagram.setPort(_port);
@@ -213,10 +217,11 @@ public final class TFTPDataPacket extends TFTPPacket
         _offset = offset;
         _length = length;
 
-        if (length > MAX_DATA_LENGTH)
+        if (length > MAX_DATA_LENGTH) {
             _length = MAX_DATA_LENGTH;
-        else
+        } else {
             _length = length;
+        }
     }
 
     /***

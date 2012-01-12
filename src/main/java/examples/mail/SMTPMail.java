@@ -90,8 +90,9 @@ public final class SMTPMail
 
                 cc = stdin.readLine();
 
-                if (cc== null || cc.length() == 0)
+                if (cc== null || cc.length() == 0) {
                     break;
+                }
 
                 header.addCC(cc.trim());
                 ccList.add(cc.trim());
@@ -131,8 +132,9 @@ public final class SMTPMail
 
 
 
-            for (String recpt : ccList)
+            for (String recpt : ccList) {
                 client.addRecipient(recpt);
+            }
 
             writer = client.sendMessageData();
 

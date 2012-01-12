@@ -197,7 +197,9 @@ public class FTPSClient extends FTPClient {
     @Override
     protected void _connectAction_() throws IOException {
         // Implicit mode.
-        if (isImplicit) sslNegotiation();
+        if (isImplicit) {
+            sslNegotiation();
+        }
         super._connectAction_();
         // Explicit mode.
         if (!isImplicit) {
@@ -227,7 +229,7 @@ public class FTPSClient extends FTPClient {
      * @throws IOException
      */
     private void initSslContext() throws IOException {
-        if(context == null) {
+        if (context == null) {
             context = SSLContextUtils.createSSLContext(protocol, getKeyManager(), getTrustManager());
         }
     }
@@ -254,8 +256,12 @@ public class FTPSClient extends FTPClient {
             socket.setWantClientAuth(isWantClientAuth);
         }
 
-        if (protocols != null) socket.setEnabledProtocols(protocols);
-        if (suites != null) socket.setEnabledCipherSuites(suites);
+        if (protocols != null) {
+            socket.setEnabledProtocols(protocols);
+        }
+        if (suites != null) {
+            socket.setEnabledCipherSuites(suites);
+        }
         socket.startHandshake();
 
         _socket_ = socket;
@@ -301,8 +307,9 @@ public class FTPSClient extends FTPClient {
      * false - indicates that an existing session must be resumed.
      */
     public boolean getEnableSessionCreation() {
-        if (_socket_ instanceof SSLSocket)
+        if (_socket_ instanceof SSLSocket) {
             return ((SSLSocket)_socket_).getEnableSessionCreation();
+        }
         return false;
     }
 
@@ -321,8 +328,9 @@ public class FTPSClient extends FTPClient {
      * that the client authenticate itself.
      */
     public boolean getNeedClientAuth() {
-        if (_socket_ instanceof SSLSocket)
+        if (_socket_ instanceof SSLSocket) {
             return ((SSLSocket)_socket_).getNeedClientAuth();
+        }
         return false;
     }
 
@@ -343,8 +351,9 @@ public class FTPSClient extends FTPClient {
      * that the client authenticate itself.
      */
     public boolean getWantClientAuth() {
-        if (_socket_ instanceof SSLSocket)
+        if (_socket_ instanceof SSLSocket) {
             return ((SSLSocket)_socket_).getWantClientAuth();
+        }
         return false;
     }
 
@@ -365,8 +374,9 @@ public class FTPSClient extends FTPClient {
      * in "client" mode.
      */
     public boolean getUseClientMode() {
-        if (_socket_ instanceof SSLSocket)
+        if (_socket_ instanceof SSLSocket) {
             return ((SSLSocket)_socket_).getUseClientMode();
+        }
         return false;
     }
 
@@ -387,8 +397,9 @@ public class FTPSClient extends FTPClient {
      * @return An array of cipher suite names, or <code>null</code>
      */
     public String[] getEnabledCipherSuites() {
-        if (_socket_ instanceof SSLSocket)
+        if (_socket_ instanceof SSLSocket) {
             return ((SSLSocket)_socket_).getEnabledCipherSuites();
+        }
         return null;
     }
 
@@ -409,8 +420,9 @@ public class FTPSClient extends FTPClient {
      * @return An array of protocols, or <code>null</code>
      */
     public String[] getEnabledProtocols() {
-        if (_socket_ instanceof SSLSocket)
+        if (_socket_ instanceof SSLSocket) {
             return ((SSLSocket)_socket_).getEnabledProtocols();
+        }
         return null;
     }
 
@@ -423,8 +435,9 @@ public class FTPSClient extends FTPClient {
      * @see #parsePBSZ(long)
      */
     public void execPBSZ(long pbsz) throws SSLException, IOException {
-        if (pbsz < 0 || 4294967295L < pbsz) // 32-bit unsigned number
+        if (pbsz < 0 || 4294967295L < pbsz) { // 32-bit unsigned number
             throw new IllegalArgumentException();
+        }
         int status = sendCommand(CMD_PBSZ, String.valueOf(pbsz));
         if (FTPReply.COMMAND_OK != status) {
             throw new SSLException(getReplyString());
@@ -473,10 +486,15 @@ public class FTPSClient extends FTPClient {
      * the command.
      */
     public void execPROT(String prot) throws SSLException, IOException {
-        if (prot == null) prot = DEFAULT_PROT;
-        if (!checkPROTValue(prot)) throw new IllegalArgumentException();
-        if (FTPReply.COMMAND_OK != sendCommand(CMD_PROT, prot))
+        if (prot == null) {
+            prot = DEFAULT_PROT;
+        }
+        if (!checkPROTValue(prot)) {
+            throw new IllegalArgumentException();
+        }
+        if (FTPReply.COMMAND_OK != sendCommand(CMD_PROT, prot)) {
             throw new SSLException(getReplyString());
+        }
         if (DEFAULT_PROT.equals(prot)) {
             setSocketFactory(null);
             setServerSocketFactory(null);
@@ -494,7 +512,9 @@ public class FTPSClient extends FTPClient {
      */
     private boolean checkPROTValue(String prot) {
         for (int p = 0; p < PROT_COMMAND_VALUE.length; p++) {
-            if (PROT_COMMAND_VALUE[p].equals(prot)) return true;
+            if (PROT_COMMAND_VALUE[p].equals(prot)) {
+                return true;
+            }
         }
         return false;
     }
@@ -748,8 +768,9 @@ public class FTPSClient extends FTPClient {
      */
     public byte[] parseADATReply(String reply)
     {
-        if (reply == null) return null;
-        else {
+        if (reply == null) {
+            return null;
+        } else {
             return Base64.decodeBase64(extractPrefixedData("ADAT=", reply));
         }
     }

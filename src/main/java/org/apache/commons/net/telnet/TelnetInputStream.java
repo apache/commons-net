@@ -78,10 +78,11 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         __ioException = null;
         __readIsWaiting = false;
         __threaded = false;
-        if(readerThread)
+        if(readerThread) {
             __thread = new Thread(this);
-        else
+        } else {
             __thread = null;
+        }
     }
 
     TelnetInputStream(InputStream input, TelnetClient client) {
@@ -90,8 +91,9 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
 
     void _start()
     {
-        if(__thread == null)
+        if(__thread == null) {
             return;
+        }
 
         int priority;
         __isClosed = false;
@@ -100,8 +102,9 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         // threads.  This should prevent scheduler induced deadlock (rather than
         // deadlock caused by a bug in this code).
         priority = Thread.currentThread().getPriority() + 1;
-        if (priority > Thread.MAX_PRIORITY)
+        if (priority > Thread.MAX_PRIORITY) {
             priority = Thread.MAX_PRIORITY;
+        }
         __thread.setPriority(priority);
         __thread.setDaemon(true);
         __thread.start();
@@ -129,12 +132,14 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         {
 
             // If there is no more data AND we were told not to block, just return WOULD_BLOCK (-2). (More efficient than exception.)
-            if(!mayBlock && super.available() == 0)
+            if(!mayBlock && super.available() == 0) {
                 return WOULD_BLOCK;
+            }
 
             // Otherwise, exit only when we reach end of stream.
-            if ((ch = super.read()) < 0)
+            if ((ch = super.read()) < 0) {
                 return EOF;
+            }
 
             ch = (ch & 0xff);
 
@@ -176,14 +181,15 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                 {
                     synchronized (__client)
                     {
-                        if (__client._requestedDont(TelnetOption.BINARY))
+                        if (__client._requestedDont(TelnetOption.BINARY)) {
                             __receiveState = _STATE_CR;
-                        else
+                        } else {
                             __receiveState = _STATE_DATA;
+                        }
                     }
-                }
-                else
+                } else {
                     __receiveState = _STATE_DATA;
+                }
                 break;
 
             case _STATE_IAC:
@@ -260,8 +266,9 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                     continue;
                 default:
                     // store suboption char
-                    if (__suboption_count < __suboption.length)
+                    if (__suboption_count < __suboption.length) {
                         __suboption[__suboption_count++] = ch;
+                    }
                     break;
                 }
                 __receiveState = _STATE_SB;
@@ -278,8 +285,9 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                     __receiveState = _STATE_DATA;
                     continue;
                 case TelnetCommand.IAC: // De-dup the duplicated IAC
-                    if (__suboption_count < __suboption.length)
+                    if (__suboption_count < __suboption.length) {
                         __suboption[__suboption_count++] = ch;
+                    }
                     break;
                 default:            // unexpected byte! ignore it
                     break;
@@ -340,8 +348,9 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
             __queue[__queueTail] = ch;
             ++__bytesAvailable;
 
-            if (++__queueTail >= __queue.length)
+            if (++__queueTail >= __queue.length) {
                 __queueTail = 0;
+            }
         }
         return bufferWasEmpty;
     }
@@ -368,8 +377,9 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                 if (__bytesAvailable == 0)
                 {
                     // Return EOF if at end of file
-                    if (__hasReachedEOF)
+                    if (__hasReachedEOF) {
                         return EOF;
+                    }
 
                     // Otherwise, we have to wait for queue to get something
                     if(__threaded)
@@ -397,9 +407,11 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                         {
                             try
                             {
-                                if ((ch = __read(mayBlock)) < 0) // EOF or WOULD_BLOCK
-                                    if(ch != WOULD_BLOCK)
-                                        return (ch); // must be EOF
+                                if ((ch = __read(mayBlock)) < 0) { // must be EOF
+                                    if(ch != WOULD_BLOCK) {
+                                        return (ch);
+                                    }
+                                }
                             }
                             catch (InterruptedIOException e)
                             {
@@ -428,8 +440,9 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                             }
                             catch (InterruptedException e)
                             {
-                                if (__isClosed)
+                                if (__isClosed) {
                                     return EOF;
+                                }
                             }
 
                             // Reads should not block on subsequent iterations. Potentially, this could happen if the
@@ -450,8 +463,9 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
 
                     ch = __queue[__queueHead];
 
-                    if (++__queueHead >= __queue.length)
+                    if (++__queueHead >= __queue.length) {
                         __queueHead = 0;
+                    }
 
                     --__bytesAvailable;
 
@@ -504,18 +518,21 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     {
         int ch, off;
 
-        if (length < 1)
+        if (length < 1) {
             return 0;
+        }
 
         // Critical section because run() may change __bytesAvailable
         synchronized (__queue)
         {
-            if (length > __bytesAvailable)
+            if (length > __bytesAvailable) {
                 length = __bytesAvailable;
+            }
         }
 
-        if ((ch = read()) == EOF)
+        if ((ch = read()) == EOF) {
             return EOF;
+        }
 
         off = offset;
 
@@ -588,8 +605,9 @@ _outerLoop:
             {
                 try
                 {
-                    if ((ch = __read(true)) < 0)
+                    if ((ch = __read(true)) < 0) {
                         break;
+                    }
                 }
                 catch (InterruptedIOException e)
                 {
@@ -603,8 +621,9 @@ _outerLoop:
                         }
                         catch (InterruptedException interrupted)
                         {
-                            if (__isClosed)
+                            if (__isClosed) {
                                 break _outerLoop;
+                            }
                         }
                         continue;
                     }
@@ -626,13 +645,15 @@ _outerLoop:
                 }
                 catch (InterruptedException e)
                 {
-                    if (__isClosed)
+                    if (__isClosed) {
                         break _outerLoop;
+                    }
                 }
 
                 // Notify input listener if buffer was previously empty
-                if (notify)
+                if (notify) {
                     __client.notifyInputListener();
+                }
             }
         }
         catch (IOException ioe)

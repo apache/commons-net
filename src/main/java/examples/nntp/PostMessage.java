@@ -89,8 +89,9 @@ public final class PostMessage
                 // Of course you don't want to do this because readLine() may be null
                 newsgroup = stdin.readLine().trim();
 
-                if (newsgroup.length() == 0)
+                if (newsgroup.length() == 0) {
                     break;
+                }
 
                 header.addNewsgroup(newsgroup);
             }
@@ -105,11 +106,13 @@ public final class PostMessage
 
             references = stdin.readLine();
 
-            if (organization != null && organization.length() > 0)
+            if (organization != null && organization.length() > 0) {
                 header.addHeaderField("Organization", organization);
+            }
 
-            if (references != null && references.length() > 0)
+            if (references != null && references.length() > 0) {
                 header.addHeaderField("References", references);
+            }
 
             header.addHeaderField("X-Newsreader", "NetComponents");
 

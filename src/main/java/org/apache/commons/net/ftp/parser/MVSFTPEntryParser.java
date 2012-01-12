@@ -233,12 +233,13 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
         boolean isParsed = false;
         FTPFile f = new FTPFile();
 
-        if (isType == FILE_LIST_TYPE)
+        if (isType == FILE_LIST_TYPE) {
             isParsed = parseFileList(f, entry);
-        else if (isType == MEMBER_LIST_TYPE) {
+        } else if (isType == MEMBER_LIST_TYPE) {
             isParsed = parseMemberList(f, entry);
-            if (!isParsed)
+            if (!isParsed) {
                 isParsed = parseSimpleEntry(f, entry);
+            }
         } else if (isType == UNIX_LIST_TYPE) {
             isParsed = parseUnixList(f, entry);
         } else if (isType == JES_LEVEL_1_LIST_TYPE) {
@@ -247,8 +248,9 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             isParsed = parseJeslevel2List(f, entry);
         }
 
-        if (!isParsed)
+        if (!isParsed) {
             f = null;
+        }
 
         return f;
     }
@@ -372,8 +374,9 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      */
     private boolean parseUnixList(FTPFile file, String entry) {
         file = unixFTPEntryParser.parseFTPEntry(entry);
-        if (file == null)
+        if (file == null) {
             return false;
+        }
         return true;
     }
 

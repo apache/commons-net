@@ -73,7 +73,9 @@ final class TelnetOutputStream extends OutputStream
                         }
                     } // __convertCRtoCRLF
                     else if (ch != '\n')
+                     {
                         __client._sendByte('\0'); // RFC854 requires CR NUL for bare CR
+                    }
                 }
 
                 __lastWasCR = false;
@@ -97,9 +99,9 @@ final class TelnetOutputStream extends OutputStream
             {
                 __client._sendByte(ch);
                 __client._sendByte(TelnetCommand.IAC);
-            }
-            else
+            } else {
                 __client._sendByte(ch);
+            }
         }
     }
 
@@ -133,8 +135,9 @@ final class TelnetOutputStream extends OutputStream
     {
         synchronized (__client)
         {
-            while (length-- > 0)
+            while (length-- > 0) {
                 write(buffer[offset++]);
+            }
         }
     }
 

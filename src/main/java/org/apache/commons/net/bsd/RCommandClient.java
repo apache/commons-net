@@ -203,8 +203,9 @@ public class RCommandClient extends RExecClient
             break;
         }
 
-        if (localPort < MIN_CLIENT_PORT)
+        if (localPort < MIN_CLIENT_PORT) {
             throw new BindException("All ports in use or insufficient permssion.");
+        }
 
         _connectAction_();
     }
@@ -306,8 +307,9 @@ public class RCommandClient extends RExecClient
                         InetAddress localAddr, int localPort)
     throws SocketException, IOException, IllegalArgumentException
     {
-        if (localPort < MIN_CLIENT_PORT || localPort > MAX_CLIENT_PORT)
+        if (localPort < MIN_CLIENT_PORT || localPort > MAX_CLIENT_PORT) {
             throw new IllegalArgumentException("Invalid port number " + localPort);
+        }
         super.connect(host, port, localAddr, localPort);
     }
 
@@ -338,8 +340,9 @@ public class RCommandClient extends RExecClient
                         InetAddress localAddr, int localPort)
     throws SocketException, IOException, IllegalArgumentException, UnknownHostException
     {
-        if (localPort < MIN_CLIENT_PORT || localPort > MAX_CLIENT_PORT)
+        if (localPort < MIN_CLIENT_PORT || localPort > MAX_CLIENT_PORT) {
             throw new IllegalArgumentException("Invalid port number " + localPort);
+        }
         super.connect(hostname, port, localAddr, localPort);
     }
 

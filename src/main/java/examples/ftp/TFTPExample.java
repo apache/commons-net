@@ -72,23 +72,22 @@ public final class TFTPExample
             arg = args[argc];
             if (arg.startsWith("-"))
             {
-                if (arg.equals("-r"))
+                if (arg.equals("-r")) {
                     receiveFile = true;
-                else if (arg.equals("-s"))
+                } else if (arg.equals("-s")) {
                     receiveFile = false;
-                else if (arg.equals("-a"))
+                } else if (arg.equals("-a")) {
                     transferMode = TFTP.ASCII_MODE;
-                else if (arg.equals("-b"))
+                } else if (arg.equals("-b")) {
                     transferMode = TFTP.BINARY_MODE;
-                else
-                {
+                } else {
                     System.err.println("Error: unrecognized option.");
                     System.err.print(USAGE);
                     System.exit(1);
                 }
-            }
-            else
+            } else {
                 break;
+            }
         }
 
         // Make sure there are enough arguments
@@ -190,12 +189,11 @@ public final class TFTPExample
                 }
             }
 
-            if (!closed)
+            if (!closed) {
                 System.exit(1);
+            }
 
-        }
-        else
-        {
+        } else {
             // We're sending a file
             FileInputStream input = null;
 
@@ -249,8 +247,9 @@ public final class TFTPExample
                 }
             }
 
-            if (!closed)
+            if (!closed) {
                 System.exit(1);
+            }
 
         }
 

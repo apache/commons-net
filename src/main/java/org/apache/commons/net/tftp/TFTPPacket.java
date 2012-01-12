@@ -127,9 +127,10 @@ public abstract class TFTPPacket
         byte[] data;
         TFTPPacket packet = null;
 
-        if (datagram.getLength() < MIN_PACKET_SIZE)
+        if (datagram.getLength() < MIN_PACKET_SIZE) {
             throw new TFTPPacketException(
                 "Bad packet. Datagram data length is too short.");
+        }
 
         data = datagram.getData();
 

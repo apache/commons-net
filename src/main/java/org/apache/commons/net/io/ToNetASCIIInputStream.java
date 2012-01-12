@@ -132,20 +132,24 @@ public final class ToNetASCIIInputStream extends FilterInputStream
     {
         int ch, off;
 
-        if (length < 1)
+        if (length < 1) {
             return 0;
+        }
 
         ch = available();
 
-        if (length > ch)
+        if (length > ch) {
             length = ch;
+        }
 
         // If nothing is available, block to read only one character
-        if (length < 1)
+        if (length < 1) {
             length = 1;
+        }
 
-        if ((ch = read()) == -1)
+        if ((ch = read()) == -1) {
             return -1;
+        }
 
         off = offset;
 
@@ -172,8 +176,9 @@ public final class ToNetASCIIInputStream extends FilterInputStream
 
         result = in.available();
 
-        if (__status == __LAST_WAS_NL)
+        if (__status == __LAST_WAS_NL) {
             return (result + 1);
+        }
 
         return result;
     }

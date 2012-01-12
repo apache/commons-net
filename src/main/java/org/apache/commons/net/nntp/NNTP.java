@@ -133,15 +133,18 @@ public class NNTP extends SocketClient
     {
         _replyString = _reader_.readLine();
 
-        if (_replyString == null)
+        if (_replyString == null) {
             throw new NNTPConnectionClosedException(
-                "Connection closed without indication.");
+                    "Connection closed without indication.");
+        }
 
         // In case we run into an anomaly we don't want fatal index exceptions
         // to be thrown.
-        if (_replyString.length() < 3)
+        if (_replyString.length() < 3) {
             throw new MalformedServerReplyException(
                 "Truncated server reply: " + _replyString);
+        }
+
         try
         {
             _replyCode = Integer.parseInt(_replyString.substring(0, 3));
@@ -154,9 +157,10 @@ public class NNTP extends SocketClient
 
         fireReplyReceived(_replyCode, _replyString + SocketClient.NETASCII_EOL);
 
-        if (_replyCode == NNTPReply.SERVICE_DISCONTINUED)
+        if (_replyCode == NNTPReply.SERVICE_DISCONTINUED) {
             throw new NNTPConnectionClosedException(
                 "NNTP response 400 received.  Server closed connection.");
+        }
     }
 
     /***

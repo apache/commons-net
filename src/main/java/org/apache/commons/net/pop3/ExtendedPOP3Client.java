@@ -81,7 +81,9 @@ public class ExtendedPOP3Client extends POP3SClient
                         InvalidKeyException, InvalidKeySpecException
     {
         if (sendCommand(POP3Command.AUTH, method.getAuthName())
-        != POP3Reply.OK_INT) return false;
+        != POP3Reply.OK_INT) {
+            return false;
+        }
 
         switch(method) {
             case PLAIN:
@@ -124,7 +126,9 @@ public class ExtendedPOP3Client extends POP3SClient
         StringBuilder result = new StringBuilder(a.length*2);
         for (int i = 0; i < a.length; i++)
         {
-            if ( (a[i] & 0x0FF) <= 15 ) result.append("0");
+            if ( (a[i] & 0x0FF) <= 15 ) {
+                result.append("0");
+            }
             result.append(Integer.toHexString(a[i] & 0x0FF));
         }
         return result.toString();

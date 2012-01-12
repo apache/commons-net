@@ -59,12 +59,13 @@ public final class NTPClient
         NtpV3Packet message = info.getMessage();
         int stratum = message.getStratum();
         String refType;
-        if (stratum <= 0)
+        if (stratum <= 0) {
             refType = "(Unspecified or Unavailable)";
-        else if (stratum == 1)
+        } else if (stratum == 1) {
             refType = "(Primary Reference; e.g., GPS)"; // GPS, radio clock, etc.
-        else
+        } else {
             refType = "(Secondary Reference; e.g. via NTP or SNTP)";
+        }
         // stratum should be 0..15...
         System.out.println(" Stratum: " + stratum + " " + refType);
         int version = message.getVersion();
@@ -95,8 +96,9 @@ public final class NTPClient
                     try {
                         InetAddress addr = InetAddress.getByName(refAddr);
                         String name = addr.getHostName();
-                        if (name != null && !name.equals(refAddr))
+                        if (name != null && !name.equals(refAddr)) {
                             refName = name;
+                        }
                     } catch (UnknownHostException e) {
                         // some stratum-2 servers sync to ref clock device but fudge stratum level higher... (e.g. 2)
                         // ref not valid host maybe it's a reference clock name?
@@ -110,8 +112,9 @@ public final class NTPClient
             }
             // otherwise give up on naming the beast...
         }
-        if (refName != null && refName.length() > 1)
+        if (refName != null && refName.length() > 1) {
             refAddr += " (" + refName + ")";
+        }
         System.out.println(" Reference Identifier:\t" + refAddr);
 
         TimeStamp refNtpTime = message.getReferenceTimeStamp();

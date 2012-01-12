@@ -146,8 +146,9 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
             return ;
         }
 
-        while (length-- > 0)
+        while (length-- > 0) {
             __write(buffer[offset++]);
+        }
     }
 
 
@@ -166,8 +167,9 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
             return ;
         }
 
-        if (__lastWasCR)
+        if (__lastWasCR) {
             out.write('\r');
+        }
         super.close();
     }
 }

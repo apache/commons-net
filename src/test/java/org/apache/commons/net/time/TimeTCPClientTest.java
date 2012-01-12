@@ -82,8 +82,9 @@ public class TimeTCPClientTest extends TestCase
                 time = System.currentTimeMillis();
             } finally
             {
-              if(client.isConnected())
-                client.disconnect();
+              if(client.isConnected()) {
+                  client.disconnect();
+              }
             }
 
             try
@@ -95,8 +96,9 @@ public class TimeTCPClientTest extends TestCase
                 time2 = System.currentTimeMillis();
             } finally
             {
-              if(client.isConnected())
-                client.disconnect();
+              if(client.isConnected()) {
+                  client.disconnect();
+              }
             }
 
         } finally

@@ -304,8 +304,9 @@ public class NtpV3Impl implements NtpV3Packet
                 return idAsString(); // 4-character ASCII string (e.g. GPS, USNO)
             }
             // in NTPv4 servers this is latest transmit timestamp of ref source
-            if (version == VERSION_4)
+            if (version == VERSION_4) {
                 return idAsHex();
+            }
         }
 
         // Stratum 2 and higher this is a four-octet IPv4 address
@@ -333,7 +334,9 @@ public class NtpV3Impl implements NtpV3Packet
         StringBuilder id = new StringBuilder();
         for (int i = 0; i <= 3; i++) {
             char c = (char) buf[REFERENCE_ID_INDEX + i];
-            if (c == 0) break; // 0-terminated string
+            if (c == 0) {  // 0-terminated string
+                break;
+            }
             id.append(c);
         }
         return id.toString();
@@ -526,8 +529,9 @@ public class NtpV3Impl implements NtpV3Packet
     {
         byte[] incomingBuf = srcDp.getData();
         int len = srcDp.getLength();
-        if (len > buf.length)
+        if (len > buf.length) {
             len = buf.length;
+        }
 
         System.arraycopy(incomingBuf, 0, buf, 0, len);
     }

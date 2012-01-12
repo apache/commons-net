@@ -119,8 +119,9 @@ public class AuthenticatingSMTPClient extends SMTPSClient
         host = getLocalAddress();
         name = host.getHostName();
 
-        if (name == null)
+        if (name == null) {
             return false;
+        }
 
         return SMTPReply.isPositiveCompletion(ehlo(name));
     }
@@ -167,7 +168,9 @@ public class AuthenticatingSMTPClient extends SMTPSClient
                         InvalidKeyException, InvalidKeySpecException
     {
         if (!SMTPReply.isPositiveIntermediate(sendCommand(SMTPCommand.AUTH,
-                AUTH_METHOD.getAuthName(method)))) return false;
+                AUTH_METHOD.getAuthName(method)))) {
+            return false;
+        }
 
         if (method.equals(AUTH_METHOD.PLAIN))
         {
@@ -202,11 +205,14 @@ public class AuthenticatingSMTPClient extends SMTPSClient
             // the server sends fixed responses (base64("Username") and
             // base64("Password")), so we don't have to read them.
             if (!SMTPReply.isPositiveIntermediate(sendCommand(
-                new String(Base64.encodeBase64(username.getBytes()))))) return false;
+                new String(Base64.encodeBase64(username.getBytes()))))) {
+                return false;
+            }
             return SMTPReply.isPositiveCompletion(sendCommand(
                 new String(Base64.encodeBase64(password.getBytes()))));
+        } else {
+            return false; // safety check
         }
-        else return false; // safety check
     }
 
     /**
@@ -221,7 +227,9 @@ public class AuthenticatingSMTPClient extends SMTPSClient
         StringBuilder result = new StringBuilder(a.length*2);
         for (int i = 0; i < a.length; i++)
         {
-            if ( (a[i] & 0x0FF) <= 15 ) result.append("0");
+            if ( (a[i] & 0x0FF) <= 15 ) {
+                result.append("0");
+            }
             result.append(Integer.toHexString(a[i] & 0x0FF));
         }
         return result.toString();
@@ -246,10 +254,15 @@ public class AuthenticatingSMTPClient extends SMTPSClient
          */
         public static final String getAuthName(AUTH_METHOD method)
         {
-            if (method.equals(AUTH_METHOD.PLAIN)) return "PLAIN";
-            else if (method.equals(AUTH_METHOD.CRAM_MD5)) return "CRAM-MD5";
-            else if (method.equals(AUTH_METHOD.LOGIN)) return "LOGIN";
-            else return null;
+            if (method.equals(AUTH_METHOD.PLAIN)) {
+                return "PLAIN";
+            } else if (method.equals(AUTH_METHOD.CRAM_MD5)) {
+                return "CRAM-MD5";
+            } else if (method.equals(AUTH_METHOD.LOGIN)) {
+                return "LOGIN";
+            } else {
+                return null;
+            }
         }
     }
 }

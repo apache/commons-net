@@ -251,7 +251,9 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
         }
         int ind = s.indexOf('.');
         if (ind == -1) {
-            if (s.length() == 0) return 0;
+            if (s.length() == 0) {
+                return 0;
+            }
             return Long.parseLong(s, 16) << 32; // no decimal
         }
 
@@ -361,8 +363,9 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
     private static void appendHexString(StringBuilder buf, long l)
     {
         String s = Long.toHexString(l);
-        for (int i = s.length(); i < 8; i++)
+        for (int i = s.length(); i < 8; i++) {
             buf.append('0');
+        }
         buf.append(s);
     }
 

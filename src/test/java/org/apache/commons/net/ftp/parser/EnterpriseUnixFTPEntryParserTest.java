@@ -101,8 +101,9 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
         assertEquals("18128",
                      file.getGroup());
 
-        if(today.get(Calendar.MONTH) < Calendar.AUGUST)
+        if (today.get(Calendar.MONTH) < Calendar.AUGUST) {
             --year;
+        }
 
         Calendar timestamp = file.getTimestamp();
         assertEquals(year, timestamp.get(Calendar.YEAR));

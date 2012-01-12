@@ -37,13 +37,13 @@ class ThreadContainer {
      * @return true if child is under self's tree. Detects circular references
      */
     boolean findChild(ThreadContainer target) {
-        if (child == null)
+        if (child == null) {
             return false;
-
-        else if (child == target)
+        } else if (child == target) {
             return true;
-        else
+        } else {
             return child.findChild(target);
+        }
     }
 
     // Copy the ThreadContainer tree structure down into the underlying Threadable objects
@@ -51,21 +51,24 @@ class ThreadContainer {
     // TODO convert this to an iterative function - this can blow the stack
     // with very large Threadable trees
     void flush() {
-        if (parent != null && threadable == null)
+        if (parent != null && threadable == null) {
             throw new RuntimeException("no threadable in " + this.toString());
+        }
 
         parent = null;
 
-        if (threadable != null)
+        if (threadable != null) {
             threadable.setChild(child == null ? null : child.threadable);
+        }
 
         if (child != null) {
             child.flush();
             child = null;
         }
 
-        if (threadable != null)
+        if (threadable != null) {
             threadable.setNext(next == null ? null : next.threadable);
+        }
 
         if (next != null) {
             next.flush();
@@ -86,14 +89,17 @@ class ThreadContainer {
                 kid != null;
                 prev = kid,
                     kid = rest,
-                    rest = (rest == null ? null : rest.next))
+                    rest = (rest == null ? null : rest.next)) 
+            {
                 kid.next = prev;
+            }
 
             child = prev;
 
             // Do it for the kids
-            for (kid = child; kid != null; kid = kid.next)
+            for (kid = child; kid != null; kid = kid.next) {
                 kid.reverseChildren();
+            }
         }
     }
 }

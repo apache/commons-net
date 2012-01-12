@@ -104,8 +104,9 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
             boolean result = true;
             for(int ii=0; ii<a1.length; ii++)
             {
-                if(a1[ii]!= a2[ii])
+                if(a1[ii]!= a2[ii]) {
                     result = false;
+                }
             }
             return(result);
         }

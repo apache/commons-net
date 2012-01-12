@@ -79,8 +79,9 @@ public final class DaytimeTCPClient extends SocketClient
         while (true)
         {
             read = reader.read(__buffer, 0, __buffer.length);
-            if (read <= 0)
+            if (read <= 0) {
                 break;
+            }
             result.append(__buffer, 0, read);
         }
 

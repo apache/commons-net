@@ -95,8 +95,9 @@ public class FingerClient extends SocketClient
             while (true)
             {
                 read = input.read(__buffer, 0, __buffer.length);
-                if (read <= 0)
+                if (read <= 0) {
                     break;
+                }
                 result.append(__buffer, 0, read);
             }
         } finally {
@@ -160,8 +161,9 @@ public class FingerClient extends SocketClient
     {
         DataOutputStream output;
         StringBuilder buffer = new StringBuilder(64);
-        if (longOutput)
+        if (longOutput) {
             buffer.append(__LONG_FLAG);
+        }
         buffer.append(username);
         buffer.append(SocketClient.NETASCII_EOL);
 

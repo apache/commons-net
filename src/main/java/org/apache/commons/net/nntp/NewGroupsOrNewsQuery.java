@@ -72,40 +72,39 @@ public final class NewGroupsOrNewsQuery
         str = Integer.toString(num);
         num = str.length();
 
-        if (num >= 2)
+        if (num >= 2) {
             buffer.append(str.substring(num - 2));
-        else
+        } else {
             buffer.append("00");
+        }
 
         // Get month
         num = date.get(Calendar.MONTH) + 1;
         str = Integer.toString(num);
         num = str.length();
 
-        if (num == 1)
-        {
+        if (num == 1) {
             buffer.append('0');
             buffer.append(str);
-        }
-        else if (num == 2)
+        } else if (num == 2) {
             buffer.append(str);
-        else
+        } else {
             buffer.append("01");
+        }
 
         // Get day
         num = date.get(Calendar.DAY_OF_MONTH);
         str = Integer.toString(num);
         num = str.length();
 
-        if (num == 1)
-        {
+        if (num == 1) {
             buffer.append('0');
             buffer.append(str);
-        }
-        else if (num == 2)
+        } else if (num == 2) {
             buffer.append(str);
-        else
+        } else {
             buffer.append("01");
+        }
 
         __date = buffer.toString();
 
@@ -116,30 +115,28 @@ public final class NewGroupsOrNewsQuery
         str = Integer.toString(num);
         num = str.length();
 
-        if (num == 1)
-        {
+        if (num == 1) {
             buffer.append('0');
             buffer.append(str);
-        }
-        else if (num == 2)
+        } else if (num == 2) {
             buffer.append(str);
-        else
+        } else {
             buffer.append("00");
+        }
 
         // Get minutes
         num = date.get(Calendar.MINUTE);
         str = Integer.toString(num);
         num = str.length();
 
-        if (num == 1)
-        {
+        if (num == 1) {
             buffer.append('0');
             buffer.append(str);
-        }
-        else if (num == 2)
+        } else if (num == 2) {
             buffer.append(str);
-        else
+        } else {
             buffer.append("00");
+        }
 
 
         // Get seconds
@@ -147,15 +144,14 @@ public final class NewGroupsOrNewsQuery
         str = Integer.toString(num);
         num = str.length();
 
-        if (num == 1)
-        {
+        if (num == 1) {
             buffer.append('0');
             buffer.append(str);
-        }
-        else if (num == 2)
+        } else if (num == 2) {
             buffer.append(str);
-        else
+        } else {
             buffer.append("00");
+        }
 
         __time = buffer.toString();
     }
@@ -173,10 +169,11 @@ public final class NewGroupsOrNewsQuery
      ***/
     public void addNewsgroup(String newsgroup)
     {
-        if (__newsgroups != null)
+        if (__newsgroups != null) {
             __newsgroups.append(',');
-        else
+        } else {
             __newsgroups = new StringBuffer();
+        }
         __newsgroups.append(newsgroup);
     }
 
@@ -217,10 +214,11 @@ public final class NewGroupsOrNewsQuery
      ***/
     public void addDistribution(String distribution)
     {
-        if (__distributions != null)
+        if (__distributions != null) {
             __distributions.append(',');
-        else
+        } else {
             __distributions = new StringBuffer();
+        }
         __distributions.append(distribution);
     }
 

@@ -216,9 +216,9 @@ public class SubnetUtils {
 
             /* Calculate broadcast address */
             broadcast = network | ~(netmask);
-        }
-        else
+        } else {
             throw new IllegalArgumentException("Could not parse [" + mask + "]");
+        }
     }
 
     /*
@@ -228,9 +228,9 @@ public class SubnetUtils {
         Matcher matcher = addressPattern.matcher(address);
         if (matcher.matches()) {
             return matchAddress(matcher);
-        }
-        else
+        } else {
             throw new IllegalArgumentException("Could not parse [" + address + "]");
+        }
     }
 
     /*
@@ -251,8 +251,9 @@ public class SubnetUtils {
      */
     private int[] toArray(int val) {
         int ret[] = new int[4];
-        for (int j = 3; j >= 0; --j)
+        for (int j = 3; j >= 0; --j) {
             ret[j] |= ((val >>> 8*(3-j)) & (0xff));
+        }
         return ret;
     }
 
@@ -276,8 +277,9 @@ public class SubnetUtils {
      * Returns x if it is in range, throws an exception otherwise.
      */
     private int rangeCheck(int value, int begin, int end) {
-        if (value > begin && value <= end) // (begin,end]
+        if (value > begin && value <= end) { // (begin,end]
             return value;
+        }
 
         throw new IllegalArgumentException("Value [" + value + "] not in range ("+begin+","+end+"]");
     }

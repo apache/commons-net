@@ -61,8 +61,9 @@ public final class chargen
         // present.
         while (lines-- > 0)
         {
-            if ((line = chargenInput.readLine()) == null)
+            if ((line = chargenInput.readLine()) == null) {
                 break;
+            }
             System.out.println(line);
         }
 

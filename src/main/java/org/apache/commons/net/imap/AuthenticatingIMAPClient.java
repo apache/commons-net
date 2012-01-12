@@ -216,7 +216,9 @@ public class AuthenticatingIMAPClient extends IMAPSClient
         StringBuilder result = new StringBuilder(a.length*2);
         for (int i = 0; i < a.length; i++)
         {
-            if ( (a[i] & 0x0FF) <= 15 ) result.append("0");
+            if ( (a[i] & 0x0FF) <= 15 ) {
+                result.append("0");
+            }
             result.append(Integer.toHexString(a[i] & 0x0FF));
         }
         return result.toString();

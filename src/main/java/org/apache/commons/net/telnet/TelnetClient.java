@@ -115,10 +115,12 @@ public class TelnetClient extends Telnet
     @Override
     public void disconnect() throws IOException
     {
-        if (__input != null)
+        if (__input != null) {
             __input.close();
-        if (__output != null)
+        }
+        if (__output != null) {
             __output.close();
+        }
         super.disconnect();
     }
 
@@ -215,8 +217,9 @@ public class TelnetClient extends Telnet
     public void sendSubnegotiation(int[] message)
     throws IOException, IllegalArgumentException
     {
-        if (message.length < 1)
+        if (message.length < 1) {
             throw new IllegalArgumentException("zero length message");
+        }
         _sendSubnegotiation(message);
     }
 
@@ -401,7 +404,8 @@ public class TelnetClient extends Telnet
         synchronized (this) {
             listener = this.inputListener;
         }
-        if (listener != null)
+        if (listener != null) {
             listener.telnetInputAvailable();
+        }
     }
 }

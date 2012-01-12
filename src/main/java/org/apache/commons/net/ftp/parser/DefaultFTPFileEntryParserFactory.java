@@ -88,8 +88,9 @@ public class DefaultFTPFileEntryParserFactory
      */
     public FTPFileEntryParser createFileEntryParser(String key)
     {
-        if (key == null)
+        if (key == null) {
             throw new ParserInitializationException("Parser key cannot be null");
+        }
         return createFileEntryParser(key, null);
     }
 

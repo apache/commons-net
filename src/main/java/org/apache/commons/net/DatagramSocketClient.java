@@ -268,9 +268,10 @@ public abstract class DatagramSocketClient
      ***/
     public void setDatagramSocketFactory(DatagramSocketFactory factory)
     {
-        if (factory == null)
+        if (factory == null) {
             _socketFactory_ = __DEFAULT_SOCKET_FACTORY;
-        else
+        } else {
             _socketFactory_ = factory;
+        }
     }
 }

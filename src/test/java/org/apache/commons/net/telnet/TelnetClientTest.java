@@ -221,8 +221,9 @@ extends TestCase implements TelnetNotificationHandler
             is2.read(buffread2);
             connect2_ok = true;
 
-            if(equalBytes(buffread2, expected2))
-                 init2_ok = true;
+            if (equalBytes(buffread2, expected2)) {
+                init2_ok = true;
+            }
         }
 
         InputStream is3 = ANSI.server.getInputStream();
@@ -346,8 +347,9 @@ extends TestCase implements TelnetNotificationHandler
         {
             is1.read(buffread1);
 
-            if(equalBytes(buffread1, expected1))
+            if (equalBytes(buffread1, expected1)) {
                 negotiation1_ok = true;
+            }
         }
 
         InputStream is2 = OPTIONS.server.getInputStream();
@@ -361,8 +363,9 @@ extends TestCase implements TelnetNotificationHandler
         {
             is2.read(buffread2);
 
-            if(equalBytes(buffread2, expected2))
+            if (equalBytes(buffread2, expected2)) {
                 negotiation2_ok = true;
+            }
 
             if(negotiation2_ok)
             {
@@ -374,8 +377,9 @@ extends TestCase implements TelnetNotificationHandler
                 {
                     is2.read(buffread2b);
 
-                    if(equalBytes(buffread2b, expected2b))
+                    if (equalBytes(buffread2b, expected2b)) {
                         negotiation2_ok = true;
+                    }
                 }
             }
         }
@@ -391,8 +395,9 @@ extends TestCase implements TelnetNotificationHandler
         {
             is3.read(buffread3);
 
-            if(equalBytes(buffread3, expected3))
+            if (equalBytes(buffread3, expected3)) {
                 negotiation3_ok = true;
+            }
 
             if(negotiation3_ok)
             {
@@ -403,8 +408,9 @@ extends TestCase implements TelnetNotificationHandler
                 if(is3.available() == 10)
                 {
                     is3.read(buffread3b);
-                    if(equalBytes(buffread3b, expected3b))
-                            negotiation3_ok = true;
+                    if (equalBytes(buffread3b, expected3b)) {
+                        negotiation3_ok = true;
+                    }
                 }
             }
         }
@@ -474,8 +480,9 @@ extends TestCase implements TelnetNotificationHandler
         {
             is.read(buffread);
 
-            if(equalBytes(buffread, expected))
+            if (equalBytes(buffread, expected)) {
                 negotiation1_ok = true;
+            }
 
             if(negotiation1_ok)
             {
@@ -486,8 +493,9 @@ extends TestCase implements TelnetNotificationHandler
                 if(is.available() == 3)
                 {
                     is.read(buffread2);
-                    if(equalBytes(buffread2, expected2))
-                            negotiation1_ok = true;
+                    if (equalBytes(buffread2, expected2)) {
+                        negotiation1_ok = true;
+                    }
                 }
             }
         }
@@ -608,8 +616,9 @@ extends TestCase implements TelnetNotificationHandler
             if(is.available() == 6)
             {
                 is.read(buffread);
-                if(equalBytes(buffread, expected))
+                if (equalBytes(buffread, expected)) {
                     remove_ok = true;
+                }
             }
         }
 
@@ -665,16 +674,18 @@ extends TestCase implements TelnetNotificationHandler
         assertNotNull(tr);
         boolean res1 = ANSI.client.sendAYT(2000);
 
-        if(res1 == true)
+        if (res1 == true) {
             ayt_true_ok=true;
+        }
 
         Thread.sleep(1000);
         is.skip(is.available());
 
         boolean res2 = ANSI.client.sendAYT(2000);
 
-        if(res2 == false)
+        if (res2 == false) {
             ayt_false_ok=true;
+        }
 
 
         assertTrue(ayt_true_ok);
@@ -712,8 +723,9 @@ extends TestCase implements TelnetNotificationHandler
         if(pi.available() == 5)
         {
             pi.read(buffer);
-            if(equalBytes(buffer, expected1))
+            if (equalBytes(buffer, expected1)) {
                 test1spy_ok = true;
+            }
         }
 
         ostc.write("test2".getBytes());
@@ -724,8 +736,9 @@ extends TestCase implements TelnetNotificationHandler
         if(pi.available() == 5)
         {
             pi.read(buffer);
-            if(equalBytes(buffer, expected2))
+            if (equalBytes(buffer, expected2)) {
                 test2spy_ok = true;
+            }
         }
 
         STANDARD.client.stopSpyStream();
@@ -796,9 +809,10 @@ extends TestCase implements TelnetNotificationHandler
                 pos+=read;
             }
 
-            if(equalBytes(buffread1, expected1))
+            if (equalBytes(buffread1, expected1)) {
                 negotiation1_ok = true;
         //}
+            }
 
 
         InputStream is2 = STANDARD.server.getInputStream();
@@ -819,9 +833,10 @@ extends TestCase implements TelnetNotificationHandler
         //{
             is2.read(buffread1);
 
-            if(equalBytes(buffread1, expected1))
+            if (equalBytes(buffread1, expected1)) {
                 negotiation2_ok = true;
         //}
+            }
 
         assertTrue(!NOREAD.client.getReaderThread());
         assertTrue(STANDARD.client.getReaderThread());
@@ -846,8 +861,9 @@ extends TestCase implements TelnetNotificationHandler
             for(int ii=0; ii<a1.length; ii++)
             {
 
-                if(a1[ii]!= a2[ii])
+                if (a1[ii]!= a2[ii]) {
                     result = false;
+                }
             }
             return(result);
         }

@@ -113,19 +113,21 @@ public class POP3 extends SocketClient
         _replyLines.clear();
         line = _reader.readLine();
 
-        if (line == null)
+        if (line == null) {
             throw new EOFException("Connection closed without indication.");
+        }
 
-        if (line.startsWith(_OK))
+        if (line.startsWith(_OK)) {
             _replyCode = POP3Reply.OK;
-        else if (line.startsWith(_ERROR))
+        } else if (line.startsWith(_ERROR)) {
             _replyCode = POP3Reply.ERROR;
-        else if (line.startsWith(_OK_INT))
+        } else if (line.startsWith(_OK_INT)) {
             _replyCode = POP3Reply.OK_INT;
-        else
+        } else {
             throw new
             MalformedServerReplyException(
                 "Received invalid POP3 protocol response from server." + line);
+        }
 
         _replyLines.add(line);
         _lastReplyLine = line;
@@ -185,8 +187,9 @@ public class POP3 extends SocketClient
         while (line != null)
         {
             _replyLines.add(line);
-            if (line.equals("."))
+            if (line.equals(".")) {
                 break;
+            }
             line = _reader.readLine();
         }
     }

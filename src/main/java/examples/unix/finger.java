@@ -47,10 +47,9 @@ public final class finger
         // Get flags.  If an invalid flag is present, exit with usage message.
         while (arg < args.length && args[arg].startsWith("-"))
         {
-            if (args[arg].equals("-l"))
+            if (args[arg].equals("-l")) {
                 longOutput = true;
-            else
-            {
+            } else {
                 System.err.println("usage: finger [-l] [[[handle][@<server>]] ...]");
                 System.exit(1);
             }
@@ -140,8 +139,9 @@ public final class finger
             }
 
             ++arg;
-            if (arg != args.length)
+            if (arg != args.length) {
                 System.out.print("\n");
+            }
         }
     }
 }

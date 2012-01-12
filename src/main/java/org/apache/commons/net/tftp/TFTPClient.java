@@ -87,10 +87,11 @@ public class TFTPClient extends TFTP
      ***/
     public void setMaxTimeouts(int numTimeouts)
     {
-        if (numTimeouts < 1)
+        if (numTimeouts < 1) {
             __maxTimeouts = 1;
-        else
+        } else {
             __maxTimeouts = numTimeouts;
+        }
     }
 
     /***
@@ -135,8 +136,9 @@ public class TFTPClient extends TFTP
         dataLength = lastBlock = hostPort = bytesRead = 0;
         block = 1;
 
-        if (mode == TFTP.ASCII_MODE)
+        if (mode == TFTP.ASCII_MODE) {
             output = new FromNetASCIIOutputStream(output);
+        }
 
         sent =
             new TFTPReadRequestPacket(host, port, filename, mode);
@@ -243,8 +245,9 @@ _receivePacket:
                         {
                             discardPackets();
 
-                            if (lastBlock == (block == 0 ? 65535 : (block - 1)))
+                            if (lastBlock == (block == 0 ? 65535 : (block - 1))) {
                                 continue _sendPacket;  // Resend last acknowledgement.
+                            }
 
                             continue _receivePacket; // Start fetching packets again.
                         }
@@ -381,8 +384,9 @@ _receivePacket:
         block = 0;
         boolean lastAckWait = false;
 
-        if (mode == TFTP.ASCII_MODE)
+        if (mode == TFTP.ASCII_MODE) {
             input = new ToNetASCIIInputStream(input);
+        }
 
         sent =
             new TFTPWriteRequestPacket(host, port, filename, mode);

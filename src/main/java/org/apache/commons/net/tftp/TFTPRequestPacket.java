@@ -111,8 +111,9 @@ public abstract class TFTPRequestPacket extends TFTPPacket
 
         byte[] data = datagram.getData();
 
-        if (getType() != data[1])
+        if (getType() != data[1]) {
             throw new TFTPPacketException("TFTP operator code does not match type.");
+        }
 
         StringBuilder buffer = new StringBuilder();
 
@@ -127,8 +128,9 @@ public abstract class TFTPRequestPacket extends TFTPPacket
 
         _filename = buffer.toString();
 
-        if (index >= length)
+        if (index >= length) {
             throw new TFTPPacketException("Bad filename and mode format.");
+        }
 
         buffer.setLength(0);
         ++index; // need to advance beyond the end of string marker

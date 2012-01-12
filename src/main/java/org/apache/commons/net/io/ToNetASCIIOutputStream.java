@@ -71,8 +71,9 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
             out.write('\r');
             return ;
         case '\n':
-            if (!__lastWasCR)
+            if (!__lastWasCR) {
                 out.write('\r');
+            }
             //$FALL-THROUGH$
         default:
             __lastWasCR = false;
@@ -111,8 +112,9 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
     public synchronized void write(byte buffer[], int offset, int length)
     throws IOException
     {
-        while (length-- > 0)
+        while (length-- > 0) {
             write(buffer[offset++]);
+        }
     }
 
 }

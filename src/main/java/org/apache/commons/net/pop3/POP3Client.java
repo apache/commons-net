@@ -59,8 +59,9 @@ public class POP3Client extends POP3
 
         tokenizer = new StringTokenizer(line);
 
-        if (!tokenizer.hasMoreElements())
+        if (!tokenizer.hasMoreElements()) {
             return null;
+        }
 
         num = size = 0;
 
@@ -68,8 +69,9 @@ public class POP3Client extends POP3
         {
             num = Integer.parseInt(tokenizer.nextToken());
 
-            if (!tokenizer.hasMoreElements())
+            if (!tokenizer.hasMoreElements()) {
                 return null;
+            }
 
             size = Integer.parseInt(tokenizer.nextToken());
         }
@@ -88,8 +90,9 @@ public class POP3Client extends POP3
 
         tokenizer = new StringTokenizer(line);
 
-        if (!tokenizer.hasMoreElements())
+        if (!tokenizer.hasMoreElements()) {
             return null;
+        }
 
         num = 0;
 
@@ -97,8 +100,9 @@ public class POP3Client extends POP3
         {
             num = Integer.parseInt(tokenizer.nextToken());
 
-            if (!tokenizer.hasMoreElements())
+            if (!tokenizer.hasMoreElements()) {
                 return null;
+            }
 
             line = tokenizer.nextToken();
         }
@@ -129,14 +133,17 @@ public class POP3Client extends POP3
      ***/
     public boolean login(String username, String password) throws IOException
     {
-        if (getState() != AUTHORIZATION_STATE)
+        if (getState() != AUTHORIZATION_STATE) {
             return false;
+        }
 
-        if (sendCommand(POP3Command.USER, username) != POP3Reply.OK)
+        if (sendCommand(POP3Command.USER, username) != POP3Reply.OK) {
             return false;
+        }
 
-        if (sendCommand(POP3Command.PASS, password) != POP3Reply.OK)
+        if (sendCommand(POP3Command.PASS, password) != POP3Reply.OK) {
             return false;
+        }
 
         setState(TRANSACTION_STATE);
 
@@ -185,8 +192,9 @@ public class POP3Client extends POP3
         StringBuilder buffer, digestBuffer;
         MessageDigest md5;
 
-        if (getState() != AUTHORIZATION_STATE)
+        if (getState() != AUTHORIZATION_STATE) {
             return false;
+        }
 
         md5 = MessageDigest.getInstance("MD5");
         timestamp += secret;
@@ -195,7 +203,9 @@ public class POP3Client extends POP3
 
         for (i = 0; i < digest.length; i++) {
             int digit = digest[i] & 0xff;
-            if (digit <= 15) digestBuffer.append("0"); // Add leading zero if necessary (NET-351)
+            if (digit <= 15) { // Add leading zero if necessary (NET-351)
+                digestBuffer.append("0");
+            }
             digestBuffer.append(Integer.toHexString(digit));
         }
 
@@ -204,8 +214,9 @@ public class POP3Client extends POP3
         buffer.append(' ');
         buffer.append(digestBuffer.toString());
 
-        if (sendCommand(POP3Command.APOP, buffer.toString()) != POP3Reply.OK)
+        if (sendCommand(POP3Command.APOP, buffer.toString()) != POP3Reply.OK) {
             return false;
+        }
 
         setState(TRANSACTION_STATE);
 
@@ -230,8 +241,9 @@ public class POP3Client extends POP3
      ***/
     public boolean logout() throws IOException
     {
-        if (getState() == TRANSACTION_STATE)
+        if (getState() == TRANSACTION_STATE) {
             setState(UPDATE_STATE);
+        }
         sendCommand(POP3Command.QUIT);
         return (_replyCode == POP3Reply.OK);
     }
@@ -251,8 +263,9 @@ public class POP3Client extends POP3
      ***/
     public boolean noop() throws IOException
     {
-        if (getState() == TRANSACTION_STATE)
+        if (getState() == TRANSACTION_STATE) {
             return (sendCommand(POP3Command.NOOP) == POP3Reply.OK);
+        }
         return false;
     }
 
@@ -274,9 +287,10 @@ public class POP3Client extends POP3
      ***/
     public boolean deleteMessage(int messageId) throws IOException
     {
-        if (getState() == TRANSACTION_STATE)
+        if (getState() == TRANSACTION_STATE) {
             return (sendCommand(POP3Command.DELE, Integer.toString(messageId))
                     == POP3Reply.OK);
+        }
         return false;
     }
 
@@ -294,8 +308,9 @@ public class POP3Client extends POP3
      ***/
     public boolean reset() throws IOException
     {
-        if (getState() == TRANSACTION_STATE)
+        if (getState() == TRANSACTION_STATE) {
             return (sendCommand(POP3Command.RSET) == POP3Reply.OK);
+        }
         return false;
     }
 
@@ -316,10 +331,12 @@ public class POP3Client extends POP3
      ***/
     public POP3MessageInfo status() throws IOException
     {
-        if (getState() != TRANSACTION_STATE)
+        if (getState() != TRANSACTION_STATE) {
             return null;
-        if (sendCommand(POP3Command.STAT) != POP3Reply.OK)
+        }
+        if (sendCommand(POP3Command.STAT) != POP3Reply.OK) {
             return null;
+        }
         return __parseStatus(_lastReplyLine.substring(3));
     }
 
@@ -343,11 +360,13 @@ public class POP3Client extends POP3
      ***/
     public POP3MessageInfo listMessage(int messageId) throws IOException
     {
-        if (getState() != TRANSACTION_STATE)
+        if (getState() != TRANSACTION_STATE) {
             return null;
+        }
         if (sendCommand(POP3Command.LIST, Integer.toString(messageId))
-                != POP3Reply.OK)
+                != POP3Reply.OK) {
             return null;
+        }
         return __parseStatus(_lastReplyLine.substring(3));
     }
 
@@ -371,10 +390,12 @@ public class POP3Client extends POP3
      ***/
     public POP3MessageInfo[] listMessages() throws IOException
     {
-        if (getState() != TRANSACTION_STATE)
+        if (getState() != TRANSACTION_STATE) {
             return null;
-        if (sendCommand(POP3Command.LIST) != POP3Reply.OK)
+        }
+        if (sendCommand(POP3Command.LIST) != POP3Reply.OK) {
             return null;
+        }
         getAdditionalReply();
 
         // This could be a zero length array if no messages present
@@ -383,8 +404,9 @@ public class POP3Client extends POP3
         ListIterator<String> en = _replyLines.listIterator(1); // Skip first line
 
         // Fetch lines.
-        for (int line = 0; line < messages.length; line++)
+        for (int line = 0; line < messages.length; line++) {
             messages[line] = __parseStatus(en.next());
+        }
 
         return messages;
     }
@@ -409,11 +431,13 @@ public class POP3Client extends POP3
     public POP3MessageInfo listUniqueIdentifier(int messageId)
     throws IOException
     {
-        if (getState() != TRANSACTION_STATE)
+        if (getState() != TRANSACTION_STATE) {
             return null;
+        }
         if (sendCommand(POP3Command.UIDL, Integer.toString(messageId))
-                != POP3Reply.OK)
+                != POP3Reply.OK) {
             return null;
+        }
         return __parseUID(_lastReplyLine.substring(3));
     }
 
@@ -437,10 +461,12 @@ public class POP3Client extends POP3
      ***/
     public POP3MessageInfo[] listUniqueIdentifiers() throws IOException
     {
-        if (getState() != TRANSACTION_STATE)
+        if (getState() != TRANSACTION_STATE) {
             return null;
-        if (sendCommand(POP3Command.UIDL) != POP3Reply.OK)
+        }
+        if (sendCommand(POP3Command.UIDL) != POP3Reply.OK) {
             return null;
+        }
         getAdditionalReply();
 
         // This could be a zero length array if no messages present
@@ -449,8 +475,9 @@ public class POP3Client extends POP3
         ListIterator<String> en = _replyLines.listIterator(1); // skip first line
 
         // Fetch lines.
-        for (int line = 0; line < messages.length; line++)
+        for (int line = 0; line < messages.length; line++) {
             messages[line] = __parseUID(en.next());
+        }
 
         return messages;
     }

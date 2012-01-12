@@ -62,19 +62,24 @@ public final class NtpUtils {
      * @return reference clock string if primary NTP server
      */
     public static String getReferenceClock(NtpV3Packet message) {
-        if (message == null)
+        if (message == null) {
             return "";
+        }
         int refId = message.getReferenceId();
-        if (refId == 0)
+        if (refId == 0) {
             return "";
+        }
         StringBuilder buf = new StringBuilder(4);
         // start at highest-order byte (0x4c434c00 -> LCL)
         for (int shiftBits = 24; shiftBits >= 0; shiftBits -= 8)
         {
             char c = (char) ((refId >>> shiftBits) & 0xff);
-            if (c == 0) break; // 0-terminated ASCII string
-            if (!Character.isLetterOrDigit(c))
+            if (c == 0) { // 0-terminated ASCII string
+                break;
+            }
+            if (!Character.isLetterOrDigit(c)) {
                 return "";
+            }
             buf.append(c);
         }
         return buf.toString();

@@ -177,13 +177,12 @@ public class NNTPClient extends NNTP
             long firstNum = Long.parseLong(tokens[i++]);
             result._setFirstArticle(firstNum);
             result._setLastArticle(lastNum);
-            if((firstNum == 0) && (lastNum == 0))
+            if ((firstNum == 0) && (lastNum == 0)) {
                 result._setArticleCount(0);
-            else
+            } else {
                 result._setArticleCount(lastNum - firstNum + 1);
             }
-        catch (NumberFormatException e)
-        {
+        } catch (NumberFormatException e) {
             return null;
         }
 
@@ -257,15 +256,17 @@ public class NNTPClient extends NNTP
         while ((line = reader.readLine()) != null)
         {
             NewsgroupInfo tmp = __parseNewsgroupListEntry(line);
-            if (tmp != null)
+            if (tmp != null) {
                 list.addElement(tmp);
-            else
+            } else {
                 throw new MalformedServerReplyException(line);
+            }
         }
 
         int size;
-        if ((size = list.size()) < 1)
+        if ((size = list.size()) < 1) {
             return new NewsgroupInfo[0];
+        }
 
         NewsgroupInfo[] info = new NewsgroupInfo[size];
         list.copyInto(info);
@@ -695,11 +696,13 @@ public class NNTPClient extends NNTP
     public boolean selectNewsgroup(String newsgroup, NewsgroupInfo info)
     throws IOException
     {
-        if (!NNTPReply.isPositiveCompletion(group(newsgroup)))
+        if (!NNTPReply.isPositiveCompletion(group(newsgroup))) {
             return false;
+        }
 
-        if (info != null)
+        if (info != null) {
             __parseGroupReply(getReplyString(), info);
+        }
 
         return true;
     }
@@ -786,19 +789,19 @@ public class NNTPClient extends NNTP
     public boolean selectArticle(String articleId, ArticleInfo pointer)
     throws IOException
     {
-        if (articleId != null)
-        {
-            if (!NNTPReply.isPositiveCompletion(stat(articleId)))
+        if (articleId != null) {
+            if (!NNTPReply.isPositiveCompletion(stat(articleId))) {
                 return false;
-        }
-        else
-        {
-            if (!NNTPReply.isPositiveCompletion(stat()))
+            }
+        } else {
+            if (!NNTPReply.isPositiveCompletion(stat())) {
                 return false;
+            }
         }
 
-        if (pointer != null)
+        if (pointer != null) {
             __parseArticlePointer(getReplyString(), pointer);
+        }
 
         return true;
     }
@@ -847,11 +850,13 @@ public class NNTPClient extends NNTP
     public boolean selectArticle(long articleNumber, ArticleInfo pointer)
     throws IOException
     {
-        if (!NNTPReply.isPositiveCompletion(stat(articleNumber)))
+        if (!NNTPReply.isPositiveCompletion(stat(articleNumber))) {
             return false;
+        }
 
-        if (pointer != null)
+        if (pointer != null) {
             __parseArticlePointer(getReplyString(), pointer);
+        }
 
         return true;
     }
@@ -891,11 +896,13 @@ public class NNTPClient extends NNTP
     public boolean selectPreviousArticle(ArticleInfo pointer)
     throws IOException
     {
-        if (!NNTPReply.isPositiveCompletion(last()))
+        if (!NNTPReply.isPositiveCompletion(last())) {
             return false;
+        }
 
-        if (pointer != null)
+        if (pointer != null) {
             __parseArticlePointer(getReplyString(), pointer);
+        }
 
         return true;
     }
@@ -933,11 +940,13 @@ public class NNTPClient extends NNTP
      ***/
     public boolean selectNextArticle(ArticleInfo pointer) throws IOException
     {
-        if (!NNTPReply.isPositiveCompletion(next()))
+        if (!NNTPReply.isPositiveCompletion(next())) {
             return false;
+        }
 
-        if (pointer != null)
+        if (pointer != null) {
             __parseArticlePointer(getReplyString(), pointer);
+        }
 
         return true;
     }
@@ -972,8 +981,9 @@ public class NNTPClient extends NNTP
      ***/
     public NewsgroupInfo[] listNewsgroups() throws IOException
     {
-        if (!NNTPReply.isPositiveCompletion(list()))
+        if (!NNTPReply.isPositiveCompletion(list())) {
             return null;
+        }
 
         return __readNewsgroupListing();
     }
@@ -1038,8 +1048,9 @@ public class NNTPClient extends NNTP
      */
     public NewsgroupInfo[] listNewsgroups(String wildmat) throws IOException
     {
-        if(!NNTPReply.isPositiveCompletion(listActive(wildmat)))
+        if(!NNTPReply.isPositiveCompletion(listActive(wildmat))) {
             return null;
+        }
         return __readNewsgroupListing();
     }
 
@@ -1106,8 +1117,10 @@ public class NNTPClient extends NNTP
     {
         if (!NNTPReply.isPositiveCompletion(newgroups(
                                                 query.getDate(), query.getTime(),
-                                                query.isGMT(), query.getDistributions())))
+                                                query.isGMT(), query.getDistributions()))) 
+        {
             return null;
+        }
 
         return __readNewsgroupListing();
     }
@@ -1326,8 +1339,9 @@ public class NNTPClient extends NNTP
 
     public Writer postArticle() throws IOException
     {
-        if (!NNTPReply.isPositiveIntermediate(post()))
+        if (!NNTPReply.isPositiveIntermediate(post())) {
             return null;
+        }
 
         return new DotTerminatedMessageWriter(_writer_);
     }
@@ -1335,8 +1349,9 @@ public class NNTPClient extends NNTP
 
     public Writer forwardArticle(String articleId) throws IOException
     {
-        if (!NNTPReply.isPositiveIntermediate(ihave(articleId)))
+        if (!NNTPReply.isPositiveIntermediate(ihave(articleId))) {
             return null;
+        }
 
         return new DotTerminatedMessageWriter(_writer_);
     }
@@ -1713,7 +1728,9 @@ public class NNTPClient extends NNTP
    // Helper methods
 
     private ArticleInfo __ap2ai(@SuppressWarnings("deprecation") ArticlePointer ap) {
-        if (ap == null) return null;
+        if (ap == null) {
+            return null;
+        }
         ArticleInfo ai = new ArticleInfo();
         return ai;
     }

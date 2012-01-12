@@ -78,8 +78,9 @@ public class SimpleNNTPHeader
      ***/
     public void addNewsgroup(String newsgroup)
     {
-        if (__newsgroupCount++ > 0)
+        if (__newsgroupCount++ > 0) {
             __newsgroups.append(',');
+        }
         __newsgroups.append(newsgroup);
     }
 
@@ -154,8 +155,9 @@ public class SimpleNNTPHeader
         header.append("\nSubject: ");
         header.append(__subject);
         header.append('\n');
-        if (__headerFields.length() > 0)
+        if (__headerFields.length() > 0) {
             header.append(__headerFields.toString());
+        }
         header.append('\n');
 
         return header.toString();

@@ -150,8 +150,9 @@ public class SMTP extends SocketClient
 
         if (args != null)
         {
-            if (includeSpace)
+            if (includeSpace) {
                 __commandBuffer.append(' ');
+            }
             __commandBuffer.append(args);
         }
 
@@ -190,16 +191,18 @@ public class SMTP extends SocketClient
 
         String line = _reader.readLine();
 
-        if (line == null)
+        if (line == null) {
             throw new SMTPConnectionClosedException(
                 "Connection closed without indication.");
+        }
 
         // In case we run into an anomaly we don't want fatal index exceptions
         // to be thrown.
         length = line.length();
-        if (length < 3)
+        if (length < 3) {
             throw new MalformedServerReplyException(
                 "Truncated server reply: " + line);
+        }
 
         try
         {
@@ -221,9 +224,10 @@ public class SMTP extends SocketClient
             {
                 line = _reader.readLine();
 
-                if (line == null)
+                if (line == null) {
                     throw new SMTPConnectionClosedException(
                         "Connection closed without indication.");
+                }
 
                 _replyLines.add(line);
 
@@ -240,9 +244,10 @@ public class SMTP extends SocketClient
 
         fireReplyReceived(_replyCode, getReplyString());
 
-        if (_replyCode == SMTPReply.SERVICE_NOT_AVAILABLE)
+        if (_replyCode == SMTPReply.SERVICE_NOT_AVAILABLE) {
             throw new SMTPConnectionClosedException(
                 "SMTP response 421 received.  Server closed connection.");
+        }
     }
 
     /*** Initiates control connections and gets initial reply. ***/
@@ -443,8 +448,9 @@ public class SMTP extends SocketClient
     {
         StringBuilder buffer;
 
-        if (!_newReplyString)
+        if (!_newReplyString) {
             return _replyString;
+        }
 
         buffer = new StringBuilder();
 

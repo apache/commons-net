@@ -293,8 +293,9 @@ __main:
 
             System.out.println("Remote system is " + ftp.getSystemType());
 
-            if (binaryTransfer)
+            if (binaryTransfer) {
                 ftp.setFileType(FTP.BINARY_FILE_TYPE);
+            }
 
             // Use passive mode as default because most of us are
             // behind firewalls these days.

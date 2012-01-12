@@ -74,8 +74,9 @@ public final class ListNewsgroups
         {
             try
             {
-                if (client.isConnected())
+                if (client.isConnected()) {
                     client.disconnect();
+                }
             }
             catch (IOException e)
             {

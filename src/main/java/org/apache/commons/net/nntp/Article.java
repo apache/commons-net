@@ -102,30 +102,35 @@ public class Article implements Threadable {
 
                         int i = start + 3;
 
-                        while (i < len && subject.charAt(i) >= '0' && subject.charAt(i) <= '9')
+                        while (i < len && subject.charAt(i) >= '0' && subject.charAt(i) <= '9') {
                             i++;
+                        }
 
                         if (i < (len - 1)
                             && (subject.charAt(i) == ']' || subject.charAt(i) == ')')
-                            && subject.charAt(i + 1) == ':') {
+                            && subject.charAt(i + 1) == ':') 
+                        {
                             start = i + 2;
                             done = false;
                         }
                     }
                 }
 
-                if ("(no subject)".equals(simplifiedSubject))
+                if ("(no subject)".equals(simplifiedSubject)) {
                     simplifiedSubject = "";
+                }
 
                 int end = len;
 
-                while (end > start && subject.charAt(end - 1) < ' ')
+                while (end > start && subject.charAt(end - 1) < ' ') {
                     end--;
+                }
 
-                if (start == 0 && end == len)
+                if (start == 0 && end == len) {
                     simplifiedSubject = subject;
-                else
+                } else {
                     simplifiedSubject = subject.substring(start, end);
+                }
             }
         }
 
@@ -136,13 +141,16 @@ public class Article implements Threadable {
      * @param depth the current tree depth
      */
     public static void printThread(Article article, int depth) {
-            for (int i = 0; i < depth; ++i)
+            for (int i = 0; i < depth; ++i) {
                 System.out.print("==>");
+            }
             System.out.println(article.getSubject() + "\t" + article.getFrom());
-            if (article.kid != null)
+            if (article.kid != null) {
                 printThread(article.kid, depth + 1);
-            if (article.next != null)
+            }
+            if (article.next != null) {
                 printThread(article.next, depth);
+            }
     }
 
     public String getArticleId() {
@@ -199,8 +207,9 @@ public class Article implements Threadable {
     }
 
     public String simplifiedSubject() {
-        if(simplifiedSubject == null)
+        if(simplifiedSubject == null) {
             simplifySubject();
+        }
         return simplifiedSubject;
     }
 

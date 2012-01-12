@@ -100,13 +100,15 @@ public class TimeInfo {
     public TimeInfo(NtpV3Packet message, long returnTime, List<String> comments,
                    boolean doComputeDetails)
     {
-        if (message == null)
+        if (message == null) {
             throw new IllegalArgumentException("message cannot be null");
+        }
         this._returnTime = returnTime;
         this._message = message;
         this._comments = comments;
-        if (doComputeDetails)
+        if (doComputeDetails) {
             computeDetails();
+        }
     }
 
     /**
@@ -173,16 +175,15 @@ public class TimeInfo {
             {
                 _offset = Long.valueOf(xmitTime - _returnTime);
                 _comments.add("Error: zero orig time -- cannot compute delay");
-            } else
+            } else {
                 _comments.add("Error: zero orig time -- cannot compute delay/offset");
-        } else if (rcvNtpTime.ntpValue() == 0 || xmitNtpTime.ntpValue() == 0)
-        {
+            }
+        } else if (rcvNtpTime.ntpValue() == 0 || xmitNtpTime.ntpValue() == 0) {
             _comments.add("Warning: zero rcvNtpTime or xmitNtpTime");
             // assert destTime >= origTime since network delay cannot be negative
-            if (origTime > _returnTime)
+            if (origTime > _returnTime) {
                 _comments.add("Error: OrigTime > DestRcvTime");
-            else
-            {
+            } else {
                 // without receive or xmit time cannot figure out processing time
                 // so delay is simply the network travel time
                 _delay = Long.valueOf(_returnTime - origTime);
@@ -229,13 +230,15 @@ public class TimeInfo {
                              _comments.add("Info: processing time > total network time by 1 ms -> assume zero delay");
                              delayValue = 0;
                          }
-                     } else
-                         _comments.add("Warning: processing time > total network time");
+                     } else {
+                        _comments.add("Warning: processing time > total network time");
+                    }
                  }
              }
              _delay = Long.valueOf(delayValue);
-            if (origTime > _returnTime) // assert destTime >= origTime
+            if (origTime > _returnTime) {
                 _comments.add("Error: OrigTime > DestRcvTime");
+            }
 
             _offset = Long.valueOf(((rcvTime - origTime) + (xmitTime - _returnTime)) / 2);
         }

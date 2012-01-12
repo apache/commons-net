@@ -156,7 +156,9 @@ public class IMAPSClient extends IMAPClient
     protected void _connectAction_() throws IOException
     {
         // Implicit mode.
-        if (isImplicit) performSSLNegotiation();
+        if (isImplicit) {
+            performSSLNegotiation();
+        }
         super._connectAction_();
         // Explicit mode - don't do anything. The user calls execTLS()
     }
@@ -190,8 +192,12 @@ public class IMAPSClient extends IMAPClient
         socket.setEnableSessionCreation(true);
         socket.setUseClientMode(true);
 
-        if (protocols != null) socket.setEnabledProtocols(protocols);
-        if (suites != null) socket.setEnabledCipherSuites(suites);
+        if (protocols != null) {
+            socket.setEnabledProtocols(protocols);
+        }
+        if (suites != null) {
+            socket.setEnabledCipherSuites(suites);
+        }
         socket.startHandshake();
 
         _socket_ = socket;

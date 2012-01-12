@@ -102,8 +102,9 @@ public class IMAP extends SocketClient
         _replyLines.clear();
         String line = _reader.readLine();
 
-        if (line == null)
+        if (line == null) {
             throw new EOFException("Connection closed without indication.");
+        }
 
         _replyLines.add(line);
 

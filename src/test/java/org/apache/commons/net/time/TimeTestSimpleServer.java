@@ -122,7 +122,7 @@ public class TimeTestSimpleServer implements Runnable
             {
             } finally
             {
-                if (socket != null)
+                if (socket != null) {
                     try
                     {
                         socket.close();  // force closing of the socket
@@ -130,6 +130,7 @@ public class TimeTestSimpleServer implements Runnable
                     {
                         System.err.println("close socket error: " + e);
                     }
+                }
             }
         }
     }

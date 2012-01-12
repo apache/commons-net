@@ -243,11 +243,15 @@ public class IMAPClient extends IMAP
     public boolean append(String mailboxName, String flags, String datetime) throws IOException
     {
         String args = mailboxName;
-        if (flags != null) args += " " + flags;
-        if (datetime != null)
-        {
-            if (datetime.charAt(0) == '{') args += " " + datetime;
-            else args += " {" + datetime + "}";
+        if (flags != null) {
+            args += " " + flags;
+        }
+        if (datetime != null) {
+            if (datetime.charAt(0) == '{') {
+                args += " " + datetime;
+            } else {
+                args += " {" + datetime + "}";
+            }
         }
         return doCommand (IMAPCommand.APPEND, args);
     }
@@ -305,7 +309,9 @@ public class IMAPClient extends IMAP
     public boolean search(String charset, String criteria) throws IOException
     {
         String args = "";
-        if (charset != null) args += "CHARSET " + charset;
+        if (charset != null) {
+            args += "CHARSET " + charset;
+        }
         args += criteria;
         return doCommand (IMAPCommand.SEARCH, args);
     }

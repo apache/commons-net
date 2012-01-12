@@ -219,17 +219,15 @@ public class RExecClient extends SocketClient
         _output_.flush();
 
         ch = _input_.read();
-        if (ch > 0)
-        {
+        if (ch > 0) {
             StringBuilder buffer = new StringBuilder();
 
-            while ((ch = _input_.read()) != -1 && ch != '\n')
+            while ((ch = _input_.read()) != -1 && ch != '\n') {
                 buffer.append((char)ch);
+            }
 
             throw new IOException(buffer.toString());
-        }
-        else if (ch < 0)
-        {
+        } else if (ch < 0) {
             throw new IOException("Server closed connection.");
         }
     }
@@ -254,8 +252,9 @@ public class RExecClient extends SocketClient
     @Override
     public void disconnect() throws IOException
     {
-        if (_errorStream_ != null)
+        if (_errorStream_ != null) {
             _errorStream_.close();
+        }
         _errorStream_ = null;
         super.disconnect();
     }

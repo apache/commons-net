@@ -221,8 +221,9 @@ public class SMTPClient extends SMTP
         host = getLocalAddress();
         name = host.getHostName();
 
-        if (name == null)
+        if (name == null) {
             return false;
+        }
 
         return SMTPReply.isPositiveCompletion(helo(name));
     }
@@ -358,8 +359,9 @@ public class SMTPClient extends SMTP
      ***/
     public Writer sendMessageData() throws IOException
     {
-        if (!SMTPReply.isPositiveIntermediate(data()))
+        if (!SMTPReply.isPositiveIntermediate(data())) {
             return null;
+        }
 
         return new DotTerminatedMessageWriter(_writer);
     }
@@ -389,8 +391,9 @@ public class SMTPClient extends SMTP
 
         writer = sendMessageData();
 
-        if (writer == null)
+        if (writer == null) {
             return false;
+        }
 
         writer.write(message);
         writer.close();
@@ -423,11 +426,13 @@ public class SMTPClient extends SMTP
                                      String message)
     throws IOException
     {
-        if (!setSender(sender))
+        if (!setSender(sender)) {
             return false;
+        }
 
-        if (!addRecipient(recipient))
+        if (!addRecipient(recipient)) {
             return false;
+        }
 
         return sendShortMessageData(message);
     }
@@ -461,17 +466,20 @@ public class SMTPClient extends SMTP
         boolean oneSuccess = false;
         int count;
 
-        if (!setSender(sender))
+        if (!setSender(sender)) {
             return false;
+        }
 
         for (count = 0; count < recipients.length; count++)
         {
-            if (addRecipient(recipients[count]))
+            if (addRecipient(recipients[count])) {
                 oneSuccess = true;
+            }
         }
 
-        if (!oneSuccess)
+        if (!oneSuccess) {
             return false;
+        }
 
         return sendShortMessageData(message);
     }
@@ -556,8 +564,9 @@ public class SMTPClient extends SMTP
      ***/
     public String listHelp() throws IOException
     {
-        if (SMTPReply.isPositiveCompletion(help()))
+        if (SMTPReply.isPositiveCompletion(help())) {
             return getReplyString();
+        }
         return null;
     }
 
@@ -579,8 +588,9 @@ public class SMTPClient extends SMTP
      ***/
     public String listHelp(String command) throws IOException
     {
-        if (SMTPReply.isPositiveCompletion(help(command)))
+        if (SMTPReply.isPositiveCompletion(help(command))) {
             return getReplyString();
+        }
         return null;
     }
 

@@ -150,8 +150,9 @@ public class TFTP extends DatagramSocketClient
 
         try
         {
-            while (true)
+            while (true) {
                 _socket_.receive(datagram);
+            }
         }
         catch (SocketException e)
         {
