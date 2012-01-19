@@ -32,8 +32,7 @@ import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileFilters;
 import org.apache.commons.net.ftp.FTPListParseEngine;
-import org.apache.commons.net.ftp.parser.MLSxEntryParser;
-import org.apache.commons.net.ftp.parser.UnixFTPEntryParser;
+
 import org.junit.Test;
 
 /**

@@ -25,7 +25,6 @@ import java.security.spec.InvalidKeySpecException;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.net.smtp.SMTPReply;
 import org.apache.commons.net.util.Base64;
 
 

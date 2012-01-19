@@ -19,7 +19,6 @@ package org.apache.commons.net.ntp;
 import java.util.Date;
 import java.util.Calendar;
 import junit.framework.TestCase;
-import org.apache.commons.net.ntp.TimeStamp;
 
 /**
  * Test class that validates assertions for the basic TimeStamp operations and comparisons.
