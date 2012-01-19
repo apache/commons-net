@@ -389,6 +389,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 <version>2.8</version>
                 <configuration>
                     <configLocation>${basedir}/checkstyle.xml</configLocation>
+                    <suppressionsLocation>${basedir}/checkstyle-suppressions.xml</suppressionsLocation>
                     <enableRulesSummary>false</enableRulesSummary>
                 </configuration>
             </plugin>
