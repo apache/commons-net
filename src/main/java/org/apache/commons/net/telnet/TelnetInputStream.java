@@ -45,7 +45,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                      _STATE_WONT = 3, _STATE_DO = 4, _STATE_DONT = 5,
                      _STATE_SB = 6, _STATE_SE = 7, _STATE_CR = 8, _STATE_IAC_SB = 9;
 
-    private boolean __hasReachedEOF;
+    private boolean __hasReachedEOF; // @GuardedBy("__queue")
     private volatile boolean __isClosed;
     private boolean __readIsWaiting;
     private int __receiveState, __queueHead, __queueTail, __bytesAvailable;
