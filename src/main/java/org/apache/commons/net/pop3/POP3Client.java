@@ -114,6 +114,22 @@ public class POP3Client extends POP3
     }
 
     /***
+     * Send a CAPA command to the POP3 server.
+     * @return True if the command was successful, false if not.
+     * @exception IOException If a network I/O error occurs in the process of
+     *        sending the CAPA command.
+     ***/
+    public boolean capa() throws IOException
+    {
+        if (sendCommand(POP3Command.CAPA) == POP3Reply.OK) {
+            getAdditionalReply();
+            return true;
+        }
+        return false;
+        
+    }
+    
+    /***
      * Login to the POP3 server with the given username and password.  You
      * must first connect to the server with
      * {@link org.apache.commons.net.SocketClient#connect  connect }

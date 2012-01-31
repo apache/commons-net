@@ -46,17 +46,6 @@ public class ExtendedPOP3Client extends POP3SClient
     }
 
     /***
-     * Send a CAPA command to the POP3 server.
-     * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
-     *        sending the NOOP command.
-     ***/
-    public boolean capa() throws IOException
-    {
-        return (sendCommand(POP3Command.CAPA) == POP3Reply.OK);
-    }
-
-    /***
      * Authenticate to the POP3 server by sending the AUTH command with the
      * selected mechanism, using the given username and the given password.
      * <p>
