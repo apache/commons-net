@@ -367,7 +367,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 <artifactId>clirr-maven-plugin</artifactId>
                 <version>2.3</version>
                 <configuration>
-                    <comparisonVersion>2.2</comparisonVersion>
                     <minSeverity>info</minSeverity>
                     <excludes>
                       <exclude>examples/**</exclude>
