@@ -52,7 +52,7 @@ public class TelnetClient extends Telnet
     private TelnetInputListener inputListener;
 
     /***
-     * Default TelnetClient constructor.
+     * Default TelnetClient constructor, sets terminal-type {@code VT100}.
      ***/
     public TelnetClient()
     {
@@ -63,6 +63,11 @@ public class TelnetClient extends Telnet
         __output = null;
     }
 
+    /**
+     * Construct an instance with the specified terminal type.
+     * 
+     * @param termtype the terminal type to use, e.g. {@code VT100}
+     */
     /* TERMINAL-TYPE option (start)*/
     public TelnetClient(String termtype)
     {
