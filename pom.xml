@@ -264,23 +264,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                     </execution>
                 </executions>
             </plugin>
-            <!-- Repeat the configuration here for use when directly invoking the plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-changes-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                   <!-- Cannot use outputDirectory to place the file, 
-                        as that affects the HTML output, so use relative path instead 
-                    -->
-                   <announcementFile>../../RELEASE-NOTES.txt</announcementFile>
-                    <issueLinkTemplatePerSystem>
-                        <default>%URL%/%ISSUE%</default>
-                    </issueLinkTemplatePerSystem>
-                    <template>release-notes.vm</template>
-                    <templateDirectory>src/changes</templateDirectory>
-                </configuration>
-            </plugin>
 
             <!-- Exclude examples from Javadoc jar -->
             <plugin>
@@ -323,7 +306,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-changes-plugin</artifactId>
-                <version>2.5</version>
+                <version>${commons.changes.version}</version>
                 <configuration>
                     <issueLinkTemplatePerSystem>
                         <default>%URL%/%ISSUE%</default>
