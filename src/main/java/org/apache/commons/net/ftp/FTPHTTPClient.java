@@ -62,8 +62,21 @@ public class FTPHTTPClient extends FTPClient {
      *
      * @throws IllegalStateException if connection mode is not passive
      */
+    // Kept to maintain binary compatibility
+    // Not strictly necessary, but Clirr complains even though there is a super-impl
     @Override
     protected Socket _openDataConnection_(int command, String arg) 
+    throws IOException {
+        return super._openDataConnection_(command, arg);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalStateException if connection mode is not passive
+     */
+    @Override
+    protected Socket _openDataConnection_(String command, String arg) 
     throws IOException {
         //Force local passive mode, active mode not supported by through proxy
         if (getDataConnectionMode() != PASSIVE_LOCAL_DATA_CONNECTION_MODE) {
