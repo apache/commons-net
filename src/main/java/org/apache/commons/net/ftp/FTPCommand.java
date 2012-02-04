@@ -17,7 +17,7 @@
 
 package org.apache.commons.net.ftp;
 
-/***
+/**
  * FTPCommand stores a set of constants for FTP command codes.  To interpret
  * the meaning of the codes, familiarity with RFC 959 is assumed.
  * The mnemonic constant names are transcriptions from the code descriptions
@@ -26,8 +26,8 @@ package org.apache.commons.net.ftp;
  * where the constant name is the same as the FTP command.
  * <p>
  * <p>
- ***/
-/** TODO replace this with an enum */
+ */
+// TODO - replace with an enum?
 public final class FTPCommand
 {
 
