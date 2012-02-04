@@ -15,12 +15,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<project name="Apache Commons Net&amp;trade;">
+<project name="Apache Commons Net">
 
   <bannerRight>
-    <name>Commons Net&#8482;</name>
+    <name>Apache Commons Net</name>
     <src>/images/net-logo-white.png</src>
     <href>/index.html</href>
+    <alt>Commons Net&amp;trade; logo</alt>
   </bannerRight>
 
   <body>
@@ -29,7 +30,7 @@
       <item name="Migration How-to"      href="migration.html"/>
       <item name="FAQ"                   href="faq.html"/>
       <item name="Download"              href="http://commons.apache.org/net/download_net.cgi"/>
-      <item name="Javadoc (3.0.1)"       href="api-3.0.1/index.html"/>
+      <item name="Javadoc (3.1)"         href="api-3.1/index.html"/>
       <item name="Javadoc (1.4.1)"       href="api-1.4.1/index.html"/>
       <item name="Release Notes"         href="changes-report.html"/>
     </menu>
