@@ -281,6 +281,14 @@ implements Configurable
     public static final String FTP_SYSTEM_TYPE = "org.apache.commons.net.ftp.systemType";
 
     /**
+     * The system property ({@value}) which can be used as the default system type.<br/>
+     * If defined, the value will be used if the SYST command fails.
+     *
+     * @since 3.1
+     */
+    public static final String FTP_SYSTEM_TYPE_DEFAULT = "org.apache.commons.net.ftp.systemType.default";
+
+    /**
      * The name of an optional systemType properties file ({@value}), which is loaded
      * using {@link Class#getResourceAsStream(String)}.<br/>
      * The entries are the systemType (as determined by {@link FTPClient#getSystemType})
@@ -2492,6 +2500,8 @@ implements Configurable
      * FTP server.  FTPClient will remember the value and return the
      * cached value until a call to disconnect.
      * <p>
+     * If the SYST command fails, and the system property
+     * {@link #FTP_SYSTEM_TYPE_DEFAULT} is defined, then this is used instead.
      * @return The system type obtained from the server. Never null.
      * @exception FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -2499,7 +2509,8 @@ implements Configurable
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
-     *  command to the server or receiving a reply from the server.
+     *  command to the server or receiving a reply from the server (and the default
+     *  system type property is not defined)
      *  @since 2.2
      ***/
     public String getSystemType() throws IOException
@@ -2513,7 +2524,13 @@ implements Configurable
                 // Assume that response is not empty here (cannot be null)
                 __systemName = _replyLines.get(_replyLines.size() - 1).substring(4);
             } else {
-                throw new IOException("Unable to determine system type - response: " + getReplyString());
+                // Check if the user has provided a default for when the SYST command fails
+                String systDefault = System.getProperty(FTP_SYSTEM_TYPE_DEFAULT);
+                if (systDefault != null) {
+                    __systemName = systDefault;
+                } else {
+                    throw new IOException("Unable to determine system type - response: " + getReplyString());
+                }
             }
         }
         return __systemName;
