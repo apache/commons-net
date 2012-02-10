@@ -65,6 +65,9 @@ The <action> type attribute can be add,update,fix,remove.
 This release fixes a few bugs and adds some new functionality (see below).
   It is binary compatible with previous releases
         ">
+            <action issue="NET-441" dev="sebb" type="fix" due-to="consiliens">
+            mlistDir doc should be "MLSD" not "MSLD".
+            </action>
             <action issue="NET-440" dev="sebb" type="add">
             Allow user to provide default value in case SYST command fails.
             </action>

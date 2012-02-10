@@ -2258,7 +2258,7 @@ implements Configurable
     }
 
     /**
-     * Generate a directory listing for the current directory using the MSLD command.
+     * Generate a directory listing for the current directory using the MLSD command.
      *
      * @return the array of file entries
      * @throws IOException
@@ -2270,7 +2270,7 @@ implements Configurable
     }
 
     /**
-     * Generate a directory listing using the MSLD command.
+     * Generate a directory listing using the MLSD command.
      *
      * @param pathname the directory name, may be {@code null}
      * @return the array of file entries
@@ -2284,7 +2284,7 @@ implements Configurable
     }
 
     /**
-     * Generate a directory listing using the MSLD command.
+     * Generate a directory listing using the MLSD command.
      *
      * @param pathname the directory name, may be {@code null}
      * @param filter the filter to apply to the responses
