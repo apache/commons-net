@@ -12,12 +12,14 @@ This release fixes a few bugs and adds some new functionality (see below).
 Changes in this version include:
 
 New features:
+o NET-440:  Allow user to provide default value in case SYST command fails. 
 o NET-346:  FTP should support reporting NATed external IP address Thanks to Kevin Samuel. 
 o NET-433:  NET site should link to the examples 
 o NET-426:  FTPS: Hook to customize _openDataConnection_ SSLSocket before startHandshake() is called Thanks to Ketan. 
 o NET-436:  Support for SYST "Mac OS" listing - "MACOS Peter's Server" Thanks to Jürgen Jung. 
 
 Fixed Bugs:
+o NET-441:  mlistDir doc should be "MLSD" not "MSLD". Thanks to consiliens. 
 o NET-438:  POP3Client.capa() should call POP3Client.getAdditionalReply() Thanks to Norman Maurer. 
 o NET-412:  TFTP implementation subject to Sorcerer's Apprentice Syndrome Thanks to Chuck Wolber. 
 o NET-410:  TFTP does not handle RFC 783 retransmits Thanks to Chuck Wolber. 
