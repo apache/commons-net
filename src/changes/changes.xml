@@ -67,10 +67,10 @@ This release fixes a few bugs and adds some new functionality (see below).
   It is binary compatible with previous releases
         ">
             <action issue="NET-441" dev="sebb" type="fix" due-to="consiliens">
-            mlistDir doc should be "MLSD" not "MSLD".
+            [FTP] mlistDir doc should be "MLSD" not "MSLD".
             </action>
             <action issue="NET-440" dev="sebb" type="add">
-            Allow user to provide default value in case SYST command fails.
+            [FTP] Allow user to provide default value in case SYST command fails.
             </action>
             <action issue="NET-438" dev="sebb" type="fix" due-to="Norman Maurer">
             POP3Client.capa() should call POP3Client.getAdditionalReply()
@@ -88,7 +88,7 @@ This release fixes a few bugs and adds some new functionality (see below).
             FTP should support reporting NATed external IP address
             </action>
             <action issue="NET-433" dev="sebb" type="add">
-            NET site should link to the examples
+            Commons NET site should link to the examples
             </action>
             <action issue="NET-422" dev="sebb" type="fix" due-to="Tomas Mysik / Magnus Johansson">
             FTP using HTTP proxy not working
@@ -106,14 +106,14 @@ This release fixes a few bugs and adds some new functionality (see below).
             FTPClient fails to close local listener socket when command socket channel encounter "ReadTimeoutException"
             </action>
             <action issue="NET-436" dev="sebb" type="add" due-to="Jürgen Jung">
-            Support for SYST "Mac OS" listing - "MACOS Peter's Server"
+            [FTP] Support for SYST "Mac OS" listing - "MACOS Peter's Server"
             </action>
             <action issue="NET-425" dev="sebb" type="update" due-to="Steven Jardine">
-            _openDataConnection_, __storeFile, and __storeFileStream should be protected and take String for FTP command.
+            [FTP] _openDataConnection_, __storeFile, and __storeFileStream should be protected and take String for FTP command.
             Likewise for receiveFile and receiveFileStream.
             </action>
             <action issue="NET-416" dev="sebb" type="update" due-to="Abhijeet Gaikwad">
-            Increasing sub-negotiation message holder array size
+            [Telnet] Increasing sub-negotiation message holder array size
             </action>
             <action issue="NET-428" dev="sebb" type="fix" due-to="sebb">
             SubnetUtils throws ArrayIndexOutOfBoundsException for new SubnetUtils( "1.2.3.4/32" ).getInfo().getAllAddresses()
@@ -122,7 +122,7 @@ This release fixes a few bugs and adds some new functionality (see below).
             Problem connecting to TLS/SSL SMTP server using explicit mode.
             </action>
             <action issue="NET-415" dev="sebb" type="fix" due-to="george thomas">
-            typo in migration how-to.
+            [Site] typo in migration how-to.
             </action>
         </release>
 
