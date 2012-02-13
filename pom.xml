@@ -348,9 +348,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>clirr-maven-plugin</artifactId>
-                <version>${commons.clirr.version}</version>
                 <configuration>
-                    <minSeverity>info</minSeverity>
                     <excludes>
                       <exclude>examples/**</exclude>
                     </excludes>
