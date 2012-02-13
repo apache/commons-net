@@ -49,13 +49,6 @@
     <Bug code="BC" />
   </Match>
 
-  <!-- Switch fallthrough is deliberate -->
-  <Match>
-    <Class name="org.apache.commons.net.ftp.parser.UnixFTPEntryParser" />
-    <Method name="parseFTPEntry" />
-    <Bug code="SF" />
-  </Match>
-
   <!-- False positive - missing default -->
   <Match>
     <Class name="org.apache.commons.net.io.DotTerminatedMessageWriter" />

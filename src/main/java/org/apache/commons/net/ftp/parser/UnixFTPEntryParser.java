@@ -208,8 +208,8 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             case 'b':
             case 'c':
                 isDevice = true;
-                // break; - fall through
-                //$FALL-THROUGH$ TODO change this if DEVICE_TYPE implemented
+                type = FTPFile.FILE_TYPE; // TODO change this if DEVICE_TYPE implemented
+                break;
             case 'f':
             case '-':
                 type = FTPFile.FILE_TYPE;
