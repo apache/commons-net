@@ -340,6 +340,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
+                <version>2.3.2</version>
                 <configuration>
                     <excludeFilterFile>findbugs-exclude-filter.xml</excludeFilterFile>
                 </configuration>
@@ -366,12 +367,20 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.8</version>
+                <version>2.9</version>
                 <configuration>
                     <configLocation>${basedir}/checkstyle.xml</configLocation>
                     <suppressionsLocation>${basedir}/checkstyle-suppressions.xml</suppressionsLocation>
                     <enableRulesSummary>false</enableRulesSummary>
                 </configuration>
+                <!-- Workround for CHECKSTYLE-167/172 -->
+                <reportSets>
+                  <reportSet>
+                    <reports>
+                      <report>checkstyle</report>
+                    </reports>
+                  </reportSet>
+                </reportSets>
             </plugin>
 
         </plugins>
