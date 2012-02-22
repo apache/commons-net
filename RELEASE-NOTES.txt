@@ -25,7 +25,7 @@ o NET-412:  TFTP implementation subject to Sorcerer's Apprentice Syndrome Thanks
 o NET-410:  TFTP does not handle RFC 783 retransmits Thanks to Chuck Wolber. 
 o NET-437:  TelnetInputStream doesn't support non-blocking IO when reader thread is not enabled Thanks to Gavin Camp. 
 o NET-422:  FTP using HTTP proxy not working Thanks to Tomas Mysik / Magnus Johansson. 
-o NET-423:  FTPClient.storeFIle might fail when ControlKeepAliveTimeout is set (ditto for FTPCLient.retrieveFile) Thanks to Jens Koch. 
+o NET-423:  FTPClient.storeFile might fail when ControlKeepAliveTimeout is set (ditto for FTPCLient.retrieveFile) Thanks to Jens Koch. 
 o NET-430:  Can't login to POP3S Server using explicit mode Thanks to Thomas Mathis. 
 o NET-434:  FTPClient fails to close local listener socket when command socket channel encounter "ReadTimeoutException" Thanks to zhangyong. 
 o NET-428:  SubnetUtils throws ArrayIndexOutOfBoundsException for new SubnetUtils( "1.2.3.4/32" ).getInfo().getAllAddresses() Thanks to sebb. 
