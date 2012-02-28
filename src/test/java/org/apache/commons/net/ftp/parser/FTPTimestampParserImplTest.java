@@ -62,13 +62,14 @@ public class FTPTimestampParserImplTest extends TestCase {
 
     public void testParseTimestampWithSlop() {
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.HOUR_OF_DAY, 1);
         cal.set(Calendar.SECOND,0);
         cal.set(Calendar.MILLISECOND,0);
-        Date anHourFromNow = cal.getTime();
-        cal.add(Calendar.DATE, 1);
-        Date anHourFromNowTomorrow = cal.getTime();
-        cal.add(Calendar.DATE, -1);
+
+        Calendar caltemp = (Calendar) cal.clone();
+        caltemp.add(Calendar.HOUR_OF_DAY, 1);
+        Date anHourFromNow = caltemp.getTime();
+        caltemp.add(Calendar.DATE, 1);
+        Date anHourFromNowTomorrow = caltemp.getTime();
 
         FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
 
