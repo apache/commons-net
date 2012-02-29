@@ -420,6 +420,15 @@ public class FTPTimestampParserImplTest extends TestCase {
         }
     }
 
+    // This test currently fails, because we assume that short dates are +-6months when parsing Feb 29
+    public void DISABLEDtestNET446() throws Exception {
+        GregorianCalendar server = new GregorianCalendar(2001, Calendar.JANUARY, 1, 12, 0);
+        // Note: we use a known leap year for the target date to avoid rounding up
+        GregorianCalendar input = new GregorianCalendar(2000, Calendar.FEBRUARY,29);
+        GregorianCalendar expected = new GregorianCalendar(2000, Calendar.FEBRUARY,29);
+        checkShortParse("Feb 29th 2000", server, input, expected);
+    }
+
     public void testParseDec31Lenient() throws Exception {
         GregorianCalendar now = new GregorianCalendar(2007, Calendar.DECEMBER, 30, 12, 0);
         checkShortParse("2007-12-30",now,now); // should always work
