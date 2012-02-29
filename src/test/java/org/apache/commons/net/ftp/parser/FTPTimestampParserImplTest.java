@@ -409,7 +409,12 @@ public class FTPTimestampParserImplTest extends TestCase {
         GregorianCalendar input = new GregorianCalendar(2000, Calendar.FEBRUARY,29);
         GregorianCalendar expected = new GregorianCalendar(1999, Calendar.FEBRUARY,29);
         try {
-            checkShortParse("Feb 29th 1999", server, input, expected);
+            checkShortParse("Feb 29th 1999", server, input, expected, true);
+            fail("Should have failed to parse Feb 29th 1999");
+        } catch (ParseException pe) {
+        }
+        try {
+            checkShortParse("Feb 29th 1999", server, input, expected, false);
             fail("Should have failed to parse Feb 29th 1999");
         } catch (ParseException pe) {
         }
