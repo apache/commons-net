@@ -103,11 +103,15 @@ public class FTPTimestampParserImpl implements
                 // slightly in the future to roll back a full year.  (Bug 35181 => NET-83)
                 now.add(Calendar.DATE, 1);
             }
+            // The Java SimpleDateFormat class uses the epoch year 1970 if not present in the input
+            // As 1970 was not a leap year, it cannot parse "Feb 29" correctly.
+            // Java 1.5+ returns Mar 1 1970
             // Temporarily add the current year to the short date time
             // to cope with short-date leap year strings.
-            // e.g. Java's DateFormatter will assume that "Feb 29 12:00" refers to
-            // Feb 29 1970 (an invalid date) rather than a potentially valid leap year date.
-            // This is pretty bad hack to work around the deficiencies of the JDK date/time classes.
+            // Since Feb 29 is more that 6 months from the end of the year, this should be OK for
+            // all instances of short dates which are +- 6 months from current date.
+            // TODO this won't always work for systems that use short dates +0/-12months
+            // e.g. if today is Jan 1 2001 and the short date is Feb 29
             String year = Integer.toString(now.get(Calendar.YEAR));
             String timeStampStrPlusYear = timestampStr + " " + year;
             SimpleDateFormat hackFormatter = new SimpleDateFormat(recentDateFormat.toPattern() + " yyyy",
@@ -139,7 +143,8 @@ public class FTPTimestampParserImpl implements
             working.setTime(parsed);
         } else {
             throw new ParseException(
-                    "Timestamp could not be parsed with older or recent DateFormat",
+                    "Timestamp '"+timestampStr+"' could not be parsed using a server time of "
+                        +serverTime.getTime().toString(),
                     pp.getErrorIndex());
         }
         return working;
