@@ -62,6 +62,13 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
     <body>
+        <release version="3.2" date="TBA" description="
+        ">
+TBA
+            <action issue="NET-444" dev="sebb" type="fix">
+            FTPTimestampParserImpl fails to parse future dates correctly on Feb 28th in a leap year.
+            </action>
+        </release>
         <release version="3.1" date="Feb 20, 2012" description="
 This release fixes a few bugs and adds some new functionality (see below).
   It is binary compatible with previous releases

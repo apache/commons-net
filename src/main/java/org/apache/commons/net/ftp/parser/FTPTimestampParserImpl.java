@@ -90,66 +90,57 @@ public class FTPTimestampParserImpl implements
      * @since 1.5
      */
     public Calendar parseTimestamp(String timestampStr, Calendar serverTime) throws ParseException {
-        Calendar now = (Calendar) serverTime.clone();// Copy this, because we may change it
-        now.setTimeZone(this.getServerTimeZone());
-        Calendar working = (Calendar) now.clone();
+        Calendar working = (Calendar) serverTime.clone();
         working.setTimeZone(getServerTimeZone()); // is this needed?
-        ParsePosition pp = new ParsePosition(0);
 
         Date parsed = null;
+
         if (recentDateFormat != null) {
+            Calendar now = (Calendar) serverTime.clone();// Copy this, because we may change it
+            now.setTimeZone(this.getServerTimeZone());
             if (lenientFutureDates) {
                 // add a day to "now" so that "slop" doesn't cause a date
                 // slightly in the future to roll back a full year.  (Bug 35181 => NET-83)
                 now.add(Calendar.DATE, 1);
             }
-            parsed = recentDateFormat.parse(timestampStr, pp);
-        }
-        if (parsed != null && pp.getIndex() == timestampStr.length())
-        {
-            working.setTime(parsed);
-            working.set(Calendar.YEAR, now.get(Calendar.YEAR));
-
-            if (working.after(now)) {
-                working.add(Calendar.YEAR, -1);
-            }
-        } else {
             // Temporarily add the current year to the short date time
             // to cope with short-date leap year strings.
             // e.g. Java's DateFormatter will assume that "Feb 29 12:00" refers to
             // Feb 29 1970 (an invalid date) rather than a potentially valid leap year date.
             // This is pretty bad hack to work around the deficiencies of the JDK date/time classes.
-            if (recentDateFormat != null) {
-                pp = new ParsePosition(0);
-                int year = now.get(Calendar.YEAR);
-                String timeStampStrPlusYear = timestampStr + " " + year;
-                SimpleDateFormat hackFormatter = new SimpleDateFormat(recentDateFormat.toPattern() + " yyyy",
-                        recentDateFormat.getDateFormatSymbols());
-                hackFormatter.setLenient(false);
-                hackFormatter.setTimeZone(recentDateFormat.getTimeZone());
-                parsed = hackFormatter.parse(timeStampStrPlusYear, pp);
-            }
-            if (parsed != null && pp.getIndex() == timestampStr.length() + 5) {
+            String year = Integer.toString(now.get(Calendar.YEAR));
+            String timeStampStrPlusYear = timestampStr + " " + year;
+            SimpleDateFormat hackFormatter = new SimpleDateFormat(recentDateFormat.toPattern() + " yyyy",
+                    recentDateFormat.getDateFormatSymbols());
+            hackFormatter.setLenient(false);
+            hackFormatter.setTimeZone(recentDateFormat.getTimeZone());
+            ParsePosition pp = new ParsePosition(0);
+            parsed = hackFormatter.parse(timeStampStrPlusYear, pp);
+            // Check if we parsed the full string, if so it must have been a short date originally
+            if (parsed != null && pp.getIndex() == timeStampStrPlusYear.length()) {
                 working.setTime(parsed);
-            }
-            else {
-                pp = new ParsePosition(0);
-                parsed = defaultDateFormat.parse(timestampStr, pp);
-                // note, length checks are mandatory for us since
-                // SimpleDateFormat methods will succeed if less than
-                // full string is matched.  They will also accept,
-                // despite "leniency" setting, a two-digit number as
-                // a valid year (e.g. 22:04 will parse as 22 A.D.)
-                // so could mistakenly confuse an hour with a year,
-                // if we don't insist on full length parsing.
-                if (parsed != null && pp.getIndex() == timestampStr.length()) {
-                    working.setTime(parsed);
-                } else {
-                    throw new ParseException(
-                            "Timestamp could not be parsed with older or recent DateFormat",
-                            pp.getErrorIndex());
+                if (working.after(now)) { // must have been last year instead
+                    working.add(Calendar.YEAR, -1);
                 }
+                return working;
             }
+        }
+
+        ParsePosition pp = new ParsePosition(0);
+        parsed = defaultDateFormat.parse(timestampStr, pp);
+        // note, length checks are mandatory for us since
+        // SimpleDateFormat methods will succeed if less than
+        // full string is matched.  They will also accept,
+        // despite "leniency" setting, a two-digit number as
+        // a valid year (e.g. 22:04 will parse as 22 A.D.)
+        // so could mistakenly confuse an hour with a year,
+        // if we don't insist on full length parsing.
+        if (parsed != null && pp.getIndex() == timestampStr.length()) {
+            working.setTime(parsed);
+        } else {
+            throw new ParseException(
+                    "Timestamp could not be parsed with older or recent DateFormat",
+                    pp.getErrorIndex());
         }
         return working;
     }

@@ -97,6 +97,25 @@ public class FTPTimestampParserImplTest extends TestCase {
         }
     }
 
+    public void testNET444() throws Exception {
+        FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
+        parser.setLenientFutureDates(true);
+        SimpleDateFormat sdf = new SimpleDateFormat(parser.getRecentDateFormatString());
+        GregorianCalendar now = new GregorianCalendar(2012, Calendar.FEBRUARY, 28, 12, 0);
+
+        GregorianCalendar nowplus1 = new GregorianCalendar(2012, Calendar.FEBRUARY, 28, 13, 0);
+        // Create a suitable short date
+        String future1 = sdf.format(nowplus1.getTime());
+        Calendar parsed1 = parser.parseTimestamp(future1, now);
+        assertEquals(nowplus1.get(Calendar.YEAR), parsed1.get(Calendar.YEAR));
+
+        GregorianCalendar nowplus25 = new GregorianCalendar(2012, Calendar.FEBRUARY, 29, 13, 0);
+        // Create a suitable short date
+        String future25 = sdf.format(nowplus25.getTime());
+        Calendar parsed25 = parser.parseTimestamp(future25, now);
+        assertEquals(nowplus25.get(Calendar.YEAR) - 1, parsed25.get(Calendar.YEAR));
+    }
+
     public void testParseTimestampAcrossTimeZones() {
 
 
@@ -174,8 +193,8 @@ public class FTPTimestampParserImplTest extends TestCase {
                 fail("failed.to.parse.default");
             }
             try {
-                parser.parseTimestamp("f\u00e9v 22 2002");
-                fail("should.have.failed.to.parse.default");
+                Calendar c = parser.parseTimestamp("f\u00e9v 22 2002");
+                fail("should.have.failed.to.parse.default, but was: "+c.getTime().toString());
             } catch (ParseException e) {
                 // this is the success case
             }
