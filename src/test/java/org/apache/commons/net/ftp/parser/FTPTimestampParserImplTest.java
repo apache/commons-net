@@ -256,9 +256,18 @@ public class FTPTimestampParserImplTest extends TestCase {
      * Check how short date is interpreted at a given time.
      * Check both with and without lenient future dates
      */
-    private void checkShortParse(String msg, Calendar now, Calendar input) throws ParseException {
-        checkShortParse(msg, now, input, false);
-        checkShortParse(msg, now, input, true);
+    private void checkShortParse(String msg, Calendar serverTime, Calendar input) throws ParseException {
+        checkShortParse(msg, serverTime, input, false);
+        checkShortParse(msg, serverTime, input, true);
+    }
+
+    /*
+     * Check how short date is interpreted at a given time.
+     * Check both with and without lenient future dates
+     */
+    private void checkShortParse(String msg, Calendar serverTime, Calendar input, Calendar expected) throws ParseException {
+        checkShortParse(msg, serverTime, input, expected, false);
+        checkShortParse(msg, serverTime, input, expected, true);
     }
 
     /**
@@ -270,6 +279,19 @@ public class FTPTimestampParserImplTest extends TestCase {
      * @param lenient whether to use lenient mode or not.
      */
     private void checkShortParse(String msg, Calendar servertime, Calendar input, boolean lenient) throws ParseException {
+        checkShortParse(msg, servertime, input, input, lenient);
+    }
+
+    /**
+     * Check how short date is interpreted at a given time
+     * Check only using specified lenient future dates setting
+     * @param msg identifying message
+     * @param servertime the time at the server
+     * @param input the time to be converted to a short date and parsed
+     * @param expected the expected result from parsing
+     * @param lenient whether to use lenient mode or not.
+     */
+    private void checkShortParse(String msg, Calendar servertime, Calendar input, Calendar expected, boolean lenient) throws ParseException {
         FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
         parser.setLenientFutureDates(lenient);
         Format shortFormat = parser.getRecentDateFormat(); // It's expecting this format
@@ -279,15 +301,15 @@ public class FTPTimestampParserImplTest extends TestCase {
         int outyear = output.get(Calendar.YEAR);
         int outdom = output.get(Calendar.DAY_OF_MONTH);
         int outmon = output.get(Calendar.MONTH);
-        int inyear = input.get(Calendar.YEAR);
-        int indom = input.get(Calendar.DAY_OF_MONTH);
-        int inmon = input.get(Calendar.MONTH);
+        int inyear = expected.get(Calendar.YEAR);
+        int indom = expected.get(Calendar.DAY_OF_MONTH);
+        int inmon = expected.get(Calendar.MONTH);
         if (indom != outdom || inmon != outmon || inyear != outyear){
             Format longFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
             fail("Test: '"+msg+"' Server="+longFormat.format(servertime.getTime())
                     +". Failed to parse "+shortDate
                     +". Actual "+longFormat.format(output.getTime())
-                    +". Expected "+longFormat.format(input.getTime()));
+                    +". Expected "+longFormat.format(expected.getTime()));
         }
     }
 
@@ -382,12 +404,14 @@ public class FTPTimestampParserImplTest extends TestCase {
 
     // Test Feb 29 for a known non-leap year - should fail
     public void testFeb29NonLeapYear(){
-        GregorianCalendar now = new GregorianCalendar(1999, Calendar.APRIL, 1, 12, 0);
+        GregorianCalendar server = new GregorianCalendar(1999, Calendar.APRIL, 1, 12, 0);
         // Note: we use a known leap year for the target date to avoid rounding up
+        GregorianCalendar input = new GregorianCalendar(2000, Calendar.FEBRUARY,29);
+        GregorianCalendar expected = new GregorianCalendar(1999, Calendar.FEBRUARY,29);
         try {
-            checkShortParse("Feb 29th 1999",now,new GregorianCalendar(2000, Calendar.FEBRUARY,29));
+            checkShortParse("Feb 29th 1999", server, input, expected);
             fail("Should have failed to parse Feb 29th 1999");
-        } catch (ParseException expected) {
+        } catch (ParseException pe) {
         }
     }
 
