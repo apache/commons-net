@@ -261,18 +261,21 @@ public class FTPTimestampParserImplTest extends TestCase {
         checkShortParse(msg, now, input, true);
     }
 
-    /*
+    /**
      * Check how short date is interpreted at a given time
      * Check only using specified lenient future dates setting
+     * @param msg identifying message
+     * @param servertime the time at the server
+     * @param input the time to be converted to a short date, parsed and tested against the full time
+     * @param lenient whether to use lenient mode or not.
      */
-    private void checkShortParse(String msg, Calendar now, Calendar input, boolean lenient) throws ParseException {
+    private void checkShortParse(String msg, Calendar servertime, Calendar input, boolean lenient) throws ParseException {
         FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
         parser.setLenientFutureDates(lenient);
         Format shortFormat = parser.getRecentDateFormat(); // It's expecting this format
-        Format longFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 
         final String shortDate = shortFormat.format(input.getTime());
-        Calendar output=parser.parseTimestamp(shortDate, now);
+        Calendar output=parser.parseTimestamp(shortDate, servertime);
         int outyear = output.get(Calendar.YEAR);
         int outdom = output.get(Calendar.DAY_OF_MONTH);
         int outmon = output.get(Calendar.MONTH);
@@ -280,7 +283,8 @@ public class FTPTimestampParserImplTest extends TestCase {
         int indom = input.get(Calendar.DAY_OF_MONTH);
         int inmon = input.get(Calendar.MONTH);
         if (indom != outdom || inmon != outmon || inyear != outyear){
-            fail("Test: '"+msg+"' Server="+longFormat.format(now.getTime())
+            Format longFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            fail("Test: '"+msg+"' Server="+longFormat.format(servertime.getTime())
                     +". Failed to parse "+shortDate
                     +". Actual "+longFormat.format(output.getTime())
                     +". Expected "+longFormat.format(input.getTime()));
