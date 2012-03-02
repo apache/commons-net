@@ -65,6 +65,9 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.2" date="TBA" description="
         ">
 TBA
+            <action issue="NET-442" dev="sebb" type="fix">
+            StringIndexOutOfBoundsException: String index out of range: -1 if server respond with root is current directory.
+            </action>
             <action issue="NET-444" dev="sebb" type="fix">
             FTPTimestampParserImpl fails to parse future dates correctly on Feb 28th in a leap year.
             </action>
