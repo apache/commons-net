@@ -223,6 +223,10 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                                         <attribute name="Implementation-Build" value="${implementation.build}"/>
                                         <attribute name="X-Compile-Source-JDK" value="${maven.compile.source}" />
                                         <attribute name="X-Compile-Target-JDK" value="${maven.compile.target}" />
+                                        <!-- Helper application -->
+                                        <attribute name="Main-Class" value="examples/Main" />
+                                        <!-- Allow java -jar examples.jar to work -->
+                                        <attribute name="Class-Path" value="commons-net-${project.version}.jar" />
                                     </manifest>
                                     <fileset dir="target/classes" includes="examples/**" />
                                 </jar>
