@@ -31,7 +31,7 @@ import org.apache.commons.net.whois.WhoisClient;
 public final class fwhois
 {
 
-    public static final void main(String[] args)
+    public static void main(String[] args)
     {
         int index;
         String handle, host;

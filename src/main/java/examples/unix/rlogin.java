@@ -51,7 +51,7 @@ import examples.util.IOUtil;
 public final class rlogin
 {
 
-    public static final void main(String[] args)
+    public static void main(String[] args)
     {
         String server, localuser, remoteuser, terminal;
         RLoginClient client;

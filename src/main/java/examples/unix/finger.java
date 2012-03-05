@@ -36,7 +36,7 @@ import org.apache.commons.net.finger.FingerClient;
 public final class finger
 {
 
-    public static final void main(String[] args)
+    public static void main(String[] args)
     {
         boolean longOutput = false;
         int arg = 0, index;

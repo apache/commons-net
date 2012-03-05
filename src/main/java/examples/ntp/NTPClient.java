@@ -147,7 +147,7 @@ public final class NTPClient
                 + ", clock offset(ms)=" + offset); // offset in ms
     }
 
-    public static final void main(String[] args)
+    public static void main(String[] args)
     {
         if (args.length == 0) {
             System.err.println("Usage: NTPClient <hostname-or-address-list>");

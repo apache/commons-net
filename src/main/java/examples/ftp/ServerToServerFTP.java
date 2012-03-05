@@ -40,7 +40,7 @@ import org.apache.commons.net.ftp.FTPReply;
 public final class ServerToServerFTP
 {
 
-    public static final void main(String[] args)
+    public static void main(String[] args)
     {
         String server1, username1, password1, file1;
         String server2, username2, password2, file2;

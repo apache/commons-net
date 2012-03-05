@@ -43,7 +43,7 @@ import org.apache.commons.net.smtp.SimpleSMTPHeader;
 public final class SMTPMail
 {
 
-    public final static void main(String[] args)
+    public static void main(String[] args)
     {
         String sender, recipient, subject, filename, server, cc;
         List<String> ccList = new ArrayList<String>();

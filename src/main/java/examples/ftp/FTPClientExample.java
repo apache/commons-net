@@ -72,7 +72,7 @@ public final class FTPClientExample
         "\t-PrP password - HTTP Proxy server password\n" +
         "\t-# - add hash display during transfers\n";
 
-    public static final void main(String[] args)
+    public static void main(String[] args)
     {
         boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false, listNames = false, hidden = false;
         boolean localActive = false, useEpsvWithIPv4 = false, feat = false, printHash = false;
