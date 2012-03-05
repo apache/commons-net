@@ -107,7 +107,8 @@ public class FTPSClient extends FTPClient {
     private KeyManager keyManager = null;
 
     /**
-     * Constructor for FTPSClient.
+     * Constructor for FTPSClient, calls {@link #FTPSClient(String, boolean)}.
+     * 
      * Sets protocol to {@link #DEFAULT_PROTOCOL} - i.e. TLS - and security mode to explicit (isImplicit = false)
      */
     public FTPSClient() {
@@ -116,6 +117,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Constructor for FTPSClient, using {@link #DEFAULT_PROTOCOL} - i.e. TLS
+     * Calls {@link #FTPSClient(String, boolean)}
      * @param isImplicit The security mode (Implicit/Explicit).
      */
     public FTPSClient(boolean isImplicit) {
@@ -123,7 +125,8 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Constructor for FTPSClient, using explict mode
+     * Constructor for FTPSClient, using explict mode, calls {@link #FTPSClient(String, boolean)}.
+     * 
      * @param protocol the protocol to use
      */
     public FTPSClient(String protocol) {
@@ -134,7 +137,7 @@ public class FTPSClient extends FTPClient {
      * Constructor for FTPSClient allowing specification of protocol
      * and security mode. If isImplicit is true, the port is set to
      * {@link #DEFAULT_FTPS_PORT} i.e. 990.
-     *
+     * The default TrustManager is set from {@link TrustManagerUtils#getValidateServerCertificateTrustManager()}
      * @param protocol the protocol
      * @param isImplicit The security mode(Implicit/Explicit).
      */
@@ -149,6 +152,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Constructor for FTPSClient, using {@link #DEFAULT_PROTOCOL} - i.e. TLS
+     * The default TrustManager is set from {@link TrustManagerUtils#getValidateServerCertificateTrustManager()}
      * @param isImplicit The security mode(Implicit/Explicit).
      * @param context A pre-configured SSL Context
      */
@@ -160,7 +164,7 @@ public class FTPSClient extends FTPClient {
     /**
      * Constructor for FTPSClient, using {@link #DEFAULT_PROTOCOL} - i.e. TLS
      * and isImplicit {@code false}
-     *
+     * Calls {@link #FTPSClient(boolean, SSLContext)}
      * @param context A pre-configured SSL Context
      */
     public FTPSClient(SSLContext context) {
@@ -614,10 +618,11 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Override the default {@link TrustManager} to use.
+     * Override the default {@link TrustManager} to use; if set to {@code null},
+     * the default TrustManager from the JVM will be used.
      *
-     * @param trustManager The TrustManager implementation to set.
-    * @see org.apache.commons.net.util.TrustManagerUtils
+     * @param trustManager The TrustManager implementation to set, may be {@code null}
+     * @see org.apache.commons.net.util.TrustManagerUtils
      */
     public void setTrustManager(TrustManager trustManager) {
         this.trustManager = trustManager;
