@@ -80,9 +80,14 @@
            Commons NET includes several working sample applications that you can use.
            Source files are included in the source (and binary) archives, and a compiled jar is provided.
        </p>
-           To use one of the sample applications, ensure that you have both the examples and main jars on the classpath.
-           For example:
-           <pre>java -cp commons-net-examples-3.1.jar;commons-net-3.1.jar examples/ftp/FTPClientExample</pre>
+           To use one of the sample applications, ensure that the example and main jars are both in the same directory.
+           Then run the class as per the following example:
+           <pre>java -jar [path/]commons-net-examples-3.1.jar FTPClientExample [parameters]</pre>
+           This uses the helper application which supports shorthand class names.
+           <br/>
+           Alternatively, ensure that the example and main jars are on the classpath.
+           Then invoke the class directly, for example:
+           <pre>java -cp commons-net-examples-3.1.jar;commons-net-3.1.jar examples/ftp/FTPClientExample [parameters]</pre>
 
        <subsection name="FTP (package: examples/ftp)">
            <ul>
