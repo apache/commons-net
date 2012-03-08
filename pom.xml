@@ -301,6 +301,9 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                     <resources>
                       <resource>
                         <directory>src/main/java/examples</directory>
+                        <excludes>
+                          <exclude>**/Main.java</exclude>
+                        </excludes>
                         <filtering>false</filtering>
                       </resource>
                     </resources>
