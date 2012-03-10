@@ -39,7 +39,7 @@ import java.util.TimeZone;
  * </p>
  *
  * @author Jason Mathews, MITRE Corp
- * @version $Revision$ $Date$
+ * @version $Revision$
  * @see java.util.Date
  */
 public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>

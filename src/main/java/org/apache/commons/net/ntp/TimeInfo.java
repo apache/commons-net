@@ -26,7 +26,7 @@ import java.util.List;
  *
  * @author Jason Mathews, MITRE Corp
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  */
 public class TimeInfo {
 
