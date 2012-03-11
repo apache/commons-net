@@ -186,8 +186,8 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptors>
-                        <descriptor>src/assembly/bin.xml</descriptor>
-                        <descriptor>src/assembly/src.xml</descriptor>
+                        <descriptor>src/main/assembly/bin.xml</descriptor>
+                        <descriptor>src/main/assembly/src.xml</descriptor>
                     </descriptors>
                     <tarLongFileMode>gnu</tarLongFileMode>
                 </configuration>
