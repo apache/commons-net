@@ -65,6 +65,12 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.2" date="TBA" description="
 TBA
         ">
+            <action dev="sebb" type="add">
+            The examples can now be run using "java -jar commons-net-examples-m.n.jar".
+            This will automatically include the main net jar in the classpath.
+            See documentation.
+            FTPClientExample now supports "-A" for anonymous login
+            </action>
             <action issue="NET-442" dev="sebb" type="fix">
             StringIndexOutOfBoundsException: String index out of range: -1 if server respond with root is current directory.
             </action>
