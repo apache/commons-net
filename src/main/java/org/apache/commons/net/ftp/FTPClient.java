@@ -192,7 +192,7 @@ import org.apache.commons.net.io.Util;
  *    FTPClient f = new FTPClient();
  *    f.connect(server);
  *    f.login(username, password);
- *    FTPFile[] files = listFiles(directory);
+ *    FTPFile[] files = f.listFiles(directory);
  * </pre>
  * <p>
  * Paged access, using a parser not accessible by auto-detect.  The class
