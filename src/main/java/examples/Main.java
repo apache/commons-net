@@ -58,7 +58,8 @@ public class Main {
                   String name = je.getName();
                   if (!name.endsWith(".class") 
                           || name.contains("$") // subclasses
-                          || name .equals("examples/util/IOUtil.class") // no main class
+                          || name.equals("examples/nntp/NNTPUtils.class") // no main class
+                          || name.equals("examples/util/IOUtil.class") // no main class
                           || name.equals("examples/Main.class")) {
                       continue;
                   }
