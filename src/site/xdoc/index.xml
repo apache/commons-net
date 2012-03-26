@@ -119,6 +119,9 @@
 
        <subsection name="NNTP (package: examples/nntp)">
            <ul>
+               <li><a href="examples/nntp/ArticleReader.java">ArticleReader</a>
+                   Simple class showing one way to read an article header and body.
+               </li>
                <li><a href="examples/nntp/ExtendedNNTPOps.java">ExtendedNNTPOps</a>
                    Simple class showing some of the extended commands (AUTH, XOVER, LIST ACTIVE)
                </li>
