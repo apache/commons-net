@@ -65,6 +65,9 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.2" date="TBA" description="
 TBA
         ">
+            <action issue="NET-458" dev="sebb" type="fix" due-to="Denis Molony">
+            MVSFTPEntryParser.parseSimpleEntry - ArrayIndexOutOfBoundsException.
+            </action>
             <action issue="NET-450" dev="sebb" type="fix" due-to="Roger Hardiman">
             Bug in documentation for FTPClient.
             </action>
