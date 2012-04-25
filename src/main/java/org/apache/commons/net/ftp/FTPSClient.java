@@ -474,18 +474,19 @@ public class FTPSClient extends FTPClient {
     }
     
     /**
-     * PROT command.<br/>
-     * C - Clear<br/>
-     * S - Safe(SSL protocol only)<br/>
-     * E - Confidential(SSL protocol only)<br/>
-     * P - Private
-     * <p>
+     * PROT command.
+     * <ul>
+     * <li>C - Clear</li>
+     * <li>S - Safe(SSL protocol only)</li>
+     * <li>E - Confidential(SSL protocol only)</li>
+     * <li>P - Private</li>
+     * </ul>
      * <b>N.B.</b> the method calls
      *  {@link #setSocketFactory(javax.net.SocketFactory)} and
      *  {@link #setServerSocketFactory(javax.net.ServerSocketFactory)}
      *
-     * @param prot Data Channel Protection Level.
-     * @throws SSLException If the server reply code does not equal "200".
+     * @param prot Data Channel Protection Level, if {@code null}, use {@link #DEFAULT_PROT}. 
+     * @throws SSLException If the server reply code does not equal  {@code 200}.
      * @throws IOException If an I/O error occurs while sending
      * the command.
      */
