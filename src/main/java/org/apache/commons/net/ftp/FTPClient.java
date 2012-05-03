@@ -837,10 +837,12 @@ implements Configurable
     /***
      * Sets the timeout in milliseconds to use when reading from the
      * data connection.  This timeout will be set immediately after
-     * opening the data connection.
+     * opening the data connection, provided that the value is &ge; 0.
      * <p>
+     * <b>Note:</b> the timeout will also be applied when calling accept()
+     * whilst establishing an active local data connection.
      * @param  timeout The default timeout in milliseconds that is used when
-     *        opening a data connection socket.
+     *        opening a data connection socket. The value 0 means an infinite timeout.
      ***/
     public void setDataTimeout(int timeout)
     {
