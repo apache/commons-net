@@ -335,17 +335,23 @@ implements Configurable
      */
     public static final int PASSIVE_REMOTE_DATA_CONNECTION_MODE = 3;
 
-    private int __dataConnectionMode, __dataTimeout;
+    private int __dataConnectionMode;
+    private int __dataTimeout;
     private int __passivePort;
     private String __passiveHost;
     private final Random __random;
-    private int __activeMinPort, __activeMaxPort;
+    private int __activeMinPort;
+    private int __activeMaxPort;
     private InetAddress __activeExternalHost;
     private InetAddress __reportActiveExternalHost; // overrides __activeExternalHost in EPRT/PORT commands
 
     private int __fileType;
     @SuppressWarnings("unused") // fields are written, but currently not read
-    private int __fileFormat, __fileStructure, __fileTransferMode;
+    private int __fileFormat;
+    @SuppressWarnings("unused") // field is written, but currently not read
+    private int __fileStructure;
+    @SuppressWarnings("unused") // field is written, but currently not read
+    private int __fileTransferMode;
     private boolean __remoteVerificationEnabled;
     private long __restartOffset;
     private FTPFileEntryParserFactory __parserFactory;
