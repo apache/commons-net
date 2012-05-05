@@ -135,7 +135,7 @@ public class RCommandClient extends RExecClient
             throw new BindException("All ports in use.");
         }
 
-        _output_.write(Integer.toString(server.getLocalPort()).getBytes());
+        _output_.write(Integer.toString(server.getLocalPort()).getBytes("UTF-8")); // $NON-NLS
         _output_.write('\0');
         _output_.flush();
 
