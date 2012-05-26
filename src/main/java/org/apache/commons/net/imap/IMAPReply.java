@@ -78,6 +78,7 @@ public final class IMAPReply
         return line.startsWith(IMAP_CONTINUATION_PREFIX);
     }
 
+    // TODO do we need trailing .* ?
     private static final String TAGGED_RESPONSE = "^\\w+ (\\S+).*"; // TODO perhaps be less strict on tag match?
     // tag cannot contain: + ( ) { SP CTL % * " \ ]
     private static final Pattern TAGGED_PATTERN = Pattern.compile(TAGGED_RESPONSE);
@@ -93,8 +94,23 @@ public final class IMAPReply
         return getReplyCode(line, TAGGED_PATTERN);
     }
 
-    private static final String UNTAGGED_RESPONSE = "^\\* (\\S+).*";
+    private static final String UNTAGGED_RESPONSE = "^\\* (\\S+).*"; // TODO do we need trailing .* ?
     private static final Pattern UNTAGGED_PATTERN = Pattern.compile(UNTAGGED_RESPONSE);
+
+    private static final Pattern LITERAL_PATTERN = Pattern.compile("\\{(\\d+)\\}$"); // {dd}
+
+    /**
+     * Checks if the line introduces a literal, i.e. ends with {dd}
+     * 
+     * @return the literal count, or -1 if there was no literal.
+     */
+    public static int literalCount(String line) {
+        Matcher m = LITERAL_PATTERN.matcher(line);
+        if (m.find()) {
+            return Integer.parseInt(m.group(1)); // Should always parse because we matched \d+
+        }
+        return -1;
+    }
 
     /**
      * Intepret the String reply code - OK, NO, BAD - in an untagged response as a integer.

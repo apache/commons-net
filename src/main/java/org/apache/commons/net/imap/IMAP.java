@@ -110,6 +110,15 @@ public class IMAP extends SocketClient
 
         if (wantTag) {
             while(IMAPReply.isUntagged(line)) {
+                int literalCount = IMAPReply.literalCount(line);
+                while (literalCount >= 0) {
+                    line=_reader.readLine();
+                    if (line == null) {
+                        throw new EOFException("Connection closed without indication.");
+                    }
+                    _replyLines.add(line);
+                    literalCount -= (line.length() + 2); // Allow for CRLF
+                }
                 line = _reader.readLine();
                 if (line == null) {
                     throw new EOFException("Connection closed without indication.");
