@@ -78,7 +78,6 @@ public final class IMAPReply
         return line.startsWith(IMAP_CONTINUATION_PREFIX);
     }
 
-    // TODO do we need trailing .* ?
     private static final String TAGGED_RESPONSE = "^\\w+ (\\S+).*"; // TODO perhaps be less strict on tag match?
     // tag cannot contain: + ( ) { SP CTL % * " \ ]
     private static final Pattern TAGGED_PATTERN = Pattern.compile(TAGGED_RESPONSE);
@@ -87,14 +86,14 @@ public final class IMAPReply
      * Intepret the String reply code - OK, NO, BAD - in a tagged response as a integer.
      *
      * @param line the tagged line to be checked
-     * @return {@link #OK} or {@link #NO} or {@link #BAD}
+     * @return {@link #OK} or {@link #NO} or {@link #BAD} or {@link #CONT}
      * @throws IOException if the input has an unexpected format
      */
     public static int getReplyCode(String line) throws IOException {
         return getReplyCode(line, TAGGED_PATTERN);
     }
 
-    private static final String UNTAGGED_RESPONSE = "^\\* (\\S+).*"; // TODO do we need trailing .* ?
+    private static final String UNTAGGED_RESPONSE = "^\\* (\\S+).*";
     private static final Pattern UNTAGGED_PATTERN = Pattern.compile(UNTAGGED_RESPONSE);
 
     private static final Pattern LITERAL_PATTERN = Pattern.compile("\\{(\\d+)\\}$"); // {dd}
@@ -116,7 +115,7 @@ public final class IMAPReply
      * Intepret the String reply code - OK, NO, BAD - in an untagged response as a integer.
      *
      * @param line the untagged line to be checked
-     * @return {@link #OK} or {@link #NO} or {@link #BAD}
+     * @return {@link #OK} or {@link #NO} or {@link #BAD} or {@link #CONT}
      * @throws IOException if the input has an unexpected format
      */
     public static int getUntaggedReplyCode(String line) throws IOException {
@@ -129,7 +128,7 @@ public final class IMAPReply
             return CONT;
         }
         Matcher m = pattern.matcher(line);
-        if (m.matches()) {
+        if (m.matches()) { // TODO would lookingAt() be more efficient? If so, then drop trailing .* from patterns
             String code = m.group(1);
             if (code.equals(IMAP_OK)) {
                 return OK;
