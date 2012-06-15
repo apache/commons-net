@@ -3477,6 +3477,9 @@ implements Configurable
 
     /**
      * Enables or disables automatic server encoding detection (only UTF-8 supported).
+     * <p>
+     * Does not affect existing connections; must be invoked before a connection is established.
+     * 
      * @param autodetect If true, automatic server encoding detection will be enabled.
      */
     public void setAutodetectUTF8(boolean autodetect)
