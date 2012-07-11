@@ -344,6 +344,8 @@ implements Configurable
     private int __activeMaxPort;
     private InetAddress __activeExternalHost;
     private InetAddress __reportActiveExternalHost; // overrides __activeExternalHost in EPRT/PORT commands
+    /** The address to bind to on passive connections, if necessary. */
+    private InetAddress __passiveLocalHost;
 
     private int __fileType;
     @SuppressWarnings("unused") // fields are written, but currently not read
@@ -451,6 +453,7 @@ implements Configurable
         __listHiddenFiles = false;
         __useEPSVwithIPv4 = false;
         __random = new Random();
+        __passiveLocalHost   = null;
     }
 
 
@@ -782,6 +785,9 @@ implements Configurable
             }
 
             socket = _socketFactory_.createSocket();
+            if (__passiveLocalHost != null) {
+                socket.bind(new InetSocketAddress(__passiveLocalHost, 0));
+            }
             socket.connect(new InetSocketAddress(__passiveHost, __passivePort), connectTimeout);
             if ((__restartOffset > 0) && !restart(__restartOffset))
             {
@@ -1332,6 +1338,40 @@ implements Configurable
     public void setActiveExternalIPAddress(String ipAddress) throws UnknownHostException
     {
         this.__activeExternalHost = InetAddress.getByName(ipAddress);
+    }
+
+    /**
+     * Set the local IP address to use in passive mode.
+     * Useful when there are multiple network cards.
+     * <p>
+     * @param ipAddress The local IP address of this machine.
+     * @throws UnknownHostException if the ipAddress cannot be resolved
+     */
+    public void setPassiveLocalIPAddress(String ipAddress) throws UnknownHostException
+    {
+        this.__passiveLocalHost = InetAddress.getByName(ipAddress);
+    }
+
+    /**
+     * Set the local IP address to use in passive mode.
+     * Useful when there are multiple network cards.
+     * <p>
+     * @param inetAddress The local IP address of this machine.
+     */
+    public void setPassiveLocalIPAddress(InetAddress inetAddress)
+    {
+        this.__passiveLocalHost = inetAddress;
+    }
+
+    /**
+     * Set the local IP address in passive mode.
+     * Useful when there are multiple network cards.
+     * <p>
+     * @return The local IP address in passive mode.
+     */
+    public InetAddress getPassiveLocalIPAddress()
+    {
+        return this.__passiveLocalHost;
     }
 
     /**
