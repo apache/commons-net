@@ -65,6 +65,9 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.2" date="TBA" description="
 TBA
         ">
+            <action issue="NET-456" dev="sebb" type="fix">
+            TelnetClient hangs when reader-thread startup is delayed.
+            </action>
             <action issue="NET-449" dev="sebb" type="fix">
             listFiles bug with folder that begins with "-". Clarify Javadoc.
             </action>
