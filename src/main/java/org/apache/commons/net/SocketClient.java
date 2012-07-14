@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.Socket;
 import java.net.SocketException;
 
@@ -102,6 +103,9 @@ public abstract class SocketClient
 
     /** Hint for SO_SNDBUF size */
     private int sendBufferSize = -1;
+
+    /** The proxy to use when connecting. */
+    private Proxy connProxy;
 
     /**
      * Default constructor for SocketClient.  Initializes
@@ -659,6 +663,7 @@ public abstract class SocketClient
      * connections.  If the factory value is null, then a default
      * factory is used (only do this to reset the factory after having
      * previously altered it).
+     * Any proxy setting is discarded.
      * <p>
      * @param factory  The new SocketFactory the SocketClient should use.
      */
@@ -669,6 +674,10 @@ public abstract class SocketClient
         } else {
             _socketFactory_ = factory;
         }
+        // re-setting the socket factory makes the proxy setting useless,
+        // so set the field to null so that getProxy() doesn't return a
+        // Proxy that we're actually not using.
+        connProxy = null;
     }
 
     /**
@@ -779,6 +788,27 @@ public abstract class SocketClient
      */
     protected ProtocolCommandSupport getCommandSupport() {
         return __commandSupport;
+    }
+
+    /**
+     * Sets the proxy for use with all the connections.
+     * The proxy is used for connections established after the
+     * call to this method.
+     * 
+     * @param proxy the new proxy for connections.
+     * @since 3.2
+     */
+    public void setProxy(Proxy proxy) {
+        setSocketFactory(new DefaultSocketFactory(proxy));
+        connProxy = proxy;
+    }
+
+    /**
+     * Gets the proxy for use with all the connections.
+     * @return the current proxy for connections.
+     */
+    public Proxy getProxy() {
+        return connProxy;
     }
 
     /*
