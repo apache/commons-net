@@ -25,6 +25,8 @@ import org.apache.commons.net.ftp.FTPClient;
 
 /**
  * A simple functional test class for SocketClients.
+ * 
+ * Requires a Java-compatible SOCK proxy server on 127.0.0.1:9050 and access to ftp.gnu.org.
  */
 public class SocketClientFunctionalTest extends TestCase
 {
