@@ -53,7 +53,6 @@ public class Main {
                 }
                 JarFile jf = new JarFile(sourceFile);
                 Enumeration<JarEntry> e = jf.entries();
-                jf.close();
                 while (e.hasMoreElements()) {
                   JarEntry je = e.nextElement();
                   String name = je.getName();
@@ -72,6 +71,7 @@ public class Main {
                   }
                   map.put(alias, name);
                 }
+                jf.close();
             }
         }
 
