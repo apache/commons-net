@@ -450,9 +450,12 @@ public abstract class SocketClient
      * Only call this method after a connection has been opened
      * by {@link #connect connect()}.
      * <p>
+     * To set the initial timeout, use {@link #setDefaultTimeout(int)} instead.
+     * 
      * @param timeout  The timeout in milliseconds to use for the currently
      *                 open socket connection.
      * @exception SocketException If the operation fails.
+     * @throws NullPointerException if the socket is not currently open
      */
     public void setSoTimeout(int timeout) throws SocketException
     {
@@ -505,6 +508,7 @@ public abstract class SocketClient
      * <p>
      * @return The timeout in milliseconds of the currently opened socket.
      * @exception SocketException If the operation fails.
+     * @throws NullPointerException if the socket is not currently open
      */
     public int getSoTimeout() throws SocketException
     {
@@ -517,6 +521,7 @@ public abstract class SocketClient
      * <p>
      * @param on  True if Nagle's algorithm is to be enabled, false if not.
      * @exception SocketException If the operation fails.
+     * @throws NullPointerException if the socket is not currently open
      */
     public void setTcpNoDelay(boolean on) throws SocketException
     {
@@ -531,6 +536,7 @@ public abstract class SocketClient
      * @return True if Nagle's algorithm is enabled on the currently opened
      *        socket, false otherwise.
      * @exception SocketException If the operation fails.
+     * @throws NullPointerException if the socket is not currently open
      */
     public boolean getTcpNoDelay() throws SocketException
     {
@@ -546,6 +552,7 @@ public abstract class SocketClient
      * other systems.
      * @param  keepAlive If true, keepAlive is turned on
      * @throws SocketException
+     * @throws NullPointerException if the socket is not currently open
      * @since 2.2
      */
     public void setKeepAlive(boolean keepAlive) throws SocketException {
@@ -557,6 +564,7 @@ public abstract class SocketClient
      * Delegates to {@link Socket#getKeepAlive()}
      * @return True if SO_KEEPALIVE is enabled.
      * @throws SocketException
+     * @throws NullPointerException if the socket is not currently open
      * @since 2.2
      */
     public boolean getKeepAlive() throws SocketException {
@@ -569,6 +577,7 @@ public abstract class SocketClient
      * @param on  True if linger is to be enabled, false if not.
      * @param val The linger timeout (in hundredths of a second?)
      * @exception SocketException If the operation fails.
+     * @throws NullPointerException if the socket is not currently open
      */
     public void setSoLinger(boolean on, int val) throws SocketException
     {
@@ -582,6 +591,7 @@ public abstract class SocketClient
      * @return The current SO_LINGER timeout.  If SO_LINGER is disabled returns
      *         -1.
      * @exception SocketException If the operation fails.
+     * @throws NullPointerException if the socket is not currently open
      */
     public int getSoLinger() throws SocketException
     {
@@ -596,6 +606,7 @@ public abstract class SocketClient
      * <p>
      * @return The port number of the open socket on the local host used
      *         for the connection.
+     * @throws NullPointerException if the socket is not currently open
      */
     public int getLocalPort()
     {
@@ -608,6 +619,7 @@ public abstract class SocketClient
      * Delegates to {@link Socket#getLocalAddress()}
      * <p>
      * @return The local address to which the client's socket is bound.
+     * @throws NullPointerException if the socket is not currently open
      */
     public InetAddress getLocalAddress()
     {
@@ -621,6 +633,7 @@ public abstract class SocketClient
      * <p>
      * @return The port number of the remote host to which the client is
      *         connected.
+     * @throws NullPointerException if the socket is not currently open
      */
     public int getRemotePort()
     {
@@ -631,6 +644,7 @@ public abstract class SocketClient
     /**
      * @return The remote address to which the client is connected.
      * Delegates to {@link Socket#getInetAddress()}
+     * @throws NullPointerException if the socket is not currently open
      */
     public InetAddress getRemoteAddress()
     {

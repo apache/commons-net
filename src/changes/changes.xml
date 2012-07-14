@@ -65,6 +65,9 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.2" date="TBA" description="
 TBA
         ">
+            <action issue="NET-473" dev="sebb" type="fix">
+            FTPClient setSoTimeout (int time) will result in NullPointerException. Clarify Javadoc.
+            </action>
             <action issue="NET-468" dev="sebb" type="add" due-to="Bogdan Drozdowski">
             Request for native support for socks proxy routing with Commons net FTP.
             </action>
