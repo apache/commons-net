@@ -2692,6 +2692,11 @@ implements Configurable
      * expand glob expressions.
      * <p>
      * @param pathname  The file or directory to list.
+     *                  Warning: the server may treat a leading '-' as an
+     *                  option introducer. If so, try using an absolute path,
+     *                  or prefix the path with ./ (unix style servers).
+     *                  Some servers may support "--" as meaning end of options,
+     *                  in which case "-- -xyz" should work.
      * @return The list of filenames contained in the given path.  null if
      *     the list could not be obtained.  If there are no filenames in
      *     the directory, a zero-length array is returned.
@@ -2774,6 +2779,11 @@ implements Configurable
      *                  or may not expand glob expressions, using them here
      *                  is not recommended and may well cause this method to
      *                  fail.
+     *                  Also, some servers treat a leading '-' as being an option.
+     *                  To avoid this interpretation, use an absolute pathname
+     *                  or prefix the pathname with ./ (unix style servers).
+     *                  Some servers may support "--" as meaning end of options,
+     *                  in which case "-- -xyz" should work.
      *
      * @return The list of file information contained in the given path in
      *         the format determined by the autodetection mechanism
