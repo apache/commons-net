@@ -2393,10 +2393,17 @@ implements Configurable
     }
 
     /**
-     * Sets the restart offset.  The restart command is sent to the server
-     * only before sending the file transfer command.  When this is done,
-     * the restart marker is reset to zero.
+     * Sets the restart offset for file transfers.
+     * <p>  
+     * The restart command is not sent to the server immediately.
+     * It is sent when a data connection is created as part of a 
+     * subsequent command.
+     * The restart marker is reset to zero after use.
+     * </p>
      * <p>
+     * <b>Note: This method should only be invoked immediately prior to
+     * the transfer to which it applies.</b>
+     * 
      * @param offset  The offset into the remote file at which to start the
      *           next file transfer.  This must be a value greater than or
      *           equal to zero.

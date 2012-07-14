@@ -65,6 +65,9 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.2" date="TBA" description="
 TBA
         ">
+            <action issue="NET-475" dev="sebb" type="fix">
+            FtpClient sends REST when calling listFiles. Clarified Javadoc.
+            </action>
             <action issue="NET-465" dev="sebb" type="add" due-to="Bogdan Drozdowski">
             FTPClient setSendBufferSize and setReceiveBufferSize on data socket.
             </action>
