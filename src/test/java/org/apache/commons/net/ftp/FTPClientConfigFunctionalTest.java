@@ -143,18 +143,21 @@ public class FTPClientConfigFunctionalTest extends TestCase {
             lastfile = thisfile;
         }
 
-        // test that notwithstanding any time zone differences, the newest file
-        // is older than now.
-        assertTrue(lastfile.getTimestamp().getTime().before(now));
-        Calendar first = firstfile.getTimestamp();
-
-        // test that the oldest is less than two days older than the newest
-        // and, in particular, that no files have been considered "future"
-        // by the parser and therefore been relegated to the same date a
-        // year ago.
-        first.add(Calendar.DATE, 2);
-        assertTrue(lastfile.getTimestamp().getTime().toString()+" before "+ first.getTime().toString(),lastfile.getTimestamp().before(first));
-
+        if (firstfile == null || lastfile == null)  {
+            fail("No files found");
+        } else {
+            // test that notwithstanding any time zone differences, the newest file
+            // is older than now.
+            assertTrue(lastfile.getTimestamp().getTime().before(now));
+            Calendar first = firstfile.getTimestamp();
+    
+            // test that the oldest is less than two days older than the newest
+            // and, in particular, that no files have been considered "future"
+            // by the parser and therefore been relegated to the same date a
+            // year ago.
+            first.add(Calendar.DATE, 2);
+            assertTrue(lastfile.getTimestamp().getTime().toString()+" before "+ first.getTime().toString(),lastfile.getTimestamp().before(first));
+        }
     }
 }
 
