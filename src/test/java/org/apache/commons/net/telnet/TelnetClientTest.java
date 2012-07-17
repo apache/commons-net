@@ -756,6 +756,7 @@ extends TestCase implements TelnetNotificationHandler
         assertTrue(test1spy_ok);
         assertTrue(test2spy_ok);
         assertTrue(stopspy_ok);
+        pi.close();
     }
 
     /***
