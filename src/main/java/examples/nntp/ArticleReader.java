@@ -71,6 +71,7 @@ public class ArticleReader {
             while((line=br.readLine()) != null) {
                 System.out.println(line);
             }
+            br.close();
         }
         if (articleSpec != null) {
             br = (BufferedReader) client.retrieveArticleBody(articleSpec);
@@ -82,6 +83,7 @@ public class ArticleReader {
             while((line=br.readLine()) != null) {
                 System.out.println(line);
             }
+            br.close();
         }
     }
 
