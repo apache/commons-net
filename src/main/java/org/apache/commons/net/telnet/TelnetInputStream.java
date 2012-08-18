@@ -561,7 +561,11 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         // Critical section because run() may change __bytesAvailable
         synchronized (__queue)
         {
-            return __bytesAvailable + super.available();
+            if (__threaded) { // Must not call super.available when running threaded: NET-466
+                return __bytesAvailable;
+            } else {
+                return __bytesAvailable + super.available();
+            }
         }
     }
 
