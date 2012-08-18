@@ -66,6 +66,10 @@ import org.apache.commons.net.io.Util;
  * Then you need to check the FTP reply code to see if the connection
  * was successful.  For example:
  * <pre>
+ *    FTPClient ftp = new FTPClient();
+ *    FTPClientConfig config = new FTPClientConfig();
+ *    config.setXXX(YYY); // change required options
+ *    ftp.configure(config );
  *    boolean error = false;
  *    try {
  *      int reply;
