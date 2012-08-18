@@ -92,7 +92,11 @@ public class SMTP extends SocketClient
     // the wire.
     private static final String __DEFAULT_ENCODING = "ISO-8859-1";
 
-    /** The encoding to use (user-settable) */
+    /**
+     * The encoding to use (user-settable).
+     * 
+     * @since 3.1 (changed from private to protected)
+     */
     protected final String encoding;
 
     /**

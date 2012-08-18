@@ -504,6 +504,9 @@ implements Configurable
         return reply.substring(REPLY_CODE_LEN + 1);
     }
 
+    /**
+     * @since 3.1
+     */
     protected void _parsePassiveModeReply(String reply)
     throws MalformedServerReplyException
     {
@@ -583,6 +586,9 @@ implements Configurable
         return _storeFile(FTPCommand.getCommand(command), remote, local);
     }
     
+    /**
+     * @since 3.1
+     */
     protected boolean _storeFile(String command, String remote, InputStream local)
     throws IOException
     {
@@ -632,6 +638,9 @@ implements Configurable
         return _storeFileStream(FTPCommand.getCommand(command), remote);
     }
 
+    /**
+     * @since 3.1
+     */
     protected OutputStream _storeFileStream(String command, String remote)
     throws IOException
     {
@@ -700,6 +709,7 @@ implements Configurable
      *         the connection.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
+     * @since 3.1
      */
     protected Socket _openDataConnection_(String command, String arg)
     throws IOException
@@ -1739,6 +1749,9 @@ implements Configurable
         return _retrieveFile(FTPCommand.getCommand(FTPCommand.RETR), remote, local);
     }
 
+    /**
+     * @since 3.1
+     */
     protected boolean _retrieveFile(String command, String remote, OutputStream local)
     throws IOException
     {
@@ -1809,6 +1822,9 @@ implements Configurable
         return _retrieveFileStream(FTPCommand.getCommand(FTPCommand.RETR), remote);
     }
 
+    /**
+     * @since 3.1
+     */
     protected InputStream _retrieveFileStream(String command, String remote)
     throws IOException
     {
@@ -2385,6 +2401,7 @@ implements Configurable
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
+     * @since 3.1 (changed from private to protected)
      */
     protected boolean restart(long offset) throws IOException
     {
