@@ -559,7 +559,7 @@ public class FTPSClient extends FTPClient {
     /**
      * Returns a socket of the data connection.
      * Wrapped as an {@link SSLSocket}, which carries out handshake processing.
-     * @param command The textual representation of the FTP command to send.
+     * @param command The int representation of the FTP command to send.
      * @param arg The arguments to the FTP command.
      * If this parameter is set to null, then the command is sent with
      * no arguments.
