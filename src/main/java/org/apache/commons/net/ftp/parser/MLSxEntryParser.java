@@ -209,6 +209,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                     file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
                     break;
                 default:
+                    break;
                     // ignore unexpected flag for now.
             } // switch
         } // each char
