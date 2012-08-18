@@ -572,6 +572,26 @@ public class FTPSClient extends FTPClient {
     @Override
     protected Socket _openDataConnection_(int command, String arg)
             throws IOException {
+        return _openDataConnection_(FTPCommand.getCommand(command), arg);
+    }
+
+   /**
+     * Returns a socket of the data connection.
+     * Wrapped as an {@link SSLSocket}, which carries out handshake processing.
+     * @param command The textual representation of the FTP command to send.
+     * @param arg The arguments to the FTP command.
+     * If this parameter is set to null, then the command is sent with
+     * no arguments.
+     * @return corresponding to the established data connection.
+     * Null is returned if an FTP protocol error is reported at any point
+     * during the establishment and initialization of the connection.
+     * @throws IOException If there is any problem with the connection.
+     * @see FTPClient#_openDataConnection_(int, String)
+     * @since 3.2
+     */
+    @Override
+    protected Socket _openDataConnection_(String command, String arg)
+            throws IOException {
         Socket socket = super._openDataConnection_(command, arg);
         _prepareDataSocket_(socket);
         if (socket instanceof SSLSocket) {

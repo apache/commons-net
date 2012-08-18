@@ -65,6 +65,11 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.2" date="TBA" description="
 TBA
         ">
+            <action issue="NET-426" dev="sebb" type="fix" due-to="Ketan">
+            FTPS: Hook to customize _openDataConnection_ SSLSocket before startHandshake() is called.
+            Implement _openDataConnection(String, String) method to properly
+            interface with FTPClient.openDataConnection(String, String)
+            </action>
             <action issue="NET-456" dev="sebb" type="fix">
             TelnetClient hangs when reader-thread startup is delayed.
             </action>
