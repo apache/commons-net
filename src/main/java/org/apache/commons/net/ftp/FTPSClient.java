@@ -570,6 +570,8 @@ public class FTPSClient extends FTPClient {
      * @see FTPClient#_openDataConnection_(int, String)
      */
     @Override
+    // Strictly speaking this is not needed, but it works round a Clirr bug
+    // So rather than invoke the parent code, we do it here
     protected Socket _openDataConnection_(int command, String arg)
             throws IOException {
         return _openDataConnection_(FTPCommand.getCommand(command), arg);
