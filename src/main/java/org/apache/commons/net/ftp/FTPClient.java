@@ -537,11 +537,14 @@ implements Configurable
         try {
             InetAddress host = InetAddress.getByName(__passiveHost);
             // reply is a local address, but target is not - assume NAT box changed the PASV reply
-            if (host.isSiteLocalAddress() && !getRemoteAddress().isSiteLocalAddress()){
-                String hostAddress = getRemoteAddress().getHostAddress();
-                fireReplyReceived(0,
-                            "[Replacing site local address "+__passiveHost+" with "+hostAddress+"]\n");
-                __passiveHost = hostAddress;
+            if (host.isSiteLocalAddress()) {
+                InetAddress remote = getRemoteAddress();
+                if (!remote.isSiteLocalAddress()){ 
+                    String hostAddress = remote.getHostAddress();
+                    fireReplyReceived(0,
+                                "[Replacing site local address "+__passiveHost+" with "+hostAddress+"]\n");
+                    __passiveHost = hostAddress;                    
+                }
             }
         } catch (UnknownHostException e) { // Should not happen as we are passing in an IP address
             throw new MalformedServerReplyException(
