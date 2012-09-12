@@ -599,16 +599,19 @@ implements Configurable
     protected boolean _storeFile(String command, String remote, InputStream local)
     throws IOException
     {
-        Socket socket;
+        Socket socket = _openDataConnection_(command, remote);
 
-        if ((socket = _openDataConnection_(command, remote)) == null) {
+        if (socket == null) {
             return false;
         }
 
-        OutputStream output = new BufferedOutputStream(socket.getOutputStream(), getDefaultedBufferSize());
+        OutputStream output;
 
         if (__fileType == ASCII_FILE_TYPE) {
-            output = new ToNetASCIIOutputStream(output);
+            output = new ToNetASCIIOutputStream(
+                     new BufferedOutputStream(socket.getOutputStream(), getDefaultedBufferSize()));
+        } else {
+            output = new BufferedOutputStream(socket.getOutputStream(), getDefaultedBufferSize());
         }
 
         CSL csl = null;
@@ -651,9 +654,9 @@ implements Configurable
     protected OutputStream _storeFileStream(String command, String remote)
     throws IOException
     {
-        Socket socket;
+        Socket socket = _openDataConnection_(command, remote);
 
-        if ((socket = _openDataConnection_(command, remote)) == null) {
+        if (socket == null) {
             return null;
         }
 
@@ -1762,16 +1765,18 @@ implements Configurable
     protected boolean _retrieveFile(String command, String remote, OutputStream local)
     throws IOException
     {
-        Socket socket;
+        Socket socket = _openDataConnection_(command, remote);
 
-        if ((socket = _openDataConnection_(command, remote)) == null) {
+        if (socket == null) {
             return false;
         }
 
-        InputStream input = new BufferedInputStream(socket.getInputStream(),
-                getDefaultedBufferSize());
+        InputStream input;
         if (__fileType == ASCII_FILE_TYPE) {
-            input = new FromNetASCIIInputStream(input);
+            input = new FromNetASCIIInputStream(
+                    new BufferedInputStream(socket.getInputStream(), getDefaultedBufferSize()));
+        } else {
+            input = new BufferedInputStream(socket.getInputStream(), getDefaultedBufferSize());
         }
 
         CSL csl = null;
@@ -1835,9 +1840,9 @@ implements Configurable
     protected InputStream _retrieveFileStream(String command, String remote)
     throws IOException
     {
-        Socket socket;
+        Socket socket = _openDataConnection_(command, remote);
 
-        if ((socket = _openDataConnection_(command, remote)) == null) {
+        if (socket == null) {
             return null;
         }
 
@@ -2734,9 +2739,9 @@ implements Configurable
      */
     public String[] listNames(String pathname) throws IOException
     {
-        Socket socket;
+        Socket socket = _openDataConnection_(FTPCommand.NLST, getListArguments(pathname));
 
-        if ((socket = _openDataConnection_(FTPCommand.NLST, getListArguments(pathname))) == null) {
+        if (socket == null) {
             return null;
         }
 
@@ -3202,10 +3207,10 @@ implements Configurable
             FTPFileEntryParser parser, String pathname)
     throws IOException
     {
-        Socket socket;
+        Socket socket = _openDataConnection_(FTPCommand.LIST, getListArguments(pathname));
 
         FTPListParseEngine engine = new FTPListParseEngine(parser);
-        if ((socket = _openDataConnection_(FTPCommand.LIST, getListArguments(pathname))) == null)
+        if (socket == null)
         {
             return engine;
         }
@@ -3230,9 +3235,9 @@ implements Configurable
      */
     private FTPListParseEngine initiateMListParsing(String pathname) throws IOException
     {
-        Socket socket;
+        Socket socket = _openDataConnection_(FTPCommand.MLSD, pathname);
         FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance());
-        if ((socket = _openDataConnection_(FTPCommand.MLSD, pathname)) == null)
+        if (socket == null)
         {
             return engine;
         }
