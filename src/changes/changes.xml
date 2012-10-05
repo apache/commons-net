@@ -63,7 +63,8 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.2" date="TBA" description="
-TBA
+This release fixes bugs and adds some new functionality (see below).
+ It is binary compatible with previous releases
         ">
             <action issue="NET-466" dev="sebb" type="fix" due-to="Martin Oberhuber">
             Regression: TelnetInputStream#available() blocks.
