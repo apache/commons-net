@@ -14,9 +14,11 @@
 ## KIND, either express or implied.  See the License for the
 ## specific language governing permissions and limitations
 ## under the License.
-              Apache ${project.name} ${version} RELEASE NOTES
+              Apache ${project.name}
+                  Version ${version}
+                 RELEASE NOTES
 
-The ${developmentTeam} is pleased to announce the release of ${finalName}
+The ${developmentTeam} is pleased to announce the release of Apache ${project.name} ${version}
 
 $introduction.replaceAll("(?<!\015)\012", "
 ").replaceAll("(?m)^ +","")
