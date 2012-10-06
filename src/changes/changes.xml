@@ -66,6 +66,9 @@ The <action> type attribute can be add,update,fix,remove.
 This release fixes bugs and adds some new functionality (see below).
  It is binary compatible with previous releases
         ">
+            <action issue="NET-483" dev="sebb" type="fix">
+            Base64.encodeBase64(byte[], boolean, boolean, int) does not calculate output size correctly for unchunked output.
+            </action>
             <action issue="NET-466" dev="sebb" type="fix" due-to="Martin Oberhuber">
             Regression: TelnetInputStream#available() blocks.
             </action>

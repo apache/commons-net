@@ -845,7 +845,7 @@ public class Base64 {
             return binaryData;
         }
 
-        long len = getEncodeLength(binaryData, CHUNK_SIZE, CHUNK_SEPARATOR);
+        long len = getEncodeLength(binaryData, isChunked ? CHUNK_SIZE : 0, CHUNK_SEPARATOR);
         if (len > maxResultSize) {
             throw new IllegalArgumentException("Input array too big, the output array would be bigger (" +
                 len +
@@ -1076,4 +1076,13 @@ public class Base64 {
         eof = false;
     }
 
+    // Getters for use in testing
+    
+    int getLineLength() {
+        return lineLength;
+    }
+    
+    byte[] getLineSeparator() {
+        return lineSeparator.clone();
+    }
 }
