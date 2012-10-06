@@ -695,7 +695,7 @@ public class FTPSClient extends FTPClient {
     {
         if (data != null)
         {
-            return sendCommand(CMD_ADAT, new String(Base64.encodeBase64(data)));
+            return sendCommand(CMD_ADAT, Base64.encodeBase64StringUnChunked(data));
         }
         else
         {
@@ -741,7 +741,7 @@ public class FTPSClient extends FTPClient {
     {
         if (data != null)
         {
-            return sendCommand(CMD_MIC, new String(Base64.encodeBase64(data)));
+            return sendCommand(CMD_MIC, Base64.encodeBase64StringUnChunked(data));
         }
         else
         {
@@ -761,7 +761,7 @@ public class FTPSClient extends FTPClient {
     {
         if (data != null)
         {
-            return sendCommand(CMD_CONF, new String(Base64.encodeBase64(data)));
+            return sendCommand(CMD_CONF, Base64.encodeBase64StringUnChunked(data));
         }
         else
         {
@@ -781,7 +781,7 @@ public class FTPSClient extends FTPClient {
     {
         if (data != null)
         {
-            return sendCommand(CMD_ENC, new String(Base64.encodeBase64(data)));
+            return sendCommand(CMD_ENC, Base64.encodeBase64StringUnChunked(data));
         }
         else
         {

@@ -174,9 +174,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
         {
             // the server sends an empty response ("334 "), so we don't have to read it.
             return SMTPReply.isPositiveCompletion(sendCommand(
-                new String(
-                    Base64.encodeBase64(("\000" + username + "\000" + password).getBytes())
-                    )
+                    Base64.encodeBase64StringUnChunked(("\000" + username + "\000" + password).getBytes())
                 ));
         }
         else if (method.equals(AUTH_METHOD.CRAM_MD5))
@@ -196,18 +194,18 @@ public class AuthenticatingSMTPClient extends SMTPSClient
             System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
             // send the reply and read the server code:
             return SMTPReply.isPositiveCompletion(sendCommand(
-                new String(Base64.encodeBase64(toEncode))));
+                Base64.encodeBase64StringUnChunked(toEncode)));
         }
         else if (method.equals(AUTH_METHOD.LOGIN))
         {
             // the server sends fixed responses (base64("Username") and
             // base64("Password")), so we don't have to read them.
             if (!SMTPReply.isPositiveIntermediate(sendCommand(
-                new String(Base64.encodeBase64(username.getBytes()))))) {
+                Base64.encodeBase64StringUnChunked(username.getBytes())))) {
                 return false;
             }
             return SMTPReply.isPositiveCompletion(sendCommand(
-                new String(Base64.encodeBase64(password.getBytes()))));
+                Base64.encodeBase64StringUnChunked(password.getBytes())));
         } else {
             return false; // safety check
         }

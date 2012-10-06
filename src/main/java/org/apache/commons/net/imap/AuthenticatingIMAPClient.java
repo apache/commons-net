@@ -176,7 +176,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
                 toEncode[usernameBytes.length] = ' ';
                 System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
                 // send the reply and read the server code:
-                int result = sendData(new String(Base64.encodeBase64(toEncode)));
+                int result = sendData(Base64.encodeBase64StringUnChunked(toEncode));
                 if (result == IMAPReply.OK)
                 {
                     setState(IMAP.IMAPState.AUTH_STATE);
@@ -188,12 +188,11 @@ public class AuthenticatingIMAPClient extends IMAPSClient
                 // the server sends fixed responses (base64("Username") and
                 // base64("Password")), so we don't have to read them.
                 if (sendData(
-                    new String(Base64.encodeBase64(username.getBytes()))) != IMAPReply.CONT)
+                    Base64.encodeBase64StringUnChunked(username.getBytes())) != IMAPReply.CONT)
                 {
                     return false;
                 }
-                int result = sendData(
-                    new String(Base64.encodeBase64(password.getBytes())));
+                int result = sendData(Base64.encodeBase64StringUnChunked(password.getBytes()));
                 if (result == IMAPReply.OK)
                 {
                     setState(IMAP.IMAPState.AUTH_STATE);

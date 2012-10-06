@@ -95,7 +95,7 @@ public class ExtendedPOP3Client extends POP3SClient
                 toEncode[usernameBytes.length] = ' ';
                 System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
                 // send the reply and read the server code:
-                return sendCommand(new String(Base64.encodeBase64(toEncode))) == POP3Reply.OK;
+                return sendCommand(Base64.encodeBase64StringUnChunked(toEncode)) == POP3Reply.OK;
             default:
                 return false;
         }
