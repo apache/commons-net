@@ -150,9 +150,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
             {
                 // the server sends an empty response ("+ "), so we don't have to read it.
                 int result = sendData(
-                    new String(
-                        Base64.encodeBase64(("\000" + username + "\000" + password).getBytes())
-                        )
+                    Base64.encodeBase64StringUnChunked(("\000" + username + "\000" + password).getBytes())
                     );
                 if (result == IMAPReply.OK)
                 {
