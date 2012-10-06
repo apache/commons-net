@@ -646,7 +646,9 @@ public class Base64 {
 
     /**
      * Encodes binary data using the base64 algorithm into 76 character blocks separated by CRLF.
-     *
+     * <p>
+     * For a non-chunking version, see {@link #encodeToString(byte[])}.
+     * 
      * @param binaryData
      *            binary data to encode
      * @return String containing Base64 characters.
@@ -893,7 +895,9 @@ public class Base64 {
 
     /**
      * Encodes a byte[] containing binary data, into a String containing characters in the Base64 alphabet.
-     *
+     * <p>
+     * See also {@link #encodeBase64String(byte[])} which allows for chunking the output.
+     * 
      * @param pArray
      *            a byte array containing binary data
      * @return A String containing only Base64 character data
