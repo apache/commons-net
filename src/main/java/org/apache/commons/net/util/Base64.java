@@ -647,7 +647,7 @@ public class Base64 {
     /**
      * Encodes binary data using the base64 algorithm into 76 character blocks separated by CRLF.
      * <p>
-     * For a non-chunking version, see {@link #encodeToString(byte[])}.
+     * For a non-chunking version, see {@link #encodeBase64StringUnChunked(byte[])}.
      * 
      * @param binaryData
      *            binary data to encode
@@ -656,6 +656,33 @@ public class Base64 {
      */
     public static String encodeBase64String(byte[] binaryData) {
         return newStringUtf8(encodeBase64(binaryData, true));
+    }
+
+    /**
+     * Encodes binary data using the base64 algorithm, without using chunking.
+     * <p>
+     * For a chunking version, see {@link #encodeBase64String(byte[])}.
+     * 
+     * @param binaryData
+     *            binary data to encode
+     * @return String containing Base64 characters.
+     * @since 3.2
+     */
+    public static String encodeBase64StringUnChunked(byte[] binaryData) {
+        return newStringUtf8(encodeBase64(binaryData, false));
+    }
+
+    /**
+     * Encodes binary data using the base64 algorithm.
+     * 
+     * @param binaryData
+     *            binary data to encode
+     * @param useChunking whether to split the output into chunks
+     * @return String containing Base64 characters.
+     * @since 3.2
+     */
+    public static String encodeBase64String(byte[] binaryData, boolean useChunking) {
+        return newStringUtf8(encodeBase64(binaryData, useChunking));
     }
 
     /**
@@ -895,8 +922,6 @@ public class Base64 {
 
     /**
      * Encodes a byte[] containing binary data, into a String containing characters in the Base64 alphabet.
-     * <p>
-     * See also {@link #encodeBase64String(byte[])} which allows for chunking the output.
      * 
      * @param pArray
      *            a byte array containing binary data
