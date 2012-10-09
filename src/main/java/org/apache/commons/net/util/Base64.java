@@ -721,26 +721,6 @@ public class Base64 {
     }
 
     /**
-     * Decodes an Object using the base64 algorithm. This method is provided in order to satisfy the requirements of the
-     * Decoder interface, and will throw a DecoderException if the supplied object is not of type byte[] or String.
-     *
-     * @param pObject
-     *            Object to decode
-     * @return An object (of type byte[]) containing the binary data which corresponds to the byte[] or String supplied.
-     * @throws RuntimeException
-     *             if the parameter supplied is not of type byte[]
-     */
-    public Object decode(Object pObject) {
-        if (pObject instanceof byte[]) {
-            return decode((byte[]) pObject);
-        } else if (pObject instanceof String) {
-            return decode((String) pObject);
-        } else {
-            throw new RuntimeException("Parameter supplied to Base64 decode is not a byte[] or a String");
-        }
-    }
-
-    /**
      * Decodes a String containing containing characters in the Base64 alphabet.
      *
      * @param pArray
@@ -897,25 +877,6 @@ public class Base64 {
             default :
                 return false;
         }
-    }
-
-    // Implementation of the Encoder Interface
-
-    /**
-     * Encodes an Object using the base64 algorithm. This method is provided in order to satisfy the requirements of the
-     * Encoder interface, and will throw an EncoderException if the supplied object is not of type byte[].
-     *
-     * @param pObject
-     *            Object to encode
-     * @return An object (of type byte[]) containing the base64 encoded data which corresponds to the byte[] supplied.
-     * @throws RuntimeException
-     *             if the parameter supplied is not of type byte[]
-     */
-    public Object encode(Object pObject)  {
-        if (!(pObject instanceof byte[])) {
-            throw new RuntimeException("Parameter supplied to Base64 encode is not a byte[]");
-        }
-        return encode((byte[]) pObject);
     }
 
     /**

@@ -64,8 +64,11 @@ The <action> type attribute can be add,update,fix,remove.
     <body>
         <release version="3.2" date="TBA" description="
 This release fixes bugs and adds some new functionality (see below).
- It is binary compatible with previous releases
+ It is binary compatible with previous releases.
         ">
+            <action issue="NET-485" dev="sebb" type="fix">
+            Remove unnecessary Base64 methods.
+            </action>
             <action issue="NET-482" dev="sebb" type="update" due-to="Houman Atashbar">
             Support XOAUTH.
             </action>
