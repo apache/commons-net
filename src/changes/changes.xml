@@ -66,6 +66,9 @@ The <action> type attribute can be add,update,fix,remove.
 This release fixes bugs and adds some new functionality (see below).
  It is binary compatible with previous releases
         ">
+            <action issue="NET-482" dev="sebb" type="update" due-to="Houman Atashbar">
+            Support XOAUTH.
+            </action>
             <action issue="NET-484" dev="sebb" type="fix">
             Base64.CHUNK_SEPARATOR should be private
             </action>

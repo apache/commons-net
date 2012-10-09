@@ -197,6 +197,15 @@ public class AuthenticatingIMAPClient extends IMAPSClient
                 }
                 return result == IMAPReply.OK;
             }
+            case XOAUTH:
+            {
+                int result = sendData(new String(username.getBytes()));
+                if (result == IMAPReply.OK)
+                {
+                    setState(IMAP.IMAPState.AUTH_STATE);
+                }
+                return result == IMAPReply.OK;
+            }
         }
         return false; // safety check
     }
@@ -231,8 +240,10 @@ public class AuthenticatingIMAPClient extends IMAPSClient
         /** The standarised (RFC2195) CRAM-MD5 method, which doesn't send the password (secure). */
         CRAM_MD5("CRAM-MD5"),
         /** The unstandarised Microsoft LOGIN method, which sends the password unencrypted (insecure). */
-        LOGIN("LOGIN");
-
+        LOGIN("LOGIN"),
+        /** XOAUTH */
+        XOAUTH("XOAUTH");
+        
         private final String authName;
         
         private AUTH_METHOD(String name){

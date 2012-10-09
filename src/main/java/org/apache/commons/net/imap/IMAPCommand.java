@@ -36,6 +36,8 @@ public enum IMAPCommand
     AUTHENTICATE(1),
     LOGIN(2),
     
+    XOAUTH(1),
+    
     // commands valid in authenticated state
     SELECT(1),
     EXAMINE(1),
