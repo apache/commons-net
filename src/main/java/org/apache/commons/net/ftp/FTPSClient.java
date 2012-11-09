@@ -516,8 +516,9 @@ public class FTPSClient extends FTPClient {
      * @return True - A set point is right / False - A set point is not right
      */
     private boolean checkPROTValue(String prot) {
-        for (int p = 0; p < PROT_COMMAND_VALUE.length; p++) {
-            if (PROT_COMMAND_VALUE[p].equals(prot)) {
+        for (String element : PROT_COMMAND_VALUE)
+        {
+            if (element.equals(prot)) {
                 return true;
             }
         }

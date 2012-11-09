@@ -48,10 +48,9 @@ public abstract class FTPParseTestFramework extends TestCase
     {
 
         String[] badsamples = getBadListing();
-        for (int i = 0; i < badsamples.length; i++)
+        for (String test : badsamples)
         {
 
-            String test = badsamples[i];
             FTPFile f = parser.parseFTPEntry(test);
             assertNull("Should have Failed to parse " + test,
                        nullFileOrNullDate(f));
@@ -69,10 +68,9 @@ public abstract class FTPParseTestFramework extends TestCase
     {
 
         String[] goodsamples = getGoodListing();
-        for (int i = 0; i < goodsamples.length; i++)
+        for (String test : goodsamples)
         {
 
-            String test = goodsamples[i];
             FTPFile f = parser.parseFTPEntry(test);
             assertNotNull("Failed to parse " + test,
                           f);

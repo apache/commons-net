@@ -775,9 +775,9 @@ class Telnet extends SocketClient
         {
             _output_.write(_COMMAND_SB);
             // Note _output_ is buffered, so might as well simplify by writing single bytes
-            for (int ii = 0; ii < subn.length; ii++)
+            for (int element : subn)
             {
-                byte b = (byte) subn[ii];
+                byte b = (byte) element;
                 if (b == (byte) TelnetCommand.IAC) { // cast is necessary because IAC is outside the signed byte range
                     _output_.write(b); // double any IAC bytes
                 }

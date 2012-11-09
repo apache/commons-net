@@ -124,16 +124,18 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     }
 
     public void assertFileInListing(FTPFile[] listing, String name) {
-        for (int i = 0; i < listing.length; i++) {
-            if (name.equals(listing[i].getName())) {
+        for (FTPFile element : listing)
+        {
+            if (name.equals(element.getName())) {
                 return;
             }
         }
         fail("File " + name + " not found in supplied listing");
     }
     public void assertFileNotInListing(FTPFile[] listing, String name) {
-        for (int i = 0; i < listing.length; i++) {
-            if (name.equals(listing[i].getName())) {
+        for (FTPFile element : listing)
+        {
+            if (name.equals(element.getName())) {
                 fail("Unexpected File " + name + " found in supplied listing");
             }
         }

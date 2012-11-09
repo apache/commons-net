@@ -68,19 +68,17 @@ public class ListingFunctionalTest extends TestCase
         Method[] methods = clasz.getDeclaredMethods();
         TestSuite allSuites = new TestSuite("FTP Listing Functional Test Suite");
 
-        for (int i = 0; i < testData.length; i++)
+        for (String[] element : testData)
         {
-            TestSuite suite = new TestSuite(testData[i][VALID_PARSERKEY]+ " @ " +testData[i][HOSTNAME]);
+            TestSuite suite = new TestSuite(element[VALID_PARSERKEY]+ " @ " +element[HOSTNAME]);
 
-            for (int j = 0; j < methods.length; j++)
+            for (Method method : methods)
             {
-                Method method = methods[j];
-
                 if (method.getName().startsWith("test"))
                 {
                     suite.addTest(new ListingFunctionalTest(
                                                             method.getName(),
-                                                            testData[i]));
+                                                            element));
                 }
             }
 

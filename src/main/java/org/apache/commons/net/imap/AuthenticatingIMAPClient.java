@@ -220,12 +220,12 @@ public class AuthenticatingIMAPClient extends IMAPSClient
     private String _convertToHexString(byte[] a)
     {
         StringBuilder result = new StringBuilder(a.length*2);
-        for (int i = 0; i < a.length; i++)
+        for (byte element : a)
         {
-            if ( (a[i] & 0x0FF) <= 15 ) {
+            if ( (element & 0x0FF) <= 15 ) {
                 result.append("0");
             }
-            result.append(Integer.toHexString(a[i] & 0x0FF));
+            result.append(Integer.toHexString(element & 0x0FF));
         }
         return result.toString();
     }

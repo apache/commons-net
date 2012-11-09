@@ -73,8 +73,9 @@ public class ExtendedNNTPOps {
 
             // LIST ACTIVE
             NewsgroupInfo[] fanGroups = client.listNewsgroups("alt.fan.*");
-            for (int i = 0; i < fanGroups.length; ++i) {
-                System.out.println(fanGroups[i].getNewsgroup());
+            for (NewsgroupInfo fanGroup : fanGroups)
+            {
+                System.out.println(fanGroup.getNewsgroup());
             }
 
         } catch (IOException e) {

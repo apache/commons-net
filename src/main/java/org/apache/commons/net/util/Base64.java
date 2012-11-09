@@ -623,8 +623,9 @@ public class Base64 {
      * @return <code>true</code> if any byte is a valid character in the Base64 alphabet; false herwise
      */
     private static boolean containsBase64Byte(byte[] arrayOctet) {
-        for (int i = 0; i < arrayOctet.length; i++) {
-            if (isBase64(arrayOctet[i])) {
+        for (byte element : arrayOctet)
+        {
+            if (isBase64(element)) {
                 return true;
             }
         }
