@@ -101,6 +101,7 @@ public class SubnetUtils {
             return (isInclusiveHostCount() ? network() :
                 broadcast() - network() > 1 ? network() + 1 : 0); 
         }
+        
         private int high() { 
             return (isInclusiveHostCount() ? broadcast() :
                 broadcast() - network() > 1 ? broadcast() -1  : 0); 
@@ -121,8 +122,11 @@ public class SubnetUtils {
         }
 
         public String getBroadcastAddress()         { return format(toArray(broadcast())); }
+        
         public String getNetworkAddress()           { return format(toArray(network())); }
+        
         public String getNetmask()                  { return format(toArray(netmask())); }
+        
         public String getAddress()                  { return format(toArray(address())); }
 
         /**
