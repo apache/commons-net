@@ -114,20 +114,30 @@ public class SubnetUtils {
          * @param address A dot-delimited IPv4 address, e.g. "192.168.0.1"
          * @return True if in range, false otherwise
          */
-        public boolean isInRange(String address)    { return isInRange(toInteger(address)); }
-
-        private boolean isInRange(int address)      {
-            int diff = address-low();
-            return (diff >= 0 && (diff <= (high()-low())));
+        public boolean isInRange(String address) {
+            return isInRange(toInteger(address));
         }
 
-        public String getBroadcastAddress()         { return format(toArray(broadcast())); }
-        
-        public String getNetworkAddress()           { return format(toArray(network())); }
-        
-        public String getNetmask()                  { return format(toArray(netmask())); }
-        
-        public String getAddress()                  { return format(toArray(address())); }
+        private boolean isInRange(int address) {
+            int diff = address - low();
+            return (diff >= 0 && (diff <= (high() - low())));
+        }
+
+        public String getBroadcastAddress() {
+            return format(toArray(broadcast()));
+        }
+
+        public String getNetworkAddress() {
+            return format(toArray(network()));
+        }
+
+        public String getNetmask() {
+            return format(toArray(netmask()));
+        }
+
+        public String getAddress() {
+            return format(toArray(address()));
+        }
 
         /**
          * Return the low address as a dotted IP address.
@@ -135,7 +145,9 @@ public class SubnetUtils {
          * 
          * @return the IP address in dotted format, may be "0.0.0.0" if there is no valid address
          */
-        public String getLowAddress()               { return format(toArray(low())); }
+        public String getLowAddress() {
+            return format(toArray(low()));
+        }
 
         /**
          * Return the high address as a dotted IP address.
@@ -143,7 +155,9 @@ public class SubnetUtils {
          * 
          * @return the IP address in dotted format, may be "0.0.0.0" if there is no valid address
          */
-        public String getHighAddress()              { return format(toArray(high())); }
+        public String getHighAddress() {
+            return format(toArray(high()));
+        }
         
         /**
          * Get the count of available addresses.
@@ -155,7 +169,9 @@ public class SubnetUtils {
             return count < 0 ? 0 : count;
         }
 
-        public int asInteger(String address)        { return toInteger(address); }
+        public int asInteger(String address) {
+            return toInteger(address);
+        }
 
         public String getCidrSignature() {
             return toCidrNotation(
