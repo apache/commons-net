@@ -30,7 +30,7 @@
       <item name="Migration How-to"      href="migration.html"/>
       <item name="FAQ"                   href="faq.html"/>
       <item name="Download"              href="http://commons.apache.org/net/download_net.cgi"/>
-      <item name="Javadoc (3.1)"         href="api-3.1/index.html"/>
+      <item name="Javadoc (3.2)"         href="api-3.2/index.html"/>
       <item name="Javadoc (1.4.1)"       href="api-1.4.1/index.html"/>
       <item name="Release Notes"         href="changes-report.html"/>
     </menu>
