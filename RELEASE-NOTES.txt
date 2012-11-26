@@ -8,7 +8,7 @@ Apache Commons Net library contains a collection of network utilities and protoc
 Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
 
 This release fixes bugs and adds some new functionality (see below).
-It is binary compatible with previous releases
+It is binary compatible with previous releases.
 
 Changes in this version include:
 
@@ -22,6 +22,10 @@ o           The examples can now be run using "java -jar commons-net-examples-m.
             FTPClientExample now supports "-A" for anonymous login
 
 Fixed Bugs:
+o NET-46:   retrieveFileStream fails randomly or hangs
+o NET-485:  Remove unnecessary Base64 methods.
+o NET-484:  Base64.CHUNK_SEPARATOR should be private
+o NET-483:  Base64.encodeBase64(byte[], boolean, boolean, int) does not calculate output size correctly for unchunked output.
 o NET-466:  Regression: TelnetInputStream#available() blocks. Thanks to Martin Oberhuber.
 o NET-426:  FTPS: Hook to customize _openDataConnection_ SSLSocket before startHandshake() is called.
             Implement _openDataConnection(String, String) method to properly
@@ -36,6 +40,8 @@ o NET-450:  Bug in documentation for FTPClient. Thanks to Roger Hardiman.
 o NET-442:  StringIndexOutOfBoundsException: String index out of range: -1 if server respond with root is current directory.
 o NET-444:  FTPTimestampParserImpl fails to parse future dates correctly on Feb 28th in a leap year.
 
+Changes:
+o NET-482:  Support XOAUTH. Thanks to Houman Atashbar.
 
 
 For complete information on Commons Net, including instructions on how to submit bug reports,
