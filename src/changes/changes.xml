@@ -66,6 +66,9 @@ The <action> type attribute can be add,update,fix,remove.
 This release fixes bugs and adds some new functionality (see below).
  It is binary compatible with previous releases.
         ">
+            <action issue="NET-46" dev="sebb" type="fix">
+            retrieveFileStream fails randomly or hangs
+            </action>
             <action issue="NET-485" dev="sebb" type="fix">
             Remove unnecessary Base64 methods.
             </action>

@@ -773,6 +773,11 @@ implements Configurable
                     server.setSoTimeout(__dataTimeout);
                 }
                 socket = server.accept();
+                
+                // Ensure the timeout is set before any commands are issued on the new socket
+                if (__dataTimeout >= 0) {
+                    socket.setSoTimeout(__dataTimeout);
+                }
             } finally {
                 server.close();
             }
@@ -808,6 +813,15 @@ implements Configurable
             if (__passiveLocalHost != null) {
                 socket.bind(new InetSocketAddress(__passiveLocalHost, 0));
             }
+
+            // For now, let's just use the data timeout value for waiting for
+            // the data connection.  It may be desirable to let this be a
+            // separately configurable value.  In any case, we really want
+            // to allow preventing the accept from blocking indefinitely.
+            if (__dataTimeout >= 0) {
+                socket.setSoTimeout(__dataTimeout);
+            }
+
             socket.connect(new InetSocketAddress(__passiveHost, __passivePort), connectTimeout);
             if ((__restartOffset > 0) && !restart(__restartOffset))
             {
@@ -829,10 +843,6 @@ implements Configurable
             throw new IOException(
                     "Host attempting data connection " + socket.getInetAddress().getHostAddress() +
                     " is not same as server " + getRemoteAddress().getHostAddress());
-        }
-
-        if (__dataTimeout >= 0) {
-            socket.setSoTimeout(__dataTimeout);
         }
 
         if ( __bufferSize > 0 ) {
