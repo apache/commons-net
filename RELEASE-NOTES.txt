@@ -9,6 +9,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
 
 This release fixes bugs and adds some new functionality (see below).
 It is binary compatible with previous releases.
+Note that Clirr shows that two public methods have been removed (NET-485). These are not used within NET.
 
 Changes in this version include:
 
