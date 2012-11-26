@@ -42,9 +42,9 @@ public class FTPSTrustManager implements X509TrustManager
 
     public void checkServerTrusted(X509Certificate[] certificates, String authType) throws CertificateException
     {
-        for (int i = 0; i < certificates.length; ++i)
+        for (X509Certificate certificate : certificates)
         {
-            certificates[i].checkValidity();
+            certificate.checkValidity();
         }
     }
 

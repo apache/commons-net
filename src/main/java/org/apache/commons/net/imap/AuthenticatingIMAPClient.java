@@ -150,9 +150,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
             {
                 // the server sends an empty response ("+ "), so we don't have to read it.
                 int result = sendData(
-                    new String(
-                        Base64.encodeBase64(("\000" + username + "\000" + password).getBytes())
-                        )
+                    Base64.encodeBase64StringUnChunked(("\000" + username + "\000" + password).getBytes())
                     );
                 if (result == IMAPReply.OK)
                 {
@@ -176,7 +174,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
                 toEncode[usernameBytes.length] = ' ';
                 System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
                 // send the reply and read the server code:
-                int result = sendData(new String(Base64.encodeBase64(toEncode)));
+                int result = sendData(Base64.encodeBase64StringUnChunked(toEncode));
                 if (result == IMAPReply.OK)
                 {
                     setState(IMAP.IMAPState.AUTH_STATE);
@@ -188,12 +186,20 @@ public class AuthenticatingIMAPClient extends IMAPSClient
                 // the server sends fixed responses (base64("Username") and
                 // base64("Password")), so we don't have to read them.
                 if (sendData(
-                    new String(Base64.encodeBase64(username.getBytes()))) != IMAPReply.CONT)
+                    Base64.encodeBase64StringUnChunked(username.getBytes())) != IMAPReply.CONT)
                 {
                     return false;
                 }
-                int result = sendData(
-                    new String(Base64.encodeBase64(password.getBytes())));
+                int result = sendData(Base64.encodeBase64StringUnChunked(password.getBytes()));
+                if (result == IMAPReply.OK)
+                {
+                    setState(IMAP.IMAPState.AUTH_STATE);
+                }
+                return result == IMAPReply.OK;
+            }
+            case XOAUTH:
+            {
+                int result = sendData(new String(username.getBytes()));
                 if (result == IMAPReply.OK)
                 {
                     setState(IMAP.IMAPState.AUTH_STATE);
@@ -214,12 +220,12 @@ public class AuthenticatingIMAPClient extends IMAPSClient
     private String _convertToHexString(byte[] a)
     {
         StringBuilder result = new StringBuilder(a.length*2);
-        for (int i = 0; i < a.length; i++)
+        for (byte element : a)
         {
-            if ( (a[i] & 0x0FF) <= 15 ) {
+            if ( (element & 0x0FF) <= 15 ) {
                 result.append("0");
             }
-            result.append(Integer.toHexString(a[i] & 0x0FF));
+            result.append(Integer.toHexString(element & 0x0FF));
         }
         return result.toString();
     }
@@ -234,8 +240,10 @@ public class AuthenticatingIMAPClient extends IMAPSClient
         /** The standarised (RFC2195) CRAM-MD5 method, which doesn't send the password (secure). */
         CRAM_MD5("CRAM-MD5"),
         /** The unstandarised Microsoft LOGIN method, which sends the password unencrypted (insecure). */
-        LOGIN("LOGIN");
-
+        LOGIN("LOGIN"),
+        /** XOAUTH */
+        XOAUTH("XOAUTH");
+        
         private final String authName;
         
         private AUTH_METHOD(String name){

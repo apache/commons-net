@@ -405,6 +405,7 @@ public class FTPFile implements Serializable
         }
         sb.append(' ');
         sb.append(getName());
+        fmt.close();
         return sb.toString();
     }
 

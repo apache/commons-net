@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
@@ -52,6 +54,7 @@ public final class FTPClientExample
         "Usage: ftp [options] <hostname> <username> <password> [<remote file> [<local file>]]\n" +
         "\nDefault behavior is to download a file and use ASCII transfer mode.\n" +
         "\t-a - use local active mode (default is local passive)\n" +
+        "\t-A - anonymous login\n" +
         "\t-b - use binary transfer mode\n" +
         "\t-c cmd - issue arbitrary command (remote is used as a parameter if provided) \n" +
         "\t-d - list directory details using MLSD (remote is used as the pathname if provided)\n" +
@@ -72,7 +75,7 @@ public final class FTPClientExample
         "\t-PrP password - HTTP Proxy server password\n" +
         "\t-# - add hash display during transfers\n";
 
-    public static final void main(String[] args)
+    public static void main(String[] args) throws UnknownHostException
     {
         boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false, listNames = false, hidden = false;
         boolean localActive = false, useEpsvWithIPv4 = false, feat = false, printHash = false;
@@ -88,6 +91,8 @@ public final class FTPClientExample
         int proxyPort = 80;
         String proxyUser = null;
         String proxyPassword = null;
+        String username = null;
+        String password = null;
 
         int base = 0;
         for (base = 0; base < args.length; base++)
@@ -97,6 +102,10 @@ public final class FTPClientExample
             }
             else if (args[base].equals("-a")) {
                 localActive = true;
+            }
+            else if (args[base].equals("-A")) {
+                username = "anonymous";
+                password = System.getProperty("user.name")+"@"+InetAddress.getLocalHost().getHostName();
             }
             else if (args[base].equals("-b")) {
                 binaryTransfer = true;
@@ -169,6 +178,9 @@ public final class FTPClientExample
         }
 
         int remain = args.length - base;
+        if (username != null) {
+            minParams -= 2;
+        }
         if (remain < minParams) // server, user, pass, remote, local [protocol]
         {
             System.err.println(USAGE);
@@ -182,8 +194,10 @@ public final class FTPClientExample
             server=parts[0];
             port=Integer.parseInt(parts[1]);
         }
-        String username = args[base++];
-        String password = args[base++];
+        if (username == null) {
+            username = args[base++];
+            password = args[base++];
+        }
 
         String remote = null;
         if (args.length - base > 0) {

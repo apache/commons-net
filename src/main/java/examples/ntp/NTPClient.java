@@ -147,7 +147,7 @@ public final class NTPClient
                 + ", clock offset(ms)=" + offset); // offset in ms
     }
 
-    public static final void main(String[] args)
+    public static void main(String[] args)
     {
         if (args.length == 0) {
             System.err.println("Usage: NTPClient <hostname-or-address-list>");
@@ -159,11 +159,11 @@ public final class NTPClient
         client.setDefaultTimeout(10000);
         try {
             client.open();
-            for (int i = 0; i < args.length; i++)
+            for (String arg : args)
             {
                 System.out.println();
                 try {
-                    InetAddress hostAddr = InetAddress.getByName(args[i]);
+                    InetAddress hostAddr = InetAddress.getByName(arg);
                     System.out.println("> " + hostAddr.getHostName() + "/" + hostAddr.getHostAddress());
                     TimeInfo info = client.getTime(hostAddr);
                     processResponse(info);

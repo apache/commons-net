@@ -110,13 +110,14 @@ public class FTPClientConfigFunctionalTest extends TestCase {
         });
 
 
-        for (int i=0; i < files.length; i++) {
+        for (FTPFile file : files)
+        {
             // The directory contains a few additional files at the beginning
             // which aren't in the series we want. The series we want consists
             // of files named sn.dddd. This adjusts the file list to get rid
             // of the uninteresting ones.
-            if (files[i].getName().startsWith("sn")) {
-                sorted.add(files[i]);
+            if (file.getName().startsWith("sn")) {
+                sorted.add(file);
             }
         }
         return sorted;
@@ -143,18 +144,21 @@ public class FTPClientConfigFunctionalTest extends TestCase {
             lastfile = thisfile;
         }
 
-        // test that notwithstanding any time zone differences, the newest file
-        // is older than now.
-        assertTrue(lastfile.getTimestamp().getTime().before(now));
-        Calendar first = firstfile.getTimestamp();
-
-        // test that the oldest is less than two days older than the newest
-        // and, in particular, that no files have been considered "future"
-        // by the parser and therefore been relegated to the same date a
-        // year ago.
-        first.add(Calendar.DATE, 2);
-        assertTrue(lastfile.getTimestamp().getTime().toString()+" before "+ first.getTime().toString(),lastfile.getTimestamp().before(first));
-
+        if (firstfile == null || lastfile == null)  {
+            fail("No files found");
+        } else {
+            // test that notwithstanding any time zone differences, the newest file
+            // is older than now.
+            assertTrue(lastfile.getTimestamp().getTime().before(now));
+            Calendar first = firstfile.getTimestamp();
+    
+            // test that the oldest is less than two days older than the newest
+            // and, in particular, that no files have been considered "future"
+            // by the parser and therefore been relegated to the same date a
+            // year ago.
+            first.add(Calendar.DATE, 2);
+            assertTrue(lastfile.getTimestamp().getTime().toString()+" before "+ first.getTime().toString(),lastfile.getTimestamp().before(first));
+        }
     }
 }
 

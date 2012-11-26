@@ -1,46 +1,50 @@
+              Apache Commons Net
+                  Version 3.2
+                 RELEASE NOTES
 
-              Apache Commons Net 3.1 RELEASE NOTES
-
-The Commons Net team is pleased to announce the release of commons-net-3.1
+The Commons Net team is pleased to announce the release of Apache Commons Net 3.2
 
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
 Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
 
-This release fixes a few bugs and adds some new functionality (see below).
- It is binary compatible with previous releases
+This release fixes bugs and adds some new functionality (see below).
+It is binary compatible with previous releases.
 
 Changes in this version include:
 
 New features:
-o NET-440:  Allow user to provide default value in case SYST command fails. 
-o NET-346:  FTP should support reporting NATed external IP address Thanks to Kevin Samuel. 
-o NET-433:  NET site should link to the examples 
-o NET-426:  FTPS: Hook to customize _openDataConnection_ SSLSocket before startHandshake() is called Thanks to Ketan. 
-o NET-436:  Support for SYST "Mac OS" listing - "MACOS Peter's Server" Thanks to Jürgen Jung. 
+o NET-468:  Request for native support for socks proxy routing with Commons net FTP. Thanks to Bogdan Drozdowski.
+o NET-465:  FTPClient setSendBufferSize and setReceiveBufferSize on data socket. Thanks to Bogdan Drozdowski.
+o NET-462:  FTPClient in PASSIVE_LOCAL_DATA_CONNECTION_MODE cannot work when host have several different IP. Thanks to Bogdan Drozdowski.
+o           The examples can now be run using "java -jar commons-net-examples-m.n.jar".
+            This will automatically include the main net jar in the classpath.
+            See documentation.
+            FTPClientExample now supports "-A" for anonymous login
 
 Fixed Bugs:
-o NET-441:  mlistDir doc should be "MLSD" not "MSLD". Thanks to consiliens. 
-o NET-438:  POP3Client.capa() should call POP3Client.getAdditionalReply() Thanks to Norman Maurer. 
-o NET-412:  TFTP implementation subject to Sorcerer's Apprentice Syndrome Thanks to Chuck Wolber. 
-o NET-410:  TFTP does not handle RFC 783 retransmits Thanks to Chuck Wolber. 
-o NET-437:  TelnetInputStream doesn't support non-blocking IO when reader thread is not enabled Thanks to Gavin Camp. 
-o NET-422:  FTP using HTTP proxy not working Thanks to Tomas Mysik / Magnus Johansson. 
-o NET-423:  FTPClient.storeFIle might fail when ControlKeepAliveTimeout is set (ditto for FTPCLient.retrieveFile) Thanks to Jens Koch. 
-o NET-430:  Can't login to POP3S Server using explicit mode Thanks to Thomas Mathis. 
-o NET-434:  FTPClient fails to close local listener socket when command socket channel encounter "ReadTimeoutException" Thanks to zhangyong. 
-o NET-428:  SubnetUtils throws ArrayIndexOutOfBoundsException for new SubnetUtils( "1.2.3.4/32" ).getInfo().getAllAddresses() Thanks to sebb. 
-o NET-421:  Problem connecting to TLS/SSL SMTP server using explicit mode. Thanks to Oliver Saggau. 
-o NET-415:  typo in migration how-to. Thanks to george thomas. 
+o NET-46:   retrieveFileStream fails randomly or hangs
+o NET-485:  Remove unnecessary Base64 methods.
+o NET-484:  Base64.CHUNK_SEPARATOR should be private
+o NET-483:  Base64.encodeBase64(byte[], boolean, boolean, int) does not calculate output size correctly for unchunked output.
+o NET-466:  Regression: TelnetInputStream#available() blocks. Thanks to Martin Oberhuber.
+o NET-426:  FTPS: Hook to customize _openDataConnection_ SSLSocket before startHandshake() is called.
+            Implement _openDataConnection(String, String) method to properly
+            interface with FTPClient.openDataConnection(String, String) Thanks to Ketan.
+o NET-456:  TelnetClient hangs when reader-thread startup is delayed.
+o NET-449:  listFiles bug with folder that begins with "-". Clarify Javadoc.
+o NET-473:  FTPClient setSoTimeout (int time) will result in NullPointerException. Clarify Javadoc.
+o NET-475:  FtpClient sends REST when calling listFiles. Clarified Javadoc.
+o NET-467:  IMAPClient#fetch() does not handle literal strings.
+o NET-458:  MVSFTPEntryParser.parseSimpleEntry - ArrayIndexOutOfBoundsException. Thanks to Denis Molony.
+o NET-450:  Bug in documentation for FTPClient. Thanks to Roger Hardiman.
+o NET-442:  StringIndexOutOfBoundsException: String index out of range: -1 if server respond with root is current directory.
+o NET-444:  FTPTimestampParserImpl fails to parse future dates correctly on Feb 28th in a leap year.
 
 Changes:
-o NET-425:  _openDataConnection_, __storeFile, and __storeFileStream should be protected and take String for FTP command.
-            Likewise for receiveFile and receiveFileStream. Thanks to Steven Jardine. 
-o NET-416:  Increasing sub-negotiation message holder array size Thanks to Abhijeet Gaikwad. 
+o NET-482:  Support XOAUTH. Thanks to Houman Atashbar.
 
 
 For complete information on Commons Net, including instructions on how to submit bug reports,
 patches, or suggestions for improvement, see the Apache Commons Net website:
 
 http://commons.apache.org/net/
-
-

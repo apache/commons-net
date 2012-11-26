@@ -86,7 +86,7 @@ public final class IMAPReply
      * Intepret the String reply code - OK, NO, BAD - in a tagged response as a integer.
      *
      * @param line the tagged line to be checked
-     * @return {@link #OK} or {@link #NO} or {@link #BAD}
+     * @return {@link #OK} or {@link #NO} or {@link #BAD} or {@link #CONT}
      * @throws IOException if the input has an unexpected format
      */
     public static int getReplyCode(String line) throws IOException {
@@ -96,11 +96,26 @@ public final class IMAPReply
     private static final String UNTAGGED_RESPONSE = "^\\* (\\S+).*";
     private static final Pattern UNTAGGED_PATTERN = Pattern.compile(UNTAGGED_RESPONSE);
 
+    private static final Pattern LITERAL_PATTERN = Pattern.compile("\\{(\\d+)\\}$"); // {dd}
+
+    /**
+     * Checks if the line introduces a literal, i.e. ends with {dd}
+     * 
+     * @return the literal count, or -1 if there was no literal.
+     */
+    public static int literalCount(String line) {
+        Matcher m = LITERAL_PATTERN.matcher(line);
+        if (m.find()) {
+            return Integer.parseInt(m.group(1)); // Should always parse because we matched \d+
+        }
+        return -1;
+    }
+
     /**
      * Intepret the String reply code - OK, NO, BAD - in an untagged response as a integer.
      *
      * @param line the untagged line to be checked
-     * @return {@link #OK} or {@link #NO} or {@link #BAD}
+     * @return {@link #OK} or {@link #NO} or {@link #BAD} or {@link #CONT}
      * @throws IOException if the input has an unexpected format
      */
     public static int getUntaggedReplyCode(String line) throws IOException {
@@ -113,7 +128,7 @@ public final class IMAPReply
             return CONT;
         }
         Matcher m = pattern.matcher(line);
-        if (m.matches()) {
+        if (m.matches()) { // TODO would lookingAt() be more efficient? If so, then drop trailing .* from patterns
             String code = m.group(1);
             if (code.equals(IMAP_OK)) {
                 return OK;

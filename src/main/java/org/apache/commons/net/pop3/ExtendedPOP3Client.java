@@ -95,7 +95,7 @@ public class ExtendedPOP3Client extends POP3SClient
                 toEncode[usernameBytes.length] = ' ';
                 System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
                 // send the reply and read the server code:
-                return sendCommand(new String(Base64.encodeBase64(toEncode))) == POP3Reply.OK;
+                return sendCommand(Base64.encodeBase64StringUnChunked(toEncode)) == POP3Reply.OK;
             default:
                 return false;
         }
@@ -111,12 +111,12 @@ public class ExtendedPOP3Client extends POP3SClient
     private String _convertToHexString(byte[] a)
     {
         StringBuilder result = new StringBuilder(a.length*2);
-        for (int i = 0; i < a.length; i++)
+        for (byte element : a)
         {
-            if ( (a[i] & 0x0FF) <= 15 ) {
+            if ( (element & 0x0FF) <= 15 ) {
                 result.append("0");
             }
-            result.append(Integer.toHexString(a[i] & 0x0FF));
+            result.append(Integer.toHexString(element & 0x0FF));
         }
         return result.toString();
     }

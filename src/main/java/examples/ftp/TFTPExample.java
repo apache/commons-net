@@ -59,7 +59,7 @@ public final class TFTPExample
         "\t-a Use ASCII transfer mode\n" +
         "\t-b Use binary transfer mode\n";
 
-    public final static void main(String[] args)
+    public static void main(String[] args)
     {
         boolean receiveFile = true, closed;
         int transferMode = TFTP.BINARY_MODE, argc;

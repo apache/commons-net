@@ -34,7 +34,7 @@ import org.apache.commons.net.imap.IMAPSClient;
 public final class IMAPMail
 {
 
-    public static final void main(String[] args)
+    public static void main(String[] args)
     {
         if (args.length < 3)
         {

@@ -127,5 +127,6 @@ public class DownloadListings extends FTPClient {
             }
         }
         os.close();
+        rdr.close();
     }
 }

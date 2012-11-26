@@ -107,7 +107,8 @@ public class FTPSClient extends FTPClient {
     private KeyManager keyManager = null;
 
     /**
-     * Constructor for FTPSClient.
+     * Constructor for FTPSClient, calls {@link #FTPSClient(String, boolean)}.
+     * 
      * Sets protocol to {@link #DEFAULT_PROTOCOL} - i.e. TLS - and security mode to explicit (isImplicit = false)
      */
     public FTPSClient() {
@@ -116,6 +117,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Constructor for FTPSClient, using {@link #DEFAULT_PROTOCOL} - i.e. TLS
+     * Calls {@link #FTPSClient(String, boolean)}
      * @param isImplicit The security mode (Implicit/Explicit).
      */
     public FTPSClient(boolean isImplicit) {
@@ -123,7 +125,8 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Constructor for FTPSClient, using explict mode
+     * Constructor for FTPSClient, using explict mode, calls {@link #FTPSClient(String, boolean)}.
+     * 
      * @param protocol the protocol to use
      */
     public FTPSClient(String protocol) {
@@ -134,7 +137,7 @@ public class FTPSClient extends FTPClient {
      * Constructor for FTPSClient allowing specification of protocol
      * and security mode. If isImplicit is true, the port is set to
      * {@link #DEFAULT_FTPS_PORT} i.e. 990.
-     *
+     * The default TrustManager is set from {@link TrustManagerUtils#getValidateServerCertificateTrustManager()}
      * @param protocol the protocol
      * @param isImplicit The security mode(Implicit/Explicit).
      */
@@ -149,6 +152,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Constructor for FTPSClient, using {@link #DEFAULT_PROTOCOL} - i.e. TLS
+     * The default TrustManager is set from {@link TrustManagerUtils#getValidateServerCertificateTrustManager()}
      * @param isImplicit The security mode(Implicit/Explicit).
      * @param context A pre-configured SSL Context
      */
@@ -160,7 +164,7 @@ public class FTPSClient extends FTPClient {
     /**
      * Constructor for FTPSClient, using {@link #DEFAULT_PROTOCOL} - i.e. TLS
      * and isImplicit {@code false}
-     *
+     * Calls {@link #FTPSClient(boolean, SSLContext)}
      * @param context A pre-configured SSL Context
      */
     public FTPSClient(SSLContext context) {
@@ -470,18 +474,19 @@ public class FTPSClient extends FTPClient {
     }
     
     /**
-     * PROT command.<br/>
-     * C - Clear<br/>
-     * S - Safe(SSL protocol only)<br/>
-     * E - Confidential(SSL protocol only)<br/>
-     * P - Private
-     * <p>
+     * PROT command.
+     * <ul>
+     * <li>C - Clear</li>
+     * <li>S - Safe(SSL protocol only)</li>
+     * <li>E - Confidential(SSL protocol only)</li>
+     * <li>P - Private</li>
+     * </ul>
      * <b>N.B.</b> the method calls
      *  {@link #setSocketFactory(javax.net.SocketFactory)} and
      *  {@link #setServerSocketFactory(javax.net.ServerSocketFactory)}
      *
-     * @param prot Data Channel Protection Level.
-     * @throws SSLException If the server reply code does not equal "200".
+     * @param prot Data Channel Protection Level, if {@code null}, use {@link #DEFAULT_PROT}. 
+     * @throws SSLException If the server reply code does not equal  {@code 200}.
      * @throws IOException If an I/O error occurs while sending
      * the command.
      */
@@ -511,8 +516,9 @@ public class FTPSClient extends FTPClient {
      * @return True - A set point is right / False - A set point is not right
      */
     private boolean checkPROTValue(String prot) {
-        for (int p = 0; p < PROT_COMMAND_VALUE.length; p++) {
-            if (PROT_COMMAND_VALUE[p].equals(prot)) {
+        for (String element : PROT_COMMAND_VALUE)
+        {
+            if (element.equals(prot)) {
                 return true;
             }
         }
@@ -554,7 +560,7 @@ public class FTPSClient extends FTPClient {
     /**
      * Returns a socket of the data connection.
      * Wrapped as an {@link SSLSocket}, which carries out handshake processing.
-     * @param command The textual representation of the FTP command to send.
+     * @param command The int representation of the FTP command to send.
      * @param arg The arguments to the FTP command.
      * If this parameter is set to null, then the command is sent with
      * no arguments.
@@ -565,7 +571,29 @@ public class FTPSClient extends FTPClient {
      * @see FTPClient#_openDataConnection_(int, String)
      */
     @Override
+    // Strictly speaking this is not needed, but it works round a Clirr bug
+    // So rather than invoke the parent code, we do it here
     protected Socket _openDataConnection_(int command, String arg)
+            throws IOException {
+        return _openDataConnection_(FTPCommand.getCommand(command), arg);
+    }
+
+   /**
+     * Returns a socket of the data connection.
+     * Wrapped as an {@link SSLSocket}, which carries out handshake processing.
+     * @param command The textual representation of the FTP command to send.
+     * @param arg The arguments to the FTP command.
+     * If this parameter is set to null, then the command is sent with
+     * no arguments.
+     * @return corresponding to the established data connection.
+     * Null is returned if an FTP protocol error is reported at any point
+     * during the establishment and initialization of the connection.
+     * @throws IOException If there is any problem with the connection.
+     * @see FTPClient#_openDataConnection_(int, String)
+     * @since 3.2
+     */
+    @Override
+    protected Socket _openDataConnection_(String command, String arg)
             throws IOException {
         Socket socket = super._openDataConnection_(command, arg);
         _prepareDataSocket_(socket);
@@ -599,6 +627,7 @@ public class FTPSClient extends FTPClient {
     * after creating the socket.
     * The default implementation is a no-op
     * @throws IOException 
+    * @since 3.1
     */
     protected void _prepareDataSocket_(Socket socket)
             throws IOException {
@@ -614,10 +643,11 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Override the default {@link TrustManager} to use.
+     * Override the default {@link TrustManager} to use; if set to {@code null},
+     * the default TrustManager from the JVM will be used.
      *
-     * @param trustManager The TrustManager implementation to set.
-    * @see org.apache.commons.net.util.TrustManagerUtils
+     * @param trustManager The TrustManager implementation to set, may be {@code null}
+     * @see org.apache.commons.net.util.TrustManagerUtils
      */
     public void setTrustManager(TrustManager trustManager) {
         this.trustManager = trustManager;
@@ -666,7 +696,7 @@ public class FTPSClient extends FTPClient {
     {
         if (data != null)
         {
-            return sendCommand(CMD_ADAT, new String(Base64.encodeBase64(data)));
+            return sendCommand(CMD_ADAT, Base64.encodeBase64StringUnChunked(data));
         }
         else
         {
@@ -712,7 +742,7 @@ public class FTPSClient extends FTPClient {
     {
         if (data != null)
         {
-            return sendCommand(CMD_MIC, new String(Base64.encodeBase64(data)));
+            return sendCommand(CMD_MIC, Base64.encodeBase64StringUnChunked(data));
         }
         else
         {
@@ -732,7 +762,7 @@ public class FTPSClient extends FTPClient {
     {
         if (data != null)
         {
-            return sendCommand(CMD_CONF, new String(Base64.encodeBase64(data)));
+            return sendCommand(CMD_CONF, Base64.encodeBase64StringUnChunked(data));
         }
         else
         {
@@ -752,7 +782,7 @@ public class FTPSClient extends FTPClient {
     {
         if (data != null)
         {
-            return sendCommand(CMD_ENC, new String(Base64.encodeBase64(data)));
+            return sendCommand(CMD_ENC, Base64.encodeBase64StringUnChunked(data));
         }
         else
         {

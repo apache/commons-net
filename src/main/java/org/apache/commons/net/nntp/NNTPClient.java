@@ -253,16 +253,18 @@ public class NNTPClient extends NNTP
         Vector<NewsgroupInfo> list = new Vector<NewsgroupInfo>(2048);
 
         String line;
-        while ((line = reader.readLine()) != null)
-        {
-            NewsgroupInfo tmp = __parseNewsgroupListEntry(line);
-            if (tmp != null) {
-                list.addElement(tmp);
-            } else {
-                throw new MalformedServerReplyException(line);
+        try {
+            while ((line = reader.readLine()) != null) {
+                NewsgroupInfo tmp = __parseNewsgroupListEntry(line);
+                if (tmp != null) {
+                    list.addElement(tmp);
+                } else {
+                    throw new MalformedServerReplyException(line);
+                }
             }
+        } finally {
+            reader.close();
         }
-
         int size;
         if ((size = list.size()) < 1) {
             return new NewsgroupInfo[0];
@@ -1215,8 +1217,12 @@ public class NNTPClient extends NNTP
         BufferedReader reader = new DotTerminatedMessageReader(_reader_);
 
         String line;
-        while ((line = reader.readLine()) != null) {
-            list.addElement(line);
+        try {
+            while ((line = reader.readLine()) != null) {
+                list.addElement(line);
+            }
+        } finally {
+            reader.close();
         }
 
         int size = list.size();

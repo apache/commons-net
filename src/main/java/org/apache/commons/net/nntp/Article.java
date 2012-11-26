@@ -144,7 +144,7 @@ public class Article implements Threadable {
             for (int i = 0; i < depth; ++i) {
                 System.out.print("==>");
             }
-            System.out.println(article.getSubject() + "\t" + article.getFrom());
+            System.out.println(article.getSubject() + "\t" + article.getFrom()+"\t"+article.getArticleId());            
             if (article.kid != null) {
                 printThread(article.kid, depth + 1);
             }

@@ -108,6 +108,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         __thread.setPriority(priority);
         __thread.setDaemon(true);
         __thread.start();
+        __threaded = true; // tell _processChar that we are running threaded
     }
 
 
@@ -560,7 +561,11 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         // Critical section because run() may change __bytesAvailable
         synchronized (__queue)
         {
-            return __bytesAvailable + super.available();
+            if (__threaded) { // Must not call super.available when running threaded: NET-466
+                return __bytesAvailable;
+            } else {
+                return __bytesAvailable + super.available();
+            }
         }
     }
 
@@ -595,8 +600,6 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     public void run()
     {
         int ch;
-
-        __threaded = true; // tell _processChar that we are running threaded
 
         try
         {

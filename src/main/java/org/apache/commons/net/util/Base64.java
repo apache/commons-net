@@ -68,13 +68,11 @@ public class Base64 {
     /**
      * Chunk separator per RFC 2045 section 2.1.
      *
-     * <p>
-     * N.B. The next major release may break compatibility and make this field private.
-     * </p>
-     *
      * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
      */
-    static final byte[] CHUNK_SEPARATOR = {'\r', '\n'};
+    private static final byte[] CHUNK_SEPARATOR = {'\r', '\n'};
+    
+    private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
 
     /**
      * This array is a lookup table that translates 6-bit positive integer index values into their "Base64 Alphabet"
@@ -318,7 +316,7 @@ public class Base64 {
     public Base64(int lineLength, byte[] lineSeparator, boolean urlSafe) {
         if (lineSeparator == null) {
             lineLength = 0;  // disable chunk-separating
-            lineSeparator = CHUNK_SEPARATOR;  // this just gets ignored
+            lineSeparator = EMPTY_BYTE_ARRAY;  // this just gets ignored
         }
         this.lineLength = lineLength > 0 ? (lineLength / 4) * 4 : 0;
         this.lineSeparator = new byte[lineSeparator.length];
@@ -478,6 +476,8 @@ public class Base64 {
                         buffer[pos++] = PAD;
                     }
                     break;
+                default:
+                    break;  // other values ignored
             }
             if (lineLength > 0 && pos > 0) {
                 System.arraycopy(lineSeparator, 0, buffer, pos, lineSeparator.length);
@@ -579,6 +579,8 @@ public class Base64 {
                     buffer[pos++] = (byte) ((x >> 16) & MASK_8BITS);
                     buffer[pos++] = (byte) ((x >> 8) & MASK_8BITS);
                     break;
+                default:
+                    break;  // other values ignored
             }
         }
     }
@@ -621,8 +623,9 @@ public class Base64 {
      * @return <code>true</code> if any byte is a valid character in the Base64 alphabet; false herwise
      */
     private static boolean containsBase64Byte(byte[] arrayOctet) {
-        for (int i = 0; i < arrayOctet.length; i++) {
-            if (isBase64(arrayOctet[i])) {
+        for (byte element : arrayOctet)
+        {
+            if (isBase64(element)) {
                 return true;
             }
         }
@@ -642,7 +645,9 @@ public class Base64 {
 
     /**
      * Encodes binary data using the base64 algorithm into 76 character blocks separated by CRLF.
-     *
+     * <p>
+     * For a non-chunking version, see {@link #encodeBase64StringUnChunked(byte[])}.
+     * 
      * @param binaryData
      *            binary data to encode
      * @return String containing Base64 characters.
@@ -650,6 +655,33 @@ public class Base64 {
      */
     public static String encodeBase64String(byte[] binaryData) {
         return newStringUtf8(encodeBase64(binaryData, true));
+    }
+
+    /**
+     * Encodes binary data using the base64 algorithm, without using chunking.
+     * <p>
+     * For a chunking version, see {@link #encodeBase64String(byte[])}.
+     * 
+     * @param binaryData
+     *            binary data to encode
+     * @return String containing Base64 characters.
+     * @since 3.2
+     */
+    public static String encodeBase64StringUnChunked(byte[] binaryData) {
+        return newStringUtf8(encodeBase64(binaryData, false));
+    }
+
+    /**
+     * Encodes binary data using the base64 algorithm.
+     * 
+     * @param binaryData
+     *            binary data to encode
+     * @param useChunking whether to split the output into chunks
+     * @return String containing Base64 characters.
+     * @since 3.2
+     */
+    public static String encodeBase64String(byte[] binaryData, boolean useChunking) {
+        return newStringUtf8(encodeBase64(binaryData, useChunking));
     }
 
     /**
@@ -687,26 +719,6 @@ public class Base64 {
      */
     public static byte[] encodeBase64Chunked(byte[] binaryData) {
         return encodeBase64(binaryData, true);
-    }
-
-    /**
-     * Decodes an Object using the base64 algorithm. This method is provided in order to satisfy the requirements of the
-     * Decoder interface, and will throw a DecoderException if the supplied object is not of type byte[] or String.
-     *
-     * @param pObject
-     *            Object to decode
-     * @return An object (of type byte[]) containing the binary data which corresponds to the byte[] or String supplied.
-     * @throws RuntimeException
-     *             if the parameter supplied is not of type byte[]
-     */
-    public Object decode(Object pObject) {
-        if (pObject instanceof byte[]) {
-            return decode((byte[]) pObject);
-        } else if (pObject instanceof String) {
-            return decode((String) pObject);
-        } else {
-            throw new RuntimeException("Parameter supplied to Base64 decode is not a byte[] or a String");
-        }
     }
 
     /**
@@ -812,7 +824,7 @@ public class Base64 {
             return binaryData;
         }
 
-        long len = getEncodeLength(binaryData, CHUNK_SIZE, CHUNK_SEPARATOR);
+        long len = getEncodeLength(binaryData, isChunked ? CHUNK_SIZE : 0, isChunked ? CHUNK_SEPARATOR : EMPTY_BYTE_ARRAY);
         if (len > maxResultSize) {
             throw new IllegalArgumentException("Input array too big, the output array would be bigger (" +
                 len +
@@ -868,28 +880,9 @@ public class Base64 {
         }
     }
 
-    // Implementation of the Encoder Interface
-
-    /**
-     * Encodes an Object using the base64 algorithm. This method is provided in order to satisfy the requirements of the
-     * Encoder interface, and will throw an EncoderException if the supplied object is not of type byte[].
-     *
-     * @param pObject
-     *            Object to encode
-     * @return An object (of type byte[]) containing the base64 encoded data which corresponds to the byte[] supplied.
-     * @throws RuntimeException
-     *             if the parameter supplied is not of type byte[]
-     */
-    public Object encode(Object pObject)  {
-        if (!(pObject instanceof byte[])) {
-            throw new RuntimeException("Parameter supplied to Base64 encode is not a byte[]");
-        }
-        return encode((byte[]) pObject);
-    }
-
     /**
      * Encodes a byte[] containing binary data, into a String containing characters in the Base64 alphabet.
-     *
+     * 
      * @param pArray
      *            a byte array containing binary data
      * @return A String containing only Base64 character data
@@ -1043,4 +1036,13 @@ public class Base64 {
         eof = false;
     }
 
+    // Getters for use in testing
+    
+    int getLineLength() {
+        return lineLength;
+    }
+    
+    byte[] getLineSeparator() {
+        return lineSeparator.clone();
+    }
 }

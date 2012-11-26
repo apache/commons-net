@@ -24,7 +24,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id: FTPParseTestFramework.java 437134 2006-08-26 09:36:36Z rwinston $
+ * @version $Id$
  */
 public abstract class FTPParseTestFramework extends TestCase
 {
@@ -48,10 +48,9 @@ public abstract class FTPParseTestFramework extends TestCase
     {
 
         String[] badsamples = getBadListing();
-        for (int i = 0; i < badsamples.length; i++)
+        for (String test : badsamples)
         {
 
-            String test = badsamples[i];
             FTPFile f = parser.parseFTPEntry(test);
             assertNull("Should have Failed to parse " + test,
                        nullFileOrNullDate(f));
@@ -69,10 +68,9 @@ public abstract class FTPParseTestFramework extends TestCase
     {
 
         String[] goodsamples = getGoodListing();
-        for (int i = 0; i < goodsamples.length; i++)
+        for (String test : goodsamples)
         {
 
-            String test = goodsamples[i];
             FTPFile f = parser.parseFTPEntry(test);
             assertNotNull("Failed to parse " + test,
                           f);

@@ -55,10 +55,8 @@ public class CompositeFileEntryParser extends FTPFileEntryParserImpl
         }
         else
         {
-            for (int iterParser=0; iterParser < ftpFileEntryParsers.length; iterParser++)
+            for (FTPFileEntryParser ftpFileEntryParser : ftpFileEntryParsers)
             {
-                FTPFileEntryParser ftpFileEntryParser = ftpFileEntryParsers[iterParser];
-
                 FTPFile matched = ftpFileEntryParser.parseFTPEntry(listEntry);
                 if (matched != null)
                 {

@@ -22,7 +22,7 @@ package org.apache.commons.net.ntp;
  *
  * @author Jason Mathews, MITRE Corp
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  */
 public final class NtpUtils {
 

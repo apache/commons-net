@@ -81,9 +81,9 @@ public class TFTPTest extends TestCase
             {
                 tftpS.shutdown();
             }
-            for (int i = 0; i < files.length; i++)
+            for (File file : files)
             {
-                files[i].delete();
+                file.delete();
             }
         }
         super.tearDown();

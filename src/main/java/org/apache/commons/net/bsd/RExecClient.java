@@ -89,7 +89,7 @@ public class RExecClient extends SocketClient
 
         server = _serverSocketFactory_.createServerSocket(0, 1, getLocalAddress());
 
-        _output_.write(Integer.toString(server.getLocalPort()).getBytes());
+        _output_.write(Integer.toString(server.getLocalPort()).getBytes("UTF-8")); // $NON-NLS-1$
         _output_.write('\0');
         _output_.flush();
 

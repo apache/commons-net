@@ -54,9 +54,9 @@ public final class TrustManagerUtils
             throws CertificateException
         {
             if (checkServerValidity) {
-                for (int i = 0; i < certificates.length; ++i)
+                for (X509Certificate certificate : certificates)
                 {
-                    certificates[i].checkValidity();
+                    certificate.checkValidity();
                 }
             }
         }

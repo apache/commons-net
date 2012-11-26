@@ -166,18 +166,19 @@ public final class DotTerminatedMessageReader extends BufferedReader
     @Override
     public int read(char[] buffer, int offset, int length) throws IOException
     {
-        int ch, off;
+        if (length < 1)
+        {
+            return 0;
+        }
+        int ch;
         synchronized (lock)
         {
-            if (length < 1)
-            {
-                return 0;
-            }
             if ((ch = read()) == -1)
             {
                 return -1;
             }
-            off = offset;
+
+            int off = offset;
 
             do
             {

@@ -21,7 +21,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mario@ops.co.at">MarioIvankovits</a>
- * @version $Id: CompositeFTPParseTestFramework.java 155429 2005-02-26 13:13:04Z dirkv $
+ * @version $Id$
  */
 public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramework
 {
@@ -76,12 +76,12 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
     {
         String goodsamples[][] = getGoodListings();
 
-        for (int i = 0; i < goodsamples.length; i++)
+        for (String[] goodsample : goodsamples)
         {
             FTPFileEntryParser parser = getParser();
-            for (int j = 0; j < goodsamples[i].length; j++)
+            for (int j = 0; j < goodsample.length; j++)
             {
-                String test = goodsamples[i][j];
+                String test = goodsample[j];
                 FTPFile f = parser.parseFTPEntry(test);
                 assertNotNull("Failed to parse " + test,
                         f);
@@ -99,12 +99,12 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
     {
         String badsamples[][] = getBadListings();
 
-        for (int i = 0; i < badsamples.length; i++)
+        for (String[] badsample : badsamples)
         {
             FTPFileEntryParser parser = getParser();
-            for (int j = 0; j < badsamples[i].length; j++)
+            for (int j = 0; j < badsample.length; j++)
             {
-                String test = badsamples[i][j];
+                String test = badsample[j];
                 FTPFile f = parser.parseFTPEntry(test);
                 assertNull("Should have Failed to parse " + test,
                         nullFileOrNullDate(f));

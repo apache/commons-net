@@ -62,15 +62,85 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
     <body>
-        <release version="3.1" date="TBA" description="
+        <release version="3.2" date="TBA" description="
+This release fixes bugs and adds some new functionality (see below).
+ It is binary compatible with previous releases.
+        ">
+            <action issue="NET-46" dev="sebb" type="fix">
+            retrieveFileStream fails randomly or hangs
+            </action>
+            <action issue="NET-485" dev="sebb" type="fix">
+            Remove unnecessary Base64 methods.
+            </action>
+            <action issue="NET-482" dev="sebb" type="update" due-to="Houman Atashbar">
+            Support XOAUTH.
+            </action>
+            <action issue="NET-484" dev="sebb" type="fix">
+            Base64.CHUNK_SEPARATOR should be private
+            </action>
+            <action issue="NET-483" dev="sebb" type="fix">
+            Base64.encodeBase64(byte[], boolean, boolean, int) does not calculate output size correctly for unchunked output.
+            </action>
+            <action issue="NET-466" dev="sebb" type="fix" due-to="Martin Oberhuber">
+            Regression: TelnetInputStream#available() blocks.
+            </action>
+            <action issue="NET-426" dev="sebb" type="fix" due-to="Ketan">
+            FTPS: Hook to customize _openDataConnection_ SSLSocket before startHandshake() is called.
+            Implement _openDataConnection(String, String) method to properly
+            interface with FTPClient.openDataConnection(String, String)
+            </action>
+            <action issue="NET-456" dev="sebb" type="fix">
+            TelnetClient hangs when reader-thread startup is delayed.
+            </action>
+            <action issue="NET-449" dev="sebb" type="fix">
+            listFiles bug with folder that begins with "-". Clarify Javadoc.
+            </action>
+            <action issue="NET-473" dev="sebb" type="fix">
+            FTPClient setSoTimeout (int time) will result in NullPointerException. Clarify Javadoc.
+            </action>
+            <action issue="NET-468" dev="sebb" type="add" due-to="Bogdan Drozdowski">
+            Request for native support for socks proxy routing with Commons net FTP.
+            </action>
+            <action issue="NET-475" dev="sebb" type="fix">
+            FtpClient sends REST when calling listFiles. Clarified Javadoc.
+            </action>
+            <action issue="NET-465" dev="sebb" type="add" due-to="Bogdan Drozdowski">
+            FTPClient setSendBufferSize and setReceiveBufferSize on data socket.
+            </action>
+            <action issue="NET-462" dev="sebb" type="add" due-to="Bogdan Drozdowski">
+            FTPClient in PASSIVE_LOCAL_DATA_CONNECTION_MODE cannot work when host have several different IP.
+            </action>
+            <action issue="NET-467" dev="sebb" type="fix">
+            IMAPClient#fetch() does not handle literal strings.
+            </action>
+            <action issue="NET-458" dev="sebb" type="fix" due-to="Denis Molony">
+            MVSFTPEntryParser.parseSimpleEntry - ArrayIndexOutOfBoundsException.
+            </action>
+            <action issue="NET-450" dev="sebb" type="fix" due-to="Roger Hardiman">
+            Bug in documentation for FTPClient.
+            </action>
+            <action dev="sebb" type="add">
+            The examples can now be run using "java -jar commons-net-examples-m.n.jar".
+            This will automatically include the main net jar in the classpath.
+            See documentation.
+            FTPClientExample now supports "-A" for anonymous login
+            </action>
+            <action issue="NET-442" dev="sebb" type="fix">
+            StringIndexOutOfBoundsException: String index out of range: -1 if server respond with root is current directory.
+            </action>
+            <action issue="NET-444" dev="sebb" type="fix">
+            FTPTimestampParserImpl fails to parse future dates correctly on Feb 28th in a leap year.
+            </action>
+        </release>
+        <release version="3.1" date="Feb 20, 2012" description="
 This release fixes a few bugs and adds some new functionality (see below).
   It is binary compatible with previous releases
         ">
             <action issue="NET-441" dev="sebb" type="fix" due-to="consiliens">
-            mlistDir doc should be "MLSD" not "MSLD".
+            [FTP] mlistDir doc should be "MLSD" not "MSLD".
             </action>
             <action issue="NET-440" dev="sebb" type="add">
-            Allow user to provide default value in case SYST command fails.
+            [FTP] Allow user to provide default value in case SYST command fails.
             </action>
             <action issue="NET-438" dev="sebb" type="fix" due-to="Norman Maurer">
             POP3Client.capa() should call POP3Client.getAdditionalReply()
@@ -88,7 +158,7 @@ This release fixes a few bugs and adds some new functionality (see below).
             FTP should support reporting NATed external IP address
             </action>
             <action issue="NET-433" dev="sebb" type="add">
-            NET site should link to the examples
+            Commons NET site should link to the examples
             </action>
             <action issue="NET-422" dev="sebb" type="fix" due-to="Tomas Mysik / Magnus Johansson">
             FTP using HTTP proxy not working
@@ -106,14 +176,14 @@ This release fixes a few bugs and adds some new functionality (see below).
             FTPClient fails to close local listener socket when command socket channel encounter "ReadTimeoutException"
             </action>
             <action issue="NET-436" dev="sebb" type="add" due-to="Jürgen Jung">
-            Support for SYST "Mac OS" listing - "MACOS Peter's Server"
+            [FTP] Support for SYST "Mac OS" listing - "MACOS Peter's Server"
             </action>
             <action issue="NET-425" dev="sebb" type="update" due-to="Steven Jardine">
-            _openDataConnection_, __storeFile, and __storeFileStream should be protected and take String for FTP command.
+            [FTP] _openDataConnection_, __storeFile, and __storeFileStream should be protected and take String for FTP command.
             Likewise for receiveFile and receiveFileStream.
             </action>
             <action issue="NET-416" dev="sebb" type="update" due-to="Abhijeet Gaikwad">
-            Increasing sub-negotiation message holder array size
+            [Telnet] Increasing sub-negotiation message holder array size
             </action>
             <action issue="NET-428" dev="sebb" type="fix" due-to="sebb">
             SubnetUtils throws ArrayIndexOutOfBoundsException for new SubnetUtils( "1.2.3.4/32" ).getInfo().getAllAddresses()
@@ -122,7 +192,7 @@ This release fixes a few bugs and adds some new functionality (see below).
             Problem connecting to TLS/SSL SMTP server using explicit mode.
             </action>
             <action issue="NET-415" dev="sebb" type="fix" due-to="george thomas">
-            typo in migration how-to.
+            [Site] typo in migration how-to.
             </action>
         </release>
 

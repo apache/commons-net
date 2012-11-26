@@ -23,7 +23,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:rwinston@apache.org">Rory Winston</a>
- * @version $Id: NetwareFTPEntryParserTest.java 492109 2007-01-03 11:24:57Z rwinston $
+ * @version $Id$
  */
 public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
 

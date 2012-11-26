@@ -118,6 +118,7 @@ public class POP3Client extends POP3
      * @return True if the command was successful, false if not.
      * @exception IOException If a network I/O error occurs in the process of
      *        sending the CAPA command.
+     * @since 3.1 (was previously in ExtendedPOP3Client)
      ***/
     public boolean capa() throws IOException
     {

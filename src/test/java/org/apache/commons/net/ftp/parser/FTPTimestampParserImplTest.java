@@ -62,13 +62,14 @@ public class FTPTimestampParserImplTest extends TestCase {
 
     public void testParseTimestampWithSlop() {
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.HOUR_OF_DAY, 1);
         cal.set(Calendar.SECOND,0);
         cal.set(Calendar.MILLISECOND,0);
-        Date anHourFromNow = cal.getTime();
-        cal.add(Calendar.DATE, 1);
-        Date anHourFromNowTomorrow = cal.getTime();
-        cal.add(Calendar.DATE, -1);
+
+        Calendar caltemp = (Calendar) cal.clone();
+        caltemp.add(Calendar.HOUR_OF_DAY, 1);
+        Date anHourFromNow = caltemp.getTime();
+        caltemp.add(Calendar.DATE, 1);
+        Date anHourFromNowTomorrow = caltemp.getTime();
 
         FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
 
@@ -94,6 +95,25 @@ public class FTPTimestampParserImplTest extends TestCase {
         } catch (ParseException e) {
             fail("Unable to parse");
         }
+    }
+
+    public void testNET444() throws Exception {
+        FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
+        parser.setLenientFutureDates(true);
+        SimpleDateFormat sdf = new SimpleDateFormat(parser.getRecentDateFormatString());
+        GregorianCalendar now = new GregorianCalendar(2012, Calendar.FEBRUARY, 28, 12, 0);
+
+        GregorianCalendar nowplus1 = new GregorianCalendar(2012, Calendar.FEBRUARY, 28, 13, 0);
+        // Create a suitable short date
+        String future1 = sdf.format(nowplus1.getTime());
+        Calendar parsed1 = parser.parseTimestamp(future1, now);
+        assertEquals(nowplus1.get(Calendar.YEAR), parsed1.get(Calendar.YEAR));
+
+        GregorianCalendar nowplus25 = new GregorianCalendar(2012, Calendar.FEBRUARY, 29, 13, 0);
+        // Create a suitable short date
+        String future25 = sdf.format(nowplus25.getTime());
+        Calendar parsed25 = parser.parseTimestamp(future25, now);
+        assertEquals(nowplus25.get(Calendar.YEAR) - 1, parsed25.get(Calendar.YEAR));
     }
 
     public void testParseTimestampAcrossTimeZones() {
@@ -173,8 +193,8 @@ public class FTPTimestampParserImplTest extends TestCase {
                 fail("failed.to.parse.default");
             }
             try {
-                parser.parseTimestamp("f\u00e9v 22 2002");
-                fail("should.have.failed.to.parse.default");
+                Calendar c = parser.parseTimestamp("f\u00e9v 22 2002");
+                fail("should.have.failed.to.parse.default, but was: "+c.getTime().toString());
             } catch (ParseException e) {
                 // this is the success case
             }
@@ -236,34 +256,60 @@ public class FTPTimestampParserImplTest extends TestCase {
      * Check how short date is interpreted at a given time.
      * Check both with and without lenient future dates
      */
-    private void checkShortParse(String msg, Calendar now, Calendar input) throws ParseException {
-        checkShortParse(msg, now, input, false);
-        checkShortParse(msg, now, input, true);
+    private void checkShortParse(String msg, Calendar serverTime, Calendar input) throws ParseException {
+        checkShortParse(msg, serverTime, input, false);
+        checkShortParse(msg, serverTime, input, true);
     }
 
     /*
+     * Check how short date is interpreted at a given time.
+     * Check both with and without lenient future dates
+     */
+    private void checkShortParse(String msg, Calendar serverTime, Calendar input, Calendar expected) throws ParseException {
+        checkShortParse(msg, serverTime, input, expected, false);
+        checkShortParse(msg, serverTime, input, expected, true);
+    }
+
+    /**
      * Check how short date is interpreted at a given time
      * Check only using specified lenient future dates setting
+     * @param msg identifying message
+     * @param servertime the time at the server
+     * @param input the time to be converted to a short date, parsed and tested against the full time
+     * @param lenient whether to use lenient mode or not.
      */
-    private void checkShortParse(String msg, Calendar now, Calendar input, boolean lenient) throws ParseException {
+    private void checkShortParse(String msg, Calendar servertime, Calendar input, boolean lenient) throws ParseException {
+        checkShortParse(msg, servertime, input, input, lenient);
+    }
+
+    /**
+     * Check how short date is interpreted at a given time
+     * Check only using specified lenient future dates setting
+     * @param msg identifying message
+     * @param servertime the time at the server
+     * @param input the time to be converted to a short date and parsed
+     * @param expected the expected result from parsing
+     * @param lenient whether to use lenient mode or not.
+     */
+    private void checkShortParse(String msg, Calendar servertime, Calendar input, Calendar expected, boolean lenient) throws ParseException {
         FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
         parser.setLenientFutureDates(lenient);
         Format shortFormat = parser.getRecentDateFormat(); // It's expecting this format
-        Format longFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 
         final String shortDate = shortFormat.format(input.getTime());
-        Calendar output=parser.parseTimestamp(shortDate, now);
+        Calendar output=parser.parseTimestamp(shortDate, servertime);
         int outyear = output.get(Calendar.YEAR);
         int outdom = output.get(Calendar.DAY_OF_MONTH);
         int outmon = output.get(Calendar.MONTH);
-        int inyear = input.get(Calendar.YEAR);
-        int indom = input.get(Calendar.DAY_OF_MONTH);
-        int inmon = input.get(Calendar.MONTH);
+        int inyear = expected.get(Calendar.YEAR);
+        int indom = expected.get(Calendar.DAY_OF_MONTH);
+        int inmon = expected.get(Calendar.MONTH);
         if (indom != outdom || inmon != outmon || inyear != outyear){
-            fail("Test: '"+msg+"' Server="+longFormat.format(now.getTime())
+            Format longFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            fail("Test: '"+msg+"' Server="+longFormat.format(servertime.getTime())
                     +". Failed to parse "+shortDate
                     +". Actual "+longFormat.format(output.getTime())
-                    +". Expected "+longFormat.format(input.getTime()));
+                    +". Expected "+longFormat.format(expected.getTime()));
         }
     }
 
@@ -358,13 +404,29 @@ public class FTPTimestampParserImplTest extends TestCase {
 
     // Test Feb 29 for a known non-leap year - should fail
     public void testFeb29NonLeapYear(){
-        GregorianCalendar now = new GregorianCalendar(1999, Calendar.APRIL, 1, 12, 0);
+        GregorianCalendar server = new GregorianCalendar(1999, Calendar.APRIL, 1, 12, 0);
         // Note: we use a known leap year for the target date to avoid rounding up
+        GregorianCalendar input = new GregorianCalendar(2000, Calendar.FEBRUARY,29);
+        GregorianCalendar expected = new GregorianCalendar(1999, Calendar.FEBRUARY,29);
         try {
-            checkShortParse("Feb 29th 1999",now,new GregorianCalendar(2000, Calendar.FEBRUARY,29));
+            checkShortParse("Feb 29th 1999", server, input, expected, true);
             fail("Should have failed to parse Feb 29th 1999");
-        } catch (ParseException expected) {
+        } catch (ParseException pe) {
         }
+        try {
+            checkShortParse("Feb 29th 1999", server, input, expected, false);
+            fail("Should have failed to parse Feb 29th 1999");
+        } catch (ParseException pe) {
+        }
+    }
+
+    // This test currently fails, because we assume that short dates are +-6months when parsing Feb 29
+    public void DISABLEDtestNET446() throws Exception {
+        GregorianCalendar server = new GregorianCalendar(2001, Calendar.JANUARY, 1, 12, 0);
+        // Note: we use a known leap year for the target date to avoid rounding up
+        GregorianCalendar input = new GregorianCalendar(2000, Calendar.FEBRUARY,29);
+        GregorianCalendar expected = new GregorianCalendar(2000, Calendar.FEBRUARY,29);
+        checkShortParse("Feb 29th 2000", server, input, expected);
     }
 
     public void testParseDec31Lenient() throws Exception {

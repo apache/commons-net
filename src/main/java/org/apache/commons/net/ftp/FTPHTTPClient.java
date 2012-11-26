@@ -74,6 +74,7 @@ public class FTPHTTPClient extends FTPClient {
      * {@inheritDoc}
      *
      * @throws IllegalStateException if connection mode is not passive
+     * @since 3.1
      */
     @Override
     protected Socket _openDataConnection_(String command, String arg) 

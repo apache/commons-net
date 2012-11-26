@@ -144,7 +144,14 @@ public class AuthenticatingSMTPClient extends SMTPSClient
     /***
      * Authenticate to the SMTP server by sending the AUTH command with the
      * selected mechanism, using the given username and the given password.
-     * <p>
+     *
+     * @param method the method to use, one of the {@link AuthenticatingSMTPClient.AUTH_METHOD} enum values
+     * @param username the user name. 
+     *        If the method is XOAUTH, then this is used as the plain text oauth protocol parameter string
+     *        which is Base64-encoded for transmission.        
+     * @param password the password for the username.
+     *        Ignored for XOAUTH.
+     * 
      * @return True if successfully completed, false if not.
      * @exception SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
@@ -174,9 +181,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
         {
             // the server sends an empty response ("334 "), so we don't have to read it.
             return SMTPReply.isPositiveCompletion(sendCommand(
-                new String(
-                    Base64.encodeBase64(("\000" + username + "\000" + password).getBytes())
-                    )
+                    Base64.encodeBase64StringUnChunked(("\000" + username + "\000" + password).getBytes())
                 ));
         }
         else if (method.equals(AUTH_METHOD.CRAM_MD5))
@@ -196,18 +201,24 @@ public class AuthenticatingSMTPClient extends SMTPSClient
             System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
             // send the reply and read the server code:
             return SMTPReply.isPositiveCompletion(sendCommand(
-                new String(Base64.encodeBase64(toEncode))));
+                Base64.encodeBase64StringUnChunked(toEncode)));
         }
         else if (method.equals(AUTH_METHOD.LOGIN))
         {
             // the server sends fixed responses (base64("Username") and
             // base64("Password")), so we don't have to read them.
             if (!SMTPReply.isPositiveIntermediate(sendCommand(
-                new String(Base64.encodeBase64(username.getBytes()))))) {
+                Base64.encodeBase64StringUnChunked(username.getBytes())))) {
                 return false;
             }
             return SMTPReply.isPositiveCompletion(sendCommand(
-                new String(Base64.encodeBase64(password.getBytes()))));
+                Base64.encodeBase64StringUnChunked(password.getBytes())));
+        }
+        else if (method.equals(AUTH_METHOD.XOAUTH))
+        {
+            return SMTPReply.isPositiveIntermediate(sendCommand(
+                    Base64.encodeBase64StringUnChunked(username.getBytes())
+            ));
         } else {
             return false; // safety check
         }
@@ -223,12 +234,12 @@ public class AuthenticatingSMTPClient extends SMTPSClient
     private String _convertToHexString(byte[] a)
     {
         StringBuilder result = new StringBuilder(a.length*2);
-        for (int i = 0; i < a.length; i++)
+        for (byte element : a)
         {
-            if ( (a[i] & 0x0FF) <= 15 ) {
+            if ( (element & 0x0FF) <= 15 ) {
                 result.append("0");
             }
-            result.append(Integer.toHexString(a[i] & 0x0FF));
+            result.append(Integer.toHexString(element & 0x0FF));
         }
         return result.toString();
     }
@@ -243,7 +254,9 @@ public class AuthenticatingSMTPClient extends SMTPSClient
         /** The standarised (RFC2195) CRAM-MD5 method, which doesn't send the password (secure). */
         CRAM_MD5,
         /** The unstandarised Microsoft LOGIN method, which sends the password unencrypted (insecure). */
-        LOGIN;
+        LOGIN,
+        /** XOAuth method which accepts a signed and base64ed OAuth URL. */
+        XOAUTH;
 
         /**
          * Gets the name of the given authentication method suitable for the server.
@@ -258,6 +271,8 @@ public class AuthenticatingSMTPClient extends SMTPSClient
                 return "CRAM-MD5";
             } else if (method.equals(AUTH_METHOD.LOGIN)) {
                 return "LOGIN";
+            } else if (method.equals(AUTH_METHOD.XOAUTH)) {
+                return "XOAUTH";
             } else {
                 return null;
             }

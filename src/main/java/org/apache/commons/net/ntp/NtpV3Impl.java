@@ -25,7 +25,7 @@ import java.net.DatagramPacket;
  * @author Naz Irizarry, MITRE Corp
  * @author Jason Mathews, MITRE Corp
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  */
 public class NtpV3Impl implements NtpV3Packet
 {

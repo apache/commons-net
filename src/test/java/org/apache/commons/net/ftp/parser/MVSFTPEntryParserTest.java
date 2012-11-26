@@ -29,7 +29,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
  *
  * Created on Apr 6, 2005<br/>
  * @author <a href="mailto:wnoto@openfinance.com">William Noto</a>
- * @version $Id: MVSFTPEntryParserTest.java,v 1.16 2005/01/02 03:17:50 scohen Exp $
+ * @version $Id$
  */
 public class MVSFTPEntryParserTest extends FTPParseTestFramework {
 

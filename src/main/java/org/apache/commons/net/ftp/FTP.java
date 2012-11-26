@@ -212,6 +212,10 @@ public class FTP extends SocketClient
      * with {@link #setControlEncoding setControlEncoding}.
      */
     public static final String DEFAULT_CONTROL_ENCODING = "ISO-8859-1";
+
+    /** Length of the FTP reply code (3 alphanumerics) */
+    public static final int REPLY_CODE_LEN = 3;
+
     private static final String __modes = "AEILNTCFRPSBC";
 
     protected int _replyCode;
@@ -269,7 +273,7 @@ public class FTP extends SocketClient
 
     // The RFC-compliant multiline termination check
     private boolean __strictCheck(String line, String code) {
-        return (!(line.startsWith(code) && line.charAt(3) == ' '));
+        return (!(line.startsWith(code) && line.charAt(REPLY_CODE_LEN) == ' '));
     }
 
     // The strict check is too strong a condition because of non-conforming ftp
@@ -278,7 +282,7 @@ public class FTP extends SocketClient
     // test that the line starts with a digit rather than starting with
     // the code.
     private boolean __lenientCheck(String line) {
-        return (!(line.length() >= 4 && line.charAt(3) != '-' &&
+        return (!(line.length() > REPLY_CODE_LEN&& line.charAt(REPLY_CODE_LEN) != '-' &&
                 Character.isDigit(line.charAt(0))));
     }
 
@@ -317,7 +321,7 @@ public class FTP extends SocketClient
         // In case we run into an anomaly we don't want fatal index exceptions
         // to be thrown.
         length = line.length();
-        if (length < 3) {
+        if (length < REPLY_CODE_LEN) {
             throw new MalformedServerReplyException(
                 "Truncated server reply: " + line);
         }
@@ -325,7 +329,7 @@ public class FTP extends SocketClient
         String code = null;
         try
         {
-            code = line.substring(0, 3);
+            code = line.substring(0, REPLY_CODE_LEN);
             _replyCode = Integer.parseInt(code);
         }
         catch (NumberFormatException e)
@@ -337,7 +341,7 @@ public class FTP extends SocketClient
         _replyLines.add(line);
 
         // Get extra lines if message continues.
-        if (length > 3 && line.charAt(3) == '-')
+        if (length > REPLY_CODE_LEN && line.charAt(REPLY_CODE_LEN) == '-')
         {
             do
             {

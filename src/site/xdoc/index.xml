@@ -80,9 +80,14 @@
            Commons NET includes several working sample applications that you can use.
            Source files are included in the source (and binary) archives, and a compiled jar is provided.
        </p>
-           To use one of the sample applications, ensure that you have both the examples and main jars on the classpath.
-           For example:
-           <pre>java -cp commons-net-examples-3.1.jar;commons-net-3.1.jar examples/ftp/FTPClientExample</pre>
+           To use one of the sample applications, ensure that the example and main jars are both in the same directory.
+           Then run the class as per the following example:
+           <pre>java -jar [path/]commons-net-examples-3.1.jar FTPClientExample [parameters]</pre>
+           This uses the helper application which supports shorthand class names.
+           <br/>
+           Alternatively, ensure that the example and main jars are on the classpath.
+           Then invoke the class directly, for example:
+           <pre>java -cp commons-net-examples-3.1.jar;commons-net-3.1.jar examples/ftp/FTPClientExample [parameters]</pre>
 
        <subsection name="FTP (package: examples/ftp)">
            <ul>
@@ -112,22 +117,11 @@
            </ul>
        </subsection>
 
-       <subsection name="MAIL (package: examples/mail)">
+       <subsection name="NNTP (package: examples/nntp)">
            <ul>
-               <li><a href="examples/mail/IMAPMail.java">IMAPMail</a>
-                   This is an example program demonstrating how to use the IMAP[S]Client class.
+               <li><a href="examples/nntp/ArticleReader.java">ArticleReader</a>
+                   Simple class showing one way to read an article header and body.
                </li>
-               <li><a href="examples/mail/POP3Mail.java">POP3Mail</a>
-                   This is an example program demonstrating how to use the POP3[S]Client class.
-               </li>
-               <li><a href="examples/mail/SMTPMail.java">SMTPMail</a>
-                   This is an example program demonstrating how to use the SMTP[S]Client class.
-               </li>
-           </ul>
-       </subsection>
-
-       <subsection name="MAIL (package: examples/nntp)">
-           <ul>
                <li><a href="examples/nntp/ExtendedNNTPOps.java">ExtendedNNTPOps</a>
                    Simple class showing some of the extended commands (AUTH, XOVER, LIST ACTIVE)
                </li>
@@ -148,7 +142,7 @@
            </ul>
        </subsection>
 
-       <subsection name="MAIL (package: examples/ntp)">
+       <subsection name="NTP (package: examples/ntp)">
            <ul>
                <li><a href="examples/ntp/NTPClient.java">NTPClient</a>
                    This is an example program demonstrating how to use the NTPUDPClient
@@ -167,7 +161,7 @@
            </ul>
        </subsection>
 
-       <subsection name="MAIL (package: examples/telnet)">
+       <subsection name="TELNET (package: examples/telnet)">
            <ul>
                <li><a href="examples/telnet/TelnetClientExample.java">TelnetClientExample</a>
                    This is a simple example of use of TelnetClient.

@@ -127,8 +127,8 @@ public class Threader {
         ThreadContainer parentRef = null;
         {
             String[] references = threadable.messageThreadReferences();
-            for (int i = 0; i < references.length; ++i) {
-                String refString = references[i];
+            for (String refString : references)
+            {
                 ThreadContainer ref = idTable.get(refString);
 
                 // if this id doesnt have a container, create one
