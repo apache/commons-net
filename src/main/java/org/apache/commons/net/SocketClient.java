@@ -69,7 +69,7 @@ public abstract class SocketClient
 
     /**
      * A ProtocolCommandSupport object used to manage the registering of
-     * ProtocolCommandListeners and te firing of ProtocolCommandEvents.
+     * ProtocolCommandListeners and the firing of ProtocolCommandEvents.
      */
     private ProtocolCommandSupport __commandSupport;
 
