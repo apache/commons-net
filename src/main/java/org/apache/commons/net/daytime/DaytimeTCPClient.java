@@ -23,7 +23,7 @@ import java.io.InputStreamReader;
 
 import org.apache.commons.net.SocketClient;
 
-/***
+/**
  * The DaytimeTCPClient class is a TCP implementation of a client for the
  * Daytime protocol described in RFC 867.  To use the class, merely
  * establish a connection with
@@ -32,11 +32,8 @@ import org.apache.commons.net.SocketClient;
  * string, then
  * call {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
  * to close the connection properly.
- * <p>
- * <p>
  * @see DaytimeUDPClient
- ***/
-
+ */
 public final class DaytimeTCPClient extends SocketClient
 {
     /*** The default daytime port.  It is set to 13 according to RFC 867. ***/
