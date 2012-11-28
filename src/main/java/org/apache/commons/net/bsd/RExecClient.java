@@ -65,7 +65,7 @@ import org.apache.commons.net.io.SocketInputStream;
 
 public class RExecClient extends SocketClient
 {
-    private static final char NULL_CHAR = '\0';
+    protected static final char NULL_CHAR = '\0';
 
     /***
      * The default rexec port.  Set to 512 in BSD Unix.

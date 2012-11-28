@@ -136,7 +136,7 @@ public class RCommandClient extends RExecClient
         }
 
         _output_.write(Integer.toString(server.getLocalPort()).getBytes("UTF-8")); // $NON-NLS
-        _output_.write('\0');
+        _output_.write(NULL_CHAR);
         _output_.flush();
 
         socket = server.accept();
