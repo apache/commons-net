@@ -23,7 +23,7 @@ import java.net.InetAddress;
 
 import org.apache.commons.net.DatagramSocketClient;
 
-/***
+/**
  * The DaytimeUDPClient class is a UDP implementation of a client for the
  * Daytime protocol described in RFC 867.  To use the class, merely
  * open a local datagram socket with
@@ -36,10 +36,8 @@ import org.apache.commons.net.DatagramSocketClient;
  * successive calls to {@link #getTime  getTime } are permitted
  * without re-establishing a connection.  That is because UDP is a
  * connectionless protocol and the Daytime protocol is stateless.
- * <p>
- * <p>
  * @see DaytimeTCPClient
- ***/
+ */
 
 public final class DaytimeUDPClient extends DatagramSocketClient
 {
