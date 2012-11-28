@@ -36,23 +36,23 @@ import org.apache.commons.net.SocketClient;
  */
 public final class DaytimeTCPClient extends SocketClient
 {
-    /*** The default daytime port.  It is set to 13 according to RFC 867. ***/
+    /** The default daytime port.  It is set to 13 according to RFC 867. */
     public static final int DEFAULT_PORT = 13;
 
     // Received dates will likely be less than 64 characters.
     // This is a temporary buffer used while receiving data.
     private final char[] __buffer = new char[64];
 
-    /***
+    /**
      * The default DaytimeTCPClient constructor.  It merely sets the default
      * port to <code> DEFAULT_PORT </code>.
-     ***/
+     */
     public DaytimeTCPClient ()
     {
         setDefaultPort(DEFAULT_PORT);
     }
 
-    /***
+    /**
      * Retrieves the time string from the server and returns it.  The
      * server will have closed the connection at this point, so you should
      * call
@@ -64,7 +64,7 @@ public final class DaytimeTCPClient extends SocketClient
      * <p>
      * @return The time string retrieved from the server.
      * @exception IOException  If an error occurs while fetching the time string.
-     ***/
+     */
     public String getTime() throws IOException
     {
         int read;
