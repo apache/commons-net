@@ -214,7 +214,7 @@ public class POP3Client extends POP3
 
         md5 = MessageDigest.getInstance("MD5");
         timestamp += secret;
-        digest = md5.digest(timestamp.getBytes());
+        digest = md5.digest(timestamp.getBytes(this.getCharset()));
         digestBuffer = new StringBuilder(128);
 
         for (i = 0; i < digest.length; i++) {

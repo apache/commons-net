@@ -27,6 +27,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.apache.commons.net.util.Charsets;
+
 
 /**
  * This class handles the entire process of parsing a listing of
@@ -120,15 +122,8 @@ public class FTPListParseEngine {
      */
     private void readStream(InputStream stream, String encoding) throws IOException
     {
-        BufferedReader reader;
-        if (encoding == null)
-        {
-            reader = new BufferedReader(new InputStreamReader(stream));
-        }
-        else
-        {
-            reader = new BufferedReader(new InputStreamReader(stream, encoding));
-        }
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(stream, Charsets.toCharset(encoding)));
 
         String line = this.parser.readNextEntry(reader);
 

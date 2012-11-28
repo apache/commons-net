@@ -26,6 +26,7 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.Socket;
 import java.net.SocketException;
+import java.nio.charset.Charset;
 
 import javax.net.ServerSocketFactory;
 import javax.net.SocketFactory;
@@ -106,11 +107,17 @@ public abstract class SocketClient
 
     /** The proxy to use when connecting. */
     private Proxy connProxy;
+    
+    /**
+     * Charset to use for byte IO.
+     */
+    private Charset charset = Charset.defaultCharset();
 
     /**
      * Default constructor for SocketClient.  Initializes
      * _socket_ to null, _timeout_ to 0, _defaultPort to 0,
-     * _isConnected_ to false, and _socketFactory_ to a shared instance of
+     * _isConnected_ to false, charset to {@code Charset.defaultCharset()} 
+     * and _socketFactory_ to a shared instance of
      * {@link org.apache.commons.net.DefaultSocketFactory}.
      */
     public SocketClient()
@@ -823,6 +830,26 @@ public abstract class SocketClient
      */
     public Proxy getProxy() {
         return connProxy;
+    }
+
+    /**
+     * Gets the charset.
+     * 
+     * @return the charset.
+     * @since 3.3
+     */
+    public Charset getCharset() {
+        return charset;
+    }
+
+    /**
+     * Sets the charset.
+     * 
+     * @param charset the charset.
+     * @since 3.3
+     */
+    public void setCharset(Charset charset) {
+        this.charset = charset;
     }
 
     /*

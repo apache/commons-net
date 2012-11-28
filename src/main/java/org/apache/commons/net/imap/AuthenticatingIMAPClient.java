@@ -150,7 +150,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
             {
                 // the server sends an empty response ("+ "), so we don't have to read it.
                 int result = sendData(
-                    Base64.encodeBase64StringUnChunked(("\000" + username + "\000" + password).getBytes())
+                    Base64.encodeBase64StringUnChunked(("\000" + username + "\000" + password).getBytes(this.getCharset()))
                     );
                 if (result == IMAPReply.OK)
                 {
@@ -164,11 +164,11 @@ public class AuthenticatingIMAPClient extends IMAPSClient
                 byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(2).trim());
                 // get the Mac instance
                 Mac hmac_md5 = Mac.getInstance("HmacMD5");
-                hmac_md5.init(new SecretKeySpec(password.getBytes(), "HmacMD5"));
+                hmac_md5.init(new SecretKeySpec(password.getBytes(this.getCharset()), "HmacMD5"));
                 // compute the result:
-                byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes();
+                byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(this.getCharset());
                 // join the byte arrays to form the reply
-                byte[] usernameBytes = username.getBytes();
+                byte[] usernameBytes = username.getBytes(this.getCharset());
                 byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
                 System.arraycopy(usernameBytes, 0, toEncode, 0, usernameBytes.length);
                 toEncode[usernameBytes.length] = ' ';
@@ -186,11 +186,11 @@ public class AuthenticatingIMAPClient extends IMAPSClient
                 // the server sends fixed responses (base64("Username") and
                 // base64("Password")), so we don't have to read them.
                 if (sendData(
-                    Base64.encodeBase64StringUnChunked(username.getBytes())) != IMAPReply.CONT)
+                    Base64.encodeBase64StringUnChunked(username.getBytes(this.getCharset()))) != IMAPReply.CONT)
                 {
                     return false;
                 }
-                int result = sendData(Base64.encodeBase64StringUnChunked(password.getBytes()));
+                int result = sendData(Base64.encodeBase64StringUnChunked(password.getBytes(this.getCharset())));
                 if (result == IMAPReply.OK)
                 {
                     setState(IMAP.IMAPState.AUTH_STATE);

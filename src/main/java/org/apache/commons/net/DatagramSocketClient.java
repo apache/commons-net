@@ -20,6 +20,7 @@ package org.apache.commons.net;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.nio.charset.Charset;
 
 /***
  * The DatagramSocketClient provides the basic operations that are required
@@ -54,6 +55,11 @@ public abstract class DatagramSocketClient
      ***/
     private static final DatagramSocketFactory __DEFAULT_SOCKET_FACTORY =
         new DefaultDatagramSocketFactory();
+    
+    /**
+     * Charset to use for byte IO.
+     */
+    private Charset charset = Charset.defaultCharset();
 
     /*** The timeout to use after opening a socket. ***/
     protected int _timeout_;
@@ -273,5 +279,25 @@ public abstract class DatagramSocketClient
         } else {
             _socketFactory_ = factory;
         }
+    }
+
+    /**
+     * Gets the charset.
+     * 
+     * @return the charset.
+     * @since 3.3
+     */
+    public Charset getCharset() {
+        return charset;
+    }
+
+    /**
+     * Sets the charset.
+     * 
+     * @param charset the charset.
+     * @since 3.3
+     */
+    public void setCharset(Charset charset) {
+        this.charset = charset;
     }
 }

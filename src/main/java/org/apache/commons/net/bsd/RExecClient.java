@@ -212,11 +212,11 @@ public class RExecClient extends SocketClient
             _output_.write(NULL_CHAR);
         }
 
-        _output_.write(username.getBytes());
+        _output_.write(username.getBytes(this.getCharset()));
         _output_.write(NULL_CHAR);
-        _output_.write(password.getBytes());
+        _output_.write(password.getBytes(this.getCharset()));
         _output_.write(NULL_CHAR);
-        _output_.write(command.getBytes());
+        _output_.write(command.getBytes(this.getCharset()));
         _output_.write(NULL_CHAR);
         _output_.flush();
 
