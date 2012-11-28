@@ -65,6 +65,8 @@ import org.apache.commons.net.io.SocketInputStream;
 
 public class RExecClient extends SocketClient
 {
+    private static final char NULL_CHAR = '\0';
+
     /***
      * The default rexec port.  Set to 512 in BSD Unix.
      ***/
@@ -90,7 +92,7 @@ public class RExecClient extends SocketClient
         server = _serverSocketFactory_.createServerSocket(0, 1, getLocalAddress());
 
         _output_.write(Integer.toString(server.getLocalPort()).getBytes("UTF-8")); // $NON-NLS-1$
-        _output_.write('\0');
+        _output_.write(NULL_CHAR);
         _output_.flush();
 
         socket = server.accept();
@@ -207,15 +209,15 @@ public class RExecClient extends SocketClient
         }
         else
         {
-            _output_.write('\0');
+            _output_.write(NULL_CHAR);
         }
 
         _output_.write(username.getBytes());
-        _output_.write('\0');
+        _output_.write(NULL_CHAR);
         _output_.write(password.getBytes());
-        _output_.write('\0');
+        _output_.write(NULL_CHAR);
         _output_.write(command.getBytes());
-        _output_.write('\0');
+        _output_.write(NULL_CHAR);
         _output_.flush();
 
         ch = _input_.read();
