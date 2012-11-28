@@ -38,17 +38,16 @@ import org.apache.commons.net.DatagramSocketClient;
  * connectionless protocol and the Daytime protocol is stateless.
  * @see DaytimeTCPClient
  */
-
 public final class DaytimeUDPClient extends DatagramSocketClient
 {
-    /*** The default daytime port.  It is set to 13 according to RFC 867. ***/
+    /** The default daytime port.  It is set to 13 according to RFC 867. */
     public static final int DEFAULT_PORT = 13;
 
     private final byte[] __dummyData = new byte[1];
     // Received dates should be less than 256 bytes
     private final byte[] __timeData = new byte[256];
 
-    /***
+    /**
      * Retrieves the time string from the specified server and port and
      * returns it.
      * <p>
@@ -56,7 +55,7 @@ public final class DaytimeUDPClient extends DatagramSocketClient
      * @param port The port of the service.
      * @return The time string.
      * @exception IOException If an error occurs while retrieving the time.
-     ***/
+     */
     public String getTime(InetAddress host, int port) throws IOException
     {
         DatagramPacket sendPacket, receivePacket;
@@ -71,7 +70,7 @@ public final class DaytimeUDPClient extends DatagramSocketClient
         return new String(receivePacket.getData(), 0, receivePacket.getLength());
     }
 
-    /*** Same as <code>getTime(host, DaytimeUDPClient.DEFAULT_PORT);</code> ***/
+    /** Same as <code>getTime(host, DaytimeUDPClient.DEFAULT_PORT);</code> */
     public String getTime(InetAddress host) throws IOException
     {
         return getTime(host, DEFAULT_PORT);
