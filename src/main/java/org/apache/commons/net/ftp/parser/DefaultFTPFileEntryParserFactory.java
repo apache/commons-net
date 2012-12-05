@@ -86,6 +86,7 @@ public class DefaultFTPFileEntryParserFactory
      *                   the supplied key into an FTPFileEntryParser.
      * @see FTPFileEntryParser
      */
+    @Override
     public FTPFileEntryParser createFileEntryParser(String key)
     {
         if (key == null) {
@@ -193,6 +194,7 @@ public class DefaultFTPFileEntryParserFactory
      * @throws NullPointerException if {@code config} is {@code null}
      * @since 1.4
      */
+    @Override
     public FTPFileEntryParser createFileEntryParser(FTPClientConfig config)
     throws ParserInitializationException
     {

@@ -57,6 +57,7 @@ class ReplyIterator implements Iterator<String>, Iterable<String> {
         this(_reader, true);
     }
 
+    @Override
     public boolean hasNext() {
         if (savedException != null){
             throw new NoSuchElementException(savedException.toString());
@@ -64,6 +65,7 @@ class ReplyIterator implements Iterator<String>, Iterable<String> {
         return line != null;
     }
 
+    @Override
     public String next() throws NoSuchElementException {
         if (savedException != null){
             throw new NoSuchElementException(savedException.toString());
@@ -84,10 +86,12 @@ class ReplyIterator implements Iterator<String>, Iterable<String> {
         return prev;
     }
 
+    @Override
     public void remove() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Iterator<String> iterator() {
         return this;
     }

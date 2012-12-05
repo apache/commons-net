@@ -32,6 +32,7 @@ class ArticleIterator implements Iterator<Article>, Iterable<Article> {
         stringIterator = iterableString.iterator();
     }
 
+    @Override
     public boolean hasNext() {
         return stringIterator.hasNext();
     }
@@ -41,14 +42,17 @@ class ArticleIterator implements Iterator<Article>, Iterable<Article> {
      * @return the next {@link Article}, never {@code null}, if unparseable then isDummy()
      * will be true, and the subject will contain the raw info.
      */
+    @Override
     public Article next() {
         String line = stringIterator.next();
         return NNTPClient.__parseArticleEntry(line);
     }
 
+    @Override
     public void remove() {
         stringIterator.remove();
     }
+    @Override
     public Iterator<Article> iterator() {
         return this;
     }

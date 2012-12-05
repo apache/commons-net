@@ -194,18 +194,22 @@ public class Article implements Threadable {
     }
 
 
+    @Override
     public boolean isDummy() {
         return (articleNumber == -1);
     }
 
+    @Override
     public String messageThreadId() {
         return articleId;
     }
 
+    @Override
     public String[] messageThreadReferences() {
         return getReferences();
     }
 
+    @Override
     public String simplifiedSubject() {
         if(simplifiedSubject == null) {
             simplifySubject();
@@ -214,11 +218,13 @@ public class Article implements Threadable {
     }
 
 
+    @Override
     public boolean subjectIsReply() {
         return isReply;
     }
 
 
+    @Override
     public void setChild(Threadable child) {
         this.kid = (Article) child;
         flushSubjectCache();
@@ -229,12 +235,14 @@ public class Article implements Threadable {
     }
 
 
+    @Override
     public void setNext(Threadable next) {
         this.next = (Article)next;
         flushSubjectCache();
     }
 
 
+    @Override
     public Threadable makeDummy() {
         return new Article();
     }

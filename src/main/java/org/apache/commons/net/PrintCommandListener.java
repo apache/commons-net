@@ -147,6 +147,7 @@ public class PrintCommandListener implements ProtocolCommandListener
         __directionMarker = showDirection;
     }
 
+    @Override
     public void protocolCommandSent(ProtocolCommandEvent event)
     {
         if (__directionMarker) {
@@ -188,6 +189,7 @@ public class PrintCommandListener implements ProtocolCommandListener
         }
         return msg;
     }
+    @Override
     public void protocolReplyReceived(ProtocolCommandEvent event)
     {
         if (__directionMarker) {

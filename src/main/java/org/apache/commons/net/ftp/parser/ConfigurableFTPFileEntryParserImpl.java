@@ -87,6 +87,7 @@ implements Configurable
      * If it is null, a default configuration defined by
      * each concrete subclass is used instead.
      */
+    @Override
     public void configure(FTPClientConfig config)
     {
         if (this.timestampParser instanceof Configurable) {

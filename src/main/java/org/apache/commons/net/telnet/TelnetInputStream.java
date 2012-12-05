@@ -597,6 +597,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         __threaded = false;
     }
 
+    @Override
     public void run()
     {
         int ch;

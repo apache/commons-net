@@ -35,11 +35,13 @@ public class FTPSTrustManager implements X509TrustManager
     /**
      * No-op
      */
+    @Override
     public void checkClientTrusted(X509Certificate[] certificates, String authType)
     {
         return;
     }
 
+    @Override
     public void checkServerTrusted(X509Certificate[] certificates, String authType) throws CertificateException
     {
         for (X509Certificate certificate : certificates)
@@ -48,6 +50,7 @@ public class FTPSTrustManager implements X509TrustManager
         }
     }
 
+    @Override
     public X509Certificate[] getAcceptedIssuers()
     {
         return EMPTY_X509CERTIFICATE_ARRAY;

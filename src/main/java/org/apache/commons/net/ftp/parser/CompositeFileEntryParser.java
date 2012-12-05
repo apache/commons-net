@@ -43,6 +43,7 @@ public class CompositeFileEntryParser extends FTPFileEntryParserImpl
         this.ftpFileEntryParsers = ftpFileEntryParsers;
     }
 
+    @Override
     public FTPFile parseFTPEntry(String listEntry)
     {
         if (cachedFtpFileEntryParser != null)
