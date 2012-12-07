@@ -1432,8 +1432,8 @@ implements Configurable
      * it again.  The default file type is <code> FTP.ASCII_FILE_TYPE </code>
      * if this method is never called.
      * <p>
-     * <b>N.B.</b> currently calling any connect method will reset the mode to
-     * ACTIVE_LOCAL_DATA_CONNECTION_MODE.
+     * <b>N.B.</b> currently calling any connect method will reset the type to
+     * FTP.ASCII_FILE_TYPE.
      * @param fileType The <code> _FILE_TYPE </code> constant indcating the
      *                 type of file.
      * @return True if successfully completed, false if not.
@@ -1470,8 +1470,8 @@ implements Configurable
      * is <code> FTP.NON_PRINT_TEXT_FORMAT </code> if this method is never
      * called.
      * <p>
-     * <b>N.B.</b> currently calling any connect method will reset the mode to
-     * ACTIVE_LOCAL_DATA_CONNECTION_MODE.
+     * <b>N.B.</b> currently calling any connect method will reset the type to
+     * FTP.ASCII_FILE_TYPE and the formatOrByteSize to FTP.NON_PRINT_TEXT_FORMAT.
      * <p>
      * @param fileType The <code> _FILE_TYPE </code> constant indcating the
      *                 type of file.
@@ -1503,7 +1503,8 @@ implements Configurable
 
     /**
      * Sets the file structure.  The default structure is
-     * <code> FTP.FILE_STRUCTURE </code> if this method is never called.
+     * <code> FTP.FILE_STRUCTURE </code> if this method is never called
+     * or if a connect method is called.
      * <p>
      * @param structure  The structure of the file (one of the FTP class
      *         <code>_STRUCTURE</code> constants).
@@ -1529,7 +1530,8 @@ implements Configurable
 
     /**
      * Sets the transfer mode.  The default transfer mode
-     * <code> FTP.STREAM_TRANSFER_MODE </code> if this method is never called.
+     * <code> FTP.STREAM_TRANSFER_MODE </code> if this method is never called
+     * or if a connect method is called.
      * <p>
      * @param mode  The new transfer mode to use (one of the FTP class
      *         <code>_TRANSFER_MODE</code> constants).
