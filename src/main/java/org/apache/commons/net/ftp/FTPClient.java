@@ -496,18 +496,33 @@ implements Configurable
      * @param reply
      * @return
      */
-    private static String __parsePathname(String reply)
+    // package protected for access by test cases
+    static String __parsePathname(String reply)
     {
         String param = reply.substring(REPLY_CODE_LEN + 1);
         if (param.startsWith("\"")) {
-            int end;
-            if (param.endsWith("\"")) {
-                end = param.length()-1;
-            } else { // perhaps there's a trailing comment
-                end=param.lastIndexOf("\" "); // find start of comment (assume it does not contain ")
+            StringBuilder sb = new StringBuilder();
+            boolean quoteSeen = false;
+            // start after initial quote
+            for(int i=1; i < param.length(); i++) {
+                char ch = param.charAt(i);
+                if (ch=='"') {
+                    if (quoteSeen) {
+                        sb.append(ch);
+                        quoteSeen=false;
+                    } else {
+                        // don't output yet, in case doubled
+                        quoteSeen=true;
+                    }
+                } else {
+                    if (quoteSeen) { // found lone trailing quote within string
+                        return sb.toString();
+                    }
+                    sb.append(ch); // just another character
+                }
             }
-            if (end != -1) { // It was a match
-                return param.substring(1, end).replace("\"\"", "\"");            
+            if (quoteSeen) { // found lone trailing quote at end of string
+                return sb.toString();
             }
         }
         // malformed reply, return all after reply code and space
