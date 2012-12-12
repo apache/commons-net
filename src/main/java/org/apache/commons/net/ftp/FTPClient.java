@@ -484,11 +484,12 @@ implements Configurable
 
     /**
      * Parse the pathname from a CWD reply.
+     * <p>
      * According to RFC959 (http://www.ietf.org/rfc/rfc959.txt), 
-     * it should be the same as for MKD, i.e.
-     * 257<space>"<directory-name>"<space><commentary>
-     * where any embedded double-quotes are doubled.
-     * 
+     * it should be the same as for MKD - but without commentary - i.e.
+     * {@code 257<space>"<directory-name>"}
+     * where any double-quotes in <directory-name> are doubled.
+     * <p>
      * However, see NET-442 for an exception.
      * 
      * @param reply
@@ -496,16 +497,12 @@ implements Configurable
      */
     private static String __parsePathname(String reply)
     {
-        int begin = reply.indexOf('"'); // find first double quote
-        if (begin == -1) { // not found, return all after reply code and space
-            return reply.substring(REPLY_CODE_LEN + 1);
-        }
-        int end = reply.lastIndexOf("\" "); // N.B. assume commentary does not contain double-quote
-        if (end != -1 ){ // found end of quoted string, de-duplicate any embedded quotes
-            return reply.substring(begin+1, end).replace("\"\"", "\"");            
+        String param = reply.substring(REPLY_CODE_LEN + 1);
+        if (param.startsWith("\"") && param.endsWith("\"")) {
+            return param.substring(1, param.length()-1).replace("\"\"", "\"");            
         }
         // malformed reply, return all after reply code and space
-        return reply.substring(REPLY_CODE_LEN + 1);
+        return param;
     }
 
     /**
