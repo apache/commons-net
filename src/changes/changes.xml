@@ -67,6 +67,9 @@ The <action> type attribute can be add,update,fix,remove.
             <action issue="NET-492" dev="sebb" type="fix">
             FTPClient.printWorkingDirectory() incorrectly parses certain valid PWD command results
             </action>
+            <action dev="ggregory" type="update">
+            Updated code to require Java 1.6
+            </action>
         </release>
         <release version="3.2" date="2012-12-03" description="
 This release fixes bugs and adds some new functionality (see below).
