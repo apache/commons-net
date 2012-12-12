@@ -498,8 +498,16 @@ implements Configurable
     private static String __parsePathname(String reply)
     {
         String param = reply.substring(REPLY_CODE_LEN + 1);
-        if (param.startsWith("\"") && param.endsWith("\"")) {
-            return param.substring(1, param.length()-1).replace("\"\"", "\"");            
+        if (param.startsWith("\"")) {
+            int end;
+            if (param.endsWith("\"")) {
+                end = param.length()-1;
+            } else { // perhaps there's a trailing comment
+                end=param.lastIndexOf("\" "); // find start of comment (assume it does not contain ")
+            }
+            if (end != -1) { // It was a match
+                return param.substring(1, end).replace("\"\"", "\"");            
+            }
         }
         // malformed reply, return all after reply code and space
         return param;
