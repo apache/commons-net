@@ -39,6 +39,7 @@ public class ListingFunctionalTest extends TestCase
     static final int INVALID_PATH = 3;
     static final int VALID_FILENAME = 4;
     static final int VALID_PATH = 5;
+    static final int PATH_PWD = 6; // response to PWD
 
     public static final Test suite()
     {
@@ -47,16 +48,24 @@ public class ListingFunctionalTest extends TestCase
                 {
                     "ftp.ibiblio.org", "unix", "vms",
                     "HA!", "javaio.jar",
-                    "pub/languages/java/javafaq"
+                    "pub/languages/java/javafaq",
+                    "/pub/languages/java/javafaq",
                 },
                 {
-                    "ftp.wacom.com", "windows", "VMS", "HA!",
-                    "wacom97.zip", "pub\\drivers"
+                    "apache.cs.utah.edu", "unix", "vms",
+                    "HA!", "HEADER.html",
+                    "apache.org",
+                    "/apache.org",
                 },
+//                { // not available
+//                    "ftp.wacom.com", "windows", "VMS", "HA!",
+//                    "wacom97.zip", "pub\\drivers"
+//                },
                 {
                     "ftp.decuslib.com", "vms", "windows", // VMS OpenVMS V8.3
                     "[.HA!]", "FREEWARE_SUBMISSION_INSTRUCTIONS.TXT;1",
-                    "[.FREEWAREV80.FREEWARE]"
+                    "[.FREEWAREV80.FREEWARE]",
+                    "DECUSLIB:[DECUS.FREEWAREV80.FREEWARE]"
                 },
 //                {  // VMS TCPware V5.7-2 does not return (RWED) permissions
 //                    "ftp.process.com", "vms", "windows",
@@ -95,6 +104,7 @@ public class ListingFunctionalTest extends TestCase
     private String validFilename;
     private String validParserKey;
     private String validPath;
+    private String pwdPath;
 
     /**
      * Constructor for FTPClientTest.
@@ -110,6 +120,7 @@ public class ListingFunctionalTest extends TestCase
         invalidPath = settings[INVALID_PATH];
         validFilename = settings[VALID_FILENAME];
         validPath = settings[VALID_PATH];
+        pwdPath = settings[PATH_PWD];
         hostName = settings[HOSTNAME];
     }
 
@@ -157,6 +168,7 @@ public class ListingFunctionalTest extends TestCase
         client.connect(hostName);
         client.login("anonymous", "anonymous");
         client.enterLocalPassiveMode();
+//        client.addProtocolCommandListener(new PrintCommandListener(System.out));
     }
 
     /*
@@ -285,7 +297,10 @@ public class ListingFunctionalTest extends TestCase
 
         FTPFile[] files = client.listFiles(validPath);
 
-        assertEquals(0, files.length);
+        assertNotNull(files);
+
+        // This may well fail, e.g. window parser for VMS listing
+        assertTrue("Expected empty array: "+Arrays.toString(files), Arrays.equals(new FTPFile[]{}, files));
     }
 
     /*
@@ -350,4 +365,12 @@ public class ListingFunctionalTest extends TestCase
 
         assertNull(names);
     }
+
+    public void testprintWorkingDirectory()
+            throws IOException
+        {
+            client.changeWorkingDirectory(validPath);
+            String pwd = client.printWorkingDirectory();
+            assertEquals(pwdPath, pwd);
+        }
 }
