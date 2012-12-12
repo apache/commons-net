@@ -486,9 +486,10 @@ implements Configurable
      * Parse the pathname from a CWD reply.
      * <p>
      * According to RFC959 (http://www.ietf.org/rfc/rfc959.txt), 
-     * it should be the same as for MKD - but without commentary - i.e.
-     * {@code 257<space>"<directory-name>"}
-     * where any double-quotes in <directory-name> are doubled.
+     * it should be the same as for MKD i.e.
+     * {@code 257<space>"<directory-name>"[<space>commentary]}
+     * where any double-quotes in {@code <directory-name>} are doubled.
+     * Unlike MKD, the commentary is optional.
      * <p>
      * However, see NET-442 for an exception.
      * 
