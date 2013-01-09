@@ -64,6 +64,9 @@ The <action> type attribute can be add,update,fix,remove.
     <body>
         <release version="3.3" date="TBA" description="
         ">
+            <action issue="NET-494" dev="sebb" type="fix">
+            FTPClient.CSL.cleanUp() fails to restore timeout value on exception
+            </action>
             <action issue="NET-492" dev="sebb" type="fix">
             FTPClient.printWorkingDirectory() incorrectly parses certain valid PWD command results
             </action>

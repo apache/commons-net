@@ -650,6 +650,9 @@ implements Configurable
         catch (IOException e)
         {
             Util.closeQuietly(socket); // ignore close errors here
+            if (csl != null) {
+                csl.cleanUp(); // fetch any outstanding keepalive replies
+            }
             throw e;
         }
 
@@ -1825,11 +1828,11 @@ implements Configurable
                     false);
         } finally {
             Util.closeQuietly(socket);
+            if (csl != null) {
+                csl.cleanUp(); // fetch any outstanding keepalive replies
+            }
         }
 
-        if (csl != null) {
-            csl.cleanUp(); // fetch any outstanding keepalive replies
-        }
         // Get the transfer response
         boolean ok = completePendingCommand();
         return ok;
@@ -3580,10 +3583,13 @@ implements Configurable
         }
 
         void cleanUp() throws IOException {
-            while(notAcked-- > 0) {
-                parent.__getReplyNoReport();
+            try {
+                while(notAcked-- > 0) {
+                    parent.__getReplyNoReport();
+                }
+            } finally {
+                parent.setSoTimeout(currentSoTimeout);                
             }
-            parent.setSoTimeout(currentSoTimeout);
         }
 
     }
