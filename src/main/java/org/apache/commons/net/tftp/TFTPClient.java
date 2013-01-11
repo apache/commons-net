@@ -197,7 +197,7 @@ _receivePacket:
                     }
                 }
 
-                // Comply with RFC 783 indication that an error acknowledgement
+                // Comply with RFC 783 indication that an error acknowledgment
                 // should be sent to originator if unexpected TID or host.
                 if (host.equals(received.getAddress()) &&
                         received.getPort() == hostPort)
