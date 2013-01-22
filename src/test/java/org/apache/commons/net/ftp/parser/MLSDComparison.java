@@ -42,7 +42,7 @@ import org.junit.Test;
  */
 public class MLSDComparison {
 
-    private Comparator<FTPFile> cmp = new Comparator<FTPFile>() {
+    private final Comparator<FTPFile> cmp = new Comparator<FTPFile>() {
         @Override
         public int compare(FTPFile o1, FTPFile o2) {
                 String n1 = o1.getName();

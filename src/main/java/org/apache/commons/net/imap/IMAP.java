@@ -62,9 +62,9 @@ public class IMAP extends SocketClient
 
     protected BufferedReader _reader;
     private int _replyCode;
-    private List<String> _replyLines;
+    private final List<String> _replyLines;
 
-    private char[] _initialID = { 'A', 'A', 'A', 'A' };
+    private final char[] _initialID = { 'A', 'A', 'A', 'A' };
 
     /**
      * The default IMAPClient constructor.  Initializes the state

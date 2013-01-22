@@ -39,7 +39,7 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     private static final String DEFAULT_DATE_FORMAT2
         = "MM-dd-yy kk:mm"; //11-09-01 18:30
 
-    private FTPTimestampParser timestampParser;
+    private final FTPTimestampParser timestampParser;
 
     /**
      * this is the regular expression used by this parser.

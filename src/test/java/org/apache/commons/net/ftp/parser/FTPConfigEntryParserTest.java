@@ -35,7 +35,7 @@ import org.apache.commons.net.ftp.FTPFile;
  */
 public class FTPConfigEntryParserTest extends TestCase {
 
-    private SimpleDateFormat df = new SimpleDateFormat();
+    private final SimpleDateFormat df = new SimpleDateFormat();
 
     public void testParseFieldsOnAIX() {
 

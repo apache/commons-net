@@ -48,8 +48,9 @@ package org.apache.commons.net.smtp;
 
 public class SimpleSMTPHeader
 {
-    private String __subject, __from, __to;
-    private StringBuffer __headerFields, __cc;
+    private final String __subject, __from, __to;
+    private final StringBuffer __headerFields;
+    private StringBuffer __cc;
 
     /***
      * Creates a new SimpleSMTPHeader instance initialized with the given

@@ -98,13 +98,13 @@ public class ListingFunctionalTest extends TestCase
     }
 
     private FTPClient client;
-    private String hostName;
-    private String invalidParserKey;
-    private String invalidPath;
-    private String validFilename;
-    private String validParserKey;
-    private String validPath;
-    private String pwdPath;
+    private final String hostName;
+    private final String invalidParserKey;
+    private final String invalidPath;
+    private final String validFilename;
+    private final String validParserKey;
+    private final String validPath;
+    private final String pwdPath;
 
     /**
      * Constructor for FTPClientTest.

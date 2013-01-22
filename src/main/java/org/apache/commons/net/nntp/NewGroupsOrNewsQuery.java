@@ -43,10 +43,10 @@ import java.util.Calendar;
 
 public final class NewGroupsOrNewsQuery
 {
-    private String __date, __time;
+    private final String __date, __time;
     private StringBuffer __distributions;
     private StringBuffer __newsgroups;
-    private boolean __isGMT;
+    private final boolean __isGMT;
 
 
     /***

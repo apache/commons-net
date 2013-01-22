@@ -50,7 +50,7 @@ public class TimeTestSimpleServer implements Runnable
     public static final int DEFAULT_PORT = 37;
 
     private ServerSocket server;
-    private int port;
+    private final int port;
     private boolean running = false;
 
     /**

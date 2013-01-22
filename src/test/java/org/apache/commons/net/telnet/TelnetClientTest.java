@@ -62,7 +62,7 @@ extends TestCase implements TelnetNotificationHandler
     private TestConnection ANSI;
     private TestConnection NOREAD;
 
-    private int NUM_CONNECTIONS = 4;
+    private final int NUM_CONNECTIONS = 4;
 
 
     protected int numdo = 0;

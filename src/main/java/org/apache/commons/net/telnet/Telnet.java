@@ -100,7 +100,7 @@ class Telnet extends SocketClient
     /***
      * Array of option handlers
      ***/
-    private TelnetOptionHandler optionHandlers[];
+    private final TelnetOptionHandler optionHandlers[];
 
     /* open TelnetOptionHandler functionality (end)*/
 
@@ -115,7 +115,7 @@ class Telnet extends SocketClient
     /***
      * monitor to wait for AYT
      ***/
-    private Object aytMonitor = new Object();
+    private final Object aytMonitor = new Object();
 
     /***
      * flag for AYT

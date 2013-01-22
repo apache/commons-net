@@ -49,7 +49,7 @@ import junit.framework.TestCase;
 
 public class FTPClientConfigFunctionalTest extends TestCase {
 
-    private FTPClient FTP = new FTPClient();
+    private final FTPClient FTP = new FTPClient();
     private FTPClientConfig FTPConf;
 
 

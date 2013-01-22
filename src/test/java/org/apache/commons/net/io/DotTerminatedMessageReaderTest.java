@@ -25,8 +25,8 @@ import junit.framework.TestCase;
 public class DotTerminatedMessageReaderTest extends TestCase {
 
     private DotTerminatedMessageReader reader;
-    private StringBuilder str = new StringBuilder();
-    private char[] buf = new char[64];
+    private final StringBuilder str = new StringBuilder();
+    private final char[] buf = new char[64];
     private static final String CRLF = "\r\n";
     private static final String DOT = ".";
     private static final String EOM = CRLF+DOT+CRLF;
