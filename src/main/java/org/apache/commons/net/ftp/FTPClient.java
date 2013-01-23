@@ -361,7 +361,9 @@ implements Configurable
     private boolean __remoteVerificationEnabled;
     private long __restartOffset;
     private FTPFileEntryParserFactory __parserFactory;
-    private int __bufferSize;
+    private int __bufferSize; // buffersize for buffered data streams
+    private int __sendDataSocketBufferSize;
+    private int __receiveDataSocketBufferSize;
     private boolean __listHiddenFiles;
     private boolean __useEPSVwithIPv4; // whether to attempt EPSV with an IPv4 connection
 
@@ -478,7 +480,7 @@ implements Configurable
         __systemName         = null;
         __entryParser        = null;
         __entryParserKey    = "";
-        __bufferSize         = Util.DEFAULT_COPY_BUFFER_SIZE;
+        __bufferSize         = 0;
         __featuresMap = null;
     }
 
@@ -826,6 +828,12 @@ implements Configurable
                 if (__dataTimeout >= 0) {
                     socket.setSoTimeout(__dataTimeout);
                 }
+                if (__receiveDataSocketBufferSize > 0) {
+                    socket.setReceiveBufferSize(__receiveDataSocketBufferSize);
+                }
+                if (__sendDataSocketBufferSize > 0) {
+                    socket.setSendBufferSize(__sendDataSocketBufferSize);
+                }
             } finally {
                 server.close();
             }
@@ -858,6 +866,12 @@ implements Configurable
             }
 
             socket = _socketFactory_.createSocket();
+            if (__receiveDataSocketBufferSize > 0) {
+                socket.setReceiveBufferSize(__receiveDataSocketBufferSize);
+            }
+            if (__sendDataSocketBufferSize > 0) {
+                socket.setSendBufferSize(__sendDataSocketBufferSize);
+            }
             if (__passiveLocalHost != null) {
                 socket.bind(new InetSocketAddress(__passiveLocalHost, 0));
             }
@@ -891,11 +905,6 @@ implements Configurable
             throw new IOException(
                     "Host attempting data connection " + socket.getInetAddress().getHostAddress() +
                     " is not same as server " + getRemoteAddress().getHostAddress());
-        }
-
-        if ( __bufferSize > 0 ) {
-            socket.setReceiveBufferSize(__bufferSize);
-            socket.setSendBufferSize(__bufferSize);
         }
 
         return socket;
@@ -3432,6 +3441,42 @@ implements Configurable
      */
     public int getBufferSize() {
         return __bufferSize;
+    }
+
+    /**
+     * Sets the value to be used for the data socket SO_SNDBUF option.
+     * If the value is positive, the option will be set when the data socket has been created.
+     *
+     * @param bufSize The size of the buffer, zero or negative means the value is ignored.
+     */
+    public void setSendDataSocketBufferSize(int bufSize) {
+        __sendDataSocketBufferSize = bufSize;
+    }
+
+    /**
+     * Retrieve the value to be used for the data socket SO_SNDBUF option.
+     * @return The current buffer size.
+     */
+    public int getSendDataSocketBufferSize() {
+        return __sendDataSocketBufferSize;
+    }
+
+    /**
+     * Sets the value to be used for the data socket SO_RCVBUF option.
+     * If the value is positive, the option will be set when the data socket has been created.
+     *
+     * @param bufSize The size of the buffer, zero or negative means the value is ignored.
+     */
+    public void setReceieveDataSocketBufferSize(int bufSize) {
+        __receiveDataSocketBufferSize = bufSize;
+    }
+
+    /**
+     * Retrieve the value to be used for the data socket SO_RCVBUF option.
+     * @return The current buffer size.
+     */
+    public int getReceiveDataSocketBufferSize() {
+        return __receiveDataSocketBufferSize;
     }
 
     /**

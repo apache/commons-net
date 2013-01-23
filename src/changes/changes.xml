@@ -64,6 +64,11 @@ The <action> type attribute can be add,update,fix,remove.
     <body>
         <release version="3.3" date="TBA" description="
         ">
+            <action issue="NET-465" dev="sebb" type="fix">
+            FTPClient setSendBufferSize and setReceiveBufferSize on data socket.
+            The previous fix caused performance problems.
+            Added new getters and setters for the SO_SNDBUF and SO_RCVBUF values to be used on the data socket.
+            </action>
             <action issue="NET-496" dev="sebb" type="add">
             Util copyReader/copyStream classes should use default buffer size for non-positive buffer size parameters.
             </action>
