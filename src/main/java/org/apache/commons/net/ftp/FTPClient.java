@@ -629,10 +629,9 @@ implements Configurable
         OutputStream output;
 
         if (__fileType == ASCII_FILE_TYPE) {
-            output = new ToNetASCIIOutputStream(
-                     new BufferedOutputStream(socket.getOutputStream(), getBufferSize()));
+            output = new ToNetASCIIOutputStream(getBufferedOutputStream(socket.getOutputStream()));
         } else {
-            output = new BufferedOutputStream(socket.getOutputStream(), getBufferSize());
+            output = getBufferedOutputStream(socket.getOutputStream());
         }
 
         CSL csl = null;
@@ -693,7 +692,7 @@ implements Configurable
             // programmer if possible.  Programmers can decide on their
             // own if they want to wrap the SocketOutputStream we return
             // for file types other than ASCII.
-            output = new BufferedOutputStream(output, getBufferSize());
+            output = getBufferedOutputStream(output);
             output = new ToNetASCIIOutputStream(output);
 
         }
@@ -1834,10 +1833,9 @@ implements Configurable
 
         InputStream input;
         if (__fileType == ASCII_FILE_TYPE) {
-            input = new FromNetASCIIInputStream(
-                    new BufferedInputStream(socket.getInputStream(), getBufferSize()));
+            input = new FromNetASCIIInputStream(getBufferedInputStream(socket.getInputStream()));
         } else {
-            input = new BufferedInputStream(socket.getInputStream(), getBufferSize());
+            input = getBufferedInputStream(socket.getInputStream());
         }
 
         CSL csl = null;
@@ -1916,7 +1914,7 @@ implements Configurable
             // programmer if possible.  Programmers can decide on their
             // own if they want to wrap the SocketInputStream we return
             // for file types other than ASCII.
-            input = new BufferedInputStream(input, getBufferSize());
+            input = getBufferedInputStream(input);
             input = new FromNetASCIIInputStream(input);
         }
         return new org.apache.commons.net.io.SocketInputStream(socket, input);
@@ -3420,7 +3418,7 @@ implements Configurable
 
 
     /**
-     * Set the internal buffer size for data sockets.
+     * Set the internal buffer size for buffered data streams.
      *
      * @param bufSize The size of the buffer. Use a non-positive value to use the default.
      */
@@ -3429,7 +3427,7 @@ implements Configurable
     }
 
     /**
-     * Retrieve the current internal buffer size for data sockets.
+     * Retrieve the current internal buffer size for buffered data streams.
      * @return The current buffer size.
      */
     public int getBufferSize() {
@@ -3559,6 +3557,20 @@ implements Configurable
      */
     public int getControlKeepAliveReplyTimeout() {
         return __controlKeepAliveReplyTimeout;
+    }
+
+    private OutputStream getBufferedOutputStream(OutputStream outputStream) {
+        if (__bufferSize > 0) {
+            return new BufferedOutputStream(outputStream, __bufferSize);
+        }
+        return new BufferedOutputStream(outputStream);
+    }
+
+    private InputStream getBufferedInputStream(InputStream inputStream) {
+        if (__bufferSize > 0) {
+            return new BufferedInputStream(inputStream, __bufferSize);            
+        }
+        return new BufferedInputStream(inputStream);
     }
 
     // @since 3.0
