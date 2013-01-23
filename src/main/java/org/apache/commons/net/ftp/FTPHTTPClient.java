@@ -64,10 +64,12 @@ public class FTPHTTPClient extends FTPClient {
      * {@inheritDoc}
      *
      * @throws IllegalStateException if connection mode is not passive
+     * @deprecated Use {@link #_openDataConnection_(FTPCmd, String)} instead
      */
     // Kept to maintain binary compatibility
     // Not strictly necessary, but Clirr complains even though there is a super-impl
     @Override
+    @Deprecated
     protected Socket _openDataConnection_(int command, String arg) 
     throws IOException {
         return super._openDataConnection_(command, arg);

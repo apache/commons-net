@@ -32,7 +32,7 @@ import java.net.Socket;
 
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPCommand;
+import org.apache.commons.net.ftp.FTPCmd;
 import org.apache.commons.net.io.Util;
 
 /**
@@ -70,7 +70,7 @@ public class DownloadListings extends FTPClient {
         removeProtocolCommandListener(listener);
     }
 
-    private void download(String path, int command, File filename) throws Exception {
+    private void download(String path, FTPCmd command, File filename) throws Exception {
         Socket socket;
         if ((socket = _openDataConnection_(command, getListArguments(path))) == null) {
             System.out.println(getReplyString());
@@ -114,8 +114,8 @@ public class DownloadListings extends FTPClient {
                 if (self.open(host, port)) {
                     try {
                         self.info();
-                        self.download(path, FTPCommand.LIST, new File(DOWNLOAD_DIR, host+"_list.txt"));
-                        self.download(path, FTPCommand.MLSD, new File(DOWNLOAD_DIR, host+"_mlsd.txt"));
+                        self.download(path, FTPCmd.LIST, new File(DOWNLOAD_DIR, host+"_list.txt"));
+                        self.download(path, FTPCmd.MLSD, new File(DOWNLOAD_DIR, host+"_mlsd.txt"));
                     } catch (Exception e) {
                         e.printStackTrace();
                     } finally {

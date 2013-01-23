@@ -26,6 +26,7 @@ public class FTPCommandTest extends TestCase {
         super(name);
     }
 
+    @SuppressWarnings("deprecation") // test of deprecated code
     public void testArray() {
         FTPCommand.checkArray();
     }

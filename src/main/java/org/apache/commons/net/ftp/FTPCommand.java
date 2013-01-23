@@ -26,8 +26,9 @@ package org.apache.commons.net.ftp;
  * where the constant name is the same as the FTP command.
  * <p>
  * <p>
+ * @deprecated use {@link FTPCmd} instead
  */
-// TODO - replace with an enum?
+@Deprecated
 public final class FTPCommand
 {
 

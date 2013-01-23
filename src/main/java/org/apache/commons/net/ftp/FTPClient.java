@@ -608,10 +608,10 @@ implements Configurable
         __passivePort = port;
     }
 
-    private boolean __storeFile(int command, String remote, InputStream local)
+    private boolean __storeFile(FTPCmd command, String remote, InputStream local)
     throws IOException
     {
-        return _storeFile(FTPCommand.getCommand(command), remote, local);
+        return _storeFile(command.getCommand(), remote, local);
     }
     
     /**
@@ -666,10 +666,10 @@ implements Configurable
         return ok;
     }
 
-    private OutputStream __storeFileStream(int command, String remote)
+    private OutputStream __storeFileStream(FTPCmd command, String remote)
     throws IOException
     {
-        return _storeFileStream(FTPCommand.getCommand(command), remote);
+        return _storeFileStream(command.getCommand(), remote);
     }
 
     /**
@@ -719,11 +719,37 @@ implements Configurable
      *         the connection.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
+     * @deprecated Use {@link #_openDataConnection_(FTPCmd, String)} instead
      */
+    @Deprecated
     protected Socket _openDataConnection_(int command, String arg)
     throws IOException
     {
         return _openDataConnection_(FTPCommand.getCommand(command), arg);
+    }
+
+    /**
+     * Establishes a data connection with the FTP server, returning
+     * a Socket for the connection if successful.  If a restart
+     * offset has been set with {@link #setRestartOffset(long)},
+     * a REST command is issued to the server with the offset as
+     * an argument before establishing the data connection.  Active
+     * mode connections also cause a local PORT command to be issued.
+     * <p>
+     * @param command  The int representation of the FTP command to send.
+     * @param arg The arguments to the FTP command.  If this parameter is
+     *             set to null, then the command is sent with no argument.
+     * @return A Socket corresponding to the established data connection.
+     *         Null is returned if an FTP protocol error is reported at
+     *         any point during the establishment and initialization of
+     *         the connection.
+     * @exception IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     */
+    protected Socket _openDataConnection_(FTPCmd command, String arg)
+    throws IOException
+    {
+        return _openDataConnection_(command.getCommand(), arg);
     }
 
     /**
@@ -1792,7 +1818,7 @@ implements Configurable
     public boolean retrieveFile(String remote, OutputStream local)
     throws IOException
     {
-        return _retrieveFile(FTPCommand.getCommand(FTPCommand.RETR), remote, local);
+        return _retrieveFile(FTPCmd.RETR.getCommand(), remote, local);
     }
 
     /**
@@ -1867,7 +1893,7 @@ implements Configurable
      */
     public InputStream retrieveFileStream(String remote) throws IOException
     {
-        return _retrieveFileStream(FTPCommand.getCommand(FTPCommand.RETR), remote);
+        return _retrieveFileStream(FTPCmd.RETR.getCommand(), remote);
     }
 
     /**
@@ -1926,7 +1952,7 @@ implements Configurable
     public boolean storeFile(String remote, InputStream local)
     throws IOException
     {
-        return __storeFile(FTPCommand.STOR, remote, local);
+        return __storeFile(FTPCmd.STOR, remote, local);
     }
 
 
@@ -1957,7 +1983,7 @@ implements Configurable
      */
     public OutputStream storeFileStream(String remote) throws IOException
     {
-        return __storeFileStream(FTPCommand.STOR, remote);
+        return __storeFileStream(FTPCmd.STOR, remote);
     }
 
     /**
@@ -1988,7 +2014,7 @@ implements Configurable
     public boolean appendFile(String remote, InputStream local)
     throws IOException
     {
-        return __storeFile(FTPCommand.APPE, remote, local);
+        return __storeFile(FTPCmd.APPE, remote, local);
     }
 
     /**
@@ -2018,7 +2044,7 @@ implements Configurable
      */
     public OutputStream appendFileStream(String remote) throws IOException
     {
-        return __storeFileStream(FTPCommand.APPE, remote);
+        return __storeFileStream(FTPCmd.APPE, remote);
     }
 
     /**
@@ -2050,7 +2076,7 @@ implements Configurable
     public boolean storeUniqueFile(String remote, InputStream local)
     throws IOException
     {
-        return __storeFile(FTPCommand.STOU, remote, local);
+        return __storeFile(FTPCmd.STOU, remote, local);
     }
 
 
@@ -2083,7 +2109,7 @@ implements Configurable
      */
     public OutputStream storeUniqueFileStream(String remote) throws IOException
     {
-        return __storeFileStream(FTPCommand.STOU, remote);
+        return __storeFileStream(FTPCmd.STOU, remote);
     }
 
     /**
@@ -2112,7 +2138,7 @@ implements Configurable
      */
     public boolean storeUniqueFile(InputStream local) throws IOException
     {
-        return __storeFile(FTPCommand.STOU, null, local);
+        return __storeFile(FTPCmd.STOU, null, local);
     }
 
     /**
@@ -2142,7 +2168,7 @@ implements Configurable
      */
     public OutputStream storeUniqueFileStream() throws IOException
     {
-        return __storeFileStream(FTPCommand.STOU, null);
+        return __storeFileStream(FTPCmd.STOU, null);
     }
 
     /**
@@ -2382,7 +2408,7 @@ implements Configurable
      */
     public FTPFile mlistFile(String pathname) throws IOException
     {
-        boolean success = FTPReply.isPositiveCompletion(sendCommand(FTPCommand.MLST, pathname));
+        boolean success = FTPReply.isPositiveCompletion(sendCommand(FTPCmd.MLST, pathname));
         if (success){
             String entry = getReplyStrings()[1].substring(1); // skip leading space for parser
             return MLSxEntryParser.parseEntry(entry);
@@ -2775,7 +2801,7 @@ implements Configurable
      */
     public String[] listNames(String pathname) throws IOException
     {
-        Socket socket = _openDataConnection_(FTPCommand.NLST, getListArguments(pathname));
+        Socket socket = _openDataConnection_(FTPCmd.NLST, getListArguments(pathname));
 
         if (socket == null) {
             return null;
@@ -3243,7 +3269,7 @@ implements Configurable
             FTPFileEntryParser parser, String pathname)
     throws IOException
     {
-        Socket socket = _openDataConnection_(FTPCommand.LIST, getListArguments(pathname));
+        Socket socket = _openDataConnection_(FTPCmd.LIST, getListArguments(pathname));
 
         FTPListParseEngine engine = new FTPListParseEngine(parser);
         if (socket == null)
@@ -3271,7 +3297,7 @@ implements Configurable
      */
     private FTPListParseEngine initiateMListParsing(String pathname) throws IOException
     {
-        Socket socket = _openDataConnection_(FTPCommand.MLSD, pathname);
+        Socket socket = _openDataConnection_(FTPCmd.MLSD, pathname);
         FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance());
         if (socket == null)
         {
