@@ -630,9 +630,9 @@ implements Configurable
 
         if (__fileType == ASCII_FILE_TYPE) {
             output = new ToNetASCIIOutputStream(
-                     new BufferedOutputStream(socket.getOutputStream(), getDefaultedBufferSize()));
+                     new BufferedOutputStream(socket.getOutputStream(), getBufferSize()));
         } else {
-            output = new BufferedOutputStream(socket.getOutputStream(), getDefaultedBufferSize());
+            output = new BufferedOutputStream(socket.getOutputStream(), getBufferSize());
         }
 
         CSL csl = null;
@@ -643,7 +643,7 @@ implements Configurable
         // Treat everything else as binary for now
         try
         {
-            Util.copyStream(local, output, getDefaultedBufferSize(),
+            Util.copyStream(local, output, getBufferSize(),
                     CopyStreamEvent.UNKNOWN_STREAM_SIZE, __mergeListeners(csl),
                     false);
         }
@@ -693,8 +693,7 @@ implements Configurable
             // programmer if possible.  Programmers can decide on their
             // own if they want to wrap the SocketOutputStream we return
             // for file types other than ASCII.
-            output = new BufferedOutputStream(output,
-                    getDefaultedBufferSize());
+            output = new BufferedOutputStream(output, getBufferSize());
             output = new ToNetASCIIOutputStream(output);
 
         }
@@ -1836,9 +1835,9 @@ implements Configurable
         InputStream input;
         if (__fileType == ASCII_FILE_TYPE) {
             input = new FromNetASCIIInputStream(
-                    new BufferedInputStream(socket.getInputStream(), getDefaultedBufferSize()));
+                    new BufferedInputStream(socket.getInputStream(), getBufferSize()));
         } else {
-            input = new BufferedInputStream(socket.getInputStream(), getDefaultedBufferSize());
+            input = new BufferedInputStream(socket.getInputStream(), getBufferSize());
         }
 
         CSL csl = null;
@@ -1849,7 +1848,7 @@ implements Configurable
         // Treat everything else as binary for now
         try
         {
-            Util.copyStream(input, local, getDefaultedBufferSize(),
+            Util.copyStream(input, local, getBufferSize(),
                     CopyStreamEvent.UNKNOWN_STREAM_SIZE, __mergeListeners(csl),
                     false);
         } finally {
@@ -1917,8 +1916,7 @@ implements Configurable
             // programmer if possible.  Programmers can decide on their
             // own if they want to wrap the SocketInputStream we return
             // for file types other than ASCII.
-            input = new BufferedInputStream(input,
-                    getDefaultedBufferSize());
+            input = new BufferedInputStream(input, getBufferSize());
             input = new FromNetASCIIInputStream(input);
         }
         return new org.apache.commons.net.io.SocketInputStream(socket, input);
@@ -3436,14 +3434,6 @@ implements Configurable
      */
     public int getBufferSize() {
         return __bufferSize;
-    }
-
-    /**
-     * Get the buffer size, with default set to Util.DEFAULT_COPY_BUFFER_SIZE.
-     * @return the buffer size.
-     */
-    private int getDefaultedBufferSize() {
-        return __bufferSize > 0 ? __bufferSize : Util.DEFAULT_COPY_BUFFER_SIZE;
     }
 
     /**
