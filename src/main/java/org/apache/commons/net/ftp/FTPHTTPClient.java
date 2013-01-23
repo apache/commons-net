@@ -45,11 +45,14 @@ public class FTPHTTPClient extends FTPClient {
     private static final byte[] CRLF={'\r', '\n'};
     private final Base64 base64 = new Base64();
 
+    private String tunnelHost; // Save the host when setting up a tunnel (needed for EPSV)
+
     public FTPHTTPClient(String proxyHost, int proxyPort, String proxyUser, String proxyPass) {
         this.proxyHost = proxyHost;
         this.proxyPort = proxyPort;
         this.proxyUsername = proxyUser;
         this.proxyPassword = proxyPass;
+        this.tunnelHost = null;
     }
 
     public FTPHTTPClient(String proxyHost, int proxyPort) {
@@ -85,10 +88,12 @@ public class FTPHTTPClient extends FTPClient {
         }
 
         final boolean isInet6Address = getRemoteAddress() instanceof Inet6Address;
+        String passiveHost = null;
         
         boolean attemptEPSV = isUseEPSVwithIPv4() || isInet6Address;
         if (attemptEPSV && epsv() == FTPReply.ENTERING_EPSV_MODE) {
             _parseExtendedPassiveModeReply(_replyLines.get(0));
+            passiveHost = this.tunnelHost;
         } else {
             if (isInet6Address) {
                 return null; // Must use EPSV for IPV6
@@ -98,12 +103,13 @@ public class FTPHTTPClient extends FTPClient {
                 return null;
             }
             _parsePassiveModeReply(_replyLines.get(0));
+            passiveHost = this.getPassiveHost();
         }
 
         Socket socket = new Socket(proxyHost, proxyPort);
         InputStream is = socket.getInputStream();
         OutputStream os = socket.getOutputStream();
-        tunnelHandshake(this.getPassiveHost(), this.getPassivePort(), is, os);
+        tunnelHandshake(passiveHost, this.getPassivePort(), is, os);
         if ((getRestartOffset() > 0) && !restart(getRestartOffset())) {
             socket.close();
             return null;
@@ -139,6 +145,7 @@ public class FTPHTTPClient extends FTPClient {
         final String connectString = "CONNECT "  + host + ":" + port  + " HTTP/1.1";
         final String hostString = "Host: " + host + ":" + port;
 
+        this.tunnelHost = host;
         output.write(connectString.getBytes("UTF-8")); // TODO what is the correct encoding?
         output.write(CRLF);
         output.write(hostString.getBytes("UTF-8"));

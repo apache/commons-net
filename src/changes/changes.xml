@@ -64,6 +64,9 @@ The <action> type attribute can be add,update,fix,remove.
     <body>
         <release version="3.3" date="TBA" description="
         ">
+            <action issue="NET-480" dev="sebb" type="fix">
+            Wrong passivHost when using FTPHTTPClient with EPSV
+            </action>
             <action issue="NET-494" dev="sebb" type="fix">
             FTPClient.CSL.cleanUp() fails to restore timeout value on exception
             </action>
