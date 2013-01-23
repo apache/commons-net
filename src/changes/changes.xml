@@ -64,6 +64,9 @@ The <action> type attribute can be add,update,fix,remove.
     <body>
         <release version="3.3" date="TBA" description="
         ">
+            <action issue="NET-496" dev="sebb" type="add">
+            Util copyReader/copyStream classes should use default buffer size for non-positive buffer size parameters.
+            </action>
             <action issue="NET-310" dev="sebb" type="add">
             FTPCommand conversion to use enum; added FTPCmd emum and deprecated FTPCommand.
             </action>

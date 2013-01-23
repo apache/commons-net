@@ -37,10 +37,11 @@ import java.net.Socket;
 
 public final class Util
 {
-    /***
-     * The default buffer size used by {@link #copyStream  copyStream }
-     * and {@link #copyReader  copyReader }. It's value is 1024.
-     ***/
+    /**
+     * The default buffer size ({@value}) used by 
+     * {@link #copyStream  copyStream } and {@link #copyReader  copyReader}
+     * and by the copyReader/copyStream methods if a zero or negative buffer size is supplied.
+     */
     public static final int DEFAULT_COPY_BUFFER_SIZE = 1024;
 
     // Cannot be instantiated
@@ -66,6 +67,7 @@ public final class Util
      * @param source  The source InputStream.
      * @param dest    The destination OutputStream.
      * @param bufferSize  The number of bytes to buffer during the copy.
+     *            A zero or negative value means to use {@link #DEFAULT_COPY_BUFFER_SIZE}.
      * @param streamSize  The number of bytes in the stream being copied.
      *          Should be set to CopyStreamEvent.UNKNOWN_STREAM_SIZE if unknown.
      * @param listener  The CopyStreamListener to notify of progress.  If
@@ -90,11 +92,8 @@ public final class Util
     throws CopyStreamException
     {
         int bytes;
-        long total;
-        byte[] buffer;
-
-        buffer = new byte[bufferSize];
-        total = 0;
+        long total = 0;
+        byte[] buffer = new byte[bufferSize >= 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE];
 
         try
         {
@@ -158,6 +157,7 @@ public final class Util
      * @param source  The source InputStream.
      * @param dest    The destination OutputStream.
      * @param bufferSize  The number of bytes to buffer during the copy.
+     *            A zero or negative value means to use {@link #DEFAULT_COPY_BUFFER_SIZE}.
      * @param streamSize  The number of bytes in the stream being copied.
      *          Should be set to CopyStreamEvent.UNKNOWN_STREAM_SIZE if unknown.
      * @param listener  The CopyStreamListener to notify of progress.  If
@@ -191,6 +191,8 @@ public final class Util
      * <p>
      * @param source  The source InputStream.
      * @param dest    The destination OutputStream.
+     * @param bufferSize  The number of bytes to buffer during the copy.
+     *            A zero or negative value means to use {@link #DEFAULT_COPY_BUFFER_SIZE}.
      * @return  The number of bytes read/written in the copy operation.
      * @exception CopyStreamException  If an error occurs while reading from the
      *            source or writing to the destination.  The CopyStreamException
@@ -237,6 +239,7 @@ public final class Util
      * @param source  The source Reader.
      * @param dest    The destination writer.
      * @param bufferSize  The number of characters to buffer during the copy.
+     *            A zero or negative value means to use {@link #DEFAULT_COPY_BUFFER_SIZE}.
      * @param streamSize  The number of characters in the stream being copied.
      *          Should be set to CopyStreamEvent.UNKNOWN_STREAM_SIZE if unknown.
      * @param listener  The CopyStreamListener to notify of progress.  If
@@ -257,11 +260,8 @@ public final class Util
     throws CopyStreamException
     {
         int chars;
-        long total;
-        char[] buffer;
-
-        buffer = new char[bufferSize];
-        total = 0;
+        long total = 0;
+        char[] buffer = new char[bufferSize >= 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE];
 
         try
         {
@@ -312,6 +312,7 @@ public final class Util
      * @param source  The source Reader.
      * @param dest    The destination writer.
      * @param bufferSize  The number of characters to buffer during the copy.
+     *            A zero or negative value means to use {@link #DEFAULT_COPY_BUFFER_SIZE}.
      * @return  The number of characters read/written in the copy operation.
      * @exception CopyStreamException  If an error occurs while reading from the
      *            source or writing to the destination.  The CopyStreamException
