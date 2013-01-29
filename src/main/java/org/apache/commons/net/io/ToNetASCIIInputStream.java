@@ -43,7 +43,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
      * Creates a ToNetASCIIInputStream instance that wraps an existing
      * InputStream.
      * <p>
-     * @param input  The InputStream to .
+     * @param input  The InputStream to wrap.
      ***/
     public ToNetASCIIInputStream(InputStream input)
     {
