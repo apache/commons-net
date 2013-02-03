@@ -1488,6 +1488,11 @@ implements Configurable
      * type.  After changing it, the new type stays in effect until you change
      * it again.  The default file type is <code> FTP.ASCII_FILE_TYPE </code>
      * if this method is never called.
+     * <br>
+     * The server default is supposed to be ASCII (see RFC 959), however many
+     * ftp servers default to BINARY. <b>To ensure correct operation with all servers,
+     * always specify the appropriate file type after connecting to the server.</b>
+     * <br>
      * <p>
      * <b>N.B.</b> currently calling any connect method will reset the type to
      * FTP.ASCII_FILE_TYPE.
@@ -1521,6 +1526,11 @@ implements Configurable
      * be set when you want to change the type.  After changing it, the new
      * type stays in effect until you change it again.  The default file type
      * is <code> FTP.ASCII_FILE_TYPE </code> if this method is never called.
+     * <br>
+     * The server default is supposed to be ASCII (see RFC 959), however many
+     * ftp servers default to BINARY. <b>To ensure correct operation with all servers,
+     * always specify the appropriate file type after connecting to the server.</b>
+     * <br>
      * The format should be one of the FTP class <code> TEXT_FORMAT </code>
      * constants, or if the type is <code> FTP.LOCAL_FILE_TYPE </code>, the
      * format should be the byte size for that type.  The default format
