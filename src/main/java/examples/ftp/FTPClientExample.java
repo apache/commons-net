@@ -310,6 +310,10 @@ __main:
 
             if (binaryTransfer) {
                 ftp.setFileType(FTP.BINARY_FILE_TYPE);
+            } else {
+                // in theory this should not be necessary as servers should default to ASCII
+                // but they don't all do so - see NET-500
+                ftp.setFileType(FTP.ASCII_FILE_TYPE);
             }
 
             // Use passive mode as default because most of us are
