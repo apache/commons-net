@@ -42,9 +42,12 @@ public class FTPClientTest extends TestCase {
             "\"/path/without/trailing/quote",
             
         "257 root is current directory.", // NET-442
-             "root is current directory."
+            "root is current directory.",
 
+        "257 \"/\"", // NET-502
+              "/",
     };
+
     public FTPClientTest(String name) {
         super(name);
     }
