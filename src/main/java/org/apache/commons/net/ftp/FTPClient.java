@@ -496,7 +496,9 @@ implements Configurable
      * However, see NET-442 for an exception.
      * 
      * @param reply
-     * @return
+     * @return the pathname, without enclosing quotes, 
+     * or the full string after the reply code and space if the syntax is invalid 
+     * (i.e. enclosing quotes are missing or embedded quotes are not doubled)
      */
     // package protected for access by test cases
     static String __parsePathname(String reply)
