@@ -60,6 +60,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      * @param protocol The protocol to use
      * @param encoding The encoding to use
      * @throws NoSuchAlgorithmException
+     * @since 3.3
      */
     public AuthenticatingSMTPClient(String protocol, String encoding) throws NoSuchAlgorithmException {
         super(protocol, false, encoding);

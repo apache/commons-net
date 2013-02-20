@@ -112,6 +112,7 @@ public class SMTPSClient extends SMTPClient
      * @param proto the protocol.
      * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      * @param encoding the encoding
+     * @since 3.3
      */
     public SMTPSClient(String proto, boolean implicit, String encoding)
     {
