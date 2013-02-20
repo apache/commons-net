@@ -55,6 +55,16 @@ public class AuthenticatingSMTPClient extends SMTPSClient
         super(protocol);
     }
 
+    /**
+     * Overloaded constructor that takes a protocol specification and encoding
+     * @param protocol The protocol to use
+     * @param encoding The encoding to use
+     * @throws NoSuchAlgorithmException
+     */
+    public AuthenticatingSMTPClient(String protocol, String encoding) throws NoSuchAlgorithmException {
+        super(protocol, false, encoding);
+    }
+
     /***
      * A convenience method to send the ESMTP EHLO command to the server,
      * receive the reply, and return the reply code.

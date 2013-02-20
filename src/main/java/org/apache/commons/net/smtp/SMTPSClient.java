@@ -108,6 +108,19 @@ public class SMTPSClient extends SMTPClient
     }
 
     /**
+     * Constructor for SMTPSClient.
+     * @param proto the protocol.
+     * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
+     * @param encoding the encoding
+     */
+    public SMTPSClient(String proto, boolean implicit, String encoding)
+    {
+        super(encoding);
+        protocol = proto;
+        isImplicit = implicit;
+    }
+
+    /**
      * Constructor for SMTPSClient, using {@link #DEFAULT_PROTOCOL} i.e. TLS
      * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      * @param ctx A pre-configured SSL Context.

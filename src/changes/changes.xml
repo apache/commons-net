@@ -64,6 +64,9 @@ The <action> type attribute can be add,update,fix,remove.
     <body>
         <release version="3.3" date="TBA" description="
         ">
+            <action issue="NET-503" dev="sebb" type="add">
+            AuthenticatingSMTPClient does not support non-default encoding
+            </action>
             <action issue="NET-500" dev="sebb" type="fix">
             Always call FTPClient#setFileType after connection.
             Not all servers default to ASCII.
