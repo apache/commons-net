@@ -18,6 +18,9 @@
 
 package org.apache.commons.net.ftp;
 
+/**
+* @since 3.3
+ */
 public enum FTPCmd {
     ABOR,
     ACCT,

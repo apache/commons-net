@@ -721,7 +721,7 @@ implements Configurable
      *         the connection.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     * @deprecated Use {@link #_openDataConnection_(FTPCmd, String)} instead
+     * @deprecated (3.3) Use {@link #_openDataConnection_(FTPCmd, String)} instead
      */
     @Deprecated
     protected Socket _openDataConnection_(int command, String arg)
@@ -747,6 +747,7 @@ implements Configurable
      *         the connection.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
+     * @since 3.3
      */
     protected Socket _openDataConnection_(FTPCmd command, String arg)
     throws IOException
@@ -3460,7 +3461,8 @@ implements Configurable
      * If the value is positive, the option will be set when the data socket has been created.
      *
      * @param bufSize The size of the buffer, zero or negative means the value is ignored.
-     */
+      * @since 3.3
+    */
     public void setSendDataSocketBufferSize(int bufSize) {
         __sendDataSocketBufferSize = bufSize;
     }
@@ -3468,6 +3470,7 @@ implements Configurable
     /**
      * Retrieve the value to be used for the data socket SO_SNDBUF option.
      * @return The current buffer size.
+     * @since 3.3
      */
     public int getSendDataSocketBufferSize() {
         return __sendDataSocketBufferSize;
@@ -3478,6 +3481,7 @@ implements Configurable
      * If the value is positive, the option will be set when the data socket has been created.
      *
      * @param bufSize The size of the buffer, zero or negative means the value is ignored.
+     * @since 3.3
      */
     public void setReceieveDataSocketBufferSize(int bufSize) {
         __receiveDataSocketBufferSize = bufSize;
@@ -3486,6 +3490,7 @@ implements Configurable
     /**
      * Retrieve the value to be used for the data socket SO_RCVBUF option.
      * @return The current buffer size.
+     * @since 3.3
      */
     public int getReceiveDataSocketBufferSize() {
         return __receiveDataSocketBufferSize;

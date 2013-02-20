@@ -550,7 +550,7 @@ public class FTP extends SocketClient
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     * @deprecated Use {@link #sendCommand(FTPCmd, String)} instead
+     * @deprecated (3.3) Use {@link #sendCommand(FTPCmd, String)} instead
      ***/
     @Deprecated
     public int sendCommand(int command, String args) throws IOException
@@ -576,6 +576,7 @@ public class FTP extends SocketClient
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
+     * @since 3.3
      */
     public int sendCommand(FTPCmd command)  throws IOException{
         return sendCommand(command, null);
@@ -601,6 +602,7 @@ public class FTP extends SocketClient
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
+     * @since 3.3
      */
     public int sendCommand(FTPCmd command, String args)  throws IOException{
         return sendCommand(command.getCommand(), args);

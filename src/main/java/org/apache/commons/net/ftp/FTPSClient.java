@@ -569,7 +569,7 @@ public class FTPSClient extends FTPClient {
      * during the establishment and initialization of the connection.
      * @throws IOException If there is any problem with the connection.
      * @see FTPClient#_openDataConnection_(int, String)
-     * @deprecated Use {@link #_openDataConnection_(FTPCmd, String)} instead
+     * @deprecated (3.3) Use {@link #_openDataConnection_(FTPCmd, String)} instead
      */
     @Override
     // Strictly speaking this is not needed, but it works round a Clirr bug

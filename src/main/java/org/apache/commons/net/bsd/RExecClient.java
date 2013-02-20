@@ -65,6 +65,9 @@ import org.apache.commons.net.io.SocketInputStream;
 
 public class RExecClient extends SocketClient
 {
+    /**
+     * @since 3.3
+     */
     protected static final char NULL_CHAR = '\0';
 
     /***
