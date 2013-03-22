@@ -36,7 +36,7 @@
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
 Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
     </description>
-    <url>http://commons.apache.org/proper/net/</url>
+    <url>http://commons.apache.org/proper/commons-net/</url>
     <issueManagement>
         <system>jira</system>
         <url>http://issues.apache.org/jira/browse/NET</url>
