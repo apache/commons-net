@@ -390,6 +390,11 @@ implements Configurable
     // Most FTP servers don't seem to support concurrent control and data connection usage
     private int __controlKeepAliveReplyTimeout=1000;
 
+    /**
+     * Enable or disable replacement of internal IP in passive mode. Default enabled.
+     */
+    private boolean __passiveNatWorkaround = true;
+
     /** Pattern for PASV mode responses. Groups: (n,n,n,n),(n),(n) */
     private static final java.util.regex.Pattern __PARMS_PAT;
     static {
@@ -559,21 +564,23 @@ implements Configurable
                     "Could not parse passive port information.\nServer Reply: " + reply);
         }
 
-        try {
-            InetAddress host = InetAddress.getByName(__passiveHost);
-            // reply is a local address, but target is not - assume NAT box changed the PASV reply
-            if (host.isSiteLocalAddress()) {
-                InetAddress remote = getRemoteAddress();
-                if (!remote.isSiteLocalAddress()){ 
-                    String hostAddress = remote.getHostAddress();
-                    fireReplyReceived(0,
-                                "[Replacing site local address "+__passiveHost+" with "+hostAddress+"]\n");
-                    __passiveHost = hostAddress;                    
+        if (__passiveNatWorkaround) {
+            try {
+                InetAddress host = InetAddress.getByName(__passiveHost);
+                // reply is a local address, but target is not - assume NAT box changed the PASV reply
+                if (host.isSiteLocalAddress()) {
+                    InetAddress remote = getRemoteAddress();
+                    if (!remote.isSiteLocalAddress()){ 
+                        String hostAddress = remote.getHostAddress();
+                        fireReplyReceived(0,
+                                    "[Replacing site local address "+__passiveHost+" with "+hostAddress+"]\n");
+                        __passiveHost = hostAddress;                    
+                    }
                 }
+            } catch (UnknownHostException e) { // Should not happen as we are passing in an IP address
+                throw new MalformedServerReplyException(
+                        "Could not parse passive host information.\nServer Reply: " + reply);
             }
-        } catch (UnknownHostException e) { // Should not happen as we are passing in an IP address
-            throw new MalformedServerReplyException(
-                    "Could not parse passive host information.\nServer Reply: " + reply);
         }
     }
 
@@ -3619,6 +3626,22 @@ implements Configurable
      */
     public int getControlKeepAliveReplyTimeout() {
         return __controlKeepAliveReplyTimeout;
+    }
+
+    /**
+     * Enable or disable passive mode NAT workaround.
+     * If enabled, a site-local PASV mode reply address will be replaced with the
+     * remote host address to which the PASV mode request was sent
+     * (unless that is also a site local address).
+     * This gets around the problem that some NAT boxes may change the
+     * reply.
+     *
+     * The default is true, i.e. site-local replies are replaced.
+     * @param enabled true to enable replacing internal IP's in passive
+     * mode.
+     */
+    public void setPassiveNatWorkaround(boolean enabled) {
+        this.__passiveNatWorkaround = enabled;
     }
 
     private OutputStream getBufferedOutputStream(OutputStream outputStream) {

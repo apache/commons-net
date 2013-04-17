@@ -64,6 +64,9 @@ The <action> type attribute can be add,update,fix,remove.
     <body>
         <release version="3.3" date="TBA" description="
         ">
+            <action issue="NET-507" dev="sebb" type="update">
+            Option to disable private IP replacement in FTP passive mode.
+            </action>
             <action issue="NET-503" dev="sebb" type="add">
             AuthenticatingSMTPClient does not support non-default encoding
             </action>
