@@ -880,7 +880,7 @@ extends TestCase implements TelnetNotificationHandler
      * @param option_code - code of the option negotiated
      * <p>
      ***/
-    @Override
+//    @Override
     public void receivedNegotiation(int negotiation_code, int option_code)
     {
         if(negotiation_code == TelnetNotificationHandler.RECEIVED_DO)

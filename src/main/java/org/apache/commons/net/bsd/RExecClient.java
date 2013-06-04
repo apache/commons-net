@@ -215,11 +215,11 @@ public class RExecClient extends SocketClient
             _output_.write(NULL_CHAR);
         }
 
-        _output_.write(username.getBytes(this.getCharset()));
+        _output_.write(username.getBytes(this.getCharsetName())); // Java 1.6 can use getCharset()
         _output_.write(NULL_CHAR);
-        _output_.write(password.getBytes(this.getCharset()));
+        _output_.write(password.getBytes(this.getCharsetName())); // Java 1.6 can use getCharset()
         _output_.write(NULL_CHAR);
-        _output_.write(command.getBytes(this.getCharset()));
+        _output_.write(command.getBytes(this.getCharsetName())); // Java 1.6 can use getCharset()
         _output_.write(NULL_CHAR);
         _output_.flush();
 

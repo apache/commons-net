@@ -833,6 +833,17 @@ public abstract class SocketClient
     }
 
     /**
+     * Gets the charset name.
+     * 
+     * @return the charset.
+     * @since 3.3
+     * TODO Will be deprecated once the code requires Java 1.6 as a mininmum 
+     */
+    public String getCharsetName() {
+        return charset.name();
+    }
+
+    /**
      * Gets the charset.
      * 
      * @return the charset.

@@ -24,7 +24,7 @@ import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 
 import org.apache.commons.net.SocketClient;
-import org.apache.commons.net.util.Charsets;
+//import org.apache.commons.net.util.Charsets;
 
 /***
  * The FingerClient class implements the client side of the Internet Finger
@@ -90,7 +90,7 @@ public class FingerClient extends SocketClient
 
         input =
             new BufferedReader(new InputStreamReader(getInputStream(longOutput,
-                               username), this.getCharset()));
+                               username), this.getCharsetName())); // Java 1.6 can use getCharset()
 
         try {
             while (true)
@@ -168,7 +168,7 @@ public class FingerClient extends SocketClient
         buffer.append(username);
         buffer.append(SocketClient.NETASCII_EOL);
 
-        byte[] encodedQuery = buffer.toString().getBytes(Charsets.toCharset(encoding));
+        byte[] encodedQuery = buffer.toString().getBytes(/*Charsets.toCharset*/(encoding)); // Java 1.6 can use charset
 
         output = new DataOutputStream(new BufferedOutputStream(_output_, 1024));
         output.write(encodedQuery, 0, encodedQuery.length);

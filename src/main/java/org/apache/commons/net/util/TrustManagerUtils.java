@@ -45,13 +45,13 @@ public final class TrustManagerUtils
         /**
          * Never generates a CertificateException.
          */
-        @Override
+//        @Override
         public void checkClientTrusted(X509Certificate[] certificates, String authType)
         {
             return;
         }
 
-        @Override
+//        @Override
         public void checkServerTrusted(X509Certificate[] certificates, String authType)
             throws CertificateException
         {
@@ -66,7 +66,7 @@ public final class TrustManagerUtils
         /**
          * @return an empty array of certificates
          */
-        @Override
+//        @Override
         public X509Certificate[] getAcceptedIssuers()
         {
             return EMPTY_X509CERTIFICATE_ARRAY;

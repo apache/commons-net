@@ -21,13 +21,13 @@ package org.apache.commons.net.io;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
+//import java.nio.charset.Charset;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class ToNetASCIIInputStreamTest {
 
-    private static final Charset ASCII = Charset.forName("ASCII");
+    private static final String ASCII = /*Charset.forName*/("ASCII");
 
     @Test
     public void testToNetASCIIInputStream1() throws Exception

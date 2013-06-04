@@ -51,7 +51,7 @@ public class TelnetTestSimpleServer implements Runnable
     /***
      * Run for the thread. Waits for new connections
      ***/
-    @Override
+//    @Override
     public void run()
     {
         boolean bError = false;
