@@ -199,7 +199,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
             }
             case XOAUTH:
             {
-                int result = sendData(new String(username.getBytes()));
+                int result = sendData(username);
                 if (result == IMAPReply.OK)
                 {
                     setState(IMAP.IMAPState.AUTH_STATE);
