@@ -7,7 +7,7 @@ The Commons Net team is pleased to announce the release of Apache Commons Net 3.
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
 Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
 
-
+This is a bug-fix release. See further details below.
 
 Changes in this version include:
 
