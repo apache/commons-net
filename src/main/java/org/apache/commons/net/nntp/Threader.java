@@ -316,7 +316,7 @@ public class Threader {
 
             String subj = threadable.simplifiedSubject();
 
-            if (subj == null || subj == "") {
+            if (subj == null || subj.length() == 0) {
                 continue;
             }
 
