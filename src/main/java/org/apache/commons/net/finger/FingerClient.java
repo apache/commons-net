@@ -90,7 +90,7 @@ public class FingerClient extends SocketClient
 
         input =
             new BufferedReader(new InputStreamReader(getInputStream(longOutput,
-                               username), this.getCharsetName())); // Java 1.6 can use getCharset()
+                               username), getCharsetName())); // Java 1.6 can use getCharset()
 
         try {
             while (true)

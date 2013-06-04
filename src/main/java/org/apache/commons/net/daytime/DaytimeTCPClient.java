@@ -71,7 +71,7 @@ public final class DaytimeTCPClient extends SocketClient
         StringBuilder result = new StringBuilder(__buffer.length);
         BufferedReader reader;
 
-        reader = new BufferedReader(new InputStreamReader(_input_, this.getCharsetName())); // Java 1.6 can use getCharset()
+        reader = new BufferedReader(new InputStreamReader(_input_, getCharsetName())); // Java 1.6 can use getCharset()
 
         while (true)
         {
