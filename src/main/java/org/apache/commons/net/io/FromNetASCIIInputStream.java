@@ -20,6 +20,9 @@ package org.apache.commons.net.io;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PushbackInputStream;
+import java.io.UnsupportedEncodingException;
+
+import javax.management.RuntimeErrorException;
 
 /***
  * This class wraps an input stream, replacing all occurrences
@@ -40,7 +43,11 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
     static {
         _lineSeparator = System.getProperty("line.separator");
         _noConversionRequired = _lineSeparator.equals("\r\n");
-        _lineSeparatorBytes = _lineSeparator.getBytes();
+        try {
+            _lineSeparatorBytes = _lineSeparator.getBytes("US-ASCII");
+        } catch (UnsupportedEncodingException e) {
+           throw new RuntimeException("Broken JVM - cannot find US-ASCII charset!",e);
+        }
     }
 
     private int __length = 0;
