@@ -361,7 +361,7 @@ public class Threader {
             String subj = threadable.simplifiedSubject();
 
             // Dont thread together all subjectless messages
-            if (subj == null || subj == "") {
+            if (subj == null || subj.length() == 0) {
                 continue;
             }
 
