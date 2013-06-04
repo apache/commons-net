@@ -1119,7 +1119,7 @@ public class NNTPClient extends NNTP
     {
         if (!NNTPReply.isPositiveCompletion(newgroups(
                                                 query.getDate(), query.getTime(),
-                                                query.isGMT(), query.getDistributions()))) 
+                                                query.isGMT(), query.getDistributions())))
         {
             return null;
         }

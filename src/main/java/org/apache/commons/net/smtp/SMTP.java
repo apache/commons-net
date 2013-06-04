@@ -94,7 +94,7 @@ public class SMTP extends SocketClient
 
     /**
      * The encoding to use (user-settable).
-     * 
+     *
      * @since 3.1 (changed from private to protected)
      */
     protected final String encoding;
@@ -107,7 +107,7 @@ public class SMTP extends SocketClient
 
     BufferedReader _reader;
     BufferedWriter _writer;
-    
+
     private int _replyCode;
     private final ArrayList<String> _replyLines;
     private boolean _newReplyString;
@@ -139,7 +139,7 @@ public class SMTP extends SocketClient
 
     /**
      * Send a command to the server. May also be used to send text data.
-     * 
+     *
      * @param command the command to send (as a plain String)
      * @param args the command arguments, may be {@code null}
      * @param includeSpace if {@code true}, add a space between the command and its arguments
@@ -173,7 +173,7 @@ public class SMTP extends SocketClient
     }
 
     /**
-     * 
+     *
      * @param command the command to send (as an int defined in {@link SMPTCommand})
      * @param args the command arguments, may be {@code null}
      * @param includeSpace if {@code true}, add a space between the command and its arguments
@@ -762,8 +762,8 @@ public class SMTP extends SocketClient
 
     /**
      * Removes a ProtocolCommandListener.
-     * 
-     * Delegates this incorrectly named method - removeProtocolCommandistener (note the missing "L")- to 
+     *
+     * Delegates this incorrectly named method - removeProtocolCommandistener (note the missing "L")- to
      * the correct method {@link SocketClient#removeProtocolCommandListener}
      * @param listener The ProtocolCommandListener to remove
      */

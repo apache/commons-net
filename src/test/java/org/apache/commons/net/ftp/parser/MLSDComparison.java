@@ -37,7 +37,7 @@ import org.junit.Test;
 
 /**
  * Attempt comparison of LIST and MLSD listings
- * 
+ *
  * TODO - needs some work.
  */
 public class MLSDComparison {

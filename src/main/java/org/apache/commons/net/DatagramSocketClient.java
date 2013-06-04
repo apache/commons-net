@@ -55,7 +55,7 @@ public abstract class DatagramSocketClient
      ***/
     private static final DatagramSocketFactory __DEFAULT_SOCKET_FACTORY =
         new DefaultDatagramSocketFactory();
-    
+
     /**
      * Charset to use for byte IO.
      */
@@ -283,7 +283,7 @@ public abstract class DatagramSocketClient
 
     /**
      * Gets the charset name.
-     * 
+     *
      * @return the charset name.
      * @since 3.3
      * TODO Will be deprecated once the code requires Java 1.6 as a mininmum
@@ -294,7 +294,7 @@ public abstract class DatagramSocketClient
 
     /**
      * Gets the charset.
-     * 
+     *
      * @return the charset.
      * @since 3.3
      */
@@ -304,7 +304,7 @@ public abstract class DatagramSocketClient
 
     /**
      * Sets the charset.
-     * 
+     *
      * @param charset the charset.
      * @since 3.3
      */

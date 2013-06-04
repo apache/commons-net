@@ -65,7 +65,7 @@ public class FTPTimestampParserImpl implements
      * member.  If that fails, throw a ParseException.
      *
      * This method assumes that the server time is the same as the local time.
-     * 
+     *
      * @see FTPTimestampParserImpl#parseTimestamp(String, Calendar)
      *
      * @param timestampStr The timestamp to be parsed

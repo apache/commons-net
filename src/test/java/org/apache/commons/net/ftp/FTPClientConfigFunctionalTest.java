@@ -152,7 +152,7 @@ public class FTPClientConfigFunctionalTest extends TestCase {
             // is older than now.
             assertTrue(lastfile.getTimestamp().getTime().before(now));
             Calendar first = firstfile.getTimestamp();
-    
+
             // test that the oldest is less than two days older than the newest
             // and, in particular, that no files have been considered "future"
             // by the parser and therefore been relegated to the same date a

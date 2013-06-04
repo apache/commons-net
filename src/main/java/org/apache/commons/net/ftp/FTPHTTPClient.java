@@ -70,7 +70,7 @@ public class FTPHTTPClient extends FTPClient {
     // Not strictly necessary, but Clirr complains even though there is a super-impl
     @Override
     @Deprecated
-    protected Socket _openDataConnection_(int command, String arg) 
+    protected Socket _openDataConnection_(int command, String arg)
     throws IOException {
         return super._openDataConnection_(command, arg);
     }
@@ -82,7 +82,7 @@ public class FTPHTTPClient extends FTPClient {
      * @since 3.1
      */
     @Override
-    protected Socket _openDataConnection_(String command, String arg) 
+    protected Socket _openDataConnection_(String command, String arg)
     throws IOException {
         //Force local passive mode, active mode not supported by through proxy
         if (getDataConnectionMode() != PASSIVE_LOCAL_DATA_CONNECTION_MODE) {
@@ -91,7 +91,7 @@ public class FTPHTTPClient extends FTPClient {
 
         final boolean isInet6Address = getRemoteAddress() instanceof Inet6Address;
         String passiveHost = null;
-        
+
         boolean attemptEPSV = isUseEPSVwithIPv4() || isInet6Address;
         if (attemptEPSV && epsv() == FTPReply.ENTERING_EPSV_MODE) {
             _parseExtendedPassiveModeReply(_replyLines.get(0));

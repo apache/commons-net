@@ -65,7 +65,7 @@ public class TelnetClient extends Telnet
 
     /**
      * Construct an instance with the specified terminal type.
-     * 
+     *
      * @param termtype the terminal type to use, e.g. {@code VT100}
      */
     /* TERMINAL-TYPE option (start)*/
@@ -255,7 +255,7 @@ public class TelnetClient extends Telnet
      * @param opthand - option handler to be registered.
      * <p>
      * @throws InvalidTelnetOptionException
-     * @throws IOException 
+     * @throws IOException
      ***/
     @Override
     public void addOptionHandler(TelnetOptionHandler opthand)
@@ -271,7 +271,7 @@ public class TelnetClient extends Telnet
      * @param optcode - Code of the option to be unregistered.
      * <p>
      * @throws InvalidTelnetOptionException
-     * @throws IOException 
+     * @throws IOException
      ***/
     @Override
     public void deleteOptionHandler(int optcode)

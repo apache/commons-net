@@ -492,17 +492,17 @@ implements Configurable
     /**
      * Parse the pathname from a CWD reply.
      * <p>
-     * According to RFC959 (http://www.ietf.org/rfc/rfc959.txt), 
+     * According to RFC959 (http://www.ietf.org/rfc/rfc959.txt),
      * it should be the same as for MKD i.e.
      * {@code 257<space>"<directory-name>"[<space>commentary]}
      * where any double-quotes in {@code <directory-name>} are doubled.
      * Unlike MKD, the commentary is optional.
      * <p>
      * However, see NET-442 for an exception.
-     * 
+     *
      * @param reply
-     * @return the pathname, without enclosing quotes, 
-     * or the full string after the reply code and space if the syntax is invalid 
+     * @return the pathname, without enclosing quotes,
+     * or the full string after the reply code and space if the syntax is invalid
      * (i.e. enclosing quotes are missing or embedded quotes are not doubled)
      */
     // package protected for access by test cases
@@ -570,11 +570,11 @@ implements Configurable
                 // reply is a local address, but target is not - assume NAT box changed the PASV reply
                 if (host.isSiteLocalAddress()) {
                     InetAddress remote = getRemoteAddress();
-                    if (!remote.isSiteLocalAddress()){ 
+                    if (!remote.isSiteLocalAddress()){
                         String hostAddress = remote.getHostAddress();
                         fireReplyReceived(0,
                                     "[Replacing site local address "+__passiveHost+" with "+hostAddress+"]\n");
-                        __passiveHost = hostAddress;                    
+                        __passiveHost = hostAddress;
                     }
                 }
             } catch (UnknownHostException e) { // Should not happen as we are passing in an IP address
@@ -624,7 +624,7 @@ implements Configurable
     {
         return _storeFile(command.getCommand(), remote, local);
     }
-    
+
     /**
      * @since 3.1
      */
@@ -816,7 +816,7 @@ implements Configurable
                         return null;
                     }
                 }
-    
+
                 if ((__restartOffset > 0) && !restart(__restartOffset)) {
                     return null;
                 }
@@ -833,7 +833,7 @@ implements Configurable
                     server.setSoTimeout(__dataTimeout);
                 }
                 socket = server.accept();
-                
+
                 // Ensure the timeout is set before any commands are issued on the new socket
                 if (__dataTimeout >= 0) {
                     socket.setSoTimeout(__dataTimeout);
@@ -1399,11 +1399,11 @@ implements Configurable
             return getLocalAddress();
         }
     }
-    
+
     /**
      * Get the reported host address for active mode EPRT/PORT commands;
      * allows override of {@link #getHostAddress()}.
-     * 
+     *
      * Useful for FTP Client behind Firewall NAT.
      * <p>
      * @return __reportActiveExternalHost if non-null, else getHostAddress();
@@ -1833,7 +1833,7 @@ implements Configurable
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception org.apache.commons.net.io.CopyStreamException  
+     * @exception org.apache.commons.net.io.CopyStreamException
      *      If an I/O error occurs while actually
      *      transferring the file.  The CopyStreamException allows you to
      *      determine the number of bytes transferred and the IOException
@@ -1965,7 +1965,7 @@ implements Configurable
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception org.apache.commons.net.io.CopyStreamException  
+     * @exception org.apache.commons.net.io.CopyStreamException
      *      If an I/O error occurs while actually
      *      transferring the file.  The CopyStreamException allows you to
      *      determine the number of bytes transferred and the IOException
@@ -2510,16 +2510,16 @@ implements Configurable
 
     /**
      * Sets the restart offset for file transfers.
-     * <p>  
+     * <p>
      * The restart command is not sent to the server immediately.
-     * It is sent when a data connection is created as part of a 
+     * It is sent when a data connection is created as part of a
      * subsequent command.
      * The restart marker is reset to zero after use.
      * </p>
      * <p>
      * <b>Note: This method should only be invoked immediately prior to
      * the transfer to which it applies.</b>
-     * 
+     *
      * @param offset  The offset into the remote file at which to start the
      *           next file transfer.  This must be a value greater than or
      *           equal to zero.
@@ -3653,7 +3653,7 @@ implements Configurable
 
     private InputStream getBufferedInputStream(InputStream inputStream) {
         if (__bufferSize > 0) {
-            return new BufferedInputStream(inputStream, __bufferSize);            
+            return new BufferedInputStream(inputStream, __bufferSize);
         }
         return new BufferedInputStream(inputStream);
     }
@@ -3701,7 +3701,7 @@ implements Configurable
                     parent.__getReplyNoReport();
                 }
             } finally {
-                parent.setSoTimeout(currentSoTimeout);                
+                parent.setSoTimeout(currentSoTimeout);
             }
         }
 
@@ -3732,7 +3732,7 @@ implements Configurable
      * Enables or disables automatic server encoding detection (only UTF-8 supported).
      * <p>
      * Does not affect existing connections; must be invoked before a connection is established.
-     * 
+     *
      * @param autodetect If true, automatic server encoding detection will be enabled.
      */
     public void setAutodetectUTF8(boolean autodetect)

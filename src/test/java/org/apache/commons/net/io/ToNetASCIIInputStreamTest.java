@@ -13,7 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.apache.commons.net.io;
@@ -64,8 +64,8 @@ public class ToNetASCIIInputStreamTest {
         ToNetASCIIInputStream toNetASCII = new ToNetASCIIInputStream(source);
         byte[] output = new byte[data.length*2]; // cannot be longer than twice the input
 
-        int length = byByte ? 
-                getSingleBytes(toNetASCII, output) :  
+        int length = byByte ?
+                getSingleBytes(toNetASCII, output) :
                     getBuffer(toNetASCII, output);
 
         byte[] result = new byte[length];

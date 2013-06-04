@@ -157,7 +157,7 @@ public final class FTPClientExample
                 trustmgr = args[++base];
             }
             else if (args[base].equals("-PrH")) {
-                proxyHost = args[++base]; 
+                proxyHost = args[++base];
                 String parts[] = proxyHost.split(":");
                 if (parts.length == 2){
                     proxyHost=parts[0];

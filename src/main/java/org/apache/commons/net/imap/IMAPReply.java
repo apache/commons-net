@@ -100,7 +100,7 @@ public final class IMAPReply
 
     /**
      * Checks if the line introduces a literal, i.e. ends with {dd}
-     * 
+     *
      * @return the literal count, or -1 if there was no literal.
      */
     public static int literalCount(String line) {

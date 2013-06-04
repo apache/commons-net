@@ -36,14 +36,14 @@
             org.apache.commons.net.util and org.apache.commons.net.io could be moved to their corresponding commons projects.
           </li>
           <li>
-            Parse the client/server interactions without creating so many 
+            Parse the client/server interactions without creating so many
             strings. Many operations are slow because of this.
           </li>
           <li>
             Add ESMTP and more extended NNTP commands.
           </li>
           <li>
-            Make NNTPClient.listNewsgroups() and NNTPClient.listNewNews() 
+            Make NNTPClient.listNewsgroups() and NNTPClient.listNewNews()
             more efficient. Don't preparse into lots of little objects.
           </li>
           <li>FTP proxy support</li>

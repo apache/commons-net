@@ -24,7 +24,7 @@
   </properties>
 
   <body>
-    
+
 <section name="Migration How-To">
 <p>
 This how-to lists the migration steps for moving between versions of Commons Net.
@@ -35,10 +35,10 @@ This how-to lists the migration steps for moving between versions of Commons Net
     <p>
         Version 3.0 is binary compatible with version 2.0. There should be no changes required to existing binary code.
     </p>
-    <p>        
+    <p>
         However, version 3.0 is <b>not source compatible</b> with 2.0.
     </p>
-    <p>        
+    <p>
         Several obsolete/unused constants have been removed.<br/>
         (Such changes do not affect binary code, because compilers are required to localise constants).<br/>
         The <a href="clirr-report.html">clirr report</a> shows which constants have been removed.

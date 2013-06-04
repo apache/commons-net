@@ -71,7 +71,7 @@ public class Base64 {
      * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
      */
     private static final byte[] CHUNK_SEPARATOR = {'\r', '\n'};
-    
+
     private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
 
     /**
@@ -647,7 +647,7 @@ public class Base64 {
      * Encodes binary data using the base64 algorithm into 76 character blocks separated by CRLF.
      * <p>
      * For a non-chunking version, see {@link #encodeBase64StringUnChunked(byte[])}.
-     * 
+     *
      * @param binaryData
      *            binary data to encode
      * @return String containing Base64 characters.
@@ -661,7 +661,7 @@ public class Base64 {
      * Encodes binary data using the base64 algorithm, without using chunking.
      * <p>
      * For a chunking version, see {@link #encodeBase64String(byte[])}.
-     * 
+     *
      * @param binaryData
      *            binary data to encode
      * @return String containing Base64 characters.
@@ -673,7 +673,7 @@ public class Base64 {
 
     /**
      * Encodes binary data using the base64 algorithm.
-     * 
+     *
      * @param binaryData
      *            binary data to encode
      * @param useChunking whether to split the output into chunks
@@ -882,7 +882,7 @@ public class Base64 {
 
     /**
      * Encodes a byte[] containing binary data, into a String containing characters in the Base64 alphabet.
-     * 
+     *
      * @param pArray
      *            a byte array containing binary data
      * @return A String containing only Base64 character data
@@ -1037,11 +1037,11 @@ public class Base64 {
     }
 
     // Getters for use in testing
-    
+
     int getLineLength() {
         return lineLength;
     }
-    
+
     byte[] getLineSeparator() {
         return lineSeparator.clone();
     }

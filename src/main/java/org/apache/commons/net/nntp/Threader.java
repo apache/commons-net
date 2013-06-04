@@ -416,7 +416,7 @@ public class Threader {
 
                 for (ThreadContainer tail = newc.child;
                     tail != null;
-                    tail = tail.next) 
+                    tail = tail.next)
                 {
                     tail.parent = newc;
                 }

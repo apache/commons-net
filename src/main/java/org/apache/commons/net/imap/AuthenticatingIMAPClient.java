@@ -243,9 +243,9 @@ public class AuthenticatingIMAPClient extends IMAPSClient
         LOGIN("LOGIN"),
         /** XOAUTH */
         XOAUTH("XOAUTH");
-        
+
         private final String authName;
-        
+
         private AUTH_METHOD(String name){
             this.authName=name;
         }

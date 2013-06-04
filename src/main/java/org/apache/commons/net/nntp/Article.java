@@ -108,7 +108,7 @@ public class Article implements Threadable {
 
                         if (i < (len - 1)
                             && (subject.charAt(i) == ']' || subject.charAt(i) == ')')
-                            && subject.charAt(i + 1) == ':') 
+                            && subject.charAt(i + 1) == ':')
                         {
                             start = i + 2;
                             done = false;
@@ -144,7 +144,7 @@ public class Article implements Threadable {
             for (int i = 0; i < depth; ++i) {
                 System.out.print("==>");
             }
-            System.out.println(article.getSubject() + "\t" + article.getFrom()+"\t"+article.getArticleId());            
+            System.out.println(article.getSubject() + "\t" + article.getFrom()+"\t"+article.getArticleId());
             if (article.kid != null) {
                 printThread(article.kid, depth + 1);
             }

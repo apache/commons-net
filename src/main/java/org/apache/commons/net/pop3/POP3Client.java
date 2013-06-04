@@ -127,9 +127,9 @@ public class POP3Client extends POP3
             return true;
         }
         return false;
-        
+
     }
-    
+
     /***
      * Login to the POP3 server with the given username and password.  You
      * must first connect to the server with
@@ -487,7 +487,7 @@ public class POP3Client extends POP3
 
         // This could be a zero length array if no messages present
         POP3MessageInfo[] messages = new POP3MessageInfo[_replyLines.size() - 2]; // skip first and last lines
-        
+
         ListIterator<String> en = _replyLines.listIterator(1); // skip first line
 
         // Fetch lines.
@@ -520,7 +520,7 @@ public class POP3Client extends POP3
      * This can safely be cast to a {@link java.io.BufferedReader BufferedReader} in order to
      * use the {@link java.io.BufferedReader#readLine() BufferedReader#readLine()} method.
      * Returns null if the retrieval attempt fails  (e.g., if the specified
-     * message number does not exist). 
+     * message number does not exist).
      * @exception IOException If a network I/O error occurs in the process of
      *        sending the retrieve message command.
      */

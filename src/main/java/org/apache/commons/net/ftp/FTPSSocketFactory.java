@@ -85,7 +85,7 @@ public class FTPSSocketFactory extends SocketFactory {
     public java.net.ServerSocket createServerSocket(int port, int backlog, InetAddress ifAddress) throws IOException {
         return this.init(this.context.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
     }
-        
+
     /** @deprecated  (2.2) use {@link FTPSServerSocketFactory#init(java.net.ServerSocket)} */
     @SuppressWarnings("unused")
     @Deprecated

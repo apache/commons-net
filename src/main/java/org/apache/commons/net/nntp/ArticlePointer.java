@@ -23,7 +23,7 @@ package org.apache.commons.net.nntp;
  * want this information when issuing a STAT command, implemented by
  * {@link NNTPClient#selectArticle selectArticle}.
  * @see NNTPClient
- * 
+ *
  * @deprecated 3.0 use {@link ArticleInfo} instead
  */
 @Deprecated

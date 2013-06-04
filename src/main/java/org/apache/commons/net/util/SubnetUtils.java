@@ -99,12 +99,12 @@ public class SubnetUtils {
 
         private int low() {
             return (isInclusiveHostCount() ? network() :
-                broadcast() - network() > 1 ? network() + 1 : 0); 
+                broadcast() - network() > 1 ? network() + 1 : 0);
         }
-        
-        private int high() { 
+
+        private int high() {
             return (isInclusiveHostCount() ? broadcast() :
-                broadcast() - network() > 1 ? broadcast() -1  : 0); 
+                broadcast() - network() > 1 ? broadcast() -1  : 0);
         }
 
         /**
@@ -142,7 +142,7 @@ public class SubnetUtils {
         /**
          * Return the low address as a dotted IP address.
          * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
-         * 
+         *
          * @return the IP address in dotted format, may be "0.0.0.0" if there is no valid address
          */
         public String getLowAddress() {
@@ -152,19 +152,19 @@ public class SubnetUtils {
         /**
          * Return the high address as a dotted IP address.
          * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
-         * 
+         *
          * @return the IP address in dotted format, may be "0.0.0.0" if there is no valid address
          */
         public String getHighAddress() {
             return format(toArray(high()));
         }
-        
+
         /**
          * Get the count of available addresses.
          * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
          * @return the count of addresses, may be zero.
          */
-        public int getAddressCount()                { 
+        public int getAddressCount()                {
             int count = broadcast() - network() + (isInclusiveHostCount() ? 1 : -1);
             return count < 0 ? 0 : count;
         }

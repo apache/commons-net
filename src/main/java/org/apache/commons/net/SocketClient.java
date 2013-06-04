@@ -107,7 +107,7 @@ public abstract class SocketClient
 
     /** The proxy to use when connecting. */
     private Proxy connProxy;
-    
+
     /**
      * Charset to use for byte IO.
      */
@@ -116,7 +116,7 @@ public abstract class SocketClient
     /**
      * Default constructor for SocketClient.  Initializes
      * _socket_ to null, _timeout_ to 0, _defaultPort to 0,
-     * _isConnected_ to false, charset to {@code Charset.defaultCharset()} 
+     * _isConnected_ to false, charset to {@code Charset.defaultCharset()}
      * and _socketFactory_ to a shared instance of
      * {@link org.apache.commons.net.DefaultSocketFactory}.
      */
@@ -458,7 +458,7 @@ public abstract class SocketClient
      * by {@link #connect connect()}.
      * <p>
      * To set the initial timeout, use {@link #setDefaultTimeout(int)} instead.
-     * 
+     *
      * @param timeout  The timeout in milliseconds to use for the currently
      *                 open socket connection.
      * @exception SocketException If the operation fails.
@@ -484,7 +484,7 @@ public abstract class SocketClient
     /**
      * Get the current sendBuffer size
      * @return the size, or -1 if not initialised
-     * @since 3.0 
+     * @since 3.0
      */
     protected int getSendBufferSize(){
         return sendBufferSize;
@@ -504,7 +504,7 @@ public abstract class SocketClient
     /**
      * Get the current receivedBuffer size
      * @return the size, or -1 if not initialised
-     * @since 3.0 
+     * @since 3.0
      */
     protected int getReceiveBufferSize(){
         return receiveBufferSize;
@@ -748,7 +748,7 @@ public abstract class SocketClient
 
 
     /**
-     * Adds a ProtocolCommandListener. 
+     * Adds a ProtocolCommandListener.
      *
      * @param listener  The ProtocolCommandListener to add.
      * @since 3.0
@@ -769,7 +769,7 @@ public abstract class SocketClient
 
     /**
      * If there are any listeners, send them the reply details.
-     * 
+     *
      * @param replyCode the code extracted from the reply
      * @param reply the full reply text
      * @since 3.0
@@ -782,7 +782,7 @@ public abstract class SocketClient
 
     /**
      * If there are any listeners, send them the command details.
-     * 
+     *
      * @param command the command name
      * @param message the complete message, including command name
      * @since 3.0
@@ -803,7 +803,7 @@ public abstract class SocketClient
     /**
      * Subclasses can override this if they need to provide their own
      * instance field for backwards compatibilty.
-     * 
+     *
      * @return the CommandSupport instance, may be {@code null}
      * @since 3.0
      */
@@ -815,7 +815,7 @@ public abstract class SocketClient
      * Sets the proxy for use with all the connections.
      * The proxy is used for connections established after the
      * call to this method.
-     * 
+     *
      * @param proxy the new proxy for connections.
      * @since 3.2
      */
@@ -834,10 +834,10 @@ public abstract class SocketClient
 
     /**
      * Gets the charset name.
-     * 
+     *
      * @return the charset.
      * @since 3.3
-     * TODO Will be deprecated once the code requires Java 1.6 as a mininmum 
+     * TODO Will be deprecated once the code requires Java 1.6 as a mininmum
      */
     public String getCharsetName() {
         return charset.name();
@@ -845,7 +845,7 @@ public abstract class SocketClient
 
     /**
      * Gets the charset.
-     * 
+     *
      * @return the charset.
      * @since 3.3
      */
@@ -855,7 +855,7 @@ public abstract class SocketClient
 
     /**
      * Sets the charset.
-     * 
+     *
      * @param charset the charset.
      * @since 3.3
      */

@@ -40,7 +40,7 @@ public class FTPClientTest extends TestCase {
 
         "257 \"/path/without/trailing/quote", // invalid syntax, return all after reply code prefix
             "\"/path/without/trailing/quote",
-            
+
         "257 root is current directory.", // NET-442
             "root is current directory.",
 
@@ -54,7 +54,7 @@ public class FTPClientTest extends TestCase {
 
     public void testParseClient() {
         for(int i=0; i<TESTS.length; i+=2) {
-            assertEquals("Failed to parse",TESTS[i+1], FTPClient.__parsePathname(TESTS[i]));            
+            assertEquals("Failed to parse",TESTS[i+1], FTPClient.__parsePathname(TESTS[i]));
         }
     }
 

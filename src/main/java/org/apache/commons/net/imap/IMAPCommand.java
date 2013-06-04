@@ -24,20 +24,20 @@ public enum IMAPCommand
 {
     // These enums must either use the same name as the IMAP command
     // or must provide the correct string as the parameter.
-    
+
     // Commands valid in any state:
-    
+
     CAPABILITY(0),
     NOOP(0),
     LOGOUT(0),
-    
+
     // Commands valid in Not Authenticated state
     STARTTLS(0),
     AUTHENTICATE(1),
     LOGIN(2),
-    
+
     XOAUTH(1),
-    
+
     // commands valid in authenticated state
     SELECT(1),
     EXAMINE(1),
@@ -50,7 +50,7 @@ public enum IMAPCommand
     LSUB(2),
     STATUS(2), // P2 = list in ()
     APPEND(2,4), // mbox [(flags)] [date-time] literal
-    
+
     // commands valid in selected state (substate of authenticated)
     CHECK(0),
     CLOSE(0),
@@ -61,9 +61,9 @@ public enum IMAPCommand
     COPY(2),
     UID(2, Integer.MAX_VALUE),
     ;
-    
+
     private final String imapCommand;
-    
+
     @SuppressWarnings("unused") // not yet used
     private final int minParamCount;
     @SuppressWarnings("unused") // not yet used
@@ -72,23 +72,23 @@ public enum IMAPCommand
     IMAPCommand(){
         this(null);
     }
-    
+
     IMAPCommand(String name){
         this(name, 0);
     }
-    
+
     IMAPCommand(int paramCount){
         this(null, paramCount, paramCount);
    }
-    
+
     IMAPCommand(int minCount, int maxCount){
         this(null, minCount, maxCount);
    }
-    
+
     IMAPCommand(String name, int paramCount){
         this(name, paramCount, paramCount);
     }
-    
+
     IMAPCommand(String name, int minCount, int maxCount){
         this.imapCommand = name;
         this.minParamCount = minCount;

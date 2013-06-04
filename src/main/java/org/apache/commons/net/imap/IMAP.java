@@ -82,7 +82,7 @@ public class IMAP extends SocketClient
 
     /**
      * Get the reply for a command that expects a tagged response.
-     * 
+     *
      * @throws IOException
      */
     private void __getReply() throws IOException
@@ -93,7 +93,7 @@ public class IMAP extends SocketClient
     /**
      * Get the reply for a command, reading the response until the
      * reply is found.
-     * 
+     *
      * @param wantTag {@code true} if the command expects a tagged response.
      * @throws IOException
      */

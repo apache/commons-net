@@ -330,8 +330,8 @@ public class POP3 extends SocketClient
 
     /**
      * Removes a ProtocolCommandListener.
-     * 
-     * Delegates this incorrectly named method - removeProtocolCommandistener (note the missing "L")- to 
+     *
+     * Delegates this incorrectly named method - removeProtocolCommandistener (note the missing "L")- to
      * the correct method {@link SocketClient#removeProtocolCommandListener}
      * @param listener The ProtocolCommandListener to remove
      */

@@ -38,7 +38,7 @@ import java.net.Socket;
 public final class Util
 {
     /**
-     * The default buffer size ({@value}) used by 
+     * The default buffer size ({@value}) used by
      * {@link #copyStream  copyStream } and {@link #copyReader  copyReader}
      * and by the copyReader/copyStream methods if a zero or negative buffer size is supplied.
      */

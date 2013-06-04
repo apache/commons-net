@@ -21,7 +21,7 @@
 This file is also used by the maven-changes-plugin to generate the release notes.
 Useful ways of finding items to add to this file are:
 
-1.  Add items when you fix a bug or add a feature (this makes the 
+1.  Add items when you fix a bug or add a feature (this makes the
 release process easy :-).
 
 2.  Do a JIRA search for tickets closed since the previous release.
@@ -33,7 +33,7 @@ To generate the release notes from this file:
 
 mvn changes:announcement-generate -Prelease-notes [-Dchanges.version=nnn]
 
-then tweak the formatting if necessary 
+then tweak the formatting if necessary
 and commit
 
 The <action> type attribute can be add,update,fix,remove.
@@ -45,16 +45,16 @@ The <action> type attribute can be add,update,fix,remove.
         <author email="dev@commons.apache.org">Apache Commons devlopers</author>
     </properties>
 
-    <!-- NOTE: 
+    <!-- NOTE:
     The description below is specially formatted so as to improve the layout of the generated release notes:
     The parsing process removes all line feeds, replacing them with a single space.
     The Velocity template in resources/templates has been enhanced to replace pairs of adjacent spaces
     with a new-line in the release notes. (These spaces are ignored when displaying HTML).
     If the output is not quite correct, check for invisible trailing spaces!
-    
+
     N.B. The release notes template groups actions by type, and only extracts data for the current release.
     The changes report outputs actions in the order they appear in this file.
-    
+
     To regenerate the release notes:
     mvn changes:announcement-generate -Prelease-notes [-Dchanges.version=nnn]
 
@@ -361,7 +361,7 @@ KeyManagerUtils can be used to provide client certificates.
             </action>
             <action issue="NET-273" dev="sebb" type="add">
             FEAT response parsing. Added FTPClient methods: boolean hasFeature(feature [,option]),
-            String fetaureValue(feature), String[] featureValues(feature) 
+            String fetaureValue(feature), String[] featureValues(feature)
             </action>
             <action issue="NET-379" dev="sebb" type="add">
             FTPClient - support for processing arbitrary commands that only use the control channel
@@ -532,8 +532,8 @@ This is primarily a maintenance release, but it also includes new features and e
             Fix parsing to allow for new-style DOS listing using 24hr clock rather than AM/PM
             </action>
             <action issue="NET-338" dev="sebb" type="add">
-            ftp.FTPClient.initiateListParsing(String parserKey, String pathname) 
-            can call createFileEntryParser with null systemName. 
+            ftp.FTPClient.initiateListParsing(String parserKey, String pathname)
+            can call createFileEntryParser with null systemName.
             Fix this by adding getSystemType() which does not return null, and deprecating getSystemName().
             </action>
             <action issue="NET-244" dev="sebb" type="add">
@@ -654,7 +654,7 @@ This is primarily a maintenance release, but it also includes new features and e
                 Javadoc fixes, improvements, and refactoring.
             </action>
             <action issue="NET-245" dev="rwinston" type="fix">
-                Apply MFMT patch 
+                Apply MFMT patch
             </action>
             <action issue="NET-279" dev="rwinston" type="fix">
                 Fix copying of reply lines collection
@@ -754,11 +754,11 @@ This is primarily a maintenance release, but it also includes new features and e
                 Added WindowSizeOptionHandler for TelnetClient. Thanks to yuvalkashtan@gmail.com
             </action>
             <action dev="rwinston" type="update">
-                Refactored *Client classes under net/ package into separate subpackages, and move PrintCommandListener 
+                Refactored *Client classes under net/ package into separate subpackages, and move PrintCommandListener
                 out of the examples/ package.
             </action>
             <action dev="rwinston" type="add">
-                Added an ant target to the Maven build to generate an FTP-only jar file, for clients who 
+                Added an ant target to the Maven build to generate an FTP-only jar file, for clients who
                 wish to use only FTP-based functionality.
             </action>
             <action dev="rwinston" type="update">
@@ -832,7 +832,7 @@ This is primarily a maintenance release, but it also includes new features and e
             <action dev="sebb" type="fix" issue="NET-225">
                 FTPFileEntryParserImpl.preParse() doesn't remove unparsable entries at the end of the file list
             </action>
-        </release>    
+        </release>
 
 
 <!-- 1.5.0 has not yet been released, so comment out the section until it is ready for release -->
@@ -848,7 +848,7 @@ This is primarily a maintenance release, but it also includes new features and e
             <action dev="rwinston" type="fix"
                 issue="NET-73">
                 TelnetInputStream.java: Fixing another
-                potential deadlock for 
+                potential deadlock for
                 telnet and FTP (patch courtesy Rob Hasselbaum).
             </action>
             <action dev="dfs" type="update" issue="NET-57">
@@ -883,7 +883,7 @@ This is primarily a maintenance release, but it also includes new features and e
             </action>
             <action dev="scohen" type="fix" issue="NET-62">
                 DefaultFTPFileEntryParserFactory.java:
-                Wrap 
+                Wrap
                 NoClassDefFoundError in FTP parser exception
                 when ORO is not available.
             </action>
@@ -906,7 +906,7 @@ This is primarily a maintenance release, but it also includes new features and e
                 Article.java: Fix minor issues with NNTP
                 parsing.
             </action>
-        </release> 
+        </release>
 -->
 
 
@@ -1004,7 +1004,7 @@ This is primarily a maintenance release, but it also includes new features and e
             </action>
             <action dev="dfs" type="fix">
                 Fix TelnetClient zombie thread issue
-            </action>    
+            </action>
 
 
         </release>
@@ -1021,24 +1021,24 @@ This is primarily a maintenance release, but it also includes new features and e
         <release version="1.2.2" date="June 25, 2004" description="fix release">
             <action dev="scohen" type="fix">
                 fixed bug in the way FTPClient.listFiles worked when a directory was not
-                specified.  Current directory was not being 'remembered'.  This was most 
+                specified.  Current directory was not being 'remembered'.  This was most
                 problematic in the dependent ftp task of Ant.
             </action>
             <action dev="scohen" type="fix">
                 fixed handling of certain unusual "special" file types in the Unix parser.
             </action>
-        </release>    
+        </release>
 
         <release version="1.2.1" date="May 6, 2004" description="fix release">
             <action dev="scohen" type="fix">
                 changed code that rendered package uncompilable under JDK 1.2
             </action>
-        </release>    
+        </release>
 
         <release version="1.2.0" date="April 30, 2004" description="autodetection of system for listings">
             <action dev="scohen" type="fix">
                 Mario Ivankovits mario@ops.co.at added
-                functionality supporting correct handling of the &quot;dirstyle&quot; 
+                functionality supporting correct handling of the &quot;dirstyle&quot;
                 attribute of NT and OS400 servers that allows them to mimic Unix ftp servers.
                 and a bug fix affecting handling of sticky and suid bits on Unix FTP servers.
             </action>
@@ -1046,7 +1046,7 @@ This is primarily a maintenance release, but it also includes new features and e
                 Mario Ivankovits mario@ops.co.at added parser for OS400.
             </action>
             <action dev="jbrekke,scohen" type="fix">
-                Added a functional junit test testing list parsing against real servers 
+                Added a functional junit test testing list parsing against real servers
                 and fix several    bugs found through this test.
             </action>
             <action dev="dfs" type="add">
@@ -1069,11 +1069,11 @@ This is primarily a maintenance release, but it also includes new features and e
             </action>
         </release>
 
-<!-- Not yet released; probably never will be 
+<!-- Not yet released; probably never will be
         <release version="1.1.1" date="TBD" description="last jdk1.1 compatible release">
             <action dev="scohen" type="fix">
                 Removed all JDK 1.1 incompatibilities that had been introduced
-                unintentionally in previous versions.  Release 1.1.1 is the last 
+                unintentionally in previous versions.  Release 1.1.1 is the last
                 JDK 1.1 compatible release.  Any future 1.1.x maintenance releases
                 will remain JDK !.1 compatible, but version 1.2 may break
                 compatibility and will be guaranteed to work with only J2SE 1.2
@@ -1148,8 +1148,8 @@ This is primarily a maintenance release, but it also includes new features and e
                 Added a migration document for moving from NetComponents to Commons/Net.
             </action>
             <action dev="brekke" type="fix">
-                Moved the ftp2 tree with tests to a proposal directory and setup 
-                a build for that code.  This can grow in this area so users don't 
+                Moved the ftp2 tree with tests to a proposal directory and setup
+                a build for that code.  This can grow in this area so users don't
                 think it is production ready.
             </action>
             <action dev="dfs" type="fix">
@@ -1171,8 +1171,8 @@ This is primarily a maintenance release, but it also includes new features and e
                 Patch for restarting FTP file transfers.  The offset was not
                 being sent immediately before the data transfer command on
                 account.  The bug was apparently introduced in NetComponents
-                when it was decided to always send a PORT command before each data 
-                transfer to avoid socket reuse problems on Windows.  
+                when it was decided to always send a PORT command before each data
+                transfer to avoid socket reuse problems on Windows.
                 From: Tapan Karecha ( tapan@india.hp.com ).
             </action>
             <action dev="dfs" type="fix">

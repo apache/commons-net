@@ -41,7 +41,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
  * os-depend-fact   = <IANA assigned OS name> "." token
  * local-fact       = "X." token
  * value            = *SCHAR
- * 
+ *
  * Sample os-depend-fact:
  * UNIX.group=0;UNIX.mode=0755;UNIX.owner=0;
  * </pre>
@@ -49,7 +49,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
  * multiple (data) entries are returned without any leading spaces.
  * The parser requires that the leading space from the MLST entry is removed.
  * MLSD entries can begin with a single space if there are no facts.
- * 
+ *
  * @since 3.0
  */
 public class MLSxEntryParser extends FTPFileEntryParserImpl

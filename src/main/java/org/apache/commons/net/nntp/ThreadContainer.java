@@ -89,7 +89,7 @@ class ThreadContainer {
                 kid != null;
                 prev = kid,
                     kid = rest,
-                    rest = (rest == null ? null : rest.next)) 
+                    rest = (rest == null ? null : rest.next))
             {
                 kid.next = prev;
             }

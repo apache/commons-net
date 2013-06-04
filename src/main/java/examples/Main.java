@@ -13,7 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package examples;
@@ -33,11 +33,11 @@ public class Main {
      * Lists available classes, and provides shorthand invocation.
      * For example:<br/>
      * <code>java -jar commons-net-examples-m.n.jar FTPClientExample -l host user password</code>
-     * 
+     *
      * @param args the first argument is used to name the class; remaining arguments
      * are passed to the target class.
-     * @throws Exception 
-     * @throws Exception 
+     * @throws Exception
+     * @throws Exception
      */
     public static void main(String[] args) throws Exception  {
         if (args.length==0) {
@@ -56,7 +56,7 @@ public class Main {
                 while (e.hasMoreElements()) {
                   JarEntry je = e.nextElement();
                   String name = je.getName();
-                  if (!name.endsWith(".class") 
+                  if (!name.endsWith(".class")
                           || name.contains("$") // subclasses
                           || name.equals("examples/nntp/NNTPUtils.class") // no main class
                           || name.equals("examples/util/IOUtil.class") // no main class

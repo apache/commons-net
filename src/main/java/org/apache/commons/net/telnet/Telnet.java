@@ -263,7 +263,7 @@ class Telnet extends SocketClient
      * Sets the state of the option.
      * <p>
      * @param option - option code to be set.
-     * @throws IOException 
+     * @throws IOException
      ***/
     void _setWill(int option) throws IOException
     {
@@ -292,7 +292,7 @@ class Telnet extends SocketClient
      * Sets the state of the option.
      * <p>
      * @param option - option code to be set.
-     * @throws IOException 
+     * @throws IOException
      ***/
     void _setDo(int option) throws IOException
     {
@@ -1091,7 +1091,7 @@ class Telnet extends SocketClient
      *
      * @param opthand - option handler to be registered.
      * @throws InvalidTelnetOptionException - The option code is invalid.
-     * @throws IOException 
+     * @throws IOException
      **/
     void addOptionHandler(TelnetOptionHandler opthand)
     throws InvalidTelnetOptionException, IOException
@@ -1133,7 +1133,7 @@ class Telnet extends SocketClient
      *
      * @param optcode - Code of the option to be unregistered.
      * @throws InvalidTelnetOptionException - The option code is invalid.
-     * @throws IOException 
+     * @throws IOException
      **/
     void deleteOptionHandler(int optcode)
     throws InvalidTelnetOptionException, IOException

@@ -4,14 +4,14 @@ import java.nio.charset.Charset;
 
 /**
  * Helps dealing with Charsets.
- * 
+ *
  * @since 3.3
  */
 public class Charsets {
 
     /**
      * Returns a charset object for the given charset name.
-     * 
+     *
      * @param charsetName
      *            The name of the requested charset; may be a canonical name, an alias, or null. If null, return the
      *            default charset.
@@ -23,9 +23,9 @@ public class Charsets {
 
     /**
      * Returns a charset object for the given charset name.
-     * 
+     *
      * @param charsetName
-     *            The name of the requested charset; may be a canonical name, an alias, or null. 
+     *            The name of the requested charset; may be a canonical name, an alias, or null.
      *            If null, return the default charset.
      * @param defaultCharsetName the charset name to use if the requested charset is null
      *

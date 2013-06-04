@@ -157,12 +157,12 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      * selected mechanism, using the given username and the given password.
      *
      * @param method the method to use, one of the {@link AuthenticatingSMTPClient.AUTH_METHOD} enum values
-     * @param username the user name. 
+     * @param username the user name.
      *        If the method is XOAUTH, then this is used as the plain text oauth protocol parameter string
-     *        which is Base64-encoded for transmission.        
+     *        which is Base64-encoded for transmission.
      * @param password the password for the username.
      *        Ignored for XOAUTH.
-     * 
+     *
      * @return True if successfully completed, false if not.
      * @exception SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result

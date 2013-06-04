@@ -117,7 +117,7 @@ Platform specific files should have the platform specific linefeeds.
 <p>
 5. JavaDoc <strong>MUST</strong> exist on all public and protected methods.
 JavaDoc on private and default access methods and members is preferred and
-encouraged.  If your code modifications use an existing class/method/variable 
+encouraged.  If your code modifications use an existing class/method/variable
 which lacks JavaDoc, it is required that you add it.  This will improve the
 project as a whole.
 </p>

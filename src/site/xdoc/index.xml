@@ -23,7 +23,7 @@
  </properties>
 
  <body>
- 
+
    <section name="Apache Commons Net">
    <p>
      Apache Commons Net&#x2122; library implements the client side of many basic
@@ -52,7 +52,7 @@
        <li>Telnet</li>
        <li>TFTP</li>
        <li>Finger</li>
-       <li>Whois</li> 
+       <li>Whois</li>
        <li>rexec/rcmd/rlogin</li>
        <li>Time (rdate) and Daytime</li>
        <li>Echo</li>

@@ -25,7 +25,7 @@ import org.apache.commons.net.ftp.FTPClient;
 
 /**
  * A simple test class for SocketClient settings.
- * 
+ *
  * @since 3.2
  */
 public class SocketClientTest extends TestCase

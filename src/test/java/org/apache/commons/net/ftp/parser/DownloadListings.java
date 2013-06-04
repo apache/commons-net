@@ -39,7 +39,7 @@ import org.apache.commons.net.io.Util;
  * Sample class to download LIST and MLSD listings from list of ftp sites.
  */
 public class DownloadListings extends FTPClient {
-    
+
     // Also used by MLDSComparison
     static final String DOWNLOAD_DIR = "target/ftptest";
 

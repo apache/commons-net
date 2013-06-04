@@ -213,7 +213,7 @@ public class POP3SClient extends POP3Client
         _input_ = socket.getInputStream();
         _output_ = socket.getOutputStream();
         _reader = new CRLFLineReader(new InputStreamReader(_input_, _DEFAULT_ENCODING));
-        _writer = new BufferedWriter(new OutputStreamWriter(_output_, _DEFAULT_ENCODING));    
+        _writer = new BufferedWriter(new OutputStreamWriter(_output_, _DEFAULT_ENCODING));
     }
 
     /**

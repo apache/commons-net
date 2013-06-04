@@ -47,15 +47,15 @@ public final class SMTPCommand
     public static final int TURN = 12;
     public static final int QUIT = 13;
 
-    /** 
+    /**
      * The authorization command
-     * @since 3.0 
+     * @since 3.0
      */
     public static final int AUTH = 14 ;
 
-    /** 
+    /**
      * The extended hello command
-     * @since 3.0 
+     * @since 3.0
      */
     public static final int EHLO = 15 ;
 
@@ -92,7 +92,7 @@ public final class SMTPCommand
     static {
         if (_commands.length != _NEXT_) {
             throw new RuntimeException("Error in array definition");
-        }        
+        }
     }
 
     /***

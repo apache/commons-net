@@ -132,7 +132,7 @@ import java.util.TreeMap;
  *    f.login(username, password);
  *    FTPFile[] files = listFiles(directory);
  * </pre>
- * 
+ *
  * @since 1.4
  * @see org.apache.commons.net.ftp.Configurable
  * @see org.apache.commons.net.ftp.FTPClient

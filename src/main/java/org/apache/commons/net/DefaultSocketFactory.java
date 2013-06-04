@@ -55,7 +55,7 @@ public class DefaultSocketFactory extends SocketFactory
 
     /**
      * A constructor for sockets with proxy support.
-     * 
+     *
      * @param proxy The Proxy to use when creating new Sockets.
      * @since 3.2
      */
@@ -66,7 +66,7 @@ public class DefaultSocketFactory extends SocketFactory
 
     /**
      * Creates an unconnected Socket.
-     * 
+     *
      * @return A new unconnected Socket.
      * @exception IOException If an I/O error occurs while creating the Socket.
      * @since 3.2

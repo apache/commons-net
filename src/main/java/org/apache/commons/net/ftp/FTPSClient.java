@@ -108,7 +108,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Constructor for FTPSClient, calls {@link #FTPSClient(String, boolean)}.
-     * 
+     *
      * Sets protocol to {@link #DEFAULT_PROTOCOL} - i.e. TLS - and security mode to explicit (isImplicit = false)
      */
     public FTPSClient() {
@@ -126,7 +126,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Constructor for FTPSClient, using explict mode, calls {@link #FTPSClient(String, boolean)}.
-     * 
+     *
      * @param protocol the protocol to use
      */
     public FTPSClient(String protocol) {
@@ -451,7 +451,7 @@ public class FTPSClient extends FTPClient {
     /**
      * PBSZ command. pbsz value: 0 to (2^32)-1 decimal integer.
      * Issues the command and parses the response to return the negotiated value.
-     * 
+     *
      * @param pbsz Protection Buffer Size.
      * @throws SSLException If the server reply code does not equal "200".
      * @throws IOException If an I/O error occurs while sending
@@ -472,7 +472,7 @@ public class FTPSClient extends FTPClient {
         }
         return minvalue;
     }
-    
+
     /**
      * PROT command.
      * <ul>
@@ -485,7 +485,7 @@ public class FTPSClient extends FTPClient {
      *  {@link #setSocketFactory(javax.net.SocketFactory)} and
      *  {@link #setServerSocketFactory(javax.net.ServerSocketFactory)}
      *
-     * @param prot Data Channel Protection Level, if {@code null}, use {@link #DEFAULT_PROT}. 
+     * @param prot Data Channel Protection Level, if {@code null}, use {@link #DEFAULT_PROT}.
      * @throws SSLException If the server reply code does not equal  {@code 200}.
      * @throws IOException If an I/O error occurs while sending
      * the command.
@@ -527,7 +527,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Send an FTP command.
-     * A successful CCC (Clear Command Channel) command causes the underlying {@link SSLSocket} 
+     * A successful CCC (Clear Command Channel) command causes the underlying {@link SSLSocket}
      * instance to be assigned to a plain {@link Socket}
      * @param command The FTP command.
      * @return server reply.
@@ -625,10 +625,10 @@ public class FTPSClient extends FTPClient {
     /**
     * Performs any custom initialization for a newly created SSLSocket (before
     * the SSL handshake happens).
-    * Called by {@link #_openDataConnection_(int, String)} immediately 
+    * Called by {@link #_openDataConnection_(int, String)} immediately
     * after creating the socket.
     * The default implementation is a no-op
-    * @throws IOException 
+    * @throws IOException
     * @since 3.1
     */
     protected void _prepareDataSocket_(Socket socket)
@@ -815,7 +815,7 @@ public class FTPSClient extends FTPClient {
      */
     private String extractPrefixedData(String prefix, String reply) {
         int idx = reply.indexOf(prefix);
-        if (idx == -1) { 
+        if (idx == -1) {
             return null;
         }
         // N.B. Cannot use trim before substring as leading space would affect the offset.
