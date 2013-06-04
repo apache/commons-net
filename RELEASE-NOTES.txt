@@ -1,51 +1,36 @@
               Apache Commons Net
-                  Version 3.2
+                  Version 3.3
                  RELEASE NOTES
 
-The Commons Net team is pleased to announce the release of Apache Commons Net 3.2
+The Commons Net team is pleased to announce the release of Apache Commons Net 3.3
 
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
 Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
 
-This release fixes bugs and adds some new functionality (see below).
-It is binary compatible with previous releases.
-Note that Clirr shows that two public methods have been removed (NET-485). These are not used within NET.
+
 
 Changes in this version include:
 
 New features:
-o NET-468:  Request for native support for socks proxy routing with Commons net FTP. Thanks to Bogdan Drozdowski.
-o NET-465:  FTPClient setSendBufferSize and setReceiveBufferSize on data socket. Thanks to Bogdan Drozdowski.
-o NET-462:  FTPClient in PASSIVE_LOCAL_DATA_CONNECTION_MODE cannot work when host have several different IP. Thanks to Bogdan Drozdowski.
-o           The examples can now be run using "java -jar commons-net-examples-m.n.jar".
-            This will automatically include the main net jar in the classpath.
-            See documentation.
-            FTPClientExample now supports "-A" for anonymous login
+o NET-503:  AuthenticatingSMTPClient does not support non-default encoding
+o NET-496:  Util copyReader/copyStream classes should use default buffer size for non-positive buffer size parameters.
+o NET-310:  FTPCommand conversion to use enum; added FTPCmd emum and deprecated FTPCommand.
 
 Fixed Bugs:
-o NET-46:   retrieveFileStream fails randomly or hangs
-o NET-485:  Remove unnecessary Base64 methods.
-o NET-484:  Base64.CHUNK_SEPARATOR should be private
-o NET-483:  Base64.encodeBase64(byte[], boolean, boolean, int) does not calculate output size correctly for unchunked output.
-o NET-466:  Regression: TelnetInputStream#available() blocks. Thanks to Martin Oberhuber.
-o NET-426:  FTPS: Hook to customize _openDataConnection_ SSLSocket before startHandshake() is called.
-            Implement _openDataConnection(String, String) method to properly
-            interface with FTPClient.openDataConnection(String, String) Thanks to Ketan.
-o NET-456:  TelnetClient hangs when reader-thread startup is delayed.
-o NET-449:  listFiles bug with folder that begins with "-". Clarify Javadoc.
-o NET-473:  FTPClient setSoTimeout (int time) will result in NullPointerException. Clarify Javadoc.
-o NET-475:  FtpClient sends REST when calling listFiles. Clarified Javadoc.
-o NET-467:  IMAPClient#fetch() does not handle literal strings.
-o NET-458:  MVSFTPEntryParser.parseSimpleEntry - ArrayIndexOutOfBoundsException. Thanks to Denis Molony.
-o NET-450:  Bug in documentation for FTPClient. Thanks to Roger Hardiman.
-o NET-442:  StringIndexOutOfBoundsException: String index out of range: -1 if server respond with root is current directory.
-o NET-444:  FTPTimestampParserImpl fails to parse future dates correctly on Feb 28th in a leap year.
+o NET-500:  Always call FTPClient#setFileType after connection.
+            Not all servers default to ASCII.
+o NET-465:  FTPClient setSendBufferSize and setReceiveBufferSize on data socket.
+            The previous fix caused performance problems.
+            Added new getters and setters for the SO_SNDBUF and SO_RCVBUF values to be used on the data socket.
+o NET-480:  Wrong passivHost when using FTPHTTPClient with EPSV
+o NET-494:  FTPClient.CSL.cleanUp() fails to restore timeout value on exception
+o NET-492:  FTPClient.printWorkingDirectory() incorrectly parses certain valid PWD command results
 
 Changes:
-o NET-482:  Support XOAUTH. Thanks to Houman Atashbar.
+o NET-507:  Option to disable private IP replacement in FTP passive mode.
 
 
 For complete information on Commons Net, including instructions on how to submit bug reports,
 patches, or suggestions for improvement, see the Apache Commons Net website:
 
-http://commons.apache.org/net/
+http://commons.apache.org/proper/commons-net/
