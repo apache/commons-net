@@ -139,17 +139,18 @@ public abstract class RegexFTPFileEntryParserImpl extends
      * Alter the current regular expression being utilised for entry parsing
      * and create a new {@link Pattern} instance.
      * @param regex The new regular expression
-     * @return  true if the compiled pattern is not null
+     * @return  true
      * @since 2.0
+     * @throws PatternSyntaxException if the regex cannot be compiled
      */
     public boolean setRegex(String regex) {
         try {
             pattern = Pattern.compile(regex);
+            return true;
         } catch (PatternSyntaxException pse) {
             throw new IllegalArgumentException("Unparseable regex supplied: "
                     + regex);
         }
-        return (pattern != null);
     }
 
 }
