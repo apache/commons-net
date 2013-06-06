@@ -65,7 +65,7 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.3" date="2013-06-??" description="
 This is a bug-fix release. See further details below.
         ">
-            <action issue="NET-501" dev="sebb" due-to="Julián Lastiri" type="fix">
+            <action issue="NET-501" dev="sebb"  due-to="Julián Lastiri" type="fix">
             Race Condition on TelnetClient.disconnect() and TelnetInputStream.run()
             java.lang.IllegalStateException: Queue is full! Cannot process another character. 
             </action>
