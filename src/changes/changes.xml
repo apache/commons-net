@@ -65,34 +65,37 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.3" date="2013-06-??" description="
 This is a bug-fix release. See further details below.
         ">
-            <action issue="NET-507" dev="sebb" type="update">
+            <action issue="NET-505" dev="sebb" due-to="Sean Kelley" type="update">
+            User specified bufferSize reset to default when FTPClient is disconnected or reinitialized resulting in performance degradation.
+            </action>
+            <action issue="NET-507" dev="sebb" due-to="Jiri Netolicky" type="update">
             Option to disable private IP replacement in FTP passive mode.
             </action>
-            <action issue="NET-503" dev="sebb" type="add">
+            <action issue="NET-503" dev="sebb" due-to="Ofer Regev" type="add">
             AuthenticatingSMTPClient does not support non-default encoding
             </action>
-            <action issue="NET-500" dev="sebb" type="fix">
+            <action issue="NET-500" dev="sebb" due-to="Michael Frick" type="fix">
             Always call FTPClient#setFileType after connection.
             Not all servers default to ASCII.
             </action>
-            <action issue="NET-465" dev="sebb" type="fix">
+            <action issue="NET-465" dev="sebb" due-to="Jim Kerwood" type="fix">
             FTPClient setSendBufferSize and setReceiveBufferSize on data socket.
             The previous fix caused performance problems.
             Added new getters and setters for the SO_SNDBUF and SO_RCVBUF values to be used on the data socket.
             </action>
-            <action issue="NET-496" dev="sebb" type="add">
+            <action issue="NET-496" dev="sebb"type="add">
             Util copyReader/copyStream classes should use default buffer size for non-positive buffer size parameters.
             </action>
             <action issue="NET-310" dev="sebb" type="add">
             FTPCommand conversion to use enum; added FTPCmd emum and deprecated FTPCommand.
             </action>
-            <action issue="NET-480" dev="sebb" type="fix">
+            <action issue="NET-480" dev="sebb" due-to="Peter Naber" type="fix">
             Wrong passivHost when using FTPHTTPClient with EPSV
             </action>
-            <action issue="NET-494" dev="sebb" type="fix">
+            <action issue="NET-494" dev="sebb"type="fix">
             FTPClient.CSL.cleanUp() fails to restore timeout value on exception
             </action>
-            <action issue="NET-492" dev="sebb" type="fix">
+            <action issue="NET-492" dev="sebb" due-to="Tomasz Jedrzejewski" type="fix">
             FTPClient.printWorkingDirectory() incorrectly parses certain valid PWD command results
             </action>
         </release>

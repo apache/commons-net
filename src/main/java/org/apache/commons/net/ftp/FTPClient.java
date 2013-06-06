@@ -485,7 +485,6 @@ implements Configurable
         __systemName         = null;
         __entryParser        = null;
         __entryParserKey    = "";
-        __bufferSize         = 0;
         __featuresMap = null;
     }
 
