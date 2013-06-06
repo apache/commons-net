@@ -636,12 +636,10 @@ implements Configurable
             return false;
         }
 
-        OutputStream output;
+        OutputStream output = getBufferedOutputStream(socket.getOutputStream());
 
         if (__fileType == ASCII_FILE_TYPE) {
-            output = new ToNetASCIIOutputStream(getBufferedOutputStream(socket.getOutputStream()));
-        } else {
-            output = getBufferedOutputStream(socket.getOutputStream());
+            output = new ToNetASCIIOutputStream(output);
         }
 
         CSL csl = null;
@@ -1859,11 +1857,9 @@ implements Configurable
             return false;
         }
 
-        InputStream input;
+        InputStream input = getBufferedInputStream(socket.getInputStream());
         if (__fileType == ASCII_FILE_TYPE) {
-            input = new FromNetASCIIInputStream(getBufferedInputStream(socket.getInputStream()));
-        } else {
-            input = getBufferedInputStream(socket.getInputStream());
+            input = new FromNetASCIIInputStream(input);
         }
 
         CSL csl = null;
@@ -1878,6 +1874,7 @@ implements Configurable
                     CopyStreamEvent.UNKNOWN_STREAM_SIZE, __mergeListeners(csl),
                     false);
         } finally {
+            Util.closeQuietly(input);
             Util.closeQuietly(socket);
             if (csl != null) {
                 csl.cleanUp(); // fetch any outstanding keepalive replies
