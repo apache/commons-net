@@ -353,7 +353,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      *
      * @param file
      * @param entry
-     * @return
+     * @return true if the entry string is non-null and non-empty
      */
     private boolean parseSimpleEntry(FTPFile file, String entry) {
         if (entry != null && entry.trim().length() > 0) {
