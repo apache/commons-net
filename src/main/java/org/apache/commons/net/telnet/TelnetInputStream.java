@@ -594,7 +594,6 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
             __queue.notifyAll();
         }
 
-        __threaded = false;
     }
 
 //    @Override
