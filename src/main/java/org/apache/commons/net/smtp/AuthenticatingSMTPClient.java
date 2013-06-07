@@ -24,6 +24,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import javax.net.ssl.SSLContext;
 
 import org.apache.commons.net.util.Base64;
 
@@ -53,6 +54,40 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      */
     public AuthenticatingSMTPClient(String protocol) throws NoSuchAlgorithmException {
         super(protocol);
+    }
+
+    /**
+     * Overloaded constructor that takes a protocol specification and the implicit argument
+     * @param proto the protocol.
+     * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
+     * @since 3.3
+     */
+    public AuthenticatingSMTPClient(String proto, boolean implicit)
+    {
+      super(proto, implicit);
+    }
+
+    /**
+     * Overloaded constructor that takes the protocol specification, the implicit argument and encoding
+     * @param proto the protocol.
+     * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
+     * @param encoding the encoding
+     * @since 3.3
+     */
+    public AuthenticatingSMTPClient(String proto, boolean implicit, String encoding)
+    {
+      super(proto, implicit, encoding);
+    }
+
+    /**
+     * Overloaded constructor that takes the implicit argument, and using {@link #DEFAULT_PROTOCOL} i.e. TLS
+     * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
+     * @param ctx A pre-configured SSL Context.
+     * @since 3.3
+     */
+    public AuthenticatingSMTPClient(boolean implicit, SSLContext ctx)
+    {
+      super(implicit, ctx);
     }
 
     /**

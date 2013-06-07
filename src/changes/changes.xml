@@ -63,8 +63,11 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.3" date="2013-06-??" description="
-This is a bug-fix release. See further details below.
+This is mainly a bug-fix release. See further details below.
         ">
+            <action issue="NET-509" dev="sebb" due-to="Anthony Dahanne" type="update">
+            AuthenticatingSMTPClient needs a constructor with the isImplicit argument for SSL
+            </action>
             <action issue="NET-501" dev="sebb"  due-to="Julián Lastiri" type="fix">
             Race Condition on TelnetClient.disconnect() and TelnetInputStream.run()
             java.lang.IllegalStateException: Queue is full! Cannot process another character. 
