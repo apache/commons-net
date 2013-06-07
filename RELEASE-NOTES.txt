@@ -7,27 +7,31 @@ The Commons Net team is pleased to announce the release of Apache Commons Net 3.
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
 Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
 
-This is a bug-fix release. See further details below.
+This is mainly a bug-fix release. See further details below.
 
 Changes in this version include:
 
 New features:
-o NET-503:  AuthenticatingSMTPClient does not support non-default encoding
+o NET-503:  AuthenticatingSMTPClient does not support non-default encoding Thanks to Ofer Regev.
 o NET-496:  Util copyReader/copyStream classes should use default buffer size for non-positive buffer size parameters.
 o NET-310:  FTPCommand conversion to use enum; added FTPCmd emum and deprecated FTPCommand.
 
 Fixed Bugs:
+o NET-501:  Race Condition on TelnetClient.disconnect() and TelnetInputStream.run()
+            java.lang.IllegalStateException: Queue is full! Cannot process another character. Thanks to Julián Lastiri.
 o NET-500:  Always call FTPClient#setFileType after connection.
-            Not all servers default to ASCII.
+            Not all servers default to ASCII. Thanks to Michael Frick.
 o NET-465:  FTPClient setSendBufferSize and setReceiveBufferSize on data socket.
             The previous fix caused performance problems.
-            Added new getters and setters for the SO_SNDBUF and SO_RCVBUF values to be used on the data socket.
-o NET-480:  Wrong passivHost when using FTPHTTPClient with EPSV
+            Added new getters and setters for the SO_SNDBUF and SO_RCVBUF values to be used on the data socket. Thanks to Jim Kerwood.
+o NET-480:  Wrong passivHost when using FTPHTTPClient with EPSV Thanks to Peter Naber.
 o NET-494:  FTPClient.CSL.cleanUp() fails to restore timeout value on exception
-o NET-492:  FTPClient.printWorkingDirectory() incorrectly parses certain valid PWD command results
+o NET-492:  FTPClient.printWorkingDirectory() incorrectly parses certain valid PWD command results Thanks to Tomasz Jedrzejewski.
 
 Changes:
-o NET-507:  Option to disable private IP replacement in FTP passive mode.
+o NET-509:  AuthenticatingSMTPClient needs a constructor with the isImplicit argument for SSL Thanks to Anthony Dahanne.
+o NET-505:  User specified bufferSize reset to default when FTPClient is disconnected or reinitialized resulting in performance degradation. Thanks to Sean Kelley.
+o NET-507:  Option to disable private IP replacement in FTP passive mode. Thanks to Jiri Netolicky.
 
 
 For complete information on Commons Net, including instructions on how to submit bug reports,
