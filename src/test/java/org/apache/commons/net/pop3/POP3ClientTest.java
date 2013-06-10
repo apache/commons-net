@@ -44,10 +44,10 @@ public class POP3ClientTest extends TestCase
 {
     POP3Client p = null;
 
-    String user = TestSetupParameters.user;
-    String emptyUser = TestSetupParameters.emptyuser;
-    String password = TestSetupParameters.password;
-    String mailhost = TestSetupParameters.mailhost;
+    String user = POP3Constants.user;
+    String emptyUser = POP3Constants.emptyuser;
+    String password = POP3Constants.password;
+    String mailhost = POP3Constants.mailhost;
 
     /**
      *

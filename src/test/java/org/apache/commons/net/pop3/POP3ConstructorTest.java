@@ -39,10 +39,10 @@ import java.io.Reader;
  */
 public class POP3ConstructorTest extends TestCase
 {
-    String user = TestSetupParameters.user;
-    String emptyUser = TestSetupParameters.emptyuser;
-    String password = TestSetupParameters.password;
-    String mailhost = TestSetupParameters.mailhost;
+    String user = POP3Constants.user;
+    String emptyUser = POP3Constants.emptyuser;
+    String password = POP3Constants.password;
+    String mailhost = POP3Constants.mailhost;
 
     /**
      *

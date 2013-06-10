@@ -34,7 +34,7 @@ package org.apache.commons.net.pop3;
  * Your mileage may vary based on the POP3 server you run the tests against.
  * Some servers are more standards-compliant than others.
  */
-public class TestSetupParameters
+public class POP3Constants
 {
     public static final String user = "test";
     public static final String emptyuser = "alwaysempty";
@@ -43,6 +43,6 @@ public class TestSetupParameters
     public static final String mailhost = "localhost";
 
      //Cannot be instantiated
-    private TestSetupParameters()
+    private POP3Constants()
     {}
 }
