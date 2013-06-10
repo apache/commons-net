@@ -175,9 +175,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 <configuration>
                     <excludes>
                         <exclude>**/*FunctionalTest.java</exclude>
-                        <exclude>**/*POP3*.java</exclude>
-                        <!-- JUnit4 and/or Surefire does not like a class with a private constructor -->
-                        <exclude>**/TestSetupParameters.java</exclude>
+                        <exclude>**/POP3*Test.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>
