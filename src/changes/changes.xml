@@ -42,7 +42,7 @@ The <action> type attribute can be add,update,fix,remove.
 <document>
     <properties>
         <title>Changes</title>
-        <author email="dev@commons.apache.org">Apache Commons devlopers</author>
+        <author email="dev@commons.apache.org">Apache Commons developers</author>
     </properties>
 
     <!-- NOTE:
