@@ -226,7 +226,7 @@ public class SubnetUtils {
             address = matchAddress(matcher);
 
             /* Create a binary netmask from the number of bits specification /x */
-            int cidrPart = rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
+            int cidrPart = rangeCheck(Integer.parseInt(matcher.group(5)), 1, NBITS);
             for (int j = 0; j < cidrPart; ++j) {
                 netmask |= (1 << 31-j);
             }
@@ -260,7 +260,7 @@ public class SubnetUtils {
     private int matchAddress(Matcher matcher) {
         int addr = 0;
         for (int i = 1; i <= 4; ++i) {
-            int n = (rangeCheck(Integer.parseInt(matcher.group(i)), -1, 255));
+            int n = (rangeCheck(Integer.parseInt(matcher.group(i)), 0, 255));
             addr |= ((n & 0xff) << 8*(4-i));
         }
         return addr;
@@ -293,15 +293,15 @@ public class SubnetUtils {
 
     /*
      * Convenience function to check integer boundaries.
-     * Checks if a value x is in the range (begin,end].
+     * Checks if a value x is in the range [begin,end].
      * Returns x if it is in range, throws an exception otherwise.
      */
     private int rangeCheck(int value, int begin, int end) {
-        if (value > begin && value <= end) { // (begin,end]
+        if (value >= begin && value <= end) { // (begin,end]
             return value;
         }
 
-        throw new IllegalArgumentException("Value [" + value + "] not in range ("+begin+","+end+"]");
+        throw new IllegalArgumentException("Value [" + value + "] not in range ["+begin+","+end+"]");
     }
 
     /*
