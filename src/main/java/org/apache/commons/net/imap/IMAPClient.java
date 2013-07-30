@@ -341,9 +341,9 @@ public class IMAPClient extends IMAP
 
     /**
      * Send a STORE command to the server.
-     * @param sequenceSet The sequence set to store.
-     * @param itemNames The item names for the STORE command.
-     * @param itemValues The item values for the STORE command.
+     * @param sequenceSet The sequence set to update (e.g. 2:5)
+     * @param itemNames The item name for the STORE command (i.e. [+|-]FLAGS[.SILENT])
+     * @param itemValues The item values for the STORE command. (e.g. (\Deleted) )
      * @return {@code true} if the command was successful,{@code false} if not.
      * @exception IOException If a network I/O error occurs.
      */
