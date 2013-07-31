@@ -62,6 +62,14 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
     <body>
+        <release version="3.4" date="2013-??-??" description="
+        ">
+            <action issue="NET-514" dev="sebb" type="fix">
+            IMAP APPEND multiple issues in IMapClient.
+            Deprecated unusable append methods.
+            Added new append method, as well as example IMapImportMbox class to make use of it.
+            </action>
+        </release>
         <release version="3.3" date="2013-06-??" description="
 This is mainly a bug-fix release. See further details below.
         ">

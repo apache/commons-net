@@ -26,6 +26,9 @@ import java.io.IOException;
 public class IMAPClient extends IMAP
 {
 
+    private static final char DQUOTE = '"';
+    private static final String DQUOTE_S = "\"";
+
     // --------- commands available in all states
 
     /**
@@ -237,9 +240,46 @@ public class IMAPClient extends IMAP
      * @param mailboxName The mailbox name.
      * @param flags The flag parenthesized list (optional).
      * @param datetime The date/time string (optional).
+     * @param message The message to append.
      * @return {@code true} if the command was successful,{@code false} if not.
      * @exception IOException If a network I/O error occurs.
      */
+    public boolean append(String mailboxName, String flags, String datetime, String message) throws IOException
+    {
+        StringBuilder args = new StringBuilder(mailboxName);
+        if (flags != null) {
+            args.append(" ").append(flags);
+        }
+        if (datetime != null) {
+            args.append(" ");
+            if (datetime.charAt(0) == DQUOTE) {
+                args.append(datetime);
+            } else {
+                args.append(DQUOTE).append(datetime).append(DQUOTE);
+            }
+        }
+        args.append(" ");
+        // String literal (probably not used much - it at all)
+        if (message.startsWith(DQUOTE_S) && message.endsWith(DQUOTE_S)) {
+            args.append(message);
+            return doCommand (IMAPCommand.APPEND, args.toString());
+        }
+        args.append('{').append(message.length()).append('}'); // length of message
+        final int status = sendCommand(IMAPCommand.APPEND, args.toString());
+        return IMAPReply.isContinuation(status) // expecting continuation response
+            && IMAPReply.isSuccess(sendData(message)); // if so, send the data
+    }
+
+    /**
+     * Send an APPEND command to the server.
+     * @param mailboxName The mailbox name.
+     * @param flags The flag parenthesized list (optional).
+     * @param datetime The date/time string (optional).
+     * @return {@code true} if the command was successful,{@code false} if not.
+     * @exception IOException If a network I/O error occurs.
+     * @deprecated (3.4) Does not work; the message body is not optional. Use {@link #append(String, String, String, String)} instead.
+     */
+    @Deprecated
     public boolean append(String mailboxName, String flags, String datetime) throws IOException
     {
         String args = mailboxName;
@@ -261,7 +301,9 @@ public class IMAPClient extends IMAP
      * @param mailboxName The mailbox name.
      * @return {@code true} if the command was successful,{@code false} if not.
      * @exception IOException If a network I/O error occurs.
+     * @deprecated (3.4) Does not work; the message body is not optional. Use {@link #append(String, String, String, String)} instead.
      */
+    @Deprecated
     public boolean append(String mailboxName) throws IOException
     {
         return append(mailboxName, null, null);
