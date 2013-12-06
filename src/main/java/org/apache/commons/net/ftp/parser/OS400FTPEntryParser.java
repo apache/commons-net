@@ -17,6 +17,7 @@
 
 package org.apache.commons.net.ftp.parser;
 
+import java.io.File;
 import java.text.ParseException;
 
 import org.apache.commons.net.ftp.FTPClientConfig;
@@ -24,8 +25,212 @@ import org.apache.commons.net.ftp.FTPFile;
 
 /**
  * @version $Id$
+ * <pre>
+ * Example *FILE/*MEM FTP entries, when the current
+ * working directory is a file of file system QSYS:
+ * ------------------------------------------------
+ * 
+ * > cwd /qsys.lib/rpgunit.lib/rpgunitc1.file                        
+ *   250-NAMEFMT set to 1.                                           
+ *   250 "/QSYS.LIB/RPGUNIT.LIB/RPGUNITC1.FILE" is current directory.
+ * > dir                                                             
+ *   227 Entering Passive Mode (10,200,36,33,40,249).                
+ *   125 List started.                                               
+ *   QPGMR          135168 22.06.13 13:18:19 *FILE                   
+ *   QPGMR                                   *MEM       MKCMD.MBR    
+ *   QPGMR                                   *MEM       RUCALLTST.MBR
+ *   QPGMR                                   *MEM       RUCMDHLP.MBR 
+ *   QPGMR                                   *MEM       RUCRTTST.MBR 
+ *   250 List completed.                                             
+ *
+ * 
+ * Example *FILE entry of an OS/400 save file:
+ * ---------------------------------------------------
+ *
+ * > cwd /qsys.lib/rpgunit.lib
+ *   250 "/QSYS.LIB/RPGUNIT.LIB" is current library.
+ * > dir rpgunit.file
+ *   227 Entering Passive Mode (10,200,36,33,188,106).
+ *   125 List started.
+ *   QPGMR        16347136 29.06.13 15:45:09 *FILE      RPGUNIT.SAVF
+ *   250 List completed.
+ *  
+ * 
+ * Example *STMF/*DIR FTP entries, when the
+ * current working directory is in file system "root":
+ * ---------------------------------------------------
+ *   
+ * > cwd /home/raddatz                                                            
+ *   250 "/home/raddatz" is current directory.                                    
+ * > dir test*                                                                    
+ *   227 Entering Passive Mode (10,200,36,33,200,189).                            
+ *   125 List started.                                                            
+ *   RADDATZ           200 21.05.11 12:31:18 *STMF      TEST_RG_02_CRLF.properties
+ *   RADDATZ           187 08.05.11 12:31:40 *STMF      TEST_RG_02_LF.properties  
+ *   RADDATZ           187 08.05.11 12:31:52 *STMF      TEST_RG_02_CR.properties  
+ *   RADDATZ          8192 04.07.13 09:04:14 *DIR       testDir1/                 
+ *   RADDATZ          8192 04.07.13 09:04:17 *DIR       testDir2/                 
+ *   250 List completed. 
+ *   
+ *                                                            
+ * Example 1, using ANT to list specific members of a file:
+ * -------------------------------------------------------- 
+ * 
+ *      &lt;echo/>
+ *      &lt;echo>Listing members of a file:</echo>
+ *      
+ *      &lt;ftp action="list"
+ *           server="${ftp.server}"
+ *           userid="${ftp.user}"
+ *           password="${ftp.password}"
+ *           binary="false" 
+ *           verbose="true" 
+ *           remotedir="/QSYS.LIB/RPGUNIT.LIB/RPGUNITY1.FILE"
+ *           systemTypeKey="OS/400"
+ *           listing="ftp-listing.txt"
+ *           >
+ *          &lt;fileset dir="./i5-downloads-file" casesensitive="false">
+ *              &lt;include name="run*.mbr" />
+ *          &lt;/fileset>
+ *      &lt;/ftp>
+ *      
+ * Output:
+ * -------
+ * 
+ *   [echo] Listing members of a file:
+ *    [ftp] listing files
+ *    [ftp] listing RUN.MBR
+ *    [ftp] listing RUNNER.MBR
+ *    [ftp] listing RUNNERBND.MBR
+ *    [ftp] 3 files listed
+ *   
+ *                                                            
+ * Example 2, using ANT to list specific members of all files of a library:
+ * ------------------------------------------------------------------------ 
+ *   
+ *      &lt;echo/>
+ *      &lt;echo>Listing members of all files of a library:</echo>
+ *      
+ *      &lt;ftp action="list"
+ *           server="${ftp.server}"
+ *           userid="${ftp.user}"
+ *           password="${ftp.password}"
+ *           binary="false" 
+ *           verbose="true" 
+ *           remotedir="/QSYS.LIB/RPGUNIT.LIB"
+ *           systemTypeKey="OS/400"
+ *           listing="ftp-listing.txt"
+ *           >
+ *          &lt;fileset dir="./i5-downloads-lib" casesensitive="false">
+ *              &lt;include name="**\run*.mbr" />
+ *          &lt;/fileset>
+ *      &lt;/ftp>
+ *      
+ * Output:
+ * -------
+ *
+ *   [echo] Listing members of all files of a library:
+ *    [ftp] listing files
+ *    [ftp] listing RPGUNIT1.FILE\RUN.MBR
+ *    [ftp] listing RPGUNIT1.FILE\RUNRMT.MBR
+ *    [ftp] listing RPGUNITT1.FILE\RUNT.MBR
+ *    [ftp] listing RPGUNITY1.FILE\RUN.MBR
+ *    [ftp] listing RPGUNITY1.FILE\RUNNER.MBR
+ *    [ftp] listing RPGUNITY1.FILE\RUNNERBND.MBR
+ *    [ftp] 6 files listed
+ *   
+ *                                                            
+ * Example 3, using ANT to download specific members of a file:
+ * ------------------------------------------------------------ 
+ *                                                            
+ *      &lt;echo/>
+ *      &lt;echo>Downloading members of a file:</echo>
+ *
+ *      &lt;ftp action="get"
+ *           server="${ftp.server}"
+ *           userid="${ftp.user}"
+ *           password="${ftp.password}"
+ *           binary="false" 
+ *           verbose="true" 
+ *           remotedir="/QSYS.LIB/RPGUNIT.LIB/RPGUNITY1.FILE"
+ *           systemTypeKey="OS/400"
+ *           >
+ *          &lt;fileset dir="./i5-downloads-file" casesensitive="false">
+ *              &lt;include name="run*.mbr" />
+ *          &lt;/fileset>
+ *      &lt;/ftp>
+ *      
+ * Output:
+ * -------
+ *      
+ *   [echo] Downloading members of a file:
+ *    [ftp] getting files
+ *    [ftp] transferring RUN.MBR to C:\workspaces\rdp_080\workspace\ANT - FTP\i5-downloads-file\RUN.MBR
+ *    [ftp] transferring RUNNER.MBR to C:\workspaces\rdp_080\workspace\ANT - FTP\i5-downloads-file\RUNNER.MBR
+ *    [ftp] transferring RUNNERBND.MBR to C:\workspaces\rdp_080\workspace\ANT - FTP\i5-downloads-file\RUNNERBND.MBR
+ *    [ftp] 3 files retrieved
+ *   
+ *                                                            
+ * Example 4, using ANT to download specific members of all files of a library:
+ * ---------------------------------------------------------------------------- 
+ *   
+ *      &lt;echo/>
+ *      &lt;echo>Downloading members of all files of a library:</echo>
+ *
+ *      &lt;ftp action="get"
+ *           server="${ftp.server}"
+ *           userid="${ftp.user}"
+ *           password="${ftp.password}"
+ *           binary="false" 
+ *           verbose="true" 
+ *           remotedir="/QSYS.LIB/RPGUNIT.LIB"
+ *           systemTypeKey="OS/400"
+ *           >
+ *          &lt;fileset dir="./i5-downloads-lib" casesensitive="false">
+ *              &lt;include name="**\run*.mbr" />
+ *          &lt;/fileset>
+ *      &lt;/ftp>
+ *      
+ * Output:
+ * -------
+ *      
+ *   [echo] Downloading members of all files of a library:
+ *    [ftp] getting files
+ *    [ftp] transferring RPGUNIT1.FILE\RUN.MBR to C:\workspaces\rdp_080\workspace\ANT - FTP\i5-downloads-lib\RPGUNIT1.FILE\RUN.MBR
+ *    [ftp] transferring RPGUNIT1.FILE\RUNRMT.MBR to C:\workspaces\rdp_080\workspace\ANT - FTP\i5-downloads-lib\RPGUNIT1.FILE\RUNRMT.MBR
+ *    [ftp] transferring RPGUNITT1.FILE\RUNT.MBR to C:\workspaces\rdp_080\workspace\ANT - FTP\i5-downloads-lib\RPGUNITT1.FILE\RUNT.MBR
+ *    [ftp] transferring RPGUNITY1.FILE\RUN.MBR to C:\workspaces\rdp_080\workspace\ANT - FTP\i5-downloads-lib\RPGUNITY1.FILE\RUN.MBR
+ *    [ftp] transferring RPGUNITY1.FILE\RUNNER.MBR to C:\workspaces\rdp_080\workspace\ANT - FTP\i5-downloads-lib\RPGUNITY1.FILE\RUNNER.MBR
+ *    [ftp] transferring RPGUNITY1.FILE\RUNNERBND.MBR to C:\workspaces\rdp_080\workspace\ANT - FTP\i5-downloads-lib\RPGUNITY1.FILE\RUNNERBND.MBR
+ *    [ftp] 6 files retrieved
+ *   
+ *                                                            
+ * Example 5, using ANT to download a save file of a library:
+ * ---------------------------------------------------------- 
+ *   
+ *      &lt;ftp action="get"
+ *           server="${ftp.server}"
+ *           userid="${ftp.user}"
+ *           password="${ftp.password}"
+ *           binary="true"
+ *           verbose="true"
+ *           remotedir="/QSYS.LIB/RPGUNIT.LIB"
+ *           systemTypeKey="OS/400"
+ *           >
+ *        &lt;fileset dir="./i5-downloads-savf" casesensitive="false">
+ *            &lt;include name="RPGUNIT.SAVF" />
+ *        &lt;/fileset>
+ *      &lt;/ftp>
+ *      
+ * Output:
+ * -------
+ *   [echo] Downloading save file:
+ *    [ftp] getting files
+ *    [ftp] transferring RPGUNIT.SAVF to C:\workspaces\rdp_080\workspace\net-Test\i5-downloads-lib\RPGUNIT.SAVF
+ *    [ftp] 1 files retrieved
+ *      
+ * </pre>
  */
-
 public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 {
     private static final String DEFAULT_DATE_FORMAT
@@ -34,11 +239,11 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 
 
     private static final String REGEX =
-        "(\\S+)\\s+"                // user
-        + "(\\d+)\\s+"              // size
-        + "(\\S+)\\s+(\\S+)\\s+"    // date stuff
-        + "(\\*\\S+)\\s+"               // *STMF/*DIR
-        + "(\\S+/?)\\s*";               // filename
+        "(\\S+)\\s+"                  // user
+        + "(?:(\\d+)\\s+)?"           // size, empty for members
+        + "(?:(\\S+)\\s+(\\S+)\\s+)?" // date stuff, empty for members
+        + "(\\*STMF|\\*DIR|\\*FILE|\\*MEM)\\s+"  // *STMF/*DIR/*FILE/*MEM
+        + "(?:(\\S+)\\s*)?";          // filename, missing, when CWD is a *FILE
 
 
     /**
@@ -85,9 +290,15 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         {
             String usr = group(1);
             String filesize = group(2);
-            String datestr = group(3)+" "+group(4);
+            String datestr = "";
+            if (!isNullOrEmpty(group(3)) || !isNullOrEmpty(group(4))) 
+            {
+                datestr = group(3)+" "+group(4);
+            }
             String typeStr = group(5);
             String name = group(6);
+            
+            boolean mustScanForPathSeparator = true;
 
             try
             {
@@ -102,10 +313,58 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             if (typeStr.equalsIgnoreCase("*STMF"))
             {
                 type = FTPFile.FILE_TYPE;
+                if (isNullOrEmpty(filesize) || isNullOrEmpty(name))
+                {
+                    return null;
+                }
             }
             else if (typeStr.equalsIgnoreCase("*DIR"))
             {
                 type = FTPFile.DIRECTORY_TYPE;
+                if (isNullOrEmpty(filesize) || isNullOrEmpty(name))
+                {
+                    return null;
+                }
+            }
+            else if (typeStr.equalsIgnoreCase("*FILE")) 
+            {
+                // File, defines the structure of the data (columns of a row)
+                // but the data is stored in one or more members. Typically a
+                // source file contains multiple members whereas it is
+                // recommended (but not enforced) to use one member per data
+                // file. 
+                // Save files are a special type of files which are used
+                // to save objects, e.g. for backups.
+                if (name != null && name.toUpperCase().endsWith(".SAVF"))
+                {
+                    mustScanForPathSeparator = false;
+                    type = FTPFile.FILE_TYPE;
+                }
+                else
+                {
+                    return null;
+                }
+            } 
+            else if (typeStr.equalsIgnoreCase("*MEM")) 
+            {
+                mustScanForPathSeparator = false;
+                type = FTPFile.FILE_TYPE;
+                
+                if (isNullOrEmpty(name))
+                {
+                    return null;
+                }
+                if (!(isNullOrEmpty(filesize) && isNullOrEmpty(datestr)))
+                {
+                    return null;
+                }
+                
+                // Quick and dirty bug fix to make SelectorUtils work.
+                // Class SelectorUtils uses 'File.separator' to splitt
+                // a given path into pieces. But actually it had to
+                // use the separator of the FTP server, which is a forward
+                // slash in case of an AS/400. 
+                name = name.replace('/', File.separatorChar);
             }
             else
             {
@@ -129,10 +388,13 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             {
                 name = name.substring(0, name.length() - 1);
             }
-            int pos = name.lastIndexOf('/');
-            if (pos > -1)
+            if (mustScanForPathSeparator)
             {
-                name = name.substring(pos + 1);
+                int pos = name.lastIndexOf('/');
+                if (pos > -1)
+                {
+                    name = name.substring(pos + 1);
+                }
             }
 
             file.setName(name);
@@ -140,6 +402,20 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             return file;
         }
         return null;
+    }
+    
+    /**
+     * 
+     * @param string String value that is checked for <code>null</code>
+     * or empty. 
+     * @return <code>true</code> for <code>null</code> or empty values, 
+     * else <code>false</code>.
+     */
+    private boolean isNullOrEmpty(String string) {
+        if (string == null || string.length() == 0) {
+            return true;
+        }
+        return false;
     }
 
     /**
