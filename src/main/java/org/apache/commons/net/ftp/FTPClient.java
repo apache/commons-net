@@ -1178,7 +1178,7 @@ implements Configurable
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    boolean reinitialize() throws IOException
+    public boolean reinitialize() throws IOException
     {
         rein();
 
