@@ -79,9 +79,7 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
         for (String[] goodsample : goodsamples)
         {
             FTPFileEntryParser parser = getParser();
-            for (int j = 0; j < goodsample.length; j++)
-            {
-                String test = goodsample[j];
+            for (String test : goodsample) {
                 FTPFile f = parser.parseFTPEntry(test);
                 assertNotNull("Failed to parse " + test,
                         f);
@@ -102,9 +100,7 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
         for (String[] badsample : badsamples)
         {
             FTPFileEntryParser parser = getParser();
-            for (int j = 0; j < badsample.length; j++)
-            {
-                String test = badsample[j];
+            for (String test : badsample) {
                 FTPFile f = parser.parseFTPEntry(test);
                 assertNull("Should have Failed to parse " + test,
                         nullFileOrNullDate(f));
