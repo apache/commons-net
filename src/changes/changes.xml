@@ -69,6 +69,9 @@ The <action> type attribute can be add,update,fix,remove.
             Deprecated unusable append methods.
             Added new append method, as well as example IMapImportMbox class to make use of it.
             </action>
+            <action issue="NET-511" dev="ggregory" type="fix" due-to="Kyriacos Elia, Daniel Scott">
+            Exception for new SubnetUtils("0.0.0.0/0").
+            </action>
         </release>
         <release version="3.3" date="2013-06-??" description="
 This is mainly a bug-fix release. See further details below.
