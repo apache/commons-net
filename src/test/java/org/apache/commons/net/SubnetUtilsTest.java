@@ -24,75 +24,6 @@ import junit.framework.TestCase;
 
 public class SubnetUtilsTest extends TestCase {
 
-    public void testParseSimpleNetmask() {
-        final String address = "192.168.0.1";
-        final String masks[] = new String[] { "255.0.0.0", "255.255.0.0", "255.255.255.0", "255.255.255.248"};
-        final String bcastAddresses[] = new String[] { "192.255.255.255", "192.168.255.255", "192.168.0.255", "192.168.0.7"};
-        final String lowAddresses[] = new String[] { "192.0.0.1", "192.168.0.1", "192.168.0.1", "192.168.0.1" };
-        final String highAddresses[] = new String[] { "192.255.255.254", "192.168.255.254", "192.168.0.254", "192.168.0.6" };
-        final String networkAddresses[] = new String[] { "192.0.0.0", "192.168.0.0", "192.168.0.0", "192.168.0.0" };
-        final String cidrSignatures[] = new String[] { "192.168.0.1/8", "192.168.0.1/16", "192.168.0.1/24", "192.168.0.1/29" };
-        final int usableAddresses[] = new int[] { 16777214, 65534, 254, 6 };
-
-        for (int i = 0; i < masks.length; ++i) {
-            SubnetUtils utils = new SubnetUtils(address, masks[i]);
-            SubnetInfo info = utils.getInfo();
-            assertEquals(bcastAddresses[i], info.getBroadcastAddress());
-            assertEquals(cidrSignatures[i], info.getCidrSignature());
-            assertEquals(lowAddresses[i], info.getLowAddress());
-            assertEquals(highAddresses[i], info.getHighAddress());
-            assertEquals(networkAddresses[i], info.getNetworkAddress());
-            assertEquals(usableAddresses[i], info.getAddressCount());
-        }
-    }
-
-    public void testParseSimpleNetmaskInclusive() {
-         String address = "192.168.15.7";
-         String masks[]=new String[]{ "255.255.255.252",  "255.255.255.254",  "255.255.255.255"};
-         String bcast[]=new String[]{ "192.168.15.7",     "192.168.15.7",     "192.168.15.7"};
-         String netwk[]=new String[]{ "192.168.15.4",     "192.168.15.6",     "192.168.15.7" };
-         String lowAd[]=new String[]{ "192.168.15.4",     "192.168.15.6",     "192.168.15.7" };
-         String highA[]=new String[]{ "192.168.15.7",     "192.168.15.7",     "192.168.15.7" };
-         String cidrS[]=new String[]{ "192.168.15.7/30",  "192.168.15.7/31",  "192.168.15.7/32"};
-         int usableAd[]=new int[]   { 4 ,                 2,                  1};
-
-         for (int i = 0; i < masks.length; ++i) {
-             SubnetUtils utils = new SubnetUtils(address, masks[i]);
-             utils.setInclusiveHostCount(true);
-             SubnetInfo info = utils.getInfo();
-             assertEquals("ci "+masks[i], cidrS[i], info.getCidrSignature());
-             assertEquals("bc "+masks[i], bcast[i], info.getBroadcastAddress());
-             assertEquals("ac "+masks[i], usableAd[i], info.getAddressCount());
-             assertEquals("nw "+masks[i], netwk[i], info.getNetworkAddress());
-             assertEquals("lo "+masks[i], lowAd[i], info.getLowAddress());
-             assertEquals("hi "+masks[i], highA[i], info.getHighAddress());
-         }
-     }
-
-    public void testParseSimpleNetmaskExclusive() {
-        String address = "192.168.15.7";
-        String masks[]=new String[]{ "255.255.255.252",  "255.255.255.254",  "255.255.255.255"};
-        String bcast[]=new String[]{ "192.168.15.7",     "192.168.15.7",     "192.168.15.7"};
-        String netwk[]=new String[]{ "192.168.15.4",     "192.168.15.6",     "192.168.15.7" };
-        String lowAd[]=new String[]{ "192.168.15.5",     "0.0.0.0",          "0.0.0.0"    };
-        String highA[]=new String[]{ "192.168.15.6",     "0.0.0.0",          "0.0.0.0"    };
-        String cidrS[]=new String[]{ "192.168.15.7/30",  "192.168.15.7/31",  "192.168.15.7/32"};
-        int usableAd[]=new int[]   { 2 ,                 0,                  0};
-       // low and high addresses don't exist
-
-        for (int i = 0; i < masks.length; ++i) {
-            SubnetUtils utils = new SubnetUtils(address, masks[i]);
-            utils.setInclusiveHostCount(false);
-            SubnetInfo info = utils.getInfo();
-            assertEquals("ci "+masks[i], cidrS[i], info.getCidrSignature());
-            assertEquals("bc "+masks[i], bcast[i], info.getBroadcastAddress());
-            assertEquals("nw "+masks[i], netwk[i], info.getNetworkAddress());
-            assertEquals("ac "+masks[i], usableAd[i], info.getAddressCount());
-            assertEquals("lo "+masks[i], lowAd[i], info.getLowAddress());
-            assertEquals("hi "+masks[i], highA[i], info.getHighAddress());
-        }
-    }
-
     // TODO Lower address test
     public void testAddresses() {
         SubnetUtils utils = new SubnetUtils("192.168.0.1/29");
@@ -104,15 +35,6 @@ public class SubnetUtilsTest extends TestCase {
         assertFalse(info.isInRange("10.10.2.1"));
         assertFalse(info.isInRange("192.168.1.1"));
         assertFalse(info.isInRange("192.168.0.255"));
-    }
-
-    public void testZeroNetmaskBits() {
-        try {
-            new SubnetUtils("192.168.0.1/0");
-            fail("Mask /0 should have generated an IllegalArgumentException");
-        }
-        catch (IllegalArgumentException expected) {
-        }
     }
 
     /**
@@ -305,5 +227,83 @@ public class SubnetUtilsTest extends TestCase {
         String[] address = subnetUtils.getInfo().getAllAddresses();
         assertNotNull(address);
         assertEquals(0,address.length);
+    }
+
+    public void testParseSimpleNetmask() {
+        final String address = "192.168.0.1";
+        final String masks[] = new String[] { "255.0.0.0", "255.255.0.0", "255.255.255.0", "255.255.255.248"};
+        final String bcastAddresses[] = new String[] { "192.255.255.255", "192.168.255.255", "192.168.0.255", "192.168.0.7"};
+        final String lowAddresses[] = new String[] { "192.0.0.1", "192.168.0.1", "192.168.0.1", "192.168.0.1" };
+        final String highAddresses[] = new String[] { "192.255.255.254", "192.168.255.254", "192.168.0.254", "192.168.0.6" };
+        final String networkAddresses[] = new String[] { "192.0.0.0", "192.168.0.0", "192.168.0.0", "192.168.0.0" };
+        final String cidrSignatures[] = new String[] { "192.168.0.1/8", "192.168.0.1/16", "192.168.0.1/24", "192.168.0.1/29" };
+        final int usableAddresses[] = new int[] { 16777214, 65534, 254, 6 };
+
+        for (int i = 0; i < masks.length; ++i) {
+            SubnetUtils utils = new SubnetUtils(address, masks[i]);
+            SubnetInfo info = utils.getInfo();
+            assertEquals(bcastAddresses[i], info.getBroadcastAddress());
+            assertEquals(cidrSignatures[i], info.getCidrSignature());
+            assertEquals(lowAddresses[i], info.getLowAddress());
+            assertEquals(highAddresses[i], info.getHighAddress());
+            assertEquals(networkAddresses[i], info.getNetworkAddress());
+            assertEquals(usableAddresses[i], info.getAddressCount());
+        }
+    }
+
+    public void testParseSimpleNetmaskExclusive() {
+        String address = "192.168.15.7";
+        String masks[]=new String[]{ "255.255.255.252",  "255.255.255.254",  "255.255.255.255"};
+        String bcast[]=new String[]{ "192.168.15.7",     "192.168.15.7",     "192.168.15.7"};
+        String netwk[]=new String[]{ "192.168.15.4",     "192.168.15.6",     "192.168.15.7" };
+        String lowAd[]=new String[]{ "192.168.15.5",     "0.0.0.0",          "0.0.0.0"    };
+        String highA[]=new String[]{ "192.168.15.6",     "0.0.0.0",          "0.0.0.0"    };
+        String cidrS[]=new String[]{ "192.168.15.7/30",  "192.168.15.7/31",  "192.168.15.7/32"};
+        int usableAd[]=new int[]   { 2 ,                 0,                  0};
+       // low and high addresses don't exist
+
+        for (int i = 0; i < masks.length; ++i) {
+            SubnetUtils utils = new SubnetUtils(address, masks[i]);
+            utils.setInclusiveHostCount(false);
+            SubnetInfo info = utils.getInfo();
+            assertEquals("ci "+masks[i], cidrS[i], info.getCidrSignature());
+            assertEquals("bc "+masks[i], bcast[i], info.getBroadcastAddress());
+            assertEquals("nw "+masks[i], netwk[i], info.getNetworkAddress());
+            assertEquals("ac "+masks[i], usableAd[i], info.getAddressCount());
+            assertEquals("lo "+masks[i], lowAd[i], info.getLowAddress());
+            assertEquals("hi "+masks[i], highA[i], info.getHighAddress());
+        }
+    }
+
+    public void testParseSimpleNetmaskInclusive() {
+         String address = "192.168.15.7";
+         String masks[]=new String[]{ "255.255.255.252",  "255.255.255.254",  "255.255.255.255"};
+         String bcast[]=new String[]{ "192.168.15.7",     "192.168.15.7",     "192.168.15.7"};
+         String netwk[]=new String[]{ "192.168.15.4",     "192.168.15.6",     "192.168.15.7" };
+         String lowAd[]=new String[]{ "192.168.15.4",     "192.168.15.6",     "192.168.15.7" };
+         String highA[]=new String[]{ "192.168.15.7",     "192.168.15.7",     "192.168.15.7" };
+         String cidrS[]=new String[]{ "192.168.15.7/30",  "192.168.15.7/31",  "192.168.15.7/32"};
+         int usableAd[]=new int[]   { 4 ,                 2,                  1};
+
+         for (int i = 0; i < masks.length; ++i) {
+             SubnetUtils utils = new SubnetUtils(address, masks[i]);
+             utils.setInclusiveHostCount(true);
+             SubnetInfo info = utils.getInfo();
+             assertEquals("ci "+masks[i], cidrS[i], info.getCidrSignature());
+             assertEquals("bc "+masks[i], bcast[i], info.getBroadcastAddress());
+             assertEquals("ac "+masks[i], usableAd[i], info.getAddressCount());
+             assertEquals("nw "+masks[i], netwk[i], info.getNetworkAddress());
+             assertEquals("lo "+masks[i], lowAd[i], info.getLowAddress());
+             assertEquals("hi "+masks[i], highA[i], info.getHighAddress());
+         }
+     }
+
+    public void testZeroNetmaskBits() {
+        try {
+            new SubnetUtils("192.168.0.1/0");
+            fail("Mask /0 should have generated an IllegalArgumentException");
+        }
+        catch (IllegalArgumentException expected) {
+        }
     }
 }
