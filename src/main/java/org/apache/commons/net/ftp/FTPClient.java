@@ -2322,7 +2322,11 @@ implements Configurable
     private boolean initFeatureMap() throws IOException {
         if (__featuresMap == null) {
             // Don't create map here, because next line may throw exception
-            boolean success = FTPReply.isPositiveCompletion(feat());
+            final int replyCode = feat();
+            if (replyCode == FTPReply.NOT_LOGGED_IN) { // 503
+                return false; // NET-518; don't create empy map
+            }
+            boolean success = FTPReply.isPositiveCompletion(replyCode);
             // we init the map here, so we don't keep trying if we know the command will fail
             __featuresMap = new HashMap<String, Set<String>>();
             if (!success) {
