@@ -79,7 +79,6 @@ The <action> type attribute can be add,update,fix,remove.
             <action issue="NET-518" dev="sebb" type="fix" due-to="David Kocher">
             FTPClient#initFeatureMap should not initialize empty map if reply code is 530
             </action>
-        </release>
             <action issue="NET-514" dev="sebb" type="fix">
             IMAP APPEND multiple issues in IMapClient.
             Deprecated unusable append methods.
