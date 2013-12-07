@@ -73,7 +73,8 @@ import org.apache.commons.net.io.Util;
  *    boolean error = false;
  *    try {
  *      int reply;
- *      ftp.connect("ftp.foobar.com");
+ *      String server = "ftp.example.com";
+ *      ftp.connect(server);
  *      System.out.println("Connected to " + server + ".");
  *      System.out.print(ftp.getReplyString());
  *

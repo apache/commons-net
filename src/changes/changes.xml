@@ -64,6 +64,9 @@ The <action> type attribute can be add,update,fix,remove.
     <body>
         <release version="3.4" date="2013-??-??" description="
         ">
+            <action issue="NET-515" type="fix" due-to="Sebastian Ritter">
+            FTPClient sample in class javadoc "bug"
+            </action>
             <action issue="NET-519" type="fix">
             Apache Commons Net 3.3 has a performance issue
             </action>
