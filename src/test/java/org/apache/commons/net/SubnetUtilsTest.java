@@ -22,6 +22,7 @@ import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
 
 import junit.framework.TestCase;
 
+@SuppressWarnings("deprecation") // deliberate use of deprecated methods
 public class SubnetUtilsTest extends TestCase {
 
     // TODO Lower address test
@@ -310,5 +311,37 @@ public class SubnetUtilsTest extends TestCase {
             fail("Mask /0 should have generated an IllegalArgumentException");
         } catch (IllegalArgumentException expected) {
         }
+    }
+
+    public void testNET521() {
+        SubnetUtils utils;
+        SubnetInfo info;
+
+        utils = new SubnetUtils("0.0.0.0/0");
+        utils.setInclusiveHostCount(true);
+        info = utils.getInfo();
+        assertEquals("0.0.0.0", info.getNetmask());
+        assertEquals(4294967296L, info.getAddressCountLong());
+        try {
+            info.getAddressCount();
+            fail("Expected RuntimeException");
+        } catch (RuntimeException expected) {
+            // ignored
+        }
+        utils = new SubnetUtils("128.0.0.0/1");
+        utils.setInclusiveHostCount(true);
+        info = utils.getInfo();
+        assertEquals("128.0.0.0", info.getNetmask());
+        assertEquals(2147483648L, info.getAddressCountLong());
+        try {
+            info.getAddressCount();
+            fail("Expected RuntimeException");
+        } catch (RuntimeException expected) {
+            // ignored
+        }
+        // if we exclude the broadcast and network addresses, the count is less than Integer.MAX_VALUE
+        utils.setInclusiveHostCount(false);
+        info = utils.getInfo();
+        assertEquals(2147483646, info.getAddressCount());
     }
 }

@@ -90,6 +90,9 @@ public class SubnetUtils {
      *
      */
     public final class SubnetInfo {
+        /* Mask to convert unsigned int to a long (i.e. keep 32 bits) */
+        private static final long UNSIGNED_INT_MASK = 0x0FFFFFFFFL;
+
         private SubnetInfo() {}
 
         private int netmask()       { return netmask; }
@@ -163,9 +166,28 @@ public class SubnetUtils {
          * Get the count of available addresses.
          * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
          * @return the count of addresses, may be zero.
+         * @throws RuntimeException if the correct count is greater than {@code Integer.MAX_VALUE}
+         * @deprecated use {@link #getAddressCountLong()} instead
          */
-        public int getAddressCount()                {
-            int count = broadcast() - network() + (isInclusiveHostCount() ? 1 : -1);
+        @Deprecated
+        public int getAddressCount() {
+            long countLong = getAddressCountLong();
+            if (countLong > Integer.MAX_VALUE) {
+                throw new RuntimeException("Count is larger than an integer: " + countLong);
+            }
+            // N.B. cannot be negative
+            return (int)countLong;
+        }
+
+        /**
+         * Get the count of available addresses.
+         * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
+         * @return the count of addresses, may be zero.
+         */
+        public long getAddressCountLong() {
+            long b = broadcast() & UNSIGNED_INT_MASK;
+            long n = network()   & UNSIGNED_INT_MASK;
+            long count = b - n + (isInclusiveHostCount() ? 1 : -1);
             return count < 0 ? 0 : count;
         }
 
