@@ -99,15 +99,19 @@ public class SubnetUtils {
         private int network()       { return network; }
         private int address()       { return address; }
         private int broadcast()     { return broadcast; }
+        
+        // long versions of the values (as unsigned int) which are more suitable for range checking
+        private long networkLong()  { return network &  UNSIGNED_INT_MASK; }
+        private long broadcastLong(){ return broadcast &  UNSIGNED_INT_MASK; }
 
         private int low() {
             return (isInclusiveHostCount() ? network() :
-                broadcast() - network() > 1 ? network() + 1 : 0);
+                broadcastLong() - networkLong() > 1 ? network() + 1 : 0);
         }
 
         private int high() {
             return (isInclusiveHostCount() ? broadcast() :
-                broadcast() - network() > 1 ? broadcast() -1  : 0);
+                broadcastLong() - networkLong() > 1 ? broadcast() -1  : 0);
         }
 
         /**
@@ -122,8 +126,10 @@ public class SubnetUtils {
         }
 
         private boolean isInRange(int address) {
-            int diff = address - low();
-            return (diff >= 0 && (diff <= (high() - low())));
+            long addLong = address & UNSIGNED_INT_MASK;
+            long lowLong = low() & UNSIGNED_INT_MASK;
+            long highLong = high() & UNSIGNED_INT_MASK;
+            return addLong >= lowLong && addLong <= highLong;
         }
 
         public String getBroadcastAddress() {
@@ -185,8 +191,8 @@ public class SubnetUtils {
          * @return the count of addresses, may be zero.
          */
         public long getAddressCountLong() {
-            long b = broadcast() & UNSIGNED_INT_MASK;
-            long n = network()   & UNSIGNED_INT_MASK;
+            long b = broadcastLong();
+            long n = networkLong();
             long count = b - n + (isInclusiveHostCount() ? 1 : -1);
             return count < 0 ? 0 : count;
         }

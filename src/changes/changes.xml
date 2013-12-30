@@ -64,6 +64,10 @@ The <action> type attribute can be add,update,fix,remove.
     <body>
         <release version="3.4" date="2013-??-??" description="
         ">
+            <action issue="NET-520" type="fix" dev="sebb">
+            SubnetUtils("0.0.0.0/0") does not behave as expected
+            Fixed range checking so network and broadcast addresses are treated as unsigned ints
+            </action>
             <action issue="NET-521" type="fix" dev="sebb">
             SubnetUtils.SubnetInfo.getAddressCount() can overflow as it returns an int
             </action>

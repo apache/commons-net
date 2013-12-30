@@ -344,4 +344,15 @@ public class SubnetUtilsTest extends TestCase {
         info = utils.getInfo();
         assertEquals(2147483646, info.getAddressCount());
     }
+
+    public void testNET520() {
+        SubnetUtils utils = new SubnetUtils("0.0.0.0/0");
+        utils.setInclusiveHostCount(true);
+        SubnetInfo info = utils.getInfo();
+        assertEquals("0.0.0.0",info.getNetworkAddress());
+        assertEquals("255.255.255.255",info.getBroadcastAddress());
+        assertTrue(info.isInRange("127.0.0.0"));
+        utils.setInclusiveHostCount(false);
+        assertTrue(info.isInRange("127.0.0.0"));
+    }
 }
