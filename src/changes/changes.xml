@@ -62,7 +62,8 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
     <body>
-        <release version="3.4" date="2013-??-??" description="
+        <release version="3.4" date="2014-01-??" description="
+This is mainly a bug-fix release. See further details below.
         ">
             <action issue="NET-520" type="fix" dev="sebb">
             SubnetUtils("0.0.0.0/0") does not behave as expected
@@ -95,7 +96,7 @@ The <action> type attribute can be add,update,fix,remove.
             Exception for new SubnetUtils("0.0.0.0/0").
             </action>
         </release>
-        <release version="3.3" date="2013-06-??" description="
+        <release version="3.3" date="2013-06-11" description="
 This is mainly a bug-fix release. See further details below.
         ">
             <action issue="NET-509" dev="sebb" due-to="Anthony Dahanne" type="update">
