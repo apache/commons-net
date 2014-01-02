@@ -123,7 +123,7 @@ This is mainly a bug-fix release. See further details below.
             The previous fix caused performance problems.
             Added new getters and setters for the SO_SNDBUF and SO_RCVBUF values to be used on the data socket.
             </action>
-            <action issue="NET-496" dev="sebb"type="add">
+            <action issue="NET-496" dev="sebb" type="add">
             Util copyReader/copyStream classes should use default buffer size for non-positive buffer size parameters.
             </action>
             <action issue="NET-310" dev="sebb" type="add">
@@ -132,7 +132,7 @@ This is mainly a bug-fix release. See further details below.
             <action issue="NET-480" dev="sebb" due-to="Peter Naber" type="fix">
             Wrong passivHost when using FTPHTTPClient with EPSV
             </action>
-            <action issue="NET-494" dev="sebb"type="fix">
+            <action issue="NET-494" dev="sebb" type="fix">
             FTPClient.CSL.cleanUp() fails to restore timeout value on exception
             </action>
             <action issue="NET-492" dev="sebb" due-to="Tomasz Jedrzejewski" type="fix">
