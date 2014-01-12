@@ -44,7 +44,6 @@ public class TimeTCPClientTest extends TestCase
             server1 = new TimeTestSimpleServer(_port);
             server1.connect();
         }
-        System.out.println("Starting server on port " + _port);
         server1.start();
     }
 
@@ -71,19 +70,21 @@ public class TimeTCPClientTest extends TestCase
 
         long time, time2;
         long clientTime, clientTime2;
+        TimeTCPClient client = new TimeTCPClient();
         try
         {
-            TimeTCPClient client = new TimeTCPClient();
-            InetAddress localHost = InetAddress.getLocalHost();
-            localHost = InetAddress.getByName("localhost");
+            // Not sure why code used to use getLocalHost.
+            final InetAddress localHost = InetAddress.getByName("localhost"); // WAS InetAddress.getLocalHost();
             try
             {
                 // We want to timeout if a response takes longer than 60 seconds
                 client.setDefaultTimeout(60000);
-                System.out.println("Attempt to connect to server on " + localHost + " " + _port);
                 client.connect(localHost, _port);
                 clientTime = client.getDate().getTime();
                 time = System.currentTimeMillis();
+            } catch (IOException e) { // catch the first connect error; assume second will work if this does
+                fail("IOError <"+e+"> trying to connect to " + localHost + " " + _port );
+                throw e;
             } finally
             {
               if(client.isConnected()) {
@@ -95,7 +96,6 @@ public class TimeTCPClientTest extends TestCase
             {
                 // We want to timeout if a response takes longer than 60 seconds
                 client.setDefaultTimeout(60000);
-                System.out.println("Attempt to connect to server on " + _port);
                 client.connect(localHost, _port);
                 clientTime2 = (client.getTime() - TimeTCPClient.SECONDS_1900_TO_1970)*1000L;
                 time2 = System.currentTimeMillis();
@@ -105,15 +105,14 @@ public class TimeTCPClientTest extends TestCase
                   client.disconnect();
               }
             }
-
         } finally
         {
             closeConnections();
         }
 
-      // current time shouldn't differ from time reported via network by 5 seconds
-      assertTrue(Math.abs(time - clientTime) < 5000);
-      assertTrue(Math.abs(time2 - clientTime2) < 5000);
+        // current time shouldn't differ from time reported via network by 5 seconds
+        assertTrue(Math.abs(time - clientTime) < 5000);
+        assertTrue(Math.abs(time2 - clientTime2) < 5000);
     }
 
     /***
