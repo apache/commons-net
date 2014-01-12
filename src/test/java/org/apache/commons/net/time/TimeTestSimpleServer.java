@@ -109,11 +109,13 @@ public class TimeTestSimpleServer implements Runnable
     public void run()
     {
         Socket socket = null;
+        System.out.println("Starting TimeTestSimpleServer on " + port);
         while (running)
         {
             try
             {
                 socket = server.accept();
+                System.out.println("Accepted connection");
                 DataOutputStream os = new DataOutputStream(socket.getOutputStream());
                 // add 500 ms to round off to nearest second
                 int time = (int) ((System.currentTimeMillis() + 500) / 1000 + SECONDS_1900_TO_1970);
@@ -134,6 +136,7 @@ public class TimeTestSimpleServer implements Runnable
                 }
             }
         }
+        System.out.println("Ended TimeTestSimpleServer on " + port);
     }
 
     /**

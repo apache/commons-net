@@ -34,16 +34,17 @@ public class TimeTCPClientTest extends TestCase
      ***/
     protected void openConnections() throws Exception
     {
-    try {
+        try {
             server1 = new TimeTestSimpleServer(_port);
             server1.connect();
-    } catch (IOException ioe)
-    {
-        // try again on another port
-        _port = 4000;
+        } catch (IOException ioe)
+        {
+            // try again on another port
+            _port = 4000;
             server1 = new TimeTestSimpleServer(_port);
             server1.connect();
-    }
+        }
+        System.out.println("Starting server on port " + _port);
         server1.start();
     }
 
@@ -77,6 +78,7 @@ public class TimeTCPClientTest extends TestCase
             {
                 // We want to timeout if a response takes longer than 60 seconds
                 client.setDefaultTimeout(60000);
+                System.out.println("Attempt to connect to server on " + _port);
                 client.connect(InetAddress.getLocalHost(), _port);
                 clientTime = client.getDate().getTime();
                 time = System.currentTimeMillis();
@@ -91,6 +93,7 @@ public class TimeTCPClientTest extends TestCase
             {
                 // We want to timeout if a response takes longer than 60 seconds
                 client.setDefaultTimeout(60000);
+                System.out.println("Attempt to connect to server on " + _port);
                 client.connect(InetAddress.getLocalHost(), _port);
                 clientTime2 = (client.getTime() - TimeTCPClient.SECONDS_1900_TO_1970)*1000L;
                 time2 = System.currentTimeMillis();
