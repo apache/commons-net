@@ -75,6 +75,7 @@ public class TimeTCPClientTest extends TestCase
         {
             TimeTCPClient client = new TimeTCPClient();
             InetAddress localHost = InetAddress.getLocalHost();
+            localHost = InetAddress.getByName("localhost");
             try
             {
                 // We want to timeout if a response takes longer than 60 seconds
