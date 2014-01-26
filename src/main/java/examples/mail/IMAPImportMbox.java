@@ -87,8 +87,8 @@ public final class IMAPImportMbox
 
         for(int i = 2; i < args.length; i++) {
             String arg = args[i];
-            if (arg.matches("\\d+(-\\d+)(,\\d+(-\\d+))*")) { // number,m-n
-                for(String entry :arg.split(",")) {
+            if (arg.matches("\\d+(-\\d+)?(,\\d+(-\\d+)?)*")) { // number,m-n
+                for(String entry : arg.split(",")) {
                     String []parts = entry.split("-");
                     if (parts.length == 2) { // m-n
                         int low = Integer.parseInt(parts[0]);
@@ -104,6 +104,8 @@ public final class IMAPImportMbox
                 contains.add(arg); // not a number/number range
             }
         }
+//        System.out.println(msgNums.toString());
+//        System.out.println(java.util.Arrays.toString(contains.toArray()));
 
         final IMAPClient imap;
 
@@ -164,12 +166,12 @@ public final class IMAPImportMbox
             boolean wanted = false; // Skip any leading rubbish
             while((line=br.readLine())!=null) {
                 if (line.startsWith("From ")) { // start of message; i.e. end of previous (if any)
-                    if (process(sb, imap, folder)) { // process previous message (if any)
+                    if (process(sb, imap, folder, total)) { // process previous message (if any)
                         loaded++;
                     }
-                    wanted = wanted(total, line, msgNums, contains);
-                    total ++;
                     sb.setLength(0);
+                    total ++;
+                    wanted = wanted(total, line, msgNums, contains);
                 } else if (line.startsWith(">From ")) { // Unescape "From " in body text
                     line = line.substring(1);
                 }
@@ -180,7 +182,7 @@ public final class IMAPImportMbox
                 }
             }
             br.close();
-            if (wanted && process(sb, imap, folder)) { // last message (if any)
+            if (wanted && process(sb, imap, folder, total)) { // last message (if any)
                 loaded++;
             }
         } catch (IOException e) {
@@ -195,15 +197,16 @@ public final class IMAPImportMbox
         System.out.println("Processed " + total + " messages, loaded " + loaded);
     }
 
-    private static boolean process(final StringBuilder sb, final IMAPClient imap, final String folder) throws IOException {
+    private static boolean process(final StringBuilder sb, final IMAPClient imap, final String folder
+            ,final int msgNum) throws IOException {
         final int length = sb.length();
         boolean haveMessage = length > 2;
         if (haveMessage) {
-            System.out.println("Length " + length);
+            System.out.println("MsgNum: " + msgNum +" Length " + length);
             sb.setLength(length-2); // drop trailing CRLF
             String msg = sb.toString();
             if (!imap.append(folder, null, null, msg)) {
-                throw new IOException("Failed to import message: " + imap.getReplyString());
+                throw new IOException("Failed to import message: " + msgNum + " " + imap.getReplyString());
             }
         }
         return haveMessage;
