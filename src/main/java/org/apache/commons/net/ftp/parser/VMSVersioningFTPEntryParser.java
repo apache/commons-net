@@ -50,7 +50,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
 
     private final Pattern _preparse_pattern_;
     private static final String PRE_PARSE_REGEX =
-        "(.*);([0-9]+)\\s*.*";
+        "(.*?);([0-9]+)\\s*.*";
 
     /**
      * Constructor for a VMSFTPEntryParser object.

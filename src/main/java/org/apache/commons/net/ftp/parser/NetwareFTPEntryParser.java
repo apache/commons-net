@@ -50,7 +50,7 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * Example: d [-W---F--] SCION_VOL2                        512 Apr 13 23:12 VOL2
      */
     private static final String REGEX = "(d|-){1}\\s+"      // Directory/file flag
-            + "\\[(.*)\\]\\s+"                              // Attributes
+            + "\\[([-A-Z]+)\\]\\s+"                         // Attributes RWCEAFMS or -
             + "(\\S+)\\s+" + "(\\d+)\\s+"                   // Owner and size
             + "(\\S+\\s+\\S+\\s+((\\d+:\\d+)|(\\d{4})))"    // Long/short date format
             + "\\s+(.*)";                                   // Filename (incl. spaces)

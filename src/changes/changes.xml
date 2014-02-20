@@ -65,6 +65,9 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.4" date="2014-01-??" description="
 This is mainly a bug-fix release. See further details below.
         ">
+            <action issue="NET-526" type="update" dev="sebb">
+            Avoid greedy matches within a regex
+            </action>
             <action issue="NET-520" type="fix" dev="sebb">
             SubnetUtils("0.0.0.0/0") does not behave as expected
             Fixed range checking so network and broadcast addresses are treated as unsigned ints

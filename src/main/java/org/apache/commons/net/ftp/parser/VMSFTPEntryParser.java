@@ -56,7 +56,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * this is the regular expression used by this parser.
      */
     private static final String REGEX =
-        "(.*;[0-9]+)\\s*"                                                   //1  file and version
+        "(.*?;[0-9]+)\\s*"                                                  //1  file and version
         + "(\\d+)/\\d+\\s*"                                                 //2  size/allocated
         +"(\\S+)\\s+(\\S+)\\s+"                                             //3+4 date and time
         + "\\[(([0-9$A-Za-z_]+)|([0-9$A-Za-z_]+),([0-9$a-zA-Z_]+))\\]?\\s*" //5(6,7,8) owner
