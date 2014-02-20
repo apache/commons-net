@@ -34,8 +34,6 @@ import java.net.Socket;
  * <p>
  * Note this is for <B>debugging purposes only</B> and not meant to be run as a realiable time service.
  *
- * @author Jason Mathews, MITRE Corporation
- *
  * @version $Revision$
  */
 public class TimeTestSimpleServer implements Runnable

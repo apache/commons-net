@@ -17,14 +17,14 @@ package org.apache.commons.net.ntp;
  */
 
 
+import java.net.DatagramPacket;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Wrapper class to network time packet messages (NTP, etc) that computes
  * related timing info and stats.
- *
- * @author Jason Mathews, MITRE Corp
  *
  * @version $Revision$
  */
@@ -286,6 +286,15 @@ public class TimeInfo {
     }
 
     /**
+     * Get host address from message datagram if available
+     * @return host address of available otherwise null
+     */
+    public InetAddress getAddress() {
+        DatagramPacket pkt = _message.getDatagramPacket();
+        return pkt == null ? null : pkt.getAddress();
+    }
+
+    /**
      * Returns time at which time message packet was received by local machine.
      *
      * @return packet return time.
@@ -293,6 +302,44 @@ public class TimeInfo {
     public long getReturnTime()
     {
         return _returnTime;
+    }
+
+    /**
+     * Compares this object against the specified object.
+     * The result is <code>true</code> if and only if the argument is
+     * not <code>null</code> and is a <code>TimeStamp</code> object that
+     * contains the same values as this object.
+     *
+     * @param   obj   the object to compare with.
+     * @return  <code>true</code> if the objects are the same;
+     *          <code>false</code> otherwise.
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        TimeInfo other = (TimeInfo) obj;
+        return _returnTime == other._returnTime && _message.equals(other._message);
+    }
+
+    /**
+     * Computes a hashcode for this object. The result is the exclusive
+     * OR of the return time and the message hash code.
+     *
+     * @return  a hash code value for this object.
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = (int)_returnTime;
+        result = prime * result + _message.hashCode();
+        return result;
     }
 
 }

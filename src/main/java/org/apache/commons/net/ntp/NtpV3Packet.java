@@ -23,8 +23,6 @@ import java.net.DatagramPacket;
  * Interface for a NtpV3Packet with get/set methods corresponding to the fields
  * in the NTP Data Message Header described in RFC 1305.
  *
- * @author Naz Irizarry, MITRE Corp
- * @author Jason Mathews, MITRE Corp
  * @version $Revision$
  */
 public interface NtpV3Packet
@@ -121,9 +119,21 @@ public interface NtpV3Packet
     public int getPrecision();
 
     /**
+     * Set precision as defined in RFC-1305
+     * @param precision Precision
+     */
+    void setPrecision(int precision);
+
+    /**
      * @return root delay as defined in RFC-1305
      */
     public int getRootDelay();
+
+    /**
+     * Set root delay as defined in RFC-1305
+     * @param delay
+    */
+    void setRootDelay(int delay);
 
     /**
      * @return root delay in milliseconds
@@ -134,6 +144,12 @@ public interface NtpV3Packet
      * @return root dispersion as defined in RFC-1305
      */
     public int getRootDispersion();
+
+    /**
+     *
+     * @param disperson
+     */
+    void setRootDispersion(int disperson);
 
     /**
      * @return root dispersion in milliseconds
@@ -153,7 +169,7 @@ public interface NtpV3Packet
     /**
      * Set version as defined in RFC-1305
      */
-    public void setVersion(int mode);
+    public void setVersion(int version);
 
     /**
      * @return stratum as defined in RFC-1305

@@ -65,6 +65,9 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.4" date="2014-01-??" description="
 This is mainly a bug-fix release. See further details below.
         ">
+            <action issue="NET-526" type="update" dev="sebb" due-to="Jason Mathews, MITRE Corp">
+            Added missing set methods on NTP class and interface
+            </action>
             <action issue="NET-526" type="update" dev="sebb">
             Avoid greedy matches within a regex
             </action>

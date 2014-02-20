@@ -35,7 +35,6 @@ import org.apache.commons.net.DatagramSocketClient;
  * without re-establishing a connection.  That is because UDP is a
  * connectionless protocol and the Network Time Protocol is stateless.
  *
- * @author Jason Mathews, MITRE Corp
  * @version $Revision$
  ***/
 

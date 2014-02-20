@@ -22,9 +22,6 @@ import java.net.DatagramPacket;
  * Implementation of NtpV3Packet with methods converting Java objects to/from
  * the Network Time Protocol (NTP) data message header format described in RFC-1305.
  *
- * @author Naz Irizarry, MITRE Corp
- * @author Jason Mathews, MITRE Corp
- *
  * @version $Revision$
  */
 public class NtpV3Impl implements NtpV3Packet
@@ -89,6 +86,7 @@ public class NtpV3Impl implements NtpV3Packet
 
     /***
      * Set mode as defined in RFC-1305.
+     *
      * @param mode
      */
 //    @Override
@@ -114,6 +112,7 @@ public class NtpV3Impl implements NtpV3Packet
 
     /***
      * Set leap indicator as defined in RFC-1305.
+     *
      * @param li leap indicator.
      */
 //    @Override
@@ -230,6 +229,17 @@ public class NtpV3Impl implements NtpV3Packet
     }
 
     /***
+     * Set root delay as defined in RFC-1305.
+     *
+     * @param delay root delay
+     */
+//    @Override
+    public void setRootDelay(int delay)
+    {
+        setInt(ROOT_DELAY_INDEX, delay);
+    }
+
+    /**
      * Return root delay as defined in RFC-1305 in milliseconds, which is
      * the total roundtrip delay to the primary reference source, in
      * seconds. Values can take positive and negative values, depending
@@ -252,6 +262,17 @@ public class NtpV3Impl implements NtpV3Packet
     public int getRootDispersion()
     {
         return getInt(ROOT_DISPERSION_INDEX);
+    }
+
+    /***
+     * Set root dispersion as defined in RFC-1305.
+     *
+     * @param dispersion root dispersion
+     */
+//    @Override
+    public void setRootDispersion(int dispersion)
+    {
+        setInt(ROOT_DISPERSION_INDEX, dispersion);
     }
 
     /***
@@ -288,10 +309,7 @@ public class NtpV3Impl implements NtpV3Packet
 //    @Override
     public void setReferenceId(int refId)
     {
-        for (int i = 3; i >= 0; i--) {
-            buf[REFERENCE_ID_INDEX + i] = (byte) (refId & 0xff);
-            refId >>>= 8; // shift right one-byte
-        }
+        setInt(REFERENCE_ID_INDEX, refId);
     }
 
     /***
@@ -489,6 +507,20 @@ public class NtpV3Impl implements NtpV3Packet
     }
 
     /***
+     * Set integer value at index position.
+     *
+     * @param idx index position
+     * @param value 32-bit int value
+     */
+    private void setInt(int idx, int value)
+    {
+        for (int i=3; i >= 0; i--) {
+            buf[idx + i] = (byte) (value & 0xff);
+            value >>>= 8; // shift right one-byte
+        }
+    }
+
+    /**
      * Get NTP Timestamp at specified starting index.
      *
      * @param index index into data array
@@ -553,18 +585,61 @@ public class NtpV3Impl implements NtpV3Packet
     /***
      * Set the contents of this object from source datagram packet.
      *
-     * @param srcDp source DatagramPacket to copy contents from.
+     * @param srcDp source DatagramPacket to copy contents from, never null.
+     * @throws IllegalArgumentException if srcDp is null or byte length is less than minimum length of 48 bytes
      */
 //    @Override
     public void setDatagramPacket(DatagramPacket srcDp)
     {
+        if (srcDp == null || srcDp.getLength() < buf.length) {
+            throw new IllegalArgumentException();
+        }
         byte[] incomingBuf = srcDp.getData();
         int len = srcDp.getLength();
         if (len > buf.length) {
             len = buf.length;
         }
-
         System.arraycopy(incomingBuf, 0, buf, 0, len);
+        DatagramPacket dp = getDatagramPacket();
+        dp.setAddress(srcDp.getAddress());
+        int port = srcDp.getPort();
+        dp.setPort(port > 0 ? port : NTP_PORT);
+        dp.setData(buf);
+    }
+
+    /***
+     * Compares this object against the specified object.
+     * The result is <code>true</code> if and only if the argument is
+     * not <code>null</code> and is a <code>NtpV3Impl</code> object that
+     * contains the same values as this object.
+     *
+     * @param   obj   the object to compare with.
+     * @return  <code>true</code> if the objects are the same;
+     *          <code>false</code> otherwise.
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        NtpV3Impl other = (NtpV3Impl) obj;
+        return java.util.Arrays.equals(buf, other.buf);
+    }
+
+    /***
+     * Computes a hashcode for this object. The result is the exclusive
+     * OR of the values of this object stored as a byte array.
+     *
+     * @return  a hash code value for this object.
+     */
+    @Override
+    public int hashCode()
+    {
+        return java.util.Arrays.hashCode(buf);
     }
 
     /***

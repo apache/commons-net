@@ -38,7 +38,6 @@ import java.util.TimeZone;
  * time known as "the epoch", namely January 1, 1970, 00:00:00 GMT.
  * </p>
  *
- * @author Jason Mathews, MITRE Corp
  * @version $Revision$
  * @see java.util.Date
  */

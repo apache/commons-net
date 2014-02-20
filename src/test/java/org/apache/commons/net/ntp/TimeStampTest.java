@@ -22,8 +22,6 @@ import junit.framework.TestCase;
 
 /**
  * Test class that validates assertions for the basic TimeStamp operations and comparisons.
- *
- * @author Jason Mathews, MITRE Corp
  */
 public class TimeStampTest extends TestCase {
 
@@ -77,6 +75,16 @@ public class TimeStampTest extends TestCase {
     assertEquals("refDate.getTime()", refDate.getTime(), ts.getTime());
     Date tsDate = ts.getDate();
     assertEquals(refDate, tsDate);
+    }
+
+    public void testNotSame() {
+        TimeStamp time = TimeStamp.getCurrentTime();
+        Object other = Integer.valueOf(0);
+        if(time.equals(other))
+          fail("TimeStamp cannot equal Date");
+        other = null;
+        if(time.equals(other))
+        fail("TimeStamp cannot equal null");
     }
 
 }

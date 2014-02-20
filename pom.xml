@@ -93,9 +93,18 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
             <email>mario@ops.co.at</email>
         </contributor>
         <contributor>
+            <name>Naz Irizarry</name>
+            <organization>MITRE Corp</organization>
+            </contributor>
+        <contributor>
+        <contributor>
             <name>Tapan Karecha</name>
             <email>tapan@india.hp.com</email>
         </contributor>
+        <contributor>
+            <name>Jason Mathews</name>
+            <organization>MITRE Corp</organization>
+            </contributor>
         <contributor>
             <name>Winston Ojeda</name>
             <email>Winston.Ojeda@qg.com</email>

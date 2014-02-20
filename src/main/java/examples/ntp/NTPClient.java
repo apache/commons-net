@@ -43,7 +43,6 @@ import org.apache.commons.net.ntp.TimeStamp;
  * <br>
  * Example: NTPClient clock.psu.edu
  *
- * @author Jason Mathews, MITRE Corp
  ***/
 public final class NTPClient
 {

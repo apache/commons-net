@@ -20,8 +20,6 @@ package org.apache.commons.net.ntp;
 /***
  * Common NtpUtils Helper class.
  *
- * @author Jason Mathews, MITRE Corp
- *
  * @version $Revision$
  */
 public final class NtpUtils {
