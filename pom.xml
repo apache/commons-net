@@ -95,8 +95,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <contributor>
             <name>Naz Irizarry</name>
             <organization>MITRE Corp</organization>
-            </contributor>
-        <contributor>
+        </contributor>
         <contributor>
             <name>Tapan Karecha</name>
             <email>tapan@india.hp.com</email>
