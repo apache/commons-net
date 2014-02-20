@@ -419,7 +419,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                   <exclude>.checkstyle</exclude>
                   <exclude>.fbprefs</exclude>
                 </excludes>
-              </configuration>      
+              </configuration>
             </plugin>
 
         </plugins>
