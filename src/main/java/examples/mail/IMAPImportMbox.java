@@ -70,7 +70,7 @@ public final class IMAPImportMbox
 
         String []userpass = userInfo.split(":");
         if (userpass.length != 2) {
-            throw new IllegalArgumentException("Invalid userInfo details: '" + userpass + "'");            
+            throw new IllegalArgumentException("Invalid userInfo details: '" + userpass + "'");
         }
 
         String username = userpass[0];
@@ -214,7 +214,7 @@ public final class IMAPImportMbox
 
     /**
      * Is the message wanted?
-     * 
+     *
      * @param msgNum the message number
      * @param line the From line
      * @param msgNums the list of wanted message numbers
@@ -222,7 +222,7 @@ public final class IMAPImportMbox
      * @return true if the message is wanted
      */
     private static boolean wanted(int msgNum, String line, BitSet msgNums, List<String> contains) {
-        return (msgNums.isEmpty() && contains.isEmpty()) // no selectors 
+        return (msgNums.isEmpty() && contains.isEmpty()) // no selectors
              || msgNums.get(msgNum) // matches message number
              || listContains(contains, line); // contains string
     }
