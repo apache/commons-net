@@ -125,7 +125,7 @@ public class RExecClient extends SocketClient
 
 
     /***
-     * Returns the InputStream from which the standard outputof the remote
+     * Returns the InputStream from which the standard output of the remote
      * process can be read.  The input stream will only be set after a
      * successful rexec() invocation.
      * <p>
