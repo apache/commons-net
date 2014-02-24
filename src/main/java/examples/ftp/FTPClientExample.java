@@ -59,6 +59,7 @@ public final class FTPClientExample
         "\t-c cmd - issue arbitrary command (remote is used as a parameter if provided) \n" +
         "\t-d - list directory details using MLSD (remote is used as the pathname if provided)\n" +
         "\t-e - use EPSV with IPv4 (default false)\n" +
+        "\t-E - encoding to use for control channel\n" +
         "\t-f - issue FEAT command (remote and local files are ignored)\n" +
         "\t-h - list hidden files (applies to -l and -n only)\n" +
         "\t-k secs - use keep-alive timer (setControlKeepAliveTimeout)\n" +
@@ -94,6 +95,7 @@ public final class FTPClientExample
         String proxyPassword = null;
         String username = null;
         String password = null;
+        String encoding = null;
 
         int base = 0;
         for (base = 0; base < args.length; base++)
@@ -121,6 +123,9 @@ public final class FTPClientExample
             }
             else if (args[base].equals("-e")) {
                 useEpsvWithIPv4 = true;
+            }
+            else if (args[base].equals("-E")) {
+                encoding = args[++base];
             }
             else if (args[base].equals("-f")) {
                 feat = true;
@@ -251,6 +256,9 @@ public final class FTPClientExample
         }
         if (controlKeepAliveReplyTimeout >= 0) {
             ftp.setControlKeepAliveReplyTimeout(controlKeepAliveReplyTimeout);
+        }
+        if (encoding != null) {
+            ftp.setControlEncoding(encoding);
         }
         ftp.setListHiddenFiles(hidden);
 
