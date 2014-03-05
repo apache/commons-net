@@ -55,6 +55,7 @@ public abstract class RegexFTPFileEntryParserImpl extends
 
     /**
      * The constructor for a RegexFTPFileEntryParserImpl object.
+     * The expression is compiled with flags = 0.
      *
      * @param regex  The regular expression with which this object is
      * initialized.
@@ -70,6 +71,26 @@ public abstract class RegexFTPFileEntryParserImpl extends
     public RegexFTPFileEntryParserImpl(String regex) {
         super();
         compileRegex(regex, 0);
+    }
+
+    /**
+     * The constructor for a RegexFTPFileEntryParserImpl object.
+     *
+     * @param regex  The regular expression with which this object is
+     * initialized.
+     * @param flags the flags to apply, see {@link Pattern#compile(String, int)}. Use 0 for none.
+     *
+     * @exception IllegalArgumentException
+     * Thrown if the regular expression is unparseable.  Should not be seen in
+     * normal conditions.  It it is seen, this is a sign that a subclass has
+     * been created with a bad regular expression.   Since the parser must be
+     * created before use, this means that any bad parser subclasses created
+     * from this will bomb very quickly,  leading to easy detection.
+     * @since 3.4
+     */
+    public RegexFTPFileEntryParserImpl(String regex, final int flags) {
+        super();
+        compileRegex(regex, flags);
     }
 
     /**

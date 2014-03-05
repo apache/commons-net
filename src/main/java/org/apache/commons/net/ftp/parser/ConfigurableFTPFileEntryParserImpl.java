@@ -38,10 +38,6 @@ import org.apache.commons.net.ftp.FTPClientConfig;
  * </p>
  * @since 1.4
  */
-/**
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates - Comments
- */
 public abstract class ConfigurableFTPFileEntryParserImpl
 extends RegexFTPFileEntryParserImpl
 implements Configurable
@@ -50,13 +46,27 @@ implements Configurable
     private final FTPTimestampParser timestampParser;
 
     /**
-     * Only constructor for this abstract class.
+     * constructor for this abstract class.
      * @param regex  Regular expression used main parsing of the
      * file listing.
      */
     public ConfigurableFTPFileEntryParserImpl(String regex)
     {
         super(regex);
+        this.timestampParser = new FTPTimestampParserImpl();
+    }
+
+    /**
+     * constructor for this abstract class.
+     * @param regex  Regular expression used main parsing of the
+     * file listing.
+     * @param flags the flags to apply, see 
+     * {@link java.util.regex.Pattern#compile(String, int) Pattern#compile(String, int)}. Use 0 for none.
+     * @since 3.4
+     */
+    public ConfigurableFTPFileEntryParserImpl(String regex, int flags)
+    {
+        super(regex, flags);
         this.timestampParser = new FTPTimestampParserImpl();
     }
 
