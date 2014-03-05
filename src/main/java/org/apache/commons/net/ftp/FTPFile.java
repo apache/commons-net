@@ -417,8 +417,9 @@ public class FTPFile implements Serializable
                 return 'd';
             case SYMBOLIC_LINK_TYPE:
                 return 'l';
+            default:
+                return '?';
         }
-        return '?';
     }
 
     private String permissionToString(int access ){
