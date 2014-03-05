@@ -69,7 +69,7 @@ public abstract class RegexFTPFileEntryParserImpl extends
 
     public RegexFTPFileEntryParserImpl(String regex) {
         super();
-        setRegex(regex);
+        compileRegex(regex, 0);
     }
 
     /**
@@ -143,14 +143,41 @@ public abstract class RegexFTPFileEntryParserImpl extends
      * @since 2.0
      * @throws IllegalArgumentException if the regex cannot be compiled
      */
-    public boolean setRegex(String regex) {
-        try {
-            pattern = Pattern.compile(regex);
-            return true;
-        } catch (PatternSyntaxException pse) {
-            throw new IllegalArgumentException("Unparseable regex supplied: "
-                    + regex);
-        }
+    public boolean setRegex(final String regex) {
+        compileRegex(regex, 0);
+        return true;
     }
 
+
+    /**
+     * Alter the current regular expression being utilised for entry parsing
+     * and create a new {@link Pattern} instance.
+     * @param regex The new regular expression
+     * @param flags the flags to apply, see {@link Pattern#compile(String, int)}. Use 0 for none.
+     * @return  true
+     * @since 3.4
+     * @throws IllegalArgumentException if the regex cannot be compiled
+     */
+    public boolean setRegex(final String regex, final int flags) {
+        compileRegex(regex, flags);
+        return true;
+    }
+
+    /**
+     * Compile the regex and store the {@link Pattern}.
+     *
+     * This is an internal method to do the work so the constructor does not
+     * have to call an overrideable method.
+     *
+     * @param regex the expression to compile
+     * @param flags the flags to apply, see {@link Pattern#compile(String, int)}. Use 0 for none.
+     * @throws IllegalArgumentException if the regex cannot be compiled
+     */
+    private void compileRegex(final String regex, final int flags) {
+        try {
+            pattern = Pattern.compile(regex, flags);
+        } catch (PatternSyntaxException pse) {
+            throw new IllegalArgumentException("Unparseable regex supplied: " + regex);
+        }
+    }
 }
