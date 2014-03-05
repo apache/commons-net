@@ -38,7 +38,7 @@ public abstract class FTPFileEntryParserImpl
 
     /**
      * Reads the next entry using the supplied BufferedReader object up to
-     * whatever delemits one entry from the next.  This default implementation
+     * whatever delimits one entry from the next.  This default implementation
      * simply calls BufferedReader.readLine().
      *
      * @param reader The BufferedReader object from which entries are to be
