@@ -17,6 +17,7 @@
 
 package org.apache.commons.net.ftp.parser;
 import java.text.ParseException;
+import java.util.regex.Pattern;
 
 import org.apache.commons.net.ftp.Configurable;
 import org.apache.commons.net.ftp.FTPClientConfig;
@@ -76,7 +77,7 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      */
      public NTFTPEntryParser(FTPClientConfig config)
     {
-        super(REGEX);
+        super(REGEX, Pattern.DOTALL);
         configure(config);
         FTPClientConfig config2 = new FTPClientConfig(
                 FTPClientConfig.SYST_NT,
