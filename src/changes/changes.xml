@@ -65,6 +65,9 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.4" date="2014-01-??" description="
 This is mainly a bug-fix release. See further details below.
         ">
+            <action issue="NET-527" type="add" dev="sebb" due-to="jason mathews">
+            Add SimpleNTPServer as example and for testing
+            </action>
             <action issue="NET-516" type="fix" dev="sebb" due-to="Asha K S & pavan">
             parser problem occurs if the filename contains one or more characters of which the second byte of Shift-JIS code is 0x85
             Fix NT parser
