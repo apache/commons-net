@@ -141,7 +141,7 @@ public abstract class RegexFTPFileEntryParserImpl extends
      * @param regex The new regular expression
      * @return  true
      * @since 2.0
-     * @throws PatternSyntaxException if the regex cannot be compiled
+     * @throws IllegalArgumentException if the regex cannot be compiled
      */
     public boolean setRegex(String regex) {
         try {
