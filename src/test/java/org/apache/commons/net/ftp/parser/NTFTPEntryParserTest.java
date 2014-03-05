@@ -160,7 +160,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
             assertEquals("Tue Dec 03 18:38:00 1996",df.format(timestamp.getTime()));
     }
 
-    public void testNET339() { // TODO enable when NET-339 is fixed
+    public void testNET339() {
         FTPFile file = getParser().parseFTPEntry("05-22-97  12:08                  5000000000 10 years and under");
         assertNotNull("Could not parse entry", file);
         assertEquals("10 years and under", file.getName());
