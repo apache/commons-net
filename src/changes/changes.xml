@@ -65,6 +65,9 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.4" date="2014-01-??" description="
 This is mainly a bug-fix release. See further details below.
         ">
+            <action issue="NET-529" type="fix" dev="sebb" due-to="Putinas Piliponis">
+            SubnetUtils throws exception on valid input
+            </action>
             <action issue="NET-527" type="add" dev="sebb" due-to="jason mathews">
             Add SimpleNTPServer as example and for testing
             </action>

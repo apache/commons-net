@@ -255,9 +255,6 @@ public class SubnetUtils {
 
             /* Create a binary netmask from the number of bits specification /x */
             int cidrPart = rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
-            if (cidrPart == 0 && address != 0) {
-                throw new IllegalArgumentException("Cannot have /0 cidr with non-zero address");
-            }
             for (int j = 0; j < cidrPart; ++j) {
                 netmask |= (1 << 31 - j);
             }

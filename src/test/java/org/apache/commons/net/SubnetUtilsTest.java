@@ -201,16 +201,6 @@ public class SubnetUtilsTest extends TestCase {
             fail("Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected) {
         }
-        try {
-            new SubnetUtils("192.168.0.1/0");
-            fail("Should have thrown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
-        }
-        try {
-            new SubnetUtils("192.168.0.1", "0.0.0.0");
-            fail("Should have thrown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
-        }
     }
 
     public void testNET428_31() throws Exception {
@@ -303,14 +293,6 @@ public class SubnetUtilsTest extends TestCase {
 
     public void testZeroAddressAndCidr() {
         new SubnetUtils("0.0.0.0/0");
-    }
-
-    public void testZeroNetmaskBits() {
-        try {
-            new SubnetUtils("192.168.0.1/0");
-            fail("Mask /0 should have generated an IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
-        }
     }
 
     public void testNET521() {
