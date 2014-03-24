@@ -1,8 +1,8 @@
-              Apache Commons Net
-                  Version 3.3
+              Apache Apache Commons Net
+                  Version 3.4
                  RELEASE NOTES
 
-The Commons Net team is pleased to announce the release of Apache Commons Net 3.3
+The Apache Commons Net team is pleased to announce the release of Apache Apache Commons Net 3.4
 
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
 Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
@@ -12,29 +12,32 @@ This is mainly a bug-fix release. See further details below.
 Changes in this version include:
 
 New features:
-o NET-503:  AuthenticatingSMTPClient does not support non-default encoding Thanks to Ofer Regev.
-o NET-496:  Util copyReader/copyStream classes should use default buffer size for non-positive buffer size parameters.
-o NET-310:  FTPCommand conversion to use enum; added FTPCmd emum and deprecated FTPCommand.
+o NET-527:  Add SimpleNTPServer as example and for testing Thanks to jason mathews.
+o NET-512:  Downloading files or members from the AS400 QSYS file system is not supported Thanks to Thomas Raddatz.
 
 Fixed Bugs:
-o NET-501:  Race Condition on TelnetClient.disconnect() and TelnetInputStream.run()
-            java.lang.IllegalStateException: Queue is full! Cannot process another character. Thanks to Julián Lastiri.
-o NET-500:  Always call FTPClient#setFileType after connection.
-            Not all servers default to ASCII. Thanks to Michael Frick.
-o NET-465:  FTPClient setSendBufferSize and setReceiveBufferSize on data socket.
-            The previous fix caused performance problems.
-            Added new getters and setters for the SO_SNDBUF and SO_RCVBUF values to be used on the data socket. Thanks to Jim Kerwood.
-o NET-480:  Wrong passivHost when using FTPHTTPClient with EPSV Thanks to Peter Naber.
-o NET-494:  FTPClient.CSL.cleanUp() fails to restore timeout value on exception
-o NET-492:  FTPClient.printWorkingDirectory() incorrectly parses certain valid PWD command results Thanks to Tomasz Jedrzejewski.
+o NET-529:  SubnetUtils throws exception on valid input Thanks to Putinas Piliponis.
+o NET-516:  parser problem occurs if the filename contains one or more characters of which the second byte of Shift-JIS code is 0x85
+            Fix NT parser Thanks to Asha K S & pavan.
+o NET-520:  SubnetUtils("0.0.0.0/0") does not behave as expected
+            Fixed range checking so network and broadcast addresses are treated as unsigned ints
+o NET-521:  SubnetUtils.SubnetInfo.getAddressCount() can overflow as it returns an int
+o NET-515:  FTPClient sample in class javadoc "bug" Thanks to Sebastian Ritter.
+o NET-519:  Apache Commons Net 3.3 has a performance issue
+o NET-517:  FTPClient#reinitialize is package protected Thanks to David Kocher.
+o NET-518:  FTPClient#initFeatureMap should not initialize empty map if reply code is 530 Thanks to David Kocher.
+o NET-514:  IMAP APPEND multiple issues in IMapClient.
+            Deprecated unusable append methods.
+            Added new append method, as well as example IMapImportMbox class to make use of it.
+o NET-511:  Exception for new SubnetUtils("0.0.0.0/0"). Thanks to Kyriacos Elia, Daniel Scott.
 
 Changes:
-o NET-509:  AuthenticatingSMTPClient needs a constructor with the isImplicit argument for SSL Thanks to Anthony Dahanne.
-o NET-505:  User specified bufferSize reset to default when FTPClient is disconnected or reinitialized resulting in performance degradation. Thanks to Sean Kelley.
-o NET-507:  Option to disable private IP replacement in FTP passive mode. Thanks to Jiri Netolicky.
+o           Added control encoding option to FTPClientExample
+o NET-526:  Added missing set methods on NTP class and interface Thanks to Jason Mathews, MITRE Corp.
+o NET-526:  Avoid greedy matches within a regex
 
 
-For complete information on Commons Net, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache Commons Net website:
+For complete information on Apache Commons Net, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Apache Commons Net website:
 
 http://commons.apache.org/proper/commons-net/
