@@ -32,9 +32,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Threader {
-    private ThreadContainer root;
-    private HashMap<String,ThreadContainer> idTable;
-    private int bogusIdCount = 0;
 
     /**
      * The client passes in a list of Threadable objects, and
@@ -59,23 +56,23 @@ public class Threader {
             return null;
         }
 
-        idTable = new HashMap<String,ThreadContainer>();
+        HashMap<String,ThreadContainer> idTable = new HashMap<String,ThreadContainer>();
 
         // walk through each Threadable element
         for (Threadable t : messages) {
             if (!t.isDummy()) {
-                buildContainer(t);
+                buildContainer(t, idTable);
             }
         }
 
-        root = findRootSet();
+        ThreadContainer root = findRootSet(idTable);
         idTable.clear();
         idTable = null;
 
         pruneEmptyContainers(root);
 
         root.reverseChildren();
-        gatherSubjects();
+        gatherSubjects(root);
 
         if (root.next != null) {
             throw new RuntimeException("root node has a next:" + root);
@@ -89,7 +86,6 @@ public class Threader {
 
         Threadable result = (root.child == null ? null : root.child.threadable);
         root.flush();
-        root = null;
 
         return result;
     }
@@ -97,10 +93,12 @@ public class Threader {
     /**
      *
      * @param threadable
+     * @param idTable 
      */
-    private void buildContainer(Threadable threadable) {
+    private void buildContainer(Threadable threadable, HashMap<String,ThreadContainer> idTable) {
         String id = threadable.messageThreadId();
         ThreadContainer container = idTable.get(id);
+        int bogusIdCount = 0;
 
         // A ThreadContainer exists for this id already. This should be a forward reference, but may
         // be a duplicate id, in which case we will need to generate a bogus placeholder id
@@ -204,9 +202,10 @@ public class Threader {
 
     /**
      * Find the root set of all existing ThreadContainers
+     * @param idTable 
      * @return root the ThreadContainer representing the root node
      */
-    private ThreadContainer findRootSet() {
+    private ThreadContainer findRootSet(HashMap<String, ThreadContainer> idTable) {
         ThreadContainer root = new ThreadContainer();
         Iterator<String> iter = idTable.keySet().iterator();
 
@@ -291,8 +290,9 @@ public class Threader {
 
     /**
      *  If any two members of the root set have the same subject, merge them. This is to attempt to accomodate messages without References: headers.
+     * @param root 
      */
-    private void gatherSubjects() {
+    private void gatherSubjects(ThreadContainer root) {
 
         int count = 0;
 
