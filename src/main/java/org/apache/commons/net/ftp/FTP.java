@@ -361,7 +361,9 @@ public class FTP extends SocketClient
             while ( isStrictMultilineParsing() ? __strictCheck(line, code) : __lenientCheck(line));
         }
 
-        fireReplyReceived(_replyCode, getReplyString());
+        if (reportReply) {
+            fireReplyReceived(_replyCode, getReplyString());
+        }
 
         if (_replyCode == FTPReply.SERVICE_NOT_AVAILABLE) {
             throw new FTPConnectionClosedException("FTP response 421 received.  Server closed connection.");
