@@ -371,10 +371,13 @@ public class IMAPClient extends IMAP
 
     /**
      * Send a FETCH command to the server.
-     * @param sequenceSet The sequence set to fetch.
-     * @param itemNames The item names for the FETCH command.
+     *
+     * @param sequenceSet The sequence set to fetch (e.g. 1:4,6,11,100:*)
+     * @param itemNames The item names for the FETCH command. (e.g. BODY.PEEK[HEADER.FIELDS (SUBJECT)])
      * @return {@code true} if the command was successful,{@code false} if not.
      * @exception IOException If a network I/O error occurs.
+     * @see #getReplyString()
+     * @see #getReplyStrings()
      */
     public boolean fetch(String sequenceSet, String itemNames) throws IOException
     {
