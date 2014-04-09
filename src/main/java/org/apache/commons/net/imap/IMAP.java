@@ -119,7 +119,7 @@ public class IMAP extends SocketClient
                     _replyLines.add(line);
                     literalCount -= (line.length() + 2); // Allow for CRLF
                 }
-                line = _reader.readLine();
+                line = _reader.readLine(); // get next chunk or final tag
                 if (line == null) {
                     throw new EOFException("Connection closed without indication.");
                 }
@@ -132,6 +132,21 @@ public class IMAP extends SocketClient
         }
 
         fireReplyReceived(_replyCode, getReplyString());
+    }
+
+    /**
+     * Overrides {@link SocketClient#fireReplyReceived(int, String)} so as to
+     * avoid creating the reply string if there are no listeners to invoke.
+     *
+     * @param replyCode passed to the listeners
+     * @param ignored the string is only created if there are listeners defined.
+     * @see #getReplyString()
+     */
+    @Override
+    protected void fireReplyReceived(int replyCode, String ignored) {
+        if (getCommandSupport().getListenerCount() > 0) {
+            getCommandSupport().fireReplyReceived(replyCode, getReplyString());
+        }
     }
 
     /**
