@@ -39,7 +39,10 @@ import org.apache.commons.net.imap.IMAPSClient;
  * <ul>
  * <li>1,2,3,7-10</li>
  * <li>-142986- : this is useful for retrieving messages by apmail number, which appears as From xyz-return-142986-apmail-...</li>
- * <ul>
+ * </ul>
+ * <p>
+ * For example:<br>
+ * IMAPImportMbox imaps://user:pass@imap.googlemail.com/imported_messages 201401.mbox 1-10,20 -142986-
  */
 public final class IMAPImportMbox
 {
