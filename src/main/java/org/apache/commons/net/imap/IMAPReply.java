@@ -41,6 +41,13 @@ public final class IMAPReply
     /** The reply code indicating command continuation. */
     public static final int CONT = 3;
 
+    /**
+     * The reply code indicating a partial response. 
+     * This is used when a chunk listener is registered and the listener
+     * requests that the reply lines are cleared on return. 
+     */
+    public static final int PARTIAL = 3;
+
     /** The IMAP reply String indicating success of an operation. */
     private static final String IMAP_OK = "OK";
 

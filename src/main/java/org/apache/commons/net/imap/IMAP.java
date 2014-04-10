@@ -64,6 +64,23 @@ public class IMAP extends SocketClient
     private int _replyCode;
     private final List<String> _replyLines;
 
+    /**
+     * Implement this interface and register it via {@link #setChunkListener(IMAPChunkListener)}
+     * in order to get access to multi-line partial command responses.
+     * Useful when processing large FETCH responses.
+     */
+    public interface IMAPChunkListener {
+        /**
+         * Called when a multi-line partial response has been received.
+         * @param imap the instance, get the response 
+         * by calling {@link #getReplyString()} or {@link #getReplyStrings()}
+         * @return {@code true} if the reply buffer is to be cleared on return
+         */
+        boolean chunkReceived(IMAP imap);
+    }
+
+    private volatile IMAPChunkListener __chunkListener;
+
     private final char[] _initialID = { 'A', 'A', 'A', 'A' };
 
     /**
@@ -111,6 +128,7 @@ public class IMAP extends SocketClient
         if (wantTag) {
             while(IMAPReply.isUntagged(line)) {
                 int literalCount = IMAPReply.literalCount(line);
+                final boolean isMultiLine = literalCount >= 0;
                 while (literalCount >= 0) {
                     line=_reader.readLine();
                     if (line == null) {
@@ -118,6 +136,16 @@ public class IMAP extends SocketClient
                     }
                     _replyLines.add(line);
                     literalCount -= (line.length() + 2); // Allow for CRLF
+                }
+                if (isMultiLine) {
+                    IMAPChunkListener il = __chunkListener;
+                    if (il != null) {
+                        boolean clear = il.chunkReceived(this);
+                        if (clear) {
+                            fireReplyReceived(IMAPReply.PARTIAL, getReplyString());
+                            _replyLines.clear();
+                        }
+                    }
                 }
                 line = _reader.readLine(); // get next chunk or final tag
                 if (line == null) {
@@ -363,6 +391,19 @@ public class IMAP extends SocketClient
         }
 
         return buffer.toString();
+    }
+
+    /**
+     * Sets the current chunk listener.
+     * If a listener is registered and the implementation returns true,
+     * then any registered 
+     * {@link org.apache.commons.net.PrintCommandListener PrintCommandListener}
+     * instances will be invoked with the partial response and a status of
+     * {@link IMAPReply#PARTIAL} to indicate that the final reply code is not yet known.
+     * @param listener the class to use, or {@code null} to disable
+     */
+    public void setChunkListener(IMAPChunkListener listener) {
+        __chunkListener = listener;
     }
 
     /**

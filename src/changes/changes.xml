@@ -65,6 +65,9 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.4" date="2014-01-??" description="
 This is mainly a bug-fix release. See further details below.
         ">
+            <action issue="NET-535" type="add" dev="sebb">
+            IMAP FETCH can overflow reply buffer; provide for partial responses
+            </action>
             <action issue="NET-534" type="update" dev="sebb">
             Unnecesssary call to getReplyString() if no listeners configured
             </action>
