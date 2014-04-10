@@ -25,6 +25,8 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.net.imap.IMAPClient;
 import org.apache.commons.net.imap.IMAPSClient;
@@ -48,6 +50,7 @@ public final class IMAPImportMbox
 {
 
     private static final String CRLF = "\r\n";
+    private static final Pattern PATFROM = Pattern.compile(">+From "); // escaped From
 
     public static void main(String[] args) throws IOException
     {
@@ -175,7 +178,7 @@ public final class IMAPImportMbox
                     sb.setLength(0);
                     total ++;
                     wanted = wanted(total, line, msgNums, contains);
-                } else if (line.startsWith(">From ")) { // Unescape "From " in body text
+                } else if (startsWith(line, PATFROM)) { // Unescape ">+From " in body text
                     line = line.substring(1);
                 }
                 // TODO process first Received: line to determine arrival date?
@@ -198,6 +201,11 @@ public final class IMAPImportMbox
             imap.disconnect();
         }
         System.out.println("Processed " + total + " messages, loaded " + loaded);
+    }
+
+    private static boolean startsWith(String input, Pattern pat) {
+        Matcher m = pat.matcher(input);
+        return m.lookingAt();
     }
 
     private static boolean process(final StringBuilder sb, final IMAPClient imap, final String folder
