@@ -40,6 +40,7 @@ public final class IMAPMail
         {
             System.err.println(
                 "Usage: IMAPMail <imap server hostname> <username> <password> [TLS]");
+            System.err.println("Connects to server; lists capabilities and shows Inbox status");
             System.exit(1);
         }
 
