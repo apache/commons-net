@@ -79,6 +79,32 @@ public class IMAP extends SocketClient
         boolean chunkReceived(IMAP imap);
     }
 
+    /**
+     * <p>
+     * Implementation of IMAPChunkListener that returns {@code true}
+     * but otherwise does nothing.
+     * </p>
+     * <p>
+     * This is intended for use with a suitable ProtocolCommandListener.
+     * If the IMAP response contains multiple-line data, the protocol listener
+     * will be called for each multi-line chunk.
+     * The accumulated reply data will be cleared after calling the listener.
+     * If the response is very long, this can significantly reduce memory requirements.
+     * The listener will also start receiving response data earlier, as it does not have
+     * to wait for the entire response to be read.
+     * </p>
+     * <p>
+     * The ProtocolCommandListener must be prepared to accept partial responses.
+     * This should not be a problem for listeners that just log the input.
+     * </p>
+     * @see #setChunkListener(IMAPChunkListener)
+     */
+    public static final IMAPChunkListener TRUE_CHUNK_LISTENER = new IMAPChunkListener(){
+        public boolean chunkReceived(IMAP imap) {
+            return true;
+        }
+        
+    };
     private volatile IMAPChunkListener __chunkListener;
 
     private final char[] _initialID = { 'A', 'A', 'A', 'A' };
@@ -401,6 +427,7 @@ public class IMAP extends SocketClient
      * instances will be invoked with the partial response and a status of
      * {@link IMAPReply#PARTIAL} to indicate that the final reply code is not yet known.
      * @param listener the class to use, or {@code null} to disable
+     * @see #TRUE_CHUNK_LISTENER
      */
     public void setChunkListener(IMAPChunkListener listener) {
         __chunkListener = listener;
