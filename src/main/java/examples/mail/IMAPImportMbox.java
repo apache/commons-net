@@ -29,7 +29,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.net.imap.IMAPClient;
-import org.apache.commons.net.imap.IMAPSClient;
 
 /**
  * This is an example program demonstrating how to use the IMAP[S]Client class.
@@ -69,19 +68,6 @@ public final class IMAPImportMbox
             throw new IOException("Cannot read mailbox file: " + mbox);
         }
 
-        final String userInfo = uri.getUserInfo();
-        if (userInfo == null) {
-            throw new IllegalArgumentException("Missing userInfo details");
-        }
-
-        String []userpass = userInfo.split(":");
-        if (userpass.length != 2) {
-            throw new IllegalArgumentException("Invalid userInfo details: '" + userpass + "'");
-        }
-
-        String username = userpass[0];
-        String password = userpass[1];
-
         String path = uri.getPath();
         if (path == null || path.length() < 1) {
             throw new IllegalArgumentException("Invalid folderPath: '" + path + "'");
@@ -113,56 +99,12 @@ public final class IMAPImportMbox
 //        System.out.println(msgNums.toString());
 //        System.out.println(java.util.Arrays.toString(contains.toArray()));
 
-        final IMAPClient imap;
-
-        if ("imaps".equalsIgnoreCase(uri.getScheme())) {
-            System.out.println("Using secure protocol");
-            imap = new IMAPSClient(true); // implicit
-//        } else if ("null".equals(uri.getScheme())) {
-//            imap = new IMAPClient(){
-//                @Override
-//                public void connect(String host){ }
-//                @Override
-//                public boolean login(String user, String pass) {return true;}
-//                @Override
-//                public boolean logout() {return true;}
-//                @Override
-//                public void disconnect() {}
-//                @Override
-//                public void setSoTimeout(int t) {}
-//                @Override
-//                public boolean append(String mailboxName, String flags, String datetime, String message) {return true;}
-//            };
-        } else {
-            imap = new IMAPClient();
-        }
-
-        String server = uri.getHost();
-        int port = uri.getPort();
-        if (port != -1) {
-            imap.setDefaultPort(port);
-        }
-
-        System.out.println("Connecting to server " + server + " on " + imap.getDefaultPort());
-
-        // We want to timeout if a response takes longer than 60 seconds
-        imap.setDefaultTimeout(60000);
-
-        try {
-            imap.connect(server);
-        } catch (IOException e) {
-            throw new RuntimeException("Could not connect to server.", e);
-        }
+        // Connect and login
+        final IMAPClient imap = IMAPUtils.imapLogin(uri, 10000, null);
 
         int total = 0;
         int loaded = 0;
         try {
-            if (!imap.login(username, password)) {
-                System.err.println("Could not login to server. Check password.");
-                imap.disconnect();
-                System.exit(3);
-            }
-
             imap.setSoTimeout(6000);
 
             final BufferedReader br = new BufferedReader(new FileReader(file)); // TODO charset?

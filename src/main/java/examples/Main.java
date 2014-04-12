@@ -41,7 +41,7 @@ public class Main {
      */
     public static void main(String[] args) throws Exception  {
         if (args.length==0) {
-            System.out.println("Usage: java -jar examples.jar <exampleClass> <exampleClass parameters>");
+            System.out.println("Usage: java -jar commons-net-examples-m.n.jar <exampleClass> <exampleClass parameters>");
         }
         CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
         Map<String, String> map = new HashMap<String, String>();
@@ -58,9 +58,11 @@ public class Main {
                   String name = je.getName();
                   if (!name.endsWith(".class")
                           || name.contains("$") // subclasses
+                          // TODO use reflection to eliminate non-mail classes?
                           || name.equals("examples/nntp/NNTPUtils.class") // no main class
                           || name.equals("examples/util/IOUtil.class") // no main class
-                          || name.equals("examples/Main.class")) {
+                          || name.equals("examples/mail/IMAPUtils.class") // no main class
+                          || name.equals("examples/Main.class")) { // ourself
                       continue;
                   }
                   name = name.replace(".class", "");
