@@ -637,10 +637,12 @@ implements Configurable
             return false;
         }
 
-        OutputStream output = getBufferedOutputStream(socket.getOutputStream());
+        final OutputStream output;
 
         if (__fileType == ASCII_FILE_TYPE) {
-            output = new ToNetASCIIOutputStream(output);
+            output = new ToNetASCIIOutputStream(getBufferedOutputStream(socket.getOutputStream()));
+        } else {
+            output = getBufferedOutputStream(socket.getOutputStream());
         }
 
         CSL csl = null;
@@ -692,7 +694,7 @@ implements Configurable
             return null;
         }
 
-        OutputStream output = socket.getOutputStream();
+        final OutputStream output;
         if (__fileType == ASCII_FILE_TYPE) {
             // We buffer ascii transfers because the buffering has to
             // be interposed between ToNetASCIIOutputSream and the underlying
@@ -701,9 +703,9 @@ implements Configurable
             // programmer if possible.  Programmers can decide on their
             // own if they want to wrap the SocketOutputStream we return
             // for file types other than ASCII.
-            output = getBufferedOutputStream(output);
-            output = new ToNetASCIIOutputStream(output);
-
+            output = new ToNetASCIIOutputStream(getBufferedOutputStream(socket.getOutputStream()));
+        } else {
+            output = socket.getOutputStream();
         }
         return new org.apache.commons.net.io.SocketOutputStream(socket, output);
     }
@@ -1858,9 +1860,11 @@ implements Configurable
             return false;
         }
 
-        InputStream input = getBufferedInputStream(socket.getInputStream());
+        final InputStream input;
         if (__fileType == ASCII_FILE_TYPE) {
-            input = new FromNetASCIIInputStream(input);
+            input = new FromNetASCIIInputStream(getBufferedInputStream(socket.getInputStream()));
+        } else {
+            input = getBufferedInputStream(socket.getInputStream());
         }
 
         CSL csl = null;
@@ -1931,7 +1935,7 @@ implements Configurable
             return null;
         }
 
-        InputStream input = socket.getInputStream();
+        final InputStream input;
         if (__fileType == ASCII_FILE_TYPE) {
             // We buffer ascii transfers because the buffering has to
             // be interposed between FromNetASCIIOutputSream and the underlying
@@ -1940,8 +1944,9 @@ implements Configurable
             // programmer if possible.  Programmers can decide on their
             // own if they want to wrap the SocketInputStream we return
             // for file types other than ASCII.
-            input = getBufferedInputStream(input);
-            input = new FromNetASCIIInputStream(input);
+            input = new FromNetASCIIInputStream(getBufferedInputStream(socket.getInputStream()));
+        } else {
+            input = socket.getInputStream();
         }
         return new org.apache.commons.net.io.SocketInputStream(socket, input);
     }
