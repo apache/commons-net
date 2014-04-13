@@ -36,8 +36,7 @@ import java.util.Calendar;
  * </pre>
  * This will retrieve the list of newsgroups starting with the comp.
  * distribution prefix created since midnight 11/15/97.
- * <p>
- * <p>
+ *
  * @see NNTPClient
  ***/
 

@@ -32,8 +32,7 @@ import org.apache.commons.net.DatagramSocketClient;
  * After you're done sending discard data, call
  * {@link org.apache.commons.net.DatagramSocketClient#close  close() }
  * to clean up properly.
- * <p>
- * <p>
+ *
  * @see DiscardTCPClient
  ***/
 
@@ -75,6 +74,11 @@ public class DiscardUDPClient extends DatagramSocketClient
     /***
      * Same as
      * <code>send(data, length, host. DiscardUDPClient.DEFAULT_PORT)</code>.
+     * @param data the buffer to send
+     * @param length the length of the data in the buffer
+     * @param host the target host
+     * @see #send(byte[], int, InetAddress, int)
+     * @throws IOException if an error occurs
      ***/
     public void send(byte[] data, int length, InetAddress host)
     throws IOException
@@ -86,6 +90,10 @@ public class DiscardUDPClient extends DatagramSocketClient
     /***
      * Same as
      * <code>send(data, data.length, host. DiscardUDPClient.DEFAULT_PORT)</code>.
+     * @param data the buffer to send
+     * @param host the target host
+     * @see #send(byte[], int, InetAddress, int)
+     * @throws IOException if an error occurs
      ***/
     public void send(byte[] data, InetAddress host) throws IOException
     {

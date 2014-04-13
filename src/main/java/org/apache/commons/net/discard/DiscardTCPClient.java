@@ -32,7 +32,6 @@ import org.apache.commons.net.SocketClient;
  * {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
  * to clean up properly.
  * <p>
- * <p>
  * @see DiscardUDPClient
  ***/
 

@@ -216,6 +216,7 @@ public abstract class DatagramSocketClient
      * <p>
      * @param timeout  The timeout in milliseconds to use for the currently
      *                 open datagram socket connection.
+     * @throws SocketException if an error setting the timeout
      ***/
     public void setSoTimeout(int timeout) throws SocketException
     {
@@ -229,6 +230,7 @@ public abstract class DatagramSocketClient
      * a NullPointerException is thrown.
      * <p>
      * @return The timeout in milliseconds of the currently opened socket.
+     * @throws SocketException if an error getting the timeout
      ***/
     public int getSoTimeout() throws SocketException
     {

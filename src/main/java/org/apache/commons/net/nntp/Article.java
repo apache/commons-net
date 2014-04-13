@@ -21,8 +21,8 @@ import java.util.ArrayList;
 
 /**
  * This is a class that contains the basic state needed for message retrieval and threading.
- * With thanks to Jamie  Zawinski <jwz@jwz.org>
- * @author rwinston <rwinston@apache.org>
+ * With thanks to Jamie  Zawinski (jwz@jwz.org)
+ * @author rwinston (rwinston@apache.org)
  */
 public class Article implements Threadable {
     private long articleNumber;
@@ -42,7 +42,7 @@ public class Article implements Threadable {
 
     /**
      * Adds a message-id to the list of messages that this message references (i.e. replies to)
-     * @param msgId
+     * @param msgId the message id to add
      */
     public void addReference(String msgId) {
         if (msgId == null || msgId.length() == 0) {

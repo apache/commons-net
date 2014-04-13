@@ -939,12 +939,10 @@ public class FTP extends SocketClient
      * receive the reply, and return the reply code.
      *
      * Examples:
-     * <code>
      * <ul>
      * <li>EPRT |1|132.235.1.2|6275|</li>
      * <li>EPRT |2|1080::8:800:200C:417A|5282|</li>
      * </ul>
-     * </code>
      * <p>
      * @see "http://www.faqs.org/rfcs/rfc2428.html"
      *

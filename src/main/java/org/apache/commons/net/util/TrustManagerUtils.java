@@ -104,7 +104,7 @@ public final class TrustManagerUtils
      * when the TrustManager parameter is set to {@code null}
      * @param keyStore the KeyStore to use, may be {@code null}
      * @return the default TrustManager
-     * @throws GeneralSecurityException
+     * @throws GeneralSecurityException if an error occurs
      */
     public static X509TrustManager getDefaultTrustManager(KeyStore keyStore) throws GeneralSecurityException {
         String defaultAlgorithm = TrustManagerFactory.getDefaultAlgorithm();

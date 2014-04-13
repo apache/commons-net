@@ -255,7 +255,7 @@ public class Base64 {
      *
      * @param lineLength
      *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 4).
-     *            If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
+     *            If {@code lineLength <= 0}, then the output will not be divided into lines (chunks). Ignored when decoding.
      * @since 1.4
      */
     public Base64(int lineLength) {
@@ -277,7 +277,7 @@ public class Base64 {
      *
      * @param lineLength
      *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 4).
-     *            If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
+     *            If {@code lineLength <= 0}, then the output will not be divided into lines (chunks). Ignored when decoding.
      * @param lineSeparator
      *            Each line of encoded data will end with this sequence of bytes.
      * @throws IllegalArgumentException
@@ -303,7 +303,7 @@ public class Base64 {
      *
      * @param lineLength
      *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 4).
-     *            If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
+     *            If {@code lineLength <= 0}, then the output will not be divided into lines (chunks). Ignored when decoding.
      * @param lineSeparator
      *            Each line of encoded data will end with this sequence of bytes.
      * @param urlSafe

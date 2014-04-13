@@ -323,7 +323,7 @@ public class NNTPClient extends NNTP
 
     /***
      * Retrieves an article from the NNTP server.  The article is referenced
-     * by its unique article identifier (including the enclosing &lt and &gt).
+     * by its unique article identifier (including the enclosing &lt; and &gt;).
      * The article number and identifier contained in the server reply
      * are returned through an ArticleInfo.  The <code> articleId </code>
      * field of the ArticleInfo cannot always be trusted because some
@@ -370,6 +370,9 @@ public class NNTPClient extends NNTP
     /**
      * Same as <code> retrieveArticle(articleId, (ArticleInfo) null) </code>
      * Note: the return can be cast to a {@link BufferedReader}
+     * @param articleId the article id to retrieve
+     * @return the reader
+     * @throws IOException if an IO error occurs
      */
     public Reader retrieveArticle(String articleId) throws IOException
     {
@@ -379,6 +382,8 @@ public class NNTPClient extends NNTP
     /**
      * Same as <code> retrieveArticle((String) null) </code>
      * Note: the return can be cast to a {@link BufferedReader}
+     * @return the reader
+     * @throws IOException if an IO error occurs
      */
     public Reader retrieveArticle() throws IOException
     {
@@ -430,7 +435,12 @@ public class NNTPClient extends NNTP
         return __retrieve(NNTPCommand.ARTICLE, articleNumber, pointer);
     }
 
-    /*** Same as <code> retrieveArticle(articleNumber, null) </code> ***/
+    /**
+     * Same as <code> retrieveArticle(articleNumber, null) </code> 
+     * @param articleNumber the article number to fetch
+     * @return the reader
+     * @throws IOException if an IO error occurs
+     */
     public BufferedReader retrieveArticle(long articleNumber) throws IOException
     {
         return retrieveArticle(articleNumber, null);
@@ -441,7 +451,7 @@ public class NNTPClient extends NNTP
     /***
      * Retrieves an article header from the NNTP server.  The article is
      * referenced
-     * by its unique article identifier (including the enclosing &lt and &gt).
+     * by its unique article identifier (including the enclosing &lt; and &gt).
      * The article number and identifier contained in the server reply
      * are returned through an ArticleInfo.  The <code> articleId </code>
      * field of the ArticleInfo cannot always be trusted because some
@@ -488,6 +498,8 @@ public class NNTPClient extends NNTP
     /**
      * Same as <code> retrieveArticleHeader(articleId, (ArticleInfo) null) </code>
      *  Note: the return can be cast to a {@link BufferedReader}
+     * @param articleId the article id  to fetch
+     * @return the reader
      */
     public Reader retrieveArticleHeader(String articleId) throws IOException
     {
@@ -561,7 +573,7 @@ public class NNTPClient extends NNTP
     /***
      * Retrieves an article body from the NNTP server.  The article is
      * referenced
-     * by its unique article identifier (including the enclosing &lt and &gt).
+     * by its unique article identifier (including the enclosing &lt; and &gt;).
      * The article number and identifier contained in the server reply
      * are returned through an ArticleInfo.  The <code> articleId </code>
      * field of the ArticleInfo cannot always be trusted because some
@@ -765,7 +777,7 @@ public class NNTPClient extends NNTP
 
     /***
      * Select an article by its unique identifier (including enclosing
-     * &lt and &gt) and return its article number and id through the
+     * &lt; and &gt;) and return its article number and id through the
      * pointer parameter.  This is achieved through the STAT command.
      * According to RFC 977, this will NOT set the current article pointer
      * on the server.  To do that, you must reference the article by its
@@ -1185,7 +1197,7 @@ public class NNTPClient extends NNTP
      * command fails, null will be returned.  You must add at least one
      * newsgroup to the query, else the command will fail.  Each String
      * in the returned array is a unique message identifier including the
-     * enclosing &lt and &gt.
+     * enclosing &lt; and &gt;.
      * This uses the "NEWNEWS" command.
      * <p>
      * @param query  The query restricting how to search for new news.  You
@@ -1243,7 +1255,7 @@ public class NNTPClient extends NNTP
      * This uses the "NEWNEWS" command.
      * You must add at least one newsgroup to the query, else the command will fail.
      * Each String which is returned is a unique message identifier including the
-     * enclosing &lt and &gt.
+     * enclosing &lt; and &gt;.
      * <p>
      * @param query  The query restricting how to search for new news.  You
      *    must add at least one newsgroup to the query.

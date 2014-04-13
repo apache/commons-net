@@ -26,8 +26,7 @@ package org.apache.commons.net.nntp;
  * , and
  * {@link org.apache.commons.net.nntp.NNTPClient#listNewNewsgroups listNewNewsgroups }
  *  respectively.
- * <p>
- * <p>
+ *
  * @see NNTPClient
  ***/
 

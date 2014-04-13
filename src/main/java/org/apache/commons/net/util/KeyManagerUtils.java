@@ -49,7 +49,7 @@ import org.apache.commons.net.io.Util;
  * cl.connect(...);
  * </pre>
  * If using the default store type and the key password is the same as the
- * store password, these parameters can be omitted. <br/>
+ * store password, these parameters can be omitted. <br>
  * If the desired key is the first or only key in the keystore, the keyAlias parameter
  * can be omitted, in which case the code becomes:
  * <pre>
@@ -78,6 +78,7 @@ public final class KeyManagerUtils {
      * @param keyAlias the alias of the key to use, may be {@code null} in which case the first key entry alias is used
      * @param keyPass the password of the key to use
      * @return the customised KeyManager
+     * @throws GeneralSecurityException if there is a problem creating the keystore
      */
     public static KeyManager createClientKeyManager(KeyStore ks, String keyAlias, String keyPass)
         throws GeneralSecurityException
@@ -96,6 +97,8 @@ public final class KeyManagerUtils {
      * @param keyAlias the alias of the key to use, may be {@code null} in which case the first key entry alias is used
      * @param keyPass the password of the key to use
      * @return the customised KeyManager
+     * @throws GeneralSecurityException if there is a problem creating the keystore
+     * @throws IOException if there is a problem creating the keystore
      */
     public static KeyManager createClientKeyManager(String storeType, File storePath, String storePass, String keyAlias, String keyPass)
         throws IOException, GeneralSecurityException
@@ -113,6 +116,8 @@ public final class KeyManagerUtils {
      * @param storePass the keyStore password
      * @param keyAlias the alias of the key to use, may be {@code null} in which case the first key entry alias is used
      * @return the customised KeyManager
+     * @throws IOException if there is a problem creating the keystore
+     * @throws GeneralSecurityException if there is a problem creating the keystore
      */
     public static KeyManager createClientKeyManager(File storePath, String storePass, String keyAlias)
         throws IOException, GeneralSecurityException
@@ -129,6 +134,8 @@ public final class KeyManagerUtils {
      * @param storePath the path to the keyStore
      * @param storePass the keyStore password
      * @return the customised KeyManager
+     * @throws IOException if there is a problem creating the keystore
+     * @throws GeneralSecurityException if there is a problem creating the keystore
      */
     public static KeyManager createClientKeyManager(File storePath, String storePass)
         throws IOException, GeneralSecurityException

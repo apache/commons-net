@@ -147,6 +147,7 @@ public abstract class SocketClient
      * Subclasses overriding this method should start by calling
      * <code> super._connectAction_() </code> first to ensure the
      * initialization of the aforementioned protected variables.
+     * @throws IOException (SocketException) if a problem occurs with the socket
      */
     protected void _connectAction_() throws IOException
     {
@@ -474,7 +475,7 @@ public abstract class SocketClient
      * Set the underlying socket send buffer size.
      * <p>
      * @param size The size of the buffer in bytes.
-     * @throws SocketException
+     * @throws SocketException never thrown, but subclasses might want to do so
      * @since 2.0
      */
     public void setSendBufferSize(int size) throws SocketException {
@@ -558,7 +559,7 @@ public abstract class SocketClient
      * allows a specific keepalive value to be set, although this seems not to be the case on
      * other systems.
      * @param  keepAlive If true, keepAlive is turned on
-     * @throws SocketException
+     * @throws SocketException if there is a problem with the socket
      * @throws NullPointerException if the socket is not currently open
      * @since 2.2
      */
@@ -570,7 +571,7 @@ public abstract class SocketClient
      * Returns the current value of the SO_KEEPALIVE flag on the currently opened socket.
      * Delegates to {@link Socket#getKeepAlive()}
      * @return True if SO_KEEPALIVE is enabled.
-     * @throws SocketException
+     * @throws SocketException if there is a problem with the socket
      * @throws NullPointerException if the socket is not currently open
      * @since 2.2
      */
@@ -666,6 +667,7 @@ public abstract class SocketClient
      * accept a connection from a server, such as an FTP data connection or
      * a BSD R command standard error stream.
      * <p>
+     * @param socket the item to check against
      * @return True if the remote hosts are the same, false if not.
      */
     public boolean verifyRemote(Socket socket)

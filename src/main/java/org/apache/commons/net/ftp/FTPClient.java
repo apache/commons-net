@@ -239,14 +239,14 @@ import org.apache.commons.net.io.Util;
  *     as in Ant</li>
  * </ul>see {@link  FTPClientConfig  FTPClientConfig}.
  * <p>
- * <b>Control channel keep-alive feature</b>:<br/>
+ * <b>Control channel keep-alive feature</b>:<br>
  * During file transfers, the data connection is busy, but the control connection is idle.
  * FTP servers know that the control connection is in use, so won't close it through lack of activity,
  * but it's a lot harder for network routers to know that the control and data connections are associated
  * with each other.
  * Some routers may treat the control connection as idle, and disconnect it if the transfer over the data
  * connection takes longer than the allowable idle time for the router.
- * <br/>
+ * <br>
  * One solution to this is to send a safe command (i.e. NOOP) over the control connection to reset the router's
  * idle timer. This is enabled as follows:
  * <pre>
@@ -278,7 +278,7 @@ public class FTPClient extends FTP
 implements Configurable
 {
     /**
-     * The system property ({@value}) which can be used to override the system type.<br/>
+     * The system property ({@value}) which can be used to override the system type.<br>
      * If defined, the value will be used to create any automatically created parsers.
      *
      * @since 3.0
@@ -286,7 +286,7 @@ implements Configurable
     public static final String FTP_SYSTEM_TYPE = "org.apache.commons.net.ftp.systemType";
 
     /**
-     * The system property ({@value}) which can be used as the default system type.<br/>
+     * The system property ({@value}) which can be used as the default system type.<br>
      * If defined, the value will be used if the SYST command fails.
      *
      * @since 3.1
@@ -295,10 +295,10 @@ implements Configurable
 
     /**
      * The name of an optional systemType properties file ({@value}), which is loaded
-     * using {@link Class#getResourceAsStream(String)}.<br/>
+     * using {@link Class#getResourceAsStream(String)}.<br>
      * The entries are the systemType (as determined by {@link FTPClient#getSystemType})
      * and the values are the replacement type or parserClass, which is passed to
-     * {@link FTPFileEntryParserFactory#createFileEntryParser(String)}.<br/>
+     * {@link FTPFileEntryParserFactory#createFileEntryParser(String)}.<br>
      * For example:
      * <pre>
      * Plan 9=Unix
@@ -2220,13 +2220,13 @@ implements Configurable
      * Query the server for supported features. The server may reply with a list of server-supported exensions.
      * For example, a typical client-server interaction might be (from RFC 2389):
      * <pre>
-        C> feat
-        S> 211-Extensions supported:
-        S>  MLST size*;create;modify*;perm;media-type
-        S>  SIZE
-        S>  COMPRESSION
-        S>  MDTM
-        S> 211 END
+        C&gt; feat
+        S&gt; 211-Extensions supported:
+        S&gt;  MLST size*;create;modify*;perm;media-type
+        S&gt;  SIZE
+        S&gt;  COMPRESSION
+        S&gt;  MDTM
+        S&gt; 211 END
      * </pre>
      * @see <a href="http://www.faqs.org/rfcs/rfc2389.html">http://www.faqs.org/rfcs/rfc2389.html</a>
      * @return True if successfully completed, false if not.

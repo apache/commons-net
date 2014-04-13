@@ -24,7 +24,6 @@ import java.io.PrintWriter;
  * This is a support class for some of the example programs.  It is
  * a sample implementation of the ProtocolCommandListener interface
  * which just prints out to a specified stream all command/reply traffic.
- * <p>
  *
  * @since 2.0
  ***/
@@ -82,7 +81,7 @@ public class PrintCommandListener implements ProtocolCommandListener
      * @param stream where to write the commands and responses
      * @param suppressLogin if {@code true}, only print command name for login
      * @param eolMarker if non-zero, add a marker just before the EOL.
-     * @param showDirection if {@code true}, add "> " or "< " as appropriate to the output
+     * @param showDirection if {@code true}, add {@code "> "} or {@code "< "} as appropriate to the output
      *
      * @since 3.0
      */

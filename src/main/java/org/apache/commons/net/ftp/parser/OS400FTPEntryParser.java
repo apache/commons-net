@@ -30,10 +30,10 @@ import org.apache.commons.net.ftp.FTPFile;
  * working directory is a file of file system QSYS:
  * ------------------------------------------------
  *
- * > cwd /qsys.lib/rpgunit.lib/rpgunitc1.file
+ * $ cwd /qsys.lib/rpgunit.lib/rpgunitc1.file
  *   250-NAMEFMT set to 1.
  *   250 "/QSYS.LIB/RPGUNIT.LIB/RPGUNITC1.FILE" is current directory.
- * > dir
+ * $ dir
  *   227 Entering Passive Mode (10,200,36,33,40,249).
  *   125 List started.
  *   QPGMR          135168 22.06.13 13:18:19 *FILE
@@ -47,9 +47,9 @@ import org.apache.commons.net.ftp.FTPFile;
  * Example *FILE entry of an OS/400 save file:
  * ---------------------------------------------------
  *
- * > cwd /qsys.lib/rpgunit.lib
+ * $ cwd /qsys.lib/rpgunit.lib
  *   250 "/QSYS.LIB/RPGUNIT.LIB" is current library.
- * > dir rpgunit.file
+ * $ dir rpgunit.file
  *   227 Entering Passive Mode (10,200,36,33,188,106).
  *   125 List started.
  *   QPGMR        16347136 29.06.13 15:45:09 *FILE      RPGUNIT.SAVF
@@ -60,9 +60,9 @@ import org.apache.commons.net.ftp.FTPFile;
  * current working directory is in file system "root":
  * ---------------------------------------------------
  *
- * > cwd /home/raddatz
+ * $ cwd /home/raddatz
  *   250 "/home/raddatz" is current directory.
- * > dir test*
+ * $ dir test*
  *   227 Entering Passive Mode (10,200,36,33,200,189).
  *   125 List started.
  *   RADDATZ           200 21.05.11 12:31:18 *STMF      TEST_RG_02_CRLF.properties
@@ -76,8 +76,8 @@ import org.apache.commons.net.ftp.FTPFile;
  * Example 1, using ANT to list specific members of a file:
  * --------------------------------------------------------
  *
- *      &lt;echo/>
- *      &lt;echo>Listing members of a file:</echo>
+ *      &lt;echo/&gt;
+ *      &lt;echo&gt;Listing members of a file:&lt;/echo&gt;
  *
  *      &lt;ftp action="list"
  *           server="${ftp.server}"
@@ -88,11 +88,11 @@ import org.apache.commons.net.ftp.FTPFile;
  *           remotedir="/QSYS.LIB/RPGUNIT.LIB/RPGUNITY1.FILE"
  *           systemTypeKey="OS/400"
  *           listing="ftp-listing.txt"
- *           >
+ *           &gt;
  *          &lt;fileset dir="./i5-downloads-file" casesensitive="false">
- *              &lt;include name="run*.mbr" />
- *          &lt;/fileset>
- *      &lt;/ftp>
+ *              &lt;include name="run*.mbr" /&gt;
+ *          &lt;/fileset&gt;
+ *      &lt;/ftp&gt;
  *
  * Output:
  * -------
@@ -108,8 +108,8 @@ import org.apache.commons.net.ftp.FTPFile;
  * Example 2, using ANT to list specific members of all files of a library:
  * ------------------------------------------------------------------------
  *
- *      &lt;echo/>
- *      &lt;echo>Listing members of all files of a library:</echo>
+ *      &lt;echo/&gt;
+ *      &lt;echo&gt;Listing members of all files of a library:&lt;/echo&gt;
  *
  *      &lt;ftp action="list"
  *           server="${ftp.server}"
@@ -120,11 +120,11 @@ import org.apache.commons.net.ftp.FTPFile;
  *           remotedir="/QSYS.LIB/RPGUNIT.LIB"
  *           systemTypeKey="OS/400"
  *           listing="ftp-listing.txt"
- *           >
- *          &lt;fileset dir="./i5-downloads-lib" casesensitive="false">
+ *           &gt;
+ *          &lt;fileset dir="./i5-downloads-lib" casesensitive="false"&gt;
  *              &lt;include name="**\run*.mbr" />
- *          &lt;/fileset>
- *      &lt;/ftp>
+ *          &lt;/fileset&gt;
+ *      &lt;/ftp&gt;
  *
  * Output:
  * -------

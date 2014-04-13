@@ -71,8 +71,7 @@ import org.apache.commons.net.io.CRLFLineReader;
  * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite
  * attempts to be as lenient as possible.
- * <p>
- * <p>
+ *
  * @author Rory Winston
  * @author Ted Wise
  * @see NNTPClient
@@ -388,7 +387,7 @@ public class NNTP extends SocketClient
      * receive the initial reply, and return the reply code.
      * <p>
      * @param messageId  The message identifier of the requested article,
-     *                   including the encapsulating &lt and &gt characters.
+     *                   including the encapsulating &lt; and &gt; characters.
      * @return The reply code received from the server.
      * @exception NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
@@ -448,7 +447,7 @@ public class NNTP extends SocketClient
      * receive the initial reply, and return the reply code.
      * <p>
      * @param messageId  The message identifier of the requested article,
-     *                   including the encapsulating &lt and &gt characters.
+     *                   including the encapsulating &lt; and &gt; characters.
      * @return The reply code received from the server.
      * @exception NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
@@ -508,7 +507,7 @@ public class NNTP extends SocketClient
      * receive the initial reply, and return the reply code.
      * <p>
      * @param messageId  The message identifier of the requested article,
-     *                   including the encapsulating &lt and &gt characters.
+     *                   including the encapsulating &lt; and &gt; characters.
      * @return The reply code received from the server.
      * @exception NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
@@ -568,7 +567,7 @@ public class NNTP extends SocketClient
      * receive the initial reply, and return the reply code.
      * <p>
      * @param messageId  The message identifier of the requested article,
-     *                   including the encapsulating &lt and &gt characters.
+     *                   including the encapsulating &lt; and &gt; characters.
      * @return The reply code received from the server.
      * @exception NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
@@ -666,7 +665,7 @@ public class NNTP extends SocketClient
      * receive the reply, and return the reply code.
      * <p>
      * @param messageId  The article identifier,
-     *                   including the encapsulating &lt and &gt characters.
+     *                   including the encapsulating &lt; and &gt; characters.
      * @return The reply code received from the server.
      * @exception NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
@@ -978,7 +977,7 @@ public class NNTP extends SocketClient
      * @param wildmat A wildmat (pseudo-regex) pattern. See RFC 2980 for
      *                details.
      * @return the reply code received from the server.
-     * @throws IOException
+     * @throws IOException if the command fails
      */
     public int listActive(String wildmat) throws IOException {
         StringBuilder command = new StringBuilder("ACTIVE ");

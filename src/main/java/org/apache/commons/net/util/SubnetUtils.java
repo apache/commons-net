@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 /**
  * A class that performs some subnet calculations given a network address and a subnet mask.
  * @see "http://www.faqs.org/rfcs/rfc1519.html"
- * @author <rwinston@apache.org>
+ * @author rwinston@apache.org
  * @since 2.0
  */
 public class SubnetUtils {
@@ -66,8 +66,9 @@ public class SubnetUtils {
 
     /**
      * Returns <code>true</code> if the return value of {@link SubnetInfo#getAddressCount()}
-     * includes the network address and broadcast addresses.
+     * includes the network and broadcast addresses.
      * @since 2.2
+     * @return true if the hostcount includes the network and broadcast addresses
      */
     public boolean isInclusiveHostCount() {
         return inclusiveHostCount;
@@ -76,7 +77,7 @@ public class SubnetUtils {
     /**
      * Set to <code>true</code> if you want the return value of {@link SubnetInfo#getAddressCount()}
      * to include the network and broadcast addresses.
-     * @param inclusiveHostCount
+     * @param inclusiveHostCount true if network and broadcast addresses are to be included
      * @since 2.2
      */
     public void setInclusiveHostCount(boolean inclusiveHostCount) {

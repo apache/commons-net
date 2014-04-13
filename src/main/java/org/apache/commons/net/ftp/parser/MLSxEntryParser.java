@@ -38,7 +38,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
  *                    "Type" / "Unique" / "Perm" /
  *                    "Lang" / "Media-Type" / "CharSet" /
  * os-depend-fact / local-fact
- * os-depend-fact   = <IANA assigned OS name> "." token
+ * os-depend-fact   = {IANA assigned OS name} "." token
  * local-fact       = "X." token
  * value            = *SCHAR
  *

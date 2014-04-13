@@ -19,7 +19,7 @@ package org.apache.commons.net.nntp;
 
 /**
  * A placeholder interface for threadable message objects
- * Author: Rory Winston <rwinston@checkfree.com>
+ * Author: Rory Winston (rwinston@checkfree.com)
  *
  */
 public interface Threadable {
