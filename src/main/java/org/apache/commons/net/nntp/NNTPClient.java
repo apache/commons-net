@@ -77,8 +77,7 @@ import org.apache.commons.net.io.Util;
  * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite
  * attempts to be as lenient as possible.
- * <p>
- * <p>
+ *
  * @author Rory Winston
  * @author Ted Wise
  * @see NNTP
@@ -847,7 +846,9 @@ public class NNTPClient extends NNTP
         return true;
     }
 
-    /**** Same as <code> selectArticle(articleId, (ArticleInfo) null) </code> ***/
+    /**
+     * Same as <code> selectArticle(articleId, (ArticleInfo) null) </code> 
+     */
     public boolean selectArticle(String articleId) throws IOException
     {
         return selectArticle(articleId, (ArticleInfo) null);
@@ -1715,86 +1716,111 @@ public class NNTPClient extends NNTP
     }
 
     /**
+     * @param articleId The unique article identifier of the article to retrieve 
+     * @param pointer A parameter through which to return the article's number and unique id
      * @deprecated 3.0 use {@link #retrieveArticle(String, ArticleInfo)} instead
      * @return A DotTerminatedMessageReader instance from which the article can be read. 
      * null if the article does not exist.
+     * @throws IOException on error
      */
     @Deprecated
-    public Reader retrieveArticle(String a, ArticlePointer ap) throws IOException {
-        ArticleInfo ai =  __ap2ai(ap);
-        Reader rdr = retrieveArticle(a, ai);
-        __ai2ap(ai, ap);
+    public Reader retrieveArticle(String articleId, ArticlePointer pointer) throws IOException {
+        ArticleInfo ai =  __ap2ai(pointer);
+        Reader rdr = retrieveArticle(articleId, ai);
+        __ai2ap(ai, pointer);
         return rdr;
     }
 
     /**
+     * @param articleId The unique article identifier of the article to retrieve 
+     * @param pointer A parameter through which to return the article's number and unique id
      * @return A DotTerminatedMessageReader instance from which the article
      *         body can be read.  null if the article does not exist.
+     * @throws IOException on error
      * @deprecated 3.0 use {@link #retrieveArticleBody(String, ArticleInfo)} instead
      */
     @Deprecated
-    public Reader retrieveArticleBody(String a, ArticlePointer ap) throws IOException {
-        ArticleInfo ai =  __ap2ai(ap);
-        Reader rdr = retrieveArticleBody(a, ai);
-        __ai2ap(ai, ap);
+    public Reader retrieveArticleBody(String articleId, ArticlePointer pointer) throws IOException {
+        ArticleInfo ai =  __ap2ai(pointer);
+        Reader rdr = retrieveArticleBody(articleId, ai);
+        __ai2ap(ai, pointer);
         return rdr;
     }
 
     /**
+     * @param articleId The unique article identifier of the article to retrieve 
+     * @param pointer A parameter through which to return the article's number and unique id
+     * @return A DotTerminatedMessageReader instance from which the article
+     *         body can be read.  null if the article does not exist.
+     * @throws IOException on error
      * @deprecated 3.0 use {@link #retrieveArticleHeader(String, ArticleInfo)} instead
      */
     @Deprecated
-    public Reader retrieveArticleHeader(String a, ArticlePointer ap) throws IOException {
-        ArticleInfo ai =  __ap2ai(ap);
-        Reader rdr = retrieveArticleHeader(a, ai);
-        __ai2ap(ai, ap);
+    public Reader retrieveArticleHeader(String articleId, ArticlePointer pointer) throws IOException {
+        ArticleInfo ai =  __ap2ai(pointer);
+        Reader rdr = retrieveArticleHeader(articleId, ai);
+        __ai2ap(ai, pointer);
         return rdr;
     }
 
     /**
+     * @param articleId The unique article identifier of the article to retrieve 
+     * @param pointer A parameter through which to return the article's number and unique id
+     * @return A DotTerminatedMessageReader instance from which the article
+     *         body can be read.  null if the article does not exist.
+     * @throws IOException on error
      * @deprecated 3.0 use {@link #selectArticle(String, ArticleInfo)} instead
      */
     @Deprecated
-    public boolean selectArticle(String a, ArticlePointer ap) throws IOException {
-        ArticleInfo ai =  __ap2ai(ap);
-        boolean b = selectArticle(a, ai);
-        __ai2ap(ai, ap);
+    public boolean selectArticle(String articleId, ArticlePointer pointer) throws IOException {
+        ArticleInfo ai =  __ap2ai(pointer);
+        boolean b = selectArticle(articleId, ai);
+        __ai2ap(ai, pointer);
         return b;
 
     }
 
     /**
+     * @param pointer A parameter through which to return the article's number and unique id
+     * @return True if successful, false if not.
+     * @throws IOException on error
      * @deprecated 3.0 use {@link #selectArticle(ArticleInfo)} instead
      */
     @Deprecated
-    public boolean selectArticle(ArticlePointer ap) throws IOException {
-        ArticleInfo ai =  __ap2ai(ap);
+    public boolean selectArticle(ArticlePointer pointer) throws IOException {
+        ArticleInfo ai =  __ap2ai(pointer);
         boolean b = selectArticle(ai);
-        __ai2ap(ai, ap);
+        __ai2ap(ai, pointer);
         return b;
 
     }
 
     /**
+     * @param pointer A parameter through which to return the article's number and unique id
+     * @return True if successful, false if not.
+     * @throws IOException on error
      * @deprecated 3.0 use {@link #selectNextArticle(ArticleInfo)} instead
      */
     @Deprecated
-    public boolean selectNextArticle(ArticlePointer ap) throws IOException {
-        ArticleInfo ai =  __ap2ai(ap);
+    public boolean selectNextArticle(ArticlePointer pointer) throws IOException {
+        ArticleInfo ai =  __ap2ai(pointer);
         boolean b = selectNextArticle(ai);
-        __ai2ap(ai, ap);
+        __ai2ap(ai, pointer);
         return b;
 
     }
 
     /**
+     * @param pointer A parameter through which to return the article's number and unique id
+     * @return True if successful, false if not.
+     * @throws IOException on error
      * @deprecated 3.0 use {@link #selectPreviousArticle(ArticleInfo)} instead
      */
     @Deprecated
-    public boolean selectPreviousArticle(ArticlePointer ap) throws IOException {
-        ArticleInfo ai =  __ap2ai(ap);
+    public boolean selectPreviousArticle(ArticlePointer pointer) throws IOException {
+        ArticleInfo ai =  __ap2ai(pointer);
         boolean b = selectPreviousArticle(ai);
-        __ai2ap(ai, ap);
+        __ai2ap(ai, pointer);
         return b;
     }
 

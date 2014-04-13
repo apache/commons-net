@@ -40,8 +40,7 @@ package org.apache.commons.net.nntp;
  * if(!client.completePendingCommand()) // failure
  *   return false;
  * </pre>
- * <p>
- * <p>
+ *
  * @see NNTPClient
  ***/
 

@@ -27,8 +27,7 @@ import java.io.IOException;
  * failed NNTP command.  This exception is derived from IOException and
  * therefore may be caught either as an IOException or specifically as an
  * NNTPConnectionClosedException.
- * <p>
- * <p>
+ *
  * @see NNTP
  * @see NNTPClient
  ***/
