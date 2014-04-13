@@ -21,7 +21,6 @@ import java.io.Reader;
 
 /**
  * @author <a href="mailto:commons-dev@apache.org">[Net]</a>
- * @version $Id$
  *
  * The POP3* tests all presume the existence of the following parameters:
  *   mailserver: localhost (running on the default port 110)
@@ -44,15 +43,12 @@ public class POP3ConstructorTest extends TestCase
     String password = POP3Constants.password;
     String mailhost = POP3Constants.mailhost;
 
-    /**
-     *
-     */
     public POP3ConstructorTest(String name)
     {
         super(name);
     }
 
-    /**
+    /*
      * This test will ensure that the constants are not inadvertently changed.
      * If the constants are changed in org.apache.commons.net.pop3 for some
      * reason, this test will have to be updated.
@@ -81,10 +77,6 @@ public class POP3ConstructorTest extends TestCase
         assertEquals(11, POP3Command.UIDL);
     }
 
-    /**
-     * Test the default constructor
-     *
-     */
     public void testPOP3DefaultConstructor()
     {
         POP3 pop = new POP3();
@@ -95,10 +87,6 @@ public class POP3ConstructorTest extends TestCase
         assertNotNull(pop._replyLines);
     }
 
-    /*
-     * Test the default constructor
-     *
-     */
     public void testPOP3ClientStateTransition() throws Exception
     {
         POP3Client pop = new POP3Client();

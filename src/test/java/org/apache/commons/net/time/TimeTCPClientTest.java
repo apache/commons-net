@@ -29,9 +29,6 @@ public class TimeTCPClientTest extends TestCase
 
     private int _port = 3333; // default test port
 
-    /***
-     * open connections needed for the tests for the test.
-     ***/
     protected void openConnections() throws Exception
     {
         try {
@@ -47,7 +44,7 @@ public class TimeTCPClientTest extends TestCase
         server1.start();
     }
 
-    /***
+    /*
      *  tests the constant basetime used by TimeClient against tha
      *  computed from Calendar class.
      */
@@ -115,9 +112,6 @@ public class TimeTCPClientTest extends TestCase
         assertTrue(Math.abs(time2 - clientTime2) < 5000);
     }
 
-    /***
-     * closes all the connections
-     ***/
     protected void closeConnections()
     {
         try

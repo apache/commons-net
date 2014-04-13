@@ -16,16 +16,8 @@
  */
 package org.apache.commons.net.telnet;
 
-/***
- * JUnit test class for TerminalTypeOptionHandler
- * <p>
- * @author Bruno D'Avanzo
- ***/
 public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstract
 {
-    /***
-     * setUp for the test.
-     ***/
     @Override
     protected void setUp()
     {
@@ -34,9 +26,6 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
         opthand3 = new TerminalTypeOptionHandler("ANSI", false, false, false, false);
     }
 
-    /***
-     * test of the constructors.
-     ***/
     @Override
     public void testConstructors()
     {
@@ -44,10 +33,10 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
         super.testConstructors();
     }
 
-    /***
+    /*
      * test of client-driven subnegotiation.
      * Checks that no subnegotiation is made.
-     ***/
+     */
     @Override
     public void testStartSubnegotiation()
     {
@@ -60,10 +49,10 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
     }
 
 
-    /***
+    /*
      * test of client-driven subnegotiation.
      * Checks that the terminal type is sent
-     ***/
+     */
     @Override
     public void testAnswerSubnegotiation()
     {
@@ -90,9 +79,9 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
     }
 
 
-    /***
+    /*
      * compares two arrays of int
-     ***/
+     */
     protected boolean equalInts(int a1[], int a2[])
     {
         if(a1.length != a2.length)

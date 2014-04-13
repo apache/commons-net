@@ -33,9 +33,6 @@ public class TestNtpClient {
 
     private static SimpleNTPServer server;
 
-    /**
-     * Start NTP server needed for the tests
-     */
     @BeforeClass
     public static void oneTimeSetUp() throws IOException
     {

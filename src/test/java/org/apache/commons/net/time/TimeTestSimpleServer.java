@@ -51,18 +51,11 @@ public class TimeTestSimpleServer implements Runnable
     private final int port;
     private boolean running = false;
 
-    /**
-     * Default constructor for TimetSimpleServer.
-     * Initializes port to defaul time port.
-     */
     public TimeTestSimpleServer()
     {
         port = DEFAULT_PORT;
     }
 
-    /**
-     * Constructor for TimetSimpleServer given a specific port.
-     */
     public TimeTestSimpleServer(int port)
     {
         this.port = port;
@@ -86,9 +79,8 @@ public class TimeTestSimpleServer implements Runnable
         return running;
     }
 
-    /**
+    /*
      * Start time service and provide time to client connections.
-     * @throws IOException
      */
     public void start() throws IOException
     {
@@ -134,7 +126,7 @@ public class TimeTestSimpleServer implements Runnable
         }
     }
 
-    /**
+    /*
      * Close server socket.
      */
     public void stop()

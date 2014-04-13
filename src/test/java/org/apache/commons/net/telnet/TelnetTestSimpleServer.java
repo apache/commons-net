@@ -34,11 +34,12 @@ public class TelnetTestSimpleServer implements Runnable
     Socket clientSocket = null;
     Thread listener = null;
 
-    /***
+    /*
      * test of client-driven subnegotiation.
      * <p>
      * @param port - server port on which to listen.
-     ***/
+     * @throws IOException on error
+     */
     public TelnetTestSimpleServer(int port) throws IOException
     {
         serverSocket = new ServerSocket(port);
@@ -48,9 +49,6 @@ public class TelnetTestSimpleServer implements Runnable
         listener.start();
     }
 
-    /***
-     * Run for the thread. Waits for new connections
-     ***/
 //    @Override
     public void run()
     {
@@ -97,9 +95,6 @@ public class TelnetTestSimpleServer implements Runnable
     }
 
 
-    /***
-     * Disconnects the client socket
-     ***/
     public void disconnect()
     {
         if (clientSocket == null) {
@@ -118,9 +113,6 @@ public class TelnetTestSimpleServer implements Runnable
         }
     }
 
-    /***
-     * Stop the listener thread
-     ***/
     public void stop()
     {
         listener.interrupt();
@@ -134,9 +126,6 @@ public class TelnetTestSimpleServer implements Runnable
         }
     }
 
-    /***
-     * Gets the input stream for the client socket
-     ***/
     public InputStream getInputStream() throws IOException
     {
         if(clientSocket != null)
@@ -149,9 +138,6 @@ public class TelnetTestSimpleServer implements Runnable
         }
     }
 
-    /***
-     * Gets the output stream for the client socket
-     ***/
     public OutputStream getOutputStream() throws IOException
     {
         if(clientSocket != null)
