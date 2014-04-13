@@ -23,8 +23,6 @@ import java.io.IOException;
 import java.io.Reader;
 
 /**
- * @author <a href="mailto:commons-dev@apache.org">[Net]</a>
- * @version $Id$
  *
  * The POP3* tests all presume the existence of the following parameters:
  *   mailserver: localhost (running on the default port 110)
@@ -49,9 +47,6 @@ public class POP3ClientCommandsTest extends TestCase
     String password = POP3Constants.password;
     String mailhost = POP3Constants.mailhost;
 
-    /**
-     *
-     */
     public POP3ClientCommandsTest(String name)
     {
         super(name);
@@ -85,10 +80,6 @@ public class POP3ClientCommandsTest extends TestCase
         assertEquals(POP3.TRANSACTION_STATE, p.getState());
     }
 
-    /**
-     *
-     *
-     */
     public void testNoopCommand() throws Exception
     {
         reset();
@@ -106,10 +97,6 @@ public class POP3ClientCommandsTest extends TestCase
         assertFalse(p.noop());
     }
 
-    /**
-     *
-     *
-     */
     public void testStatus() throws Exception
     {
         reset();
@@ -144,10 +131,6 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(p.status());
     }
 
-    /**
-     *
-     *
-     */
     public void testListMessagesOnFullMailbox() throws Exception
     {
         reset();
@@ -171,10 +154,6 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(msg);
     }
 
-    /**
-     *
-     *
-     */
     public void testListMessageOnFullMailbox() throws Exception
     {
         reset();
@@ -206,10 +185,6 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(msg);
     }
 
-    /**
-     *
-     *
-     */
     public void testListMessagesOnEmptyMailbox() throws Exception
     {
         reset();
@@ -225,10 +200,6 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(msg);
     }
 
-    /**
-     *
-     *
-     */
     public void testListMessageOnEmptyMailbox() throws Exception
     {
         reset();
@@ -240,10 +211,6 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(msg);
     }
 
-    /**
-     *
-     *
-     */
     public void testListUniqueIDsOnFullMailbox() throws Exception
     {
         reset();
@@ -266,10 +233,6 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(msg);
     }
 
-    /**
-     *
-     *
-     */
     public void testListUniqueIDOnFullMailbox() throws Exception
     {
         reset();
@@ -300,10 +263,6 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(msg);
     }
 
-    /**
-     *
-     *
-     */
     public void testListUniqueIDsOnEmptyMailbox() throws Exception
     {
         reset();
@@ -319,10 +278,6 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(msg);
     }
 
-    /**
-     *
-     *
-     */
     public void testListUniqueIdentifierOnEmptyMailbox() throws Exception
     {
         reset();
@@ -334,10 +289,6 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(msg);
     }
 
-    /**
-     *
-     *
-     */
     public void testRetrieveMessageOnFullMailbox() throws Exception
     {
         reset();
@@ -382,10 +333,6 @@ public class POP3ClientCommandsTest extends TestCase
         }
     }
 
-    /**
-     *
-     *
-     */
     public void testRetrieveMessageOnEmptyMailbox() throws Exception
     {
         reset();
@@ -394,10 +341,6 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(p.retrieveMessage(1));
     }
 
-    /**
-     *
-     *
-     */
     public void testRetrieveMessageShouldFails() throws Exception
     {
         reset();
@@ -418,10 +361,6 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(p.retrieveMessage(1));
     }
 
-    /**
-     *
-     *
-     */
     public void testRetrieveMessageTopOnFullMailbox() throws Exception
     {
         reset();
@@ -441,10 +380,6 @@ public class POP3ClientCommandsTest extends TestCase
         }
     }
 
-    /**
-     *
-     *
-     */
     public void testRetrieveOverSizedMessageTopOnFullMailbox() throws Exception
     {
         reset();
@@ -486,10 +421,6 @@ public class POP3ClientCommandsTest extends TestCase
         assertTrue(actualSize >= reportedSize);
     }
 
-    /**
-     *
-     *
-     */
     public void testRetrieveMessageTopOnEmptyMailbox() throws Exception
     {
         reset();
@@ -498,10 +429,6 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(p.retrieveMessageTop(1, 10));
     }
 
-    /**
-     *
-     *
-     */
     public void testRetrieveMessageTopShouldFails() throws Exception
     {
         reset();
