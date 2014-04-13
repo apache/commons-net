@@ -495,7 +495,7 @@ public abstract class SocketClient
      * Sets the underlying socket receive buffer size.
      * <p>
      * @param size The size of the buffer in bytes.
-     * @throws SocketException
+     * @throws SocketException never (but subclasses may wish to do so)
      * @since 2.0
      */
     public void setReceiveBufferSize(int size) throws SocketException  {
