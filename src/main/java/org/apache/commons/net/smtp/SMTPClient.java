@@ -113,8 +113,7 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite
  * attempts to be as lenient as possible.
- * <p>
- * <p>
+ *
  * @see SMTP
  * @see SimpleSMTPHeader
  * @see RelayPath

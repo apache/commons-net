@@ -25,8 +25,7 @@ import java.util.Vector;
  * SMTP MAIL command requires a reverse relay path while the SMTP RCPT
  * command requires a forward relay path.  See RFC 821 for more details.
  * In general, you will not have to deal with relay paths.
- * <p>
- * <p>
+ *
  * @see SMTPClient
  ***/
 

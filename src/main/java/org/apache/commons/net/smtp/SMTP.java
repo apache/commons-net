@@ -75,8 +75,7 @@ import org.apache.commons.net.io.CRLFLineReader;
  * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite
  * attempts to be as lenient as possible.
- * <p>
- * <p>
+ *
  * @see SMTPClient
  * @see SMTPConnectionClosedException
  * @see org.apache.commons.net.MalformedServerReplyException
@@ -125,7 +124,7 @@ public class SMTP extends SocketClient
 
     /**
      * Overloaded constructor where the user may specify a default encoding.
-     * @param encoding
+     * @param encoding the encoing to use
      * @since 2.0
      */
     public SMTP(String encoding) {

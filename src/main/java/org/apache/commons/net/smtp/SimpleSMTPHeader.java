@@ -41,8 +41,7 @@ package org.apache.commons.net.smtp;
  * if(!client.completePendingCommand()) // failure
  *   return false;
  * </pre>
- * <p>
- * <p>
+ *
  * @see SMTPClient
  ***/
 
