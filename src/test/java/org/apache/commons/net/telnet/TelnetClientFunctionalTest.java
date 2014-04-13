@@ -40,7 +40,7 @@ public class TelnetClientFunctionalTest extends TestCase
         tc1 = new TelnetClient();
     }
 
-    /***
+    /*
      * Do the functional test:
      * - connect to the weather service
      * - press return on the first menu
@@ -81,12 +81,14 @@ public class TelnetClientFunctionalTest extends TestCase
         }
 
         assertTrue(testresult);
+        os.close();
+        is.close();
     }
 
 
-    /***
+    /*
      * Helper method. waits for a string with timeout
-     ***/
+     */
     public boolean waitForString(InputStream is, String end, long timeout) throws Exception
     {
         byte buffer[] = new byte[32];
