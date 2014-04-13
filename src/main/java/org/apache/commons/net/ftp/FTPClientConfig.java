@@ -67,7 +67,6 @@ import java.util.TreeMap;
  *    f.login(username, password);
  *    FTPFile[] files = listFiles(directory);
  * </pre>
- * </p>
  * <p>
  * Paged access on a UNIX server that uses Danish month names
  * and "European" date formatting in Denmark's time zone, when you
@@ -91,7 +90,6 @@ import java.util.TreeMap;
  *       //expensive FTPFile objects not created until needed.
  *    }
  * </pre>
- * </p>
  * <p>
  * Unpaged (whole list) access on a VMS server that uses month names
  * in a language not {@link #getSupportedLanguageCodes() supported} by the system.
@@ -106,7 +104,6 @@ import java.util.TreeMap;
  *    f.login(username, password);
  *    FTPFile[] files = listFiles(directory);
  * </pre>
- * </p>
  * <p>
  * Unpaged (whole list) access on a Windows-NT server in a different time zone.
  * (Note, since the NT Format uses numeric date formatting, language issues
@@ -120,7 +117,6 @@ import java.util.TreeMap;
  *    f.login(username, password);
  *    FTPFile[] files = listFiles(directory);
  * </pre>
- * </p>
  * Unpaged (whole list) access on a Windows-NT server in a different time zone
  * but which has been configured to use a unix-style listing format.
  * <pre>

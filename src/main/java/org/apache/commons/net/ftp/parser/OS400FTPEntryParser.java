@@ -89,7 +89,7 @@ import org.apache.commons.net.ftp.FTPFile;
  *           systemTypeKey="OS/400"
  *           listing="ftp-listing.txt"
  *           &gt;
- *          &lt;fileset dir="./i5-downloads-file" casesensitive="false">
+ *          &lt;fileset dir="./i5-downloads-file" casesensitive="false"&gt;
  *              &lt;include name="run*.mbr" /&gt;
  *          &lt;/fileset&gt;
  *      &lt;/ftp&gt;
@@ -122,7 +122,7 @@ import org.apache.commons.net.ftp.FTPFile;
  *           listing="ftp-listing.txt"
  *           &gt;
  *          &lt;fileset dir="./i5-downloads-lib" casesensitive="false"&gt;
- *              &lt;include name="**\run*.mbr" />
+ *              &lt;include name="**\run*.mbr" /&gt;
  *          &lt;/fileset&gt;
  *      &lt;/ftp&gt;
  *
@@ -143,8 +143,8 @@ import org.apache.commons.net.ftp.FTPFile;
  * Example 3, using ANT to download specific members of a file:
  * ------------------------------------------------------------
  *
- *      &lt;echo/>
- *      &lt;echo>Downloading members of a file:</echo>
+ *      &lt;echo/&gt;
+ *      &lt;echo&gt;Downloading members of a file:&lt;/echo&gt;
  *
  *      &lt;ftp action="get"
  *           server="${ftp.server}"
@@ -154,11 +154,11 @@ import org.apache.commons.net.ftp.FTPFile;
  *           verbose="true"
  *           remotedir="/QSYS.LIB/RPGUNIT.LIB/RPGUNITY1.FILE"
  *           systemTypeKey="OS/400"
- *           >
- *          &lt;fileset dir="./i5-downloads-file" casesensitive="false">
- *              &lt;include name="run*.mbr" />
- *          &lt;/fileset>
- *      &lt;/ftp>
+ *           &gt;
+ *          &lt;fileset dir="./i5-downloads-file" casesensitive="false"&gt;
+ *              &lt;include name="run*.mbr" /&gt;
+ *          &lt;/fileset&gt;
+ *      &lt;/ftp&gt;
  *
  * Output:
  * -------
@@ -174,8 +174,8 @@ import org.apache.commons.net.ftp.FTPFile;
  * Example 4, using ANT to download specific members of all files of a library:
  * ----------------------------------------------------------------------------
  *
- *      &lt;echo/>
- *      &lt;echo>Downloading members of all files of a library:</echo>
+ *      &lt;echo/&gt;
+ *      &lt;echo&gt;Downloading members of all files of a library:&lt;/echo&gt;
  *
  *      &lt;ftp action="get"
  *           server="${ftp.server}"
@@ -185,11 +185,11 @@ import org.apache.commons.net.ftp.FTPFile;
  *           verbose="true"
  *           remotedir="/QSYS.LIB/RPGUNIT.LIB"
  *           systemTypeKey="OS/400"
- *           >
- *          &lt;fileset dir="./i5-downloads-lib" casesensitive="false">
- *              &lt;include name="**\run*.mbr" />
- *          &lt;/fileset>
- *      &lt;/ftp>
+ *           &gt;
+ *          &lt;fileset dir="./i5-downloads-lib" casesensitive="false"&gt;
+ *              &lt;include name="**\run*.mbr" /&gt;
+ *          &lt;/fileset&gt;
+ *      &lt;/ftp&gt;
  *
  * Output:
  * -------
@@ -216,11 +216,11 @@ import org.apache.commons.net.ftp.FTPFile;
  *           verbose="true"
  *           remotedir="/QSYS.LIB/RPGUNIT.LIB"
  *           systemTypeKey="OS/400"
- *           >
- *        &lt;fileset dir="./i5-downloads-savf" casesensitive="false">
- *            &lt;include name="RPGUNIT.SAVF" />
- *        &lt;/fileset>
- *      &lt;/ftp>
+ *           &gt;
+ *        &lt;fileset dir="./i5-downloads-savf" casesensitive="false"&gt;
+ *            &lt;include name="RPGUNIT.SAVF" /&gt;
+ *        &lt;/fileset&gt;
+ *      &lt;/ftp&gt;
  *
  * Output:
  * -------

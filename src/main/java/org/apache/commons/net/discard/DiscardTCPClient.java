@@ -31,7 +31,7 @@ import org.apache.commons.net.SocketClient;
  * when you're done writing to it.  Rather, call
  * {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
  * to clean up properly.
- * <p>
+ *
  * @see DiscardUDPClient
  ***/
 

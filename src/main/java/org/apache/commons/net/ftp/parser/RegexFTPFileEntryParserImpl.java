@@ -32,7 +32,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
  *
  * This is the base class for all regular expression based FTPFileEntryParser classes
  *
- * @author Steve Cohen <scohen@apache.org>
+ * @author Steve Cohen (scohen@apache.org)
  */
 public abstract class RegexFTPFileEntryParserImpl extends
         FTPFileEntryParserImpl {
