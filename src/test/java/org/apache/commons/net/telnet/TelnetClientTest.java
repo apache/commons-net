@@ -23,12 +23,12 @@ import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
-/***
+/**
  * JUnit test class for TelnetClient.s
  * Implements protocol compliance tests
  * <p>
  * @author Bruno D'Avanzo
- ***/
+ */
 public class TelnetClientTest
 extends TestCase implements TelnetNotificationHandler
 {
@@ -70,9 +70,9 @@ extends TestCase implements TelnetNotificationHandler
     protected int numwill = 0;
     protected int numwont = 0;
 
-    /***
+    /*
      * open connections needed for the tests for the test.
-     ***/
+     */
     @Override
     protected void setUp() throws Exception
     {
@@ -166,9 +166,9 @@ extends TestCase implements TelnetNotificationHandler
 
     }
 
-    /***
+    /*
      * tests the initial condition of the sessions
-     ***/
+     */
     public void testInitial() throws Exception
     {
         boolean connect1_ok = false;
@@ -248,9 +248,9 @@ extends TestCase implements TelnetNotificationHandler
         assertTrue(add_invalid_ok2);
     }
 
-    /***
+    /*
      * protocol compliance test for option negotiation
-     ***/
+     */
     public void testOptionNegotiation() throws Exception
     {
         boolean negotiation1_ok = false;
@@ -431,9 +431,9 @@ extends TestCase implements TelnetNotificationHandler
     }
 
 
-    /***
+    /*
      * protocol compliance test for option renegotiation
-     ***/
+     */
     public void testOptionRenegotiation() throws Exception
     {
         boolean negotiation1_ok = false;
@@ -504,9 +504,9 @@ extends TestCase implements TelnetNotificationHandler
         assertTrue(!OPTIONS.client.getLocalOptionState(TelnetOption.ECHO));
     }
 
-    /***
+    /*
      * test of option negotiation notification
-     ***/
+     */
     public void testNotification() throws Exception
     {
         byte buffread1[] = new byte[6];
@@ -574,9 +574,9 @@ extends TestCase implements TelnetNotificationHandler
     }
 
 
-    /***
+    /*
      * protocol compliance test in case of option handler removal
-     ***/
+     */
     public void testDeleteOptionHandler() throws Exception
     {
         boolean remove_ok = false;
@@ -649,9 +649,9 @@ extends TestCase implements TelnetNotificationHandler
     }
 
 
-    /***
+    /*
      * test of AYT functionality
-     ***/
+     */
     public void testAYT() throws Exception
     {
         boolean ayt_true_ok = false;
@@ -692,9 +692,9 @@ extends TestCase implements TelnetNotificationHandler
         assertTrue(ayt_false_ok);
     }
 
-    /***
+    /*
      * test of Spy functionality
-     ***/
+     */
     public void testSpy() throws Exception
     {
         boolean test1spy_ok = false;
@@ -759,9 +759,9 @@ extends TestCase implements TelnetNotificationHandler
         pi.close();
     }
 
-    /***
+    /*
      * test of setReaderThread
-     ***/
+     */
     public void testSetReaderThread() throws Exception
     {
         boolean negotiation1_ok = false;
@@ -847,9 +847,9 @@ extends TestCase implements TelnetNotificationHandler
     }
 
 
-    /***
+    /*
      * Helper method. compares two arrays of int
-     ***/
+     */
     protected boolean equalBytes(byte a1[], byte a2[])
     {
         if(a1.length != a2.length)
@@ -870,7 +870,7 @@ extends TestCase implements TelnetNotificationHandler
         }
     }
 
-    /***
+    /*
      * Callback method called when TelnetClient receives an option
      * negotiation command.
      * <p>
@@ -879,7 +879,7 @@ extends TestCase implements TelnetNotificationHandler
      * <p>
      * @param option_code - code of the option negotiated
      * <p>
-     ***/
+     */
 //    @Override
     public void receivedNegotiation(int negotiation_code, int option_code)
     {

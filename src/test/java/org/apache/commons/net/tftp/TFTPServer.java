@@ -203,6 +203,7 @@ public class TFTPServer implements Runnable
 
     /**
      * The current socket timeout used during transfers in milliseconds.
+     * @return the timeout value
      */
     public int getSocketTimeout()
     {

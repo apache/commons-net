@@ -95,7 +95,7 @@ public class POP3ConstructorTest extends TestCase
         assertNotNull(pop._replyLines);
     }
 
-    /**
+    /*
      * Test the default constructor
      *
      */

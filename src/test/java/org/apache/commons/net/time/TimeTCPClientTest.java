@@ -61,9 +61,9 @@ public class TimeTCPClientTest extends TestCase
         assertEquals(baseTime, -TimeTCPClient.SECONDS_1900_TO_1970);
     }
 
-    /***
+    /*
      * tests the times retrieved via the Time protocol implementation.
-     ***/
+     */
     public void testCompareTimes() throws Exception
     {
         openConnections();
