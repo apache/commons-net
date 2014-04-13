@@ -52,35 +52,23 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
             }
     };
 
-    /**
-     * @see junit.framework.TestCase#TestCase(String)
-     */
     public OS400FTPEntryParserAdditionalTest(String name)
     {
         super(name);
     }
 
-    /**
-     * @see FTPParseTestFramework#getBadListing()
-     */
     @Override
     protected String[][] getBadListings()
     {
         return badsamples;
     }
 
-    /**
-     * @see FTPParseTestFramework#getGoodListing()
-     */
     @Override
     protected String[][] getGoodListings()
     {
         return goodsamples;
     }
 
-    /**
-     * @see FTPParseTestFramework#getParser()
-     */
     @Override
     protected FTPFileEntryParser getParser()
     {
@@ -91,9 +79,6 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
         });
     }
 
-    /**
-     * @see FTPParseTestFramework#testParseFieldsOnDirectory()
-     */
     @Override
     public void testParseFieldsOnDirectory() throws Exception
     {
@@ -132,9 +117,6 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
         }
     }
 
-    /**
-     * @see FTPParseTestFramework#testParseFieldsOnFile()
-     */
     @Override
     public void testParseFieldsOnFile() throws Exception
     {

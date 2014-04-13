@@ -21,7 +21,6 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @version $Id$
  */
 public class OS2FTPEntryParserTest extends FTPParseTestFramework
 {
@@ -53,17 +52,11 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
         "     0           DIR   05-19-2000 12:56  local",
     };
 
-    /**
-     * @see junit.framework.TestCase#TestCase(String)
-     */
     public OS2FTPEntryParserTest(String name)
     {
         super(name);
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
-     */
     @Override
     public void testParseFieldsOnDirectory() throws Exception
     {
@@ -77,9 +70,6 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
                      df.format(dir.getTimestamp().getTime()));
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
-     */
     @Override
     public void testParseFieldsOnFile() throws Exception
     {
@@ -93,9 +83,6 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
                      df.format(file.getTimestamp().getTime()));
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getBadListing()
-     */
     @Override
     protected String[] getBadListing()
     {
@@ -103,9 +90,6 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
         return (badsamples);
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getGoodListing()
-     */
     @Override
     protected String[] getGoodListing()
     {
@@ -113,9 +97,6 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
         return (goodsamples);
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
-     */
     @Override
     protected FTPFileEntryParser getParser()
     {

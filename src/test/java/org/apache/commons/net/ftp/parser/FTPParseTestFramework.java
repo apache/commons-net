@@ -39,11 +39,6 @@ public abstract class FTPParseTestFramework extends TestCase
         super(name);
     }
 
-    /**
-     * Method testBadListing.
-     * Tests that parser provided failures actually fail.
-     * @throws Exception
-     */
     public void testBadListing() throws Exception
     {
 
@@ -59,11 +54,6 @@ public abstract class FTPParseTestFramework extends TestCase
         }
     }
 
-    /**
-     * Method testGoodListing.
-     * Test that parser provided listings pass.
-     * @throws Exception
-     */
     public void testGoodListing() throws Exception
     {
 
@@ -72,8 +62,7 @@ public abstract class FTPParseTestFramework extends TestCase
         {
 
             FTPFile f = parser.parseFTPEntry(test);
-            assertNotNull("Failed to parse " + test,
-                          f);
+            assertNotNull("Failed to parse " + test, f);
 
             doAdditionalGoodTests(test, f);
         }
@@ -134,9 +123,6 @@ public abstract class FTPParseTestFramework extends TestCase
      */
     public abstract void testParseFieldsOnFile() throws Exception;
 
-    /**
-     * @see junit.framework.TestCase#setUp()
-     */
     @Override
     protected void setUp() throws Exception
     {

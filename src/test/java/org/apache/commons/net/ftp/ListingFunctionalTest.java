@@ -106,11 +106,6 @@ public class ListingFunctionalTest extends TestCase
     private final String validPath;
     private final String pwdPath;
 
-    /**
-     * Constructor for FTPClientTest.
-     *
-     * @param arg0
-     */
     public ListingFunctionalTest(String arg0,
                                  String[] settings)
     {
@@ -124,12 +119,6 @@ public class ListingFunctionalTest extends TestCase
         hostName = settings[HOSTNAME];
     }
 
-    /**
-     * @param fileList
-     * @param string
-     *
-     * @return
-     */
     private boolean findByName(List<?> fileList,
                                String string)
     {

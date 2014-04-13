@@ -23,13 +23,10 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
- * Changed on August 31, 2006<br/>
  * Test suite addapted to new MVSFTPEntryParser.java.
  * @author <a href="mailto:henrik.sorensen@balcab.ch">Henrik Sorensen</a>
  *
- * Created on Apr 6, 2005<br/>
  * @author <a href="mailto:wnoto@openfinance.com">William Noto</a>
- * @version $Id$
  */
 public class MVSFTPEntryParserTest extends FTPParseTestFramework {
 

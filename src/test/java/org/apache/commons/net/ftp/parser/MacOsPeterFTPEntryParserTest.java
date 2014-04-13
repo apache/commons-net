@@ -42,24 +42,15 @@ public class MacOsPeterFTPEntryParserTest extends FTPParseTestFramework {
         "-rwx------        0       12713    12713 Jul  8  2009 Twitter_Avatar.png",
     };
 
-    /**
-     * @see junit.framework.TestCase#TestCase(String)
-     */
     public MacOsPeterFTPEntryParserTest(String name) {
         super(name);
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getBadListing()
-     */
     @Override
     protected String[] getBadListing() {
         return (badsamples);
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getGoodListing()
-     */
     @Override
     protected String[] getGoodListing() {
         return (goodsamples);

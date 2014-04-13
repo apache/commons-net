@@ -25,17 +25,11 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
  */
 public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramework
 {
-    /**
-     * @see junit.framework.TestCase#TestCase(String)
-     */
     public CompositeFTPParseTestFramework(String name)
     {
         super(name);
     }
 
-    /**
-     * @see FTPParseTestFramework#getGoodListing()
-     */
     @Override
     protected String[] getGoodListing()
     {
@@ -60,9 +54,6 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
      */
     protected abstract String[][] getGoodListings();
 
-    /**
-     * @see FTPParseTestFramework#getBadListing()
-     */
     @Override
     protected String[] getBadListing()
     {

@@ -79,31 +79,20 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 
         };
 
-    /**
-     * @see junit.framework.TestCase#TestCase(String)
-     */
     public UnixFTPEntryParserTest(String name) {
         super(name);
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getBadListing()
-     */
     @Override
     protected String[] getBadListing() {
         return (badsamples);
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getGoodListing()
-     */
     @Override
     protected String[] getGoodListing() {
         return (goodsamples);
     }
 
-    /**
-     */
     public void testNumericDateFormat()
     {
         String testNumericDF =
@@ -136,10 +125,6 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 
     }
 
-
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
-     */
     @Override
     protected FTPFileEntryParser getParser() {
         return (new UnixFTPEntryParser());
@@ -231,9 +216,6 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
         assertEquals(f.getGroup(), "group");
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
-     */
     @Override
     public void testParseFieldsOnDirectory() throws Exception {
         FTPFile f = getParser().parseFTPEntry("drwxr-xr-x   2 user     group         4096 Mar  2 15:13 zxbox");
@@ -265,11 +247,6 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
     }
 
 
-    /**
-     * Method checkPermissions.
-     * Verify that the persmissions were properly set.
-     * @param f
-     */
     private void checkPermissions(FTPFile f) {
         assertTrue("Should have user read permission.", f.hasPermission(
                 FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
@@ -291,9 +268,6 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
                 FTPFile.WORLD_ACCESS, FTPFile.EXECUTE_PERMISSION));
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
-     */
     @Override
     public void testParseFieldsOnFile() throws Exception {
         FTPFile f = getParser()
@@ -324,10 +298,6 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
         assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp().getTime()));
     }
 
-    /*
-     * @param test
-     * @param f
-     */
     @Override
     protected void doAdditionalGoodTests(String test, FTPFile f) {
         String link = f.getLink();

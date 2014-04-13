@@ -23,7 +23,6 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * @author <a href="mailto:rwinston@apache.org">Rory Winston</a>
- * @version $Id$
  */
 public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
 
@@ -40,40 +39,25 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
         "d [RWCEAFMS] rwinston                          512 Nov 24  2005 Favorites"
     };
 
-    /**
-     * @see junit.framework.TestCase#TestCase(String)
-     */
     public NetwareFTPEntryParserTest(String name) {
         super(name);
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getBadListing()
-     */
     @Override
     protected String[] getBadListing() {
         return (badsamples);
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getGoodListing()
-     */
     @Override
     protected String[] getGoodListing() {
         return (goodsamples);
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
-     */
     @Override
     protected FTPFileEntryParser getParser() {
         return (new NetwareFTPEntryParser());
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
-     */
     @Override
     public void testParseFieldsOnDirectory() throws Exception {
         String reply = "d [-W---F--] testUser                        512 Apr 13 23:12 testFile";
@@ -100,9 +84,6 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
     }
 
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
-     */
     @Override
     public void testParseFieldsOnFile() throws Exception {
         String reply = "- [R-CEAFMS] rwinston                        19968 Mar 12 15:20 Document name with spaces.doc";

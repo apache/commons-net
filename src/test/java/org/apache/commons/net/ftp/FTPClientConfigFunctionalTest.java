@@ -89,9 +89,7 @@ public class FTPClientConfigFunctionalTest extends TestCase {
         FTP.disconnect();
         super.tearDown();
     }
-    /**
-     * @param arg0
-     */
+
     public FTPClientConfigFunctionalTest(String arg0) {
         super(arg0);
     }

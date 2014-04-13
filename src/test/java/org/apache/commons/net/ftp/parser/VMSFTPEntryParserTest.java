@@ -81,10 +81,6 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         super(name);
     }
 
-    /**
-     * Test the parsing of the whole list.
-     * @throws IOException
-     */
     public void testWholeListParse() throws IOException
     {
         VMSFTPEntryParser parser = new VMSFTPEntryParser();
@@ -101,10 +97,6 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
 
     }
 
-    /**
-     * Test the parsing of the whole list.
-     * @throws IOException
-     */
     public void testWholeListParseWithVersioning() throws IOException
     {
 
@@ -141,9 +133,6 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         }
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
-     */
     @Override
     public void testParseFieldsOnDirectory() throws Exception
     {
@@ -180,9 +169,6 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         checkPermisions(dir, 0705);
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
-     */
     @Override
     public void testParseFieldsOnFile() throws Exception
     {
@@ -218,9 +204,6 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         checkPermisions(file, 0400);
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getBadListing()
-     */
     @Override
     protected String[] getBadListing()
     {
@@ -228,9 +211,6 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         return (badsamples);
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getGoodListing()
-     */
     @Override
     protected String[] getGoodListing()
     {
@@ -238,9 +218,6 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         return (goodsamples);
     }
 
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
-     */
     @Override
     protected FTPFileEntryParser getParser()
     {
@@ -249,6 +226,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         parser.configure(null);
         return parser;
     }
+
     protected FTPFileEntryParser getVersioningParser()
     {
         ConfigurableFTPFileEntryParserImpl parser =
@@ -257,10 +235,8 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         return parser;
     }
 
-    /**
-     * Method checkPermisions.
+    /*
      * Verify that the VMS parser does NOT  set the permissions.
-     * @param dir
      */
     private void checkPermisions(FTPFile dir, int octalPerm)
     {

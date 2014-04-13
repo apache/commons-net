@@ -219,12 +219,10 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         }
     }
 
-    /**
-     * test condition reported as bug 20259 => NET-106.
+    /*
+     * test condition reported as bug 20259 - now NET-106.
      * directory with name beginning with a numeric character
      * was not parsing correctly
-     *
-     * @throws Exception
      */
     public void testDirectoryBeginningWithNumber() throws Exception
     {
@@ -241,7 +239,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         assertEquals("name", "123 abc xyz", f.getName());
     }
 
-    /**
+    /*
      * Test that group names with embedded spaces can be handled correctly
      *
      */
