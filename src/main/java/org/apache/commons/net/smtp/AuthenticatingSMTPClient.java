@@ -40,9 +40,8 @@ public class AuthenticatingSMTPClient extends SMTPSClient
     /**
      * The default AuthenticatingSMTPClient constructor.
      * Creates a new Authenticating SMTP Client.
-     * @throws NoSuchAlgorithmException
      */
-    public AuthenticatingSMTPClient() throws NoSuchAlgorithmException
+    public AuthenticatingSMTPClient()
     {
         super();
     }
@@ -50,9 +49,8 @@ public class AuthenticatingSMTPClient extends SMTPSClient
     /**
      * Overloaded constructor that takes a protocol specification
      * @param protocol The protocol to use
-     * @throws NoSuchAlgorithmException
      */
-    public AuthenticatingSMTPClient(String protocol) throws NoSuchAlgorithmException {
+    public AuthenticatingSMTPClient(String protocol) {
         super(protocol);
     }
 
@@ -94,10 +92,9 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      * Overloaded constructor that takes a protocol specification and encoding
      * @param protocol The protocol to use
      * @param encoding The encoding to use
-     * @throws NoSuchAlgorithmException
      * @since 3.3
      */
-    public AuthenticatingSMTPClient(String protocol, String encoding) throws NoSuchAlgorithmException {
+    public AuthenticatingSMTPClient(String protocol, String encoding) {
         super(protocol, false, encoding);
     }
 
