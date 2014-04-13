@@ -95,7 +95,7 @@ public class NNTPClient extends NNTP
      * @param reply the reply to parse "22n nnn <aaa>"
      * @param pointer the pointer to update
      *
-     * @throws MalformedServerReplyException
+     * @throws MalformedServerReplyException if response could not be parsed
      */
     private void __parseArticlePointer(String reply, ArticleInfo pointer)
     throws MalformedServerReplyException
@@ -277,8 +277,7 @@ public class NNTPClient extends NNTP
     }
 
 
-    private BufferedReader __retrieve(int command,
-                              String articleId, ArticleInfo pointer)
+    private BufferedReader __retrieve(int command, String articleId, ArticleInfo pointer)
     throws IOException
     {
         if (articleId != null)
@@ -303,8 +302,7 @@ public class NNTPClient extends NNTP
     }
 
 
-    private BufferedReader __retrieve(int command,
-                              long articleNumber, ArticleInfo pointer)
+    private BufferedReader __retrieve(int command, long articleNumber, ArticleInfo pointer)
     throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(sendCommand(command,
@@ -351,7 +349,7 @@ public class NNTPClient extends NNTP
      *   set this parameter to null if you do not desire to retrieve the
      *   returned article information.
      * @return A DotTerminatedMessageReader instance from which the article
-     *         be read.  null if the article does not exist.
+     *         can be read.  null if the article does not exist.
      * @exception NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
@@ -371,7 +369,8 @@ public class NNTPClient extends NNTP
      * Same as <code> retrieveArticle(articleId, (ArticleInfo) null) </code>
      * Note: the return can be cast to a {@link BufferedReader}
      * @param articleId the article id to retrieve
-     * @return the reader
+     * @return A DotTerminatedMessageReader instance from which the article can be read. 
+     * null if the article does not exist.
      * @throws IOException if an IO error occurs
      */
     public Reader retrieveArticle(String articleId) throws IOException
@@ -382,7 +381,8 @@ public class NNTPClient extends NNTP
     /**
      * Same as <code> retrieveArticle((String) null) </code>
      * Note: the return can be cast to a {@link BufferedReader}
-     * @return the reader
+     * @return A DotTerminatedMessageReader instance from which the article can be read. 
+     * null if the article does not exist.
      * @throws IOException if an IO error occurs
      */
     public Reader retrieveArticle() throws IOException
@@ -420,7 +420,7 @@ public class NNTPClient extends NNTP
      *   set this parameter to null if you do not desire to retrieve the
      *   returned article information.
      * @return A DotTerminatedMessageReader instance from which the article
-     *         be read.  null if the article does not exist.
+     *         can be read.  null if the article does not exist.
      * @exception NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
@@ -438,7 +438,8 @@ public class NNTPClient extends NNTP
     /**
      * Same as <code> retrieveArticle(articleNumber, null) </code> 
      * @param articleNumber the article number to fetch
-     * @return the reader
+     * @return A DotTerminatedMessageReader instance from which the article
+     *         can be read.  null if the article does not exist.
      * @throws IOException if an IO error occurs
      */
     public BufferedReader retrieveArticle(long articleNumber) throws IOException
@@ -630,7 +631,8 @@ public class NNTPClient extends NNTP
      * Same as <code> retrieveArticleBody(articleId, (ArticleInfo) null) </code>
      *  Note: the return can be cast to a {@link BufferedReader}
      * @param articleId the article id
-     * @return the reader
+     * @return A DotTerminatedMessageReader instance from which the article
+     *         body can be read.  null if the article does not exist.
      * @throws IOException if an error occurs
      */
     public Reader retrieveArticleBody(String articleId) throws IOException
@@ -641,7 +643,8 @@ public class NNTPClient extends NNTP
     /**
      * Same as <code> retrieveArticleBody(null) </code>
      *  Note: the return can be cast to a {@link BufferedReader}
-     * @return the reader
+     * @return A DotTerminatedMessageReader instance from which the article
+     *         body can be read.  null if the article does not exist.
      * @throws IOException if an error occurs
      */
     public Reader retrieveArticleBody() throws IOException
@@ -1555,8 +1558,8 @@ public class NNTPClient extends NNTP
      * and highArticleNumber, inclusively.
      * <p>
      * @param header
-     * @param lowArticleNumber
-     * @param highArticleNumber
+     * @param lowArticleNumber to fetch
+     * @param highArticleNumber to fetch
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException
      */
@@ -1578,24 +1581,37 @@ public class NNTPClient extends NNTP
 
 
     /**
+     * @param header 
+     * @param lowArticleNumber to fetch
+     * @param highArticleNumber to fetch
+     * @return a DotTerminatedReader if successful, null otherwise
+     * @throws IOException on error
      * @deprecated 3.0 use {@link #retrieveHeader(String, long, long)} instead
      */
     @Deprecated
-    public Reader retrieveHeader(String s, int l, int h)
+    public Reader retrieveHeader(String header, int lowArticleNumber, int highArticleNumber)
         throws IOException
     {
-        return retrieveHeader(s, (long) l, (long) h);
+        return retrieveHeader(header, (long) lowArticleNumber, (long) highArticleNumber);
     }
 
     /**
+     * @param lowArticleNumber to fetch
+     * @param highArticleNumber to fetch
+     * @return a DotTerminatedReader if successful, null otherwise
+     * @throws IOException on error
      * @deprecated 3.0 use {@link #retrieveArticleInfo(long, long)} instead
      */
     @Deprecated
-    public Reader retrieveArticleInfo(int a, int b) throws IOException {
-        return retrieveArticleInfo((long) a, (long) b);
+    public Reader retrieveArticleInfo(int lowArticleNumber, int highArticleNumber) throws IOException {
+        return retrieveArticleInfo((long) lowArticleNumber, (long) highArticleNumber);
     }
 
     /**
+     * @param a s
+     * @param b 
+     * @return 
+     * @throws IOException 
      * @deprecated 3.0 use {@link #retrieveHeader(String, long)} instead
      */
     @Deprecated
@@ -1615,6 +1631,8 @@ public class NNTPClient extends NNTP
     }
 
     /**
+     * @param lowArticleNumber to fetch
+     * @return a DotTerminatedReader if successful, null otherwise
      * @deprecated 3.0 use {@link #retrieveArticleInfo(long)} instead
      */
     @Deprecated
@@ -1658,22 +1676,31 @@ public class NNTPClient extends NNTP
     }
 
     /**
+     * @param articleNumber  The number of the the article to retrieve.
+     * @param pointer A parameter through which to return the article's number and unique id
+     * @return A DotTerminatedMessageReader instance from which the article
+     *         can be read.  null if the article does not exist.
+     * @throws IOException on error
      * @deprecated 3.0 use {@link #retrieveArticle(long, ArticleInfo)} instead
      */
     @Deprecated
-    public Reader retrieveArticle(int a, ArticlePointer ap) throws IOException {
-        ArticleInfo ai =  __ap2ai(ap);
-        Reader rdr = retrieveArticle(a, ai);
-        __ai2ap(ai, ap);
+    public Reader retrieveArticle(int articleNumber, ArticlePointer pointer) throws IOException {
+        ArticleInfo ai =  __ap2ai(pointer);
+        Reader rdr = retrieveArticle(articleNumber, ai);
+        __ai2ap(ai, pointer);
         return rdr;
     }
 
     /**
+     * @param articleNumber The number of the the article to retrieve
+     * @return A DotTerminatedMessageReader instance from which the article
+     *         can be read.  null if the article does not exist.
+     * @throws IOException on error
      * @deprecated 3.0 use {@link #retrieveArticle(long)} instead
      */
     @Deprecated
-    public Reader retrieveArticle(int a) throws IOException {
-        return retrieveArticle((long) a);
+    public Reader retrieveArticle(int articleNumber) throws IOException {
+        return retrieveArticle((long) articleNumber);
     }
 
     /**
@@ -1689,6 +1716,8 @@ public class NNTPClient extends NNTP
 
     /**
      * @deprecated 3.0 use {@link #retrieveArticle(String, ArticleInfo)} instead
+     * @return A DotTerminatedMessageReader instance from which the article can be read. 
+     * null if the article does not exist.
      */
     @Deprecated
     public Reader retrieveArticle(String a, ArticlePointer ap) throws IOException {
@@ -1699,6 +1728,8 @@ public class NNTPClient extends NNTP
     }
 
     /**
+     * @return A DotTerminatedMessageReader instance from which the article
+     *         body can be read.  null if the article does not exist.
      * @deprecated 3.0 use {@link #retrieveArticleBody(String, ArticleInfo)} instead
      */
     @Deprecated
