@@ -394,6 +394,10 @@ public class RCommandClient extends RExecClient
     /***
      * Same as
      * <code> rcommand(localUsername, remoteUsername, command, false); </code>
+     * @param localUsername the local user
+     * @param remoteUsername the remote user
+     * @param command the command
+     * @throws IOException on error
      ***/
     public void rcommand(String localUsername, String remoteUsername,
                          String command)

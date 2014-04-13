@@ -242,7 +242,7 @@ public class FTPTimestampParserImpl implements
      * by that {@link  FTPClientConfig#lookupDateFormatSymbols(String) language}
      * to parse timestamps.</li>
      * <li>otherwise use default English month names</li>
-     * </ul></p><p>
+     * </ul><p>
      * Finally if a {@link  org.apache.commons.net.ftp.FTPClientConfig#setServerTimeZoneId(String) serverTimeZoneId}
      * has been supplied via the config, set that into all date formats that have
      * been configured.

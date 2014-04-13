@@ -76,6 +76,7 @@ public final class Util
      *        write.  This is necessary for interactive sessions that rely on
      *        buffered streams.  If you don't flush, the data will stay in
      *        the stream buffer.
+     * @return number of bytes read/written
      * @exception CopyStreamException  If an error occurs while reading from the
      *            source or writing to the destination.  The CopyStreamException
      *            will contain the number of bytes confirmed to have been
@@ -162,6 +163,7 @@ public final class Util
      *          Should be set to CopyStreamEvent.UNKNOWN_STREAM_SIZE if unknown.
      * @param listener  The CopyStreamListener to notify of progress.  If
      *      this parameter is null, notification is not attempted.
+     * @return number of bytes read/written
      * @exception CopyStreamException  If an error occurs while reading from the
      *            source or writing to the destination.  The CopyStreamException
      *            will contain the number of bytes confirmed to have been
@@ -214,6 +216,10 @@ public final class Util
 
     /***
      * Same as <code> copyStream(source, dest, DEFAULT_COPY_BUFFER_SIZE); </code>
+     * @param source where to copy from
+     * @param dest  where to copy to
+     * @return number of bytes copied
+     * @throws CopyStreamException on error
      ***/
     public static final long copyStream(InputStream source, OutputStream dest)
     throws CopyStreamException
@@ -334,6 +340,10 @@ public final class Util
 
     /***
      * Same as <code> copyReader(source, dest, DEFAULT_COPY_BUFFER_SIZE); </code>
+     * @param source where to copy from
+     * @param dest  where to copy to
+     * @return number of bytes copied
+     * @throws CopyStreamException on error
      ***/
     public static final long copyReader(Reader source, Writer dest)
     throws CopyStreamException

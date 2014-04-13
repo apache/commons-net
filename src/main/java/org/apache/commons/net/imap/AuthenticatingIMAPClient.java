@@ -74,6 +74,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
      * Constructor for AuthenticatingIMAPClient that delegates to IMAPSClient.
      * @param proto the protocol.
      * @param implicit The security mode(Implicit/Explicit).
+     * @param ctx the context
      */
     public AuthenticatingIMAPClient(String proto, boolean implicit, SSLContext ctx)
     {
@@ -103,6 +104,9 @@ public class AuthenticatingIMAPClient extends IMAPSClient
      * Authenticate to the IMAP server by sending the AUTHENTICATE command with the
      * selected mechanism, using the given username and the given password.
      * <p>
+     * @param method the method name
+     * @param username user
+     * @param password password
      * @return True if successfully completed, false if not.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
@@ -125,6 +129,9 @@ public class AuthenticatingIMAPClient extends IMAPSClient
      * Authenticate to the IMAP server by sending the AUTHENTICATE command with the
      * selected mechanism, using the given username and the given password.
      * <p>
+     * @param method the method name
+     * @param username user
+     * @param password password
      * @return True if successfully completed, false if not.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
