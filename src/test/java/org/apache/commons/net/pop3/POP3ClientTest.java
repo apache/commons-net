@@ -49,9 +49,6 @@ public class POP3ClientTest extends TestCase
     String password = POP3Constants.password;
     String mailhost = POP3Constants.mailhost;
 
-    /**
-     *
-     */
     public POP3ClientTest(String name)
     {
         super(name);
@@ -85,7 +82,7 @@ public class POP3ClientTest extends TestCase
         assertEquals(POP3.TRANSACTION_STATE, p.getState());
     }
 
-    /**
+    /*
      * Simple test to logon to a valid server using a valid
      * user name and password.
      */
@@ -98,9 +95,6 @@ public class POP3ClientTest extends TestCase
         login();
     }
 
-    /**
-     *
-     */
     public void testInvalidLoginWithBadName() throws Exception
     {
         reset();
@@ -110,9 +104,6 @@ public class POP3ClientTest extends TestCase
         assertFalse(p.login("badusername", password));
     }
 
-    /**
-     *
-     */
     public void testInvalidLoginWithBadPassword() throws Exception
     {
         reset();
@@ -122,7 +113,7 @@ public class POP3ClientTest extends TestCase
         assertFalse(p.login(user, "badpassword"));
     }
 
-    /**
+    /*
      * Test to try to run the login method from the
      * disconnected, transaction and update states
      */
@@ -147,10 +138,6 @@ public class POP3ClientTest extends TestCase
         p.disconnect();
     }
 
-    /**
-     *
-     *
-     */
     public void testLogoutFromAllStates() throws Exception
     {
         //From 'transaction' state
