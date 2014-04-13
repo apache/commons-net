@@ -554,7 +554,7 @@ public class POP3Client extends POP3
      * properly.
      * <p>
      * @param messageId  The number of the message to fetch.
-     * @param numLines  The top number of lines to fetch. This must be >= 0.
+     * @param numLines  The top number of lines to fetch. This must be &gt;= 0.
      * @return  A DotTerminatedMessageReader instance
      * from which the specified top number of lines of the message can be
      * read.

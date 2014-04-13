@@ -46,12 +46,12 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
     private static final long serialVersionUID = 8139806907588338737L;
 
     /**
-     * baseline NTP time if bit-0=0 -> 7-Feb-2036 @ 06:28:16 UTC
+     * baseline NTP time if bit-0=0 is 7-Feb-2036 @ 06:28:16 UTC
      */
     protected static final long msb0baseTime = 2085978496000L;
 
     /**
-     *  baseline NTP time if bit-0=1 -> 1-Jan-1900 @ 01:00:00 UTC
+     *  baseline NTP time if bit-0=1 is 1-Jan-1900 @ 01:00:00 UTC
      */
     protected static final long msb1baseTime = -2208988800000L;
 
@@ -308,7 +308,7 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
      * represented by this <code>TimeStamp</code> object. That is, the hashcode
      * is the value of the expression:
      * <blockquote><pre>
-     * (int)(this.ntpValue()^(this.ntpValue() >>> 32))
+     * {@code (int)(this.ntpValue()^(this.ntpValue() >>> 32))}
      * </pre></blockquote>
      *
      * @return  a hash code value for this object.
@@ -342,7 +342,7 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
      * Converts this <code>TimeStamp</code> object to a <code>String</code>.
      * The NTP timestamp 64-bit long value is represented as hex string with
      * seconds separated by fractional seconds by a decimal point;
-     * e.g. c1a089bd.fc904f6d <=> Tue, Dec 10 2002 10:41:49.986
+     * e.g. c1a089bd.fc904f6d == Tue, Dec 10 2002 10:41:49.986
      *
      * @return NTP timestamp 64-bit long value as hex string with seconds
      * separated by fractional seconds.
@@ -372,7 +372,7 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
      * Converts 64-bit NTP timestamp value to a <code>String</code>.
      * The NTP timestamp value is represented as hex string with
      * seconds separated by fractional seconds by a decimal point;
-     * e.g. c1a089bd.fc904f6d <=> Tue, Dec 10 2002 10:41:49.986
+     * e.g. c1a089bd.fc904f6d == Tue, Dec 10 2002 10:41:49.986
      *
      * @return NTP timestamp 64-bit long value as hex string with seconds
      * separated by fractional seconds.

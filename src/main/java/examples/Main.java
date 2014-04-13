@@ -31,7 +31,7 @@ public class Main {
     /**
      * Helper application for example classes.
      * Lists available classes, and provides shorthand invocation.
-     * For example:<br/>
+     * For example:<br>
      * <code>java -jar commons-net-examples-m.n.jar FTPClientExample -l host user password</code>
      *
      * @param args the first argument is used to name the class; remaining arguments

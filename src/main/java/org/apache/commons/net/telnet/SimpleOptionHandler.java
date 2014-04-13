@@ -61,7 +61,7 @@ public class SimpleOptionHandler extends TelnetOptionHandler
     /***
      * Implements the abstract method of TelnetOptionHandler.
      * <p>
-     * @param suboptionData - the sequence received, whithout IAC SB & IAC SE
+     * @param suboptionData - the sequence received, without IAC SB &amp; IAC SE
      * @param suboptionLength - the length of data in suboption_data
      * <p>
      * @return always null (no response to subnegotiation)
