@@ -150,6 +150,7 @@ public class TFTPServer implements Runnable
      *
      * @param serverReadDirectory directory for GET requests
      * @param serverWriteDirectory directory for PUT requests
+     * @param port the port to use
      * @param mode A value as specified above.
      * @param log Stream to write log message to. If not provided, uses System.out
      * @param errorLog Stream to write error messages to. If not provided, uses System.err.
@@ -168,7 +169,7 @@ public class TFTPServer implements Runnable
     /**
      * Set the max number of retries in response to a timeout. Default 3. Min 0.
      *
-     * @param retries
+     * @param retries number of retries, must be &gt; 0
      */
     public void setMaxTimeoutRetries(int retries)
     {
@@ -181,6 +182,7 @@ public class TFTPServer implements Runnable
 
     /**
      * Get the current value for maxTimeoutRetries
+     * @return the max allowed number of retries
      */
     public int getMaxTimeoutRetries()
     {
@@ -191,6 +193,7 @@ public class TFTPServer implements Runnable
      * Set the socket timeout in milliseconds used in transfers. Defaults to the value here:
      * http://commons.apache.org/net/apidocs/org/apache/commons/net/tftp/TFTP.html#DEFAULT_TIMEOUT
      * (5000 at the time I write this) Min value of 10.
+     * @param timeout the timeout; must be larger than 10
      */
     public void setSocketTimeout(int timeout)
     {
@@ -846,7 +849,7 @@ public class TFTPServer implements Runnable
     /**
      * Set the stream object to log debug / informational messages. By default, this is a no-op
      *
-     * @param log
+     * @param log the stream to use for logging
      */
     public void setLog(PrintStream log)
     {
@@ -856,7 +859,7 @@ public class TFTPServer implements Runnable
     /**
      * Set the stream object to log error messsages. By default, this is a no-op
      *
-     * @param logError
+     * @param logError the stream to use for logging errors
      */
     public void setLogError(PrintStream logError)
     {
