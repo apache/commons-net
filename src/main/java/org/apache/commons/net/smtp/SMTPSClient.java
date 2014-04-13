@@ -286,7 +286,7 @@ public class SMTPSClient extends SMTPClient
      * the command or performing the negotiation.
      * @return TRUE if the command and negotiation succeeded.
      */
-    public boolean execTLS() throws SSLException, IOException
+    public boolean execTLS() throws IOException
     {
         if (!SMTPReply.isPositiveCompletion(sendCommand("STARTTLS")))
         {
