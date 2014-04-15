@@ -27,6 +27,7 @@ package org.apache.commons.net.nntp;
  *
  */
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -36,8 +37,8 @@ public class Threader {
     /**
      * The client passes in a list of Threadable objects, and
      * the Threader constructs a connected 'graph' of messages
-     * @param messages list of messages to thread
-     * @return null if messages == null or root.child == null
+     * @param messages list of messages to thread, must not be empty
+     * @return null if messages == null or root.child == null or messages list is empty
      * @since 2.2
      */
     public Threadable thread(List<? extends Threadable> messages) {
@@ -47,8 +48,8 @@ public class Threader {
     /**
      * The client passes in a list of Iterable objects, and
      * the Threader constructs a connected 'graph' of messages
-     * @param messages iterable of messages to thread
-     * @return null if messages == null or root.child == null
+     * @param messages iterable of messages to thread, must not be empty
+     * @return null if messages == null or root.child == null or messages list is empty
      * @since 3.0
      */
     public Threadable thread(Iterable<? extends Threadable> messages) {
@@ -63,6 +64,10 @@ public class Threader {
             if (!t.isDummy()) {
                 buildContainer(t, idTable);
             }
+        }
+
+        if (idTable.isEmpty()) {
+            return null;
         }
 
         ThreadContainer root = findRootSet(idTable);
@@ -446,13 +451,16 @@ public class Threader {
     /**
      * The client passes in an array of Threadable objects, and
      * the Threader constructs a connected 'graph' of messages
-     * @param messages array of messages to thread
-     * @return null if messages == null or root.child == null
+     * @param messages array of messages to thread, must not be empty
+     * @return null if messages == null or root.child == null or messages array is empty
      * @deprecated (2.2) prefer {@link #thread(List)}
      */
     @Deprecated
     public Threadable thread(Threadable[] messages) {
-        return thread(java.util.Arrays.asList(messages));
+        if (messages == null) {
+            return null;
+        }
+        return thread(Arrays.asList(messages));
     }
 
 }
