@@ -17,6 +17,7 @@
 
 package org.apache.commons.net.nntp;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 /**
@@ -138,13 +139,46 @@ public class Article implements Threadable {
      * Recursive method that traverses a pre-threaded graph (or tree)
      * of connected Article objects and prints them out.
      * @param article the root of the article 'tree'
+     * @since 3.4
+     */
+    public static void printThread(Article article) {
+        printThread(article, 0, System.out);
+    }
+
+    /**
+     * Recursive method that traverses a pre-threaded graph (or tree)
+     * of connected Article objects and prints them out.
+     * @param article the root of the article 'tree'
+     * @param ps the PrintStream to use
+     * @since 3.4
+     */
+    public static void printThread(Article article, PrintStream ps) {
+        printThread(article, 0, ps);
+    }
+
+    /**
+     * Recursive method that traverses a pre-threaded graph (or tree)
+     * of connected Article objects and prints them out.
+     * @param article the root of the article 'tree'
      * @param depth the current tree depth
      */
     public static void printThread(Article article, int depth) {
+        printThread(article, depth, System.out);
+    }
+
+    /**
+     * Recursive method that traverses a pre-threaded graph (or tree)
+     * of connected Article objects and prints them out.
+     * @param article the root of the article 'tree'
+     * @param depth the current tree depth
+     * @param ps the PrintStream to use
+     * @since 3.4
+     */
+    public static void printThread(Article article, int depth, PrintStream ps) {
             for (int i = 0; i < depth; ++i) {
-                System.out.print("==>");
+                ps.print("==>");
             }
-            System.out.println(article.getSubject() + "\t" + article.getFrom()+"\t"+article.getArticleId());
+            ps.println(article.getSubject() + "\t" + article.getFrom()+"\t"+article.getArticleId());
             if (article.kid != null) {
                 printThread(article.kid, depth + 1);
             }

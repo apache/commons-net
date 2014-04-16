@@ -68,6 +68,9 @@ This is mainly a bug-fix release. See further details below.
   IMAPExportMbox (example app) allows IMAP folders to be exported into an mbox file.
   This is the inverse of the IMAPImportMbox example added previously
         ">
+            <action issue="NET-540" type="add" dev="sebb">
+            Article#printThread should have option to use any PrintStream
+            </action>
             <action issue="NET-539" type="fix" dev="sebb">
             NPE if Threader.thread invoked with empty list or with null array
             </action>
