@@ -29,6 +29,9 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.net.SocketFactory;
+
+import org.apache.commons.net.DefaultSocketFactory;
 import org.apache.commons.net.util.Base64;
 
 /**
@@ -47,12 +50,16 @@ public class FTPHTTPClient extends FTPClient {
 
     private String tunnelHost; // Save the host when setting up a tunnel (needed for EPSV)
 
+    public static final String ENCODING = "UTF-8";
+    private String encoding;
+
     public FTPHTTPClient(String proxyHost, int proxyPort, String proxyUser, String proxyPass) {
         this.proxyHost = proxyHost;
         this.proxyPort = proxyPort;
         this.proxyUsername = proxyUser;
         this.proxyPassword = proxyPass;
         this.tunnelHost = null;
+        this.encoding = ENCODING;
     }
 
     public FTPHTTPClient(String proxyHost, int proxyPort) {
@@ -108,7 +115,7 @@ public class FTPHTTPClient extends FTPClient {
             passiveHost = this.getPassiveHost();
         }
 
-        Socket socket = new Socket(proxyHost, proxyPort);
+        Socket socket = _socketFactory_.createSocket(proxyHost, proxyPort);
         InputStream is = socket.getInputStream();
         OutputStream os = socket.getOutputStream();
         tunnelHandshake(passiveHost, this.getPassivePort(), is, os);
@@ -128,7 +135,7 @@ public class FTPHTTPClient extends FTPClient {
     @Override
     public void connect(String host, int port) throws SocketException, IOException {
 
-        _socket_ = new Socket(proxyHost, proxyPort);
+        _socket_ = _socketFactory_.createSocket(proxyHost, proxyPort);
         _input_ = _socket_.getInputStream();
         _output_ = _socket_.getOutputStream();
         try {
@@ -148,16 +155,16 @@ public class FTPHTTPClient extends FTPClient {
         final String hostString = "Host: " + host + ":" + port;
 
         this.tunnelHost = host;
-        output.write(connectString.getBytes("UTF-8")); // TODO what is the correct encoding?
+        output.write(connectString.getBytes(encoding)); // TODO what is the correct encoding?
         output.write(CRLF);
-        output.write(hostString.getBytes("UTF-8"));
+        output.write(hostString.getBytes(encoding));
         output.write(CRLF);
 
         if (proxyUsername != null && proxyPassword != null) {
             final String auth = proxyUsername + ":" + proxyPassword;
             final String header = "Proxy-Authorization: Basic "
-                + base64.encodeToString(auth.getBytes("UTF-8"));
-            output.write(header.getBytes("UTF-8"));
+                + base64.encodeToString(auth.getBytes(encoding));
+            output.write(header.getBytes(encoding));
         }
         output.write(CRLF);
 
@@ -193,6 +200,17 @@ public class FTPHTTPClient extends FTPClient {
             }
             throw new IOException(msg.toString());
         }
+    }
+
+    /**
+     * Set encoding to be used for http requests during handshake with HTTP proxy.
+     * Default value is UTF-8 so it can
+     * be overridden if necessary. Encoding should be set before connect(...) methods is called.
+     * 
+     * @param encoding the encoding to set
+     */
+    public void setEncoding(String encoding) {
+      this.encoding = encoding;
     }
 }
 
