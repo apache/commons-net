@@ -30,6 +30,10 @@ import org.apache.commons.net.imap.IMAPClient;
  * <p>
  * Usage: IMAPMail imap[s]://username:password@server/
  * <p>
+ * For example<br>
+ * IMAPMail imaps://username:password@imap.mail.yahoo.com/<br>
+ * or<br>
+ * IMAPMail imaps://username:password@imap.googlemail.com/
  */
 public final class IMAPMail
 {
