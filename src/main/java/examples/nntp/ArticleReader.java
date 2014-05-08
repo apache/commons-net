@@ -59,31 +59,32 @@ public class ArticleReader {
         NewsgroupInfo group = new NewsgroupInfo();
         client.selectNewsgroup(newsgroup, group);
 
-        BufferedReader br;
+        BufferedReader brHdr;
         String line;
         if (articleSpec != null) {
-            br = (BufferedReader) client.retrieveArticleHeader(articleSpec);
+            brHdr = (BufferedReader) client.retrieveArticleHeader(articleSpec);
         } else {
             long articleNum = group.getLastArticleLong();
-            br = client.retrieveArticleHeader(articleNum);
+            brHdr = client.retrieveArticleHeader(articleNum);
         }
-        if (br != null) {
-            while((line=br.readLine()) != null) {
+        if (brHdr != null) {
+            while((line=brHdr.readLine()) != null) {
                 System.out.println(line);
             }
-            br.close();
+            brHdr.close();
         }
+        BufferedReader brBody;
         if (articleSpec != null) {
-            br = (BufferedReader) client.retrieveArticleBody(articleSpec);
+        	brBody = (BufferedReader) client.retrieveArticleBody(articleSpec);
         } else {
             long articleNum = group.getLastArticleLong();
-            br = client.retrieveArticleBody(articleNum);
+            brBody = client.retrieveArticleBody(articleNum);
         }
-        if (br != null) {
-            while((line=br.readLine()) != null) {
+        if (brBody != null) {
+            while((line=brBody.readLine()) != null) {
                 System.out.println(line);
             }
-            br.close();
+            brBody.close();
         }
     }
 
