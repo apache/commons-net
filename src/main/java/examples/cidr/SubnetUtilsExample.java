@@ -66,7 +66,7 @@ public class SubnetUtilsExample {
                     + "within the subnet [" + subnet + "]");
             System.out.println(prompt);
         }
-
+        scanner.close();
     }
 
 }
