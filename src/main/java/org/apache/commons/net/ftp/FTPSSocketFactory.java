@@ -87,7 +87,6 @@ public class FTPSSocketFactory extends SocketFactory {
     }
 
     /** @deprecated  (2.2) use {@link FTPSServerSocketFactory#init(java.net.ServerSocket)} */
-    @SuppressWarnings("unused")
     @Deprecated
     public java.net.ServerSocket init(java.net.ServerSocket socket) throws IOException {
         ((javax.net.ssl.SSLServerSocket) socket).setUseClientMode(true);
