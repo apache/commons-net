@@ -42,7 +42,7 @@ import org.apache.commons.net.imap.IMAPClient;
  * <p>
  * An example sequence-set might be:
  * <ul>
- * <li>11,2,3-10,20:*</li>
+ * <li>11,2,3:10,20:*</li>
  * <li>1:* - this is the default</li>
  * </ul>
  * <p>
@@ -50,11 +50,17 @@ import org.apache.commons.net.imap.IMAPClient;
  * <ul>
  * <li>BODY.PEEK[HEADER.FIELDS (SUBJECT)]</li>
  * <li>ALL</li>
+ * <li>ENVELOPE</li>
  * <li>(INTERNALDATE BODY.PEEK[]) - this is the default</li>
  * </ul>
  * <p>
  * For example:<br>
- * IMAPExportMbox imaps://username:password@imap.googlemail.com/messages_for_export exported.mbox 1-10,20
+ * IMAPExportMbox imaps://username:password@imap.googlemail.com/messages_for_export exported.mbox 1:10,20<br>
+ * IMAPExportMbox imaps://username:password@imap.googlemail.com/messages_for_export exported.mbox 3 ENVELOPE<br>
+ * <p>
+ * Note that the sequence-set and item names are passed unmodified to the FETCH command.
+ * Also the listener that writes the mailbox only captures the multi-line responses.
+ * It does not capture the output from ENVELOPE commands.
  */
 public final class IMAPExportMbox
 {
@@ -188,6 +194,7 @@ public final class IMAPExportMbox
                 }
             }
             try {
+            	total++;
                 // Add initial mbox header line
                 bw.append("From ");
                 bw.append(replyTo);
