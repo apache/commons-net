@@ -36,7 +36,8 @@ public class TestConnectTimeout extends TestCase {
 
         try {
             // Connect to a valid host on a bogus port
-            client.connect("ftp.microsoft.com", 1234);
+        	// TODO use a local server if possible
+            client.connect("www.apache.org", 1234);
             assertTrue("Expecting SocketTimeoutException", false);
         }
         catch (SocketTimeoutException se) {
