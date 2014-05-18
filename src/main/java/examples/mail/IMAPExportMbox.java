@@ -48,6 +48,7 @@ import org.apache.commons.net.imap.IMAPClient;
  * <p>
  * Some example item-names might be:
  * <ul>
+ * <li>BODY.PEEK[HEADER]</li>
  * <li>BODY.PEEK[HEADER.FIELDS (SUBJECT)]</li>
  * <li>ALL</li>
  * <li>ENVELOPE</li>
