@@ -1203,13 +1203,13 @@ class Telnet extends SocketClient
         {
             try
             {
-                if (ch != '\r')
+                if (ch != '\r') // never write '\r' on its own
                 {
-                    spy.write(ch);
                     if (ch == '\n')
                     {
-                        spy.write('\r');
+                        spy.write('\r'); // add '\r' before '\n'
                     }
+                    spy.write(ch); // write original character
                     spy.flush();
                 }
             }
