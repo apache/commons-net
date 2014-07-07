@@ -398,6 +398,7 @@ implements Configurable
 
     /** Pattern for PASV mode responses. Groups: (n,n,n,n),(n),(n) */
     private static final java.util.regex.Pattern __PARMS_PAT;
+    
     static {
         __PARMS_PAT = java.util.regex.Pattern.compile(
                 "(\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3}),(\\d{1,3}),(\\d{1,3})");
