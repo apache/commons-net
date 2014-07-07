@@ -355,7 +355,7 @@ public class ListingFunctionalTest extends TestCase
         assertNull(names);
     }
 
-    public void testprintWorkingDirectory()
+    public void testPrintWorkingDirectory()
             throws IOException
         {
             client.changeWorkingDirectory(validPath);
