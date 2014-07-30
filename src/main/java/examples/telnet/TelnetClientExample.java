@@ -60,7 +60,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
 
         if(args.length < 1)
         {
-            System.err.println("Usage: TelnetClientExample1 <remote-ip> [<remote-port>]");
+            System.err.println("Usage: TelnetClientExample <remote-ip> [<remote-port>]");
             System.exit(1);
         }
 
