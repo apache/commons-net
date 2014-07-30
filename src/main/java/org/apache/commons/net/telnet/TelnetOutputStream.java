@@ -25,8 +25,9 @@ import java.io.OutputStream;
  * <p>
  * In binary mode, the only conversion is to double IAC.
  * <p>
- * In ASCII mode, if convertCRtoCRLF is true, any CR is converted to CRLF.
+ * In ASCII mode, if convertCRtoCRLF is true (currently always true), any CR is converted to CRLF.
  * IACs are doubled.
+ * Also a bare LF is converted to CRLF and a bare CR is converted to CR\0
  * <p>
  ***/
 
@@ -78,20 +79,27 @@ final class TelnetOutputStream extends OutputStream
                     }
                 }
 
-                __lastWasCR = false;
-
                 switch (ch)
                 {
                 case '\r':
                     __client._sendByte('\r');
                     __lastWasCR = true;
                     break;
+                case '\n':
+                    if (!__lastWasCR) { // convert LF to CRLF
+                        __client._sendByte('\r');
+                    }
+                    __client._sendByte(ch);
+                    __lastWasCR = false;
+                    break;
                 case TelnetCommand.IAC:
                     __client._sendByte(TelnetCommand.IAC);
                     __client._sendByte(TelnetCommand.IAC);
+                    __lastWasCR = false;
                     break;
                 default:
                     __client._sendByte(ch);
+                    __lastWasCR = false;
                     break;
                 }
             } // end ASCII
