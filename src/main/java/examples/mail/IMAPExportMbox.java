@@ -98,11 +98,11 @@ public final class IMAPExportMbox
 
         // suppress login details
         final PrintCommandListener listener = new PrintCommandListener(System.out, true);
-        
+
         // Connect and login
         final IMAPClient imap = IMAPUtils.imapLogin(uri, 10000, listener);
 
-        MboxListener chunkListener = new MboxListener(mbox); 
+        MboxListener chunkListener = new MboxListener(mbox);
         try {
 
             imap.setSoTimeout(6000);
@@ -230,7 +230,7 @@ public final class IMAPExportMbox
         public void close() throws IOException {
             if (bw != null) {
                 bw.close();
-            }   
+            }
         }
     }
 }

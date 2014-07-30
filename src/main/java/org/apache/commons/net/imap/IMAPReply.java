@@ -42,9 +42,9 @@ public final class IMAPReply
     public static final int CONT = 3;
 
     /**
-     * The reply code indicating a partial response. 
+     * The reply code indicating a partial response.
      * This is used when a chunk listener is registered and the listener
-     * requests that the reply lines are cleared on return. 
+     * requests that the reply lines are cleared on return.
      */
     public static final int PARTIAL = 3;
 

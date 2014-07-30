@@ -251,7 +251,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
     }
 
     // byte -123 when read using ISO-8859-1 encoding becomes 0X85 line terminator
-    private static final byte[] listFilesByteTrace = { 
+    private static final byte[] listFilesByteTrace = {
         48, 57, 45, 48, 52, 45, 49, 51, 32, 32, 48, 53, 58, 53, 49, 80, 77,
         32, 32, 32, 32, 32, 32, 32, 60, 68, 73, 82, 62, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
         97, 115, 112, 110, 101, 116, 95, 99, 108, 105, 101, 110, 116,

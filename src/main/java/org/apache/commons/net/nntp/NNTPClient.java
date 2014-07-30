@@ -368,7 +368,7 @@ public class NNTPClient extends NNTP
      * Same as <code> retrieveArticle(articleId, (ArticleInfo) null) </code>
      * Note: the return can be cast to a {@link BufferedReader}
      * @param articleId the article id to retrieve
-     * @return A DotTerminatedMessageReader instance from which the article can be read. 
+     * @return A DotTerminatedMessageReader instance from which the article can be read.
      * null if the article does not exist.
      * @throws IOException if an IO error occurs
      */
@@ -380,7 +380,7 @@ public class NNTPClient extends NNTP
     /**
      * Same as <code> retrieveArticle((String) null) </code>
      * Note: the return can be cast to a {@link BufferedReader}
-     * @return A DotTerminatedMessageReader instance from which the article can be read. 
+     * @return A DotTerminatedMessageReader instance from which the article can be read.
      * null if the article does not exist.
      * @throws IOException if an IO error occurs
      */
@@ -435,7 +435,7 @@ public class NNTPClient extends NNTP
     }
 
     /**
-     * Same as <code> retrieveArticle(articleNumber, null) </code> 
+     * Same as <code> retrieveArticle(articleNumber, null) </code>
      * @param articleNumber the article number to fetch
      * @return A DotTerminatedMessageReader instance from which the article
      *         can be read.  null if the article does not exist.
@@ -566,7 +566,7 @@ public class NNTPClient extends NNTP
 
 
     /**
-     * Same as <code> retrieveArticleHeader(articleNumber, null) </code> 
+     * Same as <code> retrieveArticleHeader(articleNumber, null) </code>
      *
      * @param articleNumber the article number
      * @return the reader
@@ -699,7 +699,7 @@ public class NNTPClient extends NNTP
 
 
     /**
-     * Same as <code> retrieveArticleBody(articleNumber, null) </code> 
+     * Same as <code> retrieveArticleBody(articleNumber, null) </code>
      * @param articleNumber the article number
      * @return the reader
      * @throws IOException if an error occurs
@@ -743,7 +743,7 @@ public class NNTPClient extends NNTP
     }
 
     /**
-     * Same as <code> selectNewsgroup(newsgroup, null) </code> 
+     * Same as <code> selectNewsgroup(newsgroup, null) </code>
      * @param newsgroup the newsgroup name
      * @return true if newsgroup exist and was selected
      * @throws IOException if an error occurs
@@ -847,7 +847,7 @@ public class NNTPClient extends NNTP
     }
 
     /**
-     * Same as <code> selectArticle(articleId, (ArticleInfo) null) </code> 
+     * Same as <code> selectArticle(articleId, (ArticleInfo) null) </code>
      */
     public boolean selectArticle(String articleId) throws IOException
     {
@@ -1582,7 +1582,7 @@ public class NNTPClient extends NNTP
 
 
     /**
-     * @param header 
+     * @param header
      * @param lowArticleNumber to fetch
      * @param highArticleNumber to fetch
      * @return a DotTerminatedReader if successful, null otherwise
@@ -1610,9 +1610,9 @@ public class NNTPClient extends NNTP
 
     /**
      * @param a s
-     * @param b 
-     * @return 
-     * @throws IOException 
+     * @param b
+     * @return
+     * @throws IOException
      * @deprecated 3.0 use {@link #retrieveHeader(String, long)} instead
      */
     @Deprecated
@@ -1716,10 +1716,10 @@ public class NNTPClient extends NNTP
     }
 
     /**
-     * @param articleId The unique article identifier of the article to retrieve 
+     * @param articleId The unique article identifier of the article to retrieve
      * @param pointer A parameter through which to return the article's number and unique id
      * @deprecated 3.0 use {@link #retrieveArticle(String, ArticleInfo)} instead
-     * @return A DotTerminatedMessageReader instance from which the article can be read. 
+     * @return A DotTerminatedMessageReader instance from which the article can be read.
      * null if the article does not exist.
      * @throws IOException on error
      */
@@ -1732,7 +1732,7 @@ public class NNTPClient extends NNTP
     }
 
     /**
-     * @param articleId The unique article identifier of the article to retrieve 
+     * @param articleId The unique article identifier of the article to retrieve
      * @param pointer A parameter through which to return the article's number and unique id
      * @return A DotTerminatedMessageReader instance from which the article
      *         body can be read.  null if the article does not exist.
@@ -1748,7 +1748,7 @@ public class NNTPClient extends NNTP
     }
 
     /**
-     * @param articleId The unique article identifier of the article to retrieve 
+     * @param articleId The unique article identifier of the article to retrieve
      * @param pointer A parameter through which to return the article's number and unique id
      * @return A DotTerminatedMessageReader instance from which the article
      *         body can be read.  null if the article does not exist.
@@ -1764,7 +1764,7 @@ public class NNTPClient extends NNTP
     }
 
     /**
-     * @param articleId The unique article identifier of the article to retrieve 
+     * @param articleId The unique article identifier of the article to retrieve
      * @param pointer A parameter through which to return the article's number and unique id
      * @return A DotTerminatedMessageReader instance from which the article
      *         body can be read.  null if the article does not exist.

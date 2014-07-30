@@ -98,7 +98,7 @@ public class Threader {
     /**
      *
      * @param threadable
-     * @param idTable 
+     * @param idTable
      */
     private void buildContainer(Threadable threadable, HashMap<String,ThreadContainer> idTable) {
         String id = threadable.messageThreadId();
@@ -207,7 +207,7 @@ public class Threader {
 
     /**
      * Find the root set of all existing ThreadContainers
-     * @param idTable 
+     * @param idTable
      * @return root the ThreadContainer representing the root node
      */
     private ThreadContainer findRootSet(HashMap<String, ThreadContainer> idTable) {
@@ -295,7 +295,7 @@ public class Threader {
 
     /**
      *  If any two members of the root set have the same subject, merge them. This is to attempt to accomodate messages without References: headers.
-     * @param root 
+     * @param root
      */
     private void gatherSubjects(ThreadContainer root) {
 

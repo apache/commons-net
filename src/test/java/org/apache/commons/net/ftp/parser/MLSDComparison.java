@@ -137,7 +137,7 @@ public class MLSDComparison {
     /**
      * Compare two instances to see if they are the same,
      * ignoring any uninitialised fields.
-     * @param a first instance 
+     * @param a first instance
      * @param b second instance
      * @return true if the initialised fields are the same
      * @since 3.0

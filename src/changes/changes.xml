@@ -148,7 +148,7 @@ This is mainly a bug-fix release. See further details below.
             </action>
             <action issue="NET-501" dev="sebb"  due-to="Julián Lastiri" type="fix">
             Race Condition on TelnetClient.disconnect() and TelnetInputStream.run()
-            java.lang.IllegalStateException: Queue is full! Cannot process another character. 
+            java.lang.IllegalStateException: Queue is full! Cannot process another character.
             </action>
             <action issue="NET-505" dev="sebb" due-to="Sean Kelley" type="update">
             User specified bufferSize reset to default when FTPClient is disconnected or reinitialized resulting in performance degradation.

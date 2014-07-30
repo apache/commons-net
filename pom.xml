@@ -450,7 +450,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         </activation>
         <properties>
           <!-- Disable Xdoclint, until JavaDoc issues are fixed -->
-          <additionalparam>-Xdoclint:none</additionalparam>          
+          <additionalparam>-Xdoclint:none</additionalparam>
         </properties>
       </profile>
     </profiles>

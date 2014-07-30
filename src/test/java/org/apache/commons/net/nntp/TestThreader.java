@@ -27,27 +27,27 @@ import org.junit.Test;
  * Test the Threader
  */
 public class TestThreader {
-    
+
     @Test
     @SuppressWarnings("deprecation") // test of deprecated method
     public void testNullArray() { // NET-539
         Threader t = new Threader();
         Threadable[] messages=null;
-        Assert.assertNull(t.thread(messages));        
+        Assert.assertNull(t.thread(messages));
     }
 
     @Test
     public void testNullList() {
         Threader t = new Threader();
         List<Threadable> messages=null;
-        Assert.assertNull(t.thread(messages));        
+        Assert.assertNull(t.thread(messages));
     }
 
     @Test
     public void testNullIterable() {
         Threader t = new Threader();
         Iterable<Threadable> messages=null;
-        Assert.assertNull(t.thread(messages));        
+        Assert.assertNull(t.thread(messages));
     }
 
     @SuppressWarnings("deprecation") // test of deprecated method

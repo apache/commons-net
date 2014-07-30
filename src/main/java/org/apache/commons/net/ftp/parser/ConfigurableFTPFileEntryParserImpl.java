@@ -60,7 +60,7 @@ implements Configurable
      * constructor for this abstract class.
      * @param regex  Regular expression used main parsing of the
      * file listing.
-     * @param flags the flags to apply, see 
+     * @param flags the flags to apply, see
      * {@link java.util.regex.Pattern#compile(String, int) Pattern#compile(String, int)}. Use 0 for none.
      * @since 3.4
      */

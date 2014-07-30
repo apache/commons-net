@@ -72,7 +72,7 @@ public class IMAP extends SocketClient
     public interface IMAPChunkListener {
         /**
          * Called when a multi-line partial response has been received.
-         * @param imap the instance, get the response 
+         * @param imap the instance, get the response
          * by calling {@link #getReplyString()} or {@link #getReplyStrings()}
          * @return {@code true} if the reply buffer is to be cleared on return
          */
@@ -103,7 +103,7 @@ public class IMAP extends SocketClient
         public boolean chunkReceived(IMAP imap) {
             return true;
         }
-        
+
     };
     private volatile IMAPChunkListener __chunkListener;
 
@@ -422,7 +422,7 @@ public class IMAP extends SocketClient
     /**
      * Sets the current chunk listener.
      * If a listener is registered and the implementation returns true,
-     * then any registered 
+     * then any registered
      * {@link org.apache.commons.net.PrintCommandListener PrintCommandListener}
      * instances will be invoked with the partial response and a status of
      * {@link IMAPReply#PARTIAL} to indicate that the final reply code is not yet known.
