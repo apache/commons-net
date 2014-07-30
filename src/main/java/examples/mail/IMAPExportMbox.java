@@ -195,7 +195,7 @@ public final class IMAPExportMbox
                 }
             }
             try {
-            	total++;
+                total++;
                 // Add initial mbox header line
                 bw.append("From ");
                 bw.append(replyTo);

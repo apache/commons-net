@@ -36,7 +36,7 @@ public class TestConnectTimeout extends TestCase {
 
         try {
             // Connect to a valid host on a bogus port
-        	// TODO use a local server if possible
+            // TODO use a local server if possible
             client.connect("www.apache.org", 1234);
             assertTrue("Expecting SocketTimeoutException", false);
         }

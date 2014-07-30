@@ -75,7 +75,7 @@ public class ArticleReader {
         }
         BufferedReader brBody;
         if (articleSpec != null) {
-        	brBody = (BufferedReader) client.retrieveArticleBody(articleSpec);
+            brBody = (BufferedReader) client.retrieveArticleBody(articleSpec);
         } else {
             long articleNum = group.getLastArticleLong();
             brBody = client.retrieveArticleBody(articleNum);
