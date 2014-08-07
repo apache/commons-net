@@ -68,6 +68,9 @@ This is mainly a bug-fix release. See further details below.
   IMAPExportMbox (example app) allows IMAP folders to be exported into an mbox file.
   This is the inverse of the IMAPImportMbox example added previously
         ">
+            <action type="update" dev="sebb">
+            Added control character processing to TelnetClientExample
+            </action>
             <action issue="NET-547" type="fix" dev="sebb" due-to="Fabio Scippacercola">
             There is a lack of documentation regarding setControlKeepAliveTimeout
             </action>

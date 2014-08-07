@@ -122,6 +122,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                 System.out.println("Type UNREGISTER to unregister an OptionHandler");
                 System.out.println("Type SPY to register the spy (connect to port 3333 to spy)");
                 System.out.println("Type UNSPY to stop spying the connection");
+                System.out.println("Type ^[A-Z] to send the control character; use ^^ to send ^");
 
                 reader.start();
                 OutputStream outstr = tc.getOutputStream();
@@ -216,6 +217,16 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                             else if((new String(buff, 0, ret_read)).startsWith("UNSPY"))
                             {
                                 tc.stopSpyStream();
+                            }
+                            else if((new String(buff, 0, ret_read)).matches("^\\^[A-Z^]\\r?\\n?$"))
+                            {
+                                byte toSend = buff[1];
+                                if (toSend == '^') {
+                                    outstr.write(toSend);
+                                } else {
+                                    outstr.write(toSend - 'A' + 1);                                   
+                                }
+                                outstr.flush();
                             }
                             else
                             {
