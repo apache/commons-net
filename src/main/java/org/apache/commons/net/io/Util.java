@@ -94,7 +94,7 @@ public final class Util
     {
         int numBytes;
         long total = 0;
-        byte[] buffer = new byte[bufferSize >= 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE];
+        byte[] buffer = new byte[bufferSize > 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE];
 
         try
         {
@@ -267,7 +267,7 @@ public final class Util
     {
         int numChars;
         long total = 0;
-        char[] buffer = new char[bufferSize >= 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE];
+        char[] buffer = new char[bufferSize > 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE];
 
         try
         {
