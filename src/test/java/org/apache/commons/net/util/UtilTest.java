@@ -30,7 +30,6 @@ import java.io.Writer;
 import java.net.Socket;
 
 import org.apache.commons.net.io.CopyStreamEvent;
-import org.apache.commons.net.io.CopyStreamException;
 import org.apache.commons.net.io.CopyStreamListener;
 import org.apache.commons.net.io.Util;
 import org.junit.Assert;
