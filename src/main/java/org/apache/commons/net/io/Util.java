@@ -92,24 +92,24 @@ public final class Util
                                         boolean flush)
     throws CopyStreamException
     {
-        int bytes;
+        int numBytes;
         long total = 0;
         byte[] buffer = new byte[bufferSize >= 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE];
 
         try
         {
-            while ((bytes = source.read(buffer)) != -1)
+            while ((numBytes = source.read(buffer)) != -1)
             {
                 // Technically, some read(byte[]) methods may return 0 and we cannot
                 // accept that as an indication of EOF.
 
-                if (bytes == 0)
+                if (numBytes == 0)
                 {
-                    bytes = source.read();
-                    if (bytes < 0) {
+                    int singleByte = source.read();
+                    if (singleByte < 0) {
                         break;
                     }
-                    dest.write(bytes);
+                    dest.write(singleByte);
                     if(flush) {
                         dest.flush();
                     }
@@ -120,13 +120,13 @@ public final class Util
                     continue;
                 }
 
-                dest.write(buffer, 0, bytes);
+                dest.write(buffer, 0, numBytes);
                 if(flush) {
                     dest.flush();
                 }
-                total += bytes;
+                total += numBytes;
                 if (listener != null) {
-                    listener.bytesTransferred(total, bytes, streamSize);
+                    listener.bytesTransferred(total, numBytes, streamSize);
                 }
             }
         }
@@ -265,23 +265,23 @@ public final class Util
                                         CopyStreamListener listener)
     throws CopyStreamException
     {
-        int chars;
+        int numChars;
         long total = 0;
         char[] buffer = new char[bufferSize >= 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE];
 
         try
         {
-            while ((chars = source.read(buffer)) != -1)
+            while ((numChars = source.read(buffer)) != -1)
             {
                 // Technically, some read(char[]) methods may return 0 and we cannot
                 // accept that as an indication of EOF.
-                if (chars == 0)
+                if (numChars == 0)
                 {
-                    chars = source.read();
-                    if (chars < 0) {
+                    int singleChar = source.read();
+                    if (singleChar < 0) {
                         break;
                     }
-                    dest.write(chars);
+                    dest.write(singleChar);
                     dest.flush();
                     ++total;
                     if (listener != null) {
@@ -290,11 +290,11 @@ public final class Util
                     continue;
                 }
 
-                dest.write(buffer, 0, chars);
+                dest.write(buffer, 0, numChars);
                 dest.flush();
-                total += chars;
+                total += numChars;
                 if (listener != null) {
-                    listener.bytesTransferred(total, chars, streamSize);
+                    listener.bytesTransferred(total, numChars, streamSize);
                 }
             }
         }
