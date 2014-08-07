@@ -137,7 +137,8 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                         ret_read = System.in.read(buff);
                         if(ret_read > 0)
                         {
-                            if((new String(buff, 0, ret_read)).startsWith("AYT"))
+                            final String line = new String(buff, 0, ret_read); // deliberate use of default charset
+                            if(line.startsWith("AYT"))
                             {
                                 try
                                 {
@@ -150,14 +151,14 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                                     System.err.println("Exception waiting AYT response: " + e.getMessage());
                                 }
                             }
-                            else if((new String(buff, 0, ret_read)).startsWith("OPT"))
+                            else if(line.startsWith("OPT"))
                             {
                                  System.out.println("Status of options:");
                                  for(int ii=0; ii<25; ii++) {
                                      System.out.println("Local Option " + ii + ":" + tc.getLocalOptionState(ii) + " Remote Option " + ii + ":" + tc.getRemoteOptionState(ii));
                                  }
                             }
-                            else if((new String(buff, 0, ret_read)).startsWith("REGISTER"))
+                            else if(line.startsWith("REGISTER"))
                             {
                                 StringTokenizer st = new StringTokenizer(new String(buff));
                                 try
@@ -187,7 +188,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                                     }
                                 }
                             }
-                            else if((new String(buff, 0, ret_read)).startsWith("UNREGISTER"))
+                            else if(line.startsWith("UNREGISTER"))
                             {
                                 StringTokenizer st = new StringTokenizer(new String(buff));
                                 try
@@ -210,15 +211,15 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                                     }
                                 }
                             }
-                            else if((new String(buff, 0, ret_read)).startsWith("SPY"))
+                            else if(line.startsWith("SPY"))
                             {
                                 tc.registerSpyStream(fout);
                             }
-                            else if((new String(buff, 0, ret_read)).startsWith("UNSPY"))
+                            else if(line.startsWith("UNSPY"))
                             {
                                 tc.stopSpyStream();
                             }
-                            else if((new String(buff, 0, ret_read)).matches("^\\^[A-Z^]\\r?\\n?$"))
+                            else if(line.matches("^\\^[A-Z^]\\r?\\n?$"))
                             {
                                 byte toSend = buff[1];
                                 if (toSend == '^') {
