@@ -103,25 +103,25 @@ public class UtilTest {
         {   // Check bufsize 2 uses chunks of 2
             Reader rdr = new CharArrayReader(buff);
             final CSLtotal listener = new CSLtotal(bufflen, 2);
-            Util.copyReader(rdr, dest, 2, 0, listener); // buffer size 2        
+            Util.copyReader(rdr, dest, 2, 0, listener); // buffer size 2
             listener.checkExpected();
         }
         {   // Check bigger size reads the lot
             Reader rdr = new CharArrayReader(buff);
             final CSLtotal listener = new CSLtotal(bufflen, bufflen);
-            Util.copyReader(rdr, dest, 20, 0, listener); // buffer size 20        
+            Util.copyReader(rdr, dest, 20, 0, listener); // buffer size 20
             listener.checkExpected();
         }
         {   // Check negative size reads reads full amount
             Reader rdr = new CharArrayReader(buff);
             final CSLtotal listener = new CSLtotal(bufflen, bufflen);
-            Util.copyReader(rdr, dest, -1, 0, listener); // buffer size -1        
+            Util.copyReader(rdr, dest, -1, 0, listener); // buffer size -1
             listener.checkExpected();
         }
         {   // Check zero size reads reads full amount
             Reader rdr = new CharArrayReader(buff);
             final CSLtotal listener = new CSLtotal(bufflen, bufflen);
-            Util.copyReader(rdr, dest, 0, 0, listener); // buffer size -1        
+            Util.copyReader(rdr, dest, 0, 0, listener); // buffer size -1
             listener.checkExpected();
         }
     }
@@ -139,25 +139,25 @@ public class UtilTest {
         {   // Check bufsize 2 uses chunks of 2
             InputStream is = new ByteArrayInputStream(buff);
             final CSLtotal listener = new CSLtotal(bufflen, 2);
-            Util.copyStream(is, dst, 2, 0, listener); // buffer size 2        
+            Util.copyStream(is, dst, 2, 0, listener); // buffer size 2
             listener.checkExpected();
         }
         {   // Check bigger size reads the lot
             InputStream is = new ByteArrayInputStream(buff);
             final CSLtotal listener = new CSLtotal(bufflen, bufflen);
-            Util.copyStream(is, dst, 20, 0, listener); // buffer size 20        
+            Util.copyStream(is, dst, 20, 0, listener); // buffer size 20
             listener.checkExpected();
         }
         {   // Check negative size reads reads full amount
             InputStream is = new ByteArrayInputStream(buff);
             final CSLtotal listener = new CSLtotal(bufflen, bufflen);
-            Util.copyStream(is, dst, -1, 0, listener); // buffer size -1        
+            Util.copyStream(is, dst, -1, 0, listener); // buffer size -1
             listener.checkExpected();
         }
         {   // Check zero size reads reads full amount
             InputStream is = new ByteArrayInputStream(buff);
             final CSLtotal listener = new CSLtotal(bufflen, bufflen);
-            Util.copyStream(is, dst, 0, 0, listener); // buffer size -1        
+            Util.copyStream(is, dst, 0, 0, listener); // buffer size -1
             listener.checkExpected();
         }
     }
@@ -180,7 +180,7 @@ public class UtilTest {
             Assert.assertEquals("Wrong streamSize", expectedSize, streamSize);
             Assert.assertEquals("Wrong bytes", expectedBytes, bytesTransferred);
         }
-        
+
     }
 
     // Class to check overall counts as well as batch size
@@ -203,11 +203,11 @@ public class UtilTest {
             this.totalBytesTransferredTotal = totalBytesTransferred;
             this.bytesTransferredTotal += bytesTransferred;
         }
-        
+
         void checkExpected() {
             Assert.assertEquals("Wrong totalBytesTransferred total", expectedTotal, totalBytesTransferredTotal);
             Assert.assertEquals("Total should equal sum of parts", totalBytesTransferredTotal, bytesTransferredTotal);
         }
-        
+
     }
 }
