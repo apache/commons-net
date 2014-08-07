@@ -68,6 +68,9 @@ This is mainly a bug-fix release. See further details below.
   IMAPExportMbox (example app) allows IMAP folders to be exported into an mbox file.
   This is the inverse of the IMAPImportMbox example added previously
         ">
+            <action issue="NET-547" type="fix" dev="sebb" due-to="Fabio Scippacercola">
+            There is a lack of documentation regarding setControlKeepAliveTimeout
+            </action>
             <action issue="NET-549" type="fix" dev="sebb" due-to="Pradeep Natarajan">
             Telnet does not convert LF to CRLF in ASCII mode
             </action>

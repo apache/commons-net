@@ -239,7 +239,12 @@ import org.apache.commons.net.io.Util;
  *     as in Ant</li>
  * </ul>see {@link  FTPClientConfig  FTPClientConfig}.
  * <p>
- * <b>Control channel keep-alive feature</b>:<br>
+ * <b>Control channel keep-alive feature</b>:
+ * <p>
+ * <b>Please note:</b> this does not apply to the methods where the user is responsible for writing or reading
+ * the data stream, i.e. {@link #retrieveFileStream(String)} , {@link #storeFileStream(String)}
+ * and the other xxxFileStream methods
+ * <p>
  * During file transfers, the data connection is busy, but the control connection is idle.
  * FTP servers know that the control connection is in use, so won't close it through lack of activity,
  * but it's a lot harder for network routers to know that the control and data connections are associated
@@ -253,14 +258,22 @@ import org.apache.commons.net.io.Util;
  *     ftpClient.setControlKeepAliveTimeout(300); // set timeout to 5 minutes
  * </pre>
  * This will cause the file upload/download methods to send a NOOP approximately every 5 minutes.
+ * The following public methods support this:
+ * <ul>
+ * <li>{@link #retrieveFile(String, OutputStream)}</li>
+ * <li>{@link #appendFile(String, InputStream)}</li>
+ * <li>{@link #storeFile(String, InputStream)}</li>
+ * <li>{@link #storeUniqueFile(InputStream)}</li>
+ * <li>{@link #storeUniqueFileStream(String)}</li>
+ * </ul>
+ * This feature does not apply to the methods where the user is responsible for writing or reading
+ * the data stream, i.e. {@link #retrieveFileStream(String)} , {@link #storeFileStream(String)}
+ * and the other xxxFileStream methods.
+ * In such cases, the user is responsible for keeping the control connection alive if necessary.
  * <p>
  * The implementation currently uses a {@link CopyStreamListener} which is passed to the
  * {@link Util#copyStream(InputStream, OutputStream, int, long, CopyStreamListener, boolean)}
  * method, so the timing is partially dependent on how long each block transfer takes.
- * <p>
- * <b>Note:</b> this does not apply to the methods where the user is responsible for writing or reading
- * the data stream, i.e. {@link #retrieveFileStream(String)} , {@link #storeFileStream(String)}
- * and the other xxxFileStream methods
  * <p>
  *
  * @see #FTP_SYSTEM_TYPE
