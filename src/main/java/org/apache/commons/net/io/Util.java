@@ -285,7 +285,7 @@ public final class Util
                     dest.flush();
                     ++total;
                     if (listener != null) {
-                        listener.bytesTransferred(total, chars, streamSize);
+                        listener.bytesTransferred(total, 1, streamSize);
                     }
                     continue;
                 }
