@@ -70,6 +70,7 @@ public final class Util
      *            A zero or negative value means to use {@link #DEFAULT_COPY_BUFFER_SIZE}.
      * @param streamSize  The number of bytes in the stream being copied.
      *          Should be set to CopyStreamEvent.UNKNOWN_STREAM_SIZE if unknown.
+     * Not currently used (though it is passed to {@link CopyStreamListener#bytesTransferred(long, int, long)}
      * @param listener  The CopyStreamListener to notify of progress.  If
      *      this parameter is null, notification is not attempted.
      * @param flush Whether to flush the output stream after every
@@ -161,6 +162,7 @@ public final class Util
      *            A zero or negative value means to use {@link #DEFAULT_COPY_BUFFER_SIZE}.
      * @param streamSize  The number of bytes in the stream being copied.
      *          Should be set to CopyStreamEvent.UNKNOWN_STREAM_SIZE if unknown.
+     * Not currently used (though it is passed to {@link CopyStreamListener#bytesTransferred(long, int, long)}
      * @param listener  The CopyStreamListener to notify of progress.  If
      *      this parameter is null, notification is not attempted.
      * @return number of bytes read/written
@@ -248,6 +250,7 @@ public final class Util
      *            A zero or negative value means to use {@link #DEFAULT_COPY_BUFFER_SIZE}.
      * @param streamSize  The number of characters in the stream being copied.
      *          Should be set to CopyStreamEvent.UNKNOWN_STREAM_SIZE if unknown.
+     * Not currently used (though it is passed to {@link CopyStreamListener#bytesTransferred(long, int, long)}
      * @param listener  The CopyStreamListener to notify of progress.  If
      *      this parameter is null, notification is not attempted.
      * @return  The number of characters read/written in the copy operation.
