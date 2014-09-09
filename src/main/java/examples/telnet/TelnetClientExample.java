@@ -274,7 +274,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
      * negotiation command.
      * <p>
      * @param negotiation_code - type of negotiation command received
-     * (RECEIVED_DO, RECEIVED_DONT, RECEIVED_WILL, RECEIVED_WONT)
+     * (RECEIVED_DO, RECEIVED_DONT, RECEIVED_WILL, RECEIVED_WONT, RECEIVED_COMMAND)
      * <p>
      * @param option_code - code of the option negotiated
      * <p>
@@ -283,21 +283,25 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
     public void receivedNegotiation(int negotiation_code, int option_code)
     {
         String command = null;
-        if(negotiation_code == TelnetNotificationHandler.RECEIVED_DO)
-        {
-            command = "DO";
-        }
-        else if(negotiation_code == TelnetNotificationHandler.RECEIVED_DONT)
-        {
-            command = "DONT";
-        }
-        else if(negotiation_code == TelnetNotificationHandler.RECEIVED_WILL)
-        {
-            command = "WILL";
-        }
-        else if(negotiation_code == TelnetNotificationHandler.RECEIVED_WONT)
-        {
-            command = "WONT";
+        switch (negotiation_code) {
+            case TelnetNotificationHandler.RECEIVED_DO:
+                command = "DO";
+                break;
+            case TelnetNotificationHandler.RECEIVED_DONT:
+                command = "DONT";
+                break;
+            case TelnetNotificationHandler.RECEIVED_WILL:
+                command = "WILL";
+                break;
+            case TelnetNotificationHandler.RECEIVED_WONT:
+                command = "WONT";
+                break;
+            case TelnetNotificationHandler.RECEIVED_COMMAND:
+                command = "COMMAND";
+                break;
+            default:
+                command = Integer.toString(negotiation_code); // Should not happen
+                break;
         }
         System.out.println("Received " + command + " for option code " + option_code);
    }
