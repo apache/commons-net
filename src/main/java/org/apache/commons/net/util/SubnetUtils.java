@@ -126,7 +126,7 @@ public class SubnetUtils {
             return isInRange(toInteger(address));
         }
 
-        private boolean isInRange(int address) {
+        public boolean isInRange(int address) {
             long addLong = address & UNSIGNED_INT_MASK;
             long lowLong = low() & UNSIGNED_INT_MASK;
             long highLong = high() & UNSIGNED_INT_MASK;

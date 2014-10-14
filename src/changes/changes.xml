@@ -68,6 +68,9 @@ This is mainly a bug-fix release. See further details below.
   IMAPExportMbox (example app) allows IMAP folders to be exported into an mbox file.
   This is the inverse of the IMAPImportMbox example added previously
         ">
+            <action issue="NET-556" type="update" dev="sebb" due-to="Andy Rosa">
+            Make SubnetInfo.isInRange(int) public
+            </action>
             <action issue="NET-550" type="fix" dev="sebb" due-to="Geoffrey Hardy">
             Default FTPClient bufferSize results in very slow retrieve transfers
             Fix code in Util#copyStream (also copyReader) that failed to use the proper default for buffer size 0
