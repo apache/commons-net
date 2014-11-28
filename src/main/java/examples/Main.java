@@ -18,6 +18,7 @@
 
 package examples;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.CodeSource;
 import java.util.Enumeration;
@@ -39,7 +40,7 @@ public class Main {
      * @throws Exception
      * @throws Exception
      */
-    public static void main(String[] args) throws Exception  {
+    public static void main(String[] args) throws Throwable  {
         if (args.length==0) {
             System.out.println("Usage: java -jar commons-net-examples-m.n.jar <exampleClass> <exampleClass parameters>");
         }
@@ -91,6 +92,15 @@ public class Main {
         Method m = clazz.getDeclaredMethod("main", new Class[]{args.getClass()});
         String[] args2 = new String[args.length-1];
         System.arraycopy(args, 1, args2, 0, args2.length);
-        m.invoke(null, (Object)args2);
+        try {
+            m.invoke(null, (Object)args2);
+        } catch (InvocationTargetException ite) {
+            Throwable cause = ite.getCause();
+            if (cause != null) {
+                throw cause;
+            } else {
+                throw ite;
+            }
+        }
     }
 }
