@@ -35,7 +35,7 @@ class IMAPUtils {
      *
      * @param uri the URI to use, e.g. imaps://user:pass@imap.mail.yahoo.com/folder
      * or imaps://user:pass@imap.googlemail.com/folder
-     * @param defaultTimeout initial timeout
+     * @param defaultTimeout initial timeout (in milliseconds)
      * @param listener for tracing protocol IO (may be null)
      * @return the IMAP client - connected and logged in
      * @throws IOException if any problems occur
