@@ -77,7 +77,7 @@ public final class IMAPExportMbox
 
     private static final int CONNECT_TIMEOUT = 10; // Seconds
     private static final int READ_TIMEOUT = 10;
-    
+
     public static void main(String[] args) throws IOException
     {
         int connect_timeout = CONNECT_TIMEOUT;
@@ -86,7 +86,7 @@ public final class IMAPExportMbox
         int argIdx = 0;
         String eol = EOL_DEFAULT;
         boolean printHash = false;
-        
+
         for(argIdx = 0; argIdx < args.length; argIdx++) {
             if (args[argIdx].equals("-c")) {
                 connect_timeout = Integer.parseInt(args[++argIdx]);
@@ -101,7 +101,6 @@ public final class IMAPExportMbox
             } else {
                 break;
             }
-            
         }
 
         int argCount = args.length - argIdx;
