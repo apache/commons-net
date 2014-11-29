@@ -3426,7 +3426,7 @@ implements Configurable
 
 
     /**
-     * Issue the FTP MDTM command (not supported by all servers to retrieve the last
+     * Issue the FTP MDTM command (not supported by all servers) to retrieve the last
      * modification time of a file. The modification string should be in the
      * ISO 3077 form "YYYYMMDDhhmmss(.xxx)?". The timestamp represented should also be in
      * GMT, but not all FTP servers honour this.
@@ -3438,7 +3438,7 @@ implements Configurable
      */
     public String getModificationTime(String pathname) throws IOException {
         if (FTPReply.isPositiveCompletion(mdtm(pathname))) {
-            return getReplyString();
+            return getReplyString().substring(4); // skip the return code (e.g. 213) and the space
         }
         return null;
     }
