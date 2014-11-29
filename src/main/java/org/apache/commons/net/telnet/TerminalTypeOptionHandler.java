@@ -111,26 +111,4 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler
         }
         return null;
     }
-
-    /***
-     * Implements the abstract method of TelnetOptionHandler.
-     * <p>
-     * @return always null (no response to subnegotiation)
-     ***/
-    @Override
-    public int[] startSubnegotiationLocal()
-    {
-        return null;
-    }
-
-    /***
-     * Implements the abstract method of TelnetOptionHandler.
-     * <p>
-     * @return always null (no response to subnegotiation)
-     ***/
-    @Override
-    public int[] startSubnegotiationRemote()
-    {
-        return null;
-    }
 }

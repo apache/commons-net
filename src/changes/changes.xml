@@ -68,6 +68,9 @@ This is mainly a bug-fix release. See further details below.
   IMAPExportMbox (example app) allows IMAP folders to be exported into an mbox file.
   This is the inverse of the IMAPImportMbox example added previously
         ">
+            <action issue="NET-554" type="update" dev="sebb">
+            Simplify TelnetOptionHandler class hierarchy
+            </action>
             <action issue="NET-558" type="fix" dev="sebb" due-to="Ralph Becker">
             FTPClient.getModificationTime(filename) returns complete received line including response code
             </action>

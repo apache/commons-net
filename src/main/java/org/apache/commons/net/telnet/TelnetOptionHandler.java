@@ -191,7 +191,9 @@ public abstract class TelnetOptionHandler
     /***
      * Method called upon reception of a subnegotiation for this option
      * coming from the other end.
-     * Must be implemented by the actual TelnetOptionHandler to specify
+     * <p>
+     * This implementation returns null, and
+     * must be overridden by the actual TelnetOptionHandler to specify
      * which response must be sent for the subnegotiation request.
      * <p>
      * @param suboptionData - the sequence received, without IAC SB &amp; IAC SE
@@ -200,8 +202,9 @@ public abstract class TelnetOptionHandler
      * @return response to be sent to the subnegotiation sequence. TelnetClient
      * will add IAC SB &amp; IAC SE. null means no response
      ***/
-    public abstract int[] answerSubnegotiation(int suboptionData[],
-                            int suboptionLength);
+    public int[] answerSubnegotiation(int suboptionData[], int suboptionLength) {
+        return null;
+    }
 
     /***
      * This method is invoked whenever this option is acknowledged active on
@@ -209,10 +212,15 @@ public abstract class TelnetOptionHandler
      * The method is used to specify a subnegotiation sequence that will be
      * sent by TelnetClient when the option is activated.
      * <p>
+     * This implementation returns null, and must be overriden by 
+     * the actual TelnetOptionHandler to specify
+     * which response must be sent for the subnegotiation request.
      * @return subnegotiation sequence to be sent by TelnetClient. TelnetClient
      * will add IAC SB &amp; IAC SE. null means no subnegotiation.
      ***/
-    public abstract int[] startSubnegotiationLocal();
+    public int[] startSubnegotiationLocal() {
+        return null;
+    }
 
     /***
      * This method is invoked whenever this option is acknowledged active on
@@ -220,10 +228,15 @@ public abstract class TelnetOptionHandler
      * The method is used to specify a subnegotiation sequence that will be
      * sent by TelnetClient when the option is activated.
      * <p>
+     * This implementation returns null, and must be overriden by 
+     * the actual TelnetOptionHandler to specify
+     * which response must be sent for the subnegotiation request.
      * @return subnegotiation sequence to be sent by TelnetClient. TelnetClient
      * will add IAC SB &amp; IAC SE. null means no subnegotiation.
      ***/
-    public abstract int[] startSubnegotiationRemote();
+    public int[] startSubnegotiationRemote() {
+        return null;
+    }
 
     /***
      * Returns a boolean indicating whether a WILL request sent to the other

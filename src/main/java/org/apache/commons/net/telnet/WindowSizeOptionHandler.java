@@ -99,20 +99,6 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
 
     /***
      * Implements the abstract method of TelnetOptionHandler.
-     * <p>
-     * @param suboptionData - the sequence received, without IAC SB &amp; IAC SE
-     * @param suboptionLength - the length of data in suboption_data
-     * <p>
-     * @return terminal type information
-     ***/
-    @Override
-    public int[] answerSubnegotiation(int suboptionData[], int suboptionLength)
-    {
-        return null;
-    }
-
-    /***
-     * Implements the abstract method of TelnetOptionHandler.
      * This will send the client Height and Width to the server.
      * <p>
      * @return array to send to remote system
@@ -175,14 +161,4 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
         return response;
     }
 
-    /***
-     * Implements the abstract method of TelnetOptionHandler.
-     * <p>
-     * @return always null (no response to subnegotiation)
-     ***/
-    @Override
-    public int[] startSubnegotiationRemote()
-    {
-        return null;
-    }
 }

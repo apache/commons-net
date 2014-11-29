@@ -51,39 +51,4 @@ public class SuppressGAOptionHandler extends TelnetOptionHandler
         super(TelnetOption.SUPPRESS_GO_AHEAD, false, false, false, false);
     }
 
-    /***
-     * Implements the abstract method of TelnetOptionHandler.
-     * <p>
-     * @param suboptionData - the sequence received, without IAC SB &amp; IAC SE
-     * @param suboptionLength - the length of data in suboption_data
-     * <p>
-     * @return always null (no response to subnegotiation)
-     ***/
-    @Override
-    public int[] answerSubnegotiation(int suboptionData[], int suboptionLength)
-    {
-        return null;
-    }
-
-    /***
-     * Implements the abstract method of TelnetOptionHandler.
-     * <p>
-     * @return always null (no response to subnegotiation)
-     ***/
-    @Override
-    public int[] startSubnegotiationLocal()
-    {
-        return null;
-    }
-
-    /***
-     * Implements the abstract method of TelnetOptionHandler.
-     * <p>
-     * @return always null (no response to subnegotiation)
-     ***/
-    @Override
-    public int[] startSubnegotiationRemote()
-    {
-        return null;
-    }
 }
