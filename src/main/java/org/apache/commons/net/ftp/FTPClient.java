@@ -69,6 +69,7 @@ import org.apache.commons.net.io.Util;
  *    FTPClient ftp = new FTPClient();
  *    FTPClientConfig config = new FTPClientConfig();
  *    config.setXXX(YYY); // change required options
+ *    // for example config.setServerTimeZoneId("Pacific/Pitcairn")
  *    ftp.configure(config );
  *    boolean error = false;
  *    try {
@@ -1911,10 +1912,12 @@ implements Configurable
      * InputStream will convert line separators in the file to
      * the local representation.  You must close the InputStream when you
      * finish reading from it.  The InputStream itself will take care of
-     * closing the parent data connection socket upon being closed.  To
-     * finalize the file transfer you must call
+     * closing the parent data connection socket upon being closed.
+     * <p> 
+     * <b>To finalize the file transfer you must call
      * {@link #completePendingCommand  completePendingCommand } and
-     * check its return value to verify success.
+     * check its return value to verify success.</b>
+     * If this is not done, subsequent commands may behave unexpectedly.
      * <p>
      * Note: if you have used {@link #setRestartOffset(long)},
      * the file data will start from the selected offset.
@@ -2005,9 +2008,12 @@ implements Configurable
      * create a special OutputStream to do this).  You must close the
      * OutputStream when you finish writing to it.  The OutputStream itself
      * will take care of closing the parent data connection socket upon being
-     * closed.  To finalize the file transfer you must call
+     * closed.
+     * <p> 
+     * <b>To finalize the file transfer you must call
      * {@link #completePendingCommand  completePendingCommand } and
-     * check its return value to verify success.
+     * check its return value to verify success.</b>
+     * If this is not done, subsequent commands may behave unexpectedly.
      * <p>
      * @param remote  The name to give the remote file.
      * @return An OutputStream through which the remote file can be written.  If
@@ -2066,9 +2072,12 @@ implements Configurable
      * create a special OutputStream to do this).  You must close the
      * OutputStream when you finish writing to it.  The OutputStream itself
      * will take care of closing the parent data connection socket upon being
-     * closed.  To finalize the file transfer you must call
+     * closed.
+     * <p> 
+     * <b>To finalize the file transfer you must call
      * {@link #completePendingCommand  completePendingCommand } and
-     * check its return value to verify success.
+     * check its return value to verify success.</b>
+     * If this is not done, subsequent commands may behave unexpectedly.
      * <p>
      * @param remote  The name of the remote file.
      * @return An OutputStream through which the remote file can be appended.
@@ -2130,9 +2139,12 @@ implements Configurable
      * create a special OutputStream to do this).  You must close the
      * OutputStream when you finish writing to it.  The OutputStream itself
      * will take care of closing the parent data connection socket upon being
-     * closed.  To finalize the file transfer you must call
+     * closed.
+     * <p> 
+     * <b>To finalize the file transfer you must call
      * {@link #completePendingCommand  completePendingCommand } and
-     * check its return value to verify success.
+     * check its return value to verify success.</b>
+     * If this is not done, subsequent commands may behave unexpectedly.
      * <p>
      * @param remote  The name on which to base the unique name given to
      *                the remote file.
@@ -2191,9 +2203,12 @@ implements Configurable
      * create a special OutputStream to do this).  You must close the
      * OutputStream when you finish writing to it.  The OutputStream itself
      * will take care of closing the parent data connection socket upon being
-     * closed.  To finalize the file transfer you must call
+     * closed.
+     * <p> 
+     * <b>To finalize the file transfer you must call
      * {@link #completePendingCommand  completePendingCommand } and
-     * check its return value to verify success.
+     * check its return value to verify success.</b>
+     * If this is not done, subsequent commands may behave unexpectedly.
      * <p>
      * @return An OutputStream through which the remote file can be written.  If
      *      the data connection cannot be opened (e.g., the file does not
