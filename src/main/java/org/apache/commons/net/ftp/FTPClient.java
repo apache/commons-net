@@ -3268,9 +3268,16 @@ implements Configurable
             String parserKey, String pathname)
     throws IOException
     {
+        __createParser(parserKey); // create and cache parser
+        return initiateListParsing(__entryParser, pathname);
+    }
+
+    // package access for test purposes
+    void __createParser(String parserKey) throws IOException {
         // We cache the value to avoid creation of a new object every
         // time a file listing is generated.
-        if(__entryParser == null ||  ! __entryParserKey.equals(parserKey)) {
+        // Note: we don't check against a null parserKey (NET-544)
+        if(__entryParser == null ||  (parserKey != null && ! __entryParserKey.equals(parserKey))) {
             if (null != parserKey) {
                 // if a parser key was supplied in the parameters,
                 // use that to create the parser
@@ -3307,7 +3314,6 @@ implements Configurable
             }
         }
 
-        return initiateListParsing(__entryParser, pathname);
 
     }
 
@@ -3782,6 +3788,11 @@ implements Configurable
     public boolean getAutodetectUTF8()
     {
         return __autodetectEncoding;
+    }
+
+    // Method for use by unit test code only
+    FTPFileEntryParser getEntryParser() {
+        return __entryParser;
     }
 
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE

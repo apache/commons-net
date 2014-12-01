@@ -18,6 +18,8 @@
 
 package org.apache.commons.net.ftp;
 
+import java.io.IOException;
+
 import junit.framework.TestCase;
 
 public class FTPClientTest extends TestCase {
@@ -58,4 +60,44 @@ public class FTPClientTest extends TestCase {
         }
     }
 
+    public void testParserCachingWithKey() throws Exception {
+        FTPClient client = new FTPClient();
+        assertNull(client.getEntryParser());
+        client.__createParser(FTPClientConfig.SYST_UNIX);
+        final FTPFileEntryParser entryParserSYST = client.getEntryParser();
+        assertNotNull(entryParserSYST);
+        client.__createParser(FTPClientConfig.SYST_UNIX);
+        assertSame(entryParserSYST, client.getEntryParser()); // the previous entry was cached
+        client.__createParser(FTPClientConfig.SYST_VMS);
+        final FTPFileEntryParser entryParserVMS = client.getEntryParser();
+        assertNotSame(entryParserSYST, entryParserVMS); // the previous entry was replaced
+        client.__createParser(FTPClientConfig.SYST_VMS);
+        assertSame(entryParserVMS, client.getEntryParser()); // the previous entry was cached
+        client.__createParser(FTPClientConfig.SYST_UNIX); // revert
+        assertNotSame(entryParserVMS, client.getEntryParser()); // the previous entry was replaced
+    }
+
+    private static class LocalClient extends FTPClient {
+        private String systemType;
+        @Override
+        public String getSystemType() throws IOException {
+            return systemType;
+        }
+        public void setSystemType(String type) {
+            systemType = type;
+        }
+    }
+    public void testParserCachingNullKey() throws Exception {
+        LocalClient client = new LocalClient();
+        client.setSystemType(FTPClientConfig.SYST_UNIX);
+        assertNull(client.getEntryParser());
+        client.__createParser(null);
+        final FTPFileEntryParser entryParser = client.getEntryParser();
+        assertNotNull(entryParser);
+        client.__createParser(null);
+        assertSame(entryParser, client.getEntryParser()); // parser was cached
+        client.setSystemType(FTPClientConfig.SYST_NT);
+        client.__createParser(null);
+        assertSame(entryParser, client.getEntryParser()); // parser was cached
+    }
 }
