@@ -2926,6 +2926,12 @@ implements Configurable
      * the returned array is determined by the<code> FTPFileEntryParser </code>
      * used.
      * <p>
+     * N.B. the LIST command does not generally return very precise timestamps.
+     * For recent files, the response usually contains hours and minutes (not seconds).
+     * For older files, the output may only contain a date.
+     * If the server supports it, the MLSD command returns timestamps with a precision
+     * of seconds, and may include milliseconds. See {@link #mlistDir()}
+     * <p>
      * @param pathname  The file or directory to list.  Since the server may
      *                  or may not expand glob expressions, using them here
      *                  is not recommended and may well cause this method to
@@ -2978,6 +2984,12 @@ implements Configurable
      * This information is obtained through the LIST command.  The contents of
      * the returned array is determined by the<code> FTPFileEntryParser </code>
      * used.
+     * <p>
+     * N.B. the LIST command does not generally return very precise timestamps.
+     * For recent files, the response usually contains hours and minutes (not seconds).
+     * For older files, the output may only contain a date.
+     * If the server supports it, the MLSD command returns timestamps with a precision
+     * of seconds, and may include milliseconds. See {@link #mlistDir()}
      * <p>
      * @return The list of file information contained in the current directory
      *         in the format determined by the autodetection mechanism.
@@ -3041,6 +3053,12 @@ implements Configurable
      * the returned array is determined by the<code> FTPFileEntryParser </code>
      * used.
      * <p>
+     * N.B. the LIST command does not generally return very precise timestamps.
+     * For recent files, the response usually contains hours and minutes (not seconds).
+     * For older files, the output may only contain a date.
+     * If the server supports it, the MLSD command returns timestamps with a precision
+     * of seconds, and may include milliseconds. See {@link #mlistDir()}
+     * <p>
      * @return The list of directories contained in the current directory
      *         in the format determined by the autodetection mechanism.
      *
@@ -3081,6 +3099,12 @@ implements Configurable
      * This information is obtained through the LIST command.  The contents of
      * the returned array is determined by the<code> FTPFileEntryParser </code>
      * used.
+     * <p>
+     * N.B. the LIST command does not generally return very precise timestamps.
+     * For recent files, the response usually contains hours and minutes (not seconds).
+     * For older files, the output may only contain a date.
+     * If the server supports it, the MLSD command returns timestamps with a precision
+     * of seconds, and may include milliseconds. See {@link #mlistDir()}
      * <p>
      * @return The list of directories contained in the specified directory
      *         in the format determined by the autodetection mechanism.
