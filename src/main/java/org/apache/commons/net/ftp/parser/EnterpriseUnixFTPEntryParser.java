@@ -50,16 +50,20 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
     private static final String REGEX =
         "(([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])"
         + "([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z])([\\-]|[A-Z]))"
-        + "(\\S*)\\s*"
-        + "(\\S+)\\s*"
-        + "(\\S*)\\s*"
-        + "(\\d*)\\s*"
-        + "(\\d*)\\s*"
-        + MONTHS
-        + "\\s*"
-        + "((?:[012]\\d*)|(?:3[01]))\\s*"
-        + "((\\d\\d\\d\\d)|((?:[01]\\d)|(?:2[0123])):([012345]\\d))\\s"
-        + "(\\S*)(\\s*.*)";
+        + "(\\S*)\\s*" // 12
+        + "(\\S+)\\s*" // 13
+        + "(\\S*)\\s*" // 14 user
+        + "(\\d*)\\s*" // 15 group
+        + "(\\d*)\\s*" // 16 filesize
+        + MONTHS       // 17 month
+        + "\\s*"       // TODO should the space be optional?
+        // TODO \\d* should be \\d? surely ? Otherwise 01111 is allowed
+        + "((?:[012]\\d*)|(?:3[01]))\\s*" // 18 date [012]\d* or 3[01]
+        + "((\\d\\d\\d\\d)|((?:[01]\\d)|(?:2[0123])):([012345]\\d))\\s" 
+        // 20 \d\d\d\d  = year  OR 
+        // 21 [01]\d or 2[0123] hour + ':'
+        // 22 [012345]\d = minute
+        + "(\\S*)(\\s*.*)"; // 23 name
 
     /**
      * The sole constructor for a EnterpriseUnixFTPEntryParser object.
@@ -123,7 +127,7 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
                 int month = pos / 4;
                 if (yr != null)
                 {
-                    // it's a year
+                    // it's a year; there are no hours and minutes
                     cal.set(Calendar.YEAR, Integer.parseInt(yr));
                 }
                 else
