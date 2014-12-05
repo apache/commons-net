@@ -68,6 +68,9 @@ This is mainly a bug-fix release. See further details below.
   IMAPExportMbox (example app) allows IMAP folders to be exported into an mbox file.
   This is the inverse of the IMAPImportMbox example added previously
         ">
+            <action issue="NET-561" type="fix" dev="sebb">
+            FTPFile.toFormattedString prints user and group in wrong order
+            </action>
             <action issue="NET-544" type="fix" dev="sebb" due-to="Olivier Queyrut ">
             FTPClient.initiateListParsing does not correctly check if parserKey was cached
             </action>
