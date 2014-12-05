@@ -41,7 +41,9 @@ public class FTPTimestampParserImpl implements
 {
 
 
+    /** The date format for all dates, except possibly recent dates. Assumed to include the year. */
     private SimpleDateFormat defaultDateFormat;
+    /** The format used for recent dates (which don't have the year). May be null. */
     private SimpleDateFormat recentDateFormat;
     private boolean lenientFutureDates = false;
 
