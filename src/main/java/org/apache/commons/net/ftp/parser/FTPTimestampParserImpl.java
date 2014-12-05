@@ -104,7 +104,7 @@ public class FTPTimestampParserImpl implements
             if (lenientFutureDates) {
                 // add a day to "now" so that "slop" doesn't cause a date
                 // slightly in the future to roll back a full year.  (Bug 35181 => NET-83)
-                now.add(Calendar.DATE, 1);
+                now.add(Calendar.DAY_OF_MONTH, 1);
             }
             // The Java SimpleDateFormat class uses the epoch year 1970 if not present in the input
             // As 1970 was not a leap year, it cannot parse "Feb 29" correctly.

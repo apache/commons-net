@@ -83,7 +83,7 @@ public class FTPConfigEntryParserTest extends TestCase {
         Calendar cal = Calendar.getInstance();
 
         cal.set(Calendar.MONTH, Calendar.MARCH);
-        cal.set(Calendar.DATE, 2);
+        cal.set(Calendar.DAY_OF_MONTH, 2);
         cal.set(Calendar.HOUR_OF_DAY, 16);
         cal.set(Calendar.MINUTE, 27);
         cal.set(Calendar.SECOND, 0);
@@ -145,7 +145,7 @@ public class FTPConfigEntryParserTest extends TestCase {
         Calendar cal = Calendar.getInstance();
 
         cal.set(Calendar.MONTH, Calendar.MARCH);
-        cal.set(Calendar.DATE, 2);
+        cal.set(Calendar.DAY_OF_MONTH, 2);
         cal.set(Calendar.HOUR_OF_DAY, 18);
         cal.set(Calendar.MINUTE, 06);
         cal.set(Calendar.SECOND, 0);

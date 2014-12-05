@@ -98,7 +98,7 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
         cal.set(Calendar.MONTH, Calendar.MARCH);
 
         cal.set(Calendar.YEAR, 2004);
-        cal.set(Calendar.DATE, 24);
+        cal.set(Calendar.DAY_OF_MONTH, 24);
         cal.set(Calendar.HOUR_OF_DAY, 14);
         cal.set(Calendar.MINUTE, 6);
         cal.set(Calendar.SECOND, 34);
@@ -134,7 +134,7 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
 
         Calendar cal = Calendar.getInstance();
 
-        cal.set(Calendar.DATE, 24);
+        cal.set(Calendar.DAY_OF_MONTH, 24);
         cal.set(Calendar.MONTH, Calendar.MARCH);
         cal.set(Calendar.YEAR, 2004);
         cal.set(Calendar.HOUR_OF_DAY, 14);

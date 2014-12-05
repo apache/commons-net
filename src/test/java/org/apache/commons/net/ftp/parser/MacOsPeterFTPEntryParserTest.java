@@ -77,14 +77,14 @@ public class MacOsPeterFTPEntryParserTest extends FTPParseTestFramework {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MONTH, Calendar.MARCH);
 
-        cal.set(Calendar.DATE, 1);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         if (f.getTimestamp().getTime().before(cal.getTime())) {
             cal.add(Calendar.YEAR, -1);
         }
-        cal.set(Calendar.DATE, 2);
+        cal.set(Calendar.DAY_OF_MONTH, 2);
         cal.set(Calendar.HOUR_OF_DAY, 15);
         cal.set(Calendar.MINUTE, 13);
 
@@ -109,14 +109,14 @@ public class MacOsPeterFTPEntryParserTest extends FTPParseTestFramework {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MONTH, Calendar.JULY);
 
-        cal.set(Calendar.DATE, 1);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         if (f.getTimestamp().getTime().before(cal.getTime())) {
             cal.add(Calendar.YEAR, -1);
         }
-        cal.set(Calendar.DATE, 2);
+        cal.set(Calendar.DAY_OF_MONTH, 2);
         cal.set(Calendar.HOUR_OF_DAY, 14);
         cal.set(Calendar.MINUTE, 51);
         assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp().getTime()));

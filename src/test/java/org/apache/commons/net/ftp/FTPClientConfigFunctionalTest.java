@@ -155,7 +155,7 @@ public class FTPClientConfigFunctionalTest extends TestCase {
             // and, in particular, that no files have been considered "future"
             // by the parser and therefore been relegated to the same date a
             // year ago.
-            first.add(Calendar.DATE, 2);
+            first.add(Calendar.DAY_OF_MONTH, 2);
             assertTrue(lastfile.getTimestamp().getTime().toString()+" before "+ first.getTime().toString(),lastfile.getTimestamp().before(first));
         }
     }

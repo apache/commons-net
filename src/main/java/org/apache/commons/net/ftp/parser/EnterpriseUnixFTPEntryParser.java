@@ -142,7 +142,7 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
                     cal.set(Calendar.MINUTE, Integer.parseInt(min));
                 }
                 cal.set(Calendar.MONTH, month);
-                cal.set(Calendar.DATE, Integer.parseInt(da));
+                cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(da));
                 file.setTimestamp(cal);
             }
             catch (NumberFormatException e)

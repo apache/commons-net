@@ -68,7 +68,7 @@ public class FTPTimestampParserImplTest extends TestCase {
         Calendar caltemp = (Calendar) cal.clone();
         caltemp.add(Calendar.HOUR_OF_DAY, 1);
         Date anHourFromNow = caltemp.getTime();
-        caltemp.add(Calendar.DATE, 1);
+        caltemp.add(Calendar.DAY_OF_MONTH, 1);
         Date anHourFromNowTomorrow = caltemp.getTime();
 
         FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
