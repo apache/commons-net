@@ -112,13 +112,10 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
             }
 
             Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.MILLISECOND, 0);
-            cal.set(Calendar.SECOND,
-                    0);
-            cal.set(Calendar.MINUTE,
-                    0);
-            cal.set(Calendar.HOUR_OF_DAY,
-                    0);
+            cal.set(Calendar.MILLISECOND, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
             try
             {
 
@@ -127,8 +124,7 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
                 if (yr != null)
                 {
                     // it's a year
-                    cal.set(Calendar.YEAR,
-                            Integer.parseInt(yr));
+                    cal.set(Calendar.YEAR, Integer.parseInt(yr));
                 }
                 else
                 {
@@ -141,17 +137,12 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
                     {
                         year--;
                     }
-                    cal.set(Calendar.YEAR,
-                            year);
-                    cal.set(Calendar.HOUR_OF_DAY,
-                            Integer.parseInt(hr));
-                    cal.set(Calendar.MINUTE,
-                            Integer.parseInt(min));
+                    cal.set(Calendar.YEAR, year);
+                    cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hr));
+                    cal.set(Calendar.MINUTE, Integer.parseInt(min));
                 }
-                cal.set(Calendar.MONTH,
-                        month);
-                cal.set(Calendar.DATE,
-                        Integer.parseInt(da));
+                cal.set(Calendar.MONTH, month);
+                cal.set(Calendar.DATE, Integer.parseInt(da));
                 file.setTimestamp(cal);
             }
             catch (NumberFormatException e)
