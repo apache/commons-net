@@ -346,6 +346,7 @@ public class FTPFile implements Serializable
      * @param permission The access permission (one of the
      *               <code> _PERMISSION </code> constants)
      * @param value  True if permission is allowed, false if not.
+     * @throws ArrayIndexOutOfBoundsException if either of the parameters is out of range
      ***/
     public void setPermission(int access, int permission, boolean value)
     {
