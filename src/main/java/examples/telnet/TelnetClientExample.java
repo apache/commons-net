@@ -225,7 +225,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                                 if (toSend == '^') {
                                     outstr.write(toSend);
                                 } else {
-                                    outstr.write(toSend - 'A' + 1);                                   
+                                    outstr.write(toSend - 'A' + 1);
                                 }
                                 outstr.flush();
                             }
