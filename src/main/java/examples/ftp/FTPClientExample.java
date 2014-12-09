@@ -72,6 +72,7 @@ public final class FTPClientExample
         "\t-t - list file details using MLST (remote is used as the pathname if provided)\n" +
         "\t-w msec - wait time for keep-alive reply (setControlKeepAliveReplyTimeout)\n" +
         "\t-T  all|valid|none - use one of the built-in TrustManager implementations (none = JVM default)\n" +
+        "\t-Z timezone - set the server timezone for parsing LIST responses\n" +
         "\t-PrH server[:port] - HTTP Proxy host and optional port[80] \n" +
         "\t-PrU user - HTTP Proxy server username\n" +
         "\t-PrP password - HTTP Proxy server password\n" +
@@ -96,6 +97,8 @@ public final class FTPClientExample
         String username = null;
         String password = null;
         String encoding = null;
+        String serverTimeZoneId = null;
+
 
         int base = 0;
         for (base = 0; base < args.length; base++)
@@ -160,6 +163,9 @@ public final class FTPClientExample
             }
             else if (args[base].equals("-T")) {
                 trustmgr = args[++base];
+            }
+            else if (args[base].equals("-Z")) {
+                serverTimeZoneId = args[++base];
             }
             else if (args[base].equals("-PrH")) {
                 proxyHost = args[++base];
@@ -346,9 +352,12 @@ __main:
             }
             else if (listFiles)
             {
-                if (lenient) {
+                if (lenient || serverTimeZoneId != null) {
                     FTPClientConfig config = new FTPClientConfig();
-                    config.setLenientFutureDates(true);
+                    config.setLenientFutureDates(lenient);
+                    if (serverTimeZoneId != null) {
+                        config.setServerTimeZoneId(serverTimeZoneId);
+                    }
                     ftp.configure(config );
                 }
 
