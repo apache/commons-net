@@ -386,11 +386,29 @@ public class FTPFile implements Serializable
     /***
      * Returns a string representation of the FTPFile information.
      * This currently mimics the Unix listing format.
+     * This method uses the timezone of the Calendar entry, which is
+     * the server time zone (if one was provided) otherwise it is
+     * the local time zone.
      *
      * @return A string representation of the FTPFile information.
      * @since 3.0
      */
     public String toFormattedString()
+    {
+        return toFormattedString(null);
+    }
+
+    /**
+     * Returns a string representation of the FTPFile information.
+     * This currently mimics the Unix listing format.
+     * This method allows the Calendar time zone to be overridden.
+     *
+     * @param timezone the timezone to use for displaying the time stamp
+     * If {@code null}, then use the Calendar entry timezone
+     * @return A string representation of the FTPFile information.
+     * @since 3.4
+     */
+    public String toFormattedString(final String timezone)
     {
         StringBuilder sb = new StringBuilder();
         Formatter fmt = new Formatter(sb);
@@ -403,6 +421,15 @@ public class FTPFile implements Serializable
         fmt.format(" %8d", Long.valueOf(getSize()));
         Calendar timestamp = getTimestamp();
         if (timestamp != null) {
+            if (timezone != null) {
+                TimeZone newZone = TimeZone.getTimeZone(timezone);
+                if (!newZone.equals(timestamp.getTimeZone())){
+                    Date original = timestamp.getTime();
+                    Calendar newStamp = Calendar.getInstance(newZone);
+                    newStamp.setTime(original);
+                    timestamp = newStamp;
+                }
+            }
             fmt.format(" %1$tY-%1$tm-%1$td", timestamp);
             // Only display time units if they are present
             if (timestamp.isSet(Calendar.HOUR_OF_DAY)) {
