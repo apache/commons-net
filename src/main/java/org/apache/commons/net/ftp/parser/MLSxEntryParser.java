@@ -184,17 +184,24 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
      * @since 3.4
      */
     public static Calendar parseGMTdateTime(String timestamp) {
-        SimpleDateFormat sdf;
+        final SimpleDateFormat sdf;
+        final boolean hasMillis;
         if (timestamp.contains(".")){
             sdf = new SimpleDateFormat("yyyyMMddHHmmss.SSS");
+            hasMillis = true;
         } else {
             sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+            hasMillis = false;
         }
-        TimeZone GMT = TimeZone.getTimeZone("GMT"); // both need to be set for the parse to work OK
+        TimeZone GMT = TimeZone.getTimeZone("GMT");
+        // both timezones need to be set for the parse to work OK
         sdf.setTimeZone(GMT);
         GregorianCalendar gc = new GregorianCalendar(GMT);
         try {
             gc.setTime(sdf.parse(timestamp));
+            if (!hasMillis) {
+                gc.clear(Calendar.MILLISECOND); // flag up missing ms units
+            }
             return gc;
         } catch (ParseException e) {
             return null;
