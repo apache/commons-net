@@ -25,11 +25,6 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
@@ -375,10 +370,8 @@ __main:
                     }
                 }
                 if (mdtm) {
-                    FTPFile f = new FTPFile();
-                    f.setName(remote);
-                    String stamp = ftp.getModificationTime(remote);
-                    f.setTimestamp(parseGMTdate(stamp) ); // parse the returned string
+                    FTPFile f = ftp.mdtmFile(remote);
+                    System.out.println(f.getRawListing());
                     System.out.println(f.toFormattedString(displayTimeZoneId));
                 }
                 if (mlst) {
@@ -517,30 +510,6 @@ __main:
                 megsTotal = megs;
             }
         };
-    }
-
-    private static Calendar parseGMTdate(String gmtTimeStamp) {
-        SimpleDateFormat sdf;
-        final boolean hasMillis;
-        if (gmtTimeStamp.contains(".")){
-            sdf = new SimpleDateFormat("yyyyMMddHHmmss.SSS");
-            hasMillis = true;
-        } else {
-            sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-            hasMillis = false;
-        }
-        TimeZone GMT = TimeZone.getTimeZone("GMT"); // both need to be set for the parse to work OK
-        sdf.setTimeZone(GMT);
-        GregorianCalendar gc = new GregorianCalendar(GMT);
-        try {
-            gc.setTime(sdf.parse(gmtTimeStamp));
-            if (!hasMillis) {
-                gc.clear(Calendar.MILLISECOND);
-            }
-        } catch (ParseException e) {
-            // TODO ??
-        }
-        return gc;
     }
 }
 
