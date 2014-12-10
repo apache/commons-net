@@ -68,8 +68,12 @@ This is mainly a bug-fix release. See further details below.
   IMAPExportMbox (example app) allows IMAP folders to be exported into an mbox file.
   This is the inverse of the IMAPImportMbox example added previously
         ">
+            <action issue="NET-565" type="update" dev="sebb">
+            Add FTPClient method to return an FTPFile from an MDTM command
+            </action>
             <action issue="NET-564" type="update" dev="sebb">
             FTPFile.toFormattedString - allow specification of TimeZone for display
+            </action>
             <action issue="NET-562" type="update" dev="sebb">
             FTPFile.toFormattedString should print only signficant parts of the parsed date
             </action>

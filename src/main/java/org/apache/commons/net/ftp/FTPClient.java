@@ -3490,6 +3490,31 @@ implements Configurable
 
 
     /**
+     * Issue the FTP MDTM command (not supported by all servers) to retrieve the last
+     * modification time of a file. The modification string should be in the
+     * ISO 3077 form "YYYYMMDDhhmmss(.xxx)?". The timestamp represented should also be in
+     * GMT, but not all FTP servers honour this.
+     *
+     * @param pathname The file path to query.
+     * @return A FTPFile representing the last file modification time, may be {@code null}.
+     * The FTPFile timestamp will be null if a parse error occurs.
+     * @throws IOException if an I/O error occurs.
+     * @since 3.4
+     */
+    public FTPFile mdtmFile(String pathname) throws IOException {
+        if (FTPReply.isPositiveCompletion(mdtm(pathname))) {
+            String reply = getReplyStrings()[0].substring(4); // skip the return code (e.g. 213) and the space
+            FTPFile file = new FTPFile();
+            file.setName(pathname);
+            file.setRawListing(reply);
+            file.setTimestamp(MLSxEntryParser.parseGMTdateTime(reply));
+            return file;
+        }
+        return null;
+    }
+
+
+    /**
      * Issue the FTP MFMT command (not supported by all servers) which sets the last
      * modified time of a file.
      *

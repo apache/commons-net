@@ -18,6 +18,7 @@
 package org.apache.commons.net.ftp.parser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -138,22 +139,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                 file.setSize(Long.parseLong(factvalue));
             }
             else if ("modify".equals(factname)) {
-                // YYYYMMDDHHMMSS[.sss]
-                SimpleDateFormat sdf; // Not thread-safe
-                if (factvalue.contains(".")){
-                    sdf = new SimpleDateFormat("yyyyMMddHHmmss.SSS");
-                } else {
-                    sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-                }
-                TimeZone GMT = TimeZone.getTimeZone("GMT"); // both need to be set for the parse to work OK
-                sdf.setTimeZone(GMT);
-                GregorianCalendar gc = new GregorianCalendar(GMT);
-                try {
-                    gc.setTime(sdf.parse(factvalue));
-                    file.setTimestamp(gc);
-                } catch (ParseException e) {
-                    // TODO ??
-                }
+                file.setTimestamp(parseGMTdateTime(factvalue));
             }
             else if ("type".equals(factname)) {
                     Integer intType = TYPE_TO_INT.get(valueLowerCase);
@@ -188,6 +174,30 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
             } // process "perm"
         } // each fact
         return file;
+    }
+
+    /**
+     * Parse a GMT time stamp of the form YYYYMMDDHHMMSS[.sss]
+     *
+     * @param timestamp the date-time to parse
+     * @return a Calendar entry, may be {@code null} 
+     */
+    public static Calendar parseGMTdateTime(String timestamp) {
+        SimpleDateFormat sdf;
+        if (timestamp.contains(".")){
+            sdf = new SimpleDateFormat("yyyyMMddHHmmss.SSS");
+        } else {
+            sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        }
+        TimeZone GMT = TimeZone.getTimeZone("GMT"); // both need to be set for the parse to work OK
+        sdf.setTimeZone(GMT);
+        GregorianCalendar gc = new GregorianCalendar(GMT);
+        try {
+            gc.setTime(sdf.parse(timestamp));
+            return gc;
+        } catch (ParseException e) {
+            return null;
+        }
     }
 
     //              perm-fact    = "Perm" "=" *pvals
