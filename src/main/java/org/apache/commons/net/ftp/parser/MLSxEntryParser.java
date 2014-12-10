@@ -16,9 +16,10 @@
  */
 
 package org.apache.commons.net.ftp.parser;
-import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -139,7 +140,11 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                 file.setSize(Long.parseLong(factvalue));
             }
             else if ("modify".equals(factname)) {
-                file.setTimestamp(parseGMTdateTime(factvalue));
+                final Calendar parsed = parseGMTdateTime(factvalue);
+                if (parsed == null) {
+                    return null;
+                }
+                file.setTimestamp(parsed);
             }
             else if ("type".equals(factname)) {
                     Integer intType = TYPE_TO_INT.get(valueLowerCase);
@@ -197,15 +202,17 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
         // both timezones need to be set for the parse to work OK
         sdf.setTimeZone(GMT);
         GregorianCalendar gc = new GregorianCalendar(GMT);
-        try {
-            gc.setTime(sdf.parse(timestamp));
-            if (!hasMillis) {
-                gc.clear(Calendar.MILLISECOND); // flag up missing ms units
-            }
-            return gc;
-        } catch (ParseException e) {
-            return null;
+        ParsePosition pos = new ParsePosition(0);
+        sdf.setLenient(false); // We want to parse the whole string
+        final Date parsed = sdf.parse(timestamp, pos);
+        if (pos.getIndex()  != timestamp.length()) {
+            return null; // did not fully parse the input
         }
+        gc.setTime(parsed);
+        if (!hasMillis) {
+            gc.clear(Calendar.MILLISECOND); // flag up missing ms units
+        }
+        return gc;
     }
 
     //              perm-fact    = "Perm" "=" *pvals

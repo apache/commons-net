@@ -35,6 +35,9 @@ public class MLSxEntryParserTest extends FTPParseTestFramework {
         "Type=dir missing-semicolon",
         "Type= missing value and semicolon",
         " ", // no path
+        "Modify=2014; Short stamp",
+        "Type=pdir;Modify=20141205180002Z; /trailing chars in Modify",
+        "Type=dir;Modify=2014102206510x2.999;UNIX.mode=0775; modify has spurious chars",
     };
 
     private static final String[] goodsamples = {
