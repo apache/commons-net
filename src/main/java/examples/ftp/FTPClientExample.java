@@ -25,6 +25,11 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
@@ -65,6 +70,7 @@ public final class FTPClientExample
         "\t-k secs - use keep-alive timer (setControlKeepAliveTimeout)\n" +
         "\t-l - list files using LIST (remote is used as the pathname if provided)\n" +
         "\t     Files are listed twice: first in raw mode, then as the formatted parsed data.\n" +
+        "\t-m - list file details using MLSD (remote is used as the pathname if provided)\n" +
         "\t-L - use lenient future dates (server dates may be up to 1 day into future)\n" +
         "\t-n - list file names using NLST (remote is used as the pathname if provided)\n" +
         "\t-p true|false|protocol[,true|false] - use FTPSClient with the specified protocol and/or isImplicit setting\n" +
@@ -82,7 +88,7 @@ public final class FTPClientExample
     {
         boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false, listNames = false, hidden = false;
         boolean localActive = false, useEpsvWithIPv4 = false, feat = false, printHash = false;
-        boolean mlst = false, mlsd = false;
+        boolean mlst = false, mlsd = false, mdtm = false;
         boolean lenient = false;
         long keepAliveTimeout = -1;
         int controlKeepAliveReplyTimeout = -1;
@@ -142,6 +148,10 @@ public final class FTPClientExample
             }
             else if (args[base].equals("-l")) {
                 listFiles = true;
+                minParams = 3;
+            }
+            else if (args[base].equals("-m")) {
+                mdtm = true;
                 minParams = 3;
             }
             else if (args[base].equals("-L")) {
@@ -373,6 +383,14 @@ __main:
                     System.out.println(f.toFormattedString());
                 }
             }
+            else if (mdtm)
+            {
+                FTPFile f = new FTPFile();
+                f.setName(remote);
+                String stamp = ftp.getModificationTime(remote);
+                f.setTimestamp(parseGMTdate(stamp) ); // parse the returned string
+                System.out.println(f.toFormattedString());
+            }
             else if (mlst)
             {
                 FTPFile f = ftp.mlistFile(remote);
@@ -494,6 +512,30 @@ __main:
                 megsTotal = megs;
             }
         };
+    }
+
+    private static Calendar parseGMTdate(String gmtTimeStamp) {
+        SimpleDateFormat sdf;
+        final boolean hasMillis;
+        if (gmtTimeStamp.contains(".")){
+            sdf = new SimpleDateFormat("yyyyMMddHHmmss.SSS");
+            hasMillis = true;
+        } else {
+            sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+            hasMillis = false;
+        }
+        TimeZone GMT = TimeZone.getTimeZone("GMT"); // both need to be set for the parse to work OK
+        sdf.setTimeZone(GMT);
+        GregorianCalendar gc = new GregorianCalendar(GMT);
+        try {
+            gc.setTime(sdf.parse(gmtTimeStamp));
+            if (!hasMillis) {
+                gc.clear(Calendar.MILLISECOND);
+            }
+        } catch (ParseException e) {
+            // TODO ??
+        }
+        return gc;
     }
 }
 
