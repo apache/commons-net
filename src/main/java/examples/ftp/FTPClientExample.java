@@ -79,6 +79,7 @@ public final class FTPClientExample
         "\t-w msec - wait time for keep-alive reply (setControlKeepAliveReplyTimeout)\n" +
         "\t-T  all|valid|none - use one of the built-in TrustManager implementations (none = JVM default)\n" +
         "\t-Z timezone - set the server timezone for parsing LIST responses\n" +
+        "\t-z timezone - set the timezone for displaying MDTM, LIST, MLSD, MLST responses\n" +
         "\t-PrH server[:port] - HTTP Proxy host and optional port[80] \n" +
         "\t-PrU user - HTTP Proxy server username\n" +
         "\t-PrP password - HTTP Proxy server password\n" +
@@ -104,6 +105,7 @@ public final class FTPClientExample
         String password = null;
         String encoding = null;
         String serverTimeZoneId = null;
+        String displayTimeZoneId = null;
 
 
         int base = 0;
@@ -176,6 +178,9 @@ public final class FTPClientExample
             }
             else if (args[base].equals("-Z")) {
                 serverTimeZoneId = args[++base];
+            }
+            else if (args[base].equals("-z")) {
+                displayTimeZoneId = args[++base];
             }
             else if (args[base].equals("-PrH")) {
                 proxyHost = args[++base];
@@ -360,48 +365,48 @@ __main:
 
                 input.close();
             }
-            else if (listFiles)
+            // Allow multiple list types for single invocation
+            else if (listFiles || mlsd || mdtm || mlst || listNames)
             {
-                if (lenient || serverTimeZoneId != null) {
-                    FTPClientConfig config = new FTPClientConfig();
-                    config.setLenientFutureDates(lenient);
-                    if (serverTimeZoneId != null) {
-                        config.setServerTimeZoneId(serverTimeZoneId);
+                if (mlsd) {
+                    for (FTPFile f : ftp.mlistDir(remote)) {
+                        System.out.println(f.getRawListing());
+                        System.out.println(f.toFormattedString(displayTimeZoneId));
                     }
-                    ftp.configure(config );
                 }
-
-                for (FTPFile f : ftp.listFiles(remote)) {
-                    System.out.println(f.getRawListing());
-                    System.out.println(f.toFormattedString());
+                if (mdtm) {
+                    FTPFile f = new FTPFile();
+                    f.setName(remote);
+                    String stamp = ftp.getModificationTime(remote);
+                    f.setTimestamp(parseGMTdate(stamp) ); // parse the returned string
+                    System.out.println(f.toFormattedString(displayTimeZoneId));
                 }
-            }
-            else if (mlsd)
-            {
-                for (FTPFile f : ftp.mlistDir(remote)) {
-                    System.out.println(f.getRawListing());
-                    System.out.println(f.toFormattedString());
+                if (mlst) {
+                    FTPFile f = ftp.mlistFile(remote);
+                    if (f != null){
+                        System.out.println(f.toFormattedString(displayTimeZoneId));
+                    }
                 }
-            }
-            else if (mdtm)
-            {
-                FTPFile f = new FTPFile();
-                f.setName(remote);
-                String stamp = ftp.getModificationTime(remote);
-                f.setTimestamp(parseGMTdate(stamp) ); // parse the returned string
-                System.out.println(f.toFormattedString());
-            }
-            else if (mlst)
-            {
-                FTPFile f = ftp.mlistFile(remote);
-                if (f != null){
-                    System.out.println(f.toFormattedString());
+                if (listNames) {
+                    for (String s : ftp.listNames(remote)) {
+                        System.out.println(s);
+                    }
                 }
-            }
-            else if (listNames)
-            {
-                for (String s : ftp.listNames(remote)) {
-                    System.out.println(s);
+                // Do this last because it changes the client
+                if (listFiles) {
+                    if (lenient || serverTimeZoneId != null) {
+                        FTPClientConfig config = new FTPClientConfig();
+                        config.setLenientFutureDates(lenient);
+                        if (serverTimeZoneId != null) {
+                            config.setServerTimeZoneId(serverTimeZoneId);
+                        }
+                        ftp.configure(config );
+                    }
+    
+                    for (FTPFile f : ftp.listFiles(remote)) {
+                        System.out.println(f.getRawListing());
+                        System.out.println(f.toFormattedString(displayTimeZoneId));
+                    }
                 }
             }
             else if (feat)
