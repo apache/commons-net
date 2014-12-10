@@ -53,12 +53,16 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
         "-rw-r--r--   1 ftp      nogroup     83853 Jan 22  2001 zxJDBC-1.2.4.tar.gz",
         "-rw-r--r--   1 ftp      nogroup    126552 Jan 22  2001 zxJDBC-1.2.4.zip",
         "-rw-r--r--   1 root     root       111325 Apr 27  2001 zxJDBC-2.0.1b1.tar.gz",
-        "-rw-r--r--   1 root     root       190144 Apr 27  2001 zxJDBC-2.0.1b1.zip"
+        "-rw-r--r--   1 root     root       190144 Apr 27  2001 zxJDBC-2.0.1b1.zip",
+        "drwxr-xr-x   2 root     root         4096 Aug 26  20 zztpp",
+        "drwxr-xr-x   2 root     root         4096 Aug 26  201 zztpp",
+        "drwxr-xr-x   2 root     root         4096 Aug 26  201O zztpp", // OH not zero
     };
     private static final String[] GOODSAMPLES =
     {
         "-C--E-----FTP B QUA1I1      18128       41 Aug 12 13:56 QUADTEST",
-        "-C--E-----FTP A QUA1I1      18128       41 Aug 12 13:56 QUADTEST2"
+        "-C--E-----FTP A QUA1I1      18128       41 Aug 12 13:56 QUADTEST2",
+        "-C--E-----FTP A QUA1I1      18128       41 Apr 1 2014 QUADTEST3"
     };
 
     /**
