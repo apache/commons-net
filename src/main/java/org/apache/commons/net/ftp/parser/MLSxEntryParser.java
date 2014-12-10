@@ -180,7 +180,8 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
      * Parse a GMT time stamp of the form YYYYMMDDHHMMSS[.sss]
      *
      * @param timestamp the date-time to parse
-     * @return a Calendar entry, may be {@code null} 
+     * @return a Calendar entry, may be {@code null}
+     * @since 3.4
      */
     public static Calendar parseGMTdateTime(String timestamp) {
         SimpleDateFormat sdf;
