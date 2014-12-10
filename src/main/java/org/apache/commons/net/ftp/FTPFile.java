@@ -18,7 +18,9 @@
 package org.apache.commons.net.ftp;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Formatter;
+import java.util.TimeZone;
 
 /***
  * The FTPFile class is used to represent information about files stored
@@ -401,9 +403,21 @@ public class FTPFile implements Serializable
         fmt.format(" %8d", Long.valueOf(getSize()));
         Calendar timestamp = getTimestamp();
         if (timestamp != null) {
-            fmt.format(" %1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS", timestamp);
-            fmt.format(" %1$tZ", timestamp);
-            sb.append(' ');
+            fmt.format(" %1$tY-%1$tm-%1$td", timestamp);
+            // Only display time units if they are present
+            if (timestamp.isSet(Calendar.HOUR_OF_DAY)) {
+                fmt.format(" %1$tH", timestamp);
+                if (timestamp.isSet(Calendar.MINUTE)) {
+                    fmt.format(":%1$tM", timestamp);
+                    if (timestamp.isSet(Calendar.SECOND)) {
+                        fmt.format(":%1$tS", timestamp);
+                        if (timestamp.isSet(Calendar.MILLISECOND)) {
+                            fmt.format(".%1$tL", timestamp);
+                        }
+                    }
+                }
+                fmt.format(" %1$tZ", timestamp);
+            }
         }
         sb.append(' ');
         sb.append(getName());

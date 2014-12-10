@@ -68,6 +68,9 @@ This is mainly a bug-fix release. See further details below.
   IMAPExportMbox (example app) allows IMAP folders to be exported into an mbox file.
   This is the inverse of the IMAPImportMbox example added previously
         ">
+            <action issue="NET-562" type="update" dev="sebb">
+            FTPFile.toFormattedString should print only signficant parts of the parsed date
+            </action>
             <action issue="NET-563" type="fix" dev="sebb">
             MLSxEntryParser needs test cases; parsing is too lax
             </action>
