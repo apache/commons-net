@@ -129,6 +129,7 @@ public class FTPTimestampParserImpl implements
                 if (working.after(now)) { // must have been last year instead
                     working.add(Calendar.YEAR, -1);
                 }
+                setPrecision(recentDateFormat, working);
                 return working;
             }
         }
@@ -150,7 +151,37 @@ public class FTPTimestampParserImpl implements
                         +serverTime.getTime().toString(),
                     pp.getErrorIndex());
         }
+        setPrecision(defaultDateFormat, working);
         return working;
+    }
+
+    private void setPrecision(SimpleDateFormat dateFormat, Calendar working) {
+        final String FORMAT_CHARS="HmsS"; // assume date is always present
+        String pattern = dateFormat.toPattern();
+        char lastChar=0;
+        for(char ch : FORMAT_CHARS.toCharArray()) {
+            if (pattern.indexOf(ch) == -1){
+                lastChar = ch;
+                break;
+            }
+        }
+        if (lastChar == 0) { // matched the lot
+            return;
+        }
+        switch(lastChar) {
+        case 'S':
+            working.clear(Calendar.MILLISECOND);
+            break;
+        case 's':
+            working.clear(Calendar.SECOND);
+            break;
+        case 'm':
+            working.clear(Calendar.MINUTE);
+            break;
+        case 'H':
+            working.clear(Calendar.HOUR_OF_DAY);
+            break;
+        }
     }
 
     /**

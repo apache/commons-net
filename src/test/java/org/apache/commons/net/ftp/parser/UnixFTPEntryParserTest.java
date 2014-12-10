@@ -247,6 +247,24 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
     }
 
 
+    public void testPrecisionMinutes() {
+        FTPFile file = getParser().parseFTPEntry("drwxr-xr-x   2 user     group         4096 Mar  2 15:13 zxbox");
+        assertNotNull(file);
+        Calendar stamp = file.getTimestamp();
+        assertNotNull(stamp);
+        assertTrue("Expected minute to be set", stamp.isSet(Calendar.MINUTE));
+        assertFalse("Expected second to be unset", stamp.isSet(Calendar.SECOND));
+    }
+
+    public void testPrecisionDays() {
+        FTPFile file = getParser().parseFTPEntry("drwxr-xr-x   2 user     group         4096 Mar  2 2014 zxbox");
+        assertNotNull(file);
+        Calendar stamp = file.getTimestamp();
+        assertNotNull(stamp);
+        assertTrue("Expected day to be set", stamp.isSet(Calendar.DAY_OF_MONTH));
+        assertFalse("Expected hour to be unset", stamp.isSet(Calendar.HOUR_OF_DAY));
+    }
+
     private void checkPermissions(FTPFile f) {
         assertTrue("Should have user read permission.", f.hasPermission(
                 FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));

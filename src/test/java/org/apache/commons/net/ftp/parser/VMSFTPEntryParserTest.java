@@ -18,6 +18,7 @@ package org.apache.commons.net.ftp.parser;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Calendar;
 
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
@@ -202,6 +203,16 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         assertEquals("TRANSLATED",
                      file.getUser());
         checkPermisions(file, 0400);
+    }
+
+    public void testPrecisionSeconds() {
+        FTPFile file = getParser().parseFTPEntry("1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [TRANSLATED]    (RWED,RD,,)");
+        assertNotNull(file);
+        Calendar stamp = file.getTimestamp();
+        assertNotNull(stamp);
+        assertTrue("Expected hour to be set", stamp.isSet(Calendar.HOUR_OF_DAY));
+        assertTrue("Expected second to be set", stamp.isSet(Calendar.SECOND));
+        assertFalse("Expected millisecond to be unset", stamp.isSet(Calendar.MILLISECOND));
     }
 
     @Override
