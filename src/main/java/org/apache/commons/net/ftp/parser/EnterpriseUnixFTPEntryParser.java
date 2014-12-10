@@ -120,19 +120,23 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MINUTE, 0);
             cal.set(Calendar.HOUR_OF_DAY, 0);
+
+            int pos = MONTHS.indexOf(mo);
+            int month = pos / 4;
+            final int missingUnit; // the first missing unit
             try
             {
 
-                int pos = MONTHS.indexOf(mo);
-                int month = pos / 4;
                 if (yr != null)
                 {
                     // it's a year; there are no hours and minutes
                     cal.set(Calendar.YEAR, Integer.parseInt(yr));
+                    missingUnit = Calendar.HOUR_OF_DAY;
                 }
                 else
                 {
                     // it must be  hour/minute or we wouldn't have matched
+                    missingUnit = Calendar.SECOND;
                     int year = cal.get(Calendar.YEAR);
 
                     // if the month we're reading is greater than now, it must
@@ -147,6 +151,7 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
                 }
                 cal.set(Calendar.MONTH, month);
                 cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(da));
+                cal.clear(missingUnit);
                 file.setTimestamp(cal);
             }
             catch (NumberFormatException e)

@@ -120,6 +120,20 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
         checkPermisions(file);
     }
 
+    public void testPrecisionMinutes() {
+        FTPFile file = getParser().parseFTPEntry("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 13:56 QUADTEST");
+        Calendar stamp = file.getTimestamp();
+        assertTrue("Expected minute to be set", stamp.isSet(Calendar.MINUTE));
+        assertFalse("Expected second to be unset", stamp.isSet(Calendar.SECOND));
+    }
+
+    public void testPrecisionDays() {
+        FTPFile file = getParser().parseFTPEntry("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 2014 QUADTEST");
+        Calendar stamp = file.getTimestamp();
+        assertTrue("Expected day to be set", stamp.isSet(Calendar.DAY_OF_MONTH));
+        assertFalse("Expected hour to be unset", stamp.isSet(Calendar.HOUR_OF_DAY));
+    }
+
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getBadListing()
      */
