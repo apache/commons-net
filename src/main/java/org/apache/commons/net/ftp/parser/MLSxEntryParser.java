@@ -93,25 +93,43 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
 
 //    @Override
     public FTPFile parseFTPEntry(String entry) {
+        if (entry.startsWith(" ")) {// leading space means no facts are present
+            if (entry.length() > 1) { // is there a path name?
+                FTPFile file = new FTPFile();
+                file.setRawListing(entry);
+                file.setName(entry.substring(1));
+                return file;
+            } else {
+                return null; // Invalid - no pathname
+            }
+            
+        }
         String parts[] = entry.split(" ",2); // Path may contain space
-        if (parts.length != 2) {
+        if (parts.length != 2 || parts[1].length() == 0) {
+            return null; // no space found or no file name
+        }
+        final String factList = parts[0];
+        if (!factList.endsWith(";")) {
             return null;
         }
         FTPFile file = new FTPFile();
         file.setRawListing(entry);
         file.setName(parts[1]);
-        String[] facts = parts[0].split(";");
+        String[] facts = factList.split(";");
         boolean hasUnixMode = parts[0].toLowerCase(Locale.ENGLISH).contains("unix.mode=");
         for(String fact : facts) {
-            String []factparts = fact.split("=");
+            String []factparts = fact.split("=", -1); // Don't drop empty values
 // Sample missing permission
 // drwx------   2 mirror   mirror       4096 Mar 13  2010 subversion
 // modify=20100313224553;perm=;type=dir;unique=811U282598;UNIX.group=500;UNIX.mode=0700;UNIX.owner=500; subversion
             if (factparts.length != 2) {
-                continue; // nothing to do here
+                return null; // invalid - there was no "=" sign
             }
             String factname = factparts[0].toLowerCase(Locale.ENGLISH);
             String factvalue = factparts[1];
+            if (factvalue.length() == 0) {
+                continue; // nothing to see here
+            }
             String valueLowerCase = factvalue.toLowerCase(Locale.ENGLISH);
             if ("size".equals(factname)) {
                 file.setSize(Long.parseLong(factvalue));
@@ -132,10 +150,10 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                 GregorianCalendar gc = new GregorianCalendar(GMT);
                 try {
                     gc.setTime(sdf.parse(factvalue));
+                    file.setTimestamp(gc);
                 } catch (ParseException e) {
                     // TODO ??
                 }
-                file.setTimestamp(gc);
             }
             else if ("type".equals(factname)) {
                     Integer intType = TYPE_TO_INT.get(valueLowerCase);
