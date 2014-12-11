@@ -115,11 +115,11 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
         checkPermisions(file);
     }
 
-    public void testPrecisionMinutes() {
+    public void testRecentPrecision() {
         testPrecision("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 13:56 QUADTEST", CalendarUnit.MINUTE);
     }
 
-    public void testPrecisionDays() {
+    public void testDefaultPrecision() {
         testPrecision("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 2014 QUADTEST", CalendarUnit.DAY_OF_MONTH);
     }
 

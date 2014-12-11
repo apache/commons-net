@@ -186,5 +186,9 @@ public abstract class FTPParseTestFramework extends TestCase
             assertFalse("Expected not set "+prevUnit+" in "+listEntry, stamp.isSet(prevUnit.unit));            
         }
     }
-    
+
+    // Force subclasses to test precision
+    abstract public void testDefaultPrecision();
+
+    abstract public void testRecentPrecision();
 }

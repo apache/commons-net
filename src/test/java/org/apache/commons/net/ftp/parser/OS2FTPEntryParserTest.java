@@ -105,4 +105,15 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
         parser.configure(null);
         return parser;
     }
+
+    @Override
+    public void testDefaultPrecision() {
+        testPrecision("     0           DIR   05-12-97   16:44  PSFONTS", CalendarUnit.MINUTE);
+        testPrecision("     0           DIR   05-19-2000 12:56  local", CalendarUnit.MINUTE);
+    }
+
+    @Override
+    public void testRecentPrecision() {
+        // Not needed
+    }
 }

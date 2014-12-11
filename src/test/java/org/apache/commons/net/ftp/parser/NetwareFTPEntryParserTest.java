@@ -100,4 +100,16 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
         assertFalse(f.hasPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION));
     }
 
+    @Override
+    public void testDefaultPrecision() {
+        testPrecision("d [RWCEAFMS] rwinston                          512 Nov 24  2005 Favorites", CalendarUnit.DAY_OF_MONTH);
+    }
+
+    @Override
+    public void testRecentPrecision() {
+        testPrecision("- [RWCEAFMS] rwinston                        19968 Mar 12 15:20 Executive Summary.doc", CalendarUnit.MINUTE);
+    }
+
 }
+
+

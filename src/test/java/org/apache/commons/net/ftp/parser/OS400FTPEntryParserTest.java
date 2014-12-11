@@ -172,4 +172,14 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
         assertEquals(df.format(cal.getTime()),
                      df.format(f.getTimestamp().getTime()));
     }
+
+    @Override
+    public void testDefaultPrecision() {
+        testPrecision("PEP              4019 04/03/18 18:58:16 *STMF      einladung.zip", CalendarUnit.SECOND);
+    }
+
+    @Override
+    public void testRecentPrecision() {
+        testPrecision("----rwxr-x   1 PEP      0           4019 Mar 18 18:58 einladung.zip", CalendarUnit.MINUTE);
+    }
 }

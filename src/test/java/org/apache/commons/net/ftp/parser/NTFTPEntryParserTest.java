@@ -339,4 +339,15 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         int iso8859_1 = testNET516("ISO-8859-1");
         assertEquals(LISTFILE_COUNT, iso8859_1);
     }
+
+    @Override
+    public void testDefaultPrecision() {
+        testPrecision("05-26-1995  10:57AM               143712 $LDR$", CalendarUnit.MINUTE);
+        testPrecision("05-22-97  08:08                    828 AUTOEXEC.BAK", CalendarUnit.MINUTE);
+    }
+
+    @Override
+    public void testRecentPrecision() {
+        // Not used
+    }
 }

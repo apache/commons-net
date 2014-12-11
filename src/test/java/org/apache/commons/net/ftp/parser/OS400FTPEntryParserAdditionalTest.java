@@ -143,4 +143,14 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
         assertEquals(df.format(cal.getTime()),
                      df.format(f.getTimestamp().getTime()));
     }
+
+    @Override
+    public void testDefaultPrecision() {
+        // Done in other class
+    }
+
+    @Override
+    public void testRecentPrecision() {
+        // Done in other class
+    }
 }
