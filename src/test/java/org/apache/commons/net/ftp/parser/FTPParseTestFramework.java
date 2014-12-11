@@ -18,6 +18,7 @@ package org.apache.commons.net.ftp.parser;
 import junit.framework.TestCase;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
@@ -146,4 +147,29 @@ public abstract class FTPParseTestFramework extends TestCase
         }
         return f;
     }
+
+    // associate Calendar unit ints with a readable string
+    protected enum CalendarUnit {
+        MILLISECOND(Calendar.MILLISECOND),
+        SECOND(Calendar.SECOND),
+        MINUTE(Calendar.MINUTE),
+        HOUR_OF_DAY(Calendar.HOUR_OF_DAY),
+        DAY_OF_MONTH(Calendar.DAY_OF_MONTH),
+        MONTH(Calendar.MONTH),
+        YEAR(Calendar.YEAR),
+        ;
+        final int unit;
+        CalendarUnit(int calUnit) {
+            unit = calUnit;
+        };
+    }
+
+    protected void testPrecision(String listEntry, CalendarUnit expectedPrecision) {
+        FTPFile file = getParser().parseFTPEntry(listEntry);
+        assertNotNull("Could not parse "+listEntry, file);
+        Calendar stamp = file.getTimestamp();
+        assertNotNull("Failed to parse time in "+listEntry, stamp);
+        assertTrue("Expected set "+expectedPrecision+" in "+listEntry, stamp.isSet(expectedPrecision.unit));
+    }
+    
 }
