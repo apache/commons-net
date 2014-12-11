@@ -149,6 +149,8 @@ public abstract class FTPParseTestFramework extends TestCase
     }
 
     // associate Calendar unit ints with a readable string
+    // MUST be listed least significant first, as the routine needs to
+    // find the previous - less significant - entry
     protected enum CalendarUnit {
         MILLISECOND(Calendar.MILLISECOND),
         SECOND(Calendar.SECOND),
@@ -170,6 +172,11 @@ public abstract class FTPParseTestFramework extends TestCase
         Calendar stamp = file.getTimestamp();
         assertNotNull("Failed to parse time in "+listEntry, stamp);
         assertTrue("Expected set "+expectedPrecision+" in "+listEntry, stamp.isSet(expectedPrecision.unit));
+        final int ordinal = expectedPrecision.ordinal();
+        if (ordinal > 0) {
+            final CalendarUnit prevUnit = CalendarUnit.values()[ordinal-1];
+            assertFalse("Expected not set "+prevUnit+" in "+listEntry, stamp.isSet(prevUnit.unit));            
+        }
     }
     
 }
