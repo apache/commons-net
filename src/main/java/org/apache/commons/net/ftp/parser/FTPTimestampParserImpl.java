@@ -121,20 +121,21 @@ public class FTPTimestampParserImpl implements
 
     /*
      * Sets the Calendar precision (used by FTPFile#toFormattedDate) by clearing
-     * the units which were not in the format used to parse the date
+     * the immediately preceeding unit (if any).
+     * Unfortunately the clear(int) method results in setting all other units.
      */
     private static void setPrecision(int index, Calendar working) {
-        int i = 0;
-        for(i = 0; i < index; i++) {
-            final int field = CALENDAR_UNITS[i];
-            // Just in case the analysis is wrong, stop clearing if
-            // field value is not the default.
-            final int value = working.get(field);
-            if (value != 0) {
-// DEBUG:                new Throwable("Unexpected value "+value).printStackTrace();
-                break; // stop clearing any further fields
-            }
-            working.clear(field);
+        if (index <= 0) { // e.g. MILLISECONDS
+            return;
+        }
+        final int field = CALENDAR_UNITS[index-1];
+        // Just in case the analysis is wrong, stop clearing if
+        // field value is not the default.
+        final int value = working.get(field);
+        if (value != 0) { // don't reset if it has a value
+//            new Throwable("Unexpected value "+value).printStackTrace(); // DEBUG
+        } else {
+            working.clear(field); // reset just the required field
         }
     }
 
