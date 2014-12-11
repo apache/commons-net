@@ -43,17 +43,107 @@ public class FTPTimestampParserImpl implements
 
     /** The date format for all dates, except possibly recent dates. Assumed to include the year. */
     private SimpleDateFormat defaultDateFormat;
+    /* The index in CALENDAR_UNITS of the smallest time unit in defaultDateFormat */
+    private int defaultDateSmallestUnitIndex;
+
     /** The format used for recent dates (which don't have the year). May be null. */
     private SimpleDateFormat recentDateFormat;
+    /* The index in CALENDAR_UNITS of the smallest time unit in recentDateFormat */
+    private int recentDateSmallestUnitIndex;
+    
     private boolean lenientFutureDates = false;
 
+    /*
+     * List of units in order of increasing significance.
+     * This allows the code to clear all units in the Calendar until it
+     * reaches the least significant unit in the parse string.
+     * The date formats are analysed to find the least significant
+     * unit (e.g. Minutes or Milliseconds) and the appropriate index to
+     * the array is saved.
+     * This is done by searching the array for the unit specifier,
+     * and returning the index. When clearing the Calendar units,
+     * the code loops through the array until the previous entry.
+     * e.g. for MINUTE it would clear MILLISECOND and SECOND
+     */
+    private static final int[] CALENDAR_UNITS = {
+        Calendar.MILLISECOND, 
+        Calendar.SECOND,
+        Calendar.MINUTE, 
+        Calendar.HOUR_OF_DAY,
+        Calendar.DAY_OF_MONTH,
+        Calendar.MONTH,
+        Calendar.YEAR};
+
+    /*
+     * Return the index to the array representing the least significant
+     * unit found in the date format.
+     * Default is 0 (to avoid dropping precision)
+     */
+    private static int getEntry(SimpleDateFormat dateFormat) {
+        if (dateFormat == null) {
+            return 0;
+        }
+        final String FORMAT_CHARS="SsmHdM";
+        final String pattern = dateFormat.toPattern();
+        for(char ch : FORMAT_CHARS.toCharArray()) {
+            if (pattern.indexOf(ch) != -1){ // found the character
+                switch(ch) {
+                case 'S':
+                    return indexOf(Calendar.MILLISECOND);
+                case 's':
+                    return indexOf(Calendar.SECOND);
+                case 'm':
+                    return indexOf(Calendar.MINUTE);
+                case 'H':
+                    return indexOf(Calendar.HOUR_OF_DAY);
+                case 'd':
+                    return indexOf(Calendar.DAY_OF_MONTH);
+                case 'M':
+                    return indexOf(Calendar.MONTH);
+                }
+            }
+        }
+        return 0;
+    }
+
+    /*
+     * Find the entry in the CALENDAR_UNITS array.
+     */
+    private static int indexOf(int calendarUnit) {
+        int i;
+        for(i = 0; i <CALENDAR_UNITS.length; i++) {
+            if (calendarUnit == CALENDAR_UNITS[i]) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    /*
+     * Sets the Calendar precision (used by FTPFile#toFormattedDate) by clearing
+     * the units which were not in the format used to parse the date
+     */
+    private static void setPrecision(int index, Calendar working) {
+        int i = 0;
+        for(i = 0; i < index; i++) {
+            final int field = CALENDAR_UNITS[i];
+            // Just in case the analysis is wrong, stop clearing if
+            // field value is not the default.
+            final int value = working.get(field);
+            if (value != 0) {
+// DEBUG:                new Throwable("Unexpected value "+value).printStackTrace();
+                break; // stop clearing any further fields
+            }
+            working.clear(field);
+        }
+    }
 
     /**
      * The only constructor for this class.
      */
     public FTPTimestampParserImpl() {
-        setDefaultDateFormat(DEFAULT_SDF);
-        setRecentDateFormat(DEFAULT_RECENT_SDF);
+        setDefaultDateFormat(DEFAULT_SDF, null);
+        setRecentDateFormat(DEFAULT_RECENT_SDF, null);
     }
 
     /**
@@ -129,7 +219,7 @@ public class FTPTimestampParserImpl implements
                 if (working.after(now)) { // must have been last year instead
                     working.add(Calendar.YEAR, -1);
                 }
-                setPrecision(recentDateFormat, working);
+                setPrecision(recentDateSmallestUnitIndex, working);
                 return working;
             }
         }
@@ -151,37 +241,8 @@ public class FTPTimestampParserImpl implements
                         +serverTime.getTime().toString(),
                     pp.getErrorIndex());
         }
-        setPrecision(defaultDateFormat, working);
+        setPrecision(defaultDateSmallestUnitIndex, working);
         return working;
-    }
-
-    private void setPrecision(SimpleDateFormat dateFormat, Calendar working) {
-        final String FORMAT_CHARS="HmsS"; // assume date is always present
-        String pattern = dateFormat.toPattern();
-        char lastChar=0;
-        for(char ch : FORMAT_CHARS.toCharArray()) {
-            if (pattern.indexOf(ch) == -1){
-                lastChar = ch;
-                break;
-            }
-        }
-        if (lastChar == 0) { // matched the lot
-            return;
-        }
-        switch(lastChar) {
-        case 'S':
-            working.clear(Calendar.MILLISECOND);
-            break;
-        case 's':
-            working.clear(Calendar.SECOND);
-            break;
-        case 'm':
-            working.clear(Calendar.MINUTE);
-            break;
-        case 'H':
-            working.clear(Calendar.HOUR_OF_DAY);
-            break;
-        }
     }
 
     /**
@@ -197,13 +258,21 @@ public class FTPTimestampParserImpl implements
         return defaultDateFormat.toPattern();
     }
     /**
-     * @param defaultDateFormat The defaultDateFormat to be set.
+     * @param format The defaultDateFormat to be set.
+     * @param dfs the symbols to use (may be null)
      */
-    private void setDefaultDateFormat(String format) {
+    private void setDefaultDateFormat(String format, DateFormatSymbols dfs) {
         if (format != null) {
-            this.defaultDateFormat = new SimpleDateFormat(format);
+            if (dfs != null) {
+                this.defaultDateFormat = new SimpleDateFormat(format, dfs);
+            } else {
+                this.defaultDateFormat = new SimpleDateFormat(format);                
+            }
             this.defaultDateFormat.setLenient(false);
+        } else {
+            this.defaultDateFormat = null;
         }
+        this.defaultDateSmallestUnitIndex = getEntry(this.defaultDateFormat);
     }
     /**
      * @return Returns the recentDateFormat.
@@ -218,13 +287,21 @@ public class FTPTimestampParserImpl implements
         return recentDateFormat.toPattern();
     }
     /**
-     * @param recentDateFormat The recentDateFormat to set.
+     * @param format The recentDateFormat to set.
+     * @param dfs the symbols to use (may be null)
      */
-    private void setRecentDateFormat(String format) {
+    private void setRecentDateFormat(String format, DateFormatSymbols dfs) {
         if (format != null) {
-            this.recentDateFormat = new SimpleDateFormat(format);
+            if (dfs != null) {
+                this.recentDateFormat = new SimpleDateFormat(format, dfs);
+            } else {
+                this.recentDateFormat = new SimpleDateFormat(format);
+            }
             this.recentDateFormat.setLenient(false);
+        } else {
+            this.recentDateFormat = null;
         }
+        this.recentDateSmallestUnitIndex = getEntry(this.recentDateFormat);
     }
 
     /**
@@ -297,19 +374,13 @@ public class FTPTimestampParserImpl implements
 
 
         String recentFormatString = config.getRecentDateFormatStr();
-        if (recentFormatString == null) {
-            this.recentDateFormat = null;
-        } else {
-            this.recentDateFormat = new SimpleDateFormat(recentFormatString, dfs);
-            this.recentDateFormat.setLenient(false);
-        }
+        setRecentDateFormat(recentFormatString, dfs);
 
         String defaultFormatString = config.getDefaultDateFormatStr();
         if (defaultFormatString == null) {
             throw new IllegalArgumentException("defaultFormatString cannot be null");
         }
-        this.defaultDateFormat = new SimpleDateFormat(defaultFormatString, dfs);
-        this.defaultDateFormat.setLenient(false);
+        setDefaultDateFormat(defaultFormatString, dfs);
 
         setServerTimeZone(config.getServerTimeZoneId());
 
