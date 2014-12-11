@@ -104,8 +104,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
             new UnixFTPEntryParser(UnixFTPEntryParser.NUMERIC_DATE_CONFIG);
 
         FTPFile f = parser.parseFTPEntry(testNumericDF);
-        assertNotNull("Failed to parse " + testNumericDF,
-                      f);
+        assertNotNull("Failed to parse " + testNumericDF, f);
 
 
         Calendar cal = Calendar.getInstance();
@@ -119,8 +118,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
         assertEquals(cal.getTime(), f.getTimestamp().getTime());
 
         FTPFile f2 = parser.parseFTPEntry(testNumericDF2);
-        assertNotNull("Failed to parse " + testNumericDF2,
-                      f2);
+        assertNotNull("Failed to parse " + testNumericDF2, f2);
         assertEquals("symbolic link", "./../../global/macros/.", f2.getLink());
 
     }
@@ -242,8 +240,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
         cal.set(Calendar.HOUR_OF_DAY, 15);
         cal.set(Calendar.MINUTE, 13);
 
-        assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp()
-                .getTime()));
+        assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp().getTime()));
     }
 
 

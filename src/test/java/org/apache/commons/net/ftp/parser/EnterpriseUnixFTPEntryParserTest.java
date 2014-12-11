@@ -94,16 +94,11 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
         Calendar today  = Calendar.getInstance();
         int year        = today.get(Calendar.YEAR);
 
-        assertTrue("Should be a file.",
-                   file.isFile());
-        assertEquals("QUADTEST",
-                     file.getName());
-        assertEquals(5000000000L,
-                     file.getSize());
-        assertEquals("QUA1I1",
-                     file.getUser());
-        assertEquals("18128",
-                     file.getGroup());
+        assertTrue("Should be a file.", file.isFile());
+        assertEquals("QUADTEST", file.getName());
+        assertEquals(5000000000L, file.getSize());
+        assertEquals("QUA1I1", file.getUser());
+        assertEquals("18128", file.getGroup());
 
         if (today.get(Calendar.MONTH) < Calendar.AUGUST) {
             --year;
@@ -134,7 +129,6 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     @Override
     protected String[] getBadListing()
     {
-
         return (BADSAMPLES);
     }
 
@@ -144,7 +138,6 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     @Override
     protected String[] getGoodListing()
     {
-
         return (GOODSAMPLES);
     }
 
@@ -154,7 +147,6 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     @Override
     protected FTPFileEntryParser getParser()
     {
-
         return (new EnterpriseUnixFTPEntryParser());
     }
 
