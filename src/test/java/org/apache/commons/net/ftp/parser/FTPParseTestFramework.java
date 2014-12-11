@@ -171,10 +171,18 @@ public abstract class FTPParseTestFramework extends TestCase
         assertNotNull("Could not parse "+listEntry, file);
         Calendar stamp = file.getTimestamp();
         assertNotNull("Failed to parse time in "+listEntry, stamp);
-        assertTrue("Expected set "+expectedPrecision+" in "+listEntry, stamp.isSet(expectedPrecision.unit));
         final int ordinal = expectedPrecision.ordinal();
+        final CalendarUnit[] values = CalendarUnit.values();
+        // Check expected unit and all more significant ones are set
+        // This is needed for FTPFile.toFormattedString() to work correctly
+        for(int i = ordinal; i < values.length; i++) {
+            CalendarUnit unit = values[i];
+            assertTrue("Expected set "+unit+" in "+listEntry, stamp.isSet(unit.unit));            
+        }
+        // Check previous entry (if any) is not set
+        // This is also needed for FTPFile.toFormattedString() to work correctly
         if (ordinal > 0) {
-            final CalendarUnit prevUnit = CalendarUnit.values()[ordinal-1];
+            final CalendarUnit prevUnit = values[ordinal-1];
             assertFalse("Expected not set "+prevUnit+" in "+listEntry, stamp.isSet(prevUnit.unit));            
         }
     }
