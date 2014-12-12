@@ -585,7 +585,10 @@ public class FTPClientConfig
     }
 
     /**
-     * Allow list parsing methods to create basic FTPFile entries if parsing fails
+     * Allow list parsing methods to create basic FTPFile entries if parsing fails.
+     * <p>
+     * In this case, the FTPFile will contain only the unparsed entry {@link FTPFile#getRawListing()}
+     * and {@link FTPFile#isValid()} will return {@code false}
      * @param saveUnparseable if true, then create FTPFile entries if parsing fails
      * @since 3.4
      */
@@ -595,6 +598,9 @@ public class FTPClientConfig
 
     /**
      * @return true if list parsing should return FTPFile entries even for unparseable response lines
+     * <p>
+     * If true, the FTPFile for any unparseable entries will contain only the unparsed entry
+     * {@link FTPFile#getRawListing()} and {@link FTPFile#isValid()} will return {@code false}
      * @since 3.4
      */
     public boolean getUnparseableEntries() {
