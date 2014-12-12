@@ -70,7 +70,9 @@ public final class FTPClientExample
         "\t-n - list file names using NLST (remote is used as the pathname if provided)\n" +
         "\t-p true|false|protocol[,true|false] - use FTPSClient with the specified protocol and/or isImplicit setting\n" +
         "\t-s - store file on server (upload)\n" +
+        "\t-S - systemType set server system type (e.g. UNIX VMS WINDOWS)\n" +
         "\t-t - list file details using MLST (remote is used as the pathname if provided)\n" +
+        "\t-U - save unparseable responses\n" +
         "\t-w msec - wait time for keep-alive reply (setControlKeepAliveReplyTimeout)\n" +
         "\t-T  all|valid|none - use one of the built-in TrustManager implementations (none = JVM default)\n" +
         "\t-Z timezone - set the server timezone for parsing LIST responses\n" +
@@ -84,7 +86,7 @@ public final class FTPClientExample
     {
         boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false, listNames = false, hidden = false;
         boolean localActive = false, useEpsvWithIPv4 = false, feat = false, printHash = false;
-        boolean mlst = false, mlsd = false, mdtm = false;
+        boolean mlst = false, mlsd = false, mdtm = false, saveUnparseable = false;
         boolean lenient = false;
         long keepAliveTimeout = -1;
         int controlKeepAliveReplyTimeout = -1;
@@ -101,6 +103,7 @@ public final class FTPClientExample
         String encoding = null;
         String serverTimeZoneId = null;
         String displayTimeZoneId = null;
+        String serverType = null;
 
 
         int base = 0;
@@ -161,9 +164,15 @@ public final class FTPClientExample
             else if (args[base].equals("-p")) {
                 protocol = args[++base];
             }
+            else if (args[base].equals("-S")) {
+                serverType = args[++base];
+            }
             else if (args[base].equals("-t")) {
                 mlst = true;
                 minParams = 3;
+            }
+            else if (args[base].equals("-U")) {
+                saveUnparseable = true;
             }
             else if (args[base].equals("-w")) {
                 controlKeepAliveReplyTimeout = Integer.parseInt(args[++base]);
@@ -281,6 +290,15 @@ public final class FTPClientExample
         // suppress login details
         ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
 
+        final FTPClientConfig config;
+        if (serverType != null) {
+            config = new FTPClientConfig(serverType);
+        } else {
+            config = new FTPClientConfig();            
+        }
+        config.setUnparseableEntries(saveUnparseable);
+        ftp.configure(config);
+
         try
         {
             int reply;
@@ -388,17 +406,20 @@ __main:
                 // Do this last because it changes the client
                 if (listFiles) {
                     if (lenient || serverTimeZoneId != null) {
-                        FTPClientConfig config = new FTPClientConfig();
                         config.setLenientFutureDates(lenient);
                         if (serverTimeZoneId != null) {
                             config.setServerTimeZoneId(serverTimeZoneId);
                         }
                         ftp.configure(config );
                     }
-    
+
                     for (FTPFile f : ftp.listFiles(remote)) {
                         System.out.println(f.getRawListing());
-                        System.out.println(f.toFormattedString(displayTimeZoneId));
+                        if (f.isValid()) {
+                            System.out.println(f.toFormattedString(displayTimeZoneId));
+                        } else {
+                            System.out.println("[Unparseable]");                            
+                        }
                     }
                 }
             }

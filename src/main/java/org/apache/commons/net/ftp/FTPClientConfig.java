@@ -217,6 +217,7 @@ public class FTPClientConfig
     private String serverLanguageCode = null;
     private String shortMonthNames = null;
     private String serverTimeZoneId = null;
+    private boolean saveUnparseableEntries = false;
 
 
     /**
@@ -583,5 +584,21 @@ public class FTPClientConfig
         return LANGUAGE_CODE_MAP.keySet();
     }
 
+    /**
+     * Allow list parsing methods to create basic FTPFile entries if parsing fails
+     * @param saveUnparseable if true, then create FTPFile entries if parsing fails
+     * @since 3.4
+     */
+    public void setUnparseableEntries(boolean saveUnparseable) {
+        this.saveUnparseableEntries = saveUnparseable;
+    }
+
+    /**
+     * @return true if list parsing should return FTPFile entries even for unparseable response lines
+     * @since 3.4
+     */
+    public boolean getUnparseableEntries() {
+        return this.saveUnparseableEntries;
+    }
 
 }

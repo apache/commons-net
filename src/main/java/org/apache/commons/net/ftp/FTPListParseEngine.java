@@ -80,9 +80,24 @@ public class FTPListParseEngine {
     private ListIterator<String> _internalIterator = entries.listIterator();
 
     private final FTPFileEntryParser parser;
+    // Should invalid files (parse failures) be allowed?
+    private final boolean saveUnparseableEntries;
 
     public FTPListParseEngine(FTPFileEntryParser parser) {
+        this(parser, null);
+    }
+
+    /**
+     * Intended for use by FTPClient only
+     * @since 3.4
+     */
+    FTPListParseEngine(FTPFileEntryParser parser, FTPClientConfig configuration) {
         this.parser = parser;
+        if (configuration != null) {
+            this.saveUnparseableEntries = configuration.getUnparseableEntries();
+        } else {
+            this.saveUnparseableEntries = false;
+        }
     }
 
     /**
@@ -164,6 +179,9 @@ public class FTPListParseEngine {
         while (count > 0 && this._internalIterator.hasNext()) {
             String entry = this._internalIterator.next();
             FTPFile temp = this.parser.parseFTPEntry(entry);
+            if (temp == null && saveUnparseableEntries) {
+                temp = new FTPFile(entry);
+            }
             tmpResults.add(temp);
             count--;
         }
@@ -203,6 +221,9 @@ public class FTPListParseEngine {
         while (count > 0 && this._internalIterator.hasPrevious()) {
             String entry = this._internalIterator.previous();
             FTPFile temp = this.parser.parseFTPEntry(entry);
+            if (temp == null && saveUnparseableEntries) {
+                temp = new FTPFile(entry);
+            }
             tmpResults.add(0,temp);
             count--;
         }
@@ -250,6 +271,9 @@ public class FTPListParseEngine {
         while (iter.hasNext()) {
             String entry = iter.next();
             FTPFile temp = this.parser.parseFTPEntry(entry);
+            if (temp == null && saveUnparseableEntries) {
+                temp = new FTPFile(entry);
+            }
             if (filter.accept(temp)){
                 tmpResults.add(temp);
             }

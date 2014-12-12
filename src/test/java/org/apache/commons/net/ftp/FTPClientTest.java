@@ -18,7 +18,11 @@
 
 package org.apache.commons.net.ftp;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+import org.apache.commons.net.ftp.parser.UnixFTPEntryParser;
 
 import junit.framework.TestCase;
 
@@ -100,4 +104,25 @@ public class FTPClientTest extends TestCase {
         client.__createParser(null);
         assertSame(entryParser, client.getEntryParser()); // parser was cached
     }
+    public void testUnparseableFiles() throws Exception {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        baos.write("-rwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox".getBytes());
+        baos.write(new byte[]{'\r','\n'});
+        baos.write("zrwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox".getBytes());
+        baos.write(new byte[]{'\r','\n'});
+        FTPFileEntryParser parser = new UnixFTPEntryParser();
+        FTPClientConfig config = new FTPClientConfig();
+        FTPListParseEngine engine = new FTPListParseEngine(parser, config);
+        config.setUnparseableEntries(false);
+        engine.readServerList(new ByteArrayInputStream(baos.toByteArray()), null); // use default encoding
+        FTPFile[] files = engine.getFiles();
+        assertEquals(1, files.length);
+        config.setUnparseableEntries(true);
+        engine = new FTPListParseEngine(parser, config );
+        engine.readServerList(new ByteArrayInputStream(baos.toByteArray()), null); // use default encoding
+        files = engine.getFiles();
+        assertEquals(2, files.length);
+    }
+
+
 }

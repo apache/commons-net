@@ -3361,7 +3361,7 @@ implements Configurable
     {
         Socket socket = _openDataConnection_(FTPCmd.LIST, getListArguments(pathname));
 
-        FTPListParseEngine engine = new FTPListParseEngine(parser);
+        FTPListParseEngine engine = new FTPListParseEngine(parser, __configuration);
         if (socket == null)
         {
             return engine;
@@ -3388,7 +3388,7 @@ implements Configurable
     private FTPListParseEngine initiateMListParsing(String pathname) throws IOException
     {
         Socket socket = _openDataConnection_(FTPCmd.MLSD, pathname);
-        FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance());
+        FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance(), __configuration);
         if (socket == null)
         {
             return engine;

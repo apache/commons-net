@@ -65,13 +65,34 @@ public class FTPFile implements Serializable
     private long _size;
     private String _rawListing, _user, _group, _name, _link;
     private Calendar _date;
+    // If this is null, then list entry parsing failed
     private final boolean[] _permissions[]; // e.g. _permissions[USER_ACCESS][READ_PERMISSION]
 
     /*** Creates an empty FTPFile. ***/
     public FTPFile()
     {
         _permissions = new boolean[3][3];
-        _rawListing = null;
+        _type = UNKNOWN_TYPE;
+        // init these to values that do not occur in listings
+        // so can distinguish which fields are unset
+        _hardLinkCount = 0; // 0 is invalid as a link count
+        _size = -1; // 0 is valid, so use -1
+        _user = "";
+        _group = "";
+        _date = null;
+        _name = null;
+    }
+
+    /**
+     * Constructor for use by {@link FTPListParseEngine} only.
+     * Used to create FTPFile entries for failed parses 
+     * @param rawListing line that could not be parsed.
+     * @since 3.4
+     */
+    FTPFile(String rawListing)
+    {
+        _permissions = null; // flag that entry is invalid
+        _rawListing = rawListing;
         _type = UNKNOWN_TYPE;
         // init these to values that do not occur in listings
         // so can distinguish which fields are unset
@@ -151,6 +172,18 @@ public class FTPFile implements Serializable
         return (_type == UNKNOWN_TYPE);
     }
 
+    /**
+     * Used to indicate whether an entry is valid or not.
+     * If the entry is invalid, only the {@link #getRawListing()} method will be useful.
+     * Other methods may fail.
+     * 
+     * Used in conjunction with list parsing that preseverves entries that failed to parse.
+     * @return true if the entry is valid
+     * @since 3.4
+     */
+    public boolean isValid() {
+        return (_permissions != null);        
+    }
 
     /***
      * Set the type of the file (<code>DIRECTORY_TYPE</code>,
@@ -410,6 +443,10 @@ public class FTPFile implements Serializable
      */
     public String toFormattedString(final String timezone)
     {
+        
+        if (!isValid()) {
+            return getRawListing();
+        }
         StringBuilder sb = new StringBuilder();
         Formatter fmt = new Formatter(sb);
         sb.append(formatType());
