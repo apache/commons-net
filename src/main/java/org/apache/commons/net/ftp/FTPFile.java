@@ -178,6 +178,7 @@ public class FTPFile implements Serializable
      * Other methods may fail.
      * 
      * Used in conjunction with list parsing that preseverves entries that failed to parse.
+     * @see FTPClientConfig#setUnparseableEntries(boolean)
      * @return true if the entry is valid
      * @since 3.4
      */
@@ -399,9 +400,14 @@ public class FTPFile implements Serializable
      * @param permission The access permission (one of the
      *               <code> _PERMISSION </code> constants)
      * @throws ArrayIndexOutOfBoundsException if either of the parameters is out of range
+     * @return true if {@link #isValid()} is {@code true &&} the associated permission is set;
+     * {@code false} otherwise.
      ***/
     public boolean hasPermission(int access, int permission)
     {
+        if (_permissions == null) {
+            return false;
+        }
         return _permissions[access][permission];
     }
 
@@ -422,6 +428,10 @@ public class FTPFile implements Serializable
      * This method uses the timezone of the Calendar entry, which is
      * the server time zone (if one was provided) otherwise it is
      * the local time zone.
+     * <p>
+     * Note: if the instance is not valid {@link #isValid()}, no useful
+     * information can be returned. In this case, use {@link #getRawListing()}
+     * instead.
      *
      * @return A string representation of the FTPFile information.
      * @since 3.0
@@ -435,7 +445,10 @@ public class FTPFile implements Serializable
      * Returns a string representation of the FTPFile information.
      * This currently mimics the Unix listing format.
      * This method allows the Calendar time zone to be overridden.
-     *
+     * <p>
+     * Note: if the instance is not valid {@link #isValid()}, no useful
+     * information can be returned. In this case, use {@link #getRawListing()}
+     * instead.
      * @param timezone the timezone to use for displaying the time stamp
      * If {@code null}, then use the Calendar entry timezone
      * @return A string representation of the FTPFile information.
@@ -445,7 +458,7 @@ public class FTPFile implements Serializable
     {
         
         if (!isValid()) {
-            return getRawListing();
+            return "[Invalid: could not parse file entry]";
         }
         StringBuilder sb = new StringBuilder();
         Formatter fmt = new Formatter(sb);

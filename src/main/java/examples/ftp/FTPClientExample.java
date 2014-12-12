@@ -415,11 +415,7 @@ __main:
 
                     for (FTPFile f : ftp.listFiles(remote)) {
                         System.out.println(f.getRawListing());
-                        if (f.isValid()) {
-                            System.out.println(f.toFormattedString(displayTimeZoneId));
-                        } else {
-                            System.out.println("[Unparseable]");                            
-                        }
+                        System.out.println(f.toFormattedString(displayTimeZoneId));
                     }
                 }
             }
