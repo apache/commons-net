@@ -108,7 +108,7 @@ public final class IMAPExportMbox
             }
         }
 
-        int argCount = args.length - argIdx;
+        final int argCount = args.length - argIdx;
 
         if (argCount < 2)
         {
@@ -128,7 +128,26 @@ public final class IMAPExportMbox
         final URI uri      = URI.create(args[argIdx++]);
         final String file  = args[argIdx++];
         final String sequenceSet = argCount > 2 ? args[argIdx++] : "1:*";
-        final String itemNames   = argCount > 3 ? args[argIdx++] : "(INTERNALDATE BODY.PEEK[])";
+        final String itemNames;
+        // Handle 0, 1 or multiple item names
+        if (argCount > 3) {
+            if (argCount > 4) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("(");
+                for(int i=4; i <= argCount; i++) {
+                    if (i>4) {
+                        sb.append(" ");
+                    }
+                    sb.append(args[argIdx++]);
+                }
+                sb.append(")");
+                itemNames = sb.toString();
+            } else {
+                itemNames = args[argIdx++];
+            }
+        } else {
+            itemNames = "(INTERNALDATE BODY.PEEK[])";
+        }
 
         final MboxListener chunkListener;
         if (file.equals("-")) {
