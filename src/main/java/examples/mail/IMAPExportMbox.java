@@ -24,7 +24,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -218,12 +221,24 @@ public final class IMAPExportMbox
             String count = chunkListener == null ? "?" : Integer.toString(chunkListener.total);
             System.err.println("FETCH " + sequenceSet + " " + itemNames + " failed after processing " + count + " complete messages ");
             if (chunkListener != null) {
-                System.err.println("Last response seen: "+chunkListener.lastFetched);
+                System.err.println("Last complete response seen: "+chunkListener.lastFetched);
             }
             throw ioe;
         } finally {
             if (chunkListener != null) {
                 chunkListener.close();
+                final Iterator<String> missingIds = chunkListener.missingIds.iterator();
+                if (missingIds.hasNext()) {
+                    StringBuilder sb = new StringBuilder();
+                    for(;;) {
+                        sb.append(missingIds.next());
+                        if (!missingIds.hasNext()) {
+                            break;
+                        }
+                        sb.append(",");
+                    }
+                    System.err.println("*** Missing ids: " + sb.toString());
+                }
             }
             imap.logout();
             imap.disconnect();
@@ -243,6 +258,7 @@ public final class IMAPExportMbox
         private final BufferedWriter bw;
         volatile int total = 0;
         volatile String lastFetched;
+        volatile List<String> missingIds = new ArrayList<String>();
         private long lastSeq = -1;
         private final String eol;
         private final SimpleDateFormat DATE_FORMAT // for mbox From_ lines
@@ -268,7 +284,6 @@ public final class IMAPExportMbox
             final String[] replyStrings = imap.getReplyStrings();
             Date received = new Date();
             final String firstLine = replyStrings[0];
-            lastFetched = firstLine;
             Matcher m = PATID.matcher(firstLine);
             if (m.lookingAt()) { // found a match
                 String date = m.group(PATID_DATE_GROUP);
@@ -285,8 +300,12 @@ public final class IMAPExportMbox
                 if (m.lookingAt()) { // found a match
                     final long msgSeq = Long.parseLong(m.group(PATSEQ_SEQUENCE_GROUP)); // Cannot fail to parse
                     if (lastSeq != -1) {
-                        if (msgSeq != (lastSeq + 1)) {
-                            System.err.println("Sequence error: current= " + msgSeq + " previous= " + lastSeq + " Diff= " + (msgSeq-lastSeq));
+                        long missing = msgSeq - lastSeq - 1;
+                        if (missing != 0) {
+                            for(long j = lastSeq + 1; j < msgSeq; j++) {
+                                missingIds.add(String.valueOf(j));
+                            }
+                            System.err.println("*** Sequence error: current=" + msgSeq + " previous=" + lastSeq + " Missing=" + missing);
                         }
                     }
                     lastSeq = msgSeq;
@@ -336,8 +355,10 @@ public final class IMAPExportMbox
                 }
                 bw.append(eol); // blank line between entries
             } catch (IOException e) {
+                e.printStackTrace();
                 throw new RuntimeException(e); // chunkReceived cannot throw a checked Exception
             }
+            lastFetched = firstLine;
             total++;
             if (printHash) {
                 System.err.print(".");
