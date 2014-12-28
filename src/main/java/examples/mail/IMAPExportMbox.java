@@ -30,9 +30,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.net.PrintCommandListener;
+import org.apache.commons.net.ProtocolCommandEvent;
 import org.apache.commons.net.imap.IMAP.IMAPChunkListener;
 import org.apache.commons.net.imap.IMAP;
 import org.apache.commons.net.imap.IMAPClient;
+import org.apache.commons.net.imap.IMAPReply;
 
 /**
  * This is an example program demonstrating how to use the IMAP[S]Client class.
@@ -71,7 +73,7 @@ public final class IMAPExportMbox
     private static final String EOL_DEFAULT = System.getProperty("line.separator");
 
     private static final Pattern PATFROM = Pattern.compile(">*From "); // unescaped From_
-    // e.g. INTERNALDATE "27-Oct-2013 07:43:24 +0000"
+    // e.g. * nnn (INTERNALDATE "27-Oct-2013 07:43:24 +0000"  BODY[] {nn} ...)
     private static final Pattern PATID =
             Pattern.compile(".*INTERNALDATE \"(\\d\\d-\\w{3}-\\d{4} \\d\\d:\\d\\d:\\d\\d [+-]\\d+)\"");
 
@@ -155,7 +157,14 @@ public final class IMAPExportMbox
         String folder = path.substring(1); // skip the leading /
 
         // suppress login details
-        final PrintCommandListener listener = new PrintCommandListener(System.out, true);
+        final PrintCommandListener listener = new PrintCommandListener(System.out, true) {
+            @Override
+            public void protocolReplyReceived(ProtocolCommandEvent event) {
+                if (event.getReplyCode() != IMAPReply.PARTIAL){ // This is dealt with by the chunk listener
+                    super.protocolReplyReceived(event);                    
+                }
+            }
+        };
 
         // Connect and login
         final IMAPClient imap = IMAPUtils.imapLogin(uri, connect_timeout * 1000, listener);
@@ -169,15 +178,11 @@ public final class IMAPExportMbox
             }
 
             if (chunkListener != null) {
-                imap.removeProtocolCommandListener(listener); // We use the chunk listener instead
                 imap.setChunkListener(chunkListener);
             } // else the command listener displays the full output without processing
 
 
             if (!imap.fetch(sequenceSet, itemNames)) {
-                if (chunkListener != null) {
-                    chunkListener.close();
-                }
                 throw new IOException("FETCH " + sequenceSet + " " + itemNames+ " failed with " + imap.getReplyString());
             }
 
@@ -185,13 +190,6 @@ public final class IMAPExportMbox
                 System.err.println();
             }
 
-            // remains of response
-            for(String line :imap.getReplyStrings()) {
-                System.out.println(line);
-            }
-            if (chunkListener != null) {
-                chunkListener.close();
-            }
         } catch (IOException ioe) {
             String count = chunkListener == null ? "?" : Integer.toString(chunkListener.total);
             System.err.println("FETCH " + sequenceSet + " " + itemNames + " failed after processing " + count + " complete messages ");
