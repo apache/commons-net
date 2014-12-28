@@ -374,6 +374,7 @@ public class IMAPClient extends IMAP
      *
      * @param sequenceSet The sequence set to fetch (e.g. 1:4,6,11,100:*)
      * @param itemNames The item names for the FETCH command. (e.g. BODY.PEEK[HEADER.FIELDS (SUBJECT)])
+     * If multiple item names are requested, these must be enclosed in parentheses, e.g. "(UID FLAGS BODY.PEEK[])"
      * @return {@code true} if the command was successful,{@code false} if not.
      * @exception IOException If a network I/O error occurs.
      * @see #getReplyString()
