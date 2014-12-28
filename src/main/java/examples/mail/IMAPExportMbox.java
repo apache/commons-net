@@ -110,13 +110,14 @@ public final class IMAPExportMbox
 
         if (argCount < 2)
         {
-            System.err.println("Usage: IMAPExportMbox [-LF|-CRLF] [-c n] [-r n] [-.] [-X] imap[s]://user:password@host[:port]/folder/path <mboxfile> [sequence-set] [itemnames]");
+            System.err.println("Usage: IMAPExportMbox [-LF|-CRLF] [-c n] [-r n] [-.] [-X] imap[s]://user:password@host[:port]/folder/path [+|-]<mboxfile> [sequence-set] [itemnames]");
             System.err.println("\t-LF | -CRLF set end-of-line to LF or CRLF (default is the line.separator system property)");
             System.err.println("\t-c connect timeout in seconds (default 10)");
             System.err.println("\t-r read timeout in seconds (default 10)");
             System.err.println("\t-. print a . for each complete message received");
             System.err.println("\t-X print the X-IMAP line for each complete message received");
-            System.err.println("\tthe mailboxfile is where the messages are stored; use '-' to write to standard output");
+            System.err.println("\tthe mboxfile is where the messages are stored; use '-' to write to standard output.");
+            System.err.println("\tPrefix filename with '+' to append to the file. Prefix with '-' to allow overwrite.");
             System.err.println("\ta sequence-set is a list of numbers/number ranges e.g. 1,2,3-10,20:* - default 1:*");
             System.err.println("\titemnames are the message data item name(s) e.g. BODY.PEEK[HEADER.FIELDS (SUBJECT)] or a macro e.g. ALL - default (INTERNALDATE BODY.PEEK[])");
             System.exit(1);
@@ -127,7 +128,25 @@ public final class IMAPExportMbox
         final String sequenceSet = argCount > 2 ? args[argIdx++] : "1:*";
         final String itemNames   = argCount > 3 ? args[argIdx++] : "(INTERNALDATE BODY.PEEK[])";
 
-        final File mbox = "-".equals(file) ? null : new File(file);
+        final MboxListener chunkListener;
+        if (file.equals("-")) {
+            chunkListener = null;
+        } else if (file.startsWith("+")) {
+            final File mbox = new File(file.substring(1));
+            System.out.println("Appending to file " + mbox);
+            chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mbox, true)), eol, printHash, printMarker);
+        } else if (file.startsWith("-")) {
+            final File mbox = new File(file.substring(1));
+            System.out.println("Writing to file " + mbox);
+            chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mbox, false)), eol, printHash, printMarker);
+        } else {
+            final File mbox = new File(file);
+            if (mbox.exists()) {
+                throw new IOException("mailbox file: " + mbox + " already exists!");                
+            }
+            System.out.println("Creating file " + mbox);
+            chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mbox)), eol, printHash, printMarker);
+        }
 
         String path = uri.getPath();
         if (path == null || path.length() < 1) {
@@ -137,8 +156,6 @@ public final class IMAPExportMbox
 
         // suppress login details
         final PrintCommandListener listener = new PrintCommandListener(System.out, true);
-
-        final MboxListener chunkListener = mbox == null? null : new MboxListener(mbox, eol, printHash, printMarker);
 
         // Connect and login
         final IMAPClient imap = IMAPUtils.imapLogin(uri, connect_timeout * 1000, listener);
@@ -151,7 +168,7 @@ public final class IMAPExportMbox
                 throw new IOException("Could not select folder: " + folder);
             }
 
-            if (mbox != null) {
+            if (chunkListener != null) {
                 imap.removeProtocolCommandListener(listener); // We use the chunk listener instead
                 imap.setChunkListener(chunkListener);
             } // else the command listener displays the full output without processing
@@ -201,7 +218,7 @@ public final class IMAPExportMbox
 
     private static class MboxListener implements IMAPChunkListener {
 
-        private BufferedWriter bw;
+        private final BufferedWriter bw;
         volatile int total = 0;
         volatile String lastFetched;
         private final String eol;
@@ -214,17 +231,12 @@ public final class IMAPExportMbox
         private final boolean printHash;
         private final boolean printMarker;
 
-        MboxListener(File mbox, String eol, boolean printHash, boolean printMarker) throws IOException {
+        MboxListener(BufferedWriter bw, String eol, boolean printHash, boolean printMarker) throws IOException {
           this.eol = eol;
           this.printHash = printHash;
           this.printMarker = printMarker;
           DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT"));
-          if (mbox.exists()) {
-              throw new IOException("mailbox file: " + mbox + " already exists!");
-          } else {
-              System.out.println("Creating: " + mbox);
-          }
-          this.bw = new BufferedWriter(new FileWriter(mbox));
+          this.bw = bw;
         }
 
         public boolean chunkReceived(IMAP imap) {
