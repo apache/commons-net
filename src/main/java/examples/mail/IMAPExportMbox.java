@@ -74,8 +74,12 @@ public final class IMAPExportMbox
 
     private static final Pattern PATFROM = Pattern.compile(">*From "); // unescaped From_
     // e.g. * nnn (INTERNALDATE "27-Oct-2013 07:43:24 +0000"  BODY[] {nn} ...)
-    private static final Pattern PATID =
+    private static final Pattern PATID = // INTERNALDATE
             Pattern.compile(".*INTERNALDATE \"(\\d\\d-\\w{3}-\\d{4} \\d\\d:\\d\\d:\\d\\d [+-]\\d+)\"");
+    private static final int PATID_DATE_GROUP = 1;
+
+    private static final Pattern PATSEQ = Pattern.compile("\\* (\\d+) "); // Sequence number
+    private static final int PATSEQ_SEQUENCE_GROUP = 1;
 
     private static final int CONNECT_TIMEOUT = 10; // Seconds
     private static final int READ_TIMEOUT = 10;
@@ -149,24 +153,25 @@ public final class IMAPExportMbox
             itemNames = "(INTERNALDATE BODY.PEEK[])";
         }
 
+        final boolean checkSequence = sequenceSet.matches("\\d+:(\\d+|\\*)"); // are we expecting a sequence?
         final MboxListener chunkListener;
         if (file.equals("-")) {
             chunkListener = null;
         } else if (file.startsWith("+")) {
             final File mbox = new File(file.substring(1));
             System.out.println("Appending to file " + mbox);
-            chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mbox, true)), eol, printHash, printMarker);
+            chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mbox, true)), eol, printHash, printMarker, checkSequence);
         } else if (file.startsWith("-")) {
             final File mbox = new File(file.substring(1));
             System.out.println("Writing to file " + mbox);
-            chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mbox, false)), eol, printHash, printMarker);
+            chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mbox, false)), eol, printHash, printMarker, checkSequence);
         } else {
             final File mbox = new File(file);
             if (mbox.exists()) {
                 throw new IOException("mailbox file: " + mbox + " already exists!");                
             }
             System.out.println("Creating file " + mbox);
-            chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mbox)), eol, printHash, printMarker);
+            chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mbox)), eol, printHash, printMarker, checkSequence);
         }
 
         String path = uri.getPath();
@@ -238,6 +243,7 @@ public final class IMAPExportMbox
         private final BufferedWriter bw;
         volatile int total = 0;
         volatile String lastFetched;
+        private long lastSeq = -1;
         private final String eol;
         private final SimpleDateFormat DATE_FORMAT // for mbox From_ lines
             = new SimpleDateFormat("EEE MMM dd HH:mm:ss YYYY");
@@ -247,13 +253,15 @@ public final class IMAPExportMbox
         = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss Z");
         private final boolean printHash;
         private final boolean printMarker;
+        private final boolean checkSequence;
 
-        MboxListener(BufferedWriter bw, String eol, boolean printHash, boolean printMarker) throws IOException {
+        MboxListener(BufferedWriter bw, String eol, boolean printHash, boolean printMarker, boolean checkSequence) throws IOException {
           this.eol = eol;
           this.printHash = printHash;
           this.printMarker = printMarker;
           DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT"));
           this.bw = bw;
+          this.checkSequence = checkSequence;
         }
 
         public boolean chunkReceived(IMAP imap) {
@@ -263,7 +271,7 @@ public final class IMAPExportMbox
             lastFetched = firstLine;
             Matcher m = PATID.matcher(firstLine);
             if (m.lookingAt()) { // found a match
-                String date = m.group(1);
+                String date = m.group(PATID_DATE_GROUP);
                 try {
                     received=IDPARSE.parse(date);
                 } catch (ParseException e) {
@@ -272,7 +280,18 @@ public final class IMAPExportMbox
             } else {
                 System.err.println("No timestamp found in: " + firstLine + "  - using current time");
             }
-
+            if (checkSequence) {
+            m = PATSEQ.matcher(firstLine);
+                if (m.lookingAt()) { // found a match
+                    final long msgSeq = Long.parseLong(m.group(PATSEQ_SEQUENCE_GROUP)); // Cannot fail to parse
+                    if (lastSeq != -1) {
+                        if (msgSeq != (lastSeq + 1)) {
+                            System.err.println("Sequence error: current= " + msgSeq + " previous= " + lastSeq + " Diff= " + (msgSeq-lastSeq));
+                        }
+                    }
+                    lastSeq = msgSeq;
+                }
+            }
             String replyTo = "MAILER-DAEMON"; // default
             for(int i=1; i< replyStrings.length - 1; i++) {
                 final String line = replyStrings[i];
