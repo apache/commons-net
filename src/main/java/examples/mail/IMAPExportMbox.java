@@ -86,6 +86,7 @@ public final class IMAPExportMbox
         int argIdx = 0;
         String eol = EOL_DEFAULT;
         boolean printHash = false;
+        boolean printMarker = false;
 
         for(argIdx = 0; argIdx < args.length; argIdx++) {
             if (args[argIdx].equals("-c")) {
@@ -98,6 +99,8 @@ public final class IMAPExportMbox
                 eol = CRLF;
             } else if (args[argIdx].equals("-.")) {
                 printHash = true;
+            } else if (args[argIdx].equals("-X")) {
+                printMarker = true;
             } else {
                 break;
             }
@@ -107,11 +110,12 @@ public final class IMAPExportMbox
 
         if (argCount < 2)
         {
-            System.err.println("Usage: IMAPExportMbox [-LF|-CRLF] [-c n] [-r n] [#] imap[s]://user:password@host[:port]/folder/path <mboxfile> [sequence-set] [itemnames]");
+            System.err.println("Usage: IMAPExportMbox [-LF|-CRLF] [-c n] [-r n] [-.] [-X] imap[s]://user:password@host[:port]/folder/path <mboxfile> [sequence-set] [itemnames]");
             System.err.println("\t-LF | -CRLF set end-of-line to LF or CRLF (default is the line.separator system property)");
             System.err.println("\t-c connect timeout in seconds (default 10)");
             System.err.println("\t-r read timeout in seconds (default 10)");
             System.err.println("\t-. print a . for each complete message received");
+            System.err.println("\t-X print the X-IMAP line for each complete message received");
             System.err.println("\tthe mailboxfile is where the messages are stored; use '-' to write to standard output");
             System.err.println("\ta sequence-set is a list of numbers/number ranges e.g. 1,2,3-10,20:* - default 1:*");
             System.err.println("\titemnames are the message data item name(s) e.g. BODY.PEEK[HEADER.FIELDS (SUBJECT)] or a macro e.g. ALL - default (INTERNALDATE BODY.PEEK[])");
@@ -134,7 +138,7 @@ public final class IMAPExportMbox
         // suppress login details
         final PrintCommandListener listener = new PrintCommandListener(System.out, true);
 
-        final MboxListener chunkListener = mbox == null? null : new MboxListener(mbox, eol, printHash);
+        final MboxListener chunkListener = mbox == null? null : new MboxListener(mbox, eol, printHash, printMarker);
 
         // Connect and login
         final IMAPClient imap = IMAPUtils.imapLogin(uri, connect_timeout * 1000, listener);
@@ -174,6 +178,9 @@ public final class IMAPExportMbox
         } catch (IOException ioe) {
             String count = chunkListener == null ? "?" : Integer.toString(chunkListener.total);
             System.err.println("FETCH " + sequenceSet + " " + itemNames + " failed after processing " + count + " complete messages ");
+            if (chunkListener != null) {
+                System.err.println("Last response seen: "+chunkListener.lastFetched);
+            }
             throw ioe;
         } finally {
             if (chunkListener != null) {
@@ -196,6 +203,7 @@ public final class IMAPExportMbox
 
         private BufferedWriter bw;
         volatile int total = 0;
+        volatile String lastFetched;
         private final String eol;
         private final SimpleDateFormat DATE_FORMAT // for mbox From_ lines
             = new SimpleDateFormat("EEE MMM dd HH:mm:ss YYYY");
@@ -204,10 +212,12 @@ public final class IMAPExportMbox
         private final SimpleDateFormat IDPARSE // for parsing INTERNALDATE
         = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss Z");
         private final boolean printHash;
+        private final boolean printMarker;
 
-        MboxListener(File mbox, String eol, boolean printHash) throws IOException {
+        MboxListener(File mbox, String eol, boolean printHash, boolean printMarker) throws IOException {
           this.eol = eol;
           this.printHash = printHash;
+          this.printMarker = printMarker;
           DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT"));
           if (mbox.exists()) {
               throw new IOException("mailbox file: " + mbox + " already exists!");
@@ -221,6 +231,7 @@ public final class IMAPExportMbox
             final String[] replyStrings = imap.getReplyStrings();
             Date received = new Date();
             final String firstLine = replyStrings[0];
+            lastFetched = firstLine;
             Matcher m = PATID.matcher(firstLine);
             if (m.lookingAt()) { // found a match
                 String date = m.group(1);
@@ -256,6 +267,9 @@ public final class IMAPExportMbox
                 bw.append(eol);
                 // Debug
                 bw.append("X-IMAP-Response: ").append(firstLine).append(eol);
+                if (printMarker) {
+                    System.err.println("[" + total + "] " + firstLine);
+                }
                 // Skip first and last lines
                 for(int i=1; i< replyStrings.length - 1; i++) {
                     final String line = replyStrings[i];
