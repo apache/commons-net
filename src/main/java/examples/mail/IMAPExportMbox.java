@@ -54,17 +54,20 @@ import org.apache.commons.net.imap.IMAPReply;
  * Some example item-names might be:
  * <ul>
  * <li>BODY.PEEK[HEADER]</li>
- * <li>BODY.PEEK[HEADER.FIELDS (SUBJECT)]</li>
+ * <li>'BODY.PEEK[HEADER.FIELDS (SUBJECT)]'</li>
  * <li>ALL</li>
  * <li>ENVELOPE</li>
- * <li>(INTERNALDATE BODY.PEEK[]) - this is the default</li>
+ * <li>'(INTERNALDATE BODY.PEEK[])' - this is the default</li>
  * </ul>
  * <p>
  * For example:<br>
  * IMAPExportMbox imaps://username:password@imap.googlemail.com/messages_for_export exported.mbox 1:10,20<br>
  * IMAPExportMbox imaps://username:password@imap.googlemail.com/messages_for_export exported.mbox 3 ENVELOPE<br>
  * <p>
- * Note that the sequence-set and item names are passed unmodified to the FETCH command.
+ * Note that the sequence-set is passed unmodified to the FETCH command.
+ * The item names are wrapped in parentheses if more than one is provided.
+ * Otherwise, the parameter is assumed to be wrapped if necessary.
+ * Parameters with spaces must be quoted otherwise the OS shell will normally treat them as separate parameters.
  * Also the listener that writes the mailbox only captures the multi-line responses.
  * It does not capture the output from ENVELOPE commands.
  */
@@ -213,10 +216,6 @@ public final class IMAPExportMbox
                 throw new IOException("FETCH " + sequenceSet + " " + itemNames+ " failed with " + imap.getReplyString());
             }
 
-            if (printHash) {
-                System.err.println();
-            }
-
         } catch (IOException ioe) {
             String count = chunkListener == null ? "?" : Integer.toString(chunkListener.total);
             System.err.println("FETCH " + sequenceSet + " " + itemNames + " failed after processing " + count + " complete messages ");
@@ -225,6 +224,11 @@ public final class IMAPExportMbox
             }
             throw ioe;
         } finally {
+
+            if (printHash) {
+                System.err.println();
+            }
+
             if (chunkListener != null) {
                 chunkListener.close();
                 final Iterator<String> missingIds = chunkListener.missingIds.iterator();
