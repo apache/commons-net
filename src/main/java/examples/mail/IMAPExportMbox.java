@@ -87,6 +87,12 @@ public final class IMAPExportMbox
     private static final Pattern PATSEQ = Pattern.compile("\\* (\\d+) "); // Sequence number
     private static final int PATSEQ_SEQUENCE_GROUP = 1;
 
+    // e.g. * 382 EXISTS
+    private static final Pattern PATEXISTS = Pattern.compile("\\* (\\d+) EXISTS"); // Response from SELECT
+
+    // AAAC NO [TEMPFAIL] FETCH Temporary failure on server [CODE: WBL]
+    private static final Pattern PATTEMPFAIL = Pattern.compile("[A-Z]{4} NO \\[TEMPFAIL\\] FETCH .*");
+
     private static final int CONNECT_TIMEOUT = 10; // Seconds
     private static final int READ_TIMEOUT = 10;
 
@@ -99,12 +105,15 @@ public final class IMAPExportMbox
         String eol = EOL_DEFAULT;
         boolean printHash = false;
         boolean printMarker = false;
+        int retryWaitSecs = 0;
 
         for(argIdx = 0; argIdx < args.length; argIdx++) {
             if (args[argIdx].equals("-c")) {
                 connect_timeout = Integer.parseInt(args[++argIdx]);
-            } else if (args[argIdx].equals("-c")) {
-                connect_timeout = Integer.parseInt(args[++argIdx]);
+            } else if (args[argIdx].equals("-r")) {
+                read_timeout = Integer.parseInt(args[++argIdx]);
+            } else if (args[argIdx].equals("-R")) {
+                retryWaitSecs = Integer.parseInt(args[++argIdx]);
             } else if (args[argIdx].equals("-LF")) {
                 eol = LF;
             } else if (args[argIdx].equals("-CRLF")) {
@@ -122,10 +131,11 @@ public final class IMAPExportMbox
 
         if (argCount < 2)
         {
-            System.err.println("Usage: IMAPExportMbox [-LF|-CRLF] [-c n] [-r n] [-.] [-X] imap[s]://user:password@host[:port]/folder/path [+|-]<mboxfile> [sequence-set] [itemnames]");
+            System.err.println("Usage: IMAPExportMbox [-LF|-CRLF] [-c n] [-r n] [-R n] [-.] [-X] imap[s]://user:password@host[:port]/folder/path [+|-]<mboxfile> [sequence-set] [itemnames]");
             System.err.println("\t-LF | -CRLF set end-of-line to LF or CRLF (default is the line.separator system property)");
             System.err.println("\t-c connect timeout in seconds (default 10)");
             System.err.println("\t-r read timeout in seconds (default 10)");
+            System.err.println("\t-R temporary failure retry wait in seconds (default 0; i.e. disabled)");
             System.err.println("\t-. print a . for each complete message received");
             System.err.println("\t-X print the X-IMAP line for each complete message received");
             System.err.println("\tthe mboxfile is where the messages are stored; use '-' to write to standard output.");
@@ -137,7 +147,7 @@ public final class IMAPExportMbox
 
         final URI uri      = URI.create(args[argIdx++]);
         final String file  = args[argIdx++];
-        final String sequenceSet = argCount > 2 ? args[argIdx++] : "1:*";
+        String sequenceSet = argCount > 2 ? args[argIdx++] : "1:*";
         final String itemNames;
         // Handle 0, 1 or multiple item names
         if (argCount > 3) {
@@ -199,6 +209,8 @@ public final class IMAPExportMbox
         // Connect and login
         final IMAPClient imap = IMAPUtils.imapLogin(uri, connect_timeout * 1000, listener);
 
+        String maxIndexInFolder = null;
+
         try {
 
             imap.setSoTimeout(read_timeout * 1000);
@@ -207,13 +219,37 @@ public final class IMAPExportMbox
                 throw new IOException("Could not select folder: " + folder);
             }
 
+            for(String line : imap.getReplyStrings()) {
+                maxIndexInFolder = matches(line, PATEXISTS, 1);
+                if (maxIndexInFolder != null) {
+                    break;
+                }
+            }
+
             if (chunkListener != null) {
                 imap.setChunkListener(chunkListener);
             } // else the command listener displays the full output without processing
 
 
-            if (!imap.fetch(sequenceSet, itemNames)) {
-                throw new IOException("FETCH " + sequenceSet + " " + itemNames+ " failed with " + imap.getReplyString());
+            while(true) {
+                boolean ok = imap.fetch(sequenceSet, itemNames);
+                // If the fetch failed, can we retry?
+                if (!ok && retryWaitSecs > 0 && chunkListener != null && checkSequence) {
+                    final String replyString = imap.getReplyString(); //includes EOL
+                    if (startsWith(replyString, PATTEMPFAIL)) {
+                        System.err.println("Temporary error detected, will retry in " + retryWaitSecs + "seconds");
+                        sequenceSet = (chunkListener.lastSeq+1)+":*";
+                        try {
+                            Thread.sleep(retryWaitSecs * 1000);
+                        } catch (InterruptedException e) {
+                            // ignored
+                        }
+                    } else {
+                        throw new IOException("FETCH " + sequenceSet + " " + itemNames+ " failed with " + replyString);
+                    }
+                } else {
+                    break;
+                }
             }
 
         } catch (IOException ioe) {
@@ -250,11 +286,22 @@ public final class IMAPExportMbox
         if (chunkListener != null) {
             System.out.println("Processed " + chunkListener.total + " messages.");
         }
+        if (maxIndexInFolder != null) {
+            System.out.println("Folder contained " + maxIndexInFolder + " messages.");            
+        }
     }
 
     private static boolean startsWith(String input, Pattern pat) {
         Matcher m = pat.matcher(input);
         return m.lookingAt();
+    }
+
+    private static String matches(String input, Pattern pat, int index) {
+        Matcher m = pat.matcher(input);
+        if (m.lookingAt()) {
+            return m.group(index);
+        }
+        return null;
     }
 
     private static class MboxListener implements IMAPChunkListener {
@@ -263,7 +310,7 @@ public final class IMAPExportMbox
         volatile int total = 0;
         volatile String lastFetched;
         volatile List<String> missingIds = new ArrayList<String>();
-        private long lastSeq = -1;
+        volatile long lastSeq = -1;
         private final String eol;
         private final SimpleDateFormat DATE_FORMAT // for mbox From_ lines
             = new SimpleDateFormat("EEE MMM dd HH:mm:ss YYYY");
@@ -298,22 +345,6 @@ public final class IMAPExportMbox
                 }
             } else {
                 System.err.println("No timestamp found in: " + firstLine + "  - using current time");
-            }
-            if (checkSequence) {
-            m = PATSEQ.matcher(firstLine);
-                if (m.lookingAt()) { // found a match
-                    final long msgSeq = Long.parseLong(m.group(PATSEQ_SEQUENCE_GROUP)); // Cannot fail to parse
-                    if (lastSeq != -1) {
-                        long missing = msgSeq - lastSeq - 1;
-                        if (missing != 0) {
-                            for(long j = lastSeq + 1; j < msgSeq; j++) {
-                                missingIds.add(String.valueOf(j));
-                            }
-                            System.err.println("*** Sequence error: current=" + msgSeq + " previous=" + lastSeq + " Missing=" + missing);
-                        }
-                    }
-                    lastSeq = msgSeq;
-                }
             }
             String replyTo = "MAILER-DAEMON"; // default
             for(int i=1; i< replyStrings.length - 1; i++) {
@@ -364,6 +395,22 @@ public final class IMAPExportMbox
             }
             lastFetched = firstLine;
             total++;
+            if (checkSequence) {
+                m = PATSEQ.matcher(firstLine);
+                if (m.lookingAt()) { // found a match
+                    final long msgSeq = Long.parseLong(m.group(PATSEQ_SEQUENCE_GROUP)); // Cannot fail to parse
+                    if (lastSeq != -1) {
+                        long missing = msgSeq - lastSeq - 1;
+                        if (missing != 0) {
+                            for(long j = lastSeq + 1; j < msgSeq; j++) {
+                                missingIds.add(String.valueOf(j));
+                            }
+                            System.err.println("*** Sequence error: current=" + msgSeq + " previous=" + lastSeq + " Missing=" + missing);
+                        }
+                    }
+                    lastSeq = msgSeq;
+                }
+            }
             if (printHash) {
                 System.err.print(".");
             }
