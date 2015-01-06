@@ -17,6 +17,7 @@
 package org.apache.commons.net.ftp;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -38,7 +39,10 @@ public class TestConnectTimeout extends TestCase {
             // Connect to a valid host on a bogus port
             // TODO use a local server if possible
             client.connect("www.apache.org", 1234);
-            assertTrue("Expecting SocketTimeoutException", false);
+            fail("Expecting an Exception");
+        }
+        catch (ConnectException se) {
+            assertTrue(true);
         }
         catch (SocketTimeoutException se) {
             assertTrue(true);
