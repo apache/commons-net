@@ -25,6 +25,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
@@ -51,7 +52,7 @@ public final class FTPClientExample
 {
 
     public static final String USAGE =
-        "Usage: ftp [options] <hostname> <username> <password> [<remote file> [<local file>]]\n" +
+        "Expected Parameters: [options] <hostname> <username> <password> [<remote file> [<local file>]]\n" +
         "\nDefault behavior is to download a file and use ASCII transfer mode.\n" +
         "\t-a - use local active mode (default is local passive)\n" +
         "\t-A - anonymous login (omit username and password parameters)\n" +
@@ -214,6 +215,9 @@ public final class FTPClientExample
         }
         if (remain < minParams) // server, user, pass, remote, local [protocol]
         {
+            if (args.length > 0) {
+                System.err.println("Actual Parameters: " + Arrays.toString(args));
+            }
             System.err.println(USAGE);
             System.exit(1);
         }
