@@ -18,6 +18,7 @@
 
 package examples;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.CodeSource;
@@ -37,19 +38,19 @@ public class Main {
      *
      * @param args the first argument is used to name the class; remaining arguments
      * are passed to the target class.
+     * @param sourcefile 
      * @throws Exception
      * @throws Exception
      */
     public static void main(String[] args) throws Throwable  {
-        if (args.length==0) {
-            System.out.println("Usage: java -jar commons-net-examples-m.n.jar <exampleClass> <exampleClass parameters>");
-        }
         CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
         Map<String, String> map = new HashMap<String, String>();
+        final boolean noArgsProvided = args.length == 0;
         if ( codeSource != null) {
             final String sourceFile = codeSource.getLocation().getFile();
             if (sourceFile.endsWith(".jar")) {
-                if (args.length==0) {
+                if (noArgsProvided) {
+                    System.out.println("Usage: java -jar commons-net-examples-m.n.jar <exampleClass> <exampleClass parameters>");
                     System.out.println("\nClasses found in the jar:");
                 }
                 JarFile jf = new JarFile(sourceFile);
@@ -57,28 +58,26 @@ public class Main {
                 while (e.hasMoreElements()) {
                   JarEntry je = e.nextElement();
                   String name = je.getName();
-                  if (!name.endsWith(".class")
-                          || name.contains("$") // subclasses
-                          // TODO use reflection to eliminate non-mail classes?
-                          || name.equals("examples/nntp/NNTPUtils.class") // no main class
-                          || name.equals("examples/util/IOUtil.class") // no main class
-                          || name.equals("examples/mail/IMAPUtils.class") // no main class
-                          || name.equals("examples/Main.class")) { // ourself
-                      continue;
-                  }
-                  name = name.replace(".class", "");
-                  int lastSep = name.lastIndexOf('/');
-                  String alias = name.substring(lastSep+1);
-                  if (args.length==0) {
-                      System.out.printf("%-25s %s%n",alias,name);
-                  }
-                  map.put(alias, name);
+                  processFileName(name, map, noArgsProvided);
                 }
                 jf.close();
+            } else {
+                if (noArgsProvided) {
+                    System.out.println("Usage: mvn -q exec:java  -Dexec.arguments=<exampleClass>,<exampleClass parameters>");
+                    System.out.println("\nClasses found in the jar:");
+                }
+                File examples = new File(sourceFile, "examples");
+                if (examples.exists()) {
+                    scanForClasses(sourceFile.length(), examples, map, noArgsProvided);
+                }
+            }
+        } else {
+            if (noArgsProvided) {
+                System.out.println("Usage: java -jar commons-net-examples-m.n.jar <exampleClass> <exampleClass parameters>");
             }
         }
 
-        if (args.length==0) {
+        if (noArgsProvided) {
             return;
         }
 
@@ -88,19 +87,56 @@ public class Main {
             fullName = shortName;
         }
         fullName = fullName.replace('/', '.');
-        Class<?> clazz = Class.forName(fullName);
-        Method m = clazz.getDeclaredMethod("main", new Class[]{args.getClass()});
-        String[] args2 = new String[args.length-1];
-        System.arraycopy(args, 1, args2, 0, args2.length);
         try {
-            m.invoke(null, (Object)args2);
-        } catch (InvocationTargetException ite) {
-            Throwable cause = ite.getCause();
-            if (cause != null) {
-                throw cause;
+            Class<?> clazz = Class.forName(fullName);
+            Method m = clazz.getDeclaredMethod("main", new Class[]{args.getClass()});
+            String[] args2 = new String[args.length-1];
+            System.arraycopy(args, 1, args2, 0, args2.length);
+            try {
+                m.invoke(null, (Object)args2);
+            } catch (InvocationTargetException ite) {
+                Throwable cause = ite.getCause();
+                if (cause != null) {
+                    throw cause;
+                } else {
+                    throw ite;
+                }
+            }
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        }
+    }
+
+    private static void scanForClasses(int rootLength, File current, Map<String, String> map, boolean printAlias) {
+        for(File file : current.listFiles()) {
+            if (file.isDirectory()) {
+                scanForClasses(rootLength, file, map, printAlias);
             } else {
-                throw ite;
+                
+                processFileName(file.getPath().substring(rootLength), map, printAlias);
+                
             }
         }
+        
+    }
+
+    private static void processFileName(String name, Map<String, String> map, boolean printAlias) {
+        if (!name.endsWith(".class")
+                || name.contains("$") // subclasses
+                // TODO use reflection to eliminate non-main classes?
+                // however that would entail loading the class.
+                || name.equals("examples/nntp/NNTPUtils.class") // no main class
+                || name.equals("examples/util/IOUtil.class") // no main class
+                || name.equals("examples/mail/IMAPUtils.class") // no main class
+                || name.equals("examples/Main.class")) { // ourself
+            return;
+        }
+        name = name.replace(".class", "");
+        final int lastSep = name.lastIndexOf('/');
+        final String alias = name.substring(lastSep+1);
+        if (printAlias) {
+            System.out.printf("%-25s %s%n",alias,name);
+        }
+        map.put(alias, name);
     }
 }
