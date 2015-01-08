@@ -268,6 +268,7 @@ public class FTPSClient extends FTPClient {
         }
         socket.startHandshake();
 
+        // TODO the following setup appears to duplicate that in the super class methods
         _socket_ = socket;
         _controlInput_ = new BufferedReader(new InputStreamReader(
                 socket .getInputStream(), getControlEncoding()));

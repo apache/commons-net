@@ -198,6 +198,7 @@ public class SMTPSClient extends SMTPClient
         }
         socket.startHandshake();
 
+        // TODO the following setup appears to duplicate that in the super class methods
         _socket_ = socket;
         _input_ = socket.getInputStream();
         _output_ = socket.getOutputStream();
