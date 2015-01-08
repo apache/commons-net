@@ -21,6 +21,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
@@ -377,9 +378,18 @@ public class FTP extends SocketClient
     @Override
     protected void _connectAction_() throws IOException
     {
+        _connectAction_(null);
+    }
+
+
+    protected void _connectAction_(Reader socketIsReader) throws IOException {
         super._connectAction_(); // sets up _input_ and _output_
-        _controlInput_ =
-            new CRLFLineReader(new InputStreamReader(_input_, getControlEncoding()));
+        if(socketIsReader == null) {
+            _controlInput_ =
+                    new CRLFLineReader(new InputStreamReader(_input_, getControlEncoding()));
+        } else {
+            _controlInput_ = new CRLFLineReader(socketIsReader);
+        }
         _controlOutput_ =
             new BufferedWriter(new OutputStreamWriter(_output_, getControlEncoding()));
         if (connectTimeout > 0) { // NET-385

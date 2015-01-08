@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -939,7 +940,14 @@ implements Configurable
     @Override
     protected void _connectAction_() throws IOException
     {
-        super._connectAction_(); // sets up _input_ and _output_
+        _connectAction_(null);
+    }
+
+
+    @Override
+    protected void _connectAction_(Reader socketIsReader) throws IOException
+    {
+    	super._connectAction_(socketIsReader); // sets up _input_ and _output_
         __initDefaults();
         // must be after super._connectAction_(), because otherwise we get an
         // Exception claiming we're not connected

@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.Inet6Address;
 import java.net.Socket;
@@ -131,18 +132,19 @@ public class FTPHTTPClient extends FTPClient {
         _socket_ = new Socket(proxyHost, proxyPort);
         _input_ = _socket_.getInputStream();
         _output_ = _socket_.getOutputStream();
+        Reader socketIsReader;
         try {
-            tunnelHandshake(host, port, _input_, _output_);
+            socketIsReader = tunnelHandshake(host, port, _input_, _output_);
         }
         catch (Exception e) {
             IOException ioe = new IOException("Could not connect to " + host+ " using port " + port);
             ioe.initCause(e);
             throw ioe;
         }
-        super._connectAction_();
+        super._connectAction_(socketIsReader);
     }
 
-    private void tunnelHandshake(String host, int port, InputStream input, OutputStream output) throws IOException,
+    private BufferedReader tunnelHandshake(String host, int port, InputStream input, OutputStream output) throws IOException,
     UnsupportedEncodingException {
         final String connectString = "CONNECT "  + host + ":" + port  + " HTTP/1.1";
         final String hostString = "Host: " + host + ":" + port;
@@ -193,6 +195,7 @@ public class FTPHTTPClient extends FTPClient {
             }
             throw new IOException(msg.toString());
         }
+        return reader;
     }
 }
 
