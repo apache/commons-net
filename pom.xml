@@ -139,6 +139,8 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
     <properties>
         <maven.compiler.source>1.5</maven.compiler.source>
         <maven.compiler.target>1.5</maven.compiler.target>
+        <!-- ensure the signature version agrees with the compiler version above -->
+        <animal-sniffer.signature>java15</animal-sniffer.signature>
         <commons.javadoc.java.link>http://download.oracle.com/javase/1.5.0/docs/api/</commons.javadoc.java.link>
         <commons.componentid>net</commons.componentid>
         <commons.release.version>${project.version}</commons.release.version>
@@ -363,6 +365,30 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
           <mainClass>examples.Main</mainClass>
         </configuration>
       </plugin>
+
+            <!-- Temporary location until parent pom updated -->
+
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>animal-sniffer-maven-plugin</artifactId>
+              <version>1.13</version>
+              <executions>
+                <execution>
+                  <id>checkAPIcompatibility</id>
+                  <phase>test</phase>
+                  <goals>
+                    <goal>check</goal>
+                  </goals>
+                </execution>
+              </executions>
+              <configuration>
+                <signature>
+                  <groupId>org.codehaus.mojo.signature</groupId>
+                  <artifactId>${animal-sniffer.signature}</artifactId>
+                  <version>1.0</version>
+                </signature>
+              </configuration>
+            </plugin>
 
         </plugins>
 
