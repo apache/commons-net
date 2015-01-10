@@ -139,8 +139,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
     <properties>
         <maven.compiler.source>1.5</maven.compiler.source>
         <maven.compiler.target>1.5</maven.compiler.target>
-        <!-- ensure the signature version agrees with the compiler version above -->
-        <animal-sniffer.signature>java15</animal-sniffer.signature>
         <commons.javadoc.java.link>http://download.oracle.com/javase/1.5.0/docs/api/</commons.javadoc.java.link>
         <commons.componentid>net</commons.componentid>
         <commons.release.version>${project.version}</commons.release.version>
@@ -367,6 +365,30 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
       </plugin>
 
             <!-- Temporary location until parent pom updated -->
+
+            <!-- to bypass Animal Sniffer, define "animal.sniffer.skip" as true -->
+
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>build-helper-maven-plugin</artifactId>
+              <version>1.9.1</version>
+              <executions>
+                <execution>
+                  <id>regex-property</id>
+                  <goals>
+                    <goal>regex-property</goal>
+                  </goals>
+                  <configuration>
+                    <!-- generate the default animal sniffer java signature name from the java target version -->
+                    <name>animal-sniffer.signature</name>
+                    <value>${maven.compiler.target}</value>
+                    <regex>^(\d)\.(\d)$</regex>
+                    <replacement>java$1$2</replacement>
+                    <failIfNoMatch>true</failIfNoMatch> <!-- unexpected compiler version (assuming n.m version format)-->
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
 
             <plugin>
               <groupId>org.codehaus.mojo</groupId>
