@@ -166,6 +166,11 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 </excludes>
               </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.9.1</version>
+            </plugin>
           </plugins>
         </pluginManagement>
         <plugins>
@@ -272,7 +277,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.8</version>
                 <executions>
                     <execution>
                         <id>attach-artifacts</id>
@@ -363,55 +367,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
           <mainClass>examples.Main</mainClass>
         </configuration>
       </plugin>
-
-            <!-- Temporary location until parent pom updated -->
-
-            <!-- to bypass Animal Sniffer, define "animal.sniffer.skip" as true -->
-
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>build-helper-maven-plugin</artifactId>
-              <version>1.9.1</version>
-              <executions>
-                <execution>
-                  <id>regex-property</id>
-                  <goals>
-                    <goal>regex-property</goal>
-                  </goals>
-                  <configuration>
-                    <!-- generate the default animal sniffer java signature name from the java target version -->
-                    <name>animal-sniffer.signature</name>
-                    <value>${maven.compiler.target}</value>
-                    <regex>^(\d)\.(\d)$</regex>
-                    <replacement>java$1$2</replacement>
-                    <failIfNoMatch>true</failIfNoMatch> <!-- unexpected compiler version (assuming n.m version format)-->
-                  </configuration>
-                </execution>
-              </executions>
-            </plugin>
-
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>animal-sniffer-maven-plugin</artifactId>
-              <version>1.13</version>
-              <executions>
-                <execution>
-                  <id>checkAPIcompatibility</id>
-                  <phase>test</phase>
-                  <goals>
-                    <goal>check</goal>
-                  </goals>
-                </execution>
-              </executions>
-              <configuration>
-                <signature>
-                  <groupId>org.codehaus.mojo.signature</groupId>
-                  <artifactId>${animal-sniffer.signature}</artifactId>
-                  <version>1.0</version>
-                </signature>
-              </configuration>
-            </plugin>
-
         </plugins>
 
     </build>
@@ -522,6 +477,69 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
           <!-- Disable Xdoclint, until JavaDoc issues are fixed -->
           <additionalparam>-Xdoclint:none</additionalparam>
         </properties>
+      </profile>
+
+      <profile>
+        <id>animal-sniffer</id>
+        <activation>
+          <file>
+            <missing>src/site/resources/profile.noanimal</missing>
+          </file>
+        </activation>
+        
+        <build>
+          <plugins>
+
+            <!-- Temporary location until parent pom updated -->
+
+            <!-- to bypass Animal Sniffer, define "animal.sniffer.skip" as true -->
+
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>build-helper-maven-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>regex-property</id>
+                  <phase>validate</phase>
+                  <goals>
+                    <goal>regex-property</goal>
+                  </goals>
+                  <configuration>
+                    <!-- generate the default animal sniffer java signature name from the java target version -->
+                    <name>animal-sniffer.signature</name>
+                    <value>${maven.compiler.target}</value>
+                    <regex>^(\d)\.(\d)$</regex>
+                    <replacement>java$1$2</replacement>
+                    <failIfNoMatch>true</failIfNoMatch> <!-- unexpected compiler version (assuming n.m version format)-->
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>animal-sniffer-maven-plugin</artifactId>
+              <version>1.13</version>
+              <executions>
+                <execution>
+                  <id>checkAPIcompatibility</id>
+                  <phase>test</phase>
+                  <goals>
+                    <goal>check</goal>
+                  </goals>
+                </execution>
+              </executions>
+              <configuration>
+                <signature>
+                  <groupId>org.codehaus.mojo.signature</groupId>
+                  <artifactId>${animal-sniffer.signature}</artifactId>
+                  <version>1.0</version>
+                </signature>
+              </configuration>
+            </plugin>
+
+          </plugins>
+        </build>
       </profile>
     </profiles>
 
