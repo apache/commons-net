@@ -68,6 +68,9 @@ This is mainly a bug-fix release. See further details below.
   IMAPExportMbox (example app) allows IMAP folders to be exported into an mbox file.
   This is the inverse of the IMAPImportMbox example added previously
         ">
+            <action type="update" dev="sebb">
+            examples/Main now uses a property file to define aliases instead of scanning class files
+            </action>
             <action issue="NET-552" type="fix" dev="sebb" due-to="Quentin Devriendt">
             SocketTimeoutException connecting a FTP server via an HTTP Proxy
             </action>
