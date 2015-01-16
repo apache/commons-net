@@ -18,6 +18,7 @@
 
 package examples;
 
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.CodeSource;
@@ -41,7 +42,12 @@ public class Main {
      */
     public static void main(String[] args) throws Throwable  {
         final Properties fp = new Properties();
-        fp.load(Main.class.getResourceAsStream("examples.properties"));
+        final InputStream ras = Main.class.getResourceAsStream("examples.properties");
+        if (ras != null) {
+            fp.load(ras);
+        } else {
+            System.err.println("[Cannot find examples.properties file, so aliases cannot be used]");
+        }
         if (args.length == 0) {
             if (Thread.currentThread().getStackTrace().length > 2) { // called by Maven
                 System.out.println("Usage: mvn -q exec:java  -Dexec.arguments=<alias or exampleClass>,<exampleClass parameters> (comma-separated, no spaces)");
@@ -53,10 +59,13 @@ public class Main {
                     System.out.println("Usage: java -cp target/classes examples/Main <alias or exampleClass> <exampleClass parameters>");                
                 }
             }
-            System.out.println("\nAliases and their classes:");
             @SuppressWarnings("unchecked") // property names are Strings
             List<String> l = (List<String>) Collections.list(fp.propertyNames());
+            if (l.isEmpty()) { 
+                return;
+            }
             Collections.sort(l);
+            System.out.println("\nAliases and their classes:");
             for(String s : l) {
                 System.out.printf("%-25s %s%n",s,fp.getProperty(s));
             }
