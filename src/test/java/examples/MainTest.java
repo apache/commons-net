@@ -19,7 +19,10 @@ public class MainTest {
         Properties cp = scanClasses();
         Properties fp = new Properties();
         fp.load(this.getClass().getResourceAsStream("examples.properties"));
-        for(String c : cp.stringPropertyNames()) {
+        @SuppressWarnings("unchecked") // OK
+        final Enumeration<String> propertyNames = (Enumeration<String>) cp.propertyNames();
+        while(propertyNames.hasMoreElements()){
+            String c = propertyNames.nextElement();
             String fv = fp.getProperty(c); 
             final String cv = cp.getProperty(c);
             if (fv == null) {
