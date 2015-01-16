@@ -150,6 +150,8 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <commons.release.2.desc>(Requires Java 1.3 or later)</commons.release.2.desc>
         <commons.jira.id>NET</commons.jira.id>
         <commons.jira.pid>12310487</commons.jira.pid>
+        <!-- TODO Remove when updating to CP37 -->
+        <commons.animal-sniffer.version>1.11</commons.animal-sniffer.version>
     </properties>
 
     <build>
@@ -479,6 +481,19 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         </properties>
       </profile>
 
+      <!-- TODO Remove when updating to CP37 -->
+      <profile>
+        <id>jdk7-plugin-fixes</id>
+        <activation>
+          <jdk>[1.7,)</jdk>
+        </activation>
+        <properties>
+          <!-- Current latest version requires Java 7 when running Maven -->
+          <commons.animal-sniffer.version>1.13</commons.animal-sniffer.version>
+        </properties>
+      </profile>
+
+      <!-- TODO Remove when updating to CP37 -->
       <profile>
         <id>animal-sniffer</id>
         <activation>
@@ -519,11 +534,10 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
             <plugin>
               <groupId>org.codehaus.mojo</groupId>
               <artifactId>animal-sniffer-maven-plugin</artifactId>
-              <version>1.13</version>
+              <version>${commons.animal-sniffer.version}</version>
               <executions>
                 <execution>
                   <id>checkAPIcompatibility</id>
-                  <phase>test</phase>
                   <goals>
                     <goal>check</goal>
                   </goals>
