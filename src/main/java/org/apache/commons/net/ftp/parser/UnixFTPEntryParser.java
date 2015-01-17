@@ -85,11 +85,20 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      */
     private static final String REGEX =
         "([bcdelfmpSs-])"
-        +"(((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-])))\\+?\\s*"
-        + "(\\d+)\\s+"                                  // link count
+        +"(((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-])))\\+?" // permissions
+
+        + "\\s*"                                        // separator TODO why allow it to be omitted?? 
+
+        + "(\\d+)"                                      // link count
+
+        + "\\s+" // separator
+
         + "(?:(\\S+(?:\\s\\S+)*?)\\s+)?"                // owner name (optional spaces)
         + "(?:(\\S+(?:\\s\\S+)*)\\s+)?"                 // group name (optional spaces)
-        + "(\\d+(?:,\\s*\\d+)?)\\s+"                    // size or n,m
+        + "(\\d+(?:,\\s*\\d+)?)"                        // size or n,m
+
+        + "\\s+" // separator
+
         /*
          * numeric or standard format date:
          *   yyyy-mm-dd (expecting hh:mm to follow)
@@ -98,12 +107,17 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
          *   N.B. use non-space for MMM to allow for languages such as German which use
          *   diacritics (e.g. umlaut) in some abbreviations.
         */
-        + "((?:\\d+[-/]\\d+[-/]\\d+)|(?:\\S{3}\\s+\\d{1,2})|(?:\\d{1,2}\\s+\\S{3}))\\s+"
+        + "((?:\\d+[-/]\\d+[-/]\\d+)|(?:\\S{3}\\s+\\d{1,2})|(?:\\d{1,2}\\s+\\S{3}))"
+
+        + "\\s+" // separator
+
         /*
            year (for non-recent standard format) - yyyy
            or time (for numeric or recent standard format) [h]h:mm
         */
-        + "(\\d+(?::\\d+)?)\\s+"
+        + "(\\d+(?::\\d+)?)"
+
+        + "\\s+" // separator
 
         + "(\\S*)(\\s*.*)"; // the rest
 
