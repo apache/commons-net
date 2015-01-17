@@ -124,7 +124,11 @@ public class DefaultFTPFileEntryParserFactory
             String ukey = key.toUpperCase(java.util.Locale.ENGLISH);
             if (ukey.indexOf(FTPClientConfig.SYST_UNIX) >= 0)
             {
-                parser = new UnixFTPEntryParser(config);
+                parser = new UnixFTPEntryParser(config, false);
+            }
+            else if (ukey.indexOf(FTPClientConfig.SYST_UNIX_TRIM_LEADING) >= 0)
+            {
+                parser = new UnixFTPEntryParser(config, true);
             }
             else if (ukey.indexOf(FTPClientConfig.SYST_VMS) >= 0)
             {
@@ -239,7 +243,8 @@ public class DefaultFTPFileEntryParserFactory
             return new CompositeFileEntryParser(new FTPFileEntryParser[]
                    {
                        new NTFTPEntryParser(config),
-                       new UnixFTPEntryParser(config)
+                       new UnixFTPEntryParser(config, 
+                               config != null && FTPClientConfig.SYST_UNIX_TRIM_LEADING.equals(config.getServerSystemKey()))
                    });
         }
     }
@@ -271,7 +276,8 @@ public class DefaultFTPFileEntryParserFactory
             return new CompositeFileEntryParser(new FTPFileEntryParser[]
                 {
                     new OS400FTPEntryParser(config),
-                    new UnixFTPEntryParser(config)
+                    new UnixFTPEntryParser(config,
+                            config != null && FTPClientConfig.SYST_UNIX_TRIM_LEADING.equals(config.getServerSystemKey()))
                 });
         }
     }

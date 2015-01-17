@@ -145,6 +145,14 @@ public class FTPClientConfig
     public static final String SYST_UNIX  = "UNIX";
 
     /**
+     * Identifier for alternate UNIX parser; same as {@link SYST_UNIX} but leading spaces are
+     * trimmed from file names. This is to maintain backwards compatibility with
+     * the original behaviour of the parser which ignored multiple spaces between the date
+     * and the start of the file name.
+     */
+    public static final String SYST_UNIX_TRIM_LEADING  = "UNIX_LTRIM";
+
+    /**
      * Identifier by which a vms-based ftp server is known throughout
      * the commons-net ftp system.
      */

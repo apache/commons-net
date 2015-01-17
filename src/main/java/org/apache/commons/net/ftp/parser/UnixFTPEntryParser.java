@@ -158,7 +158,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      */
     public UnixFTPEntryParser(FTPClientConfig config)
     {
-        this(config, true); // retain original behaviour (for now)
+        this(config, false);
     }
 
     /**
