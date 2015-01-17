@@ -120,11 +120,11 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
            year (for non-recent standard format) - yyyy
            or time (for numeric or recent standard format) [h]h:mm
         */
-        + "(\\d+(?::\\d+)?)"
+        + "(\\d+(?::\\d+)?)" // (20)
 
         + "\\s+" // separator
 
-        + "(\\S*)(\\s*.*)"; // the rest
+        + "(.*)"; // the rest (21)
 
 
     /**
@@ -199,7 +199,6 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             String filesize = group(18);
             String datestr = group(19) + " " + group(20);
             String name = group(21);
-            String endtoken = group(22);
 
             try
             {
@@ -284,35 +283,27 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
                 // intentionally do nothing
             }
 
-            if (null == endtoken)
+            // oddball cases like symbolic links, file names
+            // with spaces in them.
+            if (type == FTPFile.SYMBOLIC_LINK_TYPE)
             {
-                file.setName(name);
-            }
-            else
-            {
-                // oddball cases like symbolic links, file names
-                // with spaces in them.
-                name += endtoken;
-                if (type == FTPFile.SYMBOLIC_LINK_TYPE)
-                {
 
-                    int end = name.indexOf(" -> ");
-                    // Give up if no link indicator is present
-                    if (end == -1)
-                    {
-                        file.setName(name);
-                    }
-                    else
-                    {
-                        file.setName(name.substring(0, end));
-                        file.setLink(name.substring(end + 4));
-                    }
-
-                }
-                else
+                int end = name.indexOf(" -> ");
+                // Give up if no link indicator is present
+                if (end == -1)
                 {
                     file.setName(name);
                 }
+                else
+                {
+                    file.setName(name.substring(0, end));
+                    file.setLink(name.substring(end + 4));
+                }
+
+            }
+            else
+            {
+                file.setName(name);
             }
             return file;
         }
