@@ -82,9 +82,14 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      *    T   the 1000 bit is turned on, and execution is off (undefined bit-
      *        state)
      *    e   z/OS external link bit
+     *    Final letter may be appended:
+     *    +   file has extended security attributes (e.g. ACL)
+     *    Note: local listings on MacOSX also use '@'; 
+     *    this is not allowed for here as does not appear to be shown by FTP servers
+     *    @   file has extended attributes
      */
     private static final String REGEX =
-        "([bcdelfmpSs-])"
+        "([bcdelfmpSs-])" // file type
         +"(((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-])))\\+?" // permissions
 
         + "\\s*"                                        // separator TODO why allow it to be omitted?? 
