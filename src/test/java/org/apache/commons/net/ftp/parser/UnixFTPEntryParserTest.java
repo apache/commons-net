@@ -166,6 +166,18 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
         assertEquals(f.getName(), "zxbox     ");
     }
 
+    public void testLeadingSpacesOriginal() { // this is the original (non-ideal) behaviour
+        FTPFile f = getParser().parseFTPEntry("drwxr-xr-x   2 john smith     group         4096 Mar  2 15:13   zxbox");
+        assertNotNull(f);
+        assertEquals("zxbox", f.getName() ); // leading spaces dropped
+    }
+
+    public void testLeadingSpacesNET566() { // check new behaviour
+        FTPFile f = new UnixFTPEntryParser(null, false).parseFTPEntry("drwxr-xr-x   2 john smith     group         4096 Mar  2 15:13   zxbox");
+        assertNotNull(f);
+        assertEquals("  zxbox", f.getName() ); // leading spaces retained
+    }
+
     public void testNameWIthPunctuation() {
         FTPFile f = getParser().parseFTPEntry("drwx------ 4 maxm Domain Users 512 Oct 2 10:59 abc(test)123.pdf");
         assertNotNull(f);

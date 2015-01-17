@@ -122,10 +122,14 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         */
         + "(\\d+(?::\\d+)?)" // (20)
 
-        + "\\s+" // separator
+        + "\\s" // separator
 
         + "(.*)"; // the rest (21)
 
+
+    // if true, leading spaces are trimmed from file names
+    // this was the case for the original implementation
+    private final boolean trimLeadingSpaces;
 
     /**
      * The default constructor for a UnixFTPEntryParser object.
@@ -154,8 +158,27 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      */
     public UnixFTPEntryParser(FTPClientConfig config)
     {
+        this(config, true); // retain original behaviour (for now)
+    }
+
+    /**
+     * This constructor allows the creation of a UnixFTPEntryParser object with
+     * something other than the default configuration.
+     *
+     * @param config The {@link FTPClientConfig configuration} object used to
+     * configure this parser.
+     * @param trimLeadingSpaces if {@code true}, trim leading spaces from file names
+     * @exception IllegalArgumentException
+     * Thrown if the regular expression is unparseable.  Should not be seen
+     * under normal conditions.  It it is seen, this is a sign that
+     * <code>REGEX</code> is  not a valid regular expression.
+     * @since 1.4
+     */
+    public UnixFTPEntryParser(FTPClientConfig config, boolean trimLeadingSpaces)
+    {
         super(REGEX);
         configure(config);
+        this.trimLeadingSpaces = trimLeadingSpaces;
     }
 
     /**
@@ -199,6 +222,9 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             String filesize = group(18);
             String datestr = group(19) + " " + group(20);
             String name = group(21);
+            if (trimLeadingSpaces) {
+                name = name.replaceFirst("^\\s+", "");
+            }
 
             try
             {
