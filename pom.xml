@@ -348,6 +348,17 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
             </configuration>
           </plugin>
 
+          <!--  drop examples from CLI invocations -->
+          <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>clirr-maven-plugin</artifactId>
+              <configuration>
+                  <excludes>
+                    <exclude>examples/**</exclude>
+                  </excludes>
+              </configuration>
+          </plugin>
+
       <!-- 
             Allow exec:java to launch examples from the classpath
             For example:
