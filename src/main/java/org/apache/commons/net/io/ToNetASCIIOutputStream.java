@@ -28,8 +28,8 @@ import java.io.OutputStream;
  * a newline.
  * You would use this class to implement ASCII file transfers requiring
  * conversion to NETASCII.
- * <p>
- * <p>
+ *
+ *
  ***/
 
 public final class ToNetASCIIOutputStream extends FilterOutputStream
@@ -39,7 +39,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
     /***
      * Creates a ToNetASCIIOutputStream instance that wraps an existing
      * OutputStream.
-     * <p>
+     *
      * @param output  The OutputStream to wrap.
      ***/
     public ToNetASCIIOutputStream(OutputStream output)
@@ -55,7 +55,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
      * to convert naked newlines to NETASCII line separators.
      * This is transparent to the programmer and is only mentioned for
      * completeness.
-     * <p>
+     *
      * @param ch The byte to write.
      * @exception IOException If an error occurs while writing to the underlying
      *            stream.
@@ -85,7 +85,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
 
     /***
      * Writes a byte array to the stream.
-     * <p>
+     *
      * @param buffer  The byte array to write.
      * @exception IOException If an error occurs while writing to the underlying
      *            stream.
@@ -101,7 +101,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
     /***
      * Writes a number of bytes from a byte array to the stream starting from
      * a given offset.
-     * <p>
+     *
      * @param buffer  The byte array to write.
      * @param offset  The offset into the array at which to start copying data.
      * @param length  The number of bytes to write.

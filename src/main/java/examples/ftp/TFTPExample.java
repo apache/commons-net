@@ -42,7 +42,6 @@ import org.apache.commons.net.tftp.TFTPClient;
  *        -r Receive a remote file
  *        -a Use ASCII transfer mode
  *        -b Use binary transfer mode
- * <p>
  ***/
 public final class TFTPExample
 {

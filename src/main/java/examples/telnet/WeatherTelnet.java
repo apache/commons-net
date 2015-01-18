@@ -32,7 +32,6 @@ import examples.util.IOUtil;
  * inconvenient for use with a remote interactive shell.  The TelnetClient
  * class used by itself is mostly intended for automating access to telnet
  * resources rather than interactive use.
- * <p>
  ***/
 
 // This class requires the IOUtil support class!

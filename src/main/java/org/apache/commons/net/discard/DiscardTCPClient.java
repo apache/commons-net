@@ -55,7 +55,7 @@ public class DiscardTCPClient extends SocketClient
      * reading from it.  Rather, you should call
      * {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
      * to clean up properly.
-     * <p>
+     *
      * @return An OutputStream through which you can write data to the server.
      ***/
     public OutputStream getOutputStream()

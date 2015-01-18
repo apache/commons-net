@@ -104,7 +104,7 @@ public enum FTPCmd {
     /**
      * Retrieve the FTP protocol command string corresponding to a specified
      * command code.
-     * <p>
+     *
      * @return The FTP protcol command string corresponding to a specified
      *         command code.
      */

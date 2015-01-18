@@ -27,8 +27,8 @@ import org.apache.commons.net.util.ListenerList;
  * ProtocolCommandListeners and firing ProtocolCommandEvents.  You can
  * simply delegate ProtocolCommandEvent firing and listener
  * registering/unregistering tasks to this class.
- * <p>
- * <p>
+ *
+ *
  * @see ProtocolCommandEvent
  * @see ProtocolCommandListener
  ***/
@@ -43,7 +43,7 @@ public class ProtocolCommandSupport implements Serializable
     /***
      * Creates a ProtocolCommandSupport instance using the indicated source
      * as the source of ProtocolCommandEvents.
-     * <p>
+     *
      * @param source  The source to use for all generated ProtocolCommandEvents.
      ***/
     public ProtocolCommandSupport(Object source)
@@ -58,7 +58,7 @@ public class ProtocolCommandSupport implements Serializable
      * registered listeners, invoking their
      * {@link org.apache.commons.net.ProtocolCommandListener#protocolCommandSent protocolCommandSent() }
      *  methods.
-     * <p>
+     *
      * @param command The string representation of the command type sent, not
      *      including the arguments (e.g., "STAT" or "GET").
      * @param message The entire command string verbatim as sent to the server,
@@ -81,7 +81,7 @@ public class ProtocolCommandSupport implements Serializable
      * to all registered listeners, invoking their
      * {@link org.apache.commons.net.ProtocolCommandListener#protocolReplyReceived protocolReplyReceived() }
      *  methods.
-     * <p>
+     *
      * @param replyCode The integer code indicating the natureof the reply.
      *   This will be the protocol integer value for protocols
      *   that use integer reply codes, or the reply class constant
@@ -102,7 +102,7 @@ public class ProtocolCommandSupport implements Serializable
 
     /***
      * Adds a ProtocolCommandListener.
-     * <p>
+     *
      * @param listener  The ProtocolCommandListener to add.
      ***/
     public void addProtocolCommandListener(ProtocolCommandListener listener)
@@ -112,7 +112,7 @@ public class ProtocolCommandSupport implements Serializable
 
     /***
      * Removes a ProtocolCommandListener.
-     * <p>
+     *
      * @param listener  The ProtocolCommandListener to remove.
      ***/
     public void removeProtocolCommandListener(ProtocolCommandListener listener)
@@ -123,7 +123,7 @@ public class ProtocolCommandSupport implements Serializable
 
     /***
      * Returns the number of ProtocolCommandListeners currently registered.
-     * <p>
+     *
      * @return The number of ProtocolCommandListeners currently registered.
      ***/
     public int getListenerCount()

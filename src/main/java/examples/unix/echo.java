@@ -38,7 +38,6 @@ import org.apache.commons.net.echo.EchoUDPClient;
  * port.
  * <p>
  * Usage: echo [-udp] <hostname>
- * <p>
  ***/
 public final class echo
 {

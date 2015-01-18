@@ -33,8 +33,8 @@ import javax.net.SocketFactory;
  * constructors.  It is the default SocketFactory used by
  * {@link org.apache.commons.net.SocketClient}
  * implementations.
- * <p>
- * <p>
+ *
+ *
  * @see SocketFactory
  * @see SocketClient
  * @see SocketClient#setSocketFactory
@@ -83,7 +83,7 @@ public class DefaultSocketFactory extends SocketFactory
 
     /***
      * Creates a Socket connected to the given host and port.
-     * <p>
+     *
      * @param host The hostname to connect to.
      * @param port The port to connect to.
      * @return A Socket connected to the given host and port.
@@ -105,7 +105,7 @@ public class DefaultSocketFactory extends SocketFactory
 
     /***
      * Creates a Socket connected to the given host and port.
-     * <p>
+     *
      * @param address The address of the host to connect to.
      * @param port The port to connect to.
      * @return A Socket connected to the given host and port.
@@ -127,7 +127,7 @@ public class DefaultSocketFactory extends SocketFactory
     /***
      * Creates a Socket connected to the given host and port and
      * originating from the specified local address and port.
-     * <p>
+     *
      * @param host The hostname to connect to.
      * @param port The port to connect to.
      * @param localAddr  The local address to use.
@@ -154,7 +154,7 @@ public class DefaultSocketFactory extends SocketFactory
     /***
      * Creates a Socket connected to the given host and port and
      * originating from the specified local address and port.
-     * <p>
+     *
      * @param address The address of the host to connect to.
      * @param port The port to connect to.
      * @param localAddr  The local address to use.
@@ -180,7 +180,7 @@ public class DefaultSocketFactory extends SocketFactory
     /***
      * Creates a ServerSocket bound to a specified port.  A port
      * of 0 will create the ServerSocket on a system-determined free port.
-     * <p>
+     *
      * @param port  The port on which to listen, or 0 to use any free port.
      * @return A ServerSocket that will listen on a specified port.
      * @exception IOException If an I/O error occurs while creating
@@ -195,7 +195,7 @@ public class DefaultSocketFactory extends SocketFactory
      * Creates a ServerSocket bound to a specified port with a given
      * maximum queue length for incoming connections.  A port of 0 will
      * create the ServerSocket on a system-determined free port.
-     * <p>
+     *
      * @param port  The port on which to listen, or 0 to use any free port.
      * @param backlog  The maximum length of the queue for incoming connections.
      * @return A ServerSocket that will listen on a specified port.
@@ -213,7 +213,7 @@ public class DefaultSocketFactory extends SocketFactory
      * address with a given maximum queue length for incoming connections.
      * A port of 0 will
      * create the ServerSocket on a system-determined free port.
-     * <p>
+     *
      * @param port  The port on which to listen, or 0 to use any free port.
      * @param backlog  The maximum length of the queue for incoming connections.
      * @param bindAddr  The local address to which the ServerSocket should bind.

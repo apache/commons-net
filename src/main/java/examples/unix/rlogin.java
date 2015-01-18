@@ -44,7 +44,6 @@ import examples.util.IOUtil;
  * Example: java rlogin myhost localusername remoteusername vt100
  * <p>
  * Usage: rlogin <hostname> <localuser> <remoteuser> <terminal>
- * <p>
  ***/
 
 // This class requires the IOUtil support class!

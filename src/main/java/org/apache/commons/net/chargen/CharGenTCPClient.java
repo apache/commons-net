@@ -38,8 +38,7 @@ import org.apache.commons.net.SocketClient;
  * the data.  Don't close the input stream when you're done with it.  Rather,
  * call {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
  * to clean up properly.
- * <p>
- * <p>
+ *
  * @see CharGenUDPClient
  ***/
 
@@ -71,7 +70,7 @@ public final class CharGenTCPClient extends SocketClient
      * reading from it.  Rather, you should call
      * {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
      * to clean up properly.
-     * <p>
+     *
      * @return An InputStream from which the server generated data can be read.
      ***/
     public InputStream getInputStream()

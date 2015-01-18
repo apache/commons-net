@@ -24,8 +24,8 @@ import java.util.EventObject;
  * stream copying operation.  The event stores the number of bytes
  * transferred by the write triggering the event as well as the total
  * number of bytes transferred so far by the copy operation.
- * <p>
- * <p>
+ *
+ *
  * @see CopyStreamListener
  * @see CopyStreamAdapter
  * @see Util

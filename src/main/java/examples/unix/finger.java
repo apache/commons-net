@@ -31,7 +31,6 @@ import org.apache.commons.net.finger.FingerClient;
  * queries the finger daemon.
  * <p>
  * The -l flag is used to request long output from the server.
- * <p>
  ***/
 public final class finger
 {

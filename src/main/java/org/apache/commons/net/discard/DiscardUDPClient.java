@@ -51,7 +51,7 @@ public class DiscardUDPClient extends DatagramSocketClient
 
     /***
      * Sends the specified data to the specified server at the specified port.
-     * <p>
+     *
      * @param data  The discard data to send.
      * @param length  The length of the data to send.  Should be less than
      *    or equal to the length of the data byte array.

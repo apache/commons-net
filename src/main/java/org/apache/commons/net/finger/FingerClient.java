@@ -75,7 +75,7 @@ public class FingerClient extends SocketClient
      * Fingers a user at the connected host and returns the output
      * as a String.  You must first connect to a finger server before
      * calling this method, and you should disconnect afterward.
-     * <p>
+     *
      * @param longOutput Set to true if long output is requested, false if not.
      * @param username  The name of the user to finger.
      * @return The result of the finger query.
@@ -113,7 +113,7 @@ public class FingerClient extends SocketClient
      * as a String.  You must first connect to a finger server before
      * calling this method, and you should disconnect afterward.
      * This is equivalent to calling <code> query(longOutput, "") </code>.
-     * <p>
+     *
      * @param longOutput Set to true if long output is requested, false if not.
      * @return The result of the finger query.
      * @exception IOException If an I/O error occurs while reading the socket.
@@ -129,7 +129,7 @@ public class FingerClient extends SocketClient
      * of the finger query.  You must first connect to a finger server before
      * calling this method, and you should disconnect after finishing reading
      * the stream.
-     * <p>
+     *
      * @param longOutput Set to true if long output is requested, false if not.
      * @param username  The name of the user to finger.
      * @return The InputStream of the network connection of the finger query.
@@ -147,7 +147,7 @@ public class FingerClient extends SocketClient
      * of the finger query.  You must first connect to a finger server before
      * calling this method, and you should disconnect after finishing reading
      * the stream.
-     * <p>
+     *
      * @param longOutput Set to true if long output is requested, false if not.
      * @param username  The name of the user to finger.
      * @param encoding the character encoding that should be used for the query,
@@ -184,7 +184,7 @@ public class FingerClient extends SocketClient
      * calling getInputStream(longOutput, "").  You must first connect to a
      * finger server before calling this method, and you should disconnect
      * after finishing reading the stream.
-     * <p>
+     *
      * @param longOutput Set to true if long output is requested, false if not.
      * @return The InputStream of the network connection of the finger query.
      *         Can be read to obtain finger results.

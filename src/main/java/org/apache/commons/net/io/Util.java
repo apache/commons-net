@@ -28,8 +28,8 @@ import java.net.Socket;
 /***
  * The Util class cannot be instantiated and stores short static convenience
  * methods that are often quite useful.
- * <p>
- * <p>
+ *
+ *
  * @see CopyStreamException
  * @see CopyStreamListener
  * @see CopyStreamAdapter
@@ -63,7 +63,7 @@ public final class Util
      * source nor the destination are closed.  You must do this yourself
      * outside of the method call.  The number of bytes read/written is
      * returned.
-     * <p>
+     *
      * @param source  The source InputStream.
      * @param dest    The destination OutputStream.
      * @param bufferSize  The number of bytes to buffer during the copy.
@@ -155,7 +155,7 @@ public final class Util
      * source nor the destination are closed.  You must do this yourself
      * outside of the method call.  The number of bytes read/written is
      * returned.
-     * <p>
+     *
      * @param source  The source InputStream.
      * @param dest    The destination OutputStream.
      * @param bufferSize  The number of bytes to buffer during the copy.
@@ -192,7 +192,7 @@ public final class Util
      * source nor the destination are closed.  You must do this yourself
      * outside of the method call.  The number of bytes read/written is
      * returned.
-     * <p>
+     *
      * @param source  The source InputStream.
      * @param dest    The destination OutputStream.
      * @param bufferSize  The number of bytes to buffer during the copy.
@@ -243,7 +243,7 @@ public final class Util
      * read until its end is reached, but neither the source nor the
      * destination are closed.  You must do this yourself outside of the
      * method call.  The number of characters read/written is returned.
-     * <p>
+     *
      * @param source  The source Reader.
      * @param dest    The destination writer.
      * @param bufferSize  The number of characters to buffer during the copy.
@@ -317,7 +317,7 @@ public final class Util
      * read until its end is reached, but neither the source nor the
      * destination are closed.  You must do this yourself outside of the
      * method call.  The number of characters read/written is returned.
-     * <p>
+     *
      * @param source  The source Reader.
      * @param dest    The destination writer.
      * @param bufferSize  The number of characters to buffer during the copy.

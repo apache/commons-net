@@ -276,7 +276,6 @@ import org.apache.commons.net.io.Util;
  * The implementation currently uses a {@link CopyStreamListener} which is passed to the
  * {@link Util#copyStream(InputStream, OutputStream, int, long, CopyStreamListener, boolean)}
  * method, so the timing is partially dependent on how long each block transfer takes.
- * <p>
  *
  * @see #FTP_SYSTEM_TYPE
  * @see #SYSTEM_TYPE_PROPERTIES
@@ -734,7 +733,7 @@ implements Configurable
      * a REST command is issued to the server with the offset as
      * an argument before establishing the data connection.  Active
      * mode connections also cause a local PORT command to be issued.
-     * <p>
+     *
      * @param command  The int representation of the FTP command to send.
      * @param arg The arguments to the FTP command.  If this parameter is
      *             set to null, then the command is sent with no argument.
@@ -760,7 +759,7 @@ implements Configurable
      * a REST command is issued to the server with the offset as
      * an argument before establishing the data connection.  Active
      * mode connections also cause a local PORT command to be issued.
-     * <p>
+     *
      * @param command  The int representation of the FTP command to send.
      * @param arg The arguments to the FTP command.  If this parameter is
      *             set to null, then the command is sent with no argument.
@@ -785,7 +784,7 @@ implements Configurable
      * a REST command is issued to the server with the offset as
      * an argument before establishing the data connection.  Active
      * mode connections also cause a local PORT command to be issued.
-     * <p>
+     *
      * @param command  The text representation of the FTP command to send.
      * @param arg The arguments to the FTP command.  If this parameter is
      *             set to null, then the command is sent with no argument.
@@ -1003,7 +1002,7 @@ implements Configurable
     /**
      * Closes the connection to the FTP server and restores
      * connection parameters to the default values.
-     * <p>
+     *
      * @exception IOException If an error occurs while disconnecting.
      */
     @Override
@@ -1020,7 +1019,7 @@ implements Configurable
      * connection is attached.  The default is for verification to be
      * enabled.  You may set this value at any time, whether the
      * FTPClient is currently connected or not.
-     * <p>
+     *
      * @param enable True to enable verification, false to disable verification.
      */
     public void setRemoteVerificationEnabled(boolean enable)
@@ -1032,7 +1031,7 @@ implements Configurable
      * Return whether or not verification of the remote host participating
      * in data connections is enabled.  The default behavior is for
      * verification to be enabled.
-     * <p>
+     *
      * @return True if verification is enabled, false if not.
      */
     public boolean isRemoteVerificationEnabled()
@@ -1042,7 +1041,7 @@ implements Configurable
 
     /**
      * Login to the FTP server using the provided username and password.
-     * <p>
+     *
      * @param username The username to login under.
      * @param password The password to use.
      * @return True if successfully completed, false if not.
@@ -1077,7 +1076,7 @@ implements Configurable
      * Login to the FTP server using the provided username, password,
      * and account.  If no account is required by the server, only
      * the username and password, the account information is not used.
-     * <p>
+     *
      * @param username The username to login under.
      * @param password The password to use.
      * @param account  The account to use.
@@ -1120,7 +1119,7 @@ implements Configurable
 
     /**
      * Logout of the FTP server by sending the QUIT command.
-     * <p>
+     *
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -1138,7 +1137,7 @@ implements Configurable
 
     /**
      * Change the current working directory of the FTP session.
-     * <p>
+     *
      * @param pathname  The new current working directory.
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
@@ -1157,7 +1156,7 @@ implements Configurable
 
     /**
      * Change to the parent directory of the current working directory.
-     * <p>
+     *
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -1175,7 +1174,7 @@ implements Configurable
 
     /**
      * Issue the FTP SMNT command.
-     * <p>
+     *
      * @param pathname The pathname to mount.
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
@@ -1194,7 +1193,7 @@ implements Configurable
     /**
      * Reinitialize the FTP session.  Not all FTP servers support this
      * command, which issues the FTP REIN command.
-     * <p>
+     *
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -1275,7 +1274,7 @@ implements Configurable
      * must remember to call
      * {@link #enterLocalActiveMode  enterLocalActiveMode() } if you
      * wish to return to the normal data connection mode.
-     * <p>
+     *
      * @param host The passive mode server accepting connections for data
      *             transfers.
      * @param port The passive mode server's data port.
@@ -1313,7 +1312,7 @@ implements Configurable
      * must remember to call
      * {@link #enterLocalActiveMode  enterLocalActiveMode() } if you
      * wish to return to the normal data connection mode.
-     * <p>
+     *
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -1344,7 +1343,7 @@ implements Configurable
      * This is because FTPClient sends a PASV command to the server only
      * just before opening a data connection, and not when you call
      * {@link #enterLocalPassiveMode enterLocalPassiveMode()}.
-     * <p>
+     *
      * @return The passive host name if in passive mode, otherwise null.
      */
     public String getPassiveHost()
@@ -1360,7 +1359,7 @@ implements Configurable
      * This is because FTPClient sends a PASV command to the server only
      * just before opening a data connection, and not when you call
      * {@link #enterLocalPassiveMode enterLocalPassiveMode()}.
-     * <p>
+     *
      * @return The data port of the passive server.  If not in passive
      *         mode, undefined.
      */
@@ -1373,7 +1372,7 @@ implements Configurable
     /**
      * Returns the current data connection mode (one of the
      * <code> _DATA_CONNECTION_MODE </code> constants.
-     * <p>
+     *
      * @return The current data connection mode (one of the
      * <code> _DATA_CONNECTION_MODE </code> constants.
      */
@@ -1384,7 +1383,7 @@ implements Configurable
 
     /**
      * Get the client port for active mode.
-     * <p>
+     *
      * @return The client port for active mode.
      */
     private int getActivePort()
@@ -1406,7 +1405,7 @@ implements Configurable
 
     /**
      * Get the host address for active mode; allows the local address to be overridden.
-     * <p>
+     *
      * @return __activeExternalHost if non-null, else getLocalAddress()
      * @see #setActiveExternalIPAddress(String)
      */
@@ -1428,7 +1427,7 @@ implements Configurable
      * allows override of {@link #getHostAddress()}.
      *
      * Useful for FTP Client behind Firewall NAT.
-     * <p>
+     *
      * @return __reportActiveExternalHost if non-null, else getHostAddress();
      */
     private InetAddress getReportHostAddress() {
@@ -1441,7 +1440,7 @@ implements Configurable
 
     /**
      * Set the client side port range in active mode.
-     * <p>
+     *
      * @param minPort The lowest available port (inclusive).
      * @param maxPort The highest available port (inclusive).
      * @since 2.2
@@ -1455,7 +1454,7 @@ implements Configurable
     /**
      * Set the external IP address in active mode.
      * Useful when there are multiple network cards.
-     * <p>
+     *
      * @param ipAddress The external IP address of this machine.
      * @throws UnknownHostException if the ipAddress cannot be resolved
      * @since 2.2
@@ -1468,7 +1467,7 @@ implements Configurable
     /**
      * Set the local IP address to use in passive mode.
      * Useful when there are multiple network cards.
-     * <p>
+     *
      * @param ipAddress The local IP address of this machine.
      * @throws UnknownHostException if the ipAddress cannot be resolved
      */
@@ -1480,7 +1479,7 @@ implements Configurable
     /**
      * Set the local IP address to use in passive mode.
      * Useful when there are multiple network cards.
-     * <p>
+     *
      * @param inetAddress The local IP address of this machine.
      */
     public void setPassiveLocalIPAddress(InetAddress inetAddress)
@@ -1491,7 +1490,7 @@ implements Configurable
     /**
      * Set the local IP address in passive mode.
      * Useful when there are multiple network cards.
-     * <p>
+     *
      * @return The local IP address in passive mode.
      */
     public InetAddress getPassiveLocalIPAddress()
@@ -1502,7 +1501,7 @@ implements Configurable
     /**
      * Set the external IP address to report in EPRT/PORT commands in active mode.
      * Useful when there are multiple network cards.
-     * <p>
+     *
      * @param ipAddress The external IP address of this machine.
      * @throws UnknownHostException if the ipAddress cannot be resolved
      * @since 3.1
@@ -1572,13 +1571,13 @@ implements Configurable
      * <p>
      * <b>N.B.</b> currently calling any connect method will reset the type to
      * FTP.ASCII_FILE_TYPE and the formatOrByteSize to FTP.NON_PRINT_TEXT_FORMAT.
-     * <p>
+     *
      * @param fileType The <code> _FILE_TYPE </code> constant indcating the
      *                 type of file.
      * @param formatOrByteSize  The format of the file (one of the
      *              <code>_FORMAT</code> constants.  In the case of
      *              <code>LOCAL_FILE_TYPE</code>, the byte size.
-     * <p>
+     *
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -1605,7 +1604,7 @@ implements Configurable
      * Sets the file structure.  The default structure is
      * <code> FTP.FILE_STRUCTURE </code> if this method is never called
      * or if a connect method is called.
-     * <p>
+     *
      * @param structure  The structure of the file (one of the FTP class
      *         <code>_STRUCTURE</code> constants).
      * @return True if successfully completed, false if not.
@@ -1632,7 +1631,7 @@ implements Configurable
      * Sets the transfer mode.  The default transfer mode
      * <code> FTP.STREAM_TRANSFER_MODE </code> if this method is never called
      * or if a connect method is called.
-     * <p>
+     *
      * @param mode  The new transfer mode to use (one of the FTP class
      *         <code>_TRANSFER_MODE</code> constants).
      * @return True if successfully completed, false if not.
@@ -1659,7 +1658,7 @@ implements Configurable
      * Initiate a server to server file transfer.  This method tells the
      * server to which the client is connected to retrieve a given file from
      * the other server.
-     * <p>
+     *
      * @param filename  The name of the file to retrieve.
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
@@ -1686,7 +1685,7 @@ implements Configurable
      * the other server using the given filename.  The other server must
      * have had a <code> remoteRetrieve </code> issued to it by another
      * FTPClient.
-     * <p>
+     *
      * @param filename  The name to call the file that is to be stored.
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
@@ -1713,7 +1712,7 @@ implements Configurable
      * the other server using a unique filename based on the given filename.
      * The other server must have had a <code> remoteRetrieve </code> issued
      * to it by another FTPClient.
-     * <p>
+     *
      * @param filename  The name on which to base the filename of the file
      *                  that is to be stored.
      * @return True if successfully completed, false if not.
@@ -1743,7 +1742,7 @@ implements Configurable
      * to it by another FTPClient.  Many FTP servers require that a base
      * filename be given from which the unique filename can be derived.  For
      * those servers use the other version of <code> remoteStoreUnique</code>
-     * <p>
+     *
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -1768,10 +1767,10 @@ implements Configurable
      * server to which the client is connected to append to a given file on
      * the other server.  The other server must have had a
      * <code> remoteRetrieve </code> issued to it by another FTPClient.
-     * <p>
+     *
      * @param filename  The name of the file to be appended to, or if the
      *        file does not exist, the name to call the file being stored.
-     * <p>
+     *
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -1824,7 +1823,7 @@ implements Configurable
      *     System.exit(1);
      * }
      * </pre>
-     * <p>
+     *
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -1983,7 +1982,7 @@ implements Configurable
      * InputStream.  If the current file type is ASCII, line separators in
      * the file are transparently converted to the NETASCII format (i.e.,
      * you should not attempt to create a special InputStream to do this).
-     * <p>
+     *
      * @param remote  The name to give the remote file.
      * @param local   The local InputStream from which to read the file.
      * @return True if successfully completed, false if not.
@@ -2022,7 +2021,7 @@ implements Configurable
      * {@link #completePendingCommand  completePendingCommand } and
      * check its return value to verify success.</b>
      * If this is not done, subsequent commands may behave unexpectedly.
-     * <p>
+     *
      * @param remote  The name to give the remote file.
      * @return An OutputStream through which the remote file can be written.  If
      *      the data connection cannot be opened (e.g., the file does not
@@ -2047,7 +2046,7 @@ implements Configurable
      * InputStream.  If the current file type is ASCII, line separators in
      * the file are transparently converted to the NETASCII format (i.e.,
      * you should not attempt to create a special InputStream to do this).
-     * <p>
+     *
      * @param remote  The name of the remote file.
      * @param local   The local InputStream from which to read the data to
      *                be appended to the remote file.
@@ -2086,7 +2085,7 @@ implements Configurable
      * {@link #completePendingCommand  completePendingCommand } and
      * check its return value to verify success.</b>
      * If this is not done, subsequent commands may behave unexpectedly.
-     * <p>
+     *
      * @param remote  The name of the remote file.
      * @return An OutputStream through which the remote file can be appended.
      *      If the data connection cannot be opened (e.g., the file does not
@@ -2112,7 +2111,7 @@ implements Configurable
      * InputStream.  If the current file type is ASCII, line separators in
      * the file are transparently converted to the NETASCII format (i.e.,
      * you should not attempt to create a special InputStream to do this).
-     * <p>
+     *
      * @param remote  The name on which to base the unique name given to
      *                the remote file.
      * @param local   The local InputStream from which to read the file.
@@ -2153,7 +2152,7 @@ implements Configurable
      * {@link #completePendingCommand  completePendingCommand } and
      * check its return value to verify success.</b>
      * If this is not done, subsequent commands may behave unexpectedly.
-     * <p>
+     *
      * @param remote  The name on which to base the unique name given to
      *                the remote file.
      * @return An OutputStream through which the remote file can be written.  If
@@ -2180,7 +2179,7 @@ implements Configurable
      * InputStream.  If the current file type is ASCII, line separators in
      * the file are transparently converted to the NETASCII format (i.e.,
      * you should not attempt to create a special InputStream to do this).
-     * <p>
+     *
      * @param local   The local InputStream from which to read the file.
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
@@ -2217,7 +2216,7 @@ implements Configurable
      * {@link #completePendingCommand  completePendingCommand } and
      * check its return value to verify success.</b>
      * If this is not done, subsequent commands may behave unexpectedly.
-     * <p>
+     *
      * @return An OutputStream through which the remote file can be written.  If
      *      the data connection cannot be opened (e.g., the file does not
      *      exist), null is returned (in which case you may check the reply
@@ -2237,7 +2236,7 @@ implements Configurable
 
     /**
      * Reserve a number of bytes on the server for the next file transfer.
-     * <p>
+     *
      * @param bytes  The number of bytes which the server should allocate.
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
@@ -2401,7 +2400,7 @@ implements Configurable
 
     /**
      * Reserve space on the server for the next file transfer.
-     * <p>
+     *
      * @param bytes  The number of bytes which the server should allocate.
      * @param recordSize  The size of a file record.
      * @return True if successfully completed, false if not.
@@ -2424,7 +2423,7 @@ implements Configurable
      * <p>
      * Should only be used with commands that return replies on the
      * command channel - do not use for LIST, NLST, MLSD etc.
-     * <p>
+     *
      * @param command  The command to invoke
      * @param params  The parameters string, may be {@code null}
      * @return True if successfully completed, false if not, in which case
@@ -2445,7 +2444,7 @@ implements Configurable
      * <p>
      * Should only be used with commands that return replies on the
      * command channel - do not use for LIST, NLST, MLSD etc.
-     * <p>
+     *
      * @param command  The command to invoke
      * @param params  The parameters string, may be {@code null}
      * @return The array of replies, or {@code null} if the command failed, in which case
@@ -2532,7 +2531,7 @@ implements Configurable
      * the REST comand for the stream transfer mode.  However, most FTP
      * servers support this.  Any subsequent file transfer will start
      * reading or writing the remote file from the indicated offset.
-     * <p>
+     *
      * @param offset  The offset into the remote file at which to start the
      *           next file transfer.
      * @return True if successfully completed, false if not.
@@ -2576,7 +2575,7 @@ implements Configurable
 
     /**
      * Fetches the restart offset.
-     * <p>
+     *
      * @return offset  The offset into the remote file at which to start the
      *           next file transfer.
      */
@@ -2589,7 +2588,7 @@ implements Configurable
 
     /**
      * Renames a remote file.
-     * <p>
+     *
      * @param from  The name of the remote file to rename.
      * @param to    The new name of the remote file.
      * @return True if successfully completed, false if not.
@@ -2613,7 +2612,7 @@ implements Configurable
 
     /**
      * Abort a transfer in progress.
-     * <p>
+     *
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -2630,7 +2629,7 @@ implements Configurable
 
     /**
      * Deletes a file on the FTP server.
-     * <p>
+     *
      * @param pathname   The pathname of the file to be deleted.
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
@@ -2649,7 +2648,7 @@ implements Configurable
 
     /**
      * Removes a directory on the FTP server (if empty).
-     * <p>
+     *
      * @param pathname  The pathname of the directory to remove.
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
@@ -2670,7 +2669,7 @@ implements Configurable
      * Creates a new subdirectory on the FTP server in the current directory
      * (if a relative pathname is given) or where specified (if an absolute
      * pathname is given).
-     * <p>
+     *
      * @param pathname The pathname of the directory to create.
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
@@ -2689,7 +2688,7 @@ implements Configurable
 
     /**
      * Returns the pathname of the current working directory.
-     * <p>
+     *
      * @return The pathname of the current working directory.  If it cannot
      *         be obtained, returns null.
      * @exception FTPConnectionClosedException
@@ -2776,7 +2775,7 @@ implements Configurable
     /**
      * Fetches the system help information from the server and returns the
      * full string.
-     * <p>
+     *
      * @return The system help string obtained from the server.  null if the
      *       information could not be obtained.
      * @exception FTPConnectionClosedException
@@ -2822,7 +2821,7 @@ implements Configurable
     /**
      * Sends a NOOP command to the FTP server.  This is useful for preventing
      * server timeouts.
-     * <p>
+     *
      * @return True if successfully completed, false if not.
      * @exception FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -2849,7 +2848,7 @@ implements Configurable
      * returned. If the pathname corresponds
      * to a file, only that file will be listed.  The server may or may not
      * expand glob expressions.
-     * <p>
+     *
      * @param pathname  The file or directory to list.
      *                  Warning: the server may treat a leading '-' as an
      *                  option introducer. If so, try using an absolute path,
@@ -2905,7 +2904,7 @@ implements Configurable
      * null is returned (the FTP server returned a 550 error No files found.).
      * If the directory is not empty, an array of filenames in the directory is
      * returned.
-     * <p>
+     *
      * @return The list of filenames contained in the current working
      *     directory.  null if the list could not be obtained.
      *     If there are no filenames in the directory, a zero-length array
@@ -2939,7 +2938,7 @@ implements Configurable
      * For older files, the output may only contain a date.
      * If the server supports it, the MLSD command returns timestamps with a precision
      * of seconds, and may include milliseconds. See {@link #mlistDir()}
-     * <p>
+     *
      * @param pathname  The file or directory to list.  Since the server may
      *                  or may not expand glob expressions, using them here
      *                  is not recommended and may well cause this method to
@@ -2998,7 +2997,7 @@ implements Configurable
      * For older files, the output may only contain a date.
      * If the server supports it, the MLSD command returns timestamps with a precision
      * of seconds, and may include milliseconds. See {@link #mlistDir()}
-     * <p>
+     *
      * @return The list of file information contained in the current directory
      *         in the format determined by the autodetection mechanism.
      *         <p><b>
@@ -3066,7 +3065,7 @@ implements Configurable
      * For older files, the output may only contain a date.
      * If the server supports it, the MLSD command returns timestamps with a precision
      * of seconds, and may include milliseconds. See {@link #mlistDir()}
-     * <p>
+     *
      * @return The list of directories contained in the current directory
      *         in the format determined by the autodetection mechanism.
      *
@@ -3113,7 +3112,7 @@ implements Configurable
      * For older files, the output may only contain a date.
      * If the server supports it, the MLSD command returns timestamps with a precision
      * of seconds, and may include milliseconds. See {@link #mlistDir()}
-     * <p>
+     *
      * @return The list of directories contained in the specified directory
      *         in the format determined by the autodetection mechanism.
      *
@@ -3201,7 +3200,7 @@ implements Configurable
      * This method differs from using the listFiles() methods in that
      * expensive FTPFile objects are not created until needed which may be
      * an advantage on large lists.
-     * <p>
+     *
      * <pre>
      *    FTPClient f=FTPClient();
      *    f.connect(server);
@@ -3437,7 +3436,7 @@ implements Configurable
 
     /**
      * Issue the FTP STAT command to the server.
-     * <p>
+     *
      * @return The status information returned by the server.
      * @exception FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -3459,7 +3458,7 @@ implements Configurable
     /**
      * Issue the FTP STAT command to the server for a given pathname.  This
      * should produce a listing of the file or directory.
-     * <p>
+     *
      * @return The status information returned by the server.
      * @exception FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result

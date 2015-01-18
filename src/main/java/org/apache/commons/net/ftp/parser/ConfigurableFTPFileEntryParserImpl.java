@@ -32,10 +32,10 @@ import org.apache.commons.net.ftp.FTPClientConfig;
  * that pulls out the date portion as a separate string which is
  * passed to the underlying {@link FTPTimestampParser delegate} to
  * handle parsing of the file timestamp.
- * </p><p>
+ * <p>
  * This class also implements the {@link Configurable Configurable}
  * interface to allow the parser to be configured from the outside.
- * </p>
+ *
  * @since 1.4
  */
 public abstract class ConfigurableFTPFileEntryParserImpl
@@ -73,7 +73,7 @@ implements Configurable
     /**
      * This method is called by the concrete parsers to delegate
      * timestamp parsing to the timestamp parser.
-     * <p>
+     *
      * @param timestampStr the timestamp string pulled from the
      * file listing by the regular expression parser, to be submitted
      * to the <code>timestampParser</code> for extracting the timestamp.

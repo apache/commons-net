@@ -47,7 +47,8 @@ import java.io.IOException;
  * remote process are transmitted over the same connection, readable
  * from the input stream returned by
  * {@link org.apache.commons.net.bsd.RExecClient#getInputStream getInputStream() }
- * .  Unlike RExecClient and RCommandClient, it is
+ * <p>
+ * Unlike RExecClient and RCommandClient, it is
  * not possible to tell the rlogind daemon to return the standard error
  * stream over a separate connection.
  * {@link org.apache.commons.net.bsd.RExecClient#getErrorStream getErrorStream() }
@@ -55,9 +56,7 @@ import java.io.IOException;
  * The standard input of the remote process can be written to through
  * the output stream returned by
  * {@link org.apache.commons.net.bsd.RExecClient#getOutputStream getOutputSream() }
- * .
- * <p>
- * <p>
+ *
  * @see org.apache.commons.net.SocketClient
  * @see RExecClient
  * @see RCommandClient
@@ -97,7 +96,7 @@ public class RLoginClient extends RCommandClient
      * a password be entered interactively.  You will be able to read the
      * prompt from the output stream of the RLoginClient and write the
      * password to the input stream of the RLoginClient.
-     * <p>
+     *
      * @param localUsername  The user account on the local machine that is
      *        trying to login to the remote host.
      * @param remoteUsername  The account name on the server that is

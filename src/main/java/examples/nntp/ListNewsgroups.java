@@ -27,7 +27,6 @@ import org.apache.commons.net.nntp.NewsgroupInfo;
  * server and issues fetches the list of newsgroups stored by the server.
  * On servers that store a lot of newsgroups, this command can take a very
  * long time (listing upwards of 30,000 groups).
- * <p>
  ***/
 
 public final class ListNewsgroups

@@ -29,8 +29,8 @@ import java.net.Socket;
  * are dealing with a stream originating from a socket, but do not have
  * a reference to the socket, and want to make sure it closes when the
  * stream closes.
- * <p>
- * <p>
+ *
+ *
  * @see SocketOutputStream
  ***/
 
@@ -42,7 +42,7 @@ public class SocketInputStream extends FilterInputStream
      * Creates a SocketInputStream instance wrapping an input stream and
      * storing a reference to a socket that should be closed on closing
      * the stream.
-     * <p>
+     *
      * @param socket  The socket to close on closing the stream.
      * @param stream  The input stream to wrap.
      ***/
@@ -55,7 +55,7 @@ public class SocketInputStream extends FilterInputStream
     /***
      * Closes the stream and immediately afterward closes the referenced
      * socket.
-     * <p>
+     *
      * @exception IOException  If there is an error in closing the stream
      *                         or socket.
      ***/

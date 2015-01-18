@@ -28,8 +28,8 @@ import java.io.InputStream;
  * a newline.
  * You would use this class to implement ASCII file transfers requiring
  * conversion to NETASCII.
- * <p>
- * <p>
+ *
+ *
  ***/
 
 public final class ToNetASCIIInputStream extends FilterInputStream
@@ -42,7 +42,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
     /***
      * Creates a ToNetASCIIInputStream instance that wraps an existing
      * InputStream.
-     * <p>
+     *
      * @param input  The InputStream to wrap.
      ***/
     public ToNetASCIIInputStream(InputStream input)
@@ -55,7 +55,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
     /***
      * Reads and returns the next byte in the stream.  If the end of the
      * message has been reached, returns -1.
-     * <p>
+     *
      * @return The next character in the stream. Returns -1 if the end of the
      *          stream has been reached.
      * @exception IOException If an error occurs while reading the underlying
@@ -99,7 +99,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
      * Reads the next number of bytes from the stream into an array and
      * returns the number of bytes read.  Returns -1 if the end of the
      * stream has been reached.
-     * <p>
+     *
      * @param buffer  The byte array in which to store the data.
      * @return The number of bytes read. Returns -1 if the
      *          end of the message has been reached.
@@ -118,7 +118,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
      * the number of bytes read.  Returns -1 if the end of the
      * message has been reached.  The characters are stored in the array
      * starting from the given offset and up to the length specified.
-     * <p>
+     *
      * @param buffer The byte array in which to store the data.
      * @param offset  The offset into the array at which to start storing data.
      * @param length   The number of bytes to read.

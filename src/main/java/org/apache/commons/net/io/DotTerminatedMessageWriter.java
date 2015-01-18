@@ -32,8 +32,8 @@ import java.io.Writer;
  * converts single linefeeds to NETASCII newlines, and on closing
  * will send the final message terminator dot and NETASCII newline
  * sequence.
- * <p>
- * <p>
+ *
+ *
  ***/
 
 public final class DotTerminatedMessageWriter extends Writer
@@ -49,7 +49,7 @@ public final class DotTerminatedMessageWriter extends Writer
     /***
      * Creates a DotTerminatedMessageWriter that wraps an existing Writer
      * output destination.
-     * <p>
+     *
      * @param output  The Writer output destination to write the message.
      ***/
     public DotTerminatedMessageWriter(Writer output)
@@ -66,7 +66,7 @@ public final class DotTerminatedMessageWriter extends Writer
      * convert naked linefeeds to NETASCII line separators and to double
      * line-leading periods.  This is transparent to the programmer and
      * is only mentioned for completeness.
-     * <p>
+     *
      * @param ch  The character to write.
      * @exception IOException  If an error occurs while writing to the
      *            underlying output.
@@ -107,7 +107,7 @@ public final class DotTerminatedMessageWriter extends Writer
     /***
      * Writes a number of characters from a character array to the output
      * starting from a given offset.
-     * <p>
+     *
      * @param buffer  The character array to write.
      * @param offset  The offset into the array at which to start copying data.
      * @param length  The number of characters to write.
@@ -128,7 +128,7 @@ public final class DotTerminatedMessageWriter extends Writer
 
     /***
      * Writes a character array to the output.
-     * <p>
+     *
      * @param buffer  The character array to write.
      * @exception IOException If an error occurs while writing to the underlying
      *            output.
@@ -142,7 +142,7 @@ public final class DotTerminatedMessageWriter extends Writer
 
     /***
      * Writes a String to the output.
-     * <p>
+     *
      * @param string  The String to write.
      * @exception IOException If an error occurs while writing to the underlying
      *            output.
@@ -156,7 +156,7 @@ public final class DotTerminatedMessageWriter extends Writer
 
     /***
      * Writes part of a String to the output starting from a given offset.
-     * <p>
+     *
      * @param string  The String to write.
      * @param offset  The offset into the String at which to start copying data.
      * @param length  The number of characters to write.
@@ -172,7 +172,7 @@ public final class DotTerminatedMessageWriter extends Writer
 
     /***
      * Flushes the underlying output, writing all buffered output.
-     * <p>
+     *
      * @exception IOException If an error occurs while writing to the underlying
      *            output.
      ***/
@@ -190,7 +190,7 @@ public final class DotTerminatedMessageWriter extends Writer
      * Flushes the underlying output, writing all buffered output, but doesn't
      * actually close the underlying stream.  The underlying stream may still
      * be used for communicating with the server and therefore is not closed.
-     * <p>
+     *
      * @exception IOException If an error occurs while writing to the underlying
      *            output or closing the Writer.
      ***/

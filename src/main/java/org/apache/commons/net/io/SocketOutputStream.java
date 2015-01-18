@@ -29,8 +29,8 @@ import java.net.Socket;
  * are dealing with a stream originating from a socket, but do not have
  * a reference to the socket, and want to make sure it closes when the
  * stream closes.
- * <p>
- * <p>
+ *
+ *
  * @see SocketInputStream
  ***/
 
@@ -42,7 +42,7 @@ public class SocketOutputStream extends FilterOutputStream
      * Creates a SocketOutputStream instance wrapping an output stream and
      * storing a reference to a socket that should be closed on closing
      * the stream.
-     * <p>
+     *
      * @param socket  The socket to close on closing the stream.
      * @param stream  The input stream to wrap.
      ***/
@@ -58,7 +58,7 @@ public class SocketOutputStream extends FilterOutputStream
      * a given offset.  This method bypasses the equivalent method in
      * FilterOutputStream because the FilterOutputStream implementation is
      * very inefficient.
-     * <p>
+     *
      * @param buffer  The byte array to write.
      * @param offset  The offset into the array at which to start copying data.
      * @param length  The number of bytes to write.
@@ -75,7 +75,7 @@ public class SocketOutputStream extends FilterOutputStream
     /***
      * Closes the stream and immediately afterward closes the referenced
      * socket.
-     * <p>
+     *
      * @exception IOException  If there is an error in closing the stream
      *                         or socket.
      ***/

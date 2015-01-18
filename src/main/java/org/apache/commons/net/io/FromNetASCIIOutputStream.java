@@ -32,8 +32,8 @@ import java.io.OutputStream;
  * not flush the last byte written if that byte was a carriage
  * return.  A call to {@link #close  close() }, however, will
  * flush the carriage return.
- * <p>
- * <p>
+ *
+ *
  ***/
 
 public final class FromNetASCIIOutputStream extends FilterOutputStream
@@ -43,7 +43,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
     /***
      * Creates a FromNetASCIIOutputStream instance that wraps an existing
      * OutputStream.
-     * <p>
+     *
      * @param output  The OutputStream to wrap.
      ***/
     public FromNetASCIIOutputStream(OutputStream output)
@@ -90,7 +90,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
      * a NETASCII line separator was encountered.
      * This is transparent to the programmer and is only mentioned for
      * completeness.
-     * <p>
+     *
      * @param ch The byte to write.
      * @exception IOException If an error occurs while writing to the underlying
      *            stream.
@@ -111,7 +111,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
 
     /***
      * Writes a byte array to the stream.
-     * <p>
+     *
      * @param buffer  The byte array to write.
      * @exception IOException If an error occurs while writing to the underlying
      *            stream.
@@ -127,7 +127,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
     /***
      * Writes a number of bytes from a byte array to the stream starting from
      * a given offset.
-     * <p>
+     *
      * @param buffer  The byte array to write.
      * @param offset  The offset into the array at which to start copying data.
      * @param length  The number of bytes to write.
@@ -154,7 +154,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
 
     /***
      * Closes the stream, writing all pending data.
-     * <p>
+     *
      * @exception IOException  If an error occurs while closing the stream.
      ***/
     @Override

@@ -26,8 +26,7 @@ import java.io.IOException;
  * failed FTP command.  This exception is derived from IOException and
  * therefore may be caught either as an IOException or specifically as an
  * FTPConnectionClosedException.
- * <p>
- * <p>
+ *
  * @see FTP
  * @see FTPClient
  ***/
@@ -45,7 +44,7 @@ public class FTPConnectionClosedException extends IOException
 
     /***
      * Constructs a FTPConnectionClosedException with a specified message.
-     * <p>
+     *
      * @param message  The message explaining the reason for the exception.
      ***/
     public FTPConnectionClosedException(String message)

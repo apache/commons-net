@@ -42,8 +42,8 @@ import java.nio.charset.Charset;
  * them by directly invoking a constructor.  By honoring this contract
  * you guarantee that a user will always be able to provide his own
  * Socket implementations by substituting his own SocketFactory.
- * <p>
- * <p>
+ *
+ *
  * @see DatagramSocketFactory
  ***/
 
@@ -95,7 +95,7 @@ public abstract class DatagramSocketClient
      * <p>
      * _isOpen_ is set to true after calling this method and _socket_
      * is set to the newly opened socket.
-     * <p>
+     *
      * @exception SocketException If the socket could not be opened or the
      *   timeout could not be set.
      ***/
@@ -114,7 +114,7 @@ public abstract class DatagramSocketClient
      * <p>
      * _isOpen_ is set to true after calling this method and _socket_
      * is set to the newly opened socket.
-     * <p>
+     *
      * @param port The port to use for the socket.
      * @exception SocketException If the socket could not be opened or the
      *   timeout could not be set.
@@ -135,7 +135,7 @@ public abstract class DatagramSocketClient
      * <p>
      * _isOpen_ is set to true after calling this method and _socket_
      * is set to the newly opened socket.
-     * <p>
+     *
      * @param port The port to use for the socket.
      * @param laddr  The local address to use.
      * @exception SocketException If the socket could not be opened or the
@@ -170,7 +170,7 @@ public abstract class DatagramSocketClient
 
     /***
      * Returns true if the client has a currently open socket.
-     * <p>
+     *
      * @return True if the client has a curerntly open socket, false otherwise.
      ***/
     public boolean isOpen()
@@ -186,7 +186,7 @@ public abstract class DatagramSocketClient
      * and should not be confused with {@link #setSoTimeout setSoTimeout()}
      * which operates on the currently open socket.  _timeout_ contains
      * the new timeout value.
-     * <p>
+     *
      * @param timeout  The timeout in milliseconds to use for the datagram socket
      *                 connection.
      ***/
@@ -199,7 +199,7 @@ public abstract class DatagramSocketClient
     /***
      * Returns the default timeout in milliseconds that is used when
      * opening a socket.
-     * <p>
+     *
      * @return The default timeout in milliseconds that is used when
      *         opening a socket.
      ***/
@@ -213,7 +213,7 @@ public abstract class DatagramSocketClient
      * Set the timeout in milliseconds of a currently open connection.
      * Only call this method after a connection has been opened
      * by {@link #open open()}.
-     * <p>
+     *
      * @param timeout  The timeout in milliseconds to use for the currently
      *                 open datagram socket connection.
      * @throws SocketException if an error setting the timeout
@@ -228,7 +228,7 @@ public abstract class DatagramSocketClient
      * Returns the timeout in milliseconds of the currently opened socket.
      * If you call this method when the client socket is not open,
      * a NullPointerException is thrown.
-     * <p>
+     *
      * @return The timeout in milliseconds of the currently opened socket.
      * @throws SocketException if an error getting the timeout
      ***/
@@ -242,7 +242,7 @@ public abstract class DatagramSocketClient
      * Returns the port number of the open socket on the local host used
      * for the connection.  If you call this method when the client socket
      * is not open, a NullPointerException is thrown.
-     * <p>
+     *
      * @return The port number of the open socket on the local host used
      *         for the connection.
      ***/
@@ -256,7 +256,7 @@ public abstract class DatagramSocketClient
      * Returns the local address to which the client's socket is bound.
      * If you call this method when the client socket is not open, a
      * NullPointerException is thrown.
-     * <p>
+     *
      * @return The local address to which the client's socket is bound.
      ***/
     public InetAddress getLocalAddress()
@@ -270,7 +270,7 @@ public abstract class DatagramSocketClient
      * to open DatagramSockets.  If the factory value is null, then a default
      * factory is used (only do this to reset the factory after having
      * previously altered it).
-     * <p>
+     *
      * @param factory  The new DatagramSocketFactory the DatagramSocketClient
      * should use.
      ***/

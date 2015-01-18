@@ -31,8 +31,8 @@ import java.net.SocketException;
  * This allows you to provide your own DatagramSocket implementations and
  * to perform security checks or browser capability requests before
  * creating a DatagramSocket.
- * <p>
- * <p>
+ *
+ *
  ***/
 
 public interface DatagramSocketFactory
@@ -40,14 +40,14 @@ public interface DatagramSocketFactory
 
     /***
      * Creates a DatagramSocket on the local host at the first available port.
-     * <p>
+     *
      * @exception SocketException If the socket could not be created.
      ***/
     public DatagramSocket createDatagramSocket() throws SocketException;
 
     /***
      * Creates a DatagramSocket on the local host at a specified port.
-     * <p>
+     *
      * @param port The port to use for the socket.
      * @exception SocketException If the socket could not be created.
      ***/
@@ -56,7 +56,7 @@ public interface DatagramSocketFactory
     /***
      * Creates a DatagramSocket at the specified address on the local host
      * at a specified port.
-     * <p>
+     *
      * @param port The port to use for the socket.
      * @param laddr  The local address to use.
      * @exception SocketException If the socket could not be created.

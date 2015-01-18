@@ -79,8 +79,6 @@ import org.apache.commons.net.io.SocketInputStream;
  * the output stream returned by
  * {@link org.apache.commons.net.bsd.RExecClient#getOutputStream getOutputStream() }
  * .
- * <p>
- * <p>
  * @see org.apache.commons.net.SocketClient
  * @see RExecClient
  * @see RLoginClient
@@ -169,7 +167,7 @@ public class RCommandClient extends RExecClient
      * acceptable to the BSD rshell daemon.
      * Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
-     * <p>
+     *
      * @param host  The remote host.
      * @param port  The port to connect to on the remote host.
      * @param localAddr  The local address to use.
@@ -218,7 +216,7 @@ public class RCommandClient extends RExecClient
      * to the BSD rshell daemon.
      * Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
-     * <p>
+     *
      * @param host  The remote host.
      * @param port  The port to connect to on the remote host.
      * @exception SocketException If the socket timeout could not be set.
@@ -241,7 +239,7 @@ public class RCommandClient extends RExecClient
      * to the BSD rshell daemon.
      * Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
-     * <p>
+     *
      * @param hostname  The name of the remote host.
      * @param port  The port to connect to on the remote host.
      * @exception SocketException If the socket timeout could not be set.
@@ -265,7 +263,7 @@ public class RCommandClient extends RExecClient
      * acceptable to the BSD rshell daemon.
      * Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
-     * <p>
+     *
      * @param hostname  The remote host.
      * @param port  The port to connect to on the remote host.
      * @param localAddr  The local address to use.
@@ -290,7 +288,7 @@ public class RCommandClient extends RExecClient
      * be thrown.
      * Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
-     * <p>
+     *
      * @param host  The remote host.
      * @param port  The port to connect to on the remote host.
      * @param localAddr  The local address to use.
@@ -322,7 +320,7 @@ public class RCommandClient extends RExecClient
      * be thrown.
      * Before returning, {@link org.apache.commons.net.SocketClient#_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
-     * <p>
+     *
      * @param hostname  The name of the remote host.
      * @param port  The port to connect to on the remote host.
      * @param localAddr  The local address to use.

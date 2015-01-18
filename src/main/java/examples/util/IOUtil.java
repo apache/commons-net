@@ -31,7 +31,6 @@ import org.apache.commons.net.io.Util;
  * data to a remote output destination.  The writer thread reads from
  * a remote input source and writes to a local output destination.
  * The threads terminate when the remote input source closes.
- * <p>
  ***/
 
 public final class IOUtil

@@ -33,8 +33,7 @@ import org.apache.commons.net.discard.DiscardTCPClient;
  * Don't close either stream when you're done using them.  Rather, call
  * {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
  * to clean up properly.
- * <p>
- * <p>
+ *
  * @see EchoUDPClient
  * @see DiscardTCPClient
  ***/
@@ -59,7 +58,7 @@ public final class EchoTCPClient extends DiscardTCPClient
      * reading from it.  Rather, you should call
      * {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
      * to clean up properly.
-     * <p>
+     *
      * @return An InputStream from which you can read echoed data from the
      *         server.
      ***/

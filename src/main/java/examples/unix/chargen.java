@@ -38,7 +38,6 @@ import org.apache.commons.net.chargen.CharGenUDPClient;
  * port.
  * <p>
  * Usage: chargen [-udp] <hostname>
- * <p>
  ***/
 public final class chargen
 {

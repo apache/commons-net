@@ -33,7 +33,6 @@ import examples.util.IOUtil;
  * Example: java rexec myhost myusername mypassword "ps -aux"
  * <p>
  * Usage: rexec <hostname> <username> <password> <command>
- * <p>
  ***/
 
 // This class requires the IOUtil support class!

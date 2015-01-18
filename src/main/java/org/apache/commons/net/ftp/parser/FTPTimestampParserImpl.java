@@ -345,7 +345,8 @@ public class FTPTimestampParserImpl implements
      * Set up the {@link  FTPClientConfig#setDefaultDateFormatStr(java.lang.String) defaultDateFormat}
      * and optionally the {@link  FTPClientConfig#setRecentDateFormatStr(String) recentDateFormat}
      * to values supplied in the config based on month names configured as follows:
-     * </p><p><ul>
+     * </p>
+     * <ul>
      * <li>If a {@link  FTPClientConfig#setShortMonthNames(String) shortMonthString}
      * has been supplied in the <code>config</code>, use that to parse  parse timestamps.</li>
      * <li>Otherwise, if a {@link  FTPClientConfig#setServerLanguageCode(String) serverLanguageCode}

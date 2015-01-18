@@ -44,7 +44,7 @@ import org.apache.commons.net.telnet.InvalidTelnetOptionException;
  * When connected, type AYT to send an AYT command to the server and see
  * the result.
  * Type OPT to see a report of the state of the first 25 options.
- * <p>
+ *
  * @author Bruno D'Avanzo
  ***/
 public class TelnetClientExample implements Runnable, TelnetNotificationHandler
@@ -272,12 +272,10 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
     /***
      * Callback method called when TelnetClient receives an option
      * negotiation command.
-     * <p>
+     *
      * @param negotiation_code - type of negotiation command received
      * (RECEIVED_DO, RECEIVED_DONT, RECEIVED_WILL, RECEIVED_WONT, RECEIVED_COMMAND)
-     * <p>
      * @param option_code - code of the option negotiated
-     * <p>
      ***/
 //    @Override
     public void receivedNegotiation(int negotiation_code, int option_code)

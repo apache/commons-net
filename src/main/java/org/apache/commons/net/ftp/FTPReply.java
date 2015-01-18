@@ -110,7 +110,7 @@ public final class FTPReply
      * No further commands can be issued to the FTP server after a positive
      * preliminary response until a follow up response is received from the
      * server.
-     * <p>
+     *
      * @param reply  The reply code to test.
      * @return True if a reply code is a postive preliminary response, false
      *         if not.
@@ -125,7 +125,7 @@ public final class FTPReply
      * codes beginning with a 2 are positive completion responses.
      * The FTP server will send a positive completion response on the final
      * successful completion of a command.
-     * <p>
+     *
      * @param reply  The reply code to test.
      * @return True if a reply code is a postive completion response, false
      *         if not.
@@ -143,7 +143,7 @@ public final class FTPReply
      * commands.  For example, after a successful USER command, a positive
      * intermediate response will be sent to indicate that the server is
      * ready for the PASS command.
-     * <p>
+     *
      * @param reply  The reply code to test.
      * @return True if a reply code is a postive intermediate response, false
      *         if not.
@@ -158,7 +158,7 @@ public final class FTPReply
      * codes beginning with a 4 are negative transient responses.
      * The FTP server will send a negative transient response on the
      * failure of a command that can be reattempted with success.
-     * <p>
+     *
      * @param reply  The reply code to test.
      * @return True if a reply code is a negative transient response, false
      *         if not.
@@ -173,7 +173,7 @@ public final class FTPReply
      * codes beginning with a 5 are negative permanent responses.
      * The FTP server will send a negative permanent response on the
      * failure of a command that cannot be reattempted with success.
-     * <p>
+     *
      * @param reply  The reply code to test.
      * @return True if a reply code is a negative permanent response, false
      *         if not.

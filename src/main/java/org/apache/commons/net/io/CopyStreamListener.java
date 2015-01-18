@@ -32,8 +32,8 @@ import java.util.EventListener;
  * removeCopyStreamListener methods.  However, future additions may use the
  * JavaBean event model, which is why the hooks have been included from the
  * beginning.
- * <p>
- * <p>
+ *
+ *
  * @see CopyStreamEvent
  * @see CopyStreamAdapter
  * @see Util

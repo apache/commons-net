@@ -26,8 +26,8 @@ import java.util.EventObject;
  * The ProtocolCommandEvent class coupled with the
  * {@link org.apache.commons.net.ProtocolCommandListener}
  *  interface facilitate this process.
- * <p>
- * <p>
+ *
+ *
  * @see ProtocolCommandListener
  * @see ProtocolCommandSupport
  ***/
@@ -45,7 +45,7 @@ public class ProtocolCommandEvent extends EventObject
      * the server.  ProtocolCommandEvents created with this constructor
      * should only be sent after a command has been sent, but before the
      * reply has been received.
-     * <p>
+     *
      * @param source  The source of the event.
      * @param command The string representation of the command type sent, not
      *      including the arguments (e.g., "STAT" or "GET").
@@ -67,7 +67,7 @@ public class ProtocolCommandEvent extends EventObject
      * received.  ProtocolCommandEvents created with this constructor
      * should only be sent after a complete command reply has been received
      * fromt a server.
-     * <p>
+     *
      * @param source  The source of the event.
      * @param replyCode The integer code indicating the natureof the reply.
      *   This will be the protocol integer value for protocols
@@ -89,7 +89,7 @@ public class ProtocolCommandEvent extends EventObject
      * Returns the string representation of the command type sent (e.g., "STAT"
      * or "GET").  If the ProtocolCommandEvent is a reply event, then null
      * is returned.
-     * <p>
+     *
      * @return The string representation of the command type sent, or null
      *         if this is a reply event.
      ***/
@@ -102,7 +102,7 @@ public class ProtocolCommandEvent extends EventObject
     /***
      * Returns the reply code of the received server reply.  Undefined if
      * this is not a reply event.
-     * <p>
+     *
      * @return The reply code of the received server reply.  Undefined if
      *         not a reply event.
      ***/
@@ -114,7 +114,7 @@ public class ProtocolCommandEvent extends EventObject
     /***
      * Returns true if the ProtocolCommandEvent was generated as a result
      * of sending a command.
-     * <p>
+     *
      * @return true If the ProtocolCommandEvent was generated as a result
      * of sending a command.  False otherwise.
      ***/
@@ -126,7 +126,7 @@ public class ProtocolCommandEvent extends EventObject
     /***
      * Returns true if the ProtocolCommandEvent was generated as a result
      * of receiving a reply.
-     * <p>
+     *
      * @return true If the ProtocolCommandEvent was generated as a result
      * of receiving a reply.  False otherwise.
      ***/
@@ -138,7 +138,7 @@ public class ProtocolCommandEvent extends EventObject
     /***
      * Returns the entire message sent to or received from the server.
      * Includes the line terminator.
-     * <p>
+     *
      * @return The entire message sent to or received from the server.
      ***/
     public String getMessage()

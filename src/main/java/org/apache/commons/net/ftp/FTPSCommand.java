@@ -41,7 +41,7 @@ public final class FTPSCommand {
     /**
      * Retrieve the FTPS command string corresponding to a specified
      * command code.
-     * <p>
+     *
      * @param command The command code.
      * @return The FTPS command string corresponding to a specified
      *  command code.

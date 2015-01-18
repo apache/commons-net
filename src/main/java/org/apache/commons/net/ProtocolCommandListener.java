@@ -30,8 +30,8 @@ import java.util.EventListener;
  * ProtocolCommandListener interface and register the class as a listener
  * with a ProtocolCommandEvent source such as
  * {@link org.apache.commons.net.ftp.FTPClient}.
- * <p>
- * <p>
+ *
+ *
  * @see ProtocolCommandEvent
  * @see ProtocolCommandSupport
  ***/
@@ -42,7 +42,7 @@ public interface ProtocolCommandListener extends EventListener
     /***
      * This method is invoked by a ProtocolCommandEvent source after
      * sending a protocol command to a server.
-     * <p>
+     *
      * @param event The ProtocolCommandEvent fired.
      ***/
     public void protocolCommandSent(ProtocolCommandEvent event);
@@ -50,7 +50,7 @@ public interface ProtocolCommandListener extends EventListener
     /***
      * This method is invoked by a ProtocolCommandEvent source after
      * receiving a reply from a server.
-     * <p>
+     *
      * @param event The ProtocolCommandEvent fired.
      ***/
     public void protocolReplyReceived(ProtocolCommandEvent event);

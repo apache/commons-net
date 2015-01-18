@@ -37,7 +37,6 @@ import examples.util.IOUtil;
  * Example: java rshell myhost localusername remoteusername "ps -aux"
  * <p>
  * Usage: rshell <hostname> <localuser> <remoteuser> <command>
- * <p>
  ***/
 
 // This class requires the IOUtil support class!

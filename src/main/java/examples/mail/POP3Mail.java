@@ -34,7 +34,6 @@ import org.apache.commons.net.pop3.POP3SClient;
  * entries for each message.
  * <p>
  * Usage: POP3Mail <pop3[s] server hostname> <username> <password> [secure protocol, e.g. TLS]
- * <p>
  */
 public final class POP3Mail
 {

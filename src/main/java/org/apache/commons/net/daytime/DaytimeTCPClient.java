@@ -61,7 +61,7 @@ public final class DaytimeTCPClient extends SocketClient
      * initiate another connection with
      * {@link org.apache.commons.net.SocketClient#connect  connect }
      * before calling <code> getTime() </code> again.
-     * <p>
+     *
      * @return The time string retrieved from the server.
      * @exception IOException  If an error occurs while fetching the time string.
      */

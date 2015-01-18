@@ -63,7 +63,6 @@ public class DefaultFTPFileEntryParserFactory
      * which are returned by the SYST command on the systems which
      * the corresponding parser successfully parses.  This enables
      * this factory to be used in the auto-detection system.
-     * <p>
      *
      * @param key    should be a fully qualified classname corresponding to
      *               a class implementing the FTPFileEntryParser interface<br>

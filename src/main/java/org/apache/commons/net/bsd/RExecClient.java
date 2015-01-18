@@ -56,8 +56,7 @@ import org.apache.commons.net.io.SocketInputStream;
  * The standard input of the remote process can be written to through
  * the output stream returned by
  * {@link #getOutputStream  getOutputSream()}.
- * <p>
- * <p>
+ *
  * @see SocketClient
  * @see RCommandClient
  * @see RLoginClient
@@ -128,7 +127,7 @@ public class RExecClient extends SocketClient
      * Returns the InputStream from which the standard output of the remote
      * process can be read.  The input stream will only be set after a
      * successful rexec() invocation.
-     * <p>
+     *
      * @return The InputStream from which the standard output of the remote
      * process can be read.
      ***/
@@ -142,7 +141,7 @@ public class RExecClient extends SocketClient
      * Returns the OutputStream through which the standard input of the remote
      * process can be written.  The output stream will only be set after a
      * successful rexec() invocation.
-     * <p>
+     *
      * @return The OutputStream through which the standard input of the remote
      * process can be written.
      ***/
@@ -157,7 +156,7 @@ public class RExecClient extends SocketClient
      * process can be read if a separate error stream is requested from
      * the server.  Otherwise, null will be returned.  The error stream
      * will only be set after a successful rexec() invocation.
-     * <p>
+     *
      * @return The InputStream from which the standard error of the remote
      * process can be read if a separate error stream is requested from
      * the server.  Otherwise, null will be returned.
@@ -189,7 +188,7 @@ public class RExecClient extends SocketClient
      * an attacker monitoring the rexec() negotiation.  You may disable this
      * behavior with {@link #setRemoteVerificationEnabled setRemoteVerificationEnabled()}
      * .
-     * <p>
+     *
      * @param username  The account name on the server through which to execute
      *                  the command.
      * @param password  The plain text password of the user account.
@@ -240,6 +239,10 @@ public class RExecClient extends SocketClient
 
     /***
      * Same as <code> rexec(username, password, command, false); </code>
+     * @param username the user name
+     * @param password the password
+     * @param command the command to run
+     * @throws IOException if an error occurs
      ***/
     public void rexec(String username, String password,
                       String command)
@@ -251,7 +254,7 @@ public class RExecClient extends SocketClient
     /***
      * Disconnects from the server, closing all associated open sockets and
      * streams.
-     * <p>
+     *
      * @exception IOException If there an error occurs while disconnecting.
      ***/
     @Override
@@ -271,7 +274,7 @@ public class RExecClient extends SocketClient
      * the standard out stream is connected.  The default is for verification
      * to be enabled.  You may set this value at any time, whether the
      * client is currently connected or not.
-     * <p>
+     *
      * @param enable True to enable verification, false to disable verification.
      ***/
     public final void setRemoteVerificationEnabled(boolean enable)
@@ -283,7 +286,7 @@ public class RExecClient extends SocketClient
      * Return whether or not verification of the remote host providing a
      * separate error stream is enabled.  The default behavior is for
      * verification to be enabled.
-     * <p>
+     *
      * @return True if verification is enabled, false if not.
      ***/
     public final boolean isRemoteVerificationEnabled()

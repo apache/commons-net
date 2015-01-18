@@ -78,7 +78,7 @@ public class IMAPClient extends IMAP
      * before attempting to login.  A login attempt is only valid if
      * the client is in the NOT_AUTH_STATE.
      * After logging in, the client enters the AUTH_STATE.
-     * <p>
+     *
      * @param username  The account name being logged in to.
      * @param password  The plain text password of the account.
      * @return True if the login attempt was successful, false if not.

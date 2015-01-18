@@ -28,8 +28,8 @@ import java.io.IOException;
  * certain situations where it is not possible to continue an operation
  * because the server reply could not be interpreted in a meaningful manner.
  * In these cases, a MalformedServerReplyException should be thrown.
- * <p>
- * <p>
+ *
+ *
  ***/
 
 public class MalformedServerReplyException extends IOException
@@ -45,7 +45,7 @@ public class MalformedServerReplyException extends IOException
 
     /***
      * Constructs a MalformedServerReplyException with a specified message.
-     * <p>
+     *
      * @param message  The message explaining the reason for the exception.
      ***/
     public MalformedServerReplyException(String message)

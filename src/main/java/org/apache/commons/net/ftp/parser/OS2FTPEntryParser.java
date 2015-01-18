@@ -82,7 +82,7 @@ public class OS2FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * file listing line doesn't describe a file, <code> null </code> is
      * returned, otherwise a <code> FTPFile </code> instance representing the
      * files in the directory is returned.
-     * <p>
+     *
      * @param entry A line of text from the file listing
      * @return An FTPFile instance corresponding to the supplied entry
      */

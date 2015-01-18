@@ -33,8 +33,6 @@ import org.apache.commons.net.time.TimeUDPClient;
  * 132.163.135.130 (warning: the IP address may change).
  * <p>
  * Usage: rdate [-udp] <hostname>
- * <p>
- * <p>
  ***/
 public final class rdate
 {

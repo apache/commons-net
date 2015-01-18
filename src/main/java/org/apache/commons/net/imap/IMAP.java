@@ -231,7 +231,7 @@ public class IMAP extends SocketClient
     /**
      * Sets IMAP client state.  This must be one of the
      * <code>_STATE</code> constants.
-     * <p>
+     *
      * @param state  The new state.
      */
     protected void setState(IMAP.IMAPState state)
@@ -242,7 +242,7 @@ public class IMAP extends SocketClient
 
     /**
      * Returns the current IMAP client state.
-     * <p>
+     *
      * @return The current IMAP client state.
      */
     public IMAP.IMAPState getState()
@@ -255,7 +255,7 @@ public class IMAP extends SocketClient
      * <code> DISCONNECTED_STATE </code>.  The reply text information
      * from the last issued command is voided to allow garbage collection
      * of the memory used to store that information.
-     * <p>
+     *
      * @exception IOException  If there is an error in disconnecting.
      */
     @Override
@@ -271,7 +271,7 @@ public class IMAP extends SocketClient
 
     /**
      * Sends a command an arguments to the server and returns the reply code.
-     * <p>
+     *
      * @param commandID The ID (tag) of the command.
      * @param command  The IMAP command to send.
      * @param args     The command arguments.
@@ -306,7 +306,7 @@ public class IMAP extends SocketClient
 
     /**
      * Sends a command an arguments to the server and returns the reply code.
-     * <p>
+     *
      * @param command  The IMAP command to send.
      * @param args     The command arguments.
      * @return  The server reply code (see IMAPReply).
@@ -319,7 +319,7 @@ public class IMAP extends SocketClient
     /**
      * Sends a command with no arguments to the server and returns the
      * reply code.
-     * <p>
+     *
      * @param command  The IMAP command to send.
      * @return  The server reply code (see IMAPReply).
      */
@@ -330,7 +330,7 @@ public class IMAP extends SocketClient
 
     /**
      * Sends a command and arguments to the server and returns the reply code.
-     * <p>
+     *
      * @param command  The IMAP command to send
      *                  (one of the IMAPCommand constants).
      * @param args     The command arguments.
@@ -343,7 +343,7 @@ public class IMAP extends SocketClient
 
     /**
      * Sends a command and arguments to the server and return whether successful.
-     * <p>
+     *
      * @param command  The IMAP command to send
      *                  (one of the IMAPCommand constants).
      * @param args     The command arguments.
@@ -381,7 +381,7 @@ public class IMAP extends SocketClient
 
     /**
      * Sends data to the server and returns the reply code.
-     * <p>
+     *
      * @param command  The IMAP command to send.
      * @return  The server reply code (see IMAPReply).
      */
@@ -404,7 +404,7 @@ public class IMAP extends SocketClient
      * Returns the reply to the last command sent to the server.
      * The value is a single string containing all the reply lines including
      * newlines.
-     * <p>
+     *
      * @return The last server response.
      */
     public String getReplyString()

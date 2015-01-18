@@ -28,8 +28,8 @@ import java.io.UnsupportedEncodingException;
  * which is the NETASCII standard for representing a newline, with the
  * local line separator representation.  You would use this class to
  * implement ASCII file transfers requiring conversion from NETASCII.
- * <p>
- * <p>
+ *
+ *
  ***/
 
 public final class FromNetASCIIInputStream extends PushbackInputStream
@@ -55,7 +55,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      * line separator, false if they are the same.  This method is useful
      * to determine whether or not you need to instantiate a
      * FromNetASCIIInputStream object.
-     * <p>
+     *
      * @return True if the NETASCII line separator differs from the local
      *   system line separator, false if they are the same.
      ***/
@@ -110,7 +110,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      * to convert NETASCII line separators to the local line separator format.
      * This is transparent to the programmer and is only mentioned for
      * completeness.
-     * <p>
+     *
      * @return The next character in the stream. Returns -1 if the end of the
      *          stream has been reached.
      * @exception IOException If an error occurs while reading the underlying
@@ -131,7 +131,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      * Reads the next number of bytes from the stream into an array and
      * returns the number of bytes read.  Returns -1 if the end of the
      * stream has been reached.
-     * <p>
+     *
      * @param buffer  The byte array in which to store the data.
      * @return The number of bytes read. Returns -1 if the
      *          end of the message has been reached.
@@ -150,7 +150,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      * the number of bytes read.  Returns -1 if the end of the
      * message has been reached.  The characters are stored in the array
      * starting from the given offset and up to the length specified.
-     * <p>
+     *
      * @param buffer The byte array in which to store the data.
      * @param offset  The offset into the array at which to start storing data.
      * @param length   The number of bytes to read.

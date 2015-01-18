@@ -34,7 +34,6 @@ import org.apache.commons.net.time.TimeUDPClient;
  * use the UDP port.
  * <p>
  * Usage: TimeClient [-udp] <hostname>
- * <p>
  ***/
 public final class TimeClient
 {

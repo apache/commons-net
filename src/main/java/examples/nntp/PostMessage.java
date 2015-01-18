@@ -36,7 +36,6 @@ import org.apache.commons.net.nntp.SimpleNNTPHeader;
  * This is an example program using the NNTP package to post an article
  * to the specified newsgroup(s).  It prompts you for header information and
  * a filename to post.
- * <p>
  ***/
 
 public final class PostMessage

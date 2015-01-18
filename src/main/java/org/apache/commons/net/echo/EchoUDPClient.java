@@ -33,8 +33,7 @@ import org.apache.commons.net.discard.DiscardUDPClient;
  * After you're done echoing data, call
  * {@link org.apache.commons.net.DatagramSocketClient#close  close() }
  * to clean up properly.
- * <p>
- * <p>
+ *
  * @see EchoTCPClient
  * @see DiscardUDPClient
  ***/
@@ -49,7 +48,7 @@ public final class EchoUDPClient extends DiscardUDPClient
     /***
      * Sends the specified data to the specified server at the default echo
      * port.
-     * <p>
+     *
      * @param data  The echo data to send.
      * @param length  The length of the data to send.  Should be less than
      *    or equal to the length of the data byte array.
@@ -78,7 +77,7 @@ public final class EchoUDPClient extends DiscardUDPClient
      * up among multiple datagrams, requiring multiple calls to receive.
      * Also, the UDP packets will not necessarily arrive in the same order
      * they were sent.
-     * <p>
+     *
      * @return  Length of actual data received.
      * @exception IOException If an error occurs while receiving the data.
      ***/

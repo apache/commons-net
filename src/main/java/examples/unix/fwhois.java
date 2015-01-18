@@ -26,7 +26,6 @@ import org.apache.commons.net.whois.WhoisClient;
 /***
  * This is an example of how you would implement the Linux fwhois command
  * in Java using NetComponents.  The Java version is much shorter.
- * <p>
  ***/
 public final class fwhois
 {

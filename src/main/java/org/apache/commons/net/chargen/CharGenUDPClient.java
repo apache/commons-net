@@ -45,8 +45,7 @@ import org.apache.commons.net.DatagramSocketClient;
  * timeout duration beforehand).  Don't forget to call
  * {@link org.apache.commons.net.DatagramSocketClient#close  close() }
  * to clean up properly.
- * <p>
- * <p>
+ *
  * @see CharGenTCPClient
  ***/
 
@@ -85,7 +84,7 @@ public final class CharGenUDPClient extends DatagramSocketClient
      * Sends the data initiation datagram.  This data in the packet is ignored
      * by the server, and merely serves to signal that the server should send
      * its reply.
-     * <p>
+     *
      * @param host The address of the server.
      * @param port The port of the service.
      * @exception IOException If an error occurs while sending the datagram.
@@ -107,7 +106,7 @@ public final class CharGenUDPClient extends DatagramSocketClient
      * Receive the reply data from the server.  This will always be 512 bytes
      * or less.  Chargen and quote of the day only return one packet.  Netstat
      * and systat require multiple calls to receive() with timeout detection.
-     * <p>
+     *
      * @return The reply data from the server.
      * @exception IOException If an error occurs while receiving the datagram.
      ***/

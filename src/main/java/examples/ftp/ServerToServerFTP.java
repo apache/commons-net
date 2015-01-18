@@ -35,7 +35,6 @@ import org.apache.commons.net.ftp.FTPReply;
  * argument equal to the client host).
  * <p>
  * Usage: ftp <host1> <user1> <pass1> <file1> <host2> <user2> <pass2> <file2>
- * <p>
  ***/
 public final class ServerToServerFTP
 {

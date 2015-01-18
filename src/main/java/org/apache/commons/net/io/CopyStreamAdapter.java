@@ -31,8 +31,8 @@ import org.apache.commons.net.util.ListenerList;
  * bytesTransfered(long, int) of a CopyStreamListener for performance
  * reasons and also because multiple listeners cannot be registered given
  * that the methods are static.
- * <p>
- * <p>
+ *
+ *
  * @see CopyStreamEvent
  * @see CopyStreamListener
  * @see Util

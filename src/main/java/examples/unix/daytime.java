@@ -32,7 +32,6 @@ import org.apache.commons.net.daytime.DaytimeUDPClient;
  * port.
  * <p>
  * Usage: daytime [-udp] <hostname>
- * <p>
  ***/
 public final class daytime
 {

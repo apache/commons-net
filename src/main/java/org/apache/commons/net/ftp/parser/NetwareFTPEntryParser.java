@@ -91,7 +91,6 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * returned, otherwise a <code> FTPFile </code> instance representing the
      * files in the directory is returned.
      * <p>
-     * <p>
      * Netware file permissions are in the following format:  RWCEAFMS, and are explained as follows:
      * <ul>
      * <li><b>S</b> - Supervisor; All rights.
