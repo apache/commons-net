@@ -38,8 +38,8 @@ import java.net.InetAddress;
  * and
  * {@link org.apache.commons.net.tftp.TFTPClient#sendFile sendFile()}
  * methods.
- * <p>
- * <p>
+ *
+ *
  * @see TFTPPacket
  * @see TFTPReadRequestPacket
  * @see TFTPWriteRequestPacket
@@ -75,7 +75,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
     /***
      * Creates a request packet of a given type to be sent to a host at a
      * given port with a filename and transfer mode request.
-     * <p>
+     *
      * @param destination  The host to which the packet is going to be sent.
      * @param port  The port to which the packet is going to be sent.
      * @param type The type of the request (either TFTPPacket.READ_REQUEST or
@@ -97,7 +97,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
      * Creates a request packet of a given type based on a received
      * datagram.  Assumes the datagram is at least length 4, else an
      * ArrayIndexOutOfBoundsException may be thrown.
-     * <p>
+     *
      * @param type The type of the request (either TFTPPacket.READ_REQUEST or
      *             TFTPPacket.WRITE_REQUEST).
      * @param datagram  The datagram containing the received request.
@@ -171,7 +171,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
      * It takes a datagram as an argument, and a byte buffer in which
      * to store the raw datagram data.  Inside the method, the data
      * is set as the datagram's data and the datagram returned.
-     * <p>
+     *
      * @param datagram  The datagram to create.
      * @param data The buffer to store the packet and to use in the datagram.
      * @return The datagram argument.
@@ -207,7 +207,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
      * the {@link org.apache.commons.net.tftp.TFTPClient}
      * class.  Under normal circumstances, you should not have a need to call
      * this method.
-     * <p>
+     *
      * @return A UDP datagram containing the TFTP request packet.
      ***/
     @Override
@@ -232,7 +232,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
 
     /***
      * Returns the transfer mode of the request.
-     * <p>
+     *
      * @return The transfer mode of the request.
      ***/
     public final int getMode()
@@ -242,7 +242,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
 
     /***
      * Returns the requested filename.
-     * <p>
+     *
      * @return The requested filename.
      ***/
     public final String getFilename()

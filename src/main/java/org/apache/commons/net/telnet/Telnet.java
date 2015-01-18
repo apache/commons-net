@@ -148,7 +148,7 @@ class Telnet extends SocketClient
     /* TERMINAL-TYPE option (start)*/
     /***
      * This constructor lets you specify the terminal type.
-     * <p>
+     *
      * @param termtype - terminal type to be negotiated (ej. VT100)
      ***/
     Telnet(String termtype)
@@ -165,9 +165,9 @@ class Telnet extends SocketClient
 
     /***
      * Looks for the state of the option.
-     * <p>
+     *
      * @return returns true if a will has been acknowledged
-     * <p>
+     *
      * @param option - option code to be looked up.
      ***/
     boolean _stateIsWill(int option)
@@ -177,9 +177,9 @@ class Telnet extends SocketClient
 
     /***
      * Looks for the state of the option.
-     * <p>
+     *
      * @return returns true if a wont has been acknowledged
-     * <p>
+     *
      * @param option - option code to be looked up.
      ***/
     boolean _stateIsWont(int option)
@@ -189,9 +189,9 @@ class Telnet extends SocketClient
 
     /***
      * Looks for the state of the option.
-     * <p>
+     *
      * @return returns true if a do has been acknowledged
-     * <p>
+     *
      * @param option - option code to be looked up.
      ***/
     boolean _stateIsDo(int option)
@@ -201,9 +201,9 @@ class Telnet extends SocketClient
 
     /***
      * Looks for the state of the option.
-     * <p>
+     *
      * @return returns true if a dont has been acknowledged
-     * <p>
+     *
      * @param option - option code to be looked up.
      ***/
     boolean _stateIsDont(int option)
@@ -213,9 +213,9 @@ class Telnet extends SocketClient
 
     /***
      * Looks for the state of the option.
-     * <p>
+     *
      * @return returns true if a will has been reuqested
-     * <p>
+     *
      * @param option - option code to be looked up.
      ***/
     boolean _requestedWill(int option)
@@ -225,9 +225,9 @@ class Telnet extends SocketClient
 
     /***
      * Looks for the state of the option.
-     * <p>
+     *
      * @return returns true if a wont has been reuqested
-     * <p>
+     *
      * @param option - option code to be looked up.
      ***/
     boolean _requestedWont(int option)
@@ -237,9 +237,9 @@ class Telnet extends SocketClient
 
     /***
      * Looks for the state of the option.
-     * <p>
+     *
      * @return returns true if a do has been reuqested
-     * <p>
+     *
      * @param option - option code to be looked up.
      ***/
     boolean _requestedDo(int option)
@@ -249,9 +249,9 @@ class Telnet extends SocketClient
 
     /***
      * Looks for the state of the option.
-     * <p>
+     *
      * @return returns true if a dont has been reuqested
-     * <p>
+     *
      * @param option - option code to be looked up.
      ***/
     boolean _requestedDont(int option)
@@ -261,7 +261,7 @@ class Telnet extends SocketClient
 
     /***
      * Sets the state of the option.
-     * <p>
+     *
      * @param option - option code to be set.
      * @throws IOException
      ***/
@@ -290,7 +290,7 @@ class Telnet extends SocketClient
 
     /***
      * Sets the state of the option.
-     * <p>
+     *
      * @param option - option code to be set.
      * @throws IOException
      ***/
@@ -319,7 +319,7 @@ class Telnet extends SocketClient
 
     /***
      * Sets the state of the option.
-     * <p>
+     *
      * @param option - option code to be set.
      ***/
     void _setWantWill(int option)
@@ -329,7 +329,7 @@ class Telnet extends SocketClient
 
     /***
      * Sets the state of the option.
-     * <p>
+     *
      * @param option - option code to be set.
      ***/
     void _setWantDo(int option)
@@ -339,7 +339,7 @@ class Telnet extends SocketClient
 
     /***
      * Sets the state of the option.
-     * <p>
+     *
      * @param option - option code to be set.
      ***/
     void _setWont(int option)
@@ -356,7 +356,7 @@ class Telnet extends SocketClient
 
     /***
      * Sets the state of the option.
-     * <p>
+     *
      * @param option - option code to be set.
      ***/
     void _setDont(int option)
@@ -373,7 +373,7 @@ class Telnet extends SocketClient
 
     /***
      * Sets the state of the option.
-     * <p>
+     *
      * @param option - option code to be set.
      ***/
     void _setWantWont(int option)
@@ -383,7 +383,7 @@ class Telnet extends SocketClient
 
     /***
      * Sets the state of the option.
-     * <p>
+     *
      * @param option - option code to be set.
      ***/
     void _setWantDont(int option)
@@ -731,7 +731,7 @@ class Telnet extends SocketClient
 
     /***
      * Sends terminal type information.
-     * <p>
+     *
      * @throws IOException - Exception in I/O.
      ***/
     final synchronized void _sendTerminalType()
@@ -825,7 +825,7 @@ class Telnet extends SocketClient
 
     /***
      * Called upon connection.
-     * <p>
+     *
      * @throws IOException - Exception in I/O.
      ***/
     @Override
@@ -1173,7 +1173,7 @@ class Telnet extends SocketClient
     /***
      * Registers an OutputStream for spying what's going on in
      * the Telnet session.
-     * <p>
+     *
      * @param spystream - OutputStream on which session activity
      * will be echoed.
      ***/
@@ -1184,7 +1184,7 @@ class Telnet extends SocketClient
 
     /***
      * Stops spying this Telnet.
-     * <p>
+     *
      ***/
     void _stopSpyStream()
     {
@@ -1193,7 +1193,7 @@ class Telnet extends SocketClient
 
     /***
      * Sends a read char on the spy stream.
-     * <p>
+     *
      * @param ch - character read from the session
      ***/
     void _spyRead(int ch)
@@ -1222,7 +1222,7 @@ class Telnet extends SocketClient
 
     /***
      * Sends a written char on the spy stream.
-     * <p>
+     *
      * @param ch - character written to the session
      ***/
     void _spyWrite(int ch)
@@ -1250,7 +1250,7 @@ class Telnet extends SocketClient
     /***
      * Registers a notification handler to which will be sent
      * notifications of received telnet option negotiation commands.
-     * <p>
+     *
      * @param notifhand - TelnetNotificationHandler to be registered
      ***/
     public void registerNotifHandler(TelnetNotificationHandler  notifhand)
@@ -1260,7 +1260,7 @@ class Telnet extends SocketClient
 
     /***
      * Unregisters the current notification handler.
-     * <p>
+     *
      ***/
     public void unregisterNotifHandler()
     {

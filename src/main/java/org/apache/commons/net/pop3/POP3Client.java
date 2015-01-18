@@ -41,8 +41,8 @@ import org.apache.commons.net.io.DotTerminatedMessageReader;
  * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite
  * attempts to be as lenient as possible.
- * <p>
- * <p>
+ *
+ *
  * @see POP3MessageInfo
  * @see org.apache.commons.net.io.DotTerminatedMessageReader
  * @see org.apache.commons.net.MalformedServerReplyException
@@ -140,7 +140,7 @@ public class POP3Client extends POP3
      * .  After logging in, the client enters the
      * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
      * .
-     * <p>
+     *
      * @param username  The account name being logged in to.
      * @param password  The plain text password of the account.
      * @return True if the login attempt was successful, false if not.
@@ -189,7 +189,7 @@ public class POP3Client extends POP3
      * information to this method.  The secret is a shared secret known
      * to you and the server.  See RFC 1939 for more details regarding
      * the APOP command.
-     * <p>
+     *
      * @param username  The account name being logged in to.
      * @param timestamp  The timestamp string to combine with the secret.
      * @param secret  The shared secret which produces the MD5 digest when
@@ -250,7 +250,7 @@ public class POP3Client extends POP3
      * , it enters the
      * {@link org.apache.commons.net.pop3.POP3#UPDATE_STATE UPDATE_STATE }
      *  on a successful logout.
-     * <p>
+     *
      * @return True if the logout attempt was successful, false if not.
      * @exception IOException If a network I/O error occurs in the process
      *           of logging out.
@@ -272,7 +272,7 @@ public class POP3Client extends POP3
      * the client is in the
      * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
      * .
-     * <p>
+     *
      * @return True if the noop attempt was successful, false if not.
      * @exception IOException If a network I/O error occurs in the process of
      *        sending the NOOP command.
@@ -295,7 +295,7 @@ public class POP3Client extends POP3
      * A delete attempt can only succeed if the client is in the
      * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
      * .
-     * <p>
+     *
      * @param messageId  The message number to delete.
      * @return True if the deletion attempt was successful, false if not.
      * @exception IOException If a network I/O error occurs in the process of
@@ -317,7 +317,7 @@ public class POP3Client extends POP3
      * succeed if the client is in the
      * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
      * .
-     * <p>
+     *
      * @return True if the reset attempt was successful, false if not.
      * @exception IOException If a network I/O error occurs in the process of
      *      sending the reset command.
@@ -338,7 +338,7 @@ public class POP3Client extends POP3
      * containing the number of messages in the mailbox and the total
      * size of the messages in bytes.  Returns null if the status the
      * attempt fails.
-     * <p>
+     *
      * @return A POP3MessageInfo instance containing the number of
      *         messages in the mailbox and the total size of the messages
      *         in bytes.  Returns null if the status the attempt fails.
@@ -366,7 +366,7 @@ public class POP3Client extends POP3
      * size of the message in bytes.  Returns null if the list
      * attempt fails (e.g., if the specified message number does
      * not exist).
-     * <p>
+     *
      * @param messageId  The number of the message list.
      * @return A POP3MessageInfo instance containing the number of the
      *         listed message and the size of the message in bytes.  Returns
@@ -395,7 +395,7 @@ public class POP3Client extends POP3
      * each containing the number of a message and its size in bytes.
      * If there are no messages, this method returns a zero length array.
      * If the list attempt fails, it returns null.
-     * <p>
+     *
      * @return An array of POP3MessageInfo instances representing all messages
      * in the order they appear in the mailbox,
      * each containing the number of a message and its size in bytes.
@@ -436,7 +436,7 @@ public class POP3Client extends POP3
      * unique identifier for that message.  Returns null if the list
      * attempt fails  (e.g., if the specified message number does
      * not exist).
-     * <p>
+     *
      * @param messageId  The number of the message list.
      * @return A POP3MessageInfo instance containing the number of the
      *         listed message and the unique identifier for that message.
@@ -466,7 +466,7 @@ public class POP3Client extends POP3
      * each containing the number of a message and its unique identifier.
      * If there are no messages, this method returns a zero length array.
      * If the list attempt fails, it returns null.
-     * <p>
+     *
      * @return An array of POP3MessageInfo instances representing all messages
      * in the order they appear in the mailbox,
      * each containing the number of a message and its unique identifier
@@ -513,7 +513,7 @@ public class POP3Client extends POP3
      * reached, new commands can be executed and their replies read.  If
      * you do not follow these requirements, your program will not work
      * properly.
-     * <p>
+     *
      * @param messageId  The number of the message to fetch.
      * @return A DotTerminatedMessageReader instance
      * from which the entire message can be read.
@@ -552,7 +552,7 @@ public class POP3Client extends POP3
      * reached, new commands can be executed and their replies read.  If
      * you do not follow these requirements, your program will not work
      * properly.
-     * <p>
+     *
      * @param messageId  The number of the message to fetch.
      * @param numLines  The top number of lines to fetch. This must be &gt;= 0.
      * @return  A DotTerminatedMessageReader instance

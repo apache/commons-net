@@ -44,8 +44,8 @@ import org.apache.commons.net.finger.FingerClient;
  *    }
  * </pre>
  *
- * <p>
- * <p>
+ *
+ *
  ***/
 
 public final class WhoisClient extends FingerClient
@@ -75,7 +75,7 @@ public final class WhoisClient extends FingerClient
      * the given handle.  It is up to the programmer to be familiar with the
      * handle syntax of the whois server.  You must first connect to a whois
      * server before calling this method, and you should disconnect afterward.
-     * <p>
+     *
      * @param handle  The handle to lookup.
      * @return The result of the whois query.
      * @exception IOException  If an I/O error occurs during the operation.
@@ -93,7 +93,7 @@ public final class WhoisClient extends FingerClient
      * of the whois server.  You must first connect to a finger server before
      * calling this method, and you should disconnect after finishing reading
      * the stream.
-     * <p>
+     *
      * @param handle  The handle to lookup.
      * @return The InputStream of the network connection of the whois query.
      *         Can be read to obtain whois results.

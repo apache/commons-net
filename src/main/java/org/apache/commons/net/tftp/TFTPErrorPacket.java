@@ -34,8 +34,8 @@ import java.net.InetAddress;
  * and
  * {@link org.apache.commons.net.tftp.TFTPClient#sendFile sendFile()}
  * methods.
- * <p>
- * <p>
+ *
+ *
  * @see TFTPPacket
  * @see TFTPPacketException
  * @see TFTP
@@ -78,7 +78,7 @@ public final class TFTPErrorPacket extends TFTPPacket
     /***
      * Creates an error packet to be sent to a host at a given port
      * with an error code and error message.
-     * <p>
+     *
      * @param destination  The host to which the packet is going to be sent.
      * @param port  The port to which the packet is going to be sent.
      * @param error The error code of the packet.
@@ -97,7 +97,7 @@ public final class TFTPErrorPacket extends TFTPPacket
      * Creates an error packet based from a received
      * datagram.  Assumes the datagram is at least length 4, else an
      * ArrayIndexOutOfBoundsException may be thrown.
-     * <p>
+     *
      * @param datagram  The datagram containing the received error.
      * @throws TFTPPacketException  If the datagram isn't a valid TFTP
      *         error packet.
@@ -140,7 +140,7 @@ public final class TFTPErrorPacket extends TFTPPacket
      * It takes a datagram as an argument, and a byte buffer in which
      * to store the raw datagram data.  Inside the method, the data
      * is set as the datagram's data and the datagram returned.
-     * <p>
+     *
      * @param datagram  The datagram to create.
      * @param data The buffer to store the packet and to use in the datagram.
      * @return The datagram argument.
@@ -179,7 +179,7 @@ public final class TFTPErrorPacket extends TFTPPacket
      * class.
      * Under normal circumstances, you should not have a need to call this
      * method.
-     * <p>
+     *
      * @return A UDP datagram containing the TFTP error packet.
      ***/
     @Override
@@ -206,7 +206,7 @@ public final class TFTPErrorPacket extends TFTPPacket
 
     /***
      * Returns the error code of the packet.
-     * <p>
+     *
      * @return The error code of the packet.
      ***/
     public int getError()
@@ -217,7 +217,7 @@ public final class TFTPErrorPacket extends TFTPPacket
 
     /***
      * Returns the error message of the packet.
-     * <p>
+     *
      * @return The error message of the packet.
      ***/
     public String getMessage()

@@ -39,8 +39,8 @@ import java.io.OutputStream;
  * When you finish using the streams, you must call
  * {@link #disconnect  disconnect } rather than simply
  * closing the streams.
- * <p>
- * <p>
+ *
+ *
  * @author Bruno D'Avanzo
  ***/
 
@@ -88,7 +88,7 @@ public class TelnetClient extends Telnet
 
     /***
      * Handles special connection requirements.
-     * <p>
+     *
      * @exception IOException  If an error occurs during connection setup.
      ***/
     @Override
@@ -133,7 +133,7 @@ public class TelnetClient extends Telnet
      * Returns the telnet connection output stream.  You should not close the
      * stream when you finish with it.  Rather, you should call
      * {@link #disconnect  disconnect }.
-     * <p>
+     *
      * @return The telnet connection output stream.
      ***/
     public OutputStream getOutputStream()
@@ -145,7 +145,7 @@ public class TelnetClient extends Telnet
      * Returns the telnet connection input stream.  You should not close the
      * stream when you finish with it.  Rather, you should call
      * {@link #disconnect  disconnect }.
-     * <p>
+     *
      * @return The telnet connection input stream.
      ***/
     public InputStream getInputStream()
@@ -155,9 +155,9 @@ public class TelnetClient extends Telnet
 
     /***
      * Returns the state of the option on the local side.
-     * <p>
+     *
      * @param option - Option to be checked.
-     * <p>
+     *
      * @return The state of the option on the local side.
      ***/
     public boolean getLocalOptionState(int option)
@@ -169,9 +169,9 @@ public class TelnetClient extends Telnet
 
     /***
      * Returns the state of the option on the remote side.
-     * <p>
+     *
      * @param option - Option to be checked.
-     * <p>
+     *
      * @return The state of the option on the remote side.
      ***/
     public boolean getRemoteOptionState(int option)
@@ -186,11 +186,11 @@ public class TelnetClient extends Telnet
 
     /***
      * Sends an Are You There sequence and waits for the result.
-     * <p>
+     *
      * @param timeout - Time to wait for a response (millis.)
-     * <p>
+     *
      * @return true if AYT received a response, false otherwise
-     * <p>
+     *
      * @throws InterruptedException on error
      * @throws IllegalArgumentException on error
      * @throws IOException on error
@@ -252,9 +252,9 @@ public class TelnetClient extends Telnet
 
     /***
      * Registers a new TelnetOptionHandler for this telnet client to use.
-     * <p>
+     *
      * @param opthand - option handler to be registered.
-     * <p>
+     *
      * @throws InvalidTelnetOptionException on error
      * @throws IOException on error
      ***/
@@ -268,9 +268,9 @@ public class TelnetClient extends Telnet
 
     /***
      * Unregisters a  TelnetOptionHandler.
-     * <p>
+     *
      * @param optcode - Code of the option to be unregistered.
-     * <p>
+     *
      * @throws InvalidTelnetOptionException on error
      * @throws IOException on error
      ***/
@@ -285,7 +285,7 @@ public class TelnetClient extends Telnet
     /***
      * Registers an OutputStream for spying what's going on in
      * the TelnetClient session.
-     * <p>
+     *
      * @param spystream - OutputStream on which session activity
      * will be echoed.
      ***/
@@ -296,7 +296,7 @@ public class TelnetClient extends Telnet
 
     /***
      * Stops spying this TelnetClient.
-     * <p>
+     *
      ***/
     public void stopSpyStream()
     {
@@ -307,7 +307,7 @@ public class TelnetClient extends Telnet
     /***
      * Registers a notification handler to which will be sent
      * notifications of received telnet option negotiation commands.
-     * <p>
+     *
      * @param notifhand - TelnetNotificationHandler to be registered
      ***/
     @Override
@@ -318,7 +318,7 @@ public class TelnetClient extends Telnet
 
     /***
      * Unregisters the current notification handler.
-     * <p>
+     *
      ***/
     @Override
     public void unregisterNotifHandler()
@@ -359,7 +359,7 @@ public class TelnetClient extends Telnet
 
     /***
      * Gets the status of the reader thread.
-     * <p>
+     *
      * @return true if the reader thread is enabled, false otherwise
      ***/
     public boolean getReaderThread()

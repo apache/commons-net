@@ -27,8 +27,8 @@ import java.io.IOException;
  * failed SMTP command.  This exception is derived from IOException and
  * therefore may be caught either as an IOException or specifically as an
  * SMTPConnectionClosedException.
- * <p>
- * <p>
+ *
+ *
  * @see SMTP
  * @see SMTPClient
  ***/
@@ -46,7 +46,7 @@ public final class SMTPConnectionClosedException extends IOException
 
     /***
      * Constructs a SMTPConnectionClosedException with a specified message.
-     * <p>
+     *
      * @param message  The message explaining the reason for the exception.
      ***/
     public SMTPConnectionClosedException(String message)

@@ -37,8 +37,8 @@ import org.apache.commons.net.DatagramSocketClient;
  * Details regarding the TFTP protocol and the format of TFTP packets can
  * be found in RFC 783.  But the point of these classes is to keep you
  * from having to worry about the internals.
- * <p>
- * <p>
+ *
+ *
  * @see org.apache.commons.net.DatagramSocketClient
  * @see TFTPPacket
  * @see TFTPPacketException
@@ -111,7 +111,7 @@ public class TFTP extends DatagramSocketClient
      * Returns the TFTP string representation of a TFTP transfer mode.
      * Will throw an ArrayIndexOutOfBoundsException if an invalid transfer
      * mode is specified.
-     * <p>
+     *
      * @param mode  The TFTP transfer mode.  One of the MODE constants.
      * @return  The TFTP string representation of the TFTP transfer mode.
      ***/
@@ -135,7 +135,7 @@ public class TFTP extends DatagramSocketClient
      * This method synchronizes a connection by discarding all packets that
      * may be in the local socket buffer.  This method need only be called
      * when you implement your own TFTP client or server.
-     * <p>
+     *
      * @exception IOException if an I/O error occurs.
      ***/
     public final void discardPackets() throws IOException
@@ -181,7 +181,7 @@ public class TFTP extends DatagramSocketClient
      * have a reference to the internal byte buffer.  You must finish using
      * this data before calling bufferedReceive() again, or else the data
      * will be overwritten by the the call.
-     * <p>
+     *
      * @return The TFTPPacket received.
      * @exception InterruptedIOException  If a socket timeout occurs.  The
      *       Java documentation claims an InterruptedIOException is thrown
@@ -218,7 +218,7 @@ public class TFTP extends DatagramSocketClient
      * have a reference to the internal byte buffer.  You must finish using
      * this data before calling bufferedReceive() again, or else the data
      * will be overwritten by the the call.
-     * <p>
+     *
      * @param packet  The TFTP packet to send.
      * @exception IOException  If some  I/O error occurs.
      ***/
@@ -260,7 +260,7 @@ public class TFTP extends DatagramSocketClient
 
     /***
      * Sends a TFTP packet to its destination.
-     * <p>
+     *
      * @param packet  The TFTP packet to send.
      * @exception IOException  If some  I/O error occurs.
      ***/
@@ -272,7 +272,7 @@ public class TFTP extends DatagramSocketClient
 
     /***
      * Receives a TFTPPacket.
-     * <p>
+     *
      * @return The TFTPPacket received.
      * @exception InterruptedIOException  If a socket timeout occurs.  The
      *       Java documentation claims an InterruptedIOException is thrown

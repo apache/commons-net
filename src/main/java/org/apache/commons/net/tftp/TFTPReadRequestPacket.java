@@ -34,8 +34,8 @@ import java.net.InetAddress;
  * and
  * {@link org.apache.commons.net.tftp.TFTPClient#sendFile sendFile()}
  * methods.
- * <p>
- * <p>
+ *
+ *
  * @see TFTPPacket
  * @see TFTPRequestPacket
  * @see TFTPPacketException
@@ -48,7 +48,7 @@ public final class TFTPReadRequestPacket extends TFTPRequestPacket
     /***
      * Creates a read request packet to be sent to a host at a
      * given port with a filename and transfer mode request.
-     * <p>
+     *
      * @param destination  The host to which the packet is going to be sent.
      * @param port  The port to which the packet is going to be sent.
      * @param filename The requested filename.
@@ -66,7 +66,7 @@ public final class TFTPReadRequestPacket extends TFTPRequestPacket
      * datagram and assumes the datagram has already been identified as a
      * read request.  Assumes the datagram is at least length 4, else an
      * ArrayIndexOutOfBoundsException may be thrown.
-     * <p>
+     *
      * @param datagram  The datagram containing the received request.
      * @throws TFTPPacketException  If the datagram isn't a valid TFTP
      *         request packet.

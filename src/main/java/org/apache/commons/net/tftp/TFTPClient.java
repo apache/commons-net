@@ -46,8 +46,8 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
  * Details regarding the TFTP protocol and the format of TFTP packets can
  * be found in RFC 783.  But the point of these classes is to keep you
  * from having to worry about the internals.
- * <p>
- * <p>
+ *
+ *
  * @see TFTP
  * @see TFTPPacket
  * @see TFTPPacketException
@@ -80,7 +80,7 @@ public class TFTPClient extends TFTP
      * timeout during a receiveFile() or sendFile() operation before ending
      * attempts to retry the receive and failing.
      * The default is DEFAULT_MAX_TIMEOUTS.
-     * <p>
+     *
      * @param numTimeouts  The maximum number of timeouts to allow.  Values
      *        less than 1 should not be used, but if they are, they are
      *        treated as 1.
@@ -97,7 +97,7 @@ public class TFTPClient extends TFTP
     /***
      * Returns the maximum number of times a receive attempt is allowed to
      * timeout before ending attempts to retry the receive and failing.
-     * <p>
+     *
      * @return The maximum number of timeouts allowed.
      ***/
     public int getMaxTimeouts()
@@ -113,7 +113,7 @@ public class TFTPClient extends TFTP
      * {@link org.apache.commons.net.DatagramSocketClient#open open()} before
      * invoking this method.  This method will not close the OutputStream
      * containing the file; you must close it after the method invocation.
-     * <p>
+     *
      * @param filename  The name of the file to receive.
      * @param mode   The TFTP mode of the transfer (one of the MODE constants).
      * @param output The OutputStream to which the file should be written.
@@ -294,7 +294,7 @@ _receivePacket:
      * {@link org.apache.commons.net.DatagramSocketClient#open open()} before
      * invoking this method.  This method will not close the OutputStream
      * containing the file; you must close it after the method invocation.
-     * <p>
+     *
      * @param filename The name of the file to receive.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
      * @param output   The OutputStream to which the file should be written.
@@ -357,7 +357,7 @@ _receivePacket:
      * {@link org.apache.commons.net.DatagramSocketClient#open open()} before
      * invoking this method.  This method will not close the InputStream
      * containing the file; you must close it after the method invocation.
-     * <p>
+     *
      * @param filename The name the remote server should use when creating
      *        the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
@@ -553,7 +553,7 @@ _receivePacket:
      * {@link org.apache.commons.net.DatagramSocketClient#open open()} before
      * invoking this method.  This method will not close the InputStream
      * containing the file; you must close it after the method invocation.
-     * <p>
+     *
      * @param filename The name the remote server should use when creating
      *        the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).

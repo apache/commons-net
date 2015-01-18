@@ -37,8 +37,8 @@ import java.net.InetAddress;
  * and
  * {@link org.apache.commons.net.tftp.TFTPClient#sendFile sendFile()}
  * methods.
- * <p>
- * <p>
+ *
+ *
  * @see TFTPPacketException
  * @see TFTP
  ***/
@@ -115,7 +115,7 @@ public abstract class TFTPPacket
      * encapsulating the data contained in that datagram.  This method is the
      * only way you can instantiate a TFTPPacket derived class from a
      * datagram.
-     * <p>
+     *
      * @param datagram  The datagram containing a TFTP packet.
      * @return The TFTPPacket object corresponding to the datagram.
      * @exception TFTPPacketException  If the datagram does not contain a valid
@@ -162,7 +162,7 @@ public abstract class TFTPPacket
     /***
      * This constructor is not visible outside of the package.  It is used
      * by subclasses within the package to initialize base data.
-     * <p>
+     *
      * @param type The type of the packet.
      * @param address The host the packet came from or is going to be sent.
      * @param port The port the packet came from or is going to be sent.
@@ -180,7 +180,7 @@ public abstract class TFTPPacket
      * It takes a datagram as an argument, and a byte buffer in which
      * to store the raw datagram data.  Inside the method, the data
      * should be set as the datagram's data and the datagram returned.
-     * <p>
+     *
      * @param datagram  The datagram to create.
      * @param data The buffer to store the packet and to use in the datagram.
      * @return The datagram argument.
@@ -196,14 +196,14 @@ public abstract class TFTPPacket
      * class.
      * Under normal circumstances, you should not have a need to call this
      * method.
-     * <p>
+     *
      * @return A UDP datagram containing the TFTP packet.
      ***/
     public abstract DatagramPacket newDatagram();
 
     /***
      * Returns the type of the packet.
-     * <p>
+     *
      * @return The type of the packet.
      ***/
     public final int getType()
@@ -214,7 +214,7 @@ public abstract class TFTPPacket
     /***
      * Returns the address of the host where the packet is going to be sent
      * or where it came from.
-     * <p>
+     *
      * @return The type of the packet.
      ***/
     public final InetAddress getAddress()
@@ -225,7 +225,7 @@ public abstract class TFTPPacket
     /***
      * Returns the port where the packet is going to be sent
      * or where it came from.
-     * <p>
+     *
      * @return The port where the packet came from or where it is going.
      ***/
     public final int getPort()

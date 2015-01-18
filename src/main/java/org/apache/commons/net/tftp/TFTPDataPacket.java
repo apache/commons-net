@@ -34,8 +34,8 @@ import java.net.InetAddress;
  * and
  * {@link org.apache.commons.net.tftp.TFTPClient#sendFile sendFile()}
  * methods.
- * <p>
- * <p>
+ *
+ *
  * @see TFTPPacket
  * @see TFTPPacketException
  * @see TFTP
@@ -68,7 +68,7 @@ public final class TFTPDataPacket extends TFTPPacket
      * the byte array where the data starts.  The length is the length of
      * the data.  If the length is greater than MAX_DATA_LENGTH, it is
      * truncated.
-     * <p>
+     *
      * @param destination  The host to which the packet is going to be sent.
      * @param port  The port to which the packet is going to be sent.
      * @param blockNumber The block number of the data.
@@ -103,7 +103,7 @@ public final class TFTPDataPacket extends TFTPPacket
      * Creates a data packet based from a received
      * datagram.  Assumes the datagram is at least length 4, else an
      * ArrayIndexOutOfBoundsException may be thrown.
-     * <p>
+     *
      * @param datagram  The datagram containing the received data.
      * @throws TFTPPacketException  If the datagram isn't a valid TFTP
      *         data packet.
@@ -134,7 +134,7 @@ public final class TFTPDataPacket extends TFTPPacket
      * It takes a datagram as an argument, and a byte buffer in which
      * to store the raw datagram data.  Inside the method, the data
      * is set as the datagram's data and the datagram returned.
-     * <p>
+     *
      * @param datagram  The datagram to create.
      * @param data The buffer to store the packet and to use in the datagram.
      * @return The datagram argument.
@@ -169,7 +169,7 @@ public final class TFTPDataPacket extends TFTPPacket
      * class.
      * Under normal circumstances, you should not have a need to call this
      * method.
-     * <p>
+     *
      * @return A UDP datagram containing the TFTP data packet.
      ***/
     @Override
@@ -190,7 +190,7 @@ public final class TFTPDataPacket extends TFTPPacket
 
     /***
      * Returns the block number of the data packet.
-     * <p>
+     *
      * @return The block number of the data packet.
      ***/
     public int getBlockNumber()
@@ -206,7 +206,7 @@ public final class TFTPDataPacket extends TFTPPacket
 
     /***
      * Sets the data for the data packet.
-     * <p>
+     *
      * @param data The byte array containing the data.
      * @param offset The offset into the array where the data starts.
      * @param length The length of the data.
@@ -226,7 +226,7 @@ public final class TFTPDataPacket extends TFTPPacket
 
     /***
      * Returns the length of the data part of the data packet.
-     * <p>
+     *
      * @return The length of the data part of the data packet.
      ***/
     public int getDataLength()
@@ -237,7 +237,7 @@ public final class TFTPDataPacket extends TFTPPacket
     /***
      * Returns the offset into the byte array where the packet data actually
      * starts.
-     * <p>
+     *
      * @return The offset into the byte array where the packet data actually
      *         starts.
      ***/
@@ -248,7 +248,7 @@ public final class TFTPDataPacket extends TFTPPacket
 
     /***
      * Returns the byte array containing the packet data.
-     * <p>
+     *
      * @return The byte array containing the packet data.
      ***/
     public byte[] getData()

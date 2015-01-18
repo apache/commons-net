@@ -22,8 +22,8 @@ package org.apache.commons.net.telnet;
  * storehouse for telnet option constants.
  * <p>
  * Details regarding Telnet option specification can be found in RFC 855.
- * <p>
- * <p>
+ *
+ *
  * @see org.apache.commons.net.telnet.Telnet
  * @see org.apache.commons.net.telnet.TelnetClient
  ***/
@@ -158,7 +158,7 @@ public class TelnetOption
     /***
      * Returns the string representation of the telnet protocol option
      * corresponding to the given option code.
-     * <p>
+     *
      * @param code The option code of the telnet protocol option
      * @return The string representation of the telnet protocol option.
      ***/
@@ -178,7 +178,7 @@ public class TelnetOption
     /***
      * Determines if a given option code is valid.  Returns true if valid,
      * false if not.
-     * <p>
+     *
      * @param code  The option code to test.
      * @return True if the option code is valid, false if not.
      **/

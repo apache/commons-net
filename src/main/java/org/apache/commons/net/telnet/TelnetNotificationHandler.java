@@ -25,8 +25,8 @@ package org.apache.commons.net.telnet;
  * The user can implement this interface and register a
  * TelnetNotificationHandler by using the registerNotificationHandler()
  * of TelnetClient to be notified of option negotiation commands.
- * <p>
- * <p>
+ *
+ *
  * @author Bruno D'Avanzo
  ***/
 
@@ -61,12 +61,11 @@ public interface TelnetNotificationHandler
     /***
      * Callback method called when TelnetClient receives an
      * command or option negotiation command
-     * <p>
+     *
      * @param negotiation_code - type of (negotiation) command received
      * (RECEIVED_DO, RECEIVED_DONT, RECEIVED_WILL, RECEIVED_WONT, RECEIVED_COMMAND)
-     * <p>
+     *
      * @param option_code - code of the option negotiated, or the command code itself (e.g. NOP).
-     * <p>
      ***/
     public void receivedNegotiation(int negotiation_code, int option_code);
 }

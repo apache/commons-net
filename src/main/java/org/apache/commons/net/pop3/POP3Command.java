@@ -19,8 +19,8 @@ package org.apache.commons.net.pop3;
 
 /***
  * POP3Command stores POP3 command code constants.
- * <p>
- * <p>
+ *
+ *
  ***/
 
 public final class POP3Command
@@ -79,7 +79,7 @@ public final class POP3Command
 
     /***
      * Get the POP3 protocol string command corresponding to a command code.
-     * <p>
+     *
      * @return The POP3 protocol string command corresponding to a command code.
      ***/
     public static final String getCommand(int command)

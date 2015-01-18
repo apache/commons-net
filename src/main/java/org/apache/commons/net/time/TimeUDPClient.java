@@ -38,8 +38,8 @@ import org.apache.commons.net.DatagramSocketClient;
  * {@link #getDate  getDate } are permitted
  * without re-establishing a connection.  That is because UDP is a
  * connectionless protocol and the Time protocol is stateless.
- * <p>
- * <p>
+ *
+ *
  * @see TimeTCPClient
  ***/
 
@@ -65,7 +65,7 @@ public final class TimeUDPClient extends DatagramSocketClient
      * This method reads the raw 32-bit big-endian
      * unsigned integer from the server, converts it to a Java long, and
      * returns the value.
-     * <p>
+     *
      * @param host The address of the server.
      * @param port The port of the service.
      * @return The time value retrieved from the server.
@@ -102,7 +102,7 @@ public final class TimeUDPClient extends DatagramSocketClient
     /***
      * Retrieves the time from the server and returns a Java Date
      * containing the time converted to the local timezone.
-     * <p>
+     *
      * @param host The address of the server.
      * @param port The port of the service.
      * @return A Date value containing the time retrieved from the server

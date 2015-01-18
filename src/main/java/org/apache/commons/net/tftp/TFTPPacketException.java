@@ -29,8 +29,8 @@ package org.apache.commons.net.tftp;
  * and
  * {@link org.apache.commons.net.tftp.TFTPClient#sendFile sendFile()}
  * methods provide.
- * <p>
- * <p>
+ *
+ *
  * @see TFTPPacket
  * @see TFTP
  ***/

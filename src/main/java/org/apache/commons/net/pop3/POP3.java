@@ -46,8 +46,8 @@ import org.apache.commons.net.io.CRLFLineReader;
  * the reply received from the server deviates enough from the protocol
  * specification that it cannot be interpreted in a useful manner despite
  * attempts to be as lenient as possible.
- * <p>
- * <p>
+ *
+ *
  * @see POP3Client
  * @see org.apache.commons.net.MalformedServerReplyException
  ***/
@@ -167,7 +167,7 @@ public class POP3 extends SocketClient
 
     /***
      * Returns the current POP3 client state.
-     * <p>
+     *
      * @return The current POP3 client state.
      ***/
     public int getState()
@@ -200,7 +200,7 @@ public class POP3 extends SocketClient
      * <code> DISCONNECTED_STATE </code>.  The reply text information
      * from the last issued command is voided to allow garbage collection
      * of the memory used to store that information.
-     * <p>
+     *
      * @exception IOException  If there is an error in disconnecting.
      ***/
     @Override
@@ -217,7 +217,7 @@ public class POP3 extends SocketClient
 
     /***
      * Sends a command an arguments to the server and returns the reply code.
-     * <p>
+     *
      * @param command  The POP3 command to send.
      * @param args     The command arguments.
      * @return  The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
@@ -250,7 +250,7 @@ public class POP3 extends SocketClient
     /***
      * Sends a command with no arguments to the server and returns the
      * reply code.
-     * <p>
+     *
      * @param command  The POP3 command to send.
      * @return  The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
      ***/
@@ -261,7 +261,7 @@ public class POP3 extends SocketClient
 
     /***
      * Sends a command an arguments to the server and returns the reply code.
-     * <p>
+     *
      * @param command  The POP3 command to send
      *                  (one of the POP3Command constants).
      * @param args     The command arguments.
@@ -275,7 +275,7 @@ public class POP3 extends SocketClient
     /***
      * Sends a command with no arguments to the server and returns the
      * reply code.
-     * <p>
+     *
      * @param command  The POP3 command to send
      *                  (one of the POP3Command constants).
      * @return  The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
@@ -295,7 +295,7 @@ public class POP3 extends SocketClient
      * fetch the rest of the reply, and then call <code>getReplyStrings</code>
      * again.  You only have to worry about this if you are implementing
      * your own client using the {@link #sendCommand  sendCommand } methods.
-     * <p>
+     *
      * @return The last server response.
      ***/
     public String[] getReplyStrings()
@@ -312,7 +312,7 @@ public class POP3 extends SocketClient
      * fetch the rest of the reply, and then call <code>getReplyString</code>
      * again.  You only have to worry about this if you are implementing
      * your own client using the {@link #sendCommand  sendCommand } methods.
-     * <p>
+     *
      * @return The last server response.
      ***/
     public String getReplyString()

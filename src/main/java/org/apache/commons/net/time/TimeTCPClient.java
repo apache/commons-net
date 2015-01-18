@@ -32,8 +32,8 @@ import org.apache.commons.net.SocketClient;
  * {@link #getDate  getDate() } to retrieve the time, then
  * call {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
  * to close the connection properly.
- * <p>
- * <p>
+ *
+ *
  * @see TimeUDPClient
  ***/
 
@@ -72,7 +72,7 @@ public final class TimeTCPClient extends SocketClient
      * initiate another connection with
      * {@link org.apache.commons.net.SocketClient#connect  connect }
      * before calling <code> getTime() </code> again.
-     * <p>
+     *
      * @return The time value retrieved from the server.
      * @exception IOException  If an error occurs while fetching the time.
      ***/
@@ -94,7 +94,7 @@ public final class TimeTCPClient extends SocketClient
      * initiate another connection with
      * {@link org.apache.commons.net.SocketClient#connect  connect }
      * before calling <code> getDate() </code> again.
-     * <p>
+     *
      * @return A Date value containing the time retrieved from the server
      *     converted to the local timezone.
      * @exception IOException  If an error occurs while fetching the time.

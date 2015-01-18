@@ -34,8 +34,8 @@ import java.net.InetAddress;
  * and
  * {@link org.apache.commons.net.tftp.TFTPClient#sendFile sendFile()}
  * methods.
- * <p>
- * <p>
+ *
+ *
  * @see TFTPPacket
  * @see TFTPPacketException
  * @see TFTP
@@ -49,7 +49,7 @@ public final class TFTPAckPacket extends TFTPPacket
     /***
      * Creates an acknowledgment packet to be sent to a host at a given port
      * acknowledging receipt of a block.
-     * <p>
+     *
      * @param destination  The host to which the packet is going to be sent.
      * @param port  The port to which the packet is going to be sent.
      * @param blockNumber  The block number being acknowledged.
@@ -64,7 +64,7 @@ public final class TFTPAckPacket extends TFTPPacket
      * Creates an acknowledgement packet based from a received
      * datagram.  Assumes the datagram is at least length 4, else an
      * ArrayIndexOutOfBoundsException may be thrown.
-     * <p>
+     *
      * @param datagram  The datagram containing the received acknowledgement.
      * @throws TFTPPacketException  If the datagram isn't a valid TFTP
      *         acknowledgement packet.
@@ -90,7 +90,7 @@ public final class TFTPAckPacket extends TFTPPacket
      * It takes a datagram as an argument, and a byte buffer in which
      * to store the raw datagram data.  Inside the method, the data
      * is set as the datagram's data and the datagram returned.
-     * <p>
+     *
      * @param datagram  The datagram to create.
      * @param data The buffer to store the packet and to use in the datagram.
      * @return The datagram argument.
@@ -120,7 +120,7 @@ public final class TFTPAckPacket extends TFTPPacket
      * the {@link org.apache.commons.net.tftp.TFTPClient}
      * class.  Under normal circumstances, you should not have a need to call this
      * method.
-     * <p>
+     *
      * @return A UDP datagram containing the TFTP acknowledgement packet.
      ***/
     @Override
@@ -140,7 +140,7 @@ public final class TFTPAckPacket extends TFTPPacket
 
     /***
      * Returns the block number of the acknowledgement.
-     * <p>
+     *
      * @return The block number of the acknowledgement.
      ***/
     public int getBlockNumber()
