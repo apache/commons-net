@@ -126,6 +126,12 @@ public class SubnetUtils {
             return isInRange(toInteger(address));
         }
 
+        /**
+         * 
+         * @param address the address to check
+         * @return true if it is in range
+         * @since 3.4 (made public)
+         */
         public boolean isInRange(int address) {
             long addLong = address & UNSIGNED_INT_MASK;
             long lowLong = low() & UNSIGNED_INT_MASK;
@@ -174,7 +180,7 @@ public class SubnetUtils {
          * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
          * @return the count of addresses, may be zero.
          * @throws RuntimeException if the correct count is greater than {@code Integer.MAX_VALUE}
-         * @deprecated use {@link #getAddressCountLong()} instead
+         * @deprecated (3.4) use {@link #getAddressCountLong()} instead
          */
         @Deprecated
         public int getAddressCount() {
@@ -190,6 +196,7 @@ public class SubnetUtils {
          * Get the count of available addresses.
          * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
          * @return the count of addresses, may be zero.
+         * @since 3.4
          */
         public long getAddressCountLong() {
             long b = broadcastLong();

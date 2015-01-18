@@ -954,6 +954,11 @@ implements Configurable
     }
 
 
+    /**
+     * @param socketIsReader the reader to reuse (if non-null)
+     * @throws IOException on error
+     * @since 3.4
+     */
     @Override
     protected void _connectAction_(Reader socketIsReader) throws IOException
     {
@@ -1213,6 +1218,7 @@ implements Configurable
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
+     * @since 3.4 (made public)
      */
     public boolean reinitialize() throws IOException
     {

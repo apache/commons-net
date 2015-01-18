@@ -288,6 +288,7 @@ public class TimeInfo {
     /**
      * Get host address from message datagram if available
      * @return host address of available otherwise null
+     * @since 3.4
      */
     public InetAddress getAddress() {
         DatagramPacket pkt = _message.getDatagramPacket();
@@ -313,6 +314,7 @@ public class TimeInfo {
      * @param   obj   the object to compare with.
      * @return  <code>true</code> if the objects are the same;
      *          <code>false</code> otherwise.
+     * @since 3.4
      */
     @Override
     public boolean equals(Object obj)
@@ -332,6 +334,7 @@ public class TimeInfo {
      * OR of the return time and the message hash code.
      *
      * @return  a hash code value for this object.
+     * @since 3.4
      */
     @Override
     public int hashCode()

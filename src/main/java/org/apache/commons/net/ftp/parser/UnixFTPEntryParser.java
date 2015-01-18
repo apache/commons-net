@@ -172,7 +172,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * Thrown if the regular expression is unparseable.  Should not be seen
      * under normal conditions.  It it is seen, this is a sign that
      * <code>REGEX</code> is  not a valid regular expression.
-     * @since 1.4
+     * @since 3.4
      */
     public UnixFTPEntryParser(FTPClientConfig config, boolean trimLeadingSpaces)
     {

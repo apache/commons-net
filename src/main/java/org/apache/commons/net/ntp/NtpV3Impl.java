@@ -163,6 +163,7 @@ public class NtpV3Impl implements NtpV3Packet
     /***
      * Set precision as defined in RFC-1305.
      * @param precision the precision to set
+     * @since 3.4
      */
     public void setPrecision(int precision)
     {
@@ -232,6 +233,7 @@ public class NtpV3Impl implements NtpV3Packet
      * Set root delay as defined in RFC-1305.
      *
      * @param delay root delay
+     * @since 3.4
      */
 //    @Override
     public void setRootDelay(int delay)
@@ -268,6 +270,7 @@ public class NtpV3Impl implements NtpV3Packet
      * Set root dispersion as defined in RFC-1305.
      *
      * @param dispersion root dispersion
+     * @since 3.4
      */
 //    @Override
     public void setRootDispersion(int dispersion)
@@ -616,6 +619,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param   obj   the object to compare with.
      * @return  <code>true</code> if the objects are the same;
      *          <code>false</code> otherwise.
+     * @since 3.4
      */
     @Override
     public boolean equals(Object obj)
@@ -635,6 +639,7 @@ public class NtpV3Impl implements NtpV3Packet
      * OR of the values of this object stored as a byte array.
      *
      * @return  a hash code value for this object.
+     * @since 3.4
      */
     @Override
     public int hashCode()

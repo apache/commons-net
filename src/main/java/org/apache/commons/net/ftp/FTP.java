@@ -382,6 +382,14 @@ public class FTP extends SocketClient
     }
 
 
+    /**
+     * Initiates control connections and gets initial reply.
+     * Initializes {@link #_controlInput_} and {@link #_controlOutput_}.
+     *
+     * @param socketIsReader the reader to reuse (if non-null)
+     * @throws IOException on error
+     * @since 3.4
+     */
     protected void _connectAction_(Reader socketIsReader) throws IOException {
         super._connectAction_(); // sets up _input_ and _output_
         if(socketIsReader == null) {

@@ -98,6 +98,7 @@ public class IMAP extends SocketClient
      * This should not be a problem for listeners that just log the input.
      * </p>
      * @see #setChunkListener(IMAPChunkListener)
+     * @since 3.4
      */
     public static final IMAPChunkListener TRUE_CHUNK_LISTENER = new IMAPChunkListener(){
         public boolean chunkReceived(IMAP imap) {
@@ -195,6 +196,7 @@ public class IMAP extends SocketClient
      * @param replyCode passed to the listeners
      * @param ignored the string is only created if there are listeners defined.
      * @see #getReplyString()
+     * @since 3.4
      */
     @Override
     protected void fireReplyReceived(int replyCode, String ignored) {
@@ -435,6 +437,7 @@ public class IMAP extends SocketClient
      * {@link IMAPReply#PARTIAL} to indicate that the final reply code is not yet known.
      * @param listener the class to use, or {@code null} to disable
      * @see #TRUE_CHUNK_LISTENER
+     * @since 3.4
      */
     public void setChunkListener(IMAPChunkListener listener) {
         __chunkListener = listener;

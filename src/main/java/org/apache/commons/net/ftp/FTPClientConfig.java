@@ -149,6 +149,7 @@ public class FTPClientConfig
      * trimmed from file names. This is to maintain backwards compatibility with
      * the original behaviour of the parser which ignored multiple spaces between the date
      * and the start of the file name.
+     * @since 3.4
      */
     public static final String SYST_UNIX_TRIM_LEADING  = "UNIX_LTRIM";
 

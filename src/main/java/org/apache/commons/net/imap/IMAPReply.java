@@ -45,6 +45,7 @@ public final class IMAPReply
      * The reply code indicating a partial response.
      * This is used when a chunk listener is registered and the listener
      * requests that the reply lines are cleared on return.
+     * @since 3.4
      */
     public static final int PARTIAL = 3;
 

@@ -26,6 +26,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * Helper application for example classes.
+ */
 public class Main {
 
     /**

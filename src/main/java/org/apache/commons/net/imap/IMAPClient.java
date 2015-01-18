@@ -243,6 +243,7 @@ public class IMAPClient extends IMAP
      * @param message The message to append.
      * @return {@code true} if the command was successful,{@code false} if not.
      * @exception IOException If a network I/O error occurs.
+     * @since 3.4
      */
     public boolean append(String mailboxName, String flags, String datetime, String message) throws IOException
     {

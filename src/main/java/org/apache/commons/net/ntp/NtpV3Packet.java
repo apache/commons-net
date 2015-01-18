@@ -124,6 +124,7 @@ public interface NtpV3Packet
     /**
      * Set precision as defined in RFC-1305
      * @param precision Precision
+     * @since 3.4
      */
     void setPrecision(int precision);
 
@@ -135,6 +136,7 @@ public interface NtpV3Packet
     /**
      * Set root delay as defined in RFC-1305
      * @param delay the delay to set
+     * @since 3.4
     */
     void setRootDelay(int delay);
 
@@ -151,6 +153,7 @@ public interface NtpV3Packet
     /**
      *
      * @param dispersion the value to set
+     * @since 3.4
      */
     void setRootDispersion(int dispersion);
 
