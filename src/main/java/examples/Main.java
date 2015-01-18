@@ -36,9 +36,7 @@ public class Main {
      *
      * @param args the first argument is used to name the class; remaining arguments
      * are passed to the target class.
-     * @param sourcefile 
-     * @throws Exception
-     * @throws Exception
+     * @throws Throwable
      */
     public static void main(String[] args) throws Throwable  {
         final Properties fp = new Properties();
