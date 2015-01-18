@@ -24,7 +24,7 @@ import java.net.DatagramPacket;
  *
  * @version $Revision$
  */
-public class NtpV3Impl implements NtpV3Packetbis
+public class NtpV3Impl implements NtpV3Packet
 {
 
     private static final int MODE_INDEX = 0;

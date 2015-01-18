@@ -113,7 +113,7 @@ public class TestTimeInfo {
         TimeInfo info = new TimeInfo(packet, returnTime);
 
         // 1. different return time
-        NtpV3Packetbis packet2 = new NtpV3Impl();
+        NtpV3Packet packet2 = new NtpV3Impl();
         Assert.assertEquals(packet, packet2);
         TimeInfo info2 = new TimeInfo(packet2, returnTime + 1);
         Assert.assertFalse(info.equals(info2));

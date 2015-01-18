@@ -19,7 +19,6 @@ package examples.ntp;
 import org.apache.commons.net.ntp.NtpUtils;
 import org.apache.commons.net.ntp.NtpV3Impl;
 import org.apache.commons.net.ntp.NtpV3Packet;
-import org.apache.commons.net.ntp.NtpV3Packetbis;
 import org.apache.commons.net.ntp.TimeStamp;
 
 import java.io.IOException;
@@ -165,7 +164,7 @@ public class SimpleNTPServer implements Runnable {
         System.out.printf("NTP packet from %s mode=%s%n", request.getAddress().getHostAddress(),
                 NtpUtils.getModeName(message.getMode()));
         if (message.getMode() == NtpV3Packet.MODE_CLIENT) {
-            NtpV3Packetbis response = new NtpV3Impl();
+            NtpV3Packet response = new NtpV3Impl();
 
             response.setStratum(1);
             response.setMode(NtpV3Packet.MODE_SERVER);
