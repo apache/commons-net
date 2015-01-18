@@ -1609,9 +1609,6 @@ public class NNTPClient extends NNTP
     }
 
     /**
-     * @param a s
-     * @param b
-     * @return
      * @throws IOException
      * @deprecated 3.0 use {@link #retrieveHeader(String, long)} instead
      */
@@ -1637,8 +1634,8 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #retrieveArticleInfo(long)} instead
      */
     @Deprecated
-    public Reader retrieveArticleInfo(int a) throws IOException {
-        return retrieveArticleInfo((long) a);
+    public Reader retrieveArticleInfo(int lowArticleNumber) throws IOException {
+        return retrieveArticleInfo((long) lowArticleNumber);
     }
 
     /**
