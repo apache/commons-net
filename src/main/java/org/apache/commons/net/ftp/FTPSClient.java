@@ -629,7 +629,8 @@ public class FTPSClient extends FTPClient {
     * Called by {@link #_openDataConnection_(int, String)} immediately
     * after creating the socket.
     * The default implementation is a no-op
-    * @throws IOException
+     * @param socket the socket to set up
+    * @throws IOException on error
     * @since 3.1
     */
     protected void _prepareDataSocket_(Socket socket)

@@ -315,6 +315,8 @@ public class FTPListParseEngine {
 
     /**
      * Do not use.
+     * @param stream the stream from which to read
+     * @throws IOException on error
      * @deprecated use {@link #readServerList(InputStream, String)} instead
     */
     @Deprecated

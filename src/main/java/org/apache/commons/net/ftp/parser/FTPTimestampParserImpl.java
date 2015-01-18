@@ -181,8 +181,8 @@ public class FTPTimestampParserImpl implements
      * @see FTPTimestampParser#parseTimestamp(String)
      * @param timestampStr The timestamp to be parsed
      * @param serverTime The current time for the server
-     * @return 
-     * @throws ParseException 
+     * @return the calendar
+     * @throws ParseException if timestamp cannot be parsed 
      * @since 1.5
      */
     public Calendar parseTimestamp(String timestampStr, Calendar serverTime) throws ParseException {

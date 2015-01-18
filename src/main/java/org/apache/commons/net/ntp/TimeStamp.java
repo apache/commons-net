@@ -88,6 +88,7 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
     /***
      * Constructs a newly allocated NTP timestamp object
      * that represents the native 64-bit long argument.
+     * @param ntpTime the timestamp
      */
     public TimeStamp(long ntpTime)
     {
@@ -98,12 +99,13 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
      * Constructs a newly allocated NTP timestamp object
      * that represents the value represented by the string
      * in hexdecimal form (e.g. "c1a089bd.fc904f6d").
+     * @param hexStamp the hex timestamp
      *
      * @throws NumberFormatException - if the string does not contain a parsable timestamp.
      */
-    public TimeStamp(String s) throws NumberFormatException
+    public TimeStamp(String hexStamp) throws NumberFormatException
     {
-        ntpTime = decodeNtpHexString(s);
+        ntpTime = decodeNtpHexString(hexStamp);
     }
 
     /***
@@ -238,26 +240,27 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
     /***
      * Convert NTP timestamp hexstring (e.g. "c1a089bd.fc904f6d") to the NTP
      * 64-bit unsigned fixed-point number.
+     * @param hexString the string to convert
      *
      * @return NTP 64-bit timestamp value.
      * @throws NumberFormatException - if the string does not contain a parsable timestamp.
      */
-    protected static long decodeNtpHexString(String s)
+    protected static long decodeNtpHexString(String hexString)
             throws NumberFormatException
     {
-        if (s == null) {
+        if (hexString == null) {
             throw new NumberFormatException("null");
         }
-        int ind = s.indexOf('.');
+        int ind = hexString.indexOf('.');
         if (ind == -1) {
-            if (s.length() == 0) {
+            if (hexString.length() == 0) {
                 return 0;
             }
-            return Long.parseLong(s, 16) << 32; // no decimal
+            return Long.parseLong(hexString, 16) << 32; // no decimal
         }
 
-        return Long.parseLong(s.substring(0, ind), 16) << 32 |
-                Long.parseLong(s.substring(ind + 1), 16);
+        return Long.parseLong(hexString.substring(0, ind), 16) << 32 |
+                Long.parseLong(hexString.substring(ind + 1), 16);
     }
 
     /***
@@ -373,6 +376,7 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
      * The NTP timestamp value is represented as hex string with
      * seconds separated by fractional seconds by a decimal point;
      * e.g. c1a089bd.fc904f6d == Tue, Dec 10 2002 10:41:49.986
+     * @param ntpTime the 64 bit timestamp
      *
      * @return NTP timestamp 64-bit long value as hex string with seconds
      * separated by fractional seconds.

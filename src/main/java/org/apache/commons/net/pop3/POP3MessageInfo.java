@@ -58,6 +58,8 @@ public final class POP3MessageInfo
      * Creates a POP3MessageInfo instance with <code>number</code> set
      * to <code> num </code>, <code> size </code> set to <code> octets </code>,
      * and <code>identifier</code> set to null.
+     * @param num the number
+     * @param octets the size
      ***/
     public POP3MessageInfo(int num, int octets)
     {
@@ -68,6 +70,8 @@ public final class POP3MessageInfo
      * Creates a POP3MessageInfo instance with <code>number</code> set
      * to <code> num </code>, <code> size </code> undefined,
      * and <code>identifier</code> set to <code>uid</code>.
+     * @param num the number
+     * @param uid the UID
      ***/
     public POP3MessageInfo(int num, String uid)
     {

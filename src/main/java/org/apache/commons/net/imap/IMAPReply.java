@@ -107,6 +107,7 @@ public final class IMAPReply
 
     /**
      * Checks if the line introduces a literal, i.e. ends with {dd}
+     * @param line the line to check
      *
      * @return the literal count, or -1 if there was no literal.
      */

@@ -1595,7 +1595,7 @@ public class NNTPClient extends NNTP
 
 
     /**
-     * @param header
+     * @param header the header
      * @param lowArticleNumber to fetch
      * @param highArticleNumber to fetch
      * @return a DotTerminatedReader if successful, null otherwise

@@ -198,7 +198,9 @@ public final class TFTPDataPacket extends TFTPPacket
         return _blockNumber;
     }
 
-    /*** Sets the block number of the data packet.  ***/
+    /*** Sets the block number of the data packet.  
+     * @param blockNumber the number to set
+     ***/
     public void setBlockNumber(int blockNumber)
     {
         _blockNumber = blockNumber;

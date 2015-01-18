@@ -92,7 +92,11 @@ public final class TimeUDPClient extends DatagramSocketClient
         return time;
     }
 
-    /*** Same as <code> getTime(host, DEFAULT_PORT); </code> ***/
+    /*** Same as <code> getTime(host, DEFAULT_PORT); </code> 
+     * @param host the time server 
+     * @return the time returned from the server
+     * @throws IOException on error
+     ***/
     public long getTime(InetAddress host) throws IOException
     {
         return getTime(host, DEFAULT_PORT);
@@ -115,7 +119,11 @@ public final class TimeUDPClient extends DatagramSocketClient
     }
 
 
-    /*** Same as <code> getTime(host, DEFAULT_PORT); </code> ***/
+    /*** Same as <code> getTime(host, DEFAULT_PORT); </code> 
+     * @param host the time server
+     * @return the date
+     * @throws IOException on error
+     ***/
     public Date getDate(InetAddress host) throws IOException
     {
         return new Date((getTime(host, DEFAULT_PORT) -

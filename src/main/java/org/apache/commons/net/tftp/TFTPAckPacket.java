@@ -149,7 +149,11 @@ public final class TFTPAckPacket extends TFTPPacket
     }
 
 
-    /*** Sets the block number of the acknowledgement.  ***/
+    /***
+     * Sets the block number of the acknowledgement.
+     *  
+     * @param blockNumber the number to set
+     ***/
     public void setBlockNumber(int blockNumber)
     {
         _blockNumber = blockNumber;

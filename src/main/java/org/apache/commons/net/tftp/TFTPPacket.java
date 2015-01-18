@@ -233,13 +233,18 @@ public abstract class TFTPPacket
         return _port;
     }
 
-    /*** Sets the port where the packet is going to be sent. ***/
+    /***
+     * Sets the port where the packet is going to be sent. 
+     * @param port the port to set
+     ***/
     public final void setPort(int port)
     {
         _port = port;
     }
 
-    /*** Sets the host address where the packet is going to be sent. ***/
+    /*** Sets the host address where the packet is going to be sent. 
+     * @param address the address to set
+     ***/
     public final void setAddress(InetAddress address)
     {
         _address = address;

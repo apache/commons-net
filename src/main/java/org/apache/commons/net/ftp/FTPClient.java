@@ -555,6 +555,8 @@ implements Configurable
 
     /**
      * @since 3.1
+     * @param reply the reply to parse
+     * @throws MalformedServerReplyException if the server reply does not match  (n,n,n,n),(n),(n)
      */
     protected void _parsePassiveModeReply(String reply)
     throws MalformedServerReplyException
@@ -642,6 +644,11 @@ implements Configurable
 
     /**
      * @since 3.1
+     * @param command the command to send
+     * @param remote the remote file name
+     * @param local the local file name
+     * @return true if successful
+     * @throws IOException on error
      */
     protected boolean _storeFile(String command, String remote, InputStream local)
     throws IOException
@@ -698,6 +705,10 @@ implements Configurable
     }
 
     /**
+     * @param command the command to send
+     * @param remote the remote file name
+     * @return the output stream to write to
+     * @throws IOException on error
      * @since 3.1
      */
     protected OutputStream _storeFileStream(String command, String remote)
@@ -1871,6 +1882,11 @@ implements Configurable
     }
 
     /**
+     * @param command the command to get
+     * @param remote the remote file name
+     * @param local the local file name
+     * @return true if successful 
+     * @throws IOException on error
      * @since 3.1
      */
     protected boolean _retrieveFile(String command, String remote, OutputStream local)
@@ -1948,6 +1964,10 @@ implements Configurable
     }
 
     /**
+     * @param command the command to send
+     * @param remote the remote file name
+     * @return the stream from which to read the file
+     * @throws IOException on error
      * @since 3.1
      */
     protected InputStream _retrieveFileStream(String command, String remote)
@@ -3416,6 +3436,8 @@ implements Configurable
     }
 
     /**
+     * @param pathname the initial pathname
+     * @return the adjusted string with "-a" added if necessary
      * @since 2.0
      */
     protected String getListArguments(String pathname) {

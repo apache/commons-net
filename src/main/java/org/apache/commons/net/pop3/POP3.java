@@ -178,6 +178,7 @@ public class POP3 extends SocketClient
 
     /***
      * Retrieves the additional lines of a multi-line server reply.
+     * @throws IOException on error
      ***/
     public void getAdditionalReply() throws IOException
     {
@@ -221,6 +222,7 @@ public class POP3 extends SocketClient
      * @param command  The POP3 command to send.
      * @param args     The command arguments.
      * @return  The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
+     * @throws IOException on error
      ***/
     public int sendCommand(String command, String args) throws IOException
     {
@@ -253,6 +255,7 @@ public class POP3 extends SocketClient
      *
      * @param command  The POP3 command to send.
      * @return  The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
+     * @throws IOException on error
      ***/
     public int sendCommand(String command) throws IOException
     {
@@ -266,6 +269,7 @@ public class POP3 extends SocketClient
      *                  (one of the POP3Command constants).
      * @param args     The command arguments.
      * @return  The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
+     * @throws IOException on error
      ***/
     public int sendCommand(int command, String args) throws IOException
     {
@@ -279,6 +283,7 @@ public class POP3 extends SocketClient
      * @param command  The POP3 command to send
      *                  (one of the POP3Command constants).
      * @return  The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
+     * @throws IOException on error
      ***/
     public int sendCommand(int command) throws IOException
     {

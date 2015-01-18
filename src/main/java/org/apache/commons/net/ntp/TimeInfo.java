@@ -116,7 +116,7 @@ public class TimeInfo {
      * with processing of NTP parameters. If comment list not create
      * then one will be created.
      *
-     * @param comment
+     * @param comment the comment
      */
     public void addComment(String comment)
     {

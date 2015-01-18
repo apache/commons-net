@@ -114,6 +114,7 @@ public class IMAPSClient extends IMAPClient
      * Constructor for IMAPSClient.
      * @param proto the protocol.
      * @param implicit The security mode(Implicit/Explicit).
+     * @param ctx the SSL context
      */
     public IMAPSClient(String proto, boolean implicit, SSLContext ctx)
     {

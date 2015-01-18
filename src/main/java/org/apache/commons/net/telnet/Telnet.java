@@ -1091,7 +1091,7 @@ class Telnet extends SocketClient
      *
      * @param opthand - option handler to be registered.
      * @throws InvalidTelnetOptionException - The option code is invalid.
-     * @throws IOException
+     * @throws IOException on error
      **/
     void addOptionHandler(TelnetOptionHandler opthand)
     throws InvalidTelnetOptionException, IOException
@@ -1133,7 +1133,7 @@ class Telnet extends SocketClient
      *
      * @param optcode - Code of the option to be unregistered.
      * @throws InvalidTelnetOptionException - The option code is invalid.
-     * @throws IOException
+     * @throws IOException on error
      **/
     void deleteOptionHandler(int optcode)
     throws InvalidTelnetOptionException, IOException

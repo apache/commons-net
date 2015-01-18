@@ -79,6 +79,7 @@ public final class POP3Command
 
     /***
      * Get the POP3 protocol string command corresponding to a command code.
+     * @param command the command code
      *
      * @return The POP3 protocol string command corresponding to a command code.
      ***/

@@ -56,7 +56,7 @@ public final class NtpUtils {
      * For details refer to the <A HREF="http://www.eecis.udel.edu/~mills/ntp/html/refclock.html#list">Comprehensive
      * List of Clock Drivers</A>.
      *
-     * @param message
+     * @param message the message to check
      * @return reference clock string if primary NTP server
      */
     public static String getReferenceClock(NtpV3Packet message) {
@@ -86,7 +86,7 @@ public final class NtpUtils {
     /***
      * Return human-readable name of message mode type (RFC 1305).
      *
-     * @param mode
+     * @param mode the mode type
      * @return mode name
      */
     public static String getModeName(int mode)

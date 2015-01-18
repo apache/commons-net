@@ -67,6 +67,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
     /***
      * Creates a FromNetASCIIInputStream instance that wraps an existing
      * InputStream.
+     * @param input the stream to wrap
      ***/
     public FromNetASCIIInputStream(InputStream input)
     {

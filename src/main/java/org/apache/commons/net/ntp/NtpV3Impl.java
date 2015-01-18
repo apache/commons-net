@@ -87,7 +87,7 @@ public class NtpV3Impl implements NtpV3Packet
     /***
      * Set mode as defined in RFC-1305.
      *
-     * @param mode
+     * @param mode the mode to set
      */
 //    @Override
     public void setMode(int mode)
@@ -162,7 +162,7 @@ public class NtpV3Impl implements NtpV3Packet
 
     /***
      * Set precision as defined in RFC-1305.
-     * @param precision
+     * @param precision the precision to set
      */
     public void setPrecision(int precision)
     {
@@ -647,7 +647,7 @@ public class NtpV3Impl implements NtpV3Packet
      * Java only has signed types so we have to do
      * more work to get unsigned ops.
      *
-     * @param b
+     * @param b input byte
      * @return unsigned int value of byte
      */
     protected final static int ui(byte b)
@@ -661,7 +661,7 @@ public class NtpV3Impl implements NtpV3Packet
      * Java only has signed types so we have to do
      * more work to get unsigned ops
      *
-     * @param b
+     * @param b input byte
      * @return unsigned long value of byte
      */
     protected final static long ul(byte b)

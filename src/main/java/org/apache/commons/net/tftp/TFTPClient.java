@@ -119,6 +119,7 @@ public class TFTPClient extends TFTP
      * @param output The OutputStream to which the file should be written.
      * @param host   The remote host serving the file.
      * @param port   The port number of the remote TFTP server.
+     * @return number of bytes read
      * @exception IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
      ***/
@@ -300,6 +301,7 @@ _receivePacket:
      * @param output   The OutputStream to which the file should be written.
      * @param hostname The name of the remote host serving the file.
      * @param port     The port number of the remote TFTP server.
+     * @return number of bytes read
      * @exception IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
      * @exception UnknownHostException  If the hostname cannot be resolved.
@@ -320,6 +322,7 @@ _receivePacket:
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
      * @param output   The OutputStream to which the file should be written.
      * @param host     The remote host serving the file.
+     * @return number of bytes read
      * @exception IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
      ***/
@@ -337,6 +340,7 @@ _receivePacket:
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
      * @param output   The OutputStream to which the file should be written.
      * @param hostname The name of the remote host serving the file.
+     * @return number of bytes read
      * @exception IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
      * @exception UnknownHostException  If the hostname cannot be resolved.
@@ -361,6 +365,7 @@ _receivePacket:
      * @param filename The name the remote server should use when creating
      *        the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
+     * @param input the input stream containing the data to be sent
      * @param host     The remote host receiving the file.
      * @param port     The port number of the remote TFTP server.
      * @exception IOException If an I/O error occurs.  The nature of the
@@ -557,6 +562,7 @@ _receivePacket:
      * @param filename The name the remote server should use when creating
      *        the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
+     * @param input the input stream containing the data to be sent
      * @param hostname The name of the remote host receiving the file.
      * @param port     The port number of the remote TFTP server.
      * @exception IOException If an I/O error occurs.  The nature of the
@@ -577,6 +583,7 @@ _receivePacket:
      * @param filename The name the remote server should use when creating
      *        the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
+     * @param input the input stream containing the data to be sent
      * @param host     The name of the remote host receiving the file.
      * @exception IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
@@ -595,6 +602,7 @@ _receivePacket:
      * @param filename The name the remote server should use when creating
      *        the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
+     * @param input the input stream containing the data to be sent
      * @param hostname The name of the remote host receiving the file.
      * @exception IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.

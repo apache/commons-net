@@ -72,6 +72,7 @@ public interface NtpV3Packet
 
     /**
      * Set the contents of this object from the datagram packet
+     * @param dp the packet
      */
     public void setDatagramPacket(DatagramPacket dp);
 
@@ -98,6 +99,7 @@ public interface NtpV3Packet
 
     /**
      * Set mode as defined in RFC-1305
+     * @param mode the mode to set
      */
     public void setMode(int mode);
 
@@ -110,6 +112,7 @@ public interface NtpV3Packet
     /**
      * Set poll interval as defined in RFC-1305.
      * Field range between NTP_MINPOLL and NTP_MAXPOLL.
+     * @param poll the interval to set
      */
     public void setPoll(int poll);
 
@@ -131,7 +134,7 @@ public interface NtpV3Packet
 
     /**
      * Set root delay as defined in RFC-1305
-     * @param delay
+     * @param delay the delay to set
     */
     void setRootDelay(int delay);
 
@@ -147,9 +150,9 @@ public interface NtpV3Packet
 
     /**
      *
-     * @param disperson
+     * @param dispersion the value to set
      */
-    void setRootDispersion(int disperson);
+    void setRootDispersion(int dispersion);
 
     /**
      * @return root dispersion in milliseconds
@@ -168,6 +171,7 @@ public interface NtpV3Packet
 
     /**
      * Set version as defined in RFC-1305
+     * @param version the version to set
      */
     public void setVersion(int version);
 
@@ -178,6 +182,7 @@ public interface NtpV3Packet
 
     /**
      * Set stratum as defined in RFC-1305
+     * @param stratum the stratum to set
      */
     public void setStratum(int stratum);
 
@@ -193,7 +198,7 @@ public interface NtpV3Packet
 
     /**
      * Set reference clock identifier field.
-     * @param refId
+     * @param refId the clock id field to set
      */
     public void setReferenceId(int refId);
 
