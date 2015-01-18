@@ -31,6 +31,24 @@ This how-to lists the migration steps for moving between versions of Commons Net
 </p>
 </section>
 
+<section name="Commons Net 3.x to Commons Net 3.4">
+<p>
+Version 3.4 is binary compatible with previous 3.x versions and 2.0.
+There should be no changes required to existing binary code.
+</p>
+<p>
+However, version 3.4 is <b>not source compatible</b> with 3.3.
+</p>
+<p>
+The interface NtpV3Packet has been updated to add 3 new methods.
+Adding methods to an interface <a href="https://docs.oracle.com/javase/specs/jls/se5.0/html/binaryComp.html#45348">does not affect binary compatibility</a>
+The <a href="clirr-report.html">clirr report</a> shows which methods have been added.
+(note that the report does not distinguish between source and binary incompatibility)
+Code that uses the interface will need to be updated and recompiled.
+However code that uses the implementation class NtpV3Impl will continue to work as before.
+</p>
+</section>
+
 <section name="Commons Net 2.x to Commons Net 3.0">
     <p>
         Version 3.0 is binary compatible with version 2.0. There should be no changes required to existing binary code.
