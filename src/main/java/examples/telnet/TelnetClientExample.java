@@ -53,6 +53,8 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
 
     /***
      * Main for the TelnetClientExample.
+     * @param args input params
+     * @throws Exception on error
      ***/
     public static void main(String[] args) throws Exception
     {

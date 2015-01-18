@@ -86,7 +86,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      *    +   file has extended security attributes (e.g. ACL)
      *    Note: local listings on MacOSX also use '@'; 
      *    this is not allowed for here as does not appear to be shown by FTP servers
-     *    @   file has extended attributes
+     *    {@code @}   file has extended attributes
      */
     private static final String REGEX =
         "([bcdelfmpSs-])" // file type

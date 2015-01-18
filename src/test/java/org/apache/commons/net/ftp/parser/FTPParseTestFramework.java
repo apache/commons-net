@@ -113,14 +113,14 @@ public abstract class FTPParseTestFramework extends TestCase
     /**
      * Method testParseFieldsOnDirectory.
      * Provide a test to show that fields on a directory entry are parsed correctly.
-     * @throws Exception
+     * @throws Exception on error
      */
     public abstract void testParseFieldsOnDirectory() throws Exception;
 
     /**
      * Method testParseFieldsOnFile.
      * Provide a test to show that fields on a file entry are parsed correctly.
-     * @throws Exception
+     * @throws Exception on error
      */
     public abstract void testParseFieldsOnFile() throws Exception;
 

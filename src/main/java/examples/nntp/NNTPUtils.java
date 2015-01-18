@@ -33,11 +33,11 @@ public class NNTPUtils {
     /**
      * Given an {@link NNTPClient} instance, and an integer range of messages, return
      * an array of {@link Article} instances.
-     * @param client
-     * @param lowArticleNumber
-     * @param highArticleNumber
+     * @param client the client to use
+     * @param lowArticleNumber low number
+     * @param highArticleNumber high number
      * @return Article[] An array of Article
-     * @throws IOException
+     * @throws IOException on error
      */
     public  static List<Article> getArticleInfo(NNTPClient client, long lowArticleNumber, long highArticleNumber)
     throws IOException {
