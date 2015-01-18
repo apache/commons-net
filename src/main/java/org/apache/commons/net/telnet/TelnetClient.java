@@ -191,9 +191,9 @@ public class TelnetClient extends Telnet
      * <p>
      * @return true if AYT received a response, false otherwise
      * <p>
-     * @throws InterruptedException
-     * @throws IllegalArgumentException
-     * @throws IOException
+     * @throws InterruptedException on error
+     * @throws IllegalArgumentException on error
+     * @throws IOException on error
      ***/
     public boolean sendAYT(long timeout)
     throws IOException, IllegalArgumentException, InterruptedException
@@ -239,6 +239,7 @@ public class TelnetClient extends Telnet
      *
      * @param command the code for the command
      * @throws IOException if an I/O error occurs while writing the message
+     * @throws IllegalArgumentException  on error
      * @since 3.0
      ***/
     public void sendCommand(byte command)
@@ -254,8 +255,8 @@ public class TelnetClient extends Telnet
      * <p>
      * @param opthand - option handler to be registered.
      * <p>
-     * @throws InvalidTelnetOptionException
-     * @throws IOException
+     * @throws InvalidTelnetOptionException on error
+     * @throws IOException on error
      ***/
     @Override
     public void addOptionHandler(TelnetOptionHandler opthand)
@@ -270,8 +271,8 @@ public class TelnetClient extends Telnet
      * <p>
      * @param optcode - Code of the option to be unregistered.
      * <p>
-     * @throws InvalidTelnetOptionException
-     * @throws IOException
+     * @throws InvalidTelnetOptionException on error
+     * @throws IOException on error
      ***/
     @Override
     public void deleteOptionHandler(int optcode)

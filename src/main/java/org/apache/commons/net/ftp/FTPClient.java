@@ -2266,7 +2266,7 @@ implements Configurable
      * </pre>
      * @see <a href="http://www.faqs.org/rfcs/rfc2389.html">http://www.faqs.org/rfcs/rfc2389.html</a>
      * @return True if successfully completed, false if not.
-     * @throws IOException
+     * @throws IOException on error
      * @since 2.2
      */
     public boolean features() throws IOException {
@@ -2276,11 +2276,12 @@ implements Configurable
     /**
      * Query the server for a supported feature, and returns its values (if any).
      * Caches the parsed response to avoid resending the command repeatedly.
+     * @param feature the feature to check
      *
      * @return if the feature is present, returns the feature values (empty array if none)
      * Returns {@code null} if the feature is not found or the command failed.
      * Check {@link #getReplyCode()} or {@link #getReplyString()} if so.
-     * @throws IOException
+     * @throws IOException on error
      * @since 3.0
      */
     public String[] featureValues(String feature) throws IOException {
@@ -2297,12 +2298,13 @@ implements Configurable
     /**
      * Query the server for a supported feature, and returns the its value (if any).
      * Caches the parsed response to avoid resending the command repeatedly.
+     * @param feature the feature to check
      *
      * @return if the feature is present, returns the feature value or the empty string
      * if the feature exists but has no value.
      * Returns {@code null} if the feature is not found or the command failed.
      * Check {@link #getReplyCode()} or {@link #getReplyString()} if so.
-     * @throws IOException
+     * @throws IOException on error
      * @since 3.0
      */
     public String featureValue(String feature) throws IOException {
@@ -2322,7 +2324,7 @@ implements Configurable
      * or the {@link #feat()} command failed. Check {@link #getReplyCode()} or {@link #getReplyString()}
      * if it is necessary to distinguish these cases.
      *
-     * @throws IOException
+     * @throws IOException on error
      * @since 3.0
      */
     public boolean hasFeature(String feature) throws IOException {
@@ -2344,7 +2346,7 @@ implements Configurable
      * or the {@link #feat()} command failed. Check {@link #getReplyCode()} or {@link #getReplyString()}
      * if it is necessary to distinguish these cases.
      *
-     * @throws IOException
+     * @throws IOException on error
      * @since 3.0
      */
     public boolean hasFeature(String feature, String value) throws IOException {
@@ -2468,9 +2470,9 @@ implements Configurable
     /**
      * Get file details using the MLST command
      *
-     * @param pathname the file or directory to list, may be {@code} null
+     * @param pathname the file or directory to list, may be {@code null}
      * @return the file details, may be {@code null}
-     * @throws IOException
+     * @throws IOException on error
      * @since 3.0
      */
     public FTPFile mlistFile(String pathname) throws IOException
@@ -2488,7 +2490,7 @@ implements Configurable
      * Generate a directory listing for the current directory using the MLSD command.
      *
      * @return the array of file entries
-     * @throws IOException
+     * @throws IOException on error
      * @since 3.0
      */
     public FTPFile[] mlistDir() throws IOException
@@ -2501,7 +2503,7 @@ implements Configurable
      *
      * @param pathname the directory name, may be {@code null}
      * @return the array of file entries
-     * @throws IOException
+     * @throws IOException on error
      * @since 3.0
      */
     public FTPFile[] mlistDir(String pathname) throws IOException
@@ -2516,7 +2518,7 @@ implements Configurable
      * @param pathname the directory name, may be {@code null}
      * @param filter the filter to apply to the responses
      * @return the array of file entries
-     * @throws IOException
+     * @throws IOException on error
      * @since 3.0
      */
     public FTPFile[] mlistDir(String pathname, FTPFileFilter filter) throws IOException
@@ -3041,7 +3043,7 @@ implements Configurable
      * @param pathname the initial path, may be null
      * @param filter the filter, non-null
      * @return the list of FTPFile entries.
-     * @throws IOException
+     * @throws IOException on error
      * @since 2.2
      */
     public FTPFile[] listFiles(String pathname, FTPFileFilter filter)
@@ -3112,6 +3114,7 @@ implements Configurable
      * For older files, the output may only contain a date.
      * If the server supports it, the MLSD command returns timestamps with a precision
      * of seconds, and may include milliseconds. See {@link #mlistDir()}
+     * @param parent the starting directory
      *
      * @return The list of directories contained in the specified directory
      *         in the format determined by the autodetection mechanism.
@@ -3213,6 +3216,7 @@ implements Configurable
      *       //expensive FTPFile objects not created until needed.
      *    }
      * </pre>
+     * @param pathname the starting directory
      *
      * @return A FTPListParseEngine object that holds the raw information and
      * is capable of providing parsed FTPFile objects, one for each file
@@ -3234,8 +3238,7 @@ implements Configurable
      *                   resolve the type of system we are connected with.
      * @see FTPListParseEngine
      */
-    public FTPListParseEngine initiateListParsing(
-            String pathname)
+    public FTPListParseEngine initiateListParsing(String pathname)
     throws IOException
     {
         return initiateListParsing((String) null, pathname);
@@ -3266,6 +3269,7 @@ implements Configurable
      *               To allow for arbitrary system types, the return from the
      *               SYST command is used to look up an alias for the type in the
      *               {@link #SYSTEM_TYPE_PROPERTIES} properties file if it is available.
+     * @param pathname the starting directory
      *
      * @return A FTPListParseEngine object that holds the raw information and
      * is capable of providing parsed FTPFile objects, one for each file
@@ -3458,6 +3462,7 @@ implements Configurable
     /**
      * Issue the FTP STAT command to the server for a given pathname.  This
      * should produce a listing of the file or directory.
+     * @param pathname the filename
      *
      * @return The status information returned by the server.
      * @exception FTPConnectionClosedException
@@ -3719,6 +3724,7 @@ implements Configurable
 
     /**
      * Get how long to wait for control keep-alive message replies.
+     * @return wait time in msec
      * @since 3.0
      */
     public int getControlKeepAliveReplyTimeout() {
@@ -3854,6 +3860,8 @@ implements Configurable
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE
 
     /**
+     * @return the name
+     * @throws IOException on error
      * @deprecated use {@link #getSystemType()} instead
      */
     @Deprecated

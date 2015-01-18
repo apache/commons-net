@@ -177,7 +177,7 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
      * is represented by a single Java-based time value of f22cd1fc8a, but its
      * NTP equivalent are all values ranging from c1a9ae1c.cf5c28f5 to c1a9ae1c.cf9db22c.
      *
-     * @param ntpTimeValue
+     * @param ntpTimeValue the input time
      * @return the number of milliseconds since January 1, 1970, 00:00:00 GMT
      * represented by this NTP timestamp value.
      */

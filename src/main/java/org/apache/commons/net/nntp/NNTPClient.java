@@ -783,7 +783,7 @@ public class NNTPClient extends NNTP
      * Send a "LIST OVERVIEW.FMT" command to the server.
      *
      * @return the contents of the Overview format, of {@code null} if the command failed
-     * @throws IOException
+     * @throws IOException on error
      */
     public String[] listOverviewFmt() throws IOException
     {
@@ -848,6 +848,9 @@ public class NNTPClient extends NNTP
 
     /**
      * Same as <code> selectArticle(articleId, (ArticleInfo) null) </code>
+     * @param articleId the article Id
+     * @return true if successful
+     * @throws IOException on error
      */
     public boolean selectArticle(String articleId) throws IOException
     {
@@ -857,6 +860,9 @@ public class NNTPClient extends NNTP
     /****
      * Same as <code> selectArticle((String) null, articleId) </code>.  Useful
      * for retrieving the current article number.
+     * @param pointer to the article
+     * @return true if OK
+     * @throws IOException on error 
      ***/
     public boolean selectArticle(ArticleInfo pointer) throws IOException
     {
@@ -904,7 +910,10 @@ public class NNTPClient extends NNTP
     }
 
 
-    /*** Same as <code> selectArticle(articleNumber, null) </code> ***/
+    /*** Same as <code> selectArticle(articleNumber, null) </code> 
+     * @param articleNumber the numger
+     * @return true if successful
+     * @throws IOException on error ***/
     public boolean selectArticle(long articleNumber) throws IOException
     {
         return selectArticle(articleNumber, null);
@@ -949,7 +958,9 @@ public class NNTPClient extends NNTP
         return true;
     }
 
-    /*** Same as <code> selectPreviousArticle((ArticleInfo) null) </code> ***/
+    /*** Same as <code> selectPreviousArticle((ArticleInfo) null) </code> 
+     * @return true if successful 
+     * @throws IOException on error ***/
     public boolean selectPreviousArticle() throws IOException
     {
         return selectPreviousArticle((ArticleInfo) null);
@@ -994,7 +1005,9 @@ public class NNTPClient extends NNTP
     }
 
 
-    /*** Same as <code> selectNextArticle((ArticleInfo) null) </code> ***/
+    /*** Same as <code> selectNextArticle((ArticleInfo) null) </code> 
+     * @return true if successful
+     * @throws IOException on error ***/
     public boolean selectNextArticle() throws IOException
     {
         return selectNextArticle((ArticleInfo) null);
@@ -1084,7 +1097,7 @@ public class NNTPClient extends NNTP
      *    for each newsgroup served by the NNTP server corresponding to the
      *    supplied pattern.   If no such newsgroups are served, a zero length
      *    array will be returned.  If the command fails, null will be returned.
-     * @throws IOException
+     * @throws IOException on error
      * @see #iterateNewsgroupListing(String)
      * @see #iterateNewsgroups(String)
      */
@@ -1106,7 +1119,7 @@ public class NNTPClient extends NNTP
      *    for each newsgroup served by the NNTP server corresponding to the
      *    supplied pattern.   If no such newsgroups are served, no entries
      *    will be returned.
-     * @throws IOException
+     * @throws IOException on error
      * @since 3.0
      */
     public Iterable<String> iterateNewsgroupListing(String wildmat) throws IOException {
@@ -1125,7 +1138,7 @@ public class NNTPClient extends NNTP
      *    for each newsgroup served by the NNTP server corresponding to the
      *    supplied pattern.   If no such newsgroups are served, no entries
      *    will be returned.
-     * @throws IOException
+     * @throws IOException on error
      * @since 3.0
      */
     public Iterable<NewsgroupInfo> iterateNewsgroups(String wildmat) throws IOException {
@@ -1426,7 +1439,7 @@ public class NNTPClient extends NNTP
      * @param username a valid username
      * @param password the corresponding password
      * @return True for successful login, false for a failure
-     * @throws IOException
+     * @throws IOException on error
      */
     public boolean authenticate(String username, String password)
         throws IOException
@@ -1472,7 +1485,7 @@ public class NNTPClient extends NNTP
      * <p>
      * @param articleNumber the article to retrieve headers for
      * @return a DotTerminatedReader if successful, null otherwise
-     * @throws IOException
+     * @throws IOException on error
      */
     public BufferedReader retrieveArticleInfo(long articleNumber) throws IOException
     {
@@ -1483,10 +1496,10 @@ public class NNTPClient extends NNTP
      * Return article headers for all articles between lowArticleNumber
      * and highArticleNumber, inclusively. Uses the XOVER command.
      * <p>
-     * @param lowArticleNumber
-     * @param highArticleNumber
+     * @param lowArticleNumber low number
+     * @param highArticleNumber high number
      * @return a DotTerminatedReader if successful, null otherwise
-     * @throws IOException
+     * @throws IOException on error
      */
     public BufferedReader retrieveArticleInfo(long lowArticleNumber,
             long highArticleNumber)
@@ -1501,8 +1514,8 @@ public class NNTPClient extends NNTP
      * Return article headers for all articles between lowArticleNumber
      * and highArticleNumber, inclusively, using the XOVER command.
      * <p>
-     * @param lowArticleNumber
-     * @param highArticleNumber
+     * @param lowArticleNumber low
+     * @param highArticleNumber high
      * @return an Iterable of Articles
      * @throws IOException if the command failed
      * @since 3.0
@@ -1546,7 +1559,7 @@ public class NNTPClient extends NNTP
      * @param header the header to retrieve
      * @param articleNumber the article to retrieve the header for
      * @return a DotTerminatedReader if successful, null otherwise
-     * @throws IOException
+     * @throws IOException on error
      */
     public BufferedReader retrieveHeader(String header, long articleNumber)
         throws IOException
@@ -1558,11 +1571,11 @@ public class NNTPClient extends NNTP
      * Return an article header for all articles between lowArticleNumber
      * and highArticleNumber, inclusively.
      * <p>
-     * @param header
+     * @param header the header
      * @param lowArticleNumber to fetch
      * @param highArticleNumber to fetch
      * @return a DotTerminatedReader if successful, null otherwise
-     * @throws IOException
+     * @throws IOException on error
      */
     public BufferedReader retrieveHeader(String header, long lowArticleNumber,
                                  long highArticleNumber)
@@ -1609,7 +1622,10 @@ public class NNTPClient extends NNTP
     }
 
     /**
-     * @throws IOException
+     * @param a tba
+     * @param b  tba
+     * @return  tba
+     * @throws IOException tba
      * @deprecated 3.0 use {@link #retrieveHeader(String, long)} instead
      */
     @Deprecated
@@ -1618,6 +1634,10 @@ public class NNTPClient extends NNTP
     }
 
     /**
+     * @param a  tba
+     * @param ap  tba
+     * @return  tba
+     * @throws IOException tba 
      * @deprecated 3.0 use {@link #selectArticle(long, ArticleInfo)} instead
      */
     @Deprecated
@@ -1631,6 +1651,7 @@ public class NNTPClient extends NNTP
     /**
      * @param lowArticleNumber to fetch
      * @return a DotTerminatedReader if successful, null otherwise
+     * @throws IOException  tba
      * @deprecated 3.0 use {@link #retrieveArticleInfo(long)} instead
      */
     @Deprecated
@@ -1639,6 +1660,9 @@ public class NNTPClient extends NNTP
     }
 
     /**
+     * @param a  tba
+     * @return  tba
+     * @throws IOException  tba
      * @deprecated 3.0 use {@link #selectArticle(long)} instead
      */
     @Deprecated
@@ -1647,6 +1671,9 @@ public class NNTPClient extends NNTP
     }
 
     /**
+     * @param a  tba
+     * @return  tba
+     * @throws IOException  tba
      * @deprecated 3.0 use {@link #retrieveArticleHeader(long)} instead
      */
     @Deprecated
@@ -1655,6 +1682,10 @@ public class NNTPClient extends NNTP
     }
 
     /**
+     * @param a  tba
+     * @param ap  tba
+     * @return  tba
+     * @throws IOException  tba
      * @deprecated 3.0 use {@link #retrieveArticleHeader(long, ArticleInfo)} instead
      */
     @Deprecated
@@ -1666,6 +1697,9 @@ public class NNTPClient extends NNTP
     }
 
     /**
+     * @param a  tba
+     * @return  tba
+     * @throws IOException  tba
      * @deprecated 3.0 use {@link #retrieveArticleBody(long)} instead
      */
     @Deprecated
@@ -1702,6 +1736,10 @@ public class NNTPClient extends NNTP
     }
 
     /**
+     * @param a  tba
+     * @param ap  tba
+     * @return  tba
+     * @throws IOException  tba
      * @deprecated 3.0 use {@link #retrieveArticleBody(long, ArticleInfo)} instead
      */
     @Deprecated

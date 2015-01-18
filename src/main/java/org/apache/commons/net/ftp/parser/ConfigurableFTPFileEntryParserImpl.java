@@ -79,6 +79,7 @@ implements Configurable
      * to the <code>timestampParser</code> for extracting the timestamp.
      * @return a <code>java.util.Calendar</code> containing results of the
      * timestamp parse.
+     * @throws ParseException on parse error
      */
     public Calendar parseTimestamp(String timestampStr) throws ParseException {
         return this.timestampParser.parseTimestamp(timestampStr);

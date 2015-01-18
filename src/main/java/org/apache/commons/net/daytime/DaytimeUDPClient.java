@@ -70,7 +70,11 @@ public final class DaytimeUDPClient extends DatagramSocketClient
         return new String(receivePacket.getData(), 0, receivePacket.getLength(), getCharsetName()); // Java 1.6 can use getCharset()
     }
 
-    /** Same as <code>getTime(host, DaytimeUDPClient.DEFAULT_PORT);</code> */
+    /** Same as <code>getTime(host, DaytimeUDPClient.DEFAULT_PORT);</code> 
+     * @param host the host
+     * @return  the time
+     * @throws IOException on error
+     */
     public String getTime(InetAddress host) throws IOException
     {
         return getTime(host, DEFAULT_PORT);

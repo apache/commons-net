@@ -77,6 +77,8 @@ public final class EchoUDPClient extends DiscardUDPClient
      * up among multiple datagrams, requiring multiple calls to receive.
      * Also, the UDP packets will not necessarily arrive in the same order
      * they were sent.
+     * @param  data the buffer to receive the input
+     * @param length  of the buffer
      *
      * @return  Length of actual data received.
      * @exception IOException If an error occurs while receiving the data.
@@ -89,7 +91,11 @@ public final class EchoUDPClient extends DiscardUDPClient
         return __receivePacket.getLength();
     }
 
-    /*** Same as <code> receive(data, data.length)</code> ***/
+    /*** Same as <code> receive(data, data.length)</code> 
+     * @param data the buffer to receive the input
+     * @return the number of bytes
+     * @throws IOException on error 
+     ***/
     public int receive(byte[] data) throws IOException
     {
         return receive(data, data.length);

@@ -68,25 +68,40 @@ public class FTPSSocketFactory extends SocketFactory {
 
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE
 
-    /** @deprecated (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int) instead} */
+    /** @param port the port
+     * @return  the socket
+     * @throws IOException on error 
+     * @deprecated (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int) instead} */
     @Deprecated
     public java.net.ServerSocket createServerSocket(int port) throws IOException {
         return this.init(this.context.getServerSocketFactory().createServerSocket(port));
     }
 
-    /** @deprecated  (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int, int) instead} */
+    /** @param port  the port
+     * @param backlog the backlog
+     * @return  the socket
+     * @throws IOException  on error
+     * @deprecated  (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int, int) instead} */
     @Deprecated
     public java.net.ServerSocket createServerSocket(int port, int backlog) throws IOException {
         return this.init(this.context.getServerSocketFactory().createServerSocket(port, backlog));
     }
 
-    /** @deprecated  (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int, int, InetAddress) instead} */
+    /** @param port  the port
+     * @param backlog the backlog
+     * @param ifAddress the interface
+     * @return  the socket
+     * @throws IOException  on error
+     * @deprecated  (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int, int, InetAddress) instead} */
     @Deprecated
     public java.net.ServerSocket createServerSocket(int port, int backlog, InetAddress ifAddress) throws IOException {
         return this.init(this.context.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
     }
 
-    /** @deprecated  (2.2) use {@link FTPSServerSocketFactory#init(java.net.ServerSocket)} */
+    /** @param socket the socket
+     * @return the socket
+     * @throws IOException  on error
+     * @deprecated  (2.2) use {@link FTPSServerSocketFactory#init(java.net.ServerSocket)} */
     @Deprecated
     public java.net.ServerSocket init(java.net.ServerSocket socket) throws IOException {
         ((javax.net.ssl.SSLServerSocket) socket).setUseClientMode(true);

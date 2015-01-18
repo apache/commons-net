@@ -38,7 +38,7 @@ public class ExtendedPOP3Client extends POP3SClient
     /**
      * The default ExtendedPOP3Client constructor.
      * Creates a new Extended POP3 Client.
-     * @throws NoSuchAlgorithmException
+     * @throws NoSuchAlgorithmException on error
      */
     public ExtendedPOP3Client() throws NoSuchAlgorithmException
     {

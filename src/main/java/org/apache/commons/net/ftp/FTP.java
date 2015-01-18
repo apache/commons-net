@@ -1321,6 +1321,9 @@ public class FTP extends SocketClient
 
 
     /**
+     * @param file name of file
+     * @return the status
+     * @throws IOException on error
      * @since 2.0
      **/
     public int mdtm(String file) throws IOException
@@ -1785,7 +1788,7 @@ public class FTP extends SocketClient
 
     /**
      * Set strict multiline parsing.
-     * @param strictMultilineParsing
+     * @param strictMultilineParsing the setting
      * @since 2.0
      */
     public void setStrictMultilineParsing(boolean strictMultilineParsing) {
