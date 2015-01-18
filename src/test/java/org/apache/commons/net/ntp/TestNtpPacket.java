@@ -29,7 +29,7 @@ public class TestNtpPacket {
 
     @Test
     public void testCreate() {
-        NtpV3Packet message = new NtpV3Impl();
+        NtpV3Packetbis message = new NtpV3Impl();
         message.setLeapIndicator(0);             // byte 0 [bit numbers 7-6]
         message.setVersion(NtpV3Packet.VERSION_3); // byte 0 [bit numbers 5-4]
         message.setMode(4);                         // byte 0 [bit numbers 3-0]
