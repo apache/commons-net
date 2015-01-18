@@ -469,17 +469,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
     </reporting>
 
     <profiles>
-      <profile>
-        <!-- Temporary hack to suppress Javadoc 8 errors -->
-        <id>javadoc_8</id>
-        <activation>
-          <jdk>1.8</jdk>
-        </activation>
-        <properties>
-          <!-- Disable Xdoclint, until JavaDoc issues are fixed -->
-          <additionalparam>-Xdoclint:none</additionalparam>
-        </properties>
-      </profile>
 
       <!-- TODO Remove when updating to CP37 -->
       <profile>
