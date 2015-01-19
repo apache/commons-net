@@ -30,7 +30,7 @@
       <item name="Migration How-to"            href="migration.html"/>
       <item name="FAQ"                         href="faq.html"/>
       <item name="Download"                    href="/download_net.cgi"/>
-      <item name="Javadoc 3.3 (Java 1.5)"      href="/javadocs/api-3.3/index.html"/>
+      <item name="Javadoc 3.4 (Java 1.5)"      href="/javadocs/api-3.4/index.html"/>
       <item name="Javadoc 1.4.1 (Java 1.3)"    href="/javadocs/api-1.4.1/index.html"/>
     </menu>
     <menu name="Development">
