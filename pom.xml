@@ -386,38 +386,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
 
     <reporting>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-changes-plugin</artifactId>
-                <version>${commons.changes.version}</version>
-                <configuration>
-                    <issueLinkTemplatePerSystem>
-                        <default>%URL%/%ISSUE%</default>
-                    </issueLinkTemplatePerSystem>
-                    <template>release-notes.vm</template>
-                    <templateDirectory>src/changes</templateDirectory>
-                    <!--  Add sample JIRA report - 'mvn changes:jira-report' or 'mvn site' -->
-                    <onlyCurrentVersion>false</onlyCurrentVersion>
-                    <columnNames>Fix Version,Key,Component,Summary,Type,Resolution,Status</columnNames>
-                    <!-- Sort cols have to be reversed in JIRA 4 -->
-                    <sortColumnNames>Key DESC,Type,Fix Version DESC</sortColumnNames>
-                    <resolutionIds>Fixed</resolutionIds>
-                    <statusIds>Resolved,Closed</statusIds>
-                    <!-- Don't include sub-task -->
-                    <typeIds>Bug,New Feature,Task,Improvement,Wish,Test</typeIds>
-                    <fixVersionIds>${commons.release.version}</fixVersionIds>
-                    <!-- The default is 100 -->
-                    <maxEntries>100</maxEntries>
-                </configuration>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>changes-report</report>
-                            <report>jira-report</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -444,13 +412,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 <configuration>
                     <excludePackageNames>examples.*</excludePackageNames>
                 </configuration>
-                <reportSets>
-                  <reportSet>
-                    <reports>
-                      <report>javadoc</report>
-                    </reports>
-                  </reportSet>
-                </reportSets>
             </plugin>
 
             <plugin>
