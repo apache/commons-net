@@ -152,8 +152,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <commons.jira.pid>12310487</commons.jira.pid>
         <!-- TODO Remove when updating to CP37 -->
         <commons.animal-sniffer.version>1.11</commons.animal-sniffer.version>
-        <!-- TODO temporary downdate to fix NPE in 0.11 -->
-        <commons.rat.version>0.10</commons.rat.version>
     </properties>
 
     <build>
