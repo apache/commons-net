@@ -34,13 +34,14 @@ import junit.framework.TestCase;
  */
 public class TFTPServerPathTest extends TestCase
 {
+    private static final int SERVER_PORT = 6901;
     String filePrefix = "tftp-";
     File serverDirectory = new File(System.getProperty("java.io.tmpdir"));
 
     public void testReadOnly() throws IOException
     {
         // Start a read-only server
-        TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, 6900,
+        TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, SERVER_PORT,
                 ServerMode.GET_ONLY, null, null);
 
         // Create our TFTP instance to handle the file transfer.
@@ -61,7 +62,7 @@ public class TFTPServerPathTest extends TestCase
 
         FileOutputStream output = new FileOutputStream(out);
 
-        tftp.receiveFile(file.getName(), TFTP.BINARY_MODE, output, "localhost", 6900);
+        tftp.receiveFile(file.getName(), TFTP.BINARY_MODE, output, "localhost", SERVER_PORT);
         output.close();
 
         assertTrue("file not created", out.exists());
@@ -71,7 +72,7 @@ public class TFTPServerPathTest extends TestCase
         FileInputStream fis = new FileInputStream(file);
         try
         {
-            tftp.sendFile(out.getName(), TFTP.BINARY_MODE, fis, "localhost", 6900);
+            tftp.sendFile(out.getName(), TFTP.BINARY_MODE, fis, "localhost", SERVER_PORT);
             fail("Server allowed write");
         }
         catch (IOException e)
@@ -86,7 +87,7 @@ public class TFTPServerPathTest extends TestCase
     public void testWriteOnly() throws IOException
     {
         // Start a write-only server
-        TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, 6900,
+        TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, SERVER_PORT,
                 ServerMode.PUT_ONLY, null, null);
 
         // Create our TFTP instance to handle the file transfer.
@@ -108,7 +109,7 @@ public class TFTPServerPathTest extends TestCase
 
         try
         {
-            tftp.receiveFile(file.getName(), TFTP.BINARY_MODE, output, "localhost", 6900);
+            tftp.receiveFile(file.getName(), TFTP.BINARY_MODE, output, "localhost", SERVER_PORT);
             fail("Server allowed read");
         }
         catch (IOException e)
@@ -119,7 +120,7 @@ public class TFTPServerPathTest extends TestCase
         out.delete();
 
         FileInputStream fis = new FileInputStream(file);
-        tftp.sendFile(out.getName(), TFTP.BINARY_MODE, fis, "localhost", 6900);
+        tftp.sendFile(out.getName(), TFTP.BINARY_MODE, fis, "localhost", SERVER_PORT);
 
         fis.close();
 
@@ -134,7 +135,7 @@ public class TFTPServerPathTest extends TestCase
     public void testWriteOutsideHome() throws IOException
     {
         // Start a server
-        TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, 6900,
+        TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, SERVER_PORT,
                 ServerMode.GET_AND_PUT, null, null);
 
         // Create our TFTP instance to handle the file transfer.
@@ -149,7 +150,7 @@ public class TFTPServerPathTest extends TestCase
         FileInputStream fis = new FileInputStream(file);
         try
         {
-            tftp.sendFile("../foo", TFTP.BINARY_MODE, fis, "localhost", 6900);
+            tftp.sendFile("../foo", TFTP.BINARY_MODE, fis, "localhost", SERVER_PORT);
             fail("Server allowed write!");
         }
         catch (IOException e)

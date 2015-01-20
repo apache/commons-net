@@ -38,6 +38,7 @@ import junit.framework.TestCase;
  */
 public class TFTPTest extends TestCase
 {
+    private static final int SERVER_PORT = 6902;
     private static TFTPServer tftpS;
     private static final File serverDirectory = new File(System.getProperty("java.io.tmpdir"));
     private static final String filePrefix = "tftp-";
@@ -60,7 +61,7 @@ public class TFTPTest extends TestCase
             files[7] = createFile(new File(serverDirectory, filePrefix + "huge.txt"), 37000 * 1024);
 
             // Start the server
-            tftpS = new TFTPServer(serverDirectory, serverDirectory, 6900, ServerMode.GET_AND_PUT,
+            tftpS = new TFTPServer(serverDirectory, serverDirectory, SERVER_PORT, ServerMode.GET_AND_PUT,
                     null, null);
             tftpS.setSocketTimeout(2000);
         }
@@ -177,7 +178,7 @@ public class TFTPTest extends TestCase
 
         FileOutputStream output = new FileOutputStream(out);
 
-        tftp.receiveFile(file.getName(), mode, output, "localhost", 6900);
+        tftp.receiveFile(file.getName(), mode, output, "localhost", SERVER_PORT);
         output.close();
 
         assertTrue("file not created", out.exists());
@@ -200,7 +201,7 @@ public class TFTPTest extends TestCase
         assertTrue("Couldn't clear output location", !in.exists());
 
         FileInputStream fis = new FileInputStream(file);
-        tftp.sendFile(in.getName(), mode, fis, "localhost", 6900);
+        tftp.sendFile(in.getName(), mode, fis, "localhost", SERVER_PORT);
         fis.close();
 
         // need to give the server a bit of time to receive our last packet, and
