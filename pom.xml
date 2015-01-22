@@ -466,13 +466,55 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
 
       <!-- TODO Remove when updating to CP37 -->
       <profile>
+        <!--
+          Make the version parts of the maven.compiler.target property
+          available as separate properties, so that they can be used to define
+          the java signature artifactId used by animal-sniffer etc.
+        -->
+        <id>parse-target-version</id>
+        <activation>
+          <property>
+            <!--
+               This property should always be defined.
+               The intention is to ensure that the profile is always enabled.
+               (activeByDefault only applies if other profiles are not enabled) 
+            -->
+            <name>user.home</name>
+          </property>
+        </activation>
+        <build>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>build-helper-maven-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>parse-version</id>
+                  <goals>
+                    <goal>parse-version</goal>
+                  </goals>
+                  <configuration>
+                    <propertyPrefix>javaTarget</propertyPrefix>
+                    <versionString>${maven.compiler.target}</versionString>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </build>
+      </profile>
+
+      <!-- TODO Remove when updating to CP37 -->
+      <profile>
         <id>animal-sniffer</id>
         <activation>
           <file>
             <missing>src/site/resources/profile.noanimal</missing>
           </file>
         </activation>
-        
+        <properties>
+        <animal-sniffer.signature>java${javaTarget.majorVersion}${javaTarget.minorVersion}</animal-sniffer.signature>
+        </properties>
         <build>
           <plugins>
 
@@ -480,27 +522,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
 
             <!-- to bypass Animal Sniffer, define "animal.sniffer.skip" as true -->
 
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>build-helper-maven-plugin</artifactId>
-              <executions>
-                <execution>
-                  <id>regex-property</id>
-                  <phase>validate</phase>
-                  <goals>
-                    <goal>regex-property</goal>
-                  </goals>
-                  <configuration>
-                    <!-- generate the default animal sniffer java signature name from the java target version -->
-                    <name>animal-sniffer.signature</name>
-                    <value>${maven.compiler.target}</value>
-                    <regex>^(\d)\.(\d)$</regex>
-                    <replacement>java$1$2</replacement>
-                    <failIfNoMatch>true</failIfNoMatch> <!-- unexpected compiler version (assuming n.m version format)-->
-                  </configuration>
-                </execution>
-              </executions>
-            </plugin>
 
             <plugin>
               <groupId>org.codehaus.mojo</groupId>
