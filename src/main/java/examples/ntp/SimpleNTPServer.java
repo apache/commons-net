@@ -62,7 +62,9 @@ public class SimpleNTPServer implements Runnable {
      */
     public SimpleNTPServer(int port)
     {
-        if (port < 0) throw new IllegalArgumentException();
+        if (port < 0) {
+            throw new IllegalArgumentException();
+        }
         this.port = port;
     }
 
@@ -102,7 +104,9 @@ public class SimpleNTPServer implements Runnable {
         {
             socket = new DatagramSocket(port);
             // port = 0 is bound to available free port
-            if (port == 0) port = socket.getLocalPort();
+            if (port == 0) {
+                port = socket.getLocalPort();
+            }
             System.out.println("Running NTP service on port " + port + "/UDP");
         }
     }
