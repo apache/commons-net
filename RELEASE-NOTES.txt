@@ -9,13 +9,39 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
 
 This is mainly a bug-fix release. See further details below.
 
+This release is binary compatible with previous releases.
+ However it is not source compatible, as some methods have been added to the interface NtpV3Packet
+
+Notable additions:
+ IMAPExportMbox (example app) allows IMAP folders to be exported into an mbox file.
+ This is the inverse of the IMAPImportMbox example added previously
+
 Changes in this version include:
 
 New features:
+o NET-528:  FTPListParseEngine does not provide access to raw responses
+o NET-565:  Add FTPClient method to return an FTPFile from an MDTM command
+o NET-540:  Article#printThread should have option to use any PrintStream
+o NET-536:  IMAP FETCH example
+            IMAPExportMbox can export selected nessages from an IMAP folder
+o NET-535:  IMAP FETCH can overflow reply buffer; provide for partial responses
 o NET-527:  Add SimpleNTPServer as example and for testing Thanks to jason mathews.
 o NET-512:  Downloading files or members from the AS400 QSYS file system is not supported Thanks to Thomas Raddatz.
 
 Fixed Bugs:
+o NET-566:  UnixFTPEntryParser Drops Leading Spaces from File Names Thanks to Gary Russell.
+o NET-552:  SocketTimeoutException connecting a FTP server via an HTTP Proxy Thanks to Quentin Devriendt.
+o NET-563:  MLSxEntryParser needs test cases; parsing is too lax
+o NET-561:  FTPFile.toFormattedString prints user and group in wrong order
+o NET-544:  FTPClient.initiateListParsing does not correctly check if parserKey was cached Thanks to Olivier Queyrut.
+o NET-558:  FTPClient.getModificationTime(filename) returns complete received line including response code Thanks to Ralph Becker.
+o NET-550:  Default FTPClient bufferSize results in very slow retrieve transfers
+            Fix code in Util#copyStream (also copyReader) that failed to use the proper default for buffer size 0 Thanks to Geoffrey Hardy.
+o NET-551:  Util copyReader calls CopyStreamListener.bytesTransferred with the incorrect value for bytesTransferred
+o NET-549:  Telnet does not convert LF to CRLF in ASCII mode Thanks to Pradeep Natarajan.
+o NET-543:  telnet: spy read EOL is reversed Thanks to Ferry Huberts.
+o NET-539:  NPE if Threader.thread invoked with empty list or with null array
+o NET-530:  input parameter of org.apache.commons.net.ftp.FTP.__getReply(boolean) is not used Thanks to fish ship.
 o NET-529:  SubnetUtils throws exception on valid input Thanks to Putinas Piliponis.
 o NET-516:  parser problem occurs if the filename contains one or more characters of which the second byte of Shift-JIS code is 0x85
             Fix NT parser Thanks to Asha K S & pavan.
@@ -32,6 +58,14 @@ o NET-514:  IMAP APPEND multiple issues in IMapClient.
 o NET-511:  Exception for new SubnetUtils("0.0.0.0/0"). Thanks to Kyriacos Elia, Daniel Scott.
 
 Changes:
+o           examples/Main now uses a property file to define aliases instead of scanning class files
+o NET-564:  FTPFile.toFormattedString - allow specification of TimeZone for display
+o NET-562:  FTPFile.toFormattedString should print only signficant parts of the parsed date
+o NET-554:  Simplify TelnetOptionHandler class hierarchy
+o NET-556:  Make SubnetInfo.isInRange(int) public Thanks to Andy Rosa.
+o           Added control character processing to TelnetClientExample
+o NET-547:  There is a lack of documentation regarding setControlKeepAliveTimeout Thanks to Fabio Scippacercola.
+o NET-534:  Unnecesssary call to getReplyString() if no listeners configured
 o           Added control encoding option to FTPClientExample
 o NET-526:  Added missing set methods on NTP class and interface Thanks to Jason Mathews, MITRE Corp.
 o NET-526:  Avoid greedy matches within a regex
