@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-parent</artifactId>
-        <version>36</version>
+        <version>37</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>commons-net</groupId>
@@ -150,8 +150,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <commons.release.2.desc>(Requires Java 1.3 or later)</commons.release.2.desc>
         <commons.jira.id>NET</commons.jira.id>
         <commons.jira.pid>12310487</commons.jira.pid>
-        <!-- TODO Remove when updating to CP37 -->
-        <commons.animal-sniffer.version>1.11</commons.animal-sniffer.version>
+        <commons.changes.onlyCurrentVersion>true</commons.changes.onlyCurrentVersion>
     </properties>
 
     <build>
@@ -387,16 +386,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
     <reporting>
         <plugins>
 
-            <!-- TODO can be replaced by property override when CP37 is available -->
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-changes-plugin</artifactId>
-              <version>${commons.changes.version}</version>
-              <configuration>
-                <onlyCurrentVersion>true</onlyCurrentVersion>
-              </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
@@ -449,104 +438,5 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
 
         </plugins>
     </reporting>
-
-    <profiles>
-
-      <!-- TODO Remove when updating to CP37 -->
-      <profile>
-        <id>jdk7-plugin-fixes</id>
-        <activation>
-          <jdk>[1.7,)</jdk>
-        </activation>
-        <properties>
-          <!-- Current latest version requires Java 7 when running Maven -->
-          <commons.animal-sniffer.version>1.13</commons.animal-sniffer.version>
-        </properties>
-      </profile>
-
-      <!-- TODO Remove when updating to CP37 -->
-      <profile>
-        <!--
-          Make the version parts of the maven.compiler.target property
-          available as separate properties, so that they can be used to define
-          the java signature artifactId used by animal-sniffer etc.
-        -->
-        <id>parse-target-version</id>
-        <activation>
-          <property>
-            <!--
-               This property should always be defined.
-               The intention is to ensure that the profile is always enabled.
-               (activeByDefault only applies if other profiles are not enabled) 
-            -->
-            <name>user.home</name>
-          </property>
-        </activation>
-        <build>
-          <plugins>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>build-helper-maven-plugin</artifactId>
-              <executions>
-                <execution>
-                  <id>parse-version</id>
-                  <goals>
-                    <goal>parse-version</goal>
-                  </goals>
-                  <configuration>
-                    <propertyPrefix>javaTarget</propertyPrefix>
-                    <versionString>${maven.compiler.target}</versionString>
-                  </configuration>
-                </execution>
-              </executions>
-            </plugin>
-          </plugins>
-        </build>
-      </profile>
-
-      <!-- TODO Remove when updating to CP37 -->
-      <profile>
-        <id>animal-sniffer</id>
-        <activation>
-          <file>
-            <missing>src/site/resources/profile.noanimal</missing>
-          </file>
-        </activation>
-        <properties>
-        <animal-sniffer.signature>java${javaTarget.majorVersion}${javaTarget.minorVersion}</animal-sniffer.signature>
-        </properties>
-        <build>
-          <plugins>
-
-            <!-- Temporary location until parent pom updated -->
-
-            <!-- to bypass Animal Sniffer, define "animal.sniffer.skip" as true -->
-
-
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>animal-sniffer-maven-plugin</artifactId>
-              <version>${commons.animal-sniffer.version}</version>
-              <executions>
-                <execution>
-                  <id>checkAPIcompatibility</id>
-                  <goals>
-                    <goal>check</goal>
-                  </goals>
-                </execution>
-              </executions>
-              <configuration>
-                <signature>
-                  <groupId>org.codehaus.mojo.signature</groupId>
-                  <artifactId>${animal-sniffer.signature}</artifactId>
-                  <version>1.0</version>
-                </signature>
-              </configuration>
-            </plugin>
-
-          </plugins>
-        </build>
-      </profile>
-    </profiles>
 
 </project>
