@@ -424,18 +424,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 </configuration>
             </plugin>
 
-            <plugin>
-              <groupId>org.apache.rat</groupId>
-              <artifactId>apache-rat-plugin</artifactId>
-              <!-- Parent pom does not (yet) exclude these -->
-              <configuration>
-                <excludes>
-                  <exclude>.checkstyle</exclude>
-                  <exclude>.fbprefs</exclude>
-                </excludes>
-              </configuration>
-            </plugin>
-
         </plugins>
     </reporting>
 
