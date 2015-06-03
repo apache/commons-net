@@ -26,7 +26,10 @@
     <download-page rdf:resource="http://commons.apache.org/net/download_net.cgi"/>
     <asfext:pmc rdf:resource="http://commons.apache.org/"/>
     <shortdesc xml:lang="en">Apache Commons Net</shortdesc>
-    <description xml:lang="en"/>
+    <description xml:lang="en">
+    Apache Commons Net library contains a collection of network utilities and protocol implementations.
+    Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
+    </description>
     <repository>
       <SVNRepository>
         <browse rdf:resource="http://svn.apache.org/repos/asf/commons/proper/net/trunk"/>
