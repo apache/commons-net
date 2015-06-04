@@ -109,7 +109,7 @@ public class FTPHTTPClient extends FTPClient {
             passiveHost = this.getPassiveHost();
         }
 
-        Socket socket = new Socket(proxyHost, proxyPort);
+        Socket socket = _socketFactory_.createSocket(proxyHost, proxyPort);
         InputStream is = socket.getInputStream();
         OutputStream os = socket.getOutputStream();
         tunnelHandshake(passiveHost, this.getPassivePort(), is, os);
@@ -129,7 +129,7 @@ public class FTPHTTPClient extends FTPClient {
     @Override
     public void connect(String host, int port) throws SocketException, IOException {
 
-        _socket_ = new Socket(proxyHost, proxyPort);
+        _socket_ = _socketFactory_.createSocket(proxyHost, proxyPort);
         _input_ = _socket_.getInputStream();
         _output_ = _socket_.getOutputStream();
         Reader socketIsReader;

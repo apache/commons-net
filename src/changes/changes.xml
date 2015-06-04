@@ -62,7 +62,7 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
     <body>
-        <release version="3.4" date="2015-01-??" description="
+        <release version="3.4" date="2015-??-??" description="
 This is mainly a bug-fix release. See further details below.
 
   This release is binary compatible with previous releases.
@@ -72,6 +72,9 @@ This is mainly a bug-fix release. See further details below.
   IMAPExportMbox (example app) allows IMAP folders to be exported into an mbox file.
   This is the inverse of the IMAPImportMbox example added previously
         ">
+            <action issue="NET-538" type="fix" dev="sebb" due-to="Dzmitry">
+            FTPHTTPClient should use socket factory to create sockets
+            </action>
             <action issue="NET-566" type="fix" dev="sebb" due-to="Gary Russell">
             UnixFTPEntryParser Drops Leading Spaces from File Names
             </action>
