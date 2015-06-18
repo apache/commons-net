@@ -39,12 +39,12 @@ public class FTPClientConfigTest extends TestCase {
         assertNull(config.getServerLanguageCode());
     }
 
-    String A = "A";
-    String B = "B";
-    String C = "C";
-    String D = "D";
-    String E = "E";
-    String F = "F";
+    private static final String A = "A";
+    private static final String B = "B";
+    private static final String C = "C";
+    private static final String D = "D";
+    private static final String E = "E";
+    private static final String F = "F";
 
     /*
      * Class under test for void FTPClientConfig(String, String, String, String, String, String)
@@ -61,10 +61,10 @@ public class FTPClientConfigTest extends TestCase {
     }
 
 
-    String badDelim = "jan,feb,mar,apr,may,jun,jul,aug.sep,oct,nov,dec";
-    String tooLong =  "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|jan";
-    String tooShort = "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov";
-    String fakeLang = "abc|def|ghi|jkl|mno|pqr|stu|vwx|yza|bcd|efg|hij";
+    private static final String badDelim = "jan,feb,mar,apr,may,jun,jul,aug.sep,oct,nov,dec";
+    private static final String tooLong =  "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|jan";
+    private static final String tooShort = "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov";
+    private static final String fakeLang = "abc|def|ghi|jkl|mno|pqr|stu|vwx|yza|bcd|efg|hij";
 
     public void testSetShortMonthNames() {
     }
