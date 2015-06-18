@@ -190,10 +190,10 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      *
      * @param method the method to use, one of the {@link AuthenticatingSMTPClient.AUTH_METHOD} enum values
      * @param username the user name.
-     *        If the method is XOAUTH, then this is used as the plain text oauth protocol parameter string
+     *        If the method is XOAUTH/XOAUTH2, then this is used as the plain text oauth protocol parameter string
      *        which is Base64-encoded for transmission.
      * @param password the password for the username.
-     *        Ignored for XOAUTH.
+     *        Ignored for XOAUTH/XOAUTH2.
      *
      * @return True if successfully completed, false if not.
      * @exception SMTPConnectionClosedException
@@ -262,6 +262,12 @@ public class AuthenticatingSMTPClient extends SMTPSClient
             return SMTPReply.isPositiveIntermediate(sendCommand(
                     Base64.encodeBase64StringUnChunked(username.getBytes(getCharsetName())) // Java 1.6 can use getCharset()
             ));
+        }
+        else if (method.equals(AUTH_METHOD.XOAUTH2))
+        {
+            return SMTPReply.isPositiveIntermediate(sendCommand(
+                    Base64.encodeBase64StringUnChunked(username.getBytes(getCharsetName())) // Java 1.6 can use getCharset()
+            ));
         } else {
             return false; // safety check
         }
@@ -299,7 +305,9 @@ public class AuthenticatingSMTPClient extends SMTPSClient
         /** The unstandarised Microsoft LOGIN method, which sends the password unencrypted (insecure). */
         LOGIN,
         /** XOAuth method which accepts a signed and base64ed OAuth URL. */
-        XOAUTH;
+        XOAUTH,
+        /** XOAuth 2 method which accepts a signed and base64ed OAuth JSON. */
+        XOAUTH2;
 
         /**
          * Gets the name of the given authentication method suitable for the server.
@@ -316,6 +324,8 @@ public class AuthenticatingSMTPClient extends SMTPSClient
                 return "LOGIN";
             } else if (method.equals(AUTH_METHOD.XOAUTH)) {
                 return "XOAUTH";
+            } else if (method.equals(AUTH_METHOD.XOAUTH2)) {
+                return "XOAUTH2";
             } else {
                 return null;
             }

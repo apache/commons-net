@@ -213,6 +213,15 @@ public class AuthenticatingIMAPClient extends IMAPSClient
                 }
                 return result == IMAPReply.OK;
             }
+            case XOAUTH2:
+            {
+                int result = sendData(username);
+                if (result == IMAPReply.OK)
+                {
+                    setState(IMAP.IMAPState.AUTH_STATE);
+                }
+                return result == IMAPReply.OK;
+            }
         }
         return false; // safety check
     }
@@ -249,7 +258,9 @@ public class AuthenticatingIMAPClient extends IMAPSClient
         /** The unstandarised Microsoft LOGIN method, which sends the password unencrypted (insecure). */
         LOGIN("LOGIN"),
         /** XOAUTH */
-        XOAUTH("XOAUTH");
+        XOAUTH("XOAUTH"),
+        /** XOAUTH 2 */
+        XOAUTH2("XOAUTH2");
 
         private final String authName;
 
