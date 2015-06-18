@@ -72,6 +72,9 @@ This is mainly a bug-fix release. See further details below.
   IMAPExportMbox (example app) allows IMAP folders to be exported into an mbox file.
   This is the inverse of the IMAPImportMbox example added previously
         ">
+            <action issue="NET-575" type="update" dev="sebb">
+            FTPClientExample should support setting the date format
+            </action>
             <action issue="NET-538" type="fix" dev="sebb" due-to="Dzmitry">
             FTPHTTPClient should use socket factory to create sockets
             </action>

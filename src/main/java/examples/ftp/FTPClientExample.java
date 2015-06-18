@@ -77,6 +77,8 @@ public final class FTPClientExample
         "\t-U - save unparseable responses\n" +
         "\t-w msec - wait time for keep-alive reply (setControlKeepAliveReplyTimeout)\n" +
         "\t-T  all|valid|none - use one of the built-in TrustManager implementations (none = JVM default)\n" +
+        "\t-y format - set default date format string\n" +
+        "\t-Y format - set recent date format string\n" +
         "\t-Z timezone - set the server timezone for parsing LIST responses\n" +
         "\t-z timezone - set the timezone for displaying MDTM, LIST, MLSD, MLST responses\n" +
         "\t-PrH server[:port] - HTTP Proxy host and optional port[80] \n" +
@@ -106,6 +108,8 @@ public final class FTPClientExample
         String serverTimeZoneId = null;
         String displayTimeZoneId = null;
         String serverType = null;
+        String defaultDateFormat = null;
+        String recentDateFormat = null;
 
 
         int base = 0;
@@ -181,6 +185,12 @@ public final class FTPClientExample
             }
             else if (args[base].equals("-T")) {
                 trustmgr = args[++base];
+            }
+            else if (args[base].equals("-y")) {
+                defaultDateFormat = args[++base];
+            }
+            else if (args[base].equals("-Y")) {
+                recentDateFormat = args[++base];
             }
             else if (args[base].equals("-Z")) {
                 serverTimeZoneId = args[++base];
@@ -302,6 +312,12 @@ public final class FTPClientExample
             config = new FTPClientConfig();            
         }
         config.setUnparseableEntries(saveUnparseable);
+        if (defaultDateFormat != null) {
+            config.setDefaultDateFormatStr(defaultDateFormat);
+        }
+        if (recentDateFormat != null) {
+            config.setRecentDateFormatStr(recentDateFormat);
+        }
         ftp.configure(config);
 
         try
