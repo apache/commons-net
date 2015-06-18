@@ -16,6 +16,7 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
@@ -182,4 +183,30 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
     public void testRecentPrecision() {
         testPrecision("----rwxr-x   1 PEP      0           4019 Mar 18 18:58 einladung.zip", CalendarUnit.MINUTE);
     }
+
+    public void testNET573() throws Exception
+    {
+        final FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_AS400);
+        conf.setDefaultDateFormatStr("MM/dd/yy HH:mm:ss");
+        final FTPFileEntryParser parser = new OS400FTPEntryParser(conf);
+        
+        FTPFile f = parser.parseFTPEntry("ZFTPDEV 9069 05/20/15 15:36:52 *STMF /DRV/AUDWRKSHET/AUDWRK0204232015114625.PDF");
+        assertNotNull("Could not parse entry.", f);
+        assertNotNull("Could not parse timestamp.", f.getTimestamp());
+        assertFalse("Should not have been a directory.", f.isDirectory());
+        assertEquals("ZFTPDEV", f.getUser());
+        assertEquals("AUDWRK0204232015114625.PDF", f.getName());
+        assertEquals(9069, f.getSize());
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, 2015);
+        cal.set(Calendar.MONTH, Calendar.MAY);
+        cal.set(Calendar.DAY_OF_MONTH, 20);
+        cal.set(Calendar.HOUR_OF_DAY, 15);
+        cal.set(Calendar.MINUTE, 36);
+        cal.set(Calendar.SECOND, 52);
+
+        assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp().getTime()));
+    }
+
 }
