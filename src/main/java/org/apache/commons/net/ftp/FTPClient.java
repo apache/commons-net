@@ -3348,8 +3348,8 @@ implements Configurable
 
             } else {
                 // if no parserKey was supplied, check for a configuration
-                // in the params, and if non-null, use that.
-                if (null != __configuration) {
+                // in the params, and if it has a non-empty system type, use that.
+                if (null != __configuration && __configuration.getServerSystemKey().length() > 0) {
                     __entryParser =
                         __parserFactory.createFileEntryParser(__configuration);
                     __entryParserKey = __configuration.getServerSystemKey();
@@ -3369,7 +3369,11 @@ implements Configurable
                             }
                         }
                     }
-                    __entryParser = __parserFactory.createFileEntryParser(systemType);
+                    if (null != __configuration) { // system type must have been empty above
+                        __entryParser = __parserFactory.createFileEntryParser(new FTPClientConfig(systemType, __configuration));
+                    } else {
+                        __entryParser = __parserFactory.createFileEntryParser(systemType);
+                    }
                     __entryParserKey = systemType;
                 }
             }

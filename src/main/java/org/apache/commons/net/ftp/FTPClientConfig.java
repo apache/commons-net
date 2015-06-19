@@ -233,6 +233,9 @@ public class FTPClientConfig
      * The main constructor for an FTPClientConfig object
      * @param systemKey key representing system type of the  server being
      * connected to. See {@link #getServerSystemKey() serverSystemKey}
+     * If set to the empty string, then FTPClient uses the system type returned by the server.
+     * However this is not recommended for general use;
+     * the correct system type should be set if it is known.
      */
     public FTPClientConfig(String systemKey) {
         this.serverSystemKey = systemKey;
@@ -247,7 +250,7 @@ public class FTPClientConfig
     }
 
     /**
-     * Constructor which allows setting of all member fields
+     * Constructor which allows setting of most member fields
      * @param systemKey key representing system type of the  server being
      * connected to. See
      *  {@link #getServerSystemKey() serverSystemKey}
@@ -275,6 +278,57 @@ public class FTPClientConfig
         this.serverLanguageCode = serverLanguageCode;
         this.shortMonthNames = shortMonthNames;
         this.serverTimeZoneId = serverTimeZoneId;
+    }
+
+    /**
+     * Constructor which allows setting of all member fields
+     * @param systemKey key representing system type of the  server being
+     * connected to. See
+     *  {@link #getServerSystemKey() serverSystemKey}
+     * @param defaultDateFormatStr See
+     *  {@link  #setDefaultDateFormatStr(String)  defaultDateFormatStr}
+     * @param recentDateFormatStr See
+     *  {@link  #setRecentDateFormatStr(String)  recentDateFormatStr}
+     * @param serverLanguageCode See
+     *  {@link  #setServerLanguageCode(String)  serverLanguageCode}
+     * @param shortMonthNames See
+     *  {@link  #setShortMonthNames(String)  shortMonthNames}
+     * @param serverTimeZoneId See
+     *  {@link  #setServerTimeZoneId(String)  serverTimeZoneId}
+     * @param lenientFutureDates See
+     * {@link  #setLenientFutureDates(boolean)  lenientFutureDates}
+     * @param saveUnparseableEntries See
+     * {@link  #setUnparseableEntries(boolean)  saveUnparseableEntries}
+     */
+    public FTPClientConfig(String systemKey,
+                           String defaultDateFormatStr,
+                           String recentDateFormatStr,
+                           String serverLanguageCode,
+                           String shortMonthNames,
+                           String serverTimeZoneId,
+                           boolean lenientFutureDates,
+                           boolean saveUnparseableEntries)
+    {
+        this(systemKey);
+        this.defaultDateFormatStr = defaultDateFormatStr;
+        this.lenientFutureDates = lenientFutureDates;
+        this.recentDateFormatStr = recentDateFormatStr;
+        this.saveUnparseableEntries = saveUnparseableEntries;
+        this.serverLanguageCode = serverLanguageCode;
+        this.shortMonthNames = shortMonthNames;
+        this.serverTimeZoneId = serverTimeZoneId;
+    }
+
+    // Copy constructor, intended for use by FTPClient only
+    FTPClientConfig(String systemKey, FTPClientConfig config) {
+        this.serverSystemKey = systemKey;
+        this.defaultDateFormatStr = config.defaultDateFormatStr;
+        this.lenientFutureDates = config.lenientFutureDates;
+        this.recentDateFormatStr = config.recentDateFormatStr;
+        this.saveUnparseableEntries = config.saveUnparseableEntries;
+        this.serverLanguageCode = config.serverLanguageCode;
+        this.serverTimeZoneId = config.serverTimeZoneId;
+        this.shortMonthNames = config.shortMonthNames;
     }
 
     private static final Map<String, Object> LANGUAGE_CODE_MAP = new TreeMap<String, Object>();
