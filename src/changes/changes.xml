@@ -115,7 +115,8 @@ This is mainly a bug-fix release. See further details below.
             Simplify TelnetOptionHandler class hierarchy
             </action>
             <action issue="NET-558" type="fix" dev="sebb" due-to="Ralph Becker">
-            FTPClient.getModificationTime(filename) returns complete received line including response code
+            FTPClient.getModificationTime(filename) returns complete received line including response code and EOL
+            Strip the response code and EOL
             </action>
             <action issue="NET-556" type="update" dev="sebb" due-to="Andy Rosa">
             Make SubnetInfo.isInRange(int) public

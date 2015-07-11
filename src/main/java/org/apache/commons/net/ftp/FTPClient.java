@@ -3527,7 +3527,7 @@ implements Configurable
      */
     public String getModificationTime(String pathname) throws IOException {
         if (FTPReply.isPositiveCompletion(mdtm(pathname))) {
-            return getReplyString().substring(4); // skip the return code (e.g. 213) and the space
+            return getReplyStrings()[0].substring(4); // skip the return code (e.g. 213) and the space
         }
         return null;
     }
