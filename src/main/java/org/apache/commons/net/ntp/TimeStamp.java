@@ -59,7 +59,7 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
      * Default NTP date string format. E.g. Fri, Sep 12 2003 21:06:23.860.
      * See <code>java.text.SimpleDateFormat</code> for code descriptions.
      */
-    public final static String NTP_DATE_FORMAT = "EEE, MMM dd yyyy HH:mm:ss.SSS";
+    public static final String NTP_DATE_FORMAT = "EEE, MMM dd yyyy HH:mm:ss.SSS";
 
     /**
      * NTP timestamp value: 64-bit unsigned fixed-point number as defined in RFC-1305

@@ -655,7 +655,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param b input byte
      * @return unsigned int value of byte
      */
-    protected final static int ui(byte b)
+    protected static final int ui(byte b)
     {
         int i = b & 0xFF;
         return i;
@@ -669,7 +669,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param b input byte
      * @return unsigned long value of byte
      */
-    protected final static long ul(byte b)
+    protected static final long ul(byte b)
     {
         long i = b & 0xFF;
         return i;
