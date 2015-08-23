@@ -188,7 +188,7 @@ public abstract class FTPParseTestFramework extends TestCase
     }
 
     // Force subclasses to test precision
-    abstract public void testDefaultPrecision();
+    public abstract void testDefaultPrecision();
 
-    abstract public void testRecentPrecision();
+    public abstract void testRecentPrecision();
 }
