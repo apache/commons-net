@@ -121,7 +121,7 @@ public abstract class TFTPPacket
      * @exception TFTPPacketException  If the datagram does not contain a valid
      *             TFTP packet.
      ***/
-    public final static TFTPPacket newTFTPPacket(DatagramPacket datagram)
+    public static final TFTPPacket newTFTPPacket(DatagramPacket datagram)
     throws TFTPPacketException
     {
         byte[] data;
