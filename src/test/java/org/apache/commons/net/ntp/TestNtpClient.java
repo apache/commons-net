@@ -50,7 +50,9 @@ public class TestNtpClient {
         boolean running = false;
         for (int retries=0; retries < 5; retries++) {
             running = server.isRunning();
-            if (running) break;
+            if (running) {
+                break;
+            }
             // if not running then sleep 2 seconds and try again
             try {
                 Thread.sleep(2000);

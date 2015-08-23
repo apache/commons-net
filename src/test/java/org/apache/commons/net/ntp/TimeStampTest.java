@@ -80,11 +80,13 @@ public class TimeStampTest extends TestCase {
     public void testNotSame() {
         TimeStamp time = TimeStamp.getCurrentTime();
         Object other = Integer.valueOf(0);
-        if(time.equals(other))
+        if(time.equals(other)) {
           fail("TimeStamp cannot equal Date");
+        }
         other = null;
-        if(time.equals(other))
-        fail("TimeStamp cannot equal null");
+        if(time.equals(other)) {
+            fail("TimeStamp cannot equal null");
+        }
     }
 
 }
