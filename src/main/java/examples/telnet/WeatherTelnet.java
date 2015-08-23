@@ -38,7 +38,7 @@ import examples.util.IOUtil;
 public final class WeatherTelnet
 {
 
-    public final static void main(String[] args)
+    public static final void main(String[] args)
     {
         TelnetClient telnet;
 
