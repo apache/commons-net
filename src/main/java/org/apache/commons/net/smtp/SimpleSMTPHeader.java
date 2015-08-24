@@ -17,6 +17,10 @@
 
 package org.apache.commons.net.smtp;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /***
  * This class is used to construct a bare minimum
  * acceptable header for an email message.  To construct more
@@ -51,6 +55,7 @@ public class SimpleSMTPHeader
     private final String __from;
     private final String __to;
     private final StringBuffer __headerFields;
+    private boolean hasHeaderDate;
     private StringBuffer __cc;
 
     /***
@@ -93,6 +98,9 @@ public class SimpleSMTPHeader
      ***/
     public void addHeaderField(String headerField, String value)
     {
+        if (!hasHeaderDate && "Date".equals(headerField)) {
+            hasHeaderDate = true;
+        }
         __headerFields.append(headerField);
         __headerFields.append(": ");
         __headerFields.append(value);
@@ -130,6 +138,12 @@ public class SimpleSMTPHeader
     {
         StringBuilder header = new StringBuilder();
 
+        final String pattern = "EEE, dd MMM yyyy HH:mm:ss Z"; // Fri, 21 Nov 1997 09:55:06 -0600
+        final SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.ENGLISH);
+
+        if (!hasHeaderDate) {
+            addHeaderField("Date", format.format(new Date()));
+        }
         if (__headerFields.length() > 0) {
             header.append(__headerFields.toString());
         }
