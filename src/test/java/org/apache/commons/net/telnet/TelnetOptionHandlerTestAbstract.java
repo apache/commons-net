@@ -24,8 +24,6 @@ import junit.framework.TestCase;
  * the actual test classes for TelnetOptionHadler derived
  * classes, by adding creation of three new option handlers
  * and testing of the specific subnegotiation behaviour.
- * <p>
- * @author Bruno D'Avanzo
  ***/
 public abstract class TelnetOptionHandlerTestAbstract extends TestCase
 {

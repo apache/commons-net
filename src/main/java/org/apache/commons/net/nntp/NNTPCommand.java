@@ -20,9 +20,6 @@ package org.apache.commons.net.nntp;
 /***
  * NNTPCommand stores a set of constants for NNTP command codes.  To interpret
  * the meaning of the codes, familiarity with RFC 977 is assumed.
- * <p>
- * @author Rory Winston
- * @author Ted Wise
  ***/
 
 public final class NNTPCommand

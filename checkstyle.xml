@@ -27,7 +27,6 @@ limitations under the License.
   <module name="JavadocPackage">
     <!-- setting allowLegacy means it will check for package.html instead of just package-info.java -->
     <property name="allowLegacy" value="true"/>
-    <property name="severity" value="warning" />
   </module>
 
   <module name="FileTabCharacter">
@@ -47,7 +46,6 @@ limitations under the License.
     <property name="format" value="^\s+\*\s+@author\s" />
     <property name="message" value="Deprecated @author tag" />
     <property name="fileExtensions" value="java" />
-    <property name="severity" value="warning" />
   </module>
 
   <module name="TreeWalker">
@@ -88,7 +86,6 @@ limitations under the License.
       <property name="allowMissingJavadoc" value="true"/>
       <property name="allowMissingParamTags" value="true"/>
       <property name="allowMissingThrowsTags" value="true"/>
-      <property name="severity" value="warning" />
     </module>
  
   </module>

@@ -25,8 +25,6 @@ import java.io.OutputStream;
  * Waits for strings on an input stream and answers
  * sending corresponfing strings on an output stream.
  * The reader runs in a separate thread.
- * <p>
- * @author Bruno D'Avanzo
  ***/
 public class TelnetTestResponder implements Runnable
 {

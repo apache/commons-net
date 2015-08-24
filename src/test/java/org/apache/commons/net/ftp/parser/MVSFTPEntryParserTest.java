@@ -24,9 +24,6 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * Test suite addapted to new MVSFTPEntryParser.java.
- * @author <a href="mailto:henrik.sorensen@balcab.ch">Henrik Sorensen</a>
- *
- * @author <a href="mailto:wnoto@openfinance.com">William Noto</a>
  */
 public class MVSFTPEntryParserTest extends FTPParseTestFramework {
 

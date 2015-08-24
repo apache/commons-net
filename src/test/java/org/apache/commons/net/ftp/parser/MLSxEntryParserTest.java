@@ -20,7 +20,6 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
- * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @version $Id: UnixFTPEntryParserTest.java 1643407 2014-12-05 19:32:00Z sebb $
  */
 public class MLSxEntryParserTest extends FTPParseTestFramework {

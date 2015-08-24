@@ -39,9 +39,6 @@ import java.io.OutputStream;
  * When you finish using the streams, you must call
  * {@link #disconnect  disconnect } rather than simply
  * closing the streams.
- *
- *
- * @author Bruno D'Avanzo
  ***/
 
 public class TelnetClient extends Telnet

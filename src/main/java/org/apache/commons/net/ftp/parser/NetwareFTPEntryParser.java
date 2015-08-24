@@ -28,7 +28,6 @@ import org.apache.commons.net.ftp.FTPFile;
  * <a href="http://www.novell.com/documentation/nw65/index.html?page=/documentation/nw65/ftp_enu/data/fbhbgcfa.html">http://www.novell.com/documentation/nw65/index.html?page=/documentation/nw65/ftp_enu/data/fbhbgcfa.html</a>
  * for more details.
  *
- * @author <a href="rwinston@apache.org">Rory Winston</a>
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @version $Id$
  * @since 1.5

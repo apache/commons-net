@@ -24,7 +24,6 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 import org.apache.commons.net.ftp.FTPListParseEngine;
 
 /**
- * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @version $Id$
  */
 public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework

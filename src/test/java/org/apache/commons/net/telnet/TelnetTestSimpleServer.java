@@ -25,8 +25,6 @@ import java.io.IOException;
 /***
  * Simple TCP server.
  * Waits for connections on a TCP port in a separate thread.
- * <p>
- * @author Bruno D'Avanzo
  ***/
 public class TelnetTestSimpleServer implements Runnable
 {

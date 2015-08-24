@@ -23,7 +23,6 @@ import java.io.IOException;
 
 
 /**
- * @author <a href="mailto:commons-dev@apache.org">[Net]</a>
  * @version $Id$
  *
  * The POP3* tests all presume the existence of the following parameters:

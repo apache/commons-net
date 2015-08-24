@@ -27,8 +27,6 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
  * The matching parser will be cached.
  * If the cached parser wont match due to the server changed the dirstyle,
  * a new matching parser will be searched.
- *
- * @author Mario Ivankovits (mario@ops.co.at)
  */
 public class CompositeFileEntryParser extends FTPFileEntryParserImpl
 {

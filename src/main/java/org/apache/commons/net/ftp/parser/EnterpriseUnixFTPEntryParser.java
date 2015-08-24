@@ -30,7 +30,6 @@ import org.apache.commons.net.ftp.FTPFile;
  * by the autodetection scheme.
  * </B>
  * @version $Id$
- * @author <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
  */

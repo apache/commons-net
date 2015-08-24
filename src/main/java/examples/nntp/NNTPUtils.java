@@ -23,10 +23,7 @@ import org.apache.commons.net.nntp.Article;
 import org.apache.commons.net.nntp.NNTPClient;
 
 /**
- *
  * Some convenience methods for NNTP example classes.
- *
- * @author Rory Winston <rwinston@checkfree.com>
  */
 public class NNTPUtils {
 

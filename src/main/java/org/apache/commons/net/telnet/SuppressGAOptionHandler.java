@@ -19,8 +19,6 @@ package org.apache.commons.net.telnet;
 
 /***
  * Implements the telnet suppress go ahead option RFC 858.
- * <p>
- * @author Bruno D'Avanzo
  ***/
 public class SuppressGAOptionHandler extends TelnetOptionHandler
 {

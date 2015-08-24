@@ -78,8 +78,6 @@ import org.apache.commons.net.io.Util;
  * specification that it cannot be interpreted in a useful manner despite
  * attempts to be as lenient as possible.
  *
- * @author Rory Winston
- * @author Ted Wise
  * @see NNTP
  * @see NNTPConnectionClosedException
  * @see org.apache.commons.net.MalformedServerReplyException

@@ -75,8 +75,6 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
  *
  * </code>
  *
- *
- * @author <A HREF="mailto:daniel.armbrust.list@gmail.com">Dan Armbrust</A>
  * @since 2.0
  */
 

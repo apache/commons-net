@@ -25,10 +25,6 @@ import java.util.Arrays;
 
 import org.apache.commons.net.SocketClient;
 
-/**
- * @author Bruno D'Avanzo
- */
-
 class Telnet extends SocketClient
 {
     static final boolean debug =  /*true;*/ false;

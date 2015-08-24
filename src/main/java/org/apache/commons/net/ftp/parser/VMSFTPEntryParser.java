@@ -38,9 +38,6 @@ import org.apache.commons.net.ftp.FTPFile;
  * </B>
  * <P>
  *
- * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
- * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
  * @version $Id$
  *
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)

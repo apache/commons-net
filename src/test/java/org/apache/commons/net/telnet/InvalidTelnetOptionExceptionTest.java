@@ -20,8 +20,6 @@ import junit.framework.TestCase;
 
 /***
  * JUnit test class for InvalidTelnetOptionException
- * <p>
- * @author Bruno D'Avanzo
  ***/
 public class InvalidTelnetOptionExceptionTest extends TestCase
 {

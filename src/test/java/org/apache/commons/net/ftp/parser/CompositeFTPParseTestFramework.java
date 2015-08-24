@@ -20,7 +20,6 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
- * @author <a href="mario@ops.co.at">MarioIvankovits</a>
  * @version $Id$
  */
 public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramework

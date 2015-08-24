@@ -18,8 +18,6 @@ package org.apache.commons.net.telnet;
 
 /***
  * JUnit test class for SimpleOptionHandler
- * <p>
- * @author Bruno D'Avanzo
  ***/
 public class SimpleOptionHandlerTest extends TelnetOptionHandlerTestAbstract
 {

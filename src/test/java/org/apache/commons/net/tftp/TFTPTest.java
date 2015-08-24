@@ -32,9 +32,6 @@ import junit.framework.TestCase;
 /**
  * Test the TFTP Server and TFTP Client by creating some files in the system temp folder and then
  * uploading and downloading them.
- *
- * @author <A HREF="mailto:daniel.armbrust.list@gmail.com">Dan Armbrust</A>
- *
  */
 public class TFTPTest extends TestCase
 {

@@ -44,8 +44,6 @@ import org.apache.commons.net.telnet.InvalidTelnetOptionException;
  * When connected, type AYT to send an AYT command to the server and see
  * the result.
  * Type OPT to see a report of the state of the first 25 options.
- *
- * @author Bruno D'Avanzo
  ***/
 public class TelnetClientExample implements Runnable, TelnetNotificationHandler
 {

@@ -26,8 +26,6 @@ import junit.framework.TestCase;
 
 /**
  * Test the socket connect timeout functionality
- * @author Rory (rwinston@apache.org)
- *
  */
 public class TestConnectTimeout extends TestCase {
 

@@ -22,9 +22,6 @@ package org.apache.commons.net.nntp;
  * This is an implementation of a message threading algorithm, as originally devised by Zamie Zawinski.
  * See <a href="http://www.jwz.org/doc/threading.html">http://www.jwz.org/doc/threading.html</a> for details.
  * For his Java implementation, see <a href="http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java">http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java</a>
- *
- * @author rwinston <rwinston@checkfree.com>
- *
  */
 
 import java.util.Arrays;

@@ -20,8 +20,6 @@ import junit.framework.TestCase;
 import java.io.Reader;
 
 /**
- * @author <a href="mailto:commons-dev@apache.org">[Net]</a>
- *
  * The POP3* tests all presume the existence of the following parameters:
  *   mailserver: localhost (running on the default port 110)
  *   account: username=test; password=password

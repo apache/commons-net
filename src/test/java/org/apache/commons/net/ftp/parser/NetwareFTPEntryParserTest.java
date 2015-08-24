@@ -22,7 +22,6 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
- * @author <a href="mailto:rwinston@apache.org">Rory Winston</a>
  */
 public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
 

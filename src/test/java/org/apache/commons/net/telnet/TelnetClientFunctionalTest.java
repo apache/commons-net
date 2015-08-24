@@ -24,8 +24,6 @@ import java.io.OutputStream;
  * JUnit functional test for TelnetClient.
  * Connects to the weather forecast service
  * rainmaker.wunderground.com and asks for Los Angeles forecast.
- * <p>
- * @author Bruno D'Avanzo
  ***/
 public class TelnetClientFunctionalTest extends TestCase
 {

@@ -22,16 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InterruptedIOException;
 
-/***
- *
- * <p>
- *
- * <p>
- * <p>
- * @author Bruno D'Avanzo
- ***/
-
-
 final class TelnetInputStream extends BufferedInputStream implements Runnable
 {
     /** End of file has been reached */

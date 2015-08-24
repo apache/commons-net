@@ -23,7 +23,6 @@ import java.util.ArrayList;
 /**
  * This is a class that contains the basic state needed for message retrieval and threading.
  * With thanks to Jamie  Zawinski (jwz@jwz.org)
- * @author rwinston (rwinston@apache.org)
  */
 public class Article implements Threadable {
     private long articleNumber;

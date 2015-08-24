@@ -20,8 +20,6 @@ import junit.framework.TestCase;
 
 /***
  * JUnit test class for TelnetOption
- * <p>
- * @author Bruno D'Avanzo
  ***/
 public class TelnetOptionTest extends TestCase
 {

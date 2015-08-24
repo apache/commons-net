@@ -21,8 +21,6 @@ package org.apache.commons.net.telnet;
  * The InvalidTelnetOptionException is the exception that is
  * thrown whenever a TelnetOptionHandler with an invlaid
  * option code is registered in TelnetClient with addOptionHandler.
- * <p>
- * @author Bruno D'Avanzo
  ***/
 public class InvalidTelnetOptionException extends Exception
 {

@@ -18,8 +18,6 @@ package org.apache.commons.net.telnet;
 
 /***
  * JUnit test class for SuppressGAOptionHandler
- * <p>
- * @author Bruno D'Avanzo
  ***/
 public class SuppressGAOptionHandlerTest extends TelnetOptionHandlerTestAbstract
 {

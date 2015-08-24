@@ -24,7 +24,6 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
- * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @version $Id$
  */
 public abstract class FTPParseTestFramework extends TestCase

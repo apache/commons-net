@@ -86,8 +86,6 @@ import org.apache.commons.net.io.CRLFLineReader;
  * specification that it cannot be interpreted in a useful manner despite
  * attempts to be as lenient as possible.
  *
- * @author Rory Winston
- * @author Joseph Hindsley
  * @see FTPClient
  * @see FTPConnectionClosedException
  * @see org.apache.commons.net.MalformedServerReplyException

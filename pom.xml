@@ -81,9 +81,40 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
             <email>rwinston@apache.org</email>
             <organization />
         </developer>
+        <developer>
+            <name>Rory Winston</name>
+            <email>rwinston@checkfree.com</email>
+            <organization />
+        </developer>
     </developers>
 
     <contributors>
+        <contributor>
+            <name>Henrik Sorensen</name>
+            <email>henrik.sorensen@balcab.ch</email>
+        </contributor>
+        <contributor>
+            <name>Jeff Nadler</name>
+            <email>jnadler@srcginc.com</email>
+        </contributor>
+        <contributor>
+            <name>William Noto</name>
+            <email>wnoto@openfinance.com</email>
+        </contributor>
+        <contributor>
+            <name>Stephane ESTE-GRACIAS</name>
+            <email>sestegra@free.fr</email>
+        </contributor>
+        <contributor>
+            <name>Dan Armbrust</name>
+            <email>daniel.armbrust.list@gmail.com</email>
+        </contributor>
+        <contributor>
+            <name>Yuval Kashtan</name>
+        </contributor>
+        <contributor>
+            <name>Joseph Hindsley</name>
+        </contributor>
         <contributor>
             <name>Rob Hasselbaum</name>
             <email>rhasselbaum@alumni.ithaca.edu</email>

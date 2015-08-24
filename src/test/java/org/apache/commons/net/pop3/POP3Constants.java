@@ -17,7 +17,6 @@
 package org.apache.commons.net.pop3;
 
 /**
- * @author <a href="mailto:commons-dev@apache.org">[Net]</a>
  * @version $Id$
  *
  * The POP3* tests all presume the existence of the following parameters:

@@ -26,8 +26,6 @@ import java.io.PipedOutputStream;
 /**
  * JUnit test class for TelnetClient.s
  * Implements protocol compliance tests
- * <p>
- * @author Bruno D'Avanzo
  */
 public class TelnetClientTest
 extends TestCase implements TelnetNotificationHandler

@@ -19,9 +19,6 @@ package org.apache.commons.net.ftp.parser;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
-/**
- * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
- */
 public class OS2FTPEntryParserTest extends FTPParseTestFramework
 {
 

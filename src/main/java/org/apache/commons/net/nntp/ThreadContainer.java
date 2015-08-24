@@ -22,7 +22,6 @@ package org.apache.commons.net.nntp;
  * Original implementation by Jamie Zawinski.
  * See the Grendel source for more details <a href="http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java#511">here</a>
  * Threadable objects
- * @author Rory Winston <rwinston@apache.org>
  */
 class ThreadContainer {
     Threadable threadable;

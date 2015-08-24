@@ -39,8 +39,6 @@ import org.apache.commons.net.ftp.FTPClientConfig;
  *  "DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
  * <P>
  *
- * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
- * @author <a href="sestegra@free.fr">Stephane ESTE-GRACIAS</a>
  * @version $Id$
  *
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)

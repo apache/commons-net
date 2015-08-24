@@ -32,9 +32,6 @@ import junit.framework.TestCase;
 
 /**
  * Test the FTPTimestampParser class.
- *
- * @author scohen
- *
  */
 public class FTPTimestampParserImplTest extends TestCase {
 

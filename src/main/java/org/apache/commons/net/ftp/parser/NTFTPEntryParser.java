@@ -26,8 +26,6 @@ import org.apache.commons.net.ftp.FTPFile;
 /**
  * Implementation of FTPFileEntryParser and FTPFileListParser for NT Systems.
  *
- * @author  <a href="Winston.Ojeda@qg.com">Winston Ojeda</a>
- * @author <a href="mailto:scohen@apache.org">Steve Cohen</a>
  * @version $Id$
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */

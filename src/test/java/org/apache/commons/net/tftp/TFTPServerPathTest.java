@@ -28,9 +28,6 @@ import junit.framework.TestCase;
 /**
  * Some basic tests to ensure that the TFTP Server is honoring its read/write mode, and preventing
  * files from being read or written from outside of the assigned roots.
- *
- * @author <A HREF="mailto:daniel.armbrust.list@gmail.com">Dan Armbrust</A>
- *
  */
 public class TFTPServerPathTest extends TestCase
 {

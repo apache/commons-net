@@ -25,7 +25,6 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
  * Tests the EnterpriseUnixFTPEntryParser
  *
  * @version $Id$
- * @author <a href="mailto:Winston.Ojeda@qg.com">Winston Ojeda</a>
  */
 public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
 {
