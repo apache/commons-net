@@ -162,6 +162,7 @@ public class FTPTimestampParserImpl implements
      * @see FTPTimestampParserImpl#parseTimestamp(String, Calendar)
      *
      * @param timestampStr The timestamp to be parsed
+     * @return a Calendar with the parsed timestamp
      */
 //    @Override
     public Calendar parseTimestamp(String timestampStr) throws ParseException {
