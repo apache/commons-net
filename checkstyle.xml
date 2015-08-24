@@ -75,12 +75,6 @@ limitations under the License.
     </module>
     <module name="EmptyCatchBlock"></module>
 
-    <!-- TEMP
-    <module name="RedundantThrows">
-      <property name="allowUnchecked" value="true"/>
-    </module>
-     -->
-
     <module name="JavadocMethod">
       <property name="scope" value="public"/>
       <property name="allowUndeclaredRTE" value="true"/>
