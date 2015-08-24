@@ -22,15 +22,18 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLHandshakeException;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
 import org.apache.commons.net.io.CRLFLineReader;
 import org.apache.commons.net.util.SSLContextUtils;
+import org.apache.commons.net.util.SSLSocketUtils;
 
 /**
  * The IMAPSClient class provides SSL/TLS connection encryption to IMAPClient.
@@ -45,6 +48,10 @@ import org.apache.commons.net.util.SSLContextUtils;
  *               IMAPSClient c = new IMAPSClient();
  *               c.connect("127.0.0.1", 143);
  *               if (c.execTLS()) { /rest of the commands here/ }
+ *
+ * Warning: the hostname is not verified against the certificate by default, use
+ * {@link #setHostnameVerifier(HostnameVerifier)} or {@link #setEndpointCheckingEnabled(boolean)}
+ * (on Java 1.7+) to enable verification.
  */
 public class IMAPSClient extends IMAPClient
 {
@@ -72,6 +79,12 @@ public class IMAPSClient extends IMAPClient
 
     /** The {@link KeyManager}, default null. */
     private KeyManager keyManager = null;
+
+    /** The {@link HostnameVerifier} to use post-TLS, default null (i.e. no verification). */
+    private HostnameVerifier hostnameVerifier = null;
+
+    /** Use Java 1.7+ HTTPS Endpoint Identification Algorithim. */
+    private boolean tlsEndpointChecking;
 
     /**
      * Constructor for IMAPSClient.
@@ -185,12 +198,16 @@ public class IMAPSClient extends IMAPClient
         initSSLContext();
 
         SSLSocketFactory ssf = context.getSocketFactory();
-        String ip = getRemoteAddress().getHostAddress();
+        String host = (_hostname_ != null) ? _hostname_ : getRemoteAddress().getHostAddress();
         int port = getRemotePort();
         SSLSocket socket =
-            (SSLSocket) ssf.createSocket(_socket_, ip, port, true);
+            (SSLSocket) ssf.createSocket(_socket_, host, port, true);
         socket.setEnableSessionCreation(true);
         socket.setUseClientMode(true);
+
+        if (tlsEndpointChecking) {
+            SSLSocketUtils.enableEndpointNameVerification(socket);
+        }
 
         if (protocols != null) {
             socket.setEnabledProtocols(protocols);
@@ -210,6 +227,10 @@ public class IMAPSClient extends IMAPClient
         __writer =
           new BufferedWriter(new OutputStreamWriter(_output_,
                                                     __DEFAULT_ENCODING));
+
+        if (hostnameVerifier != null && !hostnameVerifier.verify(host, socket.getSession())) {
+            throw new SSLHandshakeException("Hostname doesn't match certificate");
+        }
     }
 
     /**
@@ -320,5 +341,48 @@ public class IMAPSClient extends IMAPClient
         trustManager = newTrustManager;
     }
 
+    /**
+     * Get the currently configured {@link HostnameVerifier}.
+     * @return A HostnameVerifier instance.
+     * @since 3.4
+     */
+    public HostnameVerifier getHostnameVerifier()
+    {
+        return hostnameVerifier;
+    }
+
+    /**
+     * Override the default {@link HostnameVerifier} to use.
+     * @param newHostnameVerifier The HostnameVerifier implementation to set or <code>null</code> to disable.
+     * @since 3.4
+     */
+    public void setHostnameVerifier(HostnameVerifier newHostnameVerifier)
+    {
+        hostnameVerifier = newHostnameVerifier;
+    }
+
+    /**
+     * Return whether or not endpoint identification using the HTTPS algorithm
+     * on Java 1.7+ is enabled. The default behaviour is for this to be disabled.
+     *
+     * @return True if enabled, false if not.
+     * @since 3.4
+     */
+    public boolean isEndpointCheckingEnabled()
+    {
+        return tlsEndpointChecking;
+    }
+
+    /**
+     * Automatic endpoint identification checking using the HTTPS algorithm
+     * is supported on Java 1.7+. The default behaviour is for this to be disabled.
+     *
+     * @param enable Enable automatic endpoint identification checking using the HTTPS algorithm on Java 1.7+.
+     * @since 3.4
+     */
+    public void setEndpointCheckingEnabled(boolean enable)
+    {
+        tlsEndpointChecking = enable;
+    }
 }
 /* kate: indent-width 4; replace-tabs on; */

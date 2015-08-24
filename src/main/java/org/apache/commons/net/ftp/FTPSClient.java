@@ -23,21 +23,28 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLHandshakeException;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
 import org.apache.commons.net.util.Base64;
 import org.apache.commons.net.util.SSLContextUtils;
+import org.apache.commons.net.util.SSLSocketUtils;
 import org.apache.commons.net.util.TrustManagerUtils;
 
 /**
  * FTP over SSL processing. If desired, the JVM property -Djavax.net.debug=all can be used to
  * see wire-level SSL details.
  *
+ * Warning: the hostname is not verified against the certificate by default, use
+ * {@link #setHostnameVerifier(HostnameVerifier)} or {@link #setEndpointCheckingEnabled(boolean)}
+ * (on Java 1.7+) to enable verification. Verification is only performed on client mode connections.
  * @version $Id$
  * @since 2.0
  */
@@ -105,6 +112,12 @@ public class FTPSClient extends FTPClient {
 
     /** The {@link KeyManager}, default null (i.e. use system default). */
     private KeyManager keyManager = null;
+
+    /** The {@link HostnameVerifier} to use post-TLS, default null (i.e. no verification). */
+    private HostnameVerifier hostnameVerifier = null;
+
+    /** Use Java 1.7+ HTTPS Endpoint Identification Algorithim. */
+    private boolean tlsEndpointChecking;
 
     /**
      * Constructor for FTPSClient, calls {@link #FTPSClient(String, boolean)}.
@@ -248,14 +261,19 @@ public class FTPSClient extends FTPClient {
         initSslContext();
 
         SSLSocketFactory ssf = context.getSocketFactory();
-        String ip = _socket_.getInetAddress().getHostAddress();
+        String host = (_hostname_ != null) ? _hostname_ : getRemoteAddress().getHostAddress();
         int port = _socket_.getPort();
         SSLSocket socket =
-            (SSLSocket) ssf.createSocket(_socket_, ip, port, false);
+            (SSLSocket) ssf.createSocket(_socket_, host, port, false);
         socket.setEnableSessionCreation(isCreation);
         socket.setUseClientMode(isClientMode);
-        // server mode
-        if (!isClientMode) {
+
+        // client mode
+        if (isClientMode) {
+            if (tlsEndpointChecking) {
+                SSLSocketUtils.enableEndpointNameVerification(socket);
+            }
+        } else { // server mode
             socket.setNeedClientAuth(isNeedClientAuth);
             socket.setWantClientAuth(isWantClientAuth);
         }
@@ -274,6 +292,12 @@ public class FTPSClient extends FTPClient {
                 socket .getInputStream(), getControlEncoding()));
         _controlOutput_ = new BufferedWriter(new OutputStreamWriter(
                 socket.getOutputStream(), getControlEncoding()));
+
+        if (isClientMode) {
+            if (hostnameVerifier != null && !hostnameVerifier.verify(host, socket.getSession())) {
+                throw new SSLHandshakeException("Hostname doesn't match certificate");
+            }
+        }
     }
 
     /**
@@ -655,6 +679,56 @@ public class FTPSClient extends FTPClient {
      */
     public void setTrustManager(TrustManager trustManager) {
         this.trustManager = trustManager;
+    }
+
+    /**
+     * Get the currently configured {@link HostnameVerifier}.
+     * The verifier is only used on client mode connections.
+     * @return A HostnameVerifier instance.
+     * @since 3.4
+     */
+    public HostnameVerifier getHostnameVerifier()
+    {
+        return hostnameVerifier;
+    }
+
+    /**
+     * Override the default {@link HostnameVerifier} to use.
+     * The verifier is only used on client mode connections.
+     * @param newHostnameVerifier The HostnameVerifier implementation to set or <code>null</code> to disable.
+     * @since 3.4
+     */
+    public void setHostnameVerifier(HostnameVerifier newHostnameVerifier)
+    {
+        hostnameVerifier = newHostnameVerifier;
+    }
+
+    /**
+     * Return whether or not endpoint identification using the HTTPS algorithm
+     * on Java 1.7+ is enabled. The default behaviour is for this to be disabled.
+     *
+     * This check is only performed on client mode connections.
+     *
+     * @return True if enabled, false if not.
+     * @since 3.4
+     */
+    public boolean isEndpointCheckingEnabled()
+    {
+        return tlsEndpointChecking;
+    }
+
+    /**
+     * Automatic endpoint identification checking using the HTTPS algorithm
+     * is supported on Java 1.7+. The default behaviour is for this to be disabled.
+     *
+     * This check is only performed on client mode connections.
+     *
+     * @param enable Enable automatic endpoint identification checking using the HTTPS algorithm on Java 1.7+.
+     * @since 3.4
+     */
+    public void setEndpointCheckingEnabled(boolean enable)
+    {
+        tlsEndpointChecking = enable;
     }
 
     /**

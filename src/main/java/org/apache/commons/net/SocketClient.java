@@ -80,6 +80,9 @@ public abstract class SocketClient
     /** The socket used for the connection. */
     protected Socket _socket_;
 
+    /** The hostname used for the connection (null = no hostname supplied). */
+    protected String _hostname_;
+
     /** The default port the client should connect to. */
     protected int _defaultPort_;
 
@@ -123,6 +126,7 @@ public abstract class SocketClient
     public SocketClient()
     {
         _socket_ = null;
+        _hostname_ = null;
         _input_ = null;
         _output_ = null;
         _timeout_ = 0;
@@ -173,6 +177,7 @@ public abstract class SocketClient
     public void connect(InetAddress host, int port)
     throws SocketException, IOException
     {
+        _hostname_ = null;
         _socket_ = _socketFactory_.createSocket();
         if (receiveBufferSize != -1) {
             _socket_.setReceiveBufferSize(receiveBufferSize);
@@ -202,6 +207,7 @@ public abstract class SocketClient
     throws SocketException, IOException
     {
         connect(InetAddress.getByName(hostname), port);
+        _hostname_ = hostname;
     }
 
 
@@ -224,6 +230,7 @@ public abstract class SocketClient
                         InetAddress localAddr, int localPort)
     throws SocketException, IOException
     {
+        _hostname_ = null;
         _socket_ = _socketFactory_.createSocket();
         if (receiveBufferSize != -1) {
             _socket_.setReceiveBufferSize(receiveBufferSize);
@@ -258,6 +265,7 @@ public abstract class SocketClient
     throws SocketException, IOException
     {
        connect(InetAddress.getByName(hostname), port, localAddr, localPort);
+       _hostname_ = hostname;
     }
 
 
@@ -275,6 +283,7 @@ public abstract class SocketClient
      */
     public void connect(InetAddress host) throws SocketException, IOException
     {
+        _hostname_ = null;
         connect(host, _defaultPort_);
     }
 
@@ -295,6 +304,7 @@ public abstract class SocketClient
     public void connect(String hostname) throws SocketException, IOException
     {
         connect(hostname, _defaultPort_);
+        _hostname_ = hostname;
     }
 
 
@@ -314,6 +324,7 @@ public abstract class SocketClient
         closeQuietly(_input_);
         closeQuietly(_output_);
         _socket_ = null;
+        _hostname_ = null;
         _input_ = null;
         _output_ = null;
     }

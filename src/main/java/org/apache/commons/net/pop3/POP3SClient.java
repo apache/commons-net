@@ -22,15 +22,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLHandshakeException;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
 import org.apache.commons.net.io.CRLFLineReader;
 import org.apache.commons.net.util.SSLContextUtils;
+import org.apache.commons.net.util.SSLSocketUtils;
 
 /**
  * POP3 over SSL processing. Copied from FTPSClient.java and modified to suit POP3.
@@ -44,6 +47,10 @@ import org.apache.commons.net.util.SSLContextUtils;
  *               POP3SClient c = new POP3SClient();
  *               c.connect("127.0.0.1", 110);
  *               if (c.execTLS()) { /rest of the commands here/ }
+ *
+ * Warning: the hostname is not verified against the certificate by default, use
+ * {@link #setHostnameVerifier(HostnameVerifier)} or {@link #setEndpointCheckingEnabled(boolean)}
+ * (on Java 1.7+) to enable verification.
  * @since 3.0
  */
 public class POP3SClient extends POP3Client
@@ -76,6 +83,12 @@ public class POP3SClient extends POP3Client
 
     /** The {@link KeyManager}, default null. */
     private KeyManager keyManager = null;
+
+    /** The {@link HostnameVerifier} to use post-TLS, default null (i.e. no verification). */
+    private HostnameVerifier hostnameVerifier = null;
+
+    /** Use Java 1.7+ HTTPS Endpoint Identification Algorithim. */
+    private boolean tlsEndpointChecking;
 
     /**
      * Constructor for POP3SClient, using {@link #DEFAULT_PROTOCOL} i.e. TLS
@@ -194,12 +207,16 @@ public class POP3SClient extends POP3Client
         initSSLContext();
 
         SSLSocketFactory ssf = context.getSocketFactory();
-        String ip = getRemoteAddress().getHostAddress();
+        String host = (_hostname_ != null) ? _hostname_ : getRemoteAddress().getHostAddress();
         int port = getRemotePort();
         SSLSocket socket =
-            (SSLSocket) ssf.createSocket(_socket_, ip, port, true);
+            (SSLSocket) ssf.createSocket(_socket_, host, port, true);
         socket.setEnableSessionCreation(true);
         socket.setUseClientMode(true);
+
+        if (tlsEndpointChecking) {
+            SSLSocketUtils.enableEndpointNameVerification(socket);
+        }
 
         if (protocols != null) {
             socket.setEnabledProtocols(protocols);
@@ -215,6 +232,10 @@ public class POP3SClient extends POP3Client
         _output_ = socket.getOutputStream();
         _reader = new CRLFLineReader(new InputStreamReader(_input_, _DEFAULT_ENCODING));
         _writer = new BufferedWriter(new OutputStreamWriter(_output_, _DEFAULT_ENCODING));
+
+        if (hostnameVerifier != null && !hostnameVerifier.verify(host, socket.getSession())) {
+            throw new SSLHandshakeException("Hostname doesn't match certificate");
+        }
     }
 
     /**
@@ -323,6 +344,50 @@ public class POP3SClient extends POP3Client
     public void setTrustManager(TrustManager newTrustManager)
     {
         trustManager = newTrustManager;
+    }
+
+    /**
+     * Get the currently configured {@link HostnameVerifier}.
+     * @return A HostnameVerifier instance.
+     * @since 3.4
+     */
+    public HostnameVerifier getHostnameVerifier()
+    {
+        return hostnameVerifier;
+    }
+
+    /**
+     * Override the default {@link HostnameVerifier} to use.
+     * @param newHostnameVerifier The HostnameVerifier implementation to set or <code>null</code> to disable.
+     * @since 3.4
+     */
+    public void setHostnameVerifier(HostnameVerifier newHostnameVerifier)
+    {
+        hostnameVerifier = newHostnameVerifier;
+    }
+
+    /**
+     * Return whether or not endpoint identification using the HTTPS algorithm
+     * on Java 1.7+ is enabled. The default behaviour is for this to be disabled.
+     *
+     * @return True if enabled, false if not.
+     * @since 3.4
+     */
+    public boolean isEndpointCheckingEnabled()
+    {
+        return tlsEndpointChecking;
+    }
+
+    /**
+     * Automatic endpoint identification checking using the HTTPS algorithm
+     * is supported on Java 1.7+. The default behaviour is for this to be disabled.
+     *
+     * @param enable Enable automatic endpoint identification checking using the HTTPS algorithm on Java 1.7+.
+     * @since 3.4
+     */
+    public void setEndpointCheckingEnabled(boolean enable)
+    {
+        tlsEndpointChecking = enable;
     }
 }
 

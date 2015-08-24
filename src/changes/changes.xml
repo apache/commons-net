@@ -72,6 +72,9 @@ This is mainly a bug-fix release. See further details below.
   IMAPExportMbox (example app) allows IMAP folders to be exported into an mbox file.
   This is the inverse of the IMAPImportMbox example added previously
         ">
+            <action issue="NET-579" type="fix" dev="sebb" due-to="Simon Arlott">
+            SSL/TLS SocketClients do not verify the hostname against the certificate
+            </action>
             <action issue="NET-576" type="update" dev="sebb">
             Allow FTPClient to use SYST response if system type is not specified in configuration
             </action>
