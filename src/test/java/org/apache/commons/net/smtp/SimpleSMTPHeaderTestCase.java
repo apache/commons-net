@@ -31,13 +31,10 @@ public class SimpleSMTPHeaderTestCase {
 
     @Test(expected=IllegalArgumentException.class)
     public void testToStringNoFrom() {
-        SimpleSMTPHeader hdr = new SimpleSMTPHeader(null, null, null);
-        assertNotNull(hdr);
-        // Note that the DotTerminatedMessageWriter converts LF to CRLF
-        assertEquals("From: from@here.invalid\n\n", hdr.toString());
+        new SimpleSMTPHeader(null, null, null);
     }
-    @Test
 
+    @Test
     public void testToStringNoTo() {
         SimpleSMTPHeader hdr = new SimpleSMTPHeader("from@here.invalid", null, null);
         assertNotNull(hdr);
