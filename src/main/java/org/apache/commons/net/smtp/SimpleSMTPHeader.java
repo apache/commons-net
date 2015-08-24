@@ -20,7 +20,7 @@ package org.apache.commons.net.smtp;
 /***
  * This class is used to construct a bare minimum
  * acceptable header for an email message.  To construct more
- * complicated headers you should refer to RFC 822.  When the
+ * complicated headers you should refer to RFC 5322.  When the
  * Java Mail API is finalized, you will be
  * able to use it to compose fully compliant Internet text messages.
  * <p>

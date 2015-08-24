@@ -150,7 +150,7 @@ public class SMTPClient extends SMTP
      * <p>
      * For example,
      * <pre>
-     * writer = client.sendMessage();
+     * writer = client.sendMessageData();
      * if(writer == null) // failure
      *   return false;
      * header =
@@ -335,7 +335,7 @@ public class SMTPClient extends SMTP
      * {@link org.apache.commons.net.smtp.SimpleSMTPHeader}
      * class to construct a bare minimum header.
      * To construct more complicated headers you should
-     * refer to RFC 822.  When the Java Mail API is finalized, you will be
+     * refer to RFC 5322.  When the Java Mail API is finalized, you will be
      * able to use it to compose fully compliant Internet text messages.
      * The DotTerminatedMessageWriter takes care of doubling line-leading
      * dots and ending the message with a single dot upon closing, so all
@@ -355,6 +355,7 @@ public class SMTPClient extends SMTP
      *      as an IOException or independently as itself.
      * @exception IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
+     * @see #sendShortMessageData(String)
      ***/
     public Writer sendMessageData() throws IOException
     {
@@ -375,6 +376,7 @@ public class SMTPClient extends SMTP
      * its success or failure.
      * <p>
      * @param message  The short email message to send.
+     * This must include the headers and the body, but not the trailing "."
      * @return True if successfully completed, false if not.
      * @exception SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
@@ -412,6 +414,7 @@ public class SMTPClient extends SMTP
      * @param sender  The email address of the sender.
      * @param recipient  The email address of the recipient.
      * @param message  The short email message to send.
+     * This must include the headers and the body, but not the trailing "."
      * @return True if successfully completed, false if not.
      * @exception SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
@@ -455,6 +458,7 @@ public class SMTPClient extends SMTP
      * @param sender  The email address of the sender.
      * @param recipients  An array of recipient email addresses.
      * @param message  The short email message to send.
+     * This must include the headers and the body, but not the trailing "."
      * @return True if successfully completed, false if not.
      * @exception SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
