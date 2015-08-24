@@ -47,7 +47,9 @@ package org.apache.commons.net.smtp;
 
 public class SimpleSMTPHeader
 {
-    private final String __subject, __from, __to;
+    private final String __subject;
+    private final String __from;
+    private final String __to;
     private final StringBuffer __headerFields;
     private StringBuffer __cc;
 
@@ -57,13 +59,19 @@ public class SimpleSMTPHeader
      * <p>
      * @param from  The value of the <code>From:</code> header field.  This
      *              should be the sender's email address.
+     *              Must not be null.
      * @param to    The value of the <code>To:</code> header field.  This
      *              should be the recipient's email address.
+     *              May be null
      * @param subject  The value of the <code>Subject:</code> header field.
      *              This should be the subject of the message.
+     *              May be null
      ***/
     public SimpleSMTPHeader(String from, String to, String subject)
     {
+        if (from == null) {
+            throw new IllegalArgumentException("From cannot be null");
+        }
         __to = to;
         __from = from;
         __subject = subject;
@@ -126,25 +134,23 @@ public class SimpleSMTPHeader
             header.append(__headerFields.toString());
         }
 
-        header.append("From: ");
-        header.append(__from);
-        header.append("\nTo: ");
-        header.append(__to);
+        header.append("From: ").append(__from).append("\n");
+
+        if (__to != null) {
+            header.append("To: ").append(__to).append("\n");
+        }
 
         if (__cc != null)
         {
-            header.append("\nCc: ");
-            header.append(__cc.toString());
+            header.append("Cc: ").append(__cc.toString()).append("\n");
         }
 
         if (__subject != null)
         {
-            header.append("\nSubject: ");
-            header.append(__subject);
+            header.append("Subject: ").append(__subject).append("\n");
         }
 
-        header.append('\n');
-        header.append('\n');
+        header.append('\n'); // end of headers; body follows
 
         return header.toString();
     }

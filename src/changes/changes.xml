@@ -73,6 +73,9 @@ This is mainly a bug-fix release. See further details below.
   This is the inverse of the IMAPImportMbox example added previously
         ">
         
+            <action issue="NET-582" type="fix" dev="sebb">
+            SimpleSMTPHeader does not allow for missing To: field
+            </action>
             <action issue="NET-580" type="fix" dev="sebb" due-to="Simon Arlott">
             SMTPClient.sendSimpleMessage() silently ignores failed recipients
             Update Javadoc
