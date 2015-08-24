@@ -104,7 +104,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
             } else {
                 return null; // Invalid - no pathname
             }
-            
+
         }
         String parts[] = entry.split(" ",2); // Path may contain space
         if (parts.length != 2 || parts[1].length() == 0) {

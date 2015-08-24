@@ -189,7 +189,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
         final FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_AS400);
         conf.setDefaultDateFormatStr("MM/dd/yy HH:mm:ss");
         final FTPFileEntryParser parser = new OS400FTPEntryParser(conf);
-        
+
         FTPFile f = parser.parseFTPEntry("ZFTPDEV 9069 05/20/15 15:36:52 *STMF /DRV/AUDWRKSHET/AUDWRK0204232015114625.PDF");
         assertNotNull("Could not parse entry.", f);
         assertNotNull("Could not parse timestamp.", f.getTimestamp());

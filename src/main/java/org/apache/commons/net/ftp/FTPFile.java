@@ -84,7 +84,7 @@ public class FTPFile implements Serializable
 
     /**
      * Constructor for use by {@link FTPListParseEngine} only.
-     * Used to create FTPFile entries for failed parses 
+     * Used to create FTPFile entries for failed parses
      * @param rawListing line that could not be parsed.
      * @since 3.4
      */
@@ -175,14 +175,14 @@ public class FTPFile implements Serializable
      * Used to indicate whether an entry is valid or not.
      * If the entry is invalid, only the {@link #getRawListing()} method will be useful.
      * Other methods may fail.
-     * 
+     *
      * Used in conjunction with list parsing that preseverves entries that failed to parse.
      * @see FTPClientConfig#setUnparseableEntries(boolean)
      * @return true if the entry is valid
      * @since 3.4
      */
     public boolean isValid() {
-        return (_permissions != null);        
+        return (_permissions != null);
     }
 
     /***
@@ -455,7 +455,7 @@ public class FTPFile implements Serializable
      */
     public String toFormattedString(final String timezone)
     {
-        
+
         if (!isValid()) {
             return "[Invalid: could not parse file entry]";
         }

@@ -50,7 +50,7 @@ public class FTPTimestampParserImpl implements
     private SimpleDateFormat recentDateFormat;
     /* The index in CALENDAR_UNITS of the smallest time unit in recentDateFormat */
     private int recentDateSmallestUnitIndex;
-    
+
     private boolean lenientFutureDates = false;
 
     /*
@@ -66,9 +66,9 @@ public class FTPTimestampParserImpl implements
      * e.g. for MINUTE it would clear MILLISECOND and SECOND
      */
     private static final int[] CALENDAR_UNITS = {
-        Calendar.MILLISECOND, 
+        Calendar.MILLISECOND,
         Calendar.SECOND,
-        Calendar.MINUTE, 
+        Calendar.MINUTE,
         Calendar.HOUR_OF_DAY,
         Calendar.DAY_OF_MONTH,
         Calendar.MONTH,
@@ -182,7 +182,7 @@ public class FTPTimestampParserImpl implements
      * @param timestampStr The timestamp to be parsed
      * @param serverTime The current time for the server
      * @return the calendar
-     * @throws ParseException if timestamp cannot be parsed 
+     * @throws ParseException if timestamp cannot be parsed
      * @since 1.5
      */
     public Calendar parseTimestamp(String timestampStr, Calendar serverTime) throws ParseException {
@@ -269,7 +269,7 @@ public class FTPTimestampParserImpl implements
             if (dfs != null) {
                 this.defaultDateFormat = new SimpleDateFormat(format, dfs);
             } else {
-                this.defaultDateFormat = new SimpleDateFormat(format);                
+                this.defaultDateFormat = new SimpleDateFormat(format);
             }
             this.defaultDateFormat.setLenient(false);
         } else {

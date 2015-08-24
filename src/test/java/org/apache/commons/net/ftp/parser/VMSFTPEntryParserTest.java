@@ -207,7 +207,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     public void testDefaultPrecision() {
         testPrecision("1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [TRANSLATED]    (RWED,RD,,)", CalendarUnit.SECOND);
     }
-    
+
     public void testRecentPrecision() {
         // Not used
     }

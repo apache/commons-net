@@ -222,12 +222,10 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
     @Override
     public void testDefaultPrecision() {
         // TODO Not sure what dates are parsed
-        
     }
 
     @Override
     public void testRecentPrecision() {
         // TODO Auto-generated method stub
-        
     }
 }
