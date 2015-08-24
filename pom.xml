@@ -182,6 +182,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <commons.jira.id>NET</commons.jira.id>
         <commons.jira.pid>12310487</commons.jira.pid>
         <checkstyle.plugin.version>2.16</checkstyle.plugin.version>
+        <checkstyle.tool.version>6.9</checkstyle.tool.version>
         <commons.changes.onlyCurrentVersion>true</commons.changes.onlyCurrentVersion>
     </properties>
 
@@ -203,6 +204,18 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
                 <version>1.9.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${checkstyle.plugin.version}</version>
+                <dependencies>
+                  <dependency>
+                    <groupId>com.puppycrawl.tools</groupId>
+                    <artifactId>checkstyle</artifactId>
+                    <version>${checkstyle.tool.version}</version>
+                  </dependency>
+                </dependencies>
             </plugin>
           </plugins>
         </pluginManagement>

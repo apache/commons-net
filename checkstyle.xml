@@ -73,6 +73,7 @@ limitations under the License.
     <module name="EmptyBlock">
       <property name="option" value="text"/>
     </module>
+    <module name="EmptyCatchBlock"></module>
 
     <!-- TEMP
     <module name="RedundantThrows">
