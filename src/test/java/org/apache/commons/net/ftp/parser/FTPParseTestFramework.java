@@ -177,13 +177,13 @@ public abstract class FTPParseTestFramework extends TestCase
         // This is needed for FTPFile.toFormattedString() to work correctly
         for(int i = ordinal; i < values.length; i++) {
             CalendarUnit unit = values[i];
-            assertTrue("Expected set "+unit+" in "+listEntry, stamp.isSet(unit.unit));            
+            assertTrue("Expected set "+unit+" in "+listEntry, stamp.isSet(unit.unit));
         }
         // Check previous entry (if any) is not set
         // This is also needed for FTPFile.toFormattedString() to work correctly
         if (ordinal > 0) {
             final CalendarUnit prevUnit = values[ordinal-1];
-            assertFalse("Expected not set "+prevUnit+" in "+listEntry, stamp.isSet(prevUnit.unit));            
+            assertFalse("Expected not set "+prevUnit+" in "+listEntry, stamp.isSet(prevUnit.unit));
         }
     }
 

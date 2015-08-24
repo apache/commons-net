@@ -862,7 +862,7 @@ public class NNTPClient extends NNTP
      * for retrieving the current article number.
      * @param pointer to the article
      * @return true if OK
-     * @throws IOException on error 
+     * @throws IOException on error
      ***/
     public boolean selectArticle(ArticleInfo pointer) throws IOException
     {
@@ -910,7 +910,7 @@ public class NNTPClient extends NNTP
     }
 
 
-    /*** Same as <code> selectArticle(articleNumber, null) </code> 
+    /*** Same as <code> selectArticle(articleNumber, null) </code>
      * @param articleNumber the numger
      * @return true if successful
      * @throws IOException on error ***/
@@ -958,8 +958,8 @@ public class NNTPClient extends NNTP
         return true;
     }
 
-    /*** Same as <code> selectPreviousArticle((ArticleInfo) null) </code> 
-     * @return true if successful 
+    /*** Same as <code> selectPreviousArticle((ArticleInfo) null) </code>
+     * @return true if successful
      * @throws IOException on error ***/
     public boolean selectPreviousArticle() throws IOException
     {
@@ -1005,7 +1005,7 @@ public class NNTPClient extends NNTP
     }
 
 
-    /*** Same as <code> selectNextArticle((ArticleInfo) null) </code> 
+    /*** Same as <code> selectNextArticle((ArticleInfo) null) </code>
      * @return true if successful
      * @throws IOException on error ***/
     public boolean selectNextArticle() throws IOException
@@ -1637,7 +1637,7 @@ public class NNTPClient extends NNTP
      * @param a  tba
      * @param ap  tba
      * @return  tba
-     * @throws IOException tba 
+     * @throws IOException tba
      * @deprecated 3.0 use {@link #selectArticle(long, ArticleInfo)} instead
      */
     @Deprecated

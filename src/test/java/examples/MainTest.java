@@ -40,7 +40,7 @@ public class MainTest {
         final Enumeration<String> propertyNames = (Enumeration<String>) cp.propertyNames();
         while(propertyNames.hasMoreElements()){
             String c = propertyNames.nextElement();
-            String fv = fp.getProperty(c); 
+            String fv = fp.getProperty(c);
             final String cv = cp.getProperty(c);
             if (fv == null) {
                 System.out.printf("%-25s %s - missing from examples.properties%n",c,cv);
@@ -78,10 +78,10 @@ public class MainTest {
         for(File file : current.listFiles()) {
             if (file.isDirectory()) {
                 scanForClasses(rootLength, file, p);
-            } else {                
+            } else {
                 processFileName(file.getPath().substring(rootLength), p);
             }
-        }        
+        }
     }
 
     private static void processFileName(String name, Properties p) {
@@ -96,7 +96,7 @@ public class MainTest {
         final int lastSep = name.lastIndexOf('/');
         final String alias = name.substring(lastSep+1);
         if (p.containsKey(alias)) {
-            System.out.printf("Duplicate alias: %-25s %s %s %n",alias,name,p.getProperty(alias));            
+            System.out.printf("Duplicate alias: %-25s %s %s %n",alias,name,p.getProperty(alias));
         } else {
             p.setProperty(alias, name);
         }

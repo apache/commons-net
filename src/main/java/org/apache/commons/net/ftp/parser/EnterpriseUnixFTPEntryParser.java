@@ -59,8 +59,8 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
         + "\\s*"       // TODO should the space be optional?
         // TODO \\d* should be \\d? surely ? Otherwise 01111 is allowed
         + "((?:[012]\\d*)|(?:3[01]))\\s*" // 18 date [012]\d* or 3[01]
-        + "((\\d\\d\\d\\d)|((?:[01]\\d)|(?:2[0123])):([012345]\\d))\\s" 
-        // 20 \d\d\d\d  = year  OR 
+        + "((\\d\\d\\d\\d)|((?:[01]\\d)|(?:2[0123])):([012345]\\d))\\s"
+        // 20 \d\d\d\d  = year  OR
         // 21 [01]\d or 2[0123] hour + ':'
         // 22 [012345]\d = minute
         + "(\\S*)(\\s*.*)"; // 23 name

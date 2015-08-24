@@ -212,7 +212,7 @@ public abstract class TelnetOptionHandler
      * The method is used to specify a subnegotiation sequence that will be
      * sent by TelnetClient when the option is activated.
      * <p>
-     * This implementation returns null, and must be overriden by 
+     * This implementation returns null, and must be overriden by
      * the actual TelnetOptionHandler to specify
      * which response must be sent for the subnegotiation request.
      * @return subnegotiation sequence to be sent by TelnetClient. TelnetClient
@@ -228,7 +228,7 @@ public abstract class TelnetOptionHandler
      * The method is used to specify a subnegotiation sequence that will be
      * sent by TelnetClient when the option is activated.
      * <p>
-     * This implementation returns null, and must be overriden by 
+     * This implementation returns null, and must be overriden by
      * the actual TelnetOptionHandler to specify
      * which response must be sent for the subnegotiation request.
      * @return subnegotiation sequence to be sent by TelnetClient. TelnetClient

@@ -127,7 +127,7 @@ public class SubnetUtils {
         }
 
         /**
-         * 
+         *
          * @param address the address to check
          * @return true if it is in range
          * @since 3.4 (made public)

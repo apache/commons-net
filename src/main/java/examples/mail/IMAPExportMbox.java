@@ -184,7 +184,7 @@ public final class IMAPExportMbox
         } else {
             final File mbox = new File(file);
             if (mbox.exists()) {
-                throw new IOException("mailbox file: " + mbox + " already exists!");                
+                throw new IOException("mailbox file: " + mbox + " already exists!");
             }
             System.out.println("Creating file " + mbox);
             chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mbox)), eol, printHash, printMarker, checkSequence);
@@ -201,7 +201,7 @@ public final class IMAPExportMbox
             @Override
             public void protocolReplyReceived(ProtocolCommandEvent event) {
                 if (event.getReplyCode() != IMAPReply.PARTIAL){ // This is dealt with by the chunk listener
-                    super.protocolReplyReceived(event);                    
+                    super.protocolReplyReceived(event);
                 }
             }
         };
@@ -287,7 +287,7 @@ public final class IMAPExportMbox
             System.out.println("Processed " + chunkListener.total + " messages.");
         }
         if (maxIndexInFolder != null) {
-            System.out.println("Folder contained " + maxIndexInFolder + " messages.");            
+            System.out.println("Folder contained " + maxIndexInFolder + " messages.");
         }
     }
 

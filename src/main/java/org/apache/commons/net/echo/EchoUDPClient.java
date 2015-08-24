@@ -91,10 +91,10 @@ public final class EchoUDPClient extends DiscardUDPClient
         return __receivePacket.getLength();
     }
 
-    /*** Same as <code> receive(data, data.length)</code> 
+    /*** Same as <code> receive(data, data.length)</code>
      * @param data the buffer to receive the input
      * @return the number of bytes
-     * @throws IOException on error 
+     * @throws IOException on error
      ***/
     public int receive(byte[] data) throws IOException
     {

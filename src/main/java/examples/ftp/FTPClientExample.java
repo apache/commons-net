@@ -309,7 +309,7 @@ public final class FTPClientExample
         if (serverType != null) {
             config = new FTPClientConfig(serverType);
         } else {
-            config = new FTPClientConfig();            
+            config = new FTPClientConfig();
         }
         config.setUnparseableEntries(saveUnparseable);
         if (defaultDateFormat != null) {

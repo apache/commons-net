@@ -1891,7 +1891,7 @@ implements Configurable
      * @param command the command to get
      * @param remote the remote file name
      * @param local the local file name
-     * @return true if successful 
+     * @return true if successful
      * @throws IOException on error
      * @since 3.1
      */
@@ -1942,7 +1942,7 @@ implements Configurable
      * the local representation.  You must close the InputStream when you
      * finish reading from it.  The InputStream itself will take care of
      * closing the parent data connection socket upon being closed.
-     * <p> 
+     * <p>
      * <b>To finalize the file transfer you must call
      * {@link #completePendingCommand  completePendingCommand } and
      * check its return value to verify success.</b>
@@ -2042,7 +2042,7 @@ implements Configurable
      * OutputStream when you finish writing to it.  The OutputStream itself
      * will take care of closing the parent data connection socket upon being
      * closed.
-     * <p> 
+     * <p>
      * <b>To finalize the file transfer you must call
      * {@link #completePendingCommand  completePendingCommand } and
      * check its return value to verify success.</b>
@@ -2106,7 +2106,7 @@ implements Configurable
      * OutputStream when you finish writing to it.  The OutputStream itself
      * will take care of closing the parent data connection socket upon being
      * closed.
-     * <p> 
+     * <p>
      * <b>To finalize the file transfer you must call
      * {@link #completePendingCommand  completePendingCommand } and
      * check its return value to verify success.</b>
@@ -2173,7 +2173,7 @@ implements Configurable
      * OutputStream when you finish writing to it.  The OutputStream itself
      * will take care of closing the parent data connection socket upon being
      * closed.
-     * <p> 
+     * <p>
      * <b>To finalize the file transfer you must call
      * {@link #completePendingCommand  completePendingCommand } and
      * check its return value to verify success.</b>
@@ -2237,7 +2237,7 @@ implements Configurable
      * OutputStream when you finish writing to it.  The OutputStream itself
      * will take care of closing the parent data connection socket upon being
      * closed.
-     * <p> 
+     * <p>
      * <b>To finalize the file transfer you must call
      * {@link #completePendingCommand  completePendingCommand } and
      * check its return value to verify success.</b>

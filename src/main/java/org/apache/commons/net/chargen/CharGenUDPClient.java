@@ -96,9 +96,9 @@ public final class CharGenUDPClient extends DatagramSocketClient
         _socket_.send(__sendPacket);
     }
 
-    /*** Same as <code>send(host, CharGenUDPClient.DEFAULT_PORT);</code> 
-     * @param host the destination host 
-     * @throws IOException on error 
+    /*** Same as <code>send(host, CharGenUDPClient.DEFAULT_PORT);</code>
+     * @param host the destination host
+     * @throws IOException on error
      ***/
     public void send(InetAddress host) throws IOException
     {

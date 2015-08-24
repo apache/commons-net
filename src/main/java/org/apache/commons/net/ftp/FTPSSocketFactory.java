@@ -70,7 +70,7 @@ public class FTPSSocketFactory extends SocketFactory {
 
     /** @param port the port
      * @return  the socket
-     * @throws IOException on error 
+     * @throws IOException on error
      * @deprecated (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int) instead} */
     @Deprecated
     public java.net.ServerSocket createServerSocket(int port) throws IOException {

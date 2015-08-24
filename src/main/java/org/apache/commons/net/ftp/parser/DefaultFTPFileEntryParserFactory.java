@@ -242,7 +242,7 @@ public class DefaultFTPFileEntryParserFactory
             return new CompositeFileEntryParser(new FTPFileEntryParser[]
                    {
                        new NTFTPEntryParser(config),
-                       new UnixFTPEntryParser(config, 
+                       new UnixFTPEntryParser(config,
                                config != null && FTPClientConfig.SYST_UNIX_TRIM_LEADING.equals(config.getServerSystemKey()))
                    });
         }
