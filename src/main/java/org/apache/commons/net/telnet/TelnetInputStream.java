@@ -416,6 +416,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                                     }
                                     catch (InterruptedException interrupted)
                                     {
+                                        // Ignored
                                     }
                                 }
                                 return EOF;

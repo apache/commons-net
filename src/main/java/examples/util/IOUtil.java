@@ -98,6 +98,7 @@ public final class IOUtil
         }
         catch (InterruptedException e)
         {
+            // Ignored
         }
     }
 

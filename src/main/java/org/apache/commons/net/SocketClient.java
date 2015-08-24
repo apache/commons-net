@@ -334,6 +334,7 @@ public abstract class SocketClient
             try {
                 socket.close();
             } catch (IOException e) {
+                // Ignored
             }
         }
     }
@@ -343,6 +344,7 @@ public abstract class SocketClient
             try {
                 close.close();
             } catch (IOException e) {
+                // Ignored
             }
         }
     }

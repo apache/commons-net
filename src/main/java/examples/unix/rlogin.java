@@ -92,7 +92,7 @@ public final class rlogin
                 client.disconnect();
             }
             catch (IOException f)
-            {}
+            {/* ignored */}
             e.printStackTrace();
             System.err.println("rlogin authentication failed.");
             System.exit(1);

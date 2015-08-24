@@ -111,6 +111,7 @@ public class TimeTestSimpleServer implements Runnable
                 os.flush();
             } catch (IOException e)
             {
+                // ignored
             } finally
             {
                 if (socket != null) {
@@ -153,6 +154,7 @@ public class TimeTestSimpleServer implements Runnable
             server.start();
         } catch (IOException e)
         {
+            // ignored
         }
     }
 

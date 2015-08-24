@@ -366,6 +366,7 @@ public final class Util
             try {
                 closeable.close();
             } catch (IOException e) {
+                // Ignored
             }
         }
     }
@@ -382,6 +383,7 @@ public final class Util
             try {
                 socket.close();
             } catch (IOException e) {
+                // Ignored
             }
         }
     }

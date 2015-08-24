@@ -200,6 +200,7 @@ public class SubnetUtilsTest extends TestCase {
             new SubnetUtils("192.168.0.1/33");
             fail("Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected) {
+            // Ignored
         }
     }
 

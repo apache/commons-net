@@ -436,6 +436,7 @@ implements Configurable
                 try {
                     p.load(resourceAsStream);
                 } catch (IOException e) {
+                    // Ignored
                 } finally {
                     try {
                         resourceAsStream.close();
@@ -3825,6 +3826,7 @@ implements Configurable
                 } catch (SocketTimeoutException e) {
                     notAcked++;
                 } catch (IOException e) {
+                    // Ignored
                 }
                 time = now;
             }

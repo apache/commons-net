@@ -409,11 +409,13 @@ public class FTPTimestampParserImplTest extends TestCase {
             checkShortParse("Feb 29th 1999", server, input, expected, true);
             fail("Should have failed to parse Feb 29th 1999");
         } catch (ParseException pe) {
+            // expected
         }
         try {
             checkShortParse("Feb 29th 1999", server, input, expected, false);
             fail("Should have failed to parse Feb 29th 1999");
         } catch (ParseException pe) {
+            // expected
         }
     }
 

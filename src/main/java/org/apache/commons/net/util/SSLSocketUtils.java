@@ -51,12 +51,12 @@ public class SSLSocketUtils {
                     return true;
                 }
             }
-        } catch (SecurityException e) {
-        } catch (ClassNotFoundException e) {
-        } catch (NoSuchMethodException e) {
-        } catch (IllegalArgumentException e) {
-        } catch (IllegalAccessException e) {
-        } catch (InvocationTargetException e) {
+        } catch (SecurityException e) { // Ignored
+        } catch (ClassNotFoundException e) { // Ignored
+        } catch (NoSuchMethodException e) { // Ignored
+        } catch (IllegalArgumentException e) { // Ignored
+        } catch (IllegalAccessException e) { // Ignored
+        } catch (InvocationTargetException e) { // Ignored
         }
         return false;
     }
