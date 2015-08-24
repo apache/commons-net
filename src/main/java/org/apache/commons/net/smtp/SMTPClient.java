@@ -442,9 +442,15 @@ public class SMTPClient extends SMTP
      * A convenience method for a sending short email without having to
      * explicitly set the sender and recipient(s).  This method
      * sets the sender and recipients using
-     * {@link #setSender  setSender } and
-     * {@link #addRecipient  addRecipient }, and then sends the
-     * message using {@link #sendShortMessageData  sendShortMessageData }.
+     * {@link #setSender(String)  setSender} and
+     * {@link #addRecipient(String)  addRecipient}, and then sends the
+     * message using {@link #sendShortMessageData(String)  sendShortMessageData}.
+     * <p>
+     * Note that the method ignores failures when calling
+     * {@link #addRecipient(String)  addRecipient} so long as
+     * at least one call succeeds. If no recipients can be successfully
+     * added then the method will fail (and does not attempt to
+     * send the message)
      * <p>
      * @param sender  The email address of the sender.
      * @param recipients  An array of recipient email addresses.
