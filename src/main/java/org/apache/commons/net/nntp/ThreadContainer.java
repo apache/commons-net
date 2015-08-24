@@ -20,7 +20,8 @@ package org.apache.commons.net.nntp;
 /**
  * A placeholder utility class, used for constructing a tree of Threadables
  * Original implementation by Jamie Zawinski.
- * See the Grendel source for more details <a href="http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java#511">here</a>
+ * See the Grendel source for more details
+ * <a href="http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java#511">here</a>
  * Threadable objects
  */
 class ThreadContainer {

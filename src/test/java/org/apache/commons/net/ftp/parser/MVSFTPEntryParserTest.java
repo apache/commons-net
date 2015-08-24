@@ -27,7 +27,8 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
  */
 public class MVSFTPEntryParserTest extends FTPParseTestFramework {
 
-    private static final String[] goodsamplesDatasetList = { /* Note, if the string begins with SAVE, the parsed entry is stored in the List saveftpfiles */
+    private static final String[] goodsamplesDatasetList = {
+            /* Note, if the string begins with SAVE, the parsed entry is stored in the List saveftpfiles */
             //  "Volume Unit    Referred Ext Used Recfm Lrecl BlkSz Dsorg Dsname",
             "SAVE00 3390   2004/06/23  1    1  FB     128  6144  PS    INCOMING.RPTBM023.D061704",
             "SAVE01 3390   2004/06/23  1    1  FB     128  6144  PO    INCOMING.RPTBM024.D061704",
@@ -42,7 +43,8 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
             "FPFS41 3390   2004/06/23  1    1  FB     128  6144  PS    INCOMING.RPTBM056.D061704",
             "FPFS25 3390   2004/06/23  1    1  FB     128  6144  PS    INCOMING.WTM204.D061704", };
 
-    private static final String[] goodsamplesMemberList = {/* Note, if the string begins with SAVE, the parsed entry is stored in the List saveftpfiles */
+    private static final String[] goodsamplesMemberList = {
+            /* Note, if the string begins with SAVE, the parsed entry is stored in the List saveftpfiles */
             "Name      VV.MM   Created       Changed      Size  Init   Mod   Id",
             "SAVE03    01.03 2002/09/12 2002/10/11 09:37    11    11     0 KIL001",
             "SAVE04                                                              ", // no statistics

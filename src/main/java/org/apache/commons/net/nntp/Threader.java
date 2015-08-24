@@ -21,7 +21,9 @@ package org.apache.commons.net.nntp;
 /**
  * This is an implementation of a message threading algorithm, as originally devised by Zamie Zawinski.
  * See <a href="http://www.jwz.org/doc/threading.html">http://www.jwz.org/doc/threading.html</a> for details.
- * For his Java implementation, see <a href="http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java">http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java</a>
+ * For his Java implementation, see
+ * <a href="http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java">
+ * http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java</a>
  */
 
 import java.util.Arrays;
@@ -267,7 +269,8 @@ public class Threader {
                     prev.next = kids;
                 }
 
-                // Make each child's parent be this level's parent -> i.e. promote the children. Make the last child's next point to this container's next
+                // Make each child's parent be this level's parent -> i.e. promote the children.
+                // Make the last child's next point to this container's next
                 // i.e. splice kids into the list in place of container
                 for (tail = kids; tail.next != null; tail = tail.next) {
                     tail.parent = container.parent;
@@ -291,7 +294,8 @@ public class Threader {
     }
 
     /**
-     *  If any two members of the root set have the same subject, merge them. This is to attempt to accomodate messages without References: headers.
+     *  If any two members of the root set have the same subject, merge them.
+     *  This is to attempt to accomodate messages without References: headers.
      * @param root
      */
     private void gatherSubjects(ThreadContainer root) {

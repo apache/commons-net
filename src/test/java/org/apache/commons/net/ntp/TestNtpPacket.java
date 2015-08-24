@@ -24,8 +24,10 @@ import java.net.DatagramPacket;
 public class TestNtpPacket {
 
     // pre-canned NTP packet
-    // [version:3, mode:4, poll:4, refId=0x81531472, precision:-17, delay:100, dispersion(ms):51.605224609375, id:129.83.20.114, xmitTime:Thu, May 30 2013 17:46:01.295, etc. ]
-    static final byte[] ntpPacket = hexStringToByteArray("1c0304ef0000006400000d3681531472d552447fec1d6000d5524718ac49ba5ed55247194b6d9000d55247194b797000");
+    // [version:3, mode:4, poll:4, refId=0x81531472, precision:-17, delay:100, dispersion(ms):51.605224609375,
+    // id:129.83.20.114, xmitTime:Thu, May 30 2013 17:46:01.295, etc. ]
+    static final byte[] ntpPacket = hexStringToByteArray(
+            "1c0304ef0000006400000d3681531472d552447fec1d6000d5524718ac49ba5ed55247194b6d9000d55247194b797000");
 
     @Test
     public void testCreate() {

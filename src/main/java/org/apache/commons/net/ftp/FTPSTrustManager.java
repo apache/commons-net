@@ -25,7 +25,9 @@ import javax.net.ssl.X509TrustManager;
 /**
  * Do not use.
  * @since 2.0
- * @deprecated 3.0 use {@link org.apache.commons.net.util.TrustManagerUtils#getValidateServerCertificateTrustManager() TrustManagerUtils#getValidateServerCertificateTrustManager()} instead
+ * @deprecated 3.0 use
+ * {@link org.apache.commons.net.util.TrustManagerUtils#getValidateServerCertificateTrustManager()
+ *  TrustManagerUtils#getValidateServerCertificateTrustManager()} instead
  */
 @Deprecated
 public class FTPSTrustManager implements X509TrustManager

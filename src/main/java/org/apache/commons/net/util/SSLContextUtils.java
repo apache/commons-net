@@ -42,7 +42,8 @@ public class SSLContextUtils {
      * @return the initialised context.
      * @throws IOException this is used to wrap any {@link GeneralSecurityException} that occurs
      */
-    public static SSLContext createSSLContext(String protocol, KeyManager keyManager, TrustManager trustManager) throws IOException {
+    public static SSLContext createSSLContext(String protocol, KeyManager keyManager, TrustManager trustManager)
+            throws IOException {
         return createSSLContext(protocol,
                 keyManager == null ? null : new KeyManager[] { keyManager },
                 trustManager == null ? null : new TrustManager[] { trustManager });

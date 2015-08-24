@@ -42,6 +42,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         "\r\nTotal 14 files"
     };
 
+    // CHECKSTYLE:OFF (long lines)
     private static final String[] goodsamples =
     {
         "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
@@ -61,6 +62,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         "FREEWARE40.DIR;1        27/36         16-FEB-1999 10:01:46  [AP_HTTPD,APACHE$WWW                               (RWE,RWE,RE,RE)",
         "1-JUN.LIS;1              9/9           2-jun-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
     };
+    // CHECKSTYLE:ON
 
     private static final String fullListing = "Directory USER1:[TEMP]\r\n\r\n"+
     "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)\r\n"+
@@ -135,7 +137,8 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     public void testParseFieldsOnDirectory() throws Exception
     {
 
-        FTPFile dir = getParser().parseFTPEntry("DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)");
+        FTPFile dir = getParser().parseFTPEntry(
+            "DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)");
         assertTrue("Should be a directory.",
                    dir.isDirectory());
         assertEquals("DATA.DIR",
@@ -151,7 +154,8 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         checkPermisions(dir, 0775);
 
 
-        dir = getParser().parseFTPEntry("DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [TRANSLATED]    (RWED,RWED,,RE)");
+        dir = getParser().parseFTPEntry(
+                "DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [TRANSLATED]    (RWED,RWED,,RE)");
         assertTrue("Should be a directory.",
                            dir.isDirectory());
         assertEquals("DATA.DIR",
@@ -170,7 +174,8 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     @Override
     public void testParseFieldsOnFile() throws Exception
     {
-        FTPFile file = getParser().parseFTPEntry("1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RW,R)");
+        FTPFile file = getParser().parseFTPEntry(
+            "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RW,R)");
         assertTrue("Should be a file.",
                    file.isFile());
         assertEquals("1-JUN.LIS",
@@ -203,7 +208,8 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     }
 
     public void testDefaultPrecision() {
-        testPrecision("1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [TRANSLATED]    (RWED,RD,,)", CalendarUnit.SECOND);
+        testPrecision(
+                "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [TRANSLATED]    (RWED,RD,,)", CalendarUnit.SECOND);
     }
 
     public void testRecentPrecision() {

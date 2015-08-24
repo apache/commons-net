@@ -107,7 +107,9 @@ public class FTPSClient extends FTPClient {
     /** The protocol versions */
     private String[] protocols = null;
 
-    /** The FTPS {@link TrustManager} implementation, default validate only: {@link TrustManagerUtils#getValidateServerCertificateTrustManager()}. */
+    /** The FTPS {@link TrustManager} implementation, default validate only
+     * {@link TrustManagerUtils#getValidateServerCertificateTrustManager()}.
+     */
     private TrustManager trustManager = TrustManagerUtils.getValidateServerCertificateTrustManager();
 
     /** The {@link KeyManager}, default null (i.e. use system default). */

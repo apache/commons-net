@@ -150,12 +150,14 @@ public class MacOsPeterFTPEntryParserTest extends FTPParseTestFramework {
 
     @Override
     public void testDefaultPrecision() {
-        testPrecision("-rw-r--r--    78440       49231   127671 Jul 22  2010 Filename with whitespace.jpg", CalendarUnit.DAY_OF_MONTH);
+        testPrecision(
+            "-rw-r--r--    78440       49231   127671 Jul 22  2010 Filename with whitespace.jpg", CalendarUnit.DAY_OF_MONTH);
     }
 
     @Override
     public void testRecentPrecision() {
-        testPrecision("-rw-r--r--    78440       49231   127671 Jul 22 14:51 Filename with whitespace.jpg", CalendarUnit.MINUTE);
+        testPrecision(
+            "-rw-r--r--    78440       49231   127671 Jul 22 14:51 Filename with whitespace.jpg", CalendarUnit.MINUTE);
     }
 
 }

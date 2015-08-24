@@ -224,7 +224,8 @@ public class AuthenticatingSMTPClient extends SMTPSClient
         {
             // the server sends an empty response ("334 "), so we don't have to read it.
             return SMTPReply.isPositiveCompletion(sendCommand(
-                    Base64.encodeBase64StringUnChunked(("\000" + username + "\000" + password).getBytes(getCharsetName())) // Java 1.6 can use getCharset()
+                    // Java 1.6 can use getCharset()
+                    Base64.encodeBase64StringUnChunked(("\000" + username + "\000" + password).getBytes(getCharsetName()))
                 ));
         }
         else if (method.equals(AUTH_METHOD.CRAM_MD5))
@@ -235,7 +236,8 @@ public class AuthenticatingSMTPClient extends SMTPSClient
             Mac hmac_md5 = Mac.getInstance("HmacMD5");
             hmac_md5.init(new SecretKeySpec(password.getBytes(getCharsetName()), "HmacMD5")); // Java 1.6 can use getCharset()
             // compute the result:
-            byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharsetName()); // Java 1.6 can use getCharset()
+            // Java 1.6 can use getCharset()
+            byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharsetName());
             // join the byte arrays to form the reply
             byte[] usernameBytes = username.getBytes(getCharsetName()); // Java 1.6 can use getCharset()
             byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];

@@ -57,7 +57,7 @@ limitations under the License.
     <module name="UnusedImports"/>
     <module name="NeedBraces"/>
     <module name="LineLength">
-      <property name="max" value="300"/> <!-- TODO reduce -->
+      <property name="max" value="132"/> <!-- TODO reduce -->
       <property name="severity" value="warning" />
     </module>
 

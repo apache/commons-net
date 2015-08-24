@@ -100,7 +100,8 @@ public final class KeyManagerUtils {
      * @throws GeneralSecurityException if there is a problem creating the keystore
      * @throws IOException if there is a problem creating the keystore
      */
-    public static KeyManager createClientKeyManager(String storeType, File storePath, String storePass, String keyAlias, String keyPass)
+    public static KeyManager createClientKeyManager(
+            String storeType, File storePath, String storePass, String keyAlias, String keyPass)
         throws IOException, GeneralSecurityException
     {
         KeyStore ks = loadStore(storeType, storePath, storePass);

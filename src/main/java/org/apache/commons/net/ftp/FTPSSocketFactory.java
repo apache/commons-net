@@ -56,7 +56,8 @@ public class FTPSSocketFactory extends SocketFactory {
     }
 
     @Override
-    public Socket createSocket(String address, int port, InetAddress localAddress, int localPort) throws UnknownHostException, IOException {
+    public Socket createSocket(String address, int port, InetAddress localAddress, int localPort)
+            throws UnknownHostException, IOException {
         return this.context.getSocketFactory().createSocket(address, port, localAddress, localPort);
     }
 

@@ -155,7 +155,8 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                             {
                                  System.out.println("Status of options:");
                                  for(int ii=0; ii<25; ii++) {
-                                     System.out.println("Local Option " + ii + ":" + tc.getLocalOptionState(ii) + " Remote Option " + ii + ":" + tc.getRemoteOptionState(ii));
+                                     System.out.println("Local Option " + ii + ":" + tc.getLocalOptionState(ii) +
+                                                        " Remote Option " + ii + ":" + tc.getRemoteOptionState(ii));
                                  }
                             }
                             else if(line.startsWith("REGISTER"))

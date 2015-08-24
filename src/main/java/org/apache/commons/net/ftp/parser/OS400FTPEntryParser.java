@@ -196,12 +196,12 @@ import org.apache.commons.net.ftp.FTPFile;
  *
  *   [echo] Downloading members of all files of a library:
  *    [ftp] getting files
- *    [ftp] transferring RPGUNIT1.FILE\RUN.MBR to C:\workspaces\rdp_080\workspace\ANT - FTP\i5-downloads-lib\RPGUNIT1.FILE\RUN.MBR
- *    [ftp] transferring RPGUNIT1.FILE\RUNRMT.MBR to C:\workspaces\rdp_080\workspace\ANT - FTP\i5-downloads-lib\RPGUNIT1.FILE\RUNRMT.MBR
- *    [ftp] transferring RPGUNITT1.FILE\RUNT.MBR to C:\workspaces\rdp_080\workspace\ANT - FTP\i5-downloads-lib\RPGUNITT1.FILE\RUNT.MBR
- *    [ftp] transferring RPGUNITY1.FILE\RUN.MBR to C:\workspaces\rdp_080\workspace\ANT - FTP\i5-downloads-lib\RPGUNITY1.FILE\RUN.MBR
- *    [ftp] transferring RPGUNITY1.FILE\RUNNER.MBR to C:\workspaces\rdp_080\workspace\ANT - FTP\i5-downloads-lib\RPGUNITY1.FILE\RUNNER.MBR
- *    [ftp] transferring RPGUNITY1.FILE\RUNNERBND.MBR to C:\workspaces\rdp_080\workspace\ANT - FTP\i5-downloads-lib\RPGUNITY1.FILE\RUNNERBND.MBR
+ *    [ftp] transferring RPGUNIT1.FILE\RUN.MBR to C:\work\rdp_080\space\ANT - FTP\i5-downloads\RPGUNIT1.FILE\RUN.MBR
+ *    [ftp] transferring RPGUNIT1.FILE\RUNRMT.MBR to C:\work\rdp_080\space\ANT - FTP\i5-downloads\RPGUNIT1.FILE\RUNRMT.MBR
+ *    [ftp] transferring RPGUNITT1.FILE\RUNT.MBR to C:\work\rdp_080\space\ANT - FTP\i5-downloads\RPGUNITT1.FILE\RUNT.MBR
+ *    [ftp] transferring RPGUNITY1.FILE\RUN.MBR to C:\work\rdp_080\space\ANT - FTP\i5-downloads\RPGUNITY1.FILE\RUN.MBR
+ *    [ftp] transferring RPGUNITY1.FILE\RUNNER.MBR to C:\work\rdp_080\space\ANT - FTP\i5-downloads\RPGUNITY1.FILE\RUNNER.MBR
+ *    [ftp] transferring RPGUNITY1.FILE\RUNNERBND.MBR to C:\work\rdp_080\space\ANT - FTP\i5-downloads\RPGUNITY1.FILE\RUNNERBND.MBR
  *    [ftp] 6 files retrieved
  *
  *

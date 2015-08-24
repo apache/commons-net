@@ -288,7 +288,8 @@ public class FTPTimestampParserImplTest extends TestCase {
      * @param expected the expected result from parsing
      * @param lenient whether to use lenient mode or not.
      */
-    private void checkShortParse(String msg, Calendar servertime, Calendar input, Calendar expected, boolean lenient) throws ParseException {
+    private void checkShortParse(String msg, Calendar servertime, Calendar input, Calendar expected, boolean lenient)
+            throws ParseException {
         FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
         parser.setLenientFutureDates(lenient);
         Format shortFormat = parser.getRecentDateFormat(); // It's expecting this format

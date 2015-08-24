@@ -131,7 +131,8 @@ public final class IMAPExportMbox
 
         if (argCount < 2)
         {
-            System.err.println("Usage: IMAPExportMbox [-LF|-CRLF] [-c n] [-r n] [-R n] [-.] [-X] imap[s]://user:password@host[:port]/folder/path [+|-]<mboxfile> [sequence-set] [itemnames]");
+            System.err.println("Usage: IMAPExportMbox [-LF|-CRLF] [-c n] [-r n] [-R n] [-.] [-X]" +
+                               " imap[s]://user:password@host[:port]/folder/path [+|-]<mboxfile> [sequence-set] [itemnames]");
             System.err.println("\t-LF | -CRLF set end-of-line to LF or CRLF (default is the line.separator system property)");
             System.err.println("\t-c connect timeout in seconds (default 10)");
             System.err.println("\t-r read timeout in seconds (default 10)");
@@ -141,7 +142,8 @@ public final class IMAPExportMbox
             System.err.println("\tthe mboxfile is where the messages are stored; use '-' to write to standard output.");
             System.err.println("\tPrefix filename with '+' to append to the file. Prefix with '-' to allow overwrite.");
             System.err.println("\ta sequence-set is a list of numbers/number ranges e.g. 1,2,3-10,20:* - default 1:*");
-            System.err.println("\titemnames are the message data item name(s) e.g. BODY.PEEK[HEADER.FIELDS (SUBJECT)] or a macro e.g. ALL - default (INTERNALDATE BODY.PEEK[])");
+            System.err.println("\titemnames are the message data item name(s) e.g. BODY.PEEK[HEADER.FIELDS (SUBJECT)]" +
+                               " or a macro e.g. ALL - default (INTERNALDATE BODY.PEEK[])");
             System.exit(1);
         }
 
@@ -176,11 +178,13 @@ public final class IMAPExportMbox
         } else if (file.startsWith("+")) {
             final File mbox = new File(file.substring(1));
             System.out.println("Appending to file " + mbox);
-            chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mbox, true)), eol, printHash, printMarker, checkSequence);
+            chunkListener = new MboxListener(
+                new BufferedWriter(new FileWriter(mbox, true)), eol, printHash, printMarker, checkSequence);
         } else if (file.startsWith("-")) {
             final File mbox = new File(file.substring(1));
             System.out.println("Writing to file " + mbox);
-            chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mbox, false)), eol, printHash, printMarker, checkSequence);
+            chunkListener = new MboxListener(
+                new BufferedWriter(new FileWriter(mbox, false)), eol, printHash, printMarker, checkSequence);
         } else {
             final File mbox = new File(file);
             if (mbox.exists()) {
@@ -254,7 +258,8 @@ public final class IMAPExportMbox
 
         } catch (IOException ioe) {
             String count = chunkListener == null ? "?" : Integer.toString(chunkListener.total);
-            System.err.println("FETCH " + sequenceSet + " " + itemNames + " failed after processing " + count + " complete messages ");
+            System.err.println(
+                    "FETCH " + sequenceSet + " " + itemNames + " failed after processing " + count + " complete messages ");
             if (chunkListener != null) {
                 System.err.println("Last complete response seen: "+chunkListener.lastFetched);
             }
@@ -322,7 +327,8 @@ public final class IMAPExportMbox
         private final boolean printMarker;
         private final boolean checkSequence;
 
-        MboxListener(BufferedWriter bw, String eol, boolean printHash, boolean printMarker, boolean checkSequence) throws IOException {
+        MboxListener(BufferedWriter bw, String eol, boolean printHash, boolean printMarker, boolean checkSequence)
+                throws IOException {
           this.eol = eol;
           this.printHash = printHash;
           this.printMarker = printMarker;
@@ -405,7 +411,8 @@ public final class IMAPExportMbox
                             for(long j = lastSeq + 1; j < msgSeq; j++) {
                                 missingIds.add(String.valueOf(j));
                             }
-                            System.err.println("*** Sequence error: current=" + msgSeq + " previous=" + lastSeq + " Missing=" + missing);
+                            System.err.println(
+                                "*** Sequence error: current=" + msgSeq + " previous=" + lastSeq + " Missing=" + missing);
                         }
                     }
                     lastSeq = msgSeq;

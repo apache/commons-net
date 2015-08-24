@@ -122,7 +122,8 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         while (true)
         {
 
-            // If there is no more data AND we were told not to block, just return WOULD_BLOCK (-2). (More efficient than exception.)
+            // If there is no more data AND we were told not to block,
+            // just return WOULD_BLOCK (-2). (More efficient than exception.)
             if(!mayBlock && super.available() == 0) {
                 return WOULD_BLOCK;
             }

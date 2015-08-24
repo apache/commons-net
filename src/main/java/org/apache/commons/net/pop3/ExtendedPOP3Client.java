@@ -87,7 +87,8 @@ public class ExtendedPOP3Client extends POP3SClient
                 Mac hmac_md5 = Mac.getInstance("HmacMD5");
                 hmac_md5.init(new SecretKeySpec(password.getBytes(getCharsetName()), "HmacMD5")); // Java 1.6 can use getCharset()
                 // compute the result:
-                byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharsetName()); // Java 1.6 can use getCharset()
+                // Java 1.6 can use getCharset()
+                byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharsetName());
                 // join the byte arrays to form the reply
                 byte[] usernameBytes = username.getBytes(getCharsetName()); // Java 1.6 can use getCharset()
                 byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];

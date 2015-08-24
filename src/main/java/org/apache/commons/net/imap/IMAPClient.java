@@ -278,7 +278,8 @@ public class IMAPClient extends IMAP
      * @param datetime The date/time string (optional).
      * @return {@code true} if the command was successful,{@code false} if not.
      * @exception IOException If a network I/O error occurs.
-     * @deprecated (3.4) Does not work; the message body is not optional. Use {@link #append(String, String, String, String)} instead.
+     * @deprecated (3.4) Does not work; the message body is not optional.
+     * Use {@link #append(String, String, String, String)} instead.
      */
     @Deprecated
     public boolean append(String mailboxName, String flags, String datetime) throws IOException
@@ -302,7 +303,8 @@ public class IMAPClient extends IMAP
      * @param mailboxName The mailbox name.
      * @return {@code true} if the command was successful,{@code false} if not.
      * @exception IOException If a network I/O error occurs.
-     * @deprecated (3.4) Does not work; the message body is not optional. Use {@link #append(String, String, String, String)} instead.
+     * @deprecated (3.4) Does not work; the message body is not optional.
+     * Use {@link #append(String, String, String, String)} instead.
      */
     @Deprecated
     public boolean append(String mailboxName) throws IOException
