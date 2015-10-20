@@ -904,8 +904,12 @@ public class FTPSClient extends FTPClient {
      * @throws IOException
      */
     private Socket createSSLSocket(Socket socket) throws IOException {
-        SSLSocketFactory f = context.getSocketFactory();
-        return f.createSocket(socket, socket.getInetAddress().getHostAddress(), socket.getPort(), false);
+        if (socket != null) {
+            SSLSocketFactory f = context.getSocketFactory();
+            return f.createSocket(socket, socket.getInetAddress().getHostAddress(), socket.getPort(), false);
+        } else {
+            return null;
+        }
     }
 
     // DEPRECATED - for API compatibility only - DO NOT USE
