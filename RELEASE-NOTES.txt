@@ -29,12 +29,19 @@ o NET-527:  Add SimpleNTPServer as example and for testing Thanks to jason mathe
 o NET-512:  Downloading files or members from the AS400 QSYS file system is not supported Thanks to Thomas Raddatz.
 
 Fixed Bugs:
+o NET-581:  SimpleSMTPHeader fails to supply the required Date: header
+o NET-582:  SimpleSMTPHeader does not allow for missing To: field
+o NET-580:  SMTPClient.sendSimpleMessage() silently ignores failed recipients
+            Update Javadoc Thanks to Simon Arlott.
+o NET-579:  SSL/TLS SocketClients do not verify the hostname against the certificate Thanks to Simon Arlott.
+o NET-538:  FTPHTTPClient should use socket factory to create sockets Thanks to Dzmitry.
 o NET-566:  UnixFTPEntryParser Drops Leading Spaces from File Names Thanks to Gary Russell.
 o NET-552:  SocketTimeoutException connecting a FTP server via an HTTP Proxy Thanks to Quentin Devriendt.
 o NET-563:  MLSxEntryParser needs test cases; parsing is too lax
 o NET-561:  FTPFile.toFormattedString prints user and group in wrong order
 o NET-544:  FTPClient.initiateListParsing does not correctly check if parserKey was cached Thanks to Olivier Queyrut.
-o NET-558:  FTPClient.getModificationTime(filename) returns complete received line including response code Thanks to Ralph Becker.
+o NET-558:  FTPClient.getModificationTime(filename) returns complete received line including response code and EOL
+            Strip the response code and EOL Thanks to Ralph Becker.
 o NET-550:  Default FTPClient bufferSize results in very slow retrieve transfers
             Fix code in Util#copyStream (also copyReader) that failed to use the proper default for buffer size 0 Thanks to Geoffrey Hardy.
 o NET-551:  Util copyReader calls CopyStreamListener.bytesTransferred with the incorrect value for bytesTransferred
@@ -58,6 +65,8 @@ o NET-514:  IMAP APPEND multiple issues in IMapClient.
 o NET-511:  Exception for new SubnetUtils("0.0.0.0/0"). Thanks to Kyriacos Elia, Daniel Scott.
 
 Changes:
+o NET-576:  Allow FTPClient to use SYST response if system type is not specified in configuration
+o NET-575:  FTPClientExample should support setting the date format
 o           examples/Main now uses a property file to define aliases instead of scanning class files
 o NET-564:  FTPFile.toFormattedString - allow specification of TimeZone for display
 o NET-562:  FTPFile.toFormattedString should print only signficant parts of the parsed date
