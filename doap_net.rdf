@@ -39,6 +39,13 @@
     <release>
       <Version>
         <name>commons-net</name>
+        <revision>3.4</revision>
+        <created>2015-11-26</created>
+      </Version>
+    </release>
+    <release>
+      <Version>
+        <name>commons-net</name>
         <revision>3.3</revision>
         <created>2013-06-12</created>
       </Version>
