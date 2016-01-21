@@ -55,9 +55,11 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
                                                                     // 13:52
 
     /**
-     * Matches these entries: Volume Unit Referred Ext Used Recfm Lrecl BlkSz
-     * Dsorg Dsname B10142 3390 2006/03/20 2 31 F 80 80 PS MDI.OKL.WORK
-     *
+     * Matches these entries:
+     * <pre>
+     *  Volume Unit    Referred Ext Used Recfm Lrecl BlkSz Dsorg Dsname
+     *  B10142 3390   2006/03/20  2   31  F       80    80  PS   MDI.OKL.WORK
+     * </pre>
      */
     static final String FILE_LIST_REGEX = "\\S+\\s+" + // volume
                                                                 // ignored
@@ -73,8 +75,11 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             "(\\S+)\\s*"; // Dataset Name (file name)
 
     /**
-     * Matches these entries: Name VV.MM Created Changed Size Init Mod Id
-     * TBSHELF 01.03 2002/09/12 2002/10/11 09:37 11 11 0 KIL001
+     * Matches these entries:
+     * <pre>
+     *   Name      VV.MM   Created       Changed      Size  Init   Mod   Id
+     *   TBSHELF   01.03 2002/09/12 2002/10/11 09:37    11    11     0 KIL001
+     * </pre>
      */
     static final String MEMBER_LIST_REGEX = "(\\S+)\\s+" + // name
             "\\S+\\s+" + // version, modification (ignored)
@@ -87,12 +92,15 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             "\\S+\\s*"; // id of user who modified (ignored)
 
     /**
-     * Matches these entries, note: no header: IBMUSER1 JOB01906 OUTPUT 3 Spool
-     * Files 012345678901234567890123456789012345678901234 1 2 3 4
+     * Matches these entries, note: no header:
+     * <pre>
+     *   IBMUSER1  JOB01906  OUTPUT    3 Spool Files
+     *   012345678901234567890123456789012345678901234
+     *             1         2         3         4
+     * </pre>
      */
-    static final String JES_LEVEL_1_LIST_REGEX = "(\\S+)\\s+" + // job
-                                                                        // name
-                                                                        // ignored
+    static final String JES_LEVEL_1_LIST_REGEX =
+            "(\\S+)\\s+" + // job name ignored
             "(\\S+)\\s+" + // job number
             "(\\S+)\\s+" + // job status (OUTPUT,INPUT,ACTIVE)
             "(\\S+)\\s+" + // number of spool files
@@ -101,16 +109,41 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     ;
 
     /**
-     * JES INTERFACE LEVEL 2 parser Matches these entries: JOBNAME JOBID OWNER
-     * STATUS CLASS IBMUSER1 JOB01906 IBMUSER OUTPUT A RC=0000 3 spool files
-     * IBMUSER TSU01830 IBMUSER OUTPUT TSU ABEND=522 3 spool files
-     * 012345678901234567890123456789012345678901234 1 2 3 4
-     * 012345678901234567890123456789012345678901234567890
+     * JES INTERFACE LEVEL 2 parser
+     * Matches these entries:
+     * <pre>
+     * JOBNAME  JOBID    OWNER    STATUS CLASS
+     * IBMUSER1 JOB01906 IBMUSER  OUTPUT A        RC=0000 3 spool files
+     * IBMUSER  TSU01830 IBMUSER  OUTPUT TSU      ABEND=522 3 spool files
+     * </pre>
+     * Sample output from FTP session:
+     * <pre>
+     * ftp> quote site filetype=jes
+     * 200 SITE command was accepted
+     * ftp> ls
+     * 200 Port request OK.
+     * 125 List started OK for JESJOBNAME=IBMUSER*, JESSTATUS=ALL and JESOWNER=IBMUSER
+     * JOBNAME  JOBID    OWNER    STATUS CLASS
+     * IBMUSER1 JOB01906 IBMUSER  OUTPUT A        RC=0000 3 spool files
+     * IBMUSER  TSU01830 IBMUSER  OUTPUT TSU      ABEND=522 3 spool files
+     * 250 List completed successfully.
+     * ftp> ls job01906
+     * 200 Port request OK.
+     * 125 List started OK for JESJOBNAME=IBMUSER*, JESSTATUS=ALL and JESOWNER=IBMUSER
+     * JOBNAME  JOBID    OWNER    STATUS CLASS
+     * IBMUSER1 JOB01906 IBMUSER  OUTPUT A        RC=0000
+     * --------
+     * ID  STEPNAME PROCSTEP C DDNAME   BYTE-COUNT
+     * 001 JES2              A JESMSGLG       858
+     * 002 JES2              A JESJCL         128
+     * 003 JES2              A JESYSMSG       443
+     * 3 spool files
+     * 250 List completed successfully.
+     * </pre>
      */
 
-    static final String JES_LEVEL_2_LIST_REGEX = "(\\S+)\\s+" + // job
-                                                                        // name
-                                                                        // ignored
+    static final String JES_LEVEL_2_LIST_REGEX =
+            "(\\S+)\\s+" + // job name ignored
             "(\\S+)\\s+" + // job number
             "(\\S+)\\s+" + // owner ignored
             "(\\S+)\\s+" + // job status (OUTPUT,INPUT,ACTIVE) ignored
