@@ -292,7 +292,7 @@ public class FTPTimestampParserImplTest extends TestCase {
             throws ParseException {
         FTPTimestampParserImpl parser = new FTPTimestampParserImpl();
         parser.setLenientFutureDates(lenient);
-        Format shortFormat = parser.getRecentDateFormat(); // It's expecting this format
+        SimpleDateFormat shortFormat = parser.getRecentDateFormat(); // It's expecting this format
 
         final String shortDate = shortFormat.format(input.getTime());
         Calendar output=parser.parseTimestamp(shortDate, servertime);
@@ -305,7 +305,8 @@ public class FTPTimestampParserImplTest extends TestCase {
         if (indom != outdom || inmon != outmon || inyear != outyear){
             Format longFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
             fail("Test: '"+msg+"' Server="+longFormat.format(servertime.getTime())
-                    +". Failed to parse "+shortDate
+                    +". Failed to parse "+shortDate + (lenient ? " (lenient)" : " (non-lenient)")
+                    +" using " + shortFormat.toPattern()
                     +". Actual "+longFormat.format(output.getTime())
                     +". Expected "+longFormat.format(expected.getTime()));
         }
