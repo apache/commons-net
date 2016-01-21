@@ -404,6 +404,27 @@ public class FTPTimestampParserImplTest extends TestCase {
         checkShortParse("Feb 29th 2000",now,new GregorianCalendar(year, Calendar.FEBRUARY,29));
     }
 
+    public void testFeb29LeapYear2() throws Exception{
+        int year = 2000; // Use same year for current and short date
+        GregorianCalendar now = new GregorianCalendar(year, Calendar.MARCH, 1, 12, 0);
+        checkShortParse("Feb 29th 2000", now, new GregorianCalendar(year, Calendar.FEBRUARY, 29));
+    }
+
+    // same date feb 29
+    public void testFeb29LeapYear3() throws Exception{
+        int year = 2000; // Use same year for current and short date
+        GregorianCalendar now = new GregorianCalendar(year, Calendar.FEBRUARY, 29, 12, 0);
+        checkShortParse("Feb 29th 2000", now, new GregorianCalendar(year, Calendar.FEBRUARY, 29));
+    }
+
+    // future dated Feb 29
+    public void testFeb29LeapYear4() throws Exception{
+        int year = 2000; // Use same year for current and short date
+        GregorianCalendar now = new GregorianCalendar(year, Calendar.FEBRUARY, 28, 12, 0);
+        // Must allow lenient future date here
+        checkShortParse("Feb 29th 2000", now, new GregorianCalendar(year, Calendar.FEBRUARY, 29), true);
+    }
+
     // Test Feb 29 for a known non-leap year - should fail
     public void testFeb29NonLeapYear(){
         GregorianCalendar server = new GregorianCalendar(1999, Calendar.APRIL, 1, 12, 0);
