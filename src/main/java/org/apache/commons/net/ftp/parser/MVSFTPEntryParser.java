@@ -338,16 +338,23 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     /**
      * Parse entries within a partitioned dataset.
      *
-     * Format of a memberlist within a PDS: 1 2 3 4 5 6 7 8 9 Name VV.MM Created
-     * Changed Size Init Mod Id TBSHELF 01.03 2002/09/12 2002/10/11 09:37 11 11
-     * 0 KIL001 TBTOOL 01.12 2002/09/12 2004/11/26 19:54 51 28 0 KIL001
+     * Format of a memberlist within a PDS:
+     * <pre>
+     *    0         1        2          3        4     5     6      7    8
+     *   Name      VV.MM   Created       Changed      Size  Init   Mod   Id
+     *   TBSHELF   01.03 2002/09/12 2002/10/11 09:37    11    11     0 KIL001
+     *   TBTOOL    01.12 2002/09/12 2004/11/26 19:54    51    28     0 KIL001
      *
-     * ------------------------------------------- [1] Name [2] VV.MM: Version .
-     * modification [3] Created: yyyy / MM / dd [4,5] Changed: yyyy / MM / dd
-     * HH:mm [6] Size: number of lines [7] Init: number of lines when first
-     * created [8] Mod: number of modified lines a last save [9] Id: User id for
-     * last update
-     *
+     * -------------------------------------------
+     * [1] Name
+     * [2] VV.MM: Version . modification
+     * [3] Created: yyyy / MM / dd
+     * [4,5] Changed: yyyy / MM / dd HH:mm
+     * [6] Size: number of lines
+     * [7] Init: number of lines when first created
+     * [8] Mod: number of modified lines a last save
+     * [9] Id: User id for last update
+     * </pre>
      *
      * @param file
      *            will be updated with Name, Type and Timestamp if parsed.
@@ -411,13 +418,20 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * Matches these entries, note: no header: [1] [2] [3] [4] [5] IBMUSER1
-     * JOB01906 OUTPUT 3 Spool Files
-     * 012345678901234567890123456789012345678901234 1 2 3 4
-     * ------------------------------------------- Group in regex [1] Job name
-     * [2] Job number [3] Job status (INPUT,ACTIVE,OUTPUT) [4] Number of sysout
-     * files [5] The string "Spool Files"
-     *
+     * Matches these entries, note: no header:
+     * <pre>
+     * [1]      [2]      [3]   [4] [5]
+     * IBMUSER1 JOB01906 OUTPUT 3 Spool Files
+     * 012345678901234567890123456789012345678901234
+     *           1         2         3         4
+     * -------------------------------------------
+     * Group in regex
+     * [1] Job name
+     * [2] Job number
+     * [3] Job status (INPUT,ACTIVE,OUTPUT)
+     * [4] Number of sysout files
+     * [5] The string "Spool Files"
+     *</pre>
      *
      * @param file
      *            will be updated with Name, Type and Timestamp if parsed.
@@ -439,14 +453,23 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * Matches these entries, note: no header: [1] [2] [3] [4] [5] JOBNAME JOBID
-     * OWNER STATUS CLASS IBMUSER1 JOB01906 IBMUSER OUTPUT A RC=0000 3 spool
-     * files IBMUSER TSU01830 IBMUSER OUTPUT TSU ABEND=522 3 spool files
-     * 012345678901234567890123456789012345678901234 1 2 3 4
-     * ------------------------------------------- Group in regex [1] Job name
-     * [2] Job number [3] Owner [4] Job status (INPUT,ACTIVE,OUTPUT) [5] Job
-     * Class [6] The rest
-     *
+     * Matches these entries:
+     * <pre>
+     * [1]      [2]      [3]     [4]    [5]
+     * JOBNAME  JOBID    OWNER   STATUS CLASS
+     * IBMUSER1 JOB01906 IBMUSER OUTPUT A       RC=0000 3 spool files
+     * IBMUSER  TSU01830 IBMUSER OUTPUT TSU     ABEND=522 3 spool files
+     * 012345678901234567890123456789012345678901234
+     *           1         2         3         4
+     * -------------------------------------------
+     * Group in regex
+     * [1] Job name
+     * [2] Job number
+     * [3] Owner
+     * [4] Job status (INPUT,ACTIVE,OUTPUT)
+     * [5] Job Class
+     * [6] The rest
+     * </pre>
      *
      * @param file
      *            will be updated with Name, Type and Timestamp if parsed.
@@ -469,8 +492,11 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
     /**
      * preParse is called as part of the interface. Per definition is is called
-     * before the parsing takes place. Three kind of lists is recognize:
-     * z/OS-MVS File lists z/OS-MVS Member lists unix file lists
+     * before the parsing takes place.
+     * Three kind of lists is recognize:
+     * z/OS-MVS File lists
+     * z/OS-MVS Member lists
+     * unix file lists
      * @since 2.0
      */
     @Override
