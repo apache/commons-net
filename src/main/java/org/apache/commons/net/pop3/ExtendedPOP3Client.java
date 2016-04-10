@@ -77,20 +77,19 @@ public class ExtendedPOP3Client extends POP3SClient
                 // the server sends an empty response ("+ "), so we don't have to read it.
                 return sendCommand(
                     new String(
-                        Base64.encodeBase64(("\000" + username + "\000" + password).getBytes(getCharsetName())),
-                        getCharsetName()) // Java 1.6 can use getCharset()
+                        Base64.encodeBase64(("\000" + username + "\000" + password).getBytes(getCharset())),
+                        getCharset())
                     ) == POP3Reply.OK;
             case CRAM_MD5:
                 // get the CRAM challenge
                 byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(2).trim());
                 // get the Mac instance
                 Mac hmac_md5 = Mac.getInstance("HmacMD5");
-                hmac_md5.init(new SecretKeySpec(password.getBytes(getCharsetName()), "HmacMD5")); // Java 1.6 can use getCharset()
+                hmac_md5.init(new SecretKeySpec(password.getBytes(getCharset()), "HmacMD5"));
                 // compute the result:
-                // Java 1.6 can use getCharset()
-                byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharsetName());
+                byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharset());
                 // join the byte arrays to form the reply
-                byte[] usernameBytes = username.getBytes(getCharsetName()); // Java 1.6 can use getCharset()
+                byte[] usernameBytes = username.getBytes(getCharset());
                 byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
                 System.arraycopy(usernameBytes, 0, toEncode, 0, usernameBytes.length);
                 toEncode[usernameBytes.length] = ' ';

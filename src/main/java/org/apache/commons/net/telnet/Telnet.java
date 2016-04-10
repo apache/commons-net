@@ -741,7 +741,7 @@ class Telnet extends SocketClient
         {
             _output_.write(_COMMAND_SB);
             _output_.write(_COMMAND_IS);
-            _output_.write(terminalType.getBytes(getCharsetName())); // Java 1.6 can use getCharset()
+            _output_.write(terminalType.getBytes(getCharset()));
             _output_.write(_COMMAND_SE);
             _output_.flush();
         }

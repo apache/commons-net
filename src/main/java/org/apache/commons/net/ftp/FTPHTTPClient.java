@@ -165,7 +165,7 @@ public class FTPHTTPClient extends FTPClient {
 
         List<String> response = new ArrayList<String>();
         BufferedReader reader = new BufferedReader(
-                new InputStreamReader(input, getCharsetName())); // Java 1.6 can use getCharset()
+                new InputStreamReader(input, getCharset()));
 
         for (String line = reader.readLine(); line != null
         && line.length() > 0; line = reader.readLine()) {

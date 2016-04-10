@@ -224,8 +224,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
         {
             // the server sends an empty response ("334 "), so we don't have to read it.
             return SMTPReply.isPositiveCompletion(sendCommand(
-                    // Java 1.6 can use getCharset()
-                    Base64.encodeBase64StringUnChunked(("\000" + username + "\000" + password).getBytes(getCharsetName()))
+                    Base64.encodeBase64StringUnChunked(("\000" + username + "\000" + password).getBytes(getCharset()))
                 ));
         }
         else if (method.equals(AUTH_METHOD.CRAM_MD5))
@@ -234,12 +233,11 @@ public class AuthenticatingSMTPClient extends SMTPSClient
             byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(4).trim());
             // get the Mac instance
             Mac hmac_md5 = Mac.getInstance("HmacMD5");
-            hmac_md5.init(new SecretKeySpec(password.getBytes(getCharsetName()), "HmacMD5")); // Java 1.6 can use getCharset()
+            hmac_md5.init(new SecretKeySpec(password.getBytes(getCharset()), "HmacMD5"));
             // compute the result:
-            // Java 1.6 can use getCharset()
-            byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharsetName());
+            byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharset());
             // join the byte arrays to form the reply
-            byte[] usernameBytes = username.getBytes(getCharsetName()); // Java 1.6 can use getCharset()
+            byte[] usernameBytes = username.getBytes(getCharset());
             byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
             System.arraycopy(usernameBytes, 0, toEncode, 0, usernameBytes.length);
             toEncode[usernameBytes.length] = ' ';
@@ -253,16 +251,16 @@ public class AuthenticatingSMTPClient extends SMTPSClient
             // the server sends fixed responses (base64("Username") and
             // base64("Password")), so we don't have to read them.
             if (!SMTPReply.isPositiveIntermediate(sendCommand(
-                Base64.encodeBase64StringUnChunked(username.getBytes(getCharsetName()))))) { // Java 1.6 can use getCharset()
+                Base64.encodeBase64StringUnChunked(username.getBytes(getCharset()))))) {
                 return false;
             }
             return SMTPReply.isPositiveCompletion(sendCommand(
-                Base64.encodeBase64StringUnChunked(password.getBytes(getCharsetName())))); // Java 1.6 can use getCharset()
+                Base64.encodeBase64StringUnChunked(password.getBytes(getCharset()))));
         }
         else if (method.equals(AUTH_METHOD.XOAUTH))
         {
             return SMTPReply.isPositiveIntermediate(sendCommand(
-                    Base64.encodeBase64StringUnChunked(username.getBytes(getCharsetName())) // Java 1.6 can use getCharset()
+                    Base64.encodeBase64StringUnChunked(username.getBytes(getCharset()))
             ));
         } else {
             return false; // safety check
