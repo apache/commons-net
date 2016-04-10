@@ -264,10 +264,12 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
     }
 
 
+    @Override
     public void testRecentPrecision() {
         testPrecision("drwxr-xr-x   2 user     group         4096 Mar  2 15:13 zxbox", CalendarUnit.MINUTE);
     }
 
+    @Override
     public void testDefaultPrecision() {
         testPrecision("drwxr-xr-x   2 user     group         4096 Mar  2 2014 zxbox", CalendarUnit.DAY_OF_MONTH);
     }
