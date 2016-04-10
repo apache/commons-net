@@ -53,13 +53,17 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         "30CHARBAR.TXT;1         11/18          2-JUN-1998 08:38:42  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
         "A.;2                    18/18          1-JUL-1998 08:43:20  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
         "AA.;2                  152/153        13-FEB-1997 08:13:43  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
-        "UCX$REXECD_STARTUP.LOG;1098\r\n                         4/15         24-FEB-2003 13:17:24  [POSTWARE,LP]    (RWED,RWED,RE,)",
+        "UCX$REXECD_STARTUP.LOG;1098\r\n"+
+        "                         4/15         24-FEB-2003 13:17:24  [POSTWARE,LP]    (RWED,RWED,RE,)",
         "UNARCHIVE.COM;1          2/15          7-JUL-1997 16:37:45  [POSTWARE,LP]    (RWE,RWE,RWE,RE)",
         "UNXMERGE.COM;15          1/15         20-AUG-1996 13:59:50  [POSTWARE,LP]    (RWE,RWE,RWE,RE)",
         "UNXTEMP.COM;7            1/15         15-AUG-1996 14:10:38  [POSTWARE,LP]    (RWE,RWE,RWE,RE)",
-        "UNZIP_AND_ATTACH_FILES.COM;12\r\n                        14/15         24-JUL-2002 14:35:40  [TRANSLATED]    (RWE,RWE,RWE,RE)",
-        "UNZIP_AND_ATTACH_FILES.SAV;1\r\n                        14/15         17-JAN-2002 11:13:53  [POSTWARE,LP]    (RWE,RWED,RWE,RE)",
-        "FREEWARE40.DIR;1        27/36         16-FEB-1999 10:01:46  [AP_HTTPD,APACHE$WWW                               (RWE,RWE,RE,RE)",
+        "UNZIP_AND_ATTACH_FILES.COM;12\r\n"+
+        "                        14/15         24-JUL-2002 14:35:40  [TRANSLATED]    (RWE,RWE,RWE,RE)",
+        "UNZIP_AND_ATTACH_FILES.SAV;1\r\n"+
+        "                        14/15         17-JAN-2002 11:13:53  [POSTWARE,LP]    (RWE,RWED,RWE,RE)",
+        "FREEWARE40.DIR;1        27/36"+
+        "         16-FEB-1999 10:01:46  [AP_HTTPD,APACHE$WWW                               (RWE,RWE,RE,RE)",
         "1-JUN.LIS;1              9/9           2-jun-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
     };
     // CHECKSTYLE:ON
