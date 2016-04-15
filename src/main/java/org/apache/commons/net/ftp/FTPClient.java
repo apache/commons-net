@@ -983,6 +983,7 @@ implements Configurable
             _replyLines.clear();
             _replyLines.addAll(oldReplyLines);
             _replyCode = oldReplyCode;
+            _newReplyString = true;
         }
     }
 

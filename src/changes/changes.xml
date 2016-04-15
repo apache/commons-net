@@ -74,6 +74,9 @@ This is mainly a bug-fix release. See further details below.
   Notable additions:
   The IMAP examples can now get password from console, stdin or an environment variable.
         ">
+            <action issue="NET-583" type="fix" dev="sebb" due-to="Holger Rehn">
+            FTPClient.getReplyString() returns wrong value after connect()
+            </action>
             <action type="add" dev="sebb">
             Alternative password input methods for IMAP examples
             </action>
