@@ -37,10 +37,10 @@ import org.junit.Test;
 
 public class UtilTest {
 
-    private Writer dest = new CharArrayWriter();
-    private Reader source = new CharArrayReader(new char[]{'a'});
-    private InputStream src = new ByteArrayInputStream(new byte[]{'z'});
-    private OutputStream dst = new ByteArrayOutputStream();
+    private final Writer dest = new CharArrayWriter();
+    private final Reader source = new CharArrayReader(new char[]{'a'});
+    private final InputStream src = new ByteArrayInputStream(new byte[]{'z'});
+    private final OutputStream dst = new ByteArrayOutputStream();
 
     @Test
     public void testcloseQuietly() {
