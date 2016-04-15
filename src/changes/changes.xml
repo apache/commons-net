@@ -63,6 +63,30 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
     <body>
+        <release version="3.5" date="2016-TBA" description="
+This is mainly a bug-fix release. See further details below.
+
+  This release is binary compatible with previous releases.
+  However it is not source compatible with releases before 3.4, as some methods were added to the interface NtpV3Packet in 3.4
+  
+  The code now requires a minimum of Java 1.6.
+
+  Notable additions:
+  The IMAP examples can now get password from console, stdin or an environment variable.
+        ">
+            <action type="add" dev="sebb">
+            Alternative password input methods for IMAP examples
+            </action>
+            <action type="add" dev="sebb">
+            More tests for Feb 29 handling.
+            </action>
+            <action issue="NET-586" type="fix" dev="sebb">
+            Don't use Feb 29 for short future date tests
+            </action>
+            <action type="fix" dev="sebb">
+            Documentation tweaks
+            </action>
+        </release>
         <release version="3.4" date="2015-11-26" description="
 This is mainly a bug-fix release. See further details below.
 
