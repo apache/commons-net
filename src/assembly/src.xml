@@ -28,6 +28,8 @@ Licensed to the Apache Software Foundation (ASF) under one or more
   <fileSets>
     <fileSet>
       <includes>
+        <include>BUILDING.txt</include>
+        <include>CONTRIBUTING.md</include>
         <include>README*</include>
         <include>LICENSE*</include>
         <include>NOTICE*</include>
