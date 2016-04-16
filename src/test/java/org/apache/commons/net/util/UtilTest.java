@@ -172,9 +172,11 @@ public class UtilTest {
             this.expectedBytes = bytesTransferred;
             this.expectedSize = streamSize;
         }
+        @Override
         public void bytesTransferred(CopyStreamEvent event) {
         }
 
+        @Override
         public void bytesTransferred(long totalBytesTransferred, int bytesTransferred, long streamSize) {
             Assert.assertEquals("Wrong total", expectedTotal, totalBytesTransferred);
             Assert.assertEquals("Wrong streamSize", expectedSize, streamSize);
@@ -195,9 +197,11 @@ public class UtilTest {
             this.expectedTotal = totalBytesTransferred;
             this.expectedBytes = bytesTransferred;
         }
+        @Override
         public void bytesTransferred(CopyStreamEvent event) {
         }
 
+        @Override
         public void bytesTransferred(long totalBytesTransferred, int bytesTransferred, long streamSize) {
             Assert.assertEquals("Wrong bytes", expectedBytes, bytesTransferred);
             this.totalBytesTransferredTotal = totalBytesTransferred;

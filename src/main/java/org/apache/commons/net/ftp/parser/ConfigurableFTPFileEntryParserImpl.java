@@ -99,6 +99,7 @@ implements Configurable
      * each concrete subclass is used instead.
      */
 //    @Override
+    @Override
     public void configure(FTPClientConfig config)
     {
         if (this.timestampParser instanceof Configurable) {

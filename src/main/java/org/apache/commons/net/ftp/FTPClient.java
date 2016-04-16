@@ -3648,6 +3648,7 @@ implements Configurable
      * @since 1.4
      */
 //    @Override
+    @Override
     public void configure(FTPClientConfig config) {
         this.__configuration = config;
     }
@@ -3813,11 +3814,13 @@ implements Configurable
         }
 
 //        @Override
+        @Override
         public void bytesTransferred(CopyStreamEvent event) {
             bytesTransferred(event.getTotalBytesTransferred(), event.getBytesTransferred(), event.getStreamSize());
         }
 
 //        @Override
+        @Override
         public void bytesTransferred(long totalBytesTransferred,
                 int bytesTransferred, long streamSize) {
             long now = System.currentTimeMillis();

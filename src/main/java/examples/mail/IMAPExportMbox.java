@@ -337,6 +337,7 @@ public final class IMAPExportMbox
           this.checkSequence = checkSequence;
         }
 
+        @Override
         public boolean chunkReceived(IMAP imap) {
             final String[] replyStrings = imap.getReplyStrings();
             Date received = new Date();

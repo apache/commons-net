@@ -879,6 +879,7 @@ extends TestCase implements TelnetNotificationHandler
      * <p>
      */
 //    @Override
+    @Override
     public void receivedNegotiation(int negotiation_code, int option_code)
     {
         if(negotiation_code == TelnetNotificationHandler.RECEIVED_DO)

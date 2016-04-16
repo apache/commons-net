@@ -68,6 +68,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @return mode as defined in RFC-1305.
      */
 //    @Override
+    @Override
     public int getMode()
     {
         return (ui(buf[MODE_INDEX]) >> MODE_SHIFT) & 0x7;
@@ -79,6 +80,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @return mode name as string.
      */
 //    @Override
+    @Override
     public String getModeName()
     {
         return NtpUtils.getModeName(getMode());
@@ -90,6 +92,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param mode the mode to set
      */
 //    @Override
+    @Override
     public void setMode(int mode)
     {
         buf[MODE_INDEX] = (byte) (buf[MODE_INDEX] & 0xF8 | mode & 0x7);
@@ -105,6 +108,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @return leap indicator as defined in RFC-1305.
      */
 //    @Override
+    @Override
     public int getLeapIndicator()
     {
         return (ui(buf[LI_INDEX]) >> LI_SHIFT) & 0x3;
@@ -116,6 +120,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param li leap indicator.
      */
 //    @Override
+    @Override
     public void setLeapIndicator(int li)
     {
         buf[LI_INDEX] = (byte) (buf[LI_INDEX] & 0x3F | ((li & 0x3) << LI_SHIFT));
@@ -131,6 +136,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @return poll interval as defined in RFC-1305.
      */
 //    @Override
+    @Override
     public int getPoll()
     {
         return buf[POLL_INDEX];
@@ -142,6 +148,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param poll poll interval.
      */
 //    @Override
+    @Override
     public void setPoll(int poll)
     {
         buf[POLL_INDEX] = (byte) (poll & 0xFF);
@@ -155,6 +162,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @return precision as defined in RFC-1305.
      */
 //    @Override
+    @Override
     public int getPrecision()
     {
         return buf[PRECISION_INDEX];
@@ -165,6 +173,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param precision the precision to set
      * @since 3.4
      */
+    @Override
     public void setPrecision(int precision)
     {
         buf[PRECISION_INDEX] = (byte) (precision & 0xFF);
@@ -176,6 +185,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @return NTP version number.
      */
 //    @Override
+    @Override
     public int getVersion()
     {
         return (ui(buf[VERSION_INDEX]) >> VERSION_SHIFT) & 0x7;
@@ -187,6 +197,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param version NTP version.
      */
 //    @Override
+    @Override
     public void setVersion(int version)
     {
         buf[VERSION_INDEX] = (byte) (buf[VERSION_INDEX] & 0xC7 | ((version & 0x7) << VERSION_SHIFT));
@@ -200,6 +211,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @return Stratum level as defined in RFC-1305.
      */
 //    @Override
+    @Override
     public int getStratum()
     {
         return ui(buf[STRATUM_INDEX]);
@@ -211,6 +223,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param stratum stratum level.
      */
 //    @Override
+    @Override
     public void setStratum(int stratum)
     {
         buf[STRATUM_INDEX] = (byte) (stratum & 0xFF);
@@ -224,6 +237,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @return root delay as defined in RFC-1305.
      */
 //    @Override
+    @Override
     public int getRootDelay()
     {
         return getInt(ROOT_DELAY_INDEX);
@@ -236,6 +250,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @since 3.4
      */
 //    @Override
+    @Override
     public void setRootDelay(int delay)
     {
         setInt(ROOT_DELAY_INDEX, delay);
@@ -250,6 +265,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @return root delay in milliseconds
      */
 //    @Override
+    @Override
     public double getRootDelayInMillisDouble()
     {
         double l = getRootDelay();
@@ -261,6 +277,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @return root dispersion.
      */
 //    @Override
+    @Override
     public int getRootDispersion()
     {
         return getInt(ROOT_DISPERSION_INDEX);
@@ -273,6 +290,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @since 3.4
      */
 //    @Override
+    @Override
     public void setRootDispersion(int dispersion)
     {
         setInt(ROOT_DISPERSION_INDEX, dispersion);
@@ -284,6 +302,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @return root dispersion in milliseconds
      */
 //    @Override
+    @Override
     public long getRootDispersionInMillis()
     {
         long l = getRootDispersion();
@@ -297,6 +316,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @return root dispersion in milliseconds
      */
 //    @Override
+    @Override
     public double getRootDispersionInMillisDouble()
     {
         double l = getRootDispersion();
@@ -310,6 +330,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param refId reference clock identifier.
      */
 //    @Override
+    @Override
     public void setReferenceId(int refId)
     {
         setInt(REFERENCE_ID_INDEX, refId);
@@ -322,6 +343,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @return the reference id as defined in RFC-1305.
      */
 //    @Override
+    @Override
     public int getReferenceId()
     {
         return getInt(REFERENCE_ID_INDEX);
@@ -336,6 +358,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @return the reference id string.
      */
 //    @Override
+    @Override
     public String getReferenceIdString()
     {
         int version = getVersion();
@@ -395,6 +418,7 @@ public class NtpV3Impl implements NtpV3Packet
      * Never returns a null object.
      */
 //    @Override
+    @Override
     public TimeStamp getTransmitTimeStamp()
     {
         return getTimestamp(TRANSMIT_TIMESTAMP_INDEX);
@@ -407,6 +431,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param ts NTP timestamp
      */
 //    @Override
+    @Override
     public void setTransmitTime(TimeStamp ts)
     {
         setTimestamp(TRANSMIT_TIMESTAMP_INDEX, ts);
@@ -419,6 +444,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param ts NTP timestamp
      */
 //    @Override
+    @Override
     public void setOriginateTimeStamp(TimeStamp ts)
     {
         setTimestamp(ORIGINATE_TIMESTAMP_INDEX, ts);
@@ -431,6 +457,7 @@ public class NtpV3Impl implements NtpV3Packet
      * Never returns null.
      */
 //    @Override
+    @Override
     public TimeStamp getOriginateTimeStamp()
     {
         return getTimestamp(ORIGINATE_TIMESTAMP_INDEX);
@@ -443,6 +470,7 @@ public class NtpV3Impl implements NtpV3Packet
      * Never returns null.
      */
 //    @Override
+    @Override
     public TimeStamp getReferenceTimeStamp()
     {
         return getTimestamp(REFERENCE_TIMESTAMP_INDEX);
@@ -455,6 +483,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param ts NTP timestamp
      */
 //    @Override
+    @Override
     public void setReferenceTime(TimeStamp ts)
     {
         setTimestamp(REFERENCE_TIMESTAMP_INDEX, ts);
@@ -467,6 +496,7 @@ public class NtpV3Impl implements NtpV3Packet
      * Never returns null.
      */
 //    @Override
+    @Override
     public TimeStamp getReceiveTimeStamp()
     {
         return getTimestamp(RECEIVE_TIMESTAMP_INDEX);
@@ -479,6 +509,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param ts timestamp
      */
 //    @Override
+    @Override
     public void setReceiveTimeStamp(TimeStamp ts)
     {
         setTimestamp(RECEIVE_TIMESTAMP_INDEX, ts);
@@ -491,6 +522,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @return packet type string identifier which in this case is "NTP".
      */
 //    @Override
+    @Override
     public String getType()
     {
         return "NTP";
@@ -576,6 +608,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @return a datagram packet.
      */
 //    @Override
+    @Override
     public synchronized DatagramPacket getDatagramPacket()
     {
         if (dp == null) {
@@ -592,6 +625,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @throws IllegalArgumentException if srcDp is null or byte length is less than minimum length of 48 bytes
      */
 //    @Override
+    @Override
     public void setDatagramPacket(DatagramPacket srcDp)
     {
         if (srcDp == null || srcDp.getLength() < buf.length) {

@@ -33,6 +33,7 @@ class ArticleIterator implements Iterator<Article>, Iterable<Article> {
     }
 
 //    @Override
+    @Override
     public boolean hasNext() {
         return stringIterator.hasNext();
     }
@@ -43,16 +44,19 @@ class ArticleIterator implements Iterator<Article>, Iterable<Article> {
      * will be true, and the subject will contain the raw info.
      */
 //    @Override
+    @Override
     public Article next() {
         String line = stringIterator.next();
         return NNTPClient.__parseArticleEntry(line);
     }
 
 //    @Override
+    @Override
     public void remove() {
         stringIterator.remove();
     }
 //    @Override
+    @Override
     public Iterator<Article> iterator() {
         return this;
     }

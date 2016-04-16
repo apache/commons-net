@@ -48,6 +48,7 @@ public abstract class FTPFileEntryParserImpl
      * @exception java.io.IOException thrown on any IO Error reading from the reader.
      */
 //    @Override
+    @Override
     public String readNextEntry(BufferedReader reader) throws IOException
     {
         return reader.readLine();
@@ -65,6 +66,7 @@ public abstract class FTPFileEntryParserImpl
      * @return <code>original</code> unmodified.
      */
 //     @Override
+    @Override
     public List<String> preParse(List<String> original) {
          return original;
      }

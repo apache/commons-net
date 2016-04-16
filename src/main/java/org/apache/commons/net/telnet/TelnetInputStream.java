@@ -589,6 +589,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     }
 
 //    @Override
+    @Override
     public void run()
     {
         int ch;

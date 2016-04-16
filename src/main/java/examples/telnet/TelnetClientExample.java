@@ -279,6 +279,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
      * @param option_code - code of the option negotiated
      ***/
 //    @Override
+    @Override
     public void receivedNegotiation(int negotiation_code, int option_code)
     {
         String command = null;
@@ -311,6 +312,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
      * on the screen.
      ***/
 //    @Override
+    @Override
     public void run()
     {
         InputStream instr = tc.getInputStream();

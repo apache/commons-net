@@ -100,6 +100,7 @@ public class FTPClientConfigFunctionalTest extends TestCase {
         TreeSet<FTPFile> sorted = new TreeSet<FTPFile>(new Comparator<Object>() {
 
 //            @Override
+            @Override
             public int compare(Object o1, Object o2) {
                 FTPFile f1 = (FTPFile) o1;
                 FTPFile f2 = (FTPFile) o2;

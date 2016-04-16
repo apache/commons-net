@@ -61,6 +61,7 @@ public class CopyStreamAdapter implements CopyStreamListener
      *              bytes.
      */
 //    @Override
+    @Override
     public void bytesTransferred(CopyStreamEvent event)
     {
         for (EventListener listener : internalListeners)
@@ -85,6 +86,7 @@ public class CopyStreamAdapter implements CopyStreamListener
      *        the size is unknown.
      */
 //    @Override
+    @Override
     public void bytesTransferred(long totalBytesTransferred,
                                  int bytesTransferred, long streamSize)
     {

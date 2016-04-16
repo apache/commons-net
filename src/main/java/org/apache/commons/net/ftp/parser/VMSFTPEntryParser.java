@@ -104,6 +104,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * @return An FTPFile instance corresponding to the supplied entry
      */
 //    @Override
+    @Override
     public FTPFile parseFTPEntry(String entry)
     {
         //one block in VMS equals 512 bytes
