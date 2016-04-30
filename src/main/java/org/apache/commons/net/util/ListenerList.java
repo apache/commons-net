@@ -58,7 +58,6 @@ public class ListenerList implements Serializable, Iterable<EventListener>
      * @since 2.0
      * TODO Check that this is a good defensive strategy
      */
-//    @Override
     @Override
     public Iterator<EventListener> iterator() {
             return __listeners.iterator();
