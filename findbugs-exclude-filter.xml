@@ -63,6 +63,23 @@
     <Bug code="SF" />
   </Match>
 
+  <!-- Deprecated code -->
+  <Match>
+    <Class name="org.apache.commons.net.nntp.ArticlePointer" />
+    <Bug code="UrF" />
+  </Match>
+
+  <!-- Used externally -->
+  <Match>
+    <Class name="org.apache.commons.net.pop3.POP3MessageInfo" />
+    <Or>
+      <Field name="size"/>
+      <Field name="identifier"/>
+    </Or>
+    <Bug code="UrF" />
+  </Match>
+
+
   <!-- Don't check examples -->
   <Match>
     <Package name="~examples\..*" />
