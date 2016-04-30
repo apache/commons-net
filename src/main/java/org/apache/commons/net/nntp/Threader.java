@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class Threader {
 
@@ -211,11 +212,11 @@ public class Threader {
      */
     private ThreadContainer findRootSet(HashMap<String, ThreadContainer> idTable) {
         ThreadContainer root = new ThreadContainer();
-        Iterator<String> iter = idTable.keySet().iterator();
+        Iterator<Map.Entry<String, ThreadContainer>> iter = idTable.entrySet().iterator();
 
         while (iter.hasNext()) {
-            Object key = iter.next();
-            ThreadContainer c = idTable.get(key);
+            Map.Entry<String, ThreadContainer> entry = iter.next();
+            ThreadContainer c = entry.getValue();
             if (c.parent == null) {
                 if (c.next != null) {
                     throw new RuntimeException(
