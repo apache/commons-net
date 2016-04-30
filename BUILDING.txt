@@ -24,3 +24,8 @@ For Java 8+, the MaxPermSize option should be removed:
 
 export MAVEN_OPTS="-Xmx512m" # Unix
 set MAVEN_OPTS="-Xmx512m"    # Windows
+
+To deploy:
+
+mvn deploy -Prelease -Duser.name=*ASF ID* -Pjava-1.6 [-Ptest-deploy]
+The test-deploy profile deploys to target/deploy rather than Nexus
