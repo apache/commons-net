@@ -196,6 +196,15 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
     <build>
         <pluginManagement>
           <plugins>
+            <!-- Allow CLI usage -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>${commons.findbugs.version}</version>
+                <configuration>
+                    <excludeFilterFile>findbugs-exclude-filter.xml</excludeFilterFile>
+                </configuration>
+            </plugin>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-compiler-plugin</artifactId>
@@ -206,11 +215,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                   <exclude>**/package-info.java</exclude>
                 </excludes>
               </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.9.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -455,7 +459,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>${commons.findbugs.version}</version>
                 <configuration>
                     <excludeFilterFile>findbugs-exclude-filter.xml</excludeFilterFile>
                 </configuration>
