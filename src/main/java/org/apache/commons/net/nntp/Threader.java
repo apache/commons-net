@@ -109,7 +109,8 @@ public class Threader {
         // be a duplicate id, in which case we will need to generate a bogus placeholder id
         if (container != null) {
             if (container.threadable != null) { // oops! duplicate ids...
-                id = "<Bogus-id:" + (bogusIdCount++) + ">";
+                bogusIdCount++ ; // Avoid dead local store warning
+                id = "<Bogus-id:" + (bogusIdCount) + ">";
                 container = null;
             } else {
                 // The container just contained a forward reference to this message, so let's
