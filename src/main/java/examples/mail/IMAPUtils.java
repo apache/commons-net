@@ -52,7 +52,7 @@ class IMAPUtils {
 
         String []userpass = userInfo.split(":");
         if (userpass.length != 2) {
-            throw new IllegalArgumentException("Invalid userInfo details: '" + userpass + "'");
+            throw new IllegalArgumentException("Invalid userInfo details: '" + userInfo + "'");
         }
 
         String username = userpass[0];
