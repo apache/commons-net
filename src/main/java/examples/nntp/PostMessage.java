@@ -85,8 +85,12 @@ public final class PostMessage
                 System.out.print("Additional Newsgroup <Hit enter to end>: ");
                 System.out.flush();
 
-                // Of course you don't want to do this because readLine() may be null
-                newsgroup = stdin.readLine().trim();
+                newsgroup = stdin.readLine();
+                if (newsgroup == null) {
+                    break;
+                }
+
+                newsgroup = newsgroup.trim();
 
                 if (newsgroup.length() == 0) {
                     break;
