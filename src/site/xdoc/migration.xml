@@ -27,16 +27,17 @@
 
 <section name="Migration How-To">
 <p>
-This how-to lists the migration steps for moving between versions of Commons Net.
+This how-to lists the migration steps for moving between versions of Apache Commons Net.
 </p>
 </section>
 
-<section name="Commons Net 3.x to Commons Net 3.4">
+<section name="Commons Net 3.x to Commons Net 3.5">
 <p>
-Version 3.4 is binary compatible with previous 3.x versions and 2.0.
+Version 3.5 is binary compatible with previous 3.x versions and 2.0.
 There should be no changes required to existing binary code.
 </p>
 <p>
+Version 3.5 is source compatible with 3.4.
 However, version 3.4 is <b>not source compatible</b> with 3.3.
 </p>
 <p>
