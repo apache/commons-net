@@ -444,7 +444,6 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
      *          numerically greater than the TimeStamp argument
      *          (signed comparison).
      */
-//    @Override
     @Override
     public int compareTo(TimeStamp anotherTimeStamp)
     {

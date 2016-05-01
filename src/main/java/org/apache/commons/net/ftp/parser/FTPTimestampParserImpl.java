@@ -164,7 +164,6 @@ public class FTPTimestampParserImpl implements
      * @param timestampStr The timestamp to be parsed
      * @return a Calendar with the parsed timestamp
      */
-//    @Override
     @Override
     public Calendar parseTimestamp(String timestampStr) throws ParseException {
         Calendar now = Calendar.getInstance();
@@ -364,7 +363,6 @@ public class FTPTimestampParserImpl implements
      * been configured.
      * </p>
      */
-//    @Override
     @Override
     public void configure(FTPClientConfig config) {
         DateFormatSymbols dfs = null;

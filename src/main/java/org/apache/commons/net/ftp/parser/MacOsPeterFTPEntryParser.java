@@ -125,7 +125,6 @@ public class MacOsPeterFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * @param entry A line of text from the file listing
      * @return An FTPFile instance corresponding to the supplied entry
      */
-//    @Override
     @Override
     public FTPFile parseFTPEntry(String entry) {
         FTPFile file = new FTPFile();

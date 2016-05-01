@@ -32,26 +32,22 @@ class NewsgroupIterator implements Iterator<NewsgroupInfo>, Iterable<NewsgroupIn
         stringIterator = iterableString.iterator();
     }
 
-//    @Override
     @Override
     public boolean hasNext() {
         return stringIterator.hasNext();
     }
 
-//    @Override
     @Override
     public NewsgroupInfo next() {
         String line = stringIterator.next();
         return NNTPClient.__parseNewsgroupListEntry(line);
     }
 
-//    @Override
     @Override
     public void remove() {
         stringIterator.remove();
     }
 
-//    @Override
     @Override
     public Iterator<NewsgroupInfo> iterator() {
         return this;

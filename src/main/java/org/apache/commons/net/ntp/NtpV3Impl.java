@@ -67,7 +67,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return mode as defined in RFC-1305.
      */
-//    @Override
     @Override
     public int getMode()
     {
@@ -79,7 +78,6 @@ public class NtpV3Impl implements NtpV3Packet
      * RFC 1305.
      * @return mode name as string.
      */
-//    @Override
     @Override
     public String getModeName()
     {
@@ -91,7 +89,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @param mode the mode to set
      */
-//    @Override
     @Override
     public void setMode(int mode)
     {
@@ -107,7 +104,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return leap indicator as defined in RFC-1305.
      */
-//    @Override
     @Override
     public int getLeapIndicator()
     {
@@ -119,7 +115,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @param li leap indicator.
      */
-//    @Override
     @Override
     public void setLeapIndicator(int li)
     {
@@ -135,7 +130,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return poll interval as defined in RFC-1305.
      */
-//    @Override
     @Override
     public int getPoll()
     {
@@ -147,7 +141,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @param poll poll interval.
      */
-//    @Override
     @Override
     public void setPoll(int poll)
     {
@@ -161,7 +154,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return precision as defined in RFC-1305.
      */
-//    @Override
     @Override
     public int getPrecision()
     {
@@ -184,7 +176,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return NTP version number.
      */
-//    @Override
     @Override
     public int getVersion()
     {
@@ -196,7 +187,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @param version NTP version.
      */
-//    @Override
     @Override
     public void setVersion(int version)
     {
@@ -210,7 +200,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return Stratum level as defined in RFC-1305.
      */
-//    @Override
     @Override
     public int getStratum()
     {
@@ -222,7 +211,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @param stratum stratum level.
      */
-//    @Override
     @Override
     public void setStratum(int stratum)
     {
@@ -236,7 +224,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return root delay as defined in RFC-1305.
      */
-//    @Override
     @Override
     public int getRootDelay()
     {
@@ -249,7 +236,6 @@ public class NtpV3Impl implements NtpV3Packet
      * @param delay root delay
      * @since 3.4
      */
-//    @Override
     @Override
     public void setRootDelay(int delay)
     {
@@ -264,7 +250,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return root delay in milliseconds
      */
-//    @Override
     @Override
     public double getRootDelayInMillisDouble()
     {
@@ -276,7 +261,6 @@ public class NtpV3Impl implements NtpV3Packet
      * Returns root dispersion as defined in RFC-1305.
      * @return root dispersion.
      */
-//    @Override
     @Override
     public int getRootDispersion()
     {
@@ -289,7 +273,6 @@ public class NtpV3Impl implements NtpV3Packet
      * @param dispersion root dispersion
      * @since 3.4
      */
-//    @Override
     @Override
     public void setRootDispersion(int dispersion)
     {
@@ -301,7 +284,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return root dispersion in milliseconds
      */
-//    @Override
     @Override
     public long getRootDispersionInMillis()
     {
@@ -315,7 +297,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return root dispersion in milliseconds
      */
-//    @Override
     @Override
     public double getRootDispersionInMillisDouble()
     {
@@ -329,7 +310,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @param refId reference clock identifier.
      */
-//    @Override
     @Override
     public void setReferenceId(int refId)
     {
@@ -342,7 +322,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return the reference id as defined in RFC-1305.
      */
-//    @Override
     @Override
     public int getReferenceId()
     {
@@ -357,7 +336,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return the reference id string.
      */
-//    @Override
     @Override
     public String getReferenceIdString()
     {
@@ -417,7 +395,6 @@ public class NtpV3Impl implements NtpV3Packet
      * @return the transmit timestamp as defined in RFC-1305.
      * Never returns a null object.
      */
-//    @Override
     @Override
     public TimeStamp getTransmitTimeStamp()
     {
@@ -430,7 +407,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @param ts NTP timestamp
      */
-//    @Override
     @Override
     public void setTransmitTime(TimeStamp ts)
     {
@@ -443,7 +419,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @param ts NTP timestamp
      */
-//    @Override
     @Override
     public void setOriginateTimeStamp(TimeStamp ts)
     {
@@ -456,7 +431,6 @@ public class NtpV3Impl implements NtpV3Packet
      * @return the originate time.
      * Never returns null.
      */
-//    @Override
     @Override
     public TimeStamp getOriginateTimeStamp()
     {
@@ -469,7 +443,6 @@ public class NtpV3Impl implements NtpV3Packet
      * @return the reference time as <code>TimeStamp</code> object.
      * Never returns null.
      */
-//    @Override
     @Override
     public TimeStamp getReferenceTimeStamp()
     {
@@ -482,7 +455,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @param ts NTP timestamp
      */
-//    @Override
     @Override
     public void setReferenceTime(TimeStamp ts)
     {
@@ -495,7 +467,6 @@ public class NtpV3Impl implements NtpV3Packet
      * @return the receive time.
      * Never returns null.
      */
-//    @Override
     @Override
     public TimeStamp getReceiveTimeStamp()
     {
@@ -508,7 +479,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @param ts timestamp
      */
-//    @Override
     @Override
     public void setReceiveTimeStamp(TimeStamp ts)
     {
@@ -521,7 +491,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return packet type string identifier which in this case is "NTP".
      */
-//    @Override
     @Override
     public String getType()
     {
@@ -607,7 +576,6 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return a datagram packet.
      */
-//    @Override
     @Override
     public synchronized DatagramPacket getDatagramPacket()
     {
@@ -624,7 +592,6 @@ public class NtpV3Impl implements NtpV3Packet
      * @param srcDp source DatagramPacket to copy contents from, never null.
      * @throws IllegalArgumentException if srcDp is null or byte length is less than minimum length of 48 bytes
      */
-//    @Override
     @Override
     public void setDatagramPacket(DatagramPacket srcDp)
     {

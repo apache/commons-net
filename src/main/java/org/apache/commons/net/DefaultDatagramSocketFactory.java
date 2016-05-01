@@ -42,7 +42,6 @@ public class DefaultDatagramSocketFactory implements DatagramSocketFactory
      * @return a new DatagramSocket
      * @exception SocketException If the socket could not be created.
      ***/
-//    @Override
     @Override
     public DatagramSocket createDatagramSocket() throws SocketException
     {
@@ -56,7 +55,6 @@ public class DefaultDatagramSocketFactory implements DatagramSocketFactory
      * @return a new DatagramSocket
      * @exception SocketException If the socket could not be created.
      ***/
-//    @Override
     @Override
     public DatagramSocket createDatagramSocket(int port) throws SocketException
     {
@@ -72,7 +70,6 @@ public class DefaultDatagramSocketFactory implements DatagramSocketFactory
      * @return a new DatagramSocket
      * @exception SocketException If the socket could not be created.
      ***/
-//    @Override
     @Override
     public DatagramSocket createDatagramSocket(int port, InetAddress laddr)
     throws SocketException

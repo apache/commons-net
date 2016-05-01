@@ -58,7 +58,6 @@ public class TelnetTestResponder implements Runnable
     /***
      * Runs the responder
      ***/
-//    @Override
     @Override
     public void run()
     {

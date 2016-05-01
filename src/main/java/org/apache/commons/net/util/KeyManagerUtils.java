@@ -208,7 +208,6 @@ public final class KeyManagerUtils {
         }
 
         // Call sequence: 1
-//        @Override
         @Override
         public String chooseClientAlias(String[] keyType, Principal[] issuers,
                 Socket socket) {
@@ -216,32 +215,27 @@ public final class KeyManagerUtils {
         }
 
         // Call sequence: 2
-//        @Override
         @Override
         public X509Certificate[] getCertificateChain(String alias) {
             return keyStore.getCertificateChain();
         }
 
-//        @Override
         @Override
         public String[] getClientAliases(String keyType, Principal[] issuers) {
             return new String[]{ keyStore.getAlias()};
         }
 
         // Call sequence: 3
-//        @Override
         @Override
         public PrivateKey getPrivateKey(String alias) {
             return keyStore.getPrivateKey();
         }
 
-//        @Override
         @Override
         public String[] getServerAliases(String keyType, Principal[] issuers) {
             return null;
         }
 
-//        @Override
         @Override
         public String chooseServerAlias(String keyType, Principal[] issuers, Socket socket) {
             return null;

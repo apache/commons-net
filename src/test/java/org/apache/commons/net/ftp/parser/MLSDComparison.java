@@ -43,7 +43,6 @@ import org.junit.Test;
 public class MLSDComparison {
 
     private final Comparator<FTPFile> cmp = new Comparator<FTPFile>() {
-//        @Override
         @Override
         public int compare(FTPFile o1, FTPFile o2) {
                 String n1 = o1.getName();
@@ -56,7 +55,6 @@ public class MLSDComparison {
     public void testFile() throws Exception{
         File path = new File(DownloadListings.DOWNLOAD_DIR);
         FilenameFilter filter = new FilenameFilter(){
-//            @Override
             @Override
             public boolean accept(File dir, String name) {
                 return name.endsWith("_mlsd.txt");

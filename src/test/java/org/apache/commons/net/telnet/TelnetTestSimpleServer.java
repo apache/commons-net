@@ -47,7 +47,6 @@ public class TelnetTestSimpleServer implements Runnable
         listener.start();
     }
 
-//    @Override
     @Override
     public void run()
     {

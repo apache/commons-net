@@ -98,7 +98,6 @@ implements Configurable
      * If it is null, a default configuration defined by
      * each concrete subclass is used instead.
      */
-//    @Override
     @Override
     public void configure(FTPClientConfig config)
     {

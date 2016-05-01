@@ -271,7 +271,6 @@ public class TFTPServer implements Runnable
         return !shutdownServer;
     }
 
-//    @Override
     @Override
     public void run()
     {
@@ -374,7 +373,6 @@ public class TFTPServer implements Runnable
             }
         }
 
-//        @Override
         @Override
         public void run()
         {

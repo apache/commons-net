@@ -83,7 +83,6 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
      * @param entry A line of text from the file listing
      * @return An FTPFile instance corresponding to the supplied entry
      */
-//    @Override
     @Override
     public FTPFile parseFTPEntry(String entry)
     {

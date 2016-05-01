@@ -63,9 +63,9 @@ limitations under the License.
     <!-- Modifier Checks                                    -->
     <!-- See http://checkstyle.sf.net/config_modifiers.html -->
     <module name="ModifierOrder"/>
-    
+
     <!--module name="RedundantModifier"/-->
-    
+
     <!-- Checks for blocks. You know, those {}'s         -->
     <!-- See http://checkstyle.sf.net/config_blocks.html -->
     <!--module name="AvoidNestedBlocks"/-->
@@ -81,7 +81,7 @@ limitations under the License.
       <property name="allowMissingParamTags" value="true"/>
       <property name="allowMissingThrowsTags" value="true"/>
     </module>
- 
+
   </module>
 
   <module name="SuppressionCommentFilter"/>
@@ -91,7 +91,7 @@ limitations under the License.
     <property name="file" value="${config_loc}/checkstyle-suppressions.xml"/>
   </module>
 
-  <!-- 
+  <!--
       Allow comment to suppress checkstyle for a single line
       e.g. // CHECKSTYLE IGNORE MagicNumber
    -->

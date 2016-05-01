@@ -414,10 +414,10 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
               </configuration>
           </plugin>
 
-      <!-- 
+      <!--
             Allow exec:java to launch examples from the classpath
             For example:
-            
+
             mvn -q exec:java -Dexec.arguments=FTPClientExample,-A,-l,hostname
       -->
       <plugin>
