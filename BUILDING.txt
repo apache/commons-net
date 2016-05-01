@@ -13,6 +13,8 @@ http://commons.apache.org/commons-parent-pom.html#Testing_with_different_Java_ve
 The latest version of Maven that runs under Java 1.6 is 3.2.5 [1]
 
 Building the site will also generally require at least Java 7 to run Maven.
+In particular, the Checkstyle plugin requires Java 7.
+
 To build the site from scratch, you can use:
 
 $ mvn clean site [-Pjava-1.6]
