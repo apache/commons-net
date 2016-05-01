@@ -178,7 +178,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
 
         <!-- Current release -->
         <commons.release.version>${project.version}</commons.release.version>
-        <commons.rc.version>RC2</commons.rc.version>
+        <commons.rc.version>RC3</commons.rc.version>
         <commons.release.desc>(Requires Java ${maven.compiler.target} or later)</commons.release.desc>
 
         <!-- Previous release -->
