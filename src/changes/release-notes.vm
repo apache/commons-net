@@ -14,17 +14,18 @@
 ## KIND, either express or implied.  See the License for the
 ## specific language governing permissions and limitations
 ## under the License.
-              Apache ${project.name}
-                  Version ${version}
-                 RELEASE NOTES
+##
+              ${project.name} ${version}
+                  RELEASE NOTES
 
-The ${developmentTeam} is pleased to announce the release of Apache ${project.name} ${version}
+The ${developmentTeam} is pleased to announce the release of ${project.name} ${version}
 
 $introduction.replaceAll("(?<!\015)\012", "
 ").replaceAll("(?m)^ +","")
 
 ## N.B. the available variables are described here:
 ## http://maven.apache.org/plugins/maven-changes-plugin/examples/using-a-custom-announcement-template.html
+##
 ## Hack to improve layout: replace all pairs of spaces with a single new-line
 $release.description.replaceAll("  ", "
 ")
@@ -44,6 +45,14 @@ $release.description.replaceAll("  ", "
 ## Use replaceAll to fix up LF-only line ends on Windows.
 #set($action=$actionItem.getAction().replaceAll("\n","
 "))
+## Replace &lt; with < so can embed tag markup
+#set($action=$action.replaceAll("&lt;","<"))
+## use an empty date to mean don't format the entry
+## TODO how to enable leading spaces without compromising html report
+## unfortunately leading spaces are trimmed even from CDATA sections
+#if ($actionItem.getDate() && $actionItem.getDate().length()==0)
+$action
+#else
 ## Fix up indentation for multi-line action descriptions
 #set($action=$action.replaceAll("(?m)^  +",$indent2))
 #if ($actionItem.getIssue())
@@ -61,6 +70,7 @@ $release.description.replaceAll("  ", "
 #set($dueto="")
 #end
 o $issue ${action}$dueto
+#end
 #set($action="")
 #set($issue="")
 #set($dueto="")
@@ -76,22 +86,25 @@ New features:
 #foreach($actionItem in $release.getActions('add'))
 #processaction()
 #end 
-#end
 
+#end
+##
 #if ($release.getActions('fix').size() !=0)
 Fixed Bugs:
 #foreach($actionItem in $release.getActions('fix'))
 #processaction()
 #end
-#end
 
+#end
+##
 #if ($release.getActions('update').size() !=0)
 Changes:
 #foreach($actionItem in $release.getActions('update'))
 #processaction()
 #end
-#end
 
+#end
+##
 #if ($release.getActions('remove').size() !=0)
 Removed:
 #foreach($actionItem in $release.getActions('remove'))
@@ -100,6 +113,8 @@ Removed:
 #end
 ## End of main loop
 #end
+
+Historical list of changes: ${project.url}changes-report.html
 
 For complete information on ${project.name}, including instructions on how to submit bug reports,
 patches, or suggestions for improvement, see the Apache ${project.name} website:
