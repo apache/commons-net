@@ -136,7 +136,7 @@ public class TFTP extends DatagramSocketClient
      * may be in the local socket buffer.  This method need only be called
      * when you implement your own TFTP client or server.
      *
-     * @exception IOException if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      ***/
     public final void discardPackets() throws IOException
     {
@@ -183,16 +183,16 @@ public class TFTP extends DatagramSocketClient
      * will be overwritten by the the call.
      *
      * @return The TFTPPacket received.
-     * @exception InterruptedIOException  If a socket timeout occurs.  The
+     * @throws InterruptedIOException  If a socket timeout occurs.  The
      *       Java documentation claims an InterruptedIOException is thrown
      *       on a DatagramSocket timeout, but in practice we find a
      *       SocketException is thrown.  You should catch both to be safe.
-     * @exception SocketException  If a socket timeout occurs.  The
+     * @throws SocketException  If a socket timeout occurs.  The
      *       Java documentation claims an InterruptedIOException is thrown
      *       on a DatagramSocket timeout, but in practice we find a
      *       SocketException is thrown.  You should catch both to be safe.
-     * @exception IOException  If some other I/O error occurs.
-     * @exception TFTPPacketException If an invalid TFTP packet is received.
+     * @throws IOException  If some other I/O error occurs.
+     * @throws TFTPPacketException If an invalid TFTP packet is received.
      ***/
     public final TFTPPacket bufferedReceive() throws IOException,
                 InterruptedIOException, SocketException, TFTPPacketException
@@ -220,7 +220,7 @@ public class TFTP extends DatagramSocketClient
      * will be overwritten by the the call.
      *
      * @param packet  The TFTP packet to send.
-     * @exception IOException  If some  I/O error occurs.
+     * @throws IOException  If some  I/O error occurs.
      ***/
     public final void bufferedSend(TFTPPacket packet) throws IOException
     {
@@ -262,7 +262,7 @@ public class TFTP extends DatagramSocketClient
      * Sends a TFTP packet to its destination.
      *
      * @param packet  The TFTP packet to send.
-     * @exception IOException  If some  I/O error occurs.
+     * @throws IOException  If some  I/O error occurs.
      ***/
     public final void send(TFTPPacket packet) throws IOException
     {
@@ -274,16 +274,16 @@ public class TFTP extends DatagramSocketClient
      * Receives a TFTPPacket.
      *
      * @return The TFTPPacket received.
-     * @exception InterruptedIOException  If a socket timeout occurs.  The
+     * @throws InterruptedIOException  If a socket timeout occurs.  The
      *       Java documentation claims an InterruptedIOException is thrown
      *       on a DatagramSocket timeout, but in practice we find a
      *       SocketException is thrown.  You should catch both to be safe.
-     * @exception SocketException  If a socket timeout occurs.  The
+     * @throws SocketException  If a socket timeout occurs.  The
      *       Java documentation claims an InterruptedIOException is thrown
      *       on a DatagramSocket timeout, but in practice we find a
      *       SocketException is thrown.  You should catch both to be safe.
-     * @exception IOException  If some other I/O error occurs.
-     * @exception TFTPPacketException If an invalid TFTP packet is received.
+     * @throws IOException  If some other I/O error occurs.
+     * @throws TFTPPacketException If an invalid TFTP packet is received.
      ***/
     public final TFTPPacket receive() throws IOException, InterruptedIOException,
                 SocketException, TFTPPacketException

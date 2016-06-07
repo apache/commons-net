@@ -63,7 +63,7 @@ public final class DaytimeTCPClient extends SocketClient
      * before calling <code> getTime() </code> again.
      *
      * @return The time string retrieved from the server.
-     * @exception IOException  If an error occurs while fetching the time string.
+     * @throws IOException  If an error occurs while fetching the time string.
      */
     public String getTime() throws IOException
     {

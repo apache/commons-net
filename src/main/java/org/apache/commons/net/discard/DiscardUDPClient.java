@@ -57,7 +57,7 @@ public class DiscardUDPClient extends DatagramSocketClient
      *    or equal to the length of the data byte array.
      * @param host  The address of the server.
      * @param port  The service port.
-     * @exception IOException If an error occurs during the datagram send
+     * @throws IOException If an error occurs during the datagram send
      *            operation.
      ***/
     public void send(byte[] data, int length, InetAddress host, int port)

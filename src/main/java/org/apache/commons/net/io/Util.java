@@ -78,7 +78,7 @@ public final class Util
      *        buffered streams.  If you don't flush, the data will stay in
      *        the stream buffer.
      * @return number of bytes read/written
-     * @exception CopyStreamException  If an error occurs while reading from the
+     * @throws CopyStreamException  If an error occurs while reading from the
      *            source or writing to the destination.  The CopyStreamException
      *            will contain the number of bytes confirmed to have been
      *            transferred before an
@@ -166,7 +166,7 @@ public final class Util
      * @param listener  The CopyStreamListener to notify of progress.  If
      *      this parameter is null, notification is not attempted.
      * @return number of bytes read/written
-     * @exception CopyStreamException  If an error occurs while reading from the
+     * @throws CopyStreamException  If an error occurs while reading from the
      *            source or writing to the destination.  The CopyStreamException
      *            will contain the number of bytes confirmed to have been
      *            transferred before an
@@ -198,7 +198,7 @@ public final class Util
      * @param bufferSize  The number of bytes to buffer during the copy.
      *            A zero or negative value means to use {@link #DEFAULT_COPY_BUFFER_SIZE}.
      * @return  The number of bytes read/written in the copy operation.
-     * @exception CopyStreamException  If an error occurs while reading from the
+     * @throws CopyStreamException  If an error occurs while reading from the
      *            source or writing to the destination.  The CopyStreamException
      *            will contain the number of bytes confirmed to have been
      *            transferred before an
@@ -254,7 +254,7 @@ public final class Util
      * @param listener  The CopyStreamListener to notify of progress.  If
      *      this parameter is null, notification is not attempted.
      * @return  The number of characters read/written in the copy operation.
-     * @exception CopyStreamException  If an error occurs while reading from the
+     * @throws CopyStreamException  If an error occurs while reading from the
      *            source or writing to the destination.  The CopyStreamException
      *            will contain the number of bytes confirmed to have been
      *            transferred before an
@@ -323,7 +323,7 @@ public final class Util
      * @param bufferSize  The number of characters to buffer during the copy.
      *            A zero or negative value means to use {@link #DEFAULT_COPY_BUFFER_SIZE}.
      * @return  The number of characters read/written in the copy operation.
-     * @exception CopyStreamException  If an error occurs while reading from the
+     * @throws CopyStreamException  If an error occurs while reading from the
      *            source or writing to the destination.  The CopyStreamException
      *            will contain the number of bytes confirmed to have been
      *            transferred before an

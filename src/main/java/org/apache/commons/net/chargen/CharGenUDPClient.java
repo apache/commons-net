@@ -87,7 +87,7 @@ public final class CharGenUDPClient extends DatagramSocketClient
      *
      * @param host The address of the server.
      * @param port The port of the service.
-     * @exception IOException If an error occurs while sending the datagram.
+     * @throws IOException If an error occurs while sending the datagram.
      ***/
     public void send(InetAddress host, int port) throws IOException
     {
@@ -111,7 +111,7 @@ public final class CharGenUDPClient extends DatagramSocketClient
      * and systat require multiple calls to receive() with timeout detection.
      *
      * @return The reply data from the server.
-     * @exception IOException If an error occurs while receiving the datagram.
+     * @throws IOException If an error occurs while receiving the datagram.
      ***/
     public byte[] receive() throws IOException
     {

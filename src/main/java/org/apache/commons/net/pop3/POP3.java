@@ -202,7 +202,7 @@ public class POP3 extends SocketClient
      * from the last issued command is voided to allow garbage collection
      * of the memory used to store that information.
      *
-     * @exception IOException  If there is an error in disconnecting.
+     * @throws IOException  If there is an error in disconnecting.
      ***/
     @Override
     public void disconnect() throws IOException

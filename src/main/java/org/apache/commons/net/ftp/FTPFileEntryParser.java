@@ -102,7 +102,7 @@ public interface FTPFileEntryParser
      * read.
      *
      * @return A string representing the next ftp entry or null if none found.
-     * @exception IOException thrown on any IO Error reading from the reader.
+     * @throws IOException thrown on any IO Error reading from the reader.
      */
     String readNextEntry(BufferedReader reader) throws IOException;
 

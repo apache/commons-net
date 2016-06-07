@@ -49,7 +49,7 @@ final class TelnetOutputStream extends OutputStream
      * Writes a byte to the stream.
      * <p>
      * @param ch The byte to write.
-     * @exception IOException If an error occurs while writing to the underlying
+     * @throws IOException If an error occurs while writing to the underlying
      *            stream.
      ***/
     @Override
@@ -118,7 +118,7 @@ final class TelnetOutputStream extends OutputStream
      * Writes a byte array to the stream.
      * <p>
      * @param buffer  The byte array to write.
-     * @exception IOException If an error occurs while writing to the underlying
+     * @throws IOException If an error occurs while writing to the underlying
      *            stream.
      ***/
     @Override
@@ -135,7 +135,7 @@ final class TelnetOutputStream extends OutputStream
      * @param buffer  The byte array to write.
      * @param offset  The offset into the array at which to start copying data.
      * @param length  The number of bytes to write.
-     * @exception IOException If an error occurs while writing to the underlying
+     * @throws IOException If an error occurs while writing to the underlying
      *            stream.
      ***/
     @Override

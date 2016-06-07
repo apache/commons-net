@@ -105,7 +105,7 @@ public class RLoginClient extends RCommandClient
      *        "network", etc.)
      * @param terminalSpeed  The speed of the user's terminal, expressed
      *        as a baud rate or bps (e.g., 9600 or 38400)
-     * @exception IOException If the rlogin() attempt fails.  The exception
+     * @throws IOException If the rlogin() attempt fails.  The exception
      *            will contain a message indicating the nature of the failure.
      ***/
     public void rlogin(String localUsername, String remoteUsername,

@@ -53,7 +53,7 @@ public final class EchoUDPClient extends DiscardUDPClient
      * @param length  The length of the data to send.  Should be less than
      *    or equal to the length of the data byte array.
      * @param host  The address of the server.
-     * @exception IOException If an error occurs during the datagram send
+     * @throws IOException If an error occurs during the datagram send
      *     operation.
      ***/
     @Override
@@ -81,7 +81,7 @@ public final class EchoUDPClient extends DiscardUDPClient
      * @param length  of the buffer
      *
      * @return  Length of actual data received.
-     * @exception IOException If an error occurs while receiving the data.
+     * @throws IOException If an error occurs while receiving the data.
      ***/
     public int receive(byte[] data, int length) throws IOException
     {

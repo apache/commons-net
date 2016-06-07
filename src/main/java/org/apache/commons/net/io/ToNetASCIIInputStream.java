@@ -58,7 +58,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
      *
      * @return The next character in the stream. Returns -1 if the end of the
      *          stream has been reached.
-     * @exception IOException If an error occurs while reading the underlying
+     * @throws IOException If an error occurs while reading the underlying
      *            stream.
      ***/
     @Override
@@ -103,7 +103,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
      * @param buffer  The byte array in which to store the data.
      * @return The number of bytes read. Returns -1 if the
      *          end of the message has been reached.
-     * @exception IOException If an error occurs in reading the underlying
+     * @throws IOException If an error occurs in reading the underlying
      *            stream.
      ***/
     @Override
@@ -124,7 +124,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
      * @param length   The number of bytes to read.
      * @return The number of bytes read. Returns -1 if the
      *          end of the stream has been reached.
-     * @exception IOException If an error occurs while reading the underlying
+     * @throws IOException If an error occurs while reading the underlying
      *            stream.
      ***/
     @Override

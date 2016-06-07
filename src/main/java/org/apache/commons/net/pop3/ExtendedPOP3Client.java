@@ -53,13 +53,13 @@ public class ExtendedPOP3Client extends POP3SClient
      * @param username the user name
      * @param password the password
      * @return True if successfully completed, false if not.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     * @exception NoSuchAlgorithmException If the CRAM hash algorithm
+     * @throws NoSuchAlgorithmException If the CRAM hash algorithm
      *      cannot be instantiated by the Java runtime system.
-     * @exception InvalidKeyException If the CRAM hash algorithm
+     * @throws InvalidKeyException If the CRAM hash algorithm
      *      failed to use the given password.
-     * @exception InvalidKeySpecException If the CRAM hash algorithm
+     * @throws InvalidKeySpecException If the CRAM hash algorithm
      *      failed to use the given password.
      ***/
     public boolean auth(AUTH_METHOD method,

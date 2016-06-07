@@ -34,7 +34,7 @@ public interface FTPFileEntryParserFactory
      *               FTPFileEntryParser to be created.
      *
      * @return the FTPFileEntryParser created.
-     * @exception ParserInitializationException
+     * @throws ParserInitializationException
      *                   Thrown on any exception in instantiation
      */
     public FTPFileEntryParser createFileEntryParser(String key)
@@ -58,7 +58,7 @@ public interface FTPFileEntryParserFactory
      * used to configure the parser created
      *
      * @return the @link  FTPFileEntryParser FTPFileEntryParser} so created.
-     * @exception ParserInitializationException
+     * @throws ParserInitializationException
      *                   Thrown on any exception in instantiation
      * @since 1.4
      */

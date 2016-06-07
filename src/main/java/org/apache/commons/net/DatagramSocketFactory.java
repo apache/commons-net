@@ -42,7 +42,7 @@ public interface DatagramSocketFactory
      * Creates a DatagramSocket on the local host at the first available port.
      * @return the socket
      *
-     * @exception SocketException If the socket could not be created.
+     * @throws SocketException If the socket could not be created.
      ***/
     public DatagramSocket createDatagramSocket() throws SocketException;
 
@@ -51,7 +51,7 @@ public interface DatagramSocketFactory
      *
      * @param port The port to use for the socket.
      * @return the socket
-     * @exception SocketException If the socket could not be created.
+     * @throws SocketException If the socket could not be created.
      ***/
     public DatagramSocket createDatagramSocket(int port) throws SocketException;
 
@@ -62,7 +62,7 @@ public interface DatagramSocketFactory
      * @param port The port to use for the socket.
      * @param laddr  The local address to use.
      * @return the socket
-     * @exception SocketException If the socket could not be created.
+     * @throws SocketException If the socket could not be created.
      ***/
     public DatagramSocket createDatagramSocket(int port, InetAddress laddr)
     throws SocketException;

@@ -69,7 +69,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
      * completeness.
      * @return The next character in the message. Returns -1 if the end of the
      *          message has been reached.
-     * @exception IOException If an error occurs while reading the underlying
+     * @throws IOException If an error occurs while reading the underlying
      *            stream.
      */
     @Override
@@ -140,7 +140,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
      * @param buffer  The character array in which to store the characters.
      * @return The number of characters read. Returns -1 if the
      *          end of the message has been reached.
-     * @exception IOException If an error occurs in reading the underlying
+     * @throws IOException If an error occurs in reading the underlying
      *            stream.
      */
     @Override
@@ -160,7 +160,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
      * @param length   The number of characters to read.
      * @return The number of characters read. Returns -1 if the
      *          end of the message has been reached.
-     * @exception IOException If an error occurs in reading the underlying
+     * @throws IOException If an error occurs in reading the underlying
      *            stream.
      */
     @Override
@@ -201,7 +201,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
      * for communicating with the server.  If you do not fully read
      * a message, you MUST close it, otherwise your program will likely
      * hang or behave improperly.
-     * @exception IOException  If an error occurs while reading the
+     * @throws IOException  If an error occurs while reading the
      *            underlying stream.
      */
     @Override

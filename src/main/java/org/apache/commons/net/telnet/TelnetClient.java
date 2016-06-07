@@ -86,7 +86,7 @@ public class TelnetClient extends Telnet
     /***
      * Handles special connection requirements.
      *
-     * @exception IOException  If an error occurs during connection setup.
+     * @throws IOException  If an error occurs during connection setup.
      ***/
     @Override
     protected void _connectAction_() throws IOException

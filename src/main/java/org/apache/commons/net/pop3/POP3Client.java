@@ -116,7 +116,7 @@ public class POP3Client extends POP3
     /***
      * Send a CAPA command to the POP3 server.
      * @return True if the command was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
+     * @throws IOException If a network I/O error occurs in the process of
      *        sending the CAPA command.
      * @since 3.1 (was previously in ExtendedPOP3Client)
      ***/
@@ -144,7 +144,7 @@ public class POP3Client extends POP3
      * @param username  The account name being logged in to.
      * @param password  The plain text password of the account.
      * @return True if the login attempt was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
+     * @throws IOException If a network I/O error occurs in the process of
      *            logging in.
      ***/
     public boolean login(String username, String password) throws IOException
@@ -195,9 +195,9 @@ public class POP3Client extends POP3
      * @param secret  The shared secret which produces the MD5 digest when
      *        combined with the timestamp.
      * @return True if the login attempt was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
+     * @throws IOException If a network I/O error occurs in the process of
      *            logging in.
-     * @exception NoSuchAlgorithmException If the MD5 encryption algorithm
+     * @throws NoSuchAlgorithmException If the MD5 encryption algorithm
      *      cannot be instantiated by the Java runtime system.
      ***/
     public boolean login(String username, String timestamp, String secret)
@@ -252,7 +252,7 @@ public class POP3Client extends POP3
      *  on a successful logout.
      *
      * @return True if the logout attempt was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process
+     * @throws IOException If a network I/O error occurs in the process
      *           of logging out.
      ***/
     public boolean logout() throws IOException
@@ -274,7 +274,7 @@ public class POP3Client extends POP3
      * .
      *
      * @return True if the noop attempt was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
+     * @throws IOException If a network I/O error occurs in the process of
      *        sending the NOOP command.
      ***/
     public boolean noop() throws IOException
@@ -298,7 +298,7 @@ public class POP3Client extends POP3
      *
      * @param messageId  The message number to delete.
      * @return True if the deletion attempt was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
+     * @throws IOException If a network I/O error occurs in the process of
      *           sending the delete command.
      ***/
     public boolean deleteMessage(int messageId) throws IOException
@@ -319,7 +319,7 @@ public class POP3Client extends POP3
      * .
      *
      * @return True if the reset attempt was successful, false if not.
-     * @exception IOException If a network I/O error occurs in the process of
+     * @throws IOException If a network I/O error occurs in the process of
      *      sending the reset command.
      ***/
     public boolean reset() throws IOException
@@ -342,7 +342,7 @@ public class POP3Client extends POP3
      * @return A POP3MessageInfo instance containing the number of
      *         messages in the mailbox and the total size of the messages
      *         in bytes.  Returns null if the status the attempt fails.
-     * @exception IOException If a network I/O error occurs in the process of
+     * @throws IOException If a network I/O error occurs in the process of
      *       sending the status command.
      ***/
     public POP3MessageInfo status() throws IOException
@@ -371,7 +371,7 @@ public class POP3Client extends POP3
      * @return A POP3MessageInfo instance containing the number of the
      *         listed message and the size of the message in bytes.  Returns
      *         null if the list attempt fails.
-     * @exception IOException If a network I/O error occurs in the process of
+     * @throws IOException If a network I/O error occurs in the process of
      *         sending the list command.
      ***/
     public POP3MessageInfo listMessage(int messageId) throws IOException
@@ -401,7 +401,7 @@ public class POP3Client extends POP3
      * each containing the number of a message and its size in bytes.
      * If there are no messages, this method returns a zero length array.
      * If the list attempt fails, it returns null.
-     * @exception IOException If a network I/O error occurs in the process of
+     * @throws IOException If a network I/O error occurs in the process of
      *     sending the list command.
      ***/
     public POP3MessageInfo[] listMessages() throws IOException
@@ -441,7 +441,7 @@ public class POP3Client extends POP3
      * @return A POP3MessageInfo instance containing the number of the
      *         listed message and the unique identifier for that message.
      *         Returns null if the list attempt fails.
-     * @exception IOException If a network I/O error occurs in the process of
+     * @throws IOException If a network I/O error occurs in the process of
      *        sending the list unique identifier command.
      ***/
     public POP3MessageInfo listUniqueIdentifier(int messageId)
@@ -472,7 +472,7 @@ public class POP3Client extends POP3
      * each containing the number of a message and its unique identifier
      * If there are no messages, this method returns a zero length array.
      * If the list attempt fails, it returns null.
-     * @exception IOException If a network I/O error occurs in the process of
+     * @throws IOException If a network I/O error occurs in the process of
      *     sending the list unique identifier command.
      ***/
     public POP3MessageInfo[] listUniqueIdentifiers() throws IOException
@@ -521,7 +521,7 @@ public class POP3Client extends POP3
      * use the {@link java.io.BufferedReader#readLine() BufferedReader#readLine()} method.
      * Returns null if the retrieval attempt fails  (e.g., if the specified
      * message number does not exist).
-     * @exception IOException If a network I/O error occurs in the process of
+     * @throws IOException If a network I/O error occurs in the process of
      *        sending the retrieve message command.
      */
     public Reader retrieveMessage(int messageId) throws IOException
@@ -562,7 +562,7 @@ public class POP3Client extends POP3
      * use the {@link java.io.BufferedReader#readLine() BufferedReader#readLine()} method.
      * Returns null if the retrieval attempt fails  (e.g., if the specified
      * message number does not exist).
-     * @exception IOException If a network I/O error occurs in the process of
+     * @throws IOException If a network I/O error occurs in the process of
      *       sending the top command.
      */
     public Reader retrieveMessageTop(int messageId, int numLines)

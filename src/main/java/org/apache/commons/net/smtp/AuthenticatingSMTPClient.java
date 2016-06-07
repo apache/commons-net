@@ -104,12 +104,12 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      * <p>
      * @param hostname The hostname of the sender.
      * @return The reply code received from the server.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int ehlo(String hostname) throws IOException
@@ -124,12 +124,12 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      * <p>
      * @param hostname  The hostname with which to greet the SMTP server.
      * @return True if successfully completed, false if not.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean elogin(String hostname) throws IOException
@@ -144,12 +144,12 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      * you must first login.
      * <p>
      * @return True if successfully completed, false if not.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean elogin() throws IOException
@@ -196,18 +196,18 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      *        Ignored for XOAUTH.
      *
      * @return True if successfully completed, false if not.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     * @exception NoSuchAlgorithmException If the CRAM hash algorithm
+     * @throws NoSuchAlgorithmException If the CRAM hash algorithm
      *      cannot be instantiated by the Java runtime system.
-     * @exception InvalidKeyException If the CRAM hash algorithm
+     * @throws InvalidKeyException If the CRAM hash algorithm
      *      failed to use the given password.
-     * @exception InvalidKeySpecException If the CRAM hash algorithm
+     * @throws InvalidKeySpecException If the CRAM hash algorithm
      *      failed to use the given password.
      ***/
     public boolean auth(AuthenticatingSMTPClient.AUTH_METHOD method,

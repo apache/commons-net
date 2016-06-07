@@ -740,7 +740,7 @@ public class FTPSClient extends FTPClient {
      * Calls {@code setSocketFactory(null)} and {@code setServerSocketFactory(null)}
      * to reset the factories that may have been changed during the session,
      * e.g. by {@link #execPROT(String)}
-     * @exception IOException If an error occurs while disconnecting.
+     * @throws IOException If an error occurs while disconnecting.
      * @since 3.0
      */
     @Override

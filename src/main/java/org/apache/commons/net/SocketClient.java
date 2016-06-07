@@ -169,8 +169,8 @@ public abstract class SocketClient
      * <p>
      * @param host  The remote host.
      * @param port  The port to connect to on the remote host.
-     * @exception SocketException If the socket timeout could not be set.
-     * @exception IOException If the socket could not be opened.  In most
+     * @throws SocketException If the socket timeout could not be set.
+     * @throws IOException If the socket could not be opened.  In most
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
      */
@@ -197,11 +197,11 @@ public abstract class SocketClient
      * <p>
      * @param hostname  The name of the remote host.
      * @param port  The port to connect to on the remote host.
-     * @exception SocketException If the socket timeout could not be set.
-     * @exception IOException If the socket could not be opened.  In most
+     * @throws SocketException If the socket timeout could not be set.
+     * @throws IOException If the socket could not be opened.  In most
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
-     * @exception java.net.UnknownHostException If the hostname cannot be resolved.
+     * @throws java.net.UnknownHostException If the hostname cannot be resolved.
      */
     public void connect(String hostname, int port)
     throws SocketException, IOException
@@ -221,8 +221,8 @@ public abstract class SocketClient
      * @param port  The port to connect to on the remote host.
      * @param localAddr  The local address to use.
      * @param localPort  The local port to use.
-     * @exception SocketException If the socket timeout could not be set.
-     * @exception IOException If the socket could not be opened.  In most
+     * @throws SocketException If the socket timeout could not be set.
+     * @throws IOException If the socket could not be opened.  In most
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
      */
@@ -254,11 +254,11 @@ public abstract class SocketClient
      * @param port  The port to connect to on the remote host.
      * @param localAddr  The local address to use.
      * @param localPort  The local port to use.
-     * @exception SocketException If the socket timeout could not be set.
-     * @exception IOException If the socket could not be opened.  In most
+     * @throws SocketException If the socket timeout could not be set.
+     * @throws IOException If the socket could not be opened.  In most
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
-     * @exception java.net.UnknownHostException If the hostname cannot be resolved.
+     * @throws java.net.UnknownHostException If the hostname cannot be resolved.
      */
     public void connect(String hostname, int port,
                         InetAddress localAddr, int localPort)
@@ -276,8 +276,8 @@ public abstract class SocketClient
      * is called to perform connection initialization actions.
      * <p>
      * @param host  The remote host.
-     * @exception SocketException If the socket timeout could not be set.
-     * @exception IOException If the socket could not be opened.  In most
+     * @throws SocketException If the socket timeout could not be set.
+     * @throws IOException If the socket could not be opened.  In most
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
      */
@@ -295,11 +295,11 @@ public abstract class SocketClient
      * is called to perform connection initialization actions.
      * <p>
      * @param hostname  The name of the remote host.
-     * @exception SocketException If the socket timeout could not be set.
-     * @exception IOException If the socket could not be opened.  In most
+     * @throws SocketException If the socket timeout could not be set.
+     * @throws IOException If the socket could not be opened.  In most
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
-     * @exception java.net.UnknownHostException If the hostname cannot be resolved.
+     * @throws java.net.UnknownHostException If the hostname cannot be resolved.
      */
     public void connect(String hostname) throws SocketException, IOException
     {
@@ -316,7 +316,7 @@ public abstract class SocketClient
      * again.  _isConnected_ is set to false, _socket_ is set to null,
      * _input_ is set to null, and _output_ is set to null.
      * <p>
-     * @exception IOException  If there is an error closing the socket.
+     * @throws IOException  If there is an error closing the socket.
      */
     public void disconnect() throws IOException
     {
@@ -475,7 +475,7 @@ public abstract class SocketClient
      *
      * @param timeout  The timeout in milliseconds to use for the currently
      *                 open socket connection.
-     * @exception SocketException If the operation fails.
+     * @throws SocketException If the operation fails.
      * @throws NullPointerException if the socket is not currently open
      */
     public void setSoTimeout(int timeout) throws SocketException
@@ -528,7 +528,7 @@ public abstract class SocketClient
      * Returns the timeout in milliseconds of the currently opened socket.
      * <p>
      * @return The timeout in milliseconds of the currently opened socket.
-     * @exception SocketException If the operation fails.
+     * @throws SocketException If the operation fails.
      * @throws NullPointerException if the socket is not currently open
      */
     public int getSoTimeout() throws SocketException
@@ -541,7 +541,7 @@ public abstract class SocketClient
      * currently opened socket.
      * <p>
      * @param on  True if Nagle's algorithm is to be enabled, false if not.
-     * @exception SocketException If the operation fails.
+     * @throws SocketException If the operation fails.
      * @throws NullPointerException if the socket is not currently open
      */
     public void setTcpNoDelay(boolean on) throws SocketException
@@ -556,7 +556,7 @@ public abstract class SocketClient
      * <p>
      * @return True if Nagle's algorithm is enabled on the currently opened
      *        socket, false otherwise.
-     * @exception SocketException If the operation fails.
+     * @throws SocketException If the operation fails.
      * @throws NullPointerException if the socket is not currently open
      */
     public boolean getTcpNoDelay() throws SocketException
@@ -597,7 +597,7 @@ public abstract class SocketClient
      * <p>
      * @param on  True if linger is to be enabled, false if not.
      * @param val The linger timeout (in hundredths of a second?)
-     * @exception SocketException If the operation fails.
+     * @throws SocketException If the operation fails.
      * @throws NullPointerException if the socket is not currently open
      */
     public void setSoLinger(boolean on, int val) throws SocketException
@@ -611,7 +611,7 @@ public abstract class SocketClient
      * <p>
      * @return The current SO_LINGER timeout.  If SO_LINGER is disabled returns
      *         -1.
-     * @exception SocketException If the operation fails.
+     * @throws SocketException If the operation fails.
      * @throws NullPointerException if the socket is not currently open
      */
     public int getSoLinger() throws SocketException

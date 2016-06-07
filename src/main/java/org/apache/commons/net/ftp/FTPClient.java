@@ -753,7 +753,7 @@ implements Configurable
      *         Null is returned if an FTP protocol error is reported at
      *         any point during the establishment and initialization of
      *         the connection.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      * @deprecated (3.3) Use {@link #_openDataConnection_(FTPCmd, String)} instead
      */
@@ -779,7 +779,7 @@ implements Configurable
      *         Null is returned if an FTP protocol error is reported at
      *         any point during the establishment and initialization of
      *         the connection.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      * @since 3.3
      */
@@ -804,7 +804,7 @@ implements Configurable
      *         Null is returned if an FTP protocol error is reported at
      *         any point during the establishment and initialization of
      *         the connection.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      * @since 3.1
      */
@@ -1021,7 +1021,7 @@ implements Configurable
      * Closes the connection to the FTP server and restores
      * connection parameters to the default values.
      *
-     * @exception IOException If an error occurs while disconnecting.
+     * @throws IOException If an error occurs while disconnecting.
      */
     @Override
     public void disconnect() throws IOException
@@ -1063,12 +1063,12 @@ implements Configurable
      * @param username The username to login under.
      * @param password The password to use.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean login(String username, String password) throws IOException
@@ -1099,12 +1099,12 @@ implements Configurable
      * @param password The password to use.
      * @param account  The account to use.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean login(String username, String password, String account)
@@ -1139,12 +1139,12 @@ implements Configurable
      * Logout of the FTP server by sending the QUIT command.
      *
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean logout() throws IOException
@@ -1158,12 +1158,12 @@ implements Configurable
      *
      * @param pathname  The new current working directory.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean changeWorkingDirectory(String pathname) throws IOException
@@ -1176,12 +1176,12 @@ implements Configurable
      * Change to the parent directory of the current working directory.
      *
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean changeToParentDirectory() throws IOException
@@ -1195,12 +1195,12 @@ implements Configurable
      *
      * @param pathname The pathname to mount.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean structureMount(String pathname) throws IOException
@@ -1213,12 +1213,12 @@ implements Configurable
      * command, which issues the FTP REIN command.
      *
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      * @since 3.4 (made public)
      */
@@ -1298,12 +1298,12 @@ implements Configurable
      *             transfers.
      * @param port The passive mode server's data port.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean enterRemoteActiveMode(InetAddress host, int port)
@@ -1333,12 +1333,12 @@ implements Configurable
      * wish to return to the normal data connection mode.
      *
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean enterRemotePassiveMode() throws IOException
@@ -1550,12 +1550,12 @@ implements Configurable
      * @param fileType The <code> _FILE_TYPE </code> constant indcating the
      *                 type of file.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean setFileType(int fileType) throws IOException
@@ -1598,12 +1598,12 @@ implements Configurable
      *              <code>LOCAL_FILE_TYPE</code>, the byte size.
      *
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean setFileType(int fileType, int formatOrByteSize)
@@ -1627,12 +1627,12 @@ implements Configurable
      * @param structure  The structure of the file (one of the FTP class
      *         <code>_STRUCTURE</code> constants).
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean setFileStructure(int structure) throws IOException
@@ -1654,12 +1654,12 @@ implements Configurable
      * @param mode  The new transfer mode to use (one of the FTP class
      *         <code>_TRANSFER_MODE</code> constants).
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean setFileTransferMode(int mode) throws IOException
@@ -1680,12 +1680,12 @@ implements Configurable
      *
      * @param filename  The name of the file to retrieve.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean remoteRetrieve(String filename) throws IOException
@@ -1707,12 +1707,12 @@ implements Configurable
      *
      * @param filename  The name to call the file that is to be stored.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean remoteStore(String filename) throws IOException
@@ -1735,12 +1735,12 @@ implements Configurable
      * @param filename  The name on which to base the filename of the file
      *                  that is to be stored.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean remoteStoreUnique(String filename) throws IOException
@@ -1763,12 +1763,12 @@ implements Configurable
      * those servers use the other version of <code> remoteStoreUnique</code>
      *
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean remoteStoreUnique() throws IOException
@@ -1791,12 +1791,12 @@ implements Configurable
      *        file does not exist, the name to call the file being stored.
      *
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean remoteAppend(String filename) throws IOException
@@ -1844,12 +1844,12 @@ implements Configurable
      * </pre>
      *
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean completePendingCommand() throws IOException
@@ -1869,18 +1869,18 @@ implements Configurable
      * @param remote  The name of the remote file.
      * @param local   The local OutputStream to which to write the file.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception org.apache.commons.net.io.CopyStreamException
+     * @throws org.apache.commons.net.io.CopyStreamException
      *      If an I/O error occurs while actually
      *      transferring the file.  The CopyStreamException allows you to
      *      determine the number of bytes transferred and the IOException
      *      causing the error.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean retrieveFile(String remote, OutputStream local)
@@ -1958,12 +1958,12 @@ implements Configurable
      *      the data connection cannot be opened (e.g., the file does not
      *      exist), null is returned (in which case you may check the reply
      *      code to determine the exact reason for failure).
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public InputStream retrieveFileStream(String remote) throws IOException
@@ -2014,18 +2014,18 @@ implements Configurable
      * @param remote  The name to give the remote file.
      * @param local   The local InputStream from which to read the file.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception org.apache.commons.net.io.CopyStreamException
+     * @throws org.apache.commons.net.io.CopyStreamException
      *      If an I/O error occurs while actually
      *      transferring the file.  The CopyStreamException allows you to
      *      determine the number of bytes transferred and the IOException
      *      causing the error.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean storeFile(String remote, InputStream local)
@@ -2055,12 +2055,12 @@ implements Configurable
      *      the data connection cannot be opened (e.g., the file does not
      *      exist), null is returned (in which case you may check the reply
      *      code to determine the exact reason for failure).
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public OutputStream storeFileStream(String remote) throws IOException
@@ -2079,18 +2079,18 @@ implements Configurable
      * @param local   The local InputStream from which to read the data to
      *                be appended to the remote file.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception org.apache.commons.net.io.CopyStreamException
+     * @throws org.apache.commons.net.io.CopyStreamException
      *      If an I/O error occurs while actually
      *      transferring the file.  The CopyStreamException allows you to
      *      determine the number of bytes transferred and the IOException
      *      causing the error.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean appendFile(String remote, InputStream local)
@@ -2119,12 +2119,12 @@ implements Configurable
      *      If the data connection cannot be opened (e.g., the file does not
      *      exist), null is returned (in which case you may check the reply
      *      code to determine the exact reason for failure).
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public OutputStream appendFileStream(String remote) throws IOException
@@ -2144,18 +2144,18 @@ implements Configurable
      *                the remote file.
      * @param local   The local InputStream from which to read the file.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception org.apache.commons.net.io.CopyStreamException
+     * @throws org.apache.commons.net.io.CopyStreamException
      *      If an I/O error occurs while actually
      *      transferring the file.  The CopyStreamException allows you to
      *      determine the number of bytes transferred and the IOException
      *      causing the error.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean storeUniqueFile(String remote, InputStream local)
@@ -2187,12 +2187,12 @@ implements Configurable
      *      the data connection cannot be opened (e.g., the file does not
      *      exist), null is returned (in which case you may check the reply
      *      code to determine the exact reason for failure).
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public OutputStream storeUniqueFileStream(String remote) throws IOException
@@ -2210,18 +2210,18 @@ implements Configurable
      *
      * @param local   The local InputStream from which to read the file.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception org.apache.commons.net.io.CopyStreamException
+     * @throws org.apache.commons.net.io.CopyStreamException
      *      If an I/O error occurs while actually
      *      transferring the file.  The CopyStreamException allows you to
      *      determine the number of bytes transferred and the IOException
      *      causing the error.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean storeUniqueFile(InputStream local) throws IOException
@@ -2249,12 +2249,12 @@ implements Configurable
      *      the data connection cannot be opened (e.g., the file does not
      *      exist), null is returned (in which case you may check the reply
      *      code to determine the exact reason for failure).
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public OutputStream storeUniqueFileStream() throws IOException
@@ -2267,12 +2267,12 @@ implements Configurable
      *
      * @param bytes  The number of bytes which the server should allocate.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean allocate(int bytes) throws IOException
@@ -2434,12 +2434,12 @@ implements Configurable
      * @param bytes  The number of bytes which the server should allocate.
      * @param recordSize  The size of a file record.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean allocate(int bytes, int recordSize) throws IOException
@@ -2460,7 +2460,7 @@ implements Configurable
      * call {@link #getReplyCode()} or {@link #getReplyString()}
      * to get the reason.
      *
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      * @since 3.0
      */
@@ -2481,7 +2481,7 @@ implements Configurable
      * call {@link #getReplyCode()} or {@link #getReplyString()}
      * to get the reason.
      *
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      * @since 3.0
      */
@@ -2565,12 +2565,12 @@ implements Configurable
      * @param offset  The offset into the remote file at which to start the
      *           next file transfer.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      * @since 3.1 (changed from private to protected)
      */
@@ -2622,12 +2622,12 @@ implements Configurable
      * @param from  The name of the remote file to rename.
      * @param to    The new name of the remote file.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean rename(String from, String to) throws IOException
@@ -2644,12 +2644,12 @@ implements Configurable
      * Abort a transfer in progress.
      *
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean abort() throws IOException
@@ -2662,12 +2662,12 @@ implements Configurable
      *
      * @param pathname   The pathname of the file to be deleted.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean deleteFile(String pathname) throws IOException
@@ -2681,12 +2681,12 @@ implements Configurable
      *
      * @param pathname  The pathname of the directory to remove.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean removeDirectory(String pathname) throws IOException
@@ -2702,12 +2702,12 @@ implements Configurable
      *
      * @param pathname The pathname of the directory to create.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean makeDirectory(String pathname) throws IOException
@@ -2721,12 +2721,12 @@ implements Configurable
      *
      * @return The pathname of the current working directory.  If it cannot
      *         be obtained, returns null.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public String printWorkingDirectory() throws IOException
@@ -2743,12 +2743,12 @@ implements Configurable
      * Send a site specific command.
      * @param arguments The site specific command and arguments.
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean sendSiteCommand(String arguments) throws IOException
@@ -2768,12 +2768,12 @@ implements Configurable
      * If the SYST command fails, and the system property
      * {@link #FTP_SYSTEM_TYPE_DEFAULT} is defined, then this is used instead.
      * @return The system type obtained from the server. Never null.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *  command to the server or receiving a reply from the server (and the default
      *  system type property is not defined)
      *  @since 2.2
@@ -2808,12 +2808,12 @@ implements Configurable
      *
      * @return The system help string obtained from the server.  null if the
      *       information could not be obtained.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *  command to the server or receiving a reply from the server.
      */
     public String listHelp() throws IOException
@@ -2831,12 +2831,12 @@ implements Configurable
      * @param command The command on which to ask for help.
      * @return The command help string obtained from the server.  null if the
      *       information could not be obtained.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *  command to the server or receiving a reply from the server.
      */
     public String listHelp(String command) throws IOException
@@ -2853,12 +2853,12 @@ implements Configurable
      * server timeouts.
      *
      * @return True if successfully completed, false if not.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public boolean sendNoOp() throws IOException
@@ -2888,12 +2888,12 @@ implements Configurable
      * @return The list of filenames contained in the given path.  null if
      *     the list could not be obtained.  If there are no filenames in
      *     the directory, a zero-length array is returned.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public String[] listNames(String pathname) throws IOException
@@ -2939,12 +2939,12 @@ implements Configurable
      *     directory.  null if the list could not be obtained.
      *     If there are no filenames in the directory, a zero-length array
      *     is returned.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public String[] listNames() throws IOException
@@ -2981,17 +2981,17 @@ implements Configurable
      *
      * @return The list of file information contained in the given path in
      *         the format determined by the autodetection mechanism
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *                   If the FTP server prematurely closes the connection
      *                   as a result of the client being idle or some other
      *                   reason causing the server to send FTP reply code 421.
      *                   This exception may be caught either as an IOException
      *                   or independently as itself.
-     * @exception IOException
+     * @throws IOException
      *                   If an I/O error occurs while either sending a
      *                   command to the server or receiving a reply
      *                   from the server.
-     * @exception org.apache.commons.net.ftp.parser.ParserInitializationException
+     * @throws org.apache.commons.net.ftp.parser.ParserInitializationException
      *                   Thrown if the parserKey parameter cannot be
      *                   resolved by the selected parser factory.
      *                   In the DefaultFTPEntryParserFactory, this will
@@ -3034,17 +3034,17 @@ implements Configurable
      *         NOTE:</b> This array may contain null members if any of the
      *         individual file listings failed to parse.  The caller should
      *         check each entry for null before referencing it.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *                   If the FTP server prematurely closes the connection
      *                   as a result of the client being idle or some other
      *                   reason causing the server to send FTP reply code 421.
      *                   This exception may be caught either as an IOException
      *                   or independently as itself.
-     * @exception IOException
+     * @throws IOException
      *                   If an I/O error occurs while either sending a
      *                   command to the server or receiving a reply
      *                   from the server.
-     * @exception org.apache.commons.net.ftp.parser.ParserInitializationException
+     * @throws org.apache.commons.net.ftp.parser.ParserInitializationException
      *                   Thrown if the parserKey parameter cannot be
      *                   resolved by the selected parser factory.
      *                   In the DefaultFTPEntryParserFactory, this will
@@ -3099,17 +3099,17 @@ implements Configurable
      * @return The list of directories contained in the current directory
      *         in the format determined by the autodetection mechanism.
      *
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *                   If the FTP server prematurely closes the connection
      *                   as a result of the client being idle or some other
      *                   reason causing the server to send FTP reply code 421.
      *                   This exception may be caught either as an IOException
      *                   or independently as itself.
-     * @exception IOException
+     * @throws IOException
      *                   If an I/O error occurs while either sending a
      *                   command to the server or receiving a reply
      *                   from the server.
-     * @exception org.apache.commons.net.ftp.parser.ParserInitializationException
+     * @throws org.apache.commons.net.ftp.parser.ParserInitializationException
      *                   Thrown if the parserKey parameter cannot be
      *                   resolved by the selected parser factory.
      *                   In the DefaultFTPEntryParserFactory, this will
@@ -3147,17 +3147,17 @@ implements Configurable
      * @return The list of directories contained in the specified directory
      *         in the format determined by the autodetection mechanism.
      *
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *                   If the FTP server prematurely closes the connection
      *                   as a result of the client being idle or some other
      *                   reason causing the server to send FTP reply code 421.
      *                   This exception may be caught either as an IOException
      *                   or independently as itself.
-     * @exception IOException
+     * @throws IOException
      *                   If an I/O error occurs while either sending a
      *                   command to the server or receiving a reply
      *                   from the server.
-     * @exception org.apache.commons.net.ftp.parser.ParserInitializationException
+     * @throws org.apache.commons.net.ftp.parser.ParserInitializationException
      *                   Thrown if the parserKey parameter cannot be
      *                   resolved by the selected parser factory.
      *                   In the DefaultFTPEntryParserFactory, this will
@@ -3197,15 +3197,15 @@ implements Configurable
      * returned if a data connection cannot be opened.  If the current working
      * directory contains no files, an empty array will be the return.
      *
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *                   If the FTP server prematurely closes the connection as a result
      *                   of the client being idle or some other reason causing the server
      *                   to send FTP reply code 421.  This exception may be caught either
      *                   as an IOException or independently as itself.
-     * @exception IOException
+     * @throws IOException
      *                   If an I/O error occurs while either sending a
      *                   command to the server or receiving a reply from the server.
-     * @exception org.apache.commons.net.ftp.parser.ParserInitializationException
+     * @throws org.apache.commons.net.ftp.parser.ParserInitializationException
      *                   Thrown if the autodetect mechanism cannot
      *                   resolve the type of system we are connected with.
      * @see FTPListParseEngine
@@ -3253,15 +3253,15 @@ implements Configurable
      * returned if a data connection cannot be opened.  If the current working
      * directory contains no files, an empty array will be the return.
      *
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *                   If the FTP server prematurely closes the connection as a result
      *                   of the client being idle or some other reason causing the server
      *                   to send FTP reply code 421.  This exception may be caught either
      *                   as an IOException or independently as itself.
-     * @exception IOException
+     * @throws IOException
      *                   If an I/O error occurs while either sending a
      *                   command to the server or receiving a reply from the server.
-     * @exception org.apache.commons.net.ftp.parser.ParserInitializationException
+     * @throws org.apache.commons.net.ftp.parser.ParserInitializationException
      *                   Thrown if the autodetect mechanism cannot
      *                   resolve the type of system we are connected with.
      * @see FTPListParseEngine
@@ -3306,15 +3306,15 @@ implements Configurable
      * returned if a data connection cannot be opened.  If the current working
      * directory contains no files, an empty array will be the return.
      *
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *                   If the FTP server prematurely closes the connection as a result
      *                   of the client being idle or some other reason causing the server
      *                   to send FTP reply code 421.  This exception may be caught either
      *                   as an IOException or independently as itself.
-     * @exception IOException
+     * @throws IOException
      *                   If an I/O error occurs while either sending a
      *                   command to the server or receiving a reply from the server.
-     * @exception org.apache.commons.net.ftp.parser.ParserInitializationException
+     * @throws org.apache.commons.net.ftp.parser.ParserInitializationException
      *                   Thrown if the parserKey parameter cannot be
      *                   resolved by the selected parser factory.
      *                   In the DefaultFTPEntryParserFactory, this will
@@ -3388,12 +3388,12 @@ implements Configurable
      * private method through which all listFiles() and
      * initiateListParsing methods pass once a parser is determined.
      *
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *                   If the FTP server prematurely closes the connection as a result
      *                   of the client being idle or some other reason causing the server
      *                   to send FTP reply code 421.  This exception may be caught either
      *                   as an IOException or independently as itself.
-     * @exception IOException
+     * @throws IOException
      *                   If an I/O error occurs while either sending a
      *                   command to the server or receiving a reply from the server.
      * @see FTPListParseEngine
@@ -3476,12 +3476,12 @@ implements Configurable
      * Issue the FTP STAT command to the server.
      *
      * @return The status information returned by the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public String getStatus() throws IOException
@@ -3499,12 +3499,12 @@ implements Configurable
      * @param pathname the filename
      *
      * @return The status information returned by the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
     public String getStatus(String pathname) throws IOException

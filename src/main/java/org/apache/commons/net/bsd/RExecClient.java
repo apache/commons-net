@@ -196,7 +196,7 @@ public class RExecClient extends SocketClient
      * @param separateErrorStream True if you would like the standard error
      *        to be transmitted through a different stream than standard output.
      *        False if not.
-     * @exception IOException If the rexec() attempt fails.  The exception
+     * @throws IOException If the rexec() attempt fails.  The exception
      *            will contain a message indicating the nature of the failure.
      ***/
     public void rexec(String username, String password,
@@ -255,7 +255,7 @@ public class RExecClient extends SocketClient
      * Disconnects from the server, closing all associated open sockets and
      * streams.
      *
-     * @exception IOException If there an error occurs while disconnecting.
+     * @throws IOException If there an error occurs while disconnecting.
      ***/
     @Override
     public void disconnect() throws IOException

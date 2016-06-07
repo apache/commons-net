@@ -55,7 +55,7 @@ public final class NTPUDPClient extends DatagramSocketClient
      * @param host The address of the server.
      * @param port The port of the service.
      * @return The time value retrieved from the server.
-     * @exception IOException If an error occurs while retrieving the time.
+     * @throws IOException If an error occurs while retrieving the time.
      ***/
     public TimeInfo getTime(InetAddress host, int port) throws IOException
     {
@@ -106,7 +106,7 @@ public final class NTPUDPClient extends DatagramSocketClient
      * <p>
      * @param host The address of the server.
      * @return The time value retrieved from the server.
-     * @exception IOException If an error occurs while retrieving the time.
+     * @throws IOException If an error occurs while retrieving the time.
      ***/
     public TimeInfo getTime(InetAddress host) throws IOException
     {

@@ -171,9 +171,9 @@ public class RCommandClient extends RExecClient
      * @param host  The remote host.
      * @param port  The port to connect to on the remote host.
      * @param localAddr  The local address to use.
-     * @exception SocketException If the socket timeout could not be set.
-     * @exception BindException If all acceptable rshell ports are in use.
-     * @exception IOException If the socket could not be opened.  In most
+     * @throws SocketException If the socket timeout could not be set.
+     * @throws BindException If all acceptable rshell ports are in use.
+     * @throws IOException If the socket could not be opened.  In most
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
      ***/
@@ -219,9 +219,9 @@ public class RCommandClient extends RExecClient
      *
      * @param host  The remote host.
      * @param port  The port to connect to on the remote host.
-     * @exception SocketException If the socket timeout could not be set.
-     * @exception BindException If all acceptable rshell ports are in use.
-     * @exception IOException If the socket could not be opened.  In most
+     * @throws SocketException If the socket timeout could not be set.
+     * @throws BindException If all acceptable rshell ports are in use.
+     * @throws IOException If the socket could not be opened.  In most
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
      ***/
@@ -242,12 +242,12 @@ public class RCommandClient extends RExecClient
      *
      * @param hostname  The name of the remote host.
      * @param port  The port to connect to on the remote host.
-     * @exception SocketException If the socket timeout could not be set.
-     * @exception BindException If all acceptable rshell ports are in use.
-     * @exception IOException If the socket could not be opened.  In most
+     * @throws SocketException If the socket timeout could not be set.
+     * @throws BindException If all acceptable rshell ports are in use.
+     * @throws IOException If the socket could not be opened.  In most
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
-     * @exception UnknownHostException If the hostname cannot be resolved.
+     * @throws UnknownHostException If the hostname cannot be resolved.
      ***/
     @Override
     public void connect(String hostname, int port)
@@ -267,9 +267,9 @@ public class RCommandClient extends RExecClient
      * @param hostname  The remote host.
      * @param port  The port to connect to on the remote host.
      * @param localAddr  The local address to use.
-     * @exception SocketException If the socket timeout could not be set.
-     * @exception BindException If all acceptable rshell ports are in use.
-     * @exception IOException If the socket could not be opened.  In most
+     * @throws SocketException If the socket timeout could not be set.
+     * @throws BindException If all acceptable rshell ports are in use.
+     * @throws IOException If the socket could not be opened.  In most
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
      ***/
@@ -293,11 +293,11 @@ public class RCommandClient extends RExecClient
      * @param port  The port to connect to on the remote host.
      * @param localAddr  The local address to use.
      * @param localPort  The local port to use.
-     * @exception SocketException If the socket timeout could not be set.
-     * @exception IOException If the socket could not be opened.  In most
+     * @throws SocketException If the socket timeout could not be set.
+     * @throws IOException If the socket could not be opened.  In most
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
-     * @exception IllegalArgumentException If an invalid local port number
+     * @throws IllegalArgumentException If an invalid local port number
      *            is specified.
      ***/
     @Override
@@ -325,12 +325,12 @@ public class RCommandClient extends RExecClient
      * @param port  The port to connect to on the remote host.
      * @param localAddr  The local address to use.
      * @param localPort  The local port to use.
-     * @exception SocketException If the socket timeout could not be set.
-     * @exception IOException If the socket could not be opened.  In most
+     * @throws SocketException If the socket timeout could not be set.
+     * @throws IOException If the socket could not be opened.  In most
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
-     * @exception UnknownHostException If the hostname cannot be resolved.
-     * @exception IllegalArgumentException If an invalid local port number
+     * @throws UnknownHostException If the hostname cannot be resolved.
+     * @throws IllegalArgumentException If an invalid local port number
      *            is specified.
      ***/
     @Override
@@ -378,7 +378,7 @@ public class RCommandClient extends RExecClient
      * @param separateErrorStream True if you would like the standard error
      *        to be transmitted through a different stream than standard output.
      *        False if not.
-     * @exception IOException If the rcommand() attempt fails.  The exception
+     * @throws IOException If the rcommand() attempt fails.  The exception
      *            will contain a message indicating the nature of the failure.
      ***/
     public void rcommand(String localUsername, String remoteUsername,

@@ -62,7 +62,7 @@ public class SocketOutputStream extends FilterOutputStream
      * @param buffer  The byte array to write.
      * @param offset  The offset into the array at which to start copying data.
      * @param length  The number of bytes to write.
-     * @exception IOException If an error occurs while writing to the underlying
+     * @throws IOException If an error occurs while writing to the underlying
      *            stream.
      ***/
     @Override
@@ -76,7 +76,7 @@ public class SocketOutputStream extends FilterOutputStream
      * Closes the stream and immediately afterward closes the referenced
      * socket.
      *
-     * @exception IOException  If there is an error in closing the stream
+     * @throws IOException  If there is an error in closing the stream
      *                         or socket.
      ***/
     @Override

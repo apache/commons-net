@@ -347,12 +347,12 @@ public class NNTPClient extends NNTP
      *   returned article information.
      * @return A DotTerminatedMessageReader instance from which the article
      *         can be read.  null if the article does not exist.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public BufferedReader retrieveArticle(String articleId, ArticleInfo pointer)
@@ -418,12 +418,12 @@ public class NNTPClient extends NNTP
      *   returned article information.
      * @return A DotTerminatedMessageReader instance from which the article
      *         can be read.  null if the article does not exist.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public BufferedReader retrieveArticle(long articleNumber, ArticleInfo pointer)
@@ -478,12 +478,12 @@ public class NNTPClient extends NNTP
      *   returned article information.
      * @return A DotTerminatedMessageReader instance from which the article
      *         header can be read.  null if the article does not exist.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public BufferedReader retrieveArticleHeader(String articleId, ArticleInfo pointer)
@@ -547,12 +547,12 @@ public class NNTPClient extends NNTP
      *   returned article information.
      * @return A DotTerminatedMessageReader instance from which the article
      *         header can be read.  null if the article does not exist.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public BufferedReader retrieveArticleHeader(long articleNumber,
@@ -609,12 +609,12 @@ public class NNTPClient extends NNTP
      *   returned article information.
      * @return A DotTerminatedMessageReader instance from which the article
      *         body can be read.  null if the article does not exist.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public BufferedReader retrieveArticleBody(String articleId, ArticleInfo pointer)
@@ -680,12 +680,12 @@ public class NNTPClient extends NNTP
      *   returned article information.
      * @return A DotTerminatedMessageReader instance from which the article
      *         body can be read.  null if the article does not exist.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public BufferedReader retrieveArticleBody(long articleNumber,
@@ -718,12 +718,12 @@ public class NNTPClient extends NNTP
      *      the selected newsgroup contained in the server reply is returned.
      *      Set this to null if you do not desire this information.
      * @return True if the newsgroup exists and was selected, false otherwise.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean selectNewsgroup(String newsgroup, NewsgroupInfo info)
@@ -755,12 +755,12 @@ public class NNTPClient extends NNTP
      * List the command help from the server.
      * <p>
      * @return The sever help information.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public String listHelp() throws IOException
@@ -816,12 +816,12 @@ public class NNTPClient extends NNTP
      *   set this parameter to null if you do not desire to retrieve the
      *   returned article information.
      * @return True if successful, false if not.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean selectArticle(String articleId, ArticleInfo pointer)
@@ -885,12 +885,12 @@ public class NNTPClient extends NNTP
      *   to this particular command.  You may set this parameter to null if
      *   you do not desire to retrieve the returned article information.
      * @return True if successful, false if not.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean selectArticle(long articleNumber, ArticleInfo pointer)
@@ -934,12 +934,12 @@ public class NNTPClient extends NNTP
      *   returned article information.
      * @return True if successful, false if not (e.g., there is no previous
      *     article).
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean selectPreviousArticle(ArticleInfo pointer)
@@ -981,12 +981,12 @@ public class NNTPClient extends NNTP
      *   returned article information.
      * @return True if successful, false if not (e.g., there is no following
      *         article).
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean selectNextArticle(ArticleInfo pointer) throws IOException
@@ -1022,12 +1022,12 @@ public class NNTPClient extends NNTP
      *    for each newsgroup served by the NNTP server.   If no newsgroups
      *    are served, a zero length array will be returned.  If the command
      *    fails, null will be returned.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      * @see #iterateNewsgroupListing()
      * @see #iterateNewsgroups()
@@ -1049,12 +1049,12 @@ public class NNTPClient extends NNTP
      * @return An iterable of NewsgroupInfo instances containing the information
      *    for each newsgroup served by the NNTP server.   If no newsgroups
      *    are served, no entries will be returned.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      * @since 3.0
      */
@@ -1073,12 +1073,12 @@ public class NNTPClient extends NNTP
      * @return An iterable of Strings containing the raw information
      *    for each newsgroup served by the NNTP server.   If no newsgroups
      *    are served, no entries will be returned.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      * @since 3.0
      */
@@ -1155,12 +1155,12 @@ public class NNTPClient extends NNTP
      *    for each new newsgroup added to the NNTP server.   If no newsgroups
      *    were added, a zero length array will be returned.  If the command
      *    fails, null will be returned.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      * @see #iterateNewNewsgroups(NewGroupsOrNewsQuery)
      * @see #iterateNewNewsgroupListing(NewGroupsOrNewsQuery)
@@ -1188,12 +1188,12 @@ public class NNTPClient extends NNTP
      * @return An iterable of Strings containing the raw information
      *    for each new newsgroup added to the NNTP server.   If no newsgroups
      *    were added, no entries will be returned.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      * @since 3.0
      */
@@ -1216,12 +1216,12 @@ public class NNTPClient extends NNTP
      * @return An iterable of NewsgroupInfo instances containing the information
      *    for each new newsgroup added to the NNTP server.   If no newsgroups
      *    were added, no entries will be returned.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      * @since 3.0
      */
@@ -1245,12 +1245,12 @@ public class NNTPClient extends NNTP
      *    identifiers for each new article added to the NNTP server.  If no
      *    new news is found, a zero length array will be returned.  If the
      *    command fails, null will be returned.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      *
      * @see #iterateNewNews(NewGroupsOrNewsQuery)
@@ -1301,12 +1301,12 @@ public class NNTPClient extends NNTP
      * @return An iterator of String instances containing the unique message
      *    identifiers for each new article added to the NNTP server.  If no
      *    new news is found, no strings will be returned.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      * @since 3.0
      */
@@ -1343,12 +1343,12 @@ public class NNTPClient extends NNTP
      * </pre>
      * <p>
      * @return True if successfully completed, false if not.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean completePendingCommand() throws IOException
@@ -1390,7 +1390,7 @@ public class NNTPClient extends NNTP
      * <p>
      * @return A DotTerminatedMessageWriter to which the article (including
      *      header) can be written.  Returns null if the command fails.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
 
@@ -1420,7 +1420,7 @@ public class NNTPClient extends NNTP
      * a new connection.
      * <p>
      * @return True if successfully completed, false if not.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean logout() throws IOException
@@ -1466,7 +1466,7 @@ public class NNTPClient extends NNTP
      * @param articleRange
      * @return Returns a DotTerminatedMessageReader if successful, null
      *         otherwise
-     * @exception IOException
+     * @throws IOException
      */
     private BufferedReader __retrieveArticleInfo(String articleRange)
         throws IOException
@@ -1539,7 +1539,7 @@ public class NNTPClient extends NNTP
      * @param articleRange
      * @return Returns a DotTerminatedMessageReader if successful, null
      *         otherwise
-     * @exception IOException
+     * @throws IOException
      */
     private BufferedReader __retrieveHeader(String header, String articleRange)
         throws IOException

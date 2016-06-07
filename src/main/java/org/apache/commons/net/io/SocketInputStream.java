@@ -56,7 +56,7 @@ public class SocketInputStream extends FilterInputStream
      * Closes the stream and immediately afterward closes the referenced
      * socket.
      *
-     * @exception IOException  If there is an error in closing the stream
+     * @throws IOException  If there is an error in closing the stream
      *                         or socket.
      ***/
     @Override

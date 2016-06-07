@@ -65,7 +65,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     /**
      * Constructor for a VMSFTPEntryParser object.
      *
-     * @exception IllegalArgumentException
+     * @throws IllegalArgumentException
      * Thrown if the regular expression is unparseable.  Should not be seen
      * under normal conditions.  It it is seen, this is a sign that
      * <code>REGEX</code> is  not a valid regular expression.
@@ -81,7 +81,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      *
      * @param config The {@link FTPClientConfig configuration} object used to
      * configure this parser.
-     * @exception IllegalArgumentException
+     * @throws IllegalArgumentException
      * Thrown if the regular expression is unparseable.  Should not be seen
      * under normal conditions.  It it is seen, this is a sign that
      * <code>REGEX</code> is  not a valid regular expression.
@@ -206,7 +206,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * read.
      *
      * @return A string representing the next ftp entry or null if none found.
-     * @exception IOException thrown on any IO Error reading from the reader.
+     * @throws IOException thrown on any IO Error reading from the reader.
      */
     @Override
     public String readNextEntry(BufferedReader reader) throws IOException

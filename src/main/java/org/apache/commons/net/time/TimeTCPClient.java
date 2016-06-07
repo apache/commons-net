@@ -74,7 +74,7 @@ public final class TimeTCPClient extends SocketClient
      * before calling <code> getTime() </code> again.
      *
      * @return The time value retrieved from the server.
-     * @exception IOException  If an error occurs while fetching the time.
+     * @throws IOException  If an error occurs while fetching the time.
      ***/
     public long getTime() throws IOException
     {
@@ -97,7 +97,7 @@ public final class TimeTCPClient extends SocketClient
      *
      * @return A Date value containing the time retrieved from the server
      *     converted to the local timezone.
-     * @exception IOException  If an error occurs while fetching the time.
+     * @throws IOException  If an error occurs while fetching the time.
      ***/
     public Date getDate() throws IOException
     {

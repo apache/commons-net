@@ -187,7 +187,7 @@ public class NNTP extends SocketClient
      * garbage collector.  The reply text and code information from the
      * last command is voided so that the memory it used may be reclaimed.
      * <p>
-     * @exception IOException If an error occurs while disconnecting.
+     * @throws IOException If an error occurs while disconnecting.
      ***/
     @Override
     public void disconnect() throws IOException
@@ -224,12 +224,12 @@ public class NNTP extends SocketClient
      *             set to null, then the command is sent with no argument.
      * @return The integer value of the NNTP reply code returned by the server
      *         in response to the command.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int sendCommand(String command, String args) throws IOException
@@ -268,12 +268,12 @@ public class NNTP extends SocketClient
      * @return The integer value of the NNTP reply code returned by the server
      *         in response to the command.
      *         in response to the command.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int sendCommand(int command, String args) throws IOException
@@ -292,12 +292,12 @@ public class NNTP extends SocketClient
      * @return The integer value of the NNTP reply code returned by the server
      *         in response to the command.
      *         in response to the command.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int sendCommand(String command) throws IOException
@@ -317,12 +317,12 @@ public class NNTP extends SocketClient
      * @return The integer value of the NNTP reply code returned by the server
      *         in response to the command.
      *         in response to the command.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int sendCommand(int command) throws IOException
@@ -353,12 +353,12 @@ public class NNTP extends SocketClient
      * <p>
      * @return The integer value of the reply code of the fetched NNTP reply.
      *         in response to the command.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while
+     * @throws IOException  If an I/O error occurs while
      *      receiving the server reply.
      ***/
     public int getReply() throws IOException
@@ -387,12 +387,12 @@ public class NNTP extends SocketClient
      * @param messageId  The message identifier of the requested article,
      *                   including the encapsulating &lt; and &gt; characters.
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int article(String messageId) throws IOException
@@ -407,12 +407,12 @@ public class NNTP extends SocketClient
      * @param articleNumber The number of the article to request from the
      *                      currently selected newsgroup.
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int article(long articleNumber) throws IOException
@@ -425,12 +425,12 @@ public class NNTP extends SocketClient
      * receive the initial reply, and return the reply code.
      * <p>
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int article() throws IOException
@@ -447,12 +447,12 @@ public class NNTP extends SocketClient
      * @param messageId  The message identifier of the requested article,
      *                   including the encapsulating &lt; and &gt; characters.
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int body(String messageId) throws IOException
@@ -467,12 +467,12 @@ public class NNTP extends SocketClient
      * @param articleNumber The number of the article to request from the
      *                      currently selected newsgroup.
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int body(long articleNumber) throws IOException
@@ -485,12 +485,12 @@ public class NNTP extends SocketClient
      * receive the initial reply, and return the reply code.
      * <p>
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int body() throws IOException
@@ -507,12 +507,12 @@ public class NNTP extends SocketClient
      * @param messageId  The message identifier of the requested article,
      *                   including the encapsulating &lt; and &gt; characters.
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int head(String messageId) throws IOException
@@ -527,12 +527,12 @@ public class NNTP extends SocketClient
      * @param articleNumber The number of the article to request from the
      *                      currently selected newsgroup.
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int head(long articleNumber) throws IOException
@@ -545,12 +545,12 @@ public class NNTP extends SocketClient
      * receive the initial reply, and return the reply code.
      * <p>
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int head() throws IOException
@@ -567,12 +567,12 @@ public class NNTP extends SocketClient
      * @param messageId  The message identifier of the requested article,
      *                   including the encapsulating &lt; and &gt; characters.
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int stat(String messageId) throws IOException
@@ -587,12 +587,12 @@ public class NNTP extends SocketClient
      * @param articleNumber The number of the article to request from the
      *                      currently selected newsgroup.
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int stat(long articleNumber) throws IOException
@@ -605,12 +605,12 @@ public class NNTP extends SocketClient
      * receive the initial reply, and return the reply code.
      * <p>
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int stat() throws IOException
@@ -625,12 +625,12 @@ public class NNTP extends SocketClient
      * <p>
      * @param newsgroup  The name of the newsgroup to select.
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int group(String newsgroup) throws IOException
@@ -644,12 +644,12 @@ public class NNTP extends SocketClient
      * receive the reply, and return the reply code.
      * <p>
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int help() throws IOException
@@ -665,12 +665,12 @@ public class NNTP extends SocketClient
      * @param messageId  The article identifier,
      *                   including the encapsulating &lt; and &gt; characters.
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int ihave(String messageId) throws IOException
@@ -684,12 +684,12 @@ public class NNTP extends SocketClient
      * receive the reply, and return the reply code.
      * <p>
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int last() throws IOException
@@ -704,12 +704,12 @@ public class NNTP extends SocketClient
      * receive the reply, and return the reply code.
      * <p>
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int list() throws IOException
@@ -724,12 +724,12 @@ public class NNTP extends SocketClient
      * receive the reply, and return the reply code.
      * <p>
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int next() throws IOException
@@ -750,12 +750,12 @@ public class NNTP extends SocketClient
      * @param distributions  Comma-separated distribution list to check for
      *            new groups. Set to null if no distributions.
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int newgroups(String date, String time, boolean GMT,
@@ -798,12 +798,12 @@ public class NNTP extends SocketClient
      * @param distributions  Comma-separated distribution list to check for
      *            new news. Set to null if no distributions.
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int newnews(String newsgroups, String date, String time, boolean GMT,
@@ -840,12 +840,12 @@ public class NNTP extends SocketClient
      * receive the reply, and return the reply code.
      * <p>
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int post() throws IOException
@@ -860,12 +860,12 @@ public class NNTP extends SocketClient
      * receive the reply, and return the reply code.
      * <p>
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int quit() throws IOException
@@ -880,12 +880,12 @@ public class NNTP extends SocketClient
      * @param username A valid username.
      * @return The reply code received from the server. The server should
      *          return a 381 or 281 for this command.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int authinfoUser(String username) throws IOException {
@@ -902,12 +902,12 @@ public class NNTP extends SocketClient
      * @param password a valid password.
      * @return The reply code received from the server. The server should
      *         return a 281 or 502 for this command.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int authinfoPass(String password) throws IOException {
@@ -927,12 +927,12 @@ public class NNTP extends SocketClient
      * following articles" In this revision, the last format is not
      * possible (yet).
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int xover(String selectedArticles) throws IOException {
@@ -953,12 +953,12 @@ public class NNTP extends SocketClient
      * following articles" In this revision, the last format is not
      * possible (yet).
      * @return The reply code received from the server.
-     * @exception NNTPConnectionClosedException
+     * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send NNTP reply code 400.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int xhdr(String header, String selectedArticles) throws IOException {

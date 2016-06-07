@@ -455,7 +455,7 @@ public class FTP extends SocketClient
      * last command is voided so that the memory it used may be reclaimed.
      * Also sets {@link #_controlInput_} and {@link #_controlOutput_} to null.
      *
-     * @exception IOException If an error occurs while disconnecting.
+     * @throws IOException If an error occurs while disconnecting.
      ***/
     @Override
     public void disconnect() throws IOException
@@ -480,12 +480,12 @@ public class FTP extends SocketClient
      *             set to null, then the command is sent with no argument.
      * @return The integer value of the FTP reply code returned by the server
      *         in response to the command.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int sendCommand(String command, String args) throws IOException
@@ -563,12 +563,12 @@ public class FTP extends SocketClient
      *             set to null, then the command is sent with no argument.
      * @return The integer value of the FTP reply code returned by the server
      *         in response to the command.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      * @deprecated (3.3) Use {@link #sendCommand(FTPCmd, String)} instead
      ***/
@@ -589,12 +589,12 @@ public class FTP extends SocketClient
      *                 to send.
      * @return The integer value of the FTP reply code returned by the server
      *         in response to the command.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      * @since 3.3
      */
@@ -615,12 +615,12 @@ public class FTP extends SocketClient
      *             set to null, then the command is sent with no argument.
      * @return The integer value of the FTP reply code returned by the server
      *         in response to the command.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      * @since 3.3
      */
@@ -638,12 +638,12 @@ public class FTP extends SocketClient
      * @param command  The text representation of the  FTP command to send.
      * @return The integer value of the FTP reply code returned by the server
      *         in response to the command.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int sendCommand(String command) throws IOException
@@ -663,12 +663,12 @@ public class FTP extends SocketClient
      *                 to send.
      * @return The integer value of the FTP reply code returned by the server
      *         in response to the command.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int sendCommand(int command) throws IOException
@@ -699,12 +699,12 @@ public class FTP extends SocketClient
      * fetch a secondary response from the FTP server.
      *
      * @return The integer value of the reply code of the fetched FTP reply.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while receiving the
+     * @throws IOException  If an I/O error occurs while receiving the
      *                         server reply.
      ***/
     public int getReply() throws IOException
@@ -760,12 +760,12 @@ public class FTP extends SocketClient
      *
      * @param username  The username to login under.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int user(String username) throws IOException
@@ -778,12 +778,12 @@ public class FTP extends SocketClient
      * receive the reply, and return the reply code.
      * @param password The plain text password of the username being logged into.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
     public int pass(String password) throws IOException
@@ -797,12 +797,12 @@ public class FTP extends SocketClient
      *
      * @param account  The account name to access.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int acct(String account) throws IOException
@@ -816,12 +816,12 @@ public class FTP extends SocketClient
      * receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int abor() throws IOException
@@ -835,12 +835,12 @@ public class FTP extends SocketClient
      *
      * @param directory The new working directory.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int cwd(String directory) throws IOException
@@ -853,12 +853,12 @@ public class FTP extends SocketClient
      * receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int cdup() throws IOException
@@ -871,12 +871,12 @@ public class FTP extends SocketClient
      * receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int quit() throws IOException
@@ -889,12 +889,12 @@ public class FTP extends SocketClient
      * receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int rein() throws IOException
@@ -908,12 +908,12 @@ public class FTP extends SocketClient
      *
      * @param dir  The directory name.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int smnt(String dir) throws IOException
@@ -928,12 +928,12 @@ public class FTP extends SocketClient
      * @param host  The host owning the port.
      * @param port  The new port.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int port(InetAddress host, int port) throws IOException
@@ -967,12 +967,12 @@ public class FTP extends SocketClient
      * @param host  The host owning the port.
      * @param port  The new port.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      * @since 2.2
      ***/
@@ -1012,12 +1012,12 @@ public class FTP extends SocketClient
      * information.
      *
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int pasv() throws IOException
@@ -1032,12 +1032,12 @@ public class FTP extends SocketClient
      * information.
      *
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      * @since 2.2
      ***/
@@ -1055,12 +1055,12 @@ public class FTP extends SocketClient
      *              <code>_FORMAT</code> constants.  In the case of
      *              <code>LOCAL_FILE_TYPE</code>, the byte size.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
     public int type(int fileType, int formatOrByteSize) throws IOException
@@ -1086,12 +1086,12 @@ public class FTP extends SocketClient
      * @param fileType  The type of the file (one of the <code>FILE_TYPE</code>
      *              constants).
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
     public int type(int fileType) throws IOException
@@ -1107,12 +1107,12 @@ public class FTP extends SocketClient
      * @param structure  The structure of the file (one of the
      *         <code>_STRUCTURE</code> constants).
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int stru(int structure) throws IOException
@@ -1128,12 +1128,12 @@ public class FTP extends SocketClient
      * @param mode  The transfer mode to use (one of the
      *         <code>TRANSFER_MODE</code> constants).
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int mode(int mode) throws IOException
@@ -1151,12 +1151,12 @@ public class FTP extends SocketClient
      *
      * @param pathname  The pathname of the file to retrieve.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int retr(String pathname) throws IOException
@@ -1174,12 +1174,12 @@ public class FTP extends SocketClient
      * @param pathname  The pathname to use for the file when stored at
      *                  the remote end of the transfer.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int stor(String pathname) throws IOException
@@ -1195,12 +1195,12 @@ public class FTP extends SocketClient
      * , which will handle all low level details for you.
      *
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int stou() throws IOException
@@ -1218,12 +1218,12 @@ public class FTP extends SocketClient
      *                  the remote end of the transfer.  Some FTP servers
      *                  require this.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
     public int stou(String pathname) throws IOException
@@ -1241,12 +1241,12 @@ public class FTP extends SocketClient
      * @param pathname  The pathname to use for the file when stored at
      *                  the remote end of the transfer.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int appe(String pathname) throws IOException
@@ -1260,12 +1260,12 @@ public class FTP extends SocketClient
      *
      * @param bytes The number of bytes to allocate.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int allo(int bytes) throws IOException
@@ -1293,12 +1293,12 @@ public class FTP extends SocketClient
      * @param bytes The number of bytes to allocate.
      * @param recordSize  The size of a record.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int allo(int bytes, int recordSize) throws IOException
@@ -1313,12 +1313,12 @@ public class FTP extends SocketClient
      *
      * @param marker The marker at which to restart a transfer.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int rest(String marker) throws IOException
@@ -1346,12 +1346,12 @@ public class FTP extends SocketClient
      * @param pathname The pathname for which mtime is to be changed
      * @param timeval Timestamp in <code>YYYYMMDDhhmmss</code> format
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      * @since 2.2
      * @see <a href="http://tools.ietf.org/html/draft-somers-ftp-mfxx-04">http://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
@@ -1368,12 +1368,12 @@ public class FTP extends SocketClient
      *
      * @param pathname The pathname to rename from.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int rnfr(String pathname) throws IOException
@@ -1387,12 +1387,12 @@ public class FTP extends SocketClient
      *
      * @param pathname The pathname to rename to
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int rnto(String pathname) throws IOException
@@ -1406,12 +1406,12 @@ public class FTP extends SocketClient
      *
      * @param pathname The pathname to delete.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int dele(String pathname) throws IOException
@@ -1425,12 +1425,12 @@ public class FTP extends SocketClient
      *
      * @param pathname The pathname of the directory to remove.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int rmd(String pathname) throws IOException
@@ -1444,12 +1444,12 @@ public class FTP extends SocketClient
      *
      * @param pathname The pathname of the new directory to create.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int mkd(String pathname) throws IOException
@@ -1462,12 +1462,12 @@ public class FTP extends SocketClient
      * receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int pwd() throws IOException
@@ -1483,12 +1483,12 @@ public class FTP extends SocketClient
      * , which will handle all low level details for you.
      *
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int list() throws IOException
@@ -1506,12 +1506,12 @@ public class FTP extends SocketClient
      * @param pathname  The pathname to list,
      * may be {@code null} in which case the command is sent with no parameters
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int list(String pathname) throws IOException
@@ -1527,12 +1527,12 @@ public class FTP extends SocketClient
      * , which will handle all low level details for you.
      *
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      * @since 3.0
      */
@@ -1551,12 +1551,12 @@ public class FTP extends SocketClient
      * @param path the path to report on
      * @return The reply code received from the server,
      * may be {@code null} in which case the command is sent with no parameters
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      * @since 3.0
      */
@@ -1573,12 +1573,12 @@ public class FTP extends SocketClient
      * , which will handle all low level details for you.
      *
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      * @since 3.0
      */
@@ -1597,12 +1597,12 @@ public class FTP extends SocketClient
      * @param path the path to report on
      * @return The reply code received from the server,
      * may be {@code null} in which case the command is sent with no parameters
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      * @since 3.0
      */
@@ -1619,12 +1619,12 @@ public class FTP extends SocketClient
      * , which will handle all low level details for you.
      *
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int nlst() throws IOException
@@ -1642,12 +1642,12 @@ public class FTP extends SocketClient
      * @param pathname  The pathname to list,
      * may be {@code null} in which case the command is sent with no parameters
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int nlst(String pathname) throws IOException
@@ -1661,12 +1661,12 @@ public class FTP extends SocketClient
      *
      * @param parameters  The site parameters to send.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int site(String parameters) throws IOException
@@ -1679,12 +1679,12 @@ public class FTP extends SocketClient
      * receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int syst() throws IOException
@@ -1697,12 +1697,12 @@ public class FTP extends SocketClient
      * receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int stat() throws IOException
@@ -1716,12 +1716,12 @@ public class FTP extends SocketClient
      *
      * @param pathname  A pathname to list.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int stat(String pathname) throws IOException
@@ -1734,12 +1734,12 @@ public class FTP extends SocketClient
      * receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int help() throws IOException
@@ -1753,12 +1753,12 @@ public class FTP extends SocketClient
      *
      * @param command  The command name on which to request help.
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int help(String command) throws IOException
@@ -1771,12 +1771,12 @@ public class FTP extends SocketClient
      * receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
-     * @exception FTPConnectionClosedException
+     * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send FTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending the
+     * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
     public int noop() throws IOException

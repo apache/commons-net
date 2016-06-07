@@ -118,7 +118,7 @@ public abstract class TFTPPacket
      *
      * @param datagram  The datagram containing a TFTP packet.
      * @return The TFTPPacket object corresponding to the datagram.
-     * @exception TFTPPacketException  If the datagram does not contain a valid
+     * @throws TFTPPacketException  If the datagram does not contain a valid
      *             TFTP packet.
      ***/
     public static final TFTPPacket newTFTPPacket(DatagramPacket datagram)

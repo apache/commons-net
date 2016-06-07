@@ -192,7 +192,7 @@ public class DefaultFTPFileEntryParserFactory
      * used to configure the parser created
      *
      * @return the @link  FTPFileEntryParser FTPFileEntryParser} so created.
-     * @exception ParserInitializationException
+     * @throws ParserInitializationException
      *                   Thrown on any exception in instantiation
      * @throws NullPointerException if {@code config} is {@code null}
      * @since 1.4

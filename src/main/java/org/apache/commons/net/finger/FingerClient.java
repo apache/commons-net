@@ -79,7 +79,7 @@ public class FingerClient extends SocketClient
      * @param longOutput Set to true if long output is requested, false if not.
      * @param username  The name of the user to finger.
      * @return The result of the finger query.
-     * @exception IOException If an I/O error occurs while reading the socket.
+     * @throws IOException If an I/O error occurs while reading the socket.
      ***/
     public String query(boolean longOutput, String username) throws IOException
     {
@@ -116,7 +116,7 @@ public class FingerClient extends SocketClient
      *
      * @param longOutput Set to true if long output is requested, false if not.
      * @return The result of the finger query.
-     * @exception IOException If an I/O error occurs while reading the socket.
+     * @throws IOException If an I/O error occurs while reading the socket.
      ***/
     public String query(boolean longOutput) throws IOException
     {
@@ -134,7 +134,7 @@ public class FingerClient extends SocketClient
      * @param username  The name of the user to finger.
      * @return The InputStream of the network connection of the finger query.
      *         Can be read to obtain finger results.
-     * @exception IOException If an I/O error during the operation.
+     * @throws IOException If an I/O error during the operation.
      ***/
     public InputStream getInputStream(boolean longOutput, String username)
     throws IOException
@@ -154,7 +154,7 @@ public class FingerClient extends SocketClient
      *        null for the platform's default encoding
      * @return The InputStream of the network connection of the finger query.
      *         Can be read to obtain finger results.
-     * @exception IOException If an I/O error during the operation.
+     * @throws IOException If an I/O error during the operation.
      ***/
     public InputStream getInputStream(boolean longOutput, String username, String encoding)
     throws IOException
@@ -188,7 +188,7 @@ public class FingerClient extends SocketClient
      * @param longOutput Set to true if long output is requested, false if not.
      * @return The InputStream of the network connection of the finger query.
      *         Can be read to obtain finger results.
-     * @exception IOException If an I/O error during the operation.
+     * @throws IOException If an I/O error during the operation.
      ***/
     public InputStream getInputStream(boolean longOutput) throws IOException
     {

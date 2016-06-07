@@ -58,7 +58,7 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     /**
      * The default constructor for a NetwareFTPEntryParser object.
      *
-     * @exception IllegalArgumentException
+     * @throws IllegalArgumentException
      * Thrown if the regular expression is unparseable.  Should not be seen
      * under normal conditions.  It it is seen, this is a sign that
      * <code>REGEX</code> is  not a valid regular expression.
@@ -73,7 +73,7 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      *
      * @param config The {@link FTPClientConfig configuration} object used to
      * configure this parser.
-     * @exception IllegalArgumentException
+     * @throws IllegalArgumentException
      * Thrown if the regular expression is unparseable.  Should not be seen
      * under normal conditions.  It it is seen, this is a sign that
      * <code>REGEX</code> is  not a valid regular expression.

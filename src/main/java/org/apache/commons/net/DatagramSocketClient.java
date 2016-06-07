@@ -96,7 +96,7 @@ public abstract class DatagramSocketClient
      * _isOpen_ is set to true after calling this method and _socket_
      * is set to the newly opened socket.
      *
-     * @exception SocketException If the socket could not be opened or the
+     * @throws SocketException If the socket could not be opened or the
      *   timeout could not be set.
      ***/
     public void open() throws SocketException
@@ -116,7 +116,7 @@ public abstract class DatagramSocketClient
      * is set to the newly opened socket.
      *
      * @param port The port to use for the socket.
-     * @exception SocketException If the socket could not be opened or the
+     * @throws SocketException If the socket could not be opened or the
      *   timeout could not be set.
      ***/
     public void open(int port) throws SocketException
@@ -138,7 +138,7 @@ public abstract class DatagramSocketClient
      *
      * @param port The port to use for the socket.
      * @param laddr  The local address to use.
-     * @exception SocketException If the socket could not be opened or the
+     * @throws SocketException If the socket could not be opened or the
      *   timeout could not be set.
      ***/
     public void open(int port, InetAddress laddr) throws SocketException

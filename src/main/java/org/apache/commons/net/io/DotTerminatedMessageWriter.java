@@ -68,7 +68,7 @@ public final class DotTerminatedMessageWriter extends Writer
      * is only mentioned for completeness.
      *
      * @param ch  The character to write.
-     * @exception IOException  If an error occurs while writing to the
+     * @throws IOException  If an error occurs while writing to the
      *            underlying output.
      ***/
     @Override
@@ -111,7 +111,7 @@ public final class DotTerminatedMessageWriter extends Writer
      * @param buffer  The character array to write.
      * @param offset  The offset into the array at which to start copying data.
      * @param length  The number of characters to write.
-     * @exception IOException If an error occurs while writing to the underlying
+     * @throws IOException If an error occurs while writing to the underlying
      *            output.
      ***/
     @Override
@@ -130,7 +130,7 @@ public final class DotTerminatedMessageWriter extends Writer
      * Writes a character array to the output.
      *
      * @param buffer  The character array to write.
-     * @exception IOException If an error occurs while writing to the underlying
+     * @throws IOException If an error occurs while writing to the underlying
      *            output.
      ***/
     @Override
@@ -144,7 +144,7 @@ public final class DotTerminatedMessageWriter extends Writer
      * Writes a String to the output.
      *
      * @param string  The String to write.
-     * @exception IOException If an error occurs while writing to the underlying
+     * @throws IOException If an error occurs while writing to the underlying
      *            output.
      ***/
     @Override
@@ -160,7 +160,7 @@ public final class DotTerminatedMessageWriter extends Writer
      * @param string  The String to write.
      * @param offset  The offset into the String at which to start copying data.
      * @param length  The number of characters to write.
-     * @exception IOException If an error occurs while writing to the underlying
+     * @throws IOException If an error occurs while writing to the underlying
      *            output.
      ***/
     @Override
@@ -173,7 +173,7 @@ public final class DotTerminatedMessageWriter extends Writer
     /***
      * Flushes the underlying output, writing all buffered output.
      *
-     * @exception IOException If an error occurs while writing to the underlying
+     * @throws IOException If an error occurs while writing to the underlying
      *            output.
      ***/
     @Override
@@ -191,7 +191,7 @@ public final class DotTerminatedMessageWriter extends Writer
      * actually close the underlying stream.  The underlying stream may still
      * be used for communicating with the server and therefore is not closed.
      *
-     * @exception IOException If an error occurs while writing to the underlying
+     * @throws IOException If an error occurs while writing to the underlying
      *            output or closing the Writer.
      ***/
     @Override

@@ -54,7 +54,7 @@ public final class DaytimeUDPClient extends DatagramSocketClient
      * @param host The address of the server.
      * @param port The port of the service.
      * @return The time string.
-     * @exception IOException If an error occurs while retrieving the time.
+     * @throws IOException If an error occurs while retrieving the time.
      */
     public String getTime(InetAddress host, int port) throws IOException
     {

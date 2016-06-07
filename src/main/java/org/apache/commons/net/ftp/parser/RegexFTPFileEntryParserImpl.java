@@ -58,7 +58,7 @@ public abstract class RegexFTPFileEntryParserImpl extends
      * @param regex  The regular expression with which this object is
      * initialized.
      *
-     * @exception IllegalArgumentException
+     * @throws IllegalArgumentException
      * Thrown if the regular expression is unparseable.  Should not be seen in
      * normal conditions.  It it is seen, this is a sign that a subclass has
      * been created with a bad regular expression.   Since the parser must be
@@ -78,7 +78,7 @@ public abstract class RegexFTPFileEntryParserImpl extends
      * initialized.
      * @param flags the flags to apply, see {@link Pattern#compile(String, int)}. Use 0 for none.
      *
-     * @exception IllegalArgumentException
+     * @throws IllegalArgumentException
      * Thrown if the regular expression is unparseable.  Should not be seen in
      * normal conditions.  It it is seen, this is a sign that a subclass has
      * been created with a bad regular expression.   Since the parser must be

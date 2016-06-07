@@ -45,7 +45,7 @@ public abstract class FTPFileEntryParserImpl
      * read.
      *
      * @return A string representing the next ftp entry or null if none found.
-     * @exception java.io.IOException thrown on any IO Error reading from the reader.
+     * @throws java.io.IOException thrown on any IO Error reading from the reader.
      */
     @Override
     public String readNextEntry(BufferedReader reader) throws IOException

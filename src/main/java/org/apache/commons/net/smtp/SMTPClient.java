@@ -163,12 +163,12 @@ public class SMTPClient extends SMTP
      * </pre>
      * <p>
      * @return True if successfully completed, false if not.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean completePendingCommand() throws IOException
@@ -184,12 +184,12 @@ public class SMTPClient extends SMTP
      * <p>
      * @param hostname  The hostname with which to greet the SMTP server.
      * @return True if successfully completed, false if not.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean login(String hostname) throws IOException
@@ -204,12 +204,12 @@ public class SMTPClient extends SMTP
      * you must first login.
      * <p>
      * @return True if successfully completed, false if not.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean login() throws IOException
@@ -236,12 +236,12 @@ public class SMTPClient extends SMTP
      * <p>
      * @param path  The reverse relay path pointing back to the sender.
      * @return True if successfully completed, false if not.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean setSender(RelayPath path) throws IOException
@@ -258,12 +258,12 @@ public class SMTPClient extends SMTP
      * <p>
      * @param address  The sender's email address.
      * @return True if successfully completed, false if not.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean setSender(String address) throws IOException
@@ -280,12 +280,12 @@ public class SMTPClient extends SMTP
      * <p>
      * @param path  The forward relay path pointing to the recipient.
      * @return True if successfully completed, false if not.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean addRecipient(RelayPath path) throws IOException
@@ -302,12 +302,12 @@ public class SMTPClient extends SMTP
      * <p>
      * @param address  The recipient's email address.
      * @return True if successfully completed, false if not.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean addRecipient(String address) throws IOException
@@ -348,12 +348,12 @@ public class SMTPClient extends SMTP
      * <p>
      * @return A DotTerminatedMessageWriter to which the message (including
      *      header) can be written.  Returns null if the command fails.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      * @see #sendShortMessageData(String)
      ***/
@@ -378,12 +378,12 @@ public class SMTPClient extends SMTP
      * @param message  The short email message to send.
      * This must include the headers and the body, but not the trailing "."
      * @return True if successfully completed, false if not.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean sendShortMessageData(String message) throws IOException
@@ -416,12 +416,12 @@ public class SMTPClient extends SMTP
      * @param message  The short email message to send.
      * This must include the headers and the body, but not the trailing "."
      * @return True if successfully completed, false if not.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean sendSimpleMessage(String sender, String recipient,
@@ -460,12 +460,12 @@ public class SMTPClient extends SMTP
      * @param message  The short email message to send.
      * This must include the headers and the body, but not the trailing "."
      * @return True if successfully completed, false if not.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean sendSimpleMessage(String sender, String[] recipients,
@@ -498,12 +498,12 @@ public class SMTPClient extends SMTP
      * Logout of the SMTP server by sending the QUIT command.
      * <p>
      * @return True if successfully completed, false if not.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean logout() throws IOException
@@ -518,12 +518,12 @@ public class SMTPClient extends SMTP
      * sender, recipient, and mail data, cleaing all buffers and tables.
      * <p>
      * @return True if successfully completed, false if not.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean reset() throws IOException
@@ -538,12 +538,12 @@ public class SMTPClient extends SMTP
      * <p>
      * @param username  The username or email address to validate.
      * @return True if the username is valid, false if not.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean verify(String username) throws IOException
@@ -563,12 +563,12 @@ public class SMTPClient extends SMTP
      * <p>
      * @return The system help string obtained from the server.  null if the
      *       information could not be obtained.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *  command to the server or receiving a reply from the server.
      ***/
     public String listHelp() throws IOException
@@ -587,12 +587,12 @@ public class SMTPClient extends SMTP
      * @param command The command on which to ask for help.
      * @return The command help string obtained from the server.  null if the
      *       information could not be obtained.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *  command to the server or receiving a reply from the server.
      ***/
     public String listHelp(String command) throws IOException
@@ -609,12 +609,12 @@ public class SMTPClient extends SMTP
      * server timeouts.
      * <p>
      * @return True if successfully completed, false if not.
-     * @exception SMTPConnectionClosedException
+     * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
      *      to send SMTP reply code 421.  This exception may be caught either
      *      as an IOException or independently as itself.
-     * @exception IOException  If an I/O error occurs while either sending a
+     * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
     public boolean sendNoOp() throws IOException

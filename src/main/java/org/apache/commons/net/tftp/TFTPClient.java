@@ -120,7 +120,7 @@ public class TFTPClient extends TFTP
      * @param host   The remote host serving the file.
      * @param port   The port number of the remote TFTP server.
      * @return number of bytes read
-     * @exception IOException If an I/O error occurs.  The nature of the
+     * @throws IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
      ***/
     public int receiveFile(String filename, int mode, OutputStream output,
@@ -302,9 +302,9 @@ _receivePacket:
      * @param hostname The name of the remote host serving the file.
      * @param port     The port number of the remote TFTP server.
      * @return number of bytes read
-     * @exception IOException If an I/O error occurs.  The nature of the
+     * @throws IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
-     * @exception UnknownHostException  If the hostname cannot be resolved.
+     * @throws UnknownHostException  If the hostname cannot be resolved.
      ***/
     public int receiveFile(String filename, int mode, OutputStream output,
                            String hostname, int port)
@@ -323,7 +323,7 @@ _receivePacket:
      * @param output   The OutputStream to which the file should be written.
      * @param host     The remote host serving the file.
      * @return number of bytes read
-     * @exception IOException If an I/O error occurs.  The nature of the
+     * @throws IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
      ***/
     public int receiveFile(String filename, int mode, OutputStream output,
@@ -341,9 +341,9 @@ _receivePacket:
      * @param output   The OutputStream to which the file should be written.
      * @param hostname The name of the remote host serving the file.
      * @return number of bytes read
-     * @exception IOException If an I/O error occurs.  The nature of the
+     * @throws IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
-     * @exception UnknownHostException  If the hostname cannot be resolved.
+     * @throws UnknownHostException  If the hostname cannot be resolved.
      ***/
     public int receiveFile(String filename, int mode, OutputStream output,
                            String hostname)
@@ -368,7 +368,7 @@ _receivePacket:
      * @param input the input stream containing the data to be sent
      * @param host     The remote host receiving the file.
      * @param port     The port number of the remote TFTP server.
-     * @exception IOException If an I/O error occurs.  The nature of the
+     * @throws IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
      ***/
     public void sendFile(String filename, int mode, InputStream input,
@@ -565,9 +565,9 @@ _receivePacket:
      * @param input the input stream containing the data to be sent
      * @param hostname The name of the remote host receiving the file.
      * @param port     The port number of the remote TFTP server.
-     * @exception IOException If an I/O error occurs.  The nature of the
+     * @throws IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
-     * @exception UnknownHostException  If the hostname cannot be resolved.
+     * @throws UnknownHostException  If the hostname cannot be resolved.
      ***/
     public void sendFile(String filename, int mode, InputStream input,
                          String hostname, int port)
@@ -585,9 +585,9 @@ _receivePacket:
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
      * @param input the input stream containing the data to be sent
      * @param host     The name of the remote host receiving the file.
-     * @exception IOException If an I/O error occurs.  The nature of the
+     * @throws IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
-     * @exception UnknownHostException  If the hostname cannot be resolved.
+     * @throws UnknownHostException  If the hostname cannot be resolved.
      ***/
     public void sendFile(String filename, int mode, InputStream input,
                          InetAddress host)
@@ -604,9 +604,9 @@ _receivePacket:
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
      * @param input the input stream containing the data to be sent
      * @param hostname The name of the remote host receiving the file.
-     * @exception IOException If an I/O error occurs.  The nature of the
+     * @throws IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
-     * @exception UnknownHostException  If the hostname cannot be resolved.
+     * @throws UnknownHostException  If the hostname cannot be resolved.
      ***/
     public void sendFile(String filename, int mode, InputStream input,
                          String hostname)

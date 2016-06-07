@@ -68,7 +68,7 @@ public class DefaultSocketFactory extends SocketFactory
      * Creates an unconnected Socket.
      *
      * @return A new unconnected Socket.
-     * @exception IOException If an I/O error occurs while creating the Socket.
+     * @throws IOException If an I/O error occurs while creating the Socket.
      * @since 3.2
      */
     @Override
@@ -87,8 +87,8 @@ public class DefaultSocketFactory extends SocketFactory
      * @param host The hostname to connect to.
      * @param port The port to connect to.
      * @return A Socket connected to the given host and port.
-     * @exception UnknownHostException  If the hostname cannot be resolved.
-     * @exception IOException If an I/O error occurs while creating the Socket.
+     * @throws UnknownHostException  If the hostname cannot be resolved.
+     * @throws IOException If an I/O error occurs while creating the Socket.
      ***/
     @Override
     public Socket createSocket(String host, int port)
@@ -109,7 +109,7 @@ public class DefaultSocketFactory extends SocketFactory
      * @param address The address of the host to connect to.
      * @param port The port to connect to.
      * @return A Socket connected to the given host and port.
-     * @exception IOException If an I/O error occurs while creating the Socket.
+     * @throws IOException If an I/O error occurs while creating the Socket.
      ***/
     @Override
     public Socket createSocket(InetAddress address, int port)
@@ -133,8 +133,8 @@ public class DefaultSocketFactory extends SocketFactory
      * @param localAddr  The local address to use.
      * @param localPort  The local port to use.
      * @return A Socket connected to the given host and port.
-     * @exception UnknownHostException  If the hostname cannot be resolved.
-     * @exception IOException If an I/O error occurs while creating the Socket.
+     * @throws UnknownHostException  If the hostname cannot be resolved.
+     * @throws IOException If an I/O error occurs while creating the Socket.
      ***/
     @Override
     public Socket createSocket(String host, int port,
@@ -160,7 +160,7 @@ public class DefaultSocketFactory extends SocketFactory
      * @param localAddr  The local address to use.
      * @param localPort  The local port to use.
      * @return A Socket connected to the given host and port.
-     * @exception IOException If an I/O error occurs while creating the Socket.
+     * @throws IOException If an I/O error occurs while creating the Socket.
      ***/
     @Override
     public Socket createSocket(InetAddress address, int port,
@@ -183,7 +183,7 @@ public class DefaultSocketFactory extends SocketFactory
      *
      * @param port  The port on which to listen, or 0 to use any free port.
      * @return A ServerSocket that will listen on a specified port.
-     * @exception IOException If an I/O error occurs while creating
+     * @throws IOException If an I/O error occurs while creating
      *                        the ServerSocket.
      ***/
     public ServerSocket createServerSocket(int port) throws IOException
@@ -199,7 +199,7 @@ public class DefaultSocketFactory extends SocketFactory
      * @param port  The port on which to listen, or 0 to use any free port.
      * @param backlog  The maximum length of the queue for incoming connections.
      * @return A ServerSocket that will listen on a specified port.
-     * @exception IOException If an I/O error occurs while creating
+     * @throws IOException If an I/O error occurs while creating
      *                        the ServerSocket.
      ***/
     public ServerSocket createServerSocket(int port, int backlog)
@@ -218,7 +218,7 @@ public class DefaultSocketFactory extends SocketFactory
      * @param backlog  The maximum length of the queue for incoming connections.
      * @param bindAddr  The local address to which the ServerSocket should bind.
      * @return A ServerSocket that will listen on a specified port.
-     * @exception IOException If an I/O error occurs while creating
+     * @throws IOException If an I/O error occurs while creating
      *                        the ServerSocket.
      ***/
     public ServerSocket createServerSocket(int port, int backlog,
