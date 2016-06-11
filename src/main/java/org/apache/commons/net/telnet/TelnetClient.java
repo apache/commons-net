@@ -117,13 +117,16 @@ public class TelnetClient extends Telnet
     @Override
     public void disconnect() throws IOException
     {
-        if (__input != null) {
-            __input.close();
+        try {
+            if (__input != null) {
+                __input.close();
+            }
+            if (__output != null) {
+                __output.close();
+            }
+        } finally { // NET-594
+            super.disconnect();
         }
-        if (__output != null) {
-            __output.close();
-        }
-        super.disconnect();
     }
 
     /***
