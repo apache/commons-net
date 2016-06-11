@@ -747,6 +747,9 @@ public class FTPSClient extends FTPClient {
     public void disconnect() throws IOException
     {
         super.disconnect();
+        if (plainSocket != null) {
+            plainSocket.close();
+        }
         setSocketFactory(null);
         setServerSocketFactory(null);
     }
