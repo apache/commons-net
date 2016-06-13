@@ -21,6 +21,7 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.security.CodeSource;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -52,7 +53,7 @@ public class MainTest {
 
     private Properties scanClasses() throws IOException {
         CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
-        final String sourceFile = codeSource.getLocation().getFile();
+        final String sourceFile = URLDecoder.decode(codeSource.getLocation().getFile(),"UTF-8"); // ensure special characters are decoded OK
         Properties p = new Properties();
         if (sourceFile.endsWith(".jar")) {
             JarFile jf = new JarFile(sourceFile);
