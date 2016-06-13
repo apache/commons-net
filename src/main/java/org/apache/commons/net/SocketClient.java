@@ -178,15 +178,7 @@ public abstract class SocketClient
     throws SocketException, IOException
     {
         _hostname_ = null;
-        _socket_ = _socketFactory_.createSocket();
-        if (receiveBufferSize != -1) {
-            _socket_.setReceiveBufferSize(receiveBufferSize);
-        }
-        if (sendBufferSize != -1) {
-            _socket_.setSendBufferSize(sendBufferSize);
-        }
-        _socket_.connect(new InetSocketAddress(host, port), connectTimeout);
-        _connectAction_();
+        _connect(host, port, null, -1);
     }
 
     /**
@@ -206,8 +198,8 @@ public abstract class SocketClient
     public void connect(String hostname, int port)
     throws SocketException, IOException
     {
-        connect(InetAddress.getByName(hostname), port);
         _hostname_ = hostname;
+        _connect(InetAddress.getByName(hostname), port, null, -1);
     }
 
 
@@ -231,6 +223,13 @@ public abstract class SocketClient
     throws SocketException, IOException
     {
         _hostname_ = null;
+        _connect(host, port, localAddr, localPort);
+    }
+
+    // helper method to allow code to be shared with connect(String,...) methods
+    private void _connect(InetAddress host, int port, InetAddress localAddr, int localPort)
+        throws SocketException, IOException
+    {
         _socket_ = _socketFactory_.createSocket();
         if (receiveBufferSize != -1) {
             _socket_.setReceiveBufferSize(receiveBufferSize);
@@ -238,11 +237,12 @@ public abstract class SocketClient
         if (sendBufferSize != -1) {
             _socket_.setSendBufferSize(sendBufferSize);
         }
-        _socket_.bind(new InetSocketAddress(localAddr, localPort));
+        if (localAddr != null) {
+            _socket_.bind(new InetSocketAddress(localAddr, localPort));
+        }
         _socket_.connect(new InetSocketAddress(host, port), connectTimeout);
         _connectAction_();
     }
-
 
     /**
      * Opens a Socket connected to a remote host at the specified port and
@@ -264,8 +264,8 @@ public abstract class SocketClient
                         InetAddress localAddr, int localPort)
     throws SocketException, IOException
     {
-       connect(InetAddress.getByName(hostname), port, localAddr, localPort);
-       _hostname_ = hostname;
+        _hostname_ = hostname;
+       _connect(InetAddress.getByName(hostname), port, localAddr, localPort);
     }
 
 
@@ -303,8 +303,8 @@ public abstract class SocketClient
      */
     public void connect(String hostname) throws SocketException, IOException
     {
-        connect(hostname, _defaultPort_);
         _hostname_ = hostname;
+        connect(hostname, _defaultPort_);
     }
 
 

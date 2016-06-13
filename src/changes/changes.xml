@@ -64,6 +64,9 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.6" date="TBA" description="">
+            <action issue="NET-593" type="fix" dev="sebb" due-to="Jörg Weule">
+            HostnameVerifier is called with ip addess instead of the provided hostname
+            </action>
             <action issue="NET-594" type="fix" dev="sebb" due-to="Brad Worrral">
             TelnetClient._closeOutputStream unhandled exception from FilterOutputStream.close
             </action>
