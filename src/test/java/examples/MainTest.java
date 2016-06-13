@@ -68,7 +68,7 @@ public class MainTest {
             if (examples.exists()) {
                 scanForClasses(sourceFile.length(), examples, p);
             } else {
-                fail("Could not find examples classes");
+                fail("Could not find examples classes: " + examples.getCanonicalPath());
             }
         }
         return p;
