@@ -303,7 +303,6 @@ public abstract class SocketClient
      */
     public void connect(String hostname) throws SocketException, IOException
     {
-        _hostname_ = hostname;
         connect(hostname, _defaultPort_);
     }
 
