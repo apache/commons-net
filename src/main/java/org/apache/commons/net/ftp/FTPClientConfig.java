@@ -250,6 +250,26 @@ public class FTPClientConfig
     }
 
     /**
+     * Constructor which allows setting of the format string member fields
+     * @param systemKey key representing system type of the  server being
+     * connected to. See
+     *  {@link #getServerSystemKey() serverSystemKey}
+     * @param defaultDateFormatStr See
+     *  {@link  #setDefaultDateFormatStr(String)  defaultDateFormatStr}
+     * @param recentDateFormatStr See
+     *  {@link  #setRecentDateFormatStr(String)  recentDateFormatStr}
+     *  @since 3.6
+     */
+    public FTPClientConfig(String systemKey,
+                           String defaultDateFormatStr,
+                           String recentDateFormatStr)
+    {
+        this(systemKey);
+        this.defaultDateFormatStr = defaultDateFormatStr;
+        this.recentDateFormatStr = recentDateFormatStr;
+    }
+
+    /**
      * Constructor which allows setting of most member fields
      * @param systemKey key representing system type of the  server being
      * connected to. See

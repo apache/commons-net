@@ -140,7 +140,7 @@ public class OS2FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         return new FTPClientConfig(
                 FTPClientConfig.SYST_OS2,
                 DEFAULT_DATE_FORMAT,
-                null, null, null, null);
+                null);
     }
 
 }

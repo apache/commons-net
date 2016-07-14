@@ -429,7 +429,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         return new FTPClientConfig(
                 FTPClientConfig.SYST_OS400,
                 DEFAULT_DATE_FORMAT,
-                null, null, null, null);
+                null);
     }
 
 }

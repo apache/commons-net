@@ -64,6 +64,9 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.6" date="TBA" description="">
+            <action issue="NET-599" type="update" dev="sebb">
+            Add shorthand FTPClientConfig constructor
+            </action>
             <action issue="NET-593" type="fix" dev="sebb" due-to="Jörg Weule">
             HostnameVerifier is called with ip addess instead of the provided hostname
             </action>

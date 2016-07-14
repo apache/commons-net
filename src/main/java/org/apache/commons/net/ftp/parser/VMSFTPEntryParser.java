@@ -245,7 +245,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         return new FTPClientConfig(
                 FTPClientConfig.SYST_VMS,
                 DEFAULT_DATE_FORMAT,
-                null, null, null, null);
+                null);
     }
 
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE

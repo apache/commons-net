@@ -272,8 +272,7 @@ public class MacOsPeterFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         return new FTPClientConfig(
                 FTPClientConfig.SYST_UNIX,
                 DEFAULT_DATE_FORMAT,
-                DEFAULT_RECENT_DATE_FORMAT,
-                null, null, null);
+                DEFAULT_RECENT_DATE_FORMAT);
     }
 
 }

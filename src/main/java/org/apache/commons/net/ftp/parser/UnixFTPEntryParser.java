@@ -61,7 +61,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         new FTPClientConfig(
                 FTPClientConfig.SYST_UNIX,
                 NUMERIC_DATE_FORMAT,
-                null, null, null, null);
+                null);
 
     /**
      * this is the regular expression used by this parser.

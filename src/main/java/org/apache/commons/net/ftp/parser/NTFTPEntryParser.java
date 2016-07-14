@@ -80,7 +80,7 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         FTPClientConfig config2 = new FTPClientConfig(
                 FTPClientConfig.SYST_NT,
                 DEFAULT_DATE_FORMAT2,
-                null, null, null, null);
+                null);
         config2.setDefaultDateFormatStr(DEFAULT_DATE_FORMAT2);
         this.timestampParser = new FTPTimestampParserImpl();
         ((Configurable)this.timestampParser).configure(config2);
@@ -161,7 +161,7 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         return new FTPClientConfig(
                 FTPClientConfig.SYST_NT,
                 DEFAULT_DATE_FORMAT,
-                null, null, null, null);
+                null);
     }
 
 }
