@@ -53,7 +53,8 @@ public class MainTest {
 
     private Properties scanClasses() throws IOException {
         CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
-        final String sourceFile = URLDecoder.decode(codeSource.getLocation().getFile(),"UTF-8"); // ensure special characters are decoded OK
+        // ensure special characters are decoded OK by uing the charset
+        final String sourceFile = URLDecoder.decode(codeSource.getLocation().getFile(),"UTF-8");
         Properties p = new Properties();
         if (sourceFile.endsWith(".jar")) {
             JarFile jf = new JarFile(sourceFile);
