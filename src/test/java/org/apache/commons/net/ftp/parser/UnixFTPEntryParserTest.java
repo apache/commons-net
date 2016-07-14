@@ -76,8 +76,12 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
             "crw-------   1 root     sys      109,767 Jul  2  2004 pci@1c,600000:devctl", //Solaris device
             "-rwxrwx---   1 ftp      ftp-admin 816026400 Oct  5  2008 bloplab 7 cd1.img", // NET-294
 
+            // http://mail-archives.apache.org/mod_mbox/commons-dev/200408.mbox/%3c4122F3C1.9090402@tanukisoftware.com%3e
+            "-rw-r--r-- 1 1 3518644 May 25 12:12 std",
+            "-rw-rw---- 1 ep1adm sapsys 0 6\u6708 3\u65e5 2003\u5e74 \u8a66\u9a13\u30d5\u30a1\u30a4\u30eb.csv",
+            "-rw-rw---- 1 ep1adm sapsys 0 8\u6708 17\u65e5 20:10 caerrinf",
 
-        };
+    };
 
     public UnixFTPEntryParserTest(String name) {
         super(name);
@@ -322,6 +326,59 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
         cal.set(Calendar.DAY_OF_MONTH, 2);
         cal.set(Calendar.HOUR_OF_DAY, 15);
         cal.set(Calendar.MINUTE, 13);
+        assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp().getTime()));
+    }
+
+    // http://mail-archives.apache.org/mod_mbox/commons-dev/200408.mbox/%3c4122F3C1.9090402@tanukisoftware.com%3e
+    public void testParseFieldsOnFileJapaneseTime() throws Exception
+    {
+        FTPFile f = getParser().parseFTPEntry("-rwxr-xr-x 2 user group 4096 3\u6708 2\u65e5 15:13 zxbox");
+        assertNotNull("Could not parse entry.", f);
+        assertTrue("Should have been a file.", f.isFile());
+        checkPermissions(f);
+        assertEquals(2, f.getHardLinkCount());
+        assertEquals("user", f.getUser());
+        assertEquals("group", f.getGroup());
+        assertEquals("zxbox", f.getName());
+        assertEquals(4096, f.getSize());
+
+        assertNotNull("Timestamp not null", f.getTimestamp());
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.MONTH, Calendar.MARCH);
+        cal.set(Calendar.DATE,1);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        if (f.getTimestamp().getTime().before(cal.getTime())) {
+            cal.add(Calendar.YEAR, -1);
+        }
+        cal.set(Calendar.DATE,2);
+        cal.set(Calendar.HOUR_OF_DAY, 15);
+        cal.set(Calendar.MINUTE, 13);
+        assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp().getTime()));
+    }
+
+ // http://mail-archives.apache.org/mod_mbox/commons-dev/200408.mbox/%3c4122F3C1.9090402@tanukisoftware.com%3e
+    public void testParseFieldsOnFileJapaneseYear() throws Exception {
+        FTPFile f = getParser().parseFTPEntry(
+                "-rwxr-xr-x 2 user group 4096 3\u6708 2\u65e5 2003\u5e74 \u8a66\u9a13\u30d5\u30a1\u30a4\u30eb.csv");
+        assertNotNull("Could not parse entry.", f);
+        assertTrue("Should have been a file.", f.isFile());
+        checkPermissions(f);
+        assertEquals(2, f.getHardLinkCount());
+        assertEquals("user", f.getUser());
+        assertEquals("group", f.getGroup());
+        assertEquals("\u8a66\u9a13\u30d5\u30a1\u30a4\u30eb.csv", f.getName());
+        assertEquals(4096, f.getSize());
+
+        assertNotNull("Timestamp not null", f.getTimestamp());
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, 2003);
+        cal.set(Calendar.MONTH, Calendar.MARCH);
+        cal.set(Calendar.DATE, 2);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
         assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp().getTime()));
     }
 

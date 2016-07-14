@@ -45,6 +45,17 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     static final String NUMERIC_DATE_FORMAT
         = "yyyy-MM-dd HH:mm"; //2001-11-09 20:06
 
+    // Suffixes used in Japanese listings after the numeric values
+    private static final String JA_MONTH = "\u6708";
+    private static final String JA_DAY   = "\u65e5";
+    private static final String JA_YEAR  = "\u5e74";
+
+    private static final String DEFAULT_DATE_FORMAT_JA
+        = "M'" + JA_MONTH + "' d'" + JA_DAY + "' yyyy'" + JA_YEAR + "'"; //6月 3日 2003年
+
+    private static final String DEFAULT_RECENT_DATE_FORMAT_JA
+        = "M'" + JA_MONTH + "' d'" + JA_DAY + "' HH:mm"; //8月 17日 20:10
+
     /**
      * Some Linux distributions are now shipping an FTP server which formats
      * file listing dates in an all-numeric format:
@@ -111,16 +122,24 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
          *   [d]d MMM
          *   N.B. use non-space for MMM to allow for languages such as German which use
          *   diacritics (e.g. umlaut) in some abbreviations.
+         *   Japanese uses numeric day and month with suffixes to distinguish them
+         *   [d]dXX [d]dZZ
         */
-        + "((?:\\d+[-/]\\d+[-/]\\d+)|(?:\\S{3}\\s+\\d{1,2})|(?:\\d{1,2}\\s+\\S{3}))"
+        + "("+
+            "(?:\\d+[-/]\\d+[-/]\\d+)" + // yyyy-mm-dd
+            "|(?:\\S{3}\\s+\\d{1,2})" +  // MMM [d]d
+            "|(?:\\d{1,2}\\s+\\S{3})" + // [d]d MMM
+            "|(?:\\d{1,2}" + JA_MONTH + "\\s+\\d{1,2}" + JA_DAY + ")"+
+           ")"
 
         + "\\s+" // separator
 
         /*
            year (for non-recent standard format) - yyyy
            or time (for numeric or recent standard format) [h]h:mm
+           or Japanese year - yyyyXX
         */
-        + "(\\d+(?::\\d+)?)" // (20)
+        + "((?:\\d+(?::\\d+)?)|(?:\\d{4}" + JA_YEAR + "))" // (20)
 
         + "\\s" // separator
 
@@ -228,7 +247,14 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 
             try
             {
-                file.setTimestamp(super.parseTimestamp(datestr));
+                if (group(19).contains(JA_MONTH)) { // special processing for Japanese format
+                    FTPTimestampParserImpl jaParser = new FTPTimestampParserImpl();
+                    jaParser.configure(new FTPClientConfig(
+                            FTPClientConfig.SYST_UNIX, DEFAULT_DATE_FORMAT_JA, DEFAULT_RECENT_DATE_FORMAT_JA));
+                    file.setTimestamp(jaParser.parseTimestamp(datestr));
+                } else {
+                    file.setTimestamp(super.parseTimestamp(datestr));
+                }
             }
             catch (ParseException e)
             {
@@ -347,8 +373,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         return new FTPClientConfig(
                 FTPClientConfig.SYST_UNIX,
                 DEFAULT_DATE_FORMAT,
-                DEFAULT_RECENT_DATE_FORMAT,
-                null, null, null);
+                DEFAULT_RECENT_DATE_FORMAT);
     }
 
 }
