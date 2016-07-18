@@ -33,7 +33,7 @@ import org.apache.commons.net.pop3.POP3SClient;
  * headers of all the messages, printing the From: and Subject: header
  * entries for each message.
  * <p>
- * Usage: POP3Mail <pop3[s] server hostname> <username> <password> [secure protocol, e.g. TLS]
+ * See main() method for usage details
  */
 public final class POP3Mail
 {
