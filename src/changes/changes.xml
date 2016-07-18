@@ -64,6 +64,9 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.6" date="TBA" description="">
+            <action type="update" dev="sebb">
+            POP3Mail example: support host port; allow reading password from Console/stdin/environment
+            </action>
             <action issue="NET-597" type="fix" dev="sebb" due-to="Hiroki Taniura">
             FTP fails to parse listings for Solaris 10 FTPd in Japanese
             </action>

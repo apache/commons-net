@@ -60,13 +60,21 @@ public final class POP3Mail
         if (args.length < 3)
         {
             System.err.println(
-                "Usage: POP3Mail <pop3 server hostname> <username> <password> [TLS [true=implicit]]");
+                "Usage: POP3Mail <server[:port]> <username> <password|-|*|VARNAME> [TLS [true=implicit]]");
             System.exit(1);
         }
 
-        String server = args[0];
+        String arg0[] = args[0].split(":");
+        String server=arg0[0];
         String username = args[1];
         String password = args[2];
+        // prompt for the password if necessary
+        try {
+            password = Utils.getPassword(username, password);
+        } catch (IOException e1) {
+            System.err.println("Could not retrieve password: " + e1.getMessage());
+            return;
+        }
 
         String proto = args.length > 3 ? args[3] : null;
         boolean implicit = args.length > 4 ? Boolean.parseBoolean(args[4]) : false;
@@ -79,7 +87,14 @@ public final class POP3Mail
         } else {
             pop3 = new POP3Client();
         }
-        System.out.println("Connecting to server "+server+" on "+pop3.getDefaultPort());
+
+        int port;
+        if (arg0.length == 2) {
+            port = Integer.parseInt(arg0[1]);
+        } else {
+            port = pop3.getDefaultPort();
+        }
+        System.out.println("Connecting to server "+server+" on "+port);
 
         // We want to timeout if a response takes longer than 60 seconds
         pop3.setDefaultTimeout(60000);
@@ -95,7 +110,7 @@ public final class POP3Mail
         {
             System.err.println("Could not connect to server.");
             e.printStackTrace();
-            System.exit(1);
+            return;
         }
 
         try
@@ -104,14 +119,25 @@ public final class POP3Mail
             {
                 System.err.println("Could not login to server.  Check password.");
                 pop3.disconnect();
-                System.exit(1);
+                return;
             }
+
+            POP3MessageInfo status = pop3.status();
+            if (status == null) {
+                System.err.println("Could not retrieve status.");
+                pop3.logout();
+                pop3.disconnect();
+                return;
+            }
+
+            System.out.println("Status: " + status);
 
             POP3MessageInfo[] messages = pop3.listMessages();
 
             if (messages == null)
             {
                 System.err.println("Could not retrieve message list.");
+                pop3.logout();
                 pop3.disconnect();
                 return;
             }
@@ -123,13 +149,16 @@ public final class POP3Mail
                 return;
             }
 
+            System.out.println("Message count: " + messages.length);
+
             for (POP3MessageInfo msginfo : messages) {
                 BufferedReader reader = (BufferedReader) pop3.retrieveMessageTop(msginfo.number, 0);
 
                 if (reader == null) {
                     System.err.println("Could not retrieve message header.");
+                    pop3.logout();
                     pop3.disconnect();
-                    System.exit(1);
+                    return;
                 }
                 printMessageInfo(reader, msginfo.number);
             }
