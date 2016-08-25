@@ -100,14 +100,14 @@ public class FTP extends SocketClient
     public static final int DEFAULT_PORT = 21;
 
     /***
-     * A constant used to indicate the file(s) being transfered should
+     * A constant used to indicate the file(s) being transferred should
      * be treated as ASCII.  This is the default file type.  All constants
      * ending in <code>FILE_TYPE</code> are used to indicate file types.
      ***/
     public static final int ASCII_FILE_TYPE = 0;
 
     /***
-     * A constant used to indicate the file(s) being transfered should
+     * A constant used to indicate the file(s) being transferred should
      * be treated as EBCDIC.  Note however that there are several different
      * EBCDIC formats.  All constants ending in <code>FILE_TYPE</code>
      * are used to indicate file types.
@@ -116,7 +116,7 @@ public class FTP extends SocketClient
 
 
     /***
-     * A constant used to indicate the file(s) being transfered should
+     * A constant used to indicate the file(s) being transferred should
      * be treated as a binary image, i.e., no translations should be
      * performed.  All constants ending in <code>FILE_TYPE</code> are used to
      * indicate file types.
@@ -124,7 +124,7 @@ public class FTP extends SocketClient
     public static final int BINARY_FILE_TYPE = 2;
 
     /***
-     * A constant used to indicate the file(s) being transfered should
+     * A constant used to indicate the file(s) being transferred should
      * be treated as a local type.  All constants ending in
      * <code>FILE_TYPE</code> are used to indicate file types.
      ***/
@@ -178,7 +178,7 @@ public class FTP extends SocketClient
     public static final int PAGE_STRUCTURE = 9;
 
     /***
-     * A constant used to indicate a file is to be transfered as a stream
+     * A constant used to indicate a file is to be transferred as a stream
      * of bytes.  This is the default transfer mode.  All constants ending
      * in <code>TRANSFER_MODE</code> are used to indicate file transfer
      * modes.
@@ -186,14 +186,14 @@ public class FTP extends SocketClient
     public static final int STREAM_TRANSFER_MODE = 10;
 
     /***
-     * A constant used to indicate a file is to be transfered as a series
+     * A constant used to indicate a file is to be transferred as a series
      * of blocks.  All constants ending in <code>TRANSFER_MODE</code> are used
      * to indicate file transfer modes.
      ***/
     public static final int BLOCK_TRANSFER_MODE = 11;
 
     /***
-     * A constant used to indicate a file is to be transfered as FTP
+     * A constant used to indicate a file is to be transferred as FTP
      * compressed data.  All constants ending in <code>TRANSFER_MODE</code>
      * are used to indicate file transfer modes.
      ***/
