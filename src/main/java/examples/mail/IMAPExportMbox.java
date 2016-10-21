@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -96,7 +97,7 @@ public final class IMAPExportMbox
     private static final int CONNECT_TIMEOUT = 10; // Seconds
     private static final int READ_TIMEOUT = 10;
 
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args) throws IOException, URISyntaxException
     {
         int connect_timeout = CONNECT_TIMEOUT;
         int read_timeout = READ_TIMEOUT;
@@ -147,7 +148,19 @@ public final class IMAPExportMbox
             System.exit(1);
         }
 
-        final URI uri      = URI.create(args[argIdx++]);
+        final String uriString = args[argIdx++];
+        URI uri;
+        try {
+            uri      = URI.create(uriString);
+        } catch(IllegalArgumentException e) { // cannot parse the path as is; let's pull it apart and try again
+            Matcher m = Pattern.compile("(imaps?://[^/]+)(/.*)").matcher(uriString);
+            if (m.matches()) {
+                uri = URI.create(m.group(1)); // Just the scheme and auth parts
+                uri = new URI(uri.getScheme(), uri.getAuthority(), m.group(2), null, null);
+            } else {
+                throw e; 
+            }
+        }
         final String file  = args[argIdx++];
         String sequenceSet = argCount > 2 ? args[argIdx++] : "1:*";
         final String itemNames;
