@@ -187,8 +187,8 @@ public final class IMAPExportMbox
                 new BufferedWriter(new FileWriter(mbox, false)), eol, printHash, printMarker, checkSequence);
         } else {
             final File mbox = new File(file);
-            if (mbox.exists()) {
-                throw new IOException("mailbox file: " + mbox + " already exists!");
+            if (mbox.exists() && mbox.length() > 0) {
+                throw new IOException("mailbox file: " + mbox + " already exists and is non-empty!");
             }
             System.out.println("Creating file " + mbox);
             chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mbox)), eol, printHash, printMarker, checkSequence);
