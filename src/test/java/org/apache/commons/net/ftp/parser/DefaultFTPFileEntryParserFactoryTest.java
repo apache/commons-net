@@ -32,6 +32,11 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
 
         parser = factory.createFileEntryParser("UNIX");
         assertTrue(parser instanceof UnixFTPEntryParser);
+        assertFalse(((UnixFTPEntryParser)parser).trimLeadingSpaces);
+
+        parser = factory.createFileEntryParser("UNIX_LTRIM");
+        assertTrue(parser instanceof UnixFTPEntryParser);
+        assertTrue(((UnixFTPEntryParser)parser).trimLeadingSpaces);
 
         parser = factory.createFileEntryParser("Unix");
         assertTrue(parser instanceof UnixFTPEntryParser);

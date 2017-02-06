@@ -148,7 +148,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 
     // if true, leading spaces are trimmed from file names
     // this was the case for the original implementation
-    private final boolean trimLeadingSpaces;
+    final boolean trimLeadingSpaces; // package protected for access from test code
 
     /**
      * The default constructor for a UnixFTPEntryParser object.

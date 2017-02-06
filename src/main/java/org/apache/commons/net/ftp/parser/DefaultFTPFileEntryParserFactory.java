@@ -121,13 +121,14 @@ public class DefaultFTPFileEntryParserFactory
 
         if (parser == null) { // Now try for aliases
             String ukey = key.toUpperCase(java.util.Locale.ENGLISH);
-            if (ukey.indexOf(FTPClientConfig.SYST_UNIX) >= 0)
-            {
-                parser = new UnixFTPEntryParser(config, false);
-            }
-            else if (ukey.indexOf(FTPClientConfig.SYST_UNIX_TRIM_LEADING) >= 0)
+            if (ukey.indexOf(FTPClientConfig.SYST_UNIX_TRIM_LEADING) >= 0)
             {
                 parser = new UnixFTPEntryParser(config, true);
+            }
+            // must check this after SYST_UNIX_TRIM_LEADING as it is a substring of it
+            else if (ukey.indexOf(FTPClientConfig.SYST_UNIX) >= 0)
+            {
+                parser = new UnixFTPEntryParser(config, false);
             }
             else if (ukey.indexOf(FTPClientConfig.SYST_VMS) >= 0)
             {
