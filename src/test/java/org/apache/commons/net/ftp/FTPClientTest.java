@@ -21,6 +21,8 @@ package org.apache.commons.net.ftp;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import org.apache.commons.net.ftp.parser.UnixFTPEntryParser;
 
@@ -125,4 +127,74 @@ public class FTPClientTest extends TestCase {
     }
 
 
-}
+    private static class PassiveNatWorkAroundLocalClient extends FTPClient {
+        private String passiveModeServerIP;
+
+        public PassiveNatWorkAroundLocalClient(String passiveModeServerIP) {
+            this.passiveModeServerIP = passiveModeServerIP;
+        }
+
+        @Override
+        public InetAddress getRemoteAddress() {
+            try {
+                return InetAddress.getByName(passiveModeServerIP);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+
+    public void testParsePassiveModeReplyForLocalAddressWithNatWorkaround() throws Exception {
+        FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
+        client._parsePassiveModeReply("227 Entering Passive Mode (172,16,204,138,192,22).");
+        assertEquals("8.8.8.8", client.getPassiveHost());
+    }
+
+    public void testParsePassiveModeReplyForNonLocalAddressWithNatWorkaround() throws Exception {
+        FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
+        client._parsePassiveModeReply("227 Entering Passive Mode (8,8,4,4,192,22).");
+        assertEquals("8.8.4.4", client.getPassiveHost());
+    }
+
+    public void testParsePassiveModeReplyForLocalAddressWithNatWorkaroundDisabled() throws Exception {
+        FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
+        client.setPassiveNatWorkaround(false);
+        client._parsePassiveModeReply("227 Entering Passive Mode (172,16,204,138,192,22).");
+        assertEquals("172.16.204.138", client.getPassiveHost());
+    }
+
+    public void testParsePassiveModeReplyForNonLocalAddressWithNatWorkaroundDisabled() throws Exception {
+        FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
+        client.setPassiveNatWorkaround(false);
+        client._parsePassiveModeReply("227 Entering Passive Mode (8,8,4,4,192,22).");
+        assertEquals("8.8.4.4", client.getPassiveHost());
+    }
+
+    public void testParsePassiveModeReplyForLocalAddressWithoutNatWorkaroundStrategy() throws Exception {
+        FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
+        client.setPassiveNatWorkaroundStrategy(null);
+        client._parsePassiveModeReply("227 Entering Passive Mode (172,16,204,138,192,22).");
+        assertEquals("172.16.204.138", client.getPassiveHost());
+    }
+
+    public void testParsePassiveModeReplyForNonLocalAddressWithoutNatWorkaroundStrategy() throws Exception {
+        FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
+        client.setPassiveNatWorkaroundStrategy(null);
+        client._parsePassiveModeReply("227 Entering Passive Mode (8,8,4,4,192,22).");
+        assertEquals("8.8.4.4", client.getPassiveHost());
+    }
+
+    public void testParsePassiveModeReplyForLocalAddressWithSimpleNatWorkaroundStrategy() throws Exception {
+        FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
+        client.setPassiveNatWorkaroundStrategy(new FTPClient.HostnameResolver() {
+            @Override
+            public String resolve(String hostname) throws UnknownHostException {
+                return "4.4.4.4";
+            }
+
+        });
+        client._parsePassiveModeReply("227 Entering Passive Mode (172,16,204,138,192,22).");
+        assertEquals("4.4.4.4", client.getPassiveHost());
+    }
+ }

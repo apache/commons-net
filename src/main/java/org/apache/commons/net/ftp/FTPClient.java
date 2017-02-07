@@ -406,9 +406,10 @@ implements Configurable
     private int __controlKeepAliveReplyTimeout=1000;
 
     /**
-     * Enable or disable replacement of internal IP in passive mode. Default enabled.
+     * Enable or disable replacement of internal IP in passive mode. Default enabled
+     * using {code NatServerResolverImpl}.
      */
-    private boolean __passiveNatWorkaround = true;
+    private HostnameResolver __passiveNatWorkaroundStrategy = new NatServerResolverImpl(this);
 
     /** Pattern for PASV mode responses. Groups: (n,n,n,n),(n),(n) */
     private static final java.util.regex.Pattern __PARMS_PAT;
@@ -582,18 +583,13 @@ implements Configurable
                     "Could not parse passive port information.\nServer Reply: " + reply);
         }
 
-        if (__passiveNatWorkaround) {
+        if (__passiveNatWorkaroundStrategy != null) {
             try {
-                InetAddress host = InetAddress.getByName(__passiveHost);
-                // reply is a local address, but target is not - assume NAT box changed the PASV reply
-                if (host.isSiteLocalAddress()) {
-                    InetAddress remote = getRemoteAddress();
-                    if (!remote.isSiteLocalAddress()){
-                        String hostAddress = remote.getHostAddress();
-                        fireReplyReceived(0,
-                                    "[Replacing site local address "+__passiveHost+" with "+hostAddress+"]\n");
-                        __passiveHost = hostAddress;
-                    }
+                String passiveHost = __passiveNatWorkaroundStrategy.resolve(__passiveHost);
+                if (!__passiveHost.equals(passiveHost)) {
+                    fireReplyReceived(0,
+                            "[Replacing PASV mode reply address "+__passiveHost+" with "+passiveHost+"]\n");
+                    __passiveHost = passiveHost;
                 }
             } catch (UnknownHostException e) { // Should not happen as we are passing in an IP address
                 throw new MalformedServerReplyException(
@@ -3784,9 +3780,65 @@ implements Configurable
      * The default is true, i.e. site-local replies are replaced.
      * @param enabled true to enable replacing internal IP's in passive
      * mode.
+     * @deprecated use {@link #setPassiveNatWorkaround(HostnameResolver)} instead
      */
+    @Deprecated
     public void setPassiveNatWorkaround(boolean enabled) {
-        this.__passiveNatWorkaround = enabled;
+        if (enabled) {
+            this.__passiveNatWorkaroundStrategy = new NatServerResolverImpl(this);
+        } else {
+            this.__passiveNatWorkaroundStrategy = null;
+        }
+    }
+
+    /**
+     * Set the workaround strategy to replace the PASV mode reply addresses.
+     * This gets around the problem that some NAT boxes may change the reply.
+     *
+     * The default implementation is {@code NatServerResolverImpl}, i.e. site-local
+     * replies are replaced.
+     * @param resolver strategy to replace internal IP's in passive mode
+     * or null to disable the workaround (i.e. use PASV mode reply address.)
+     * @since 3.6
+     */
+    public void setPassiveNatWorkaroundStrategy(HostnameResolver resolver) {
+        this.__passiveNatWorkaroundStrategy = resolver;
+    }
+
+    /**
+     * Strategy interface for updating host names received from FTP server
+     * for passive NAT workaround.
+     *
+     * @since 3.6
+     */
+    public static interface HostnameResolver {
+        String resolve(String hostname) throws UnknownHostException;
+    }
+
+    /**
+     * Default strategy for passive NAT workaround (site-local
+     * replies are replaced.)
+     */
+    public static class NatServerResolverImpl implements HostnameResolver {
+        private FTPClient client;
+
+        public NatServerResolverImpl(FTPClient client) {
+            this.client = client;
+        }
+
+        @Override
+        public String resolve(String hostname) throws UnknownHostException {
+            String newHostname = hostname;
+            InetAddress host = InetAddress.getByName(newHostname);
+            // reply is a local address, but target is not - assume NAT box changed the PASV reply
+            if (host.isSiteLocalAddress()) {
+                InetAddress remote = this.client.getRemoteAddress();
+                if (!remote.isSiteLocalAddress()){
+                    newHostname = remote.getHostAddress();
+                }
+            }
+            return newHostname;
+        }
     }
 
     private OutputStream getBufferedOutputStream(OutputStream outputStream) {
