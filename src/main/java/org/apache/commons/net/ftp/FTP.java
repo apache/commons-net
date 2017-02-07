@@ -236,6 +236,14 @@ public class FTP extends SocketClient
     protected boolean strictMultilineParsing = false;
 
     /**
+     * If this is true, then non-multiline replies must have the format:
+     * 3 digit code <space> <text>
+     * If false, then the 3 digit code does not have to be followed by space
+     * See section 4.2 of RFC 959 for details.
+     */
+    private boolean strictReplyParsing = true;
+
+    /**
      * Wraps SocketClient._input_ to facilitate the reading of text
      * from the FTP control connection.  Do not access the control
      * connection via SocketClient._input_.  This member starts
@@ -339,25 +347,37 @@ public class FTP extends SocketClient
 
         _replyLines.add(line);
 
-        // Get extra lines if message continues.
-        if (length > REPLY_CODE_LEN && line.charAt(REPLY_CODE_LEN) == '-')
-        {
-            do
-            {
-                line = _controlInput_.readLine();
+        // Check the server reply type
+        if (length > REPLY_CODE_LEN) {
+            char sep = line.charAt(REPLY_CODE_LEN);
+            // Get extra lines if message continues.
+            if (sep == '-') {
+                do
+                {
+                    line = _controlInput_.readLine();
 
-                if (line == null) {
-                    throw new FTPConnectionClosedException(
-                        "Connection closed without indication.");
+                    if (line == null) {
+                        throw new FTPConnectionClosedException(
+                            "Connection closed without indication.");
+                    }
+
+                    _replyLines.add(line);
+
+                    // The length() check handles problems that could arise from readLine()
+                    // returning too soon after encountering a naked CR or some other
+                    // anomaly.
                 }
+                while ( isStrictMultilineParsing() ? __strictCheck(line, code) : __lenientCheck(line));
 
-                _replyLines.add(line);
-
-                // The length() check handles problems that could arise from readLine()
-                // returning too soon after encountering a naked CR or some other
-                // anomaly.
+            } else if (isStrictReplyParsing()) {
+                if (length == REPLY_CODE_LEN + 1) { // expecting some text
+                    throw new MalformedServerReplyException("Truncated server reply: '" + line +"'");                    
+                } else if (sep != ' ') {
+                    throw new MalformedServerReplyException("Invalid server reply: '" + line +"'");
+                }
             }
-            while ( isStrictMultilineParsing() ? __strictCheck(line, code) : __lenientCheck(line));
+        } else if (isStrictReplyParsing()) {
+            throw new MalformedServerReplyException("Truncated server reply: '" + line +"'");
         }
 
         if (reportReply) {
@@ -1800,6 +1820,36 @@ public class FTP extends SocketClient
      */
     public void setStrictMultilineParsing(boolean strictMultilineParsing) {
         this.strictMultilineParsing = strictMultilineParsing;
+    }
+
+    /**
+     * Return whether strict non-multiline parsing is enabled, as per RFC 959, section 4.2.
+     * <p>
+     * The default is true, which requires the 3 digit code be followed by space and some text.
+     * <br>
+     * If false, only the 3 digit code is required (as was the case for versions up to 3.5)
+     * <br>
+     * @return True if strict (default), false if additional checks are not made
+     * @since 3.6
+     */
+    public boolean isStrictReplyParsing() {
+        return strictReplyParsing;
+    }
+
+    /**
+     * Set strict non-multiline parsing.
+     * <p>
+     * If true, it requires the 3 digit code be followed by space and some text.
+     * <br>
+     * If false, only the 3 digit code is required (as was the case for versions up to 3.5)
+     * <p>
+     * <b>This should not be required by a well-behaved FTP server</b>
+     * <br>
+     * @param strictReplyParsing the setting
+     * @since 3.6
+     */
+    public void setStrictReplyParsing(boolean strictReplyParsing) {
+        this.strictReplyParsing = strictReplyParsing;
     }
 
     /**

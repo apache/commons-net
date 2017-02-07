@@ -63,7 +63,30 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
     <body>
-        <release version="3.6" date="TBA" description="">
+        <release version="3.6" date="TBA" description="
+This is mainly a bug-fix release. See further details below.
+
+
+ This release is binary compatible with previous releases.
+ However it is not source compatible with releases before 3.4, as some methods were added to the interface NtpV3Packet in 3.4
+
+  The code now requires a minimum of Java 1.6.
+
+  Changes to functionality:
+  The FTP client now performs stricter checks on non-multiline command replies.
+  The 3 digit code must now be followed by a space and some text, as per RFC 959.
+  To suppress this stricter checking, call FTP#setStrictReplyParsing(false). This should not be needed with a well-behaved server.
+  Note also that if strict checking is disabled, some functions may unconditionally strip the next character after the code,
+without checking it if is a space.
+
+
+  Notable additions:
+  The POP3Mail examples can now get password from console, stdin or an environment variable.
+  
+">
+            <action issue="NET-611" type="fix" dev="sebb">
+            FTP does not validate command reply syntax fully
+            </action>
             <action issue="NET-609" type="fix" dev="sebb" due-to="Tqup3">
             DefaultUnixFTPFileEntryParserFactory Issue (leading spaces removal configuration)
             </action>
