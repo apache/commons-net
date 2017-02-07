@@ -80,7 +80,11 @@ public class TelnetClient extends Telnet
     }
     void _closeOutputStream() throws IOException
     {
-        _output_.close();
+        try {
+            _output_.close();            
+        } finally {
+            _output_ = null;
+        }
     }
 
     /***
@@ -125,6 +129,8 @@ public class TelnetClient extends Telnet
                 __output.close();
             }
         } finally { // NET-594
+            __output = null;
+            __input = null;
             super.disconnect();
         }
     }
