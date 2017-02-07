@@ -351,6 +351,17 @@ public class FTPClientConfig
         this.shortMonthNames = config.shortMonthNames;
     }
 
+    public FTPClientConfig(FTPClientConfig config) {
+        this.serverSystemKey = config.serverSystemKey;
+        this.defaultDateFormatStr = config.defaultDateFormatStr;
+        this.lenientFutureDates = config.lenientFutureDates;
+        this.recentDateFormatStr = config.recentDateFormatStr;
+        this.saveUnparseableEntries = config.saveUnparseableEntries;
+        this.serverLanguageCode = config.serverLanguageCode;
+        this.serverTimeZoneId = config.serverTimeZoneId;
+        this.shortMonthNames = config.shortMonthNames;
+    }
+
     private static final Map<String, Object> LANGUAGE_CODE_MAP = new TreeMap<String, Object>();
     static {
 
