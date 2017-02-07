@@ -79,11 +79,17 @@ This is mainly a bug-fix release. See further details below.
   Note also that if strict checking is disabled, some functions may unconditionally strip the next character after the code,
 without checking it if is a space.
 
+  The FTP client mlistFile() method now checks for a leading space before removing it.
+  If the space is missing, a MalformedServerReplyException is thrown.
+  This will only happen if the FTP server is not compliant with RFC 3659.
 
   Notable additions:
   The POP3Mail examples can now get password from console, stdin or an environment variable.
   
 ">
+            <action issue="NET-610" type="fix" dev="sebb" due-to="Sergey Yanzin">
+            FTPClient.mlistFile incorrectly handles MLST reply
+            </action>
             <action issue="NET-611" type="fix" dev="sebb">
             FTP does not validate command reply syntax fully
             </action>

@@ -2507,7 +2507,15 @@ implements Configurable
     {
         boolean success = FTPReply.isPositiveCompletion(sendCommand(FTPCmd.MLST, pathname));
         if (success){
-            String entry = getReplyStrings()[1].substring(1); // skip leading space for parser
+            String reply = getReplyStrings()[1];
+            /* check the response makes sense. 
+             * Must have space before fact(s) and between fact(s) and filename
+             * Fact(s) can be absent, so at least 3 chars are needed.
+             */
+            if (reply.length() < 3 || reply.charAt(0) != ' ') {
+                throw new MalformedServerReplyException("Invalid server reply (MLST): '" + reply + "'");
+            }
+            String entry = reply.substring(1); // skip leading space for parser
             return MLSxEntryParser.parseEntry(entry);
         } else {
             return null;
