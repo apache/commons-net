@@ -65,6 +65,12 @@ public class TFTPClient extends TFTP
     /*** The maximum number of timeouts allowed before failing. ***/
     private int __maxTimeouts;
 
+    /*** The number of bytes received in the ongoing download. ***/
+    private long totalBytesReceived = 0;
+
+    /*** The number of bytes sent in the ongoing upload. ***/
+    private long totalBytesSent = 0;
+
     /***
      * Creates a TFTPClient instance with a default timeout of DEFAULT_TIMEOUT,
      * maximum timeouts value of DEFAULT_MAX_TIMEOUTS, a null socket,
@@ -106,6 +112,20 @@ public class TFTPClient extends TFTP
     }
 
 
+    /**
+     * @return The number of bytes received in the ongoing download
+     */
+    public long getTotalBytesReceived() {
+        return totalBytesReceived;
+    }
+
+    /**
+     * @return The number of bytes sent in the ongoing download
+     */
+    public long getTotalBytesSent() {
+        return totalBytesSent;
+    }
+
     /***
      * Requests a named file from a remote host, writes the
      * file to an OutputStream, closes the connection, and returns the number
@@ -135,6 +155,7 @@ public class TFTPClient extends TFTP
         beginBufferedOps();
 
         dataLength = lastBlock = hostPort = bytesRead = 0;
+        totalBytesReceived = 0;
         block = 1;
 
         if (mode == TFTP.ASCII_MODE) {
@@ -277,6 +298,7 @@ _receivePacket:
             ack.setBlockNumber(lastBlock);
             sent = ack;
             bytesRead += dataLength;
+            totalBytesReceived += dataLength;
         } // First data packet less than 512 bytes signals end of stream.
 
         while (dataLength == TFTPPacket.SEGMENT_SIZE);
@@ -386,6 +408,7 @@ _receivePacket:
         beginBufferedOps();
 
         dataLength = lastBlock = hostPort = bytesRead = totalThisPacket = 0;
+        totalBytesSent = 0L;
         block = 0;
         boolean lastAckWait = false;
 
@@ -541,6 +564,7 @@ _receivePacket:
             data.setBlockNumber(block);
             data.setData(_sendBuffer, 4, totalThisPacket);
             sent = data;
+            totalBytesSent += totalThisPacket;
         }
         while ( totalThisPacket > 0 || lastAckWait );
         // Note: this was looping while dataLength == 0 || lastAckWait,
