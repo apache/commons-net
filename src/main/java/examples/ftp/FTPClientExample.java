@@ -410,8 +410,12 @@ __main:
                 }
                 if (mdtm) {
                     FTPFile f = ftp.mdtmFile(remote);
-                    System.out.println(f.getRawListing());
-                    System.out.println(f.toFormattedString(displayTimeZoneId));
+                    if (f != null) {
+                        System.out.println(f.getRawListing());
+                        System.out.println(f.toFormattedString(displayTimeZoneId));
+                    } else {
+                        System.out.println("File not found");                        
+                    }
                 }
                 if (mlst) {
                     FTPFile f = ftp.mlistFile(remote);
