@@ -33,7 +33,7 @@ import org.apache.commons.net.tftp.TFTPClient;
  * error handling.
  * <p>
  * Usage: tftp [options] hostname localfile remotefile
- * hostname   - The name of the remote host
+ * hostname   - The name of the remote host, with optional :port
  * localfile  - The name of the local file to send or the name to use for
  *              the received file
  * remotefile - The name of the remote file to receive or the name for
@@ -48,12 +48,13 @@ public final class TFTPExample
 {
     static final String USAGE =
         "Usage: tftp [options] hostname localfile remotefile\n\n" +
-        "hostname   - The name of the remote host\n" +
+        "hostname   - The name of the remote host [:port]\n" +
         "localfile  - The name of the local file to send or the name to use for\n" +
         "\tthe received file\n" +
         "remotefile - The name of the remote file to receive or the name for\n" +
         "\tthe remote server to use to name the local file being sent.\n\n" +
         "options: (The default is to assume -r -b)\n" +
+        "\t-t timeout in seconds (default 60s)\n" +
         "\t-s Send a local file\n" +
         "\t-r Receive a remote file\n" +
         "\t-a Use ASCII transfer mode\n" +
@@ -65,6 +66,7 @@ public final class TFTPExample
         int transferMode = TFTP.BINARY_MODE, argc;
         String arg, hostname, localFilename, remoteFilename;
         TFTPClient tftp;
+        int timeout = 60000;
 
         // Parse options
         for (argc = 0; argc < args.length; argc++)
@@ -80,6 +82,8 @@ public final class TFTPExample
                     transferMode = TFTP.ASCII_MODE;
                 } else if (arg.equals("-b")) {
                     transferMode = TFTP.BINARY_MODE;
+                } else if (arg.equals("-t")) {
+                    timeout = 1000*Integer.parseInt(args[++argc]);
                 } else {
                     System.err.println("Error: unrecognized option.");
                     System.err.print(USAGE);
@@ -107,7 +111,7 @@ public final class TFTPExample
         tftp = new TFTPClient();
 
         // We want to timeout if a response takes longer than 60 seconds
-        tftp.setDefaultTimeout(60000);
+        tftp.setDefaultTimeout(timeout);
 
         // We haven't closed the local file yet.
         closed = false;
@@ -154,7 +158,12 @@ public final class TFTPExample
         // Try to send local file via TFTP
         try
         {
-            tftp.sendFile(remoteFilename, transferMode, input, hostname);
+            String [] parts = hostname.split(":");
+            if (parts.length == 2) {
+                tftp.sendFile(remoteFilename, transferMode, input, parts[0], Integer.parseInt(parts[1]));                
+            } else {
+                tftp.sendFile(remoteFilename, transferMode, input, hostname);
+            }
         }
         catch (UnknownHostException e)
         {
@@ -210,7 +219,12 @@ public final class TFTPExample
         // Try to receive remote file via TFTP
         try
         {
-            tftp.receiveFile(remoteFilename, transferMode, output, hostname);
+            String [] parts = hostname.split(":");
+            if (parts.length == 2) {
+                tftp.receiveFile(remoteFilename, transferMode, output, parts[0], Integer.parseInt(parts[1]));                
+            } else {
+                tftp.receiveFile(remoteFilename, transferMode, output, hostname);
+            }
         }
         catch (UnknownHostException e)
         {
