@@ -155,8 +155,6 @@ public abstract class DatagramSocketClient
      * You should call this method after you've finished using the class
      * instance and also before you call {@link #open open() }
      * again.   _isOpen_ is set to false and  _socket_ is set to null.
-     * If you call this method when the client socket is not open,
-     * a NullPointerException is thrown.
      ***/
     public void close()
     {
@@ -171,7 +169,7 @@ public abstract class DatagramSocketClient
     /***
      * Returns true if the client has a currently open socket.
      *
-     * @return True if the client has a curerntly open socket, false otherwise.
+     * @return True if the client has a currently open socket, false otherwise.
      ***/
     public boolean isOpen()
     {
