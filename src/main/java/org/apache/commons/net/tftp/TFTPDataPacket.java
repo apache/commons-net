@@ -257,4 +257,10 @@ public final class TFTPDataPacket extends TFTPPacket
     {
         return _data;
     }
+
+    // for debugging
+    @Override
+    public String toString() {
+        return super.toString() + " DATA " + _blockNumber + " " + _length;
+    }
 }

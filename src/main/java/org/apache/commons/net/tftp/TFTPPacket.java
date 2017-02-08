@@ -249,4 +249,10 @@ public abstract class TFTPPacket
     {
         _address = address;
     }
+
+    // for debugging
+    @Override
+    public String toString() {
+        return _address + " " + _port + " " + _type;
+    }
 }

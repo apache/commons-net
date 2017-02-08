@@ -158,5 +158,11 @@ public final class TFTPAckPacket extends TFTPPacket
     {
         _blockNumber = blockNumber;
     }
+
+    // for debugging
+    @Override
+    public String toString() {
+        return super.toString() + " ACK " + _blockNumber;
+    }
 }
 

@@ -224,4 +224,10 @@ public final class TFTPErrorPacket extends TFTPPacket
     {
         return _message;
     }
+
+    // for debugging
+    @Override
+    public String toString() {
+        return super.toString() + " ERR " + _error + " " + _message;
+    }
 }

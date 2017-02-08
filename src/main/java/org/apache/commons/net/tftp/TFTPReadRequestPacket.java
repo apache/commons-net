@@ -76,4 +76,9 @@ public final class TFTPReadRequestPacket extends TFTPRequestPacket
         super(TFTPPacket.READ_REQUEST, datagram);
     }
 
+    // for debugging
+    @Override
+    public String toString() {
+        return super.toString() + " RRQ " + getFilename() + " " + TFTP.getModeName(getMode());
+    }
 }
