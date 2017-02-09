@@ -461,7 +461,7 @@ public class TFTPServer implements Runnable
         {
             try
             {
-                transferTftp_ = new TFTP();
+                transferTftp_ = newTFTP();
 
                 transferTftp_.beginBufferedOps();
                 transferTftp_.setDefaultTimeout(socketTimeout_);
@@ -575,7 +575,7 @@ public class TFTPServer implements Runnable
 
                         lastSentData = new TFTPDataPacket(trrp.getAddress(), trrp.getPort(), block,
                                 temp, 0, readLength);
-                        transferTftp_.bufferedSend(lastSentData);
+                        sendData(transferTftp_, lastSentData); // send the data
                     }
 
                     answer = null;
@@ -716,7 +716,7 @@ public class TFTPServer implements Runnable
                 }
 
                 TFTPAckPacket lastSentAck = new TFTPAckPacket(twrp.getAddress(), twrp.getPort(), 0);
-                transferTftp_.bufferedSend(lastSentAck);
+                sendData(transferTftp_, lastSentAck); // send the data
 
                 while (true)
                 {
@@ -791,7 +791,7 @@ public class TFTPServer implements Runnable
                         }
 
                         lastSentAck = new TFTPAckPacket(twrp.getAddress(), twrp.getPort(), block);
-                        transferTftp_.bufferedSend(lastSentAck);
+                        sendData(transferTftp_, lastSentAck); // send the data
                         if (dataLength < TFTPDataPacket.MAX_DATA_LENGTH)
                         {
                             // end of stream signal - The tranfer is complete.
@@ -945,5 +945,19 @@ public class TFTPServer implements Runnable
     public void setLogError(PrintStream logError)
     {
         this.logError_ = logError;
+    }
+
+    /*
+     * Allow test code to customise the TFTP instance 
+     */
+    TFTP newTFTP() {
+        return new TFTP();
+    }
+
+    /*
+     * Also allow customisation of sending data/ack so can generate errors if needed
+     */
+    void sendData(TFTP tftp, TFTPPacket data) throws IOException {
+        tftp.bufferedSend(data);
     }
 }
