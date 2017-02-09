@@ -87,6 +87,9 @@ without checking it if is a space.
   The POP3Mail examples can now get password from console, stdin or an environment variable.
   
 ">
+            <action issue="NET-414" type="fix" dev="sebb" due-to="Chuck Wolber">
+            Apache Commons TFTP does not reject request replies that originate from a control port.
+            </action>
             <action issue="NET-477" type="fix" dev="sebb" due-to="John Walton">
             TFTP sendFile retry broken
             </action>
