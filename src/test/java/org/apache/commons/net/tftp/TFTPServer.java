@@ -27,8 +27,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.SocketTimeoutException;
 import java.util.HashSet;
+import java.util.Enumeration;
 import java.util.Iterator;
 
 import org.apache.commons.net.io.FromNetASCIIOutputStream;
@@ -89,6 +92,7 @@ public class TFTPServer implements Runnable
     private File serverReadDirectory_;
     private File serverWriteDirectory_;
     private final int port_;
+    private final InetAddress laddr_;
     private Exception serverException = null;
     private final ServerMode mode_;
 
@@ -161,6 +165,81 @@ public class TFTPServer implements Runnable
         mode_ = mode;
         log_ = (log == null ? nullStream: log);
         logError_ = (errorLog == null ? nullStream : errorLog);
+        laddr_ = null;
+        launch(serverReadDirectory, serverWriteDirectory);
+    }
+
+    /**
+     * Start a TFTP Server on the specified port. Gets and Puts occur in the specified directory.
+     *
+     * The server will start in another thread, allowing this constructor to return immediately.
+     *
+     * If a get or a put comes in with a relative path that tries to get outside of the
+     * serverDirectory, then the get or put will be denied.
+     *
+     * GET_ONLY mode only allows gets, PUT_ONLY mode only allows puts, and GET_AND_PUT allows both.
+     * Modes are defined as int constants in this class.
+     *
+     * @param serverReadDirectory directory for GET requests
+     * @param serverWriteDirectory directory for PUT requests
+     * @param port The local port to bind to.
+     * @param localaddr The local address to bind to.
+     * @param mode A value as specified above.
+     * @param log Stream to write log message to. If not provided, uses System.out
+     * @param errorLog Stream to write error messages to. If not provided, uses System.err.
+     * @throws IOException if the server directory is invalid or does not exist.
+     */
+    public TFTPServer(File serverReadDirectory, File serverWriteDirectory, int port,
+        InetAddress localaddr, ServerMode mode, PrintStream log, PrintStream errorLog)
+        throws IOException
+    {
+        port_ = port;
+        mode_ = mode;
+        laddr_ = localaddr;
+        log_ = (log == null ? nullStream: log);
+        logError_ = (errorLog == null ? nullStream : errorLog);
+        launch(serverReadDirectory, serverWriteDirectory);
+    }
+
+    /**
+     * Start a TFTP Server on the specified port. Gets and Puts occur in the specified directory.
+     *
+     * The server will start in another thread, allowing this constructor to return immediately.
+     *
+     * If a get or a put comes in with a relative path that tries to get outside of the
+     * serverDirectory, then the get or put will be denied.
+     *
+     * GET_ONLY mode only allows gets, PUT_ONLY mode only allows puts, and GET_AND_PUT allows both.
+     * Modes are defined as int constants in this class.
+     *
+     * @param serverReadDirectory directory for GET requests
+     * @param serverWriteDirectory directory for PUT requests
+     * @param port the port to use
+     * @param localiface The local network interface to bind to.
+     *  The interface's first address wil be used.
+     * @param mode A value as specified above.
+     * @param log Stream to write log message to. If not provided, uses System.out
+     * @param errorLog Stream to write error messages to. If not provided, uses System.err.
+     * @throws IOException if the server directory is invalid or does not exist.
+     */
+    public TFTPServer(File serverReadDirectory, File serverWriteDirectory, int port,
+        NetworkInterface localiface, ServerMode mode, PrintStream log, PrintStream errorLog)
+        throws IOException
+    {
+        mode_ = mode;
+        port_= port;
+        InetAddress iaddr = null;
+        if (localiface != null)
+        {
+            Enumeration<InetAddress> ifaddrs = localiface.getInetAddresses();
+            if (ifaddrs != null)
+            {
+                if (ifaddrs.hasMoreElements()) iaddr = ifaddrs.nextElement();
+            }
+        }
+        log_ = (log == null ? nullStream: log);
+        logError_ = (errorLog == null ? nullStream : errorLog);
+        laddr_ = iaddr;
         launch(serverReadDirectory, serverWriteDirectory);
     }
 
@@ -242,7 +321,11 @@ public class TFTPServer implements Runnable
         // we want the server thread to listen forever.
         serverTftp_.setDefaultTimeout(0);
 
-        serverTftp_.open(port_);
+        if (laddr_ != null) {
+            serverTftp_.open(port_, laddr_);
+        } else {
+            serverTftp_.open(port_);
+        }
 
         serverThread = new Thread(this);
         serverThread.setDaemon(true);
