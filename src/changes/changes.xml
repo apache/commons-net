@@ -87,6 +87,9 @@ without checking it if is a space.
   The POP3Mail examples can now get password from console, stdin or an environment variable.
   
 ">
+            <action issue="NET-612" type="update" dev="sebb">
+            Allow TFTP socket IO tracing
+            </action>
             <action issue="NET-596" type="fix" dev="sebb" due-to="Vincent Bories-Azeau">
             NullPointerException when disconnecting TelnetClient twice with JDK 7
             </action>

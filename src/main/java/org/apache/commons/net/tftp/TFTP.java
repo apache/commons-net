@@ -201,7 +201,9 @@ public class TFTP extends DatagramSocketClient
         __receiveDatagram.setLength(__receiveBuffer.length);
         _socket_.receive(__receiveDatagram);
 
-        return TFTPPacket.newTFTPPacket(__receiveDatagram);
+        TFTPPacket newTFTPPacket = TFTPPacket.newTFTPPacket(__receiveDatagram);
+        trace("<", newTFTPPacket);
+        return newTFTPPacket;
     }
 
     /***
@@ -224,6 +226,7 @@ public class TFTP extends DatagramSocketClient
      ***/
     public final void bufferedSend(TFTPPacket packet) throws IOException
     {
+        trace(">", packet);
         _socket_.send(packet._newDatagram(__sendDatagram, _sendBuffer));
     }
 
@@ -266,6 +269,7 @@ public class TFTP extends DatagramSocketClient
      ***/
     public final void send(TFTPPacket packet) throws IOException
     {
+        trace(">", packet);
         _socket_.send(packet.newDatagram());
     }
 
@@ -294,8 +298,15 @@ public class TFTP extends DatagramSocketClient
 
         _socket_.receive(packet);
 
-        return TFTPPacket.newTFTPPacket(packet);
+        TFTPPacket newTFTPPacket = TFTPPacket.newTFTPPacket(packet);
+        trace("<", newTFTPPacket);
+        return newTFTPPacket;
     }
 
+    // Override this to trace the packet flow
+    protected void trace(String direction, TFTPPacket packet) {
+//      Simple implementation:
+//        System.out.println(direction + " " + packet.toString());
+    }
 
 }
