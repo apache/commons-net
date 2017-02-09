@@ -163,6 +163,7 @@ public class TFTPClient extends TFTP
 
         beginBufferedOps();
 
+        boolean justStarted = true;
         try {
             do { // while more data to fetch
                 bufferedSend(sent); // start the fetch/send an ack
@@ -175,8 +176,8 @@ public class TFTPClient extends TFTP
                         // answering host address (for hosts with multiple IPs)
                         final int recdPort = received.getPort();
                         final InetAddress recdAddress = received.getAddress();
-                        if (lastBlock == 0)
-                        {
+                        if (justStarted) {
+                            justStarted = false;
                             if (recdPort == port) { // must not use the control port here
                                 TFTPErrorPacket error = new TFTPErrorPacket(recdAddress,
                                         recdPort, TFTPErrorPacket.UNKNOWN_TID,

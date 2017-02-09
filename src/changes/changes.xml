@@ -87,6 +87,9 @@ without checking it if is a space.
   The POP3Mail examples can now get password from console, stdin or an environment variable.
   
 ">
+            <action issue="NET-613" type="fix" dev="sebb">
+            TFTPClient assumes that lastBlock == 0 only once
+            </action>
             <action issue="NET-320" type="fix" dev="sebb" due-to="Kevin Bulebush">
             Allow TFTPServer.java to bind to a specific network adapter
             </action>
