@@ -26,6 +26,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import org.apache.commons.net.tftp.TFTP;
 import org.apache.commons.net.tftp.TFTPClient;
+import org.apache.commons.net.tftp.TFTPPacket;
 
 /***
  * This is an example of a simple Java tftp client.
@@ -58,15 +59,18 @@ public final class TFTPExample
         "\t-s Send a local file\n" +
         "\t-r Receive a remote file\n" +
         "\t-a Use ASCII transfer mode\n" +
-        "\t-b Use binary transfer mode\n";
+        "\t-b Use binary transfer mode\n" +
+        "\t-v Verbose (trace packets)\n"
+        ;
 
     public static void main(String[] args)
     {
         boolean receiveFile = true, closed;
         int transferMode = TFTP.BINARY_MODE, argc;
         String arg, hostname, localFilename, remoteFilename;
-        TFTPClient tftp;
+        final TFTPClient tftp;
         int timeout = 60000;
+        boolean verbose = false;
 
         // Parse options
         for (argc = 0; argc < args.length; argc++)
@@ -84,6 +88,8 @@ public final class TFTPExample
                     transferMode = TFTP.BINARY_MODE;
                 } else if (arg.equals("-t")) {
                     timeout = 1000*Integer.parseInt(args[++argc]);
+                } else if (arg.equals("-v")) {
+                    verbose = true;
                 } else {
                     System.err.println("Error: unrecognized option.");
                     System.err.print(USAGE);
@@ -108,7 +114,16 @@ public final class TFTPExample
         remoteFilename = args[argc + 2];
 
         // Create our TFTP instance to handle the file transfer.
-        tftp = new TFTPClient();
+        if (verbose) {
+            tftp = new TFTPClient() {
+                @Override
+                protected void trace(String direction, TFTPPacket packet) {
+                    System.out.println(direction + " " + packet);
+                }
+            };
+        } else {
+            tftp = new TFTPClient();
+        }
 
         // We want to timeout if a response takes longer than 60 seconds
         tftp.setDefaultTimeout(timeout);
