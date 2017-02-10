@@ -84,6 +84,9 @@ public final class POP3MessageInfo
         this.identifier = uid;
     }
 
+    /**
+     * @since 3.6
+     */
     @Override
     public String toString() {
         return "Number: " + number + ". Size: " + size + ". Id: " + identifier;

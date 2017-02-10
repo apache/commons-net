@@ -25,7 +25,8 @@ import java.util.Random;
 
 /**
  * Main class for TFTPServer.
- * This allows CLI use of the server. 
+ * This allows CLI use of the server.
+ * @since 3.6
  */
 public class TFTPServerMain {
 

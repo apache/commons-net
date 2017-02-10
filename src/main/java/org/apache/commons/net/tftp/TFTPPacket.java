@@ -250,7 +250,10 @@ public abstract class TFTPPacket
         _address = address;
     }
 
-    // for debugging
+    /**
+     * For debugging
+     * @since 3.6
+     */
     @Override
     public String toString() {
         return _address + " " + _port + " " + _type;

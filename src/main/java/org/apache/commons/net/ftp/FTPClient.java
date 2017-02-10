@@ -3780,7 +3780,7 @@ implements Configurable
      * The default is true, i.e. site-local replies are replaced.
      * @param enabled true to enable replacing internal IP's in passive
      * mode.
-     * @deprecated use {@link #setPassiveNatWorkaroundStrategy(HostnameResolver)} instead
+     * @deprecated (3.6) use {@link #setPassiveNatWorkaroundStrategy(HostnameResolver)} instead
      */
     @Deprecated
     public void setPassiveNatWorkaround(boolean enabled) {
@@ -3818,6 +3818,7 @@ implements Configurable
     /**
      * Default strategy for passive NAT workaround (site-local
      * replies are replaced.)
+     * @since 3.6
      */
     public static class NatServerResolverImpl implements HostnameResolver {
         private FTPClient client;

@@ -303,10 +303,16 @@ public class TFTP extends DatagramSocketClient
         return newTFTPPacket;
     }
 
-    // Override this to trace the packet flow
+    /**
+     * Trace facility; this implementation does nothing.
+     * <p>
+     * Override it to trace the data, for example:<br>
+     * {@code System.out.println(direction + " " + packet.toString());}
+     * @param direction ">" or "<"
+     * @param packet the packet to be sent or that has been received
+     * @since 3.6
+     */
     protected void trace(String direction, TFTPPacket packet) {
-//      Simple implementation:
-//        System.out.println(direction + " " + packet.toString());
     }
 
 }

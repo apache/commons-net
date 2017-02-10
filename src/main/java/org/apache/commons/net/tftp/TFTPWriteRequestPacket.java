@@ -76,7 +76,10 @@ public final class TFTPWriteRequestPacket extends TFTPRequestPacket
         super(TFTPPacket.WRITE_REQUEST, datagram);
     }
 
-    // for debugging
+    /**
+     * For debugging
+     * @since 3.6
+     */
     @Override
     public String toString() {
         return super.toString() + " WRQ " + getFilename() + " " + TFTP.getModeName(getMode());

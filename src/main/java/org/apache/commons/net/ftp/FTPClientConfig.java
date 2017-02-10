@@ -351,6 +351,11 @@ public class FTPClientConfig
         this.shortMonthNames = config.shortMonthNames;
     }
 
+    /**
+     * Copy constructor
+     * @param config source
+     * @since 3.6
+     */
     public FTPClientConfig(FTPClientConfig config) {
         this.serverSystemKey = config.serverSystemKey;
         this.defaultDateFormatStr = config.defaultDateFormatStr;
