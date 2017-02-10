@@ -177,8 +177,8 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <commons.jira.pid>12310487</commons.jira.pid>
 
         <!-- Current release -->
-        <commons.release.version>${project.version}</commons.release.version>
-        <commons.rc.version>RC3</commons.rc.version>
+        <commons.release.version>3.6</commons.release.version>
+        <commons.rc.version>RC1</commons.rc.version>
         <commons.release.desc>(Requires Java ${maven.compiler.target} or later)</commons.release.desc>
 
         <!-- Previous release -->

@@ -73,18 +73,20 @@ This is mainly a bug-fix release. See further details below.
   The code now requires a minimum of Java 1.6.
 
   Changes to functionality:
-  The FTP client now performs stricter checks on non-multiline command replies.
+ * The FTP client now performs stricter checks on non-multiline command replies.
   The 3 digit code must now be followed by a space and some text, as per RFC 959.
   To suppress this stricter checking, call FTP#setStrictReplyParsing(false). This should not be needed with a well-behaved server.
   Note also that if strict checking is disabled, some functions may unconditionally strip the next character after the code,
 without checking it if is a space.
 
-  The FTP client mlistFile() method now checks for a leading space before removing it.
+* The FTP client mlistFile() method now checks for a leading space before removing it.
   If the space is missing, a MalformedServerReplyException is thrown.
   This will only happen if the FTP server is not compliant with RFC 3659.
 
   Notable additions:
-  The POP3Mail examples can now get password from console, stdin or an environment variable.
+ * The POP3Mail examples can now get password from console, stdin or an environment variable.
+
+* TFTPClient code has been rewritten to improve error handling and retries.
   
 ">
             <action issue="NET-613" type="fix" dev="sebb">
@@ -109,7 +111,7 @@ without checking it if is a space.
             Failure to parse times from SYST_L8 systems that report as "WINDOWS Type: L8"
             </action>
             <action issue="NET-604" type="fix" dev="sebb" due-to="Frank Delporte">
-            TFTP send & receive don't have progress indication
+            TFTP send and receive don't have progress indication
             </action>
             <action issue="NET-588" type="fix" dev="sebb" due-to="Dave Nice / Thai H">
             FTPClient.setPassiveNatWorkaround assumes host is outside site local range
@@ -132,7 +134,7 @@ without checking it if is a space.
             <action issue="NET-599" type="update" dev="sebb">
             Add shorthand FTPClientConfig constructor
             </action>
-            <action issue="NET-593" type="fix" dev="sebb" due-to="Jörg Weule">
+            <action issue="NET-593" type="fix" dev="sebb" due-to="Joerg Weule">
             HostnameVerifier is called with ip addess instead of the provided hostname
             </action>
             <action issue="NET-594" type="fix" dev="sebb" due-to="Brad Worrral">

@@ -1,7 +1,7 @@
-              Apache Commons Net 3.5
+              Apache Commons Net 3.6
                   RELEASE NOTES
 
-The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.5
+The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.6
 
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
 Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
@@ -13,19 +13,42 @@ However it is not source compatible with releases before 3.4, as some methods we
 
 The code now requires a minimum of Java 1.6.
 
+Changes to functionality:
+* The FTP client now performs stricter checks on non-multiline command replies.
+ The 3 digit code must now be followed by a space and some text, as per RFC 959.
+ To suppress this stricter checking, call FTP#setStrictReplyParsing(false). This should not be needed with a well-behaved server.
+ Note also that if strict checking is disabled, some functions may unconditionally strip the next character after the code, without checking it if is a space.
+* The FTP client mlistFile() method now checks for a leading space before removing it.
+ If the space is missing, a MalformedServerReplyException is thrown.
+ This will only happen if the FTP server is not compliant with RFC 3659.
+
 Notable additions:
- The IMAP examples can now get password from console, stdin or an environment variable.
+* The POP3Mail examples can now get password from console, stdin or an environment variable.
+* TFTPClient code has been rewritten to improve error handling and retries.
 
 Changes in this version include:
 
-New features:
-o           Alternative password input methods for IMAP examples
-o           More tests for Feb 29 handling.
-
 Fixed Bugs:
-o NET-583:  FTPClient.getReplyString() returns wrong value after connect() Thanks to Holger Rehn.
-o NET-586:  Don't use Feb 29 for short future date tests
-o           Documentation tweaks
+o NET-613:  TFTPClient assumes that lastBlock == 0 only once
+o NET-320:  Allow TFTPServer.java to bind to a specific network adapter Thanks to Kevin Bulebush.
+o NET-414:  Apache Commons TFTP does not reject request replies that originate from a control port. Thanks to Chuck Wolber.
+o NET-477:  TFTP sendFile retry broken Thanks to John Walton.
+o NET-596:  NullPointerException when disconnecting TelnetClient twice with JDK 7 Thanks to Vincent Bories-Azeau.
+o NET-602:  Failure to parse times from SYST_L8 systems that report as "WINDOWS Type: L8" Thanks to Ross Braithwaite.
+o NET-604:  TFTP send and receive don't have progress indication Thanks to Frank Delporte.
+o NET-588:  FTPClient.setPassiveNatWorkaround assumes host is outside site local range Thanks to Dave Nice / Thai H.
+o NET-610:  FTPClient.mlistFile incorrectly handles MLST reply Thanks to Sergey Yanzin.
+o NET-611:  FTP does not validate command reply syntax fully
+o NET-609:  DefaultUnixFTPFileEntryParserFactory Issue (leading spaces removal configuration) Thanks to Tqup3.
+o NET-597:  FTP fails to parse listings for Solaris 10 FTPd in Japanese Thanks to Hiroki Taniura.
+o NET-593:  HostnameVerifier is called with ip addess instead of the provided hostname Thanks to Jörg Weule.
+o NET-594:  TelnetClient._closeOutputStream unhandled exception from FilterOutputStream.close Thanks to Brad Worrral.
+o NET-592:  plainSocket in FTPSClient is never closed Thanks to Mark Ford.
+
+Changes:
+o NET-612:  Allow TFTP socket IO tracing
+o           POP3Mail example: support host port; allow reading password from Console/stdin/environment
+o NET-599:  Add shorthand FTPClientConfig constructor
 
 
 Historical list of changes: http://commons.apache.org/proper/commons-net/changes-report.html
