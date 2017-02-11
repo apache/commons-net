@@ -414,7 +414,7 @@ __main:
                         System.out.println(f.getRawListing());
                         System.out.println(f.toFormattedString(displayTimeZoneId));
                     } else {
-                        System.out.println("File not found");                        
+                        System.out.println("File not found");
                     }
                 }
                 if (mlst) {

@@ -81,7 +81,7 @@ public class TelnetClient extends Telnet
     void _closeOutputStream() throws IOException
     {
         try {
-            _output_.close();            
+            _output_.close();
         } finally {
             _output_ = null;
         }

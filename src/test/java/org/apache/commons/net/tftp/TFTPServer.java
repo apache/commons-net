@@ -948,7 +948,7 @@ public class TFTPServer implements Runnable
     }
 
     /*
-     * Allow test code to customise the TFTP instance 
+     * Allow test code to customise the TFTP instance
      */
     TFTP newTFTP() {
         return new TFTP();

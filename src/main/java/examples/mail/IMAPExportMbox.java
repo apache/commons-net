@@ -163,7 +163,7 @@ public final class IMAPExportMbox
                 uri = URI.create(m.group(1)); // Just the scheme and auth parts
                 uri = new URI(uri.getScheme(), uri.getAuthority(), m.group(2), null, null);
             } else {
-                throw e; 
+                throw e;
             }
         }
         final String file  = args[argIdx++];

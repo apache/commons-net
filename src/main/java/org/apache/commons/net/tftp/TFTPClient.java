@@ -420,7 +420,7 @@ public class TFTPClient extends TFTP
                                         block = 0;
                                     }
                                     wantReply = false; // got the ack we want
-                                } else { 
+                                } else {
                                     discardPackets();
                                 }
                                 break;

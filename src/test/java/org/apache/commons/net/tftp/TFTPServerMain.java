@@ -71,7 +71,7 @@ public class TFTPServerMain {
         }
         final boolean verbose = opts.containsKey("-v");
         final boolean randomErrors = opts.containsKey("-r");
-        final Random rand = randomErrors ? new Random() : null;        
+        final Random rand = randomErrors ? new Random() : null;
 
         final File serverDirectory = new File(opts.get("-p"));
         System.out.println("Server directory: " + serverDirectory);
@@ -131,7 +131,7 @@ public class TFTPServerMain {
                       }
                     };
                 } else {
-                    return new TFTP(); 
+                    return new TFTP();
                 }
             }
         };

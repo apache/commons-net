@@ -2504,7 +2504,7 @@ implements Configurable
         boolean success = FTPReply.isPositiveCompletion(sendCommand(FTPCmd.MLST, pathname));
         if (success){
             String reply = getReplyStrings()[1];
-            /* check the response makes sense. 
+            /* check the response makes sense.
              * Must have space before fact(s) and between fact(s) and filename
              * Fact(s) can be absent, so at least 3 chars are needed.
              */

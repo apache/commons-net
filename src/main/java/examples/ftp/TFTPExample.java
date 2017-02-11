@@ -175,7 +175,7 @@ public final class TFTPExample
         {
             String [] parts = hostname.split(":");
             if (parts.length == 2) {
-                tftp.sendFile(remoteFilename, transferMode, input, parts[0], Integer.parseInt(parts[1]));                
+                tftp.sendFile(remoteFilename, transferMode, input, parts[0], Integer.parseInt(parts[1]));
             } else {
                 tftp.sendFile(remoteFilename, transferMode, input, hostname);
             }
@@ -236,7 +236,7 @@ public final class TFTPExample
         {
             String [] parts = hostname.split(":");
             if (parts.length == 2) {
-                tftp.receiveFile(remoteFilename, transferMode, output, parts[0], Integer.parseInt(parts[1]));                
+                tftp.receiveFile(remoteFilename, transferMode, output, parts[0], Integer.parseInt(parts[1]));
             } else {
                 tftp.receiveFile(remoteFilename, transferMode, output, hostname);
             }
