@@ -63,7 +63,7 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
     <body>
-        <release version="3.6" date="TBA" description="
+        <release version="3.6" date="2017-02-15" description="
 This is mainly a bug-fix release. See further details below.
 
 
