@@ -63,6 +63,18 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
     <body>
+        <release version="3.7" date="TBA" descriptioon="
+This is mainly a bug-fix release. See further details below.
+
+
+ This release is binary compatible with previous releases.
+ However it is not source compatible with releases before 3.4, as some methods were added to the interface NtpV3Packet in 3.4
+        
+">
+            <action issue="NET-613" type="fix" dev="sebb" due-to="Donald Kwakkel">
+            System Information Leak in ftp parser
+            </action>
+        </release>
         <release version="3.6" date="2017-02-15" description="
 This is mainly a bug-fix release. See further details below.
 
