@@ -261,7 +261,7 @@ public class SubnetUtils {
             address = matchAddress(matcher);
 
             /* Create a binary netmask from the number of bits specification /x */
-            netmask = 0x0FFFFFFFF << NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
+            netmask = (int) (0x0FFFFFFFFL << NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS));
 
             /* Calculate base network address */
             network = (address & netmask);
