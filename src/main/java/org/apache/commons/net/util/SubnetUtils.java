@@ -260,7 +260,10 @@ public class SubnetUtils {
         if (matcher.matches()) {
             address = matchAddress(matcher);
 
-            /* Create a binary netmask from the number of bits specification /x */
+            /*
+             * Create a binary netmask from the number of bits specification /x
+             * The maximum binary netmask (a 32-bit long) << NBITS - the # bits specification
+             */
             netmask = (int) (0x0FFFFFFFFL << NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS));
 
             /* Calculate base network address */
