@@ -371,7 +371,6 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             try {
                 file.setTimestamp(super.parseTimestamp(datestr));
             } catch (ParseException e) {
-                e.printStackTrace();
                 // just ignore parsing errors.
                 // TODO check this is ok
                 return false; // this is a parsing failure too.

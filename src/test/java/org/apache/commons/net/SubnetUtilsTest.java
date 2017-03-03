@@ -48,6 +48,18 @@ public class SubnetUtilsTest extends TestCase {
         assertEquals("255.0.0.0", info.getNetmask());
         assertEquals(16777216, info.getAddressCount());
 
+        utils = new SubnetUtils("192.168.0.1/0");
+        utils.setInclusiveHostCount(true);
+        info = utils.getInfo();
+        assertEquals("0.0.0.0", info.getNetmask());
+        assertEquals(4294967296L, info.getAddressCountLong());
+
+        utils = new SubnetUtils("192.168.0.1/1");
+        utils.setInclusiveHostCount(true);
+        info = utils.getInfo();
+        assertEquals("128.0.0.0", info.getNetmask());
+        assertEquals(2147483648L, info.getAddressCountLong());
+
         utils = new SubnetUtils("192.168.0.1/9");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();

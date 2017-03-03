@@ -270,6 +270,19 @@ public class SubnetUtils {
              */
             netmask = (int) (0x0FFFFFFFFL << NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS));
 
+            /* Create a binary netmask from the number of bits specification /x */
+
+            int trailingZeroes = NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
+            /*
+             * An IPv4 netmask consists of 32 bits, a contiguous sequence 
+             * of the specified number of ones followed by all zeros.
+             * So, it can be obtained by shifting an unsigned integer (32 bits) to the left by
+             * the number of trailing zeros which is (32 - the # bits specification).
+             * Note that there is no unsigned left shift operator, so we have to use
+             * a long to ensure that the left-most bit is shifted out correctly.
+             */
+            netmask = (int) (0x0FFFFFFFFL << trailingZeroes );
+
             /* Calculate base network address */
             network = (address & netmask);
 
