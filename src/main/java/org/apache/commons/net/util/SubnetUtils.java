@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 public class SubnetUtils {
 
     private static final String IP_ADDRESS = "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})";
-    private static final String SLASH_FORMAT = IP_ADDRESS + "/(\\d{1,3})";
+    private static final String SLASH_FORMAT = IP_ADDRESS + "/(\\d{1,2})"; // 0 -> 32
     private static final Pattern addressPattern = Pattern.compile(IP_ADDRESS);
     private static final Pattern cidrPattern = Pattern.compile(SLASH_FORMAT);
     private static final int NBITS = 32;
