@@ -95,23 +95,18 @@ public class SubnetUtils {
 
         private SubnetInfo() {}
 
-        private int netmask()       { return netmask; }
-        private int network()       { return network; }
-        private int address()       { return address; }
-        private int broadcast()     { return broadcast; }
-
         // long versions of the values (as unsigned int) which are more suitable for range checking
         private long networkLong()  { return network &  UNSIGNED_INT_MASK; }
         private long broadcastLong(){ return broadcast &  UNSIGNED_INT_MASK; }
 
         private int low() {
-            return (isInclusiveHostCount() ? network() :
-                broadcastLong() - networkLong() > 1 ? network() + 1 : 0);
+            return (isInclusiveHostCount() ? network :
+                broadcastLong() - networkLong() > 1 ? network + 1 : 0);
         }
 
         private int high() {
-            return (isInclusiveHostCount() ? broadcast() :
-                broadcastLong() - networkLong() > 1 ? broadcast() -1  : 0);
+            return (isInclusiveHostCount() ? broadcast :
+                broadcastLong() - networkLong() > 1 ? broadcast -1  : 0);
         }
 
         /**
@@ -139,19 +134,19 @@ public class SubnetUtils {
         }
 
         public String getBroadcastAddress() {
-            return format(toArray(broadcast()));
+            return format(toArray(broadcast));
         }
 
         public String getNetworkAddress() {
-            return format(toArray(network()));
+            return format(toArray(network));
         }
 
         public String getNetmask() {
-            return format(toArray(netmask()));
+            return format(toArray(netmask));
         }
 
         public String getAddress() {
-            return format(toArray(address()));
+            return format(toArray(address));
         }
 
         /**
@@ -210,8 +205,8 @@ public class SubnetUtils {
 
         public String getCidrSignature() {
             return toCidrNotation(
-                    format(toArray(address())),
-                    format(toArray(netmask()))
+                    format(toArray(address)),
+                    format(toArray(netmask))
             );
         }
 
