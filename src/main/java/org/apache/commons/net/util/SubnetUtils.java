@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 public class SubnetUtils {
 
     private static final String IP_ADDRESS = "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})";
-    private static final String SLASH_FORMAT = IP_ADDRESS + "/(\\d{1,3})";
+    private static final String SLASH_FORMAT = IP_ADDRESS + "/(\\d{1,2})"; // 0 -> 32
     private static final Pattern addressPattern = Pattern.compile(IP_ADDRESS);
     private static final Pattern cidrPattern = Pattern.compile(SLASH_FORMAT);
     private static final int NBITS = 32;
@@ -45,7 +45,7 @@ public class SubnetUtils {
      * Constructor that takes a CIDR-notation string, e.g. "192.168.0.1/16"
      * @param cidrNotation A CIDR-notation string, e.g. "192.168.0.1/16"
      * @throws IllegalArgumentException if the parameter is invalid,
-     * i.e. does not match n.n.n.n/m where n=1-3 decimal digits, m = 1-3 decimal digits in range 1-32
+     * i.e. does not match n.n.n.n/m where n=1-3 decimal digits, m = 1-2 decimal digits in range 1-32
      */
     public SubnetUtils(String cidrNotation) {
         calculate(cidrNotation);
