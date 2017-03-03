@@ -258,10 +258,17 @@ public class SubnetUtils {
             /*
              * Create a binary netmask from the number of bits specification /x
              * 
+<<<<<<< HEAD
              * An IPv4 netmask consists of 32 bits, a contiguous sequence of ones followed by a block of zeros.
              * So, it is obtained by shifting an unsigned integer (32 bits) to the left by
              * the length of the zero blocks (32 - the # bits specification).
              * 
+=======
+             * An IPv4 netmask consists of 32 bits, a contiguous sequence of followed by a block of zeros.
+             * So, it is obtained by shifting an unsigned integer (32 bits) to the left by
+             * the length of the zero blocks (32 - the # bits specification).
+             *
+>>>>>>> origin/trunk
              * Note that rotation a int value by 32 is no operation.
              */
             netmask = (int) (0x0FFFFFFFFL << NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS));
