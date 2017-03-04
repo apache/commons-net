@@ -255,6 +255,21 @@ public class SubnetUtils {
         if (matcher.matches()) {
             address = matchAddress(matcher);
 
+            /*
+             * Create a binary netmask from the number of bits specification /x
+             * 
+             * An IPv4 netmask consists of 32 bits, a contiguous sequence of ones followed by a block of zeros.
+             * So, it is obtained by shifting an unsigned integer (32 bits) to the left by
+             * the length of the zero blocks (32 - the # bits specification).
+             * 
+             * An IPv4 netmask consists of 32 bits, a contiguous sequence of followed by a block of zeros.
+             * So, it is obtained by shifting an unsigned integer (32 bits) to the left by
+             * the length of the zero blocks (32 - the # bits specification).
+             *
+             * Note that rotation a int value by 32 is no operation.
+             */
+            netmask = (int) (0x0FFFFFFFFL << NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS));
+
             /* Create a binary netmask from the number of bits specification /x */
 
             int trailingZeroes = NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
