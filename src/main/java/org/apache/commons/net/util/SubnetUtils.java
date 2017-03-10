@@ -354,11 +354,25 @@ public class SubnetUtils {
         return x & 0x0000003F;
     }
 
-    /* Convert two dotted decimal addresses to a single xxx.xxx.xxx.xxx/yy format
+    /*
+     * Convert two dotted decimal addresses to a single xxx.xxx.xxx.xxx/yy format
      * by counting the 1-bit population in the mask address. (It may be better to count
      * NBITS-#trailing zeroes for this case)
      */
     private String toCidrNotation(String addr, String mask) {
-        return addr + "/" + pop(toInteger(mask));
+        int maskInt = toInteger(mask);
+
+        /*
+         * Check the subnet mask
+         *
+         * An IPv4 subnet mask must consist of a set of contiguous 1-bits followed by a block of 0-bits.
+         * If the mask follows the format, the numbers of subtracting one from the lowest one bit of the mask,
+         * see Hacker's Delight section 2.1, equals to the bitwise complement of the mask.
+         */
+        if ((maskInt & -maskInt) - 1 != ~maskInt) {
+            throw new IllegalArgumentException("Could not parse [" + mask + "]");
+        }
+
+        return addr + "/" + pop(maskInt);
     }
 }
