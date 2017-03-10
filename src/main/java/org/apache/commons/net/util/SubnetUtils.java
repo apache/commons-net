@@ -67,7 +67,7 @@ public class SubnetUtils {
      * Returns <code>true</code> if the return value of {@link SubnetInfo#getAddressCount()}
      * includes the network and broadcast addresses.
      * @since 2.2
-     * @return true if the host count includes the network and broadcast addresses
+     * @return true if the hostcount includes the network and broadcast addresses
      */
     public boolean isInclusiveHostCount() {
         return inclusiveHostCount;
@@ -112,7 +112,7 @@ public class SubnetUtils {
         /**
          * Returns true if the parameter <code>address</code> is in the
          * range of usable endpoint addresses for this subnet. This excludes the
-         * network and broadcast addresses.
+         * network and broadcast adresses.
          * @param address A dot-delimited IPv4 address, e.g. "192.168.0.1"
          * @return True if in range, false otherwise
          */
