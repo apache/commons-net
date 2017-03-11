@@ -340,6 +340,24 @@ public class SubnetUtilsTest extends TestCase {
         assertEquals(2147483646, info.getAddressCount());
     }
 
+    public void testNET624() {
+        new SubnetUtils("0.0.0.0/0");
+        new SubnetUtils("0.0.0.0","0.0.0.0");
+        new SubnetUtils("0.0.0.0","128.0.0.0");
+        try {
+            new SubnetUtils("0.0.0.0","64.0.0.0");
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected) {
+            // Ignored
+        }
+        try {
+            new SubnetUtils("0.0.0.0","0.0.0.1");
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected) {
+            // Ignored
+        }
+    }
+
     public void testNET520() {
         SubnetUtils utils = new SubnetUtils("0.0.0.0/0");
         utils.setInclusiveHostCount(true);
