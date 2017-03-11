@@ -398,6 +398,10 @@ __main:
                 ftp.storeFile(remote, input);
 
                 input.close();
+
+                if (keepAliveTimeout > 0) {
+                    showCslStats(ftp);
+                }
             }
             // Allow multiple list types for single invocation
             else if (listFiles || mlsd || mdtm || mlst || listNames)
@@ -499,6 +503,10 @@ __main:
                 ftp.retrieveFile(remote, output);
 
                 output.close();
+               
+                if (keepAliveTimeout > 0) {
+                    showCslStats(ftp);
+                }
             }
 
             ftp.noop(); // check that control connection is working OK
@@ -533,6 +541,13 @@ __main:
 
         System.exit(error ? 1 : 0);
     } // end main
+
+    private static void showCslStats(FTPClient ftp) {
+        @SuppressWarnings("deprecation") // debug code
+        int []stats = ftp.getCslDebug();
+        System.out.println("CslDebug="+Arrays.toString(stats));
+        
+    }
 
     private static CopyStreamListener createListener(){
         return new CopyStreamListener(){

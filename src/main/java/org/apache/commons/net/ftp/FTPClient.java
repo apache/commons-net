@@ -405,6 +405,9 @@ implements Configurable
     // Most FTP servers don't seem to support concurrent control and data connection usage
     private int __controlKeepAliveReplyTimeout=1000;
 
+    // Debug counts for NOOP acks
+    private int[] __cslDebug;
+
     /**
      * Enable or disable replacement of internal IP in passive mode. Default enabled
      * using {code NatServerResolverImpl}.
@@ -681,7 +684,7 @@ implements Configurable
         {
             Util.closeQuietly(socket); // ignore close errors here
             if (csl != null) {
-                csl.cleanUp(); // fetch any outstanding keepalive replies
+                __cslDebug = csl.cleanUp(); // fetch any outstanding keepalive replies
             }
             throw e;
         }
@@ -1925,7 +1928,7 @@ implements Configurable
             Util.closeQuietly(input);
             Util.closeQuietly(socket);
             if (csl != null) {
-                csl.cleanUp(); // fetch any outstanding keepalive replies
+                __cslDebug = csl.cleanUp(); // fetch any outstanding keepalive replies
             }
         }
 
@@ -3751,6 +3754,24 @@ implements Configurable
     }
 
     /**
+     * Get the CSL debug array.
+     * <p>
+     * <b>For debug use only</b>
+     * <p>
+     * Currently contains:
+     * <ul>
+     * <li>successfully acked NOOPs at end of transfer</li>
+     * <li>unanswered NOOPs at end of transfer</li>
+     * <li>unanswered NOOPs after fetching additional replies</li>
+     * </ul>
+     * @return the debug array
+     * @deprecated 3.7 For testing only; may be dropped or changed at any time
+     */
+    @Deprecated // only for use in testing
+    public int[] getCslDebug() {
+        return __cslDebug;
+    }
+    /**
      * Set how long to wait for control keep-alive message replies.
      *
      * @param timeout number of milliseconds to wait (defaults to 1000)
@@ -3866,6 +3887,7 @@ implements Configurable
 
         private long time = System.currentTimeMillis();
         private int notAcked;
+        private int acksAcked;
 
         CSL(FTPClient parent, long idleTime, int maxWait) throws SocketException {
             this.idle = idleTime;
@@ -3886,6 +3908,7 @@ implements Configurable
             if (now - time > idle) {
                 try {
                     parent.__noop();
+                    acksAcked++;
                 } catch (SocketTimeoutException e) {
                     notAcked++;
                 } catch (IOException e) {
@@ -3895,13 +3918,15 @@ implements Configurable
             }
         }
 
-        void cleanUp() throws IOException {
+        int[] cleanUp() throws IOException {
+            int remain = notAcked;
             if (notAcked > 0) { // TODO remove this before next release!
                 System.err.println("NET-584: notAcked=" + notAcked);
             }
             try {
-                while(notAcked-- > 0) {
+                while(notAcked > 0) {
                     parent.__getReplyNoReport();
+                    notAcked--; // only decrement if actually received
                 }
             } catch (SocketTimeoutException e) { // NET-584
                 System.err.println("NET-584: ignoring " + e.getMessage()); // TODO remove print before release!
@@ -3909,6 +3934,7 @@ implements Configurable
             } finally {
                 parent.setSoTimeout(currentSoTimeout);
             }
+            return new int [] {acksAcked, remain, notAcked}; // debug counts
         }
 
     }
