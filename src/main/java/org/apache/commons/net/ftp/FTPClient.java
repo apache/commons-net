@@ -643,7 +643,8 @@ implements Configurable
      * @since 3.1
      * @param command the command to send
      * @param remote the remote file name
-     * @param local the local file name
+     * @param local The local InputStream from which to read the data to
+     *                be written/appended to the remote file.
      * @return true if successful
      * @throws IOException on error
      */
@@ -1888,7 +1889,7 @@ implements Configurable
     /**
      * @param command the command to get
      * @param remote the remote file name
-     * @param local the local file name
+     * @param local The local OutputStream to which to write the file.
      * @return true if successful
      * @throws IOException on error
      * @since 3.1
@@ -3895,10 +3896,16 @@ implements Configurable
         }
 
         void cleanUp() throws IOException {
+            if (notAcked > 0) { // TODO remove this before next release!
+                System.err.println("NET-584: notAcked=" + notAcked);
+            }
             try {
                 while(notAcked-- > 0) {
                     parent.__getReplyNoReport();
                 }
+            } catch (SocketTimeoutException e) { // NET-584
+                System.err.println("NET-584: ignoring " + e.getMessage()); // TODO remove print before release!
+                // ignored
             } finally {
                 parent.setSoTimeout(currentSoTimeout);
             }
