@@ -32,10 +32,10 @@ public class SubnetUtils {
     private static final Pattern cidrPattern = Pattern.compile(SLASH_FORMAT);
     private static final int NBITS = 32;
 
-    private int netmask = 0;
-    private int address = 0;
-    private int network = 0;
-    private int broadcast = 0;
+    private final int netmask;
+    private final int address;
+    private final int network;
+    private final int broadcast;
 
     /** Whether the broadcast/network address are included in host count */
     private boolean inclusiveHostCount = false;
@@ -48,7 +48,32 @@ public class SubnetUtils {
      * i.e. does not match n.n.n.n/m where n=1-3 decimal digits, m = 1-2 decimal digits in range 1-32
      */
     public SubnetUtils(String cidrNotation) {
-        calculate(cidrNotation);
+      Matcher matcher = cidrPattern.matcher(cidrNotation);
+
+      if (matcher.matches()) {
+          this.address = matchAddress(matcher);
+
+          /* Create a binary netmask from the number of bits specification /x */
+
+          int trailingZeroes = NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
+          /*
+           * An IPv4 netmask consists of 32 bits, a contiguous sequence 
+           * of the specified number of ones followed by all zeros.
+           * So, it can be obtained by shifting an unsigned integer (32 bits) to the left by
+           * the number of trailing zeros which is (32 - the # bits specification).
+           * Note that there is no unsigned left shift operator, so we have to use
+           * a long to ensure that the left-most bit is shifted out correctly.
+           */
+          this.netmask = (int) (0x0FFFFFFFFL << trailingZeroes );
+
+          /* Calculate base network address */
+          this.network = (address & netmask);
+
+          /* Calculate broadcast address */
+          this.broadcast = network | ~(netmask);
+      } else {
+          throw new IllegalArgumentException("Could not parse [" + cidrNotation + "]");
+      }
     }
 
     /**
@@ -59,7 +84,18 @@ public class SubnetUtils {
      * i.e. does not match n.n.n.n where n=1-3 decimal digits and the mask is not all zeros
      */
     public SubnetUtils(String address, String mask) {
-        calculate(toCidrNotation(address, mask));
+        this.address = toInteger(address);
+        this.netmask = toInteger(mask);
+
+        if ((this.netmask & -this.netmask) - 1 != ~this.netmask) {
+            throw new IllegalArgumentException("Could not parse [" + mask + "]");
+        }
+
+        /* Calculate base network address */
+        this.network = (this.address & this.netmask);
+
+        /* Calculate broadcast address */
+        this.broadcast = this.network | ~(this.netmask);
     }
 
 
@@ -244,41 +280,9 @@ public class SubnetUtils {
     public final SubnetInfo getInfo() { return new SubnetInfo(); }
 
     /*
-     * Initialize the internal fields from the supplied CIDR mask
-     */
-    private void calculate(String mask) {
-        Matcher matcher = cidrPattern.matcher(mask);
-
-        if (matcher.matches()) {
-            address = matchAddress(matcher);
-
-            /* Create a binary netmask from the number of bits specification /x */
-
-            int trailingZeroes = NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
-            /*
-             * An IPv4 netmask consists of 32 bits, a contiguous sequence 
-             * of the specified number of ones followed by all zeros.
-             * So, it can be obtained by shifting an unsigned integer (32 bits) to the left by
-             * the number of trailing zeros which is (32 - the # bits specification).
-             * Note that there is no unsigned left shift operator, so we have to use
-             * a long to ensure that the left-most bit is shifted out correctly.
-             */
-            netmask = (int) (0x0FFFFFFFFL << trailingZeroes );
-
-            /* Calculate base network address */
-            network = (address & netmask);
-
-            /* Calculate broadcast address */
-            broadcast = network | ~(netmask);
-        } else {
-            throw new IllegalArgumentException("Could not parse [" + mask + "]");
-        }
-    }
-
-    /*
      * Convert a dotted decimal format address to a packed integer format
      */
-    private int toInteger(String address) {
+    private static int toInteger(String address) {
         Matcher matcher = addressPattern.matcher(address);
         if (matcher.matches()) {
             return matchAddress(matcher);
@@ -291,7 +295,7 @@ public class SubnetUtils {
      * Convenience method to extract the components of a dotted decimal address and
      * pack into an integer using a regex match
      */
-    private int matchAddress(Matcher matcher) {
+    private static int matchAddress(Matcher matcher) {
         int addr = 0;
         for (int i = 1; i <= 4; ++i) {
             int n = (rangeCheck(Integer.parseInt(matcher.group(i)), 0, 255));
@@ -330,7 +334,7 @@ public class SubnetUtils {
      * Checks if a value x is in the range [begin,end].
      * Returns x if it is in range, throws an exception otherwise.
      */
-    private int rangeCheck(int value, int begin, int end) {
+    private static int rangeCheck(int value, int begin, int end) {
         if (value >= begin && value <= end) { // (begin,end]
             return value;
         }
@@ -351,25 +355,4 @@ public class SubnetUtils {
         return x & 0x0000003F;
     }
 
-    /*
-     * Convert two dotted decimal addresses to a single xxx.xxx.xxx.xxx/yy format
-     * by counting the 1-bit population in the mask address. (It may be better to count
-     * NBITS-#trailing zeroes for this case)
-     */
-    private String toCidrNotation(String addr, String mask) {
-        int maskInt = toInteger(mask);
-
-        /*
-         * Check the subnet mask
-         *
-         * An IPv4 subnet mask must consist of a set of contiguous 1-bits followed by a block of 0-bits.
-         * If the mask follows the format, the numbers of subtracting one from the lowest one bit of the mask,
-         * see Hacker's Delight section 2.1, equals to the bitwise complement of the mask.
-         */
-        if ((maskInt & -maskInt) - 1 != ~maskInt) {
-            throw new IllegalArgumentException("Could not parse [" + mask + "]");
-        }
-
-        return addr + "/" + pop(maskInt);
-    }
 }
