@@ -204,10 +204,7 @@ public class SubnetUtils {
         }
 
         public String getCidrSignature() {
-            return toCidrNotation(
-                    format(toArray(address)),
-                    format(toArray(netmask))
-            );
+            return format(toArray(address)) + "/" + pop(netmask);
         }
 
         public String[] getAllAddresses() {
