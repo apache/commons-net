@@ -3763,6 +3763,7 @@ implements Configurable
      * <li>successfully acked NOOPs at end of transfer</li>
      * <li>unanswered NOOPs at end of transfer</li>
      * <li>unanswered NOOPs after fetching additional replies</li>
+     * <li>Number of IOErrors ignored</li>
      * </ul>
      * @return the debug array
      * @deprecated 3.7 For testing only; may be dropped or changed at any time
@@ -3888,6 +3889,7 @@ implements Configurable
         private long time = System.currentTimeMillis();
         private int notAcked;
         private int acksAcked;
+        private int ioErrors;
 
         CSL(FTPClient parent, long idleTime, int maxWait) throws SocketException {
             this.idle = idleTime;
@@ -3912,6 +3914,7 @@ implements Configurable
                 } catch (SocketTimeoutException e) {
                     notAcked++;
                 } catch (IOException e) {
+                    ioErrors++;
                     // Ignored
                 }
                 time = now;
@@ -3934,7 +3937,7 @@ implements Configurable
             } finally {
                 parent.setSoTimeout(currentSoTimeout);
             }
-            return new int [] {acksAcked, remain, notAcked}; // debug counts
+            return new int [] {acksAcked, remain, notAcked, ioErrors}; // debug counts
         }
 
     }
