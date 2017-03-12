@@ -276,7 +276,9 @@ import org.apache.commons.net.io.Util;
  * The implementation currently uses a {@link CopyStreamListener} which is passed to the
  * {@link Util#copyStream(InputStream, OutputStream, int, long, CopyStreamListener, boolean)}
  * method, so the timing is partially dependent on how long each block transfer takes.
- *
+ * <p>
+ * <b>This keep-alive feature is optional; if it does not help or causes problems then don't use it.</b>
+ * <p>
  * @see #FTP_SYSTEM_TYPE
  * @see #SYSTEM_TYPE_PROPERTIES
  * @see FTP
@@ -3735,6 +3737,8 @@ implements Configurable
     /**
      * Set the time to wait between sending control connection keepalive messages
      * when processing file upload or download.
+     * <p>
+     * See the class Javadoc section "Control channel keep-alive feature:"
      *
      * @param controlIdle the wait (in secs) between keepalive messages. Zero (or less) disables.
      * @since 3.0
@@ -3745,7 +3749,11 @@ implements Configurable
     }
 
     /**
-     * Get the time to wait between sending control connection keepalive messages.
+     * Get the time to wait between sending control connection keepalive messages
+     * when processing file upload or download.
+     * <p>
+     * See the class Javadoc section "Control channel keep-alive feature:"
+     *
      * @return the number of seconds between keepalive messages.
      * @since 3.0
      */
