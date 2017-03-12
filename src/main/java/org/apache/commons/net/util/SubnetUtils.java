@@ -45,7 +45,7 @@ public class SubnetUtils {
      * Constructor that takes a CIDR-notation string, e.g. "192.168.0.1/16"
      * @param cidrNotation A CIDR-notation string, e.g. "192.168.0.1/16"
      * @throws IllegalArgumentException if the parameter is invalid,
-     * i.e. does not match n.n.n.n/m where n=1-3 decimal digits, m = 1-2 decimal digits in range 1-32
+     * i.e. does not match n.n.n.n/m where n=1-3 decimal digits, m is in range 0-32
      */
     public SubnetUtils(String cidrNotation) {
       Matcher matcher = cidrPattern.matcher(cidrNotation);
