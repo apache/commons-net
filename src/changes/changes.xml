@@ -71,6 +71,9 @@ This is mainly a bug-fix release. See further details below.
  However it is not source compatible with releases before 3.4, as some methods were added to the interface NtpV3Packet in 3.4
         
 ">
+            <action issue="NET-626" type="update" dev="sebb" due-to="Makoto Sakaguchi">
+            SubnetUtils#SubnetUtils - improved comment
+            </action>
             <action issue="NET-625" type="update" dev="sebb">
             SubnetUtils - improve construction
             </action>
