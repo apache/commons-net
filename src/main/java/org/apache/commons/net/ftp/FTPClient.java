@@ -685,17 +685,16 @@ implements Configurable
         catch (IOException e)
         {
             Util.closeQuietly(socket); // ignore close errors here
+            throw e;
+        } finally {
             if (csl != null) {
                 __cslDebug = csl.cleanUp(); // fetch any outstanding keepalive replies
             }
-            throw e;
         }
 
         output.close(); // ensure the file is fully written
         socket.close(); // done writing the file
-        if (csl != null) {
-            csl.cleanUp(); // fetch any outstanding keepalive replies
-        }
+
         // Get the transfer response
         boolean ok = completePendingCommand();
         return ok;
