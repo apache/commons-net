@@ -681,9 +681,15 @@ implements Configurable
             Util.copyStream(local, output, getBufferSize(),
                     CopyStreamEvent.UNKNOWN_STREAM_SIZE, __mergeListeners(csl),
                     false);
+            output.close(); // ensure the file is fully written
+            socket.close(); // done writing the file
+
+            // Get the transfer response
+            return completePendingCommand();
         }
         catch (IOException e)
         {
+            Util.closeQuietly(output); // ignore close errors here
             Util.closeQuietly(socket); // ignore close errors here
             throw e;
         } finally {
@@ -691,13 +697,6 @@ implements Configurable
                 __cslDebug = csl.cleanUp(); // fetch any outstanding keepalive replies
             }
         }
-
-        output.close(); // ensure the file is fully written
-        socket.close(); // done writing the file
-
-        // Get the transfer response
-        boolean ok = completePendingCommand();
-        return ok;
     }
 
     private OutputStream __storeFileStream(FTPCmd command, String remote)
@@ -1925,6 +1924,9 @@ implements Configurable
             Util.copyStream(input, local, getBufferSize(),
                     CopyStreamEvent.UNKNOWN_STREAM_SIZE, __mergeListeners(csl),
                     false);
+
+            // Get the transfer response
+            return completePendingCommand();
         } finally {
             Util.closeQuietly(input);
             Util.closeQuietly(socket);
@@ -1932,10 +1934,6 @@ implements Configurable
                 __cslDebug = csl.cleanUp(); // fetch any outstanding keepalive replies
             }
         }
-
-        // Get the transfer response
-        boolean ok = completePendingCommand();
-        return ok;
     }
 
     /**
@@ -3935,7 +3933,7 @@ implements Configurable
             }
             try {
                 while(notAcked > 0) {
-                    parent.__getReplyNoReport();
+                    parent.getReply(); // we do want to see these
                     notAcked--; // only decrement if actually received
                 }
             } catch (SocketTimeoutException e) { // NET-584
