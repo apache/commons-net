@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.net.util;
+package org.apache.commons.net.util.subnet;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,6 +25,9 @@ import java.util.regex.Pattern;
  * @since 2.0
  */
 public class SubnetUtils {
+
+    private static final String IPV4_ADDRESS = "(\\d{1,3}\\.){3}\\d{1,3}/\\d{1,2}";
+    private static final String IPV6_ADDRESS = "([0-9a-f]{1,4}\\:){7}[0-9a-f]{1,4}/\\d{1,3}";
 
     private static final String IP_ADDRESS = "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})";
     private static final String SLASH_FORMAT = IP_ADDRESS + "/(\\d{1,2})"; // 0 -> 32
@@ -46,6 +49,7 @@ public class SubnetUtils {
      * @param cidrNotation A CIDR-notation string, e.g. "192.168.0.1/16"
      * @throws IllegalArgumentException if the parameter is invalid,
      * i.e. does not match n.n.n.n/m where n=1-3 decimal digits, m = 1-2 decimal digits in range 0-32
+     * @deprecated (3.7) use {@link #getByCIDRNortation(String cidrNotation)} instead
      */
     public SubnetUtils(String cidrNotation) {
       Matcher matcher = cidrPattern.matcher(cidrNotation);
@@ -57,7 +61,7 @@ public class SubnetUtils {
 
           int trailingZeroes = NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
           /*
-           * An IPv4 netmask consists of 32 bits, a contiguous sequence 
+           * An IPv4 netmask consists of 32 bits, a contiguous sequence
            * of the specified number of ones followed by all zeros.
            * So, it can be obtained by shifting an unsigned integer (32 bits) to the left by
            * the number of trailing zeros which is (32 - the # bits specification).
@@ -82,6 +86,7 @@ public class SubnetUtils {
      * @param mask A dotted decimal netmask e.g. "255.255.0.0"
      * @throws IllegalArgumentException if the address or mask is invalid,
      * i.e. does not match n.n.n.n where n=1-3 decimal digits and the mask is not all zeros
+     * @deprecated (3.7) use {@link IP4Subnet#getByMask(String address, String mask)} instead
      */
     public SubnetUtils(String address, String mask) {
         this.address = toInteger(address);
@@ -104,6 +109,7 @@ public class SubnetUtils {
      * includes the network and broadcast addresses.
      * @since 2.2
      * @return true if the host count includes the network and broadcast addresses
+     * @deprecated (3.7) use {@link IP4Subnet#isInclusiveHostCount()} instead
      */
     public boolean isInclusiveHostCount() {
         return inclusiveHostCount;
@@ -114,19 +120,40 @@ public class SubnetUtils {
      * to include the network and broadcast addresses.
      * @param inclusiveHostCount true if network and broadcast addresses are to be included
      * @since 2.2
+     * @deprecated (3.7) use {@link IP4Subnet#setInclusiveHostCount(boolean inclusiveHostCount)} instead
      */
     public void setInclusiveHostCount(boolean inclusiveHostCount) {
         this.inclusiveHostCount = inclusiveHostCount;
     }
 
+    /**
+     * Constructor that takes a CIDR-notation string that both IPv4 and IPv6 allow,
+     * e.g. "192.168.0.1/16" or "2001:db8:0:0:0:ff00:42:8329/46"
+     *
+     * NOTE: IPv6 address does NOT allow to omit consecutive sections of zeros in the current version.
+     *
+     * @param cidrNotation An IPv4 or IPv6 address
+     * @return The class of SubnetInfo
+     * @since 3.7
+     */
+    public static SubnetInfo getByCIDRNortation(String cidrNotation) {
+        if (Pattern.matches(IPV4_ADDRESS, cidrNotation)) {
+            return new IP4Subnet(cidrNotation);
+        } else if (Pattern.matches(IPV6_ADDRESS, cidrNotation)) {
+            return new IP6Subnet(cidrNotation);
+        } else {
+            throw new IllegalArgumentException("Could not parse [" + cidrNotation + "]");
+        }//if
+    }//getByCIDRNortation
 
 
     /**
      * Convenience container for subnet summary information.
-     *
+     *@deprecated (3.7) use {@link SubnetInfo} instead
      */
+/*
     public final class SubnetInfo {
-        /* Mask to convert unsigned int to a long (i.e. keep 32 bits) */
+        // Mask to convert unsigned int to a long (i.e. keep 32 bits)
         private static final long UNSIGNED_INT_MASK = 0x0FFFFFFFFL;
 
         private SubnetInfo() {}
@@ -145,23 +172,23 @@ public class SubnetUtils {
                 broadcastLong() - networkLong() > 1 ? broadcast -1  : 0);
         }
 
-        /**
+        *//**
          * Returns true if the parameter <code>address</code> is in the
          * range of usable endpoint addresses for this subnet. This excludes the
          * network and broadcast addresses.
          * @param address A dot-delimited IPv4 address, e.g. "192.168.0.1"
          * @return True if in range, false otherwise
-         */
+         *//*
         public boolean isInRange(String address) {
             return isInRange(toInteger(address));
         }
 
-        /**
+        *//**
          *
          * @param address the address to check
          * @return true if it is in range
          * @since 3.4 (made public)
-         */
+         *//*
         public boolean isInRange(int address) {
             long addLong = address & UNSIGNED_INT_MASK;
             long lowLong = low() & UNSIGNED_INT_MASK;
@@ -185,33 +212,33 @@ public class SubnetUtils {
             return format(toArray(address));
         }
 
-        /**
+        *//**
          * Return the low address as a dotted IP address.
          * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
          *
          * @return the IP address in dotted format, may be "0.0.0.0" if there is no valid address
-         */
+         *//*
         public String getLowAddress() {
             return format(toArray(low()));
         }
 
-        /**
+        *//**
          * Return the high address as a dotted IP address.
          * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
          *
          * @return the IP address in dotted format, may be "0.0.0.0" if there is no valid address
-         */
+         *//*
         public String getHighAddress() {
             return format(toArray(high()));
         }
 
-        /**
+        *//**
          * Get the count of available addresses.
          * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
          * @return the count of addresses, may be zero.
          * @throws RuntimeException if the correct count is greater than {@code Integer.MAX_VALUE}
          * @deprecated (3.4) use {@link #getAddressCountLong()} instead
-         */
+         *//*
         @Deprecated
         public int getAddressCount() {
             long countLong = getAddressCountLong();
@@ -222,12 +249,12 @@ public class SubnetUtils {
             return (int)countLong;
         }
 
-        /**
+        *//**
          * Get the count of available addresses.
          * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
          * @return the count of addresses, may be zero.
          * @since 3.4
-         */
+         *//*
         public long getAddressCountLong() {
             long b = broadcastLong();
             long n = networkLong();
@@ -255,10 +282,10 @@ public class SubnetUtils {
             return addresses;
         }
 
-        /**
+        *//**
          * {@inheritDoc}
          * @since 2.2
-         */
+         *//*
         @Override
         public String toString() {
             final StringBuilder buf = new StringBuilder();
@@ -272,17 +299,18 @@ public class SubnetUtils {
             return buf.toString();
         }
     }
-
+ */
     /**
      * Return a {@link SubnetInfo} instance that contains subnet-specific statistics
      * @return new instance
+     * @deprecated (3.7) use {@link #getByCIDRNortation(String cidrNotation)} instead
      */
-    public final SubnetInfo getInfo() { return new SubnetInfo(); }
+    //public final SubnetInfo getInfo() { return new SubnetInfo(); }
 
     /*
      * Convert a dotted decimal format address to a packed integer format
      */
-    private static int toInteger(String address) {
+    static int toInteger(String address) {
         Matcher matcher = addressPattern.matcher(address);
         if (matcher.matches()) {
             return matchAddress(matcher);
@@ -319,22 +347,33 @@ public class SubnetUtils {
      * Convert a 4-element array into dotted decimal format
      */
     private String format(int[] octets) {
-        StringBuilder str = new StringBuilder();
-        for (int i =0; i < octets.length; ++i){
-            str.append(octets[i]);
-            if (i != octets.length - 1) {
-                str.append(".");
-            }
-        }
-        return str.toString();
+        return format(octets, ".");
     }
+
+    /*
+     * Converts an integer array into a decimal format separated by symbol.
+     */
+    static String format(int[] arry, String symbol) {
+        StringBuilder buf = new StringBuilder();
+        int iMax = arry.length - 1;
+
+        for (int i = 0; i <= iMax; i++) {
+            buf.append(arry[i]);
+
+            if (i != iMax) {
+                buf.append(symbol);
+            }// if
+        }// for
+
+        return buf.toString();
+    }//format(int[] arry, String symbol)
 
     /*
      * Convenience function to check integer boundaries.
      * Checks if a value x is in the range [begin,end].
      * Returns x if it is in range, throws an exception otherwise.
      */
-    private static int rangeCheck(int value, int begin, int end) {
+    static int rangeCheck(int value, int begin, int end) {
         if (value >= begin && value <= end) { // (begin,end]
             return value;
         }
@@ -346,7 +385,7 @@ public class SubnetUtils {
      * Count the number of 1-bits in a 32-bit integer using a divide-and-conquer strategy
      * see Hacker's Delight section 5.1
      */
-    int pop(int x) {
+    static int pop(int x) {
         x = x - ((x >>> 1) & 0x55555555);
         x = (x & 0x33333333) + ((x >>> 2) & 0x33333333);
         x = (x + (x >>> 4)) & 0x0F0F0F0F;
