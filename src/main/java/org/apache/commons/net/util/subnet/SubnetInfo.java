@@ -107,6 +107,8 @@ public interface SubnetInfo {
      */
     String getCIDRNotation();
 
+    String getCidrSignature();
+
     /**
      * Returns the low address as a dotted or colon-separated IP address.
      * Will be zero for CIDR/31 and CIDR/32 if the address is IPv4 address and the inclusive flag is false.

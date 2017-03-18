@@ -191,6 +191,11 @@ public final class IP6Subnet implements SubnetInfo {
         return format(ip6Address) + "/" + cidr;
     }
 
+    @Override
+    public String getCidrSignature() {
+        return getCIDRNotation();
+    }
+
     /**
      * Returns the low address as a colon-separated IP address.
      * @return the IP address in a colon 16-bit delimited hexadecimal format,

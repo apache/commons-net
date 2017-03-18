@@ -187,21 +187,6 @@ public final class IP4Subnet implements SubnetInfo {
     }
 
     /**
-     * Creates a dotted decimal address and a dotted decimal mask.
-     * @param address An IP address, e.g. "192.168.0.1"
-     * @param mask A dotted decimal netmask e.g. "255.255.0.0"
-     * @throws IllegalArgumentException
-     *             if the address or mask is invalid,
-     *             i.e. the address does not match n.n.n.n where n=1-3 decimal digits, or
-     *             the mask does not match n.n.n.n which n={0, 128, 192, 224, 240, 248, 252, 254, 255}
-     *             and after the 0-field, it is all zeros.
-     * @return an IPSubnet class generated based on the parameters of address and mask
-     */
-    public static SubnetInfo getByMask(String address, String mask) {
-        return new IP4Subnet(address, mask);
-    }
-
-    /**
      * Returns true if the parameter <code>address</code> is in the
      * range of usable endpoint addresses for this subnet. This excludes the
      * network and broadcast addresses.
@@ -256,6 +241,10 @@ public final class IP4Subnet implements SubnetInfo {
     @Override
     public String getCIDRNotation() {
         return format(address) + "/" + cidr;
+    }
+
+    public String getCidrSignature() {
+        return getCIDRNotation();
     }
 
     /**
