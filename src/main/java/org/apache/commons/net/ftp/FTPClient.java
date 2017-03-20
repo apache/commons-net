@@ -3928,16 +3928,12 @@ implements Configurable
 
         int[] cleanUp() throws IOException {
             int remain = notAcked;
-            if (notAcked > 0) { // TODO remove this before next release!
-                System.err.println("NET-584: notAcked=" + notAcked);
-            }
             try {
                 while(notAcked > 0) {
                     parent.getReply(); // we do want to see these
                     notAcked--; // only decrement if actually received
                 }
             } catch (SocketTimeoutException e) { // NET-584
-                System.err.println("NET-584: ignoring " + e.getMessage()); // TODO remove print before release!
                 // ignored
             } finally {
                 parent.setSoTimeout(currentSoTimeout);
