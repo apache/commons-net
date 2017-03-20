@@ -165,6 +165,7 @@ public final class IP4Subnet implements SubnetInfo {
         return SubnetUtils.format(ret, ".");
     }
 
+
     /*
      * Converts a packed integer address into dotted decimal format
      */
@@ -184,6 +185,11 @@ public final class IP4Subnet implements SubnetInfo {
         }
 
         return addr;
+    }
+
+    @Override
+    public int asInteger(String address) {
+        return toInteger(address);
     }
 
     /**
@@ -214,7 +220,7 @@ public final class IP4Subnet implements SubnetInfo {
     }
 
     @Override
-    public String getAddresss() {
+    public String getAddress() {
         return format(address);
     }
 

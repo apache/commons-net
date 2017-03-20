@@ -38,6 +38,8 @@ public interface SubnetInfo {
      */
     void setInclusiveHostCount(boolean inclusiveHostCount);
 
+    int asInteger(String address);
+
     /**
      * Returns true if the parameter <code>address</code> is in the
      * range of usable endpoint addresses for this subnet. This excludes the
@@ -66,7 +68,7 @@ public interface SubnetInfo {
      *
      * @return a string of the IP address
      */
-    String getAddresss();
+    String getAddress();
 
     /**
      * Gets the CIDR suffixes, the count of consecutive 1 bits in the subnet mask.

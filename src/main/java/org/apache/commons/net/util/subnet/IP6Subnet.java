@@ -123,6 +123,11 @@ public final class IP6Subnet implements SubnetInfo {
         return address.replace(regex, ":");
     }// format
 
+    @Override
+    public int asInteger(String address) {
+        return 0;
+    }
+
     /**
      * Returns true if the parameter <code>address</code> is in the
      * range of usable endpoint addresses for this subnet.
@@ -167,7 +172,7 @@ public final class IP6Subnet implements SubnetInfo {
      * @return a string of the IP address
      */
     @Override
-    public String getAddresss() {
+    public String getAddress() {
         return format(ip6Address);
     }
 
