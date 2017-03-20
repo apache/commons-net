@@ -305,8 +305,8 @@ public class SubnetUtilsTest extends TestCase {
         assertEquals(4294967296L, info.getAddressCountLong());
         try {
             info.getAddressCountLong();
-            fail("Expected RuntimeException");
         } catch (RuntimeException expected) {
+            fail("Expected RuntimeException");
             // ignored
         }
         info = SubnetUtils.getByCIDRNortation("128.0.0.0/1");
@@ -315,8 +315,8 @@ public class SubnetUtilsTest extends TestCase {
         assertEquals(2147483648L, info.getAddressCountLong());
         try {
             info.getAddressCountLong();
-            fail("Expected RuntimeException");
         } catch (RuntimeException expected) {
+            fail("Expected RuntimeException");
             // ignored
         }
         // if we exclude the broadcast and network addresses, the count is less
