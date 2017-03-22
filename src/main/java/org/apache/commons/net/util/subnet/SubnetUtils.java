@@ -86,7 +86,7 @@ public class SubnetUtils {
      * @param mask A dotted decimal netmask e.g. "255.255.0.0"
      * @throws IllegalArgumentException if the address or mask is invalid,
      * i.e. does not match n.n.n.n where n=1-3 decimal digits and the mask is not all zeros
-     * @deprecated (3.7) use {@link IP4Subnet#getByMask(String address, String mask)} instead
+     * @deprecated (3.7) use {@link #getByMask(String address, String mask)} instead
      */
     public SubnetUtils(String address, String mask) {
         this.address = toInteger(address);
