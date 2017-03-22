@@ -23,6 +23,63 @@ package org.apache.commons.net.util.subnet;
 public abstract class SubnetInfo
 {
 
+    /*
+     * Convenience function to check integer boundaries.
+     * Checks if a value x is in the range [begin,end].
+     * Returns x if it is in range, throws an exception otherwise.
+     */
+    static int rangeCheck(int value, int begin, int end)
+    {
+        if (value < begin || value > end)
+        {
+            throw new IllegalArgumentException("Value [" + value + "] not in range ["+begin+","+end+"]");
+        }
+
+        return value;
+    }
+
+    /*
+     * Count the number of 1-bits in a 32-bit integer using a divide-and-conquer strategy
+     * see Hacker's Delight section 5.1
+     */
+    static int pop(int x)
+    {
+        x = x - ((x >>> 1) & 0x55555555);
+        x = (x & 0x33333333) + ((x >>> 2) & 0x33333333);
+        x = (x + (x >>> 4)) & 0x0F0F0F0F;
+        x = x + (x >>> 8);
+        x = x + (x >>> 16);
+        return x & 0x3F;
+    }
+
+    /*
+     * Converts an integer array into a decimal format separated by symbol.
+     */
+    static String format(int[] arry, String symbol)
+    {
+        StringBuilder str = new StringBuilder();
+        final int iMax = arry.length - 1;
+
+        for (int i =0; i <= iMax; i++)
+        {
+            str.append(arry[i]);
+
+            if (i != iMax)
+            {
+                str.append(symbol);
+            }
+        }
+
+        return str.toString();
+    }
+
+    /**
+     * Converts a dotted decimal format address to a packed integer format. (ONLY USE in IPv4
+     *
+     * @return a packed integer of a dotted decimal format address
+     */
+    public int asInteger(String address) { return 0; }
+
     /**
      * Returns <code>true</code> if the return value of {@link #getAddressCount()}
      * includes the network and broadcast addresses. (ONLY USE in IPv4)
@@ -62,13 +119,12 @@ public abstract class SubnetInfo
 
     /**
      * Returns true if the parameter <code>address</code> is in the
-     * range of usable endpoint addresses for this subnet. This excludes the
-     * network and broadcast addresses if the address is IPv4 address.
+     * range of usable endpoint addresses for this subnet.
      *
      * @param address the address to check
      * @return true if it is in range
      */
-    public boolean isInRange(short[] address) { return false; }
+    public boolean isInRange(int[] address) { return false; }
 
     /**
      * Returns the IP address.
@@ -119,6 +175,16 @@ public abstract class SubnetInfo
     public String getCIDRNotation() { return null; }
 
     /**
+     * Returns a CIDR notation, in which the address is followed by slash and
+     * the count of counting the 1-bit population in the subnet mask.
+     * IPv4 CIDR notation: e.g. "192.168.0.1/24"
+     * IPv6 CIDR notation: e.g. "2001:db8::ff00:42:8329/48"
+     *
+     * @return the CIDR notation of the address
+     */
+    public String getCidrSignature() { return getCIDRNotation(); }
+
+    /**
      * Returns the lowest address as a dotted decimal or the colon-separated hexadecimal IP address.
      * Will be zero for CIDR/31 and CIDR/32 if the address is IPv4 address and
      * the inclusive flag is <code>false</code>.
@@ -145,7 +211,7 @@ public abstract class SubnetInfo
      *
      * @return the count of addresses in a string, may be zero
      */
-    public String getAddressCount() { return null; }
+    public String getAddressCountString() { return null; }
 
     /**
      * Returns the count of available addresses.
@@ -155,5 +221,13 @@ public abstract class SubnetInfo
      * @return the count of addresses, may be zero
      */
     public long getAddressCountLong() { return 0; }
+
+    /**
+     * Returns a list of the available addresses.
+     *
+     * @return an array of the available addresses
+     * @deprecated (3.7) overflow if the available addresses are greater than {@code Integer.MAX_VALUE}
+     */
+    public String[] getAllAddresses() { return new String[0]; }
 
 }
