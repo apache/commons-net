@@ -23,6 +23,56 @@ package org.apache.commons.net.util.subnet;
 public abstract class SubnetInfo
 {
 
+    /*
+     * Convenience function to check integer boundaries.
+     * Checks if a value x is in the range [begin,end].
+     * Returns x if it is in range, throws an exception otherwise.
+     */
+    static int rangeCheck(int value, int begin, int end)
+    {
+        if (value < begin || value > end)
+        {
+            throw new IllegalArgumentException("Value [" + value + "] not in range ["+begin+","+end+"]");
+        }
+
+        return value;
+    }
+
+    /*
+     * Count the number of 1-bits in a 32-bit integer using a divide-and-conquer strategy
+     * see Hacker's Delight section 5.1
+     */
+    static int pop(int x)
+    {
+        x = x - ((x >>> 1) & 0x55555555);
+        x = (x & 0x33333333) + ((x >>> 2) & 0x33333333);
+        x = (x + (x >>> 4)) & 0x0F0F0F0F;
+        x = x + (x >>> 8);
+        x = x + (x >>> 16);
+        return x & 0x3F;
+    }
+
+    /*
+     * Converts an integer array into a decimal format separated by symbol.
+     */
+    static String format(int[] arry, String symbol)
+    {
+        StringBuilder str = new StringBuilder();
+        final int iMax = arry.length - 1;
+
+        for (int i =0; i <= iMax; i++)
+        {
+            str.append(arry[i]);
+
+            if (i != iMax)
+            {
+                str.append(symbol);
+            }
+        }
+
+        return str.toString();
+    }
+
     /**
      * Returns <code>true</code> if the return value of {@link #getAddressCount()}
      * includes the network and broadcast addresses. (ONLY USE in IPv4)
@@ -62,13 +112,12 @@ public abstract class SubnetInfo
 
     /**
      * Returns true if the parameter <code>address</code> is in the
-     * range of usable endpoint addresses for this subnet. This excludes the
-     * network and broadcast addresses if the address is IPv4 address.
+     * range of usable endpoint addresses for this subnet.
      *
      * @param address the address to check
      * @return true if it is in range
      */
-    public boolean isInRange(short[] address) { return false; }
+    public boolean isInRange(int[] address) { return false; }
 
     /**
      * Returns the IP address.
