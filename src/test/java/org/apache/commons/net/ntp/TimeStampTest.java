@@ -62,19 +62,19 @@ public class TimeStampTest extends TestCase {
 
     public void testUTCString() {
         TimeStamp ts1 = new TimeStamp(TIME1);   // Tue, Dec 17 2002 14:07:24.810 UTC
-    String actual = ts1.toUTCString();
-    assertEquals("Tue, Dec 17 2002 14:07:24.810 UTC", actual);
+        String actual = ts1.toUTCString();
+        assertEquals("Tue, Dec 17 2002 14:07:24.810 UTC", actual);
     }
 
     public void testDateConversion() {
-    // convert current date to NtpTimeStamp then compare Java date
-    // computed from NTP timestamp with original Java date.
-    Calendar refCal = Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC"));
-    Date refDate = refCal.getTime();
-    TimeStamp ts = new TimeStamp(refDate);
-    assertEquals("refDate.getTime()", refDate.getTime(), ts.getTime());
-    Date tsDate = ts.getDate();
-    assertEquals(refDate, tsDate);
+        // convert current date to NtpTimeStamp then compare Java date
+        // computed from NTP timestamp with original Java date.
+        Calendar refCal = Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC"));
+        Date refDate = refCal.getTime();
+        TimeStamp ts = new TimeStamp(refDate);
+        assertEquals("refDate.getTime()", refDate.getTime(), ts.getTime());
+        Date tsDate = ts.getDate();
+        assertEquals(refDate, tsDate);
     }
 
     public void testNotSame() {
