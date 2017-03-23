@@ -90,6 +90,13 @@ public abstract class SubnetInfo
     public void setInclusiveHostCount(boolean inclusiveHostCount) { }
 
     /**
+     * Converts a dotted decimal format address to a packed integer format. (ONLY USE in IPv4
+     *
+     * @return a packed integer of a dotted decimal format address
+     */
+    public int asInteger(String address) { return 0; }
+
+    /**
      * Returns true if the parameter <code>address</code> is in the
      * range of usable endpoint addresses for this subnet. This excludes the
      * network and broadcast addresses if the address is IPv4 address.
@@ -168,6 +175,16 @@ public abstract class SubnetInfo
     public String getCIDRNotation() { return null; }
 
     /**
+     * Returns a CIDR notation, in which the address is followed by slash and
+     * the count of counting the 1-bit population in the subnet mask.
+     * IPv4 CIDR notation: e.g. "192.168.0.1/24"
+     * IPv6 CIDR notation: e.g. "2001:db8::ff00:42:8329/48"
+     *
+     * @return the CIDR notation of the address
+     */
+    public String getCidrSignature() { return getCIDRNotation(); }
+
+    /**
      * Returns the lowest address as a dotted decimal or the colon-separated hexadecimal IP address.
      * Will be zero for CIDR/31 and CIDR/32 if the address is IPv4 address and
      * the inclusive flag is <code>false</code>.
@@ -204,5 +221,13 @@ public abstract class SubnetInfo
      * @return the count of addresses, may be zero
      */
     public long getAddressCountLong() { return 0; }
+
+    /**
+     * Returns a list of the available addresses.
+     *
+     * @return an array of the available addresses
+     * @deprecated (3.7) overflow if the available addresses are greater than {@code Integer.MAX_VALUE}
+     */
+    public String[] getAllAddresses() { return null; }
 
 }

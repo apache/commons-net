@@ -199,6 +199,12 @@ public final class IP4Subnet extends SubnetInfo
         return addr;
     }
 
+    @Override
+    public int asInteger(String address)
+    {
+        return toInteger(address);
+    }
+
     /**
      * Returns true if the parameter <code>address</code> is in the
      * range of usable endpoint addresses for this subnet. This excludes the
