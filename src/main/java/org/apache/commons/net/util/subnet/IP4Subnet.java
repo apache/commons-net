@@ -314,7 +314,7 @@ public final class IP4Subnet extends SubnetInfo
      * @return the count of addresses in a string, may be zero
      */
     @Override
-    public String getAddressCount()
+    public String getAddressCountString()
     {
         return Long.toString(getAddressCountLong());
     }

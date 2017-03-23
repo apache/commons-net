@@ -194,7 +194,7 @@ public abstract class SubnetInfo
      *
      * @return the count of addresses in a string, may be zero
      */
-    public String getAddressCount() { return null; }
+    public String getAddressCountString() { return null; }
 
     /**
      * Returns the count of available addresses.

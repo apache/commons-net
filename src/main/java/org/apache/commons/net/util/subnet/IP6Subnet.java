@@ -246,7 +246,8 @@ public final class IP6Subnet extends SubnetInfo
      *
      * @return the count of addresses in a string, may be zero
      */
-    public String getAddressCount()
+    @Override
+    public String getAddressCountString()
     {
         return new BigInteger("2").pow(128 - cidr).toString();
     }
@@ -265,7 +266,7 @@ public final class IP6Subnet extends SubnetInfo
         buf.append("CIDR-Notation:\t[").append(getCIDRNotation()).append("]")
         .append("First Address:\t[").append(getLowAddress()).append("]\n")
         .append("Last Address:\t[").append(getHighAddress()).append("]\n")
-        .append("# Addresses:\t[").append(getAddressCount()).append("]\n");
+        .append("# Addresses:\t[").append(getAddressCountString()).append("]\n");
 
         return buf.toString();
     }
