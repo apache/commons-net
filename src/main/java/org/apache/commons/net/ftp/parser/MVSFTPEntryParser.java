@@ -271,7 +271,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
                 isParsed = parseSimpleEntry(f, entry);
             }
         } else if (isType == UNIX_LIST_TYPE) {
-            isParsed = parseUnixList(f, entry);
+            return unixFTPEntryParser.parseFTPEntry(entry);
         } else if (isType == JES_LEVEL_1_LIST_TYPE) {
             isParsed = parseJeslevel1List(f, entry);
         } else if (isType == JES_LEVEL_2_LIST_TYPE) {
@@ -399,21 +399,6 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             return true;
         }
         return false;
-    }
-
-    /**
-     * Parse the entry as a standard unix file. Using the UnixFTPEntryParser.
-     *
-     * @param file
-     * @param entry
-     * @return true: entry is parsed, false: entry could not be parsed.
-     */
-    private boolean parseUnixList(FTPFile file, String entry) {
-        file = unixFTPEntryParser.parseFTPEntry(entry);
-        if (file == null) {
-            return false;
-        }
-        return true;
     }
 
     /**

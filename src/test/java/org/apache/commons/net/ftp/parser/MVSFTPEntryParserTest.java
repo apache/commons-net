@@ -17,6 +17,7 @@
 package org.apache.commons.net.ftp.parser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.net.ftp.FTPFile;
@@ -63,6 +64,12 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
             "IBMUSER2 JOB01906 IBMUSER  OUTPUT A        RC=0000 3 spool files",
             "IBMUSER  TSU01830 IBMUSER  OUTPUT TSU      ABEND=522 3 spool files", };
 
+    private static final String[] goodsamplesUnixList = {
+            "total 1234",
+            "-rwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox",
+            "drwxr-xr-x   2 root     root         4096 Aug 24  2001 zxjdbc",
+            };
+
     private static final String[] badsamples = {
             "MigratedP201.$FTXPBI1.$CF2ITB.$AAB0402.I",
             "PSMLC133902005/04/041VB2799427998PSfile1.I", "file2.O", };
@@ -97,7 +104,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
         l.add(goodsamplesMemberList);
         l.add(goodsamplesJES1List);
         l.add(goodsamplesJES2List);
-
+        l.add(goodsamplesUnixList);
         return l;
     }
 
@@ -160,6 +167,20 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
             FTPFile f = parser.parseFTPEntry(test);
             assertNotNull("Failed to parse " + test, f);
             doAdditionalGoodTests(test, f);
+        }
+    }
+
+    public void testUnixListings() {
+        MVSFTPEntryParser parser = new MVSFTPEntryParser();
+        List<String> list = new ArrayList<String>();
+        Collections.addAll(list, goodsamplesUnixList);
+        parser.preParse(list);
+        for (String test : list) {
+            FTPFile f = parser.parseFTPEntry(test);
+            assertNotNull("Failed to parse " + test, f);
+            assertNotNull("Failed to parse name " + test, f.getName());
+            assertNotNull("Failed to parse group " + test, f.getGroup());
+            assertNotNull("Failed to parse user " + test, f.getUser());
         }
     }
 
