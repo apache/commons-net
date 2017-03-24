@@ -14,14 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.net.util.subnet;
+package org.apache.commons.net.util;
 
 /**
  * Convenience container for IPv4 subnet summary information.
  * @see <a href="https://tools.ietf.org/html/rfc4632">https://tools.ietf.org/html/rfc4632</a>
  * @since 3.7
  */
-public final class IP4Subnet extends SubnetInfo
+public final class IP4Subnet extends SubnetUtils.SubnetInfo
 {
 
     /* Mask to convert an unsigned integer to a long (e.g. keep 32 bits) */
@@ -172,13 +172,13 @@ public final class IP4Subnet extends SubnetInfo
             ret[i] = (val >>> (8 * (3 - i))) & 0xff;
         }
 
-        return SubnetInfo.format(ret, ".");
+        return format(ret, ".");
     }
 
     /*
      * Converts a dotted decimal format address to a packed integer format.
      */
-    private static int toInteger(String address)
+    private int toInteger(String address)
     {
         String[] addrArry = address.split("\\.");
 

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.net.util.subnet;
+package org.apache.commons.net.util;
 
 import java.math.BigInteger;
 import java.util.regex.Matcher;
@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * @see <a href="https://tools.ietf.org/html/rfc4291#section-2.3">https://tools.ietf.org/html/rfc4291#section-2.3</a>
  * @since 3.7
  */
-public final class IP6Subnet extends SubnetInfo
+public final class IP6Subnet extends SubnetUtils.SubnetInfo
 {
 
     private static final int NBITS = 128;
@@ -112,7 +112,7 @@ public final class IP6Subnet extends SubnetInfo
      */
     private String format(int[] val)
     {
-        String address = SubnetInfo.format(val, ":");
+        String address = format(val, ":");
 
         /* The longest run of consecutive 0 fields MUST be shortened based on RFC 5952. */
         String regex = "";
