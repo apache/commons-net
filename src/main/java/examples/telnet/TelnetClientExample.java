@@ -70,7 +70,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
 
         if (args.length > 1)
         {
-            remoteport = (new Integer(args[1])).intValue();
+            remoteport = Integer.parseInt(args[1]);
         }
         else
         {
