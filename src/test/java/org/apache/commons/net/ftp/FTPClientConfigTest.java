@@ -176,13 +176,13 @@ public class FTPClientConfigTest extends TestCase {
         assertEquals("different.parser.same.date",d1, d2);
 
         try {
-            d2 = sdf1.parse("hij 31, 2004");
+            sdf1.parse("hij 31, 2004");
             fail("should.have.failed.to.parse.weird");
         } catch (ParseException px) {
             // expected
         }
         try {
-            d2 = sdf2.parse("dec 31, 2004");
+            sdf2.parse("dec 31, 2004");
             fail("should.have.failed.to.parse.standard");
         } catch (ParseException px) {
             // expected
