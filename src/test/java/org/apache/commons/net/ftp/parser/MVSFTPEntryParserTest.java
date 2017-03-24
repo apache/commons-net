@@ -240,6 +240,13 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
     }
 
     @Override
+    public void doAdditionalGoodTests(String test, FTPFile f) {
+        assertNotNull("Could not parse raw listing in " + test, f.getRawListing());
+        assertNotNull("Could not parse name in " + test, f.getName());
+        // some tests don't produce any further details
+    }
+
+    @Override
     public void testDefaultPrecision() {
         // TODO Not sure what dates are parsed
     }
