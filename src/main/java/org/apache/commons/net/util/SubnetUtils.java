@@ -16,7 +16,6 @@
  */
 package org.apache.commons.net.util;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -28,20 +27,6 @@ import java.util.regex.Pattern;
  * @since 2.0
  */
 public class SubnetUtils {
-
-    private static final String IP_ADDRESS = "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})";
-    private static final String SLASH_FORMAT = IP_ADDRESS + "/(\\d{1,2})"; // 0 -> 32
-    private static final Pattern addressPattern = Pattern.compile(IP_ADDRESS);
-    private static final Pattern cidrPattern = Pattern.compile(SLASH_FORMAT);
-    private static final int NBITS = 32;
-
-    private final int netmask;
-    private final int address;
-    private final int network;
-    private final int broadcast;
-
-    /** Whether the broadcast/network address are included in host count */
-    private boolean inclusiveHostCount = false;
 
     private static final String IPV4_ADDRESS = "(\\d{1,3}\\.){3}\\d{1,3}/\\d{1,2}";
     private static final String IPV6_ADDRESS = "([0-9a-f]{1,4}\\:){7}[0-9a-f]{1,4}/\\d{1,3}";
@@ -83,8 +68,8 @@ public class SubnetUtils {
     /**
      * Returns <code>true</code> if the return value of {@link SubnetInfo#getAddressCount()}
      * includes the network and broadcast addresses.
-     * @since 2.2
      * @return true if the host count includes the network and broadcast addresses
+     * @since 2.2
      */
     public boolean isInclusiveHostCount() {
         return subnetInfo.isInclusiveHostCount();
@@ -354,81 +339,5 @@ public class SubnetUtils {
      * @return new instance
      */
     public final SubnetInfo getInfo() { return subnetInfo; }
-
-    /*
-     * Convert a dotted decimal format address to a packed integer format
-     */
-    private static int toInteger(String address) {
-        Matcher matcher = addressPattern.matcher(address);
-        if (matcher.matches()) {
-            return matchAddress(matcher);
-        } else {
-            throw new IllegalArgumentException("Could not parse [" + address + "]");
-        }
-    }
-
-    /*
-     * Convenience method to extract the components of a dotted decimal address and
-     * pack into an integer using a regex match
-     */
-    private static int matchAddress(Matcher matcher) {
-        int addr = 0;
-        for (int i = 1; i <= 4; ++i) {
-            int n = (rangeCheck(Integer.parseInt(matcher.group(i)), 0, 255));
-            addr |= ((n & 0xff) << 8*(4-i));
-        }
-        return addr;
-    }
-
-    /*
-     * Convert a packed integer address into a 4-element array
-     */
-    private int[] toArray(int val) {
-        int ret[] = new int[4];
-        for (int j = 3; j >= 0; --j) {
-            ret[j] |= ((val >>> 8*(3-j)) & (0xff));
-        }
-        return ret;
-    }
-
-    /*
-     * Convert a 4-element array into dotted decimal format
-     */
-    private String format(int[] octets) {
-        StringBuilder str = new StringBuilder();
-        for (int i =0; i < octets.length; ++i){
-            str.append(octets[i]);
-            if (i != octets.length - 1) {
-                str.append(".");
-            }
-        }
-        return str.toString();
-    }
-
-    /*
-     * Convenience function to check integer boundaries.
-     * Checks if a value x is in the range [begin,end].
-     * Returns x if it is in range, throws an exception otherwise.
-     */
-    private static int rangeCheck(int value, int begin, int end) {
-        if (value >= begin && value <= end) { // (begin,end]
-            return value;
-        }
-
-        throw new IllegalArgumentException("Value [" + value + "] not in range ["+begin+","+end+"]");
-    }
-
-    /*
-     * Count the number of 1-bits in a 32-bit integer using a divide-and-conquer strategy
-     * see Hacker's Delight section 5.1
-     */
-    int pop(int x) {
-        x = x - ((x >>> 1) & 0x55555555);
-        x = (x & 0x33333333) + ((x >>> 2) & 0x33333333);
-        x = (x + (x >>> 4)) & 0x0F0F0F0F;
-        x = x + (x >>> 8);
-        x = x + (x >>> 16);
-        return x & 0x0000003F;
-    }
 
 }
