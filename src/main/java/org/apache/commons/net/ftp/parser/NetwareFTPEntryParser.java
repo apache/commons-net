@@ -147,11 +147,11 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
             // Now set the permissions (or at least a subset thereof - full permissions would probably require
             // subclassing FTPFile and adding extra metainformation there)
-            if (attrib.indexOf("R") != -1) {
+            if (attrib.indexOf('R') != -1) {
                 f.setPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION,
                         true);
             }
-            if (attrib.indexOf("W") != -1) {
+            if (attrib.indexOf('W') != -1) {
                 f.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION,
                         true);
             }

@@ -1004,7 +1004,7 @@ public class FTP extends SocketClient
 
         // If IPv6, trim the zone index
         h = host.getHostAddress();
-        num = h.indexOf("%");
+        num = h.indexOf('%');
         if (num > 0) {
             h = h.substring(0, num);
         }
