@@ -307,6 +307,23 @@ public class SubnetUtils {
         public String getHighAddress() { return null; }
 
         /**
+         * Get the count of available addresses.
+         * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
+         * @return the count of addresses, may be zero.
+         * @throws RuntimeException if the correct count is greater than {@code Integer.MAX_VALUE}
+         * @deprecated (3.4) use {@link #getAddressCountLong()} instead
+         */
+        @Deprecated
+        public int getAddressCount() {
+            long countLong = getAddressCountLong();
+            if (countLong > Integer.MAX_VALUE) {
+                throw new RuntimeException("Count is larger than an integer: " + countLong);
+            }
+            // N.B. cannot be negative
+            return (int)countLong;
+        }
+
+        /**
          * Returns the count of available addresses.
          * Will be zero for CIDR/31 and CIDR/32 if the address is IPv4 address and
          * the inclusive flag is <code>false</code>.
@@ -324,12 +341,14 @@ public class SubnetUtils {
          */
         public String getAddressCountString() { return null; }
 
+
         /**
          * Returns a list of the available addresses.
          *
          * @return an array of the available addresses
          * @deprecated (3.7) overflow if the available addresses are greater than {@code Integer.MAX_VALUE}
          */
+        @Deprecated
         public String[] getAllAddresses() { return new String[0]; }
 
     }

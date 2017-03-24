@@ -335,6 +335,25 @@ public final class IP4Subnet extends SubnetUtils.SubnetInfo
     }
 
     /**
+     * Returns a list of the available addresses.
+     *
+     * @return an array of the available addresses
+     * @deprecated (3.7) overflow if the available addresses are greater than {@code Integer.MAX_VALUE}
+     */
+    @Override
+    public String[] getAllAddresses() {
+        int ct = getAddressCount();
+        String[] addresses = new String[ct];
+        if (ct == 0) {
+            return addresses;
+        }
+        for (int add = low(), j=0; add <= high(); ++add, ++j) {
+            addresses[j] = format(add);
+        }
+        return addresses;
+    }
+
+    /**
      * Returns subnet summary information of the address,
      * which includes an IP address by CIDR-Notation with the netmask,
      * network address, broadcast address, the first and last addresses of the network,
