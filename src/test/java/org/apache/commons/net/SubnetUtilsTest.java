@@ -46,7 +46,7 @@ public class SubnetUtilsTest extends TestCase {
         utils.setInclusiveHostCount(true);
         SubnetInfo info = utils.getInfo();
         assertEquals("255.0.0.0", info.getNetmask());
-        assertEquals(16777216, info.getAddressCount());
+        assertEquals(16777216, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/0");
         utils.setInclusiveHostCount(true);
@@ -64,145 +64,145 @@ public class SubnetUtilsTest extends TestCase {
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.128.0.0", info.getNetmask());
-        assertEquals(8388608, info.getAddressCount());
+        assertEquals(8388608, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/10");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.192.0.0", info.getNetmask());
-        assertEquals(4194304, info.getAddressCount());
+        assertEquals(4194304, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/11");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.224.0.0", info.getNetmask());
-        assertEquals(2097152, info.getAddressCount());
+        assertEquals(2097152, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/12");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.240.0.0", info.getNetmask());
-        assertEquals(1048576, info.getAddressCount());
+        assertEquals(1048576, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/13");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.248.0.0", info.getNetmask());
-        assertEquals(524288, info.getAddressCount());
+        assertEquals(524288, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/14");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.252.0.0", info.getNetmask());
-        assertEquals(262144, info.getAddressCount());
+        assertEquals(262144, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/15");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.254.0.0", info.getNetmask());
-        assertEquals(131072, info.getAddressCount());
+        assertEquals(131072, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/16");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.255.0.0", info.getNetmask());
-        assertEquals(65536, info.getAddressCount());
+        assertEquals(65536, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/17");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.255.128.0", info.getNetmask());
-        assertEquals(32768, info.getAddressCount());
+        assertEquals(32768, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/18");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.255.192.0", info.getNetmask());
-        assertEquals(16384, info.getAddressCount());
+        assertEquals(16384, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/19");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.255.224.0", info.getNetmask());
-        assertEquals(8192, info.getAddressCount());
+        assertEquals(8192, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/20");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.255.240.0", info.getNetmask());
-        assertEquals(4096, info.getAddressCount());
+        assertEquals(4096, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/21");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.255.248.0", info.getNetmask());
-        assertEquals(2048, info.getAddressCount());
+        assertEquals(2048, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/22");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.255.252.0", info.getNetmask());
-        assertEquals(1024, info.getAddressCount());
+        assertEquals(1024, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/23");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.255.254.0", info.getNetmask());
-        assertEquals(512, info.getAddressCount());
+        assertEquals(512, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/24");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.255.255.0", info.getNetmask());
-        assertEquals(256, info.getAddressCount());
+        assertEquals(256, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/25");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.255.255.128", info.getNetmask());
-        assertEquals(128, info.getAddressCount());
+        assertEquals(128, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/26");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.255.255.192", info.getNetmask());
-        assertEquals(64, info.getAddressCount());
+        assertEquals(64, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/27");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.255.255.224", info.getNetmask());
-        assertEquals(32, info.getAddressCount());
+        assertEquals(32, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/28");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.255.255.240", info.getNetmask());
-        assertEquals(16, info.getAddressCount());
+        assertEquals(16, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/29");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.255.255.248", info.getNetmask());
-        assertEquals(8, info.getAddressCount());
+        assertEquals(8, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/30");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.255.255.252", info.getNetmask());
-        assertEquals(4, info.getAddressCount());
+        assertEquals(4, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/31");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.255.255.254", info.getNetmask());
-        assertEquals(2, info.getAddressCount());
+        assertEquals(2, info.getAddressCountLong());
 
         utils = new SubnetUtils("192.168.0.1/32");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("255.255.255.255", info.getNetmask());
-        assertEquals(1, info.getAddressCount());
+        assertEquals(1, info.getAddressCountLong());
 
         new SubnetUtils("192.168.0.1/1");
     }
@@ -218,7 +218,7 @@ public class SubnetUtilsTest extends TestCase {
 
     public void testNET428_31() throws Exception {
         final SubnetUtils subnetUtils = new SubnetUtils("1.2.3.4/31");
-        assertEquals(0, subnetUtils.getInfo().getAddressCount());
+        assertEquals(0, subnetUtils.getInfo().getAddressCountLong());
         String[] address = subnetUtils.getInfo().getAllAddresses();
         assertNotNull(address);
         assertEquals(0, address.length);
@@ -226,7 +226,7 @@ public class SubnetUtilsTest extends TestCase {
 
     public void testNET428_32() throws Exception {
         final SubnetUtils subnetUtils = new SubnetUtils("1.2.3.4/32");
-        assertEquals(0, subnetUtils.getInfo().getAddressCount());
+        assertEquals(0, subnetUtils.getInfo().getAddressCountLong());
         String[] address = subnetUtils.getInfo().getAllAddresses();
         assertNotNull(address);
         assertEquals(0, address.length);
@@ -253,7 +253,7 @@ public class SubnetUtilsTest extends TestCase {
             assertEquals(lowAddresses[i], info.getLowAddress());
             assertEquals(highAddresses[i], info.getHighAddress());
             assertEquals(networkAddresses[i], info.getNetworkAddress());
-            assertEquals(usableAddresses[i], info.getAddressCount());
+            assertEquals(usableAddresses[i], info.getAddressCountLong());
         }
     }
 
@@ -275,7 +275,7 @@ public class SubnetUtilsTest extends TestCase {
             assertEquals("ci " + masks[i], cidrS[i], info.getCidrSignature());
             assertEquals("bc " + masks[i], bcast[i], info.getBroadcastAddress());
             assertEquals("nw " + masks[i], netwk[i], info.getNetworkAddress());
-            assertEquals("ac " + masks[i], usableAd[i], info.getAddressCount());
+            assertEquals("ac " + masks[i], usableAd[i], info.getAddressCountLong());
             assertEquals("lo " + masks[i], lowAd[i], info.getLowAddress());
             assertEquals("hi " + masks[i], highA[i], info.getHighAddress());
         }
@@ -297,7 +297,7 @@ public class SubnetUtilsTest extends TestCase {
             SubnetInfo info = utils.getInfo();
             assertEquals("ci " + masks[i], cidrS[i], info.getCidrSignature());
             assertEquals("bc " + masks[i], bcast[i], info.getBroadcastAddress());
-            assertEquals("ac " + masks[i], usableAd[i], info.getAddressCount());
+            assertEquals("ac " + masks[i], usableAd[i], info.getAddressCountLong());
             assertEquals("nw " + masks[i], netwk[i], info.getNetworkAddress());
             assertEquals("lo " + masks[i], lowAd[i], info.getLowAddress());
             assertEquals("hi " + masks[i], highA[i], info.getHighAddress());
@@ -317,27 +317,17 @@ public class SubnetUtilsTest extends TestCase {
         info = utils.getInfo();
         assertEquals("0.0.0.0", info.getNetmask());
         assertEquals(4294967296L, info.getAddressCountLong());
-        try {
-            info.getAddressCount();
-            fail("Expected RuntimeException");
-        } catch (RuntimeException expected) {
-            // ignored
-        }
+
         utils = new SubnetUtils("128.0.0.0/1");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("128.0.0.0", info.getNetmask());
         assertEquals(2147483648L, info.getAddressCountLong());
-        try {
-            info.getAddressCount();
-            fail("Expected RuntimeException");
-        } catch (RuntimeException expected) {
-            // ignored
-        }
+
         // if we exclude the broadcast and network addresses, the count is less than Integer.MAX_VALUE
         utils.setInclusiveHostCount(false);
         info = utils.getInfo();
-        assertEquals(2147483646, info.getAddressCount());
+        assertEquals(2147483646, info.getAddressCountLong());
     }
 
     public void testNET624() {
