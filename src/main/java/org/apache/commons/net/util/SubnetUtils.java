@@ -174,6 +174,7 @@ public class SubnetUtils {
         /**
          * Converts a dotted decimal format address to a packed integer format. (ONLY USE in IPv4)
          *
+         * @param address a dotted decimal format address
          * @return a packed integer of a dotted decimal format address
          */
         public int asInteger(String address) { return 0; }
@@ -326,7 +327,7 @@ public class SubnetUtils {
         /**
          * Returns the count of available addresses.
          * Will be zero for CIDR/31 and CIDR/32 if the address is IPv4 address and
-         * the inclusive flag is <code>false</code>.
+         * the {@link IP4Subnet#inclusiveHostCount} flag is <code>false</code>.
          *
          * @return the count of addresses, may be zero
          */
@@ -335,7 +336,7 @@ public class SubnetUtils {
         /**
          * Returns the count of available addresses.
          * Will be zero for CIDR/31 and CIDR/32 if the address is IPv4 address and
-         * the inclusive flag is <code>false</code>.
+         * the {@link IP4Subnet#inclusiveHostCount} flag is <code>false</code>
          *
          * @return the count of addresses in a string, may be zero
          */
