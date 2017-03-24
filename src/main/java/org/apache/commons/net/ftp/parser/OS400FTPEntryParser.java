@@ -19,6 +19,7 @@ package org.apache.commons.net.ftp.parser;
 
 import java.io.File;
 import java.text.ParseException;
+import java.util.Locale;
 
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
@@ -335,7 +336,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
                 // file.
                 // Save files are a special type of files which are used
                 // to save objects, e.g. for backups.
-                if (name != null && name.toUpperCase().endsWith(".SAVF"))
+                if (name != null && name.toUpperCase(Locale.ROOT).endsWith(".SAVF"))
                 {
                     mustScanForPathSeparator = false;
                     type = FTPFile.FILE_TYPE;
