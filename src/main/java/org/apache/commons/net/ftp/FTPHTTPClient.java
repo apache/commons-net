@@ -65,7 +65,7 @@ public class FTPHTTPClient extends FTPClient {
         this.proxyUsername = proxyUser;
         this.proxyPassword = proxyPass;
         this.tunnelHost = null;
-        this.charset = null;
+        this.charset = encoding;
     }
 
     /**
