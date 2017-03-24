@@ -18,7 +18,7 @@
 package org.apache.commons.net;
 
 import org.apache.commons.net.util.SubnetUtils;
-import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
+import org.apache.commons.net.util.subnet.SubnetInfo;
 
 import junit.framework.TestCase;
 

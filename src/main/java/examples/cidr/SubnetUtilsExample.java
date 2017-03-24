@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import org.apache.commons.net.util.SubnetUtils;
-import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
+import org.apache.commons.net.util.subnet.SubnetInfo;
 
 /**
  * Example class that shows how to use the {@link SubnetUtils} class.
