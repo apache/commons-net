@@ -93,7 +93,7 @@ public final class finger
         while (arg < args.length)
         {
 
-            index = args[arg].lastIndexOf("@");
+            index = args[arg].lastIndexOf('@');
 
             if (index == -1)
             {

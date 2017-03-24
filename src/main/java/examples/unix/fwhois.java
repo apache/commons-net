@@ -43,7 +43,7 @@ public final class fwhois
             System.exit(1);
         }
 
-        index = args[0].lastIndexOf("@");
+        index = args[0].lastIndexOf('@');
 
         whois = new WhoisClient();
         // We want to timeout if a response takes longer than 60 seconds
