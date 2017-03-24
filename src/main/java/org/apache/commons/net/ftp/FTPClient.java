@@ -1547,7 +1547,7 @@ implements Configurable
      * <p>
      * <b>N.B.</b> currently calling any connect method will reset the type to
      * FTP.ASCII_FILE_TYPE.
-     * @param fileType The <code> _FILE_TYPE </code> constant indcating the
+     * @param fileType The <code> _FILE_TYPE </code> constant indicating the
      *                 type of file.
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException
@@ -1591,7 +1591,7 @@ implements Configurable
      * <b>N.B.</b> currently calling any connect method will reset the type to
      * FTP.ASCII_FILE_TYPE and the formatOrByteSize to FTP.NON_PRINT_TEXT_FORMAT.
      *
-     * @param fileType The <code> _FILE_TYPE </code> constant indcating the
+     * @param fileType The <code> _FILE_TYPE </code> constant indicating the
      *                 type of file.
      * @param formatOrByteSize  The format of the file (one of the
      *              <code>_FORMAT</code> constants.  In the case of
