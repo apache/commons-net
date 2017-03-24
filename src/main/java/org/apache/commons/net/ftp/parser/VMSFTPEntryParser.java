@@ -164,7 +164,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             }
             else
             {
-                name = name.substring(0, name.lastIndexOf(";"));
+                name = name.substring(0, name.lastIndexOf(';'));
                 f.setName(name);
             }
             //size is retreived in blocks and needs to be put in bytes
