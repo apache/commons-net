@@ -66,6 +66,7 @@ public final class chargen
             System.out.println(line);
         }
 
+        chargenInput.close();
         client.disconnect();
     }
 

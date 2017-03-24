@@ -64,7 +64,9 @@ public final class echo
             echoOutput.println(line);
             System.out.println(echoInput.readLine());
         }
-
+        echoOutput.close();
+        echoInput.close();
+        echoInput.close();
         client.disconnect();
     }
 
