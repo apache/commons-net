@@ -16,11 +16,10 @@
  */
 package examples.cidr;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
-import org.apache.commons.net.util.SubnetUtils;
-import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
+import org.apache.commons.net.util.subnet.SubnetUtils;
+import org.apache.commons.net.util.subnet.SubnetInfo;
 
 /**
  * Example class that shows how to use the {@link SubnetUtils} class.
@@ -30,8 +29,11 @@ public class SubnetUtilsExample {
 
     public static void main(String[] args) {
         String subnet = "192.168.0.3/31";
+        /*
         SubnetUtils utils = new SubnetUtils(subnet);
         SubnetInfo info = utils.getInfo();
+        */
+        SubnetInfo info = SubnetUtils.getByCIDRNortation(subnet);
 
         System.out.printf("Subnet Information for %s:\n", subnet);
         System.out.println("--------------------------------------");
@@ -53,7 +55,7 @@ public class SubnetUtilsExample {
                 Integer.toBinaryString(info.asInteger(info.getHighAddress())));
 
         System.out.printf("Total usable addresses: \t%d\n", Long.valueOf(info.getAddressCountLong()));
-        System.out.printf("Address List: %s\n\n", Arrays.toString(info.getAllAddresses()));
+        //System.out.printf("Address List: %s\n\n", Arrays.toString(info.getAllAddresses()));
 
         final String prompt ="Enter an IP address (e.g. 192.168.0.10):";
         System.out.println(prompt);
