@@ -163,9 +163,7 @@ public final class TFTPExample
         catch (IOException e)
         {
             tftp.close();
-            System.err.println("Error: could not open local file for reading.");
-            System.err.println(e.getMessage());
-            System.exit(1);
+            throw new RuntimeException("Error: could not open local file for reading.", e);
         }
 
         open(tftp);
@@ -213,7 +211,7 @@ public final class TFTPExample
         if (file.exists())
         {
             System.err.println("Error: " + localFilename + " already exists.");
-            System.exit(1);
+            return false;
         }
 
         // Try to open local file for writing
@@ -224,9 +222,7 @@ public final class TFTPExample
         catch (IOException e)
         {
             tftp.close();
-            System.err.println("Error: could not open local file for writing.");
-            System.err.println(e.getMessage());
-            System.exit(1);
+            throw new RuntimeException("Error: could not open local file for writing.", e);
         }
 
         open(tftp);
@@ -289,9 +285,7 @@ public final class TFTPExample
         }
         catch (SocketException e)
         {
-            System.err.println("Error: could not open local UDP socket.");
-            System.err.println(e.getMessage());
-            System.exit(1);
+            throw new RuntimeException("Error: could not open local UDP socket.", e);
         }
     }
 
