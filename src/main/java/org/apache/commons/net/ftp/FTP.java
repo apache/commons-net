@@ -1707,6 +1707,7 @@ public class FTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
+     * @since 3.7
      ***/
     public int size(String parameters) throws IOException
     {

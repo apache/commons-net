@@ -3537,6 +3537,7 @@ implements Configurable
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
+     * @since 3.7
      */
     public String getSize(String pathname) throws IOException
     {
