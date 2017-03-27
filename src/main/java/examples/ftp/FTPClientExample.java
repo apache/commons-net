@@ -63,6 +63,7 @@ public final class FTPClientExample
         "\t-E - encoding to use for control channel\n" +
         "\t-f - issue FEAT command (remote and local files are ignored)\n" +
         "\t-h - list hidden files (applies to -l and -n only)\n" +
+        "\t-i - issue SIZE command for a file\n" +
         "\t-k secs - use keep-alive timer (setControlKeepAliveTimeout)\n" +
         "\t-l - list files using LIST (remote is used as the pathname if provided)\n" +
         "\t     Files are listed twice: first in raw mode, then as the formatted parsed data.\n" +
@@ -91,6 +92,7 @@ public final class FTPClientExample
         boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false, listNames = false, hidden = false;
         boolean localActive = false, useEpsvWithIPv4 = false, feat = false, printHash = false;
         boolean mlst = false, mlsd = false, mdtm = false, saveUnparseable = false;
+        boolean size = false;
         boolean lenient = false;
         long keepAliveTimeout = -1;
         int controlKeepAliveReplyTimeout = -1;
@@ -148,6 +150,10 @@ public final class FTPClientExample
             }
             else if (args[base].equals("-h")) {
                 hidden = true;
+            }
+            else if (args[base].equals("-i")) {
+                size = true;
+                minParams = 3;
             }
             else if (args[base].equals("-k")) {
                 keepAliveTimeout = Long.parseLong(args[++base]);
@@ -404,7 +410,7 @@ __main:
                 }
             }
             // Allow multiple list types for single invocation
-            else if (listFiles || mlsd || mdtm || mlst || listNames)
+            else if (listFiles || mlsd || mdtm || mlst || listNames || size)
             {
                 if (mlsd) {
                     for (FTPFile f : ftp.mlistDir(remote)) {
@@ -431,6 +437,9 @@ __main:
                     for (String s : ftp.listNames(remote)) {
                         System.out.println(s);
                     }
+                }
+                if (size) {
+                    System.out.println("Size="+ftp.getSize(remote));
                 }
                 // Do this last because it changes the client
                 if (listFiles) {

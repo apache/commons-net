@@ -3524,6 +3524,30 @@ implements Configurable
 
 
     /**
+     * Issue the FTP SIZE command to the server for a given pathname.
+     * This should produce the size of the file.
+     *
+     * @param pathname the filename
+     *
+     * @return The size information returned by the server; {@code null} if there was an error
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     */
+    public String getSize(String pathname) throws IOException
+    {
+        if (FTPReply.isPositiveCompletion(size(pathname))) {
+            return getReplyStrings()[0].substring(4); // skip the return code (e.g. 213) and the space
+        }
+        return null;
+    }
+
+
+    /**
      * Issue the FTP MDTM command (not supported by all servers) to retrieve the last
      * modification time of a file. The modification string should be in the
      * ISO 3077 form "YYYYMMDDhhmmss(.xxx)?". The timestamp represented should also be in
