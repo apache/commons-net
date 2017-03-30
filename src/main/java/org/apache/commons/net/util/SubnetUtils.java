@@ -123,7 +123,6 @@ public class SubnetUtils {
 
     /**
      * Convenience container for subnet summary information.
-     * @since 3.7 (reorganized)
      */
     public static class SubnetInfo {
 
