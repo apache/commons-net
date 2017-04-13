@@ -309,7 +309,7 @@ public final class IP4Subnet extends SubnetUtils.SubnetInfo
 
     /**
      * Returns the count of available addresses.
-     * Will be zero for CIDR/31 and CIDR/32 if the {@link inclusiveHostCount} flag is <code>false</code>.
+     * Will be zero for CIDR/31 and CIDR/32 if the inclusiveHostCount flag is <code>false</code>.
      *
      * @return the count of addresses in a string, may be zero
      */
@@ -321,7 +321,7 @@ public final class IP4Subnet extends SubnetUtils.SubnetInfo
 
     /**
      * Returns the count of available addresses.
-     * Will be zero for CIDR/31 and CIDR/32 if the {@link inclusiveHostCount} flag is <code>false</code>.
+     * Will be zero for CIDR/31 and CIDR/32 if the inclusiveHostCount flag is <code>false</code>.
      *
      * @return the count of addresses, may be zero
      */
