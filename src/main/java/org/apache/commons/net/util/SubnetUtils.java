@@ -66,7 +66,7 @@ public class SubnetUtils {
     }
 
     /**
-     * Returns <code>true</code> if the return value of {@link SubnetInfo#getAddressCount()}
+     * Returns <code>true</code> if the return value of {@link SubnetInfo#getAddressCountLong() getAddressCountLong}
      * includes the network and broadcast addresses.
      * @return true if the host count includes the network and broadcast addresses
      * @since 2.2
@@ -76,7 +76,7 @@ public class SubnetUtils {
     }
 
     /**
-     * Set to <code>true</code> if you want the return value of {@link SubnetInfo#getAddressCount()}
+     * Set to <code>true</code> if you want the return value of {@link SubnetInfo#getAddressCountLong() getAddressCountLong}
      * to include the network and broadcast addresses.
      * @param inclusiveHostCount true if network and broadcast addresses are to be included
      * @since 2.2
@@ -179,7 +179,7 @@ public class SubnetUtils {
         public int asInteger(String address) { return 0; }
 
         /**
-         * Returns <code>true</code> if the return value of {@link #getAddressCount()}
+         * Returns <code>true</code> if the return value of {@link #getAddressCountLong() getAddressCountLong}
          * includes the network and broadcast addresses. (ONLY USE in IPv4)
          *
          * @return true if the host count includes the network and broadcast addresses
@@ -187,7 +187,7 @@ public class SubnetUtils {
         public boolean isInclusiveHostCount() { return false; }
 
         /**
-         * Sets to <code>true</code> if you want the return value of {@link #getAddressCount()}
+         * Sets to <code>true</code> if you want the return value of {@link #getAddressCountLong() getAddressCountLong}
          * to include the network and broadcast addresses. (ONLY USE in IPv4)
          *
          * @param inclusiveHostCount true if network and broadcast addresses are to be included

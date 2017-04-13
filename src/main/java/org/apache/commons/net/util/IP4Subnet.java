@@ -103,7 +103,7 @@ public final class IP4Subnet extends SubnetUtils.SubnetInfo
     }
 
     /**
-     * Returns <code>true</code> if the return value of {@link #getAddressCount()}
+     * Returns <code>true</code> if the return value of {@link #getAddressCountLong() getAddressCountLong}
      * includes the network and broadcast addresses.
      *
      * @return true if the host count includes the network and broadcast addresses
@@ -115,7 +115,7 @@ public final class IP4Subnet extends SubnetUtils.SubnetInfo
     }
 
     /**
-     * Sets to <code>true</code> if you want the return value of {@link #getAddressCount()}
+     * Sets to <code>true</code> if you want the return value of {@link #getAddressCountLong() getAddressCountLong}
      * to include the network and broadcast addresses.
      *
      * @param inclusiveHostCount true if network and broadcast addresses are to be included
