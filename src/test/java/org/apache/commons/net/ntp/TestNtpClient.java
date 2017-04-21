@@ -21,7 +21,7 @@ import org.junit.BeforeClass;
 import org.junit.Assert;
 import org.junit.Test;
 
-import examples.ntp.SimpleNTPServer;
+import org.apache.commons.net.examples.ntp.SimpleNTPServer;
 
 import java.io.IOException;
 import java.net.InetAddress;
