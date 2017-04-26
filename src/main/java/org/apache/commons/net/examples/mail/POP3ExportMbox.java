@@ -65,7 +65,7 @@ public final class POP3ExportMbox
         if (argCount < 3)
         {
             System.err.println(
-                "Usage: POP3Mail [-F file] <server[:port]> <username> <password|-|*|VARNAME> [TLS [true=implicit]]");
+                "Usage: POP3Mail [-F file/directory] <server[:port]> <username> <password|-|*|VARNAME> [TLS [true=implicit]]");
             System.exit(1);
         }
 
@@ -137,13 +137,23 @@ public final class POP3ExportMbox
             if (file != null) {
                 System.out.println("Getting messages: " + count);
                 File mbox = new File(file);
-                System.out.println("Writing: " + mbox);
-                // Currently POP3Client uses iso-8859-1
-                OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(mbox),Charset.forName("iso-8859-1"));
-                for (int i = 1; i <= count; i++) {
-                    writeMbox(pop3, fw, i);
+                if (mbox.isDirectory()) {
+                    System.out.println("Writing dir: " + mbox);
+                    // Currently POP3Client uses iso-8859-1
+                    for (int i = 1; i <= count; i++) {
+                        OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(new File(mbox,i+".eml")),Charset.forName("iso-8859-1"));
+                        writeFile(pop3, fw, i);
+                        fw.close();                    
+                    }
+                } else {
+                    System.out.println("Writing file: " + mbox);
+                    // Currently POP3Client uses iso-8859-1
+                    OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(mbox),Charset.forName("iso-8859-1"));
+                    for (int i = 1; i <= count; i++) {
+                        writeMbox(pop3, fw, i);
+                    }
+                    fw.close();                    
                 }
-                fw.close();
             }
 
             pop3.logout();
@@ -154,6 +164,17 @@ public final class POP3ExportMbox
             e.printStackTrace();
             return;
         }
+    }
+
+    private static void writeFile(POP3Client pop3, OutputStreamWriter fw, int i) throws IOException {
+        BufferedReader r = (BufferedReader) pop3.retrieveMessage(i);
+        String line;
+        while ((line = r.readLine()) != null)
+        {
+            fw.write(line);
+            fw.write("\n");
+        }
+        r.close();
     }
 
     private static void writeMbox(POP3Client pop3, OutputStreamWriter fw, int i) throws IOException {
