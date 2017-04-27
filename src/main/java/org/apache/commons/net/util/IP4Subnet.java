@@ -338,7 +338,6 @@ public final class IP4Subnet extends SubnetUtils.SubnetInfo
      * Returns a list of the available addresses.
      *
      * @return an array of the available addresses
-     * @deprecated (3.7) overflow if the available addresses are greater than {@code Integer.MAX_VALUE}
      */
     @Override
     public String[] getAllAddresses() {

@@ -346,9 +346,7 @@ public class SubnetUtils {
          * Returns a list of the available addresses.
          *
          * @return an array of the available addresses
-         * @deprecated (3.7) overflow if the available addresses are greater than {@code Integer.MAX_VALUE}
          */
-        @Deprecated
         public String[] getAllAddresses() { return new String[0]; }
 
     }
