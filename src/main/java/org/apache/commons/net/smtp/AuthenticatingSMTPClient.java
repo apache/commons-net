@@ -262,6 +262,12 @@ public class AuthenticatingSMTPClient extends SMTPSClient
             return SMTPReply.isPositiveIntermediate(sendCommand(
                     Base64.encodeBase64StringUnChunked(username.getBytes(getCharset()))
             ));
+        }
+        else if (method.equals(AUTH_METHOD.XOAUTH2))
+        {
+            return SMTPReply.isPositiveIntermediate(sendCommand(
+                    Base64.encodeBase64StringUnChunked(username.getBytes(getCharsetName())) // Java 1.6 can use getCharset()
+            ));
         } else {
             return false; // safety check
         }
