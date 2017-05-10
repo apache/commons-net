@@ -200,6 +200,17 @@ public final class IP4Subnet extends SubnetUtils.SubnetInfo
     }
 
     /**
+     * Converts a dotted decimal format address to a packed integer format.
+     *
+     * @param address a dotted decimal format address
+     * @return a packed integer of a dotted decimal format address
+     */
+    public int asInteger(String address)
+    {
+        return toInteger(address);
+    }
+
+    /**
      * Returns true if the parameter <code>address</code> is in the
      * range of usable endpoint addresses for this subnet. This excludes the
      * network and broadcast addresses.
