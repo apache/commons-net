@@ -173,6 +173,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <maven.compiler.target>1.6</maven.compiler.target>
         <commons.javadoc.java.link>http://download.oracle.com/javase/1.6.0/docs/api/</commons.javadoc.java.link>
         <commons.componentid>net</commons.componentid>
+        <commons.module.name>org.apache.commons.net</commons.module.name>
         <commons.jira.id>NET</commons.jira.id>
         <commons.jira.pid>12310487</commons.jira.pid>
 
