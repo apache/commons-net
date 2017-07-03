@@ -59,8 +59,9 @@ extends TestCase implements TelnetNotificationHandler
     private TestConnection OPTIONS;
     private TestConnection ANSI;
     private TestConnection NOREAD;
+    private TestConnection SMALL_BUFFER;
 
-    private final int NUM_CONNECTIONS = 4;
+    private final int NUM_CONNECTIONS = 5;
 
 
     protected int numdo = 0;
@@ -68,12 +69,26 @@ extends TestCase implements TelnetNotificationHandler
     protected int numwill = 0;
     protected int numwont = 0;
 
+    protected int[] lastSubnegotiation;
+    protected int lastSubnegotiationLength;
+
     /*
      * open connections needed for the tests for the test.
      */
     @Override
     protected void setUp() throws Exception
     {
+        SimpleOptionHandler subnegotiationSizeHandler = new SimpleOptionHandler(99, false, false, true, false)
+        {
+            @Override
+            public int[] answerSubnegotiation(int[] suboptionData, int suboptionLength)
+            {
+                lastSubnegotiation = suboptionData;
+                lastSubnegotiationLength = suboptionLength;
+                return null;
+            }
+        };
+
         int socket = 0;
         super.setUp();
         for (int port = 3333; socket < NUM_CONNECTIONS && port < 4000; port++)
@@ -87,6 +102,7 @@ extends TestCase implements TelnetNotificationHandler
                         client = new TelnetClient();
                         // redundant but makes code clearer.
                         client.setReaderThread(true);
+                        client.addOptionHandler(subnegotiationSizeHandler);
                         client.connect("127.0.0.1", port);
                         STANDARD = new TestConnection(server, client, port);
                         break;
@@ -116,6 +132,12 @@ extends TestCase implements TelnetNotificationHandler
                         client.connect("127.0.0.1", port);
                         NOREAD = new TestConnection(server, client, port);
                         break;
+                    case 4:
+                        client = new TelnetClient(8);
+                        client.addOptionHandler(subnegotiationSizeHandler);
+                        client.connect("127.0.0.1", port);
+                        SMALL_BUFFER = new TestConnection(server, client, port);
+                        break;
                }
                // only increment socket number on success
                socket++;
@@ -138,6 +160,7 @@ extends TestCase implements TelnetNotificationHandler
         ANSI.close();
         OPTIONS.close();
         STANDARD.close();
+        SMALL_BUFFER.close();
         try {
             Thread.sleep(1000);
         } catch (InterruptedException ie) {
@@ -842,6 +865,57 @@ extends TestCase implements TelnetNotificationHandler
         assertTrue("Expected read_ok to be true, got " + read_ok, read_ok);
         assertTrue("Expected negotiation1_ok to be true, got " + negotiation1_ok, negotiation1_ok);
         assertTrue("Expected negotiation2_ok to be true, got " + negotiation2_ok, negotiation2_ok);
+    }
+
+    /*
+     * test of max subnegotiation length
+     */
+    public void testMaxSubnegotiationLength() throws Exception
+    {
+        byte send[] =
+            {
+                (byte) TelnetCommand.IAC, (byte) TelnetCommand.SB, (byte) 99,
+                (byte) 1, (byte) 2, (byte) 3,
+                (byte) 4, (byte) 5, (byte) 6,
+                (byte) 7, (byte) 8, (byte) 9,
+                (byte) 10, (byte) 11, (byte) 12,
+                (byte) 13, (byte) 14, (byte) 15,
+                (byte) TelnetCommand.IAC, (byte) TelnetCommand.SE,
+            };
+
+        OutputStream os1 = SMALL_BUFFER.server.getOutputStream();
+        os1.write(send);
+        os1.flush();
+        Thread.sleep(500);
+
+        // we sent 16 bytes, but the buffer size should just be 8
+        assertEquals(8, lastSubnegotiationLength);
+        assertEquals(8, lastSubnegotiation.length);
+        assertEquals(99, lastSubnegotiation[0]);
+        assertEquals(1, lastSubnegotiation[1]);
+        assertEquals(2, lastSubnegotiation[2]);
+        assertEquals(3, lastSubnegotiation[3]);
+        assertEquals(4, lastSubnegotiation[4]);
+        assertEquals(5, lastSubnegotiation[5]);
+        assertEquals(6, lastSubnegotiation[6]);
+        assertEquals(7, lastSubnegotiation[7]);
+
+        OutputStream os2 = STANDARD.server.getOutputStream();
+        os2.write(send);
+        os2.flush();
+        Thread.sleep(500);
+
+        // the standard subnegotiation buffer size is 512
+        assertEquals(16, lastSubnegotiationLength);
+        assertEquals(512, lastSubnegotiation.length);
+        assertEquals(99, lastSubnegotiation[0]);
+        assertEquals(1, lastSubnegotiation[1]);
+        assertEquals(2, lastSubnegotiation[2]);
+        assertEquals(3, lastSubnegotiation[3]);
+        assertEquals(4, lastSubnegotiation[4]);
+        assertEquals(5, lastSubnegotiation[5]);
+        assertEquals(6, lastSubnegotiation[6]);
+        assertEquals(7, lastSubnegotiation[7]);
     }
 
 

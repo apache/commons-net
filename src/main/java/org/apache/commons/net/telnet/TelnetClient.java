@@ -43,6 +43,9 @@ import java.io.OutputStream;
 
 public class TelnetClient extends Telnet
 {
+    private static final int DEFAULT_MAX_SUBNEGOTIATION_LENGTH = 512;
+
+    final int _maxSubnegotiationLength;
     private InputStream __input;
     private OutputStream __output;
     protected boolean readerThread = true;
@@ -53,11 +56,7 @@ public class TelnetClient extends Telnet
      ***/
     public TelnetClient()
     {
-        /* TERMINAL-TYPE option (start)*/
-        super ("VT100");
-        /* TERMINAL-TYPE option (end)*/
-        __input = null;
-        __output = null;
+        this("VT100", DEFAULT_MAX_SUBNEGOTIATION_LENGTH);
     }
 
     /**
@@ -65,14 +64,39 @@ public class TelnetClient extends Telnet
      *
      * @param termtype the terminal type to use, e.g. {@code VT100}
      */
-    /* TERMINAL-TYPE option (start)*/
     public TelnetClient(String termtype)
     {
-        super (termtype);
+        this(termtype, DEFAULT_MAX_SUBNEGOTIATION_LENGTH);
+    }
+
+    /**
+     * Construct an instance with the specified max subnegotiation
+     * length and the default terminal-type {@code VT100}
+     *
+     * @param maxSubnegotiationLength the size of the subnegotiation buffer
+     */
+    public TelnetClient(int maxSubnegotiationLength)
+    {
+        this("VT100", maxSubnegotiationLength);
+    }
+
+
+    /**
+     * Construct an instance with the specified terminal type
+     * and max subnegotiation length
+     *
+     * @param termtype the terminal type to use, e.g. {@code VT100}
+     * @param maxSubnegotiationLength the size of the subnegotiation buffer
+     */
+    public TelnetClient(String termtype, int maxSubnegotiationLength)
+    {
+    /* TERMINAL-TYPE option (start)*/
+        super(termtype);
+    /* TERMINAL-TYPE option (end)*/
         __input = null;
         __output = null;
+        _maxSubnegotiationLength = maxSubnegotiationLength;
     }
-    /* TERMINAL-TYPE option (end)*/
 
     void _flushOutputStream() throws IOException
     {
