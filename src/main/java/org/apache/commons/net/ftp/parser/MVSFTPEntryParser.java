@@ -66,7 +66,8 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             "\\S+\\s+" + // unit - ignored
             "\\S+\\s+" + // access date - ignored
             "\\S+\\s+" + // extents -ignored
-            "\\S+\\s+" + // used - ignored
+            // If the values are too large, the fields may be merged (NET-639)
+            "(?:\\S+\\s+)?" + // used - ignored
             "[FV]\\S*\\s+" + // recfm - must start with F or V
             "\\S+\\s+" + // logical record length -ignored
             "\\S+\\s+" + // block size - ignored

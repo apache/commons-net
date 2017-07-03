@@ -42,7 +42,9 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
             "PSMLC6 3390   2005/04/05  1    1  VB   27994 27998  PS    file7.O.BU",
             "FPFS49 3390   2004/06/23  1    1  FB     128  6144  PO-E  INCOMING.RPTBM026.D061704",
             "FPFS41 3390   2004/06/23  1    1  FB     128  6144  PS    INCOMING.RPTBM056.D061704",
-            "FPFS25 3390   2004/06/23  1    1  FB     128  6144  PS    INCOMING.WTM204.D061704", };
+            "FPFS25 3390   2004/06/23  1    1  FB     128  6144  PS    INCOMING.WTM204.D061704",
+            "PEX26F 3390   2017/07/03  115807  FB   29600 29600  PS    INCOMING.FIN.D170630.T160630",
+        };
 
     private static final String[] goodsamplesMemberList = {
             /* Note, if the string begins with SAVE, the parsed entry is stored in the List saveftpfiles */
