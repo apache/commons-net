@@ -43,10 +43,7 @@
 Apache Commons Net
 ===================
 
-[![Build Status](https://travis-ci.org/apache/commons-net.svg?branch=master)](https://travis-ci.org/apache/commons-net)
-[![Coverage Status](https://coveralls.io/repos/apache/commons-net/badge.svg?branch=master)](https://coveralls.io/r/apache/commons-net)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/badge.svg)](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/)
-[![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+[![Build Status](https://travis-ci.org/apache/commons-net.svg?branch=trunk)](https://travis-ci.org/apache/commons-net)
 
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
 Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
