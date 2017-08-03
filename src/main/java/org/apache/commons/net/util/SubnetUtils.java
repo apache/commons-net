@@ -157,12 +157,17 @@ public class SubnetUtils {
         }
 
         /**
-         *
+         * Returns true if the parameter <code>address</code> is in the
+         * range of usable endpoint addresses for this subnet. This excludes the
+         * network and broadcast addresses.
          * @param address the address to check
          * @return true if it is in range
          * @since 3.4 (made public)
          */
         public boolean isInRange(int address) {
+            if (address == 0) { // cannot ever be in range; rejecting now avoids problems with CIDR/31,32
+                return false;
+            }
             long addLong = address & UNSIGNED_INT_MASK;
             long lowLong = low() & UNSIGNED_INT_MASK;
             long highLong = high() & UNSIGNED_INT_MASK;
