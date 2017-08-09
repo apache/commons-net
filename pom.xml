@@ -173,6 +173,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <maven.compiler.target>1.6</maven.compiler.target>
         <commons.javadoc.java.link>http://download.oracle.com/javase/1.6.0/docs/api/</commons.javadoc.java.link>
         <commons.componentid>net</commons.componentid>
+        <commons.module.name>org.apache.commons.net</commons.module.name>
         <commons.jira.id>NET</commons.jira.id>
         <commons.jira.pid>12310487</commons.jira.pid>
 
@@ -232,7 +233,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <excludes>
-                        <exclude>examples/**</exclude>
+                        <exclude>**/examples/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -243,7 +244,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 <artifactId>maven-source-plugin</artifactId>
                 <configuration>
                     <excludes>
-                        <exclude>examples/**</exclude>
+                        <exclude>**/examples/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -309,11 +310,11 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                                         <attribute name="X-Compile-Source-JDK" value="${maven.compiler.source}" />
                                         <attribute name="X-Compile-Target-JDK" value="${maven.compiler.target}" />
                                         <!-- Helper application -->
-                                        <attribute name="Main-Class" value="examples/Main" />
+                                        <attribute name="Main-Class" value="org/apache/commons/net/examples/Main" />
                                         <!-- Allow java -jar examples.jar to work -->
                                         <attribute name="Class-Path" value="commons-net-${project.version}.jar" />
                                     </manifest>
-                                    <fileset dir="target/classes" includes="examples/**" />
+                                    <fileset dir="target/classes" includes="**/examples/**" />
                                 </jar>
                             </target>
                         </configuration>
@@ -358,7 +359,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
-                    <excludePackageNames>examples.*</excludePackageNames>
+                    <excludePackageNames>*.examples.*</excludePackageNames>
                 </configuration>
             </plugin>
 
@@ -376,7 +377,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                     <outputDirectory>${basedir}/target/site/examples</outputDirectory>
                     <resources>
                       <resource>
-                        <directory>src/main/java/examples</directory>
+                        <directory>src/main/java/org/apache/commons/net/examples</directory>
                         <excludes>
                           <exclude>**/Main.java</exclude>
                         </excludes>
@@ -403,7 +404,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
               <artifactId>clirr-maven-plugin</artifactId>
               <configuration>
                   <excludes>
-                    <exclude>examples/**</exclude>
+                    <exclude>**/examples/**</exclude>
                   </excludes>
               </configuration>
           </plugin>
@@ -426,7 +427,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
           </execution>
         </executions>
         <configuration>
-          <mainClass>examples.Main</mainClass>
+          <mainClass>org.apache.commons.net.examples.Main</mainClass>
         </configuration>
       </plugin>
 
@@ -464,7 +465,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 <artifactId>clirr-maven-plugin</artifactId>
                 <configuration>
                     <excludes>
-                      <exclude>examples/**</exclude>
+                      <exclude>**/examples/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -473,7 +474,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
-                    <excludePackageNames>examples.*</excludePackageNames>
+                    <excludePackageNames>*.examples.*</excludePackageNames>
                 </configuration>
             </plugin>
 

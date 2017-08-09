@@ -90,7 +90,7 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
         assertTrue(parser instanceof OS2FTPEntryParser);
 
         try {
-            parser = factory.createFileEntryParser(
+            factory.createFileEntryParser(
                 "org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory");
             fail("Exception should have been thrown. \"DefaultFTPFileEntryParserFactory\" does not implement FTPFileEntryParser");
         } catch (ParserInitializationException pie) {

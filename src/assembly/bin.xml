@@ -27,9 +27,9 @@ Licensed to the Apache Software Foundation (ASF) under one or more
     <fileSets>
         <fileSet>
             <includes>
-                <include>README*</include>
                 <include>LICENSE*</include>
                 <include>NOTICE*</include>
+                <include>README*</include>
                 <include>RELEASE-NOTES.txt</include>
             </includes>
         </fileSet>
@@ -65,8 +65,8 @@ Licensed to the Apache Software Foundation (ASF) under one or more
         </fileSet>
         <!-- Include example sources for developers -->
         <fileSet>
-            <directory>src/main/java/examples</directory>
-            <outputDirectory>examples</outputDirectory>
+            <directory>src/main/java/org/apache/commons/net/examples</directory>
+            <outputDirectory>org/apache/commons/net/examples</outputDirectory>
             <includes>
                 <include>**/*</include>
             </includes>

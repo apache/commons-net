@@ -54,6 +54,8 @@ public enum FTPCmd {
     RNFR,
     RNTO,
     SITE,
+    /** @since 3.7 */
+    SIZE,
     SMNT,
     STAT,
     STOR,

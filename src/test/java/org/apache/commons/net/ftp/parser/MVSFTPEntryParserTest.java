@@ -17,6 +17,7 @@
 package org.apache.commons.net.ftp.parser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.net.ftp.FTPFile;
@@ -41,7 +42,9 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
             "PSMLC6 3390   2005/04/05  1    1  VB   27994 27998  PS    file7.O.BU",
             "FPFS49 3390   2004/06/23  1    1  FB     128  6144  PO-E  INCOMING.RPTBM026.D061704",
             "FPFS41 3390   2004/06/23  1    1  FB     128  6144  PS    INCOMING.RPTBM056.D061704",
-            "FPFS25 3390   2004/06/23  1    1  FB     128  6144  PS    INCOMING.WTM204.D061704", };
+            "FPFS25 3390   2004/06/23  1    1  FB     128  6144  PS    INCOMING.WTM204.D061704",
+            "PEX26F 3390   2017/07/03  115807  FB   29600 29600  PS    INCOMING.FIN.D170630.T160630",
+        };
 
     private static final String[] goodsamplesMemberList = {
             /* Note, if the string begins with SAVE, the parsed entry is stored in the List saveftpfiles */
@@ -62,6 +65,12 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
             //"JOBNAME  JOBID    OWNER    STATUS CLASS",
             "IBMUSER2 JOB01906 IBMUSER  OUTPUT A        RC=0000 3 spool files",
             "IBMUSER  TSU01830 IBMUSER  OUTPUT TSU      ABEND=522 3 spool files", };
+
+    private static final String[] goodsamplesUnixList = {
+            "total 1234",
+            "-rwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox",
+            "drwxr-xr-x   2 root     root         4096 Aug 24  2001 zxjdbc",
+            };
 
     private static final String[] badsamples = {
             "MigratedP201.$FTXPBI1.$CF2ITB.$AAB0402.I",
@@ -97,7 +106,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
         l.add(goodsamplesMemberList);
         l.add(goodsamplesJES1List);
         l.add(goodsamplesJES2List);
-
+        l.add(goodsamplesUnixList);
         return l;
     }
 
@@ -163,6 +172,20 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
         }
     }
 
+    public void testUnixListings() {
+        MVSFTPEntryParser parser = new MVSFTPEntryParser();
+        List<String> list = new ArrayList<String>();
+        Collections.addAll(list, goodsamplesUnixList);
+        parser.preParse(list);
+        for (String test : list) {
+            FTPFile f = parser.parseFTPEntry(test);
+            assertNotNull("Failed to parse " + test, f);
+            assertNotNull("Failed to parse name " + test, f.getName());
+            assertNotNull("Failed to parse group " + test, f.getGroup());
+            assertNotNull("Failed to parse user " + test, f.getUser());
+        }
+    }
+
     @Override
     public void testParseFieldsOnDirectory() throws Exception {
         MVSFTPEntryParser parser = new MVSFTPEntryParser();
@@ -216,6 +239,13 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
         assertEquals("SAVE04", file.getName());
         assertNull("Timestamp should not have been set.", file.getTimestamp());
 
+    }
+
+    @Override
+    public void doAdditionalGoodTests(String test, FTPFile f) {
+        assertNotNull("Could not parse raw listing in " + test, f.getRawListing());
+        assertNotNull("Could not parse name in " + test, f.getName());
+        // some tests don't produce any further details
     }
 
     @Override

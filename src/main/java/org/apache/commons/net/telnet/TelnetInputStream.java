@@ -45,7 +45,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     private IOException __ioException;
 
     /* TERMINAL-TYPE option (start)*/
-    private final int __suboption[] = new int[512];
+    private final int __suboption[];
     private int __suboption_count = 0;
     /* TERMINAL-TYPE option (end)*/
 
@@ -64,6 +64,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         __queue = new int[2049];
         __queueHead = 0;
         __queueTail = 0;
+        __suboption = new int[client._maxSubnegotiationLength];
         __bytesAvailable = 0;
         __ioException = null;
         __readIsWaiting = false;

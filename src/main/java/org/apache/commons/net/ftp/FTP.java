@@ -1004,7 +1004,7 @@ public class FTP extends SocketClient
 
         // If IPv6, trim the zone index
         h = host.getHostAddress();
-        num = h.indexOf("%");
+        num = h.indexOf('%');
         if (num > 0) {
             h = h.substring(0, num);
         }
@@ -1692,6 +1692,26 @@ public class FTP extends SocketClient
     public int site(String parameters) throws IOException
     {
         return sendCommand(FTPCmd.SITE, parameters);
+    }
+
+    /***
+     * A convenience method to send the FTP SIZE command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param parameters  The site parameters to send.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     * @since 3.7
+     ***/
+    public int size(String parameters) throws IOException
+    {
+        return sendCommand(FTPCmd.SIZE, parameters);
     }
 
     /***

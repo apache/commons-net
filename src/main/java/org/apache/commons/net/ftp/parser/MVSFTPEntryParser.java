@@ -66,7 +66,8 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             "\\S+\\s+" + // unit - ignored
             "\\S+\\s+" + // access date - ignored
             "\\S+\\s+" + // extents -ignored
-            "\\S+\\s+" + // used - ignored
+            // If the values are too large, the fields may be merged (NET-639)
+            "(?:\\S+\\s+)?" + // used - ignored
             "[FV]\\S*\\s+" + // recfm - must start with F or V
             "\\S+\\s+" + // logical record length -ignored
             "\\S+\\s+" + // block size - ignored
@@ -260,29 +261,19 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      */
     @Override
     public FTPFile parseFTPEntry(String entry) {
-        boolean isParsed = false;
-        FTPFile f = new FTPFile();
-
         if (isType == FILE_LIST_TYPE) {
-            isParsed = parseFileList(f, entry);
+            return parseFileList(entry);
         } else if (isType == MEMBER_LIST_TYPE) {
-            isParsed = parseMemberList(f, entry);
-            if (!isParsed) {
-                isParsed = parseSimpleEntry(f, entry);
-            }
+            return parseMemberList(entry);
         } else if (isType == UNIX_LIST_TYPE) {
-            isParsed = parseUnixList(f, entry);
+             return unixFTPEntryParser.parseFTPEntry(entry);
         } else if (isType == JES_LEVEL_1_LIST_TYPE) {
-            isParsed = parseJeslevel1List(f, entry);
+            return parseJeslevel1List(entry);
         } else if (isType == JES_LEVEL_2_LIST_TYPE) {
-            isParsed = parseJeslevel2List(f, entry);
+            return parseJeslevel2List(entry);
         }
 
-        if (!isParsed) {
-            f = null;
-        }
-
-        return f;
+        return null;
     }
 
     /**
@@ -305,13 +296,12 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * a tape archive. These entries is currently not supported by this parser.
      * A null value is returned.
      *
-     * @param file
-     *            will be updated with Name, Type, Timestamp if parsed.
      * @param entry zosDirectoryEntry
-     * @return true: entry was parsed, false: entry was not parsed.
+     * @return null: entry was not parsed.
      */
-    private boolean parseFileList(FTPFile file, String entry) {
+    private FTPFile parseFileList(String entry) {
         if (matches(entry)) {
+            FTPFile file = new FTPFile();
             file.setRawListing(entry);
             String name = group(2);
             String dsorg = group(1);
@@ -326,13 +316,13 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
                 file.setType(FTPFile.DIRECTORY_TYPE);
             }
             else {
-                return false;
+                return null;
             }
 
-            return true;
+            return file;
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -356,12 +346,11 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * [9] Id: User id for last update
      * </pre>
      *
-     * @param file
-     *            will be updated with Name, Type and Timestamp if parsed.
      * @param entry zosDirectoryEntry
-     * @return true: entry was parsed, false: entry was not parsed.
+     * @return null: entry was not parsed.
      */
-    private boolean parseMemberList(FTPFile file, String entry) {
+    private FTPFile parseMemberList(String entry) {
+        FTPFile file = new FTPFile();
         if (matches(entry)) {
             file.setRawListing(entry);
             String name = group(1);
@@ -373,47 +362,24 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             } catch (ParseException e) {
                 // just ignore parsing errors.
                 // TODO check this is ok
-                return false; // this is a parsing failure too.
+                // Drop thru to try simple parser
             }
-            return true;
+            return file;
         }
 
-        return false;
-    }
-
-    /**
-     * Assigns the name to the first word of the entry. Only to be used from a
-     * safe context, for example from a memberlist, where the regex for some
-     * reason fails. Then just assign the name field of FTPFile.
-     *
-     * @param file
-     * @param entry
-     * @return true if the entry string is non-null and non-empty
-     */
-    private boolean parseSimpleEntry(FTPFile file, String entry) {
+        /*
+         * Assigns the name to the first word of the entry. Only to be used from a
+         * safe context, for example from a memberlist, where the regex for some
+         * reason fails. Then just assign the name field of FTPFile.
+         */
         if (entry != null && entry.trim().length() > 0) {
             file.setRawListing(entry);
             String name = entry.split(" ")[0];
             file.setName(name);
             file.setType(FTPFile.FILE_TYPE);
-            return true;
+            return file;
         }
-        return false;
-    }
-
-    /**
-     * Parse the entry as a standard unix file. Using the UnixFTPEntryParser.
-     *
-     * @param file
-     * @param entry
-     * @return true: entry is parsed, false: entry could not be parsed.
-     */
-    private boolean parseUnixList(FTPFile file, String entry) {
-        file = unixFTPEntryParser.parseFTPEntry(entry);
-        if (file == null) {
-            return false;
-        }
-        return true;
+        return null;
     }
 
     /**
@@ -432,23 +398,22 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * [5] The string "Spool Files"
      *</pre>
      *
-     * @param file
-     *            will be updated with Name, Type and Timestamp if parsed.
      * @param entry zosDirectoryEntry
-     * @return true: entry was parsed, false: entry was not parsed.
+     * @return null: entry was not parsed.
      */
-    private boolean parseJeslevel1List(FTPFile file, String entry) {
+    private FTPFile parseJeslevel1List(String entry) {
         if (matches(entry)) {
+            FTPFile file = new FTPFile();
             if (group(3).equalsIgnoreCase("OUTPUT")) {
                 file.setRawListing(entry);
                 String name = group(2); /* Job Number, used by GET */
                 file.setName(name);
                 file.setType(FTPFile.FILE_TYPE);
-                return true;
+                return file;
             }
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -470,23 +435,22 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * [6] The rest
      * </pre>
      *
-     * @param file
-     *            will be updated with Name, Type and Timestamp if parsed.
      * @param entry zosDirectoryEntry
-     * @return true: entry was parsed, false: entry was not parsed.
+     * @return null: entry was not parsed.
      */
-    private boolean parseJeslevel2List(FTPFile file, String entry) {
+    private FTPFile parseJeslevel2List(String entry) {
         if (matches(entry)) {
+            FTPFile file = new FTPFile();
             if (group(4).equalsIgnoreCase("OUTPUT")) {
                 file.setRawListing(entry);
                 String name = group(2); /* Job Number, used by GET */
                 file.setName(name);
                 file.setType(FTPFile.FILE_TYPE);
-                return true;
+                return file;
             }
         }
 
-        return false;
+        return null;
     }
 
     /**

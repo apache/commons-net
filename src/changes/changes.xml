@@ -69,8 +69,38 @@ This is mainly a bug-fix release. See further details below.
 
  This release is binary compatible with previous releases.
  However it is not source compatible with releases before 3.4, as some methods were added to the interface NtpV3Packet in 3.4
-        
+
+ Note that the examples packages were moved under org/apache/commons/net/examples.
+ The examples are not part of the public API, so this does not affect compatibility.
+
 ">
+            <action issue="NET-641" type="fix" dev="sebb" due-to="pin_ptr">
+            SubnetUtils.SubnetInfo.isInRange("0.0.0.0") returns true for CIDR/31, 32
+            </action>
+            <action issue="NET-638" type="add" dev="sebb" due-to="Daniel Leong">
+            Telnet subnegotiations hard-limited to 512 bytes - allow override
+            </action>
+            <action issue="NET-639" type="fix" dev="sebb" due-to=" Alexander Eller">
+            MVSFTPEntryParser.preParse - MVS, z/OS - allow for merged Ext/Used fields
+            </action>
+            <action issue="NET-636" type="fix" dev="sebb">
+            examples should be in org.apache.commons.net subpackage
+            </action>
+            <action issue="NET-634" type="add" dev="sebb" due-to="Mauro Molinari">
+            Add SIZE command support
+            </action>
+            <action type="add" dev="sebb">
+            Add POP3ExportMbox example code
+            </action>
+            <action issue="NET-633" type="update" dev="sebb" due-to="n0rm1e">
+            Add XOAUTH2 to IMAP and SMTP
+            </action>
+            <action issue="NET-632" type="update" dev="sebb" due-to="prakapenka">
+            FTPHTTPClient - support for encoding other than UTF-8
+            </action>
+            <action issue="NET-631" type="fix" dev="sebb">
+            Bug in MVSFTPEntryParser.parseUnixList (FindBugs)
+            </action>
             <action issue="NET-584" type="fix" dev="sebb" due-to="Kazantsev Andrey Sergeevich/Nick Manley">
             Error when using org.apache.commons.net.ftp.FTPClient setControlKeepAliveTimeout
             </action>

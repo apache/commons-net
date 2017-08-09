@@ -463,7 +463,7 @@ public class FTPClientConfig
      * <p>
      * getter for the {@link  #setLenientFutureDates(boolean)  lenientFutureDates} property.
      * </p>
-     * @return Returns the lenientFutureDates.
+     * @return Returns the lenientFutureDates (default true).
      * @since 1.5
      */
     public boolean isLenientFutureDates() {
@@ -511,7 +511,7 @@ public class FTPClientConfig
     /**
      * <p>
      * setter for the lenientFutureDates property.  This boolean property
-     * (default: false) only has meaning when a
+     * (default: true) only has meaning when a
      * {@link  #setRecentDateFormatStr(String)  recentDateFormatStr} property
      * has been set.  In that case, if this property is set true, then the
      * parser, when it encounters a listing parseable with the recent date

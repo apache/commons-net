@@ -1547,7 +1547,7 @@ implements Configurable
      * <p>
      * <b>N.B.</b> currently calling any connect method will reset the type to
      * FTP.ASCII_FILE_TYPE.
-     * @param fileType The <code> _FILE_TYPE </code> constant indcating the
+     * @param fileType The <code> _FILE_TYPE </code> constant indicating the
      *                 type of file.
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException
@@ -1591,7 +1591,7 @@ implements Configurable
      * <b>N.B.</b> currently calling any connect method will reset the type to
      * FTP.ASCII_FILE_TYPE and the formatOrByteSize to FTP.NON_PRINT_TEXT_FORMAT.
      *
-     * @param fileType The <code> _FILE_TYPE </code> constant indcating the
+     * @param fileType The <code> _FILE_TYPE </code> constant indicating the
      *                 type of file.
      * @param formatOrByteSize  The format of the file (one of the
      *              <code>_FORMAT</code> constants.  In the case of
@@ -3518,6 +3518,31 @@ implements Configurable
     {
         if (FTPReply.isPositiveCompletion(stat(pathname))) {
             return getReplyString();
+        }
+        return null;
+    }
+
+
+    /**
+     * Issue the FTP SIZE command to the server for a given pathname.
+     * This should produce the size of the file.
+     *
+     * @param pathname the filename
+     *
+     * @return The size information returned by the server; {@code null} if there was an error
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     * @since 3.7
+     */
+    public String getSize(String pathname) throws IOException
+    {
+        if (FTPReply.isPositiveCompletion(size(pathname))) {
+            return getReplyStrings()[0].substring(4); // skip the return code (e.g. 213) and the space
         }
         return null;
     }
