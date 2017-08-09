@@ -127,10 +127,7 @@ public final class IP4Subnet extends SubnetUtils.SubnetInfo
     }
 
     /* long versions of the values (as unsigned int) which are more suitable for range checking */
-    private long networkLong()
-    {
-        return network & UNSIGNED_INT_MASK;
-    }
+    private long networkLong() { return network & UNSIGNED_INT_MASK; }
 
     private long broadcastLong()
     {
