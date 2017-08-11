@@ -82,14 +82,14 @@ public final class IP6Subnet extends SubnetUtils.SubnetInfo
             highAddr[i] = ip6Address[i];
         }
 
+        // Set the out of the network prefix bits
+        highAddr[index] |= 0xffff >> (cidr % 16);
+
         // Fill the following fields with 1-bits
         for (int i = index + 1; i < 8; i++)
         {
             highAddr[i] = 0xffff;
         }
-
-        // Set the out of the network prefix bits
-        highAddr[index] |= 0xffff >> (cidr % 16);
 
         return highAddr;
     }
