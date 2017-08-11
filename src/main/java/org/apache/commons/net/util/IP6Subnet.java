@@ -167,7 +167,7 @@ public final class IP6Subnet extends SubnetUtils.SubnetInfo
         for (int i = 0; i < prefixSize; i++)
         {
             // Whether all 16 bits are the same values.
-            if (address[i] == ip6Address[i])
+            if (address[i] != ip6Address[i])
             {
                 return false;
             }
