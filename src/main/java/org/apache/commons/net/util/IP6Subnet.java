@@ -63,7 +63,8 @@ public final class IP6Subnet extends SubnetUtils.SubnetInfo
         }
 
         // Set the out of the network prefix bits.
-        addr[index] &= (0xffff >> (cidr % 16)) ^ 0xffff;
+        addr[index] &= 0xffff << (16 - (cidr % 16));
+
         return addr;
     }
 
