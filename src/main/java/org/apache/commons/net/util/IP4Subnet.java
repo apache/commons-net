@@ -233,9 +233,8 @@ public final class IP4Subnet extends SubnetUtils.SubnetInfo
     public boolean isInRange(int address)
     {
         long addLong = address & UNSIGNED_INT_MASK;
-        long netLong = networkLong();
-        long broadLong = broadcastLong();
-        return (addLong > netLong) && (addLong < broadLong);
+
+        return (addLong > networkLong()) && (addLong < broadcastLong());
     }
 
     /**
