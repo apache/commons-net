@@ -89,7 +89,7 @@ public class SubnetUtils {
      * Creates subnet summary information based on the provided IPv4 or IPv6 address in CIDR-notation,
      * e.g. "192.168.0.1/16" or "2001:db8:0:0:0:ff00:42:8329/46"
      *
-     * NOTE: IPv6 address does NOT allow to omit consecutive sections of zeros in the current version.
+     * <p>NOTE: IPv6 address does NOT allow to omit consecutive sections of zeros in the current version.</p>
      *
      * @param cidrNotation IPv4 or IPv6 address
      * @return a SubnetInfo object created from the IP address.
@@ -195,7 +195,7 @@ public class SubnetUtils {
         public void setInclusiveHostCount(boolean inclusiveHostCount) {}
 
         /**
-         * Returns true if the parameter <code>address</code> is in the
+         * Returns <code>true</code> if the parameter <code>address</code> is in the
          * range of usable endpoint addresses for this subnet. This excludes the
          * network and broadcast addresses if the address is IPv4 address.
          *
@@ -206,7 +206,7 @@ public class SubnetUtils {
         public boolean isInRange(String address) { return false; }
 
         /**
-         * Returns true if the parameter <code>address</code> is in the
+         * Returns <code>true</code> if the parameter <code>address</code> is in the
          * range of usable endpoint addresses for this subnet. This excludes the
          * network and broadcast addresses if the address is IPv4 address.
          *
@@ -216,7 +216,7 @@ public class SubnetUtils {
         public boolean isInRange(int address) { return false; }
 
         /**
-         * Returns true if the parameter <code>address</code> is in the
+         * Returns <code>true</code> if the parameter <code>address</code> is in the
          * range of usable endpoint addresses for this subnet.
          *
          * @param address the address to check
@@ -226,8 +226,10 @@ public class SubnetUtils {
 
         /**
          * Returns the IP address.
-         * IPv4 format: the dot-decimal format, e.g. "192.168.0.1"
-         * IPv6 format: the colon-hexadecimal format, e.g. "2001:db8::ff00:42:8329"
+         * <ul style="list-style-type: none">
+         *     <li>IPv4 format: a dot-decimal format, e.g. "192.168.0.1"</li>
+         *     <li>IPv6 format: a colon-hexadecimal format, e.g. "2001:db8::ff00:42:8329"</li>
+         * </ul>
          *
          * @return a string of the IP address
          */
@@ -265,8 +267,10 @@ public class SubnetUtils {
         /**
          * Returns a CIDR notation, in which the address is followed by slash and
          * the count of counting the 1-bit population in the subnet mask.
-         * IPv4 CIDR notation: e.g. "192.168.0.1/24"
-         * IPv6 CIDR notation: e.g. "2001:db8::ff00:42:8329/48"
+         * <ul style="list-style-type: none">
+         *     <li>IPv4 format: a dot-decimal format, e.g. "192.168.0.1"</li>
+         *     <li>IPv6 format: a colon-hexadecimal format, e.g. "2001:db8::ff00:42:8329"</li>
+         * </ul>
          *
          * @return the CIDR notation of the address
          */
@@ -275,8 +279,10 @@ public class SubnetUtils {
         /**
          * Returns a CIDR notation, in which the address is followed by slash and
          * the count of counting the 1-bit population in the subnet mask.
-         * IPv4 CIDR notation: e.g. "192.168.0.1/24"
-         * IPv6 CIDR notation: e.g. "2001:db8::ff00:42:8329/48"
+         * <ul style="list-style-type: none">
+         *     <li>IPv4 format: a dot-decimal format, e.g. "192.168.0.1"</li>
+         *     <li>IPv6 format: a colon-hexadecimal format, e.g. "2001:db8::ff00:42:8329"</li>
+         * </ul>
          *
          * @return the CIDR notation of the address
          */
