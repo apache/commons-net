@@ -102,7 +102,7 @@ public final class IP6Subnet extends SubnetUtils.SubnetInfo
 
         for (int i = 0; i < addrArry.length; i++)
         {
-            ret[i] = Integer.parseInt(addrArry[i], 16);
+            ret[i] = rangeCheck(Integer.parseInt(addrArry[i], 16), 0, 0xffff);
         }
 
         return ret;
