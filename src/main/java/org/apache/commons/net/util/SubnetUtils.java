@@ -47,7 +47,7 @@ public class SubnetUtils {
      * n:n:n:n:n:n:n:n/m n = 1-4 hexadecimal digits, m = 1-3 decimal digits in range 0-128.
      */
     public SubnetUtils(String cidrNotation) {
-        subnetInfo = getByCIDRNortation(cidrNotation);
+        subnetInfo = getByCIDRNotation(cidrNotation);
     }
 
     /**
@@ -95,7 +95,7 @@ public class SubnetUtils {
      * @return a SubnetInfo object created from the IP address.
      * @since 3.7
      */
-    public static SubnetInfo getByCIDRNortation(String cidrNotation) {
+    public static SubnetInfo getByCIDRNotation(String cidrNotation) {
         if (Pattern.matches(IPV4_ADDRESS, cidrNotation)) {
             return new IP4Subnet(cidrNotation);
         } else if (Pattern.matches(IPV6_ADDRESS, cidrNotation)) {

@@ -174,7 +174,7 @@ public final class IP6Subnet extends SubnetUtils.SubnetInfo
             }
         }
 
-        //The host identifier is in range between the lowest and the hightest addresses
+        //The host identifier is in range between the lowest and the highest addresses
         int addr = address[prefixSize];
 
         return (addr >= lowAddress[prefixSize]) && (addr <= highAddress[prefixSize]);
