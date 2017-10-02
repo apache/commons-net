@@ -29,7 +29,7 @@ public final class IP6Subnet extends SubnetUtils.SubnetInfo
 {
 
     private static final int NBITS = 128;
-    private static final String ZERO_FIELDS = "(0\\:){2,}";
+    private static final String ZERO_FIELDS = "(0:){2,}";
 
     private final int[] ip6Address;
     private final int cidr;
