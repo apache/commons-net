@@ -163,13 +163,14 @@ public final class IP4Subnet extends SubnetUtils.SubnetInfo
      */
     private String format(int val)
     {
-        int ret[] = new int[4];
-        for (int i = 3; i >= 0; i--)
-        {
-            ret[i] = (val >>> (8 * (3 - i))) & 0xff;
-        }
+        StringBuilder buf = new StringBuilder();
 
-        return format(ret, ".");
+        buf.append((val >>> 24) & 0xff).append('.')
+           .append((val >>> 16) & 0xff).append('.')
+           .append((val >>> 8) & 0xff).append('.')
+           .append(val & 0xff);
+
+        return buf.toString();
     }
 
     /*
