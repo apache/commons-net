@@ -152,24 +152,6 @@ public class SubnetUtils {
             return x & 0x3F;
         }
 
-        /*
-         * Converts an integer array into a decimal format separated by symbol.
-         */
-        static String format(int[] arry, String symbol) {
-            StringBuilder str = new StringBuilder();
-            final int iMax = arry.length - 1;
-
-            for (int i = 0; i <= iMax; i++) {
-                str.append(arry[i]);
-
-                if (i != iMax) {
-                    str.append(symbol);
-                }
-            }
-
-            return str.toString();
-        }
-
         /**
          * Converts a dotted decimal format address to a packed integer format. (ONLY USE in IPv4)
          *
