@@ -54,10 +54,7 @@ public final class IP6Subnet extends SubnetUtils.SubnetInfo
 
         // Copy of the network prefix in the address
         int index = cidr / 16;
-        for (int i = 0; i <= index; i++)
-        {
-            addr[i] = ip6Address[i];
-        }
+        System.arraycopy(ip6Address, 0, addr, 0, index + 1);
 
         // Set the out of the network prefix bits.
         addr[index] &= ~(0xff >> (cidr % 16));
@@ -75,10 +72,7 @@ public final class IP6Subnet extends SubnetUtils.SubnetInfo
 
         // Copy of the network prefix in the address
         int index = cidr / 16;
-        for (int i = 0; i <= index; i++)
-        {
-            highAddr[i] = ip6Address[i];
-        }
+        System.arraycopy(ip6Address, 0, highAddr, 0, index + 1);
 
         // Set the out of the network prefix bits
         highAddr[index] |= 0xffff >> (cidr % 16);
