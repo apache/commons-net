@@ -54,7 +54,7 @@ public final class SMTPMail
 
         if (args.length < 1)
         {
-            System.err.println("Usage: mail smtpserver");
+            System.err.println("Usage: SMTPMail <smtpserver>");
             System.exit(1);
         }
 
