@@ -574,7 +574,8 @@ implements Configurable
                     "Could not parse passive host information.\nServer Reply: " + reply);
         }
 
-        __passiveHost = m.group(1).replace(',', '.'); // Fix up to look like IP address
+        __passiveHost = "0,0,0,0".equals(m.group(1)) ? _socket_.getInetAddress().getHostAddress() :
+                m.group(1).replace(',', '.'); // Fix up to look like IP address
 
         try
         {
