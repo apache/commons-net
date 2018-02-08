@@ -100,10 +100,16 @@ public class TelnetClient extends Telnet
 
     void _flushOutputStream() throws IOException
     {
+        if (_output_ == null) {
+            throw new IOException("Stream closed");
+        }
         _output_.flush();
     }
     void _closeOutputStream() throws IOException
     {
+        if (_output_ == null) {
+            return;
+        }
         try {
             _output_.close();
         } finally {
