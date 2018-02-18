@@ -19,11 +19,13 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.RandomAccessFile;
 import java.io.Reader;
 import java.net.Inet6Address;
 import java.net.InetAddress;
@@ -642,7 +644,7 @@ implements Configurable
     throws IOException
     {
         return _storeFile(command.getCommand(), remote, local);
-    }
+    }    
 
     /**
      * @since 3.1
@@ -698,6 +700,13 @@ implements Configurable
             }
         }
     }
+    
+    static class ProgressData {
+    	public long remoteTimestamp=0;
+    	public long remoteFileLength=0;
+    	public long localOffset=0;
+    	public boolean restEnabled=true; // whether REST command is supported by server
+    }     
 
     private OutputStream __storeFileStream(FTPCmd command, String remote)
     throws IOException
@@ -1887,6 +1896,213 @@ implements Configurable
     throws IOException
     {
         return _retrieveFile(FTPCmd.RETR.getCommand(), remote, local);
+    }
+    
+    /**
+     * progress data signature
+     */
+    public static final String PROGRESS_SIGNATURE="39DF01B317C94CC4A62F9CAD8A1025D3";
+    /**
+     * progress data block length in bytes.
+     */
+    public static final int PROGRESS_DATA_LEN=48;
+
+    /**
+     * read progress data from local file.
+     * progres data: 32 bytes signature + 8 bytes remote timestamp + 8 bytes local offset
+     * @param f
+     * @param expectTimestamp
+     * @return
+     * @throws Exception
+     */
+    protected static RandomAccessFile readProgressData(File f, ProgressData pd)
+    throws IOException 
+    {
+    	RandomAccessFile rf = new RandomAccessFile(f, "rwd");
+
+    	if(pd.remoteFileLength<1000) { // too small file
+    		pd.restEnabled = false;
+    		pd.localOffset = 0;
+    		
+    		rf.setLength(pd.remoteFileLength);
+    	}
+    	else {
+        	boolean recreate = true;
+
+        	do {
+    			if(f.exists()) {
+    				long flen = rf.length();
+        			if (flen==pd.remoteFileLength) {
+        	        	rf.seek(flen - PROGRESS_DATA_LEN);
+        	        	byte[] buf = new byte[32];
+        	        	rf.readFully(buf);
+        	        	String s = new String(buf, "UTF-8");
+        	        	if(!PROGRESS_SIGNATURE.equals(s)) {
+        	        		break;
+        	        	}
+        	        	
+        	        	long ts2 = rf.readLong();
+        	        	if(ts2!=pd.remoteTimestamp) {
+        	        		break;
+        	        	}
+        	        	
+        	        	pd.localOffset = rf.readLong();
+        	        	if(pd.localOffset<0) {
+        	        		break;
+        	        	}
+        	        	
+        	        	recreate = false;
+        			}
+        			else {
+        			}
+        		}
+    			else {
+    			}
+    		} while (false);
+        	
+    		if(recreate) {
+        		pd.localOffset = 0;
+    			rf.setLength(pd.remoteFileLength);
+    			rf.seek(pd.remoteFileLength-PROGRESS_DATA_LEN);
+    			byte[] bytes = PROGRESS_SIGNATURE.getBytes("UTF-8");
+    			rf.write(bytes);
+    			rf.writeLong(pd.remoteTimestamp);
+    			rf.writeLong(pd.localOffset);
+    		}
+    	}
+    	return rf;
+    }
+		
+    
+    /**
+     * this is same with retrieveFile(String, InputStream), besides, to supports connection resuming
+     * @param remote
+     * @param local
+     * @return
+     * @throws IOException
+     */
+    public boolean retrieveFile(String remote, File local) throws IOException {
+    	FTPFile[] fs = this.listFiles(remote);
+    	if(fs.length!=1) {
+    		return false;
+    	}
+    	
+    	ProgressData pd = new ProgressData(); 
+    	pd.remoteFileLength = fs[0].getSize();
+    	pd.remoteTimestamp = fs[0].getTimestamp().getTimeInMillis();
+    	
+    	RandomAccessFile rf = readProgressData(local, pd);
+
+    	boolean ret = _retrieveFile(FTPCmd.RETR.getCommand(), remote, rf, pd);
+    	rf.close();
+    	if(ret) {
+    		local.setLastModified(pd.remoteTimestamp);
+    	}
+    	
+        return ret;
+    }
+
+    
+    private static class ProgressDataUpdater implements CopyStreamListener {
+        long flushByteTransferred = 0;
+
+        RandomAccessFile file;
+
+        public ProgressDataUpdater(RandomAccessFile file) throws SocketException {
+            this.file = file;
+        }
+
+        @Override
+        public void bytesTransferred(CopyStreamEvent event) {
+            bytesTransferred(event.getTotalBytesTransferred(), event.getBytesTransferred(), event.getStreamSize());
+        }
+        
+        @Override
+        public void bytesTransferred(long totalBytesTransferred, int bytesTransferred, long streamSize) {
+        	this.flushByteTransferred += bytesTransferred;
+        	try {
+            	if(totalBytesTransferred + PROGRESS_DATA_LEN <streamSize) {
+            		long pos = file.getFilePointer();
+
+            		// update offset
+                	file.seek(streamSize-8);
+                	file.writeLong(totalBytesTransferred);
+                	
+                	if(flushByteTransferred>1024) {
+                		file.getFD().sync();
+                		
+                		flushByteTransferred=0;
+                	}
+                	
+                	file.seek(pos);
+            	}
+            	else {
+            		// nop
+            	}
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        }
+    }
+
+    private boolean _retrieveFile(String command, String remote, RandomAccessFile local, 
+    		ProgressData pd) throws IOException {
+    	if(pd.localOffset!=0) {
+    		int rc = this.rest(""+ pd.localOffset);
+    		if(!FTPReply.isPositiveIntermediate(rc)) { // server not support REST command
+    			pd.restEnabled = false;
+    			pd.localOffset = 0;
+    		}
+    	}
+    	
+    	local.seek(pd.localOffset);
+    	
+        Socket socket = _openDataConnection_(command, remote);
+
+        if (socket == null) {
+            return false;
+        }
+
+        final InputStream input;
+        if (__fileType == ASCII_FILE_TYPE) {
+            input = new FromNetASCIIInputStream(getBufferedInputStream(socket.getInputStream()));
+        }
+        else {
+            input = getBufferedInputStream(socket.getInputStream());
+        }
+
+        CopyStreamAdapter csa = new CopyStreamAdapter();
+        
+        if(this.__copyStreamListener!=null) {
+        	csa.addCopyStreamListener(this.__copyStreamListener);
+        }
+        
+        CSL csl = null;
+        if (__controlKeepAliveTimeout > 0) {
+            csl = new CSL(this, __controlKeepAliveTimeout, __controlKeepAliveReplyTimeout);
+            csa.addCopyStreamListener(csl);
+        }
+        
+        if(pd.restEnabled) {
+        	ProgressDataUpdater pdu = new ProgressDataUpdater(local);
+        	csa.addCopyStreamListener(pdu);
+        }
+        
+        // Treat everything else as binary for now
+        try {
+            Util.copyStream(input, local, pd.localOffset, getBufferSize(), pd.remoteFileLength, csa, false);
+
+            // Get the transfer response
+            return completePendingCommand();
+        }
+        finally {
+            Util.closeQuietly(input);
+            Util.closeQuietly(socket);
+            if (csl != null) {
+                __cslDebug = csl.cleanUp(); // fetch any outstanding keepalive replies
+            }
+        }
     }
 
     /**

@@ -21,6 +21,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.RandomAccessFile;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.Socket;
@@ -140,6 +141,81 @@ public final class Util
         return total;
     }
 
+    
+    /***
+     * Copies the contents of an InputStream to a RandomAccessFile using a
+     * copy buffer of a given size and notifies the provided
+     * CopyStreamListener of the progress of the copy operation by calling
+     * its bytesTransferred(long, int) method after each write to the
+     * destination.  If you wish to notify more than one listener you should
+     * use a CopyStreamAdapter as the listener and register the additional
+     * listeners with the CopyStreamAdapter.
+     * <p>
+     * The contents of the InputStream are
+     * read until the end of the stream is reached, but neither the
+     * source nor the destination are closed.  You must do this yourself
+     * outside of the method call.  The number of bytes read/written is
+     * returned.
+     *
+     * @param source  The source InputStream.
+     * @param dest    The destination RandomAccessFile.
+     * @param offset  the file resuming offset.
+     * @param bufferSize  The number of bytes to buffer during the copy.
+     *            A zero or negative value means to use {@link #DEFAULT_COPY_BUFFER_SIZE}.
+     * @param streamSize  The number of bytes in the stream being copied.
+     *          should NOT set to CopyStreamEvent.UNKNOWN_STREAM_SIZE.
+     * @param listener  The CopyStreamListener to notify of progress.  If
+     *      this parameter is null, notification is not attempted.
+     * @param flush Whether to flush the output stream after every
+     *        write.  This is necessary for interactive sessions that rely on
+     *        buffered streams.  If you don't flush, the data will stay in
+     *        the stream buffer.
+     * @return number of bytes read/written
+     * @throws CopyStreamException  If an error occurs while reading from the
+     *            source or writing to the destination.  The CopyStreamException
+     *            will contain the number of bytes confirmed to have been
+     *            transferred before an
+     *            IOException occurred, and it will also contain the IOException
+     *            that caused the error.  These values can be retrieved with
+     *            the CopyStreamException getTotalBytesTransferred() and
+     *            getIOException() methods.
+     */
+    public static final long copyStream(InputStream source, RandomAccessFile dest, long offset,
+            int bufferSize, long streamSize,
+            CopyStreamListener listener,
+            boolean flush)
+	throws CopyStreamException 
+    {
+		int numBytes;
+		long total = offset;
+		byte[] buffer = new byte[bufferSize > 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE];
+
+		try {
+			while ((numBytes = source.read(buffer)) != -1) {
+				// Technically, some read(byte[]) methods may return 0 and we
+				// cannot
+				// accept that as an indication of EOF.
+
+				if (numBytes == 0) {
+					continue;
+				}
+
+				dest.write(buffer, 0, numBytes);
+				if (flush) {
+					dest.getFD().sync(); 
+				}
+				total += numBytes;
+				if (listener != null) {
+					listener.bytesTransferred(total, numBytes, streamSize);
+				}
+			}
+		}
+		catch (IOException e) {
+			throw new CopyStreamException("IOException caught while copying.", total, e);
+		}
+
+		return total;
+	}
 
     /***
      * Copies the contents of an InputStream to an OutputStream using a
