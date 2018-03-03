@@ -462,7 +462,7 @@ implements Configurable
     /**
      * Default FTPClient constructor.  Creates a new FTPClient instance
      * with the data connection mode set to
-     * <code> ACTIVE_LOCAL_DATA_CONNECTION_MODE </code>, the file type
+     * <code> PASSIVE_LOCAL_DATA_CONNECTION_MODE </code>, the file type
      * set to <code> FTP.ASCII_FILE_TYPE </code>, the
      * file format set to <code> FTP.NON_PRINT_TEXT_FORMAT </code>,
      * the file structure set to <code> FTP.FILE_STRUCTURE </code>, and
@@ -493,7 +493,7 @@ implements Configurable
 
     private void __initDefaults()
     {
-        __dataConnectionMode = ACTIVE_LOCAL_DATA_CONNECTION_MODE;
+        __dataConnectionMode = PASSIVE_LOCAL_DATA_CONNECTION_MODE;
         __passiveHost        = null;
         __passivePort        = -1;
         __activeExternalHost = null;
