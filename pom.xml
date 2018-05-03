@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-parent</artifactId>
-        <version>42</version>
+        <version>43</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>commons-net</groupId>
@@ -235,6 +235,11 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                     <excludes>
                         <exclude>**/examples/**</exclude>
                     </excludes>
+                    <archive combine.children="append">
+                        <manifestEntries>
+                            <Automatic-Module-Name>${commons.module.name}</Automatic-Module-Name>
+                        </manifestEntries>
+                    </archive>
                 </configuration>
             </plugin>
 
