@@ -368,4 +368,12 @@ public class SubnetUtils {
         return x & 0x0000003F;
     }
 
+    public SubnetUtils getNext() {
+        return new SubnetUtils(getInfo().getNextAddress(), getInfo().getNetmask());
+    }
+
+    public SubnetUtils getPrevious() {
+        return new SubnetUtils(getInfo().getPreviousAddress(), getInfo().getNetmask());
+    }
+
 }
