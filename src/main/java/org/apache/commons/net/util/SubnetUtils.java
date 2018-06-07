@@ -190,6 +190,14 @@ public class SubnetUtils {
             return format(toArray(address));
         }
 
+        public String getNextAddress() {
+            return format(toArray(address + 1));
+        }
+
+        public String getPreviousAddress() {
+            return format(toArray(address - 1));
+        }
+
         /**
          * Return the low address as a dotted IP address.
          * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
