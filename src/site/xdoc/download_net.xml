@@ -102,7 +102,7 @@ limitations under the License.
         It is essential that you
         <a href="https://www.apache.org/info/verification.html">verify the integrity</a>
         of downloaded files, preferably using the <code>PGP</code> signature (<code>*.asc</code> files);
-        failing that using the <code>MD5</code> hash (<code>*.md5</code> checksum files).
+        failing that using the <code>SHA1</code> hash (<code>*.sha256</code> checksum files).
       </p>
       <p>
         The <a href="https://www.apache.org/dist/commons/KEYS">KEYS</a>
@@ -116,12 +116,12 @@ limitations under the License.
         <table>
           <tr>
               <td><a href="[preferred]/commons/net/binaries/commons-net-3.6-bin.tar.gz">commons-net-3.6-bin.tar.gz</a></td>
-              <td><a href="https://www.apache.org/dist/commons/net/binaries/commons-net-3.6-bin.tar.gz.md5">md5</a></td>
+              <td><a href="https://www.apache.org/dist/commons/net/binaries/commons-net-3.6-bin.tar.gz.sha256">sha256</a></td>
               <td><a href="https://www.apache.org/dist/commons/net/binaries/commons-net-3.6-bin.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
               <td><a href="[preferred]/commons/net/binaries/commons-net-3.6-bin.zip">commons-net-3.6-bin.zip</a></td>
-              <td><a href="https://www.apache.org/dist/commons/net/binaries/commons-net-3.6-bin.zip.md5">md5</a></td>
+              <td><a href="https://www.apache.org/dist/commons/net/binaries/commons-net-3.6-bin.zip.sha256">sha256</a></td>
               <td><a href="https://www.apache.org/dist/commons/net/binaries/commons-net-3.6-bin.zip.asc">pgp</a></td>
           </tr>
         </table>
@@ -130,43 +130,13 @@ limitations under the License.
         <table>
           <tr>
               <td><a href="[preferred]/commons/net/source/commons-net-3.6-src.tar.gz">commons-net-3.6-src.tar.gz</a></td>
-              <td><a href="https://www.apache.org/dist/commons/net/source/commons-net-3.6-src.tar.gz.md5">md5</a></td>
+              <td><a href="https://www.apache.org/dist/commons/net/source/commons-net-3.6-src.tar.gz.sha256">sha256</a></td>
               <td><a href="https://www.apache.org/dist/commons/net/source/commons-net-3.6-src.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
               <td><a href="[preferred]/commons/net/source/commons-net-3.6-src.zip">commons-net-3.6-src.zip</a></td>
-              <td><a href="https://www.apache.org/dist/commons/net/source/commons-net-3.6-src.zip.md5">md5</a></td>
+              <td><a href="https://www.apache.org/dist/commons/net/source/commons-net-3.6-src.zip.sha256">sha256</a></td>
               <td><a href="https://www.apache.org/dist/commons/net/source/commons-net-3.6-src.zip.asc">pgp</a></td>
-          </tr>
-        </table>
-      </subsection>
-    </section>
-    <section name="Apache Commons Net 1.4.1 (Requires Java 1.3 or later)">
-      <subsection name="Binaries">
-        <table>
-          <tr>
-              <td><a href="[preferred]/commons/net/binaries/commons-net-1.4.1.tar.gz">commons-net-1.4.1.tar.gz</a></td>
-              <td><a href="https://www.apache.org/dist/commons/net/binaries/commons-net-1.4.1.tar.gz.md5">md5</a></td>
-              <td><a href="https://www.apache.org/dist/commons/net/binaries/commons-net-1.4.1.tar.gz.asc">pgp</a></td>
-          </tr>
-          <tr>
-              <td><a href="[preferred]/commons/net/binaries/commons-net-1.4.1.zip">commons-net-1.4.1.zip</a></td>
-              <td><a href="https://www.apache.org/dist/commons/net/binaries/commons-net-1.4.1.zip.md5">md5</a></td>
-              <td><a href="https://www.apache.org/dist/commons/net/binaries/commons-net-1.4.1.zip.asc">pgp</a></td>
-          </tr>
-        </table>
-      </subsection>
-      <subsection name="Source">
-        <table>
-          <tr>
-              <td><a href="[preferred]/commons/net/source/commons-net-1.4.1-src.tar.gz">commons-net-1.4.1-src.tar.gz</a></td>
-              <td><a href="https://www.apache.org/dist/commons/net/source/commons-net-1.4.1-src.tar.gz.md5">md5</a></td>
-              <td><a href="https://www.apache.org/dist/commons/net/source/commons-net-1.4.1-src.tar.gz.asc">pgp</a></td>
-          </tr>
-          <tr>
-              <td><a href="[preferred]/commons/net/source/commons-net-1.4.1-src.zip">commons-net-1.4.1-src.zip</a></td>
-              <td><a href="https://www.apache.org/dist/commons/net/source/commons-net-1.4.1-src.zip.md5">md5</a></td>
-              <td><a href="https://www.apache.org/dist/commons/net/source/commons-net-1.4.1-src.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
