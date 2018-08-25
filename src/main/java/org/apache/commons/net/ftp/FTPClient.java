@@ -1089,6 +1089,21 @@ implements Configurable
         return FTPReply.isPositiveCompletion(pass(password));
     }
 
+    
+  //FTP connect with no username and password
+    public boolean login() throws IOException{
+    	 user("anonymous");
+
+         if (FTPReply.isPositiveCompletion(_replyCode)) {
+             return true;
+         }
+
+         if (!FTPReply.isPositiveIntermediate(_replyCode)) {
+             return false;
+         }
+
+         return FTPReply.isPositiveCompletion(pass("anonymous"));
+    }
 
     /**
      * Login to the FTP server using the provided username, password,
