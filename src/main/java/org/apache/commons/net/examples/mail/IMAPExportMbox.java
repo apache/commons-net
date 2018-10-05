@@ -375,12 +375,16 @@ public final class IMAPExportMbox
             for(int i=1; i< replyStrings.length - 1; i++) {
                 final String line = replyStrings[i];
                 if (line.startsWith("Return-Path: ")) {
-                   String[] parts = line.split(" ", 2);
-                    replyTo = parts[1];
-                    if (replyTo.startsWith("<")) {
-                        replyTo = replyTo.substring(1,replyTo.length()-1); // drop <> wrapper
-                    } else {
-                        System.err.println("Unexpected Return-path:" + line+ " in " + firstLine);
+                    String[] parts = line.split(" ", 2);
+                    if (!parts[1].equals("<>")) {// Don't replace default with blank
+                        replyTo = parts[1];
+                        if (replyTo.startsWith("<")) {
+                            if (replyTo.endsWith(">")) {
+                                replyTo = replyTo.substring(1,replyTo.length()-1); // drop <> wrapper                                
+                            } else {
+                                System.err.println("Unexpected Return-path: '" + line+ "' in " + firstLine);
+                            }
+                        }
                     }
                     break;
                 }
