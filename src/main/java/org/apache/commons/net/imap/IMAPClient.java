@@ -112,7 +112,7 @@ public class IMAPClient extends IMAP
      */
     public boolean select(String mailboxName) throws IOException
     {
-        return doCommand (IMAPCommand.SELECT, mailboxName);
+        return doCommand (IMAPCommand.SELECT, quoteMailboxName(mailboxName));
     }
 
     /**
@@ -123,7 +123,7 @@ public class IMAPClient extends IMAP
      */
     public boolean examine(String mailboxName) throws IOException
     {
-        return doCommand (IMAPCommand.EXAMINE, mailboxName);
+        return doCommand (IMAPCommand.EXAMINE, quoteMailboxName(mailboxName));
     }
 
     /**
@@ -134,7 +134,7 @@ public class IMAPClient extends IMAP
      */
     public boolean create(String mailboxName) throws IOException
     {
-        return doCommand (IMAPCommand.CREATE, mailboxName);
+        return doCommand (IMAPCommand.CREATE, quoteMailboxName(mailboxName));
     }
 
     /**
@@ -145,7 +145,7 @@ public class IMAPClient extends IMAP
      */
     public boolean delete(String mailboxName) throws IOException
     {
-        return doCommand (IMAPCommand.DELETE, mailboxName);
+        return doCommand (IMAPCommand.DELETE, quoteMailboxName(mailboxName));
     }
 
     /**
@@ -157,7 +157,7 @@ public class IMAPClient extends IMAP
      */
     public boolean rename(String oldMailboxName, String newMailboxName) throws IOException
     {
-        return doCommand (IMAPCommand.RENAME, oldMailboxName + " " + newMailboxName);
+        return doCommand (IMAPCommand.RENAME, quoteMailboxName(oldMailboxName) + " " + quoteMailboxName(newMailboxName));
     }
 
     /**
@@ -168,7 +168,7 @@ public class IMAPClient extends IMAP
      */
     public boolean subscribe(String mailboxName) throws IOException
     {
-        return doCommand (IMAPCommand.SUBSCRIBE, mailboxName);
+        return doCommand (IMAPCommand.SUBSCRIBE, quoteMailboxName(mailboxName));
     }
 
     /**
@@ -179,7 +179,7 @@ public class IMAPClient extends IMAP
      */
     public boolean unsubscribe(String mailboxName) throws IOException
     {
-        return doCommand (IMAPCommand.UNSUBSCRIBE, mailboxName);
+        return doCommand (IMAPCommand.UNSUBSCRIBE, quoteMailboxName(mailboxName));
     }
 
     /**
@@ -196,7 +196,7 @@ public class IMAPClient extends IMAP
      */
     public boolean list(String refName, String mailboxName) throws IOException
     {
-        return doCommand (IMAPCommand.LIST, quoteString(refName) + " " + quoteString(mailboxName));
+        return doCommand (IMAPCommand.LIST, quoteMailboxName(refName) + " " + quoteMailboxName(mailboxName));
     }
 
     /**
@@ -209,7 +209,7 @@ public class IMAPClient extends IMAP
      */
     public boolean lsub(String refName, String mailboxName) throws IOException
     {
-        return doCommand (IMAPCommand.LSUB, quoteString(refName) + " " + quoteString(mailboxName));
+        return doCommand (IMAPCommand.LSUB, quoteMailboxName(refName) + " " + quoteMailboxName(mailboxName));
     }
 
     /**
@@ -226,7 +226,7 @@ public class IMAPClient extends IMAP
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append(mailboxName);
+        sb.append(quoteMailboxName(mailboxName));
 
         sb.append(" (");
         for ( int i = 0; i < itemNames.length; i++ )
@@ -253,7 +253,7 @@ public class IMAPClient extends IMAP
      */
     public boolean append(String mailboxName, String flags, String datetime, String message) throws IOException
     {
-        StringBuilder args = new StringBuilder(mailboxName);
+        StringBuilder args = new StringBuilder(quoteMailboxName(mailboxName));
         if (flags != null) {
             args.append(" ").append(flags);
         }
@@ -417,7 +417,7 @@ public class IMAPClient extends IMAP
      */
     public boolean copy(String sequenceSet, String mailboxName) throws IOException
     {
-        return doCommand (IMAPCommand.COPY, sequenceSet + " " + mailboxName);
+        return doCommand (IMAPCommand.COPY, sequenceSet + " " + quoteMailboxName(mailboxName));
     }
 
     /**

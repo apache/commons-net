@@ -480,7 +480,7 @@ public class IMAP extends SocketClient
      * @param input the value to be quoted, may be null
      * @return the quoted value
      */
-    static String quoteString(String input) {
+    static String quoteMailboxName(String input) {
         if (input == null) { // Don't throw NPE here
             return null;
         }
