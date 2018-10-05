@@ -74,6 +74,12 @@ This is mainly a bug-fix release. See further details below.
  The examples are not part of the public API, so this does not affect compatibility.
 
 ">
+            <action issue="NET-615" type="add" dev="sebb">
+            IMAPClient could simplify using empty arguments
+            </action>
+            <action issue="NET-614" type="add" dev="sebb">
+            IMAP fails to quote/encode mailbox names
+            </action>
             <action issue="NET-643" type="fix" dev="sebb" due-to="Vasily">
             NPE when closing telnet stream
             </action>

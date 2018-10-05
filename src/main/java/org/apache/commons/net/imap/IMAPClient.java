@@ -184,18 +184,24 @@ public class IMAPClient extends IMAP
 
     /**
      * Send a LIST command to the server.
-     * @param refName The reference name.
+     * Quotes the parameters if necessary.
+     * @param refName The reference name
+     *                If empty, indicates that the mailbox name is interpreted as by SELECT.
      * @param mailboxName The mailbox name.
+     *                     If empty, this is a special request to
+     *                     return the hierarchy delimiter and the root name of the name given
+     *                     in the reference
      * @return {@code true} if the command was successful,{@code false} if not.
      * @throws IOException If a network I/O error occurs.
      */
     public boolean list(String refName, String mailboxName) throws IOException
     {
-        return doCommand (IMAPCommand.LIST, refName + " " + mailboxName);
+        return doCommand (IMAPCommand.LIST, quoteString(refName) + " " + quoteString(mailboxName));
     }
 
     /**
      * Send an LSUB command to the server.
+     * Quotes the parameters if necessary.
      * @param refName The reference name.
      * @param mailboxName The mailbox name.
      * @return {@code true} if the command was successful,{@code false} if not.
@@ -203,7 +209,7 @@ public class IMAPClient extends IMAP
      */
     public boolean lsub(String refName, String mailboxName) throws IOException
     {
-        return doCommand (IMAPCommand.LSUB, refName + " " + mailboxName);
+        return doCommand (IMAPCommand.LSUB, quoteString(refName) + " " + quoteString(mailboxName));
     }
 
     /**
