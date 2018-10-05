@@ -66,6 +66,8 @@ public final class IMAPMail
 
             imap.status("inbox", new String[]{"MESSAGES"});
 
+            imap.list("", "*"); // Show the folders
+
         } catch (IOException e) {
             System.out.println(imap.getReplyString());
             e.printStackTrace();
