@@ -85,7 +85,7 @@ public class Main {
         fullName = fullName.replace('/', '.');
         try {
             Class<?> clazz = Class.forName(fullName);
-            Method m = clazz.getDeclaredMethod("main", new Class[]{args.getClass()});
+            Method m = clazz.getDeclaredMethod("main", args.getClass());
             String[] args2 = new String[args.length-1];
             System.arraycopy(args, 1, args2, 0, args2.length);
             try {
