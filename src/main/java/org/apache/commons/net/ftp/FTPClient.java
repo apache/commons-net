@@ -2317,7 +2317,7 @@ implements Configurable
         }
         Set<String> entries = __featuresMap.get(feature.toUpperCase(Locale.ENGLISH));
         if (entries != null) {
-            return entries.toArray(new String[entries.size()]);
+            return entries.toArray(new String[0]);
         }
         return null;
     }

@@ -796,7 +796,7 @@ public class NNTPClient extends NNTP
             list.add(line);
         }
         reader.close();
-        return list.toArray(new String[list.size()]);
+        return list.toArray(new String[0]);
     }
 
     /***

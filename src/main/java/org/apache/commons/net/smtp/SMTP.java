@@ -437,7 +437,7 @@ public class SMTP extends SocketClient
      ***/
     public String[] getReplyStrings()
     {
-        return _replyLines.toArray(new String[_replyLines.size()]);
+        return _replyLines.toArray(new String[0]);
     }
 
     /***

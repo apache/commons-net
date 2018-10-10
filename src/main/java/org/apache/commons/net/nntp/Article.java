@@ -65,7 +65,7 @@ public class Article implements Threadable {
         if (references == null) {
             return new String[0];
         }
-        return references.toArray(new String[references.size()]);
+        return references.toArray(new String[0]);
     }
 
     /**
