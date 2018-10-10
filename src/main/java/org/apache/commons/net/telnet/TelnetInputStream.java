@@ -315,14 +315,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                 if(__threaded)
                 {
                     __queue.notify();
-                    try
-                    {
-                        __queue.wait();
-                    }
-                    catch (InterruptedException e)
-                    {
-                        throw e;
-                    }
+                    __queue.wait();
                 }
                 else
                 {
