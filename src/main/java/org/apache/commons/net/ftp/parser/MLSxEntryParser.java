@@ -61,10 +61,10 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
 
     private static final HashMap<String, Integer> TYPE_TO_INT = new HashMap<String, Integer>();
     static {
-        TYPE_TO_INT.put("file", Integer.valueOf(FTPFile.FILE_TYPE));
-        TYPE_TO_INT.put("cdir", Integer.valueOf(FTPFile.DIRECTORY_TYPE)); // listed directory
-        TYPE_TO_INT.put("pdir", Integer.valueOf(FTPFile.DIRECTORY_TYPE)); // a parent dir
-        TYPE_TO_INT.put("dir", Integer.valueOf(FTPFile.DIRECTORY_TYPE)); // dir or sub-dir
+        TYPE_TO_INT.put("file", FTPFile.FILE_TYPE);
+        TYPE_TO_INT.put("cdir", FTPFile.DIRECTORY_TYPE); // listed directory
+        TYPE_TO_INT.put("pdir", FTPFile.DIRECTORY_TYPE); // a parent dir
+        TYPE_TO_INT.put("dir", FTPFile.DIRECTORY_TYPE); // dir or sub-dir
     }
 
     private static int UNIX_GROUPS[] = { // Groups in order of mode digits
@@ -151,7 +151,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                     if (intType == null) {
                         file.setType(FTPFile.UNKNOWN_TYPE);
                     } else {
-                        file.setType(intType.intValue());
+                        file.setType(intType);
                     }
             }
             else if (factname.startsWith("unix.")) {

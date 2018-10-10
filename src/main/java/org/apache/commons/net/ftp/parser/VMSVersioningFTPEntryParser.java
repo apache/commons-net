@@ -116,7 +116,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
                 Integer nv = Integer.valueOf(version);
                 Integer existing = existingEntries.get(name);
                 if (null != existing) {
-                    if (nv.intValue() < existing.intValue()) {
+                    if (nv < existing) {
                         iter.remove();  // removes older version from original list.
                         continue;
                     }
@@ -140,7 +140,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
                 Integer nv = Integer.valueOf(version);
                 Integer existing = existingEntries.get(name);
                 if (null != existing) {
-                    if (nv.intValue() < existing.intValue()) {
+                    if (nv < existing) {
                         iter.remove(); // removes older version from original list.
                     }
                 }

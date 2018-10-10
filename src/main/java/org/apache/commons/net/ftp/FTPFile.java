@@ -465,9 +465,9 @@ public class FTPFile implements Serializable
         sb.append(permissionToString(USER_ACCESS));
         sb.append(permissionToString(GROUP_ACCESS));
         sb.append(permissionToString(WORLD_ACCESS));
-        fmt.format(" %4d", Integer.valueOf(getHardLinkCount()));
+        fmt.format(" %4d", getHardLinkCount());
         fmt.format(" %-8s %-8s", getUser(), getGroup());
-        fmt.format(" %8d", Long.valueOf(getSize()));
+        fmt.format(" %8d", getSize());
         Calendar timestamp = getTimestamp();
         if (timestamp != null) {
             if (timezone != null) {

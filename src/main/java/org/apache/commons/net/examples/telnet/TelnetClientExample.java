@@ -195,7 +195,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                                 try
                                 {
                                     st.nextToken();
-                                    int opcode = (new Integer(st.nextToken())).intValue();
+                                    int opcode = Integer.valueOf(st.nextToken());
                                     tc.deleteOptionHandler(opcode);
                                 }
                                 catch (Exception e)
