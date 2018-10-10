@@ -250,7 +250,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                         end_loop = true;
                     }
                 }
-                while((ret_read > 0) && (end_loop == false));
+                while((ret_read > 0) && (!end_loop));
 
                 try
                 {
