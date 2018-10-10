@@ -92,9 +92,8 @@ public final class NTPUDPClient extends DatagramSocketClient
 
         long returnTime = System.currentTimeMillis();
         // create TimeInfo message container but don't pre-compute the details yet
-        TimeInfo info = new TimeInfo(recMessage, returnTime, false);
 
-        return info;
+        return new TimeInfo(recMessage, returnTime, false);
     }
 
     /***

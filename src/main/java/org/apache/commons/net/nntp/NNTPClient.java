@@ -1863,8 +1863,7 @@ public class NNTPClient extends NNTP
         if (ap == null) {
             return null;
         }
-        ArticleInfo ai = new ArticleInfo();
-        return ai;
+        return new ArticleInfo();
     }
 
     @SuppressWarnings("deprecation")

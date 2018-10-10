@@ -798,8 +798,7 @@ public class FTPSClient extends FTPClient {
      */
     public int execCCC() throws IOException
     {
-        int repCode = sendCommand(CMD_CCC);
-// This will be performed by sendCommand(String, String)
+        // This will be performed by sendCommand(String, String)
 //        if (FTPReply.isPositiveCompletion(repCode)) {
 //            _socket_.close();
 //            _socket_ = plainSocket;
@@ -810,7 +809,7 @@ public class FTPSClient extends FTPClient {
 //                new OutputStreamWriter(
 //                    _socket_.getOutputStream(), getControlEncoding()));
 //        }
-        return repCode;
+        return sendCommand(CMD_CCC);
     }
 
     /**

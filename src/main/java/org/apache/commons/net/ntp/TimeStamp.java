@@ -301,8 +301,7 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
             seconds |= 0x80000000L; // set high-order bit if msb1baseTime 1900 used
         }
 
-        long time = seconds << 32 | fraction;
-        return time;
+        return seconds << 32 | fraction;
     }
 
     /***

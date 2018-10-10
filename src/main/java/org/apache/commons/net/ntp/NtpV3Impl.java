@@ -502,12 +502,11 @@ public class NtpV3Impl implements NtpV3Packet
      */
     private int getInt(int index)
     {
-        int i = ui(buf[index]) << 24 |
+
+        return ui(buf[index]) << 24 |
                 ui(buf[index + 1]) << 16 |
                 ui(buf[index + 2]) << 8 |
                 ui(buf[index + 3]);
-
-        return i;
     }
 
     /***
@@ -542,7 +541,7 @@ public class NtpV3Impl implements NtpV3Packet
      */
     private long getLong(int index)
     {
-        long i = ul(buf[index]) << 56 |
+        return ul(buf[index]) << 56 |
                 ul(buf[index + 1]) << 48 |
                 ul(buf[index + 2]) << 40 |
                 ul(buf[index + 3]) << 32 |
@@ -550,7 +549,6 @@ public class NtpV3Impl implements NtpV3Packet
                 ul(buf[index + 5]) << 16 |
                 ul(buf[index + 6]) << 8 |
                 ul(buf[index + 7]);
-        return i;
     }
 
     /***
@@ -658,8 +656,7 @@ public class NtpV3Impl implements NtpV3Packet
      */
     protected static final int ui(byte b)
     {
-        int i = b & 0xFF;
-        return i;
+        return b & 0xFF;
     }
 
     /***
@@ -672,8 +669,7 @@ public class NtpV3Impl implements NtpV3Packet
      */
     protected static final long ul(byte b)
     {
-        long i = b & 0xFF;
-        return i;
+        return (long) (b & 0xFF);
     }
 
     /***
