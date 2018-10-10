@@ -469,10 +469,10 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
         // list in short order.
         if (orig != null && orig.size() > 0) {
             String header = orig.get(0);
-            if (header.indexOf("Volume") >= 0 && header.indexOf("Dsname") >= 0) {
+            if (header.contains("Volume") && header.contains("Dsname")) {
                 setType(FILE_LIST_TYPE);
                 super.setRegex(FILE_LIST_REGEX);
-            } else if (header.indexOf("Name") >= 0 && header.indexOf("Id") >= 0) {
+            } else if (header.contains("Name") && header.contains("Id")) {
                 setType(MEMBER_LIST_TYPE);
                 super.setRegex(MEMBER_LIST_REGEX);
             } else if (header.indexOf("total") == 0) {
