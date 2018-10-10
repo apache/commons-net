@@ -487,10 +487,9 @@ public abstract class SocketClient
      * Set the underlying socket send buffer size.
      * <p>
      * @param size The size of the buffer in bytes.
-     * @throws SocketException never thrown, but subclasses might want to do so
      * @since 2.0
      */
-    public void setSendBufferSize(int size) throws SocketException {
+    public void setSendBufferSize(int size) {
         sendBufferSize = size;
     }
 
@@ -507,10 +506,9 @@ public abstract class SocketClient
      * Sets the underlying socket receive buffer size.
      * <p>
      * @param size The size of the buffer in bytes.
-     * @throws SocketException never (but subclasses may wish to do so)
      * @since 2.0
      */
-    public void setReceiveBufferSize(int size) throws SocketException  {
+    public void setReceiveBufferSize(int size) {
         receiveBufferSize = size;
     }
 

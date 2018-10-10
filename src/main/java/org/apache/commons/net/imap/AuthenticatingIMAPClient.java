@@ -114,14 +114,11 @@ public class AuthenticatingIMAPClient extends IMAPSClient
      *      cannot be instantiated by the Java runtime system.
      * @throws InvalidKeyException If the CRAM hash algorithm
      *      failed to use the given password.
-     * @throws InvalidKeySpecException If the CRAM hash algorithm
-     *      failed to use the given password.
      */
     public boolean authenticate(AuthenticatingIMAPClient.AUTH_METHOD method,
                         String username, String password)
                         throws IOException, NoSuchAlgorithmException,
-                        InvalidKeyException, InvalidKeySpecException
-    {
+                        InvalidKeyException {
         return auth(method, username, password);
     }
 
@@ -139,14 +136,11 @@ public class AuthenticatingIMAPClient extends IMAPSClient
      *      cannot be instantiated by the Java runtime system.
      * @throws InvalidKeyException If the CRAM hash algorithm
      *      failed to use the given password.
-     * @throws InvalidKeySpecException If the CRAM hash algorithm
-     *      failed to use the given password.
      */
     public boolean auth(AuthenticatingIMAPClient.AUTH_METHOD method,
                         String username, String password)
                         throws IOException, NoSuchAlgorithmException,
-                        InvalidKeyException, InvalidKeySpecException
-    {
+                        InvalidKeyException {
         if (!IMAPReply.isContinuation(sendCommand(IMAPCommand.AUTHENTICATE, method.getAuthName())))
         {
             return false;

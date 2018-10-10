@@ -656,11 +656,9 @@ public class FTPSClient extends FTPClient {
     * after creating the socket.
     * The default implementation is a no-op
      * @param socket the socket to set up
-    * @throws IOException on error
     * @since 3.1
     */
-    protected void _prepareDataSocket_(Socket socket)
-            throws IOException {
+    protected void _prepareDataSocket_(Socket socket) {
     }
 
     /**

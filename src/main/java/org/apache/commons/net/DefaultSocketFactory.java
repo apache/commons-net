@@ -68,12 +68,10 @@ public class DefaultSocketFactory extends SocketFactory
      * Creates an unconnected Socket.
      *
      * @return A new unconnected Socket.
-     * @throws IOException If an I/O error occurs while creating the Socket.
      * @since 3.2
      */
     @Override
-    public Socket createSocket() throws IOException
-    {
+    public Socket createSocket() {
         if (connProxy != null)
         {
             return new Socket(connProxy);

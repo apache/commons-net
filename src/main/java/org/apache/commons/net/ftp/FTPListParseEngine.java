@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -237,10 +236,8 @@ public class FTPListParseEngine {
      * @return an array of FTPFile objects containing the whole list of
      *         files returned by the server as read by this object's parser.
      * None of the entries will be null
-     * @throws IOException - not ever thrown, may be removed in a later release
      */
     public FTPFile[] getFiles()
-    throws IOException // TODO remove; not actually thrown
     {
         return getFiles(FTPFileFilters.NON_NULL);
     }
@@ -261,11 +258,8 @@ public class FTPListParseEngine {
      * a filter such as {@link FTPFileFilters#NON_NULL} which does not
      * allow null entries.
      * @since 2.2
-     * @throws IOException - not ever thrown, may be removed in a later release
      */
-    public FTPFile[] getFiles(FTPFileFilter filter)
-    throws IOException // TODO remove; not actually thrown
-    {
+    public FTPFile[] getFiles(FTPFileFilter filter) {
         List<FTPFile> tmpResults = new ArrayList<FTPFile>();
         Iterator<String> iter = this.entries.iterator();
         while (iter.hasNext()) {

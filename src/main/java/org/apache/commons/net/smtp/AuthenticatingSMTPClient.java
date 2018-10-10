@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.SSLContext;
@@ -207,14 +206,11 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      *      cannot be instantiated by the Java runtime system.
      * @throws InvalidKeyException If the CRAM hash algorithm
      *      failed to use the given password.
-     * @throws InvalidKeySpecException If the CRAM hash algorithm
-     *      failed to use the given password.
      ***/
     public boolean auth(AuthenticatingSMTPClient.AUTH_METHOD method,
                         String username, String password)
                         throws IOException, NoSuchAlgorithmException,
-                        InvalidKeyException, InvalidKeySpecException
-    {
+                        InvalidKeyException {
         if (!SMTPReply.isPositiveIntermediate(sendCommand(SMTPCommand.AUTH,
                 AUTH_METHOD.getAuthName(method)))) {
             return false;

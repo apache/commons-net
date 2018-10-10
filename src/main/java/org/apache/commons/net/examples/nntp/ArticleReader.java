@@ -20,7 +20,6 @@ package org.apache.commons.net.examples.nntp;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.SocketException;
 
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.nntp.NNTPClient;
