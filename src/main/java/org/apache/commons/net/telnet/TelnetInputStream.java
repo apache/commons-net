@@ -442,7 +442,6 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
 
                         __readIsWaiting = false;
                     }
-                    continue;
                 }
                 else
                 {

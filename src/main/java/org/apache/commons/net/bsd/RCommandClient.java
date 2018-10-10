@@ -123,9 +123,7 @@ public class RCommandClient extends RExecClient
                          getLocalAddress());
                 break; // got a socket
             }
-            catch (SocketException e)
-            {
-                continue;
+            catch (SocketException ignored) {
             }
         }
 
