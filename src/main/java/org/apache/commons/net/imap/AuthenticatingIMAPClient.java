@@ -240,7 +240,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
     /**
      * The enumeration of currently-supported authentication methods.
      */
-    public static enum AUTH_METHOD
+    public enum AUTH_METHOD
     {
         /** The standarised (RFC4616) PLAIN method, which sends the password unencrypted (insecure). */
         PLAIN("PLAIN"),
@@ -255,7 +255,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
 
         private final String authName;
 
-        private AUTH_METHOD(String name){
+        AUTH_METHOD(String name){
             this.authName=name;
         }
         /**
