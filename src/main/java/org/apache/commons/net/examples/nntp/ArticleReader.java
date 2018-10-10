@@ -31,7 +31,7 @@ import org.apache.commons.net.nntp.NewsgroupInfo;
  */
 public class ArticleReader {
 
-    public static void main(String[] args) throws SocketException, IOException {
+    public static void main(String[] args) throws IOException {
 
         if (args.length != 2 && args.length != 3 && args.length != 5) {
             System.out.println("Usage: MessageThreading <hostname> <groupname> [<article specifier> [<user> <password>]]");

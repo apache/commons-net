@@ -20,7 +20,6 @@ package org.apache.commons.net.examples.nntp;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.SocketException;
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.nntp.Article;
 import org.apache.commons.net.nntp.NNTPClient;
@@ -34,7 +33,7 @@ public class MessageThreading {
     public MessageThreading() {
     }
 
-    public static void main(String[] args) throws SocketException, IOException {
+    public static void main(String[] args) throws IOException {
 
         if (args.length != 2 && args.length != 4) {
             System.out.println("Usage: MessageThreading <hostname> <groupname> [<user> <password>]");

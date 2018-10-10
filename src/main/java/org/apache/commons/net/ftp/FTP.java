@@ -538,8 +538,7 @@ public class FTP extends SocketClient
         return __commandBuffer.toString();
     }
 
-    private void __send(String message) throws IOException,
-            FTPConnectionClosedException, SocketException {
+    private void __send(String message) throws IOException {
         try{
             _controlOutput_.write(message);
             _controlOutput_.flush();

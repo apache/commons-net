@@ -228,7 +228,7 @@ public abstract class SocketClient
 
     // helper method to allow code to be shared with connect(String,...) methods
     private void _connect(InetAddress host, int port, InetAddress localAddr, int localPort)
-        throws SocketException, IOException
+        throws IOException
     {
         _socket_ = _socketFactory_.createSocket();
         if (receiveBufferSize != -1) {

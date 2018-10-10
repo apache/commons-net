@@ -145,7 +145,7 @@ public final class KeyManagerUtils {
     }
 
     private static KeyStore loadStore(String storeType, File storePath, String storePass)
-        throws KeyStoreException,  IOException, GeneralSecurityException {
+        throws IOException, GeneralSecurityException {
         KeyStore ks = KeyStore.getInstance(storeType);
         FileInputStream stream = null;
         try {

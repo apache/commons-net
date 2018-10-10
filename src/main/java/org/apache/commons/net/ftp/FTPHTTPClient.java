@@ -169,7 +169,7 @@ public class FTPHTTPClient extends FTPClient {
     }
 
     @Override
-    public void connect(String host, int port) throws SocketException, IOException {
+    public void connect(String host, int port) throws IOException {
 
         _socket_ = _socketFactory_.createSocket(proxyHost, proxyPort);
         _input_ = _socket_.getInputStream();
@@ -186,8 +186,7 @@ public class FTPHTTPClient extends FTPClient {
         super._connectAction_(socketIsReader);
     }
 
-    private BufferedReader tunnelHandshake(String host, int port, InputStream input, OutputStream output) throws IOException,
-    UnsupportedEncodingException {
+    private BufferedReader tunnelHandshake(String host, int port, InputStream input, OutputStream output) throws IOException {
         final String connectString = "CONNECT "  + host + ":" + port  + " HTTP/1.1";
         final String hostString = "Host: " + host + ":" + port;
 
