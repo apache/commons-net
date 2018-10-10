@@ -82,7 +82,7 @@ public final class POP3ExportMbox
         }
 
         String proto = argCount > 3 ? args[argIdx++] : null;
-        boolean implicit = argCount > 4 ? Boolean.parseBoolean(args[argIdx++]) : false;
+        boolean implicit = argCount > 4 && Boolean.parseBoolean(args[argIdx++]);
 
         POP3Client pop3;
 
@@ -143,7 +143,7 @@ public final class POP3ExportMbox
                     for (int i = 1; i <= count; i++) {
                         OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(new File(mbox,i+".eml")),Charset.forName("iso-8859-1"));
                         writeFile(pop3, fw, i);
-                        fw.close();                    
+                        fw.close();
                     }
                 } else {
                     System.out.println("Writing file: " + mbox);
@@ -152,7 +152,7 @@ public final class POP3ExportMbox
                     for (int i = 1; i <= count; i++) {
                         writeMbox(pop3, fw, i);
                     }
-                    fw.close();                    
+                    fw.close();
                 }
             }
 

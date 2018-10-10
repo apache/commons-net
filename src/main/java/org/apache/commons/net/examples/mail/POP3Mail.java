@@ -77,7 +77,7 @@ public final class POP3Mail
         }
 
         String proto = args.length > 3 ? args[3] : null;
-        boolean implicit = args.length > 4 ? Boolean.parseBoolean(args[4]) : false;
+        boolean implicit = args.length > 4 && Boolean.parseBoolean(args[4]);
 
         POP3Client pop3;
 
