@@ -261,14 +261,12 @@ public class FTPListParseEngine {
      */
     public FTPFile[] getFiles(FTPFileFilter filter) {
         List<FTPFile> tmpResults = new ArrayList<FTPFile>();
-        Iterator<String> iter = this.entries.iterator();
-        while (iter.hasNext()) {
-            String entry = iter.next();
+        for (String entry : this.entries) {
             FTPFile temp = this.parser.parseFTPEntry(entry);
             if (temp == null && saveUnparseableEntries) {
                 temp = new FTPFile(entry);
             }
-            if (filter.accept(temp)){
+            if (filter.accept(temp)) {
                 tmpResults.add(temp);
             }
         }

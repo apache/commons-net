@@ -212,10 +212,8 @@ public class Threader {
      */
     private ThreadContainer findRootSet(HashMap<String, ThreadContainer> idTable) {
         ThreadContainer root = new ThreadContainer();
-        Iterator<Map.Entry<String, ThreadContainer>> iter = idTable.entrySet().iterator();
 
-        while (iter.hasNext()) {
-            Map.Entry<String, ThreadContainer> entry = iter.next();
+        for (Map.Entry<String, ThreadContainer> entry : idTable.entrySet()) {
             ThreadContainer c = entry.getValue();
             if (c.parent == null) {
                 if (c.next != null) {
