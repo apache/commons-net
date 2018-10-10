@@ -18,6 +18,12 @@
 
 package org.apache.commons.net.nntp;
 
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * This is an implementation of a message threading algorithm, as originally devised by Zamie Zawinski.
  * See <a href="http://www.jwz.org/doc/threading.html">http://www.jwz.org/doc/threading.html</a> for details.
@@ -25,12 +31,6 @@ package org.apache.commons.net.nntp;
  * <a href="http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java">
  * http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java</a>
  */
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class Threader {
 
     /**
