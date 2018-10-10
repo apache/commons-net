@@ -19,6 +19,7 @@ package org.apache.commons.net.nntp;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * This is a class that contains the basic state needed for message retrieval and threading.
@@ -52,9 +53,7 @@ public class Article implements Threadable {
             references = new ArrayList<String>();
         }
         isReply = true;
-        for(String s : msgId.split(" ")) {
-            references.add(s);
-        }
+        Collections.addAll(references, msgId.split(" "));
     }
 
     /**
