@@ -194,7 +194,6 @@ __main:
             {
                 System.err.println(
                     "Couldn't initiate transfer.  Check that filenames are valid.");
-                break __main;
             }
 
         }
