@@ -162,7 +162,6 @@ public final class POP3ExportMbox
         catch (IOException e)
         {
             e.printStackTrace();
-            return;
         }
     }
 

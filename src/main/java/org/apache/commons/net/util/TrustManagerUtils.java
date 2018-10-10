@@ -46,9 +46,7 @@ public final class TrustManagerUtils
          * Never generates a CertificateException.
          */
         @Override
-        public void checkClientTrusted(X509Certificate[] certificates, String authType)
-        {
-            return;
+        public void checkClientTrusted(X509Certificate[] certificates, String authType) {
         }
 
         @Override

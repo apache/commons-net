@@ -169,7 +169,6 @@ public final class POP3Mail
         catch (IOException e)
         {
             e.printStackTrace();
-            return;
         }
     }
 }

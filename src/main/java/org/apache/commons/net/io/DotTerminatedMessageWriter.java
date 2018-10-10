@@ -98,7 +98,6 @@ public final class DotTerminatedMessageWriter extends Writer
             default:
                 __state = __NOTHING_SPECIAL_STATE;
                 __output.write(ch);
-                return ;
             }
         }
     }

@@ -38,9 +38,7 @@ public class FTPSTrustManager implements X509TrustManager
      * No-op
      */
     @Override
-    public void checkClientTrusted(X509Certificate[] certificates, String authType)
-    {
-        return;
+    public void checkClientTrusted(X509Certificate[] certificates, String authType) {
     }
 
     @Override
