@@ -384,7 +384,7 @@ public class NNTPClient extends NNTP
      */
     public Reader retrieveArticle() throws IOException
     {
-        return retrieveArticle((String) null);
+        return retrieveArticle(null);
     }
 
 
@@ -513,7 +513,7 @@ public class NNTPClient extends NNTP
      */
     public Reader retrieveArticleHeader() throws IOException
     {
-        return retrieveArticleHeader((String) null);
+        return retrieveArticleHeader(null);
     }
 
 
