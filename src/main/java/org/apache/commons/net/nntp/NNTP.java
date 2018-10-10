@@ -962,10 +962,8 @@ public class NNTP extends SocketClient
      *      command or receiving the server reply.
      ***/
     public int xhdr(String header, String selectedArticles) throws IOException {
-        StringBuilder command = new StringBuilder(header);
-        command.append(" ");
-        command.append(selectedArticles);
-        return sendCommand(NNTPCommand.XHDR, command.toString());
+        String command = header + " " + selectedArticles;
+        return sendCommand(NNTPCommand.XHDR, command);
     }
 
     /**
@@ -978,9 +976,7 @@ public class NNTP extends SocketClient
      * @throws IOException if the command fails
      */
     public int listActive(String wildmat) throws IOException {
-        StringBuilder command = new StringBuilder("ACTIVE ");
-        command.append(wildmat);
-        return sendCommand(NNTPCommand.LIST, command.toString());
+        return sendCommand(NNTPCommand.LIST, "ACTIVE " + wildmat);
     }
 
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE

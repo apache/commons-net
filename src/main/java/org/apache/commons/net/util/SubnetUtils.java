@@ -57,7 +57,7 @@ public class SubnetUtils {
 
           int trailingZeroes = NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
           /*
-           * An IPv4 netmask consists of 32 bits, a contiguous sequence 
+           * An IPv4 netmask consists of 32 bits, a contiguous sequence
            * of the specified number of ones followed by all zeros.
            * So, it can be obtained by shifting an unsigned integer (32 bits) to the left by
            * the number of trailing zeros which is (32 - the # bits specification).
@@ -266,15 +266,13 @@ public class SubnetUtils {
          */
         @Override
         public String toString() {
-            final StringBuilder buf = new StringBuilder();
-            buf.append("CIDR Signature:\t[").append(getCidrSignature()).append("]")
-                .append(" Netmask: [").append(getNetmask()).append("]\n")
-                .append("Network:\t[").append(getNetworkAddress()).append("]\n")
-                .append("Broadcast:\t[").append(getBroadcastAddress()).append("]\n")
-                 .append("First Address:\t[").append(getLowAddress()).append("]\n")
-                 .append("Last Address:\t[").append(getHighAddress()).append("]\n")
-                 .append("# Addresses:\t[").append(getAddressCount()).append("]\n");
-            return buf.toString();
+            return "CIDR Signature:\t[" + getCidrSignature() + "]" +
+                    " Netmask: [" + getNetmask() + "]\n" +
+                    "Network:\t[" + getNetworkAddress() + "]\n" +
+                    "Broadcast:\t[" + getBroadcastAddress() + "]\n" +
+                    "First Address:\t[" + getLowAddress() + "]\n" +
+                    "Last Address:\t[" + getHighAddress() + "]\n" +
+                    "# Addresses:\t[" + getAddressCount() + "]\n";
         }
     }
 

@@ -3464,10 +3464,7 @@ implements Configurable
         {
             if (pathname != null)
             {
-                StringBuilder sb = new StringBuilder(pathname.length() + 3);
-                sb.append("-a ");
-                sb.append(pathname);
-                return sb.toString();
+                return "-a " + pathname;
             }
             else
             {
