@@ -64,9 +64,7 @@ public class SSLContextUtils {
             ctx = SSLContext.getInstance(protocol);
             ctx.init(keyManagers, trustManagers, /*SecureRandom*/ null);
         } catch (GeneralSecurityException e) {
-            IOException ioe = new IOException("Could not initialize SSL context");
-            ioe.initCause(e);
-            throw ioe;
+            throw new IOException("Could not initialize SSL context", e);
         }
         return ctx;
     }

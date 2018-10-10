@@ -428,9 +428,7 @@ public class FTP extends SocketClient
                     __getReply();
                 }
             } catch (SocketTimeoutException e) {
-                IOException ioe = new IOException("Timed out waiting for initial connect reply");
-                ioe.initCause(e);
-                throw ioe;
+                throw new IOException("Timed out waiting for initial connect reply", e);
             } finally {
                 _socket_.setSoTimeout(original);
             }

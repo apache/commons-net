@@ -177,9 +177,7 @@ public class FTPHTTPClient extends FTPClient {
             socketIsReader = tunnelHandshake(host, port, _input_, _output_);
         }
         catch (Exception e) {
-            IOException ioe = new IOException("Could not connect to " + host+ " using port " + port);
-            ioe.initCause(e);
-            throw ioe;
+            throw new IOException("Could not connect to " + host+ " using port " + port, e);
         }
         super._connectAction_(socketIsReader);
     }
