@@ -60,11 +60,7 @@ public final class CRLFLineReader extends BufferedReader
                 if (prevWasCR && intch == LF) {
                     return sb.substring(0, sb.length()-1);
                 }
-                if (intch == CR) {
-                    prevWasCR = true;
-                } else {
-                    prevWasCR = false;
-                }
+                prevWasCR = intch == CR;
                 sb.append((char) intch);
             }
         }

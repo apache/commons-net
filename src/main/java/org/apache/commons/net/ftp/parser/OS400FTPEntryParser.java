@@ -413,10 +413,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * else <code>false</code>.
      */
     private boolean isNullOrEmpty(String string) {
-        if (string == null || string.length() == 0) {
-            return true;
-        }
-        return false;
+        return string == null || string.length() == 0;
     }
 
     /**
