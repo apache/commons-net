@@ -48,7 +48,7 @@ public class IMAP extends SocketClient
         /**  A constant representing the "authenticated" state. */
         AUTH_STATE,
         /**  A constant representing the "logout" state. */
-        LOGOUT_STATE;
+        LOGOUT_STATE
     }
 
     // RFC 3501, section 5.1.3. It should be "modified UTF-7".
