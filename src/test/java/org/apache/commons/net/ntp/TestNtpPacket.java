@@ -178,10 +178,10 @@ public class TestNtpPacket {
         // now change the packet to force equals() => false
         message2.setMode(2);
         Assert.assertTrue(message1.getMode() != message2.getMode());
-        Assert.assertFalse(message1.equals(message2));
+        Assert.assertNotEquals(message1, message2);
 
         NtpV3Packet message3 = null;
-        Assert.assertFalse(message1.equals(message3));
+        Assert.assertNotEquals(message1, message3);
     }
 
     private static byte[] hexStringToByteArray(String s) {
