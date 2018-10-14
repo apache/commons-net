@@ -111,8 +111,7 @@ public class TFTPTest extends TestCase
         }
     }
 
-    public void testASCIIDownloads() throws Exception
-    {
+    public void testASCIIDownloads() {
         // test with the smaller files
         for (int i = 0; i < 6; i++)
         {

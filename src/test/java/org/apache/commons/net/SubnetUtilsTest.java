@@ -216,7 +216,7 @@ public class SubnetUtilsTest extends TestCase {
         }
     }
 
-    public void testNET428_31() throws Exception {
+    public void testNET428_31() {
         final SubnetUtils subnetUtils = new SubnetUtils("1.2.3.4/31");
         assertEquals(0, subnetUtils.getInfo().getAddressCount());
         String[] address = subnetUtils.getInfo().getAllAddresses();
@@ -224,7 +224,7 @@ public class SubnetUtilsTest extends TestCase {
         assertEquals(0, address.length);
     }
 
-    public void testNET428_32() throws Exception {
+    public void testNET428_32() {
         final SubnetUtils subnetUtils = new SubnetUtils("1.2.3.4/32");
         assertEquals(0, subnetUtils.getInfo().getAddressCount());
         String[] address = subnetUtils.getInfo().getAllAddresses();

@@ -23,7 +23,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 public class DefaultFTPFileEntryParserFactoryTest extends TestCase
 {
-    public void testDefaultParserFactory() throws Exception {
+    public void testDefaultParserFactory() {
         DefaultFTPFileEntryParserFactory factory =
             new DefaultFTPFileEntryParserFactory();
 
@@ -123,7 +123,7 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
         assertTrue("Expected "+expected.getCanonicalName()+" got "+parser.getClass().getCanonicalName(),
                 expected.isInstance(parser));
     }
-    public void testDefaultParserFactoryConfig() throws Exception {
+    public void testDefaultParserFactoryConfig() {
         DefaultFTPFileEntryParserFactory factory =
             new DefaultFTPFileEntryParserFactory();
 

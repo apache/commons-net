@@ -127,7 +127,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testGoodListing()
      */
     @Override
-    public void testGoodListing() throws Exception {
+    public void testGoodListing() {
         String[] goodsamples = getGoodListing();
         MVSFTPEntryParser parser = new MVSFTPEntryParser();
         parser.setType(MVSFTPEntryParser.FILE_LIST_TYPE);
@@ -139,7 +139,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
         }
     }
 
-    public void testMemberListing() throws Exception {
+    public void testMemberListing() {
         MVSFTPEntryParser parser = new MVSFTPEntryParser();
         parser.setType(MVSFTPEntryParser.MEMBER_LIST_TYPE);
         parser.setRegex(MVSFTPEntryParser.MEMBER_LIST_REGEX);
@@ -187,7 +187,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
     }
 
     @Override
-    public void testParseFieldsOnDirectory() throws Exception {
+    public void testParseFieldsOnDirectory() {
         MVSFTPEntryParser parser = new MVSFTPEntryParser();
         parser.setType(MVSFTPEntryParser.FILE_LIST_TYPE);
         parser.setRegex(MVSFTPEntryParser.FILE_LIST_REGEX);
@@ -210,7 +210,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
      */
     @Override
-    public void testParseFieldsOnFile() throws Exception {
+    public void testParseFieldsOnFile() {
         FTPFile file = null;
 
         MVSFTPEntryParser parser = new MVSFTPEntryParser();

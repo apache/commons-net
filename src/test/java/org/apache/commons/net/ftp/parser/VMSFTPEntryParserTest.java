@@ -138,8 +138,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     }
 
     @Override
-    public void testParseFieldsOnDirectory() throws Exception
-    {
+    public void testParseFieldsOnDirectory() {
 
         FTPFile dir = getParser().parseFTPEntry(
             "DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)");
@@ -176,8 +175,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     }
 
     @Override
-    public void testParseFieldsOnFile() throws Exception
-    {
+    public void testParseFieldsOnFile() {
         FTPFile file = getParser().parseFTPEntry(
             "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RW,R)");
         assertTrue("Should be a file.",

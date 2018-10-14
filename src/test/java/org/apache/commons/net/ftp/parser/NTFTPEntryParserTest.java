@@ -124,8 +124,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
      */
     @Override
-    public void testParseFieldsOnDirectory() throws Exception
-    {
+    public void testParseFieldsOnDirectory() {
         FTPFile dir = getParser().parseFTPEntry("12-05-96  05:03PM       <DIR>          absoft2");
         assertNotNull("Could not parse entry.", dir);
         assertEquals("Thu Dec 05 17:03:00 1996",
@@ -182,8 +181,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
      */
     @Override
-    public void testParseFieldsOnFile() throws Exception
-    {
+    public void testParseFieldsOnFile() {
         FTPFile f = getParser().parseFTPEntry("05-22-97  12:08AM                  5000000000 AUTOEXEC.BAK");
         assertNotNull("Could not parse entry.", f);
         assertEquals("Thu May 22 00:08:00 1997",
@@ -223,14 +221,12 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
      * directory with name beginning with a numeric character
      * was not parsing correctly
      */
-    public void testDirectoryBeginningWithNumber() throws Exception
-    {
+    public void testDirectoryBeginningWithNumber() {
         FTPFile f = getParser().parseFTPEntry(directoryBeginningWithNumber);
         assertEquals("name", "123xyz", f.getName());
     }
 
-    public void testDirectoryBeginningWithNumberFollowedBySpaces() throws Exception
-    {
+    public void testDirectoryBeginningWithNumberFollowedBySpaces() {
         FTPFile f = getParser().parseFTPEntry("12-03-96  06:38AM       <DIR>          123 xyz");
         assertEquals("name", "123 xyz", f.getName());
         f = getParser().parseFTPEntry("12-03-96  06:38AM       <DIR>          123 abc xyz");

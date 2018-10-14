@@ -80,8 +80,7 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
     }
 
     @Override
-    public void testParseFieldsOnDirectory() throws Exception
-    {
+    public void testParseFieldsOnDirectory() {
         FTPFile f = getParser().parseFTPEntry("PEP             36864 04/03/24 14:06:34 *DIR       dir1/");
         assertNotNull("Could not parse entry.",
                       f);
@@ -118,8 +117,7 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
     }
 
     @Override
-    public void testParseFieldsOnFile() throws Exception
-    {
+    public void testParseFieldsOnFile() {
         FTPFile f = getParser().parseFTPEntry("PEP              5000000000 04/03/24 14:06:29 *STMF      build.xml");
         assertNotNull("Could not parse entry.",
                       f);

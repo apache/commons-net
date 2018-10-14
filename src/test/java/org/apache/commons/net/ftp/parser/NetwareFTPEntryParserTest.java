@@ -58,7 +58,7 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
     }
 
     @Override
-    public void testParseFieldsOnDirectory() throws Exception {
+    public void testParseFieldsOnDirectory() {
         String reply = "d [-W---F--] testUser                        512 Apr 13 23:12 testFile";
         FTPFile f = getParser().parseFTPEntry(reply);
 
@@ -84,7 +84,7 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
 
 
     @Override
-    public void testParseFieldsOnFile() throws Exception {
+    public void testParseFieldsOnFile() {
         String reply = "- [R-CEAFMS] rwinston                        19968 Mar 12 15:20 Document name with spaces.doc";
 
         FTPFile f = getParser().parseFTPEntry(reply);

@@ -86,7 +86,7 @@ public class FTPClientTest extends TestCase {
     private static class LocalClient extends FTPClient {
         private String systemType;
         @Override
-        public String getSystemType() throws IOException {
+        public String getSystemType() {
             return systemType;
         }
         public void setSystemType(String type) {
@@ -191,7 +191,7 @@ public class FTPClientTest extends TestCase {
         FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
         client.setPassiveNatWorkaroundStrategy(new FTPClient.HostnameResolver() {
             @Override
-            public String resolve(String hostname) throws UnknownHostException {
+            public String resolve(String hostname) {
                 return "4.4.4.4";
             }
 

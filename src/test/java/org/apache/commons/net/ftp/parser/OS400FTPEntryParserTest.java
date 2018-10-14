@@ -107,8 +107,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
      * @see FTPParseTestFramework#testParseFieldsOnDirectory()
      */
     @Override
-    public void testParseFieldsOnDirectory() throws Exception
-    {
+    public void testParseFieldsOnDirectory() {
         FTPFile f = getParser().parseFTPEntry("PEP             36864 04/03/24 14:06:34 *DIR       dir1/");
         assertNotNull("Could not parse entry.",
                       f);
@@ -148,8 +147,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
      * @see FTPParseTestFramework#testParseFieldsOnFile()
      */
     @Override
-    public void testParseFieldsOnFile() throws Exception
-    {
+    public void testParseFieldsOnFile() {
         FTPFile f = getParser().parseFTPEntry("PEP              5000000000 04/03/24 14:06:29 *STMF      build.xml");
         assertNotNull("Could not parse entry.",
                       f);
@@ -184,8 +182,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
         testPrecision("----rwxr-x   1 PEP      0           4019 Mar 18 18:58 einladung.zip", CalendarUnit.MINUTE);
     }
 
-    public void testNET573() throws Exception
-    {
+    public void testNET573() {
         final FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_AS400);
         conf.setDefaultDateFormatStr("MM/dd/yy HH:mm:ss");
         final FTPFileEntryParser parser = new OS400FTPEntryParser(conf);

@@ -39,8 +39,7 @@ public abstract class FTPParseTestFramework extends TestCase
         super(name);
     }
 
-    public void testBadListing() throws Exception
-    {
+    public void testBadListing() {
 
         String[] badsamples = getBadListing();
         for (String test : badsamples)
@@ -54,8 +53,7 @@ public abstract class FTPParseTestFramework extends TestCase
         }
     }
 
-    public void testGoodListing() throws Exception
-    {
+    public void testGoodListing() {
 
         String[] goodsamples = getGoodListing();
         for (String test : goodsamples)
@@ -112,16 +110,14 @@ public abstract class FTPParseTestFramework extends TestCase
     /**
      * Method testParseFieldsOnDirectory.
      * Provide a test to show that fields on a directory entry are parsed correctly.
-     * @throws Exception on error
      */
-    public abstract void testParseFieldsOnDirectory() throws Exception;
+    public abstract void testParseFieldsOnDirectory();
 
     /**
      * Method testParseFieldsOnFile.
      * Provide a test to show that fields on a file entry are parsed correctly.
-     * @throws Exception on error
      */
-    public abstract void testParseFieldsOnFile() throws Exception;
+    public abstract void testParseFieldsOnFile();
 
     @Override
     protected void setUp() throws Exception

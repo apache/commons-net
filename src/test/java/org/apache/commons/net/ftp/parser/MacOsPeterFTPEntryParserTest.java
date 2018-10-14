@@ -62,7 +62,7 @@ public class MacOsPeterFTPEntryParserTest extends FTPParseTestFramework {
     }
 
     @Override
-    public void testParseFieldsOnDirectory() throws Exception {
+    public void testParseFieldsOnDirectory() {
         FTPFile f = getParser().parseFTPEntry(
                 "drwxr-xr-x               folder        0 Mar  2 15:13 Alias_to_Steak");
         assertNotNull("Could not parse entry.", f);
@@ -93,7 +93,7 @@ public class MacOsPeterFTPEntryParserTest extends FTPParseTestFramework {
     }
 
     @Override
-    public void testParseFieldsOnFile() throws Exception {
+    public void testParseFieldsOnFile() {
         FTPFile f = getParser().parseFTPEntry(
             "-rwxr-xr-x    78440       49231   127671 Jul  2 14:51 Filename with whitespace.jpg"
             );

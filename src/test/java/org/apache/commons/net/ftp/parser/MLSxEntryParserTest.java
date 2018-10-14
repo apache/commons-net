@@ -88,11 +88,11 @@ public class MLSxEntryParserTest extends FTPParseTestFramework {
     }
 
     @Override
-    public void testParseFieldsOnFile() throws Exception {
+    public void testParseFieldsOnFile() {
     }
 
     @Override
-    public void testParseFieldsOnDirectory() throws Exception {
+    public void testParseFieldsOnDirectory() {
     }
 
     @Override

@@ -102,7 +102,7 @@ public class TFTPServer implements Runnable
                 @Override
                 public void write(int b){}
                 @Override
-                public void write(byte[] b) throws IOException {}
+                public void write(byte[] b) {}
                 }
             );
 
@@ -333,8 +333,7 @@ public class TFTPServer implements Runnable
     }
 
     @Override
-    protected void finalize() throws Throwable
-    {
+    protected void finalize() {
         shutdown();
     }
 
