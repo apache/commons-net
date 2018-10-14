@@ -615,7 +615,7 @@ public class TFTPServer implements Runnable
                         }
                     }
 
-                    if (answer == null || !(answer instanceof TFTPAckPacket))
+                    if (!(answer instanceof TFTPAckPacket))
                     {
                         if (!shutdownTransfer)
                         {
@@ -759,13 +759,13 @@ public class TFTPServer implements Runnable
                         }
                     }
 
-                    if (dataPacket != null && dataPacket instanceof TFTPWriteRequestPacket)
+                    if (dataPacket instanceof TFTPWriteRequestPacket)
                     {
                         // it must have missed our initial ack. Send another.
                         lastSentAck = new TFTPAckPacket(twrp.getAddress(), twrp.getPort(), 0);
                         transferTftp_.bufferedSend(lastSentAck);
                     }
-                    else if (dataPacket == null || !(dataPacket instanceof TFTPDataPacket))
+                    else if (!(dataPacket instanceof TFTPDataPacket))
                     {
                         if (!shutdownTransfer)
                         {
