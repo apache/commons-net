@@ -29,7 +29,7 @@ import junit.framework.TestCase;
  */
 public class TestConnectTimeout extends TestCase {
 
-    public void testConnectTimeout() throws SocketException, IOException {
+    public void testConnectTimeout() throws IOException {
         FTPClient client = new FTPClient();
         client.setConnectTimeout(1000);
 
