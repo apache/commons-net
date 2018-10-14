@@ -109,7 +109,7 @@ public class MainTest {
         name = name.replace("/", ".");
         try {
             Class<?> clazz = Class.forName(name, false, MainTest.class.getClassLoader());
-            clazz.getMethod("main", new Class[]{String[].class});
+            clazz.getMethod("main", String[].class);
             return true;
         } catch (ClassNotFoundException e) {
             System.out.println("Cannot find " + name);
