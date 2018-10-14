@@ -40,7 +40,7 @@ public class ListingFunctionalTest extends TestCase
     static final int VALID_PATH = 5;
     static final int PATH_PWD = 6; // response to PWD
 
-    public static final Test suite()
+    public static Test suite()
     {
         String[][] testData =
             {
