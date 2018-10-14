@@ -92,14 +92,14 @@ public class TelnetClientFunctionalTest extends TestCase
         byte buffer[] = new byte[32];
         long starttime = System.currentTimeMillis();
 
-        String readbytes = "";
+        StringBuilder readbytes = new StringBuilder();
         while((readbytes.indexOf(end) < 0) &&
               ((System.currentTimeMillis() - starttime) < timeout))
         {
             if(is.available() > 0)
             {
                 int ret_read = is.read(buffer);
-                readbytes = readbytes + new String(buffer, 0, ret_read);
+                readbytes.append(new String(buffer, 0, ret_read));
             }
             else
             {

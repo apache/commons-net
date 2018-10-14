@@ -67,14 +67,14 @@ public class TelnetTestResponder implements Runnable
 
         try
         {
-            String readbytes = "";
+            StringBuilder readbytes = new StringBuilder();
             while(!result &&
                   ((System.currentTimeMillis() - starttime) < _timeout))
             {
                 if(_is.available() > 0)
                 {
                     int ret_read = _is.read(buffer);
-                    readbytes = readbytes + new String(buffer, 0, ret_read);
+                    readbytes.append(new String(buffer, 0, ret_read));
 
                     for(int ii=0; ii<_inputs.length; ii++)
                     {
