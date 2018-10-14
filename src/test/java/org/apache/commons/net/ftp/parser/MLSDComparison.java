@@ -148,12 +148,10 @@ public class MLSDComparison {
             areSame(a.getSize(), b.getSize(), -1L) &&
 //            areSame(a.getUser(), b.getUser()) &&
 //            areSame(a.getGroup(), b.getGroup()) &&
-            areSame(a.getTimestamp(), b.getTimestamp()) &&
+            areSame(a.getTimestamp(), b.getTimestamp());
 //            areSame(a.getType(), b.getType(), UNKNOWN_TYPE) &&
 //            areSame(a.getHardLinkCount(), b.getHardLinkCount(), 0) &&
 //            areSame(a._permissions, b._permissions)
-            true
-            ;
     }
 
     // compare permissions: default is all false, but that is also a possible

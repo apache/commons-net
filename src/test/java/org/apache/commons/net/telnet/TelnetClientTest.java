@@ -695,7 +695,7 @@ extends TestCase implements TelnetNotificationHandler
         assertNotNull(tr);
         boolean res1 = ANSI.client.sendAYT(2000);
 
-        if (res1 == true) {
+        if (res1) {
             ayt_true_ok=true;
         }
 
@@ -704,7 +704,7 @@ extends TestCase implements TelnetNotificationHandler
 
         boolean res2 = ANSI.client.sendAYT(2000);
 
-        if (res2 == false) {
+        if (!res2) {
             ayt_false_ok=true;
         }
 
