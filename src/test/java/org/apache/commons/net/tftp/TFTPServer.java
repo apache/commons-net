@@ -610,7 +610,6 @@ public class TFTPServer implements Runnable
                             // it.
                             timeoutCount++;
                             transferTftp_.bufferedSend(lastSentData);
-                            continue;
                         }
                     }
 
@@ -754,7 +753,6 @@ public class TFTPServer implements Runnable
                             // It didn't get our ack. Resend it.
                             transferTftp_.bufferedSend(lastSentAck);
                             timeoutCount++;
-                            continue;
                         }
                     }
 
