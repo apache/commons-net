@@ -162,7 +162,7 @@ public abstract class FTPParseTestFramework extends TestCase
         final int unit;
         CalendarUnit(int calUnit) {
             unit = calUnit;
-        };
+        }
     }
 
     protected void testPrecision(String listEntry, CalendarUnit expectedPrecision) {
