@@ -106,15 +106,15 @@ public final class IP6Subnet extends SubnetUtils.SubnetInfo
     private String format(int[] val)
     {
         // Find the longest zero fields
-        int fromIndex = 0;
-        int toIndex = 0;
+        int fromIndex = -1;
+        int toIndex = -1;
         int maxCnt = 0;
         for (int i = 0; i < 8; i++)
         {
             if (val[i] == 0)
             {
                 int j = i + 1;
-                while ((j <= 8) && (val[j] == 0))
+                while ((j < 8) && (val[j] == 0))
                 {
                     j++;
                 }
@@ -133,26 +133,19 @@ public final class IP6Subnet extends SubnetUtils.SubnetInfo
 
         // Remove all leading zeroes
         StringBuilder sb = new StringBuilder(39);
-        if (maxCnt < 1)
+        for (int i = 0; i < 8; i++)
         {
-            for (int i = 0; i < 8; i++)
+            if (i == fromIndex)
             {
-                sb.append(Integer.toHexString(val[i]));
-                if (i < 7)
-                {
-                    sb.append(':');
-                }
+                sb.append(':');
+                i = toIndex - 1;
+                continue;
             }
-        }
-        else
-        {
-            for (int i = 0; i < fromIndex; i++)
+
+            sb.append(Integer.toHexString(val[i]));
+            if (i < 7)
             {
-                sb.append(Integer.toHexString(val[i])).append(':');
-            }
-            for (int i = toIndex; i < 8; i++)
-            {
-                sb.append(':').append(Integer.toHexString(val[i]));
+                sb.append(':');
             }
         }
 
