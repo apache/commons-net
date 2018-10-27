@@ -277,7 +277,7 @@ public final class IP6Subnet extends SubnetUtils.SubnetInfo
     public String toString()
     {
         final StringBuilder buf = new StringBuilder();
-        buf.append("CIDR-Notation:\t[").append(getCIDRNotation()).append("]")
+        buf.append("CIDR-Notation:\t[").append(getCIDRNotation()).append("]\n")
         .append("First Address:\t[").append(getLowAddress()).append("]\n")
         .append("Last Address:\t[").append(getHighAddress()).append("]\n")
         .append("# Addresses:\t[").append(getAddressCountString()).append("]\n");
