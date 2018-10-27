@@ -381,7 +381,8 @@ public class SubnetUtilsTest extends TestCase {
      *
      * Relate to NET-405
      */
-    public void testIP6Address() {
+    public void testIP6Address()
+    {
         //Valid address test
         SubnetUtils subnetUtils = new SubnetUtils("2001:db8:3c0d:5b6d:0:0:42:8329/58");
         SubnetInfo subnetInfo = subnetUtils.getInfo();
@@ -389,38 +390,91 @@ public class SubnetUtilsTest extends TestCase {
         assertEquals("Lowest Address", "2001:db8:3c0d:5b40::", subnetInfo.getLowAddress());
         assertEquals("Highest Address", "2001:db8:3c0d:5b7f:ffff:ffff:ffff:ffff", subnetInfo.getHighAddress());
         assertEquals("Address counts", "1180591620717411303424", subnetInfo.getAddressCountString());
+    }
 
-        //Address range test
+    /*
+     * Test case for invalid IPv6 addresses
+     *
+     * Relate to NET-405
+     */
+    public void testInvalidIP6Address()
+    {
+        //No colons
+        try
+        {
+            new SubnetUtils("2001db83c0d5b6d004283291/58");
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected)
+        {
+            // Ignored
+        }
+
+        //Out of Range
+        try
+        {
+            new SubnetUtils("2001d:b83c0:d5b6d:2428:3291f:b8:b75fe:abef5/58");
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected)
+        {
+            // Ignored
+        }
+
+        //Beginning a Colon
+        try
+        {
+            new SubnetUtils(":2001:db8:0:2:0:9abc/58");
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected)
+        {
+            // Ignored
+        }
+
+        //Zero Compression
+/*
+        try {
+            // Unimplemented
+            subnetUtils = new SubnetUtils("2001:db8::2::9abc/58");
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected) {
+            // Ignored
+        }
+*/
+
+        //Length
+        try
+        {
+            new SubnetUtils("2001:db8:3c0d:5b6d:0:0:42:8329:1/58");
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected)
+        {
+            // Ignored
+        }
+
+        //Out of Subnet
+        try
+        {
+            new SubnetUtils("2001:db8:3c0d:5b6d:0:0:42:8329/129");
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected)
+        {
+            // Ignored
+        }
+    }
+
+    /*
+     * Address range test of IPv6 address
+     *
+     * Relate to NET-405
+     */
+    public void testIsInRangeOfIP6Address()
+    {
+        SubnetUtils subnetUtils = new SubnetUtils("2001:db8:3c0d:5b6d:0:0:42:8329/58");
+        SubnetInfo subnetInfo = subnetUtils.getInfo();
         assertTrue(subnetInfo.isInRange("2001:db8:3c0d:5b6d:0:0:42:8329"));
         assertTrue(subnetInfo.isInRange("2001:db8:3c0d:5b40::"));
         assertTrue(subnetInfo.isInRange("2001:db8:3c0d:5b7f:ffff:ffff:ffff:ffff"));
         assertTrue(subnetInfo.isInRange("2001:db8:3c0d:5b53:0:0:0:1"));
         assertFalse(subnetInfo.isInRange("2001:db8:3c0d:5b3f:ffff:ffff:ffff:ffff"));
         assertFalse(subnetInfo.isInRange("2001:db8:3c0d:5b80::"));
-
-        //Invalid address test
-        try {
-            //No colons
-            new SubnetUtils("2001db83c0d5b6d004283291/58");
-
-            //Out of Range
-            new SubnetUtils("2001d:b83c0:d5b6d:2428:3291f:b8:b75fe:abef5/58");
-
-            //Beginning a Colon
-            new SubnetUtils(":2001:db8:0:2:0:9abc/58");
-
-            //Zero Compression
-//            subnetUtils = new SubnetUtils("2001:db8::2::9abc/58");
-
-            //Length
-            new SubnetUtils("2001:db8:3c0d:5b6d:0:0:42:8329:1/58");
-
-            //Out of Subnet
-            new SubnetUtils("2001:db8:3c0d:5b6d:0:0:42:8329/129");
-
-            fail("Should have thrown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
-            // Ignored
-        }
     }
 }
