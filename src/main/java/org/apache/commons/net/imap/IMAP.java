@@ -467,5 +467,36 @@ public class IMAP extends SocketClient
         }
         return res;
     }
+
+    /**
+     * Quote an input string if necessary.
+     * If the string is enclosed in double-quotes it is assumed
+     * to be quoted already and is returned unchanged.
+     * If it is the empty string, "" is returned.
+     * If it contains a space
+     * then it is enclosed in double quotes, escaping the
+     * characters backslash and double-quote.
+     *
+     * @param input the value to be quoted, may be null
+     * @return the quoted value
+     */
+    static String quoteMailboxName(String input) {
+        if (input == null) { // Don't throw NPE here
+            return null;
+        }
+        if (input.isEmpty()) {
+            return "\"\""; // return the string ""
+        }
+        // Length check is necessary to ensure a lone double-quote is quoted
+        if (input.length() > 1 && input.startsWith("\"") && input.endsWith("\"")) {
+            return input; // Assume already quoted
+        }
+        if (input.contains(" ")) {
+            // quoted strings must escape \ and "
+            return "\"" + input.replaceAll("([\\\\\"])", "\\\\$1") + "\"";
+        }
+        return input;
+
+    }
 }
 /* kate: indent-width 4; replace-tabs on; */
