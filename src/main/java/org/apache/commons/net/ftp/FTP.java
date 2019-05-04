@@ -1293,6 +1293,25 @@ public class FTP extends SocketClient
         return sendCommand(FTPCmd.ALLO, Integer.toString(bytes));
     }
 
+    /***
+     * A convenience method to send the FTP ALLO command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param bytes The number of bytes to allocate.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     ***/
+    public int allo(long bytes) throws IOException
+    {
+        return sendCommand(FTPCmd.ALLO, Long.toString(bytes));
+    }
+
     /**
      * A convenience method to send the FTP FEAT command to the server, receive the reply,
      * and return the reply code.
@@ -1324,6 +1343,27 @@ public class FTP extends SocketClient
     public int allo(int bytes, int recordSize) throws IOException
     {
         return sendCommand(FTPCmd.ALLO, Integer.toString(bytes) + " R " +
+                           Integer.toString(recordSize));
+    }
+
+    /***
+     * A convenience method to send the FTP ALLO command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param bytes The number of bytes to allocate.
+     * @param recordSize  The size of a record.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     ***/
+    public int allo(long bytes, int recordSize) throws IOException
+    {
+        return sendCommand(FTPCmd.ALLO, Long.toString(bytes) + " R " +
                            Integer.toString(recordSize));
     }
 
