@@ -2281,6 +2281,24 @@ implements Configurable
     }
 
     /**
+     * Reserve a number of bytes on the server for the next file transfer.
+     *
+     * @param bytes  The number of bytes which the server should allocate.
+     * @return True if successfully completed, false if not.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     */
+    public boolean allocate(long bytes) throws IOException
+    {
+        return FTPReply.isPositiveCompletion(allo(bytes));
+    }
+
+    /**
      * Query the server for supported features. The server may reply with a list of server-supported exensions.
      * For example, a typical client-server interaction might be (from RFC 2389):
      * <pre>
@@ -2443,6 +2461,25 @@ implements Configurable
      *      command to the server or receiving a reply from the server.
      */
     public boolean allocate(int bytes, int recordSize) throws IOException
+    {
+        return FTPReply.isPositiveCompletion(allo(bytes, recordSize));
+    }
+
+    /**
+     * Reserve space on the server for the next file transfer.
+     *
+     * @param bytes  The number of bytes which the server should allocate.
+     * @param recordSize  The size of a file record.
+     * @return True if successfully completed, false if not.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     */
+    public boolean allocate(long bytes, int recordSize) throws IOException
     {
         return FTPReply.isPositiveCompletion(allo(bytes, recordSize));
     }

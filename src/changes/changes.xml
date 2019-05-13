@@ -74,6 +74,9 @@ This is mainly a bug-fix release. See further details below.
  The examples are not part of the public API, so this does not affect compatibility.
 
 ">
+            <action issue="NET-646" type="add" dev="sebb">
+            ALLO FTP Command for files >2GB
+            </action>
             <action issue="NET-615" type="add" dev="sebb">
             IMAPClient could simplify using empty arguments
             </action>

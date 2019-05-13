@@ -1,27 +1,6 @@
-# Maven
-target/
-
-# Netbeans
-nb-configuration.xml
-nbactions.xml
-
-# Eclipse
-.classpath
-.project
-.settings/
-
-# IntelliJ
+/.classpath
+/.project
+/.settings/
+/target/
 .idea/
 *.iml
-*.iws
-
-# OS
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-Icon?
-ehthumbs.db
-Thumbs.db
-*~*
