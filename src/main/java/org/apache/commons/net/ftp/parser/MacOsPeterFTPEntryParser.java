@@ -24,7 +24,6 @@ import org.apache.commons.net.ftp.FTPFile;
 /**
  * Implementation FTPFileEntryParser and FTPFileListParser for pre MacOS-X Systems.
  *
- * @version $Id$
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @since 3.1
  */

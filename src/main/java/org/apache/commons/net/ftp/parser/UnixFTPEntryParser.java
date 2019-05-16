@@ -30,7 +30,6 @@ import org.apache.commons.net.ftp.FTPFile;
  * This class is based on the logic of Daniel Savarese's
  * DefaultFTPListParser, but adapted to use regular expressions and to fit the
  * new FTPFileEntryParser interface.
- * @version $Id$
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl

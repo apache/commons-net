@@ -27,7 +27,6 @@ import junit.framework.TestSuite;
 
 /**
  * A functional test suite for checking that site listings work.
- * @version $Id$
  */
 public class ListingFunctionalTest extends TestCase
 {

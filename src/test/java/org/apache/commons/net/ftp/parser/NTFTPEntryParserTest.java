@@ -24,7 +24,6 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 import org.apache.commons.net.ftp.FTPListParseEngine;
 
 /**
- * @version $Id$
  */
 public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
 {

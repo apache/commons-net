@@ -25,7 +25,6 @@ import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 
 /**
- * @version $Id$
  * <pre>
  * Example *FILE/*MEM FTP entries, when the current
  * working directory is a file of file system QSYS:

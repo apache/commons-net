@@ -36,7 +36,6 @@ import org.apache.commons.net.util.ListenerList;
  * @see CopyStreamEvent
  * @see CopyStreamListener
  * @see Util
- * @version $Id$
  */
 public class CopyStreamAdapter implements CopyStreamListener
 {

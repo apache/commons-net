@@ -24,7 +24,6 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
- * @version $Id$
  */
 public abstract class FTPParseTestFramework extends TestCase
 {

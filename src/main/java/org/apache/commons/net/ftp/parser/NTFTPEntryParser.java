@@ -26,7 +26,6 @@ import org.apache.commons.net.ftp.FTPFile;
 /**
  * Implementation of FTPFileEntryParser and FTPFileListParser for NT Systems.
  *
- * @version $Id$
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl

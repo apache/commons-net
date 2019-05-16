@@ -27,7 +27,6 @@ import org.apache.commons.net.ftp.FTPFile;
  * Implementation of FTPFileEntryParser and FTPFileListParser for IBM zOS/MVS
  * Systems.
  *
- * @version $Id$
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for
  *      usage instructions)
  */

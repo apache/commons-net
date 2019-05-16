@@ -74,7 +74,6 @@ import java.util.List;
  * For an alternative approach, see the {@link FTPListParseEngine} class
  * which provides iterative access.
  *
- * @version $Id$
  * @see org.apache.commons.net.ftp.FTPFile
  * @see org.apache.commons.net.ftp.FTPClient#listFiles()
  */

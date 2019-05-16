@@ -35,7 +35,6 @@ import java.io.Reader;
  * Note: versions since 3.0 extend BufferedReader rather than Reader,
  * and no longer change the CRLF into the local EOL. Also only DOT CR LF
  * acts as EOF.
- * @version $Id$
  */
 public final class DotTerminatedMessageReader extends BufferedReader
 {

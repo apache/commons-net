@@ -73,7 +73,6 @@ import org.apache.commons.net.util.Charsets;
  * <p>
  * For unpaged access, simply use FTPClient.listFiles().  That method
  * uses this class transparently.
- * @version $Id$
  */
 public class FTPListParseEngine {
     private List<String> entries = new LinkedList<String>();

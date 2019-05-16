@@ -89,7 +89,6 @@ import org.apache.commons.net.io.CRLFLineReader;
  * @see FTPClient
  * @see FTPConnectionClosedException
  * @see org.apache.commons.net.MalformedServerReplyException
- * @version $Id$
  ***/
 
 public class FTP extends SocketClient

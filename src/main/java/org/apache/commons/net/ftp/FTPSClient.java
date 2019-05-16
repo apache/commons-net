@@ -45,7 +45,6 @@ import org.apache.commons.net.util.TrustManagerUtils;
  * Warning: the hostname is not verified against the certificate by default, use
  * {@link #setHostnameVerifier(HostnameVerifier)} or {@link #setEndpointCheckingEnabled(boolean)}
  * (on Java 1.7+) to enable verification. Verification is only performed on client mode connections.
- * @version $Id$
  * @since 2.0
  */
 public class FTPSClient extends FTPClient {

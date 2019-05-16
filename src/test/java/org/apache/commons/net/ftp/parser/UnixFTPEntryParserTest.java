@@ -22,7 +22,6 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
- * @version $Id$
  */
 public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 

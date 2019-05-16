@@ -17,7 +17,6 @@
 package org.apache.commons.net.pop3;
 
 /**
- * @version $Id$
  *
  * The POP3* tests all presume the existence of the following parameters:
  *   mailserver: localhost (running on the default port 110)

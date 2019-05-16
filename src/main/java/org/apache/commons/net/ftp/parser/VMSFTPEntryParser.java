@@ -38,7 +38,6 @@ import org.apache.commons.net.ftp.FTPFile;
  * </B>
  * <P>
  *
- * @version $Id$
  *
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
