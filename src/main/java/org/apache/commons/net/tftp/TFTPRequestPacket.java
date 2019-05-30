@@ -69,27 +69,27 @@ public abstract class TFTPRequestPacket extends TFTPPacket
     /*** The transfer mode of the request. ***/
     private final int _mode;
 
-    /*** The filename of the request. ***/
+    /*** The file name of the request. ***/
     private final String _filename;
 
     /***
      * Creates a request packet of a given type to be sent to a host at a
-     * given port with a filename and transfer mode request.
+     * given port with a file name and transfer mode request.
      *
      * @param destination  The host to which the packet is going to be sent.
      * @param port  The port to which the packet is going to be sent.
      * @param type The type of the request (either TFTPPacket.READ_REQUEST or
      *             TFTPPacket.WRITE_REQUEST).
-     * @param filename The requested filename.
+     * @param fileName The requested file name.
      * @param mode The requested transfer mode.  This should be on of the TFTP
      *        class MODE constants (e.g., TFTP.NETASCII_MODE).
      ***/
     TFTPRequestPacket(InetAddress destination, int port,
-                      int type, String filename, int mode)
+                      int type, String fileName, int mode)
     {
         super(type, destination, port);
 
-        _filename = filename;
+        _filename = fileName;
         _mode = mode;
     }
 
@@ -241,9 +241,9 @@ public abstract class TFTPRequestPacket extends TFTPPacket
     }
 
     /***
-     * Returns the requested filename.
+     * Returns the requested file name.
      *
-     * @return The requested filename.
+     * @return The requested file name.
      ***/
     public final String getFilename()
     {

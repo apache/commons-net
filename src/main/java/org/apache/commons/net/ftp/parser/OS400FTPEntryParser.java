@@ -243,7 +243,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         + "(?:(\\d+)\\s+)?"           // size, empty for members
         + "(?:(\\S+)\\s+(\\S+)\\s+)?" // date stuff, empty for members
         + "(\\*STMF|\\*DIR|\\*FILE|\\*MEM)\\s+"  // *STMF/*DIR/*FILE/*MEM
-        + "(?:(\\S+)\\s*)?";          // filename, missing, when CWD is a *FILE
+        + "(?:(\\S+)\\s*)?";          // file name, missing, when CWD is a *FILE
 
 
     /**

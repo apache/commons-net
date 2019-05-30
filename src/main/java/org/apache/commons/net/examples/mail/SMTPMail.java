@@ -36,7 +36,7 @@ import org.apache.commons.net.smtp.SimpleSMTPHeader;
 /***
  * This is an example program using the SMTP package to send a message
  * to the specified recipients.  It prompts you for header information and
- * a filename containing the message.
+ * a file name containing the message.
  ***/
 
 public final class SMTPMail

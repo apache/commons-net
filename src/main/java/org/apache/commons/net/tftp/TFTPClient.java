@@ -134,7 +134,7 @@ public class TFTPClient extends TFTP
      * invoking this method.  This method will not close the OutputStream
      * containing the file; you must close it after the method invocation.
      *
-     * @param filename  The name of the file to receive.
+     * @param fileName  The name of the file to receive.
      * @param mode   The TFTP mode of the transfer (one of the MODE constants).
      * @param output The OutputStream to which the file should be written.
      * @param host   The remote host serving the file.
@@ -143,7 +143,7 @@ public class TFTPClient extends TFTP
      * @throws IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
      ***/
-    public int receiveFile(String filename, int mode, OutputStream output,
+    public int receiveFile(String fileName, int mode, OutputStream output,
                            InetAddress host, int port) throws IOException
     {
         int bytesRead = 0;
@@ -158,7 +158,7 @@ public class TFTPClient extends TFTP
             output = new FromNetASCIIOutputStream(output);
         }
 
-        TFTPPacket sent = new TFTPReadRequestPacket(host, port, filename, mode);
+        TFTPPacket sent = new TFTPReadRequestPacket(host, port, fileName, mode);
         TFTPAckPacket ack = new TFTPAckPacket(host, port, 0);
 
         beginBufferedOps();
@@ -275,7 +275,7 @@ public class TFTPClient extends TFTP
      * invoking this method.  This method will not close the OutputStream
      * containing the file; you must close it after the method invocation.
      *
-     * @param filename The name of the file to receive.
+     * @param fileName The name of the file to receive.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
      * @param output   The OutputStream to which the file should be written.
      * @param hostname The name of the remote host serving the file.
@@ -285,19 +285,19 @@ public class TFTPClient extends TFTP
      *            error will be reported in the message.
      * @throws UnknownHostException  If the hostname cannot be resolved.
      ***/
-    public int receiveFile(String filename, int mode, OutputStream output,
+    public int receiveFile(String fileName, int mode, OutputStream output,
                            String hostname, int port)
     throws UnknownHostException, IOException
     {
-        return receiveFile(filename, mode, output, InetAddress.getByName(hostname),
+        return receiveFile(fileName, mode, output, InetAddress.getByName(hostname),
                            port);
     }
 
 
     /***
-     * Same as calling receiveFile(filename, mode, output, host, TFTP.DEFAULT_PORT).
+     * Same as calling receiveFile(fileName, mode, output, host, TFTP.DEFAULT_PORT).
      *
-     * @param filename The name of the file to receive.
+     * @param fileName The name of the file to receive.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
      * @param output   The OutputStream to which the file should be written.
      * @param host     The remote host serving the file.
@@ -305,17 +305,17 @@ public class TFTPClient extends TFTP
      * @throws IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
      ***/
-    public int receiveFile(String filename, int mode, OutputStream output,
+    public int receiveFile(String fileName, int mode, OutputStream output,
                            InetAddress host)
     throws IOException
     {
-        return receiveFile(filename, mode, output, host, DEFAULT_PORT);
+        return receiveFile(fileName, mode, output, host, DEFAULT_PORT);
     }
 
     /***
-     * Same as calling receiveFile(filename, mode, output, hostname, TFTP.DEFAULT_PORT).
+     * Same as calling receiveFile(fileName, mode, output, hostname, TFTP.DEFAULT_PORT).
      *
-     * @param filename The name of the file to receive.
+     * @param fileName The name of the file to receive.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
      * @param output   The OutputStream to which the file should be written.
      * @param hostname The name of the remote host serving the file.
@@ -324,11 +324,11 @@ public class TFTPClient extends TFTP
      *            error will be reported in the message.
      * @throws UnknownHostException  If the hostname cannot be resolved.
      ***/
-    public int receiveFile(String filename, int mode, OutputStream output,
+    public int receiveFile(String fileName, int mode, OutputStream output,
                            String hostname)
     throws UnknownHostException, IOException
     {
-        return receiveFile(filename, mode, output, InetAddress.getByName(hostname),
+        return receiveFile(fileName, mode, output, InetAddress.getByName(hostname),
                            DEFAULT_PORT);
     }
 
@@ -341,7 +341,7 @@ public class TFTPClient extends TFTP
      * invoking this method.  This method will not close the InputStream
      * containing the file; you must close it after the method invocation.
      *
-     * @param filename The name the remote server should use when creating
+     * @param fileName The name the remote server should use when creating
      *        the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
      * @param input the input stream containing the data to be sent
@@ -350,7 +350,7 @@ public class TFTPClient extends TFTP
      * @throws IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
      ***/
-    public void sendFile(String filename, int mode, InputStream input,
+    public void sendFile(String fileName, int mode, InputStream input,
                          InetAddress host, int port) throws IOException
     {
         int block = 0;
@@ -364,7 +364,7 @@ public class TFTPClient extends TFTP
             input = new ToNetASCIIInputStream(input);
         }
 
-        TFTPPacket sent = new TFTPWriteRequestPacket(host, port, filename, mode);
+        TFTPPacket sent = new TFTPWriteRequestPacket(host, port, fileName, mode);
         TFTPDataPacket data = new TFTPDataPacket(host, port, 0, _sendBuffer, 4, 0);
 
         beginBufferedOps();
@@ -485,7 +485,7 @@ public class TFTPClient extends TFTP
      * invoking this method.  This method will not close the InputStream
      * containing the file; you must close it after the method invocation.
      *
-     * @param filename The name the remote server should use when creating
+     * @param fileName The name the remote server should use when creating
      *        the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
      * @param input the input stream containing the data to be sent
@@ -495,18 +495,18 @@ public class TFTPClient extends TFTP
      *            error will be reported in the message.
      * @throws UnknownHostException  If the hostname cannot be resolved.
      ***/
-    public void sendFile(String filename, int mode, InputStream input,
+    public void sendFile(String fileName, int mode, InputStream input,
                          String hostname, int port)
     throws UnknownHostException, IOException
     {
-        sendFile(filename, mode, input, InetAddress.getByName(hostname), port);
+        sendFile(fileName, mode, input, InetAddress.getByName(hostname), port);
     }
 
 
     /***
-     * Same as calling sendFile(filename, mode, input, host, TFTP.DEFAULT_PORT).
+     * Same as calling sendFile(fileName, mode, input, host, TFTP.DEFAULT_PORT).
      *
-     * @param filename The name the remote server should use when creating
+     * @param fileName The name the remote server should use when creating
      *        the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
      * @param input the input stream containing the data to be sent
@@ -515,17 +515,17 @@ public class TFTPClient extends TFTP
      *            error will be reported in the message.
      * @throws UnknownHostException  If the hostname cannot be resolved.
      ***/
-    public void sendFile(String filename, int mode, InputStream input,
+    public void sendFile(String fileName, int mode, InputStream input,
                          InetAddress host)
     throws IOException
     {
-        sendFile(filename, mode, input, host, DEFAULT_PORT);
+        sendFile(fileName, mode, input, host, DEFAULT_PORT);
     }
 
     /***
-     * Same as calling sendFile(filename, mode, input, hostname, TFTP.DEFAULT_PORT).
+     * Same as calling sendFile(fileName, mode, input, hostname, TFTP.DEFAULT_PORT).
      *
-     * @param filename The name the remote server should use when creating
+     * @param fileName The name the remote server should use when creating
      *        the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
      * @param input the input stream containing the data to be sent
@@ -534,11 +534,11 @@ public class TFTPClient extends TFTP
      *            error will be reported in the message.
      * @throws UnknownHostException  If the hostname cannot be resolved.
      ***/
-    public void sendFile(String filename, int mode, InputStream input,
+    public void sendFile(String fileName, int mode, InputStream input,
                          String hostname)
     throws UnknownHostException, IOException
     {
-        sendFile(filename, mode, input, InetAddress.getByName(hostname),
+        sendFile(fileName, mode, input, InetAddress.getByName(hostname),
                  DEFAULT_PORT);
     }
 }

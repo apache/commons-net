@@ -446,7 +446,7 @@ public class FTP extends SocketClient
     /**
      * Saves the character encoding to be used by the FTP control connection.
      * Some FTP servers require that commands be issued in a non-ASCII
-     * encoding like UTF-8 so that filenames with multi-byte character
+     * encoding like UTF-8 so that file names with multi-byte character
      * representations (e.g, Big 8) can be specified.
      * <p>
      * Please note that this has to be set before the connection is established.

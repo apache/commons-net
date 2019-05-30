@@ -1678,7 +1678,7 @@ implements Configurable
      * server to which the client is connected to retrieve a given file from
      * the other server.
      *
-     * @param filename  The name of the file to retrieve.
+     * @param fileName  The name of the file to retrieve.
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -1688,11 +1688,11 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean remoteRetrieve(String filename) throws IOException
+    public boolean remoteRetrieve(String fileName) throws IOException
     {
         if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
                 __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
-            return FTPReply.isPositivePreliminary(retr(filename));
+            return FTPReply.isPositivePreliminary(retr(fileName));
         }
         return false;
     }
@@ -1701,11 +1701,11 @@ implements Configurable
     /**
      * Initiate a server to server file transfer.  This method tells the
      * server to which the client is connected to store a file on
-     * the other server using the given filename.  The other server must
+     * the other server using the given file name.  The other server must
      * have had a <code> remoteRetrieve </code> issued to it by another
      * FTPClient.
      *
-     * @param filename  The name to call the file that is to be stored.
+     * @param fileName  The name to call the file that is to be stored.
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -1715,11 +1715,11 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean remoteStore(String filename) throws IOException
+    public boolean remoteStore(String fileName) throws IOException
     {
         if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
                 __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
-            return FTPReply.isPositivePreliminary(stor(filename));
+            return FTPReply.isPositivePreliminary(stor(fileName));
         }
         return false;
     }
@@ -1728,11 +1728,11 @@ implements Configurable
     /**
      * Initiate a server to server file transfer.  This method tells the
      * server to which the client is connected to store a file on
-     * the other server using a unique filename based on the given filename.
+     * the other server using a unique file name based on the given file name.
      * The other server must have had a <code> remoteRetrieve </code> issued
      * to it by another FTPClient.
      *
-     * @param filename  The name on which to base the filename of the file
+     * @param fileName  The name on which to base the file name of the file
      *                  that is to be stored.
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException
@@ -1743,11 +1743,11 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean remoteStoreUnique(String filename) throws IOException
+    public boolean remoteStoreUnique(String fileName) throws IOException
     {
         if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
                 __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
-            return FTPReply.isPositivePreliminary(stou(filename));
+            return FTPReply.isPositivePreliminary(stou(fileName));
         }
         return false;
     }
@@ -1756,10 +1756,10 @@ implements Configurable
     /**
      * Initiate a server to server file transfer.  This method tells the
      * server to which the client is connected to store a file on
-     * the other server using a unique filename.
+     * the other server using a unique file name.
      * The other server must have had a <code> remoteRetrieve </code> issued
      * to it by another FTPClient.  Many FTP servers require that a base
-     * filename be given from which the unique filename can be derived.  For
+     * file name be given from which the unique file name can be derived.  For
      * those servers use the other version of <code> remoteStoreUnique</code>
      *
      * @return True if successfully completed, false if not.
@@ -1787,7 +1787,7 @@ implements Configurable
      * the other server.  The other server must have had a
      * <code> remoteRetrieve </code> issued to it by another FTPClient.
      *
-     * @param filename  The name of the file to be appended to, or if the
+     * @param fileName  The name of the file to be appended to, or if the
      *        file does not exist, the name to call the file being stored.
      *
      * @return True if successfully completed, false if not.
@@ -1799,11 +1799,11 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean remoteAppend(String filename) throws IOException
+    public boolean remoteAppend(String fileName) throws IOException
     {
         if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
                 __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
-            return FTPReply.isPositivePreliminary(appe(filename));
+            return FTPReply.isPositivePreliminary(appe(fileName));
         }
         return false;
     }
@@ -2545,7 +2545,7 @@ implements Configurable
         if (success){
             String reply = getReplyStrings()[1];
             /* check the response makes sense.
-             * Must have space before fact(s) and between fact(s) and filename
+             * Must have space before fact(s) and between fact(s) and file name
              * Fact(s) can be absent, so at least 3 chars are needed.
              */
             if (reply.length() < 3 || reply.charAt(0) != ' ') {
@@ -2912,13 +2912,13 @@ implements Configurable
 
 
     /**
-     * Obtain a list of filenames in a directory (or just the name of a given
+     * Obtain a list of file names in a directory (or just the name of a given
      * file, which is not particularly useful).  This information is obtained
      * through the NLST command.  If the given pathname is a directory and
      * contains no files,  a zero length array is returned only
      * if the FTP server returned a positive completion code, otherwise
      * null is returned (the FTP server returned a 550 error No files found.).
-     * If the directory is not empty, an array of filenames in the directory is
+     * If the directory is not empty, an array of file names in the directory is
      * returned. If the pathname corresponds
      * to a file, only that file will be listed.  The server may or may not
      * expand glob expressions.
@@ -2929,8 +2929,8 @@ implements Configurable
      *                  or prefix the path with ./ (unix style servers).
      *                  Some servers may support "--" as meaning end of options,
      *                  in which case "-- -xyz" should work.
-     * @return The list of filenames contained in the given path.  null if
-     *     the list could not be obtained.  If there are no filenames in
+     * @return The list of file names contained in the given path.  null if
+     *     the list could not be obtained.  If there are no file names in
      *     the directory, a zero-length array is returned.
      * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -2971,17 +2971,17 @@ implements Configurable
 
 
     /**
-     * Obtain a list of filenames in the current working directory
+     * Obtain a list of file names in the current working directory
      * This information is obtained through the NLST command.  If the current
      * directory contains no files, a zero length array is returned only
      * if the FTP server returned a positive completion code, otherwise,
      * null is returned (the FTP server returned a 550 error No files found.).
-     * If the directory is not empty, an array of filenames in the directory is
+     * If the directory is not empty, an array of file names in the directory is
      * returned.
      *
-     * @return The list of filenames contained in the current working
+     * @return The list of file names contained in the current working
      *     directory.  null if the list could not be obtained.
-     *     If there are no filenames in the directory, a zero-length array
+     *     If there are no file names in the directory, a zero-length array
      *     is returned.
      * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -3540,7 +3540,7 @@ implements Configurable
     /**
      * Issue the FTP STAT command to the server for a given pathname.  This
      * should produce a listing of the file or directory.
-     * @param pathname the filename
+     * @param pathname the file name
      *
      * @return The status information returned by the server.
      * @throws FTPConnectionClosedException
@@ -3564,7 +3564,7 @@ implements Configurable
      * Issue the FTP SIZE command to the server for a given pathname.
      * This should produce the size of the file.
      *
-     * @param pathname the filename
+     * @param pathname the file name
      *
      * @return The size information returned by the server; {@code null} if there was an error
      * @throws FTPConnectionClosedException

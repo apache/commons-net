@@ -47,18 +47,18 @@ public final class TFTPWriteRequestPacket extends TFTPRequestPacket
 
     /***
      * Creates a write request packet to be sent to a host at a
-     * given port with a filename and transfer mode request.
+     * given port with a file name and transfer mode request.
      *
      * @param destination  The host to which the packet is going to be sent.
      * @param port  The port to which the packet is going to be sent.
-     * @param filename The requested filename.
+     * @param fileName The requested file name.
      * @param mode The requested transfer mode.  This should be on of the TFTP
      *        class MODE constants (e.g., TFTP.NETASCII_MODE).
      ***/
     public TFTPWriteRequestPacket(InetAddress destination, int port,
-                                  String filename, int mode)
+                                  String fileName, int mode)
     {
-        super(destination, port, TFTPPacket.WRITE_REQUEST, filename, mode);
+        super(destination, port, TFTPPacket.WRITE_REQUEST, fileName, mode);
     }
 
     /***
