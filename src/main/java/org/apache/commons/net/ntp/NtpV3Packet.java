@@ -23,7 +23,6 @@ import java.net.DatagramPacket;
  * Interface for a NtpV3Packet with get/set methods corresponding to the fields
  * in the NTP Data Message Header described in RFC 1305.
  *
- * @version $Revision$
  */
 public interface NtpV3Packet
 {

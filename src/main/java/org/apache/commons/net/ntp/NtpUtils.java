@@ -20,7 +20,6 @@ package org.apache.commons.net.ntp;
 /***
  * Common NtpUtils Helper class.
  *
- * @version $Revision$
  */
 public final class NtpUtils {
 

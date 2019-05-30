@@ -38,7 +38,6 @@ import java.util.TimeZone;
  * time known as "the epoch", namely January 1, 1970, 00:00:00 GMT.
  * </p>
  *
- * @version $Revision$
  * @see java.util.Date
  */
 public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>

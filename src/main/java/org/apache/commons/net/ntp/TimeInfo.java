@@ -26,7 +26,6 @@ import java.util.List;
  * Wrapper class to network time packet messages (NTP, etc) that computes
  * related timing info and stats.
  *
- * @version $Revision$
  */
 public class TimeInfo {
 
