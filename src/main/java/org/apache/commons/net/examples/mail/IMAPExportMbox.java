@@ -146,7 +146,7 @@ public final class IMAPExportMbox
             System.err.println("\t-. print a . for each complete message received");
             System.err.println("\t-X print the X-IMAP line for each complete message received");
             System.err.println("\tthe mboxfile is where the messages are stored; use '-' to write to standard output.");
-            System.err.println("\tPrefix filename with '+' to append to the file. Prefix with '-' to allow overwrite.");
+            System.err.println("\tPrefix file name with '+' to append to the file. Prefix with '-' to allow overwrite.");
             System.err.println("\ta sequence-set is a list of numbers/number ranges e.g. 1,2,3-10,20:* - default 1:*");
             System.err.println("\titemnames are the message data item name(s) e.g. BODY.PEEK[HEADER.FIELDS (SUBJECT)]" +
                                " or a macro e.g. ALL - default (INTERNALDATE BODY.PEEK[])");

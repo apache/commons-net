@@ -193,7 +193,7 @@ __main:
             else
             {
                 System.err.println(
-                    "Couldn't initiate transfer.  Check that filenames are valid.");
+                    "Couldn't initiate transfer. Check that file names are valid.");
                 break __main;
             }
 

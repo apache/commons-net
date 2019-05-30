@@ -44,7 +44,7 @@ public final class SMTPMail
 
     public static void main(String[] args)
     {
-        String sender, recipient, subject, filename, server, cc;
+        String sender, recipient, subject, fileName, server, cc;
         List<String> ccList = new ArrayList<String>();
         BufferedReader stdin;
         FileReader fileReader = null;
@@ -100,11 +100,11 @@ public final class SMTPMail
             System.out.print("Filename: ");
             System.out.flush();
 
-            filename = stdin.readLine();
+            fileName = stdin.readLine();
 
             try
             {
-                fileReader = new FileReader(filename);
+                fileReader = new FileReader(fileName);
             }
             catch (FileNotFoundException e)
             {

@@ -131,9 +131,9 @@ public class ListingFunctionalTest extends TestCase
             }
             else
             {
-                String filename = (String) element;
+                String fileName = (String) element;
 
-                found = filename.endsWith(string);
+                found = fileName.endsWith(string);
             }
         }
 

@@ -70,14 +70,14 @@ public class DownloadListings extends FTPClient {
         removeProtocolCommandListener(listener);
     }
 
-    private void download(String path, FTPCmd command, File filename) throws Exception {
+    private void download(String path, FTPCmd command, File fileName) throws Exception {
         Socket socket;
         if ((socket = _openDataConnection_(command, getListArguments(path))) == null) {
             System.out.println(getReplyString());
             return;
         }
         InputStream inputStream = socket.getInputStream();
-        OutputStream outputStream = new FileOutputStream(filename);
+        OutputStream outputStream = new FileOutputStream(fileName);
         Util.copyStream(inputStream, outputStream );
         inputStream.close();
         socket.close();

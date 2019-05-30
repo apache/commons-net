@@ -43,7 +43,7 @@ public final class PostMessage
 
     public static void main(String[] args)
     {
-        String from, subject, newsgroup, filename, server, organization;
+        String from, subject, newsgroup, fileName, server, organization;
         String references;
         BufferedReader stdin;
         FileReader fileReader = null;
@@ -122,11 +122,11 @@ public final class PostMessage
             System.out.print("Filename: ");
             System.out.flush();
 
-            filename = stdin.readLine();
+            fileName = stdin.readLine();
 
             try
             {
-                fileReader = new FileReader(filename);
+                fileReader = new FileReader(fileName);
             }
             catch (FileNotFoundException e)
             {

@@ -70,7 +70,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
     private final int _mode;
 
     /*** The file name of the request. ***/
-    private final String _filename;
+    private final String _fileName;
 
     /***
      * Creates a request packet of a given type to be sent to a host at a
@@ -89,7 +89,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
     {
         super(type, destination, port);
 
-        _filename = fileName;
+        _fileName = fileName;
         _mode = mode;
     }
 
@@ -126,10 +126,10 @@ public abstract class TFTPRequestPacket extends TFTPPacket
             ++index;
         }
 
-        _filename = buffer.toString();
+        _fileName = buffer.toString();
 
         if (index >= length) {
-            throw new TFTPPacketException("Bad filename and mode format.");
+            throw new TFTPPacketException("Bad file name and mode format.");
         }
 
         buffer.setLength(0);
@@ -181,12 +181,12 @@ public abstract class TFTPRequestPacket extends TFTPPacket
     {
         int fileLength, modeLength;
 
-        fileLength = _filename.length();
+        fileLength = _fileName.length();
         modeLength = _modeBytes[_mode].length;
 
         data[0] = 0;
         data[1] = (byte)_type;
-        System.arraycopy(_filename.getBytes(), 0, data, 2, fileLength);
+        System.arraycopy(_fileName.getBytes(), 0, data, 2, fileLength);
         data[fileLength + 2] = 0;
         System.arraycopy(_modeBytes[_mode], 0, data, fileLength + 3,
                          modeLength);
@@ -216,13 +216,13 @@ public abstract class TFTPRequestPacket extends TFTPPacket
         int fileLength, modeLength;
         byte[] data;
 
-        fileLength = _filename.length();
+        fileLength = _fileName.length();
         modeLength = _modeBytes[_mode].length;
 
         data = new byte[fileLength + modeLength + 4];
         data[0] = 0;
         data[1] = (byte)_type;
-        System.arraycopy(_filename.getBytes(), 0, data, 2, fileLength);
+        System.arraycopy(_fileName.getBytes(), 0, data, 2, fileLength);
         data[fileLength + 2] = 0;
         System.arraycopy(_modeBytes[_mode], 0, data, fileLength + 3,
                          modeLength);
@@ -247,6 +247,6 @@ public abstract class TFTPRequestPacket extends TFTPPacket
      ***/
     public final String getFilename()
     {
-        return _filename;
+        return _fileName;
     }
 }
