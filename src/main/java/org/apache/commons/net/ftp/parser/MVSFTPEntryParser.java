@@ -153,12 +153,12 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
     /*
      * ---------------------------------------------------------------------
-     * Very brief and incomplete description of the zOS/MVS-filesystem. (Note:
+     * Very brief and incomplete description of the zOS/MVS-file system. (Note:
      * "zOS" is the operating system on the mainframe, and is the new name for
      * MVS)
      *
-     * The filesystem on the mainframe does not have hierarchal structure as for
-     * example the unix filesystem. For a more comprehensive description, please
+     * The file system on the mainframe does not have hierarchal structure as for
+     * example the unix file system. For a more comprehensive description, please
      * refer to the IBM manuals
      *
      * @LINK:
