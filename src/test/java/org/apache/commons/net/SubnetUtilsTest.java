@@ -375,4 +375,102 @@ public class SubnetUtilsTest extends TestCase {
         assertFalse(new SubnetUtils("192.168.1.0/31").getInfo().isInRange("0.0.0.0"));
         assertFalse(new SubnetUtils("192.168.1.0/32").getInfo().isInRange("0.0.0.0"));
     }
+
+    /**
+     * Test case for IPv6 addresses
+     *
+     * Relate to NET-405
+     */
+    public void testIP6Address() {
+        //Valid address test
+        SubnetUtils subnetUtils = new SubnetUtils("2001:db8:3c0d:5b6d:0:0:42:8329/58");
+        SubnetInfo subnetInfo = subnetUtils.getInfo();
+        assertEquals("CIDR-Notation", "2001:db8:3c0d:5b6d::42:8329/58", subnetInfo.getCIDRNotation());
+        assertEquals("Lowest Address", "2001:db8:3c0d:5b40::", subnetInfo.getLowAddress());
+        assertEquals("Highest Address", "2001:db8:3c0d:5b7f:ffff:ffff:ffff:ffff", subnetInfo.getHighAddress());
+        assertEquals("Address counts", "1180591620717411303424", subnetInfo.getAddressCountString());
+    }
+
+    /*
+     * Test case for invalid IPv6 addresses
+     *
+     * Relate to NET-405
+     */
+    public void testInvalidIP6AddressNoCollons()
+    {
+        //No colons
+        try {
+            new SubnetUtils("2001db83c0d5b6d004283291/58");
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected) {
+            // Ignored
+        }
+    }
+
+    public void testInvalidIP6AddressOutOfRange() {
+        //Out of Range
+        try {
+            new SubnetUtils("2001d:b83c0:d5b6d:2428:3291f:b8:b75fe:abef5/58");
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected) {
+            // Ignored
+        }
+    }
+
+    public void testInvalidIP6AddressBeginColon() {
+        //Beginning a Colon
+        try {
+            new SubnetUtils(":2001:db8:0:2:0:9abc/58");
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected) {
+            // Ignored
+        }
+    }
+
+    public void testInvalidIP6AddressZeroCompression() {
+        //Zero Compression
+        try {
+            // Unimplemented
+            new SubnetUtils("2001:db8::2::9abc/58");
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected) {
+            // Ignored
+        }
+    }
+
+    public void testInvalidIP6AddressLength() {
+        //Length
+        try {
+            new SubnetUtils("2001:db8:3c0d:5b6d:0:0:42:8329:1/58");
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected) {
+            // Ignored
+        }
+    }
+
+    public void testInvalidIP6AddressOutOfSubnet() {
+        //Out of Subnet
+        try {
+            new SubnetUtils("2001:db8:3c0d:5b6d:0:0:42:8329/129");
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected) {
+            // Ignored
+        }
+    }
+
+    /*
+     * Address range test of IPv6 address
+     *
+     * Relate to NET-405
+     */
+    public void testIsInRangeOfIP6Address() {
+        SubnetUtils subnetUtils = new SubnetUtils("2001:db8:3c0d:5b6d:0:0:42:8329/58");
+        SubnetInfo subnetInfo = subnetUtils.getInfo();
+        assertTrue(subnetInfo.isInRange("2001:db8:3c0d:5b6d:0:0:42:8329"));
+        assertTrue(subnetInfo.isInRange("2001:db8:3c0d:5b40::"));
+        assertTrue(subnetInfo.isInRange("2001:db8:3c0d:5b7f:ffff:ffff:ffff:ffff"));
+        assertTrue(subnetInfo.isInRange("2001:db8:3c0d:5b53:0:0:0:1"));
+        assertFalse(subnetInfo.isInRange("2001:db8:3c0d:5b3f:ffff:ffff:ffff:ffff"));
+        assertFalse(subnetInfo.isInRange("2001:db8:3c0d:5b80::"));
+    }
 }
