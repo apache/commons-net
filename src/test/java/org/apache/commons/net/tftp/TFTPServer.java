@@ -268,7 +268,7 @@ public class TFTPServer implements Runnable
 
     /**
      * Set the socket timeout in milliseconds used in transfers. Defaults to the value here:
-     * http://commons.apache.org/net/apidocs/org/apache/commons/net/tftp/TFTP.html#DEFAULT_TIMEOUT
+     * https://commons.apache.org/net/apidocs/org/apache/commons/net/tftp/TFTP.html#DEFAULT_TIMEOUT
      * (5000 at the time I write this) Min value of 10.
      * @param timeout the timeout; must be larger than 10
      */

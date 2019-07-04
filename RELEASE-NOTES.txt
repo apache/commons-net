@@ -51,9 +51,9 @@ o           POP3Mail example: support host port; allow reading password from Con
 o NET-599:  Add shorthand FTPClientConfig constructor
 
 
-Historical list of changes: http://commons.apache.org/proper/commons-net/changes-report.html
+Historical list of changes: https://commons.apache.org/proper/commons-net/changes-report.html
 
 For complete information on Apache Commons Net, including instructions on how to submit bug reports,
 patches, or suggestions for improvement, see the Apache Apache Commons Net website:
 
-http://commons.apache.org/proper/commons-net/
+https://commons.apache.org/proper/commons-net/

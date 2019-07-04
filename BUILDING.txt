@@ -8,7 +8,7 @@ $ mvn clean test -Pjava-1.6
 
 For setting up your Maven installation to enable the use of the profile, please see:
 
-http://commons.apache.org/commons-parent-pom.html#Testing_with_different_Java_versions
+https://commons.apache.org/commons-parent-pom.html#Testing_with_different_Java_versions
 
 The latest version of Maven that runs under Java 1.6 is 3.2.5 [1]
 
