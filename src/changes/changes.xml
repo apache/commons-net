@@ -1377,7 +1377,7 @@ This is primarily a maintenance release, but it also includes new features and e
                 new parsers parsed the file size as an integer instead of a
                 long.  Changed all of them to set the size to long.  This
                 problem was detected by the reporter of:
-                http://issues.apache.org/bugzilla/show_bug.cgi?id=30345
+                https://issues.apache.org/bugzilla/show_bug.cgi?id=30345
             </action>
         </release>
         <release version="1.2.2" date="June 25, 2004" description="fix release">
