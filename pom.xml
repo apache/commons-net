@@ -44,7 +44,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
     <inceptionYear>2001</inceptionYear>
     <scm>
         <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/net/trunk</connection>
-        <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/net/trunk</developerConnection>
+        <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/commons-net.git</developerConnection>
         <url>https://gitbox.apache.org/repos/asf?p=commons-net.git</url>
     </scm>
 
