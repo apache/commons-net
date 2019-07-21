@@ -36,7 +36,7 @@
       <item name="Coding Specifications"       href="code-standards.html"/>
       <item name="Mailing lists"               href="mail-lists.html"/>
       <item name="Issue Tracking"              href="issue-tracking.html"/>
-      <item name="SVN repository"              href="source-repository.html"/>
+      <item name="SVN repository"              href="scm.html"/>
     </menu>
 
   </body>
