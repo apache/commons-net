@@ -17,8 +17,8 @@ limitations under the License.
 -->
 
 <!DOCTYPE suppressions PUBLIC
-    "-//Puppy Crawl//DTD Suppressions 1.1//EN"
-    "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+    "-//Checkstyle//DTD SuppressionFilter Configuration 1.1//EN"
+    "https://checkstyle.org/dtds/suppressions_1_1.dtd">
 
 <suppressions>
     <!-- On Windows, it appears that Checkstyle matches files using \ delims -->
