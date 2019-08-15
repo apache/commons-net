@@ -25,6 +25,7 @@
         <artifactId>commons-parent</artifactId>
         <version>43</version>
     </parent>
+
     <groupId>commons-net</groupId>
     <artifactId>commons-net</artifactId>
     <version>3.7-SNAPSHOT</version>
@@ -37,135 +38,7 @@ Apache Commons Net library contains a collection of network utilities and protoc
 Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
     </description>
     <url>https://commons.apache.org/proper/commons-net/</url>
-    <issueManagement>
-        <system>jira</system>
-        <url>https://issues.apache.org/jira/browse/NET</url>
-    </issueManagement>
     <inceptionYear>2001</inceptionYear>
-    <scm>
-        <connection>scm:git:https://gitbox.apache.org/repos/asf/commons-net</connection>
-        <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/commons-net</developerConnection>
-        <url>https://gitbox.apache.org/repos/asf/commons-net</url>
-    </scm>
-
-    <developers>
-        <developer>
-            <name>Jeffrey D. Brekke</name>
-            <id>brekke</id>
-            <email>Jeff.Brekke@qg.com</email>
-            <organization>Quad/Graphics, Inc.</organization>
-        </developer>
-        <developer>
-            <name>Steve Cohen</name>
-            <id>scohen</id>
-            <email>scohen@apache.org</email>
-            <organization>javactivity.org</organization>
-        </developer>
-        <developer>
-            <name>Bruno D'Avanzo</name>
-            <id>brudav</id>
-            <email>bruno.davanzo@hp.com</email>
-            <organization>Hewlett-Packard</organization>
-        </developer>
-        <developer>
-            <name>Daniel F. Savarese</name>
-            <id>dfs</id>
-            <email>dfs@apache.org</email>
-            <organization>
-                &lt;a href="http://www.savarese.com/"&gt;Savarese Software Research&lt;/a&gt;
-            </organization>
-        </developer>
-        <developer>
-            <name>Rory Winston</name>
-            <id>rwinston</id>
-            <email>rwinston@apache.org</email>
-            <organization />
-        </developer>
-        <developer>
-            <name>Rory Winston</name>
-            <email>rwinston@checkfree.com</email>
-            <organization />
-        </developer>
-    </developers>
-
-    <contributors>
-        <contributor>
-            <name>Henrik Sorensen</name>
-            <email>henrik.sorensen@balcab.ch</email>
-        </contributor>
-        <contributor>
-            <name>Jeff Nadler</name>
-            <email>jnadler@srcginc.com</email>
-        </contributor>
-        <contributor>
-            <name>William Noto</name>
-            <email>wnoto@openfinance.com</email>
-        </contributor>
-        <contributor>
-            <name>Stephane ESTE-GRACIAS</name>
-            <email>sestegra@free.fr</email>
-        </contributor>
-        <contributor>
-            <name>Dan Armbrust</name>
-            <email>daniel.armbrust.list@gmail.com</email>
-        </contributor>
-        <contributor>
-            <name>Yuval Kashtan</name>
-        </contributor>
-        <contributor>
-            <name>Joseph Hindsley</name>
-        </contributor>
-        <contributor>
-            <name>Rob Hasselbaum</name>
-            <email>rhasselbaum@alumni.ithaca.edu</email>
-        </contributor>
-        <contributor>
-            <name>Mario Ivankovits</name>
-            <email>mario@ops.co.at</email>
-        </contributor>
-        <contributor>
-            <name>Naz Irizarry</name>
-            <organization>MITRE Corp</organization>
-        </contributor>
-        <contributor>
-            <name>Tapan Karecha</name>
-            <email>tapan@india.hp.com</email>
-        </contributor>
-        <contributor>
-            <name>Jason Mathews</name>
-            <organization>MITRE Corp</organization>
-            </contributor>
-        <contributor>
-            <name>Winston Ojeda</name>
-            <email>Winston.Ojeda@qg.com</email>
-            <organization>Quad/Graphics, Inc.</organization>
-        </contributor>
-        <contributor>
-            <name>Ted Wise</name>
-            <email>ctwise@bellsouth.net</email>
-        </contributor>
-        <contributor>
-            <name>Bogdan Drozdowski</name>
-            <email>bogdandr # op dot pl</email>
-        </contributor>
-    </contributors>
-
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
-    <distributionManagement>
-      <site>
-        <id>apache.website</id>
-        <name>Apache Commons Site</name>
-        <url>scm:svn:https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-net/</url>
-      </site>
-    </distributionManagement>
 
     <properties>
         <!-- Environment -->
@@ -187,6 +60,33 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <checkstyle.tool.version>6.9</checkstyle.tool.version>
         <commons.changes.onlyCurrentVersion>true</commons.changes.onlyCurrentVersion>
     </properties>
+
+    <scm>
+        <connection>scm:git:https://gitbox.apache.org/repos/asf/commons-net</connection>
+        <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/commons-net</developerConnection>
+        <url>https://gitbox.apache.org/repos/asf/commons-net</url>
+    </scm>
+    <issueManagement>
+        <system>jira</system>
+        <url>https://issues.apache.org/jira/browse/NET</url>
+    </issueManagement>
+
+    <distributionManagement>
+      <site>
+        <id>apache.website</id>
+        <name>Apache Commons Site</name>
+        <url>scm:svn:https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-net/</url>
+      </site>
+    </distributionManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <pluginManagement>
@@ -498,5 +398,107 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
 
         </plugins>
     </reporting>
+
+    <developers>
+        <developer>
+            <name>Jeffrey D. Brekke</name>
+            <id>brekke</id>
+            <email>Jeff.Brekke@qg.com</email>
+            <organization>Quad/Graphics, Inc.</organization>
+        </developer>
+        <developer>
+            <name>Steve Cohen</name>
+            <id>scohen</id>
+            <email>scohen@apache.org</email>
+            <organization>javactivity.org</organization>
+        </developer>
+        <developer>
+            <name>Bruno D'Avanzo</name>
+            <id>brudav</id>
+            <email>bruno.davanzo@hp.com</email>
+            <organization>Hewlett-Packard</organization>
+        </developer>
+        <developer>
+            <name>Daniel F. Savarese</name>
+            <id>dfs</id>
+            <email>dfs@apache.org</email>
+            <organization>
+                &lt;a href="http://www.savarese.com/"&gt;Savarese Software Research&lt;/a&gt;
+            </organization>
+        </developer>
+        <developer>
+            <name>Rory Winston</name>
+            <id>rwinston</id>
+            <email>rwinston@apache.org</email>
+            <organization />
+        </developer>
+        <developer>
+            <name>Rory Winston</name>
+            <email>rwinston@checkfree.com</email>
+            <organization />
+        </developer>
+    </developers>
+
+    <contributors>
+        <contributor>
+            <name>Henrik Sorensen</name>
+            <email>henrik.sorensen@balcab.ch</email>
+        </contributor>
+        <contributor>
+            <name>Jeff Nadler</name>
+            <email>jnadler@srcginc.com</email>
+        </contributor>
+        <contributor>
+            <name>William Noto</name>
+            <email>wnoto@openfinance.com</email>
+        </contributor>
+        <contributor>
+            <name>Stephane ESTE-GRACIAS</name>
+            <email>sestegra@free.fr</email>
+        </contributor>
+        <contributor>
+            <name>Dan Armbrust</name>
+            <email>daniel.armbrust.list@gmail.com</email>
+        </contributor>
+        <contributor>
+            <name>Yuval Kashtan</name>
+        </contributor>
+        <contributor>
+            <name>Joseph Hindsley</name>
+        </contributor>
+        <contributor>
+            <name>Rob Hasselbaum</name>
+            <email>rhasselbaum@alumni.ithaca.edu</email>
+        </contributor>
+        <contributor>
+            <name>Mario Ivankovits</name>
+            <email>mario@ops.co.at</email>
+        </contributor>
+        <contributor>
+            <name>Naz Irizarry</name>
+            <organization>MITRE Corp</organization>
+        </contributor>
+        <contributor>
+            <name>Tapan Karecha</name>
+            <email>tapan@india.hp.com</email>
+        </contributor>
+        <contributor>
+            <name>Jason Mathews</name>
+            <organization>MITRE Corp</organization>
+            </contributor>
+        <contributor>
+            <name>Winston Ojeda</name>
+            <email>Winston.Ojeda@qg.com</email>
+            <organization>Quad/Graphics, Inc.</organization>
+        </contributor>
+        <contributor>
+            <name>Ted Wise</name>
+            <email>ctwise@bellsouth.net</email>
+        </contributor>
+        <contributor>
+            <name>Bogdan Drozdowski</name>
+            <email>bogdandr # op dot pl</email>
+        </contributor>
+    </contributors>
 
 </project>
