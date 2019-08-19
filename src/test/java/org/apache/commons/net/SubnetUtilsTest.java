@@ -473,4 +473,11 @@ public class SubnetUtilsTest extends TestCase {
         assertFalse(subnetInfo.isInRange("2001:db8:3c0d:5b3f:ffff:ffff:ffff:ffff"));
         assertFalse(subnetInfo.isInRange("2001:db8:3c0d:5b80::"));
     }
+
+    public void testBoundaryIsInRangeOfIP6Address()
+    {
+        SubnetUtils subnetUtils = new SubnetUtils("2001:db8:3c0d:5b6d:0:0:42:8329/128");
+        SubnetInfo subnetInfo = subnetUtils.getInfo();
+        assertTrue(subnetInfo.isInRange("2001:db8:3c0d:5b6d:0:0:42:8329"));
+    }
 }
