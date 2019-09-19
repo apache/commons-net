@@ -219,6 +219,7 @@ public class SubnetUtils
          *
          * @param address the address to check
          * @return {@code true} if it is in range
+         * @since 3.4 (made public)
          */
         public boolean isInRange(int[] address) { return false; }
 
@@ -330,6 +331,7 @@ public class SubnetUtils
          * Will be zero for CIDR/31 and CIDR/32 if the address is IPv4 address and the {@code inclusiveHostCount} flag is {@code false}.
          *
          * @return the count of addresses, may be zero
+         * @since 3.4
          */
         public long getAddressCountLong() { return 0; }
 
