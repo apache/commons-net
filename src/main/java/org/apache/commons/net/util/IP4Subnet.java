@@ -216,7 +216,7 @@ public final class IP4Subnet extends SubnetUtils.SubnetInfo
 
     /**
      * Returns {@code true} if the parameter {@code address} is in the range of usable endpoint addresses for this subnet.
-     * This excludes the network and broadcast addresses.
+     * This excludes the network and broadcast addresses if {@code inclusiveHostCount} is {@code false}.
      *
      * @param address a dot-delimited IPv4 address, e.g. "192.168.0.1"
      * @return {@code true} if in range, {@code false} otherwise
@@ -229,7 +229,7 @@ public final class IP4Subnet extends SubnetUtils.SubnetInfo
 
     /**
      * Returns {@code true} if the parameter {@code address} is in the range of usable endpoint addresses for this subnet.
-     * This excludes the network and broadcast addresses.
+     * This excludes the network and broadcast addresses if {@code inclusiveHostCount} is {@code false}.
      *
      * @param address an IPv4 address in binary
      * @return {@code true} if in range, {@code false} otherwise
@@ -239,7 +239,20 @@ public final class IP4Subnet extends SubnetUtils.SubnetInfo
     {
         long addLong = address & UNSIGNED_INT_MASK;
 
-        return (addLong > networkLong()) && (addLong < broadcastLong());
+        long low = 0;
+        long high = 0;
+        if (inclusiveHostCount)
+        {
+            low = networkLong();
+            high = broadcastLong();
+        }
+        else
+        {
+            low = networkLong() + 1;
+            high = broadcastLong() - 1;
+        }
+
+        return (addLong >= low) && (addLong <= high);
     }
 
     /**

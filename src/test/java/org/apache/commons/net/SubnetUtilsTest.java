@@ -203,6 +203,7 @@ public class SubnetUtilsTest extends TestCase {
         info = utils.getInfo();
         assertEquals("255.255.255.255", info.getNetmask());
         assertEquals(1, info.getAddressCount());
+        assertTrue(info.isInRange("192.168.0.1"));
 
         new SubnetUtils("192.168.0.1/1");
     }
