@@ -53,7 +53,7 @@ public class IMAP extends SocketClient
 
     // RFC 3501, section 5.1.3. It should be "modified UTF-7".
     /**
-     * The default control socket ecoding.
+     * The default control socket encoding.
      */
     protected static final String __DEFAULT_ENCODING = "ISO-8859-1";
 
