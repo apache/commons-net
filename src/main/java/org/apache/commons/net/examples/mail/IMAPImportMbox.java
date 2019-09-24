@@ -135,7 +135,7 @@ public final class IMAPImportMbox
                 loaded++;
             }
         } catch (IOException e) {
-            System.out.println(imap.getReplyString());
+            System.out.println("Error processing msg: " + total + " " + imap.getReplyString());
             e.printStackTrace();
             System.exit(10);
             return;
@@ -151,15 +151,27 @@ public final class IMAPImportMbox
         return m.lookingAt();
     }
 
+    private static String getDate(String msg) {
+        final Pattern FROM_RE = Pattern.compile("From \\S+ +\\S+ (\\S+)  ?(\\S+) (\\S+) (\\S+)"); // From SENDER Fri Sep 13 17:04:01 2019
+        //                                                 [Fri]   Sep      13     HMS   2019
+        // output date: 13-Sep-2019 17:04:01 +0000
+        String date = null;
+        Matcher m = FROM_RE.matcher(msg);
+        if (m.lookingAt()) {
+            date = m.group(2)+"-"+m.group(1)+"-"+m.group(4)+" "+m.group(3)+" +0000";
+        }
+        return date;
+    }
+
     private static boolean process(final StringBuilder sb, final IMAPClient imap, final String folder
             ,final int msgNum) throws IOException {
         final int length = sb.length();
         boolean haveMessage = length > 2;
         if (haveMessage) {
             System.out.println("MsgNum: " + msgNum +" Length " + length);
-            sb.setLength(length-2); // drop trailing CRLF
+            sb.setLength(length-2); // drop trailing CRLF (mbox format has trailing blank line)
             String msg = sb.toString();
-            if (!imap.append(folder, null, null, msg)) {
+            if (!imap.append(folder, null, getDate(msg), msg)) {
                 throw new IOException("Failed to import message: " + msgNum + " " + imap.getReplyString());
             }
         }
