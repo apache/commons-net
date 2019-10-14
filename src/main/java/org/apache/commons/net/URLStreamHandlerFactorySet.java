@@ -17,8 +17,6 @@
 
 package org.apache.commons.net;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLStreamHandler;
@@ -26,7 +24,6 @@ import java.net.URLStreamHandlerFactory;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.function.BiFunction;
 
 
 /**
@@ -54,20 +51,21 @@ public class URLStreamHandlerFactorySet implements URLStreamHandlerFactory {
      * key: urlStreamHandlerFactoryName
      * value: URLStreamHandlerFactory
      */
-    private final Map<String, URLStreamHandlerFactory> urlStreamHandlerMap = new ConcurrentHashMap<>();
+    private final Map<String, URLStreamHandlerFactory> urlStreamHandlerMap = new ConcurrentHashMap<String,
+            URLStreamHandlerFactory>();
 
     /**
      * key: urlStreamHandlerFactoryName
      * value: defaultPriority
      */
-    private final Map<String, Double> defaultPriorityMap = new ConcurrentHashMap<>();
+    private final Map<String, Double> defaultPriorityMap = new ConcurrentHashMap<String, Double>();
 
     /**
      * key: urlStreamHandlerFactoryName
      * value: specialPriority
      */
     private final Map<String, Map<String, Double>> specialPriorityMap =
-            new ConcurrentHashMap<>();
+            new ConcurrentHashMap<String, Map<String, Double>>();
 
 
     public URLStreamHandlerFactorySet() {
@@ -134,8 +132,8 @@ public class URLStreamHandlerFactorySet implements URLStreamHandlerFactory {
         }
 
         URLStreamHandler result = null;
-        for (ImmutablePair<String, Double> entry : generateSortedURLStreamHandlerFactoryList(protocol)) {
-            String urlStreamHandlerFactoryName = entry.getLeft();
+        for (Map.Entry<String, Double> entry : generateSortedURLStreamHandlerFactoryList(protocol)) {
+            String urlStreamHandlerFactoryName = entry.getKey();
             URLStreamHandlerFactory urlStreamHandlerFactory = this.urlStreamHandlerMap.get(urlStreamHandlerFactoryName);
             result = urlStreamHandlerFactory.createURLStreamHandler(protocol);
             if (result != null) {
@@ -162,25 +160,21 @@ public class URLStreamHandlerFactorySet implements URLStreamHandlerFactory {
      * @param protocol
      * @return
      */
-    public List<ImmutablePair<String, Double>> generateSortedURLStreamHandlerFactoryList(String protocol) {
-        Map<String, Double> priorityMap = new HashMap<>(defaultPriorityMap);
-        this.specialPriorityMap.computeIfPresent(protocol, new BiFunction<String, Map<String, Double>, Map<String,
-                Double>>() {
-            @Override
-            public Map<String, Double> apply(String s, Map<String, Double> stringDoubleMap) {
-                priorityMap.putAll(stringDoubleMap);
-                return stringDoubleMap;
-            }
-        });
+    public List<Map.Entry<String, Double>> generateSortedURLStreamHandlerFactoryList(String protocol) {
+        Map<String, Double> priorityMap = new HashMap<String, Double>(defaultPriorityMap);
 
-        List<ImmutablePair<String, Double>> result = new ArrayList<>();
-        for (Map.Entry<String, Double> entry : priorityMap.entrySet()) {
-            result.add(new ImmutablePair<>(entry.getKey(), entry.getValue()));
+        if (this.specialPriorityMap.containsKey(protocol)) {
+            priorityMap.putAll(this.specialPriorityMap.get(protocol));
         }
-        result.sort(new Comparator<ImmutablePair<String, Double>>() {
+
+        List<Map.Entry<String, Double>> result = new ArrayList<Map.Entry<String, Double>>();
+        for (Map.Entry<String, Double> entry : priorityMap.entrySet()) {
+            result.add(entry);
+        }
+        result.sort(new Comparator<Map.Entry<String, Double>>() {
             @Override
-            public int compare(ImmutablePair<String, Double> o1, ImmutablePair<String, Double> o2) {
-                return -Double.compare(o1.getRight(), o2.getRight());
+            public int compare(Map.Entry<String, Double> o1, Map.Entry<String, Double> o2) {
+                return -Double.compare(o1.getValue(), o2.getValue());
             }
         });
         return result;
@@ -241,7 +235,12 @@ public class URLStreamHandlerFactorySet implements URLStreamHandlerFactory {
      * @see #generateSortedURLStreamHandlerFactoryList
      */
     public void setPriority(String urlStreamHandlerFactoryName, String protocol, double priority) {
-        Map<String, Double> urlStreamHandlerMap = specialPriorityMap.putIfAbsent(protocol, new ConcurrentHashMap<>());
+        Map<String, Double> urlStreamHandlerMap = specialPriorityMap.get(protocol);
+        if (urlStreamHandlerMap == null) {
+            urlStreamHandlerMap = new ConcurrentHashMap<String, Double>();
+            specialPriorityMap.put(protocol, urlStreamHandlerMap);
+        }
+
         urlStreamHandlerMap.put(urlStreamHandlerFactoryName, priority);
     }
 
@@ -263,9 +262,14 @@ public class URLStreamHandlerFactorySet implements URLStreamHandlerFactory {
      * @param protocol
      * @see #generateSortedURLStreamHandlerFactoryList
      */
-    public double getPriority(String urlStreamHandlerFactoryName, String protocol) {
-        Map<String, Double> urlStreamHandlerMap = specialPriorityMap.putIfAbsent(protocol, new ConcurrentHashMap<>());
-        Double result = urlStreamHandlerMap.get(urlStreamHandlerFactoryName);
+    public Object getPriority(String urlStreamHandlerFactoryName, String protocol) {
+        Map<String, Double> urlStreamHandlerMap = specialPriorityMap.get(protocol);
+        if (urlStreamHandlerMap == null) {
+            urlStreamHandlerMap = new ConcurrentHashMap<String, Double>();
+            specialPriorityMap.put(protocol, urlStreamHandlerMap);
+        }
+
+        Object result = urlStreamHandlerMap.get(urlStreamHandlerFactoryName);
         if (result == null) {
             result = getPriority(urlStreamHandlerFactoryName);
         }
@@ -294,7 +298,7 @@ public class URLStreamHandlerFactorySet implements URLStreamHandlerFactory {
      * <p>
      * this set and mechanism is only active when this.
      */
-    private final Set<String> refuseHandleProtocolSet = new ConcurrentSkipListSet<>();
+    private final Set<String> refuseHandleProtocolSet = new ConcurrentSkipListSet<String>();
 
     /**
      * Register this protocol into refuseHandleProtocolSet.
