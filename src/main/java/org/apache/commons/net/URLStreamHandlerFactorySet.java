@@ -171,7 +171,7 @@ public class URLStreamHandlerFactorySet implements URLStreamHandlerFactory {
         for (Map.Entry<String, Double> entry : priorityMap.entrySet()) {
             result.add(entry);
         }
-        result.sort(new Comparator<Map.Entry<String, Double>>() {
+        Collections.sort(result, new Comparator<Map.Entry<String, Double>>() {
             @Override
             public int compare(Map.Entry<String, Double> o1, Map.Entry<String, Double> o2) {
                 return -Double.compare(o1.getValue(), o2.getValue());
