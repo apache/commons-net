@@ -57,7 +57,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
 
         <!-- Local version defines -->
         <checkstyle.plugin.version>2.17</checkstyle.plugin.version>
-        <checkstyle.tool.version>6.9</checkstyle.tool.version>
+        <checkstyle.tool.version>8.18</checkstyle.tool.version>
         <commons.changes.onlyCurrentVersion>true</commons.changes.onlyCurrentVersion>
     </properties>
 
