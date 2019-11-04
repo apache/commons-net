@@ -2544,14 +2544,17 @@ implements Configurable
         boolean success = FTPReply.isPositiveCompletion(sendCommand(FTPCmd.MLST, pathname));
         if (success){
             String reply = getReplyStrings()[1];
+            // some FTP server reply not contains space before fact(s)
+            if(reply.charAt(0) != ' ') { reply = " " + reply; }
             /* check the response makes sense.
              * Must have space before fact(s) and between fact(s) and file name
              * Fact(s) can be absent, so at least 3 chars are needed.
              */
-            if (reply.length() < 3 || reply.charAt(0) != ' ') {
+            if (reply.length() < 3) {
                 throw new MalformedServerReplyException("Invalid server reply (MLST): '" + reply + "'");
             }
-            String entry = reply.substring(1); // skip leading space for parser
+            // some FTP server reply contains more than one space before fact(s)
+            String entry = reply.replaceAll("^\\s+", ""); // skip leading space for parser
             return MLSxEntryParser.parseEntry(entry);
         } else {
             return null;
