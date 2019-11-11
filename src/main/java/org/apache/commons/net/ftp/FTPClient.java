@@ -3466,13 +3466,24 @@ implements Configurable
     }
 
     /**
-     * Initiate list parsing for MLSD listings.
-     *
-     * @param pathname
+     * Initiate list parsing for MLSD listings in the current working directory.
+     *     
      * @return the engine
      * @throws IOException
      */
-    private FTPListParseEngine initiateMListParsing(String pathname) throws IOException
+    public FTPListParseEngine initiateMListParsing() throws IOException
+    {
+        return initiateMListParsing(null);
+    }
+
+    /**
+     * Initiate list parsing for MLSD listings.
+     *
+     * @param pathname the path from where to MLSD.
+     * @return the engine.
+     * @throws IOException
+     */
+    public FTPListParseEngine initiateMListParsing(String pathname) throws IOException
     {
         Socket socket = _openDataConnection_(FTPCmd.MLSD, pathname);
         FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance(), __configuration);
