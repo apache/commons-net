@@ -64,6 +64,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         "FREEWARE40.DIR;1        27/36"+
         "         16-FEB-1999 10:01:46  [AP_HTTPD,APACHE$WWW                               (RWE,RWE,RE,RE)",
         "1-JUN.LIS;1              9/9           2-jun-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
+        "ALLOCMISS.COM;1            1         15-AUG-1996 14:10:38  [POSTWARE,LP]    (RWE,RWE,RWE,RE)"
     };
     // CHECKSTYLE:ON
 
