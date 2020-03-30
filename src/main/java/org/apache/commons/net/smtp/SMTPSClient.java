@@ -357,7 +357,7 @@ public class SMTPSClient extends SMTPClient
 
     /**
      * Return whether or not endpoint identification using the HTTPS algorithm
-     * on Java 1.7+ is enabled. The default behaviour is for this to be disabled.
+     * on Java 1.7+ is enabled. The default behavior is for this to be disabled.
      *
      * @return True if enabled, false if not.
      * @since 3.4
@@ -369,7 +369,7 @@ public class SMTPSClient extends SMTPClient
 
     /**
      * Automatic endpoint identification checking using the HTTPS algorithm
-     * is supported on Java 1.7+. The default behaviour is for this to be disabled.
+     * is supported on Java 1.7+. The default behavior is for this to be disabled.
      *
      * @param enable Enable automatic endpoint identification checking using the HTTPS algorithm on Java 1.7+.
      * @since 3.4

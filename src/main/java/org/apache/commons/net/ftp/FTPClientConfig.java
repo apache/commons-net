@@ -147,7 +147,7 @@ public class FTPClientConfig
     /**
      * Identifier for alternate UNIX parser; same as {@link #SYST_UNIX} but leading spaces are
      * trimmed from file names. This is to maintain backwards compatibility with
-     * the original behaviour of the parser which ignored multiple spaces between the date
+     * the original behavior of the parser which ignored multiple spaces between the date
      * and the start of the file name.
      * @since 3.4
      */

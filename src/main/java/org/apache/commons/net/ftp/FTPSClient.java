@@ -706,7 +706,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Return whether or not endpoint identification using the HTTPS algorithm
-     * on Java 1.7+ is enabled. The default behaviour is for this to be disabled.
+     * on Java 1.7+ is enabled. The default behavior is for this to be disabled.
      *
      * This check is only performed on client mode connections.
      *
@@ -720,7 +720,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Automatic endpoint identification checking using the HTTPS algorithm
-     * is supported on Java 1.7+. The default behaviour is for this to be disabled.
+     * is supported on Java 1.7+. The default behavior is for this to be disabled.
      *
      * This check is only performed on client mode connections.
      *

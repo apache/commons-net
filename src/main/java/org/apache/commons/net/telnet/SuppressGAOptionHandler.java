@@ -25,7 +25,7 @@ public class SuppressGAOptionHandler extends TelnetOptionHandler
     /***
      * Constructor for the SuppressGAOptionHandler. Allows defining desired
      * initial setting for local/remote activation of this option and
-     * behaviour in case a local/remote activation request for this
+     * behavior in case a local/remote activation request for this
      * option is received.
      * <p>
      * @param initlocal - if set to true, a WILL is sent upon connection.
@@ -42,7 +42,7 @@ public class SuppressGAOptionHandler extends TelnetOptionHandler
 
     /***
      * Constructor for the SuppressGAOptionHandler. Initial and accept
-     * behaviour flags are set to false
+     * behavior flags are set to false
      ***/
     public SuppressGAOptionHandler()
     {

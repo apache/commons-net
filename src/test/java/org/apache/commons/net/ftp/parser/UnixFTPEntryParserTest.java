@@ -175,7 +175,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
         assertEquals("  zxbox", f.getName() ); // leading spaces retained
     }
 
-    public void testLeadingSpacesNET566() { // check new behaviour
+    public void testLeadingSpacesNET566() { // check new behavior
         FTPFile f = new UnixFTPEntryParser(null, false).parseFTPEntry(
             "drwxr-xr-x   2 john smith     group         4096 Mar  2 15:13   zxbox");
         assertNotNull(f);

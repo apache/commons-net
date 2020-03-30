@@ -41,7 +41,7 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
     /***
      * Constructor for the WindowSizeOptionHandler. Allows defining desired
      * initial setting for local/remote activation of this option and
-     * behaviour in case a local/remote activation request for this
+     * behavior in case a local/remote activation request for this
      * option is received.
      * <p>
      * @param nWidth - Window width.
@@ -73,7 +73,7 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
 
     /***
      * Constructor for the WindowSizeOptionHandler. Initial and accept
-     * behaviour flags are set to false
+     * behavior flags are set to false
      * <p>
      * @param nWidth - Window width.
      * @param nHeight - Window Height

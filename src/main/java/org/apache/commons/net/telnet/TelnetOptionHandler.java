@@ -23,7 +23,7 @@ package org.apache.commons.net.telnet;
  * <p>
  * TelnetOptionHandler implements basic option handling
  * functionality and defines abstract methods that must be
- * implemented to define subnegotiation behaviour.
+ * implemented to define subnegotiation behavior.
  ***/
 public abstract class TelnetOptionHandler
 {
@@ -65,7 +65,7 @@ public abstract class TelnetOptionHandler
     /***
      * Constructor for the TelnetOptionHandler. Allows defining desired
      * initial setting for local/remote activation of this option and
-     * behaviour in case a local/remote activation request for this
+     * behavior in case a local/remote activation request for this
      * option is received.
      * <p>
      * @param optcode - Option code.
@@ -121,7 +121,7 @@ public abstract class TelnetOptionHandler
     }
 
     /***
-     * Set behaviour of the option for DO requests coming from
+     * Set behavior of the option for DO requests coming from
      * the other end.
      * <p>
      * @param accept - if true, subsequent DO requests will be accepted.
@@ -132,7 +132,7 @@ public abstract class TelnetOptionHandler
     }
 
     /***
-     * Set behaviour of the option for WILL requests coming from
+     * Set behavior of the option for WILL requests coming from
      * the other end.
      * <p>
      * @param accept - if true, subsequent WILL requests will be accepted.

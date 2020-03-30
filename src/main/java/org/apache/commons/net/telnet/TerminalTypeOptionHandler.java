@@ -45,7 +45,7 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler
     /***
      * Constructor for the TerminalTypeOptionHandler. Allows defining desired
      * initial setting for local/remote activation of this option and
-     * behaviour in case a local/remote activation request for this
+     * behavior in case a local/remote activation request for this
      * option is received.
      * <p>
      * @param termtype - terminal type that will be negotiated.
@@ -67,7 +67,7 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler
 
     /***
      * Constructor for the TerminalTypeOptionHandler. Initial and accept
-     * behaviour flags are set to false
+     * behavior flags are set to false
      * <p>
      * @param termtype - terminal type that will be negotiated.
      ***/
