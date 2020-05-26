@@ -24,5 +24,7 @@ matrix:
     - jdk: openjdk7
     - jdk: openjdk8
     - jdk: openjdk11
+  allow_failures:
+    - jdk: openjdk11
 after_success:
   - mvn clean cobertura:cobertura coveralls:report
