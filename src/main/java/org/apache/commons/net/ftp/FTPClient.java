@@ -278,7 +278,7 @@ import org.apache.commons.net.io.Util;
  * method, so the timing is partially dependent on how long each block transfer takes.
  * <p>
  * <b>This keep-alive feature is optional; if it does not help or causes problems then don't use it.</b>
- * <p>
+ *
  * @see #FTP_SYSTEM_TYPE
  * @see #SYSTEM_TYPE_PROPERTIES
  * @see FTP
