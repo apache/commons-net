@@ -152,7 +152,8 @@ public final class IMAPImportMbox
     }
 
     private static String getDate(String msg) {
-        final Pattern FROM_RE = Pattern.compile("From \\S+ +\\S+ (\\S+)  ?(\\S+) (\\S+) (\\S+)"); // From SENDER Fri Sep 13 17:04:01 2019
+                                              // From SENDER Fri Sep 13 17:04:01 2019
+        final Pattern FROM_RE = Pattern.compile("From \\S+ +\\S+ (\\S+)  ?(\\S+) (\\S+) (\\S+)");
         //                                                 [Fri]   Sep      13     HMS   2019
         // output date: 13-Sep-2019 17:04:01 +0000
         String date = null;

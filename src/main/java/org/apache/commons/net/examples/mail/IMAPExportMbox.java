@@ -380,7 +380,7 @@ public final class IMAPExportMbox
                         replyTo = parts[1];
                         if (replyTo.startsWith("<")) {
                             if (replyTo.endsWith(">")) {
-                                replyTo = replyTo.substring(1,replyTo.length()-1); // drop <> wrapper                                
+                                replyTo = replyTo.substring(1,replyTo.length()-1); // drop <> wrapper
                             } else {
                                 System.err.println("Unexpected Return-path: '" + line+ "' in " + firstLine);
                             }

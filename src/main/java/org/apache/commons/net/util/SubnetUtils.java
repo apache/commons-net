@@ -57,7 +57,7 @@ public class SubnetUtils {
 
           int trailingZeroes = NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
           /*
-           * An IPv4 netmask consists of 32 bits, a contiguous sequence 
+           * An IPv4 netmask consists of 32 bits, a contiguous sequence
            * of the specified number of ones followed by all zeros.
            * So, it can be obtained by shifting an unsigned integer (32 bits) to the left by
            * the number of trailing zeros which is (32 - the # bits specification).

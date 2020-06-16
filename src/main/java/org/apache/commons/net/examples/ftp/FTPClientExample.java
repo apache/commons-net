@@ -512,7 +512,7 @@ __main:
                 ftp.retrieveFile(remote, output);
 
                 output.close();
-               
+
                 if (keepAliveTimeout > 0) {
                     showCslStats(ftp);
                 }
@@ -555,7 +555,7 @@ __main:
         @SuppressWarnings("deprecation") // debug code
         int []stats = ftp.getCslDebug();
         System.out.println("CslDebug="+Arrays.toString(stats));
-        
+
     }
 
     private static CopyStreamListener createListener(){
