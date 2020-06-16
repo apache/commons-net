@@ -43,7 +43,10 @@
 Apache Commons Net
 ===================
 
-[![Build Status](https://travis-ci.org/apache/commons-net.svg?branch=trunk)](https://travis-ci.org/apache/commons-net)
+[![Build Status](https://travis-ci.org/apache/commons-net.svg?branch=master)](https://travis-ci.org/apache/commons-net)
+[![Coverage Status](https://coveralls.io/repos/apache/commons-net/badge.svg?branch=master)](https://coveralls.io/r/apache/commons-net)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/badge.svg)](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/)
+[![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
 Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
@@ -52,7 +55,7 @@ Documentation
 -------------
 
 More information can be found on the [Apache Commons Net homepage](https://commons.apache.org/proper/commons-net).
-The [Javadoc](https://commons.apache.org/proper/commons-net/javadocs/api-release) can be browsed.
+The [JavaDoc](https://commons.apache.org/proper/commons-net/javadocs/api-release) can be browsed.
 Questions related to the usage of Apache Commons Net should be posted to the [user mailing list][ml].
 
 Where can I get the latest release?
