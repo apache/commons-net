@@ -155,6 +155,9 @@ This is mainly a bug-fix release. See further details below.
             <action issue="NET-663" type="fix" dev="sebb" due-to="Max Shenfield">
             NullPointerException when FTPClient remote verification fails
             </action>
+            <action issue="NET-649" type="fix" dev="sebb" due-to="Filipe Bojikian Rissi">
+            227 Entering Passive Mode
+            </action>
         </release>
         <release version="3.6" date="2017-02-15" description="
 This is mainly a bug-fix release. See further details below.
