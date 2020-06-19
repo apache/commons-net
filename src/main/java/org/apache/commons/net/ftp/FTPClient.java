@@ -937,10 +937,13 @@ implements Configurable
 
         if (__remoteVerificationEnabled && !verifyRemote(socket))
         {
+            // Grab the host before we close the socket to avoid NET-663
+            InetAddress socketHost = socket.getInetAddress();
+
             socket.close();
 
             throw new IOException(
-                    "Host attempting data connection " + socket.getInetAddress().getHostAddress() +
+                    "Host attempting data connection " + socketHost.getHostAddress() +
                     " is not same as server " + getRemoteAddress().getHostAddress());
         }
 
