@@ -146,6 +146,9 @@ This is mainly a bug-fix release. See further details below.
             <action issue="NET-613" type="fix" dev="sebb" due-to="Donald Kwakkel">
             System Information Leak in ftp parser
             </action>
+            <action issue="NET-678" type="update" dev="sebb" due-to=" Roman Grigoriadi">
+            VMS ftp LIST parsing results in empty file list
+            </action>
         </release>
         <release version="3.6" date="2017-02-15" description="
 This is mainly a bug-fix release. See further details below.
