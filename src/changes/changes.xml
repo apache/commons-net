@@ -149,8 +149,11 @@ This is mainly a bug-fix release. See further details below.
             <action issue="NET-678" type="update" dev="sebb" due-to="Roman Grigoriadi">
             VMS ftp LIST parsing results in empty file list
             </action>
-            <action issue="NET-674" type="update" dev="sebb" due-to="Chris Steingen">
+            <action issue="NET-674" type="add" dev="sebb" due-to="Chris Steingen">
             FTPListParseEngine should support listing via MLSD
+            </action>
+            <action issue="NET-663" type="fix" dev="sebb" due-to="Max Shenfield">
+            NullPointerException when FTPClient remote verification fails
             </action>
         </release>
         <release version="3.6" date="2017-02-15" description="
