@@ -985,24 +985,36 @@ public class NNTP extends SocketClient
 
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE
 
+    /**
+     * @deprecated - for API compatibility only - DO NOT USE
+     */
     @Deprecated
     public int article(int a) throws IOException
     {
         return article((long) a);
     }
 
+    /**
+     * @deprecated - for API compatibility only - DO NOT USE
+     */
     @Deprecated
     public int body(int a) throws IOException
     {
         return body((long) a);
     }
 
+    /**
+     * @deprecated - for API compatibility only - DO NOT USE
+     */
     @Deprecated
     public int head(int a) throws IOException
     {
         return head((long) a);
     }
 
+    /**
+     * @deprecated - for API compatibility only - DO NOT USE
+     */
     @Deprecated
     public int stat(int a) throws IOException
     {
