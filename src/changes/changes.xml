@@ -158,6 +158,9 @@ This is mainly a bug-fix release. See further details below.
             <action issue="NET-649" type="fix" dev="sebb" due-to="Filipe Bojikian Rissi">
             227 Entering Passive Mode
             </action>
+            <action issue="NET-660" type="add" dev="sebb" due-to="Nagabhushan S N">
+            Next and Previous IP Address in SubnetUtils.SubnetInfo
+            </action>
         </release>
         <release version="3.6" date="2017-02-15" description="
 This is mainly a bug-fix release. See further details below.
