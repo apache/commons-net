@@ -240,6 +240,10 @@ public class SubnetUtilsTest extends TestCase {
         final String lowAddresses[] = new String[] { "192.0.0.1", "192.168.0.1", "192.168.0.1", "192.168.0.1" };
         final String highAddresses[] = new String[] { "192.255.255.254", "192.168.255.254", "192.168.0.254",
                 "192.168.0.6" };
+        final String nextAddresses[] = new String[] { "192.168.0.2", "192.168.0.2", "192.168.0.2",
+                "192.168.0.2" };
+        final String previousAddresses[] = new String[] { "192.168.0.0", "192.168.0.0", "192.168.0.0",
+                "192.168.0.0" };
         final String networkAddresses[] = new String[] { "192.0.0.0", "192.168.0.0", "192.168.0.0", "192.168.0.0" };
         final String cidrSignatures[] = new String[] { "192.168.0.1/8", "192.168.0.1/16", "192.168.0.1/24",
                 "192.168.0.1/29" };
@@ -252,6 +256,8 @@ public class SubnetUtilsTest extends TestCase {
             assertEquals(cidrSignatures[i], info.getCidrSignature());
             assertEquals(lowAddresses[i], info.getLowAddress());
             assertEquals(highAddresses[i], info.getHighAddress());
+            assertEquals(nextAddresses[i], info.getNextAddress());
+            assertEquals(previousAddresses[i], info.getPreviousAddress());
             assertEquals(networkAddresses[i], info.getNetworkAddress());
             assertEquals(usableAddresses[i], info.getAddressCount());
         }
