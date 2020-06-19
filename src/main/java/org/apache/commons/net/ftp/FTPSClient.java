@@ -260,12 +260,7 @@ public class FTPSClient extends FTPClient {
     protected void sslNegotiation() throws IOException {
         plainSocket = _socket_;
         initSslContext();
-
-        SSLSocketFactory ssf = context.getSocketFactory();
-        String host = (_hostname_ != null) ? _hostname_ : getRemoteAddress().getHostAddress();
-        int port = _socket_.getPort();
-        SSLSocket socket =
-            (SSLSocket) ssf.createSocket(_socket_, host, port, false);
+        SSLSocket socket = (SSLSocket)createSSLSocket(_socket_);
         socket.setEnableSessionCreation(isCreation);
         socket.setUseClientMode(isClientMode);
 
@@ -295,7 +290,7 @@ public class FTPSClient extends FTPClient {
                 socket.getOutputStream(), getControlEncoding()));
 
         if (isClientMode) {
-            if (hostnameVerifier != null && !hostnameVerifier.verify(host, socket.getSession())) {
+            if (hostnameVerifier != null && !hostnameVerifier.verify(socket.getInetAddress().getHostAddress(), socket.getSession())) {
                 throw new SSLHandshakeException("Hostname doesn't match certificate");
             }
         }
@@ -624,6 +619,7 @@ public class FTPSClient extends FTPClient {
     protected Socket _openDataConnection_(String command, String arg)
             throws IOException {
         Socket socket = super._openDataConnection_(command, arg);
+        socket = createSSLSocket(socket);
         _prepareDataSocket_(socket);
         if (socket instanceof SSLSocket) {
             SSLSocket sslSocket = (SSLSocket)socket;
@@ -900,6 +896,22 @@ public class FTPSClient extends FTPClient {
         }
         // N.B. Cannot use trim before substring as leading space would affect the offset.
         return reply.substring(idx+prefix.length()).trim();
+    }
+
+    /**
+     * Create SSL socket from plain socket.
+     *
+     * @param socket
+     * @return
+     * @throws IOException
+     */
+    private Socket createSSLSocket(Socket socket) throws IOException {
+        if (socket != null) {
+            SSLSocketFactory f = context.getSocketFactory();
+            return f.createSocket(socket, socket.getInetAddress().getHostAddress(), socket.getPort(), false);
+        } else {
+            return null;
+        }
     }
 
     // DEPRECATED - for API compatibility only - DO NOT USE
