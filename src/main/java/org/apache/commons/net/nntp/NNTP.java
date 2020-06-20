@@ -986,6 +986,9 @@ public class NNTP extends SocketClient
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE
 
     /**
+     * @param a article number
+     * @return number
+     * @throws IOException on error
      * @deprecated - for API compatibility only - DO NOT USE
      */
     @Deprecated
@@ -995,6 +998,9 @@ public class NNTP extends SocketClient
     }
 
     /**
+     * @param a article number
+     * @return number
+     * @throws IOException on error
      * @deprecated - for API compatibility only - DO NOT USE
      */
     @Deprecated
@@ -1004,6 +1010,9 @@ public class NNTP extends SocketClient
     }
 
     /**
+     * @param a article number
+     * @return number
+     * @throws IOException on error
      * @deprecated - for API compatibility only - DO NOT USE
      */
     @Deprecated
@@ -1013,6 +1022,9 @@ public class NNTP extends SocketClient
     }
 
     /**
+     * @param a article number
+     * @return number
+     * @throws IOException on error
      * @deprecated - for API compatibility only - DO NOT USE
      */
     @Deprecated

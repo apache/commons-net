@@ -3476,7 +3476,7 @@ implements Configurable
      * Initiate list parsing for MLSD listings in the current working directory.
      *     
      * @return the engine
-     * @throws IOException
+     * @throws IOException on error
      */
     public FTPListParseEngine initiateMListParsing() throws IOException
     {
@@ -3488,7 +3488,7 @@ implements Configurable
      *
      * @param pathname the path from where to MLSD.
      * @return the engine.
-     * @throws IOException
+     * @throws IOException on error
      */
     public FTPListParseEngine initiateMListParsing(String pathname) throws IOException
     {
