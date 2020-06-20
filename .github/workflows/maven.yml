@@ -23,8 +23,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ 8, 11, 12, 13, 14 ]
-        
+        java: [ 8, 11 ]
+# Later versions don't work with 1.6
+
     steps:
     - uses: actions/checkout@v1
     - name: Set up JDK ${{ matrix.java }}
@@ -32,5 +33,5 @@ jobs:
       with:
         java-version: ${{ matrix.java }}
     - name: Build with Maven
-      run: mvn -V apache-rat:check package test --file pom.xml
-#      run: mvn -V apache-rat:check javadoc:javadoc -Ddoclint=all package test --file pom.xml
+      run: mvn apache-rat:check package test --file pom.xml
+#      run: mvn apache-rat:check javadoc:javadoc -Ddoclint=all package test --file pom.xml
