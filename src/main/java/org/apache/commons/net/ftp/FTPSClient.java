@@ -902,7 +902,7 @@ public class FTPSClient extends FTPClient {
      * Create SSL socket from plain socket.
      *
      * @param socket
-     * @return
+     * @return SSL Sockect
      * @throws IOException
      */
     private Socket createSSLSocket(Socket socket) throws IOException {
