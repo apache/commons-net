@@ -129,7 +129,7 @@ public class SMTP extends SocketClient
      */
     public SMTP(String encoding) {
         setDefaultPort(DEFAULT_PORT);
-        _replyLines = new ArrayList<String>();
+        _replyLines = new ArrayList<>();
         _newReplyString = false;
         _replyString = null;
         _commandSupport_ = new ProtocolCommandSupport(this);
@@ -161,8 +161,8 @@ public class SMTP extends SocketClient
 
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
-        String message;
-        _writer.write(message = __commandBuffer.toString());
+        String message = __commandBuffer.toString();
+        _writer.write(message);
         _writer.flush();
 
         fireCommandSent(command, message);
@@ -465,7 +465,8 @@ public class SMTP extends SocketClient
 
         _newReplyString = false;
 
-        return (_replyString = buffer.toString());
+        _replyString = buffer.toString();
+        return (_replyString);
     }
 
 
