@@ -75,7 +75,7 @@ public final class IMAPImportMbox
         }
         String folder = path.substring(1); // skip the leading /
 
-        List<String> contains = new ArrayList<String>(); // list of strings to find
+        List<String> contains = new ArrayList<>(); // list of strings to find
         BitSet msgNums = new BitSet(); // list of message numbers
 
         for(int i = 2; i < args.length; i++) {
