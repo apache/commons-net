@@ -22,7 +22,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -142,14 +142,14 @@ public final class POP3ExportMbox
                     // Currently POP3Client uses iso-8859-1
                     for (int i = 1; i <= count; i++) {
                         OutputStreamWriter fw = new OutputStreamWriter(
-                            new FileOutputStream(new File(mbox,i+".eml")),Charset.forName("iso-8859-1"));
+                            new FileOutputStream(new File(mbox,i+".eml")),StandardCharsets.ISO_8859_1);
                         writeFile(pop3, fw, i);
                         fw.close();
                     }
                 } else {
                     System.out.println("Writing file: " + mbox);
                     // Currently POP3Client uses iso-8859-1
-                    OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(mbox),Charset.forName("iso-8859-1"));
+                    OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(mbox),StandardCharsets.ISO_8859_1);
                     for (int i = 1; i <= count; i++) {
                         writeMbox(pop3, fw, i);
                     }

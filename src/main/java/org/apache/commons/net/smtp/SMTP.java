@@ -22,6 +22,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import org.apache.commons.net.MalformedServerReplyException;
@@ -89,7 +91,7 @@ public class SMTP extends SocketClient
     // We have to ensure that the protocol communication is in ASCII
     // but we use ISO-8859-1 just in case 8-bit characters cross
     // the wire.
-    private static final String __DEFAULT_ENCODING = "ISO-8859-1";
+    private static final Charset __DEFAULT_ENCODING = StandardCharsets.ISO_8859_1;
 
     /**
      * The encoding to use (user-settable).

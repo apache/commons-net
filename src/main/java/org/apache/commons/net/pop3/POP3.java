@@ -23,6 +23,8 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +78,7 @@ public class POP3 extends SocketClient
     // We have to ensure that the protocol communication is in ASCII
     // but we use ISO-8859-1 just in case 8-bit characters cross
     // the wire.
-    static final String _DEFAULT_ENCODING = "ISO-8859-1";
+    static final Charset _DEFAULT_ENCODING = StandardCharsets.ISO_8859_1;
 
     private int __popState;
     BufferedWriter _writer;
