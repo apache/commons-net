@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-parent</artifactId>
-        <version>43</version>
+        <version>51</version>
     </parent>
 
     <groupId>commons-net</groupId>
@@ -56,11 +56,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <commons.release.desc>(Requires Java ${maven.compiler.target} or later)</commons.release.desc>
 
         <!-- Local version defines -->
-        <checkstyle.plugin.version>2.17</checkstyle.plugin.version>
-        <checkstyle.tool.version>6.9</checkstyle.tool.version>
         <commons.changes.onlyCurrentVersion>true</commons.changes.onlyCurrentVersion>
-        <!-- Temporary until CP51 -->
-        <commons.surefire.version>2.22.2</commons.surefire.version>
     </properties>
 
     <scm>
@@ -116,14 +112,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${checkstyle.plugin.version}</version>
-                <dependencies>
-                  <dependency>
-                    <groupId>com.puppycrawl.tools</groupId>
-                    <artifactId>checkstyle</artifactId>
-                    <version>${checkstyle.tool.version}</version>
-                  </dependency>
-                </dependencies>
+                <version>${commons.checkstyle-plugin.version}</version>
             </plugin>
           </plugins>
         </pluginManagement>
@@ -342,7 +331,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${checkstyle.plugin.version}</version>
+                <version>${commons.checkstyle-plugin.version}</version>
                 <configuration>
                     <configLocation>${basedir}/checkstyle.xml</configLocation>
                     <!-- Needed to define config_loc for use by Eclipse -->
@@ -388,7 +377,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${checkstyle.plugin.version}</version>
+                <version>${commons.checkstyle-plugin.version}</version>
                 <configuration>
                     <configLocation>${basedir}/checkstyle.xml</configLocation>
                     <!-- Needed to define config_loc for use by Eclipse -->

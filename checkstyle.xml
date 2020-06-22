@@ -49,7 +49,6 @@ limitations under the License.
   </module>
 
   <module name="TreeWalker">
-    <property name="cacheFile" value="target/cachefile"/>
     <module name="AvoidStarImport">
       <property name="excludes" value="org.junit.Assert"/>
     </module>
@@ -82,22 +81,22 @@ limitations under the License.
       <property name="allowMissingThrowsTags" value="true"/>
     </module>
 
-  </module>
+    <module name="SuppressionCommentFilter"/>
 
-  <module name="SuppressionCommentFilter"/>
+    <!--
+        Allow comment to suppress checkstyle for a single line
+        e.g. // CHECKSTYLE IGNORE MagicNumber
+     -->
+    <module name="SuppressWithNearbyCommentFilter">
+      <property name="commentFormat" value="CHECKSTYLE IGNORE (\w+)"/>
+      <property name="checkFormat" value="$1"/>
+    </module>
+
+  </module>
 
   <module name="SuppressionFilter">
     <!-- config_loc is used by Eclipse plugin -->
     <property name="file" value="${config_loc}/checkstyle-suppressions.xml"/>
-  </module>
-
-  <!--
-      Allow comment to suppress checkstyle for a single line
-      e.g. // CHECKSTYLE IGNORE MagicNumber
-   -->
-  <module name="SuppressWithNearbyCommentFilter">
-    <property name="commentFormat" value="CHECKSTYLE IGNORE (\w+)"/>
-    <property name="checkFormat" value="$1"/>
   </module>
 
 </module>
