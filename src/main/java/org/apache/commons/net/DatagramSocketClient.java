@@ -286,8 +286,9 @@ public abstract class DatagramSocketClient
      *
      * @return the charset name.
      * @since 3.3
-     * TODO Will be deprecated once the code requires Java 1.6 as a mininmum
+     * @deprecated Use {@link #getCharset()} instead
      */
+    @Deprecated
     public String getCharsetName() {
         return charset.name();
     }
