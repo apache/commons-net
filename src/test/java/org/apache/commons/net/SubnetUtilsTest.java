@@ -317,7 +317,8 @@ public class SubnetUtilsTest extends TestCase {
     }
 
     public void testZeroAddressAndCidr() {
-        new SubnetUtils("0.0.0.0/0");
+        SubnetUtils snu = new SubnetUtils("0.0.0.0/0");
+        assertNotNull(snu);
     }
 
     public void testNET521() {
