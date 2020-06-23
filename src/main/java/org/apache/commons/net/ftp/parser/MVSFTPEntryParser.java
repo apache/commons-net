@@ -59,6 +59,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      *  Volume Unit    Referred Ext Used Recfm Lrecl BlkSz Dsorg Dsname
      *  B10142 3390   2006/03/20  2   31  F       80    80  PS   MDI.OKL.WORK
      * </pre>
+     * @see https://www.ibm.com/support/knowledgecenter/zosbasics/com.ibm.zos.zconcepts/zconcepts_159.htm
      */
     static final String FILE_LIST_REGEX = "\\S+\\s+" + // volume
                                                                 // ignored
@@ -67,7 +68,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             "\\S+\\s+" + // extents -ignored
             // If the values are too large, the fields may be merged (NET-639)
             "(?:\\S+\\s+)?" + // used - ignored
-            "[FV]\\S*\\s+" + // recfm - must start with F or V
+            "(?:F|FB|V|VB|U)\\s+" + // recfm - F[B], V[B], U
             "\\S+\\s+" + // logical record length -ignored
             "\\S+\\s+" + // block size - ignored
             "(PS|PO|PO-E)\\s+" + // Dataset organisation. Many exist
@@ -198,8 +199,8 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * for the FTP transfer.
      *
      * Any one beginning with either F or V can safely used by FTP transfer. All
-     * others should only be used with great care, so this version will just
-     * ignore the other record formats. F means a fixed number of records per
+     * others should only be used with great care.
+     * F means a fixed number of records per
      * allocated storage, and V means a variable number of records.
      *
      *
@@ -213,7 +214,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * Implementation notes ====================
      *
      * Only datasets that have dsorg PS, PO or PO-E and have recfm beginning
-     * with F or V, is fully parsed.
+     * with F or V or U, is fully parsed.
      *
      * The following fields in FTPFile is used: FTPFile.Rawlisting: Always set.
      * FTPFile.Type: DIRECTORY_TYPE or FILE_TYPE or UNKNOWN FTPFile.Name: name
@@ -277,7 +278,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
     /**
      * Parse entries representing a dataset list. Only datasets with DSORG PS or
-     * PO or PO-E and with RECFM F* or V* will be parsed.
+     * PO or PO-E and with RECFM F[B], V[B], U will be parsed.
      *
      * Format of ZOS/MVS file list: 1 2 3 4 5 6 7 8 9 10 Volume Unit Referred
      * Ext Used Recfm Lrecl BlkSz Dsorg Dsname B10142 3390 2006/03/20 2 31 F 80

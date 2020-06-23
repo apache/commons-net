@@ -44,6 +44,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
             "FPFS41 3390   2004/06/23  1    1  FB     128  6144  PS    INCOMING.RPTBM056.D061704",
             "FPFS25 3390   2004/06/23  1    1  FB     128  6144  PS    INCOMING.WTM204.D061704",
             "PEX26F 3390   2017/07/03  115807  FB   29600 29600  PS    INCOMING.FIN.D170630.T160630",
+            "VVVVVV 3390   2020/04/18 1    60   U   32760 32760  PO    NAME"
         };
 
     private static final String[] goodsamplesMemberList = {
