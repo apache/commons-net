@@ -32,6 +32,8 @@ public class SubnetUtils {
     private static final Pattern cidrPattern = Pattern.compile(SLASH_FORMAT);
     private static final int NBITS = 32;
 
+    private static final String PARSE_FAIL = "Could not parse [%s]";
+
     private final int netmask;
     private final int address;
     private final int network;
@@ -72,7 +74,7 @@ public class SubnetUtils {
           /* Calculate broadcast address */
           this.broadcast = network | ~(netmask);
       } else {
-          throw new IllegalArgumentException("Could not parse [" + cidrNotation + "]");
+          throw new IllegalArgumentException(String.format(PARSE_FAIL, cidrNotation));
       }
     }
 
@@ -88,7 +90,7 @@ public class SubnetUtils {
         this.netmask = toInteger(mask);
 
         if ((this.netmask & -this.netmask) - 1 != ~this.netmask) {
-            throw new IllegalArgumentException("Could not parse [" + mask + "]");
+            throw new IllegalArgumentException(String.format(PARSE_FAIL, mask));
         }
 
         /* Calculate base network address */
@@ -303,7 +305,7 @@ public class SubnetUtils {
         if (matcher.matches()) {
             return matchAddress(matcher);
         } else {
-            throw new IllegalArgumentException("Could not parse [" + address + "]");
+            throw new IllegalArgumentException(String.format(PARSE_FAIL, address));
         }
     }
 
