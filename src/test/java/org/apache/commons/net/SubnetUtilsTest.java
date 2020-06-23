@@ -25,11 +25,15 @@ import junit.framework.TestCase;
 @SuppressWarnings("deprecation") // deliberate use of deprecated methods
 public class SubnetUtilsTest extends TestCase {
 
-    // TODO Lower address test
     public void testAddresses() {
         SubnetUtils utils = new SubnetUtils("192.168.0.1/29");
         SubnetInfo info = utils.getInfo();
         assertTrue(info.isInRange("192.168.0.1"));
+        assertTrue(info.isInRange("192.168.0.2"));
+        assertTrue(info.isInRange("192.168.0.3"));
+        assertTrue(info.isInRange("192.168.0.4"));
+        assertTrue(info.isInRange("192.168.0.5"));
+        assertTrue(info.isInRange("192.168.0.6"));
         // We don't count the broadcast address as usable
         assertFalse(info.isInRange("192.168.0.7"));
         assertFalse(info.isInRange("192.168.0.8"));
