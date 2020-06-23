@@ -112,6 +112,7 @@ public class SubnetUtils {
     /**
      * Set to <code>true</code> if you want the return value of {@link SubnetInfo#getAddressCount()}
      * to include the network and broadcast addresses.
+     * This also applies to {@link SubnetUtils.SubnetInfo#isInRange()}
      * @param inclusiveHostCount true if network and broadcast addresses are to be included
      * @since 2.2
      */
@@ -148,7 +149,8 @@ public class SubnetUtils {
         /**
          * Returns true if the parameter <code>address</code> is in the
          * range of usable endpoint addresses for this subnet. This excludes the
-         * network and broadcast addresses.
+         * network and broadcast addresses. Use {@link SubnetUtils.setInclusiveHostCount()}
+         * to change this.
          * @param address A dot-delimited IPv4 address, e.g. "192.168.0.1"
          * @return True if in range, false otherwise
          */
@@ -159,7 +161,8 @@ public class SubnetUtils {
         /**
          * Returns true if the parameter <code>address</code> is in the
          * range of usable endpoint addresses for this subnet. This excludes the
-         * network and broadcast addresses.
+         * network and broadcast addresses by default. Use {@link SubnetUtils.setInclusiveHostCount()}
+         * to change this.
          * @param address the address to check
          * @return true if it is in range
          * @since 3.4 (made public)
