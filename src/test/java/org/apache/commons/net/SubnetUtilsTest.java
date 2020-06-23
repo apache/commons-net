@@ -213,6 +213,14 @@ public class SubnetUtilsTest extends TestCase {
         assertTrue(info.isInRange("192.168.0.15"));
     }
 
+    public void testNET679() {
+        SubnetUtils utils = new SubnetUtils("10.213.160.0/16");
+        utils.setInclusiveHostCount(true);
+        SubnetInfo info = utils.getInfo();
+        assertTrue(info.isInRange("10.213.0.0"));
+        assertTrue(info.isInRange("10.213.255.255"));
+    }
+
     public void testInvalidMasks() {
         try {
             new SubnetUtils("192.168.0.1/33");
