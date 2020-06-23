@@ -204,7 +204,13 @@ public class SubnetUtilsTest extends TestCase {
         assertEquals("255.255.255.255", info.getNetmask());
         assertEquals(1, info.getAddressCount());
 
-        new SubnetUtils("192.168.0.1/1");
+    }
+
+    public void testNET675() {
+        SubnetUtils utils = new SubnetUtils("192.168.0.15/32");
+        utils.setInclusiveHostCount(true);
+        SubnetInfo info = utils.getInfo();
+        assertTrue(info.isInRange("192.168.0.15"));
     }
 
     public void testInvalidMasks() {
