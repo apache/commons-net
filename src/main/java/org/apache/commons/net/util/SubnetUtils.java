@@ -273,6 +273,31 @@ public class SubnetUtils {
             return addresses;
         }
 
+        /*
+        * Convert a packed integer address into a 4-element array
+        */
+        private int[] toArray(int val) {
+            int ret[] = new int[4];
+            for (int j = 3; j >= 0; --j) {
+                ret[j] |= ((val >>> 8*(3-j)) & (0xff));
+            }
+            return ret;
+        }
+
+        /*
+        * Convert a 4-element array into dotted decimal format
+        */
+        private String format(int[] octets) {
+            StringBuilder str = new StringBuilder();
+            for (int i =0; i < octets.length; ++i){
+                str.append(octets[i]);
+                if (i != octets.length - 1) {
+                    str.append(".");
+                }
+            }
+            return str.toString();
+        }
+
         /**
          * {@inheritDoc}
          * @since 2.2
@@ -320,31 +345,6 @@ public class SubnetUtils {
             addr |= ((n & 0xff) << 8*(4-i));
         }
         return addr;
-    }
-
-    /*
-     * Convert a packed integer address into a 4-element array
-     */
-    private int[] toArray(int val) {
-        int ret[] = new int[4];
-        for (int j = 3; j >= 0; --j) {
-            ret[j] |= ((val >>> 8*(3-j)) & (0xff));
-        }
-        return ret;
-    }
-
-    /*
-     * Convert a 4-element array into dotted decimal format
-     */
-    private String format(int[] octets) {
-        StringBuilder str = new StringBuilder();
-        for (int i =0; i < octets.length; ++i){
-            str.append(octets[i]);
-            if (i != octets.length - 1) {
-                str.append(".");
-            }
-        }
-        return str.toString();
     }
 
     /*
