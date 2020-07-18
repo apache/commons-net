@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-parent</artifactId>
-        <version>51</version>
+        <version>52</version>
     </parent>
 
     <groupId>commons-net</groupId>
@@ -44,7 +44,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <!-- Environment -->
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
-        <commons.javadoc.java.link>http://download.oracle.com/javase/1.6.0/docs/api/</commons.javadoc.java.link>
+        <commons.javadoc.java.link>${commons.javadoc7.java.link}</commons.javadoc.java.link>
         <commons.componentid>net</commons.componentid>
         <commons.module.name>org.apache.commons.net</commons.module.name>
         <commons.jira.id>NET</commons.jira.id>
