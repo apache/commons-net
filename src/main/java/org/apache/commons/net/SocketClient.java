@@ -99,7 +99,7 @@ public abstract class SocketClient
     protected ServerSocketFactory _serverSocketFactory_;
 
     /** The socket's connect timeout (0 = infinite timeout) */
-    private static final int DEFAULT_CONNECT_TIMEOUT = 0;
+    private static final int DEFAULT_CONNECT_TIMEOUT = 60000;
     protected int connectTimeout = DEFAULT_CONNECT_TIMEOUT;
 
     /** Hint for SO_RCVBUF size */
