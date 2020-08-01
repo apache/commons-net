@@ -63,7 +63,7 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
     <body>
-        <release version="3.7" date="TBA" descriptioon="
+        <release version="3.7" date="TBA" description="
 This is mainly a bug-fix release. See further details below.
 
  This release requires a minimum of Java 7.
