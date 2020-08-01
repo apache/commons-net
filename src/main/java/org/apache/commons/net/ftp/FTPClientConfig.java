@@ -44,7 +44,7 @@ import java.util.TreeMap;
  * only need to be explicitly invoked by the user of this package for problem
  * cases that previous implementations could not solve.
  * </p>
- * <h3>Examples of use of FTPClientConfig</h3>
+ * <h2>Examples of use of FTPClientConfig</h2>
  * Use cases:
  * You are trying to access a server that
  * <ul>
