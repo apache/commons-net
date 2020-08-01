@@ -50,11 +50,17 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <commons.jira.id>NET</commons.jira.id>
         <commons.jira.pid>12310487</commons.jira.pid>
 
+        <commons.scmPubCheckoutDirectory>site-content</commons.scmPubCheckoutDirectory>
+        <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-net</commons.scmPubUrl>
+
         <!-- Current release -->
         <commons.release.version>3.6</commons.release.version>
         <commons.rc.version>RC1</commons.rc.version>
         <commons.release.desc>(Requires Java ${maven.compiler.target} or later)</commons.release.desc>
 
+        <!-- Release plugin defines -->
+        <commons.bc.version>3.6</commons.bc.version>
+        <commons.release.isDistModule>true</commons.release.isDistModule>
         <!-- Local version defines -->
         <commons.changes.onlyCurrentVersion>true</commons.changes.onlyCurrentVersion>
     </properties>
