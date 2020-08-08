@@ -23,12 +23,20 @@ The ${developmentTeam} is pleased to announce the release of ${project.name} ${v
 $introduction.replaceAll("(?<!\015)\012", "
 ").replaceAll("(?m)^ +","")
 
+
 ## N.B. the available variables are described here:
 ## http://maven.apache.org/plugins/maven-changes-plugin/examples/using-a-custom-announcement-template.html
 ##
 ## Hack to improve layout: replace all pairs of spaces with a single new-line
 $release.description.replaceAll("  ", "
 ")
+
+For complete information on ${project.name}, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache ${project.name} website:
+
+${project.url}
+
+Download page: ${project.url}download_validator.cgi
 
 ## set up indent sizes. Only change indent1
 #set($props=${project.properties})
@@ -80,6 +88,7 @@ o $issue ${action}$dueto
 No changes defined in this version.
 #else
 Changes in this version include:
+===============================
 
 #if ($release.getActions('add').size() !=0)
 New features:
@@ -116,9 +125,5 @@ Removed:
 
 Historical list of changes: ${project.url}changes-report.html
 
-For complete information on ${project.name}, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache ${project.name} website:
-
-${project.url}
-
-Download page: ${project.url}download_net.cgi
+Enjoy!
+-Apache Commons Validator team
