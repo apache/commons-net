@@ -109,7 +109,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
               <artifactId>maven-compiler-plugin</artifactId>
               <version>${commons.compiler.version}</version>
               <configuration>
-                <!-- Fix incremental compiler bug, see https://jira.codehaus.org/browse/MCOMPILER-205 etc. -->
+                <!-- Fix incremental compiler bug, see https://issues.apache.org/jira/browse/MCOMPILER-205 etc. -->
                 <excludes>
                   <exclude>**/package-info.java</exclude>
                 </excludes>
