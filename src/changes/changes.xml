@@ -67,6 +67,9 @@ The <action> type attribute can be add,update,fix,remove.
             <action issue="NET-673" type="fix" dev="ggregory" due-to="Dependabot">
             Update actions/checkout from v2.3.1 to v2.3.2 #56.
             </action>
+            <action issue="NET-673" type="fix" dev="ggregory" due-to="Dependabot">
+            Update actions/setup-java from v1.4.0 to v1.4.2 #58.
+            </action>
         </release>
         <release version="3.7" date="2020-08-05" description="
 This is mainly a bug-fix release. See further details below.
