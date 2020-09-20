@@ -133,10 +133,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                 continue; // nothing to see here
             }
             String valueLowerCase = factvalue.toLowerCase(Locale.ENGLISH);
-            if ("size".equals(factname)) {
-                file.setSize(Long.parseLong(factvalue));
-            }
-            else if ("sizd".equals(factname)) { // Directory size
+            if ("size".equals(factname) || "sizd".equals(factname)) {
                 file.setSize(Long.parseLong(factvalue));
             }
             else if ("modify".equals(factname)) {

@@ -49,9 +49,7 @@ public class TFTPServerMain {
             String arg = args[argc];
             if (arg.startsWith("-"))
             {
-                if (arg.equals("-v")) {
-                    opts.put(arg, arg);
-                } else if (arg.equals("-r")) {
+                if (arg.equals("-v") || arg.equals("-r")) {
                     opts.put(arg, arg);
                 } else if (arg.equals("-p")) {
                     opts.put(arg, args[++argc]);
