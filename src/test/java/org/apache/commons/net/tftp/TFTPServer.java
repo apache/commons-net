@@ -234,7 +234,9 @@ public class TFTPServer implements Runnable
             Enumeration<InetAddress> ifaddrs = localiface.getInetAddresses();
             if (ifaddrs != null)
             {
-                if (ifaddrs.hasMoreElements()) iaddr = ifaddrs.nextElement();
+                if (ifaddrs.hasMoreElements()) {
+                    iaddr = ifaddrs.nextElement();
+                }
             }
         }
         log_ = (log == null ? nullStream: log);
