@@ -148,7 +148,7 @@ public class RCommandClient extends RExecClient
                 socket.getInetAddress().getHostAddress());
         }
 
-        return (new SocketInputStream(socket, socket.getInputStream()));
+        return new SocketInputStream(socket, socket.getInputStream());
     }
 
     /***

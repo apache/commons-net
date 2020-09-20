@@ -262,7 +262,7 @@ public final class NewGroupsOrNewsQuery
      ***/
     public String getDistributions()
     {
-        return (__distributions == null ? null : __distributions.toString());
+        return __distributions == null ? null : __distributions.toString();
     }
 
     /***
@@ -274,6 +274,6 @@ public final class NewGroupsOrNewsQuery
      ***/
     public String getNewsgroups()
     {
-        return (__newsgroups == null ? null : __newsgroups.toString());
+        return __newsgroups == null ? null : __newsgroups.toString();
     }
 }

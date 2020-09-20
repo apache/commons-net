@@ -180,7 +180,7 @@ public class NNTP extends SocketClient
                                                       __DEFAULT_ENCODING));
         __getReply();
 
-        _isAllowedToPost = (_replyCode == NNTPReply.SERVER_READY_POSTING_ALLOWED);
+        _isAllowedToPost = _replyCode == NNTPReply.SERVER_READY_POSTING_ALLOWED;
     }
 
     /***

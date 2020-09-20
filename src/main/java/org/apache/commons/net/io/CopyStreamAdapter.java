@@ -64,7 +64,7 @@ public class CopyStreamAdapter implements CopyStreamListener
     {
         for (final EventListener listener : internalListeners)
         {
-            ((CopyStreamListener) (listener)).bytesTransferred(event);
+            ((CopyStreamListener) listener).bytesTransferred(event);
         }
     }
 
@@ -89,7 +89,7 @@ public class CopyStreamAdapter implements CopyStreamListener
     {
         for (final EventListener listener : internalListeners)
         {
-            ((CopyStreamListener) (listener)).bytesTransferred(
+            ((CopyStreamListener) listener).bytesTransferred(
                     totalBytesTransferred, bytesTransferred, streamSize);
         }
     }

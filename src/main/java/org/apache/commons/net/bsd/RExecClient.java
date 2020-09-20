@@ -108,7 +108,7 @@ public class RExecClient extends SocketClient
                 socket.getInetAddress().getHostAddress());
         }
 
-        return (new SocketInputStream(socket, socket.getInputStream()));
+        return new SocketInputStream(socket, socket.getInputStream());
     }
 
 

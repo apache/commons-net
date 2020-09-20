@@ -95,7 +95,7 @@ public abstract class TelnetOptionHandler
      ***/
     public int getOptionCode()
     {
-        return (optionCode);
+        return optionCode;
     }
 
     /***
@@ -106,7 +106,7 @@ public abstract class TelnetOptionHandler
      ***/
     public boolean getAcceptLocal()
     {
-        return (acceptLocal);
+        return acceptLocal;
     }
 
     /***
@@ -117,7 +117,7 @@ public abstract class TelnetOptionHandler
      ***/
     public boolean getAcceptRemote()
     {
-        return (acceptRemote);
+        return acceptRemote;
     }
 
     /***
@@ -150,7 +150,7 @@ public abstract class TelnetOptionHandler
      ***/
     public boolean getInitLocal()
     {
-        return (initialLocal);
+        return initialLocal;
     }
 
     /***
@@ -161,7 +161,7 @@ public abstract class TelnetOptionHandler
      ***/
     public boolean getInitRemote()
     {
-        return (initialRemote);
+        return initialRemote;
     }
 
     /***

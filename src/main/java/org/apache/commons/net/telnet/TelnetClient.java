@@ -199,7 +199,7 @@ public class TelnetClient extends Telnet
     public boolean getLocalOptionState(final int option)
     {
         /* BUG (option active when not already acknowledged) (start)*/
-        return (_stateIsWill(option) && _requestedWill(option));
+        return _stateIsWill(option) && _requestedWill(option);
         /* BUG (option active when not already acknowledged) (end)*/
     }
 
@@ -213,7 +213,7 @@ public class TelnetClient extends Telnet
     public boolean getRemoteOptionState(final int option)
     {
         /* BUG (option active when not already acknowledged) (start)*/
-        return (_stateIsDo(option) && _requestedDo(option));
+        return _stateIsDo(option) && _requestedDo(option);
         /* BUG (option active when not already acknowledged) (end)*/
     }
     /* open TelnetOptionHandler functionality (end)*/
@@ -234,7 +234,7 @@ public class TelnetClient extends Telnet
     public boolean sendAYT(final long timeout)
     throws IOException, IllegalArgumentException, InterruptedException
     {
-        return (_sendAYT(timeout));
+        return _sendAYT(timeout);
     }
     /* Code Section added for supporting AYT (start)*/
 
@@ -400,7 +400,7 @@ public class TelnetClient extends Telnet
      ***/
     public boolean getReaderThread()
     {
-        return (readerThread);
+        return readerThread;
     }
 
     /***

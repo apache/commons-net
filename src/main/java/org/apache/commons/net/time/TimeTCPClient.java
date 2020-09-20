@@ -80,7 +80,7 @@ public final class TimeTCPClient extends SocketClient
     {
         DataInputStream input;
         input = new DataInputStream(_input_);
-        return (input.readInt() & 0xffffffffL);
+        return input.readInt() & 0xffffffffL;
     }
 
     /***

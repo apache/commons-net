@@ -70,7 +70,7 @@ public final class SMTPReply
      ***/
     public static boolean isPositivePreliminary(final int reply)
     {
-        return (reply >= 100 && reply < 200);
+        return reply >= 100 && reply < 200;
     }
 
     /***
@@ -85,7 +85,7 @@ public final class SMTPReply
      ***/
     public static boolean isPositiveCompletion(final int reply)
     {
-        return (reply >= 200 && reply < 300);
+        return reply >= 200 && reply < 300;
     }
 
     /***
@@ -103,7 +103,7 @@ public final class SMTPReply
      ***/
     public static boolean isPositiveIntermediate(final int reply)
     {
-        return (reply >= 300 && reply < 400);
+        return reply >= 300 && reply < 400;
     }
 
     /***
@@ -118,7 +118,7 @@ public final class SMTPReply
      ***/
     public static boolean isNegativeTransient(final int reply)
     {
-        return (reply >= 400 && reply < 500);
+        return reply >= 400 && reply < 500;
     }
 
     /***
@@ -133,7 +133,7 @@ public final class SMTPReply
      ***/
     public static boolean isNegativePermanent(final int reply)
     {
-        return (reply >= 500 && reply < 600);
+        return reply >= 500 && reply < 600;
     }
 
 }

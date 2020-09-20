@@ -59,18 +59,18 @@ public class MLSxEntryParserTest extends FTPParseTestFramework {
 
     @Override
     protected String[] getBadListing() {
-        return (badsamples);
+        return badsamples;
     }
 
     @Override
     protected String[] getGoodListing() {
-        return (goodsamples);
+        return goodsamples;
     }
 
 
     @Override
     protected FTPFileEntryParser getParser() {
-        return (MLSxEntryParser.getInstance());
+        return MLSxEntryParser.getInstance();
     }
 
     /**

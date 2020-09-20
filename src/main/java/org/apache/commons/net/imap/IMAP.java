@@ -163,7 +163,7 @@ public class IMAP extends SocketClient
                         throw new EOFException("Connection closed without indication.");
                     }
                     _replyLines.add(line);
-                    literalCount -= (line.length() + 2); // Allow for CRLF
+                    literalCount -= line.length() + 2; // Allow for CRLF
                 }
                 if (isMultiLine) {
                     final IMAPChunkListener il = __chunkListener;

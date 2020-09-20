@@ -207,7 +207,7 @@ public class POP3SClient extends POP3Client
         initSSLContext();
 
         final SSLSocketFactory ssf = context.getSocketFactory();
-        final String host = (_hostname_ != null) ? _hostname_ : getRemoteAddress().getHostAddress();
+        final String host = _hostname_ != null ? _hostname_ : getRemoteAddress().getHostAddress();
         final int port = getRemotePort();
         final SSLSocket socket =
             (SSLSocket) ssf.createSocket(_socket_, host, port, true);

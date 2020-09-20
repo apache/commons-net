@@ -155,7 +155,7 @@ public class FTPHTTPClient extends FTPClient {
         final InputStream is = socket.getInputStream();
         final OutputStream os = socket.getOutputStream();
         tunnelHandshake(passiveHost, this.getPassivePort(), is, os);
-        if ((getRestartOffset() > 0) && !restart(getRestartOffset())) {
+        if (getRestartOffset() > 0 && !restart(getRestartOffset())) {
             socket.close();
             return null;
         }

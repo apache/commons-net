@@ -226,14 +226,14 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     protected String[] getBadListing()
     {
 
-        return (badsamples);
+        return badsamples;
     }
 
     @Override
     protected String[] getGoodListing()
     {
 
-        return (goodsamples);
+        return goodsamples;
     }
 
     @Override
@@ -260,39 +260,39 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     {
         int permMask = 1<<8;
         assertTrue("Owner should not have read permission.",
-                ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.USER_ACCESS,
+                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.USER_ACCESS,
                                       FTPFile.READ_PERMISSION));
         permMask >>= 1;
         assertTrue("Owner should not have write permission.",
-                ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.USER_ACCESS,
+                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.USER_ACCESS,
                                       FTPFile.WRITE_PERMISSION));
         permMask >>= 1;
         assertTrue("Owner should not have execute permission.",
-                ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.USER_ACCESS,
+                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.USER_ACCESS,
                                       FTPFile.EXECUTE_PERMISSION));
         permMask >>= 1;
         assertTrue("Group should not have read permission.",
-                ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.GROUP_ACCESS,
+                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.GROUP_ACCESS,
                                       FTPFile.READ_PERMISSION));
         permMask >>= 1;
         assertTrue("Group should not have write permission.",
-                ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.GROUP_ACCESS,
+                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.GROUP_ACCESS,
                                       FTPFile.WRITE_PERMISSION));
         permMask >>= 1;
         assertTrue("Group should not have execute permission.",
-                ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.GROUP_ACCESS,
+                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.GROUP_ACCESS,
                                       FTPFile.EXECUTE_PERMISSION));
         permMask >>= 1;
         assertTrue("World should not have read permission.",
-                ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.WORLD_ACCESS,
+                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.WORLD_ACCESS,
                                       FTPFile.READ_PERMISSION));
         permMask >>= 1;
         assertTrue("World should not have write permission.",
-                ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.WORLD_ACCESS,
+                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.WORLD_ACCESS,
                                       FTPFile.WRITE_PERMISSION));
         permMask >>= 1;
         assertTrue("World should not have execute permission.",
-                ((permMask & octalPerm) != 0) == dir.hasPermission(FTPFile.WORLD_ACCESS,
+                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.WORLD_ACCESS,
                                       FTPFile.EXECUTE_PERMISSION));
     }
 }

@@ -159,7 +159,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
         }
         while (--length > 0 && (ch = read()) != -1);
 
-        return (offset - off);
+        return offset - off;
     }
 
     /*** Returns false.  Mark is not supported. ***/
@@ -177,7 +177,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
         result = in.available();
 
         if (__status == __LAST_WAS_NL) {
-            return (result + 1);
+            return result + 1;
         }
 
         return result;

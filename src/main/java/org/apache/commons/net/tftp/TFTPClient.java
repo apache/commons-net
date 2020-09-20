@@ -226,7 +226,7 @@ public class TFTPClient extends TFTP
                                     wantReply = false; // got the next block, drop out to ack it
                                 } else { // unexpected block number
                                     discardPackets();
-                                    if (lastBlock == (block == 0 ? 65535 : (block - 1))) {
+                                    if (lastBlock == (block == 0 ? 65535 : block - 1)) {
                                         wantReply = false; // Resend last acknowledgemen
                                     }
                                 }

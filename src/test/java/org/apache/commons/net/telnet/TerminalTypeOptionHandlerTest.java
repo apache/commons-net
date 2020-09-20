@@ -86,7 +86,7 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
     {
         if(a1.length != a2.length)
         {
-            return(false);
+            return false;
         }
         boolean result = true;
         for(int ii=0; ii<a1.length; ii++)
@@ -95,6 +95,6 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
                 result = false;
             }
         }
-        return(result);
+        return result;
     }
 }

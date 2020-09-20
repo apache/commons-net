@@ -134,7 +134,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                 return EOF;
             }
 
-            ch = (ch & 0xff);
+            ch = ch & 0xff;
 
             /* Code Section added for supporting AYT (start)*/
             synchronized (__client)
@@ -307,7 +307,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         boolean bufferWasEmpty;
         synchronized (__queue)
         {
-            bufferWasEmpty = (__bytesAvailable == 0);
+            bufferWasEmpty = __bytesAvailable == 0;
             while (__bytesAvailable >= __queue.length - 1)
             {
                 // The queue is full. We need to wait before adding any more data to it. Hopefully the stream owner
@@ -402,7 +402,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                             {
                                 if ((ch = __read(mayBlock)) < 0) { // must be EOF
                                     if(ch != WOULD_BLOCK) {
-                                        return (ch);
+                                        return ch;
                                     }
                                 }
                             }
@@ -534,7 +534,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         while (--length > 0 && (ch = read()) != EOF);
 
         //__client._spyRead(buffer, off, offset - off);
-        return (offset - off);
+        return offset - off;
     }
 
 

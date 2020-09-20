@@ -116,7 +116,7 @@ public final class TFTPErrorPacket extends TFTPPacket
             throw new TFTPPacketException("TFTP operator code does not match type.");
         }
 
-        _error = (((data[2] & 0xff) << 8) | (data[3] & 0xff));
+        _error = (data[2] & 0xff) << 8 | data[3] & 0xff;
 
         if (length < 5) {
             throw new TFTPPacketException("Bad error packet. No message.");

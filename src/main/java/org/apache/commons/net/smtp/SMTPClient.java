@@ -552,8 +552,8 @@ public class SMTPClient extends SMTP
 
         result = vrfy(username);
 
-        return (result == SMTPReply.ACTION_OK ||
-                result == SMTPReply.USER_NOT_LOCAL_WILL_FORWARD);
+        return result == SMTPReply.ACTION_OK ||
+                result == SMTPReply.USER_NOT_LOCAL_WILL_FORWARD;
     }
 
 

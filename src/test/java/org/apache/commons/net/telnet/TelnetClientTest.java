@@ -814,7 +814,7 @@ extends TestCase implements TelnetNotificationHandler
         int ret_read = 0;
 
         ret_read = instr.read(buff);
-        if((ret_read == 1) && (buff[0] == 'A'))
+        if(ret_read == 1 && buff[0] == 'A')
         {
             read_ok = true;
         }
@@ -926,7 +926,7 @@ extends TestCase implements TelnetNotificationHandler
     {
         if(a1.length != a2.length)
         {
-            return(false);
+            return false;
         }
         boolean result = true;
         for(int ii=0; ii<a1.length; ii++)
@@ -936,7 +936,7 @@ extends TestCase implements TelnetNotificationHandler
                 result = false;
             }
         }
-        return(result);
+        return result;
     }
 
     /*

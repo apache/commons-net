@@ -48,17 +48,17 @@ public class MacOsPeterFTPEntryParserTest extends FTPParseTestFramework {
 
     @Override
     protected String[] getBadListing() {
-        return (badsamples);
+        return badsamples;
     }
 
     @Override
     protected String[] getGoodListing() {
-        return (goodsamples);
+        return goodsamples;
     }
 
     @Override
     protected FTPFileEntryParser getParser() {
-        return (new MacOsPeterFTPEntryParser());
+        return new MacOsPeterFTPEntryParser();
     }
 
     @Override

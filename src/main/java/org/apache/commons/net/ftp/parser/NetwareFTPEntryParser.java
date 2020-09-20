@@ -155,7 +155,7 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
                         true);
             }
 
-            return (f);
+            return f;
         }
         return null;
 

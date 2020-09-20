@@ -466,7 +466,7 @@ public class SMTP extends SocketClient
         _newReplyString = false;
 
         _replyString = buffer.toString();
-        return (_replyString);
+        return _replyString;
     }
 
 

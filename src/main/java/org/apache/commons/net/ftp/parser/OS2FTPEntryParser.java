@@ -122,7 +122,7 @@ public class OS2FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             //set the size
             f.setSize(Long.parseLong(size.trim()));
 
-            return (f);
+            return f;
         }
         return null;
 

@@ -198,7 +198,7 @@ public class IMAPSClient extends IMAPClient
         initSSLContext();
 
         final SSLSocketFactory ssf = context.getSocketFactory();
-        final String host = (_hostname_ != null) ? _hostname_ : getRemoteAddress().getHostAddress();
+        final String host = _hostname_ != null ? _hostname_ : getRemoteAddress().getHostAddress();
         final int port = getRemotePort();
         final SSLSocket socket =
             (SSLSocket) ssf.createSocket(_socket_, host, port, true);

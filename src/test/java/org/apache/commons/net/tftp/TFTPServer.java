@@ -163,8 +163,8 @@ public class TFTPServer implements Runnable
     {
         port_ = port;
         mode_ = mode;
-        log_ = (log == null ? nullStream: log);
-        logError_ = (errorLog == null ? nullStream : errorLog);
+        log_ = log == null ? nullStream: log;
+        logError_ = errorLog == null ? nullStream : errorLog;
         laddr_ = null;
         launch(serverReadDirectory, serverWriteDirectory);
     }
@@ -196,8 +196,8 @@ public class TFTPServer implements Runnable
         port_ = port;
         mode_ = mode;
         laddr_ = localaddr;
-        log_ = (log == null ? nullStream: log);
-        logError_ = (errorLog == null ? nullStream : errorLog);
+        log_ = log == null ? nullStream: log;
+        logError_ = errorLog == null ? nullStream : errorLog;
         launch(serverReadDirectory, serverWriteDirectory);
     }
 
@@ -239,8 +239,8 @@ public class TFTPServer implements Runnable
                 }
             }
         }
-        log_ = (log == null ? nullStream: log);
-        logError_ = (errorLog == null ? nullStream : errorLog);
+        log_ = log == null ? nullStream: log;
+        logError_ = errorLog == null ? nullStream : errorLog;
         laddr_ = iaddr;
         launch(serverReadDirectory, serverWriteDirectory);
     }
@@ -472,7 +472,7 @@ public class TFTPServer implements Runnable
 
                 if (tftpPacket_ instanceof TFTPReadRequestPacket)
                 {
-                    handleRead(((TFTPReadRequestPacket) tftpPacket_));
+                    handleRead((TFTPReadRequestPacket) tftpPacket_);
                 }
                 else if (tftpPacket_ instanceof TFTPWriteRequestPacket)
                 {
@@ -781,7 +781,7 @@ public class TFTPServer implements Runnable
                         final int dataLength = ((TFTPDataPacket) dataPacket).getDataLength();
                         final int dataOffset = ((TFTPDataPacket) dataPacket).getDataOffset();
 
-                        if (block > lastBlock || (lastBlock == 65535 && block == 0))
+                        if (block > lastBlock || lastBlock == 65535 && block == 0)
                         {
                             // it might resend a data block if it missed our ack
                             // - don't rewrite the block.

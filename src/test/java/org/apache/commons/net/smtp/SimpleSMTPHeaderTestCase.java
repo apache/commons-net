@@ -104,7 +104,7 @@ public class SimpleSMTPHeaderTestCase {
                 if (sentSecs < beforeDateSecs) {
                     fail(sentDate + " should be after "+beforeDate);
                 }
-                if (sentSecs > (afterDateSecs)) {
+                if (sentSecs > afterDateSecs) {
                     fail(sentDate+" should be before "+afterDate);
                 }
             } catch (final ParseException e) {

@@ -69,10 +69,10 @@ public class SubnetUtils {
           this.netmask = (int) (0x0FFFFFFFFL << trailingZeroes );
 
           /* Calculate base network address */
-          this.network = (address & netmask);
+          this.network = address & netmask;
 
           /* Calculate broadcast address */
-          this.broadcast = network | ~(netmask);
+          this.broadcast = network | ~netmask;
       } else {
           throw new IllegalArgumentException(String.format(PARSE_FAIL, cidrNotation));
       }
@@ -94,10 +94,10 @@ public class SubnetUtils {
         }
 
         /* Calculate base network address */
-        this.network = (this.address & this.netmask);
+        this.network = this.address & this.netmask;
 
         /* Calculate broadcast address */
-        this.broadcast = this.network | ~(this.netmask);
+        this.broadcast = this.network | ~this.netmask;
     }
 
 
@@ -139,13 +139,13 @@ public class SubnetUtils {
         private long broadcastLong(){ return broadcast &  UNSIGNED_INT_MASK; }
 
         private int low() {
-            return (isInclusiveHostCount() ? network :
-                broadcastLong() - networkLong() > 1 ? network + 1 : 0);
+            return isInclusiveHostCount() ? network :
+                broadcastLong() - networkLong() > 1 ? network + 1 : 0;
         }
 
         private int high() {
-            return (isInclusiveHostCount() ? broadcast :
-                broadcastLong() - networkLong() > 1 ? broadcast -1  : 0);
+            return isInclusiveHostCount() ? broadcast :
+                broadcastLong() - networkLong() > 1 ? broadcast -1  : 0;
         }
 
         /**
@@ -279,7 +279,7 @@ public class SubnetUtils {
         private int[] toArray(final int val) {
             final int ret[] = new int[4];
             for (int j = 3; j >= 0; --j) {
-                ret[j] |= ((val >>> 8*(3-j)) & (0xff));
+                ret[j] |= val >>> 8*(3-j) & 0xff;
             }
             return ret;
         }
@@ -340,8 +340,8 @@ public class SubnetUtils {
     private static int matchAddress(final Matcher matcher) {
         int addr = 0;
         for (int i = 1; i <= 4; ++i) {
-            final int n = (rangeCheck(Integer.parseInt(matcher.group(i)), 0, 255));
-            addr |= ((n & 0xff) << 8*(4-i));
+            final int n = rangeCheck(Integer.parseInt(matcher.group(i)), 0, 255);
+            addr |= (n & 0xff) << 8*(4-i);
         }
         return addr;
     }
@@ -364,9 +364,9 @@ public class SubnetUtils {
      * see Hacker's Delight section 5.1
      */
     int pop(int x) {
-        x = x - ((x >>> 1) & 0x55555555);
-        x = (x & 0x33333333) + ((x >>> 2) & 0x33333333);
-        x = (x + (x >>> 4)) & 0x0F0F0F0F;
+        x = x - (x >>> 1 & 0x55555555);
+        x = (x & 0x33333333) + (x >>> 2 & 0x33333333);
+        x = x + (x >>> 4) & 0x0F0F0F0F;
         x = x + (x >>> 8);
         x = x + (x >>> 16);
         return x & 0x0000003F;

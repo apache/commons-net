@@ -261,7 +261,7 @@ public class POP3Client extends POP3
             setState(UPDATE_STATE);
         }
         sendCommand(POP3Command.QUIT);
-        return (_replyCode == POP3Reply.OK);
+        return _replyCode == POP3Reply.OK;
     }
 
 
@@ -280,7 +280,7 @@ public class POP3Client extends POP3
     public boolean noop() throws IOException
     {
         if (getState() == TRANSACTION_STATE) {
-            return (sendCommand(POP3Command.NOOP) == POP3Reply.OK);
+            return sendCommand(POP3Command.NOOP) == POP3Reply.OK;
         }
         return false;
     }
@@ -304,8 +304,8 @@ public class POP3Client extends POP3
     public boolean deleteMessage(final int messageId) throws IOException
     {
         if (getState() == TRANSACTION_STATE) {
-            return (sendCommand(POP3Command.DELE, Integer.toString(messageId))
-                    == POP3Reply.OK);
+            return sendCommand(POP3Command.DELE, Integer.toString(messageId))
+                    == POP3Reply.OK;
         }
         return false;
     }
@@ -325,7 +325,7 @@ public class POP3Client extends POP3
     public boolean reset() throws IOException
     {
         if (getState() == TRANSACTION_STATE) {
-            return (sendCommand(POP3Command.RSET) == POP3Reply.OK);
+            return sendCommand(POP3Command.RSET) == POP3Reply.OK;
         }
         return false;
     }

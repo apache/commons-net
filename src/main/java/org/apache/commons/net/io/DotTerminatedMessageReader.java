@@ -185,7 +185,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
             }
             while (--length > 0 && (ch = read()) != -1);
 
-            return (offset - off);
+            return offset - off;
         }
     }
 

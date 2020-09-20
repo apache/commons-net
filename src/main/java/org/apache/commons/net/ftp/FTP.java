@@ -278,7 +278,7 @@ public class FTP extends SocketClient
 
     // The RFC-compliant multiline termination check
     private boolean __strictCheck(final String line, final String code) {
-        return (!(line.startsWith(code) && line.charAt(REPLY_CODE_LEN) == ' '));
+        return !(line.startsWith(code) && line.charAt(REPLY_CODE_LEN) == ' ');
     }
 
     // The strict check is too strong a condition because of non-conforming ftp
@@ -287,8 +287,8 @@ public class FTP extends SocketClient
     // test that the line starts with a digit rather than starting with
     // the code.
     private boolean __lenientCheck(final String line) {
-        return (!(line.length() > REPLY_CODE_LEN&& line.charAt(REPLY_CODE_LEN) != '-' &&
-                Character.isDigit(line.charAt(0))));
+        return !(line.length() > REPLY_CODE_LEN&& line.charAt(REPLY_CODE_LEN) != '-' &&
+                Character.isDigit(line.charAt(0)));
     }
 
     /**
@@ -766,7 +766,7 @@ public class FTP extends SocketClient
 
          _newReplyString = false;
 
-        return (_replyString = buffer.toString());
+        return _replyString = buffer.toString();
     }
 
 

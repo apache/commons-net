@@ -122,7 +122,7 @@ public final class TelnetCommand
      **/
     public static boolean isValidCommand(final int code)
     {
-        return (code <= __FIRST_COMMAND && code >= __LAST_COMMAND);
+        return code <= __FIRST_COMMAND && code >= __LAST_COMMAND;
     }
 
     // Cannot be instantiated

@@ -126,7 +126,7 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 
             if (null == name || name.equals(".") || name.equals(".."))
             {
-                return (null);
+                return null;
             }
             f.setName(name);
 
@@ -144,7 +144,7 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
                   f.setSize(Long.parseLong(size));
                 }
             }
-            return (f);
+            return f;
         }
         return null;
     }

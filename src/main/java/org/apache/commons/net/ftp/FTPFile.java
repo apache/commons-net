@@ -135,7 +135,7 @@ public class FTPFile implements Serializable
      ***/
     public boolean isDirectory()
     {
-        return (_type == DIRECTORY_TYPE);
+        return _type == DIRECTORY_TYPE;
     }
 
     /***
@@ -146,7 +146,7 @@ public class FTPFile implements Serializable
      ***/
     public boolean isFile()
     {
-        return (_type == FILE_TYPE);
+        return _type == FILE_TYPE;
     }
 
     /***
@@ -157,7 +157,7 @@ public class FTPFile implements Serializable
      ***/
     public boolean isSymbolicLink()
     {
-        return (_type == SYMBOLIC_LINK_TYPE);
+        return _type == SYMBOLIC_LINK_TYPE;
     }
 
     /***
@@ -168,7 +168,7 @@ public class FTPFile implements Serializable
      ***/
     public boolean isUnknown()
     {
-        return (_type == UNKNOWN_TYPE);
+        return _type == UNKNOWN_TYPE;
     }
 
     /**
@@ -182,7 +182,7 @@ public class FTPFile implements Serializable
      * @since 3.4
      */
     public boolean isValid() {
-        return (_permissions != null);
+        return _permissions != null;
     }
 
     /***

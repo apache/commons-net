@@ -466,7 +466,7 @@ public class POP3ClientCommandsTest extends TestCase
             numDeleted++;
         }
         //Check to see that they are marked as deleted
-        assertEquals(numMessages, (numDeleted + 1));
+        assertEquals(numMessages, numDeleted + 1);
 
         //Now reset to unmark the messages as deleted
         p.reset();
@@ -500,7 +500,7 @@ public class POP3ClientCommandsTest extends TestCase
             numDeleted++;
         }
         //Check to see that they are marked as deleted
-        assertEquals(numMessages, (numDeleted + 3));
+        assertEquals(numMessages, numDeleted + 3);
 
         //Logout and come back in
         p.logout();

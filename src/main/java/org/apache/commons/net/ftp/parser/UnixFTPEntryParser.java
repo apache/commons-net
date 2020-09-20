@@ -295,9 +295,9 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             {
                 // Use != '-' to avoid having to check for suid and sticky bits
                 file.setPermission(access, FTPFile.READ_PERMISSION,
-                                   (!group(g).equals("-")));
+                                   !group(g).equals("-"));
                 file.setPermission(access, FTPFile.WRITE_PERMISSION,
-                                   (!group(g + 1).equals("-")));
+                                   !group(g + 1).equals("-"));
 
                 final String execPerm = group(g + 2);
                 if (!execPerm.equals("-") && !Character.isUpperCase(execPerm.charAt(0)))

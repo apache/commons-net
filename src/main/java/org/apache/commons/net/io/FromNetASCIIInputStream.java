@@ -175,7 +175,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
 
         ch = available();
 
-        __length = (length > ch ? ch : length);
+        __length = length > ch ? ch : length;
 
         // If nothing is available, block to read only one character
         if (__length < 1) {
@@ -196,7 +196,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
         while (--__length > 0 && (ch = __read()) != -1);
 
 
-        return (offset - off);
+        return offset - off;
     }
 
 
@@ -215,7 +215,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
         if (in == null) {
             throw new IOException("Stream closed");
         }
-        return (buf.length - pos) + in.available();
+        return buf.length - pos + in.available();
     }
 
 }

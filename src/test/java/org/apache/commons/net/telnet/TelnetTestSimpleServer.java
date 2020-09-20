@@ -128,7 +128,7 @@ public class TelnetTestSimpleServer implements Runnable
     {
         if(clientSocket != null)
         {
-            return(clientSocket.getInputStream());
+            return clientSocket.getInputStream();
         }
         return null;
     }
@@ -137,7 +137,7 @@ public class TelnetTestSimpleServer implements Runnable
     {
         if(clientSocket != null)
         {
-            return(clientSocket.getOutputStream());
+            return clientSocket.getOutputStream();
         }
         return null;
     }

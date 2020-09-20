@@ -241,7 +241,7 @@ public class DefaultFTPFileEntryParserFactory
             return new NTFTPEntryParser(config);
         }
         // clone the config as it may be changed by the parsers (NET-602)
-        final FTPClientConfig config2 =  (config != null) ? new FTPClientConfig(config) : null;
+        final FTPClientConfig config2 =  config != null ? new FTPClientConfig(config) : null;
         return new CompositeFileEntryParser(new FTPFileEntryParser[]
                {
                    new NTFTPEntryParser(config),
@@ -275,7 +275,7 @@ public class DefaultFTPFileEntryParserFactory
             return new OS400FTPEntryParser(config);
         }
         // clone the config as it may be changed by the parsers (NET-602)
-        final FTPClientConfig config2 =  (config != null) ? new FTPClientConfig(config) : null;
+        final FTPClientConfig config2 =  config != null ? new FTPClientConfig(config) : null;
         return new CompositeFileEntryParser(new FTPFileEntryParser[]
             {
                 new OS400FTPEntryParser(config),

@@ -129,7 +129,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     @Override
     protected String[] getBadListing()
     {
-        return (BADSAMPLES);
+        return BADSAMPLES;
     }
 
     /**
@@ -138,7 +138,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     @Override
     protected String[] getGoodListing()
     {
-        return (GOODSAMPLES);
+        return GOODSAMPLES;
     }
 
     /**
@@ -147,7 +147,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     @Override
     protected FTPFileEntryParser getParser()
     {
-        return (new EnterpriseUnixFTPEntryParser());
+        return new EnterpriseUnixFTPEntryParser();
     }
 
     /**

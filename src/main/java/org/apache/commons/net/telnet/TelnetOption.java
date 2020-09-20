@@ -181,7 +181,7 @@ public class TelnetOption
      **/
     public static final boolean isValidOption(final int code)
     {
-        return (code <= __LAST_OPTION);
+        return code <= __LAST_OPTION;
     }
 
     // Cannot be instantiated

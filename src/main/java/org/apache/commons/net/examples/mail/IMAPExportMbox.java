@@ -260,7 +260,7 @@ public final class IMAPExportMbox
                     final String replyString = imap.getReplyString(); //includes EOL
                     if (startsWith(replyString, PATTEMPFAIL)) {
                         System.err.println("Temporary error detected, will retry in " + retryWaitSecs + "seconds");
-                        sequenceSet = (chunkListener.lastSeq+1)+":*";
+                        sequenceSet = chunkListener.lastSeq+1+":*";
                         try {
                             Thread.sleep(retryWaitSecs * 1000);
                         } catch (final InterruptedException e) {

@@ -109,19 +109,19 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
         int nShift;
         int nTurnedOnBits;
 
-        if ((m_nWidth % 0x100) == 0xFF) {
+        if (m_nWidth % 0x100 == 0xFF) {
             nResponseSize += 1;
         }
 
-        if ((m_nWidth / 0x100) == 0xFF) {
+        if (m_nWidth / 0x100 == 0xFF) {
             nResponseSize += 1;
         }
 
-        if ((m_nHeight % 0x100) == 0xFF) {
+        if (m_nHeight % 0x100 == 0xFF) {
             nResponseSize += 1;
         }
 
-        if ((m_nHeight / 0x100) == 0xFF) {
+        if (m_nHeight / 0x100 == 0xFF) {
             nResponseSize += 1;
         }
 

@@ -27,7 +27,7 @@ import org.junit.Test;
 
 public class ToNetASCIIInputStreamTest {
 
-    private static final String ASCII = /*Charset.forName*/("ASCII");
+    private static final String ASCII = /*Charset.forName*/"ASCII";
 
     @Test
     public void testToNetASCIIInputStream1() throws Exception

@@ -84,14 +84,14 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
     protected String[] getBadListing()
     {
 
-        return (badsamples);
+        return badsamples;
     }
 
     @Override
     protected String[] getGoodListing()
     {
 
-        return (goodsamples);
+        return goodsamples;
     }
 
     @Override

@@ -139,8 +139,8 @@ public final class NTPClient
         info.computeDetails(); // compute offset/delay if not already done
         final Long offsetValue = info.getOffset();
         final Long delayValue = info.getDelay();
-        final String delay = (delayValue == null) ? "N/A" : delayValue.toString();
-        final String offset = (offsetValue == null) ? "N/A" : offsetValue.toString();
+        final String delay = delayValue == null ? "N/A" : delayValue.toString();
+        final String offset = offsetValue == null ? "N/A" : offsetValue.toString();
 
         System.out.println(" Roundtrip delay(ms)=" + delay
                 + ", clock offset(ms)=" + offset); // offset in ms

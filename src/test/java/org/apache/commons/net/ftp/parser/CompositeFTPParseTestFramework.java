@@ -31,7 +31,7 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
     @Override
     protected String[] getGoodListing()
     {
-        return (getGoodListings()[0]);
+        return getGoodListings()[0];
     }
 
     /**
@@ -55,7 +55,7 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
     @Override
     protected String[] getBadListing()
     {
-        return (getBadListings()[0]);
+        return getBadListings()[0];
     }
 
     /* (non-Javadoc)

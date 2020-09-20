@@ -168,7 +168,7 @@ class Telnet extends SocketClient
      ***/
     boolean _stateIsWill(final int option)
     {
-        return ((_options[option] & _WILL_MASK) != 0);
+        return (_options[option] & _WILL_MASK) != 0;
     }
 
     /***
@@ -192,7 +192,7 @@ class Telnet extends SocketClient
      ***/
     boolean _stateIsDo(final int option)
     {
-        return ((_options[option] & _DO_MASK) != 0);
+        return (_options[option] & _DO_MASK) != 0;
     }
 
     /***
@@ -216,7 +216,7 @@ class Telnet extends SocketClient
      ***/
     boolean _requestedWill(final int option)
     {
-        return ((_options[option] & _REQUESTED_WILL_MASK) != 0);
+        return (_options[option] & _REQUESTED_WILL_MASK) != 0;
     }
 
     /***
@@ -240,7 +240,7 @@ class Telnet extends SocketClient
      ***/
     boolean _requestedDo(final int option)
     {
-        return ((_options[option] & _REQUESTED_DO_MASK) != 0);
+        return (_options[option] & _REQUESTED_DO_MASK) != 0;
     }
 
     /***
@@ -441,7 +441,7 @@ class Telnet extends SocketClient
             /* TERMINAL-TYPE option (start)*/
             if (option == TERMINAL_TYPE)
             {
-                if ((terminalType != null) && (terminalType.length() > 0))
+                if (terminalType != null && terminalType.length() > 0)
                 {
                     acceptNewState = true;
                 }
@@ -543,7 +543,7 @@ class Telnet extends SocketClient
             }
 
             /* FIX for a BUG in the negotiation (start)*/
-            if ((_stateIsWill(option)) || (_requestedWill(option)))
+            if (_stateIsWill(option) || _requestedWill(option))
             {
                 _sendWont(option);
             }
@@ -664,7 +664,7 @@ class Telnet extends SocketClient
             }
 
             /* FIX for a BUG in the negotiation (start)*/
-            if ((_stateIsDo(option)) || (_requestedDo(option)))
+            if (_stateIsDo(option) || _requestedDo(option))
             {
                 _sendDont(option);
             }
@@ -714,8 +714,8 @@ class Telnet extends SocketClient
                                 + suboption[ii]);
                         }
                     }
-                    if ((suboption[0] == TERMINAL_TYPE)
-                        && (suboption[1] == TERMINAL_TYPE_SEND))
+                    if (suboption[0] == TERMINAL_TYPE
+                        && suboption[1] == TERMINAL_TYPE_SEND)
                     {
                         _sendTerminalType();
                     }
@@ -894,7 +894,7 @@ class Telnet extends SocketClient
     final synchronized void _requestDo(final int option)
     throws IOException
     {
-        if ((_doResponse[option] == 0 && _stateIsDo(option))
+        if (_doResponse[option] == 0 && _stateIsDo(option)
             || _requestedDo(option))
         {
             return ;
@@ -934,7 +934,7 @@ class Telnet extends SocketClient
     final synchronized void _requestDont(final int option)
     throws IOException
     {
-        if ((_doResponse[option] == 0 && _stateIsDont(option))
+        if (_doResponse[option] == 0 && _stateIsDont(option)
             || _requestedDont(option))
         {
             return ;
@@ -975,7 +975,7 @@ class Telnet extends SocketClient
     final synchronized void _requestWill(final int option)
     throws IOException
     {
-        if ((_willResponse[option] == 0 && _stateIsWill(option))
+        if (_willResponse[option] == 0 && _stateIsWill(option)
             || _requestedWill(option))
         {
             return ;
@@ -1015,7 +1015,7 @@ class Telnet extends SocketClient
     final synchronized void _requestWont(final int option)
     throws IOException
     {
-        if ((_willResponse[option] == 0 && _stateIsWont(option))
+        if (_willResponse[option] == 0 && _stateIsWont(option)
             || _requestedWont(option))
         {
             return ;
@@ -1076,7 +1076,7 @@ class Telnet extends SocketClient
             }
         }
 
-        return (retValue);
+        return retValue;
     }
     /* Code Section added for supporting AYT (end)*/
 
@@ -1113,14 +1113,14 @@ class Telnet extends SocketClient
             }
             else
             {
-                throw (new InvalidTelnetOptionException(
-                    "Already registered option", optcode));
+                throw new InvalidTelnetOptionException(
+                    "Already registered option", optcode);
             }
         }
         else
         {
-            throw (new InvalidTelnetOptionException(
-                "Invalid Option Code", optcode));
+            throw new InvalidTelnetOptionException(
+                "Invalid Option Code", optcode);
         }
     }
 
@@ -1138,8 +1138,8 @@ class Telnet extends SocketClient
         {
             if (optionHandlers[optcode] == null)
             {
-                throw (new InvalidTelnetOptionException(
-                    "Unregistered option", optcode));
+                throw new InvalidTelnetOptionException(
+                    "Unregistered option", optcode);
             }
             final TelnetOptionHandler opthand = optionHandlers[optcode];
             optionHandlers[optcode] = null;
@@ -1156,8 +1156,8 @@ class Telnet extends SocketClient
         }
         else
         {
-            throw (new InvalidTelnetOptionException(
-                "Invalid Option Code", optcode));
+            throw new InvalidTelnetOptionException(
+                "Invalid Option Code", optcode);
         }
     }
     /* open TelnetOptionHandler functionality (end)*/

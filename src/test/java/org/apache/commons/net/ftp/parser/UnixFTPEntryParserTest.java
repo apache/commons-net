@@ -88,12 +88,12 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 
     @Override
     protected String[] getBadListing() {
-        return (badsamples);
+        return badsamples;
     }
 
     @Override
     protected String[] getGoodListing() {
-        return (goodsamples);
+        return goodsamples;
     }
 
     public void testNumericDateFormat()
@@ -128,7 +128,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 
     @Override
     protected FTPFileEntryParser getParser() {
-        return (new UnixFTPEntryParser());
+        return new UnixFTPEntryParser();
     }
 
     public void testOwnerNameWithSpaces() {

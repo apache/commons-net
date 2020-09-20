@@ -226,7 +226,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             }
             line = reader.readLine();
         }
-        return (entry.length() == 0 ? null : entry.toString());
+        return entry.length() == 0 ? null : entry.toString();
     }
 
     protected boolean isVersioning() {
