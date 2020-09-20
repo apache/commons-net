@@ -345,8 +345,7 @@ public final class IMAPExportMbox
         private final boolean printMarker;
         private final boolean checkSequence;
 
-        MboxListener(final BufferedWriter bw, final String eol, final boolean printHash, final boolean printMarker, final boolean checkSequence)
-                throws IOException {
+        MboxListener(final BufferedWriter bw, final String eol, final boolean printHash, final boolean printMarker, final boolean checkSequence) {
           this.eol = eol;
           this.printHash = printHash;
           this.printMarker = printMarker;
