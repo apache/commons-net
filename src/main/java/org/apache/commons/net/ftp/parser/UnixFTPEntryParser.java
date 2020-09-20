@@ -174,7 +174,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * <code>REGEX</code> is  not a valid regular expression.
      * @since 1.4
      */
-    public UnixFTPEntryParser(FTPClientConfig config)
+    public UnixFTPEntryParser(final FTPClientConfig config)
     {
         this(config, false);
     }
@@ -192,7 +192,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * <code>REGEX</code> is  not a valid regular expression.
      * @since 3.4
      */
-    public UnixFTPEntryParser(FTPClientConfig config, boolean trimLeadingSpaces)
+    public UnixFTPEntryParser(final FTPClientConfig config, final boolean trimLeadingSpaces)
     {
         super(REGEX);
         configure(config);
@@ -203,10 +203,10 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * Preparse the list to discard "total nnn" lines
      */
     @Override
-    public List<String> preParse(List<String> original) {
-        ListIterator<String> iter = original.listIterator();
+    public List<String> preParse(final List<String> original) {
+        final ListIterator<String> iter = original.listIterator();
         while (iter.hasNext()) {
-            String entry = iter.next();
+            final String entry = iter.next();
             if (entry.matches("^total \\d+$")) { // NET-389
                 iter.remove();
             }
@@ -225,20 +225,20 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * @return An FTPFile instance corresponding to the supplied entry
      */
     @Override
-    public FTPFile parseFTPEntry(String entry) {
-        FTPFile file = new FTPFile();
+    public FTPFile parseFTPEntry(final String entry) {
+        final FTPFile file = new FTPFile();
         file.setRawListing(entry);
         int type;
         boolean isDevice = false;
 
         if (matches(entry))
         {
-            String typeStr = group(1);
-            String hardLinkCount = group(15);
-            String usr = group(16);
-            String grp = group(17);
-            String filesize = group(18);
-            String datestr = group(19) + " " + group(20);
+            final String typeStr = group(1);
+            final String hardLinkCount = group(15);
+            final String usr = group(16);
+            final String grp = group(17);
+            final String filesize = group(18);
+            final String datestr = group(19) + " " + group(20);
             String name = group(21);
             if (trimLeadingSpaces) {
                 name = name.replaceFirst("^\\s+", "");
@@ -247,7 +247,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             try
             {
                 if (group(19).contains(JA_MONTH)) { // special processing for Japanese format
-                    FTPTimestampParserImpl jaParser = new FTPTimestampParserImpl();
+                    final FTPTimestampParserImpl jaParser = new FTPTimestampParserImpl();
                     jaParser.configure(new FTPClientConfig(
                             FTPClientConfig.SYST_UNIX, DEFAULT_DATE_FORMAT_JA, DEFAULT_RECENT_DATE_FORMAT_JA));
                     file.setTimestamp(jaParser.parseTimestamp(datestr));
@@ -255,7 +255,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
                     file.setTimestamp(super.parseTimestamp(datestr));
                 }
             }
-            catch (ParseException e)
+            catch (final ParseException e)
             {
                  // intentionally do nothing
             }
@@ -299,7 +299,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
                 file.setPermission(access, FTPFile.WRITE_PERMISSION,
                                    (!group(g + 1).equals("-")));
 
-                String execPerm = group(g + 2);
+                final String execPerm = group(g + 2);
                 if (!execPerm.equals("-") && !Character.isUpperCase(execPerm.charAt(0)))
                 {
                     file.setPermission(access, FTPFile.EXECUTE_PERMISSION, true);
@@ -316,7 +316,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
                 {
                     file.setHardLinkCount(Integer.parseInt(hardLinkCount));
                 }
-                catch (NumberFormatException e)
+                catch (final NumberFormatException e)
                 {
                     // intentionally do nothing
                 }
@@ -329,7 +329,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             {
                 file.setSize(Long.parseLong(filesize));
             }
-            catch (NumberFormatException e)
+            catch (final NumberFormatException e)
             {
                 // intentionally do nothing
             }
@@ -339,7 +339,7 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             if (type == FTPFile.SYMBOLIC_LINK_TYPE)
             {
 
-                int end = name.indexOf(" -> ");
+                final int end = name.indexOf(" -> ");
                 // Give up if no link indicator is present
                 if (end == -1)
                 {

@@ -94,10 +94,10 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
     }
 
     @Override
-    public FTPFile parseFTPEntry(String entry) {
+    public FTPFile parseFTPEntry(final String entry) {
         if (entry.startsWith(" ")) {// leading space means no facts are present
             if (entry.length() > 1) { // is there a path name?
-                FTPFile file = new FTPFile();
+                final FTPFile file = new FTPFile();
                 file.setRawListing(entry);
                 file.setName(entry.substring(1));
                 return file;
@@ -106,7 +106,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
             }
 
         }
-        String parts[] = entry.split(" ",2); // Path may contain space
+        final String parts[] = entry.split(" ",2); // Path may contain space
         if (parts.length != 2 || parts[1].length() == 0) {
             return null; // no space found or no file name
         }
@@ -114,25 +114,25 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
         if (!factList.endsWith(";")) {
             return null;
         }
-        FTPFile file = new FTPFile();
+        final FTPFile file = new FTPFile();
         file.setRawListing(entry);
         file.setName(parts[1]);
-        String[] facts = factList.split(";");
-        boolean hasUnixMode = parts[0].toLowerCase(Locale.ENGLISH).contains("unix.mode=");
-        for(String fact : facts) {
-            String []factparts = fact.split("=", -1); // Don't drop empty values
+        final String[] facts = factList.split(";");
+        final boolean hasUnixMode = parts[0].toLowerCase(Locale.ENGLISH).contains("unix.mode=");
+        for(final String fact : facts) {
+            final String []factparts = fact.split("=", -1); // Don't drop empty values
 // Sample missing permission
 // drwx------   2 mirror   mirror       4096 Mar 13  2010 subversion
 // modify=20100313224553;perm=;type=dir;unique=811U282598;UNIX.group=500;UNIX.mode=0700;UNIX.owner=500; subversion
             if (factparts.length != 2) {
                 return null; // invalid - there was no "=" sign
             }
-            String factname = factparts[0].toLowerCase(Locale.ENGLISH);
-            String factvalue = factparts[1];
+            final String factname = factparts[0].toLowerCase(Locale.ENGLISH);
+            final String factvalue = factparts[1];
             if (factvalue.length() == 0) {
                 continue; // nothing to see here
             }
-            String valueLowerCase = factvalue.toLowerCase(Locale.ENGLISH);
+            final String valueLowerCase = factvalue.toLowerCase(Locale.ENGLISH);
             if ("size".equals(factname) || "sizd".equals(factname)) {
                 file.setSize(Long.parseLong(factvalue));
             }
@@ -144,7 +144,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                 file.setTimestamp(parsed);
             }
             else if ("type".equals(factname)) {
-                    Integer intType = TYPE_TO_INT.get(valueLowerCase);
+                    final Integer intType = TYPE_TO_INT.get(valueLowerCase);
                     if (intType == null) {
                         file.setType(FTPFile.UNKNOWN_TYPE);
                     } else {
@@ -152,17 +152,17 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                     }
             }
             else if (factname.startsWith("unix.")) {
-                String unixfact = factname.substring("unix.".length()).toLowerCase(Locale.ENGLISH);
+                final String unixfact = factname.substring("unix.".length()).toLowerCase(Locale.ENGLISH);
                 if ("group".equals(unixfact)){
                     file.setGroup(factvalue);
                 } else if ("owner".equals(unixfact)){
                     file.setUser(factvalue);
                 } else if ("mode".equals(unixfact)){ // e.g. 0[1]755
-                    int off = factvalue.length()-3; // only parse last 3 digits
+                    final int off = factvalue.length()-3; // only parse last 3 digits
                     for(int i=0; i < 3; i++){
-                        int ch = factvalue.charAt(off+i)-'0';
+                        final int ch = factvalue.charAt(off+i)-'0';
                         if (ch >= 0 && ch <= 7) { // Check it's valid octal
-                            for(int p : UNIX_PERMS[ch]) {
+                            for(final int p : UNIX_PERMS[ch]) {
                                 file.setPermission(UNIX_GROUPS[i], p, true);
                             }
                         } else {
@@ -185,7 +185,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
      * @return a Calendar entry, may be {@code null}
      * @since 3.4
      */
-    public static Calendar parseGMTdateTime(String timestamp) {
+    public static Calendar parseGMTdateTime(final String timestamp) {
         final SimpleDateFormat sdf;
         final boolean hasMillis;
         if (timestamp.contains(".")){
@@ -195,11 +195,11 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
             sdf = new SimpleDateFormat("yyyyMMddHHmmss");
             hasMillis = false;
         }
-        TimeZone GMT = TimeZone.getTimeZone("GMT");
+        final TimeZone GMT = TimeZone.getTimeZone("GMT");
         // both timezones need to be set for the parse to work OK
         sdf.setTimeZone(GMT);
-        GregorianCalendar gc = new GregorianCalendar(GMT);
-        ParsePosition pos = new ParsePosition(0);
+        final GregorianCalendar gc = new GregorianCalendar(GMT);
+        final ParsePosition pos = new ParsePosition(0);
         sdf.setLenient(false); // We want to parse the whole string
         final Date parsed = sdf.parse(timestamp, pos);
         if (pos.getIndex()  != timestamp.length()) {
@@ -215,8 +215,8 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
     //              perm-fact    = "Perm" "=" *pvals
     //              pvals        = "a" / "c" / "d" / "e" / "f" /
     //                             "l" / "m" / "p" / "r" / "w"
-    private void doUnixPerms(FTPFile file, String valueLowerCase) {
-        for(char c : valueLowerCase.toCharArray()) {
+    private void doUnixPerms(final FTPFile file, final String valueLowerCase) {
+        for(final char c : valueLowerCase.toCharArray()) {
             // TODO these are mostly just guesses at present
             switch (c) {
                 case 'a':     // (file) may APPEnd
@@ -256,7 +256,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
         } // each char
     }
 
-    public static FTPFile parseEntry(String entry) {
+    public static FTPFile parseEntry(final String entry) {
         return PARSER.parseFTPEntry(entry);
     }
 

@@ -149,7 +149,7 @@ public final class FTPCommand
 
     // default access needed for Unit test
     static void checkArray(){
-        int expectedLength = LAST+1;
+        final int expectedLength = LAST+1;
         if (_commands.length != expectedLength) {
             throw new RuntimeException("Incorrect _commands array. Should have length "
                     +expectedLength+" found "+_commands.length);
@@ -164,7 +164,7 @@ public final class FTPCommand
      * @return The FTP protcol command string corresponding to a specified
      *         command code.
      */
-    public static final String getCommand(int command)
+    public static final String getCommand(final int command)
     {
         return _commands[command];
     }

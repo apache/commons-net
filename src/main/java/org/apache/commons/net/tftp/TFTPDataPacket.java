@@ -76,8 +76,8 @@ public final class TFTPDataPacket extends TFTPPacket
      * @param offset The offset into the array where the data starts.
      * @param length The length of the data.
      ***/
-    public TFTPDataPacket(InetAddress destination, int port, int blockNumber,
-                          byte[] data, int offset, int length)
+    public TFTPDataPacket(final InetAddress destination, final int port, final int blockNumber,
+                          final byte[] data, final int offset, final int length)
     {
         super(TFTPPacket.DATA, destination, port);
 
@@ -92,8 +92,8 @@ public final class TFTPDataPacket extends TFTPPacket
         }
     }
 
-    public TFTPDataPacket(InetAddress destination, int port, int blockNumber,
-                          byte[] data)
+    public TFTPDataPacket(final InetAddress destination, final int port, final int blockNumber,
+                          final byte[] data)
     {
         this(destination, port, blockNumber, data, 0, data.length);
     }
@@ -108,7 +108,7 @@ public final class TFTPDataPacket extends TFTPPacket
      * @throws TFTPPacketException  If the datagram isn't a valid TFTP
      *         data packet.
      ***/
-    TFTPDataPacket(DatagramPacket datagram) throws TFTPPacketException
+    TFTPDataPacket(final DatagramPacket datagram) throws TFTPPacketException
     {
         super(TFTPPacket.DATA, datagram.getAddress(), datagram.getPort());
 
@@ -140,7 +140,7 @@ public final class TFTPDataPacket extends TFTPPacket
      * @return The datagram argument.
      ***/
     @Override
-    DatagramPacket _newDatagram(DatagramPacket datagram, byte[] data)
+    DatagramPacket _newDatagram(final DatagramPacket datagram, final byte[] data)
     {
         data[0] = 0;
         data[1] = (byte)_type;
@@ -201,7 +201,7 @@ public final class TFTPDataPacket extends TFTPPacket
     /*** Sets the block number of the data packet.
      * @param blockNumber the number to set
      ***/
-    public void setBlockNumber(int blockNumber)
+    public void setBlockNumber(final int blockNumber)
     {
         _blockNumber = blockNumber;
     }
@@ -213,7 +213,7 @@ public final class TFTPDataPacket extends TFTPPacket
      * @param offset The offset into the array where the data starts.
      * @param length The length of the data.
      ***/
-    public void setData(byte[] data, int offset, int length)
+    public void setData(final byte[] data, final int offset, final int length)
     {
         _data = data;
         _offset = offset;

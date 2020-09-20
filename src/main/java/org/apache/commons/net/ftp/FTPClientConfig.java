@@ -237,7 +237,7 @@ public class FTPClientConfig
      * However this is not recommended for general use;
      * the correct system type should be set if it is known.
      */
-    public FTPClientConfig(String systemKey) {
+    public FTPClientConfig(final String systemKey) {
         this.serverSystemKey = systemKey;
     }
 
@@ -260,9 +260,9 @@ public class FTPClientConfig
      *  {@link  #setRecentDateFormatStr(String)  recentDateFormatStr}
      *  @since 3.6
      */
-    public FTPClientConfig(String systemKey,
-                           String defaultDateFormatStr,
-                           String recentDateFormatStr)
+    public FTPClientConfig(final String systemKey,
+                           final String defaultDateFormatStr,
+                           final String recentDateFormatStr)
     {
         this(systemKey);
         this.defaultDateFormatStr = defaultDateFormatStr;
@@ -285,12 +285,12 @@ public class FTPClientConfig
      * @param serverTimeZoneId See
      *  {@link  #setServerTimeZoneId(String)  serverTimeZoneId}
      */
-    public FTPClientConfig(String systemKey,
-                           String defaultDateFormatStr,
-                           String recentDateFormatStr,
-                           String serverLanguageCode,
-                           String shortMonthNames,
-                           String serverTimeZoneId)
+    public FTPClientConfig(final String systemKey,
+                           final String defaultDateFormatStr,
+                           final String recentDateFormatStr,
+                           final String serverLanguageCode,
+                           final String shortMonthNames,
+                           final String serverTimeZoneId)
     {
         this(systemKey);
         this.defaultDateFormatStr = defaultDateFormatStr;
@@ -320,14 +320,14 @@ public class FTPClientConfig
      * @param saveUnparseableEntries See
      * {@link  #setUnparseableEntries(boolean)  saveUnparseableEntries}
      */
-    public FTPClientConfig(String systemKey,
-                           String defaultDateFormatStr,
-                           String recentDateFormatStr,
-                           String serverLanguageCode,
-                           String shortMonthNames,
-                           String serverTimeZoneId,
-                           boolean lenientFutureDates,
-                           boolean saveUnparseableEntries)
+    public FTPClientConfig(final String systemKey,
+                           final String defaultDateFormatStr,
+                           final String recentDateFormatStr,
+                           final String serverLanguageCode,
+                           final String shortMonthNames,
+                           final String serverTimeZoneId,
+                           final boolean lenientFutureDates,
+                           final boolean saveUnparseableEntries)
     {
         this(systemKey);
         this.defaultDateFormatStr = defaultDateFormatStr;
@@ -340,7 +340,7 @@ public class FTPClientConfig
     }
 
     // Copy constructor, intended for use by FTPClient only
-    FTPClientConfig(String systemKey, FTPClientConfig config) {
+    FTPClientConfig(final String systemKey, final FTPClientConfig config) {
         this.serverSystemKey = systemKey;
         this.defaultDateFormatStr = config.defaultDateFormatStr;
         this.lenientFutureDates = config.lenientFutureDates;
@@ -356,7 +356,7 @@ public class FTPClientConfig
      * @param config source
      * @since 3.6
      */
-    public FTPClientConfig(FTPClientConfig config) {
+    public FTPClientConfig(final FTPClientConfig config) {
         this.serverSystemKey = config.serverSystemKey;
         this.defaultDateFormatStr = config.defaultDateFormatStr;
         this.lenientFutureDates = config.lenientFutureDates;
@@ -483,7 +483,7 @@ public class FTPClientConfig
      * </p>
      * @param defaultDateFormatStr The defaultDateFormatStr to set.
      */
-    public void setDefaultDateFormatStr(String defaultDateFormatStr) {
+    public void setDefaultDateFormatStr(final String defaultDateFormatStr) {
         this.defaultDateFormatStr = defaultDateFormatStr;
     }
 
@@ -504,7 +504,7 @@ public class FTPClientConfig
      * </p>
      * @param recentDateFormatStr The recentDateFormatStr to set.
      */
-    public void setRecentDateFormatStr(String recentDateFormatStr) {
+    public void setRecentDateFormatStr(final String recentDateFormatStr) {
         this.recentDateFormatStr = recentDateFormatStr;
     }
 
@@ -528,7 +528,7 @@ public class FTPClientConfig
      * @param lenientFutureDates set true to compensate for out-of-synch
      * conditions.
      */
-    public void setLenientFutureDates(boolean lenientFutureDates) {
+    public void setLenientFutureDates(final boolean lenientFutureDates) {
         this.lenientFutureDates = lenientFutureDates;
     }
     /**
@@ -545,7 +545,7 @@ public class FTPClientConfig
      * </p>
      * @param serverTimeZoneId The serverTimeZoneId to set.
      */
-    public void setServerTimeZoneId(String serverTimeZoneId) {
+    public void setServerTimeZoneId(final String serverTimeZoneId) {
         this.serverTimeZoneId = serverTimeZoneId;
     }
 
@@ -566,7 +566,7 @@ public class FTPClientConfig
      * </p>
      * @param shortMonthNames The value to set to the shortMonthNames property.
      */
-    public void setShortMonthNames(String shortMonthNames) {
+    public void setShortMonthNames(final String shortMonthNames) {
         this.shortMonthNames = shortMonthNames;
     }
 
@@ -610,7 +610,7 @@ public class FTPClientConfig
      * </p>
      * @param serverLanguageCode The value to set to the serverLanguageCode property.
      */
-    public void setServerLanguageCode(String serverLanguageCode) {
+    public void setServerLanguageCode(final String serverLanguageCode) {
         this.serverLanguageCode = serverLanguageCode;
     }
 
@@ -626,9 +626,9 @@ public class FTPClientConfig
      * <code>Locale.US</code> if there is no corresponding entry in the internal
      * table.
      */
-    public static DateFormatSymbols lookupDateFormatSymbols(String languageCode)
+    public static DateFormatSymbols lookupDateFormatSymbols(final String languageCode)
     {
-        Object lang = LANGUAGE_CODE_MAP.get(languageCode);
+        final Object lang = LANGUAGE_CODE_MAP.get(languageCode);
         if (lang != null) {
             if (lang instanceof Locale) {
                 return new DateFormatSymbols((Locale) lang);
@@ -647,22 +647,22 @@ public class FTPClientConfig
      * @return a DateFormatSymbols object configured with short month names
      * as in the supplied string
      */
-    public static DateFormatSymbols getDateFormatSymbols(String shortmonths)
+    public static DateFormatSymbols getDateFormatSymbols(final String shortmonths)
     {
-        String[] months = splitShortMonthString(shortmonths);
-        DateFormatSymbols dfs = new DateFormatSymbols(Locale.US);
+        final String[] months = splitShortMonthString(shortmonths);
+        final DateFormatSymbols dfs = new DateFormatSymbols(Locale.US);
         dfs.setShortMonths(months);
         return dfs;
     }
 
-    private static String[] splitShortMonthString(String shortmonths) {
-        StringTokenizer st = new StringTokenizer(shortmonths, "|");
-        int monthcnt = st.countTokens();
+    private static String[] splitShortMonthString(final String shortmonths) {
+        final StringTokenizer st = new StringTokenizer(shortmonths, "|");
+        final int monthcnt = st.countTokens();
         if (12 != monthcnt) {
             throw new IllegalArgumentException(
                     "expecting a pipe-delimited string containing 12 tokens");
         }
-        String[] months = new String[13];
+        final String[] months = new String[13];
         int pos = 0;
         while(st.hasMoreTokens()) {
             months[pos++] = st.nextToken();
@@ -691,7 +691,7 @@ public class FTPClientConfig
      * @param saveUnparseable if true, then create FTPFile entries if parsing fails
      * @since 3.4
      */
-    public void setUnparseableEntries(boolean saveUnparseable) {
+    public void setUnparseableEntries(final boolean saveUnparseable) {
         this.saveUnparseableEntries = saveUnparseable;
     }
 

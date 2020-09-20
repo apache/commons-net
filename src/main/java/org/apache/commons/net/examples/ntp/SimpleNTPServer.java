@@ -60,7 +60,7 @@ public class SimpleNTPServer implements Runnable {
      *             <code>zero</code> for a system selected free port.
      * @throws IllegalArgumentException if port number less than 0
      */
-    public SimpleNTPServer(int port)
+    public SimpleNTPServer(final int port)
     {
         if (port < 0) {
             throw new IllegalArgumentException();
@@ -136,14 +136,14 @@ public class SimpleNTPServer implements Runnable {
     public void run()
     {
         running = true;
-        byte buffer[] = new byte[48];
+        final byte buffer[] = new byte[48];
         final DatagramPacket request = new DatagramPacket(buffer, buffer.length);
         do {
             try {
                 socket.receive(request);
                 final long rcvTime = System.currentTimeMillis();
                 handlePacket(request, rcvTime);
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 if (running)
                 {
                     e.printStackTrace();
@@ -162,14 +162,14 @@ public class SimpleNTPServer implements Runnable {
      *
      * @throws IOException  if an I/O error occurs.
      */
-    protected void handlePacket(DatagramPacket request, long rcvTime) throws IOException
+    protected void handlePacket(final DatagramPacket request, final long rcvTime) throws IOException
     {
-        NtpV3Packet message = new NtpV3Impl();
+        final NtpV3Packet message = new NtpV3Impl();
         message.setDatagramPacket(request);
         System.out.printf("NTP packet from %s mode=%s%n", request.getAddress().getHostAddress(),
                 NtpUtils.getModeName(message.getMode()));
         if (message.getMode() == NtpV3Packet.MODE_CLIENT) {
-            NtpV3Packet response = new NtpV3Impl();
+            final NtpV3Packet response = new NtpV3Impl();
 
             response.setStratum(1);
             response.setMode(NtpV3Packet.MODE_SERVER);
@@ -189,7 +189,7 @@ public class SimpleNTPServer implements Runnable {
             // Transmit time is time reply sent by server (t3)
             response.setTransmitTime(TimeStamp.getNtpTime(System.currentTimeMillis()));
 
-            DatagramPacket dp = response.getDatagramPacket();
+            final DatagramPacket dp = response.getDatagramPacket();
             dp.setPort(request.getPort());
             dp.setAddress(request.getAddress());
             socket.send(dp);
@@ -211,21 +211,21 @@ public class SimpleNTPServer implements Runnable {
         started = false;
     }
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         int port = NtpV3Packet.NTP_PORT;
         if (args.length != 0)
         {
             try {
                 port = Integer.parseInt(args[0]);
-            } catch (NumberFormatException nfe) {
+            } catch (final NumberFormatException nfe) {
                 nfe.printStackTrace();
             }
         }
-        SimpleNTPServer timeServer = new SimpleNTPServer(port);
+        final SimpleNTPServer timeServer = new SimpleNTPServer(port);
         try {
             timeServer.start();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }

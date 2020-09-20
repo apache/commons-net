@@ -50,7 +50,7 @@ implements Configurable
      * @param regex  Regular expression used main parsing of the
      * file listing.
      */
-    public ConfigurableFTPFileEntryParserImpl(String regex)
+    public ConfigurableFTPFileEntryParserImpl(final String regex)
     {
         super(regex);
         this.timestampParser = new FTPTimestampParserImpl();
@@ -64,7 +64,7 @@ implements Configurable
      * {@link java.util.regex.Pattern#compile(String, int) Pattern#compile(String, int)}. Use 0 for none.
      * @since 3.4
      */
-    public ConfigurableFTPFileEntryParserImpl(String regex, int flags)
+    public ConfigurableFTPFileEntryParserImpl(final String regex, final int flags)
     {
         super(regex, flags);
         this.timestampParser = new FTPTimestampParserImpl();
@@ -81,7 +81,7 @@ implements Configurable
      * timestamp parse.
      * @throws ParseException on parse error
      */
-    public Calendar parseTimestamp(String timestampStr) throws ParseException {
+    public Calendar parseTimestamp(final String timestampStr) throws ParseException {
         return this.timestampParser.parseTimestamp(timestampStr);
     }
 
@@ -99,10 +99,10 @@ implements Configurable
      * each concrete subclass is used instead.
      */
     @Override
-    public void configure(FTPClientConfig config)
+    public void configure(final FTPClientConfig config)
     {
         if (this.timestampParser instanceof Configurable) {
-            FTPClientConfig defaultCfg = getDefaultConfiguration();
+            final FTPClientConfig defaultCfg = getDefaultConfiguration();
             if (config != null) {
                 if (null == config.getDefaultDateFormatStr()) {
                     config.setDefaultDateFormatStr(defaultCfg.getDefaultDateFormatStr());

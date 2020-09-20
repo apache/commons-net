@@ -119,7 +119,7 @@ public abstract class DatagramSocketClient
      * @throws SocketException If the socket could not be opened or the
      *   timeout could not be set.
      ***/
-    public void open(int port) throws SocketException
+    public void open(final int port) throws SocketException
     {
         _socket_ = _socketFactory_.createDatagramSocket(port);
         _socket_.setSoTimeout(_timeout_);
@@ -141,7 +141,7 @@ public abstract class DatagramSocketClient
      * @throws SocketException If the socket could not be opened or the
      *   timeout could not be set.
      ***/
-    public void open(int port, InetAddress laddr) throws SocketException
+    public void open(final int port, final InetAddress laddr) throws SocketException
     {
         _socket_ = _socketFactory_.createDatagramSocket(port, laddr);
         _socket_.setSoTimeout(_timeout_);
@@ -188,7 +188,7 @@ public abstract class DatagramSocketClient
      * @param timeout  The timeout in milliseconds to use for the datagram socket
      *                 connection.
      ***/
-    public void setDefaultTimeout(int timeout)
+    public void setDefaultTimeout(final int timeout)
     {
         _timeout_ = timeout;
     }
@@ -216,7 +216,7 @@ public abstract class DatagramSocketClient
      *                 open datagram socket connection.
      * @throws SocketException if an error setting the timeout
      ***/
-    public void setSoTimeout(int timeout) throws SocketException
+    public void setSoTimeout(final int timeout) throws SocketException
     {
         _socket_.setSoTimeout(timeout);
     }
@@ -272,7 +272,7 @@ public abstract class DatagramSocketClient
      * @param factory  The new DatagramSocketFactory the DatagramSocketClient
      * should use.
      ***/
-    public void setDatagramSocketFactory(DatagramSocketFactory factory)
+    public void setDatagramSocketFactory(final DatagramSocketFactory factory)
     {
         if (factory == null) {
             _socketFactory_ = __DEFAULT_SOCKET_FACTORY;
@@ -309,7 +309,7 @@ public abstract class DatagramSocketClient
      * @param charset the charset.
      * @since 3.3
      */
-    public void setCharset(Charset charset) {
+    public void setCharset(final Charset charset) {
         this.charset = charset;
     }
 }

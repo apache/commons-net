@@ -67,7 +67,7 @@ public class OS2FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * <code>REGEX</code> is  not a valid regular expression.
      * @since 1.4
      */
-     public OS2FTPEntryParser(FTPClientConfig config)
+     public OS2FTPEntryParser(final FTPClientConfig config)
     {
         super(REGEX);
         configure(config);
@@ -84,22 +84,22 @@ public class OS2FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * @return An FTPFile instance corresponding to the supplied entry
      */
     @Override
-    public FTPFile parseFTPEntry(String entry)
+    public FTPFile parseFTPEntry(final String entry)
     {
 
-        FTPFile f = new FTPFile();
+        final FTPFile f = new FTPFile();
         if (matches(entry))
         {
-            String size = group(1);
-            String attrib = group(2);
-            String dirString = group(3);
-            String datestr = group(4)+" "+group(5);
-            String name = group(6);
+            final String size = group(1);
+            final String attrib = group(2);
+            final String dirString = group(3);
+            final String datestr = group(4)+" "+group(5);
+            final String name = group(6);
             try
             {
                 f.setTimestamp(super.parseTimestamp(datestr));
             }
-            catch (ParseException e)
+            catch (final ParseException e)
             {
                 // intentionally do nothing
             }

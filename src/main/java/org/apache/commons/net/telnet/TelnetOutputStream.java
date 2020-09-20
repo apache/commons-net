@@ -39,7 +39,7 @@ final class TelnetOutputStream extends OutputStream
     private final boolean __convertCRtoCRLF = true;
     private boolean __lastWasCR = false;
 
-    TelnetOutputStream(TelnetClient client)
+    TelnetOutputStream(final TelnetClient client)
     {
         __client = client;
     }
@@ -122,7 +122,7 @@ final class TelnetOutputStream extends OutputStream
      *            stream.
      ***/
     @Override
-    public void write(byte buffer[]) throws IOException
+    public void write(final byte buffer[]) throws IOException
     {
         write(buffer, 0, buffer.length);
     }
@@ -139,7 +139,7 @@ final class TelnetOutputStream extends OutputStream
      *            stream.
      ***/
     @Override
-    public void write(byte buffer[], int offset, int length) throws IOException
+    public void write(final byte buffer[], int offset, int length) throws IOException
     {
         synchronized (__client)
         {

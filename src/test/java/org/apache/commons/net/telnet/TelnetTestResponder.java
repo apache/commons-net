@@ -43,14 +43,14 @@ public class TelnetTestResponder implements Runnable
      * @param outputs - Array of answers.
      * @param timeout - milliseconds
      ***/
-    public TelnetTestResponder(InputStream is, OutputStream os, String inputs[], String outputs[], long timeout)
+    public TelnetTestResponder(final InputStream is, final OutputStream os, final String inputs[], final String outputs[], final long timeout)
     {
         _is = is;
         _os = os;
         _timeout = timeout;
         _inputs = inputs;
         _outputs = outputs;
-        Thread reader = new Thread (this);
+        final Thread reader = new Thread (this);
 
         reader.start();
     }
@@ -62,8 +62,8 @@ public class TelnetTestResponder implements Runnable
     public void run()
     {
         boolean result = false;
-        byte buffer[] = new byte[32];
-        long starttime = System.currentTimeMillis();
+        final byte buffer[] = new byte[32];
+        final long starttime = System.currentTimeMillis();
 
         try
         {
@@ -73,7 +73,7 @@ public class TelnetTestResponder implements Runnable
             {
                 if(_is.available() > 0)
                 {
-                    int ret_read = _is.read(buffer);
+                    final int ret_read = _is.read(buffer);
                     readbytes = readbytes + new String(buffer, 0, ret_read);
 
                     for(int ii=0; ii<_inputs.length; ii++)
@@ -93,7 +93,7 @@ public class TelnetTestResponder implements Runnable
             }
 
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             System.err.println("Error while waiting endstring. " + e.getMessage());
         }

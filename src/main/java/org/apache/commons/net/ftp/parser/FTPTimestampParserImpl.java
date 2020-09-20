@@ -79,13 +79,13 @@ public class FTPTimestampParserImpl implements
      * unit found in the date format.
      * Default is 0 (to avoid dropping precision)
      */
-    private static int getEntry(SimpleDateFormat dateFormat) {
+    private static int getEntry(final SimpleDateFormat dateFormat) {
         if (dateFormat == null) {
             return 0;
         }
         final String FORMAT_CHARS="SsmHdM";
         final String pattern = dateFormat.toPattern();
-        for(char ch : FORMAT_CHARS.toCharArray()) {
+        for(final char ch : FORMAT_CHARS.toCharArray()) {
             if (pattern.indexOf(ch) != -1){ // found the character
                 switch(ch) {
                 case 'S':
@@ -109,7 +109,7 @@ public class FTPTimestampParserImpl implements
     /*
      * Find the entry in the CALENDAR_UNITS array.
      */
-    private static int indexOf(int calendarUnit) {
+    private static int indexOf(final int calendarUnit) {
         int i;
         for(i = 0; i <CALENDAR_UNITS.length; i++) {
             if (calendarUnit == CALENDAR_UNITS[i]) {
@@ -124,7 +124,7 @@ public class FTPTimestampParserImpl implements
      * the immediately preceeding unit (if any).
      * Unfortunately the clear(int) method results in setting all other units.
      */
-    private static void setPrecision(int index, Calendar working) {
+    private static void setPrecision(final int index, final Calendar working) {
         if (index <= 0) { // e.g. MILLISECONDS
             return;
         }
@@ -165,8 +165,8 @@ public class FTPTimestampParserImpl implements
      * @return a Calendar with the parsed timestamp
      */
     @Override
-    public Calendar parseTimestamp(String timestampStr) throws ParseException {
-        Calendar now = Calendar.getInstance();
+    public Calendar parseTimestamp(final String timestampStr) throws ParseException {
+        final Calendar now = Calendar.getInstance();
         return parseTimestamp(timestampStr, now);
     }
 
@@ -186,14 +186,14 @@ public class FTPTimestampParserImpl implements
      * @throws ParseException if timestamp cannot be parsed
      * @since 1.5
      */
-    public Calendar parseTimestamp(String timestampStr, Calendar serverTime) throws ParseException {
-        Calendar working = (Calendar) serverTime.clone();
+    public Calendar parseTimestamp(final String timestampStr, final Calendar serverTime) throws ParseException {
+        final Calendar working = (Calendar) serverTime.clone();
         working.setTimeZone(getServerTimeZone()); // is this needed?
 
         Date parsed = null;
 
         if (recentDateFormat != null) {
-            Calendar now = (Calendar) serverTime.clone();// Copy this, because we may change it
+            final Calendar now = (Calendar) serverTime.clone();// Copy this, because we may change it
             now.setTimeZone(this.getServerTimeZone());
             if (lenientFutureDates) {
                 // add a day to "now" so that "slop" doesn't cause a date
@@ -209,13 +209,13 @@ public class FTPTimestampParserImpl implements
             // all instances of short dates which are +- 6 months from current date.
             // TODO this won't always work for systems that use short dates +0/-12months
             // e.g. if today is Jan 1 2001 and the short date is Feb 29
-            String year = Integer.toString(now.get(Calendar.YEAR));
-            String timeStampStrPlusYear = timestampStr + " " + year;
-            SimpleDateFormat hackFormatter = new SimpleDateFormat(recentDateFormat.toPattern() + " yyyy",
+            final String year = Integer.toString(now.get(Calendar.YEAR));
+            final String timeStampStrPlusYear = timestampStr + " " + year;
+            final SimpleDateFormat hackFormatter = new SimpleDateFormat(recentDateFormat.toPattern() + " yyyy",
                     recentDateFormat.getDateFormatSymbols());
             hackFormatter.setLenient(false);
             hackFormatter.setTimeZone(recentDateFormat.getTimeZone());
-            ParsePosition pp = new ParsePosition(0);
+            final ParsePosition pp = new ParsePosition(0);
             parsed = hackFormatter.parse(timeStampStrPlusYear, pp);
             // Check if we parsed the full string, if so it must have been a short date originally
             if (parsed != null && pp.getIndex() == timeStampStrPlusYear.length()) {
@@ -228,7 +228,7 @@ public class FTPTimestampParserImpl implements
             }
         }
 
-        ParsePosition pp = new ParsePosition(0);
+        final ParsePosition pp = new ParsePosition(0);
         parsed = defaultDateFormat.parse(timestampStr, pp);
         // note, length checks are mandatory for us since
         // SimpleDateFormat methods will succeed if less than
@@ -265,7 +265,7 @@ public class FTPTimestampParserImpl implements
      * @param format The defaultDateFormat to be set.
      * @param dfs the symbols to use (may be null)
      */
-    private void setDefaultDateFormat(String format, DateFormatSymbols dfs) {
+    private void setDefaultDateFormat(final String format, final DateFormatSymbols dfs) {
         if (format != null) {
             if (dfs != null) {
                 this.defaultDateFormat = new SimpleDateFormat(format, dfs);
@@ -294,7 +294,7 @@ public class FTPTimestampParserImpl implements
      * @param format The recentDateFormat to set.
      * @param dfs the symbols to use (may be null)
      */
-    private void setRecentDateFormat(String format, DateFormatSymbols dfs) {
+    private void setRecentDateFormat(final String format, final DateFormatSymbols dfs) {
         if (format != null) {
             if (dfs != null) {
                 this.recentDateFormat = new SimpleDateFormat(format, dfs);
@@ -329,7 +329,7 @@ public class FTPTimestampParserImpl implements
      * @param serverTimeZone Time Id java.util.TimeZone id used by
      * the ftp server.  If null the client's local time zone is assumed.
      */
-    private void setServerTimeZone(String serverTimeZoneId) {
+    private void setServerTimeZone(final String serverTimeZoneId) {
         TimeZone serverTimeZone = TimeZone.getDefault();
         if (serverTimeZoneId != null) {
             serverTimeZone = TimeZone.getTimeZone(serverTimeZoneId);
@@ -364,11 +364,11 @@ public class FTPTimestampParserImpl implements
      * </p>
      */
     @Override
-    public void configure(FTPClientConfig config) {
+    public void configure(final FTPClientConfig config) {
         DateFormatSymbols dfs = null;
 
-        String languageCode = config.getServerLanguageCode();
-        String shortmonths = config.getShortMonthNames();
+        final String languageCode = config.getServerLanguageCode();
+        final String shortmonths = config.getShortMonthNames();
         if (shortmonths != null) {
             dfs = FTPClientConfig.getDateFormatSymbols(shortmonths);
         } else if (languageCode != null) {
@@ -378,10 +378,10 @@ public class FTPTimestampParserImpl implements
         }
 
 
-        String recentFormatString = config.getRecentDateFormatStr();
+        final String recentFormatString = config.getRecentDateFormatStr();
         setRecentDateFormat(recentFormatString, dfs);
 
-        String defaultFormatString = config.getDefaultDateFormatStr();
+        final String defaultFormatString = config.getDefaultDateFormatStr();
         if (defaultFormatString == null) {
             throw new IllegalArgumentException("defaultFormatString cannot be null");
         }
@@ -400,7 +400,7 @@ public class FTPTimestampParserImpl implements
     /**
      * @param lenientFutureDates The lenientFutureDates to set.
      */
-    void setLenientFutureDates(boolean lenientFutureDates) {
+    void setLenientFutureDates(final boolean lenientFutureDates) {
         this.lenientFutureDates = lenientFutureDates;
     }
 }

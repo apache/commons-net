@@ -46,7 +46,7 @@ public class SocketInputStream extends FilterInputStream
      * @param socket  The socket to close on closing the stream.
      * @param stream  The input stream to wrap.
      ***/
-    public SocketInputStream(Socket socket, InputStream stream)
+    public SocketInputStream(final Socket socket, final InputStream stream)
     {
         super(stream);
         __socket = socket;

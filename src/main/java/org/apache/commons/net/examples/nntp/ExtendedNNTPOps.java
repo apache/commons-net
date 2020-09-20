@@ -40,13 +40,13 @@ public class ExtendedNNTPOps {
     }
 
 
-    private void demo(String host, String user, String password) {
+    private void demo(final String host, final String user, final String password) {
         try {
             client.connect(host);
 
             // AUTHINFO USER/AUTHINFO PASS
             if (user != null && password != null) {
-                boolean success = client.authenticate(user, password);
+                final boolean success = client.authenticate(user, password);
                 if (success) {
                     System.out.println("Authentication succeeded");
                 } else {
@@ -55,13 +55,13 @@ public class ExtendedNNTPOps {
             }
 
             // XOVER
-            NewsgroupInfo testGroup = new NewsgroupInfo();
+            final NewsgroupInfo testGroup = new NewsgroupInfo();
             client.selectNewsgroup("alt.test", testGroup);
-            long lowArticleNumber = testGroup.getFirstArticleLong();
-            long  highArticleNumber = lowArticleNumber + 100;
-            Iterable<Article> articles = client.iterateArticleInfo(lowArticleNumber, highArticleNumber);
+            final long lowArticleNumber = testGroup.getFirstArticleLong();
+            final long  highArticleNumber = lowArticleNumber + 100;
+            final Iterable<Article> articles = client.iterateArticleInfo(lowArticleNumber, highArticleNumber);
 
-            for (Article article : articles) {
+            for (final Article article : articles) {
                 if (article.isDummy()) { // Subject will contain raw response
                     System.out.println("Could not parse: "+article.getSubject());
                 } else {
@@ -70,21 +70,21 @@ public class ExtendedNNTPOps {
             }
 
             // LIST ACTIVE
-            NewsgroupInfo[] fanGroups = client.listNewsgroups("alt.fan.*");
-            for (NewsgroupInfo fanGroup : fanGroups)
+            final NewsgroupInfo[] fanGroups = client.listNewsgroups("alt.fan.*");
+            for (final NewsgroupInfo fanGroup : fanGroups)
             {
                 System.out.println(fanGroup.getNewsgroup());
             }
 
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         ExtendedNNTPOps ops;
 
-        int argc = args.length;
+        final int argc = args.length;
         if (argc < 1) {
             System.err.println("usage: ExtendedNNTPOps nntpserver [username password]");
             System.exit(1);

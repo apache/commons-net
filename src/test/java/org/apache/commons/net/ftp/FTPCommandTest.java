@@ -22,7 +22,7 @@ import junit.framework.TestCase;
 
 public class FTPCommandTest extends TestCase {
 
-    public FTPCommandTest(String name) {
+    public FTPCommandTest(final String name) {
         super(name);
     }
 

@@ -82,7 +82,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
     /**
      * @see junit.framework.TestCase#TestCase(String)
      */
-    public NTFTPEntryParserTest (String name)
+    public NTFTPEntryParserTest (final String name)
     {
         super(name);
     }
@@ -144,7 +144,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
     }
 
     public void testParseLeadingDigits() {
-            FTPFile file = getParser().parseFTPEntry("05-22-97  12:08AM                  5000000000 10 years and under");
+            final FTPFile file = getParser().parseFTPEntry("05-22-97  12:08AM                  5000000000 10 years and under");
             assertNotNull("Could not parse entry", file);
             assertEquals("10 years and under", file.getName());
             assertEquals(5000000000L, file.getSize());
@@ -152,7 +152,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
             assertNotNull("Could not parse time",timestamp);
             assertEquals("Thu May 22 00:08:00 1997",df.format(timestamp.getTime()));
 
-            FTPFile dir = getParser().parseFTPEntry("12-03-96  06:38PM       <DIR>           10 years and under");
+            final FTPFile dir = getParser().parseFTPEntry("12-03-96  06:38PM       <DIR>           10 years and under");
             assertNotNull("Could not parse entry", dir);
             assertEquals("10 years and under", dir.getName());
             timestamp = dir.getTimestamp();
@@ -161,7 +161,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
     }
 
     public void testNET339() {
-        FTPFile file = getParser().parseFTPEntry("05-22-97  12:08                  5000000000 10 years and under");
+        final FTPFile file = getParser().parseFTPEntry("05-22-97  12:08                  5000000000 10 years and under");
         assertNotNull("Could not parse entry", file);
         assertEquals("10 years and under", file.getName());
         assertEquals(5000000000L, file.getSize());
@@ -169,7 +169,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         assertNotNull("Could not parse time",timestamp);
         assertEquals("Thu May 22 12:08:00 1997",df.format(timestamp.getTime()));
 
-        FTPFile dir = getParser().parseFTPEntry("12-03-96  06:38       <DIR>           10 years and under");
+        final FTPFile dir = getParser().parseFTPEntry("12-03-96  06:38       <DIR>           10 years and under");
         assertNotNull("Could not parse entry", dir);
         assertEquals("10 years and under", dir.getName());
         timestamp = dir.getTimestamp();
@@ -198,7 +198,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         f = getParser().parseFTPEntry(
                 "-rw-rw-r--   1 mqm        mqm          17707 Mar 12  3:33 killmq.sh.log");
         assertNotNull("Could not parse entry.", f);
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         cal.setTime(f.getTimestamp().getTime());
         assertEquals("hour", 3, cal.get(Calendar.HOUR));
         assertTrue("Should have been a file.",
@@ -208,7 +208,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
 
 
     @Override
-    protected void doAdditionalGoodTests(String test, FTPFile f)
+    protected void doAdditionalGoodTests(final String test, final FTPFile f)
     {
         if (test.indexOf("<DIR>") >= 0)
         {
@@ -224,7 +224,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
      */
     public void testDirectoryBeginningWithNumber() throws Exception
     {
-        FTPFile f = getParser().parseFTPEntry(directoryBeginningWithNumber);
+        final FTPFile f = getParser().parseFTPEntry(directoryBeginningWithNumber);
         assertEquals("name", "123xyz", f.getName());
     }
 
@@ -242,7 +242,7 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
      *
      */
     public void testGroupNameWithSpaces() {
-        FTPFile f = getParser().parseFTPEntry("drwx------ 4 maxm Domain Users 512 Oct 2 10:59 .metadata");
+        final FTPFile f = getParser().parseFTPEntry("drwx------ 4 maxm Domain Users 512 Oct 2 10:59 .metadata");
         assertNotNull(f);
         assertEquals("maxm", f.getUser());
         assertEquals("Domain Users", f.getGroup());
@@ -321,20 +321,20 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
 
     private static final int LISTFILE_COUNT = 16;
 
-    private int testNET516(String charset) throws Exception {
-        FTPFileEntryParser parser = new NTFTPEntryParser();
-        FTPListParseEngine engine = new FTPListParseEngine(parser );
+    private int testNET516(final String charset) throws Exception {
+        final FTPFileEntryParser parser = new NTFTPEntryParser();
+        final FTPListParseEngine engine = new FTPListParseEngine(parser );
         engine.readServerList(new ByteArrayInputStream(listFilesByteTrace),charset);
-        FTPFile[] ftpfiles = engine.getFiles();
+        final FTPFile[] ftpfiles = engine.getFiles();
         return ftpfiles.length;
     }
 
     public void testNET516() throws Exception { // problem where part of a multi-byte char gets converted to 0x85 = line term
-        int utf = testNET516("UTF-8");
+        final int utf = testNET516("UTF-8");
         assertEquals(LISTFILE_COUNT, utf);
-        int ascii = testNET516("ASCII");
+        final int ascii = testNET516("ASCII");
         assertEquals(LISTFILE_COUNT, ascii);
-        int iso8859_1 = testNET516("ISO-8859-1");
+        final int iso8859_1 = testNET516("ISO-8859-1");
         assertEquals(LISTFILE_COUNT, iso8859_1);
     }
 

@@ -49,7 +49,7 @@ public final class POP3ExportMbox
 
     private static final Pattern PATFROM = Pattern.compile(">*From "); // unescaped From_
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         int argIdx;
         String file = null;
@@ -69,20 +69,20 @@ public final class POP3ExportMbox
             System.exit(1);
         }
 
-        String arg0[] = args[argIdx++].split(":");
-        String server=arg0[0];
-        String username = args[argIdx++];
+        final String arg0[] = args[argIdx++].split(":");
+        final String server=arg0[0];
+        final String username = args[argIdx++];
         String password = args[argIdx++];
         // prompt for the password if necessary
         try {
             password = Utils.getPassword(username, password);
-        } catch (IOException e1) {
+        } catch (final IOException e1) {
             System.err.println("Could not retrieve password: " + e1.getMessage());
             return;
         }
 
-        String proto = argCount > 3 ? args[argIdx++] : null;
-        boolean implicit = argCount > 4 ? Boolean.parseBoolean(args[argIdx++]) : false;
+        final String proto = argCount > 3 ? args[argIdx++] : null;
+        final boolean implicit = argCount > 4 ? Boolean.parseBoolean(args[argIdx++]) : false;
 
         POP3Client pop3;
 
@@ -108,7 +108,7 @@ public final class POP3ExportMbox
         {
             pop3.connect(server);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             System.err.println("Could not connect to server.");
             e.printStackTrace();
@@ -124,7 +124,7 @@ public final class POP3ExportMbox
                 return;
             }
 
-            POP3MessageInfo status = pop3.status();
+            final POP3MessageInfo status = pop3.status();
             if (status == null) {
                 System.err.println("Could not retrieve status.");
                 pop3.logout();
@@ -133,15 +133,15 @@ public final class POP3ExportMbox
             }
 
             System.out.println("Status: " + status);
-            int count = status.number;
+            final int count = status.number;
             if (file != null) {
                 System.out.println("Getting messages: " + count);
-                File mbox = new File(file);
+                final File mbox = new File(file);
                 if (mbox.isDirectory()) {
                     System.out.println("Writing dir: " + mbox);
                     // Currently POP3Client uses iso-8859-1
                     for (int i = 1; i <= count; i++) {
-                        OutputStreamWriter fw = new OutputStreamWriter(
+                        final OutputStreamWriter fw = new OutputStreamWriter(
                             new FileOutputStream(new File(mbox,i+".eml")),StandardCharsets.ISO_8859_1);
                         writeFile(pop3, fw, i);
                         fw.close();
@@ -149,7 +149,7 @@ public final class POP3ExportMbox
                 } else {
                     System.out.println("Writing file: " + mbox);
                     // Currently POP3Client uses iso-8859-1
-                    OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(mbox),StandardCharsets.ISO_8859_1);
+                    final OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(mbox),StandardCharsets.ISO_8859_1);
                     for (int i = 1; i <= count; i++) {
                         writeMbox(pop3, fw, i);
                     }
@@ -160,15 +160,15 @@ public final class POP3ExportMbox
             pop3.logout();
             pop3.disconnect();
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             e.printStackTrace();
             return;
         }
     }
 
-    private static void writeFile(POP3Client pop3, OutputStreamWriter fw, int i) throws IOException {
-        BufferedReader r = (BufferedReader) pop3.retrieveMessage(i);
+    private static void writeFile(final POP3Client pop3, final OutputStreamWriter fw, final int i) throws IOException {
+        final BufferedReader r = (BufferedReader) pop3.retrieveMessage(i);
         String line;
         while ((line = r.readLine()) != null)
         {
@@ -178,12 +178,12 @@ public final class POP3ExportMbox
         r.close();
     }
 
-    private static void writeMbox(POP3Client pop3, OutputStreamWriter fw, int i) throws IOException {
+    private static void writeMbox(final POP3Client pop3, final OutputStreamWriter fw, final int i) throws IOException {
         final SimpleDateFormat DATE_FORMAT // for mbox From_ lines
         = new SimpleDateFormat("EEE MMM dd HH:mm:ss YYYY");
-        String replyTo = "MAILER-DAEMON"; // default
-        Date received = new Date();
-        BufferedReader r = (BufferedReader) pop3.retrieveMessage(i);
+        final String replyTo = "MAILER-DAEMON"; // default
+        final Date received = new Date();
+        final BufferedReader r = (BufferedReader) pop3.retrieveMessage(i);
         fw.append("From ");
         fw.append(replyTo);
         fw.append(' ');
@@ -202,8 +202,8 @@ public final class POP3ExportMbox
         r.close();
     }
 
-    private static boolean startsWith(String input, Pattern pat) {
-        Matcher m = pat.matcher(input);
+    private static boolean startsWith(final String input, final Pattern pat) {
+        final Matcher m = pat.matcher(input);
         return m.lookingAt();
     }
 }

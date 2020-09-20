@@ -54,7 +54,7 @@ public final class TFTPAckPacket extends TFTPPacket
      * @param port  The port to which the packet is going to be sent.
      * @param blockNumber  The block number being acknowledged.
      ***/
-    public TFTPAckPacket(InetAddress destination, int port, int blockNumber)
+    public TFTPAckPacket(final InetAddress destination, final int port, final int blockNumber)
     {
         super(TFTPPacket.ACKNOWLEDGEMENT, destination, port);
         _blockNumber = blockNumber;
@@ -69,7 +69,7 @@ public final class TFTPAckPacket extends TFTPPacket
      * @throws TFTPPacketException  If the datagram isn't a valid TFTP
      *         acknowledgement packet.
      ***/
-    TFTPAckPacket(DatagramPacket datagram) throws TFTPPacketException
+    TFTPAckPacket(final DatagramPacket datagram) throws TFTPPacketException
     {
         super(TFTPPacket.ACKNOWLEDGEMENT, datagram.getAddress(),
               datagram.getPort());
@@ -96,7 +96,7 @@ public final class TFTPAckPacket extends TFTPPacket
      * @return The datagram argument.
      ***/
     @Override
-    DatagramPacket _newDatagram(DatagramPacket datagram, byte[] data)
+    DatagramPacket _newDatagram(final DatagramPacket datagram, final byte[] data)
     {
         data[0] = 0;
         data[1] = (byte)_type;
@@ -154,7 +154,7 @@ public final class TFTPAckPacket extends TFTPPacket
      *
      * @param blockNumber the number to set
      ***/
-    public void setBlockNumber(int blockNumber)
+    public void setBlockNumber(final int blockNumber)
     {
         _blockNumber = blockNumber;
     }

@@ -60,9 +60,9 @@ public class CopyStreamAdapter implements CopyStreamListener
      *              bytes.
      */
     @Override
-    public void bytesTransferred(CopyStreamEvent event)
+    public void bytesTransferred(final CopyStreamEvent event)
     {
-        for (EventListener listener : internalListeners)
+        for (final EventListener listener : internalListeners)
         {
             ((CopyStreamListener) (listener)).bytesTransferred(event);
         }
@@ -84,10 +84,10 @@ public class CopyStreamAdapter implements CopyStreamListener
      *        the size is unknown.
      */
     @Override
-    public void bytesTransferred(long totalBytesTransferred,
-                                 int bytesTransferred, long streamSize)
+    public void bytesTransferred(final long totalBytesTransferred,
+                                 final int bytesTransferred, final long streamSize)
     {
-        for (EventListener listener : internalListeners)
+        for (final EventListener listener : internalListeners)
         {
             ((CopyStreamListener) (listener)).bytesTransferred(
                     totalBytesTransferred, bytesTransferred, streamSize);
@@ -100,7 +100,7 @@ public class CopyStreamAdapter implements CopyStreamListener
      * implemented in a thread safe manner.
      * @param listener  The CopyStreamlistener to register.
      */
-    public void addCopyStreamListener(CopyStreamListener listener)
+    public void addCopyStreamListener(final CopyStreamListener listener)
     {
         internalListeners.addListener(listener);
     }
@@ -110,7 +110,7 @@ public class CopyStreamAdapter implements CopyStreamListener
      * synchronized, it is implemented in a thread safe manner.
      * @param listener  The CopyStreamlistener to unregister.
      */
-    public void removeCopyStreamListener(CopyStreamListener listener)
+    public void removeCopyStreamListener(final CopyStreamListener listener)
     {
         internalListeners.removeListener(listener);
     }

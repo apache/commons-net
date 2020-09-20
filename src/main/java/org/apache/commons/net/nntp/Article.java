@@ -44,7 +44,7 @@ public class Article implements Threadable {
      * Adds a message-id to the list of messages that this message references (i.e. replies to)
      * @param msgId the message id to add
      */
-    public void addReference(String msgId) {
+    public void addReference(final String msgId) {
         if (msgId == null || msgId.length() == 0) {
             return;
         }
@@ -52,7 +52,7 @@ public class Article implements Threadable {
             references = new ArrayList<>();
         }
         isReply = true;
-        for(String s : msgId.split(" ")) {
+        for(final String s : msgId.split(" ")) {
             references.add(s);
         }
     }
@@ -74,8 +74,8 @@ public class Article implements Threadable {
      */
     private void simplifySubject() {
             int start = 0;
-            String subject = getSubject();
-            int len = subject.length();
+            final String subject = getSubject();
+            final int len = subject.length();
 
             boolean done = false;
 
@@ -140,7 +140,7 @@ public class Article implements Threadable {
      * @param article the root of the article 'tree'
      * @since 3.4
      */
-    public static void printThread(Article article) {
+    public static void printThread(final Article article) {
         printThread(article, 0, System.out);
     }
 
@@ -151,7 +151,7 @@ public class Article implements Threadable {
      * @param ps the PrintStream to use
      * @since 3.4
      */
-    public static void printThread(Article article, PrintStream ps) {
+    public static void printThread(final Article article, final PrintStream ps) {
         printThread(article, 0, ps);
     }
 
@@ -161,7 +161,7 @@ public class Article implements Threadable {
      * @param article the root of the article 'tree'
      * @param depth the current tree depth
      */
-    public static void printThread(Article article, int depth) {
+    public static void printThread(final Article article, final int depth) {
         printThread(article, depth, System.out);
     }
 
@@ -173,7 +173,7 @@ public class Article implements Threadable {
      * @param ps the PrintStream to use
      * @since 3.4
      */
-    public static void printThread(Article article, int depth, PrintStream ps) {
+    public static void printThread(final Article article, final int depth, final PrintStream ps) {
             for (int i = 0; i < depth; ++i) {
                 ps.print("==>");
             }
@@ -206,23 +206,23 @@ public class Article implements Threadable {
         return subject;
     }
 
-    public void setArticleId(String string) {
+    public void setArticleId(final String string) {
         articleId = string;
     }
 
-    public void setArticleNumber(long l) {
+    public void setArticleNumber(final long l) {
         articleNumber = l;
     }
 
-    public void setDate(String string) {
+    public void setDate(final String string) {
         date = string;
     }
 
-    public void setFrom(String string) {
+    public void setFrom(final String string) {
         from = string;
     }
 
-    public void setSubject(String string) {
+    public void setSubject(final String string) {
         subject = string;
     }
 
@@ -258,7 +258,7 @@ public class Article implements Threadable {
 
 
     @Override
-    public void setChild(Threadable child) {
+    public void setChild(final Threadable child) {
         this.kid = (Article) child;
         flushSubjectCache();
     }
@@ -269,7 +269,7 @@ public class Article implements Threadable {
 
 
     @Override
-    public void setNext(Threadable next) {
+    public void setNext(final Threadable next) {
         this.next = (Article)next;
         flushSubjectCache();
     }
@@ -293,12 +293,12 @@ public class Article implements Threadable {
     }
 
     @Deprecated
-    public void setArticleNumber(int a) {
+    public void setArticleNumber(final int a) {
         articleNumber = a;
     }
     @Deprecated
 
-    public void addHeaderField(String name, String val) {
+    public void addHeaderField(final String name, final String val) {
     }
 
 }

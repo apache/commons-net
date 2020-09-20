@@ -199,8 +199,8 @@ public class RExecClient extends SocketClient
      * @throws IOException If the rexec() attempt fails.  The exception
      *            will contain a message indicating the nature of the failure.
      ***/
-    public void rexec(String username, String password,
-                      String command, boolean separateErrorStream)
+    public void rexec(final String username, final String password,
+                      final String command, final boolean separateErrorStream)
     throws IOException
     {
         int ch;
@@ -224,7 +224,7 @@ public class RExecClient extends SocketClient
 
         ch = _input_.read();
         if (ch > 0) {
-            StringBuilder buffer = new StringBuilder();
+            final StringBuilder buffer = new StringBuilder();
 
             while ((ch = _input_.read()) != -1 && ch != '\n') {
                 buffer.append((char)ch);
@@ -244,8 +244,8 @@ public class RExecClient extends SocketClient
      * @param command the command to run
      * @throws IOException if an error occurs
      ***/
-    public void rexec(String username, String password,
-                      String command)
+    public void rexec(final String username, final String password,
+                      final String command)
     throws IOException
     {
         rexec(username, password, command, false);
@@ -277,7 +277,7 @@ public class RExecClient extends SocketClient
      *
      * @param enable True to enable verification, false to disable verification.
      ***/
-    public final void setRemoteVerificationEnabled(boolean enable)
+    public final void setRemoteVerificationEnabled(final boolean enable)
     {
         __remoteVerificationEnabled = enable;
     }

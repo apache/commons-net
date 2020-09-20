@@ -62,7 +62,7 @@ public class TFTPTest extends TestCase
                     null, null);
             tftpS.setSocketTimeout(2000);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             e.printStackTrace();
         }
@@ -79,7 +79,7 @@ public class TFTPTest extends TestCase
             {
                 tftpS.shutdown();
             }
-            for (File file : files)
+            for (final File file : files)
             {
                 file.delete();
             }
@@ -90,10 +90,10 @@ public class TFTPTest extends TestCase
     /*
      * Create a file, size specified in bytes
      */
-    private static File createFile(File file, int size) throws IOException
+    private static File createFile(final File file, final int size) throws IOException
     {
-        OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
-        byte[] temp = "0".getBytes();
+        final OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
+        final byte[] temp = "0".getBytes();
         for (int i = 0; i < size; i++)
         {
             os.write(temp);
@@ -118,7 +118,7 @@ public class TFTPTest extends TestCase
         {
             try {
                 testDownload(TFTP.ASCII_MODE, files[i]);
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 fail("Entry "+i+" Error "+e.toString());
             }
 
@@ -160,20 +160,20 @@ public class TFTPTest extends TestCase
         }
     }
 
-    private void testDownload(int mode, File file) throws IOException
+    private void testDownload(final int mode, final File file) throws IOException
     {
         // Create our TFTP instance to handle the file transfer.
-        TFTPClient tftp = new TFTPClient();
+        final TFTPClient tftp = new TFTPClient();
         tftp.open();
         tftp.setSoTimeout(2000);
 
-        File out = new File(serverDirectory, filePrefix + "download");
+        final File out = new File(serverDirectory, filePrefix + "download");
 
         // cleanup old failed runs
         out.delete();
         assertTrue("Couldn't clear output location", !out.exists());
 
-        FileOutputStream output = new FileOutputStream(out);
+        final FileOutputStream output = new FileOutputStream(out);
 
         tftp.receiveFile(file.getName(), mode, output, "localhost", SERVER_PORT);
         output.close();
@@ -185,19 +185,19 @@ public class TFTPTest extends TestCase
         out.delete();
     }
 
-    private void testUpload(int mode, File file) throws Exception
+    private void testUpload(final int mode, final File file) throws Exception
     {
         // Create our TFTP instance to handle the file transfer.
-        TFTPClient tftp = new TFTPClient();
+        final TFTPClient tftp = new TFTPClient();
         tftp.open();
         tftp.setSoTimeout(2000);
 
-        File in = new File(serverDirectory, filePrefix + "upload");
+        final File in = new File(serverDirectory, filePrefix + "upload");
         // cleanup old failed runs
         in.delete();
         assertTrue("Couldn't clear output location", !in.exists());
 
-        FileInputStream fis = new FileInputStream(file);
+        final FileInputStream fis = new FileInputStream(file);
         tftp.sendFile(in.getName(), mode, fis, "localhost", SERVER_PORT);
         fis.close();
 
@@ -210,7 +210,7 @@ public class TFTPTest extends TestCase
         in.delete();
     }
 
-    private boolean filesIdentical(File a, File b) throws IOException
+    private boolean filesIdentical(final File a, final File b) throws IOException
     {
         if (!a.exists() || !b.exists())
         {
@@ -222,8 +222,8 @@ public class TFTPTest extends TestCase
             return false;
         }
 
-        InputStream fisA = new BufferedInputStream(new FileInputStream(a));
-        InputStream fisB = new BufferedInputStream(new FileInputStream(b));
+        final InputStream fisA = new BufferedInputStream(new FileInputStream(a));
+        final InputStream fisB = new BufferedInputStream(new FileInputStream(b));
 
         int aBit = fisA.read();
         int bBit = fisB.read();

@@ -36,7 +36,7 @@ class ThreadContainer {
      * @param container
      * @return true if child is under self's tree. Detects circular references
      */
-    boolean findChild(ThreadContainer target) {
+    boolean findChild(final ThreadContainer target) {
         if (child == null) {
             return false;
         } else if (child == target) {

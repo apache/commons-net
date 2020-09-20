@@ -48,7 +48,7 @@ public class MalformedServerReplyException extends IOException
      *
      * @param message  The message explaining the reason for the exception.
      ***/
-    public MalformedServerReplyException(String message)
+    public MalformedServerReplyException(final String message)
     {
         super(message);
     }

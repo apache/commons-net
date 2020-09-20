@@ -42,10 +42,10 @@ import org.apache.commons.net.smtp.SimpleSMTPHeader;
 public final class SMTPMail
 {
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         String sender, recipient, subject, fileName, server, cc;
-        List<String> ccList = new ArrayList<>();
+        final List<String> ccList = new ArrayList<>();
         BufferedReader stdin;
         FileReader fileReader = null;
         Writer writer;
@@ -106,7 +106,7 @@ public final class SMTPMail
             {
                 fileReader = new FileReader(fileName);
             }
-            catch (FileNotFoundException e)
+            catch (final FileNotFoundException e)
             {
                 System.err.println("File not found. " + e.getMessage());
             }
@@ -131,7 +131,7 @@ public final class SMTPMail
 
 
 
-            for (String recpt : ccList) {
+            for (final String recpt : ccList) {
                 client.addRecipient(recpt);
             }
 
@@ -153,7 +153,7 @@ public final class SMTPMail
 
             client.disconnect();
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             e.printStackTrace();
             System.exit(1);

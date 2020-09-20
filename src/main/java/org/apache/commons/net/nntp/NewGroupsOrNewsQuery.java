@@ -54,7 +54,7 @@ public final class NewGroupsOrNewsQuery
      * @param date  The date since which new groups or news have arrived.
      * @param gmt   True if the date should be considered as GMT, false if not.
      ***/
-    public NewGroupsOrNewsQuery(Calendar date, boolean gmt)
+    public NewGroupsOrNewsQuery(final Calendar date, final boolean gmt)
     {
         int num;
         String str;
@@ -166,7 +166,7 @@ public final class NewGroupsOrNewsQuery
      * @param newsgroup  The newsgroup to add to the list of groups to be
      *                   checked for new news.
      ***/
-    public void addNewsgroup(String newsgroup)
+    public void addNewsgroup(final String newsgroup)
     {
         if (__newsgroups != null) {
             __newsgroups.append(',');
@@ -195,7 +195,7 @@ public final class NewGroupsOrNewsQuery
      *                   checked for new news, but which should be omitted from
      *                   the search for new news..
      ***/
-    public void omitNewsgroup(String newsgroup)
+    public void omitNewsgroup(final String newsgroup)
     {
         addNewsgroup("!" + newsgroup);
     }
@@ -211,7 +211,7 @@ public final class NewGroupsOrNewsQuery
      * <p>
      * @param distribution A distribution to add to the query.
      ***/
-    public void addDistribution(String distribution)
+    public void addDistribution(final String distribution)
     {
         if (__distributions != null) {
             __distributions.append(',');

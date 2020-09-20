@@ -43,7 +43,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
         _noConversionRequired = _lineSeparator.equals("\r\n");
         try {
             _lineSeparatorBytes = _lineSeparator.getBytes("US-ASCII");
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
            throw new RuntimeException("Broken JVM - cannot find US-ASCII charset!",e);
         }
     }
@@ -69,7 +69,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      * InputStream.
      * @param input the stream to wrap
      ***/
-    public FromNetASCIIInputStream(InputStream input)
+    public FromNetASCIIInputStream(final InputStream input)
     {
         super(input, _lineSeparatorBytes.length + 1);
     }
@@ -140,7 +140,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      *            stream.
      ***/
     @Override
-    public int read(byte buffer[]) throws IOException
+    public int read(final byte buffer[]) throws IOException
     {
         return read(buffer, 0, buffer.length);
     }
@@ -161,7 +161,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      *            stream.
      ***/
     @Override
-    public int read(byte buffer[], int offset, int length) throws IOException
+    public int read(final byte buffer[], int offset, final int length) throws IOException
     {
         if (_noConversionRequired) {
             return super.read(buffer, offset, length);

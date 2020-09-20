@@ -34,7 +34,7 @@ public class TimeTCPClientTest extends TestCase
         try {
             server1 = new TimeTestSimpleServer(_port);
             server1.connect();
-        } catch (IOException ioe)
+        } catch (final IOException ioe)
         {
             // try again on another port
             _port = 4000;
@@ -49,11 +49,11 @@ public class TimeTCPClientTest extends TestCase
      *  computed from Calendar class.
      */
     public void testInitial() {
-        TimeZone utcZone = TimeZone.getTimeZone("UTC");
-        Calendar calendar = Calendar.getInstance(utcZone);
+        final TimeZone utcZone = TimeZone.getTimeZone("UTC");
+        final Calendar calendar = Calendar.getInstance(utcZone);
         calendar.set(1900, Calendar.JANUARY, 1, 0, 0, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        long baseTime = calendar.getTime().getTime() / 1000L;
+        final long baseTime = calendar.getTime().getTime() / 1000L;
 
         assertEquals(baseTime, -TimeTCPClient.SECONDS_1900_TO_1970);
     }
@@ -67,7 +67,7 @@ public class TimeTCPClientTest extends TestCase
 
         long time, time2;
         long clientTime, clientTime2;
-        TimeTCPClient client = new TimeTCPClient();
+        final TimeTCPClient client = new TimeTCPClient();
         try
         {
             // Not sure why code used to use getLocalHost.
@@ -79,7 +79,7 @@ public class TimeTCPClientTest extends TestCase
                 client.connect(localHost, _port);
                 clientTime = client.getDate().getTime();
                 time = System.currentTimeMillis();
-            } catch (IOException e) { // catch the first connect error; assume second will work if this does
+            } catch (final IOException e) { // catch the first connect error; assume second will work if this does
                 fail("IOError <"+e+"> trying to connect to " + localHost + " " + _port );
                 throw e;
             } finally
@@ -118,7 +118,7 @@ public class TimeTCPClientTest extends TestCase
         {
             server1.stop();
             Thread.sleep(1000);
-        } catch (Exception e)
+        } catch (final Exception e)
         {
             // ignored
         }

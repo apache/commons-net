@@ -29,7 +29,7 @@ public class FTPFileFilters {
      */
     public static final FTPFileFilter ALL = new FTPFileFilter() {
         @Override
-        public boolean accept(FTPFile file) {
+        public boolean accept(final FTPFile file) {
             return true;
         }
     };
@@ -39,7 +39,7 @@ public class FTPFileFilters {
      */
     public static final FTPFileFilter NON_NULL = new FTPFileFilter() {
         @Override
-        public boolean accept(FTPFile file) {
+        public boolean accept(final FTPFile file) {
             return file != null;
         }
     };
@@ -49,7 +49,7 @@ public class FTPFileFilters {
      */
     public static final FTPFileFilter DIRECTORIES = new FTPFileFilter() {
         @Override
-        public boolean accept(FTPFile file) {
+        public boolean accept(final FTPFile file) {
             return file != null && file.isDirectory();
         }
     };

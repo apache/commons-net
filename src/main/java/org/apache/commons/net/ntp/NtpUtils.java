@@ -29,7 +29,7 @@ public final class NtpUtils {
       * @param address  the 32-bit address
       * @return  the raw IP address in a string format.
       */
-     public static String getHostAddress(int address)
+     public static String getHostAddress(final int address)
      {
           return ((address >>> 24) & 0xFF) + "." +
                  ((address >>> 16) & 0xFF) + "." +
@@ -43,9 +43,9 @@ public final class NtpUtils {
      * @param packet  NTP packet
      * @return  the packet reference id (as IP address) in "%d.%d.%d.%d" format.
      */
-     public static String getRefAddress(NtpV3Packet packet)
+     public static String getRefAddress(final NtpV3Packet packet)
      {
-         int address = (packet == null) ? 0 : packet.getReferenceId();
+         final int address = (packet == null) ? 0 : packet.getReferenceId();
          return getHostAddress(address);
      }
 
@@ -58,19 +58,19 @@ public final class NtpUtils {
      * @param message the message to check
      * @return reference clock string if primary NTP server
      */
-    public static String getReferenceClock(NtpV3Packet message) {
+    public static String getReferenceClock(final NtpV3Packet message) {
         if (message == null) {
             return "";
         }
-        int refId = message.getReferenceId();
+        final int refId = message.getReferenceId();
         if (refId == 0) {
             return "";
         }
-        StringBuilder buf = new StringBuilder(4);
+        final StringBuilder buf = new StringBuilder(4);
         // start at highest-order byte (0x4c434c00 -> LCL)
         for (int shiftBits = 24; shiftBits >= 0; shiftBits -= 8)
         {
-            char c = (char) ((refId >>> shiftBits) & 0xff);
+            final char c = (char) ((refId >>> shiftBits) & 0xff);
             if (c == 0) { // 0-terminated ASCII string
                 break;
             }
@@ -88,7 +88,7 @@ public final class NtpUtils {
      * @param mode the mode type
      * @return mode name
      */
-    public static String getModeName(int mode)
+    public static String getModeName(final int mode)
     {
         switch (mode) {
             case NtpV3Packet.MODE_RESERVED:

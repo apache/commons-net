@@ -86,7 +86,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * <code>REGEX</code> is  not a valid regular expression.
      * @since 1.4
      */
-    public VMSFTPEntryParser(FTPClientConfig config)
+    public VMSFTPEntryParser(final FTPClientConfig config)
     {
         super(REGEX);
         configure(config);
@@ -103,20 +103,20 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * @return An FTPFile instance corresponding to the supplied entry
      */
     @Override
-    public FTPFile parseFTPEntry(String entry)
+    public FTPFile parseFTPEntry(final String entry)
     {
         //one block in VMS equals 512 bytes
-        long longBlock = 512;
+        final long longBlock = 512;
 
         if (matches(entry))
         {
-            FTPFile f = new FTPFile();
+            final FTPFile f = new FTPFile();
             f.setRawListing(entry);
             String name = group(1);
-            String size = group(2);
-            String datestr = group(3)+" "+group(4);
-            String owner = group(5);
-            String permissions[] = new String[3];
+            final String size = group(2);
+            final String datestr = group(3)+" "+group(4);
+            final String owner = group(5);
+            final String permissions[] = new String[3];
             permissions[0]= group(9);
             permissions[1]= group(10);
             permissions[2]= group(11);
@@ -124,7 +124,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             {
                 f.setTimestamp(super.parseTimestamp(datestr));
             }
-            catch (ParseException e)
+            catch (final ParseException e)
             {
                  // intentionally do nothing
             }
@@ -132,7 +132,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 
             String grp;
             String user;
-            StringTokenizer t = new StringTokenizer(owner, ",");
+            final StringTokenizer t = new StringTokenizer(owner, ",");
             switch (t.countTokens()) {
                 case 1:
                     grp  = null;
@@ -168,7 +168,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             }
             //size is retreived in blocks and needs to be put in bytes
             //for us humans and added to the FTPFile array
-            long sizeInBytes = Long.parseLong(size) * longBlock;
+            final long sizeInBytes = Long.parseLong(size) * longBlock;
             f.setSize(sizeInBytes);
 
             f.setGroup(grp);
@@ -182,7 +182,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             //iterate for OWNER GROUP WORLD permissions
             for (int access = 0; access < 3; access++)
             {
-                String permission = permissions[access];
+                final String permission = permissions[access];
 
                 f.setPermission(access, FTPFile.READ_PERMISSION, permission.indexOf('R')>=0);
                 f.setPermission(access, FTPFile.WRITE_PERMISSION, permission.indexOf('W')>=0);
@@ -208,10 +208,10 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * @throws IOException thrown on any IO Error reading from the reader.
      */
     @Override
-    public String readNextEntry(BufferedReader reader) throws IOException
+    public String readNextEntry(final BufferedReader reader) throws IOException
     {
         String line = reader.readLine();
-        StringBuilder entry = new StringBuilder();
+        final StringBuilder entry = new StringBuilder();
         while (line != null)
         {
             if (line.startsWith("Directory") || line.startsWith("Total")) {
@@ -257,8 +257,8 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * @deprecated (2.2) No other FTPFileEntryParser implementations have this method.
      */
     @Deprecated
-    public FTPFile[] parseFileList(java.io.InputStream listStream) throws IOException {
-        org.apache.commons.net.ftp.FTPListParseEngine engine = new org.apache.commons.net.ftp.FTPListParseEngine(this);
+    public FTPFile[] parseFileList(final java.io.InputStream listStream) throws IOException {
+        final org.apache.commons.net.ftp.FTPListParseEngine engine = new org.apache.commons.net.ftp.FTPListParseEngine(this);
         engine.readServerList(listStream, null);
         return engine.getFiles();
     }

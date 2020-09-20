@@ -102,7 +102,7 @@ public final class IMAPExportMbox
     private static final int CONNECT_TIMEOUT = 10; // Seconds
     private static final int READ_TIMEOUT = 10;
 
-    public static void main(String[] args) throws IOException, URISyntaxException
+    public static void main(final String[] args) throws IOException, URISyntaxException
     {
         int connect_timeout = CONNECT_TIMEOUT;
         int read_timeout = READ_TIMEOUT;
@@ -157,8 +157,8 @@ public final class IMAPExportMbox
         URI uri;
         try {
             uri      = URI.create(uriString);
-        } catch(IllegalArgumentException e) { // cannot parse the path as is; let's pull it apart and try again
-            Matcher m = Pattern.compile("(imaps?://[^/]+)(/.*)").matcher(uriString);
+        } catch(final IllegalArgumentException e) { // cannot parse the path as is; let's pull it apart and try again
+            final Matcher m = Pattern.compile("(imaps?://[^/]+)(/.*)").matcher(uriString);
             if (m.matches()) {
                 uri = URI.create(m.group(1)); // Just the scheme and auth parts
                 uri = new URI(uri.getScheme(), uri.getAuthority(), m.group(2), null, null);
@@ -172,7 +172,7 @@ public final class IMAPExportMbox
         // Handle 0, 1 or multiple item names
         if (argCount > 3) {
             if (argCount > 4) {
-                StringBuilder sb = new StringBuilder();
+                final StringBuilder sb = new StringBuilder();
                 sb.append("(");
                 for(int i=4; i <= argCount; i++) {
                     if (i>4) {
@@ -212,16 +212,16 @@ public final class IMAPExportMbox
             chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mbox)), eol, printHash, printMarker, checkSequence);
         }
 
-        String path = uri.getPath();
+        final String path = uri.getPath();
         if (path == null || path.length() < 1) {
             throw new IllegalArgumentException("Invalid folderPath: '" + path + "'");
         }
-        String folder = path.substring(1); // skip the leading /
+        final String folder = path.substring(1); // skip the leading /
 
         // suppress login details
         final PrintCommandListener listener = new PrintCommandListener(System.out, true) {
             @Override
-            public void protocolReplyReceived(ProtocolCommandEvent event) {
+            public void protocolReplyReceived(final ProtocolCommandEvent event) {
                 if (event.getReplyCode() != IMAPReply.PARTIAL){ // This is dealt with by the chunk listener
                     super.protocolReplyReceived(event);
                 }
@@ -241,7 +241,7 @@ public final class IMAPExportMbox
                 throw new IOException("Could not select folder: " + folder);
             }
 
-            for(String line : imap.getReplyStrings()) {
+            for(final String line : imap.getReplyStrings()) {
                 maxIndexInFolder = matches(line, PATEXISTS, 1);
                 if (maxIndexInFolder != null) {
                     break;
@@ -254,7 +254,7 @@ public final class IMAPExportMbox
 
 
             while(true) {
-                boolean ok = imap.fetch(sequenceSet, itemNames);
+                final boolean ok = imap.fetch(sequenceSet, itemNames);
                 // If the fetch failed, can we retry?
                 if (!ok && retryWaitSecs > 0 && chunkListener != null && checkSequence) {
                     final String replyString = imap.getReplyString(); //includes EOL
@@ -263,7 +263,7 @@ public final class IMAPExportMbox
                         sequenceSet = (chunkListener.lastSeq+1)+":*";
                         try {
                             Thread.sleep(retryWaitSecs * 1000);
-                        } catch (InterruptedException e) {
+                        } catch (final InterruptedException e) {
                             // ignored
                         }
                     } else {
@@ -274,8 +274,8 @@ public final class IMAPExportMbox
                 }
             }
 
-        } catch (IOException ioe) {
-            String count = chunkListener == null ? "?" : Integer.toString(chunkListener.total);
+        } catch (final IOException ioe) {
+            final String count = chunkListener == null ? "?" : Integer.toString(chunkListener.total);
             System.err.println(
                     "FETCH " + sequenceSet + " " + itemNames + " failed after processing " + count + " complete messages ");
             if (chunkListener != null) {
@@ -292,7 +292,7 @@ public final class IMAPExportMbox
                 chunkListener.close();
                 final Iterator<String> missingIds = chunkListener.missingIds.iterator();
                 if (missingIds.hasNext()) {
-                    StringBuilder sb = new StringBuilder();
+                    final StringBuilder sb = new StringBuilder();
                     for(;;) {
                         sb.append(missingIds.next());
                         if (!missingIds.hasNext()) {
@@ -314,13 +314,13 @@ public final class IMAPExportMbox
         }
     }
 
-    private static boolean startsWith(String input, Pattern pat) {
-        Matcher m = pat.matcher(input);
+    private static boolean startsWith(final String input, final Pattern pat) {
+        final Matcher m = pat.matcher(input);
         return m.lookingAt();
     }
 
-    private static String matches(String input, Pattern pat, int index) {
-        Matcher m = pat.matcher(input);
+    private static String matches(final String input, final Pattern pat, final int index) {
+        final Matcher m = pat.matcher(input);
         if (m.lookingAt()) {
             return m.group(index);
         }
@@ -345,7 +345,7 @@ public final class IMAPExportMbox
         private final boolean printMarker;
         private final boolean checkSequence;
 
-        MboxListener(BufferedWriter bw, String eol, boolean printHash, boolean printMarker, boolean checkSequence)
+        MboxListener(final BufferedWriter bw, final String eol, final boolean printHash, final boolean printMarker, final boolean checkSequence)
                 throws IOException {
           this.eol = eol;
           this.printHash = printHash;
@@ -356,16 +356,16 @@ public final class IMAPExportMbox
         }
 
         @Override
-        public boolean chunkReceived(IMAP imap) {
+        public boolean chunkReceived(final IMAP imap) {
             final String[] replyStrings = imap.getReplyStrings();
             Date received = new Date();
             final String firstLine = replyStrings[0];
             Matcher m = PATID.matcher(firstLine);
             if (m.lookingAt()) { // found a match
-                String date = m.group(PATID_DATE_GROUP);
+                final String date = m.group(PATID_DATE_GROUP);
                 try {
                     received=IDPARSE.parse(date);
-                } catch (ParseException e) {
+                } catch (final ParseException e) {
                     System.err.println(e);
                 }
             } else {
@@ -375,7 +375,7 @@ public final class IMAPExportMbox
             for(int i=1; i< replyStrings.length - 1; i++) {
                 final String line = replyStrings[i];
                 if (line.startsWith("Return-Path: ")) {
-                    String[] parts = line.split(" ", 2);
+                    final String[] parts = line.split(" ", 2);
                     if (!parts[1].equals("<>")) {// Don't replace default with blank
                         replyTo = parts[1];
                         if (replyTo.startsWith("<")) {
@@ -411,14 +411,14 @@ public final class IMAPExportMbox
                         bw.append(eol);
                 }
                 // The last line ends with the trailing closing ")" which needs to be stripped
-                String lastLine = replyStrings[replyStrings.length-1];
+                final String lastLine = replyStrings[replyStrings.length-1];
                 final int lastLength = lastLine.length();
                 if (lastLength > 1) { // there's some content, we need to save it
                     bw.append(lastLine, 0, lastLength-1);
                     bw.append(eol);
                 }
                 bw.append(eol); // blank line between entries
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e); // chunkReceived cannot throw a checked Exception
             }
@@ -429,7 +429,7 @@ public final class IMAPExportMbox
                 if (m.lookingAt()) { // found a match
                     final long msgSeq = Long.parseLong(m.group(PATSEQ_SEQUENCE_GROUP)); // Cannot fail to parse
                     if (lastSeq != -1) {
-                        long missing = msgSeq - lastSeq - 1;
+                        final long missing = msgSeq - lastSeq - 1;
                         if (missing != 0) {
                             for(long j = lastSeq + 1; j < msgSeq; j++) {
                                 missingIds.add(String.valueOf(j));

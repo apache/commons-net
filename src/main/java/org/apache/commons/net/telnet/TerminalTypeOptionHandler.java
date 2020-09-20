@@ -54,11 +54,11 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler
      * @param acceptlocal - if set to true, any DO request is accepted.
      * @param acceptremote - if set to true, any WILL request is accepted.
      ***/
-    public TerminalTypeOptionHandler(String termtype,
-                                boolean initlocal,
-                                boolean initremote,
-                                boolean acceptlocal,
-                                boolean acceptremote)
+    public TerminalTypeOptionHandler(final String termtype,
+                                final boolean initlocal,
+                                final boolean initremote,
+                                final boolean acceptlocal,
+                                final boolean acceptremote)
     {
         super(TelnetOption.TERMINAL_TYPE, initlocal, initremote,
                                       acceptlocal, acceptremote);
@@ -71,7 +71,7 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler
      * <p>
      * @param termtype - terminal type that will be negotiated.
      ***/
-    public TerminalTypeOptionHandler(String termtype)
+    public TerminalTypeOptionHandler(final String termtype)
     {
         super(TelnetOption.TERMINAL_TYPE, false, false, false, false);
         termType = termtype;
@@ -86,7 +86,7 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler
      * @return terminal type information
      ***/
     @Override
-    public int[] answerSubnegotiation(int suboptionData[], int suboptionLength)
+    public int[] answerSubnegotiation(final int suboptionData[], final int suboptionLength)
     {
         if ((suboptionData != null) && (suboptionLength > 1)
             && (termType != null))
@@ -94,7 +94,7 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler
             if ((suboptionData[0] == TERMINAL_TYPE)
                 && (suboptionData[1] == TERMINAL_TYPE_SEND))
             {
-                int response[] = new int[termType.length() + 2];
+                final int response[] = new int[termType.length() + 2];
 
                 response[0] = TERMINAL_TYPE;
                 response[1] = TERMINAL_TYPE_IS;

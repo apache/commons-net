@@ -38,7 +38,7 @@ public final class CRLFLineReader extends BufferedReader
      * input source.
      * @param reader  The Reader input source.
      */
-    public CRLFLineReader(Reader reader)
+    public CRLFLineReader(final Reader reader)
     {
         super(reader);
     }
@@ -51,7 +51,7 @@ public final class CRLFLineReader extends BufferedReader
      */
     @Override
     public String readLine() throws IOException {
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         int intch;
         boolean prevWasCR = false;
         synchronized(lock) { // make thread-safe (hopefully!)
@@ -68,7 +68,7 @@ public final class CRLFLineReader extends BufferedReader
                 sb.append((char) intch);
             }
         }
-        String string = sb.toString();
+        final String string = sb.toString();
         if (string.length() == 0) { // immediate EOF
             return null;
         }

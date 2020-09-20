@@ -32,7 +32,7 @@ import org.apache.commons.net.nntp.NewsgroupInfo;
 public final class ListNewsgroups
 {
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         if (args.length < 1)
         {
@@ -40,8 +40,8 @@ public final class ListNewsgroups
             return;
         }
 
-        NNTPClient client = new NNTPClient();
-        String pattern = args.length >= 2 ? args[1] : "";
+        final NNTPClient client = new NNTPClient();
+        final String pattern = args.length >= 2 ? args[1] : "";
 
         try
         {
@@ -49,23 +49,23 @@ public final class ListNewsgroups
 
             int j = 0;
             try {
-                for(String s : client.iterateNewsgroupListing(pattern)) {
+                for(final String s : client.iterateNewsgroupListing(pattern)) {
                     j++;
                     System.out.println(s);
                 }
-            } catch (IOException e1) {
+            } catch (final IOException e1) {
                 e1.printStackTrace();
             }
             System.out.println(j);
 
             j = 0;
-            for(NewsgroupInfo n : client.iterateNewsgroups(pattern)) {
+            for(final NewsgroupInfo n : client.iterateNewsgroups(pattern)) {
                 j++;
                 System.out.println(n.getNewsgroup());
             }
             System.out.println(j);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             e.printStackTrace();
         }
@@ -77,7 +77,7 @@ public final class ListNewsgroups
                     client.disconnect();
                 }
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 System.err.println("Error disconnecting from server.");
                 e.printStackTrace();

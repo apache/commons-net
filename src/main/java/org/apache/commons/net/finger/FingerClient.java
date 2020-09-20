@@ -81,10 +81,10 @@ public class FingerClient extends SocketClient
      * @return The result of the finger query.
      * @throws IOException If an I/O error occurs while reading the socket.
      ***/
-    public String query(boolean longOutput, String username) throws IOException
+    public String query(final boolean longOutput, final String username) throws IOException
     {
         int read;
-        StringBuilder result = new StringBuilder(__buffer.length);
+        final StringBuilder result = new StringBuilder(__buffer.length);
         BufferedReader input;
 
         input =
@@ -118,7 +118,7 @@ public class FingerClient extends SocketClient
      * @return The result of the finger query.
      * @throws IOException If an I/O error occurs while reading the socket.
      ***/
-    public String query(boolean longOutput) throws IOException
+    public String query(final boolean longOutput) throws IOException
     {
         return query(longOutput, "");
     }
@@ -136,7 +136,7 @@ public class FingerClient extends SocketClient
      *         Can be read to obtain finger results.
      * @throws IOException If an I/O error during the operation.
      ***/
-    public InputStream getInputStream(boolean longOutput, String username)
+    public InputStream getInputStream(final boolean longOutput, final String username)
     throws IOException
     {
         return getInputStream(longOutput, username, null);
@@ -156,11 +156,11 @@ public class FingerClient extends SocketClient
      *         Can be read to obtain finger results.
      * @throws IOException If an I/O error during the operation.
      ***/
-    public InputStream getInputStream(boolean longOutput, String username, String encoding)
+    public InputStream getInputStream(final boolean longOutput, final String username, final String encoding)
     throws IOException
     {
         DataOutputStream output;
-        StringBuilder buffer = new StringBuilder(64);
+        final StringBuilder buffer = new StringBuilder(64);
         if (longOutput) {
             buffer.append(__LONG_FLAG);
         }
@@ -168,7 +168,7 @@ public class FingerClient extends SocketClient
         buffer.append(SocketClient.NETASCII_EOL);
 
         // Note: Charsets.toCharset() returns the platform default for null input
-        byte[] encodedQuery = buffer.toString().getBytes(Charsets.toCharset(encoding).name()); // Java 1.6 can use charset directly
+        final byte[] encodedQuery = buffer.toString().getBytes(Charsets.toCharset(encoding).name()); // Java 1.6 can use charset directly
 
         output = new DataOutputStream(new BufferedOutputStream(_output_, 1024));
         output.write(encodedQuery, 0, encodedQuery.length);
@@ -190,7 +190,7 @@ public class FingerClient extends SocketClient
      *         Can be read to obtain finger results.
      * @throws IOException If an I/O error during the operation.
      ***/
-    public InputStream getInputStream(boolean longOutput) throws IOException
+    public InputStream getInputStream(final boolean longOutput) throws IOException
     {
         return getInputStream(longOutput, "");
     }

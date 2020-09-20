@@ -41,7 +41,7 @@ public class ListingFunctionalTest extends TestCase
 
     public static final Test suite()
     {
-        String[][] testData =
+        final String[][] testData =
             {
                 {
                     "ftp.ibiblio.org", "unix", "vms",
@@ -71,15 +71,15 @@ public class ListingFunctionalTest extends TestCase
 //                    "[.VMS-FREEWARE.FREE-VMS]" //
 //                },
             };
-        Class<?> clasz = ListingFunctionalTest.class;
-        Method[] methods = clasz.getDeclaredMethods();
-        TestSuite allSuites = new TestSuite("FTP Listing Functional Test Suite");
+        final Class<?> clasz = ListingFunctionalTest.class;
+        final Method[] methods = clasz.getDeclaredMethods();
+        final TestSuite allSuites = new TestSuite("FTP Listing Functional Test Suite");
 
-        for (String[] element : testData)
+        for (final String[] element : testData)
         {
-            TestSuite suite = new TestSuite(element[VALID_PARSERKEY]+ " @ " +element[HOSTNAME]);
+            final TestSuite suite = new TestSuite(element[VALID_PARSERKEY]+ " @ " +element[HOSTNAME]);
 
-            for (Method method : methods)
+            for (final Method method : methods)
             {
                 if (method.getName().startsWith("test"))
                 {
@@ -102,7 +102,7 @@ public class ListingFunctionalTest extends TestCase
     private final String validPath;
     private final String pwdPath;
 
-    public ListingFunctionalTest(String arg0, String[] settings)
+    public ListingFunctionalTest(final String arg0, final String[] settings)
     {
         super(arg0);
         invalidParserKey = settings[INVALID_PARSERKEY];
@@ -114,24 +114,24 @@ public class ListingFunctionalTest extends TestCase
         hostName = settings[HOSTNAME];
     }
 
-    private boolean findByName(List<?> fileList, String string)
+    private boolean findByName(final List<?> fileList, final String string)
     {
         boolean found = false;
-        Iterator<?> iter = fileList.iterator();
+        final Iterator<?> iter = fileList.iterator();
 
         while (iter.hasNext() && !found)
         {
-            Object element = iter.next();
+            final Object element = iter.next();
 
             if (element instanceof FTPFile)
             {
-                FTPFile file = (FTPFile) element;
+                final FTPFile file = (FTPFile) element;
 
                 found = file.getName().equals(string);
             }
             else
             {
-                String fileName = (String) element;
+                final String fileName = (String) element;
 
                 found = fileName.endsWith(string);
             }
@@ -165,7 +165,7 @@ public class ListingFunctionalTest extends TestCase
         {
             client.logout();
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             e.printStackTrace();
         }
@@ -187,8 +187,8 @@ public class ListingFunctionalTest extends TestCase
     {
         client.changeWorkingDirectory(validPath);
 
-        FTPListParseEngine engine = client.initiateListParsing();
-        List<FTPFile> files = Arrays.asList(engine.getNext(25));
+        final FTPListParseEngine engine = client.initiateListParsing();
+        final List<FTPFile> files = Arrays.asList(engine.getNext(25));
 
         assertTrue(files.toString(), findByName(files, validFilename));
     }
@@ -199,9 +199,9 @@ public class ListingFunctionalTest extends TestCase
     public void testInitiateListParsingWithPath()
         throws IOException
     {
-        FTPListParseEngine engine = client.initiateListParsing(validParserKey,
+        final FTPListParseEngine engine = client.initiateListParsing(validParserKey,
                                                                validPath);
-        List<FTPFile> files = Arrays.asList(engine.getNext(25));
+        final List<FTPFile> files = Arrays.asList(engine.getNext(25));
 
         assertTrue(files.toString(), findByName(files, validFilename));
     }
@@ -212,8 +212,8 @@ public class ListingFunctionalTest extends TestCase
     public void testInitiateListParsingWithPathAndAutodetection()
         throws IOException
     {
-        FTPListParseEngine engine = client.initiateListParsing(validPath);
-        List<FTPFile> files = Arrays.asList(engine.getNext(25));
+        final FTPListParseEngine engine = client.initiateListParsing(validPath);
+        final List<FTPFile> files = Arrays.asList(engine.getNext(25));
 
         assertTrue(files.toString(), findByName(files, validFilename));
     }
@@ -224,7 +224,7 @@ public class ListingFunctionalTest extends TestCase
     public void testInitiateListParsingWithPathAndAutodetectionButEmpty()
         throws IOException
     {
-        FTPListParseEngine engine = client.initiateListParsing(invalidPath);
+        final FTPListParseEngine engine = client.initiateListParsing(invalidPath);
 
         assertFalse(engine.hasNext());
     }
@@ -235,7 +235,7 @@ public class ListingFunctionalTest extends TestCase
     public void testInitiateListParsingWithPathAndIncorrectParser()
         throws IOException
     {
-        FTPListParseEngine engine = client.initiateListParsing(invalidParserKey,
+        final FTPListParseEngine engine = client.initiateListParsing(invalidParserKey,
                                                                invalidPath);
 
         assertFalse(engine.hasNext());
@@ -247,9 +247,9 @@ public class ListingFunctionalTest extends TestCase
     public void testListFiles()
         throws IOException
     {
-        FTPClientConfig config = new FTPClientConfig(validParserKey);
+        final FTPClientConfig config = new FTPClientConfig(validParserKey);
         client.configure(config);
-        List<FTPFile> files = Arrays.asList(client.listFiles(validPath));
+        final List<FTPFile> files = Arrays.asList(client.listFiles(validPath));
 
         assertTrue(files.toString(),
                    findByName(files, validFilename));
@@ -260,7 +260,7 @@ public class ListingFunctionalTest extends TestCase
     {
         client.changeWorkingDirectory(validPath);
 
-        List<FTPFile> files = Arrays.asList(client.listFiles());
+        final List<FTPFile> files = Arrays.asList(client.listFiles());
 
         assertTrue(files.toString(),
                    findByName(files, validFilename));
@@ -272,10 +272,10 @@ public class ListingFunctionalTest extends TestCase
     public void testListFilesWithIncorrectParser()
         throws IOException
     {
-        FTPClientConfig config = new FTPClientConfig(invalidParserKey);
+        final FTPClientConfig config = new FTPClientConfig(invalidParserKey);
         client.configure(config);
 
-        FTPFile[] files = client.listFiles(validPath);
+        final FTPFile[] files = client.listFiles(validPath);
 
         assertNotNull(files);
 
@@ -289,7 +289,7 @@ public class ListingFunctionalTest extends TestCase
     public void testListFilesWithPathAndAutodectionButEmpty()
         throws IOException
     {
-        FTPFile[] files = client.listFiles(invalidPath);
+        final FTPFile[] files = client.listFiles(invalidPath);
 
         assertEquals(0, files.length);
     }
@@ -300,7 +300,7 @@ public class ListingFunctionalTest extends TestCase
     public void testListFilesWithPathAndAutodetection()
         throws IOException
     {
-        List<FTPFile> files = Arrays.asList(client.listFiles(validPath));
+        final List<FTPFile> files = Arrays.asList(client.listFiles(validPath));
 
         assertTrue(files.toString(),
                    findByName(files, validFilename));
@@ -314,11 +314,11 @@ public class ListingFunctionalTest extends TestCase
     {
         client.changeWorkingDirectory(validPath);
 
-        String[] names = client.listNames();
+        final String[] names = client.listNames();
 
         assertNotNull(names);
 
-        List<String> lnames = Arrays.asList(names);
+        final List<String> lnames = Arrays.asList(names);
 
         assertTrue(lnames.toString(), lnames.contains(validFilename));
     }
@@ -329,9 +329,9 @@ public class ListingFunctionalTest extends TestCase
     public void testListNamesWithPath()
         throws IOException
     {
-        String[] listNames = client.listNames(validPath);
+        final String[] listNames = client.listNames(validPath);
         assertNotNull("listNames not null", listNames);
-        List<String> names = Arrays.asList(listNames);
+        final List<String> names = Arrays.asList(listNames);
 
         assertTrue(names.toString(), findByName(names, validFilename));
     }
@@ -339,7 +339,7 @@ public class ListingFunctionalTest extends TestCase
     public void testListNamesWithPathButEmpty()
         throws IOException
     {
-        String[] names = client.listNames(invalidPath);
+        final String[] names = client.listNames(invalidPath);
 
         assertNull(names);
     }
@@ -348,7 +348,7 @@ public class ListingFunctionalTest extends TestCase
             throws IOException
     {
         client.changeWorkingDirectory(validPath);
-        String pwd = client.printWorkingDirectory();
+        final String pwd = client.printWorkingDirectory();
         assertEquals(pwdPath, pwd);
     }
 }

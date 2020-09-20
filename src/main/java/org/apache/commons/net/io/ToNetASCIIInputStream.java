@@ -45,7 +45,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
      *
      * @param input  The InputStream to wrap.
      ***/
-    public ToNetASCIIInputStream(InputStream input)
+    public ToNetASCIIInputStream(final InputStream input)
     {
         super(input);
         __status = __NOTHING_SPECIAL;
@@ -107,7 +107,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
      *            stream.
      ***/
     @Override
-    public int read(byte buffer[]) throws IOException
+    public int read(final byte buffer[]) throws IOException
     {
         return read(buffer, 0, buffer.length);
     }
@@ -128,7 +128,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
      *            stream.
      ***/
     @Override
-    public int read(byte buffer[], int offset, int length) throws IOException
+    public int read(final byte buffer[], int offset, int length) throws IOException
     {
         int ch, off;
 

@@ -37,9 +37,9 @@ import org.apache.commons.net.time.TimeUDPClient;
 public final class rdate
 {
 
-    public static final void timeTCP(String host) throws IOException
+    public static final void timeTCP(final String host) throws IOException
     {
-        TimeTCPClient client = new TimeTCPClient();
+        final TimeTCPClient client = new TimeTCPClient();
 
         // We want to timeout if a response takes longer than 60 seconds
         client.setDefaultTimeout(60000);
@@ -48,9 +48,9 @@ public final class rdate
         client.disconnect();
     }
 
-    public static final void timeUDP(String host) throws IOException
+    public static final void timeUDP(final String host) throws IOException
     {
-        TimeUDPClient client = new TimeUDPClient();
+        final TimeUDPClient client = new TimeUDPClient();
 
         // We want to timeout if a response takes longer than 60 seconds
         client.setDefaultTimeout(60000);
@@ -60,7 +60,7 @@ public final class rdate
     }
 
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
 
         if (args.length == 1)
@@ -69,7 +69,7 @@ public final class rdate
             {
                 timeTCP(args[0]);
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 e.printStackTrace();
                 System.exit(1);
@@ -81,7 +81,7 @@ public final class rdate
             {
                 timeUDP(args[1]);
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 e.printStackTrace();
                 System.exit(1);

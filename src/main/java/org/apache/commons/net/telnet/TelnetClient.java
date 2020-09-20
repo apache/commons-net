@@ -64,7 +64,7 @@ public class TelnetClient extends Telnet
      *
      * @param termtype the terminal type to use, e.g. {@code VT100}
      */
-    public TelnetClient(String termtype)
+    public TelnetClient(final String termtype)
     {
         this(termtype, DEFAULT_MAX_SUBNEGOTIATION_LENGTH);
     }
@@ -75,7 +75,7 @@ public class TelnetClient extends Telnet
      *
      * @param maxSubnegotiationLength the size of the subnegotiation buffer
      */
-    public TelnetClient(int maxSubnegotiationLength)
+    public TelnetClient(final int maxSubnegotiationLength)
     {
         this("VT100", maxSubnegotiationLength);
     }
@@ -88,7 +88,7 @@ public class TelnetClient extends Telnet
      * @param termtype the terminal type to use, e.g. {@code VT100}
      * @param maxSubnegotiationLength the size of the subnegotiation buffer
      */
-    public TelnetClient(String termtype, int maxSubnegotiationLength)
+    public TelnetClient(final String termtype, final int maxSubnegotiationLength)
     {
     /* TERMINAL-TYPE option (start)*/
         super(termtype);
@@ -126,7 +126,7 @@ public class TelnetClient extends Telnet
     protected void _connectAction_() throws IOException
     {
         super._connectAction_();
-        TelnetInputStream tmp = new TelnetInputStream(_input_, this, readerThread);
+        final TelnetInputStream tmp = new TelnetInputStream(_input_, this, readerThread);
         if(readerThread)
         {
             tmp._start();
@@ -196,7 +196,7 @@ public class TelnetClient extends Telnet
      *
      * @return The state of the option on the local side.
      ***/
-    public boolean getLocalOptionState(int option)
+    public boolean getLocalOptionState(final int option)
     {
         /* BUG (option active when not already acknowledged) (start)*/
         return (_stateIsWill(option) && _requestedWill(option));
@@ -210,7 +210,7 @@ public class TelnetClient extends Telnet
      *
      * @return The state of the option on the remote side.
      ***/
-    public boolean getRemoteOptionState(int option)
+    public boolean getRemoteOptionState(final int option)
     {
         /* BUG (option active when not already acknowledged) (start)*/
         return (_stateIsDo(option) && _requestedDo(option));
@@ -231,7 +231,7 @@ public class TelnetClient extends Telnet
      * @throws IllegalArgumentException on error
      * @throws IOException on error
      ***/
-    public boolean sendAYT(long timeout)
+    public boolean sendAYT(final long timeout)
     throws IOException, IllegalArgumentException, InterruptedException
     {
         return (_sendAYT(timeout));
@@ -255,7 +255,7 @@ public class TelnetClient extends Telnet
      * @throws IOException if an I/O error occurs while writing the message
      * @since 3.0
      ***/
-    public void sendSubnegotiation(int[] message)
+    public void sendSubnegotiation(final int[] message)
     throws IOException, IllegalArgumentException
     {
         if (message.length < 1) {
@@ -278,7 +278,7 @@ public class TelnetClient extends Telnet
      * @throws IllegalArgumentException  on error
      * @since 3.0
      ***/
-    public void sendCommand(byte command)
+    public void sendCommand(final byte command)
     throws IOException, IllegalArgumentException
     {
         _sendCommand(command);
@@ -295,7 +295,7 @@ public class TelnetClient extends Telnet
      * @throws IOException on error
      ***/
     @Override
-    public void addOptionHandler(TelnetOptionHandler opthand)
+    public void addOptionHandler(final TelnetOptionHandler opthand)
     throws InvalidTelnetOptionException, IOException
     {
         super.addOptionHandler(opthand);
@@ -311,7 +311,7 @@ public class TelnetClient extends Telnet
      * @throws IOException on error
      ***/
     @Override
-    public void deleteOptionHandler(int optcode)
+    public void deleteOptionHandler(final int optcode)
     throws InvalidTelnetOptionException, IOException
     {
         super.deleteOptionHandler(optcode);
@@ -325,7 +325,7 @@ public class TelnetClient extends Telnet
      * @param spystream - OutputStream on which session activity
      * will be echoed.
      ***/
-    public void registerSpyStream(OutputStream  spystream)
+    public void registerSpyStream(final OutputStream  spystream)
     {
         super._registerSpyStream(spystream);
     }
@@ -347,7 +347,7 @@ public class TelnetClient extends Telnet
      * @param notifhand - TelnetNotificationHandler to be registered
      ***/
     @Override
-    public void registerNotifHandler(TelnetNotificationHandler  notifhand)
+    public void registerNotifHandler(final TelnetNotificationHandler  notifhand)
     {
         super.registerNotifHandler(notifhand);
     }
@@ -388,7 +388,7 @@ public class TelnetClient extends Telnet
      * @param flag true to enable the reader thread, false to disable
      * @see #registerInputListener
      ***/
-    public void setReaderThread(boolean flag)
+    public void setReaderThread(final boolean flag)
     {
         readerThread = flag;
     }
@@ -425,7 +425,7 @@ public class TelnetClient extends Telnet
      * @param listener listener to be registered; replaces any previous
      * @since 3.0
      ***/
-    public synchronized void registerInputListener(TelnetInputListener listener)
+    public synchronized void registerInputListener(final TelnetInputListener listener)
     {
         this.inputListener = listener;
     }

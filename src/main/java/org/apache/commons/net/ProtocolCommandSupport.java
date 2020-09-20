@@ -46,7 +46,7 @@ public class ProtocolCommandSupport implements Serializable
      *
      * @param source  The source to use for all generated ProtocolCommandEvents.
      ***/
-    public ProtocolCommandSupport(Object source)
+    public ProtocolCommandSupport(final Object source)
     {
         __listeners = new ListenerList();
         __source = source;
@@ -64,13 +64,13 @@ public class ProtocolCommandSupport implements Serializable
      * @param message The entire command string verbatim as sent to the server,
      *        including all arguments.
      ***/
-    public void fireCommandSent(String command, String message)
+    public void fireCommandSent(final String command, final String message)
     {
         ProtocolCommandEvent event;
 
         event = new ProtocolCommandEvent(__source, command, message);
 
-        for (EventListener listener : __listeners)
+        for (final EventListener listener : __listeners)
         {
            ((ProtocolCommandListener)listener).protocolCommandSent(event);
         }
@@ -89,12 +89,12 @@ public class ProtocolCommandSupport implements Serializable
      *   strings like OK rather than integer codes (i.e., POP3Repy.OK).
      * @param message The entire reply as received from the server.
      ***/
-    public void fireReplyReceived(int replyCode, String message)
+    public void fireReplyReceived(final int replyCode, final String message)
     {
         ProtocolCommandEvent event;
         event = new ProtocolCommandEvent(__source, replyCode, message);
 
-        for (EventListener listener : __listeners)
+        for (final EventListener listener : __listeners)
         {
             ((ProtocolCommandListener)listener).protocolReplyReceived(event);
         }
@@ -105,7 +105,7 @@ public class ProtocolCommandSupport implements Serializable
      *
      * @param listener  The ProtocolCommandListener to add.
      ***/
-    public void addProtocolCommandListener(ProtocolCommandListener listener)
+    public void addProtocolCommandListener(final ProtocolCommandListener listener)
     {
         __listeners.addListener(listener);
     }
@@ -115,7 +115,7 @@ public class ProtocolCommandSupport implements Serializable
      *
      * @param listener  The ProtocolCommandListener to remove.
      ***/
-    public void removeProtocolCommandListener(ProtocolCommandListener listener)
+    public void removeProtocolCommandListener(final ProtocolCommandListener listener)
     {
         __listeners.removeListener(listener);
     }

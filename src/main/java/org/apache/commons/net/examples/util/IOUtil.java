@@ -58,7 +58,7 @@ public final class IOUtil
                                  remoteOutput.flush();
                              }
                          }
-                         catch (IOException e)
+                         catch (final IOException e)
                          {
                              //e.printStackTrace();
                          }
@@ -76,7 +76,7 @@ public final class IOUtil
                          {
                              Util.copyStream(remoteInput, localOutput);
                          }
-                         catch (IOException e)
+                         catch (final IOException e)
                          {
                              e.printStackTrace();
                              System.exit(1);
@@ -96,7 +96,7 @@ public final class IOUtil
             writer.join();
             reader.interrupt();
         }
-        catch (InterruptedException e)
+        catch (final InterruptedException e)
         {
             // Ignored
         }

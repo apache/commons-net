@@ -42,9 +42,9 @@ import org.apache.commons.net.echo.EchoUDPClient;
 public final class echo
 {
 
-    public static final void echoTCP(String host) throws IOException
+    public static final void echoTCP(final String host) throws IOException
     {
-        EchoTCPClient client = new EchoTCPClient();
+        final EchoTCPClient client = new EchoTCPClient();
         BufferedReader input, echoInput;
         PrintWriter echoOutput;
         String line;
@@ -70,7 +70,7 @@ public final class echo
         client.disconnect();
     }
 
-    public static final void echoUDP(String host) throws IOException
+    public static final void echoUDP(final String host) throws IOException
     {
         int length, count;
         byte[] data;
@@ -105,14 +105,14 @@ public final class echo
                 // because even though the JDK 1.1 docs claim that
                 // InterruptedIOException is thrown on a timeout, it seems
                 // SocketException is also thrown.
-                catch (SocketException e)
+                catch (final SocketException e)
                 {
                     // We timed out and assume the packet is lost.
                     System.err.println(
                         "SocketException: Timed out and dropped packet");
                     break;
                 }
-                catch (InterruptedIOException e)
+                catch (final InterruptedIOException e)
                 {
                     // We timed out and assume the packet is lost.
                     System.err.println(
@@ -131,7 +131,7 @@ public final class echo
     }
 
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
 
         if (args.length == 1)
@@ -140,7 +140,7 @@ public final class echo
             {
                 echoTCP(args[0]);
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 e.printStackTrace();
                 System.exit(1);
@@ -152,7 +152,7 @@ public final class echo
             {
                 echoUDP(args[1]);
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 e.printStackTrace();
                 System.exit(1);

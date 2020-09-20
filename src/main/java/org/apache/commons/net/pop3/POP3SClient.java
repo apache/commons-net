@@ -103,7 +103,7 @@ public class POP3SClient extends POP3Client
      * Constructor for POP3SClient, using {@link #DEFAULT_PROTOCOL} i.e. TLS
      * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      */
-    public POP3SClient(boolean implicit)
+    public POP3SClient(final boolean implicit)
     {
         this(DEFAULT_PROTOCOL, implicit);
     }
@@ -113,7 +113,7 @@ public class POP3SClient extends POP3Client
      * Sets security mode to explicit.
      * @param proto the protocol.
      */
-    public POP3SClient(String proto)
+    public POP3SClient(final String proto)
     {
         this(proto, false);
     }
@@ -123,7 +123,7 @@ public class POP3SClient extends POP3Client
      * @param proto the protocol.
      * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      */
-    public POP3SClient(String proto, boolean implicit)
+    public POP3SClient(final String proto, final boolean implicit)
     {
         this(proto, implicit, null);
     }
@@ -135,7 +135,7 @@ public class POP3SClient extends POP3Client
      * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      * @param ctx the context to be used
      */
-    public POP3SClient(String proto, boolean implicit, SSLContext ctx)
+    public POP3SClient(final String proto, final boolean implicit, final SSLContext ctx)
     {
         super();
         protocol = proto;
@@ -151,7 +151,7 @@ public class POP3SClient extends POP3Client
      * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      * @param ctx A pre-configured SSL Context.
      */
-    public POP3SClient(boolean implicit, SSLContext ctx)
+    public POP3SClient(final boolean implicit, final SSLContext ctx)
     {
         this(DEFAULT_PROTOCOL, implicit, ctx);
     }
@@ -161,7 +161,7 @@ public class POP3SClient extends POP3Client
      * @param context A pre-configured SSL Context.
      * @see #POP3SClient(boolean, SSLContext)
      */
-    public POP3SClient(SSLContext context)
+    public POP3SClient(final SSLContext context)
     {
         this(false, context);
     }
@@ -206,10 +206,10 @@ public class POP3SClient extends POP3Client
     {
         initSSLContext();
 
-        SSLSocketFactory ssf = context.getSocketFactory();
-        String host = (_hostname_ != null) ? _hostname_ : getRemoteAddress().getHostAddress();
-        int port = getRemotePort();
-        SSLSocket socket =
+        final SSLSocketFactory ssf = context.getSocketFactory();
+        final String host = (_hostname_ != null) ? _hostname_ : getRemoteAddress().getHostAddress();
+        final int port = getRemotePort();
+        final SSLSocket socket =
             (SSLSocket) ssf.createSocket(_socket_, host, port, true);
         socket.setEnableSessionCreation(true);
         socket.setUseClientMode(true);
@@ -252,7 +252,7 @@ public class POP3SClient extends POP3Client
      * @param newKeyManager The KeyManager implementation to set.
      * @see org.apache.commons.net.util.KeyManagerUtils
      */
-    public void setKeyManager(KeyManager newKeyManager)
+    public void setKeyManager(final KeyManager newKeyManager)
     {
         keyManager = newKeyManager;
     }
@@ -262,7 +262,7 @@ public class POP3SClient extends POP3Client
      * connection. Called before server negotiation.
      * @param cipherSuites The cipher suites.
      */
-    public void setEnabledCipherSuites(String[] cipherSuites)
+    public void setEnabledCipherSuites(final String[] cipherSuites)
     {
         suites = new String[cipherSuites.length];
         System.arraycopy(cipherSuites, 0, suites, 0, cipherSuites.length);
@@ -288,7 +288,7 @@ public class POP3SClient extends POP3Client
      * connection. I perform setting before a server negotiation.
      * @param protocolVersions The protocol versions.
      */
-    public void setEnabledProtocols(String[] protocolVersions)
+    public void setEnabledProtocols(final String[] protocolVersions)
     {
         protocols = new String[protocolVersions.length];
         System.arraycopy(protocolVersions, 0, protocols, 0, protocolVersions.length);
@@ -341,7 +341,7 @@ public class POP3SClient extends POP3Client
      * @param newTrustManager The TrustManager implementation to set.
      * @see org.apache.commons.net.util.TrustManagerUtils
      */
-    public void setTrustManager(TrustManager newTrustManager)
+    public void setTrustManager(final TrustManager newTrustManager)
     {
         trustManager = newTrustManager;
     }
@@ -361,7 +361,7 @@ public class POP3SClient extends POP3Client
      * @param newHostnameVerifier The HostnameVerifier implementation to set or <code>null</code> to disable.
      * @since 3.4
      */
-    public void setHostnameVerifier(HostnameVerifier newHostnameVerifier)
+    public void setHostnameVerifier(final HostnameVerifier newHostnameVerifier)
     {
         hostnameVerifier = newHostnameVerifier;
     }
@@ -385,7 +385,7 @@ public class POP3SClient extends POP3Client
      * @param enable Enable automatic endpoint identification checking using the HTTPS algorithm on Java 1.7+.
      * @since 3.4
      */
-    public void setEndpointCheckingEnabled(boolean enable)
+    public void setEndpointCheckingEnabled(final boolean enable)
     {
         tlsEndpointChecking = enable;
     }

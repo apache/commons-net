@@ -89,7 +89,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param mode the mode to set
      */
     @Override
-    public void setMode(int mode)
+    public void setMode(final int mode)
     {
         buf[MODE_INDEX] = (byte) (buf[MODE_INDEX] & 0xF8 | mode & 0x7);
     }
@@ -115,7 +115,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param li leap indicator.
      */
     @Override
-    public void setLeapIndicator(int li)
+    public void setLeapIndicator(final int li)
     {
         buf[LI_INDEX] = (byte) (buf[LI_INDEX] & 0x3F | ((li & 0x3) << LI_SHIFT));
     }
@@ -141,7 +141,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param poll poll interval.
      */
     @Override
-    public void setPoll(int poll)
+    public void setPoll(final int poll)
     {
         buf[POLL_INDEX] = (byte) (poll & 0xFF);
     }
@@ -165,7 +165,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @since 3.4
      */
     @Override
-    public void setPrecision(int precision)
+    public void setPrecision(final int precision)
     {
         buf[PRECISION_INDEX] = (byte) (precision & 0xFF);
     }
@@ -187,7 +187,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param version NTP version.
      */
     @Override
-    public void setVersion(int version)
+    public void setVersion(final int version)
     {
         buf[VERSION_INDEX] = (byte) (buf[VERSION_INDEX] & 0xC7 | ((version & 0x7) << VERSION_SHIFT));
     }
@@ -211,7 +211,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param stratum stratum level.
      */
     @Override
-    public void setStratum(int stratum)
+    public void setStratum(final int stratum)
     {
         buf[STRATUM_INDEX] = (byte) (stratum & 0xFF);
     }
@@ -236,7 +236,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @since 3.4
      */
     @Override
-    public void setRootDelay(int delay)
+    public void setRootDelay(final int delay)
     {
         setInt(ROOT_DELAY_INDEX, delay);
     }
@@ -252,7 +252,7 @@ public class NtpV3Impl implements NtpV3Packet
     @Override
     public double getRootDelayInMillisDouble()
     {
-        double l = getRootDelay();
+        final double l = getRootDelay();
         return l / 65.536;
     }
 
@@ -273,7 +273,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @since 3.4
      */
     @Override
-    public void setRootDispersion(int dispersion)
+    public void setRootDispersion(final int dispersion)
     {
         setInt(ROOT_DISPERSION_INDEX, dispersion);
     }
@@ -286,7 +286,7 @@ public class NtpV3Impl implements NtpV3Packet
     @Override
     public long getRootDispersionInMillis()
     {
-        long l = getRootDispersion();
+        final long l = getRootDispersion();
         return (l * 1000) / 65536L;
     }
 
@@ -299,7 +299,7 @@ public class NtpV3Impl implements NtpV3Packet
     @Override
     public double getRootDispersionInMillisDouble()
     {
-        double l = getRootDispersion();
+        final double l = getRootDispersion();
         return l / 65.536;
     }
 
@@ -310,7 +310,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param refId reference clock identifier.
      */
     @Override
-    public void setReferenceId(int refId)
+    public void setReferenceId(final int refId)
     {
         setInt(REFERENCE_ID_INDEX, refId);
     }
@@ -338,8 +338,8 @@ public class NtpV3Impl implements NtpV3Packet
     @Override
     public String getReferenceIdString()
     {
-        int version = getVersion();
-        int stratum = getStratum();
+        final int version = getVersion();
+        final int stratum = getStratum();
         if (version == VERSION_3 || version == VERSION_4) {
             if (stratum == 0 || stratum == 1) {
                 return idAsString(); // 4-character ASCII string (e.g. GPS, USNO)
@@ -372,9 +372,9 @@ public class NtpV3Impl implements NtpV3Packet
 
     private String idAsString()
     {
-        StringBuilder id = new StringBuilder();
+        final StringBuilder id = new StringBuilder();
         for (int i = 0; i <= 3; i++) {
-            char c = (char) buf[REFERENCE_ID_INDEX + i];
+            final char c = (char) buf[REFERENCE_ID_INDEX + i];
             if (c == 0) {  // 0-terminated string
                 break;
             }
@@ -407,7 +407,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param ts NTP timestamp
      */
     @Override
-    public void setTransmitTime(TimeStamp ts)
+    public void setTransmitTime(final TimeStamp ts)
     {
         setTimestamp(TRANSMIT_TIMESTAMP_INDEX, ts);
     }
@@ -419,7 +419,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param ts NTP timestamp
      */
     @Override
-    public void setOriginateTimeStamp(TimeStamp ts)
+    public void setOriginateTimeStamp(final TimeStamp ts)
     {
         setTimestamp(ORIGINATE_TIMESTAMP_INDEX, ts);
     }
@@ -455,7 +455,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param ts NTP timestamp
      */
     @Override
-    public void setReferenceTime(TimeStamp ts)
+    public void setReferenceTime(final TimeStamp ts)
     {
         setTimestamp(REFERENCE_TIMESTAMP_INDEX, ts);
     }
@@ -479,7 +479,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param ts timestamp
      */
     @Override
-    public void setReceiveTimeStamp(TimeStamp ts)
+    public void setReceiveTimeStamp(final TimeStamp ts)
     {
         setTimestamp(RECEIVE_TIMESTAMP_INDEX, ts);
     }
@@ -499,9 +499,9 @@ public class NtpV3Impl implements NtpV3Packet
     /***
      * @return 4 bytes as 32-bit int
      */
-    private int getInt(int index)
+    private int getInt(final int index)
     {
-        int i = ui(buf[index]) << 24 |
+        final int i = ui(buf[index]) << 24 |
                 ui(buf[index + 1]) << 16 |
                 ui(buf[index + 2]) << 8 |
                 ui(buf[index + 3]);
@@ -515,7 +515,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param idx index position
      * @param value 32-bit int value
      */
-    private void setInt(int idx, int value)
+    private void setInt(final int idx, int value)
     {
         for (int i=3; i >= 0; i--) {
             buf[idx + i] = (byte) (value & 0xff);
@@ -529,7 +529,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param index index into data array
      * @return TimeStamp object for 64 bits starting at index
      */
-    private TimeStamp getTimestamp(int index)
+    private TimeStamp getTimestamp(final int index)
     {
         return new TimeStamp(getLong(index));
     }
@@ -539,9 +539,9 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return 8 bytes as 64-bit long
      */
-    private long getLong(int index)
+    private long getLong(final int index)
     {
-        long i = ul(buf[index]) << 56 |
+        final long i = ul(buf[index]) << 56 |
                 ul(buf[index + 1]) << 48 |
                 ul(buf[index + 2]) << 40 |
                 ul(buf[index + 3]) << 32 |
@@ -558,7 +558,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param index index into the byte array.
      * @param t TimeStamp.
      */
-    private void setTimestamp(int index, TimeStamp t)
+    private void setTimestamp(final int index, final TimeStamp t)
     {
         long ntpTime = (t == null) ? 0 : t.ntpValue();
         // copy 64-bits from Long value into 8 x 8-bit bytes of array
@@ -592,20 +592,20 @@ public class NtpV3Impl implements NtpV3Packet
      * @throws IllegalArgumentException if srcDp is null or byte length is less than minimum length of 48 bytes
      */
     @Override
-    public void setDatagramPacket(DatagramPacket srcDp)
+    public void setDatagramPacket(final DatagramPacket srcDp)
     {
         if (srcDp == null || srcDp.getLength() < buf.length) {
             throw new IllegalArgumentException();
         }
-        byte[] incomingBuf = srcDp.getData();
+        final byte[] incomingBuf = srcDp.getData();
         int len = srcDp.getLength();
         if (len > buf.length) {
             len = buf.length;
         }
         System.arraycopy(incomingBuf, 0, buf, 0, len);
-        DatagramPacket dp = getDatagramPacket();
+        final DatagramPacket dp = getDatagramPacket();
         dp.setAddress(srcDp.getAddress());
-        int port = srcDp.getPort();
+        final int port = srcDp.getPort();
         dp.setPort(port > 0 ? port : NTP_PORT);
         dp.setData(buf);
     }
@@ -622,7 +622,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @since 3.4
      */
     @Override
-    public boolean equals(Object obj)
+    public boolean equals(final Object obj)
     {
         if (this == obj) {
             return true;
@@ -630,7 +630,7 @@ public class NtpV3Impl implements NtpV3Packet
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        NtpV3Impl other = (NtpV3Impl) obj;
+        final NtpV3Impl other = (NtpV3Impl) obj;
         return java.util.Arrays.equals(buf, other.buf);
     }
 
@@ -655,9 +655,9 @@ public class NtpV3Impl implements NtpV3Packet
      * @param b input byte
      * @return unsigned int value of byte
      */
-    protected static final int ui(byte b)
+    protected static final int ui(final byte b)
     {
-        int i = b & 0xFF;
+        final int i = b & 0xFF;
         return i;
     }
 
@@ -669,9 +669,9 @@ public class NtpV3Impl implements NtpV3Packet
      * @param b input byte
      * @return unsigned long value of byte
      */
-    protected static final long ul(byte b)
+    protected static final long ul(final byte b)
     {
-        long i = b & 0xFF;
+        final long i = b & 0xFF;
         return i;
     }
 

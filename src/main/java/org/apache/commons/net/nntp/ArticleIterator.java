@@ -28,7 +28,7 @@ class ArticleIterator implements Iterator<Article>, Iterable<Article> {
 
     private  final Iterator<String> stringIterator;
 
-    public ArticleIterator(Iterable<String> iterableString) {
+    public ArticleIterator(final Iterable<String> iterableString) {
         stringIterator = iterableString.iterator();
     }
 
@@ -44,7 +44,7 @@ class ArticleIterator implements Iterator<Article>, Iterable<Article> {
      */
     @Override
     public Article next() {
-        String line = stringIterator.next();
+        final String line = stringIterator.next();
         return NNTPClient.__parseArticleEntry(line);
     }
 

@@ -134,7 +134,7 @@ public class FTPSClient extends FTPClient {
      * Calls {@link #FTPSClient(String, boolean)}
      * @param isImplicit The security mode (Implicit/Explicit).
      */
-    public FTPSClient(boolean isImplicit) {
+    public FTPSClient(final boolean isImplicit) {
         this(DEFAULT_PROTOCOL, isImplicit);
     }
 
@@ -143,7 +143,7 @@ public class FTPSClient extends FTPClient {
      *
      * @param protocol the protocol to use
      */
-    public FTPSClient(String protocol) {
+    public FTPSClient(final String protocol) {
         this(protocol, false);
     }
 
@@ -155,7 +155,7 @@ public class FTPSClient extends FTPClient {
      * @param protocol the protocol
      * @param isImplicit The security mode(Implicit/Explicit).
      */
-    public FTPSClient(String protocol, boolean isImplicit) {
+    public FTPSClient(final String protocol, final boolean isImplicit) {
         super();
         this.protocol = protocol;
         this.isImplicit = isImplicit;
@@ -170,7 +170,7 @@ public class FTPSClient extends FTPClient {
      * @param isImplicit The security mode(Implicit/Explicit).
      * @param context A pre-configured SSL Context
      */
-    public FTPSClient(boolean isImplicit, SSLContext context) {
+    public FTPSClient(final boolean isImplicit, final SSLContext context) {
         this(DEFAULT_PROTOCOL, isImplicit);
         this.context = context;
     }
@@ -181,7 +181,7 @@ public class FTPSClient extends FTPClient {
      * Calls {@link #FTPSClient(boolean, SSLContext)}
      * @param context A pre-configured SSL Context
      */
-    public FTPSClient(SSLContext context) {
+    public FTPSClient(final SSLContext context) {
         this(false, context);
     }
 
@@ -191,7 +191,7 @@ public class FTPSClient extends FTPClient {
      * This processing is done before connected processing.
      * @param auth AUTH command use value.
      */
-    public void setAuthValue(String auth) {
+    public void setAuthValue(final String auth) {
         this.auth = auth;
     }
 
@@ -233,7 +233,7 @@ public class FTPSClient extends FTPClient {
      * the command.
      */
     protected void execAUTH() throws SSLException, IOException {
-        int replyCode = sendCommand(CMD_AUTH, auth);
+        final int replyCode = sendCommand(CMD_AUTH, auth);
         if (FTPReply.SECURITY_MECHANISM_IS_OK == replyCode) {
             // replyCode = 334
             // I carry out an ADAT command.
@@ -260,7 +260,7 @@ public class FTPSClient extends FTPClient {
     protected void sslNegotiation() throws IOException {
         plainSocket = _socket_;
         initSslContext();
-        SSLSocket socket = (SSLSocket)createSSLSocket(_socket_);
+        final SSLSocket socket = (SSLSocket)createSSLSocket(_socket_);
         socket.setEnableSessionCreation(isCreation);
         socket.setUseClientMode(isClientMode);
 
@@ -311,7 +311,7 @@ public class FTPSClient extends FTPClient {
     * @param keyManager The KeyManager implementation to set.
     * @see org.apache.commons.net.util.KeyManagerUtils
     */
-    public void setKeyManager(KeyManager keyManager) {
+    public void setKeyManager(final KeyManager keyManager) {
         this.keyManager = keyManager;
     }
 
@@ -319,7 +319,7 @@ public class FTPSClient extends FTPClient {
      * Controls whether a new SSL session may be established by this socket.
      * @param isCreation The established socket flag.
      */
-    public void setEnabledSessionCreation(boolean isCreation) {
+    public void setEnabledSessionCreation(final boolean isCreation) {
         this.isCreation = isCreation;
     }
 
@@ -343,7 +343,7 @@ public class FTPSClient extends FTPClient {
      * Configures the socket to require client authentication.
      * @param isNeedClientAuth The need client auth flag.
      */
-    public void setNeedClientAuth(boolean isNeedClientAuth) {
+    public void setNeedClientAuth(final boolean isNeedClientAuth) {
         this.isNeedClientAuth = isNeedClientAuth;
     }
 
@@ -366,7 +366,7 @@ public class FTPSClient extends FTPClient {
      * suite negotiated.
      * @param isWantClientAuth The want client auth flag.
      */
-    public void setWantClientAuth(boolean isWantClientAuth) {
+    public void setWantClientAuth(final boolean isWantClientAuth) {
         this.isWantClientAuth = isWantClientAuth;
     }
 
@@ -388,7 +388,7 @@ public class FTPSClient extends FTPClient {
      * handshake.
      * @param isClientMode The use client mode flag.
      */
-    public void setUseClientMode(boolean isClientMode) {
+    public void setUseClientMode(final boolean isClientMode) {
         this.isClientMode = isClientMode;
     }
 
@@ -411,7 +411,7 @@ public class FTPSClient extends FTPClient {
      * connection. Called before server negotiation.
      * @param cipherSuites The cipher suites.
      */
-    public void setEnabledCipherSuites(String[] cipherSuites) {
+    public void setEnabledCipherSuites(final String[] cipherSuites) {
         suites = new String[cipherSuites.length];
         System.arraycopy(cipherSuites, 0, suites, 0, cipherSuites.length);
     }
@@ -434,7 +434,7 @@ public class FTPSClient extends FTPClient {
      * connection. I perform setting before a server negotiation.
      * @param protocolVersions The protocol versions.
      */
-    public void setEnabledProtocols(String[] protocolVersions) {
+    public void setEnabledProtocols(final String[] protocolVersions) {
         protocols = new String[protocolVersions.length];
         System.arraycopy(protocolVersions, 0, protocols, 0, protocolVersions.length);
     }
@@ -460,11 +460,11 @@ public class FTPSClient extends FTPClient {
      * the command.
      * @see #parsePBSZ(long)
      */
-    public void execPBSZ(long pbsz) throws SSLException, IOException {
+    public void execPBSZ(final long pbsz) throws SSLException, IOException {
         if (pbsz < 0 || 4294967295L < pbsz) { // 32-bit unsigned number
             throw new IllegalArgumentException();
         }
-        int status = sendCommand(CMD_PBSZ, String.valueOf(pbsz));
+        final int status = sendCommand(CMD_PBSZ, String.valueOf(pbsz));
         if (FTPReply.COMMAND_OK != status) {
             throw new SSLException(getReplyString());
         }
@@ -482,12 +482,12 @@ public class FTPSClient extends FTPClient {
      * @see #execPBSZ(long)
      * @since 3.0
      */
-    public long parsePBSZ(long pbsz) throws SSLException, IOException {
+    public long parsePBSZ(final long pbsz) throws SSLException, IOException {
         execPBSZ(pbsz);
         long minvalue = pbsz;
-        String remainder = extractPrefixedData("PBSZ=", getReplyString());
+        final String remainder = extractPrefixedData("PBSZ=", getReplyString());
         if (remainder != null) {
-            long replysz = Long.parseLong(remainder);
+            final long replysz = Long.parseLong(remainder);
             if (replysz < minvalue) {
                 minvalue = replysz;
             }
@@ -537,8 +537,8 @@ public class FTPSClient extends FTPClient {
      * @param prot Data Channel Protection Level.
      * @return True - A set point is right / False - A set point is not right
      */
-    private boolean checkPROTValue(String prot) {
-        for (String element : PROT_COMMAND_VALUE)
+    private boolean checkPROTValue(final String prot) {
+        for (final String element : PROT_COMMAND_VALUE)
         {
             if (element.equals(prot)) {
                 return true;
@@ -559,8 +559,8 @@ public class FTPSClient extends FTPClient {
      */
     // Would like to remove this method, but that will break any existing clients that are using CCC
     @Override
-    public int sendCommand(String command, String args) throws IOException {
-        int repCode = super.sendCommand(command, args);
+    public int sendCommand(final String command, final String args) throws IOException {
+        final int repCode = super.sendCommand(command, args);
         /* If CCC is issued, restore socket i/o streams to unsecured versions */
         if (CMD_CCC.equals(command)) {
             if (FTPReply.COMMAND_OK == repCode) {
@@ -597,7 +597,7 @@ public class FTPSClient extends FTPClient {
     // Strictly speaking this is not needed, but it works round a Clirr bug
     // So rather than invoke the parent code, we do it here
     @Deprecated
-    protected Socket _openDataConnection_(int command, String arg)
+    protected Socket _openDataConnection_(final int command, final String arg)
             throws IOException {
         return _openDataConnection_(FTPCommand.getCommand(command), arg);
     }
@@ -617,12 +617,12 @@ public class FTPSClient extends FTPClient {
      * @since 3.2
      */
     @Override
-    protected Socket _openDataConnection_(String command, String arg)
+    protected Socket _openDataConnection_(final String command, final String arg)
             throws IOException {
-        Socket socket = super._openDataConnection_(command, arg);
+        final Socket socket = super._openDataConnection_(command, arg);
         _prepareDataSocket_(socket);
         if (socket instanceof SSLSocket) {
-            SSLSocket sslSocket = (SSLSocket)socket;
+            final SSLSocket sslSocket = (SSLSocket)socket;
 
             sslSocket.setUseClientMode(isClientMode);
             sslSocket.setEnableSessionCreation(isCreation);
@@ -654,7 +654,7 @@ public class FTPSClient extends FTPClient {
     * @throws IOException on error
     * @since 3.1
     */
-    protected void _prepareDataSocket_(Socket socket)
+    protected void _prepareDataSocket_(final Socket socket)
             throws IOException {
     }
 
@@ -674,7 +674,7 @@ public class FTPSClient extends FTPClient {
      * @param trustManager The TrustManager implementation to set, may be {@code null}
      * @see org.apache.commons.net.util.TrustManagerUtils
      */
-    public void setTrustManager(TrustManager trustManager) {
+    public void setTrustManager(final TrustManager trustManager) {
         this.trustManager = trustManager;
     }
 
@@ -695,7 +695,7 @@ public class FTPSClient extends FTPClient {
      * @param newHostnameVerifier The HostnameVerifier implementation to set or <code>null</code> to disable.
      * @since 3.4
      */
-    public void setHostnameVerifier(HostnameVerifier newHostnameVerifier)
+    public void setHostnameVerifier(final HostnameVerifier newHostnameVerifier)
     {
         hostnameVerifier = newHostnameVerifier;
     }
@@ -723,7 +723,7 @@ public class FTPSClient extends FTPClient {
      * @param enable Enable automatic endpoint identification checking using the HTTPS algorithm on Java 1.7+.
      * @since 3.4
      */
-    public void setEndpointCheckingEnabled(boolean enable)
+    public void setEndpointCheckingEnabled(final boolean enable)
     {
         tlsEndpointChecking = enable;
     }
@@ -757,7 +757,7 @@ public class FTPSClient extends FTPClient {
      * the command.
      * @since 3.0
      */
-    public int execAUTH(String mechanism) throws IOException
+    public int execAUTH(final String mechanism) throws IOException
     {
         return sendCommand(CMD_AUTH, mechanism);
     }
@@ -770,7 +770,7 @@ public class FTPSClient extends FTPClient {
      * the command.
      * @since 3.0
      */
-    public int execADAT(byte[] data) throws IOException
+    public int execADAT(final byte[] data) throws IOException
     {
         if (data != null)
         {
@@ -793,7 +793,7 @@ public class FTPSClient extends FTPClient {
      */
     public int execCCC() throws IOException
     {
-        int repCode = sendCommand(CMD_CCC);
+        final int repCode = sendCommand(CMD_CCC);
 // This will be performed by sendCommand(String, String)
 //        if (FTPReply.isPositiveCompletion(repCode)) {
 //            _socket_.close();
@@ -816,7 +816,7 @@ public class FTPSClient extends FTPClient {
      * the command.
      * @since 3.0
      */
-    public int execMIC(byte[] data) throws IOException
+    public int execMIC(final byte[] data) throws IOException
     {
         if (data != null)
         {
@@ -836,7 +836,7 @@ public class FTPSClient extends FTPClient {
      * the command.
      * @since 3.0
      */
-    public int execCONF(byte[] data) throws IOException
+    public int execCONF(final byte[] data) throws IOException
     {
         if (data != null)
         {
@@ -856,7 +856,7 @@ public class FTPSClient extends FTPClient {
      * the command.
      * @since 3.0
      */
-    public int execENC(byte[] data) throws IOException
+    public int execENC(final byte[] data) throws IOException
     {
         if (data != null)
         {
@@ -874,7 +874,7 @@ public class FTPSClient extends FTPClient {
      * @return the data in the reply, base64-decoded.
      * @since 3.0
      */
-    public byte[] parseADATReply(String reply)
+    public byte[] parseADATReply(final String reply)
     {
         if (reply == null) {
             return null;
@@ -889,8 +889,8 @@ public class FTPSClient extends FTPClient {
      * @param reply where to find the prefix
      * @return the remainder of the string after the prefix, or null if the prefix was not present.
      */
-    private String extractPrefixedData(String prefix, String reply) {
-        int idx = reply.indexOf(prefix);
+    private String extractPrefixedData(final String prefix, final String reply) {
+        final int idx = reply.indexOf(prefix);
         if (idx == -1) {
             return null;
         }
@@ -905,9 +905,9 @@ public class FTPSClient extends FTPClient {
      * @return SSL Sockect
      * @throws IOException
      */
-    private Socket createSSLSocket(Socket socket) throws IOException {
+    private Socket createSSLSocket(final Socket socket) throws IOException {
         if (socket != null) {
-            SSLSocketFactory f = context.getSocketFactory();
+            final SSLSocketFactory f = context.getSocketFactory();
             return f.createSocket(socket, socket.getInetAddress().getHostAddress(), socket.getPort(), false);
         } else {
             return null;

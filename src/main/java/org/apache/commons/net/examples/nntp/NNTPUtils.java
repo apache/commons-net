@@ -36,11 +36,11 @@ public class NNTPUtils {
      * @return Article[] An array of Article
      * @throws IOException on error
      */
-    public  static List<Article> getArticleInfo(NNTPClient client, long lowArticleNumber, long highArticleNumber)
+    public  static List<Article> getArticleInfo(final NNTPClient client, final long lowArticleNumber, final long highArticleNumber)
     throws IOException {
-        List<Article> articles = new ArrayList<>();
-        Iterable<Article> arts = client.iterateArticleInfo(lowArticleNumber, highArticleNumber);
-        for(Article article : arts){
+        final List<Article> articles = new ArrayList<>();
+        final Iterable<Article> arts = client.iterateArticleInfo(lowArticleNumber, highArticleNumber);
+        for(final Article article : arts){
             articles.add(article);
         }
         return articles;

@@ -31,32 +31,32 @@ import org.apache.commons.net.nntp.NewsgroupInfo;
  */
 public class ArticleReader {
 
-    public static void main(String[] args) throws SocketException, IOException {
+    public static void main(final String[] args) throws SocketException, IOException {
 
         if (args.length != 2 && args.length != 3 && args.length != 5) {
             System.out.println("Usage: MessageThreading <hostname> <groupname> [<article specifier> [<user> <password>]]");
             return;
         }
 
-        String hostname = args[0];
-        String newsgroup = args[1];
+        final String hostname = args[0];
+        final String newsgroup = args[1];
         // Article specifier can be numeric or Id in form <m.n.o.x@host>
-        String articleSpec = args.length >= 3 ? args[2] : null;
+        final String articleSpec = args.length >= 3 ? args[2] : null;
 
-        NNTPClient client = new NNTPClient();
+        final NNTPClient client = new NNTPClient();
         client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
         client.connect(hostname);
 
         if (args.length == 5) { // Optional auth
-            String user = args[3];
-            String password = args[4];
+            final String user = args[3];
+            final String password = args[4];
             if(!client.authenticate(user, password)) {
                 System.out.println("Authentication failed for user " + user + "!");
                 System.exit(1);
             }
         }
 
-        NewsgroupInfo group = new NewsgroupInfo();
+        final NewsgroupInfo group = new NewsgroupInfo();
         client.selectNewsgroup(newsgroup, group);
 
         BufferedReader brHdr;
@@ -64,7 +64,7 @@ public class ArticleReader {
         if (articleSpec != null) {
             brHdr = (BufferedReader) client.retrieveArticleHeader(articleSpec);
         } else {
-            long articleNum = group.getLastArticleLong();
+            final long articleNum = group.getLastArticleLong();
             brHdr = client.retrieveArticleHeader(articleNum);
         }
         if (brHdr != null) {
@@ -77,7 +77,7 @@ public class ArticleReader {
         if (articleSpec != null) {
             brBody = (BufferedReader) client.retrieveArticleBody(articleSpec);
         } else {
-            long articleNum = group.getLastArticleLong();
+            final long articleNum = group.getLastArticleLong();
             brBody = client.retrieveArticleBody(articleNum);
         }
         if (brBody != null) {

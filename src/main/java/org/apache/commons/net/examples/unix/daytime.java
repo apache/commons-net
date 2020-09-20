@@ -36,9 +36,9 @@ import org.apache.commons.net.daytime.DaytimeUDPClient;
 public final class daytime
 {
 
-    public static final void daytimeTCP(String host) throws IOException
+    public static final void daytimeTCP(final String host) throws IOException
     {
-        DaytimeTCPClient client = new DaytimeTCPClient();
+        final DaytimeTCPClient client = new DaytimeTCPClient();
 
         // We want to timeout if a response takes longer than 60 seconds
         client.setDefaultTimeout(60000);
@@ -47,9 +47,9 @@ public final class daytime
         client.disconnect();
     }
 
-    public static final void daytimeUDP(String host) throws IOException
+    public static final void daytimeUDP(final String host) throws IOException
     {
-        DaytimeUDPClient client = new DaytimeUDPClient();
+        final DaytimeUDPClient client = new DaytimeUDPClient();
 
         // We want to timeout if a response takes longer than 60 seconds
         client.setDefaultTimeout(60000);
@@ -60,7 +60,7 @@ public final class daytime
     }
 
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
 
         if (args.length == 1)
@@ -69,7 +69,7 @@ public final class daytime
             {
                 daytimeTCP(args[0]);
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 e.printStackTrace();
                 System.exit(1);
@@ -81,7 +81,7 @@ public final class daytime
             {
                 daytimeUDP(args[1]);
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 e.printStackTrace();
                 System.exit(1);

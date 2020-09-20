@@ -80,7 +80,7 @@ public final class WhoisClient extends FingerClient
      * @return The result of the whois query.
      * @throws IOException  If an I/O error occurs during the operation.
      ***/
-    public String query(String handle) throws IOException
+    public String query(final String handle) throws IOException
     {
         return query(false, handle);
     }
@@ -99,7 +99,7 @@ public final class WhoisClient extends FingerClient
      *         Can be read to obtain whois results.
      * @throws IOException  If an I/O error occurs during the operation.
      ***/
-    public InputStream getInputStream(String handle) throws IOException
+    public InputStream getInputStream(final String handle) throws IOException
     {
         return getInputStream(false, handle);
     }

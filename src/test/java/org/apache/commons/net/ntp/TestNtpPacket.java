@@ -31,7 +31,7 @@ public class TestNtpPacket {
 
     @Test
     public void testCreate() {
-        NtpV3Packet message = new NtpV3Impl();
+        final NtpV3Packet message = new NtpV3Impl();
         message.setLeapIndicator(0);             // byte 0 [bit numbers 7-6]
         message.setVersion(NtpV3Packet.VERSION_3); // byte 0 [bit numbers 5-4]
         message.setMode(4);                         // byte 0 [bit numbers 3-0]
@@ -58,12 +58,12 @@ public class TestNtpPacket {
         Assert.assertEquals(51, message.getRootDispersionInMillis());
         Assert.assertEquals(message.getRootDelay() / 65.536, message.getRootDelayInMillisDouble(), 1e-13);
 
-        DatagramPacket dp = message.getDatagramPacket(); // this creates a new datagram
+        final DatagramPacket dp = message.getDatagramPacket(); // this creates a new datagram
         Assert.assertNotNull(dp);
         Assert.assertEquals(48, dp.getLength()); // fixed 48-byte length
 
-        NtpV3Packet message2 = new NtpV3Impl();
-        DatagramPacket dp2 = new DatagramPacket(ntpPacket, ntpPacket.length);
+        final NtpV3Packet message2 = new NtpV3Impl();
+        final DatagramPacket dp2 = new DatagramPacket(ntpPacket, ntpPacket.length);
         message2.setDatagramPacket(dp2);
 
         Assert.assertEquals(message2, message);
@@ -74,7 +74,7 @@ public class TestNtpPacket {
     @Test
     public void testCreateAndSetByte0() {
         // LI + VN + Mode all part of first byte -- make sure set order does not matter
-        NtpV3Packet message = new NtpV3Impl();
+        final NtpV3Packet message = new NtpV3Impl();
 
         message.setLeapIndicator(2);
         message.setMode(4);
@@ -127,7 +127,7 @@ public class TestNtpPacket {
 
     @Test
     public void testCreateNtpV4() {
-        NtpV3Packet message = new NtpV3Impl();
+        final NtpV3Packet message = new NtpV3Impl();
         message.setVersion(NtpV3Packet.VERSION_4);
         message.setStratum(3);
         message.setReferenceId(0x81531472);
@@ -146,31 +146,31 @@ public class TestNtpPacket {
 
     @Test
     public void testCreateFromBytes() {
-        NtpV3Packet message = new NtpV3Impl();
-        DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length);
+        final NtpV3Packet message = new NtpV3Impl();
+        final DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length);
         message.setDatagramPacket(dp);
         Assert.assertEquals(4, message.getMode());
     }
 
     @Test(expected=IllegalArgumentException.class)
     public void testCreateFromBadPacket() {
-        NtpV3Packet message = new NtpV3Impl();
-        DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length-4); // drop 4-bytes from packet
+        final NtpV3Packet message = new NtpV3Impl();
+        final DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length-4); // drop 4-bytes from packet
         message.setDatagramPacket(dp);
     }
 
     @Test(expected=IllegalArgumentException.class)
     public void testCreateFromNullPacket() {
-        NtpV3Packet message = new NtpV3Impl();
+        final NtpV3Packet message = new NtpV3Impl();
         message.setDatagramPacket(null);
     }
 
     @Test
     public void testEquals() {
-        NtpV3Packet message1 = new NtpV3Impl();
-        DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length);
+        final NtpV3Packet message1 = new NtpV3Impl();
+        final DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length);
         message1.setDatagramPacket(dp);
-        NtpV3Packet message2 = new NtpV3Impl();
+        final NtpV3Packet message2 = new NtpV3Impl();
         message2.setDatagramPacket(dp);
         Assert.assertEquals("hashCode", message1.hashCode(), message2.hashCode());
         Assert.assertEquals(message1, message2);
@@ -180,13 +180,13 @@ public class TestNtpPacket {
         Assert.assertTrue(message1.getMode() != message2.getMode());
         Assert.assertFalse(message1.equals(message2));
 
-        NtpV3Packet message3 = null;
+        final NtpV3Packet message3 = null;
         Assert.assertFalse(message1.equals(message3));
     }
 
-    private static byte[] hexStringToByteArray(String s) {
-        int len = s.length();
-        byte[] data = new byte[len / 2];
+    private static byte[] hexStringToByteArray(final String s) {
+        final int len = s.length();
+        final byte[] data = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {
             data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
                     + Character.digit(s.charAt(i+1), 16));

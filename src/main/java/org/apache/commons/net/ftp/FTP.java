@@ -277,7 +277,7 @@ public class FTP extends SocketClient
     }
 
     // The RFC-compliant multiline termination check
-    private boolean __strictCheck(String line, String code) {
+    private boolean __strictCheck(final String line, final String code) {
         return (!(line.startsWith(code) && line.charAt(REPLY_CODE_LEN) == ' '));
     }
 
@@ -286,7 +286,7 @@ public class FTP extends SocketClient
     // 426 multi-line reply in response to ls /.  We relax the condition to
     // test that the line starts with a digit rather than starting with
     // the code.
-    private boolean __lenientCheck(String line) {
+    private boolean __lenientCheck(final String line) {
         return (!(line.length() > REPLY_CODE_LEN&& line.charAt(REPLY_CODE_LEN) != '-' &&
                 Character.isDigit(line.charAt(0))));
     }
@@ -310,7 +310,7 @@ public class FTP extends SocketClient
         __getReply(false);
     }
 
-    private void __getReply(boolean reportReply) throws IOException
+    private void __getReply(final boolean reportReply) throws IOException
     {
         int length;
 
@@ -338,7 +338,7 @@ public class FTP extends SocketClient
             code = line.substring(0, REPLY_CODE_LEN);
             _replyCode = Integer.parseInt(code);
         }
-        catch (NumberFormatException e)
+        catch (final NumberFormatException e)
         {
             throw new MalformedServerReplyException(
                 "Could not parse response code.\nServer Reply: " + line);
@@ -348,7 +348,7 @@ public class FTP extends SocketClient
 
         // Check the server reply type
         if (length > REPLY_CODE_LEN) {
-            char sep = line.charAt(REPLY_CODE_LEN);
+            final char sep = line.charAt(REPLY_CODE_LEN);
             // Get extra lines if message continues.
             if (sep == '-') {
                 do
@@ -407,7 +407,7 @@ public class FTP extends SocketClient
      * @throws IOException on error
      * @since 3.4
      */
-    protected void _connectAction_(Reader socketIsReader) throws IOException {
+    protected void _connectAction_(final Reader socketIsReader) throws IOException {
         super._connectAction_(); // sets up _input_ and _output_
         if(socketIsReader == null) {
             _controlInput_ =
@@ -418,7 +418,7 @@ public class FTP extends SocketClient
         _controlOutput_ =
             new BufferedWriter(new OutputStreamWriter(_output_, getControlEncoding()));
         if (connectTimeout > 0) { // NET-385
-            int original = _socket_.getSoTimeout();
+            final int original = _socket_.getSoTimeout();
             _socket_.setSoTimeout(connectTimeout);
             try {
                 __getReply();
@@ -426,8 +426,8 @@ public class FTP extends SocketClient
                 if (FTPReply.isPositivePreliminary(_replyCode)) {
                     __getReply();
                 }
-            } catch (SocketTimeoutException e) {
-                IOException ioe = new IOException("Timed out waiting for initial connect reply");
+            } catch (final SocketTimeoutException e) {
+                final IOException ioe = new IOException("Timed out waiting for initial connect reply");
                 ioe.initCause(e);
                 throw ioe;
             } finally {
@@ -453,7 +453,7 @@ public class FTP extends SocketClient
      *
      * @param encoding The new character encoding for the control connection.
      */
-    public void setControlEncoding(String encoding) {
+    public void setControlEncoding(final String encoding) {
         _controlEncoding = encoding;
     }
 
@@ -507,7 +507,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int sendCommand(String command, String args) throws IOException
+    public int sendCommand(final String command, final String args) throws IOException
     {
         if (_controlOutput_ == null) {
             throw new IOException("Connection is not open");
@@ -523,7 +523,7 @@ public class FTP extends SocketClient
         return _replyCode;
     }
 
-    private String __buildMessage(String command, String args) {
+    private String __buildMessage(final String command, final String args) {
         final StringBuilder __commandBuffer = new StringBuilder();
 
         __commandBuffer.append(command);
@@ -537,13 +537,13 @@ public class FTP extends SocketClient
         return __commandBuffer.toString();
     }
 
-    private void __send(String message) throws IOException,
+    private void __send(final String message) throws IOException,
             FTPConnectionClosedException, SocketException {
         try{
             _controlOutput_.write(message);
             _controlOutput_.flush();
         }
-        catch (SocketException e)
+        catch (final SocketException e)
         {
             if (!isConnected())
             {
@@ -564,7 +564,7 @@ public class FTP extends SocketClient
      * @since 3.0
      */
     protected void __noop() throws IOException {
-        String msg = __buildMessage(FTPCmd.NOOP.getCommand(), null);
+        final String msg = __buildMessage(FTPCmd.NOOP.getCommand(), null);
         __send(msg);
         __getReplyNoReport(); // This may timeout
     }
@@ -592,7 +592,7 @@ public class FTP extends SocketClient
      * @deprecated (3.3) Use {@link #sendCommand(FTPCmd, String)} instead
      ***/
     @Deprecated
-    public int sendCommand(int command, String args) throws IOException
+    public int sendCommand(final int command, final String args) throws IOException
     {
         return sendCommand(FTPCommand.getCommand(command), args);
     }
@@ -617,7 +617,7 @@ public class FTP extends SocketClient
      *      command or receiving the server reply.
      * @since 3.3
      */
-    public int sendCommand(FTPCmd command)  throws IOException{
+    public int sendCommand(final FTPCmd command)  throws IOException{
         return sendCommand(command, null);
     }
 
@@ -643,7 +643,7 @@ public class FTP extends SocketClient
      *      command or receiving the server reply.
      * @since 3.3
      */
-    public int sendCommand(FTPCmd command, String args)  throws IOException{
+    public int sendCommand(final FTPCmd command, final String args)  throws IOException{
         return sendCommand(command.getCommand(), args);
     }
 
@@ -665,7 +665,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int sendCommand(String command) throws IOException
+    public int sendCommand(final String command) throws IOException
     {
         return sendCommand(command, null);
     }
@@ -690,7 +690,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int sendCommand(int command) throws IOException
+    public int sendCommand(final int command) throws IOException
     {
         return sendCommand(command, null);
     }
@@ -762,7 +762,7 @@ public class FTP extends SocketClient
 
         buffer = new StringBuilder(256);
 
-        for (String line : _replyLines) {
+        for (final String line : _replyLines) {
                 buffer.append(line);
                 buffer.append(SocketClient.NETASCII_EOL);
         }
@@ -787,7 +787,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int user(String username) throws IOException
+    public int user(final String username) throws IOException
     {
         return sendCommand(FTPCmd.USER, username);
     }
@@ -805,7 +805,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
-    public int pass(String password) throws IOException
+    public int pass(final String password) throws IOException
     {
         return sendCommand(FTPCmd.PASS, password);
     }
@@ -824,7 +824,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int acct(String account) throws IOException
+    public int acct(final String account) throws IOException
     {
         return sendCommand(FTPCmd.ACCT, account);
     }
@@ -862,7 +862,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int cwd(String directory) throws IOException
+    public int cwd(final String directory) throws IOException
     {
         return sendCommand(FTPCmd.CWD, directory);
     }
@@ -935,7 +935,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int smnt(String dir) throws IOException
+    public int smnt(final String dir) throws IOException
     {
         return sendCommand(FTPCmd.SMNT, dir);
     }
@@ -955,10 +955,10 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int port(InetAddress host, int port) throws IOException
+    public int port(final InetAddress host, final int port) throws IOException
     {
         int num;
-        StringBuilder info = new StringBuilder(24);
+        final StringBuilder info = new StringBuilder(24);
 
         info.append(host.getHostAddress().replace('.', ','));
         num = port >>> 8;
@@ -995,10 +995,10 @@ public class FTP extends SocketClient
      *      command or receiving the server reply.
      * @since 2.2
      ***/
-    public int eprt(InetAddress host, int port) throws IOException
+    public int eprt(final InetAddress host, final int port) throws IOException
     {
         int num;
-        StringBuilder info = new StringBuilder();
+        final StringBuilder info = new StringBuilder();
         String h;
 
         // If IPv6, trim the zone index
@@ -1082,9 +1082,9 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
-    public int type(int fileType, int formatOrByteSize) throws IOException
+    public int type(final int fileType, final int formatOrByteSize) throws IOException
     {
-        StringBuilder arg = new StringBuilder();
+        final StringBuilder arg = new StringBuilder();
 
         arg.append(__modes.charAt(fileType));
         arg.append(' ');
@@ -1113,7 +1113,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
-    public int type(int fileType) throws IOException
+    public int type(final int fileType) throws IOException
     {
         return sendCommand(FTPCmd.TYPE,
                            __modes.substring(fileType, fileType + 1));
@@ -1134,7 +1134,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int stru(int structure) throws IOException
+    public int stru(final int structure) throws IOException
     {
         return sendCommand(FTPCmd.STRU,
                            __modes.substring(structure, structure + 1));
@@ -1155,7 +1155,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int mode(int mode) throws IOException
+    public int mode(final int mode) throws IOException
     {
         return sendCommand(FTPCmd.MODE,
                            __modes.substring(mode, mode + 1));
@@ -1178,7 +1178,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int retr(String pathname) throws IOException
+    public int retr(final String pathname) throws IOException
     {
         return sendCommand(FTPCmd.RETR, pathname);
     }
@@ -1201,7 +1201,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int stor(String pathname) throws IOException
+    public int stor(final String pathname) throws IOException
     {
         return sendCommand(FTPCmd.STOR, pathname);
     }
@@ -1245,7 +1245,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
-    public int stou(String pathname) throws IOException
+    public int stou(final String pathname) throws IOException
     {
         return sendCommand(FTPCmd.STOU, pathname);
     }
@@ -1268,7 +1268,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int appe(String pathname) throws IOException
+    public int appe(final String pathname) throws IOException
     {
         return sendCommand(FTPCmd.APPE, pathname);
     }
@@ -1287,7 +1287,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int allo(int bytes) throws IOException
+    public int allo(final int bytes) throws IOException
     {
         return sendCommand(FTPCmd.ALLO, Integer.toString(bytes));
     }
@@ -1306,7 +1306,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int allo(long bytes) throws IOException
+    public int allo(final long bytes) throws IOException
     {
         return sendCommand(FTPCmd.ALLO, Long.toString(bytes));
     }
@@ -1339,7 +1339,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int allo(int bytes, int recordSize) throws IOException
+    public int allo(final int bytes, final int recordSize) throws IOException
     {
         return sendCommand(FTPCmd.ALLO, Integer.toString(bytes) + " R " +
                            Integer.toString(recordSize));
@@ -1360,7 +1360,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int allo(long bytes, int recordSize) throws IOException
+    public int allo(final long bytes, final int recordSize) throws IOException
     {
         return sendCommand(FTPCmd.ALLO, Long.toString(bytes) + " R " +
                            Integer.toString(recordSize));
@@ -1380,7 +1380,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int rest(String marker) throws IOException
+    public int rest(final String marker) throws IOException
     {
         return sendCommand(FTPCmd.REST, marker);
     }
@@ -1392,7 +1392,7 @@ public class FTP extends SocketClient
      * @throws IOException on error
      * @since 2.0
      **/
-    public int mdtm(String file) throws IOException
+    public int mdtm(final String file) throws IOException
     {
         return sendCommand(FTPCmd.MDTM, file);
     }
@@ -1415,7 +1415,7 @@ public class FTP extends SocketClient
      * @since 2.2
      * @see <a href="http://tools.ietf.org/html/draft-somers-ftp-mfxx-04">http://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
      **/
-    public int mfmt(String pathname, String timeval) throws IOException
+    public int mfmt(final String pathname, final String timeval) throws IOException
     {
         return sendCommand(FTPCmd.MFMT, timeval + " " + pathname);
     }
@@ -1435,7 +1435,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int rnfr(String pathname) throws IOException
+    public int rnfr(final String pathname) throws IOException
     {
         return sendCommand(FTPCmd.RNFR, pathname);
     }
@@ -1454,7 +1454,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int rnto(String pathname) throws IOException
+    public int rnto(final String pathname) throws IOException
     {
         return sendCommand(FTPCmd.RNTO, pathname);
     }
@@ -1473,7 +1473,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int dele(String pathname) throws IOException
+    public int dele(final String pathname) throws IOException
     {
         return sendCommand(FTPCmd.DELE, pathname);
     }
@@ -1492,7 +1492,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int rmd(String pathname) throws IOException
+    public int rmd(final String pathname) throws IOException
     {
         return sendCommand(FTPCmd.RMD, pathname);
     }
@@ -1511,7 +1511,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int mkd(String pathname) throws IOException
+    public int mkd(final String pathname) throws IOException
     {
         return sendCommand(FTPCmd.MKD, pathname);
     }
@@ -1573,7 +1573,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int list(String pathname) throws IOException
+    public int list(final String pathname) throws IOException
     {
         return sendCommand(FTPCmd.LIST, pathname);
     }
@@ -1619,7 +1619,7 @@ public class FTP extends SocketClient
      *      command or receiving the server reply.
      * @since 3.0
      */
-    public int mlsd(String path) throws IOException
+    public int mlsd(final String path) throws IOException
     {
         return sendCommand(FTPCmd.MLSD, path);
     }
@@ -1665,7 +1665,7 @@ public class FTP extends SocketClient
      *      command or receiving the server reply.
      * @since 3.0
      */
-    public int mlst(String path) throws IOException
+    public int mlst(final String path) throws IOException
     {
         return sendCommand(FTPCmd.MLST, path);
     }
@@ -1709,7 +1709,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int nlst(String pathname) throws IOException
+    public int nlst(final String pathname) throws IOException
     {
         return sendCommand(FTPCmd.NLST, pathname);
     }
@@ -1728,7 +1728,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int site(String parameters) throws IOException
+    public int site(final String parameters) throws IOException
     {
         return sendCommand(FTPCmd.SITE, parameters);
     }
@@ -1748,7 +1748,7 @@ public class FTP extends SocketClient
      *      command or receiving the server reply.
      * @since 3.7
      ***/
-    public int size(String parameters) throws IOException
+    public int size(final String parameters) throws IOException
     {
         return sendCommand(FTPCmd.SIZE, parameters);
     }
@@ -1803,7 +1803,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int stat(String pathname) throws IOException
+    public int stat(final String pathname) throws IOException
     {
         return sendCommand(FTPCmd.STAT, pathname);
     }
@@ -1840,7 +1840,7 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int help(String command) throws IOException
+    public int help(final String command) throws IOException
     {
         return sendCommand(FTPCmd.HELP, command);
     }
@@ -1877,7 +1877,7 @@ public class FTP extends SocketClient
      * @param strictMultilineParsing the setting
      * @since 2.0
      */
-    public void setStrictMultilineParsing(boolean strictMultilineParsing) {
+    public void setStrictMultilineParsing(final boolean strictMultilineParsing) {
         this.strictMultilineParsing = strictMultilineParsing;
     }
 
@@ -1907,7 +1907,7 @@ public class FTP extends SocketClient
      * @param strictReplyParsing the setting
      * @since 3.6
      */
-    public void setStrictReplyParsing(boolean strictReplyParsing) {
+    public void setStrictReplyParsing(final boolean strictReplyParsing) {
         this.strictReplyParsing = strictReplyParsing;
     }
 

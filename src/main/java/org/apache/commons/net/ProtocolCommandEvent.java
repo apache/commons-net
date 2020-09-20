@@ -52,7 +52,7 @@ public class ProtocolCommandEvent extends EventObject
      * @param message The entire command string verbatim as sent to the server,
      *        including all arguments.
      ***/
-    public ProtocolCommandEvent(Object source, String command, String message)
+    public ProtocolCommandEvent(final Object source, final String command, final String message)
     {
         super(source);
         __replyCode = 0;
@@ -76,7 +76,7 @@ public class ProtocolCommandEvent extends EventObject
      *   strings like OK rather than integer codes (i.e., POP3Repy.OK).
      * @param message The entire reply as received from the server.
      ***/
-    public ProtocolCommandEvent(Object source, int replyCode, String message)
+    public ProtocolCommandEvent(final Object source, final int replyCode, final String message)
     {
         super(source);
         __replyCode = replyCode;

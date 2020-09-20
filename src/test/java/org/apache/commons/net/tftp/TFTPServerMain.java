@@ -38,15 +38,15 @@ public class TFTPServerMain {
             "\t-v verbose (trace packets)\n"
             ;
 
-    public static void main(String [] args) throws Exception {
+    public static void main(final String [] args) throws Exception {
         int port = 6901;
         int argc;
-        Map<String,String> opts = new HashMap<>();
+        final Map<String,String> opts = new HashMap<>();
         opts.put("-p", System.getProperty("java.io.tmpdir"));
         // Parse options
         for (argc = 0; argc < args.length; argc++)
         {
-            String arg = args[argc];
+            final String arg = args[argc];
             if (arg.startsWith("-"))
             {
                 if (arg.equals("-v") || arg.equals("-r")) {
@@ -76,30 +76,30 @@ public class TFTPServerMain {
         final TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, port,
                 TFTPServer.ServerMode.GET_AND_PUT, null, null){
             @Override
-            void sendData(TFTP tftp, TFTPPacket packet) throws IOException {
+            void sendData(final TFTP tftp, final TFTPPacket packet) throws IOException {
                 if (rand == null) {
                     super.sendData(tftp, packet);
                     return;
                 }
-                int rint = rand.nextInt(10);
+                final int rint = rand.nextInt(10);
                 switch(rint) {
                     case 0:
                         System.out.println("Bump port " + packet);
-                        int port = packet.getPort();
+                        final int port = packet.getPort();
                         packet.setPort(port+5);
                         super.sendData(tftp, packet);
                         packet.setPort(port);
                         break;
                     case 1:
                         if (packet instanceof TFTPDataPacket) {
-                            TFTPDataPacket data = (TFTPDataPacket) packet;
+                            final TFTPDataPacket data = (TFTPDataPacket) packet;
                             System.out.println("Change data block num");
                             data._blockNumber--;
                             super.sendData(tftp, packet);
                             data._blockNumber++;
                         }
                         if (packet instanceof TFTPAckPacket) {
-                            TFTPAckPacket ack = (TFTPAckPacket) packet;
+                            final TFTPAckPacket ack = (TFTPAckPacket) packet;
                             System.out.println("Change ack block num");
                             ack._blockNumber--;
                             super.sendData(tftp, packet);
@@ -124,7 +124,7 @@ public class TFTPServerMain {
                 if (verbose) {
                     return new TFTP() {
                       @Override
-                      protected void trace(String direction, TFTPPacket packet) {
+                      protected void trace(final String direction, final TFTPPacket packet) {
                           System.out.println(direction + " " + packet.toString());
                       }
                     };

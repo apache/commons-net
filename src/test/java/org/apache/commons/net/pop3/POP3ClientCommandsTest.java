@@ -47,7 +47,7 @@ public class POP3ClientCommandsTest extends TestCase
     String password = POP3Constants.password;
     String mailhost = POP3Constants.mailhost;
 
-    public POP3ClientCommandsTest(String name)
+    public POP3ClientCommandsTest(final String name)
     {
         super(name);
     }
@@ -107,7 +107,7 @@ public class POP3ClientCommandsTest extends TestCase
 
         //Should pass on a mailbox with mail in it
         login();
-        POP3MessageInfo msg = p.status();
+        final POP3MessageInfo msg = p.status();
         assertTrue(msg.number > 0);
         assertTrue(msg.size > 0);
         assertNull(msg.identifier);
@@ -117,7 +117,7 @@ public class POP3ClientCommandsTest extends TestCase
         reset();
         connect();
         assertTrue(p.login(emptyUser, password));
-        POP3MessageInfo msg2 = p.status();
+        final POP3MessageInfo msg2 = p.status();
         assertEquals(0, msg2.number);
         assertEquals(0, msg2.size);
         assertNull(msg2.identifier);
@@ -207,7 +207,7 @@ public class POP3ClientCommandsTest extends TestCase
         assertTrue(p.login(emptyUser, password));
 
         //The first message is always at index 1
-        POP3MessageInfo msg = p.listMessage(1);
+        final POP3MessageInfo msg = p.listMessage(1);
         assertNull(msg);
     }
 
@@ -285,7 +285,7 @@ public class POP3ClientCommandsTest extends TestCase
         assertTrue(p.login(emptyUser, password));
 
         //The first message is always at index 1
-        POP3MessageInfo msg = p.listUniqueIdentifier(1);
+        final POP3MessageInfo msg = p.listUniqueIdentifier(1);
         assertNull(msg);
     }
 
@@ -297,13 +297,13 @@ public class POP3ClientCommandsTest extends TestCase
         int reportedSize = 0;
         int actualSize = 0;
 
-        POP3MessageInfo[] msg = p.listMessages();
+        final POP3MessageInfo[] msg = p.listMessages();
         assertTrue(msg.length > 0);
 
         for (int i = msg.length; i > 0; i--)
         {
             reportedSize = msg[i - 1].size;
-            Reader r = p.retrieveMessage(i);
+            final Reader r = p.retrieveMessage(i);
             assertNotNull(r);
 
             int delaycount = 0;
@@ -366,9 +366,9 @@ public class POP3ClientCommandsTest extends TestCase
         reset();
         connect();
         login();
-        int numLines = 10;
+        final int numLines = 10;
 
-        POP3MessageInfo[] msg = p.listMessages();
+        final POP3MessageInfo[] msg = p.listMessages();
         assertTrue(msg.length > 0);
 
         for (int i = 0; i < msg.length; i++)
@@ -388,11 +388,11 @@ public class POP3ClientCommandsTest extends TestCase
         int reportedSize = 0;
         int actualSize = 0;
 
-        POP3MessageInfo msg = p.listMessage(1);
+        final POP3MessageInfo msg = p.listMessage(1);
         reportedSize = msg.size;
 
         //Now try to retrieve more lines than exist in the message
-        Reader r = p.retrieveMessageTop(1, 100000);
+        final Reader r = p.retrieveMessageTop(1, 100000);
         assertNotNull(r);
 
         int delaycount = 0;
@@ -456,7 +456,7 @@ public class POP3ClientCommandsTest extends TestCase
         login();
         //Get the original number of messages
         POP3MessageInfo[] msg = p.listMessages();
-        int numMessages = msg.length;
+        final int numMessages = msg.length;
         int numDeleted = 0;
 
         //Now delete some and logout
@@ -490,7 +490,7 @@ public class POP3ClientCommandsTest extends TestCase
         login();
         //Get the original number of messages
         POP3MessageInfo[] msg = p.listMessages();
-        int numMessages = msg.length;
+        final int numMessages = msg.length;
         int numDeleted = 0;
 
         //Now delete some and logout

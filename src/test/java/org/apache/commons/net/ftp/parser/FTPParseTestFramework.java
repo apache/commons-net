@@ -33,7 +33,7 @@ public abstract class FTPParseTestFramework extends TestCase
     /**
      * @see junit.framework.TestCase#TestCase(String)
      */
-    public FTPParseTestFramework(String name)
+    public FTPParseTestFramework(final String name)
     {
         super(name);
     }
@@ -41,11 +41,11 @@ public abstract class FTPParseTestFramework extends TestCase
     public void testBadListing() throws Exception
     {
 
-        String[] badsamples = getBadListing();
-        for (String test : badsamples)
+        final String[] badsamples = getBadListing();
+        for (final String test : badsamples)
         {
 
-            FTPFile f = parser.parseFTPEntry(test);
+            final FTPFile f = parser.parseFTPEntry(test);
             assertNull("Should have Failed to parse <" + test + ">",
                        nullFileOrNullDate(f));
 
@@ -56,11 +56,11 @@ public abstract class FTPParseTestFramework extends TestCase
     public void testGoodListing() throws Exception
     {
 
-        String[] goodsamples = getGoodListing();
-        for (String test : goodsamples)
+        final String[] goodsamples = getGoodListing();
+        for (final String test : goodsamples)
         {
 
-            FTPFile f = parser.parseFTPEntry(test);
+            final FTPFile f = parser.parseFTPEntry(test);
             assertNotNull("Failed to parse " + test, f);
 
             doAdditionalGoodTests(test, f);
@@ -73,7 +73,7 @@ public abstract class FTPParseTestFramework extends TestCase
      * @param test raw entry
      * @param f    parsed entry
      */
-    protected void doAdditionalGoodTests(String test, FTPFile f)
+    protected void doAdditionalGoodTests(final String test, final FTPFile f)
     {
         }
 
@@ -83,7 +83,7 @@ public abstract class FTPParseTestFramework extends TestCase
      * @param test raw entry
      * @param f    parsed entry
      */
-    protected void doAdditionalBadTests(String test, FTPFile f)
+    protected void doAdditionalBadTests(final String test, final FTPFile f)
     {
     }
 
@@ -136,7 +136,7 @@ public abstract class FTPParseTestFramework extends TestCase
      * @param f FTPFile entry - may be null
      * @return null if f is null or the date is null
      */
-    protected FTPFile nullFileOrNullDate(FTPFile f) {
+    protected FTPFile nullFileOrNullDate(final FTPFile f) {
         if (f==null){
             return null;
         }
@@ -159,22 +159,22 @@ public abstract class FTPParseTestFramework extends TestCase
         YEAR(Calendar.YEAR),
         ;
         final int unit;
-        CalendarUnit(int calUnit) {
+        CalendarUnit(final int calUnit) {
             unit = calUnit;
         }
     }
 
-    protected void testPrecision(String listEntry, CalendarUnit expectedPrecision) {
-        FTPFile file = getParser().parseFTPEntry(listEntry);
+    protected void testPrecision(final String listEntry, final CalendarUnit expectedPrecision) {
+        final FTPFile file = getParser().parseFTPEntry(listEntry);
         assertNotNull("Could not parse "+listEntry, file);
-        Calendar stamp = file.getTimestamp();
+        final Calendar stamp = file.getTimestamp();
         assertNotNull("Failed to parse time in "+listEntry, stamp);
         final int ordinal = expectedPrecision.ordinal();
         final CalendarUnit[] values = CalendarUnit.values();
         // Check expected unit and all more significant ones are set
         // This is needed for FTPFile.toFormattedString() to work correctly
         for(int i = ordinal; i < values.length; i++) {
-            CalendarUnit unit = values[i];
+            final CalendarUnit unit = values[i];
             assertTrue("Expected set "+unit+" in "+listEntry, stamp.isSet(unit.unit));
         }
         // Check previous entry (if any) is not set

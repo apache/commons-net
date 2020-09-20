@@ -87,7 +87,7 @@ public final class FTPClientExample
         "\t-PrP password - HTTP Proxy server password\n" +
         "\t-# - add hash display during transfers\n";
 
-    public static void main(String[] args) throws UnknownHostException
+    public static void main(final String[] args) throws UnknownHostException
     {
         boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false, listNames = false, hidden = false;
         boolean localActive = false, useEpsvWithIPv4 = false, feat = false, printHash = false;
@@ -206,7 +206,7 @@ public final class FTPClientExample
             }
             else if (args[base].equals("-PrH")) {
                 proxyHost = args[++base];
-                String parts[] = proxyHost.split(":");
+                final String parts[] = proxyHost.split(":");
                 if (parts.length == 2){
                     proxyHost=parts[0];
                     proxyPort=Integer.parseInt(parts[1]);
@@ -226,7 +226,7 @@ public final class FTPClientExample
             }
         }
 
-        int remain = args.length - base;
+        final int remain = args.length - base;
         if (username != null) {
             minParams -= 2;
         }
@@ -241,7 +241,7 @@ public final class FTPClientExample
 
         String server = args[base++];
         int port = 0;
-        String parts[] = server.split(":");
+        final String parts[] = server.split(":");
         if (parts.length == 2){
             server=parts[0];
             port=Integer.parseInt(parts[1]);
@@ -277,7 +277,7 @@ public final class FTPClientExample
             } else if (protocol.equals("false")) {
                 ftps = new FTPSClient(false);
             } else {
-                String prot[] = protocol.split(",");
+                final String prot[] = protocol.split(",");
                 if (prot.length == 1) { // Just protocol
                     ftps = new FTPSClient(protocol);
                 } else { // protocol,true|false
@@ -347,7 +347,7 @@ public final class FTPClientExample
                 System.exit(1);
             }
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             if (ftp.isConnected())
             {
@@ -355,7 +355,7 @@ public final class FTPClientExample
                 {
                     ftp.disconnect();
                 }
-                catch (IOException f)
+                catch (final IOException f)
                 {
                     // do nothing
                 }
@@ -413,13 +413,13 @@ __main:
             else if (listFiles || mlsd || mdtm || mlst || listNames || size)
             {
                 if (mlsd) {
-                    for (FTPFile f : ftp.mlistDir(remote)) {
+                    for (final FTPFile f : ftp.mlistDir(remote)) {
                         System.out.println(f.getRawListing());
                         System.out.println(f.toFormattedString(displayTimeZoneId));
                     }
                 }
                 if (mdtm) {
-                    FTPFile f = ftp.mdtmFile(remote);
+                    final FTPFile f = ftp.mdtmFile(remote);
                     if (f != null) {
                         System.out.println(f.getRawListing());
                         System.out.println(f.toFormattedString(displayTimeZoneId));
@@ -428,13 +428,13 @@ __main:
                     }
                 }
                 if (mlst) {
-                    FTPFile f = ftp.mlistFile(remote);
+                    final FTPFile f = ftp.mlistFile(remote);
                     if (f != null){
                         System.out.println(f.toFormattedString(displayTimeZoneId));
                     }
                 }
                 if (listNames) {
-                    for (String s : ftp.listNames(remote)) {
+                    for (final String s : ftp.listNames(remote)) {
                         System.out.println(s);
                     }
                 }
@@ -451,7 +451,7 @@ __main:
                         ftp.configure(config );
                     }
 
-                    for (FTPFile f : ftp.listFiles(remote)) {
+                    for (final FTPFile f : ftp.listFiles(remote)) {
                         System.out.println(f.getRawListing());
                         System.out.println(f.toFormattedString(displayTimeZoneId));
                     }
@@ -472,9 +472,9 @@ __main:
                     }
 
                     // Strings feature check
-                    String []features = ftp.featureValues(remote);
+                    final String []features = ftp.featureValues(remote);
                     if (features != null) {
-                        for(String f : features) {
+                        for(final String f : features) {
                             System.out.println("FEAT "+remote+"="+f+".");
                         }
                     } else {
@@ -522,13 +522,13 @@ __main:
 
             ftp.logout();
         }
-        catch (FTPConnectionClosedException e)
+        catch (final FTPConnectionClosedException e)
         {
             error = true;
             System.err.println("Server closed connection.");
             e.printStackTrace();
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             error = true;
             e.printStackTrace();
@@ -541,7 +541,7 @@ __main:
                 {
                     ftp.disconnect();
                 }
-                catch (IOException f)
+                catch (final IOException f)
                 {
                     // do nothing
                 }
@@ -551,8 +551,9 @@ __main:
         System.exit(error ? 1 : 0);
     } // end main
 
-    private static void showCslStats(FTPClient ftp) {
+    private static void showCslStats(final FTPClient ftp) {
         @SuppressWarnings("deprecation") // debug code
+        final
         int []stats = ftp.getCslDebug();
         System.out.println("CslDebug="+Arrays.toString(stats));
 
@@ -563,14 +564,14 @@ __main:
             private long megsTotal = 0;
 
             @Override
-            public void bytesTransferred(CopyStreamEvent event) {
+            public void bytesTransferred(final CopyStreamEvent event) {
                 bytesTransferred(event.getTotalBytesTransferred(), event.getBytesTransferred(), event.getStreamSize());
             }
 
             @Override
-            public void bytesTransferred(long totalBytesTransferred,
-                    int bytesTransferred, long streamSize) {
-                long megs = totalBytesTransferred / 1000000;
+            public void bytesTransferred(final long totalBytesTransferred,
+                    final int bytesTransferred, final long streamSize) {
+                final long megs = totalBytesTransferred / 1000000;
                 for (long l = megsTotal; l < megs; l++) {
                     System.err.print("#");
                 }

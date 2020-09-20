@@ -48,7 +48,7 @@ public final class NNTPConnectionClosedException extends IOException
      * <p>
      * @param message  The message explaining the reason for the exception.
      ***/
-    public NNTPConnectionClosedException(String message)
+    public NNTPConnectionClosedException(final String message)
     {
         super(message);
     }

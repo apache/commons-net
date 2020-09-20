@@ -71,7 +71,7 @@ public final class TimeUDPClient extends DatagramSocketClient
      * @return The time value retrieved from the server.
      * @throws IOException If an error occurs while retrieving the time.
      ***/
-    public long getTime(InetAddress host, int port) throws IOException
+    public long getTime(final InetAddress host, final int port) throws IOException
     {
         long time;
         DatagramPacket sendPacket, receivePacket;
@@ -97,7 +97,7 @@ public final class TimeUDPClient extends DatagramSocketClient
      * @return the time returned from the server
      * @throws IOException on error
      ***/
-    public long getTime(InetAddress host) throws IOException
+    public long getTime(final InetAddress host) throws IOException
     {
         return getTime(host, DEFAULT_PORT);
     }
@@ -113,7 +113,7 @@ public final class TimeUDPClient extends DatagramSocketClient
      *     converted to the local timezone.
      * @throws IOException  If an error occurs while fetching the time.
      ***/
-    public Date getDate(InetAddress host, int port) throws IOException
+    public Date getDate(final InetAddress host, final int port) throws IOException
     {
         return new Date((getTime(host, port) - SECONDS_1900_TO_1970)*1000L);
     }
@@ -124,7 +124,7 @@ public final class TimeUDPClient extends DatagramSocketClient
      * @return the date
      * @throws IOException on error
      ***/
-    public Date getDate(InetAddress host) throws IOException
+    public Date getDate(final InetAddress host) throws IOException
     {
         return new Date((getTime(host, DEFAULT_PORT) -
                          SECONDS_1900_TO_1970)*1000L);

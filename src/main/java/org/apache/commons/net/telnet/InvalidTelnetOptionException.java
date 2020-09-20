@@ -43,7 +43,7 @@ public class InvalidTelnetOptionException extends Exception
      * @param message - Error message.
      * @param optcode - Option code.
      ***/
-    public InvalidTelnetOptionException(String message, int optcode)
+    public InvalidTelnetOptionException(final String message, final int optcode)
     {
         optionCode = optcode;
         msg = message;

@@ -264,7 +264,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * @return An FTPFile instance corresponding to the supplied entry
      */
     @Override
-    public FTPFile parseFTPEntry(String entry) {
+    public FTPFile parseFTPEntry(final String entry) {
         if (isType == FILE_LIST_TYPE) {
             return parseFileList(entry);
         } else if (isType == MEMBER_LIST_TYPE) {
@@ -303,12 +303,12 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * @param entry zosDirectoryEntry
      * @return null: entry was not parsed.
      */
-    private FTPFile parseFileList(String entry) {
+    private FTPFile parseFileList(final String entry) {
         if (matches(entry)) {
-            FTPFile file = new FTPFile();
+            final FTPFile file = new FTPFile();
             file.setRawListing(entry);
-            String name = group(2);
-            String dsorg = group(1);
+            final String name = group(2);
+            final String dsorg = group(1);
             file.setName(name);
 
             // DSORG
@@ -353,17 +353,17 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * @param entry zosDirectoryEntry
      * @return null: entry was not parsed.
      */
-    private FTPFile parseMemberList(String entry) {
-        FTPFile file = new FTPFile();
+    private FTPFile parseMemberList(final String entry) {
+        final FTPFile file = new FTPFile();
         if (matches(entry)) {
             file.setRawListing(entry);
-            String name = group(1);
-            String datestr = group(2) + " " + group(3);
+            final String name = group(1);
+            final String datestr = group(2) + " " + group(3);
             file.setName(name);
             file.setType(FTPFile.FILE_TYPE);
             try {
                 file.setTimestamp(super.parseTimestamp(datestr));
-            } catch (ParseException e) {
+            } catch (final ParseException e) {
                 // just ignore parsing errors.
                 // TODO check this is ok
                 // Drop thru to try simple parser
@@ -378,7 +378,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
          */
         if (entry != null && entry.trim().length() > 0) {
             file.setRawListing(entry);
-            String name = entry.split(" ")[0];
+            final String name = entry.split(" ")[0];
             file.setName(name);
             file.setType(FTPFile.FILE_TYPE);
             return file;
@@ -405,12 +405,12 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * @param entry zosDirectoryEntry
      * @return null: entry was not parsed.
      */
-    private FTPFile parseJeslevel1List(String entry) {
+    private FTPFile parseJeslevel1List(final String entry) {
         if (matches(entry)) {
-            FTPFile file = new FTPFile();
+            final FTPFile file = new FTPFile();
             if (group(3).equalsIgnoreCase("OUTPUT")) {
                 file.setRawListing(entry);
-                String name = group(2); /* Job Number, used by GET */
+                final String name = group(2); /* Job Number, used by GET */
                 file.setName(name);
                 file.setType(FTPFile.FILE_TYPE);
                 return file;
@@ -442,12 +442,12 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * @param entry zosDirectoryEntry
      * @return null: entry was not parsed.
      */
-    private FTPFile parseJeslevel2List(String entry) {
+    private FTPFile parseJeslevel2List(final String entry) {
         if (matches(entry)) {
-            FTPFile file = new FTPFile();
+            final FTPFile file = new FTPFile();
             if (group(4).equalsIgnoreCase("OUTPUT")) {
                 file.setRawListing(entry);
-                String name = group(2); /* Job Number, used by GET */
+                final String name = group(2); /* Job Number, used by GET */
                 file.setName(name);
                 file.setType(FTPFile.FILE_TYPE);
                 return file;
@@ -467,12 +467,12 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * @since 2.0
      */
     @Override
-    public List<String> preParse(List<String> orig) {
+    public List<String> preParse(final List<String> orig) {
         // simply remove the header line. Composite logic will take care of the
         // two different types of
         // list in short order.
         if (orig != null && orig.size() > 0) {
-            String header = orig.get(0);
+            final String header = orig.get(0);
             if (header.indexOf("Volume") >= 0 && header.indexOf("Dsname") >= 0) {
                 setType(FILE_LIST_TYPE);
                 super.setRegex(FILE_LIST_REGEX);
@@ -505,7 +505,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * Explicitly set the type of listing being processed.
      * @param type The listing type.
      */
-    void setType(int type) {
+    void setType(final int type) {
         isType = type;
     }
 

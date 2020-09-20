@@ -51,8 +51,8 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
 
     private volatile boolean __threaded;
 
-    TelnetInputStream(InputStream input, TelnetClient client,
-                      boolean readerThread)
+    TelnetInputStream(final InputStream input, final TelnetClient client,
+                      final boolean readerThread)
     {
         super(input);
         __client = client;
@@ -76,7 +76,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         }
     }
 
-    TelnetInputStream(InputStream input, TelnetClient client) {
+    TelnetInputStream(final InputStream input, final TelnetClient client) {
         this(input, client, true);
     }
 
@@ -116,7 +116,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
      * or -1 (EOF) if end of stread reached,
      * or -2 (WOULD_BLOCK) if mayBlock is false and there is no data available
      */
-    private int __read(boolean mayBlock) throws IOException
+    private int __read(final boolean mayBlock) throws IOException
     {
         int ch;
 
@@ -300,7 +300,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     // TelnetOutputStream writing through the telnet client at same time
     // as a processDo/Will/etc. command invoked from TelnetInputStream
     // tries to write. Returns true if buffer was previously empty.
-    private boolean __processChar(int ch) throws InterruptedException
+    private boolean __processChar(final int ch) throws InterruptedException
     {
         // Critical section because we're altering __bytesAvailable,
         // __queueTail, and the contents of _queue.
@@ -319,7 +319,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                     {
                         __queue.wait();
                     }
-                    catch (InterruptedException e)
+                    catch (final InterruptedException e)
                     {
                         throw e;
                     }
@@ -384,7 +384,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                             __queue.wait();
                             __readIsWaiting = false;
                         }
-                        catch (InterruptedException e)
+                        catch (final InterruptedException e)
                         {
                             throw new InterruptedIOException("Fatal thread interruption during read.");
                         }
@@ -406,7 +406,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                                     }
                                 }
                             }
-                            catch (InterruptedIOException e)
+                            catch (final InterruptedIOException e)
                             {
                                 synchronized (__queue)
                                 {
@@ -416,7 +416,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                                     {
                                         __queue.wait(100);
                                     }
-                                    catch (InterruptedException interrupted)
+                                    catch (final InterruptedException interrupted)
                                     {
                                         // Ignored
                                     }
@@ -432,7 +432,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                                     __processChar(ch);
                                 }
                             }
-                            catch (InterruptedException e)
+                            catch (final InterruptedException e)
                             {
                                 if (__isClosed) {
                                     return EOF;
@@ -487,7 +487,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
      *            stream.
      ***/
     @Override
-    public int read(byte buffer[]) throws IOException
+    public int read(final byte buffer[]) throws IOException
     {
         return read(buffer, 0, buffer.length);
     }
@@ -508,7 +508,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
      *            stream.
      ***/
     @Override
-    public int read(byte buffer[], int offset, int length) throws IOException
+    public int read(final byte buffer[], int offset, int length) throws IOException
     {
         int ch, off;
 
@@ -605,7 +605,7 @@ _outerLoop:
                         break;
                     }
                 }
-                catch (InterruptedIOException e)
+                catch (final InterruptedIOException e)
                 {
                     synchronized (__queue)
                     {
@@ -615,7 +615,7 @@ _outerLoop:
                         {
                             __queue.wait(100);
                         }
-                        catch (InterruptedException interrupted)
+                        catch (final InterruptedException interrupted)
                         {
                             if (__isClosed) {
                                 break _outerLoop;
@@ -623,7 +623,7 @@ _outerLoop:
                         }
                         continue;
                     }
-                } catch(RuntimeException re) {
+                } catch(final RuntimeException re) {
                     // We treat any runtime exceptions as though the
                     // stream has been closed.  We close the
                     // underlying stream just to be sure.
@@ -639,7 +639,7 @@ _outerLoop:
                 {
                     notify = __processChar(ch);
                 }
-                catch (InterruptedException e)
+                catch (final InterruptedException e)
                 {
                     if (__isClosed) {
                         break _outerLoop;
@@ -652,7 +652,7 @@ _outerLoop:
                 }
             }
         }
-        catch (IOException ioe)
+        catch (final IOException ioe)
         {
             synchronized (__queue)
             {

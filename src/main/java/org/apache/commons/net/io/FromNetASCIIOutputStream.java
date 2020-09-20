@@ -46,14 +46,14 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
      *
      * @param output  The OutputStream to wrap.
      ***/
-    public FromNetASCIIOutputStream(OutputStream output)
+    public FromNetASCIIOutputStream(final OutputStream output)
     {
         super(output);
         __lastWasCR = false;
     }
 
 
-    private void __write(int ch) throws IOException
+    private void __write(final int ch) throws IOException
     {
         switch (ch)
         {
@@ -96,7 +96,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
      *            stream.
      ***/
     @Override
-    public synchronized void write(int ch)
+    public synchronized void write(final int ch)
     throws IOException
     {
         if (FromNetASCIIInputStream._noConversionRequired)
@@ -117,7 +117,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
      *            stream.
      ***/
     @Override
-    public synchronized void write(byte buffer[])
+    public synchronized void write(final byte buffer[])
     throws IOException
     {
         write(buffer, 0, buffer.length);
@@ -135,7 +135,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
      *            stream.
      ***/
     @Override
-    public synchronized void write(byte buffer[], int offset, int length)
+    public synchronized void write(final byte buffer[], int offset, int length)
     throws IOException
     {
         if (FromNetASCIIInputStream._noConversionRequired)

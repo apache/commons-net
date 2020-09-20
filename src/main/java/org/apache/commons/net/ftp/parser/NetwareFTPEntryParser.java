@@ -78,7 +78,7 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * <code>REGEX</code> is  not a valid regular expression.
      * @since 1.4
      */
-    public NetwareFTPEntryParser(FTPClientConfig config) {
+    public NetwareFTPEntryParser(final FTPClientConfig config) {
         super(REGEX);
         configure(config);
     }
@@ -111,20 +111,20 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * @return An FTPFile instance corresponding to the supplied entry
      */
     @Override
-    public FTPFile parseFTPEntry(String entry) {
+    public FTPFile parseFTPEntry(final String entry) {
 
-        FTPFile f = new FTPFile();
+        final FTPFile f = new FTPFile();
         if (matches(entry)) {
-            String dirString = group(1);
-            String attrib = group(2);
-            String user = group(3);
-            String size = group(4);
-            String datestr = group(5);
-            String name = group(9);
+            final String dirString = group(1);
+            final String attrib = group(2);
+            final String user = group(3);
+            final String size = group(4);
+            final String datestr = group(5);
+            final String name = group(9);
 
             try {
                 f.setTimestamp(super.parseTimestamp(datestr));
-            } catch (ParseException e) {
+            } catch (final ParseException e) {
                  // intentionally do nothing
             }
 

@@ -38,7 +38,7 @@ import org.apache.commons.net.examples.util.IOUtil;
 public final class WeatherTelnet
 {
 
-    public static final void main(String[] args)
+    public static final void main(final String[] args)
     {
         TelnetClient telnet;
 
@@ -48,7 +48,7 @@ public final class WeatherTelnet
         {
             telnet.connect("rainmaker.wunderground.com", 3000);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             e.printStackTrace();
             System.exit(1);
@@ -61,7 +61,7 @@ public final class WeatherTelnet
         {
             telnet.disconnect();
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             e.printStackTrace();
             System.exit(1);

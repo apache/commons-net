@@ -46,14 +46,14 @@ class Utils {
      * STDIN may require creating a temporary file which could be read by others
      * Environment variables may be visible by using PS
      */
-    static String getPassword(String username, String password) throws IOException {
+    static String getPassword(final String username, String password) throws IOException {
         if ("-".equals(password)) { // stdin
-            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             password = in.readLine();
         } else if ("*".equals(password)) { // console
-            Console con = System.console(); // Java 1.6
+            final Console con = System.console(); // Java 1.6
             if (con != null) {
-                char[] pwd = con.readPassword("Password for " + username + ": ");
+                final char[] pwd = con.readPassword("Password for " + username + ": ");
                 password = new String(pwd);
             } else {
                 throw new IOException("Cannot access Console");

@@ -51,7 +51,7 @@ import org.apache.commons.net.io.DotTerminatedMessageReader;
 public class POP3Client extends POP3
 {
 
-    private static POP3MessageInfo __parseStatus(String line)
+    private static POP3MessageInfo __parseStatus(final String line)
     {
         int num, size;
         StringTokenizer tokenizer;
@@ -74,7 +74,7 @@ public class POP3Client extends POP3
 
             size = Integer.parseInt(tokenizer.nextToken());
         }
-        catch (NumberFormatException e)
+        catch (final NumberFormatException e)
         {
             return null;
         }
@@ -105,7 +105,7 @@ public class POP3Client extends POP3
 
             line = tokenizer.nextToken();
         }
-        catch (NumberFormatException e)
+        catch (final NumberFormatException e)
         {
             return null;
         }
@@ -147,7 +147,7 @@ public class POP3Client extends POP3
      * @throws IOException If a network I/O error occurs in the process of
      *            logging in.
      ***/
-    public boolean login(String username, String password) throws IOException
+    public boolean login(final String username, final String password) throws IOException
     {
         if (getState() != AUTHORIZATION_STATE) {
             return false;
@@ -200,7 +200,7 @@ public class POP3Client extends POP3
      * @throws NoSuchAlgorithmException If the MD5 encryption algorithm
      *      cannot be instantiated by the Java runtime system.
      ***/
-    public boolean login(String username, String timestamp, String secret)
+    public boolean login(final String username, String timestamp, final String secret)
     throws IOException, NoSuchAlgorithmException
     {
         int i;
@@ -218,7 +218,7 @@ public class POP3Client extends POP3
         digestBuffer = new StringBuilder(128);
 
         for (i = 0; i < digest.length; i++) {
-            int digit = digest[i] & 0xff;
+            final int digit = digest[i] & 0xff;
             if (digit <= 15) { // Add leading zero if necessary (NET-351)
                 digestBuffer.append("0");
             }
@@ -301,7 +301,7 @@ public class POP3Client extends POP3
      * @throws IOException If a network I/O error occurs in the process of
      *           sending the delete command.
      ***/
-    public boolean deleteMessage(int messageId) throws IOException
+    public boolean deleteMessage(final int messageId) throws IOException
     {
         if (getState() == TRANSACTION_STATE) {
             return (sendCommand(POP3Command.DELE, Integer.toString(messageId))
@@ -374,7 +374,7 @@ public class POP3Client extends POP3
      * @throws IOException If a network I/O error occurs in the process of
      *         sending the list command.
      ***/
-    public POP3MessageInfo listMessage(int messageId) throws IOException
+    public POP3MessageInfo listMessage(final int messageId) throws IOException
     {
         if (getState() != TRANSACTION_STATE) {
             return null;
@@ -415,9 +415,9 @@ public class POP3Client extends POP3
         getAdditionalReply();
 
         // This could be a zero length array if no messages present
-        POP3MessageInfo[] messages = new POP3MessageInfo[_replyLines.size() - 2]; // skip first and last lines
+        final POP3MessageInfo[] messages = new POP3MessageInfo[_replyLines.size() - 2]; // skip first and last lines
 
-        ListIterator<String> en = _replyLines.listIterator(1); // Skip first line
+        final ListIterator<String> en = _replyLines.listIterator(1); // Skip first line
 
         // Fetch lines.
         for (int line = 0; line < messages.length; line++) {
@@ -444,7 +444,7 @@ public class POP3Client extends POP3
      * @throws IOException If a network I/O error occurs in the process of
      *        sending the list unique identifier command.
      ***/
-    public POP3MessageInfo listUniqueIdentifier(int messageId)
+    public POP3MessageInfo listUniqueIdentifier(final int messageId)
     throws IOException
     {
         if (getState() != TRANSACTION_STATE) {
@@ -486,9 +486,9 @@ public class POP3Client extends POP3
         getAdditionalReply();
 
         // This could be a zero length array if no messages present
-        POP3MessageInfo[] messages = new POP3MessageInfo[_replyLines.size() - 2]; // skip first and last lines
+        final POP3MessageInfo[] messages = new POP3MessageInfo[_replyLines.size() - 2]; // skip first and last lines
 
-        ListIterator<String> en = _replyLines.listIterator(1); // skip first line
+        final ListIterator<String> en = _replyLines.listIterator(1); // skip first line
 
         // Fetch lines.
         for (int line = 0; line < messages.length; line++) {
@@ -524,7 +524,7 @@ public class POP3Client extends POP3
      * @throws IOException If a network I/O error occurs in the process of
      *        sending the retrieve message command.
      */
-    public Reader retrieveMessage(int messageId) throws IOException
+    public Reader retrieveMessage(final int messageId) throws IOException
     {
         if (getState() != TRANSACTION_STATE) {
             return null;
@@ -565,7 +565,7 @@ public class POP3Client extends POP3
      * @throws IOException If a network I/O error occurs in the process of
      *       sending the top command.
      */
-    public Reader retrieveMessageTop(int messageId, int numLines)
+    public Reader retrieveMessageTop(final int messageId, final int numLines)
     throws IOException
     {
         if (numLines < 0 || getState() != TRANSACTION_STATE) {

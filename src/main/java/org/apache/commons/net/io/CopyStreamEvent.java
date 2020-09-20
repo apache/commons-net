@@ -54,8 +54,8 @@ public class CopyStreamEvent extends EventObject
      *          This may be set to <code>UNKNOWN_STREAM_SIZE</code> if the
      *          size is unknown.
      */
-    public CopyStreamEvent(Object source, long totalBytesTransferred,
-                           int bytesTransferred, long streamSize)
+    public CopyStreamEvent(final Object source, final long totalBytesTransferred,
+                           final int bytesTransferred, final long streamSize)
     {
         super(source);
         this.bytesTransferred = bytesTransferred;

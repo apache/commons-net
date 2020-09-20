@@ -53,7 +53,7 @@ public class MLSxEntryParserTest extends FTPParseTestFramework {
         "  ", // pathname of space
     };
 
-    public MLSxEntryParserTest(String name) {
+    public MLSxEntryParserTest(final String name) {
         super(name);
     }
 
@@ -82,7 +82,7 @@ public class MLSxEntryParserTest extends FTPParseTestFramework {
      * @return null if f is null
      */
     @Override
-    protected FTPFile nullFileOrNullDate(FTPFile f) {
+    protected FTPFile nullFileOrNullDate(final FTPFile f) {
         return f;
     }
 

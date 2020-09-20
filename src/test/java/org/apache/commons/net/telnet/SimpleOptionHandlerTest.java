@@ -52,8 +52,8 @@ public class SimpleOptionHandlerTest extends TelnetOptionHandlerTestAbstract
     public void testStartSubnegotiation()
     {
 
-        int resp1[] = opthand1.startSubnegotiationLocal();
-        int resp2[] = opthand1.startSubnegotiationRemote();
+        final int resp1[] = opthand1.startSubnegotiationLocal();
+        final int resp2[] = opthand1.startSubnegotiationRemote();
 
         assertEquals(resp1, null);
         assertEquals(resp2, null);
@@ -66,13 +66,13 @@ public class SimpleOptionHandlerTest extends TelnetOptionHandlerTestAbstract
     @Override
     public void testAnswerSubnegotiation()
     {
-        int subn[] =
+        final int subn[] =
         {
             TelnetCommand.IAC, TelnetCommand.SB, 4,
             1, TelnetCommand.IAC, TelnetCommand.SE,
         };
 
-        int resp1[] = opthand1.answerSubnegotiation(subn, subn.length);
+        final int resp1[] = opthand1.answerSubnegotiation(subn, subn.length);
 
         assertEquals(resp1, null);
     }

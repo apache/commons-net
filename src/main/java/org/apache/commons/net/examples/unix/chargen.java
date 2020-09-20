@@ -42,11 +42,11 @@ import org.apache.commons.net.chargen.CharGenUDPClient;
 public final class chargen
 {
 
-    public static final void chargenTCP(String host) throws IOException
+    public static final void chargenTCP(final String host) throws IOException
     {
         int lines = 100;
         String line;
-        CharGenTCPClient client = new CharGenTCPClient();
+        final CharGenTCPClient client = new CharGenTCPClient();
         BufferedReader chargenInput;
 
         // We want to timeout if a response takes longer than 60 seconds
@@ -70,7 +70,7 @@ public final class chargen
         client.disconnect();
     }
 
-    public static final void chargenUDP(String host) throws IOException
+    public static final void chargenUDP(final String host) throws IOException
     {
         int packets = 50;
         byte[] data;
@@ -97,13 +97,13 @@ public final class chargen
             // because even though the JDK 1.1 docs claim that
             // InterruptedIOException is thrown on a timeout, it seems
             // SocketException is also thrown.
-            catch (SocketException e)
+            catch (final SocketException e)
             {
                 // We timed out and assume the packet is lost.
                 System.err.println("SocketException: Timed out and dropped packet");
                 continue;
             }
-            catch (InterruptedIOException e)
+            catch (final InterruptedIOException e)
             {
                 // We timed out and assume the packet is lost.
                 System.err.println(
@@ -118,7 +118,7 @@ public final class chargen
     }
 
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
 
         if (args.length == 1)
@@ -127,7 +127,7 @@ public final class chargen
             {
                 chargenTCP(args[0]);
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 e.printStackTrace();
                 System.exit(1);
@@ -139,7 +139,7 @@ public final class chargen
             {
                 chargenUDP(args[1]);
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 e.printStackTrace();
                 System.exit(1);

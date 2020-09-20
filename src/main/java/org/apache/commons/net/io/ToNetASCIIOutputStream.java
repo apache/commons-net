@@ -42,7 +42,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
      *
      * @param output  The OutputStream to wrap.
      ***/
-    public ToNetASCIIOutputStream(OutputStream output)
+    public ToNetASCIIOutputStream(final OutputStream output)
     {
         super(output);
         __lastWasCR = false;
@@ -61,7 +61,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
      *            stream.
      ***/
     @Override
-    public synchronized void write(int ch)
+    public synchronized void write(final int ch)
     throws IOException
     {
         switch (ch)
@@ -91,7 +91,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
      *            stream.
      ***/
     @Override
-    public synchronized void write(byte buffer[])
+    public synchronized void write(final byte buffer[])
     throws IOException
     {
         write(buffer, 0, buffer.length);
@@ -109,7 +109,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
      *            stream.
      ***/
     @Override
-    public synchronized void write(byte buffer[], int offset, int length)
+    public synchronized void write(final byte buffer[], int offset, int length)
     throws IOException
     {
         while (length-- > 0) {

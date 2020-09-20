@@ -42,7 +42,7 @@ public class TestNtpClient {
 
         try {
             server.start();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             Assert.fail("failed to start NTP server: " + e);
         }
         Assert.assertTrue(server.isStarted());
@@ -56,7 +56,7 @@ public class TestNtpClient {
             // if not running then sleep 2 seconds and try again
             try {
                 Thread.sleep(2000);
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
                 // ignore
             }
         }
@@ -74,24 +74,24 @@ public class TestNtpClient {
 
     @Test
     public void testGetTime() throws IOException {
-        long currentTime = System.currentTimeMillis();
-        NTPUDPClient client = new NTPUDPClient();
+        final long currentTime = System.currentTimeMillis();
+        final NTPUDPClient client = new NTPUDPClient();
         // timeout if response takes longer than 2 seconds
         client.setDefaultTimeout(2000);
         try {
             // Java 1.7: use InetAddress.getLoopbackAddress() instead
-            InetAddress addr = InetAddress.getByAddress("loopback", new byte[]{127, 0, 0, 1});
-            TimeInfo timeInfo = client.getTime(addr, server.getPort());
+            final InetAddress addr = InetAddress.getByAddress("loopback", new byte[]{127, 0, 0, 1});
+            final TimeInfo timeInfo = client.getTime(addr, server.getPort());
             Assert.assertNotNull(timeInfo);
             Assert.assertTrue(timeInfo.getReturnTime() >= currentTime);
-            NtpV3Packet message = timeInfo.getMessage();
+            final NtpV3Packet message = timeInfo.getMessage();
             Assert.assertNotNull(message);
 
-            TimeStamp rcvTimeStamp = message.getReceiveTimeStamp();
-            TimeStamp xmitTimeStamp = message.getTransmitTimeStamp();
+            final TimeStamp rcvTimeStamp = message.getReceiveTimeStamp();
+            final TimeStamp xmitTimeStamp = message.getTransmitTimeStamp();
             Assert.assertTrue(xmitTimeStamp.compareTo(rcvTimeStamp) >= 0);
 
-            TimeStamp originateTimeStamp = message.getOriginateTimeStamp();
+            final TimeStamp originateTimeStamp = message.getOriginateTimeStamp();
             Assert.assertNotNull(originateTimeStamp);
             Assert.assertTrue(originateTimeStamp.getTime() >= currentTime);
 
@@ -99,7 +99,7 @@ public class TestNtpClient {
 
             // following assertions are specific to the SimpleNTPServer
 
-            TimeStamp referenceTimeStamp = message.getReferenceTimeStamp();
+            final TimeStamp referenceTimeStamp = message.getReferenceTimeStamp();
             Assert.assertNotNull(referenceTimeStamp);
             Assert.assertTrue(referenceTimeStamp.getTime() >= currentTime);
 

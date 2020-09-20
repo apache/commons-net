@@ -84,8 +84,8 @@ public final class TFTPErrorPacket extends TFTPPacket
      * @param error The error code of the packet.
      * @param message The error message of the packet.
      ***/
-    public TFTPErrorPacket(InetAddress destination, int port,
-                           int error, String message)
+    public TFTPErrorPacket(final InetAddress destination, final int port,
+                           final int error, final String message)
     {
         super(TFTPPacket.ERROR, destination, port);
 
@@ -102,7 +102,7 @@ public final class TFTPErrorPacket extends TFTPPacket
      * @throws TFTPPacketException  If the datagram isn't a valid TFTP
      *         error packet.
      ***/
-    TFTPErrorPacket(DatagramPacket datagram) throws TFTPPacketException
+    TFTPErrorPacket(final DatagramPacket datagram) throws TFTPPacketException
     {
         super(TFTPPacket.ERROR, datagram.getAddress(), datagram.getPort());
         int index, length;
@@ -146,7 +146,7 @@ public final class TFTPErrorPacket extends TFTPPacket
      * @return The datagram argument.
      ***/
     @Override
-    DatagramPacket _newDatagram(DatagramPacket datagram, byte[] data)
+    DatagramPacket _newDatagram(final DatagramPacket datagram, final byte[] data)
     {
         int length;
 

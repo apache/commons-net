@@ -49,15 +49,15 @@ public class SubnetUtils {
      * @throws IllegalArgumentException if the parameter is invalid,
      * i.e. does not match n.n.n.n/m where n=1-3 decimal digits, m = 1-2 decimal digits in range 0-32
      */
-    public SubnetUtils(String cidrNotation) {
-      Matcher matcher = cidrPattern.matcher(cidrNotation);
+    public SubnetUtils(final String cidrNotation) {
+      final Matcher matcher = cidrPattern.matcher(cidrNotation);
 
       if (matcher.matches()) {
           this.address = matchAddress(matcher);
 
           /* Create a binary netmask from the number of bits specification /x */
 
-          int trailingZeroes = NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
+          final int trailingZeroes = NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
           /*
            * An IPv4 netmask consists of 32 bits, a contiguous sequence
            * of the specified number of ones followed by all zeros.
@@ -85,7 +85,7 @@ public class SubnetUtils {
      * @throws IllegalArgumentException if the address or mask is invalid,
      * i.e. does not match n.n.n.n where n=1-3 decimal digits and the mask is not all zeros
      */
-    public SubnetUtils(String address, String mask) {
+    public SubnetUtils(final String address, final String mask) {
         this.address = toInteger(address);
         this.netmask = toInteger(mask);
 
@@ -118,7 +118,7 @@ public class SubnetUtils {
      * @param inclusiveHostCount true if network and broadcast addresses are to be included
      * @since 2.2
      */
-    public void setInclusiveHostCount(boolean inclusiveHostCount) {
+    public void setInclusiveHostCount(final boolean inclusiveHostCount) {
         this.inclusiveHostCount = inclusiveHostCount;
     }
 
@@ -156,7 +156,7 @@ public class SubnetUtils {
          * @param address A dot-delimited IPv4 address, e.g. "192.168.0.1"
          * @return True if in range, false otherwise
          */
-        public boolean isInRange(String address) {
+        public boolean isInRange(final String address) {
             return isInRange(toInteger(address));
         }
 
@@ -169,13 +169,13 @@ public class SubnetUtils {
          * @return true if it is in range
          * @since 3.4 (made public)
          */
-        public boolean isInRange(int address) {
+        public boolean isInRange(final int address) {
             if (address == 0) { // cannot ever be in range; rejecting now avoids problems with CIDR/31,32
                 return false;
             }
-            long addLong = address & UNSIGNED_INT_MASK;
-            long lowLong = low() & UNSIGNED_INT_MASK;
-            long highLong = high() & UNSIGNED_INT_MASK;
+            final long addLong = address & UNSIGNED_INT_MASK;
+            final long lowLong = low() & UNSIGNED_INT_MASK;
+            final long highLong = high() & UNSIGNED_INT_MASK;
             return addLong >= lowLong && addLong <= highLong;
         }
 
@@ -232,7 +232,7 @@ public class SubnetUtils {
          */
         @Deprecated
         public int getAddressCount() {
-            long countLong = getAddressCountLong();
+            final long countLong = getAddressCountLong();
             if (countLong > Integer.MAX_VALUE) {
                 throw new RuntimeException("Count is larger than an integer: " + countLong);
             }
@@ -247,13 +247,13 @@ public class SubnetUtils {
          * @since 3.4
          */
         public long getAddressCountLong() {
-            long b = broadcastLong();
-            long n = networkLong();
-            long count = b - n + (isInclusiveHostCount() ? 1 : -1);
+            final long b = broadcastLong();
+            final long n = networkLong();
+            final long count = b - n + (isInclusiveHostCount() ? 1 : -1);
             return count < 0 ? 0 : count;
         }
 
-        public int asInteger(String address) {
+        public int asInteger(final String address) {
             return toInteger(address);
         }
 
@@ -262,8 +262,8 @@ public class SubnetUtils {
         }
 
         public String[] getAllAddresses() {
-            int ct = getAddressCount();
-            String[] addresses = new String[ct];
+            final int ct = getAddressCount();
+            final String[] addresses = new String[ct];
             if (ct == 0) {
                 return addresses;
             }
@@ -276,8 +276,8 @@ public class SubnetUtils {
         /*
         * Convert a packed integer address into a 4-element array
         */
-        private int[] toArray(int val) {
-            int ret[] = new int[4];
+        private int[] toArray(final int val) {
+            final int ret[] = new int[4];
             for (int j = 3; j >= 0; --j) {
                 ret[j] |= ((val >>> 8*(3-j)) & (0xff));
             }
@@ -287,8 +287,8 @@ public class SubnetUtils {
         /*
         * Convert a 4-element array into dotted decimal format
         */
-        private String format(int[] octets) {
-            StringBuilder str = new StringBuilder();
+        private String format(final int[] octets) {
+            final StringBuilder str = new StringBuilder();
             for (int i =0; i < octets.length; ++i){
                 str.append(octets[i]);
                 if (i != octets.length - 1) {
@@ -325,8 +325,8 @@ public class SubnetUtils {
     /*
      * Convert a dotted decimal format address to a packed integer format
      */
-    private static int toInteger(String address) {
-        Matcher matcher = addressPattern.matcher(address);
+    private static int toInteger(final String address) {
+        final Matcher matcher = addressPattern.matcher(address);
         if (matcher.matches()) {
             return matchAddress(matcher);
         } else {
@@ -338,10 +338,10 @@ public class SubnetUtils {
      * Convenience method to extract the components of a dotted decimal address and
      * pack into an integer using a regex match
      */
-    private static int matchAddress(Matcher matcher) {
+    private static int matchAddress(final Matcher matcher) {
         int addr = 0;
         for (int i = 1; i <= 4; ++i) {
-            int n = (rangeCheck(Integer.parseInt(matcher.group(i)), 0, 255));
+            final int n = (rangeCheck(Integer.parseInt(matcher.group(i)), 0, 255));
             addr |= ((n & 0xff) << 8*(4-i));
         }
         return addr;
@@ -352,7 +352,7 @@ public class SubnetUtils {
      * Checks if a value x is in the range [begin,end].
      * Returns x if it is in range, throws an exception otherwise.
      */
-    private static int rangeCheck(int value, int begin, int end) {
+    private static int rangeCheck(final int value, final int begin, final int end) {
         if (value >= begin && value <= end) { // (begin,end]
             return value;
         }

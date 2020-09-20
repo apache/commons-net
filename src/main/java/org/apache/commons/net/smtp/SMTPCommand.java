@@ -101,7 +101,7 @@ public final class SMTPCommand
      * @return The SMTP protcol command string corresponding to a specified
      *         command code.
      ***/
-    public static final String getCommand(int command)
+    public static final String getCommand(final int command)
     {
         return _commands[command];
     }

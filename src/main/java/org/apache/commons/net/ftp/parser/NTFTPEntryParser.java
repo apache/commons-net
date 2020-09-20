@@ -72,11 +72,11 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * <code>REGEX</code> is  not a valid regular expression.
      * @since 1.4
      */
-     public NTFTPEntryParser(FTPClientConfig config)
+     public NTFTPEntryParser(final FTPClientConfig config)
     {
         super(REGEX, Pattern.DOTALL);
         configure(config);
-        FTPClientConfig config2 = new FTPClientConfig(
+        final FTPClientConfig config2 = new FTPClientConfig(
                 FTPClientConfig.SYST_NT,
                 DEFAULT_DATE_FORMAT2,
                 null);
@@ -96,29 +96,29 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * @return An FTPFile instance corresponding to the supplied entry
      */
     @Override
-    public FTPFile parseFTPEntry(String entry)
+    public FTPFile parseFTPEntry(final String entry)
     {
-        FTPFile f = new FTPFile();
+        final FTPFile f = new FTPFile();
         f.setRawListing(entry);
 
         if (matches(entry))
         {
-            String datestr = group(1)+" "+group(2);
-            String dirString = group(3);
-            String size = group(4);
-            String name = group(5);
+            final String datestr = group(1)+" "+group(2);
+            final String dirString = group(3);
+            final String size = group(4);
+            final String name = group(5);
             try
             {
                 f.setTimestamp(super.parseTimestamp(datestr));
             }
-            catch (ParseException e)
+            catch (final ParseException e)
             {
                 // parsing fails, try the other date format
                 try
                 {
                     f.setTimestamp(timestampParser.parseTimestamp(datestr));
                 }
-                catch (ParseException e2)
+                catch (final ParseException e2)
                 {
                     // intentionally do nothing
                 }

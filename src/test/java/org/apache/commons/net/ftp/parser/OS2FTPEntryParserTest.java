@@ -49,7 +49,7 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
         "     0           DIR   05-19-2000 12:56  local",
     };
 
-    public OS2FTPEntryParserTest(String name)
+    public OS2FTPEntryParserTest(final String name)
     {
         super(name);
     }
@@ -57,7 +57,7 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
     @Override
     public void testParseFieldsOnDirectory() throws Exception
     {
-        FTPFile dir = getParser().parseFTPEntry("     0           DIR   11-28-97   09:42  PC");
+        final FTPFile dir = getParser().parseFTPEntry("     0           DIR   11-28-97   09:42  PC");
         assertNotNull("Could not parse entry.", dir);
         assertTrue("Should have been a directory.",
                    dir.isDirectory());
@@ -70,7 +70,7 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
     @Override
     public void testParseFieldsOnFile() throws Exception
     {
-        FTPFile file = getParser().parseFTPEntry("5000000000      A          11-17-98   16:07  POPUPLOG.OS2");
+        final FTPFile file = getParser().parseFTPEntry("5000000000      A          11-17-98   16:07  POPUPLOG.OS2");
         assertNotNull("Could not parse entry.", file);
         assertTrue("Should have been a file.",
                    file.isFile());
@@ -97,7 +97,7 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
     @Override
     protected FTPFileEntryParser getParser()
     {
-        ConfigurableFTPFileEntryParserImpl parser =
+        final ConfigurableFTPFileEntryParserImpl parser =
             new OS2FTPEntryParser();
         parser.configure(null);
         return parser;

@@ -108,8 +108,8 @@ public class RLoginClient extends RCommandClient
      * @throws IOException If the rlogin() attempt fails.  The exception
      *            will contain a message indicating the nature of the failure.
      ***/
-    public void rlogin(String localUsername, String remoteUsername,
-                       String terminalType, int terminalSpeed)
+    public void rlogin(final String localUsername, final String remoteUsername,
+                       final String terminalType, final int terminalSpeed)
     throws IOException
     {
         rexec(localUsername, remoteUsername, terminalType + "/" + terminalSpeed,
@@ -123,8 +123,8 @@ public class RLoginClient extends RCommandClient
      * @param terminalType the terminal type
      * @throws IOException on error
      ***/
-    public void rlogin(String localUsername, String remoteUsername,
-                       String terminalType)
+    public void rlogin(final String localUsername, final String remoteUsername,
+                       final String terminalType)
     throws IOException
     {
         rexec(localUsername, remoteUsername, terminalType, false);

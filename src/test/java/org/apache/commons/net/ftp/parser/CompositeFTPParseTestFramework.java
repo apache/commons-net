@@ -23,7 +23,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
  */
 public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramework
 {
-    public CompositeFTPParseTestFramework(String name)
+    public CompositeFTPParseTestFramework(final String name)
     {
         super(name);
     }
@@ -63,13 +63,13 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
      */
     public void testConsistentListing() throws Exception
     {
-        String goodsamples[][] = getGoodListings();
+        final String goodsamples[][] = getGoodListings();
 
-        for (String[] goodsample : goodsamples)
+        for (final String[] goodsample : goodsamples)
         {
-            FTPFileEntryParser parser = getParser();
-            for (String test : goodsample) {
-                FTPFile f = parser.parseFTPEntry(test);
+            final FTPFileEntryParser parser = getParser();
+            for (final String test : goodsample) {
+                final FTPFile f = parser.parseFTPEntry(test);
                 assertNotNull("Failed to parse " + test,
                         f);
 
@@ -84,13 +84,13 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
     @Override
     public void testBadListing() throws Exception
     {
-        String badsamples[][] = getBadListings();
+        final String badsamples[][] = getBadListings();
 
-        for (String[] badsample : badsamples)
+        for (final String[] badsample : badsamples)
         {
-            FTPFileEntryParser parser = getParser();
-            for (String test : badsample) {
-                FTPFile f = parser.parseFTPEntry(test);
+            final FTPFileEntryParser parser = getParser();
+            for (final String test : badsample) {
+                final FTPFile f = parser.parseFTPEntry(test);
                 assertNull("Should have Failed to parse " + test,
                         nullFileOrNullDate(f));
 
@@ -104,14 +104,14 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
     // on one format will fail if another format is substituted.
     public void testInconsistentListing() throws Exception
     {
-        String goodsamples[][] = getGoodListings();
+        final String goodsamples[][] = getGoodListings();
 
-        FTPFileEntryParser parser = getParser();
+        final FTPFileEntryParser parser = getParser();
 
         for (int i = 0; i < goodsamples.length; i++)
         {
-            String test = goodsamples[i][0];
-            FTPFile f = parser.parseFTPEntry(test);
+            final String test = goodsamples[i][0];
+            final FTPFile f = parser.parseFTPEntry(test);
 
             switch (i)
             {

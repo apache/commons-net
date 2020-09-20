@@ -57,24 +57,24 @@ public class ToNetASCIIInputStreamTest {
         byteTest(true, "Hello\nWorld\n\r", "Hello\r\nWorld\r\n\r");
     }
 
-    private void byteTest(boolean byByte, String input, String expect) throws IOException {
-        byte[] data = input.getBytes(ASCII);
-        byte[] expected = expect.getBytes(ASCII);
-        InputStream source = new ByteArrayInputStream(data);
-        ToNetASCIIInputStream toNetASCII = new ToNetASCIIInputStream(source);
-        byte[] output = new byte[data.length*2]; // cannot be longer than twice the input
+    private void byteTest(final boolean byByte, final String input, final String expect) throws IOException {
+        final byte[] data = input.getBytes(ASCII);
+        final byte[] expected = expect.getBytes(ASCII);
+        final InputStream source = new ByteArrayInputStream(data);
+        final ToNetASCIIInputStream toNetASCII = new ToNetASCIIInputStream(source);
+        final byte[] output = new byte[data.length*2]; // cannot be longer than twice the input
 
-        int length = byByte ?
+        final int length = byByte ?
                 getSingleBytes(toNetASCII, output) :
                     getBuffer(toNetASCII, output);
 
-        byte[] result = new byte[length];
+        final byte[] result = new byte[length];
         System.arraycopy(output, 0, result, 0, length);
         Assert.assertArrayEquals("Failed converting "+input,expected, result);
         toNetASCII.close();
     }
 
-    private int getSingleBytes(ToNetASCIIInputStream toNetASCII, byte[] output)
+    private int getSingleBytes(final ToNetASCIIInputStream toNetASCII, final byte[] output)
             throws IOException {
         int b;
         int length=0;
@@ -84,7 +84,7 @@ public class ToNetASCIIInputStreamTest {
         return length;
     }
 
-    private int getBuffer(ToNetASCIIInputStream toNetASCII, byte[] output)
+    private int getBuffer(final ToNetASCIIInputStream toNetASCII, final byte[] output)
             throws IOException {
         int length=0;
         int remain=output.length;

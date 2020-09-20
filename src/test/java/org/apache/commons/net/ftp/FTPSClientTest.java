@@ -122,7 +122,7 @@ public class FTPSClientTest {
     }
 
     private FTPSClient loginClient() throws SocketException, IOException {
-        FTPSClient client = new FTPSClient(implicit);
+        final FTPSClient client = new FTPSClient(implicit);
         client.connect("localhost", SocketPort);
         assertClientCode(client);
         assertEquals(SocketPort, client.getRemotePort());
@@ -141,7 +141,7 @@ public class FTPSClientTest {
         return client;
     }
 
-    private void assertClientCode(FTPSClient client) {
+    private void assertClientCode(final FTPSClient client) {
         final int replyCode = client.getReplyCode();
         assertTrue(FTPReply.isPositiveCompletion(replyCode));
     }
@@ -151,8 +151,8 @@ public class FTPSClientTest {
         loginClient().disconnect();
     }
 
-    private void testListFiles(String pathname) throws SocketException, IOException {
-        FTPSClient client = loginClient();
+    private void testListFiles(final String pathname) throws SocketException, IOException {
+        final FTPSClient client = loginClient();
         try {
             // do it twice
             assertNotNull(client.listFiles(pathname));
@@ -162,8 +162,8 @@ public class FTPSClientTest {
         }
     }
 
-    private void retrieveFile(String pathname) throws SocketException, IOException {
-        FTPSClient client = loginClient();
+    private void retrieveFile(final String pathname) throws SocketException, IOException {
+        final FTPSClient client = loginClient();
         try {
             // Do it twice.
             // Just testing that we are not getting an SSL error (the file MUST be present).

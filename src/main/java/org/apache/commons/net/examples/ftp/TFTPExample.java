@@ -63,7 +63,7 @@ public final class TFTPExample
         "\t-v Verbose (trace packets)\n"
         ;
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         boolean receiveFile = true, closed;
         int transferMode = TFTP.BINARY_MODE, argc;
@@ -117,7 +117,7 @@ public final class TFTPExample
         if (verbose) {
             tftp = new TFTPClient() {
                 @Override
-                protected void trace(String direction, TFTPPacket packet) {
+                protected void trace(final String direction, final TFTPPacket packet) {
                     System.out.println(direction + " " + packet);
                 }
             };
@@ -150,8 +150,8 @@ public final class TFTPExample
         System.out.println("OK");
     }
 
-    private static boolean send(int transferMode, String hostname, String localFilename, String remoteFilename,
-            TFTPClient tftp) {
+    private static boolean send(final int transferMode, final String hostname, final String localFilename, final String remoteFilename,
+            final TFTPClient tftp) {
         boolean closed;
         FileInputStream input = null;
 
@@ -160,7 +160,7 @@ public final class TFTPExample
         {
             input = new FileInputStream(localFilename);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             tftp.close();
             throw new RuntimeException("Error: could not open local file for reading.", e);
@@ -171,20 +171,20 @@ public final class TFTPExample
         // Try to send local file via TFTP
         try
         {
-            String [] parts = hostname.split(":");
+            final String [] parts = hostname.split(":");
             if (parts.length == 2) {
                 tftp.sendFile(remoteFilename, transferMode, input, parts[0], Integer.parseInt(parts[1]));
             } else {
                 tftp.sendFile(remoteFilename, transferMode, input, hostname);
             }
         }
-        catch (UnknownHostException e)
+        catch (final UnknownHostException e)
         {
             System.err.println("Error: could not resolve hostname.");
             System.err.println(e.getMessage());
             System.exit(1);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             System.err.println("Error: I/O exception occurred while sending file.");
             System.err.println(e.getMessage());
@@ -199,8 +199,8 @@ public final class TFTPExample
         return closed;
     }
 
-    private static boolean receive(int transferMode, String hostname, String localFilename, String remoteFilename,
-            TFTPClient tftp) {
+    private static boolean receive(final int transferMode, final String hostname, final String localFilename, final String remoteFilename,
+            final TFTPClient tftp) {
         boolean closed;
         FileOutputStream output = null;
         File file;
@@ -219,7 +219,7 @@ public final class TFTPExample
         {
             output = new FileOutputStream(file);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             tftp.close();
             throw new RuntimeException("Error: could not open local file for writing.", e);
@@ -230,20 +230,20 @@ public final class TFTPExample
         // Try to receive remote file via TFTP
         try
         {
-            String [] parts = hostname.split(":");
+            final String [] parts = hostname.split(":");
             if (parts.length == 2) {
                 tftp.receiveFile(remoteFilename, transferMode, output, parts[0], Integer.parseInt(parts[1]));
             } else {
                 tftp.receiveFile(remoteFilename, transferMode, output, hostname);
             }
         }
-        catch (UnknownHostException e)
+        catch (final UnknownHostException e)
         {
             System.err.println("Error: could not resolve hostname.");
             System.err.println(e.getMessage());
             System.exit(1);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             System.err.println(
                 "Error: I/O exception occurred while receiving file.");
@@ -259,7 +259,7 @@ public final class TFTPExample
         return closed;
     }
 
-    private static boolean close(TFTPClient tftp, Closeable output) {
+    private static boolean close(final TFTPClient tftp, final Closeable output) {
         boolean closed;
         tftp.close();
         try
@@ -269,7 +269,7 @@ public final class TFTPExample
             }
             closed = true;
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             closed = false;
             System.err.println("Error: error closing file.");
@@ -278,12 +278,12 @@ public final class TFTPExample
         return closed;
     }
 
-    private static void open(TFTPClient tftp) {
+    private static void open(final TFTPClient tftp) {
         try
         {
             tftp.open();
         }
-        catch (SocketException e)
+        catch (final SocketException e)
         {
             throw new RuntimeException("Error: could not open local UDP socket.", e);
         }

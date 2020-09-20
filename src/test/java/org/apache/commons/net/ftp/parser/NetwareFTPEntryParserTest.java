@@ -38,7 +38,7 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
         "d [RWCEAFMS] rwinston                          512 Nov 24  2005 Favorites"
     };
 
-    public NetwareFTPEntryParserTest(String name) {
+    public NetwareFTPEntryParserTest(final String name) {
         super(name);
     }
 
@@ -59,8 +59,8 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
 
     @Override
     public void testParseFieldsOnDirectory() throws Exception {
-        String reply = "d [-W---F--] testUser                        512 Apr 13 23:12 testFile";
-        FTPFile f = getParser().parseFTPEntry(reply);
+        final String reply = "d [-W---F--] testUser                        512 Apr 13 23:12 testFile";
+        final FTPFile f = getParser().parseFTPEntry(reply);
 
         assertNotNull("Could not parse file", f);
         assertEquals("testFile", f.getName());
@@ -68,7 +68,7 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
         assertEquals("testUser", f.getUser());
         assertTrue("Directory flag is not set!", f.isDirectory());
 
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MONTH, 3);
         cal.set(Calendar.DAY_OF_MONTH, 13);
         cal.set(Calendar.HOUR_OF_DAY, 23);
@@ -85,9 +85,9 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
 
     @Override
     public void testParseFieldsOnFile() throws Exception {
-        String reply = "- [R-CEAFMS] rwinston                        19968 Mar 12 15:20 Document name with spaces.doc";
+        final String reply = "- [R-CEAFMS] rwinston                        19968 Mar 12 15:20 Document name with spaces.doc";
 
-        FTPFile f = getParser().parseFTPEntry(reply);
+        final FTPFile f = getParser().parseFTPEntry(reply);
 
         assertNotNull("Could not parse file", f);
         assertEquals("Document name with spaces.doc", f.getName());

@@ -41,8 +41,8 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
     public void testStartSubnegotiation()
     {
 
-        int resp1[] = opthand1.startSubnegotiationLocal();
-        int resp2[] = opthand1.startSubnegotiationRemote();
+        final int resp1[] = opthand1.startSubnegotiationLocal();
+        final int resp2[] = opthand1.startSubnegotiationRemote();
 
         assertEquals(resp1, null);
         assertEquals(resp2, null);
@@ -56,23 +56,23 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
     @Override
     public void testAnswerSubnegotiation()
     {
-        int subn[] =
+        final int subn[] =
         {
             TelnetOption.TERMINAL_TYPE, 1
         };
 
-        int expected1[] =
+        final int expected1[] =
         {
             TelnetOption.TERMINAL_TYPE, 0, 'V', 'T', '1', '0', '0'
         };
 
-        int expected2[] =
+        final int expected2[] =
         {
             TelnetOption.TERMINAL_TYPE, 0, 'A', 'N', 'S', 'I'
         };
 
-        int resp1[] = opthand1.answerSubnegotiation(subn, subn.length);
-        int resp2[] = opthand2.answerSubnegotiation(subn, subn.length);
+        final int resp1[] = opthand1.answerSubnegotiation(subn, subn.length);
+        final int resp2[] = opthand2.answerSubnegotiation(subn, subn.length);
 
         assertTrue(equalInts(resp1, expected1));
         assertTrue(equalInts(resp2, expected2));
@@ -82,7 +82,7 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
     /*
      * compares two arrays of int
      */
-    protected boolean equalInts(int a1[], int a2[])
+    protected boolean equalInts(final int a1[], final int a2[])
     {
         if(a1.length != a2.length)
         {

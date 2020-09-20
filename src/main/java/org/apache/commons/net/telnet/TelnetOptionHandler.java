@@ -74,11 +74,11 @@ public abstract class TelnetOptionHandler
      * @param acceptlocal - if set to true, any DO request is accepted.
      * @param acceptremote - if set to true, any WILL request is accepted.
      ***/
-    public TelnetOptionHandler(int optcode,
-                                boolean initlocal,
-                                boolean initremote,
-                                boolean acceptlocal,
-                                boolean acceptremote)
+    public TelnetOptionHandler(final int optcode,
+                                final boolean initlocal,
+                                final boolean initremote,
+                                final boolean acceptlocal,
+                                final boolean acceptremote)
     {
         optionCode = optcode;
         initialLocal = initlocal;
@@ -126,7 +126,7 @@ public abstract class TelnetOptionHandler
      * <p>
      * @param accept - if true, subsequent DO requests will be accepted.
      ***/
-    public void setAcceptLocal(boolean accept)
+    public void setAcceptLocal(final boolean accept)
     {
         acceptLocal = accept;
     }
@@ -137,7 +137,7 @@ public abstract class TelnetOptionHandler
      * <p>
      * @param accept - if true, subsequent WILL requests will be accepted.
      ***/
-    public void setAcceptRemote(boolean accept)
+    public void setAcceptRemote(final boolean accept)
     {
         acceptRemote = accept;
     }
@@ -170,7 +170,7 @@ public abstract class TelnetOptionHandler
      * @param init - if true, a WILL request will be sent upon subsequent
      * connections.
      ***/
-    public void setInitLocal(boolean init)
+    public void setInitLocal(final boolean init)
     {
         initialLocal = init;
     }
@@ -181,7 +181,7 @@ public abstract class TelnetOptionHandler
      * @param init - if true, a DO request will be sent upon subsequent
      * connections.
      ***/
-    public void setInitRemote(boolean init)
+    public void setInitRemote(final boolean init)
     {
         initialRemote = init;
     }
@@ -200,7 +200,7 @@ public abstract class TelnetOptionHandler
      * @return response to be sent to the subnegotiation sequence. TelnetClient
      * will add IAC SB &amp; IAC SE. null means no response
      ***/
-    public int[] answerSubnegotiation(int suboptionData[], int suboptionLength) {
+    public int[] answerSubnegotiation(final int suboptionData[], final int suboptionLength) {
         return null;
     }
 
@@ -253,7 +253,7 @@ public abstract class TelnetOptionHandler
      * <p>
      * @param state - if true, a WILL request has been acknowledged.
      ***/
-    void setWill(boolean state)
+    void setWill(final boolean state)
     {
         willFlag = state;
     }
@@ -276,7 +276,7 @@ public abstract class TelnetOptionHandler
      * <p>
      * @param state - if true, a DO request has been acknowledged.
      ***/
-    void setDo(boolean state)
+    void setDo(final boolean state)
     {
         doFlag = state;
     }

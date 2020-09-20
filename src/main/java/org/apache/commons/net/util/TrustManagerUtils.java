@@ -38,7 +38,7 @@ public final class TrustManagerUtils
 
         private final boolean checkServerValidity;
 
-        TrustManager(boolean checkServerValidity) {
+        TrustManager(final boolean checkServerValidity) {
             this.checkServerValidity = checkServerValidity;
         }
 
@@ -46,17 +46,17 @@ public final class TrustManagerUtils
          * Never generates a CertificateException.
          */
         @Override
-        public void checkClientTrusted(X509Certificate[] certificates, String authType)
+        public void checkClientTrusted(final X509Certificate[] certificates, final String authType)
         {
             return;
         }
 
         @Override
-        public void checkServerTrusted(X509Certificate[] certificates, String authType)
+        public void checkServerTrusted(final X509Certificate[] certificates, final String authType)
             throws CertificateException
         {
             if (checkServerValidity) {
-                for (X509Certificate certificate : certificates)
+                for (final X509Certificate certificate : certificates)
                 {
                     certificate.checkValidity();
                 }
@@ -107,9 +107,9 @@ public final class TrustManagerUtils
      * @return the default TrustManager
      * @throws GeneralSecurityException if an error occurs
      */
-    public static X509TrustManager getDefaultTrustManager(KeyStore keyStore) throws GeneralSecurityException {
-        String defaultAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
-        TrustManagerFactory instance = TrustManagerFactory.getInstance(defaultAlgorithm);
+    public static X509TrustManager getDefaultTrustManager(final KeyStore keyStore) throws GeneralSecurityException {
+        final String defaultAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+        final TrustManagerFactory instance = TrustManagerFactory.getInstance(defaultAlgorithm);
         instance.init(keyStore);
         return (X509TrustManager) instance.getTrustManagers()[0];
     }

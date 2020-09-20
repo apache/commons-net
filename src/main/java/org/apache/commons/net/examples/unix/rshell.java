@@ -43,7 +43,7 @@ import org.apache.commons.net.examples.util.IOUtil;
 public final class rshell
 {
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         String server, localuser, remoteuser, command;
         RCommandClient client;
@@ -67,7 +67,7 @@ public final class rshell
         {
             client.connect(server);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             System.err.println("Could not connect to server.");
             e.printStackTrace();
@@ -78,13 +78,13 @@ public final class rshell
         {
             client.rcommand(localuser, remoteuser, command);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             try
             {
                 client.disconnect();
             }
-            catch (IOException f)
+            catch (final IOException f)
             {/* ignored */}
             e.printStackTrace();
             System.err.println("Could not execute command.");
@@ -99,7 +99,7 @@ public final class rshell
         {
             client.disconnect();
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             e.printStackTrace();
             System.exit(1);

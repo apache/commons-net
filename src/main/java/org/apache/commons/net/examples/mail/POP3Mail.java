@@ -38,13 +38,13 @@ import org.apache.commons.net.pop3.POP3SClient;
 public final class POP3Mail
 {
 
-    public static final void printMessageInfo(BufferedReader reader, int id) throws IOException  {
+    public static final void printMessageInfo(final BufferedReader reader, final int id) throws IOException  {
         String from = "";
         String subject = "";
         String line;
         while ((line = reader.readLine()) != null)
         {
-            String lower = line.toLowerCase(Locale.ENGLISH);
+            final String lower = line.toLowerCase(Locale.ENGLISH);
             if (lower.startsWith("from: ")) {
                 from = line.substring(6).trim();
             }  else if (lower.startsWith("subject: ")) {
@@ -55,7 +55,7 @@ public final class POP3Mail
         System.out.println(Integer.toString(id) + " From: " + from + "  Subject: " + subject);
     }
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         if (args.length < 3)
         {
@@ -64,20 +64,20 @@ public final class POP3Mail
             System.exit(1);
         }
 
-        String arg0[] = args[0].split(":");
-        String server=arg0[0];
-        String username = args[1];
+        final String arg0[] = args[0].split(":");
+        final String server=arg0[0];
+        final String username = args[1];
         String password = args[2];
         // prompt for the password if necessary
         try {
             password = Utils.getPassword(username, password);
-        } catch (IOException e1) {
+        } catch (final IOException e1) {
             System.err.println("Could not retrieve password: " + e1.getMessage());
             return;
         }
 
-        String proto = args.length > 3 ? args[3] : null;
-        boolean implicit = args.length > 4 ? Boolean.parseBoolean(args[4]) : false;
+        final String proto = args.length > 3 ? args[3] : null;
+        final boolean implicit = args.length > 4 ? Boolean.parseBoolean(args[4]) : false;
 
         POP3Client pop3;
 
@@ -106,7 +106,7 @@ public final class POP3Mail
         {
             pop3.connect(server);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             System.err.println("Could not connect to server.");
             e.printStackTrace();
@@ -122,7 +122,7 @@ public final class POP3Mail
                 return;
             }
 
-            POP3MessageInfo status = pop3.status();
+            final POP3MessageInfo status = pop3.status();
             if (status == null) {
                 System.err.println("Could not retrieve status.");
                 pop3.logout();
@@ -132,7 +132,7 @@ public final class POP3Mail
 
             System.out.println("Status: " + status);
 
-            POP3MessageInfo[] messages = pop3.listMessages();
+            final POP3MessageInfo[] messages = pop3.listMessages();
 
             if (messages == null)
             {
@@ -151,8 +151,8 @@ public final class POP3Mail
 
             System.out.println("Message count: " + messages.length);
 
-            for (POP3MessageInfo msginfo : messages) {
-                BufferedReader reader = (BufferedReader) pop3.retrieveMessageTop(msginfo.number, 0);
+            for (final POP3MessageInfo msginfo : messages) {
+                final BufferedReader reader = (BufferedReader) pop3.retrieveMessageTop(msginfo.number, 0);
 
                 if (reader == null) {
                     System.err.println("Could not retrieve message header.");
@@ -166,7 +166,7 @@ public final class POP3Mail
             pop3.logout();
             pop3.disconnect();
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             e.printStackTrace();
             return;

@@ -83,23 +83,23 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
      * @return An FTPFile instance corresponding to the supplied entry
      */
     @Override
-    public FTPFile parseFTPEntry(String entry)
+    public FTPFile parseFTPEntry(final String entry)
     {
 
-        FTPFile file = new FTPFile();
+        final FTPFile file = new FTPFile();
         file.setRawListing(entry);
 
         if (matches(entry))
         {
-            String usr = group(14);
-            String grp = group(15);
-            String filesize = group(16);
-            String mo = group(17);
-            String da = group(18);
-            String yr = group(20);
-            String hr = group(21);
-            String min = group(22);
-            String name = group(23);
+            final String usr = group(14);
+            final String grp = group(15);
+            final String filesize = group(16);
+            final String mo = group(17);
+            final String da = group(18);
+            final String yr = group(20);
+            final String hr = group(21);
+            final String min = group(22);
+            final String name = group(23);
 
             file.setType(FTPFile.FILE_TYPE);
             file.setUser(usr);
@@ -108,19 +108,19 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
             {
                 file.setSize(Long.parseLong(filesize));
             }
-            catch (NumberFormatException e)
+            catch (final NumberFormatException e)
             {
                 // intentionally do nothing
             }
 
-            Calendar cal = Calendar.getInstance();
+            final Calendar cal = Calendar.getInstance();
             cal.set(Calendar.MILLISECOND, 0);
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MINUTE, 0);
             cal.set(Calendar.HOUR_OF_DAY, 0);
 
-            int pos = MONTHS.indexOf(mo);
-            int month = pos / 4;
+            final int pos = MONTHS.indexOf(mo);
+            final int month = pos / 4;
             final int missingUnit; // the first missing unit
             try
             {
@@ -152,7 +152,7 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl
                 cal.clear(missingUnit);
                 file.setTimestamp(cal);
             }
-            catch (NumberFormatException e)
+            catch (final NumberFormatException e)
             {
                 // do nothing, date will be uninitialized
             }

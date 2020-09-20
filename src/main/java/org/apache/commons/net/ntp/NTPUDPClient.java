@@ -56,7 +56,7 @@ public final class NTPUDPClient extends DatagramSocketClient
      * @return The time value retrieved from the server.
      * @throws IOException If an error occurs while retrieving the time.
      ***/
-    public TimeInfo getTime(InetAddress host, int port) throws IOException
+    public TimeInfo getTime(final InetAddress host, final int port) throws IOException
     {
         // if not connected then open to next available UDP port
         if (!isOpen())
@@ -64,15 +64,15 @@ public final class NTPUDPClient extends DatagramSocketClient
             open();
         }
 
-        NtpV3Packet message = new NtpV3Impl();
+        final NtpV3Packet message = new NtpV3Impl();
         message.setMode(NtpV3Packet.MODE_CLIENT);
         message.setVersion(_version);
-        DatagramPacket sendPacket = message.getDatagramPacket();
+        final DatagramPacket sendPacket = message.getDatagramPacket();
         sendPacket.setAddress(host);
         sendPacket.setPort(port);
 
-        NtpV3Packet recMessage = new NtpV3Impl();
-        DatagramPacket receivePacket = recMessage.getDatagramPacket();
+        final NtpV3Packet recMessage = new NtpV3Impl();
+        final DatagramPacket receivePacket = recMessage.getDatagramPacket();
 
         /*
          * Must minimize the time between getting the current time,
@@ -80,7 +80,7 @@ public final class NTPUDPClient extends DatagramSocketClient
          * introduces an error in the delay time.
          * No extraneous logging and initializations here !!!
          */
-        TimeStamp now = TimeStamp.getCurrentTime();
+        final TimeStamp now = TimeStamp.getCurrentTime();
 
         // Note that if you do not set the transmit time field then originating time
         // in server response is all 0's which is "Thu Feb 07 01:28:16 EST 2036".
@@ -89,9 +89,9 @@ public final class NTPUDPClient extends DatagramSocketClient
         _socket_.send(sendPacket);
         _socket_.receive(receivePacket);
 
-        long returnTime = System.currentTimeMillis();
+        final long returnTime = System.currentTimeMillis();
         // create TimeInfo message container but don't pre-compute the details yet
-        TimeInfo info = new TimeInfo(recMessage, returnTime, false);
+        final TimeInfo info = new TimeInfo(recMessage, returnTime, false);
 
         return info;
     }
@@ -107,7 +107,7 @@ public final class NTPUDPClient extends DatagramSocketClient
      * @return The time value retrieved from the server.
      * @throws IOException If an error occurs while retrieving the time.
      ***/
-    public TimeInfo getTime(InetAddress host) throws IOException
+    public TimeInfo getTime(final InetAddress host) throws IOException
     {
         return getTime(host, NtpV3Packet.NTP_PORT);
     }
@@ -130,7 +130,7 @@ public final class NTPUDPClient extends DatagramSocketClient
      *
      * @param version the NTP protocol version number
      ***/
-    public void setVersion(int version)
+    public void setVersion(final int version)
     {
         _version = version;
     }

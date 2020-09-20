@@ -35,7 +35,7 @@ import org.apache.commons.net.finger.FingerClient;
 public final class finger
 {
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         boolean longOutput = false;
         int arg = 0, index;
@@ -68,7 +68,7 @@ public final class finger
             {
                 address = InetAddress.getLocalHost();
             }
-            catch (UnknownHostException e)
+            catch (final UnknownHostException e)
             {
                 System.err.println("Error unknown host: " + e.getMessage());
                 System.exit(1);
@@ -80,7 +80,7 @@ public final class finger
                 System.out.print(finger.query(longOutput));
                 finger.disconnect();
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 System.err.println("Error I/O exception: " + e.getMessage());
                 System.exit(1);
@@ -102,7 +102,7 @@ public final class finger
                 {
                     address = InetAddress.getLocalHost();
                 }
-                catch (UnknownHostException e)
+                catch (final UnknownHostException e)
                 {
                     System.err.println("Error unknown host: " + e.getMessage());
                     System.exit(1);
@@ -118,7 +118,7 @@ public final class finger
                     address = InetAddress.getByName(host);
                     System.out.println("[" + address.getHostName() + "]");
                 }
-                catch (UnknownHostException e)
+                catch (final UnknownHostException e)
                 {
                     System.err.println("Error unknown host: " + e.getMessage());
                     System.exit(1);
@@ -131,7 +131,7 @@ public final class finger
                 System.out.print(finger.query(longOutput, handle));
                 finger.disconnect();
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 System.err.println("Error I/O exception: " + e.getMessage());
                 System.exit(1);

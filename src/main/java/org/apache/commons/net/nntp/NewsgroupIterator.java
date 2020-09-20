@@ -28,7 +28,7 @@ class NewsgroupIterator implements Iterator<NewsgroupInfo>, Iterable<NewsgroupIn
 
     private  final Iterator<String> stringIterator;
 
-    public NewsgroupIterator(Iterable<String> iterableString) {
+    public NewsgroupIterator(final Iterable<String> iterableString) {
         stringIterator = iterableString.iterator();
     }
 
@@ -39,7 +39,7 @@ class NewsgroupIterator implements Iterator<NewsgroupInfo>, Iterable<NewsgroupIn
 
     @Override
     public NewsgroupInfo next() {
-        String line = stringIterator.next();
+        final String line = stringIterator.next();
         return NNTPClient.__parseNewsgroupListEntry(line);
     }
 

@@ -91,7 +91,7 @@ public class TFTPClient extends TFTP
      *        less than 1 should not be used, but if they are, they are
      *        treated as 1.
      ***/
-    public void setMaxTimeouts(int numTimeouts)
+    public void setMaxTimeouts(final int numTimeouts)
     {
         if (numTimeouts < 1) {
             __maxTimeouts = 1;
@@ -143,8 +143,8 @@ public class TFTPClient extends TFTP
      * @throws IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
      ***/
-    public int receiveFile(String fileName, int mode, OutputStream output,
-                           InetAddress host, int port) throws IOException
+    public int receiveFile(final String fileName, final int mode, OutputStream output,
+                           InetAddress host, final int port) throws IOException
     {
         int bytesRead = 0;
         int lastBlock = 0;
@@ -159,7 +159,7 @@ public class TFTPClient extends TFTP
         }
 
         TFTPPacket sent = new TFTPReadRequestPacket(host, port, fileName, mode);
-        TFTPAckPacket ack = new TFTPAckPacket(host, port, 0);
+        final TFTPAckPacket ack = new TFTPAckPacket(host, port, 0);
 
         beginBufferedOps();
 
@@ -171,7 +171,7 @@ public class TFTPClient extends TFTP
                 int timeouts = 0;
                 do { // until successful response
                     try {
-                        TFTPPacket received = bufferedReceive();
+                        final TFTPPacket received = bufferedReceive();
                         // The first time we receive we get the port number and
                         // answering host address (for hosts with multiple IPs)
                         final int recdPort = received.getPort();
@@ -179,7 +179,7 @@ public class TFTPClient extends TFTP
                         if (justStarted) {
                             justStarted = false;
                             if (recdPort == port) { // must not use the control port here
-                                TFTPErrorPacket error = new TFTPErrorPacket(recdAddress,
+                                final TFTPErrorPacket error = new TFTPErrorPacket(recdAddress,
                                         recdPort, TFTPErrorPacket.UNKNOWN_TID,
                                         "INCORRECT SOURCE PORT");
                                 bufferedSend(error);
@@ -204,14 +204,14 @@ public class TFTPClient extends TFTP
                                 throw new IOException("Error code " + error.getError() +
                                                       " received: " + error.getMessage());
                             case TFTPPacket.DATA:
-                                TFTPDataPacket data = (TFTPDataPacket)received;
+                                final TFTPDataPacket data = (TFTPDataPacket)received;
                                 dataLength = data.getDataLength();
                                 lastBlock = data.getBlockNumber();
 
                                 if (lastBlock == block) { // is the next block number?
                                     try {
                                         output.write(data.getData(), data.getDataOffset(), dataLength);
-                                    } catch (IOException e) {
+                                    } catch (final IOException e) {
                                         error = new TFTPErrorPacket(host, hostPort,
                                                                     TFTPErrorPacket.OUT_OF_SPACE,
                                                                     "File write failed.");
@@ -236,20 +236,20 @@ public class TFTPClient extends TFTP
                                 throw new IOException("Received unexpected packet type (" + received.getType() + ")");
                             }
                         } else { // incorrect host or TID
-                            TFTPErrorPacket error = new TFTPErrorPacket(recdAddress, recdPort,
+                            final TFTPErrorPacket error = new TFTPErrorPacket(recdAddress, recdPort,
                                     TFTPErrorPacket.UNKNOWN_TID,
                                     "Unexpected host or port.");
                             bufferedSend(error);
                         }
-                    } catch (SocketException e) {
+                    } catch (final SocketException e) {
                         if (++timeouts >= __maxTimeouts) {
                             throw new IOException("Connection timed out.");
                         }
-                    } catch (InterruptedIOException e) {
+                    } catch (final InterruptedIOException e) {
                         if (++timeouts >= __maxTimeouts) {
                             throw new IOException("Connection timed out.");
                         }
-                    } catch (TFTPPacketException e) {
+                    } catch (final TFTPPacketException e) {
                         throw new IOException("Bad packet: " + e.getMessage());
                     }
                 } while(wantReply); // waiting for response
@@ -285,8 +285,8 @@ public class TFTPClient extends TFTP
      *            error will be reported in the message.
      * @throws UnknownHostException  If the hostname cannot be resolved.
      ***/
-    public int receiveFile(String fileName, int mode, OutputStream output,
-                           String hostname, int port)
+    public int receiveFile(final String fileName, final int mode, final OutputStream output,
+                           final String hostname, final int port)
     throws UnknownHostException, IOException
     {
         return receiveFile(fileName, mode, output, InetAddress.getByName(hostname),
@@ -305,8 +305,8 @@ public class TFTPClient extends TFTP
      * @throws IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
      ***/
-    public int receiveFile(String fileName, int mode, OutputStream output,
-                           InetAddress host)
+    public int receiveFile(final String fileName, final int mode, final OutputStream output,
+                           final InetAddress host)
     throws IOException
     {
         return receiveFile(fileName, mode, output, host, DEFAULT_PORT);
@@ -324,8 +324,8 @@ public class TFTPClient extends TFTP
      *            error will be reported in the message.
      * @throws UnknownHostException  If the hostname cannot be resolved.
      ***/
-    public int receiveFile(String fileName, int mode, OutputStream output,
-                           String hostname)
+    public int receiveFile(final String fileName, final int mode, final OutputStream output,
+                           final String hostname)
     throws UnknownHostException, IOException
     {
         return receiveFile(fileName, mode, output, InetAddress.getByName(hostname),
@@ -350,8 +350,8 @@ public class TFTPClient extends TFTP
      * @throws IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
      ***/
-    public void sendFile(String fileName, int mode, InputStream input,
-                         InetAddress host, int port) throws IOException
+    public void sendFile(final String fileName, final int mode, InputStream input,
+                         InetAddress host, final int port) throws IOException
     {
         int block = 0;
         int hostPort = 0;
@@ -365,7 +365,7 @@ public class TFTPClient extends TFTP
         }
 
         TFTPPacket sent = new TFTPWriteRequestPacket(host, port, fileName, mode);
-        TFTPDataPacket data = new TFTPDataPacket(host, port, 0, _sendBuffer, 4, 0);
+        final TFTPDataPacket data = new TFTPDataPacket(host, port, 0, _sendBuffer, 4, 0);
 
         beginBufferedOps();
 
@@ -378,7 +378,7 @@ public class TFTPClient extends TFTP
                 int timeouts = 0;
                 do {
                     try {
-                        TFTPPacket received = bufferedReceive();
+                        final TFTPPacket received = bufferedReceive();
                         final InetAddress recdAddress = received.getAddress();
                         final int recdPort = received.getPort();
                         // The first time we receive we get the port number and
@@ -386,7 +386,7 @@ public class TFTPClient extends TFTP
                         if (justStarted) {
                             justStarted = false;
                             if (recdPort == port) { // must not use the control port here
-                                TFTPErrorPacket error = new TFTPErrorPacket(recdAddress,
+                                final TFTPErrorPacket error = new TFTPErrorPacket(recdAddress,
                                         recdPort, TFTPErrorPacket.UNKNOWN_TID,
                                         "INCORRECT SOURCE PORT");
                                 bufferedSend(error);
@@ -406,12 +406,12 @@ public class TFTPClient extends TFTP
 
                             switch (received.getType()) {
                             case TFTPPacket.ERROR:
-                                TFTPErrorPacket error = (TFTPErrorPacket)received;
+                                final TFTPErrorPacket error = (TFTPErrorPacket)received;
                                 throw new IOException("Error code " + error.getError() +
                                                       " received: " + error.getMessage());
                             case TFTPPacket.ACKNOWLEDGEMENT:
 
-                                int lastBlock = ((TFTPAckPacket)received).getBlockNumber();
+                                final int lastBlock = ((TFTPAckPacket)received).getBlockNumber();
 
                                 if (lastBlock == block) {
                                     ++block;
@@ -428,21 +428,21 @@ public class TFTPClient extends TFTP
                                 throw new IOException("Received unexpected packet type.");
                             }
                         } else { // wrong host or TID; send error
-                            TFTPErrorPacket error = new TFTPErrorPacket(recdAddress,
+                            final TFTPErrorPacket error = new TFTPErrorPacket(recdAddress,
                                                         recdPort,
                                                         TFTPErrorPacket.UNKNOWN_TID,
                                                         "Unexpected host or port.");
                             bufferedSend(error);
                         }
-                    } catch (SocketException e) {
+                    } catch (final SocketException e) {
                         if (++timeouts >= __maxTimeouts) {
                             throw new IOException("Connection timed out.");
                         }
-                    } catch (InterruptedIOException e) {
+                    } catch (final InterruptedIOException e) {
                         if (++timeouts >= __maxTimeouts) {
                             throw new IOException("Connection timed out.");
                         }
-                    } catch (TFTPPacketException e) {
+                    } catch (final TFTPPacketException e) {
                         throw new IOException("Bad packet: " + e.getMessage());
                     }
                     // retry until a good ack
@@ -495,8 +495,8 @@ public class TFTPClient extends TFTP
      *            error will be reported in the message.
      * @throws UnknownHostException  If the hostname cannot be resolved.
      ***/
-    public void sendFile(String fileName, int mode, InputStream input,
-                         String hostname, int port)
+    public void sendFile(final String fileName, final int mode, final InputStream input,
+                         final String hostname, final int port)
     throws UnknownHostException, IOException
     {
         sendFile(fileName, mode, input, InetAddress.getByName(hostname), port);
@@ -515,8 +515,8 @@ public class TFTPClient extends TFTP
      *            error will be reported in the message.
      * @throws UnknownHostException  If the hostname cannot be resolved.
      ***/
-    public void sendFile(String fileName, int mode, InputStream input,
-                         InetAddress host)
+    public void sendFile(final String fileName, final int mode, final InputStream input,
+                         final InetAddress host)
     throws IOException
     {
         sendFile(fileName, mode, input, host, DEFAULT_PORT);
@@ -534,8 +534,8 @@ public class TFTPClient extends TFTP
      *            error will be reported in the message.
      * @throws UnknownHostException  If the hostname cannot be resolved.
      ***/
-    public void sendFile(String fileName, int mode, InputStream input,
-                         String hostname)
+    public void sendFile(final String fileName, final int mode, final InputStream input,
+                         final String hostname)
     throws UnknownHostException, IOException
     {
         sendFile(fileName, mode, input, InetAddress.getByName(hostname),

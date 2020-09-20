@@ -41,7 +41,7 @@ import org.apache.commons.net.nntp.SimpleNNTPHeader;
 public final class PostMessage
 {
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         String from, subject, newsgroup, fileName, server, organization;
         String references;
@@ -128,7 +128,7 @@ public final class PostMessage
             {
                 fileReader = new FileReader(fileName);
             }
-            catch (FileNotFoundException e)
+            catch (final FileNotFoundException e)
             {
                 System.err.println("File not found. " + e.getMessage());
                 System.exit(1);
@@ -149,7 +149,7 @@ public final class PostMessage
 
             if (client.isAllowedToPost())
             {
-                Writer writer = client.postArticle();
+                final Writer writer = client.postArticle();
 
                 if (writer != null)
                 {
@@ -168,7 +168,7 @@ public final class PostMessage
 
             client.disconnect();
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             e.printStackTrace();
             System.exit(1);

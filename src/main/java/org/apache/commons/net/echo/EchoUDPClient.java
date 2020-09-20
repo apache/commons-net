@@ -57,7 +57,7 @@ public final class EchoUDPClient extends DiscardUDPClient
      *     operation.
      ***/
     @Override
-    public void send(byte[] data, int length, InetAddress host)
+    public void send(final byte[] data, final int length, final InetAddress host)
     throws IOException
     {
         send(data, length, host, DEFAULT_PORT);
@@ -66,7 +66,7 @@ public final class EchoUDPClient extends DiscardUDPClient
 
     /*** Same as <code> send(data, data.length, host) </code> ***/
     @Override
-    public void send(byte[] data, InetAddress host) throws IOException
+    public void send(final byte[] data, final InetAddress host) throws IOException
     {
         send(data, data.length, host, DEFAULT_PORT);
     }
@@ -83,7 +83,7 @@ public final class EchoUDPClient extends DiscardUDPClient
      * @return  Length of actual data received.
      * @throws IOException If an error occurs while receiving the data.
      ***/
-    public int receive(byte[] data, int length) throws IOException
+    public int receive(final byte[] data, final int length) throws IOException
     {
         __receivePacket.setData(data);
         __receivePacket.setLength(length);
@@ -96,7 +96,7 @@ public final class EchoUDPClient extends DiscardUDPClient
      * @return the number of bytes
      * @throws IOException on error
      ***/
-    public int receive(byte[] data) throws IOException
+    public int receive(final byte[] data) throws IOException
     {
         return receive(data, data.length);
     }

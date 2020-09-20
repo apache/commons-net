@@ -60,7 +60,7 @@ public class SimpleNNTPHeader
      * @param subject  The value of the <code>Subject:</code> header field.
      *              This should be the subject of the article.
      ***/
-    public SimpleNNTPHeader(String from, String subject)
+    public SimpleNNTPHeader(final String from, final String subject)
     {
         __from = from;
         __subject = subject;
@@ -75,7 +75,7 @@ public class SimpleNNTPHeader
      * @param newsgroup  The newsgroup to add to the article's newsgroup
      *                   distribution list.
      ***/
-    public void addNewsgroup(String newsgroup)
+    public void addNewsgroup(final String newsgroup)
     {
         if (__newsgroupCount++ > 0) {
             __newsgroups.append(',');
@@ -95,7 +95,7 @@ public class SimpleNNTPHeader
      * @param headerField  The header field to add, not including the colon.
      * @param value  The value of the added header field.
      ***/
-    public void addHeaderField(String headerField, String value)
+    public void addHeaderField(final String headerField, final String value)
     {
         __headerFields.append(headerField);
         __headerFields.append(": ");
@@ -145,7 +145,7 @@ public class SimpleNNTPHeader
     @Override
     public String toString()
     {
-        StringBuilder header = new StringBuilder();
+        final StringBuilder header = new StringBuilder();
 
         header.append("From: ");
         header.append(__from);

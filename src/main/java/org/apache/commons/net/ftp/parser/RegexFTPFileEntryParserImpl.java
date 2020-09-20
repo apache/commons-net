@@ -66,7 +66,7 @@ public abstract class RegexFTPFileEntryParserImpl extends
      * from this will bomb very quickly,  leading to easy detection.
      */
 
-    public RegexFTPFileEntryParserImpl(String regex) {
+    public RegexFTPFileEntryParserImpl(final String regex) {
         super();
         compileRegex(regex, 0);
     }
@@ -86,7 +86,7 @@ public abstract class RegexFTPFileEntryParserImpl extends
      * from this will bomb very quickly,  leading to easy detection.
      * @since 3.4
      */
-    public RegexFTPFileEntryParserImpl(String regex, final int flags) {
+    public RegexFTPFileEntryParserImpl(final String regex, final int flags) {
         super();
         compileRegex(regex, flags);
     }
@@ -99,7 +99,7 @@ public abstract class RegexFTPFileEntryParserImpl extends
      * @return true if s matches this object's regular expression.
      */
 
-    public boolean matches(String s) {
+    public boolean matches(final String s) {
         this.result = null;
         _matcher_ = pattern.matcher(s);
         if (_matcher_.matches()) {
@@ -131,7 +131,7 @@ public abstract class RegexFTPFileEntryParserImpl extends
      *         match or null if this method is called without a match having
      *         been made.
      */
-    public String group(int matchnum) {
+    public String group(final int matchnum) {
         if (this.result == null) {
             return null;
         }
@@ -146,7 +146,7 @@ public abstract class RegexFTPFileEntryParserImpl extends
      */
 
     public String getGroupsAsString() {
-        StringBuilder b = new StringBuilder();
+        final StringBuilder b = new StringBuilder();
         for (int i = 1; i <= this.result.groupCount(); i++) {
             b.append(i).append(") ").append(this.result.group(i)).append(
                     System.getProperty("line.separator"));
@@ -195,7 +195,7 @@ public abstract class RegexFTPFileEntryParserImpl extends
     private void compileRegex(final String regex, final int flags) {
         try {
             pattern = Pattern.compile(regex, flags);
-        } catch (PatternSyntaxException pse) {
+        } catch (final PatternSyntaxException pse) {
             throw new IllegalArgumentException("Unparseable regex supplied: " + regex);
         }
     }

@@ -127,7 +127,7 @@ public class SMTP extends SocketClient
      * @param encoding the encoing to use
      * @since 2.0
      */
-    public SMTP(String encoding) {
+    public SMTP(final String encoding) {
         setDefaultPort(DEFAULT_PORT);
         _replyLines = new ArrayList<>();
         _newReplyString = false;
@@ -145,10 +145,10 @@ public class SMTP extends SocketClient
      * @return the reply code
      * @throws IOException
      */
-    private int __sendCommand(String command, String args, boolean includeSpace)
+    private int __sendCommand(final String command, final String args, final boolean includeSpace)
     throws IOException
     {
-        StringBuilder __commandBuffer = new StringBuilder();
+        final StringBuilder __commandBuffer = new StringBuilder();
         __commandBuffer.append(command);
 
         if (args != null)
@@ -161,7 +161,7 @@ public class SMTP extends SocketClient
 
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
-        String message = __commandBuffer.toString();
+        final String message = __commandBuffer.toString();
         _writer.write(message);
         _writer.flush();
 
@@ -179,7 +179,7 @@ public class SMTP extends SocketClient
      * @return the reply code
      * @throws IOException
      */
-    private int __sendCommand(int command, String args, boolean includeSpace)
+    private int __sendCommand(final int command, final String args, final boolean includeSpace)
     throws IOException
     {
         return __sendCommand(SMTPCommand.getCommand(command), args, includeSpace);
@@ -209,10 +209,10 @@ public class SMTP extends SocketClient
 
         try
         {
-            String code = line.substring(0, 3);
+            final String code = line.substring(0, 3);
             _replyCode = Integer.parseInt(code);
         }
-        catch (NumberFormatException e)
+        catch (final NumberFormatException e)
         {
             throw new MalformedServerReplyException(
                 "Could not parse response code.\nServer Reply: " + line);
@@ -309,7 +309,7 @@ public class SMTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int sendCommand(String command, String args) throws IOException
+    public int sendCommand(final String command, final String args) throws IOException
     {
         return __sendCommand(command, args, true);
     }
@@ -336,7 +336,7 @@ public class SMTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int sendCommand(int command, String args) throws IOException
+    public int sendCommand(final int command, final String args) throws IOException
     {
         return sendCommand(SMTPCommand.getCommand(command), args);
     }
@@ -360,7 +360,7 @@ public class SMTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int sendCommand(String command) throws IOException
+    public int sendCommand(final String command) throws IOException
     {
         return sendCommand(command, null);
     }
@@ -385,7 +385,7 @@ public class SMTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int sendCommand(int command) throws IOException
+    public int sendCommand(final int command) throws IOException
     {
         return sendCommand(command, null);
     }
@@ -457,7 +457,7 @@ public class SMTP extends SocketClient
 
         buffer = new StringBuilder();
 
-        for (String line : _replyLines)
+        for (final String line : _replyLines)
         {
             buffer.append(line);
             buffer.append(SocketClient.NETASCII_EOL);
@@ -484,7 +484,7 @@ public class SMTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int helo(String hostname) throws IOException
+    public int helo(final String hostname) throws IOException
     {
         return sendCommand(SMTPCommand.HELO, hostname);
     }
@@ -504,7 +504,7 @@ public class SMTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int mail(String reversePath) throws IOException
+    public int mail(final String reversePath) throws IOException
     {
         return __sendCommand(SMTPCommand.MAIL, reversePath, false);
     }
@@ -524,7 +524,7 @@ public class SMTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int rcpt(String forwardPath) throws IOException
+    public int rcpt(final String forwardPath) throws IOException
     {
         return __sendCommand(SMTPCommand.RCPT, forwardPath, false);
     }
@@ -563,7 +563,7 @@ public class SMTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int send(String reversePath) throws IOException
+    public int send(final String reversePath) throws IOException
     {
         return sendCommand(SMTPCommand.SEND, reversePath);
     }
@@ -583,7 +583,7 @@ public class SMTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int soml(String reversePath) throws IOException
+    public int soml(final String reversePath) throws IOException
     {
         return sendCommand(SMTPCommand.SOML, reversePath);
     }
@@ -603,7 +603,7 @@ public class SMTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int saml(String reversePath) throws IOException
+    public int saml(final String reversePath) throws IOException
     {
         return sendCommand(SMTPCommand.SAML, reversePath);
     }
@@ -642,7 +642,7 @@ public class SMTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int vrfy(String user) throws IOException
+    public int vrfy(final String user) throws IOException
     {
         return sendCommand(SMTPCommand.VRFY, user);
     }
@@ -662,7 +662,7 @@ public class SMTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int expn(String name) throws IOException
+    public int expn(final String name) throws IOException
     {
         return sendCommand(SMTPCommand.EXPN, name);
     }
@@ -699,7 +699,7 @@ public class SMTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int help(String command) throws IOException
+    public int help(final String command) throws IOException
     {
         return sendCommand(SMTPCommand.HELP, command);
     }
@@ -767,7 +767,7 @@ public class SMTP extends SocketClient
      * the correct method {@link SocketClient#removeProtocolCommandListener}
      * @param listener The ProtocolCommandListener to remove
      */
-    public void removeProtocolCommandistener(org.apache.commons.net.ProtocolCommandListener listener){
+    public void removeProtocolCommandistener(final org.apache.commons.net.ProtocolCommandListener listener){
         removeProtocolCommandListener(listener);
     }
 

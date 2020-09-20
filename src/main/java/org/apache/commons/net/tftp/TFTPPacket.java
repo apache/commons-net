@@ -121,7 +121,7 @@ public abstract class TFTPPacket
      * @throws TFTPPacketException  If the datagram does not contain a valid
      *             TFTP packet.
      ***/
-    public static final TFTPPacket newTFTPPacket(DatagramPacket datagram)
+    public static final TFTPPacket newTFTPPacket(final DatagramPacket datagram)
     throws TFTPPacketException
     {
         byte[] data;
@@ -167,7 +167,7 @@ public abstract class TFTPPacket
      * @param address The host the packet came from or is going to be sent.
      * @param port The port the packet came from or is going to be sent.
      **/
-    TFTPPacket(int type, InetAddress address, int port)
+    TFTPPacket(final int type, final InetAddress address, final int port)
     {
         _type = type;
         _address = address;
@@ -237,7 +237,7 @@ public abstract class TFTPPacket
      * Sets the port where the packet is going to be sent.
      * @param port the port to set
      ***/
-    public final void setPort(int port)
+    public final void setPort(final int port)
     {
         _port = port;
     }
@@ -245,7 +245,7 @@ public abstract class TFTPPacket
     /*** Sets the host address where the packet is going to be sent.
      * @param address the address to set
      ***/
-    public final void setAddress(InetAddress address)
+    public final void setAddress(final InetAddress address)
     {
         _address = address;
     }

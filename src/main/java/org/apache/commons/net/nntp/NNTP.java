@@ -148,7 +148,7 @@ public class NNTP extends SocketClient
         {
             _replyCode = Integer.parseInt(_replyString.substring(0, 3));
         }
-        catch (NumberFormatException e)
+        catch (final NumberFormatException e)
         {
             throw new MalformedServerReplyException(
                 "Could not parse response code.\nServer Reply: " + _replyString);
@@ -234,9 +234,9 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int sendCommand(String command, String args) throws IOException
+    public int sendCommand(final String command, final String args) throws IOException
     {
-        StringBuilder __commandBuffer = new StringBuilder();
+        final StringBuilder __commandBuffer = new StringBuilder();
         __commandBuffer.append(command);
 
         if (args != null)
@@ -278,7 +278,7 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int sendCommand(int command, String args) throws IOException
+    public int sendCommand(final int command, final String args) throws IOException
     {
         return sendCommand(NNTPCommand.getCommand(command), args);
     }
@@ -302,7 +302,7 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int sendCommand(String command) throws IOException
+    public int sendCommand(final String command) throws IOException
     {
         return sendCommand(command, null);
     }
@@ -327,7 +327,7 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int sendCommand(int command) throws IOException
+    public int sendCommand(final int command) throws IOException
     {
         return sendCommand(command, null);
     }
@@ -397,7 +397,7 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int article(String messageId) throws IOException
+    public int article(final String messageId) throws IOException
     {
         return sendCommand(NNTPCommand.ARTICLE, messageId);
     }
@@ -417,7 +417,7 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int article(long articleNumber) throws IOException
+    public int article(final long articleNumber) throws IOException
     {
         return sendCommand(NNTPCommand.ARTICLE, Long.toString(articleNumber));
     }
@@ -457,7 +457,7 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int body(String messageId) throws IOException
+    public int body(final String messageId) throws IOException
     {
         return sendCommand(NNTPCommand.BODY, messageId);
     }
@@ -477,7 +477,7 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int body(long articleNumber) throws IOException
+    public int body(final long articleNumber) throws IOException
     {
         return sendCommand(NNTPCommand.BODY, Long.toString(articleNumber));
     }
@@ -517,7 +517,7 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int head(String messageId) throws IOException
+    public int head(final String messageId) throws IOException
     {
         return sendCommand(NNTPCommand.HEAD, messageId);
     }
@@ -537,7 +537,7 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int head(long articleNumber) throws IOException
+    public int head(final long articleNumber) throws IOException
     {
         return sendCommand(NNTPCommand.HEAD, Long.toString(articleNumber));
     }
@@ -577,7 +577,7 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int stat(String messageId) throws IOException
+    public int stat(final String messageId) throws IOException
     {
         return sendCommand(NNTPCommand.STAT, messageId);
     }
@@ -597,7 +597,7 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int stat(long articleNumber) throws IOException
+    public int stat(final long articleNumber) throws IOException
     {
         return sendCommand(NNTPCommand.STAT, Long.toString(articleNumber));
     }
@@ -635,7 +635,7 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int group(String newsgroup) throws IOException
+    public int group(final String newsgroup) throws IOException
     {
         return sendCommand(NNTPCommand.GROUP, newsgroup);
     }
@@ -675,7 +675,7 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int ihave(String messageId) throws IOException
+    public int ihave(final String messageId) throws IOException
     {
         return sendCommand(NNTPCommand.IHAVE, messageId);
     }
@@ -760,10 +760,10 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int newgroups(String date, String time, boolean GMT,
-                         String distributions) throws IOException
+    public int newgroups(final String date, final String time, final boolean GMT,
+                         final String distributions) throws IOException
     {
-        StringBuilder buffer = new StringBuilder();
+        final StringBuilder buffer = new StringBuilder();
 
         buffer.append(date);
         buffer.append(' ');
@@ -808,10 +808,10 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int newnews(String newsgroups, String date, String time, boolean GMT,
-                       String distributions) throws IOException
+    public int newnews(final String newsgroups, final String date, final String time, final boolean GMT,
+                       final String distributions) throws IOException
     {
-        StringBuilder buffer = new StringBuilder();
+        final StringBuilder buffer = new StringBuilder();
 
         buffer.append(newsgroups);
         buffer.append(' ');
@@ -890,8 +890,8 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int authinfoUser(String username) throws IOException {
-        String userParameter = "USER " + username;
+    public int authinfoUser(final String username) throws IOException {
+        final String userParameter = "USER " + username;
         return sendCommand(NNTPCommand.AUTHINFO, userParameter);
     }
 
@@ -912,8 +912,8 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int authinfoPass(String password) throws IOException {
-        String passParameter = "PASS " + password;
+    public int authinfoPass(final String password) throws IOException {
+        final String passParameter = "PASS " + password;
         return sendCommand(NNTPCommand.AUTHINFO, passParameter);
     }
 
@@ -937,7 +937,7 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int xover(String selectedArticles) throws IOException {
+    public int xover(final String selectedArticles) throws IOException {
         return sendCommand(NNTPCommand.XOVER, selectedArticles);
     }
 
@@ -963,8 +963,8 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int xhdr(String header, String selectedArticles) throws IOException {
-        StringBuilder command = new StringBuilder(header);
+    public int xhdr(final String header, final String selectedArticles) throws IOException {
+        final StringBuilder command = new StringBuilder(header);
         command.append(" ");
         command.append(selectedArticles);
         return sendCommand(NNTPCommand.XHDR, command.toString());
@@ -979,8 +979,8 @@ public class NNTP extends SocketClient
      * @return the reply code received from the server.
      * @throws IOException if the command fails
      */
-    public int listActive(String wildmat) throws IOException {
-        StringBuilder command = new StringBuilder("ACTIVE ");
+    public int listActive(final String wildmat) throws IOException {
+        final StringBuilder command = new StringBuilder("ACTIVE ");
         command.append(wildmat);
         return sendCommand(NNTPCommand.LIST, command.toString());
     }
@@ -994,7 +994,7 @@ public class NNTP extends SocketClient
      * @deprecated - for API compatibility only - DO NOT USE
      */
     @Deprecated
-    public int article(int a) throws IOException
+    public int article(final int a) throws IOException
     {
         return article((long) a);
     }
@@ -1006,7 +1006,7 @@ public class NNTP extends SocketClient
      * @deprecated - for API compatibility only - DO NOT USE
      */
     @Deprecated
-    public int body(int a) throws IOException
+    public int body(final int a) throws IOException
     {
         return body((long) a);
     }
@@ -1018,7 +1018,7 @@ public class NNTP extends SocketClient
      * @deprecated - for API compatibility only - DO NOT USE
      */
     @Deprecated
-    public int head(int a) throws IOException
+    public int head(final int a) throws IOException
     {
         return head((long) a);
     }
@@ -1030,7 +1030,7 @@ public class NNTP extends SocketClient
      * @deprecated - for API compatibility only - DO NOT USE
      */
     @Deprecated
-    public int stat(int a) throws IOException
+    public int stat(final int a) throws IOException
     {
         return stat((long) a);
     }

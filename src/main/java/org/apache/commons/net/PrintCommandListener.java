@@ -42,7 +42,7 @@ public class PrintCommandListener implements ProtocolCommandListener
      * e.g. System.out
      * @since 3.0
      */
-    public PrintCommandListener(PrintStream stream)
+    public PrintCommandListener(final PrintStream stream)
     {
         this(new PrintWriter(stream));
     }
@@ -56,7 +56,7 @@ public class PrintCommandListener implements ProtocolCommandListener
      *
      * @since 3.0
      */
-    public PrintCommandListener(PrintStream stream, boolean suppressLogin) {
+    public PrintCommandListener(final PrintStream stream, final boolean suppressLogin) {
         this(new PrintWriter(stream), suppressLogin);
     }
 
@@ -70,7 +70,7 @@ public class PrintCommandListener implements ProtocolCommandListener
      *
      * @since 3.0
      */
-    public PrintCommandListener(PrintStream stream, boolean suppressLogin, char eolMarker) {
+    public PrintCommandListener(final PrintStream stream, final boolean suppressLogin, final char eolMarker) {
         this(new PrintWriter(stream), suppressLogin, eolMarker);
     }
 
@@ -85,7 +85,7 @@ public class PrintCommandListener implements ProtocolCommandListener
      *
      * @since 3.0
      */
-    public PrintCommandListener(PrintStream stream, boolean suppressLogin, char eolMarker, boolean showDirection) {
+    public PrintCommandListener(final PrintStream stream, final boolean suppressLogin, final char eolMarker, final boolean showDirection) {
         this(new PrintWriter(stream), suppressLogin, eolMarker, showDirection);
     }
 
@@ -94,7 +94,7 @@ public class PrintCommandListener implements ProtocolCommandListener
      *
      * @param writer where to write the commands and responses
      */
-    public PrintCommandListener(PrintWriter writer)
+    public PrintCommandListener(final PrintWriter writer)
     {
         this(writer, false);
     }
@@ -107,7 +107,7 @@ public class PrintCommandListener implements ProtocolCommandListener
      *
      * @since 3.0
      */
-    public PrintCommandListener(PrintWriter writer, boolean suppressLogin)
+    public PrintCommandListener(final PrintWriter writer, final boolean suppressLogin)
     {
         this(writer, suppressLogin, (char) 0);
     }
@@ -122,7 +122,7 @@ public class PrintCommandListener implements ProtocolCommandListener
      *
      * @since 3.0
      */
-    public PrintCommandListener(PrintWriter writer, boolean suppressLogin, char eolMarker)
+    public PrintCommandListener(final PrintWriter writer, final boolean suppressLogin, final char eolMarker)
     {
         this(writer, suppressLogin, eolMarker, false);
     }
@@ -138,7 +138,7 @@ public class PrintCommandListener implements ProtocolCommandListener
      *
      * @since 3.0
      */
-    public PrintCommandListener(PrintWriter writer, boolean suppressLogin, char eolMarker, boolean showDirection)
+    public PrintCommandListener(final PrintWriter writer, final boolean suppressLogin, final char eolMarker, final boolean showDirection)
     {
         __writer = writer;
         __nologin = suppressLogin;
@@ -147,13 +147,13 @@ public class PrintCommandListener implements ProtocolCommandListener
     }
 
     @Override
-    public void protocolCommandSent(ProtocolCommandEvent event)
+    public void protocolCommandSent(final ProtocolCommandEvent event)
     {
         if (__directionMarker) {
             __writer.print("> ");
         }
         if (__nologin) {
-            String cmd = event.getCommand();
+            final String cmd = event.getCommand();
             if ("PASS".equalsIgnoreCase(cmd) || "USER".equalsIgnoreCase(cmd)) {
                 __writer.print(cmd);
                 __writer.println(" *******"); // Don't bother with EOL marker for this!
@@ -174,13 +174,13 @@ public class PrintCommandListener implements ProtocolCommandListener
         __writer.flush();
     }
 
-    private String getPrintableString(String msg){
+    private String getPrintableString(final String msg){
         if (__eolMarker == 0) {
             return msg;
         }
-        int pos = msg.indexOf(SocketClient.NETASCII_EOL);
+        final int pos = msg.indexOf(SocketClient.NETASCII_EOL);
         if (pos > 0) {
-            StringBuilder sb = new StringBuilder();
+            final StringBuilder sb = new StringBuilder();
             sb.append(msg.substring(0,pos));
             sb.append(__eolMarker);
             sb.append(msg.substring(pos));
@@ -190,7 +190,7 @@ public class PrintCommandListener implements ProtocolCommandListener
     }
 
     @Override
-    public void protocolReplyReceived(ProtocolCommandEvent event)
+    public void protocolReplyReceived(final ProtocolCommandEvent event)
     {
         if (__directionMarker) {
             __writer.print("< ");

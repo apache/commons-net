@@ -31,10 +31,10 @@ public class TimeStampTest extends TestCase {
 
     public void testCompare() {
 
-        TimeStamp ts1 = new TimeStamp(TIME1);   // Tue, Dec 17 2002 14:07:24.810 UTC
-        TimeStamp ts2 = new TimeStamp(TIME1);
-        TimeStamp ts3 = new TimeStamp(TIME2);   // Tue, Dec 17 2002 14:07:24.810 UTC
-        TimeStamp ts4 = new TimeStamp(TIME3);   // Tue, Dec 17 2002 14:07:25.810 UTC
+        final TimeStamp ts1 = new TimeStamp(TIME1);   // Tue, Dec 17 2002 14:07:24.810 UTC
+        final TimeStamp ts2 = new TimeStamp(TIME1);
+        final TimeStamp ts3 = new TimeStamp(TIME2);   // Tue, Dec 17 2002 14:07:24.810 UTC
+        final TimeStamp ts4 = new TimeStamp(TIME3);   // Tue, Dec 17 2002 14:07:25.810 UTC
 
         // do assertion tests on TimeStamp class
         assertEquals("equals(1,2)", ts1, ts2);
@@ -52,8 +52,8 @@ public class TimeStampTest extends TestCase {
         assertTrue("fraction", ts1.getFraction() != ts3.getFraction());
         assertTrue("ntpValue(1,3)", ts1.ntpValue() != ts3.ntpValue());
         assertTrue("hashCode(1,3)", ts1.hashCode() != ts3.hashCode());
-        long time1 = ts1.getTime();
-        long time3 = ts3.getTime();
+        final long time1 = ts1.getTime();
+        final long time3 = ts3.getTime();
         assertEquals("equals(time1,3)", time1, time3); // ntpTime1 != ntpTime3 but JavaTime(t1) == JavaTime(t3)...
 
         assertTrue("ts3 != ts4", !ts3.equals(ts4));
@@ -61,24 +61,24 @@ public class TimeStampTest extends TestCase {
     }
 
     public void testUTCString() {
-        TimeStamp ts1 = new TimeStamp(TIME1);   // Tue, Dec 17 2002 14:07:24.810 UTC
-        String actual = ts1.toUTCString();
+        final TimeStamp ts1 = new TimeStamp(TIME1);   // Tue, Dec 17 2002 14:07:24.810 UTC
+        final String actual = ts1.toUTCString();
         assertEquals("Tue, Dec 17 2002 14:07:24.810 UTC", actual);
     }
 
     public void testDateConversion() {
         // convert current date to NtpTimeStamp then compare Java date
         // computed from NTP timestamp with original Java date.
-        Calendar refCal = Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC"));
-        Date refDate = refCal.getTime();
-        TimeStamp ts = new TimeStamp(refDate);
+        final Calendar refCal = Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC"));
+        final Date refDate = refCal.getTime();
+        final TimeStamp ts = new TimeStamp(refDate);
         assertEquals("refDate.getTime()", refDate.getTime(), ts.getTime());
-        Date tsDate = ts.getDate();
+        final Date tsDate = ts.getDate();
         assertEquals(refDate, tsDate);
     }
 
     public void testNotSame() {
-        TimeStamp time = TimeStamp.getCurrentTime();
+        final TimeStamp time = TimeStamp.getCurrentTime();
         Object other = Integer.valueOf(0);
         if(time.equals(other)) {
           fail("TimeStamp cannot equal Date");

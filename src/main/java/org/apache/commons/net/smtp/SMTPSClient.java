@@ -94,7 +94,7 @@ public class SMTPSClient extends SMTPClient
      * Constructor for SMTPSClient, using {@link #DEFAULT_PROTOCOL} i.e. TLS
      * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      */
-    public SMTPSClient(boolean implicit)
+    public SMTPSClient(final boolean implicit)
     {
         this(DEFAULT_PROTOCOL, implicit);
     }
@@ -103,7 +103,7 @@ public class SMTPSClient extends SMTPClient
      * Constructor for SMTPSClient, using explicit security mode.
      * @param proto the protocol.
      */
-    public SMTPSClient(String proto)
+    public SMTPSClient(final String proto)
     {
         this(proto, false);
     }
@@ -113,7 +113,7 @@ public class SMTPSClient extends SMTPClient
      * @param proto the protocol.
      * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      */
-    public SMTPSClient(String proto, boolean implicit)
+    public SMTPSClient(final String proto, final boolean implicit)
     {
         protocol = proto;
         isImplicit = implicit;
@@ -126,7 +126,7 @@ public class SMTPSClient extends SMTPClient
      * @param encoding the encoding
      * @since 3.3
      */
-    public SMTPSClient(String proto, boolean implicit, String encoding)
+    public SMTPSClient(final String proto, final boolean implicit, final String encoding)
     {
         super(encoding);
         protocol = proto;
@@ -138,7 +138,7 @@ public class SMTPSClient extends SMTPClient
      * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      * @param ctx A pre-configured SSL Context.
      */
-    public SMTPSClient(boolean implicit, SSLContext ctx)
+    public SMTPSClient(final boolean implicit, final SSLContext ctx)
     {
         isImplicit = implicit;
         context = ctx;
@@ -150,7 +150,7 @@ public class SMTPSClient extends SMTPClient
      * @param context A pre-configured SSL Context.
      * @see #SMTPSClient(boolean, SSLContext)
      */
-    public SMTPSClient(SSLContext context)
+    public SMTPSClient(final SSLContext context)
     {
         this(false, context);
     }
@@ -195,10 +195,10 @@ public class SMTPSClient extends SMTPClient
     {
         initSSLContext();
 
-        SSLSocketFactory ssf = context.getSocketFactory();
-        String host = (_hostname_ != null) ? _hostname_ : getRemoteAddress().getHostAddress();
-        int port = getRemotePort();
-        SSLSocket socket =
+        final SSLSocketFactory ssf = context.getSocketFactory();
+        final String host = (_hostname_ != null) ? _hostname_ : getRemoteAddress().getHostAddress();
+        final int port = getRemotePort();
+        final SSLSocket socket =
             (SSLSocket) ssf.createSocket(_socket_, host, port, true);
         socket.setEnableSessionCreation(true);
         socket.setUseClientMode(true);
@@ -242,7 +242,7 @@ public class SMTPSClient extends SMTPClient
      * @param newKeyManager The KeyManager implementation to set.
      * @see org.apache.commons.net.util.KeyManagerUtils
      */
-    public void setKeyManager(KeyManager newKeyManager)
+    public void setKeyManager(final KeyManager newKeyManager)
     {
         keyManager = newKeyManager;
     }
@@ -252,7 +252,7 @@ public class SMTPSClient extends SMTPClient
      * connection. Called before server negotiation.
      * @param cipherSuites The cipher suites.
      */
-    public void setEnabledCipherSuites(String[] cipherSuites)
+    public void setEnabledCipherSuites(final String[] cipherSuites)
     {
         suites = new String[cipherSuites.length];
         System.arraycopy(cipherSuites, 0, suites, 0, cipherSuites.length);
@@ -278,7 +278,7 @@ public class SMTPSClient extends SMTPClient
      * connection. I perform setting before a server negotiation.
      * @param protocolVersions The protocol versions.
      */
-    public void setEnabledProtocols(String[] protocolVersions)
+    public void setEnabledProtocols(final String[] protocolVersions)
     {
         protocols = new String[protocolVersions.length];
         System.arraycopy(protocolVersions, 0, protocols, 0, protocolVersions.length);
@@ -330,7 +330,7 @@ public class SMTPSClient extends SMTPClient
      * @param newTrustManager The TrustManager implementation to set.
      * @see org.apache.commons.net.util.TrustManagerUtils
      */
-    public void setTrustManager(TrustManager newTrustManager)
+    public void setTrustManager(final TrustManager newTrustManager)
     {
         trustManager = newTrustManager;
     }
@@ -350,7 +350,7 @@ public class SMTPSClient extends SMTPClient
      * @param newHostnameVerifier The HostnameVerifier implementation to set or <code>null</code> to disable.
      * @since 3.4
      */
-    public void setHostnameVerifier(HostnameVerifier newHostnameVerifier)
+    public void setHostnameVerifier(final HostnameVerifier newHostnameVerifier)
     {
         hostnameVerifier = newHostnameVerifier;
     }
@@ -374,7 +374,7 @@ public class SMTPSClient extends SMTPClient
      * @param enable Enable automatic endpoint identification checking using the HTTPS algorithm on Java 1.7+.
      * @since 3.4
      */
-    public void setEndpointCheckingEnabled(boolean enable)
+    public void setEndpointCheckingEnabled(final boolean enable)
     {
         tlsEndpointChecking = enable;
     }

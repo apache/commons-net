@@ -85,7 +85,7 @@ public class IMAPClient extends IMAP
      * @throws IOException If a network I/O error occurs in the process of
      *            logging in.
      */
-    public boolean login(String username, String password) throws IOException
+    public boolean login(final String username, final String password) throws IOException
     {
         if (getState() != IMAP.IMAPState.NOT_AUTH_STATE)
         {
@@ -110,7 +110,7 @@ public class IMAPClient extends IMAP
      * @return {@code true} if the command was successful,{@code false} if not.
      * @throws IOException If a network I/O error occurs.
      */
-    public boolean select(String mailboxName) throws IOException
+    public boolean select(final String mailboxName) throws IOException
     {
         return doCommand (IMAPCommand.SELECT, quoteMailboxName(mailboxName));
     }
@@ -121,7 +121,7 @@ public class IMAPClient extends IMAP
      * @return {@code true} if the command was successful,{@code false} if not.
      * @throws IOException If a network I/O error occurs.
      */
-    public boolean examine(String mailboxName) throws IOException
+    public boolean examine(final String mailboxName) throws IOException
     {
         return doCommand (IMAPCommand.EXAMINE, quoteMailboxName(mailboxName));
     }
@@ -132,7 +132,7 @@ public class IMAPClient extends IMAP
      * @return {@code true} if the command was successful,{@code false} if not.
      * @throws IOException If a network I/O error occurs.
      */
-    public boolean create(String mailboxName) throws IOException
+    public boolean create(final String mailboxName) throws IOException
     {
         return doCommand (IMAPCommand.CREATE, quoteMailboxName(mailboxName));
     }
@@ -143,7 +143,7 @@ public class IMAPClient extends IMAP
      * @return {@code true} if the command was successful,{@code false} if not.
      * @throws IOException If a network I/O error occurs.
      */
-    public boolean delete(String mailboxName) throws IOException
+    public boolean delete(final String mailboxName) throws IOException
     {
         return doCommand (IMAPCommand.DELETE, quoteMailboxName(mailboxName));
     }
@@ -155,7 +155,7 @@ public class IMAPClient extends IMAP
      * @return {@code true} if the command was successful,{@code false} if not.
      * @throws IOException If a network I/O error occurs.
      */
-    public boolean rename(String oldMailboxName, String newMailboxName) throws IOException
+    public boolean rename(final String oldMailboxName, final String newMailboxName) throws IOException
     {
         return doCommand (IMAPCommand.RENAME, quoteMailboxName(oldMailboxName) + " " + quoteMailboxName(newMailboxName));
     }
@@ -166,7 +166,7 @@ public class IMAPClient extends IMAP
      * @return {@code true} if the command was successful,{@code false} if not.
      * @throws IOException If a network I/O error occurs.
      */
-    public boolean subscribe(String mailboxName) throws IOException
+    public boolean subscribe(final String mailboxName) throws IOException
     {
         return doCommand (IMAPCommand.SUBSCRIBE, quoteMailboxName(mailboxName));
     }
@@ -177,7 +177,7 @@ public class IMAPClient extends IMAP
      * @return {@code true} if the command was successful,{@code false} if not.
      * @throws IOException If a network I/O error occurs.
      */
-    public boolean unsubscribe(String mailboxName) throws IOException
+    public boolean unsubscribe(final String mailboxName) throws IOException
     {
         return doCommand (IMAPCommand.UNSUBSCRIBE, quoteMailboxName(mailboxName));
     }
@@ -194,7 +194,7 @@ public class IMAPClient extends IMAP
      * @return {@code true} if the command was successful,{@code false} if not.
      * @throws IOException If a network I/O error occurs.
      */
-    public boolean list(String refName, String mailboxName) throws IOException
+    public boolean list(final String refName, final String mailboxName) throws IOException
     {
         return doCommand (IMAPCommand.LIST, quoteMailboxName(refName) + " " + quoteMailboxName(mailboxName));
     }
@@ -207,7 +207,7 @@ public class IMAPClient extends IMAP
      * @return {@code true} if the command was successful,{@code false} if not.
      * @throws IOException If a network I/O error occurs.
      */
-    public boolean lsub(String refName, String mailboxName) throws IOException
+    public boolean lsub(final String refName, final String mailboxName) throws IOException
     {
         return doCommand (IMAPCommand.LSUB, quoteMailboxName(refName) + " " + quoteMailboxName(mailboxName));
     }
@@ -219,13 +219,13 @@ public class IMAPClient extends IMAP
      * @return {@code true} if the command was successful,{@code false} if not.
      * @throws IOException If a network I/O error occurs.
      */
-    public boolean status(String mailboxName, String[] itemNames) throws IOException
+    public boolean status(final String mailboxName, final String[] itemNames) throws IOException
     {
         if (itemNames == null || itemNames.length < 1) {
             throw new IllegalArgumentException("STATUS command requires at least one data item name");
         }
 
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         sb.append(quoteMailboxName(mailboxName));
 
         sb.append(" (");
@@ -251,9 +251,9 @@ public class IMAPClient extends IMAP
      * @throws IOException If a network I/O error occurs.
      * @since 3.4
      */
-    public boolean append(String mailboxName, String flags, String datetime, String message) throws IOException
+    public boolean append(final String mailboxName, final String flags, final String datetime, final String message) throws IOException
     {
-        StringBuilder args = new StringBuilder(quoteMailboxName(mailboxName));
+        final StringBuilder args = new StringBuilder(quoteMailboxName(mailboxName));
         if (flags != null) {
             args.append(" ").append(flags);
         }
@@ -288,7 +288,7 @@ public class IMAPClient extends IMAP
      * Use {@link #append(String, String, String, String)} instead.
      */
     @Deprecated
-    public boolean append(String mailboxName, String flags, String datetime) throws IOException
+    public boolean append(final String mailboxName, final String flags, final String datetime) throws IOException
     {
         String args = mailboxName;
         if (flags != null) {
@@ -313,7 +313,7 @@ public class IMAPClient extends IMAP
      * Use {@link #append(String, String, String, String)} instead.
      */
     @Deprecated
-    public boolean append(String mailboxName) throws IOException
+    public boolean append(final String mailboxName) throws IOException
     {
         return append(mailboxName, null, null);
     }
@@ -357,7 +357,7 @@ public class IMAPClient extends IMAP
      * @return {@code true} if the command was successful,{@code false} if not.
      * @throws IOException If a network I/O error occurs.
      */
-    public boolean search(String charset, String criteria) throws IOException
+    public boolean search(final String charset, final String criteria) throws IOException
     {
         String args = "";
         if (charset != null) {
@@ -373,7 +373,7 @@ public class IMAPClient extends IMAP
      * @return {@code true} if the command was successful,{@code false} if not.
      * @throws IOException If a network I/O error occurs.
      */
-    public boolean search(String criteria) throws IOException
+    public boolean search(final String criteria) throws IOException
     {
         return search(null, criteria);
     }
@@ -389,7 +389,7 @@ public class IMAPClient extends IMAP
      * @see #getReplyString()
      * @see #getReplyStrings()
      */
-    public boolean fetch(String sequenceSet, String itemNames) throws IOException
+    public boolean fetch(final String sequenceSet, final String itemNames) throws IOException
     {
         return doCommand (IMAPCommand.FETCH, sequenceSet + " " + itemNames);
     }
@@ -402,7 +402,7 @@ public class IMAPClient extends IMAP
      * @return {@code true} if the command was successful,{@code false} if not.
      * @throws IOException If a network I/O error occurs.
      */
-    public boolean store(String sequenceSet, String itemNames, String itemValues)
+    public boolean store(final String sequenceSet, final String itemNames, final String itemValues)
         throws IOException
     {
         return doCommand (IMAPCommand.STORE, sequenceSet + " " + itemNames + " " + itemValues);
@@ -415,7 +415,7 @@ public class IMAPClient extends IMAP
      * @return {@code true} if the command was successful,{@code false} if not.
      * @throws IOException If a network I/O error occurs.
      */
-    public boolean copy(String sequenceSet, String mailboxName) throws IOException
+    public boolean copy(final String sequenceSet, final String mailboxName) throws IOException
     {
         return doCommand (IMAPCommand.COPY, sequenceSet + " " + quoteMailboxName(mailboxName));
     }
@@ -427,7 +427,7 @@ public class IMAPClient extends IMAP
      * @return {@code true} if the command was successful,{@code false} if not.
      * @throws IOException If a network I/O error occurs.
      */
-    public boolean uid(String command, String commandArgs) throws IOException
+    public boolean uid(final String command, final String commandArgs) throws IOException
     {
         return doCommand (IMAPCommand.UID, command + " " + commandArgs);
     }

@@ -49,7 +49,7 @@ public final class SMTPConnectionClosedException extends IOException
      *
      * @param message  The message explaining the reason for the exception.
      ***/
-    public SMTPConnectionClosedException(String message)
+    public SMTPConnectionClosedException(final String message)
     {
         super(message);
     }

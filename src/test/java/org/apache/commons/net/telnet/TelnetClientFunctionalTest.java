@@ -50,8 +50,8 @@ public class TelnetClientFunctionalTest extends TestCase
         boolean testresult = false;
         tc1.connect("rainmaker.wunderground.com", 3000);
 
-        InputStream is = tc1.getInputStream();
-        OutputStream os = tc1.getOutputStream();
+        final InputStream is = tc1.getInputStream();
+        final OutputStream os = tc1.getOutputStream();
 
         boolean cont = waitForString(is, "Return to continue:", 30000);
         if (cont)
@@ -87,10 +87,10 @@ public class TelnetClientFunctionalTest extends TestCase
     /*
      * Helper method. waits for a string with timeout
      */
-    public boolean waitForString(InputStream is, String end, long timeout) throws Exception
+    public boolean waitForString(final InputStream is, final String end, final long timeout) throws Exception
     {
-        byte buffer[] = new byte[32];
-        long starttime = System.currentTimeMillis();
+        final byte buffer[] = new byte[32];
+        final long starttime = System.currentTimeMillis();
 
         String readbytes = "";
         while((readbytes.indexOf(end) < 0) &&
@@ -98,7 +98,7 @@ public class TelnetClientFunctionalTest extends TestCase
         {
             if(is.available() > 0)
             {
-                int ret_read = is.read(buffer);
+                final int ret_read = is.read(buffer);
                 readbytes = readbytes + new String(buffer, 0, ret_read);
             }
             else

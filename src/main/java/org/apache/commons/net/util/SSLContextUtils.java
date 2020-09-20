@@ -42,7 +42,7 @@ public class SSLContextUtils {
      * @return the initialised context.
      * @throws IOException this is used to wrap any {@link GeneralSecurityException} that occurs
      */
-    public static SSLContext createSSLContext(String protocol, KeyManager keyManager, TrustManager trustManager)
+    public static SSLContext createSSLContext(final String protocol, final KeyManager keyManager, final TrustManager trustManager)
             throws IOException {
         return createSSLContext(protocol,
                 keyManager == null ? null : new KeyManager[] { keyManager },
@@ -57,14 +57,14 @@ public class SSLContextUtils {
      * @return the initialised context.
      * @throws IOException this is used to wrap any {@link GeneralSecurityException} that occurs
      */
-    public static SSLContext createSSLContext(String protocol, KeyManager[] keyManagers, TrustManager[] trustManagers)
+    public static SSLContext createSSLContext(final String protocol, final KeyManager[] keyManagers, final TrustManager[] trustManagers)
         throws IOException {
         SSLContext ctx;
         try {
             ctx = SSLContext.getInstance(protocol);
             ctx.init(keyManagers, trustManagers, /*SecureRandom*/ null);
-        } catch (GeneralSecurityException e) {
-            IOException ioe = new IOException("Could not initialize SSL context");
+        } catch (final GeneralSecurityException e) {
+            final IOException ioe = new IOException("Could not initialize SSL context");
             ioe.initCause(e);
             throw ioe;
         }

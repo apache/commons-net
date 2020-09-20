@@ -161,7 +161,7 @@ public class POP3 extends SocketClient
      * Set the internal POP3 state.
      * @param state the new state. This must be one of the <code>_STATE</code> constants.
      */
-    public void setState(int state)
+    public void setState(final int state)
     {
         __popState = state;
     }
@@ -226,12 +226,12 @@ public class POP3 extends SocketClient
      * @return  The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
      * @throws IOException on error
      ***/
-    public int sendCommand(String command, String args) throws IOException
+    public int sendCommand(final String command, final String args) throws IOException
     {
         if (_writer == null) {
             throw new IllegalStateException("Socket is not connected");
         }
-        StringBuilder __commandBuffer = new StringBuilder();
+        final StringBuilder __commandBuffer = new StringBuilder();
         __commandBuffer.append(command);
 
         if (args != null)
@@ -241,7 +241,7 @@ public class POP3 extends SocketClient
         }
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
-        String message = __commandBuffer.toString();
+        final String message = __commandBuffer.toString();
         _writer.write(message);
         _writer.flush();
 
@@ -259,7 +259,7 @@ public class POP3 extends SocketClient
      * @return  The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
      * @throws IOException on error
      ***/
-    public int sendCommand(String command) throws IOException
+    public int sendCommand(final String command) throws IOException
     {
         return sendCommand(command, null);
     }
@@ -273,7 +273,7 @@ public class POP3 extends SocketClient
      * @return  The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
      * @throws IOException on error
      ***/
-    public int sendCommand(int command, String args) throws IOException
+    public int sendCommand(final int command, final String args) throws IOException
     {
         return sendCommand(POP3Command._commands[command], args);
     }
@@ -287,7 +287,7 @@ public class POP3 extends SocketClient
      * @return  The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
      * @throws IOException on error
      ***/
-    public int sendCommand(int command) throws IOException
+    public int sendCommand(final int command) throws IOException
     {
         return sendCommand(POP3Command._commands[command], null);
     }
@@ -324,9 +324,9 @@ public class POP3 extends SocketClient
      ***/
     public String getReplyString()
     {
-        StringBuilder buffer = new StringBuilder(256);
+        final StringBuilder buffer = new StringBuilder(256);
 
-        for (String entry : _replyLines)
+        for (final String entry : _replyLines)
         {
             buffer.append(entry);
             buffer.append(SocketClient.NETASCII_EOL);
@@ -342,7 +342,7 @@ public class POP3 extends SocketClient
      * the correct method {@link SocketClient#removeProtocolCommandListener}
      * @param listener The ProtocolCommandListener to remove
      */
-    public void removeProtocolCommandistener(org.apache.commons.net.ProtocolCommandListener listener){
+    public void removeProtocolCommandistener(final org.apache.commons.net.ProtocolCommandListener listener){
         removeProtocolCommandListener(listener);
     }
 

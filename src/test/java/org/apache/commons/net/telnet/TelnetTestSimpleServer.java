@@ -38,7 +38,7 @@ public class TelnetTestSimpleServer implements Runnable
      * @param port - server port on which to listen.
      * @throws IOException on error
      */
-    public TelnetTestSimpleServer(int port) throws IOException
+    public TelnetTestSimpleServer(final int port) throws IOException
     {
         serverSocket = new ServerSocket(port);
 
@@ -62,7 +62,7 @@ public class TelnetTestSimpleServer implements Runnable
                     {
                         clientSocket.wait();
                     }
-                    catch (Exception e)
+                    catch (final Exception e)
                     {
                         System.err.println("Exception in wait, "+ e.getMessage());
                     }
@@ -70,13 +70,13 @@ public class TelnetTestSimpleServer implements Runnable
                     {
                         clientSocket.close();
                     }
-                    catch (Exception e)
+                    catch (final Exception e)
                     {
                         System.err.println("Exception in close, "+ e.getMessage());
                     }
                 }
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 bError = true;
             }
@@ -86,7 +86,7 @@ public class TelnetTestSimpleServer implements Runnable
         {
             serverSocket.close();
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             System.err.println("Exception in close, "+ e.getMessage());
         }
@@ -104,7 +104,7 @@ public class TelnetTestSimpleServer implements Runnable
             {
                 clientSocket.notify();
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 System.err.println("Exception in notify, "+ e.getMessage());
             }
@@ -118,7 +118,7 @@ public class TelnetTestSimpleServer implements Runnable
         {
             serverSocket.close();
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             System.err.println("Exception in close, "+ e.getMessage());
         }

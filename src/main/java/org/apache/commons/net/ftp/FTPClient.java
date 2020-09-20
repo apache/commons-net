@@ -435,18 +435,18 @@ implements Configurable
         static final Properties PROPERTIES;
 
         static {
-            InputStream resourceAsStream = FTPClient.class.getResourceAsStream(SYSTEM_TYPE_PROPERTIES);
+            final InputStream resourceAsStream = FTPClient.class.getResourceAsStream(SYSTEM_TYPE_PROPERTIES);
             Properties p = null;
             if (resourceAsStream != null) {
                 p = new Properties();
                 try {
                     p.load(resourceAsStream);
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     // Ignored
                 } finally {
                     try {
                         resourceAsStream.close();
-                    } catch (IOException e) {
+                    } catch (final IOException e) {
                         // Ignored
                     }
                 }
@@ -528,15 +528,15 @@ implements Configurable
      * (i.e. enclosing quotes are missing or embedded quotes are not doubled)
      */
     // package protected for access by test cases
-    static String __parsePathname(String reply)
+    static String __parsePathname(final String reply)
     {
-        String param = reply.substring(REPLY_CODE_LEN + 1);
+        final String param = reply.substring(REPLY_CODE_LEN + 1);
         if (param.startsWith("\"")) {
-            StringBuilder sb = new StringBuilder();
+            final StringBuilder sb = new StringBuilder();
             boolean quoteSeen = false;
             // start after initial quote
             for(int i=1; i < param.length(); i++) {
-                char ch = param.charAt(i);
+                final char ch = param.charAt(i);
                 if (ch=='"') {
                     if (quoteSeen) {
                         sb.append(ch);
@@ -565,10 +565,10 @@ implements Configurable
      * @param reply the reply to parse
      * @throws MalformedServerReplyException if the server reply does not match  (n,n,n,n),(n),(n)
      */
-    protected void _parsePassiveModeReply(String reply)
+    protected void _parsePassiveModeReply(final String reply)
     throws MalformedServerReplyException
     {
-        java.util.regex.Matcher m = __PARMS_PAT.matcher(reply);
+        final java.util.regex.Matcher m = __PARMS_PAT.matcher(reply);
         if (!m.find()) {
             throw new MalformedServerReplyException(
                     "Could not parse passive host information.\nServer Reply: " + reply);
@@ -579,11 +579,11 @@ implements Configurable
 
         try
         {
-            int oct1 = Integer.parseInt(m.group(2));
-            int oct2 = Integer.parseInt(m.group(3));
+            final int oct1 = Integer.parseInt(m.group(2));
+            final int oct2 = Integer.parseInt(m.group(3));
             __passivePort = (oct1 << 8) | oct2;
         }
-        catch (NumberFormatException e)
+        catch (final NumberFormatException e)
         {
             throw new MalformedServerReplyException(
                     "Could not parse passive port information.\nServer Reply: " + reply);
@@ -591,13 +591,13 @@ implements Configurable
 
         if (__passiveNatWorkaroundStrategy != null) {
             try {
-                String passiveHost = __passiveNatWorkaroundStrategy.resolve(__passiveHost);
+                final String passiveHost = __passiveNatWorkaroundStrategy.resolve(__passiveHost);
                 if (!__passiveHost.equals(passiveHost)) {
                     fireReplyReceived(0,
                             "[Replacing PASV mode reply address "+__passiveHost+" with "+passiveHost+"]\n");
                     __passiveHost = passiveHost;
                 }
-            } catch (UnknownHostException e) { // Should not happen as we are passing in an IP address
+            } catch (final UnknownHostException e) { // Should not happen as we are passing in an IP address
                 throw new MalformedServerReplyException(
                         "Could not parse passive host information.\nServer Reply: " + reply);
             }
@@ -627,7 +627,7 @@ implements Configurable
         {
             port = Integer.parseInt(reply.substring(3, reply.length()-1));
         }
-        catch (NumberFormatException e)
+        catch (final NumberFormatException e)
         {
             throw new MalformedServerReplyException(
                     "Could not parse extended passive host information.\nServer Reply: " + reply);
@@ -639,7 +639,7 @@ implements Configurable
         __passivePort = port;
     }
 
-    private boolean __storeFile(FTPCmd command, String remote, InputStream local)
+    private boolean __storeFile(final FTPCmd command, final String remote, final InputStream local)
     throws IOException
     {
         return _storeFile(command.getCommand(), remote, local);
@@ -654,10 +654,10 @@ implements Configurable
      * @return true if successful
      * @throws IOException on error
      */
-    protected boolean _storeFile(String command, String remote, InputStream local)
+    protected boolean _storeFile(final String command, final String remote, final InputStream local)
     throws IOException
     {
-        Socket socket = _openDataConnection_(command, remote);
+        final Socket socket = _openDataConnection_(command, remote);
 
         if (socket == null) {
             return false;
@@ -688,7 +688,7 @@ implements Configurable
             // Get the transfer response
             return completePendingCommand();
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             Util.closeQuietly(output); // ignore close errors here
             Util.closeQuietly(socket); // ignore close errors here
@@ -700,7 +700,7 @@ implements Configurable
         }
     }
 
-    private OutputStream __storeFileStream(FTPCmd command, String remote)
+    private OutputStream __storeFileStream(final FTPCmd command, final String remote)
     throws IOException
     {
         return _storeFileStream(command.getCommand(), remote);
@@ -713,10 +713,10 @@ implements Configurable
      * @throws IOException on error
      * @since 3.1
      */
-    protected OutputStream _storeFileStream(String command, String remote)
+    protected OutputStream _storeFileStream(final String command, final String remote)
     throws IOException
     {
-        Socket socket = _openDataConnection_(command, remote);
+        final Socket socket = _openDataConnection_(command, remote);
 
         if (socket == null) {
             return null;
@@ -759,7 +759,7 @@ implements Configurable
      * @deprecated (3.3) Use {@link #_openDataConnection_(FTPCmd, String)} instead
      */
     @Deprecated
-    protected Socket _openDataConnection_(int command, String arg)
+    protected Socket _openDataConnection_(final int command, final String arg)
     throws IOException
     {
         return _openDataConnection_(FTPCommand.getCommand(command), arg);
@@ -784,7 +784,7 @@ implements Configurable
      *      command to the server or receiving a reply from the server.
      * @since 3.3
      */
-    protected Socket _openDataConnection_(FTPCmd command, String arg)
+    protected Socket _openDataConnection_(final FTPCmd command, final String arg)
     throws IOException
     {
         return _openDataConnection_(command.getCommand(), arg);
@@ -809,7 +809,7 @@ implements Configurable
      *      command to the server or receiving a reply from the server.
      * @since 3.1
      */
-    protected Socket _openDataConnection_(String command, String arg)
+    protected Socket _openDataConnection_(final String command, final String arg)
     throws IOException
     {
         if (__dataConnectionMode != ACTIVE_LOCAL_DATA_CONNECTION_MODE &&
@@ -825,7 +825,7 @@ implements Configurable
         {
             // if no activePortRange was set (correctly) -> getActivePort() = 0
             // -> new ServerSocket(0) -> bind to any free local port
-            ServerSocket server = _serverSocketFactory_.createServerSocket(getActivePort(), 1, getHostAddress());
+            final ServerSocket server = _serverSocketFactory_.createServerSocket(getActivePort(), 1, getHostAddress());
 
             try {
                 // Try EPRT only if remote server is over IPv6, if not use PORT,
@@ -886,7 +886,7 @@ implements Configurable
             // and the client is coming from another internal network.
             // In that case the data connection after PASV command would fail,
             // while EPSV would make the client succeed by taking just the port.
-            boolean attemptEPSV = isUseEPSVwithIPv4() || isInet6Address;
+            final boolean attemptEPSV = isUseEPSVwithIPv4() || isInet6Address;
             if (attemptEPSV && epsv() == FTPReply.ENTERING_EPSV_MODE)
             {
                 _parseExtendedPassiveModeReply(_replyLines.get(0));
@@ -939,7 +939,7 @@ implements Configurable
         if (__remoteVerificationEnabled && !verifyRemote(socket))
         {
             // Grab the host before we close the socket to avoid NET-663
-            InetAddress socketHost = socket.getInetAddress();
+            final InetAddress socketHost = socket.getInetAddress();
 
             socket.close();
 
@@ -965,7 +965,7 @@ implements Configurable
      * @since 3.4
      */
     @Override
-    protected void _connectAction_(Reader socketIsReader) throws IOException
+    protected void _connectAction_(final Reader socketIsReader) throws IOException
     {
         super._connectAction_(socketIsReader); // sets up _input_ and _output_
         __initDefaults();
@@ -973,8 +973,8 @@ implements Configurable
         // Exception claiming we're not connected
         if ( __autodetectEncoding )
         {
-            ArrayList<String> oldReplyLines = new ArrayList<> (_replyLines);
-            int oldReplyCode = _replyCode;
+            final ArrayList<String> oldReplyLines = new ArrayList<> (_replyLines);
+            final int oldReplyCode = _replyCode;
             if ( hasFeature("UTF8") || hasFeature("UTF-8")) // UTF8 appears to be the default
             {
                  setControlEncoding("UTF-8");
@@ -1002,7 +1002,7 @@ implements Configurable
      * @param  timeout The default timeout in milliseconds that is used when
      *        opening a data connection socket. The value 0 means an infinite timeout.
      */
-    public void setDataTimeout(int timeout)
+    public void setDataTimeout(final int timeout)
     {
         __dataTimeout = timeout;
     }
@@ -1016,7 +1016,7 @@ implements Configurable
      * @see org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory
      * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
      */
-    public void setParserFactory(FTPFileEntryParserFactory parserFactory) {
+    public void setParserFactory(final FTPFileEntryParserFactory parserFactory) {
         __parserFactory = parserFactory;
     }
 
@@ -1044,7 +1044,7 @@ implements Configurable
      *
      * @param enable True to enable verification, false to disable verification.
      */
-    public void setRemoteVerificationEnabled(boolean enable)
+    public void setRemoteVerificationEnabled(final boolean enable)
     {
         __remoteVerificationEnabled = enable;
     }
@@ -1075,7 +1075,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean login(String username, String password) throws IOException
+    public boolean login(final String username, final String password) throws IOException
     {
 
         user(username);
@@ -1111,7 +1111,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean login(String username, String password, String account)
+    public boolean login(final String username, final String password, final String account)
     throws IOException
     {
         user(username);
@@ -1170,7 +1170,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean changeWorkingDirectory(String pathname) throws IOException
+    public boolean changeWorkingDirectory(final String pathname) throws IOException
     {
         return FTPReply.isPositiveCompletion(cwd(pathname));
     }
@@ -1207,7 +1207,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean structureMount(String pathname) throws IOException
+    public boolean structureMount(final String pathname) throws IOException
     {
         return FTPReply.isPositiveCompletion(smnt(pathname));
     }
@@ -1310,7 +1310,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean enterRemoteActiveMode(InetAddress host, int port)
+    public boolean enterRemoteActiveMode(final InetAddress host, final int port)
     throws IOException
     {
         if (FTPReply.isPositiveCompletion(port(host, port)))
@@ -1468,7 +1468,7 @@ implements Configurable
      * @param maxPort The highest available port (inclusive).
      * @since 2.2
      */
-    public void setActivePortRange(int minPort, int maxPort)
+    public void setActivePortRange(final int minPort, final int maxPort)
     {
         this.__activeMinPort = minPort;
         this.__activeMaxPort = maxPort;
@@ -1482,7 +1482,7 @@ implements Configurable
      * @throws UnknownHostException if the ipAddress cannot be resolved
      * @since 2.2
      */
-    public void setActiveExternalIPAddress(String ipAddress) throws UnknownHostException
+    public void setActiveExternalIPAddress(final String ipAddress) throws UnknownHostException
     {
         this.__activeExternalHost = InetAddress.getByName(ipAddress);
     }
@@ -1494,7 +1494,7 @@ implements Configurable
      * @param ipAddress The local IP address of this machine.
      * @throws UnknownHostException if the ipAddress cannot be resolved
      */
-    public void setPassiveLocalIPAddress(String ipAddress) throws UnknownHostException
+    public void setPassiveLocalIPAddress(final String ipAddress) throws UnknownHostException
     {
         this.__passiveLocalHost = InetAddress.getByName(ipAddress);
     }
@@ -1505,7 +1505,7 @@ implements Configurable
      *
      * @param inetAddress The local IP address of this machine.
      */
-    public void setPassiveLocalIPAddress(InetAddress inetAddress)
+    public void setPassiveLocalIPAddress(final InetAddress inetAddress)
     {
         this.__passiveLocalHost = inetAddress;
     }
@@ -1530,7 +1530,7 @@ implements Configurable
      * @since 3.1
      * @see #getReportHostAddress()
      */
-    public void setReportActiveExternalIPAddress(String ipAddress) throws UnknownHostException
+    public void setReportActiveExternalIPAddress(final String ipAddress) throws UnknownHostException
     {
         this.__reportActiveExternalHost = InetAddress.getByName(ipAddress);
     }
@@ -1562,7 +1562,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean setFileType(int fileType) throws IOException
+    public boolean setFileType(final int fileType) throws IOException
     {
         if (FTPReply.isPositiveCompletion(type(fileType)))
         {
@@ -1610,7 +1610,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean setFileType(int fileType, int formatOrByteSize)
+    public boolean setFileType(final int fileType, final int formatOrByteSize)
     throws IOException
     {
         if (FTPReply.isPositiveCompletion(type(fileType, formatOrByteSize)))
@@ -1639,7 +1639,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean setFileStructure(int structure) throws IOException
+    public boolean setFileStructure(final int structure) throws IOException
     {
         if (FTPReply.isPositiveCompletion(stru(structure)))
         {
@@ -1666,7 +1666,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean setFileTransferMode(int mode) throws IOException
+    public boolean setFileTransferMode(final int mode) throws IOException
     {
         if (FTPReply.isPositiveCompletion(mode(mode)))
         {
@@ -1692,7 +1692,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean remoteRetrieve(String fileName) throws IOException
+    public boolean remoteRetrieve(final String fileName) throws IOException
     {
         if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
                 __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
@@ -1719,7 +1719,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean remoteStore(String fileName) throws IOException
+    public boolean remoteStore(final String fileName) throws IOException
     {
         if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
                 __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
@@ -1747,7 +1747,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean remoteStoreUnique(String fileName) throws IOException
+    public boolean remoteStoreUnique(final String fileName) throws IOException
     {
         if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
                 __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
@@ -1803,7 +1803,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean remoteAppend(String fileName) throws IOException
+    public boolean remoteAppend(final String fileName) throws IOException
     {
         if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
                 __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
@@ -1887,7 +1887,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean retrieveFile(String remote, OutputStream local)
+    public boolean retrieveFile(final String remote, final OutputStream local)
     throws IOException
     {
         return _retrieveFile(FTPCmd.RETR.getCommand(), remote, local);
@@ -1901,10 +1901,10 @@ implements Configurable
      * @throws IOException on error
      * @since 3.1
      */
-    protected boolean _retrieveFile(String command, String remote, OutputStream local)
+    protected boolean _retrieveFile(final String command, final String remote, final OutputStream local)
     throws IOException
     {
-        Socket socket = _openDataConnection_(command, remote);
+        final Socket socket = _openDataConnection_(command, remote);
 
         if (socket == null) {
             return false;
@@ -1969,7 +1969,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public InputStream retrieveFileStream(String remote) throws IOException
+    public InputStream retrieveFileStream(final String remote) throws IOException
     {
         return _retrieveFileStream(FTPCmd.RETR.getCommand(), remote);
     }
@@ -1981,10 +1981,10 @@ implements Configurable
      * @throws IOException on error
      * @since 3.1
      */
-    protected InputStream _retrieveFileStream(String command, String remote)
+    protected InputStream _retrieveFileStream(final String command, final String remote)
     throws IOException
     {
-        Socket socket = _openDataConnection_(command, remote);
+        final Socket socket = _openDataConnection_(command, remote);
 
         if (socket == null) {
             return null;
@@ -2031,7 +2031,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean storeFile(String remote, InputStream local)
+    public boolean storeFile(final String remote, final InputStream local)
     throws IOException
     {
         return __storeFile(FTPCmd.STOR, remote, local);
@@ -2066,7 +2066,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public OutputStream storeFileStream(String remote) throws IOException
+    public OutputStream storeFileStream(final String remote) throws IOException
     {
         return __storeFileStream(FTPCmd.STOR, remote);
     }
@@ -2096,7 +2096,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean appendFile(String remote, InputStream local)
+    public boolean appendFile(final String remote, final InputStream local)
     throws IOException
     {
         return __storeFile(FTPCmd.APPE, remote, local);
@@ -2130,7 +2130,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public OutputStream appendFileStream(String remote) throws IOException
+    public OutputStream appendFileStream(final String remote) throws IOException
     {
         return __storeFileStream(FTPCmd.APPE, remote);
     }
@@ -2161,7 +2161,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean storeUniqueFile(String remote, InputStream local)
+    public boolean storeUniqueFile(final String remote, final InputStream local)
     throws IOException
     {
         return __storeFile(FTPCmd.STOU, remote, local);
@@ -2198,7 +2198,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public OutputStream storeUniqueFileStream(String remote) throws IOException
+    public OutputStream storeUniqueFileStream(final String remote) throws IOException
     {
         return __storeFileStream(FTPCmd.STOU, remote);
     }
@@ -2227,7 +2227,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean storeUniqueFile(InputStream local) throws IOException
+    public boolean storeUniqueFile(final InputStream local) throws IOException
     {
         return __storeFile(FTPCmd.STOU, null, local);
     }
@@ -2278,7 +2278,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean allocate(int bytes) throws IOException
+    public boolean allocate(final int bytes) throws IOException
     {
         return FTPReply.isPositiveCompletion(allo(bytes));
     }
@@ -2296,7 +2296,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean allocate(long bytes) throws IOException
+    public boolean allocate(final long bytes) throws IOException
     {
         return FTPReply.isPositiveCompletion(allo(bytes));
     }
@@ -2333,11 +2333,11 @@ implements Configurable
      * @throws IOException on error
      * @since 3.0
      */
-    public String[] featureValues(String feature) throws IOException {
+    public String[] featureValues(final String feature) throws IOException {
         if (!initFeatureMap()) {
             return null;
         }
-        Set<String> entries = __featuresMap.get(feature.toUpperCase(Locale.ENGLISH));
+        final Set<String> entries = __featuresMap.get(feature.toUpperCase(Locale.ENGLISH));
         if (entries != null) {
             return entries.toArray(new String[entries.size()]);
         }
@@ -2356,8 +2356,8 @@ implements Configurable
      * @throws IOException on error
      * @since 3.0
      */
-    public String featureValue(String feature) throws IOException {
-        String [] values = featureValues(feature);
+    public String featureValue(final String feature) throws IOException {
+        final String [] values = featureValues(feature);
         if (values != null) {
             return values[0];
         }
@@ -2376,7 +2376,7 @@ implements Configurable
      * @throws IOException on error
      * @since 3.0
      */
-    public boolean hasFeature(String feature) throws IOException {
+    public boolean hasFeature(final String feature) throws IOException {
         if (!initFeatureMap()) {
             return false;
         }
@@ -2398,11 +2398,11 @@ implements Configurable
      * @throws IOException on error
      * @since 3.0
      */
-    public boolean hasFeature(String feature, String value) throws IOException {
+    public boolean hasFeature(final String feature, final String value) throws IOException {
         if (!initFeatureMap()) {
             return false;
         }
-        Set<String> entries = __featuresMap.get(feature.toUpperCase(Locale.ENGLISH));
+        final Set<String> entries = __featuresMap.get(feature.toUpperCase(Locale.ENGLISH));
         if (entries != null) {
             return entries.contains(value);
         }
@@ -2419,17 +2419,17 @@ implements Configurable
             if (replyCode == FTPReply.NOT_LOGGED_IN) { // 503
                 return false; // NET-518; don't create empy map
             }
-            boolean success = FTPReply.isPositiveCompletion(replyCode);
+            final boolean success = FTPReply.isPositiveCompletion(replyCode);
             // we init the map here, so we don't keep trying if we know the command will fail
             __featuresMap = new HashMap<>();
             if (!success) {
                 return false;
             }
-            for (String l : getReplyStrings()) {
+            for (final String l : getReplyStrings()) {
                 if (l.startsWith(" ")) { // it's a FEAT entry
                     String key;
                     String value="";
-                    int varsep = l.indexOf(' ', 1);
+                    final int varsep = l.indexOf(' ', 1);
                     if (varsep > 0) {
                         key = l.substring(1, varsep);
                         value = l.substring(varsep+1);
@@ -2463,7 +2463,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean allocate(int bytes, int recordSize) throws IOException
+    public boolean allocate(final int bytes, final int recordSize) throws IOException
     {
         return FTPReply.isPositiveCompletion(allo(bytes, recordSize));
     }
@@ -2482,7 +2482,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean allocate(long bytes, int recordSize) throws IOException
+    public boolean allocate(final long bytes, final int recordSize) throws IOException
     {
         return FTPReply.isPositiveCompletion(allo(bytes, recordSize));
     }
@@ -2504,7 +2504,7 @@ implements Configurable
      *      command to the server or receiving a reply from the server.
      * @since 3.0
      */
-    public boolean doCommand(String command, String params) throws IOException
+    public boolean doCommand(final String command, final String params) throws IOException
     {
         return FTPReply.isPositiveCompletion(sendCommand(command, params));
     }
@@ -2525,9 +2525,9 @@ implements Configurable
      *      command to the server or receiving a reply from the server.
      * @since 3.0
      */
-    public String[] doCommandAsStrings(String command, String params) throws IOException
+    public String[] doCommandAsStrings(final String command, final String params) throws IOException
     {
-        boolean success = FTPReply.isPositiveCompletion(sendCommand(command, params));
+        final boolean success = FTPReply.isPositiveCompletion(sendCommand(command, params));
         if (success){
             return getReplyStrings();
         } else {
@@ -2543,9 +2543,9 @@ implements Configurable
      * @throws IOException on error
      * @since 3.0
      */
-    public FTPFile mlistFile(String pathname) throws IOException
+    public FTPFile mlistFile(final String pathname) throws IOException
     {
-        boolean success = FTPReply.isPositiveCompletion(sendCommand(FTPCmd.MLST, pathname));
+        final boolean success = FTPReply.isPositiveCompletion(sendCommand(FTPCmd.MLST, pathname));
         if (success){
             String reply = getReplyStrings()[1];
             // some FTP server reply not contains space before fact(s)
@@ -2558,7 +2558,7 @@ implements Configurable
                 throw new MalformedServerReplyException("Invalid server reply (MLST): '" + reply + "'");
             }
             // some FTP server reply contains more than one space before fact(s)
-            String entry = reply.replaceAll("^\\s+", ""); // skip leading space for parser
+            final String entry = reply.replaceAll("^\\s+", ""); // skip leading space for parser
             return MLSxEntryParser.parseEntry(entry);
         } else {
             return null;
@@ -2585,9 +2585,9 @@ implements Configurable
      * @throws IOException on error
      * @since 3.0
      */
-    public FTPFile[] mlistDir(String pathname) throws IOException
+    public FTPFile[] mlistDir(final String pathname) throws IOException
     {
-        FTPListParseEngine engine = initiateMListParsing( pathname);
+        final FTPListParseEngine engine = initiateMListParsing( pathname);
         return engine.getFiles();
     }
 
@@ -2600,9 +2600,9 @@ implements Configurable
      * @throws IOException on error
      * @since 3.0
      */
-    public FTPFile[] mlistDir(String pathname, FTPFileFilter filter) throws IOException
+    public FTPFile[] mlistDir(final String pathname, final FTPFileFilter filter) throws IOException
     {
-        FTPListParseEngine engine = initiateMListParsing( pathname);
+        final FTPListParseEngine engine = initiateMListParsing( pathname);
         return engine.getFiles(filter);
     }
 
@@ -2625,7 +2625,7 @@ implements Configurable
      *      command to the server or receiving a reply from the server.
      * @since 3.1 (changed from private to protected)
      */
-    protected boolean restart(long offset) throws IOException
+    protected boolean restart(final long offset) throws IOException
     {
         __restartOffset = 0;
         return FTPReply.isPositiveIntermediate(rest(Long.toString(offset)));
@@ -2647,7 +2647,7 @@ implements Configurable
      *           next file transfer.  This must be a value greater than or
      *           equal to zero.
      */
-    public void setRestartOffset(long offset)
+    public void setRestartOffset(final long offset)
     {
         if (offset >= 0) {
             __restartOffset = offset;
@@ -2681,7 +2681,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean rename(String from, String to) throws IOException
+    public boolean rename(final String from, final String to) throws IOException
     {
         if (!FTPReply.isPositiveIntermediate(rnfr(from))) {
             return false;
@@ -2721,7 +2721,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean deleteFile(String pathname) throws IOException
+    public boolean deleteFile(final String pathname) throws IOException
     {
         return FTPReply.isPositiveCompletion(dele(pathname));
     }
@@ -2740,7 +2740,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean removeDirectory(String pathname) throws IOException
+    public boolean removeDirectory(final String pathname) throws IOException
     {
         return FTPReply.isPositiveCompletion(rmd(pathname));
     }
@@ -2761,7 +2761,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean makeDirectory(String pathname) throws IOException
+    public boolean makeDirectory(final String pathname) throws IOException
     {
         return FTPReply.isPositiveCompletion(mkd(pathname));
     }
@@ -2802,7 +2802,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public boolean sendSiteCommand(String arguments) throws IOException
+    public boolean sendSiteCommand(final String arguments) throws IOException
     {
         return FTPReply.isPositiveCompletion(site(arguments));
     }
@@ -2841,7 +2841,7 @@ implements Configurable
                 __systemName = _replyLines.get(_replyLines.size() - 1).substring(4);
             } else {
                 // Check if the user has provided a default for when the SYST command fails
-                String systDefault = System.getProperty(FTP_SYSTEM_TYPE_DEFAULT);
+                final String systDefault = System.getProperty(FTP_SYSTEM_TYPE_DEFAULT);
                 if (systDefault != null) {
                     __systemName = systDefault;
                 } else {
@@ -2890,7 +2890,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *  command to the server or receiving a reply from the server.
      */
-    public String listHelp(String command) throws IOException
+    public String listHelp(final String command) throws IOException
     {
         if (FTPReply.isPositiveCompletion(help(command))) {
             return getReplyString();
@@ -2947,18 +2947,18 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public String[] listNames(String pathname) throws IOException
+    public String[] listNames(final String pathname) throws IOException
     {
-        Socket socket = _openDataConnection_(FTPCmd.NLST, getListArguments(pathname));
+        final Socket socket = _openDataConnection_(FTPCmd.NLST, getListArguments(pathname));
 
         if (socket == null) {
             return null;
         }
 
-        BufferedReader reader =
+        final BufferedReader reader =
             new BufferedReader(new InputStreamReader(socket.getInputStream(), getControlEncoding()));
 
-        ArrayList<String> results = new ArrayList<>();
+        final ArrayList<String> results = new ArrayList<>();
         String line;
         while ((line = reader.readLine()) != null) {
             results.add(line);
@@ -2969,7 +2969,7 @@ implements Configurable
 
         if (completePendingCommand())
         {
-            String[] names = new String[ results.size() ];
+            final String[] names = new String[ results.size() ];
             return results.toArray(names);
         }
 
@@ -3057,10 +3057,10 @@ implements Configurable
      * @see org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory
      * @see org.apache.commons.net.ftp.FTPFileEntryParser
      */
-    public FTPFile[] listFiles(String pathname)
+    public FTPFile[] listFiles(final String pathname)
     throws IOException
     {
-        FTPListParseEngine engine = initiateListParsing((String) null, pathname);
+        final FTPListParseEngine engine = initiateListParsing((String) null, pathname);
         return engine.getFiles();
 
     }
@@ -3125,10 +3125,10 @@ implements Configurable
      * @throws IOException on error
      * @since 2.2
      */
-    public FTPFile[] listFiles(String pathname, FTPFileFilter filter)
+    public FTPFile[] listFiles(final String pathname, final FTPFileFilter filter)
     throws IOException
     {
-        FTPListParseEngine engine = initiateListParsing((String) null, pathname);
+        final FTPListParseEngine engine = initiateListParsing((String) null, pathname);
         return engine.getFiles(filter);
 
     }
@@ -3224,7 +3224,7 @@ implements Configurable
      * @see org.apache.commons.net.ftp.FTPFileEntryParser
      * @since 3.0
      */
-    public FTPFile[] listDirectories(String parent) throws IOException {
+    public FTPFile[] listDirectories(final String parent) throws IOException {
         return listFiles(parent, FTPFileFilters.DIRECTORIES);
     }
 
@@ -3317,7 +3317,7 @@ implements Configurable
      *                   resolve the type of system we are connected with.
      * @see FTPListParseEngine
      */
-    public FTPListParseEngine initiateListParsing(String pathname)
+    public FTPListParseEngine initiateListParsing(final String pathname)
     throws IOException
     {
         return initiateListParsing((String) null, pathname);
@@ -3379,7 +3379,7 @@ implements Configurable
      * @see FTPListParseEngine
      */
     public FTPListParseEngine initiateListParsing(
-            String parserKey, String pathname)
+            final String parserKey, final String pathname)
     throws IOException
     {
         __createParser(parserKey); // create and cache parser
@@ -3387,7 +3387,7 @@ implements Configurable
     }
 
     // package access for test purposes
-    void __createParser(String parserKey) throws IOException {
+    void __createParser(final String parserKey) throws IOException {
         // We cache the value to avoid creation of a new object every
         // time a file listing is generated.
         // Note: we don't check against a null parserKey (NET-544)
@@ -3414,9 +3414,9 @@ implements Configurable
                     String systemType = System.getProperty(FTP_SYSTEM_TYPE);
                     if (systemType == null) {
                         systemType = getSystemType(); // cannot be null
-                        Properties override = getOverrideProperties();
+                        final Properties override = getOverrideProperties();
                         if (override != null) {
-                            String newType = override.getProperty(systemType);
+                            final String newType = override.getProperty(systemType);
                             if (newType != null) {
                                 systemType = newType;
                             }
@@ -3450,12 +3450,12 @@ implements Configurable
      * @see FTPListParseEngine
      */
     private FTPListParseEngine initiateListParsing(
-            FTPFileEntryParser parser, String pathname)
+            final FTPFileEntryParser parser, final String pathname)
     throws IOException
     {
-        Socket socket = _openDataConnection_(FTPCmd.LIST, getListArguments(pathname));
+        final Socket socket = _openDataConnection_(FTPCmd.LIST, getListArguments(pathname));
 
-        FTPListParseEngine engine = new FTPListParseEngine(parser, __configuration);
+        final FTPListParseEngine engine = new FTPListParseEngine(parser, __configuration);
         if (socket == null)
         {
             return engine;
@@ -3490,10 +3490,10 @@ implements Configurable
      * @return the engine.
      * @throws IOException on error
      */
-    public FTPListParseEngine initiateMListParsing(String pathname) throws IOException
+    public FTPListParseEngine initiateMListParsing(final String pathname) throws IOException
     {
-        Socket socket = _openDataConnection_(FTPCmd.MLSD, pathname);
-        FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance(), __configuration);
+        final Socket socket = _openDataConnection_(FTPCmd.MLSD, pathname);
+        final FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance(), __configuration);
         if (socket == null)
         {
             return engine;
@@ -3514,12 +3514,12 @@ implements Configurable
      * @return the adjusted string with "-a" added if necessary
      * @since 2.0
      */
-    protected String getListArguments(String pathname) {
+    protected String getListArguments(final String pathname) {
         if (getListHiddenFiles())
         {
             if (pathname != null)
             {
-                StringBuilder sb = new StringBuilder(pathname.length() + 3);
+                final StringBuilder sb = new StringBuilder(pathname.length() + 3);
                 sb.append("-a ");
                 sb.append(pathname);
                 return sb.toString();
@@ -3569,7 +3569,7 @@ implements Configurable
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      */
-    public String getStatus(String pathname) throws IOException
+    public String getStatus(final String pathname) throws IOException
     {
         if (FTPReply.isPositiveCompletion(stat(pathname))) {
             return getReplyString();
@@ -3594,7 +3594,7 @@ implements Configurable
      *      command to the server or receiving a reply from the server.
      * @since 3.7
      */
-    public String getSize(String pathname) throws IOException
+    public String getSize(final String pathname) throws IOException
     {
         if (FTPReply.isPositiveCompletion(size(pathname))) {
             return getReplyStrings()[0].substring(4); // skip the return code (e.g. 213) and the space
@@ -3614,7 +3614,7 @@ implements Configurable
      * @throws IOException if an I/O error occurs.
      * @since 2.0
      */
-    public String getModificationTime(String pathname) throws IOException {
+    public String getModificationTime(final String pathname) throws IOException {
         if (FTPReply.isPositiveCompletion(mdtm(pathname))) {
             return getReplyStrings()[0].substring(4); // skip the return code (e.g. 213) and the space
         }
@@ -3634,10 +3634,10 @@ implements Configurable
      * @throws IOException if an I/O error occurs.
      * @since 3.4
      */
-    public FTPFile mdtmFile(String pathname) throws IOException {
+    public FTPFile mdtmFile(final String pathname) throws IOException {
         if (FTPReply.isPositiveCompletion(mdtm(pathname))) {
-            String reply = getReplyStrings()[0].substring(4); // skip the return code (e.g. 213) and the space
-            FTPFile file = new FTPFile();
+            final String reply = getReplyStrings()[0].substring(4); // skip the return code (e.g. 213) and the space
+            final FTPFile file = new FTPFile();
             file.setName(pathname);
             file.setRawListing(reply);
             file.setTimestamp(MLSxEntryParser.parseGMTdateTime(reply));
@@ -3664,7 +3664,7 @@ implements Configurable
      * @since 2.2
      * @see <a href="http://tools.ietf.org/html/draft-somers-ftp-mfxx-04">http://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
      */
-    public boolean setModificationTime(String pathname, String timeval) throws IOException {
+    public boolean setModificationTime(final String pathname, final String timeval) throws IOException {
         return (FTPReply.isPositiveCompletion(mfmt(pathname, timeval)));
     }
 
@@ -3674,7 +3674,7 @@ implements Configurable
      *
      * @param bufSize The size of the buffer. Use a non-positive value to use the default.
      */
-    public void setBufferSize(int bufSize) {
+    public void setBufferSize(final int bufSize) {
         __bufferSize = bufSize;
     }
 
@@ -3693,7 +3693,7 @@ implements Configurable
      * @param bufSize The size of the buffer, zero or negative means the value is ignored.
       * @since 3.3
     */
-    public void setSendDataSocketBufferSize(int bufSize) {
+    public void setSendDataSocketBufferSize(final int bufSize) {
         __sendDataSocketBufferSize = bufSize;
     }
 
@@ -3713,7 +3713,7 @@ implements Configurable
      * @param bufSize The size of the buffer, zero or negative means the value is ignored.
      * @since 3.3
      */
-    public void setReceieveDataSocketBufferSize(int bufSize) {
+    public void setReceieveDataSocketBufferSize(final int bufSize) {
         __receiveDataSocketBufferSize = bufSize;
     }
 
@@ -3735,7 +3735,7 @@ implements Configurable
      * @since 1.4
      */
     @Override
-    public void configure(FTPClientConfig config) {
+    public void configure(final FTPClientConfig config) {
         this.__configuration = config;
     }
 
@@ -3748,7 +3748,7 @@ implements Configurable
      * @param listHiddenFiles true if hidden files should be listed
      * @since 2.0
      */
-    public void setListHiddenFiles(boolean listHiddenFiles) {
+    public void setListHiddenFiles(final boolean listHiddenFiles) {
         this.__listHiddenFiles = listHiddenFiles;
     }
 
@@ -3786,7 +3786,7 @@ implements Configurable
      * @param selected value to set.
      * @since 2.2
      */
-    public void setUseEPSVwithIPv4(boolean selected) {
+    public void setUseEPSVwithIPv4(final boolean selected) {
         this.__useEPSVwithIPv4 = selected;
     }
 
@@ -3797,7 +3797,7 @@ implements Configurable
      * @param listener to be used, may be {@code null} to disable
      * @since 3.0
      */
-    public void setCopyStreamListener(CopyStreamListener listener){
+    public void setCopyStreamListener(final CopyStreamListener listener){
         __copyStreamListener = listener;
     }
 
@@ -3821,7 +3821,7 @@ implements Configurable
      * @since 3.0
      * @see #setControlKeepAliveReplyTimeout(int)
      */
-    public void setControlKeepAliveTimeout(long controlIdle){
+    public void setControlKeepAliveTimeout(final long controlIdle){
         __controlKeepAliveTimeout = controlIdle * 1000;
     }
 
@@ -3864,7 +3864,7 @@ implements Configurable
      * @since 3.0
      * @see #setControlKeepAliveTimeout(long)
      */
-    public void setControlKeepAliveReplyTimeout(int timeout) {
+    public void setControlKeepAliveReplyTimeout(final int timeout) {
         __controlKeepAliveReplyTimeout = timeout;
     }
 
@@ -3891,7 +3891,7 @@ implements Configurable
      * @deprecated (3.6) use {@link #setPassiveNatWorkaroundStrategy(HostnameResolver)} instead
      */
     @Deprecated
-    public void setPassiveNatWorkaround(boolean enabled) {
+    public void setPassiveNatWorkaround(final boolean enabled) {
         if (enabled) {
             this.__passiveNatWorkaroundStrategy = new NatServerResolverImpl(this);
         } else {
@@ -3909,7 +3909,7 @@ implements Configurable
      * or null to disable the workaround (i.e. use PASV mode reply address.)
      * @since 3.6
      */
-    public void setPassiveNatWorkaroundStrategy(HostnameResolver resolver) {
+    public void setPassiveNatWorkaroundStrategy(final HostnameResolver resolver) {
         this.__passiveNatWorkaroundStrategy = resolver;
     }
 
@@ -3929,19 +3929,19 @@ implements Configurable
      * @since 3.6
      */
     public static class NatServerResolverImpl implements HostnameResolver {
-        private FTPClient client;
+        private final FTPClient client;
 
-        public NatServerResolverImpl(FTPClient client) {
+        public NatServerResolverImpl(final FTPClient client) {
             this.client = client;
         }
 
         @Override
-        public String resolve(String hostname) throws UnknownHostException {
+        public String resolve(final String hostname) throws UnknownHostException {
             String newHostname = hostname;
-            InetAddress host = InetAddress.getByName(newHostname);
+            final InetAddress host = InetAddress.getByName(newHostname);
             // reply is a local address, but target is not - assume NAT box changed the PASV reply
             if (host.isSiteLocalAddress()) {
-                InetAddress remote = this.client.getRemoteAddress();
+                final InetAddress remote = this.client.getRemoteAddress();
                 if (!remote.isSiteLocalAddress()){
                     newHostname = remote.getHostAddress();
                 }
@@ -3950,14 +3950,14 @@ implements Configurable
         }
     }
 
-    private OutputStream getBufferedOutputStream(OutputStream outputStream) {
+    private OutputStream getBufferedOutputStream(final OutputStream outputStream) {
         if (__bufferSize > 0) {
             return new BufferedOutputStream(outputStream, __bufferSize);
         }
         return new BufferedOutputStream(outputStream);
     }
 
-    private InputStream getBufferedInputStream(InputStream inputStream) {
+    private InputStream getBufferedInputStream(final InputStream inputStream) {
         if (__bufferSize > 0) {
             return new BufferedInputStream(inputStream, __bufferSize);
         }
@@ -3976,7 +3976,7 @@ implements Configurable
         private int acksAcked;
         private int ioErrors;
 
-        CSL(FTPClient parent, long idleTime, int maxWait) throws SocketException {
+        CSL(final FTPClient parent, final long idleTime, final int maxWait) throws SocketException {
             this.idle = idleTime;
             this.parent = parent;
             this.currentSoTimeout = parent.getSoTimeout();
@@ -3984,21 +3984,21 @@ implements Configurable
         }
 
         @Override
-        public void bytesTransferred(CopyStreamEvent event) {
+        public void bytesTransferred(final CopyStreamEvent event) {
             bytesTransferred(event.getTotalBytesTransferred(), event.getBytesTransferred(), event.getStreamSize());
         }
 
         @Override
-        public void bytesTransferred(long totalBytesTransferred,
-                int bytesTransferred, long streamSize) {
-            long now = System.currentTimeMillis();
+        public void bytesTransferred(final long totalBytesTransferred,
+                final int bytesTransferred, final long streamSize) {
+            final long now = System.currentTimeMillis();
             if (now - time > idle) {
                 try {
                     parent.__noop();
                     acksAcked++;
-                } catch (SocketTimeoutException e) {
+                } catch (final SocketTimeoutException e) {
                     notAcked++;
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     ioErrors++;
                     // Ignored
                 }
@@ -4007,13 +4007,13 @@ implements Configurable
         }
 
         int[] cleanUp() throws IOException {
-            int remain = notAcked;
+            final int remain = notAcked;
             try {
                 while(notAcked > 0) {
                     parent.getReply(); // we do want to see these
                     notAcked--; // only decrement if actually received
                 }
-            } catch (SocketTimeoutException e) { // NET-584
+            } catch (final SocketTimeoutException e) { // NET-584
                 // ignored
             } finally {
                 parent.setSoTimeout(currentSoTimeout);
@@ -4030,7 +4030,7 @@ implements Configurable
      * @return a merged listener or a single listener or null
      * @since 3.0
      */
-    private CopyStreamListener __mergeListeners(CopyStreamListener local) {
+    private CopyStreamListener __mergeListeners(final CopyStreamListener local) {
         if (local == null) {
             return __copyStreamListener;
         }
@@ -4038,7 +4038,7 @@ implements Configurable
             return local;
         }
         // Both are non-null
-        CopyStreamAdapter merged = new CopyStreamAdapter();
+        final CopyStreamAdapter merged = new CopyStreamAdapter();
         merged.addCopyStreamListener(local);
         merged.addCopyStreamListener(__copyStreamListener);
         return merged;
@@ -4051,7 +4051,7 @@ implements Configurable
      *
      * @param autodetect If true, automatic server encoding detection will be enabled.
      */
-    public void setAutodetectUTF8(boolean autodetect)
+    public void setAutodetectUTF8(final boolean autodetect)
     {
         __autodetectEncoding = autodetect;
     }

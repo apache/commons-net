@@ -60,7 +60,7 @@ public class DiscardUDPClient extends DatagramSocketClient
      * @throws IOException If an error occurs during the datagram send
      *            operation.
      ***/
-    public void send(byte[] data, int length, InetAddress host, int port)
+    public void send(final byte[] data, final int length, final InetAddress host, final int port)
     throws IOException
     {
         _sendPacket.setData(data);
@@ -80,7 +80,7 @@ public class DiscardUDPClient extends DatagramSocketClient
      * @see #send(byte[], int, InetAddress, int)
      * @throws IOException if an error occurs
      ***/
-    public void send(byte[] data, int length, InetAddress host)
+    public void send(final byte[] data, final int length, final InetAddress host)
     throws IOException
     {
         send(data, length, host, DEFAULT_PORT);
@@ -95,7 +95,7 @@ public class DiscardUDPClient extends DatagramSocketClient
      * @see #send(byte[], int, InetAddress, int)
      * @throws IOException if an error occurs
      ***/
-    public void send(byte[] data, InetAddress host) throws IOException
+    public void send(final byte[] data, final InetAddress host) throws IOException
     {
         send(data, data.length, host, DEFAULT_PORT);
     }

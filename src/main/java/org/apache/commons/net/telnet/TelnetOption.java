@@ -162,7 +162,7 @@ public class TelnetOption
      * @param code The option code of the telnet protocol option
      * @return The string representation of the telnet protocol option.
      ***/
-    public static final String getOption(int code)
+    public static final String getOption(final int code)
     {
         if(__optionString[code].length() == 0)
         {
@@ -182,7 +182,7 @@ public class TelnetOption
      * @param code  The option code to test.
      * @return True if the option code is valid, false if not.
      **/
-    public static final boolean isValidOption(int code)
+    public static final boolean isValidOption(final int code)
     {
         return (code <= __LAST_OPTION);
     }

@@ -33,7 +33,7 @@ public class CompositeFileEntryParser extends FTPFileEntryParserImpl
     private final FTPFileEntryParser[] ftpFileEntryParsers;
     private FTPFileEntryParser cachedFtpFileEntryParser;
 
-    public CompositeFileEntryParser(FTPFileEntryParser[] ftpFileEntryParsers)
+    public CompositeFileEntryParser(final FTPFileEntryParser[] ftpFileEntryParsers)
     {
         super();
 
@@ -42,11 +42,11 @@ public class CompositeFileEntryParser extends FTPFileEntryParserImpl
     }
 
     @Override
-    public FTPFile parseFTPEntry(String listEntry)
+    public FTPFile parseFTPEntry(final String listEntry)
     {
         if (cachedFtpFileEntryParser != null)
         {
-            FTPFile matched = cachedFtpFileEntryParser.parseFTPEntry(listEntry);
+            final FTPFile matched = cachedFtpFileEntryParser.parseFTPEntry(listEntry);
             if (matched != null)
             {
                 return matched;
@@ -54,9 +54,9 @@ public class CompositeFileEntryParser extends FTPFileEntryParserImpl
         }
         else
         {
-            for (FTPFileEntryParser ftpFileEntryParser : ftpFileEntryParsers)
+            for (final FTPFileEntryParser ftpFileEntryParser : ftpFileEntryParsers)
             {
-                FTPFile matched = ftpFileEntryParser.parseFTPEntry(listEntry);
+                final FTPFile matched = ftpFileEntryParser.parseFTPEntry(listEntry);
                 if (matched != null)
                 {
                     cachedFtpFileEntryParser = ftpFileEntryParser;

@@ -24,7 +24,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 public class DefaultFTPFileEntryParserFactoryTest extends TestCase
 {
     public void testDefaultParserFactory() throws Exception {
-        DefaultFTPFileEntryParserFactory factory =
+        final DefaultFTPFileEntryParserFactory factory =
             new DefaultFTPFileEntryParserFactory();
 
         FTPFileEntryParser parser = factory.createFileEntryParser("unix");
@@ -52,7 +52,7 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
         try {
             parser = factory.createFileEntryParser("NT");
             fail("Exception should have been thrown. \"NT\" is not a recognized key");
-        } catch (ParserInitializationException pie) {
+        } catch (final ParserInitializationException pie) {
             assertNull(pie.getCause());
             assertTrue(pie.getMessage()+ "should contain 'Unknown parser type:'",
                     pie.getMessage().contains("Unknown parser type:"));
@@ -81,7 +81,7 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
         try {
             parser = factory.createFileEntryParser("OS2FTPFileEntryParser");
             fail("Exception should have been thrown. \"OS2FTPFileEntryParser\" is not a recognized key");
-        } catch (ParserInitializationException pie) {
+        } catch (final ParserInitializationException pie) {
             assertNull(pie.getCause());
         }
 
@@ -93,8 +93,8 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
             factory.createFileEntryParser(
                 "org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory");
             fail("Exception should have been thrown. \"DefaultFTPFileEntryParserFactory\" does not implement FTPFileEntryParser");
-        } catch (ParserInitializationException pie) {
-            Throwable root = pie.getCause();
+        } catch (final ParserInitializationException pie) {
+            final Throwable root = pie.getCause();
             assertTrue(root instanceof ClassCastException);
         }
 
@@ -102,35 +102,35 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
             // Class exists, but is an interface
             factory.createFileEntryParser("org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory");
             fail("ParserInitializationException should have been thrown.");
-        } catch (ParserInitializationException pie){
-            Throwable root = pie.getCause();
+        } catch (final ParserInitializationException pie){
+            final Throwable root = pie.getCause();
             assertTrue(root instanceof InstantiationException);
         }
         try {
             // Class exists, but is abstract
             factory.createFileEntryParser("org.apache.commons.net.ftp.FTPFileEntryParserImpl");
             fail("ParserInitializationException should have been thrown.");
-        } catch (ParserInitializationException pie){
-            Throwable root = pie.getCause();
+        } catch (final ParserInitializationException pie){
+            final Throwable root = pie.getCause();
             assertTrue(root instanceof InstantiationException);
         }
     }
 
-    private void checkParserClass(FTPFileEntryParserFactory fact, String key, Class<?> expected){
-        FTPClientConfig config = key == null ? new FTPClientConfig() : new FTPClientConfig(key);
-        FTPFileEntryParser parser = fact.createFileEntryParser(config);
+    private void checkParserClass(final FTPFileEntryParserFactory fact, final String key, final Class<?> expected){
+        final FTPClientConfig config = key == null ? new FTPClientConfig() : new FTPClientConfig(key);
+        final FTPFileEntryParser parser = fact.createFileEntryParser(config);
         assertNotNull(parser);
         assertTrue("Expected "+expected.getCanonicalName()+" got "+parser.getClass().getCanonicalName(),
                 expected.isInstance(parser));
     }
     public void testDefaultParserFactoryConfig() throws Exception {
-        DefaultFTPFileEntryParserFactory factory =
+        final DefaultFTPFileEntryParserFactory factory =
             new DefaultFTPFileEntryParserFactory();
 
         try {
             factory.createFileEntryParser((FTPClientConfig)null);
             fail("Expected NullPointerException");
-        } catch (NullPointerException npe) {
+        } catch (final NullPointerException npe) {
             // expected
         }
         checkParserClass(factory, null, UnixFTPEntryParser.class);

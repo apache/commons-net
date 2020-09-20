@@ -38,9 +38,9 @@ public class SocketClientTest extends TestCase
      */
     public void testProxySettings()
     {
-        SocketClient socketClient = new FTPClient();
+        final SocketClient socketClient = new FTPClient();
         assertNull(socketClient.getProxy());
-        Proxy proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(PROXY_HOST, PROXY_PORT));
+        final Proxy proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(PROXY_HOST, PROXY_PORT));
         socketClient.setProxy(proxy);
         assertEquals(proxy, socketClient.getProxy());
         assertFalse(socketClient.isConnected());

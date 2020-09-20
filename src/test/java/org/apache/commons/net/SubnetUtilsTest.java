@@ -26,8 +26,8 @@ import junit.framework.TestCase;
 public class SubnetUtilsTest extends TestCase {
 
     public void testAddresses() {
-        SubnetUtils utils = new SubnetUtils("192.168.0.1/29");
-        SubnetInfo info = utils.getInfo();
+        final SubnetUtils utils = new SubnetUtils("192.168.0.1/29");
+        final SubnetInfo info = utils.getInfo();
         assertTrue(info.isInRange("192.168.0.1"));
         assertTrue(info.isInRange("192.168.0.2"));
         assertTrue(info.isInRange("192.168.0.3"));
@@ -211,16 +211,16 @@ public class SubnetUtilsTest extends TestCase {
     }
 
     public void testNET675() {
-        SubnetUtils utils = new SubnetUtils("192.168.0.15/32");
+        final SubnetUtils utils = new SubnetUtils("192.168.0.15/32");
         utils.setInclusiveHostCount(true);
-        SubnetInfo info = utils.getInfo();
+        final SubnetInfo info = utils.getInfo();
         assertTrue(info.isInRange("192.168.0.15"));
     }
 
     public void testNET679() {
-        SubnetUtils utils = new SubnetUtils("10.213.160.0/16");
+        final SubnetUtils utils = new SubnetUtils("10.213.160.0/16");
         utils.setInclusiveHostCount(true);
-        SubnetInfo info = utils.getInfo();
+        final SubnetInfo info = utils.getInfo();
         assertTrue(info.isInRange("10.213.0.0"));
         assertTrue(info.isInRange("10.213.255.255"));
     }
@@ -229,7 +229,7 @@ public class SubnetUtilsTest extends TestCase {
         try {
             new SubnetUtils("192.168.0.1/33");
             fail("Should have thrown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             // Ignored
         }
     }
@@ -237,7 +237,7 @@ public class SubnetUtilsTest extends TestCase {
     public void testNET428_31() throws Exception {
         final SubnetUtils subnetUtils = new SubnetUtils("1.2.3.4/31");
         assertEquals(0, subnetUtils.getInfo().getAddressCount());
-        String[] address = subnetUtils.getInfo().getAllAddresses();
+        final String[] address = subnetUtils.getInfo().getAllAddresses();
         assertNotNull(address);
         assertEquals(0, address.length);
     }
@@ -245,7 +245,7 @@ public class SubnetUtilsTest extends TestCase {
     public void testNET428_32() throws Exception {
         final SubnetUtils subnetUtils = new SubnetUtils("1.2.3.4/32");
         assertEquals(0, subnetUtils.getInfo().getAddressCount());
-        String[] address = subnetUtils.getInfo().getAllAddresses();
+        final String[] address = subnetUtils.getInfo().getAllAddresses();
         assertNotNull(address);
         assertEquals(0, address.length);
     }
@@ -268,8 +268,8 @@ public class SubnetUtilsTest extends TestCase {
         final int usableAddresses[] = new int[] { 16777214, 65534, 254, 6 };
 
         for (int i = 0; i < masks.length; ++i) {
-            SubnetUtils utils = new SubnetUtils(address, masks[i]);
-            SubnetInfo info = utils.getInfo();
+            final SubnetUtils utils = new SubnetUtils(address, masks[i]);
+            final SubnetInfo info = utils.getInfo();
             assertEquals(bcastAddresses[i], info.getBroadcastAddress());
             assertEquals(cidrSignatures[i], info.getCidrSignature());
             assertEquals(lowAddresses[i], info.getLowAddress());
@@ -282,20 +282,20 @@ public class SubnetUtilsTest extends TestCase {
     }
 
     public void testParseSimpleNetmaskExclusive() {
-        String address = "192.168.15.7";
-        String masks[] = new String[] { "255.255.255.252", "255.255.255.254", "255.255.255.255" };
-        String bcast[] = new String[] { "192.168.15.7", "192.168.15.7", "192.168.15.7" };
-        String netwk[] = new String[] { "192.168.15.4", "192.168.15.6", "192.168.15.7" };
-        String lowAd[] = new String[] { "192.168.15.5", "0.0.0.0", "0.0.0.0" };
-        String highA[] = new String[] { "192.168.15.6", "0.0.0.0", "0.0.0.0" };
-        String cidrS[] = new String[] { "192.168.15.7/30", "192.168.15.7/31", "192.168.15.7/32" };
-        int usableAd[] = new int[] { 2, 0, 0 };
+        final String address = "192.168.15.7";
+        final String masks[] = new String[] { "255.255.255.252", "255.255.255.254", "255.255.255.255" };
+        final String bcast[] = new String[] { "192.168.15.7", "192.168.15.7", "192.168.15.7" };
+        final String netwk[] = new String[] { "192.168.15.4", "192.168.15.6", "192.168.15.7" };
+        final String lowAd[] = new String[] { "192.168.15.5", "0.0.0.0", "0.0.0.0" };
+        final String highA[] = new String[] { "192.168.15.6", "0.0.0.0", "0.0.0.0" };
+        final String cidrS[] = new String[] { "192.168.15.7/30", "192.168.15.7/31", "192.168.15.7/32" };
+        final int usableAd[] = new int[] { 2, 0, 0 };
         // low and high addresses don't exist
 
         for (int i = 0; i < masks.length; ++i) {
-            SubnetUtils utils = new SubnetUtils(address, masks[i]);
+            final SubnetUtils utils = new SubnetUtils(address, masks[i]);
             utils.setInclusiveHostCount(false);
-            SubnetInfo info = utils.getInfo();
+            final SubnetInfo info = utils.getInfo();
             assertEquals("ci " + masks[i], cidrS[i], info.getCidrSignature());
             assertEquals("bc " + masks[i], bcast[i], info.getBroadcastAddress());
             assertEquals("nw " + masks[i], netwk[i], info.getNetworkAddress());
@@ -306,19 +306,19 @@ public class SubnetUtilsTest extends TestCase {
     }
 
     public void testParseSimpleNetmaskInclusive() {
-        String address = "192.168.15.7";
-        String masks[] = new String[] { "255.255.255.252", "255.255.255.254", "255.255.255.255" };
-        String bcast[] = new String[] { "192.168.15.7", "192.168.15.7", "192.168.15.7" };
-        String netwk[] = new String[] { "192.168.15.4", "192.168.15.6", "192.168.15.7" };
-        String lowAd[] = new String[] { "192.168.15.4", "192.168.15.6", "192.168.15.7" };
-        String highA[] = new String[] { "192.168.15.7", "192.168.15.7", "192.168.15.7" };
-        String cidrS[] = new String[] { "192.168.15.7/30", "192.168.15.7/31", "192.168.15.7/32" };
-        int usableAd[] = new int[] { 4, 2, 1 };
+        final String address = "192.168.15.7";
+        final String masks[] = new String[] { "255.255.255.252", "255.255.255.254", "255.255.255.255" };
+        final String bcast[] = new String[] { "192.168.15.7", "192.168.15.7", "192.168.15.7" };
+        final String netwk[] = new String[] { "192.168.15.4", "192.168.15.6", "192.168.15.7" };
+        final String lowAd[] = new String[] { "192.168.15.4", "192.168.15.6", "192.168.15.7" };
+        final String highA[] = new String[] { "192.168.15.7", "192.168.15.7", "192.168.15.7" };
+        final String cidrS[] = new String[] { "192.168.15.7/30", "192.168.15.7/31", "192.168.15.7/32" };
+        final int usableAd[] = new int[] { 4, 2, 1 };
 
         for (int i = 0; i < masks.length; ++i) {
-            SubnetUtils utils = new SubnetUtils(address, masks[i]);
+            final SubnetUtils utils = new SubnetUtils(address, masks[i]);
             utils.setInclusiveHostCount(true);
-            SubnetInfo info = utils.getInfo();
+            final SubnetInfo info = utils.getInfo();
             assertEquals("ci " + masks[i], cidrS[i], info.getCidrSignature());
             assertEquals("bc " + masks[i], bcast[i], info.getBroadcastAddress());
             assertEquals("ac " + masks[i], usableAd[i], info.getAddressCount());
@@ -329,7 +329,7 @@ public class SubnetUtilsTest extends TestCase {
     }
 
     public void testZeroAddressAndCidr() {
-        SubnetUtils snu = new SubnetUtils("0.0.0.0/0");
+        final SubnetUtils snu = new SubnetUtils("0.0.0.0/0");
         assertNotNull(snu);
     }
 
@@ -345,7 +345,7 @@ public class SubnetUtilsTest extends TestCase {
         try {
             info.getAddressCount();
             fail("Expected RuntimeException");
-        } catch (RuntimeException expected) {
+        } catch (final RuntimeException expected) {
             // ignored
         }
         utils = new SubnetUtils("128.0.0.0/1");
@@ -356,7 +356,7 @@ public class SubnetUtilsTest extends TestCase {
         try {
             info.getAddressCount();
             fail("Expected RuntimeException");
-        } catch (RuntimeException expected) {
+        } catch (final RuntimeException expected) {
             // ignored
         }
         // if we exclude the broadcast and network addresses, the count is less than Integer.MAX_VALUE
@@ -372,21 +372,21 @@ public class SubnetUtilsTest extends TestCase {
         try {
             new SubnetUtils("0.0.0.0","64.0.0.0");
             fail("Should have thrown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             // Ignored
         }
         try {
             new SubnetUtils("0.0.0.0","0.0.0.1");
             fail("Should have thrown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             // Ignored
         }
     }
 
     public void testNET520() {
-        SubnetUtils utils = new SubnetUtils("0.0.0.0/0");
+        final SubnetUtils utils = new SubnetUtils("0.0.0.0/0");
         utils.setInclusiveHostCount(true);
-        SubnetInfo info = utils.getInfo();
+        final SubnetInfo info = utils.getInfo();
         assertEquals("0.0.0.0",info.getNetworkAddress());
         assertEquals("255.255.255.255",info.getBroadcastAddress());
         assertTrue(info.isInRange("127.0.0.0"));

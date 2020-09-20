@@ -29,13 +29,13 @@ public class Base64Test {
 
     @Test
     public void testBase64() {
-        Base64 b64 = new Base64();
+        final Base64 b64 = new Base64();
         assertFalse(b64.isUrlSafe());
     }
 
     @Test
     public void testBase64Boolean() {
-        Base64 b64 = new Base64(true);
+        final Base64 b64 = new Base64(true);
         assertTrue(b64.isUrlSafe());
         assertTrue(Arrays.equals(new byte[]{'\r','\n'}, b64.getLineSeparator()));
     }
@@ -81,7 +81,7 @@ public class Base64Test {
 
     @Test
     public void testEncodeBase64ByteArray() {
-        byte[] binaryData=null;
+        final byte[] binaryData=null;
         assertTrue(Arrays.equals(binaryData, Base64.encodeBase64(binaryData)));
     }
 
@@ -142,7 +142,7 @@ public class Base64Test {
 
     @Test
     public void testEncodeBase64ByteArrayBooleanBooleanInt() {
-        byte[] binaryData = new byte[]{'1','2','3'};
+        final byte[] binaryData = new byte[]{'1','2','3'};
         byte[] encoded;
         encoded = Base64.encodeBase64(binaryData, false, false);
         assertNotNull(encoded);
@@ -150,7 +150,7 @@ public class Base64Test {
         try {
             Base64.encodeBase64(binaryData, false, false, 3);
             fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             // expected
         }
         encoded = Base64.encodeBase64(binaryData, false, false, 4); // NET-483
@@ -162,7 +162,7 @@ public class Base64Test {
         try {
             Base64.encodeBase64(binaryData, true, false, 5);
             fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             // expected
         }
         encoded = Base64.encodeBase64(binaryData, true, false, 6);

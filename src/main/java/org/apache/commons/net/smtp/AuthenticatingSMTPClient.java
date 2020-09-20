@@ -50,7 +50,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      * Overloaded constructor that takes a protocol specification
      * @param protocol The protocol to use
      */
-    public AuthenticatingSMTPClient(String protocol) {
+    public AuthenticatingSMTPClient(final String protocol) {
         super(protocol);
     }
 
@@ -60,7 +60,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
      * @since 3.3
      */
-    public AuthenticatingSMTPClient(String proto, boolean implicit)
+    public AuthenticatingSMTPClient(final String proto, final boolean implicit)
     {
       super(proto, implicit);
     }
@@ -72,7 +72,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      * @param encoding the encoding
      * @since 3.3
      */
-    public AuthenticatingSMTPClient(String proto, boolean implicit, String encoding)
+    public AuthenticatingSMTPClient(final String proto, final boolean implicit, final String encoding)
     {
       super(proto, implicit, encoding);
     }
@@ -83,7 +83,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      * @param ctx A pre-configured SSL Context.
      * @since 3.3
      */
-    public AuthenticatingSMTPClient(boolean implicit, SSLContext ctx)
+    public AuthenticatingSMTPClient(final boolean implicit, final SSLContext ctx)
     {
       super(implicit, ctx);
     }
@@ -94,7 +94,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      * @param encoding The encoding to use
      * @since 3.3
      */
-    public AuthenticatingSMTPClient(String protocol, String encoding) {
+    public AuthenticatingSMTPClient(final String protocol, final String encoding) {
         super(protocol, false, encoding);
     }
 
@@ -112,7 +112,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      ***/
-    public int ehlo(String hostname) throws IOException
+    public int ehlo(final String hostname) throws IOException
     {
         return sendCommand(SMTPCommand.EHLO, hostname);
     }
@@ -132,7 +132,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean elogin(String hostname) throws IOException
+    public boolean elogin(final String hostname) throws IOException
     {
         return SMTPReply.isPositiveCompletion(ehlo(hostname));
     }
@@ -174,9 +174,9 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      ***/
     public int[] getEnhancedReplyCode()
     {
-        String reply = getReplyString().substring(4);
-        String[] parts = reply.substring(0, reply.indexOf(' ')).split ("\\.");
-        int[] res = new int[parts.length];
+        final String reply = getReplyString().substring(4);
+        final String[] parts = reply.substring(0, reply.indexOf(' ')).split ("\\.");
+        final int[] res = new int[parts.length];
         for (int i = 0; i < parts.length; i++)
         {
             res[i] = Integer.parseInt (parts[i]);
@@ -210,8 +210,8 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      * @throws InvalidKeySpecException If the CRAM hash algorithm
      *      failed to use the given password.
      ***/
-    public boolean auth(AuthenticatingSMTPClient.AUTH_METHOD method,
-                        String username, String password)
+    public boolean auth(final AuthenticatingSMTPClient.AUTH_METHOD method,
+                        final String username, final String password)
                         throws IOException, NoSuchAlgorithmException,
                         InvalidKeyException, InvalidKeySpecException
     {
@@ -230,15 +230,15 @@ public class AuthenticatingSMTPClient extends SMTPSClient
         else if (method.equals(AUTH_METHOD.CRAM_MD5))
         {
             // get the CRAM challenge
-            byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(4).trim());
+            final byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(4).trim());
             // get the Mac instance
-            Mac hmac_md5 = Mac.getInstance("HmacMD5");
+            final Mac hmac_md5 = Mac.getInstance("HmacMD5");
             hmac_md5.init(new SecretKeySpec(password.getBytes(getCharset()), "HmacMD5"));
             // compute the result:
-            byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharset());
+            final byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharset());
             // join the byte arrays to form the reply
-            byte[] usernameBytes = username.getBytes(getCharset());
-            byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
+            final byte[] usernameBytes = username.getBytes(getCharset());
+            final byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
             System.arraycopy(usernameBytes, 0, toEncode, 0, usernameBytes.length);
             toEncode[usernameBytes.length] = ' ';
             System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
@@ -274,10 +274,10 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      * @param a The byte array to convert.
      * @return The resulting String of hex codes.
      */
-    private String _convertToHexString(byte[] a)
+    private String _convertToHexString(final byte[] a)
     {
-        StringBuilder result = new StringBuilder(a.length*2);
-        for (byte element : a)
+        final StringBuilder result = new StringBuilder(a.length*2);
+        for (final byte element : a)
         {
             if ( (element & 0x0FF) <= 15 ) {
                 result.append("0");
@@ -308,7 +308,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
          * @param method The authentication method to get the name for.
          * @return The name of the given authentication method suitable for the server.
          */
-        public static final String getAuthName(AUTH_METHOD method)
+        public static final String getAuthName(final AUTH_METHOD method)
         {
             if (method.equals(AUTH_METHOD.PLAIN)) {
                 return "PLAIN";

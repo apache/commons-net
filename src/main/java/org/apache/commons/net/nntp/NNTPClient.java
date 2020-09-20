@@ -94,10 +94,10 @@ public class NNTPClient extends NNTP
      *
      * @throws MalformedServerReplyException if response could not be parsed
      */
-    private void __parseArticlePointer(String reply, ArticleInfo pointer)
+    private void __parseArticlePointer(final String reply, final ArticleInfo pointer)
     throws MalformedServerReplyException
     {
-        String tokens[] = reply.split(" ");
+        final String tokens[] = reply.split(" ");
         if (tokens.length >= 3) { // OK, we can parset the line
             int i = 1; // skip reply code
             try
@@ -108,7 +108,7 @@ public class NNTPClient extends NNTP
                 pointer.articleId = tokens[i++];
                 return; // done
             }
-            catch (NumberFormatException e)
+            catch (final NumberFormatException e)
             {
                 // drop through and raise exception
             }
@@ -125,10 +125,10 @@ public class NNTPClient extends NNTP
      *     s = name of the group.)
      */
 
-    private static void __parseGroupReply(String reply, NewsgroupInfo info)
+    private static void __parseGroupReply(final String reply, final NewsgroupInfo info)
     throws MalformedServerReplyException
     {
-        String tokens[] = reply.split(" ");
+        final String tokens[] = reply.split(" ");
         if (tokens.length >= 5) {
             int i = 1;  // Skip numeric response value
             try
@@ -144,7 +144,7 @@ public class NNTPClient extends NNTP
 
                 info._setPostingPermission(NewsgroupInfo.UNKNOWN_POSTING_PERMISSION);
                 return ;
-            } catch (NumberFormatException e)
+            } catch (final NumberFormatException e)
             {
                // drop through to report error
             }
@@ -156,13 +156,13 @@ public class NNTPClient extends NNTP
 
 
     // Format: group last first p
-    static NewsgroupInfo __parseNewsgroupListEntry(String entry)
+    static NewsgroupInfo __parseNewsgroupListEntry(final String entry)
     {
-        String tokens[] = entry.split(" ");
+        final String tokens[] = entry.split(" ");
         if (tokens.length < 4) {
             return null;
         }
-        NewsgroupInfo result = new NewsgroupInfo();
+        final NewsgroupInfo result = new NewsgroupInfo();
 
         int i = 0;
 
@@ -170,8 +170,8 @@ public class NNTPClient extends NNTP
 
         try
         {
-            long lastNum = Long.parseLong(tokens[i++]);
-            long firstNum = Long.parseLong(tokens[i++]);
+            final long lastNum = Long.parseLong(tokens[i++]);
+            final long firstNum = Long.parseLong(tokens[i++]);
             result._setFirstArticle(firstNum);
             result._setLastArticle(lastNum);
             if ((firstNum == 0) && (lastNum == 0)) {
@@ -179,7 +179,7 @@ public class NNTPClient extends NNTP
             } else {
                 result._setArticleCount(lastNum - firstNum + 1);
             }
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return null;
         }
 
@@ -217,14 +217,14 @@ public class NNTPClient extends NNTP
      * will be true, and the subject will contain the raw info.
      * @since 3.0
      */
-    static Article __parseArticleEntry(String line) {
+    static Article __parseArticleEntry(final String line) {
         // Extract the article information
         // Mandatory format (from NNTP RFC 2980) is :
         // articleNumber\tSubject\tAuthor\tDate\tID\tReference(s)\tByte Count\tLine Count
 
-        Article article = new Article();
+        final Article article = new Article();
         article.setSubject(line); // in case parsing fails
-        String parts[] = line.split("\t");
+        final String parts[] = line.split("\t");
         if (parts.length > 6) {
             int i = 0;
             try {
@@ -234,7 +234,7 @@ public class NNTPClient extends NNTP
                 article.setDate(parts[i++]);
                 article.setArticleId(parts[i++]);
                 article.addReference(parts[i++]);
-            } catch (NumberFormatException e) {
+            } catch (final NumberFormatException e) {
                 // ignored, already handled
             }
         }
@@ -244,15 +244,15 @@ public class NNTPClient extends NNTP
     private NewsgroupInfo[] __readNewsgroupListing() throws IOException
     {
 
-        BufferedReader reader = new DotTerminatedMessageReader(_reader_);
+        final BufferedReader reader = new DotTerminatedMessageReader(_reader_);
         // Start of with a big vector because we may be reading a very large
         // amount of groups.
-        Vector<NewsgroupInfo> list = new Vector<>(2048);
+        final Vector<NewsgroupInfo> list = new Vector<>(2048);
 
         String line;
         try {
             while ((line = reader.readLine()) != null) {
-                NewsgroupInfo tmp = __parseNewsgroupListEntry(line);
+                final NewsgroupInfo tmp = __parseNewsgroupListEntry(line);
                 if (tmp != null) {
                     list.addElement(tmp);
                 } else {
@@ -267,14 +267,14 @@ public class NNTPClient extends NNTP
             return new NewsgroupInfo[0];
         }
 
-        NewsgroupInfo[] info = new NewsgroupInfo[size];
+        final NewsgroupInfo[] info = new NewsgroupInfo[size];
         list.copyInto(info);
 
         return info;
     }
 
 
-    private BufferedReader __retrieve(int command, String articleId, ArticleInfo pointer)
+    private BufferedReader __retrieve(final int command, final String articleId, final ArticleInfo pointer)
     throws IOException
     {
         if (articleId != null)
@@ -299,7 +299,7 @@ public class NNTPClient extends NNTP
     }
 
 
-    private BufferedReader __retrieve(int command, long articleNumber, ArticleInfo pointer)
+    private BufferedReader __retrieve(final int command, final long articleNumber, final ArticleInfo pointer)
     throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(sendCommand(command,
@@ -355,7 +355,7 @@ public class NNTPClient extends NNTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public BufferedReader retrieveArticle(String articleId, ArticleInfo pointer)
+    public BufferedReader retrieveArticle(final String articleId, final ArticleInfo pointer)
     throws IOException
     {
         return __retrieve(NNTPCommand.ARTICLE, articleId, pointer);
@@ -370,7 +370,7 @@ public class NNTPClient extends NNTP
      * null if the article does not exist.
      * @throws IOException if an IO error occurs
      */
-    public Reader retrieveArticle(String articleId) throws IOException
+    public Reader retrieveArticle(final String articleId) throws IOException
     {
         return retrieveArticle(articleId, (ArticleInfo) null);
     }
@@ -426,7 +426,7 @@ public class NNTPClient extends NNTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public BufferedReader retrieveArticle(long articleNumber, ArticleInfo pointer)
+    public BufferedReader retrieveArticle(final long articleNumber, final ArticleInfo pointer)
     throws IOException
     {
         return __retrieve(NNTPCommand.ARTICLE, articleNumber, pointer);
@@ -439,7 +439,7 @@ public class NNTPClient extends NNTP
      *         can be read.  null if the article does not exist.
      * @throws IOException if an IO error occurs
      */
-    public BufferedReader retrieveArticle(long articleNumber) throws IOException
+    public BufferedReader retrieveArticle(final long articleNumber) throws IOException
     {
         return retrieveArticle(articleNumber, null);
     }
@@ -486,7 +486,7 @@ public class NNTPClient extends NNTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public BufferedReader retrieveArticleHeader(String articleId, ArticleInfo pointer)
+    public BufferedReader retrieveArticleHeader(final String articleId, final ArticleInfo pointer)
     throws IOException
     {
         return __retrieve(NNTPCommand.HEAD, articleId, pointer);
@@ -500,7 +500,7 @@ public class NNTPClient extends NNTP
      * @return the reader
      * @throws IOException if an error occurs
      */
-    public Reader retrieveArticleHeader(String articleId) throws IOException
+    public Reader retrieveArticleHeader(final String articleId) throws IOException
     {
         return retrieveArticleHeader(articleId, (ArticleInfo) null);
     }
@@ -555,8 +555,8 @@ public class NNTPClient extends NNTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public BufferedReader retrieveArticleHeader(long articleNumber,
-                                        ArticleInfo pointer)
+    public BufferedReader retrieveArticleHeader(final long articleNumber,
+                                        final ArticleInfo pointer)
     throws IOException
     {
         return __retrieve(NNTPCommand.HEAD, articleNumber, pointer);
@@ -570,7 +570,7 @@ public class NNTPClient extends NNTP
      * @return the reader
      * @throws IOException if an error occurs
      */
-    public BufferedReader retrieveArticleHeader(long articleNumber) throws IOException
+    public BufferedReader retrieveArticleHeader(final long articleNumber) throws IOException
     {
         return retrieveArticleHeader(articleNumber, null);
     }
@@ -617,7 +617,7 @@ public class NNTPClient extends NNTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public BufferedReader retrieveArticleBody(String articleId, ArticleInfo pointer)
+    public BufferedReader retrieveArticleBody(final String articleId, final ArticleInfo pointer)
     throws IOException
     {
         return __retrieve(NNTPCommand.BODY, articleId, pointer);
@@ -632,7 +632,7 @@ public class NNTPClient extends NNTP
      *         body can be read.  null if the article does not exist.
      * @throws IOException if an error occurs
      */
-    public Reader retrieveArticleBody(String articleId) throws IOException
+    public Reader retrieveArticleBody(final String articleId) throws IOException
     {
         return retrieveArticleBody(articleId, (ArticleInfo) null);
     }
@@ -688,8 +688,8 @@ public class NNTPClient extends NNTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public BufferedReader retrieveArticleBody(long articleNumber,
-                                      ArticleInfo pointer)
+    public BufferedReader retrieveArticleBody(final long articleNumber,
+                                      final ArticleInfo pointer)
     throws IOException
     {
         return __retrieve(NNTPCommand.BODY, articleNumber, pointer);
@@ -702,7 +702,7 @@ public class NNTPClient extends NNTP
      * @return the reader
      * @throws IOException if an error occurs
      */
-    public BufferedReader retrieveArticleBody(long articleNumber) throws IOException
+    public BufferedReader retrieveArticleBody(final long articleNumber) throws IOException
     {
         return retrieveArticleBody(articleNumber, null);
     }
@@ -726,7 +726,7 @@ public class NNTPClient extends NNTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean selectNewsgroup(String newsgroup, NewsgroupInfo info)
+    public boolean selectNewsgroup(final String newsgroup, final NewsgroupInfo info)
     throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(group(newsgroup))) {
@@ -746,7 +746,7 @@ public class NNTPClient extends NNTP
      * @return true if newsgroup exist and was selected
      * @throws IOException if an error occurs
      */
-    public boolean selectNewsgroup(String newsgroup) throws IOException
+    public boolean selectNewsgroup(final String newsgroup) throws IOException
     {
         return selectNewsgroup(newsgroup, null);
     }
@@ -769,8 +769,8 @@ public class NNTPClient extends NNTP
             return null;
         }
 
-        StringWriter help = new StringWriter();
-        BufferedReader reader = new DotTerminatedMessageReader(_reader_);
+        final StringWriter help = new StringWriter();
+        final BufferedReader reader = new DotTerminatedMessageReader(_reader_);
         Util.copyReader(reader, help);
         reader.close();
         help.close();
@@ -789,9 +789,9 @@ public class NNTPClient extends NNTP
             return null;
         }
 
-        BufferedReader reader = new DotTerminatedMessageReader(_reader_);
+        final BufferedReader reader = new DotTerminatedMessageReader(_reader_);
         String line;
-        ArrayList<String> list = new ArrayList<>();
+        final ArrayList<String> list = new ArrayList<>();
         while((line=reader.readLine()) != null) {
             list.add(line);
         }
@@ -824,7 +824,7 @@ public class NNTPClient extends NNTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean selectArticle(String articleId, ArticleInfo pointer)
+    public boolean selectArticle(final String articleId, final ArticleInfo pointer)
     throws IOException
     {
         if (articleId != null) {
@@ -850,7 +850,7 @@ public class NNTPClient extends NNTP
      * @return true if successful
      * @throws IOException on error
      */
-    public boolean selectArticle(String articleId) throws IOException
+    public boolean selectArticle(final String articleId) throws IOException
     {
         return selectArticle(articleId, (ArticleInfo) null);
     }
@@ -862,7 +862,7 @@ public class NNTPClient extends NNTP
      * @return true if OK
      * @throws IOException on error
      ***/
-    public boolean selectArticle(ArticleInfo pointer) throws IOException
+    public boolean selectArticle(final ArticleInfo pointer) throws IOException
     {
         return selectArticle(null, pointer);
     }
@@ -893,7 +893,7 @@ public class NNTPClient extends NNTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean selectArticle(long articleNumber, ArticleInfo pointer)
+    public boolean selectArticle(final long articleNumber, final ArticleInfo pointer)
     throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(stat(articleNumber))) {
@@ -912,7 +912,7 @@ public class NNTPClient extends NNTP
      * @param articleNumber the numger
      * @return true if successful
      * @throws IOException on error ***/
-    public boolean selectArticle(long articleNumber) throws IOException
+    public boolean selectArticle(final long articleNumber) throws IOException
     {
         return selectArticle(articleNumber, null);
     }
@@ -942,7 +942,7 @@ public class NNTPClient extends NNTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean selectPreviousArticle(ArticleInfo pointer)
+    public boolean selectPreviousArticle(final ArticleInfo pointer)
     throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(last())) {
@@ -989,7 +989,7 @@ public class NNTPClient extends NNTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean selectNextArticle(ArticleInfo pointer) throws IOException
+    public boolean selectNextArticle(final ArticleInfo pointer) throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(next())) {
             return false;
@@ -1099,7 +1099,7 @@ public class NNTPClient extends NNTP
      * @see #iterateNewsgroupListing(String)
      * @see #iterateNewsgroups(String)
      */
-    public NewsgroupInfo[] listNewsgroups(String wildmat) throws IOException
+    public NewsgroupInfo[] listNewsgroups(final String wildmat) throws IOException
     {
         if(!NNTPReply.isPositiveCompletion(listActive(wildmat))) {
             return null;
@@ -1120,7 +1120,7 @@ public class NNTPClient extends NNTP
      * @throws IOException on error
      * @since 3.0
      */
-    public Iterable<String> iterateNewsgroupListing(String wildmat) throws IOException {
+    public Iterable<String> iterateNewsgroupListing(final String wildmat) throws IOException {
         if(NNTPReply.isPositiveCompletion(listActive(wildmat))) {
             return new ReplyIterator(_reader_);
         }
@@ -1139,7 +1139,7 @@ public class NNTPClient extends NNTP
      * @throws IOException on error
      * @since 3.0
      */
-    public Iterable<NewsgroupInfo> iterateNewsgroups(String wildmat) throws IOException {
+    public Iterable<NewsgroupInfo> iterateNewsgroups(final String wildmat) throws IOException {
         return new NewsgroupIterator(iterateNewsgroupListing(wildmat));
     }
 
@@ -1165,7 +1165,7 @@ public class NNTPClient extends NNTP
      * @see #iterateNewNewsgroups(NewGroupsOrNewsQuery)
      * @see #iterateNewNewsgroupListing(NewGroupsOrNewsQuery)
      ***/
-    public NewsgroupInfo[] listNewNewsgroups(NewGroupsOrNewsQuery query)
+    public NewsgroupInfo[] listNewNewsgroups(final NewGroupsOrNewsQuery query)
     throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(newgroups(
@@ -1197,7 +1197,7 @@ public class NNTPClient extends NNTP
      *      command to the server or receiving a reply from the server.
      * @since 3.0
      */
-    public Iterable<String> iterateNewNewsgroupListing(NewGroupsOrNewsQuery query) throws IOException {
+    public Iterable<String> iterateNewNewsgroupListing(final NewGroupsOrNewsQuery query) throws IOException {
         if (NNTPReply.isPositiveCompletion(newgroups(
                 query.getDate(), query.getTime(),
                 query.isGMT(), query.getDistributions()))) {
@@ -1225,7 +1225,7 @@ public class NNTPClient extends NNTP
      *      command to the server or receiving a reply from the server.
      * @since 3.0
      */
-    public Iterable<NewsgroupInfo> iterateNewNewsgroups(NewGroupsOrNewsQuery query) throws IOException {
+    public Iterable<NewsgroupInfo> iterateNewNewsgroups(final NewGroupsOrNewsQuery query) throws IOException {
         return new NewsgroupIterator(iterateNewNewsgroupListing(query));
     }
 
@@ -1255,7 +1255,7 @@ public class NNTPClient extends NNTP
      *
      * @see #iterateNewNews(NewGroupsOrNewsQuery)
      ***/
-    public String[] listNewNews(NewGroupsOrNewsQuery query)
+    public String[] listNewNews(final NewGroupsOrNewsQuery query)
     throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(
@@ -1264,8 +1264,8 @@ public class NNTPClient extends NNTP
             return null;
         }
 
-        Vector<String> list = new Vector<>();
-        BufferedReader reader = new DotTerminatedMessageReader(_reader_);
+        final Vector<String> list = new Vector<>();
+        final BufferedReader reader = new DotTerminatedMessageReader(_reader_);
 
         String line;
         try {
@@ -1276,12 +1276,12 @@ public class NNTPClient extends NNTP
             reader.close();
         }
 
-        int size = list.size();
+        final int size = list.size();
         if (size < 1) {
             return new String[0];
         }
 
-        String[] result = new String[size];
+        final String[] result = new String[size];
         list.copyInto(result);
 
         return result;
@@ -1310,7 +1310,7 @@ public class NNTPClient extends NNTP
      *      command to the server or receiving a reply from the server.
      * @since 3.0
      */
-    public Iterable<String> iterateNewNews(NewGroupsOrNewsQuery query) throws IOException {
+    public Iterable<String> iterateNewNews(final NewGroupsOrNewsQuery query) throws IOException {
         if (NNTPReply.isPositiveCompletion(newnews(
                 query.getNewsgroups(), query.getDate(), query.getTime(),
                 query.isGMT(), query.getDistributions()))) {
@@ -1404,7 +1404,7 @@ public class NNTPClient extends NNTP
     }
 
 
-    public Writer forwardArticle(String articleId) throws IOException
+    public Writer forwardArticle(final String articleId) throws IOException
     {
         if (!NNTPReply.isPositiveIntermediate(ihave(articleId))) {
             return null;
@@ -1439,7 +1439,7 @@ public class NNTPClient extends NNTP
      * @return True for successful login, false for a failure
      * @throws IOException on error
      */
-    public boolean authenticate(String username, String password)
+    public boolean authenticate(final String username, final String password)
         throws IOException
     {
         int replyCode = authinfoUser(username);
@@ -1468,7 +1468,7 @@ public class NNTPClient extends NNTP
      *         otherwise
      * @throws IOException
      */
-    private BufferedReader __retrieveArticleInfo(String articleRange)
+    private BufferedReader __retrieveArticleInfo(final String articleRange)
         throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(xover(articleRange))) {
@@ -1485,7 +1485,7 @@ public class NNTPClient extends NNTP
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException on error
      */
-    public BufferedReader retrieveArticleInfo(long articleNumber) throws IOException
+    public BufferedReader retrieveArticleInfo(final long articleNumber) throws IOException
     {
         return __retrieveArticleInfo(Long.toString(articleNumber));
     }
@@ -1499,8 +1499,8 @@ public class NNTPClient extends NNTP
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException on error
      */
-    public BufferedReader retrieveArticleInfo(long lowArticleNumber,
-            long highArticleNumber)
+    public BufferedReader retrieveArticleInfo(final long lowArticleNumber,
+            final long highArticleNumber)
         throws IOException
     {
         return
@@ -1518,10 +1518,10 @@ public class NNTPClient extends NNTP
      * @throws IOException if the command failed
      * @since 3.0
      */
-    public Iterable<Article> iterateArticleInfo(long lowArticleNumber, long highArticleNumber)
+    public Iterable<Article> iterateArticleInfo(final long lowArticleNumber, final long highArticleNumber)
         throws IOException
     {
-        BufferedReader info = retrieveArticleInfo(lowArticleNumber,highArticleNumber);
+        final BufferedReader info = retrieveArticleInfo(lowArticleNumber,highArticleNumber);
         if (info == null) {
             throw new IOException("XOVER command failed: "+getReplyString());
         }
@@ -1541,7 +1541,7 @@ public class NNTPClient extends NNTP
      *         otherwise
      * @throws IOException
      */
-    private BufferedReader __retrieveHeader(String header, String articleRange)
+    private BufferedReader __retrieveHeader(final String header, final String articleRange)
         throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(xhdr(header, articleRange))) {
@@ -1559,7 +1559,7 @@ public class NNTPClient extends NNTP
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException on error
      */
-    public BufferedReader retrieveHeader(String header, long articleNumber)
+    public BufferedReader retrieveHeader(final String header, final long articleNumber)
         throws IOException
     {
         return __retrieveHeader(header, Long.toString(articleNumber));
@@ -1575,8 +1575,8 @@ public class NNTPClient extends NNTP
      * @return a DotTerminatedReader if successful, null otherwise
      * @throws IOException on error
      */
-    public BufferedReader retrieveHeader(String header, long lowArticleNumber,
-                                 long highArticleNumber)
+    public BufferedReader retrieveHeader(final String header, final long lowArticleNumber,
+                                 final long highArticleNumber)
         throws IOException
     {
         return
@@ -1601,7 +1601,7 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #retrieveHeader(String, long, long)} instead
      */
     @Deprecated
-    public Reader retrieveHeader(String header, int lowArticleNumber, int highArticleNumber)
+    public Reader retrieveHeader(final String header, final int lowArticleNumber, final int highArticleNumber)
         throws IOException
     {
         return retrieveHeader(header, (long) lowArticleNumber, (long) highArticleNumber);
@@ -1615,7 +1615,7 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #retrieveArticleInfo(long, long)} instead
      */
     @Deprecated
-    public Reader retrieveArticleInfo(int lowArticleNumber, int highArticleNumber) throws IOException {
+    public Reader retrieveArticleInfo(final int lowArticleNumber, final int highArticleNumber) throws IOException {
         return retrieveArticleInfo((long) lowArticleNumber, (long) highArticleNumber);
     }
 
@@ -1627,7 +1627,7 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #retrieveHeader(String, long)} instead
      */
     @Deprecated
-    public Reader retrieveHeader(String a, int b) throws IOException {
+    public Reader retrieveHeader(final String a, final int b) throws IOException {
         return retrieveHeader(a, (long) b);
     }
 
@@ -1639,9 +1639,9 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #selectArticle(long, ArticleInfo)} instead
      */
     @Deprecated
-    public boolean selectArticle(int a, ArticlePointer ap) throws IOException {
-        ArticleInfo ai =  __ap2ai(ap);
-        boolean b = selectArticle(a, ai);
+    public boolean selectArticle(final int a, final ArticlePointer ap) throws IOException {
+        final ArticleInfo ai =  __ap2ai(ap);
+        final boolean b = selectArticle(a, ai);
         __ai2ap(ai, ap);
         return b;
     }
@@ -1653,7 +1653,7 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #retrieveArticleInfo(long)} instead
      */
     @Deprecated
-    public Reader retrieveArticleInfo(int lowArticleNumber) throws IOException {
+    public Reader retrieveArticleInfo(final int lowArticleNumber) throws IOException {
         return retrieveArticleInfo((long) lowArticleNumber);
     }
 
@@ -1664,7 +1664,7 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #selectArticle(long)} instead
      */
     @Deprecated
-    public boolean selectArticle(int a) throws IOException {
+    public boolean selectArticle(final int a) throws IOException {
         return selectArticle((long) a);
     }
 
@@ -1675,7 +1675,7 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #retrieveArticleHeader(long)} instead
      */
     @Deprecated
-    public Reader retrieveArticleHeader(int a) throws IOException {
+    public Reader retrieveArticleHeader(final int a) throws IOException {
         return retrieveArticleHeader((long) a);
     }
 
@@ -1687,9 +1687,9 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #retrieveArticleHeader(long, ArticleInfo)} instead
      */
     @Deprecated
-    public Reader retrieveArticleHeader(int a, ArticlePointer ap) throws IOException {
-        ArticleInfo ai =  __ap2ai(ap);
-        Reader rdr = retrieveArticleHeader(a, ai);
+    public Reader retrieveArticleHeader(final int a, final ArticlePointer ap) throws IOException {
+        final ArticleInfo ai =  __ap2ai(ap);
+        final Reader rdr = retrieveArticleHeader(a, ai);
         __ai2ap(ai, ap);
         return rdr;
     }
@@ -1701,7 +1701,7 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #retrieveArticleBody(long)} instead
      */
     @Deprecated
-    public Reader retrieveArticleBody(int a) throws IOException {
+    public Reader retrieveArticleBody(final int a) throws IOException {
         return retrieveArticleBody((long) a);
     }
 
@@ -1714,9 +1714,9 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #retrieveArticle(long, ArticleInfo)} instead
      */
     @Deprecated
-    public Reader retrieveArticle(int articleNumber, ArticlePointer pointer) throws IOException {
-        ArticleInfo ai =  __ap2ai(pointer);
-        Reader rdr = retrieveArticle(articleNumber, ai);
+    public Reader retrieveArticle(final int articleNumber, final ArticlePointer pointer) throws IOException {
+        final ArticleInfo ai =  __ap2ai(pointer);
+        final Reader rdr = retrieveArticle(articleNumber, ai);
         __ai2ap(ai, pointer);
         return rdr;
     }
@@ -1729,7 +1729,7 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #retrieveArticle(long)} instead
      */
     @Deprecated
-    public Reader retrieveArticle(int articleNumber) throws IOException {
+    public Reader retrieveArticle(final int articleNumber) throws IOException {
         return retrieveArticle((long) articleNumber);
     }
 
@@ -1741,9 +1741,9 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #retrieveArticleBody(long, ArticleInfo)} instead
      */
     @Deprecated
-    public Reader retrieveArticleBody(int a, ArticlePointer ap) throws IOException {
-        ArticleInfo ai =  __ap2ai(ap);
-        Reader rdr = retrieveArticleBody(a, ai);
+    public Reader retrieveArticleBody(final int a, final ArticlePointer ap) throws IOException {
+        final ArticleInfo ai =  __ap2ai(ap);
+        final Reader rdr = retrieveArticleBody(a, ai);
         __ai2ap(ai, ap);
         return rdr;
     }
@@ -1757,9 +1757,9 @@ public class NNTPClient extends NNTP
      * @throws IOException on error
      */
     @Deprecated
-    public Reader retrieveArticle(String articleId, ArticlePointer pointer) throws IOException {
-        ArticleInfo ai =  __ap2ai(pointer);
-        Reader rdr = retrieveArticle(articleId, ai);
+    public Reader retrieveArticle(final String articleId, final ArticlePointer pointer) throws IOException {
+        final ArticleInfo ai =  __ap2ai(pointer);
+        final Reader rdr = retrieveArticle(articleId, ai);
         __ai2ap(ai, pointer);
         return rdr;
     }
@@ -1773,9 +1773,9 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #retrieveArticleBody(String, ArticleInfo)} instead
      */
     @Deprecated
-    public Reader retrieveArticleBody(String articleId, ArticlePointer pointer) throws IOException {
-        ArticleInfo ai =  __ap2ai(pointer);
-        Reader rdr = retrieveArticleBody(articleId, ai);
+    public Reader retrieveArticleBody(final String articleId, final ArticlePointer pointer) throws IOException {
+        final ArticleInfo ai =  __ap2ai(pointer);
+        final Reader rdr = retrieveArticleBody(articleId, ai);
         __ai2ap(ai, pointer);
         return rdr;
     }
@@ -1789,9 +1789,9 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #retrieveArticleHeader(String, ArticleInfo)} instead
      */
     @Deprecated
-    public Reader retrieveArticleHeader(String articleId, ArticlePointer pointer) throws IOException {
-        ArticleInfo ai =  __ap2ai(pointer);
-        Reader rdr = retrieveArticleHeader(articleId, ai);
+    public Reader retrieveArticleHeader(final String articleId, final ArticlePointer pointer) throws IOException {
+        final ArticleInfo ai =  __ap2ai(pointer);
+        final Reader rdr = retrieveArticleHeader(articleId, ai);
         __ai2ap(ai, pointer);
         return rdr;
     }
@@ -1805,9 +1805,9 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #selectArticle(String, ArticleInfo)} instead
      */
     @Deprecated
-    public boolean selectArticle(String articleId, ArticlePointer pointer) throws IOException {
-        ArticleInfo ai =  __ap2ai(pointer);
-        boolean b = selectArticle(articleId, ai);
+    public boolean selectArticle(final String articleId, final ArticlePointer pointer) throws IOException {
+        final ArticleInfo ai =  __ap2ai(pointer);
+        final boolean b = selectArticle(articleId, ai);
         __ai2ap(ai, pointer);
         return b;
 
@@ -1820,9 +1820,9 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #selectArticle(ArticleInfo)} instead
      */
     @Deprecated
-    public boolean selectArticle(ArticlePointer pointer) throws IOException {
-        ArticleInfo ai =  __ap2ai(pointer);
-        boolean b = selectArticle(ai);
+    public boolean selectArticle(final ArticlePointer pointer) throws IOException {
+        final ArticleInfo ai =  __ap2ai(pointer);
+        final boolean b = selectArticle(ai);
         __ai2ap(ai, pointer);
         return b;
 
@@ -1835,9 +1835,9 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #selectNextArticle(ArticleInfo)} instead
      */
     @Deprecated
-    public boolean selectNextArticle(ArticlePointer pointer) throws IOException {
-        ArticleInfo ai =  __ap2ai(pointer);
-        boolean b = selectNextArticle(ai);
+    public boolean selectNextArticle(final ArticlePointer pointer) throws IOException {
+        final ArticleInfo ai =  __ap2ai(pointer);
+        final boolean b = selectNextArticle(ai);
         __ai2ap(ai, pointer);
         return b;
 
@@ -1850,25 +1850,25 @@ public class NNTPClient extends NNTP
      * @deprecated 3.0 use {@link #selectPreviousArticle(ArticleInfo)} instead
      */
     @Deprecated
-    public boolean selectPreviousArticle(ArticlePointer pointer) throws IOException {
-        ArticleInfo ai =  __ap2ai(pointer);
-        boolean b = selectPreviousArticle(ai);
+    public boolean selectPreviousArticle(final ArticlePointer pointer) throws IOException {
+        final ArticleInfo ai =  __ap2ai(pointer);
+        final boolean b = selectPreviousArticle(ai);
         __ai2ap(ai, pointer);
         return b;
     }
 
    // Helper methods
 
-    private ArticleInfo __ap2ai(@SuppressWarnings("deprecation") ArticlePointer ap) {
+    private ArticleInfo __ap2ai(@SuppressWarnings("deprecation") final ArticlePointer ap) {
         if (ap == null) {
             return null;
         }
-        ArticleInfo ai = new ArticleInfo();
+        final ArticleInfo ai = new ArticleInfo();
         return ai;
     }
 
     @SuppressWarnings("deprecation")
-    private void __ai2ap(ArticleInfo ai, ArticlePointer ap){
+    private void __ai2ap(final ArticleInfo ai, final ArticlePointer ap){
         if (ap != null) { // ai cannot be null
             ap.articleId = ai.articleId;
             ap.articleNumber = (int) ai.articleNumber;

@@ -47,7 +47,7 @@ public class POP3ClientTest extends TestCase
     String password = POP3Constants.password;
     String mailhost = POP3Constants.mailhost;
 
-    public POP3ClientTest(String name)
+    public POP3ClientTest(final String name)
     {
         super(name);
     }

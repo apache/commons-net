@@ -99,7 +99,7 @@ public class IMAPSClient extends IMAPClient
      * Constructor for IMAPSClient.
      * @param implicit The security mode (Implicit/Explicit).
      */
-    public IMAPSClient(boolean implicit)
+    public IMAPSClient(final boolean implicit)
     {
         this(DEFAULT_PROTOCOL, implicit);
     }
@@ -108,7 +108,7 @@ public class IMAPSClient extends IMAPClient
      * Constructor for IMAPSClient.
      * @param proto the protocol.
      */
-    public IMAPSClient(String proto)
+    public IMAPSClient(final String proto)
     {
         this(proto, false);
     }
@@ -118,7 +118,7 @@ public class IMAPSClient extends IMAPClient
      * @param proto the protocol.
      * @param implicit The security mode(Implicit/Explicit).
      */
-    public IMAPSClient(String proto, boolean implicit)
+    public IMAPSClient(final String proto, final boolean implicit)
     {
         this(proto, implicit, null);
     }
@@ -129,7 +129,7 @@ public class IMAPSClient extends IMAPClient
      * @param implicit The security mode(Implicit/Explicit).
      * @param ctx the SSL context
      */
-    public IMAPSClient(String proto, boolean implicit, SSLContext ctx)
+    public IMAPSClient(final String proto, final boolean implicit, final SSLContext ctx)
     {
         super();
         setDefaultPort(DEFAULT_IMAPS_PORT);
@@ -143,7 +143,7 @@ public class IMAPSClient extends IMAPClient
      * @param implicit The security mode(Implicit/Explicit).
      * @param ctx A pre-configured SSL Context.
      */
-    public IMAPSClient(boolean implicit, SSLContext ctx)
+    public IMAPSClient(final boolean implicit, final SSLContext ctx)
     {
         this(DEFAULT_PROTOCOL, implicit, ctx);
     }
@@ -152,7 +152,7 @@ public class IMAPSClient extends IMAPClient
      * Constructor for IMAPSClient.
      * @param context A pre-configured SSL Context.
      */
-    public IMAPSClient(SSLContext context)
+    public IMAPSClient(final SSLContext context)
     {
         this(false, context);
     }
@@ -197,10 +197,10 @@ public class IMAPSClient extends IMAPClient
     {
         initSSLContext();
 
-        SSLSocketFactory ssf = context.getSocketFactory();
-        String host = (_hostname_ != null) ? _hostname_ : getRemoteAddress().getHostAddress();
-        int port = getRemotePort();
-        SSLSocket socket =
+        final SSLSocketFactory ssf = context.getSocketFactory();
+        final String host = (_hostname_ != null) ? _hostname_ : getRemoteAddress().getHostAddress();
+        final int port = getRemotePort();
+        final SSLSocket socket =
             (SSLSocket) ssf.createSocket(_socket_, host, port, true);
         socket.setEnableSessionCreation(true);
         socket.setUseClientMode(true);
@@ -247,7 +247,7 @@ public class IMAPSClient extends IMAPClient
      * @param newKeyManager The KeyManager implementation to set.
      * @see org.apache.commons.net.util.KeyManagerUtils
      */
-    public void setKeyManager(KeyManager newKeyManager)
+    public void setKeyManager(final KeyManager newKeyManager)
     {
         keyManager = newKeyManager;
     }
@@ -257,7 +257,7 @@ public class IMAPSClient extends IMAPClient
      * connection. Called before server negotiation.
      * @param cipherSuites The cipher suites.
      */
-    public void setEnabledCipherSuites(String[] cipherSuites)
+    public void setEnabledCipherSuites(final String[] cipherSuites)
     {
         suites = new String[cipherSuites.length];
         System.arraycopy(cipherSuites, 0, suites, 0, cipherSuites.length);
@@ -283,7 +283,7 @@ public class IMAPSClient extends IMAPClient
      * connection. I perform setting before a server negotiation.
      * @param protocolVersions The protocol versions.
      */
-    public void setEnabledProtocols(String[] protocolVersions)
+    public void setEnabledProtocols(final String[] protocolVersions)
     {
         protocols = new String[protocolVersions.length];
         System.arraycopy(protocolVersions, 0, protocols, 0, protocolVersions.length);
@@ -336,7 +336,7 @@ public class IMAPSClient extends IMAPClient
      * @param newTrustManager The TrustManager implementation to set.
      * @see org.apache.commons.net.util.TrustManagerUtils
      */
-    public void setTrustManager(TrustManager newTrustManager)
+    public void setTrustManager(final TrustManager newTrustManager)
     {
         trustManager = newTrustManager;
     }
@@ -356,7 +356,7 @@ public class IMAPSClient extends IMAPClient
      * @param newHostnameVerifier The HostnameVerifier implementation to set or <code>null</code> to disable.
      * @since 3.4
      */
-    public void setHostnameVerifier(HostnameVerifier newHostnameVerifier)
+    public void setHostnameVerifier(final HostnameVerifier newHostnameVerifier)
     {
         hostnameVerifier = newHostnameVerifier;
     }
@@ -380,7 +380,7 @@ public class IMAPSClient extends IMAPClient
      * @param enable Enable automatic endpoint identification checking using the HTTPS algorithm on Java 1.7+.
      * @since 3.4
      */
-    public void setEndpointCheckingEnabled(boolean enable)
+    public void setEndpointCheckingEnabled(final boolean enable)
     {
         tlsEndpointChecking = enable;
     }

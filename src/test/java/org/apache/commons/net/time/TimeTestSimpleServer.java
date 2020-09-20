@@ -55,7 +55,7 @@ public class TimeTestSimpleServer implements Runnable
         port = DEFAULT_PORT;
     }
 
-    public TimeTestSimpleServer(int port)
+    public TimeTestSimpleServer(final int port)
     {
         this.port = port;
     }
@@ -103,12 +103,12 @@ public class TimeTestSimpleServer implements Runnable
             try
             {
                 socket = server.accept();
-                DataOutputStream os = new DataOutputStream(socket.getOutputStream());
+                final DataOutputStream os = new DataOutputStream(socket.getOutputStream());
                 // add 500 ms to round off to nearest second
-                int time = (int) ((System.currentTimeMillis() + 500) / 1000 + SECONDS_1900_TO_1970);
+                final int time = (int) ((System.currentTimeMillis() + 500) / 1000 + SECONDS_1900_TO_1970);
                 os.writeInt(time);
                 os.flush();
-            } catch (IOException e)
+            } catch (final IOException e)
             {
                 // ignored
             } finally
@@ -117,7 +117,7 @@ public class TimeTestSimpleServer implements Runnable
                     try
                     {
                         socket.close();  // force closing of the socket
-                    } catch (IOException e)
+                    } catch (final IOException e)
                     {
                         System.err.println("close socket error: " + e);
                     }
@@ -137,7 +137,7 @@ public class TimeTestSimpleServer implements Runnable
             try
             {
                 server.close();  // force closing of the socket
-            } catch (IOException e)
+            } catch (final IOException e)
             {
                 System.err.println("close socket error: " + e);
             }
@@ -145,13 +145,13 @@ public class TimeTestSimpleServer implements Runnable
         }
     }
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
-        TimeTestSimpleServer server = new TimeTestSimpleServer();
+        final TimeTestSimpleServer server = new TimeTestSimpleServer();
         try
         {
             server.start();
-        } catch (IOException e)
+        } catch (final IOException e)
         {
             // ignored
         }

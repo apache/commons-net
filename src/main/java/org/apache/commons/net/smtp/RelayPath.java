@@ -40,7 +40,7 @@ public final class RelayPath
      * <p>
      * @param emailAddress The destination email address.
      ***/
-    public RelayPath(String emailAddress)
+    public RelayPath(final String emailAddress)
     {
         _path = new Vector<>();
         _emailAddress = emailAddress;
@@ -58,7 +58,7 @@ public final class RelayPath
      * <p>
      * @param hostname The host to add to the relay path.
      ***/
-    public void addRelay(String hostname)
+    public void addRelay(final String hostname)
     {
         _path.addElement(hostname);
     }
@@ -71,7 +71,7 @@ public final class RelayPath
     @Override
     public String toString()
     {
-        StringBuilder buffer = new StringBuilder();
+        final StringBuilder buffer = new StringBuilder();
         Enumeration<String> hosts;
 
         buffer.append('<');

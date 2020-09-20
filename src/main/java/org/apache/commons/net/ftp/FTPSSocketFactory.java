@@ -35,7 +35,7 @@ public class FTPSSocketFactory extends SocketFactory {
 
     private final SSLContext context;
 
-    public FTPSSocketFactory(SSLContext context) {
+    public FTPSSocketFactory(final SSLContext context) {
         this.context = context;
     }
 
@@ -46,23 +46,23 @@ public class FTPSSocketFactory extends SocketFactory {
     }
 
     @Override
-    public Socket createSocket(String address, int port) throws UnknownHostException, IOException {
+    public Socket createSocket(final String address, final int port) throws UnknownHostException, IOException {
         return this.context.getSocketFactory().createSocket(address, port);
     }
 
     @Override
-    public Socket createSocket(InetAddress address, int port) throws IOException {
+    public Socket createSocket(final InetAddress address, final int port) throws IOException {
         return this.context.getSocketFactory().createSocket(address, port);
     }
 
     @Override
-    public Socket createSocket(String address, int port, InetAddress localAddress, int localPort)
+    public Socket createSocket(final String address, final int port, final InetAddress localAddress, final int localPort)
             throws UnknownHostException, IOException {
         return this.context.getSocketFactory().createSocket(address, port, localAddress, localPort);
     }
 
     @Override
-    public Socket createSocket(InetAddress address, int port, InetAddress localAddress, int localPort) throws IOException {
+    public Socket createSocket(final InetAddress address, final int port, final InetAddress localAddress, final int localPort) throws IOException {
         return this.context.getSocketFactory().createSocket(address, port, localAddress, localPort);
     }
 
@@ -74,7 +74,7 @@ public class FTPSSocketFactory extends SocketFactory {
      * @throws IOException on error
      * @deprecated (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int) instead} */
     @Deprecated
-    public java.net.ServerSocket createServerSocket(int port) throws IOException {
+    public java.net.ServerSocket createServerSocket(final int port) throws IOException {
         return this.init(this.context.getServerSocketFactory().createServerSocket(port));
     }
 
@@ -84,7 +84,7 @@ public class FTPSSocketFactory extends SocketFactory {
      * @throws IOException  on error
      * @deprecated  (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int, int) instead} */
     @Deprecated
-    public java.net.ServerSocket createServerSocket(int port, int backlog) throws IOException {
+    public java.net.ServerSocket createServerSocket(final int port, final int backlog) throws IOException {
         return this.init(this.context.getServerSocketFactory().createServerSocket(port, backlog));
     }
 
@@ -95,7 +95,7 @@ public class FTPSSocketFactory extends SocketFactory {
      * @throws IOException  on error
      * @deprecated  (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int, int, InetAddress) instead} */
     @Deprecated
-    public java.net.ServerSocket createServerSocket(int port, int backlog, InetAddress ifAddress) throws IOException {
+    public java.net.ServerSocket createServerSocket(final int port, final int backlog, final InetAddress ifAddress) throws IOException {
         return this.init(this.context.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
     }
 
@@ -104,7 +104,7 @@ public class FTPSSocketFactory extends SocketFactory {
      * @throws IOException  on error
      * @deprecated  (2.2) use {@link FTPSServerSocketFactory#init(java.net.ServerSocket)} */
     @Deprecated
-    public java.net.ServerSocket init(java.net.ServerSocket socket) throws IOException {
+    public java.net.ServerSocket init(final java.net.ServerSocket socket) throws IOException {
         ((javax.net.ssl.SSLServerSocket) socket).setUseClientMode(true);
         return socket;
     }

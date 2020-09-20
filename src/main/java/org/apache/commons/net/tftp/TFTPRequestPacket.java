@@ -84,8 +84,8 @@ public abstract class TFTPRequestPacket extends TFTPPacket
      * @param mode The requested transfer mode.  This should be on of the TFTP
      *        class MODE constants (e.g., TFTP.NETASCII_MODE).
      ***/
-    TFTPRequestPacket(InetAddress destination, int port,
-                      int type, String fileName, int mode)
+    TFTPRequestPacket(final InetAddress destination, final int port,
+                      final int type, final String fileName, final int mode)
     {
         super(type, destination, port);
 
@@ -104,18 +104,18 @@ public abstract class TFTPRequestPacket extends TFTPPacket
      * @throws TFTPPacketException  If the datagram isn't a valid TFTP
      *         request packet of the appropriate type.
      ***/
-    TFTPRequestPacket(int type, DatagramPacket datagram)
+    TFTPRequestPacket(final int type, final DatagramPacket datagram)
     throws TFTPPacketException
     {
         super(type, datagram.getAddress(), datagram.getPort());
 
-        byte[] data = datagram.getData();
+        final byte[] data = datagram.getData();
 
         if (getType() != data[1]) {
             throw new TFTPPacketException("TFTP operator code does not match type.");
         }
 
-        StringBuilder buffer = new StringBuilder();
+        final StringBuilder buffer = new StringBuilder();
 
         int index = 2;
         int length = datagram.getLength();
@@ -140,7 +140,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
             ++index;
         }
 
-        String modeString = buffer.toString().toLowerCase(java.util.Locale.ENGLISH);
+        final String modeString = buffer.toString().toLowerCase(java.util.Locale.ENGLISH);
         length = _modeStrings.length;
 
         int mode = 0;
@@ -177,7 +177,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
      * @return The datagram argument.
      ***/
     @Override
-    final DatagramPacket _newDatagram(DatagramPacket datagram, byte[] data)
+    final DatagramPacket _newDatagram(final DatagramPacket datagram, final byte[] data)
     {
         int fileLength, modeLength;
 

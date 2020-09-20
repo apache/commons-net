@@ -41,7 +41,7 @@ public class Threader {
      * @return null if messages == null or root.child == null or messages list is empty
      * @since 2.2
      */
-    public Threadable thread(List<? extends Threadable> messages) {
+    public Threadable thread(final List<? extends Threadable> messages) {
         return thread((Iterable<? extends Threadable>)messages);
     }
 
@@ -52,7 +52,7 @@ public class Threader {
      * @return null if messages == null or root.child == null or messages list is empty
      * @since 3.0
      */
-    public Threadable thread(Iterable<? extends Threadable> messages) {
+    public Threadable thread(final Iterable<? extends Threadable> messages) {
         if (messages == null) {
             return null;
         }
@@ -60,7 +60,7 @@ public class Threader {
         HashMap<String,ThreadContainer> idTable = new HashMap<>();
 
         // walk through each Threadable element
-        for (Threadable t : messages) {
+        for (final Threadable t : messages) {
             if (!t.isDummy()) {
                 buildContainer(t, idTable);
             }
@@ -70,7 +70,7 @@ public class Threader {
             return null;
         }
 
-        ThreadContainer root = findRootSet(idTable);
+        final ThreadContainer root = findRootSet(idTable);
         idTable.clear();
         idTable = null;
 
@@ -89,7 +89,7 @@ public class Threader {
             }
         }
 
-        Threadable result = (root.child == null ? null : root.child.threadable);
+        final Threadable result = (root.child == null ? null : root.child.threadable);
         root.flush();
 
         return result;
@@ -100,7 +100,7 @@ public class Threader {
      * @param threadable
      * @param idTable
      */
-    private void buildContainer(Threadable threadable, HashMap<String,ThreadContainer> idTable) {
+    private void buildContainer(final Threadable threadable, final HashMap<String,ThreadContainer> idTable) {
         String id = threadable.messageThreadId();
         ThreadContainer container = idTable.get(id);
         int bogusIdCount = 0;
@@ -130,8 +130,8 @@ public class Threader {
         // don't have them.
         ThreadContainer parentRef = null;
         {
-            String[] references = threadable.messageThreadReferences();
-            for (String refString : references)
+            final String[] references = threadable.messageThreadReferences();
+            for (final String refString : references)
             {
                 ThreadContainer ref = idTable.get(refString);
 
@@ -211,13 +211,13 @@ public class Threader {
      * @param idTable
      * @return root the ThreadContainer representing the root node
      */
-    private ThreadContainer findRootSet(HashMap<String, ThreadContainer> idTable) {
-        ThreadContainer root = new ThreadContainer();
-        Iterator<Map.Entry<String, ThreadContainer>> iter = idTable.entrySet().iterator();
+    private ThreadContainer findRootSet(final HashMap<String, ThreadContainer> idTable) {
+        final ThreadContainer root = new ThreadContainer();
+        final Iterator<Map.Entry<String, ThreadContainer>> iter = idTable.entrySet().iterator();
 
         while (iter.hasNext()) {
-            Map.Entry<String, ThreadContainer> entry = iter.next();
-            ThreadContainer c = entry.getValue();
+            final Map.Entry<String, ThreadContainer> entry = iter.next();
+            final ThreadContainer c = entry.getValue();
             if (c.parent == null) {
                 if (c.next != null) {
                     throw new RuntimeException(
@@ -234,7 +234,7 @@ public class Threader {
      * Delete any empty or dummy ThreadContainers
      * @param parent
      */
-    private void pruneEmptyContainers(ThreadContainer parent) {
+    private void pruneEmptyContainers(final ThreadContainer parent) {
         ThreadContainer container, prev, next;
         for (prev = null, container = parent.child, next = container.next;
             container != null;
@@ -262,7 +262,7 @@ public class Threader {
                         || container.child.next == null)) {
                 // We have an invalid/expired message with kids. Promote the kids to this level.
                 ThreadContainer tail;
-                ThreadContainer kids = container.child;
+                final ThreadContainer kids = container.child;
 
                 // Remove this container and replace with 'kids'.
                 if (prev == null) {
@@ -300,7 +300,7 @@ public class Threader {
      *  This is to attempt to accomodate messages without References: headers.
      * @param root
      */
-    private void gatherSubjects(ThreadContainer root) {
+    private void gatherSubjects(final ThreadContainer root) {
 
         int count = 0;
 
@@ -322,13 +322,13 @@ public class Threader {
                 threadable = c.child.threadable;
             }
 
-            String subj = threadable.simplifiedSubject();
+            final String subj = threadable.simplifiedSubject();
 
             if (subj == null || subj.length() == 0) {
                 continue;
             }
 
-            ThreadContainer old = subjectTable.get(subj);
+            final ThreadContainer old = subjectTable.get(subj);
 
             // Add this container to the table iff:
             // - There exists no container with this subject
@@ -366,14 +366,14 @@ public class Threader {
                 threadable = c.child.threadable;
             }
 
-            String subj = threadable.simplifiedSubject();
+            final String subj = threadable.simplifiedSubject();
 
             // Dont thread together all subjectless messages
             if (subj == null || subj.length() == 0) {
                 continue;
             }
 
-            ThreadContainer old = subjectTable.get(subj);
+            final ThreadContainer old = subjectTable.get(subj);
 
             if (old == c) { // That's us
                 continue;
@@ -418,7 +418,7 @@ public class Threader {
             } else {
                 // else make the old and new messages be children of a new dummy container.
                 // We create a new container object for old.msg and empty the old container
-                ThreadContainer newc = new ThreadContainer();
+                final ThreadContainer newc = new ThreadContainer();
                 newc.threadable = old.threadable;
                 newc.child = old.child;
 
@@ -459,7 +459,7 @@ public class Threader {
      * @deprecated (2.2) prefer {@link #thread(List)}
      */
     @Deprecated
-    public Threadable thread(Threadable[] messages) {
+    public Threadable thread(final Threadable[] messages) {
         if (messages == null) {
             return null;
         }

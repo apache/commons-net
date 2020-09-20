@@ -75,9 +75,9 @@ public class FTPClientConfigFunctionalTest extends TestCase {
             FTP.login("anonymous","testing@apache.org");
             FTP.changeWorkingDirectory("SL.us008001/DF.an/DC.sflnd/DS.metar");
             FTP.enterLocalPassiveMode();
-        } catch (SocketException e) {
+        } catch (final SocketException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }
@@ -90,26 +90,26 @@ public class FTPClientConfigFunctionalTest extends TestCase {
         super.tearDown();
     }
 
-    public FTPClientConfigFunctionalTest(String arg0) {
+    public FTPClientConfigFunctionalTest(final String arg0) {
         super(arg0);
     }
 
-    private TreeSet<FTPFile> getSortedList(FTPFile[] files) {
+    private TreeSet<FTPFile> getSortedList(final FTPFile[] files) {
         // create a TreeSet which will sort each element
         // as it is added.
-        TreeSet<FTPFile> sorted = new TreeSet<>(new Comparator<Object>() {
+        final TreeSet<FTPFile> sorted = new TreeSet<>(new Comparator<Object>() {
 
             @Override
-            public int compare(Object o1, Object o2) {
-                FTPFile f1 = (FTPFile) o1;
-                FTPFile f2 = (FTPFile) o2;
+            public int compare(final Object o1, final Object o2) {
+                final FTPFile f1 = (FTPFile) o1;
+                final FTPFile f2 = (FTPFile) o2;
                 return f1.getTimestamp().getTime().compareTo(f2.getTimestamp().getTime());
             }
 
         });
 
 
-        for (FTPFile file : files)
+        for (final FTPFile file : files)
         {
             // The directory contains a few additional files at the beginning
             // which aren't in the series we want. The series we want consists
@@ -123,13 +123,13 @@ public class FTPClientConfigFunctionalTest extends TestCase {
     }
 
     public void testTimeZoneFunctionality() throws Exception {
-        java.util.Date now = new java.util.Date();
-        FTPFile[] files = FTP.listFiles();
-        TreeSet<FTPFile> sorted = getSortedList(files);
+        final java.util.Date now = new java.util.Date();
+        final FTPFile[] files = FTP.listFiles();
+        final TreeSet<FTPFile> sorted = getSortedList(files);
         //SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm z" );
         FTPFile lastfile = null;
         FTPFile firstfile = null;
-        for (FTPFile thisfile : sorted) {
+        for (final FTPFile thisfile : sorted) {
             if (firstfile == null) {
                 firstfile = thisfile;
             }
@@ -149,7 +149,7 @@ public class FTPClientConfigFunctionalTest extends TestCase {
             // test that notwithstanding any time zone differences, the newest file
             // is older than now.
             assertTrue(lastfile.getTimestamp().getTime().before(now));
-            Calendar first = firstfile.getTimestamp();
+            final Calendar first = firstfile.getTimestamp();
 
             // test that the oldest is less than two days older than the newest
             // and, in particular, that no files have been considered "future"

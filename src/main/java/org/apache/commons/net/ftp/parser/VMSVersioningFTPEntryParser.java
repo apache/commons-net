@@ -74,7 +74,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
      * <code>REGEX</code> is  not a valid regular expression.
      * @since 1.4
      */
-    public VMSVersioningFTPEntryParser(FTPClientConfig config)
+    public VMSVersioningFTPEntryParser(final FTPClientConfig config)
     {
         super();
         configure(config);
@@ -83,7 +83,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
             //_preparse_matcher_ = new Perl5Matcher();
             _preparse_pattern_ = Pattern.compile(PRE_PARSE_REGEX);
         }
-        catch (PatternSyntaxException pse)
+        catch (final PatternSyntaxException pse)
         {
             throw new IllegalArgumentException (
                 "Unparseable regex supplied:  " + PRE_PARSE_REGEX);
@@ -101,19 +101,19 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
      * @return Original list purged of duplicates
      */
     @Override
-    public List<String> preParse(List<String> original) {
-        HashMap<String, Integer> existingEntries = new HashMap<>();
-        ListIterator<String> iter = original.listIterator();
+    public List<String> preParse(final List<String> original) {
+        final HashMap<String, Integer> existingEntries = new HashMap<>();
+        final ListIterator<String> iter = original.listIterator();
         while (iter.hasNext()) {
-            String entry = iter.next().trim();
+            final String entry = iter.next().trim();
             MatchResult result = null;
-            Matcher _preparse_matcher_ = _preparse_pattern_.matcher(entry);
+            final Matcher _preparse_matcher_ = _preparse_pattern_.matcher(entry);
             if (_preparse_matcher_.matches()) {
                 result = _preparse_matcher_.toMatchResult();
-                String name = result.group(1);
-                String version = result.group(2);
-                Integer nv = Integer.valueOf(version);
-                Integer existing = existingEntries.get(name);
+                final String name = result.group(1);
+                final String version = result.group(2);
+                final Integer nv = Integer.valueOf(version);
+                final Integer existing = existingEntries.get(name);
                 if (null != existing) {
                     if (nv.intValue() < existing.intValue()) {
                         iter.remove();  // removes older version from original list.
@@ -129,15 +129,15 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
         // we now must remove those with smaller than the largest version number
         // for each name that were found before the largest
         while (iter.hasPrevious()) {
-            String entry = iter.previous().trim();
+            final String entry = iter.previous().trim();
             MatchResult result = null;
-            Matcher _preparse_matcher_ = _preparse_pattern_.matcher(entry);
+            final Matcher _preparse_matcher_ = _preparse_pattern_.matcher(entry);
             if (_preparse_matcher_.matches()) {
                 result = _preparse_matcher_.toMatchResult();
-                String name = result.group(1);
-                String version = result.group(2);
-                Integer nv = Integer.valueOf(version);
-                Integer existing = existingEntries.get(name);
+                final String name = result.group(1);
+                final String version = result.group(2);
+                final Integer nv = Integer.valueOf(version);
+                final Integer existing = existingEntries.get(name);
                 if (null != existing) {
                     if (nv.intValue() < existing.intValue()) {
                         iter.remove(); // removes older version from original list.

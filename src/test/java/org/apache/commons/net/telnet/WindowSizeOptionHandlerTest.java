@@ -60,17 +60,17 @@ public class WindowSizeOptionHandlerTest extends TelnetOptionHandlerTestAbstract
      ***/
     public void testStartSubnegotiationLocal()
     {
-        int[] exp1 = {31, 0, 80, 0, 24};
-        int[] start1 = opthand1.startSubnegotiationLocal();
+        final int[] exp1 = {31, 0, 80, 0, 24};
+        final int[] start1 = opthand1.startSubnegotiationLocal();
         assertEquals(5, start1.length);
         equalInts(exp1, start1);
 
-        int[] exp2 = {31, 0, 255, 255, 0, 255, 255};
-        int[] start2 = opthand2.startSubnegotiationLocal();
+        final int[] exp2 = {31, 0, 255, 255, 0, 255, 255};
+        final int[] start2 = opthand2.startSubnegotiationLocal();
         equalInts(exp2, start2);
 
-        int[] exp3 = {31, 255, 255, 255, 255, 0, 255, 255};
-        int[] start3 = opthand3.startSubnegotiationLocal();
+        final int[] exp3 = {31, 255, 255, 255, 255, 0, 255, 255};
+        final int[] start3 = opthand3.startSubnegotiationLocal();
         equalInts(exp3, start3);
     }
 
@@ -83,14 +83,14 @@ public class WindowSizeOptionHandlerTest extends TelnetOptionHandlerTestAbstract
     @Override
     public void testAnswerSubnegotiation()
     {
-        int subn[] =
+        final int subn[] =
         {
             TelnetOption.WINDOW_SIZE, 24, 80
         };
 
-        int resp1[] = opthand1.answerSubnegotiation(subn, subn.length);
-        int resp2[] = opthand2.answerSubnegotiation(subn, subn.length);
-        int resp3[] = opthand3.answerSubnegotiation(subn, subn.length);
+        final int resp1[] = opthand1.answerSubnegotiation(subn, subn.length);
+        final int resp2[] = opthand2.answerSubnegotiation(subn, subn.length);
+        final int resp3[] = opthand3.answerSubnegotiation(subn, subn.length);
 
         assertNull(resp1);
         assertNull(resp2);
@@ -100,7 +100,7 @@ public class WindowSizeOptionHandlerTest extends TelnetOptionHandlerTestAbstract
     /***
      * compares two arrays of int
      ***/
-    private void equalInts(int a1[], int a2[])
+    private void equalInts(final int a1[], final int a2[])
     {
         assertEquals("Arrays should be the same length", a1.length, a2.length);
         for(int ii=0; ii<a1.length; ii++)

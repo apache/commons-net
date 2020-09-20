@@ -86,7 +86,7 @@ public class DefaultFTPFileEntryParserFactory
      * @see FTPFileEntryParser
      */
     @Override
-    public FTPFileEntryParser createFileEntryParser(String key)
+    public FTPFileEntryParser createFileEntryParser(final String key)
     {
         if (key == null) {
             throw new ParserInitializationException("Parser key cannot be null");
@@ -95,32 +95,32 @@ public class DefaultFTPFileEntryParserFactory
     }
 
     // Common method to process both key and config parameters.
-    private FTPFileEntryParser createFileEntryParser(String key, FTPClientConfig config) {
+    private FTPFileEntryParser createFileEntryParser(final String key, final FTPClientConfig config) {
         FTPFileEntryParser parser = null;
 
         // Is the key a possible class name?
         if (JAVA_QUALIFIED_NAME_PATTERN.matcher(key).matches()) {
             try
             {
-                Class<?> parserClass = Class.forName(key);
+                final Class<?> parserClass = Class.forName(key);
                 try {
                     parser = (FTPFileEntryParser) parserClass.newInstance();
-                } catch (ClassCastException e) {
+                } catch (final ClassCastException e) {
                     throw new ParserInitializationException(parserClass.getName()
                         + " does not implement the interface "
                         + "org.apache.commons.net.ftp.FTPFileEntryParser.", e);
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     throw new ParserInitializationException("Error initializing parser", e);
-                } catch (ExceptionInInitializerError e) {
+                } catch (final ExceptionInInitializerError e) {
                     throw new ParserInitializationException("Error initializing parser", e);
                 }
-            } catch (ClassNotFoundException e) {
+            } catch (final ClassNotFoundException e) {
                 // OK, assume it is an alias
             }
         }
 
         if (parser == null) { // Now try for aliases
-            String ukey = key.toUpperCase(java.util.Locale.ENGLISH);
+            final String ukey = key.toUpperCase(java.util.Locale.ENGLISH);
             if (ukey.indexOf(FTPClientConfig.SYST_UNIX_TRIM_LEADING) >= 0)
             {
                 parser = new UnixFTPEntryParser(config, true);
@@ -199,10 +199,10 @@ public class DefaultFTPFileEntryParserFactory
      * @since 1.4
      */
     @Override
-    public FTPFileEntryParser createFileEntryParser(FTPClientConfig config)
+    public FTPFileEntryParser createFileEntryParser(final FTPClientConfig config)
     throws ParserInitializationException
     {
-        String key = config.getServerSystemKey();
+        final String key = config.getServerSystemKey();
         return createFileEntryParser(key, config);
     }
 
@@ -233,7 +233,7 @@ public class DefaultFTPFileEntryParserFactory
      * @param config the config to use, may be {@code null}
      * @return the parser
      */
-    private FTPFileEntryParser createNTFTPEntryParser(FTPClientConfig config)
+    private FTPFileEntryParser createNTFTPEntryParser(final FTPClientConfig config)
     {
         if (config != null && FTPClientConfig.SYST_NT.equals(
                 config.getServerSystemKey()))
@@ -268,7 +268,7 @@ public class DefaultFTPFileEntryParserFactory
      * @param config the config to use, may be {@code null}
      * @return the parser
      */
-    private FTPFileEntryParser createOS400FTPEntryParser(FTPClientConfig config)
+    private FTPFileEntryParser createOS400FTPEntryParser(final FTPClientConfig config)
         {
         if (config != null &&
                 FTPClientConfig.SYST_OS400.equals(config.getServerSystemKey()))

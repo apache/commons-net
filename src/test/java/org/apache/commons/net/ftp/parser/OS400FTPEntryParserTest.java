@@ -66,7 +66,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
     /**
      * @see junit.framework.TestCase#TestCase(String)
      */
-    public OS400FTPEntryParserTest(String name)
+    public OS400FTPEntryParserTest(final String name)
     {
         super(name);
     }
@@ -108,7 +108,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
     @Override
     public void testParseFieldsOnDirectory() throws Exception
     {
-        FTPFile f = getParser().parseFTPEntry("PEP             36864 04/03/24 14:06:34 *DIR       dir1/");
+        final FTPFile f = getParser().parseFTPEntry("PEP             36864 04/03/24 14:06:34 *DIR       dir1/");
         assertNotNull("Could not parse entry.",
                       f);
         assertTrue("Should have been a directory.",
@@ -120,7 +120,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
         assertEquals(36864,
                      f.getSize());
 
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MONTH, Calendar.MARCH);
 
         cal.set(Calendar.YEAR, 2004);
@@ -134,7 +134,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
     }
 
     @Override
-    protected void doAdditionalGoodTests(String test, FTPFile f)
+    protected void doAdditionalGoodTests(final String test, final FTPFile f)
     {
         if (test.startsWith("d"))
         {
@@ -149,7 +149,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
     @Override
     public void testParseFieldsOnFile() throws Exception
     {
-        FTPFile f = getParser().parseFTPEntry("PEP              5000000000 04/03/24 14:06:29 *STMF      build.xml");
+        final FTPFile f = getParser().parseFTPEntry("PEP              5000000000 04/03/24 14:06:29 *STMF      build.xml");
         assertNotNull("Could not parse entry.",
                       f);
         assertTrue("Should have been a file.",
@@ -161,7 +161,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
         assertEquals(5000000000L,
                      f.getSize());
 
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
 
         cal.set(Calendar.DAY_OF_MONTH, 24);
         cal.set(Calendar.MONTH, Calendar.MARCH);
@@ -189,7 +189,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
         conf.setDefaultDateFormatStr("MM/dd/yy HH:mm:ss");
         final FTPFileEntryParser parser = new OS400FTPEntryParser(conf);
 
-        FTPFile f = parser.parseFTPEntry("ZFTPDEV 9069 05/20/15 15:36:52 *STMF /DRV/AUDWRKSHET/AUDWRK0204232015114625.PDF");
+        final FTPFile f = parser.parseFTPEntry("ZFTPDEV 9069 05/20/15 15:36:52 *STMF /DRV/AUDWRKSHET/AUDWRK0204232015114625.PDF");
         assertNotNull("Could not parse entry.", f);
         assertNotNull("Could not parse timestamp.", f.getTimestamp());
         assertFalse("Should not have been a directory.", f.isDirectory());
@@ -197,7 +197,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
         assertEquals("AUDWRK0204232015114625.PDF", f.getName());
         assertEquals(9069, f.getSize());
 
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, 2015);
         cal.set(Calendar.MONTH, Calendar.MAY);
         cal.set(Calendar.DAY_OF_MONTH, 20);

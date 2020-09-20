@@ -33,8 +33,8 @@ public class EchoOptionHandler extends TelnetOptionHandler
      * @param acceptlocal - if set to true, any DO request is accepted.
      * @param acceptremote - if set to true, any WILL request is accepted.
      ***/
-    public EchoOptionHandler(boolean initlocal, boolean initremote,
-                                boolean acceptlocal, boolean acceptremote)
+    public EchoOptionHandler(final boolean initlocal, final boolean initremote,
+                                final boolean acceptlocal, final boolean acceptremote)
     {
         super(TelnetOption.ECHO, initlocal, initremote,
                                       acceptlocal, acceptremote);

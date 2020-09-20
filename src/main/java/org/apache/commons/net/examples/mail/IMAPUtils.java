@@ -40,18 +40,18 @@ class IMAPUtils {
      * @return the IMAP client - connected and logged in
      * @throws IOException if any problems occur
      */
-    static IMAPClient imapLogin(URI uri, int defaultTimeout, ProtocolCommandListener listener) throws IOException {
+    static IMAPClient imapLogin(final URI uri, final int defaultTimeout, final ProtocolCommandListener listener) throws IOException {
         final String userInfo = uri.getUserInfo();
         if (userInfo == null) {
             throw new IllegalArgumentException("Missing userInfo details");
         }
 
-        String []userpass = userInfo.split(":");
+        final String []userpass = userInfo.split(":");
         if (userpass.length != 2) {
             throw new IllegalArgumentException("Invalid userInfo details: '" + userInfo + "'");
         }
 
-        String username = userpass[0];
+        final String username = userpass[0];
         String password = userpass[1];
         // prompt for the password if necessary
         password = Utils.getPassword(username, password);
@@ -84,7 +84,7 @@ class IMAPUtils {
         try {
             imap.connect(server);
             System.out.println("Successfully connected");
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new RuntimeException("Could not connect to server.", e);
         }
 

@@ -46,7 +46,7 @@ public class DownloadListings extends FTPClient {
     private PrintCommandListener listener;
     private PrintWriter out;
 
-    private boolean open(String host, int port) throws Exception{
+    private boolean open(final String host, final int port) throws Exception{
         System.out.println("Connecting to "+host);
         out = new PrintWriter(new FileWriter(new File(DOWNLOAD_DIR, host+"_info.txt")));
         listener = new PrintCommandListener(out);
@@ -54,7 +54,7 @@ public class DownloadListings extends FTPClient {
         setConnectTimeout(30000);
         try {
             connect(host, port);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             System.out.println(e);
             return false;
         }
@@ -70,14 +70,14 @@ public class DownloadListings extends FTPClient {
         removeProtocolCommandListener(listener);
     }
 
-    private void download(String path, FTPCmd command, File fileName) throws Exception {
+    private void download(final String path, final FTPCmd command, final File fileName) throws Exception {
         Socket socket;
         if ((socket = _openDataConnection_(command, getListArguments(path))) == null) {
             System.out.println(getReplyString());
             return;
         }
-        InputStream inputStream = socket.getInputStream();
-        OutputStream outputStream = new FileOutputStream(fileName);
+        final InputStream inputStream = socket.getInputStream();
+        final OutputStream outputStream = new FileOutputStream(fileName);
         Util.copyStream(inputStream, outputStream );
         inputStream.close();
         socket.close();
@@ -89,25 +89,25 @@ public class DownloadListings extends FTPClient {
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(final String[] args) throws Exception {
         String host;// = "ftp.funet.fi";
-        int port = 21;
+        final int port = 21;
         String path;// = "/";
 
         new File(DOWNLOAD_DIR).mkdirs();
-        DownloadListings self = new DownloadListings();
-        OutputStream os = new FileOutputStream(new File(DOWNLOAD_DIR, "session.log"));
+        final DownloadListings self = new DownloadListings();
+        final OutputStream os = new FileOutputStream(new File(DOWNLOAD_DIR, "session.log"));
         self.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(os), true));
 
-        Reader is = new FileReader("mirrors.list");
-        BufferedReader rdr = new BufferedReader(is);
+        final Reader is = new FileReader("mirrors.list");
+        final BufferedReader rdr = new BufferedReader(is);
         String line;
         while((line=rdr.readLine()) != null){
             if (line.startsWith("ftp")){
-                String []parts = line.split("\\s+");
-                String target = parts[2];
+                final String []parts = line.split("\\s+");
+                final String target = parts[2];
                 host = target.substring("ftp://".length());
-                int slash = host.indexOf('/');
+                final int slash = host.indexOf('/');
                 path = host.substring(slash);
                 host = host.substring(0,slash);
                 System.out.println(host+ " "+path);
@@ -116,7 +116,7 @@ public class DownloadListings extends FTPClient {
                         self.info();
                         self.download(path, FTPCmd.LIST, new File(DOWNLOAD_DIR, host+"_list.txt"));
                         self.download(path, FTPCmd.MLSD, new File(DOWNLOAD_DIR, host+"_mlsd.txt"));
-                    } catch (Exception e) {
+                    } catch (final Exception e) {
                         e.printStackTrace();
                     } finally {
                         self.disconnect();

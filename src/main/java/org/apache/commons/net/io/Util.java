@@ -87,15 +87,15 @@ public final class Util
      *            the CopyStreamException getTotalBytesTransferred() and
      *            getIOException() methods.
      ***/
-    public static final long copyStream(InputStream source, OutputStream dest,
-                                        int bufferSize, long streamSize,
-                                        CopyStreamListener listener,
-                                        boolean flush)
+    public static final long copyStream(final InputStream source, final OutputStream dest,
+                                        final int bufferSize, final long streamSize,
+                                        final CopyStreamListener listener,
+                                        final boolean flush)
     throws CopyStreamException
     {
         int numBytes;
         long total = 0;
-        byte[] buffer = new byte[bufferSize > 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE];
+        final byte[] buffer = new byte[bufferSize > 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE];
 
         try
         {
@@ -106,7 +106,7 @@ public final class Util
 
                 if (numBytes == 0)
                 {
-                    int singleByte = source.read();
+                    final int singleByte = source.read();
                     if (singleByte < 0) {
                         break;
                     }
@@ -131,7 +131,7 @@ public final class Util
                 }
             }
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             throw new CopyStreamException("IOException caught while copying.",
                                           total, e);
@@ -175,9 +175,9 @@ public final class Util
      *            the CopyStreamException getTotalBytesTransferred() and
      *            getIOException() methods.
      ***/
-    public static final long copyStream(InputStream source, OutputStream dest,
-                                        int bufferSize, long streamSize,
-                                        CopyStreamListener listener)
+    public static final long copyStream(final InputStream source, final OutputStream dest,
+                                        final int bufferSize, final long streamSize,
+                                        final CopyStreamListener listener)
     throws CopyStreamException
     {
       return copyStream(source, dest, bufferSize, streamSize, listener,
@@ -207,8 +207,8 @@ public final class Util
      *            the CopyStreamException getTotalBytesTransferred() and
      *            getIOException() methods.
      ***/
-    public static final long copyStream(InputStream source, OutputStream dest,
-                                        int bufferSize)
+    public static final long copyStream(final InputStream source, final OutputStream dest,
+                                        final int bufferSize)
     throws CopyStreamException
     {
         return copyStream(source, dest, bufferSize,
@@ -223,7 +223,7 @@ public final class Util
      * @return number of bytes copied
      * @throws CopyStreamException on error
      ***/
-    public static final long copyStream(InputStream source, OutputStream dest)
+    public static final long copyStream(final InputStream source, final OutputStream dest)
     throws CopyStreamException
     {
         return copyStream(source, dest, DEFAULT_COPY_BUFFER_SIZE);
@@ -263,14 +263,14 @@ public final class Util
      *            the CopyStreamException getTotalBytesTransferred() and
      *            getIOException() methods.
      ***/
-    public static final long copyReader(Reader source, Writer dest,
-                                        int bufferSize, long streamSize,
-                                        CopyStreamListener listener)
+    public static final long copyReader(final Reader source, final Writer dest,
+                                        final int bufferSize, final long streamSize,
+                                        final CopyStreamListener listener)
     throws CopyStreamException
     {
         int numChars;
         long total = 0;
-        char[] buffer = new char[bufferSize > 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE];
+        final char[] buffer = new char[bufferSize > 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE];
 
         try
         {
@@ -280,7 +280,7 @@ public final class Util
                 // accept that as an indication of EOF.
                 if (numChars == 0)
                 {
-                    int singleChar = source.read();
+                    final int singleChar = source.read();
                     if (singleChar < 0) {
                         break;
                     }
@@ -301,7 +301,7 @@ public final class Util
                 }
             }
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             throw new CopyStreamException("IOException caught while copying.",
                                           total, e);
@@ -332,8 +332,8 @@ public final class Util
      *            the CopyStreamException getTotalBytesTransferred() and
      *            getIOException() methods.
      ***/
-    public static final long copyReader(Reader source, Writer dest,
-                                        int bufferSize)
+    public static final long copyReader(final Reader source, final Writer dest,
+                                        final int bufferSize)
     throws CopyStreamException
     {
         return copyReader(source, dest, bufferSize,
@@ -348,7 +348,7 @@ public final class Util
      * @return number of bytes copied
      * @throws CopyStreamException on error
      ***/
-    public static final long copyReader(Reader source, Writer dest)
+    public static final long copyReader(final Reader source, final Writer dest)
     throws CopyStreamException
     {
         return copyReader(source, dest, DEFAULT_COPY_BUFFER_SIZE);
@@ -361,11 +361,11 @@ public final class Util
      * @param closeable the object to close, may be {@code null}
      * @since 3.0
      */
-    public static void closeQuietly(Closeable closeable) {
+    public static void closeQuietly(final Closeable closeable) {
         if (closeable != null) {
             try {
                 closeable.close();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 // Ignored
             }
         }
@@ -378,11 +378,11 @@ public final class Util
      * @param socket the socket to close, may be {@code null}
      * @since 3.0
      */
-    public static void closeQuietly(Socket socket) {
+    public static void closeQuietly(final Socket socket) {
         if (socket != null) {
             try {
                 socket.close();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 // Ignored
             }
         }

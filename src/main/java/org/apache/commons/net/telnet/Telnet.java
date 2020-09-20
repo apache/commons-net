@@ -147,7 +147,7 @@ class Telnet extends SocketClient
      *
      * @param termtype - terminal type to be negotiated (ej. VT100)
      ***/
-    Telnet(String termtype)
+    Telnet(final String termtype)
     {
         setDefaultPort(DEFAULT_PORT);
         _doResponse = new int[TelnetOption.MAX_OPTION_VALUE + 1];
@@ -166,7 +166,7 @@ class Telnet extends SocketClient
      *
      * @param option - option code to be looked up.
      ***/
-    boolean _stateIsWill(int option)
+    boolean _stateIsWill(final int option)
     {
         return ((_options[option] & _WILL_MASK) != 0);
     }
@@ -178,7 +178,7 @@ class Telnet extends SocketClient
      *
      * @param option - option code to be looked up.
      ***/
-    boolean _stateIsWont(int option)
+    boolean _stateIsWont(final int option)
     {
         return !_stateIsWill(option);
     }
@@ -190,7 +190,7 @@ class Telnet extends SocketClient
      *
      * @param option - option code to be looked up.
      ***/
-    boolean _stateIsDo(int option)
+    boolean _stateIsDo(final int option)
     {
         return ((_options[option] & _DO_MASK) != 0);
     }
@@ -202,7 +202,7 @@ class Telnet extends SocketClient
      *
      * @param option - option code to be looked up.
      ***/
-    boolean _stateIsDont(int option)
+    boolean _stateIsDont(final int option)
     {
         return !_stateIsDo(option);
     }
@@ -214,7 +214,7 @@ class Telnet extends SocketClient
      *
      * @param option - option code to be looked up.
      ***/
-    boolean _requestedWill(int option)
+    boolean _requestedWill(final int option)
     {
         return ((_options[option] & _REQUESTED_WILL_MASK) != 0);
     }
@@ -226,7 +226,7 @@ class Telnet extends SocketClient
      *
      * @param option - option code to be looked up.
      ***/
-    boolean _requestedWont(int option)
+    boolean _requestedWont(final int option)
     {
         return !_requestedWill(option);
     }
@@ -238,7 +238,7 @@ class Telnet extends SocketClient
      *
      * @param option - option code to be looked up.
      ***/
-    boolean _requestedDo(int option)
+    boolean _requestedDo(final int option)
     {
         return ((_options[option] & _REQUESTED_DO_MASK) != 0);
     }
@@ -250,7 +250,7 @@ class Telnet extends SocketClient
      *
      * @param option - option code to be looked up.
      ***/
-    boolean _requestedDont(int option)
+    boolean _requestedDont(final int option)
     {
         return !_requestedDo(option);
     }
@@ -261,7 +261,7 @@ class Telnet extends SocketClient
      * @param option - option code to be set.
      * @throws IOException
      ***/
-    void _setWill(int option) throws IOException
+    void _setWill(final int option) throws IOException
     {
         _options[option] |= _WILL_MASK;
 
@@ -272,7 +272,7 @@ class Telnet extends SocketClient
             {
                 optionHandlers[option].setWill(true);
 
-                int subneg[] =
+                final int subneg[] =
                     optionHandlers[option].startSubnegotiationLocal();
 
                 if (subneg != null)
@@ -290,7 +290,7 @@ class Telnet extends SocketClient
      * @param option - option code to be set.
      * @throws IOException
      ***/
-    void _setDo(int option) throws IOException
+    void _setDo(final int option) throws IOException
     {
         _options[option] |= _DO_MASK;
 
@@ -301,7 +301,7 @@ class Telnet extends SocketClient
             {
                 optionHandlers[option].setDo(true);
 
-                int subneg[] =
+                final int subneg[] =
                     optionHandlers[option].startSubnegotiationRemote();
 
                 if (subneg != null)
@@ -318,7 +318,7 @@ class Telnet extends SocketClient
      *
      * @param option - option code to be set.
      ***/
-    void _setWantWill(int option)
+    void _setWantWill(final int option)
     {
         _options[option] |= _REQUESTED_WILL_MASK;
     }
@@ -328,7 +328,7 @@ class Telnet extends SocketClient
      *
      * @param option - option code to be set.
      ***/
-    void _setWantDo(int option)
+    void _setWantDo(final int option)
     {
         _options[option] |= _REQUESTED_DO_MASK;
     }
@@ -338,7 +338,7 @@ class Telnet extends SocketClient
      *
      * @param option - option code to be set.
      ***/
-    void _setWont(int option)
+    void _setWont(final int option)
     {
         _options[option] &= ~_WILL_MASK;
 
@@ -355,7 +355,7 @@ class Telnet extends SocketClient
      *
      * @param option - option code to be set.
      ***/
-    void _setDont(int option)
+    void _setDont(final int option)
     {
         _options[option] &= ~_DO_MASK;
 
@@ -372,7 +372,7 @@ class Telnet extends SocketClient
      *
      * @param option - option code to be set.
      ***/
-    void _setWantWont(int option)
+    void _setWantWont(final int option)
     {
         _options[option] &= ~_REQUESTED_WILL_MASK;
     }
@@ -382,7 +382,7 @@ class Telnet extends SocketClient
      *
      * @param option - option code to be set.
      ***/
-    void _setWantDont(int option)
+    void _setWantDont(final int option)
     {
         _options[option] &= ~_REQUESTED_DO_MASK;
     }
@@ -392,7 +392,7 @@ class Telnet extends SocketClient
      *
      * @param command - option code to be set.
      **/
-    void _processCommand(int command)
+    void _processCommand(final int command)
     {
         if (debugoptions)
         {
@@ -412,7 +412,7 @@ class Telnet extends SocketClient
      * @param option - option code to be set.
      * @throws IOException - Exception in I/O.
      **/
-    void _processDo(int option) throws IOException
+    void _processDo(final int option) throws IOException
     {
         if (debugoptions)
         {
@@ -509,7 +509,7 @@ class Telnet extends SocketClient
      * @param option - option code to be set.
      * @throws IOException - Exception in I/O.
      **/
-    void _processDont(int option) throws IOException
+    void _processDont(final int option) throws IOException
     {
         if (debugoptions)
         {
@@ -562,7 +562,7 @@ class Telnet extends SocketClient
      * @param option - option code to be set.
      * @throws IOException - Exception in I/O.
      **/
-    void _processWill(int option) throws IOException
+    void _processWill(final int option) throws IOException
     {
         if (debugoptions)
         {
@@ -628,7 +628,7 @@ class Telnet extends SocketClient
      * @param option - option code to be set.
      * @throws IOException - Exception in I/O.
      **/
-    void _processWont(int option) throws IOException
+    void _processWont(final int option) throws IOException
     {
         if (debugoptions)
         {
@@ -684,7 +684,7 @@ class Telnet extends SocketClient
      * @param suboptionLength - length of data received
      * @throws IOException - Exception in I/O.
      **/
-    void _processSuboption(int suboption[], int suboptionLength)
+    void _processSuboption(final int suboption[], final int suboptionLength)
     throws IOException
     {
         if (debug)
@@ -697,7 +697,7 @@ class Telnet extends SocketClient
         {
             if (optionHandlers[suboption[0]] != null)
             {
-                int responseSuboption[] =
+                final int responseSuboption[] =
                   optionHandlers[suboption[0]].answerSubnegotiation(suboption,
                   suboptionLength);
                 _sendSubnegotiation(responseSuboption);
@@ -756,7 +756,7 @@ class Telnet extends SocketClient
      * @param subn - subnegotiation data to be sent
      * @throws IOException - Exception in I/O.
      **/
-    final synchronized void _sendSubnegotiation(int subn[])
+    final synchronized void _sendSubnegotiation(final int subn[])
     throws IOException
     {
         if (debug)
@@ -771,9 +771,9 @@ class Telnet extends SocketClient
         {
             _output_.write(_COMMAND_SB);
             // Note _output_ is buffered, so might as well simplify by writing single bytes
-            for (int element : subn)
+            for (final int element : subn)
             {
-                byte b = (byte) element;
+                final byte b = (byte) element;
                 if (b == (byte) TelnetCommand.IAC) { // cast is necessary because IAC is outside the signed byte range
                     _output_.write(b); // double any IAC bytes
                 }
@@ -795,7 +795,7 @@ class Telnet extends SocketClient
      * @throws IOException - Exception in I/O.
      * @since 3.0
      */
-    final synchronized void _sendCommand(byte cmd) throws IOException
+    final synchronized void _sendCommand(final byte cmd) throws IOException
     {
             _output_.write(TelnetCommand.IAC);
             _output_.write(cmd);
@@ -870,7 +870,7 @@ class Telnet extends SocketClient
      * @param option - Option code.
      * @throws IOException - Exception in I/O.
      **/
-    final synchronized void _sendDo(int option)
+    final synchronized void _sendDo(final int option)
     throws IOException
     {
         if (debug || debugoptions)
@@ -891,7 +891,7 @@ class Telnet extends SocketClient
      * @param option - Option code.
      * @throws IOException - Exception in I/O.
      **/
-    final synchronized void _requestDo(int option)
+    final synchronized void _requestDo(final int option)
     throws IOException
     {
         if ((_doResponse[option] == 0 && _stateIsDo(option))
@@ -910,7 +910,7 @@ class Telnet extends SocketClient
      * @param option - Option code.
      * @throws IOException - Exception in I/O.
      **/
-    final synchronized void _sendDont(int option)
+    final synchronized void _sendDont(final int option)
     throws IOException
     {
         if (debug || debugoptions)
@@ -931,7 +931,7 @@ class Telnet extends SocketClient
      * @param option - Option code.
      * @throws IOException - Exception in I/O.
      **/
-    final synchronized void _requestDont(int option)
+    final synchronized void _requestDont(final int option)
     throws IOException
     {
         if ((_doResponse[option] == 0 && _stateIsDont(option))
@@ -951,7 +951,7 @@ class Telnet extends SocketClient
      * @param option - Option code.
      * @throws IOException - Exception in I/O.
      **/
-    final synchronized void _sendWill(int option)
+    final synchronized void _sendWill(final int option)
     throws IOException
     {
         if (debug || debugoptions)
@@ -972,7 +972,7 @@ class Telnet extends SocketClient
      * @param option - Option code.
      * @throws IOException - Exception in I/O.
      **/
-    final synchronized void _requestWill(int option)
+    final synchronized void _requestWill(final int option)
     throws IOException
     {
         if ((_willResponse[option] == 0 && _stateIsWill(option))
@@ -991,7 +991,7 @@ class Telnet extends SocketClient
      * @param option - Option code.
      * @throws IOException - Exception in I/O.
      **/
-    final synchronized void _sendWont(int option)
+    final synchronized void _sendWont(final int option)
     throws IOException
     {
         if (debug || debugoptions)
@@ -1012,7 +1012,7 @@ class Telnet extends SocketClient
      * @param option - Option code.
      * @throws IOException - Exception in I/O.
      **/
-    final synchronized void _requestWont(int option)
+    final synchronized void _requestWont(final int option)
     throws IOException
     {
         if ((_willResponse[option] == 0 && _stateIsWont(option))
@@ -1031,7 +1031,7 @@ class Telnet extends SocketClient
      * @param b - byte to send
      * @throws IOException - Exception in I/O.
      **/
-    final synchronized void _sendByte(int b)
+    final synchronized void _sendByte(final int b)
     throws IOException
     {
         _output_.write(b);
@@ -1052,7 +1052,7 @@ class Telnet extends SocketClient
      * @throws InterruptedException - Interrupted during wait.
      * @return true if AYT received a response, false otherwise
      **/
-    final boolean _sendAYT(long timeout)
+    final boolean _sendAYT(final long timeout)
     throws IOException, IllegalArgumentException, InterruptedException
     {
         boolean retValue = false;
@@ -1089,10 +1089,10 @@ class Telnet extends SocketClient
      * @throws InvalidTelnetOptionException - The option code is invalid.
      * @throws IOException on error
      **/
-    void addOptionHandler(TelnetOptionHandler opthand)
+    void addOptionHandler(final TelnetOptionHandler opthand)
     throws InvalidTelnetOptionException, IOException
     {
-        int optcode = opthand.getOptionCode();
+        final int optcode = opthand.getOptionCode();
         if (TelnetOption.isValidOption(optcode))
         {
             if (optionHandlers[optcode] == null)
@@ -1131,7 +1131,7 @@ class Telnet extends SocketClient
      * @throws InvalidTelnetOptionException - The option code is invalid.
      * @throws IOException on error
      **/
-    void deleteOptionHandler(int optcode)
+    void deleteOptionHandler(final int optcode)
     throws InvalidTelnetOptionException, IOException
     {
         if (TelnetOption.isValidOption(optcode))
@@ -1143,7 +1143,7 @@ class Telnet extends SocketClient
             }
             else
             {
-                TelnetOptionHandler opthand = optionHandlers[optcode];
+                final TelnetOptionHandler opthand = optionHandlers[optcode];
                 optionHandlers[optcode] = null;
 
                 if (opthand.getWill())
@@ -1173,7 +1173,7 @@ class Telnet extends SocketClient
      * @param spystream - OutputStream on which session activity
      * will be echoed.
      ***/
-    void _registerSpyStream(OutputStream  spystream)
+    void _registerSpyStream(final OutputStream  spystream)
     {
         spyStream = spystream;
     }
@@ -1192,9 +1192,9 @@ class Telnet extends SocketClient
      *
      * @param ch - character read from the session
      ***/
-    void _spyRead(int ch)
+    void _spyRead(final int ch)
     {
-        OutputStream spy = spyStream;
+        final OutputStream spy = spyStream;
         if (spy != null)
         {
             try
@@ -1209,7 +1209,7 @@ class Telnet extends SocketClient
                     spy.flush();
                 }
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 spyStream = null;
             }
@@ -1221,12 +1221,12 @@ class Telnet extends SocketClient
      *
      * @param ch - character written to the session
      ***/
-    void _spyWrite(int ch)
+    void _spyWrite(final int ch)
     {
         if (!(_stateIsDo(TelnetOption.ECHO)
             && _requestedDo(TelnetOption.ECHO)))
         {
-            OutputStream spy = spyStream;
+            final OutputStream spy = spyStream;
             if (spy != null)
             {
                 try
@@ -1234,7 +1234,7 @@ class Telnet extends SocketClient
                     spy.write(ch);
                     spy.flush();
                 }
-                catch (IOException e)
+                catch (final IOException e)
                 {
                     spyStream = null;
                 }
@@ -1249,7 +1249,7 @@ class Telnet extends SocketClient
      *
      * @param notifhand - TelnetNotificationHandler to be registered
      ***/
-    public void registerNotifHandler(TelnetNotificationHandler  notifhand)
+    public void registerNotifHandler(final TelnetNotificationHandler  notifhand)
     {
         __notifhand = notifhand;
     }

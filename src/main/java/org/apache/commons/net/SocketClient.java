@@ -174,7 +174,7 @@ public abstract class SocketClient
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
      */
-    public void connect(InetAddress host, int port)
+    public void connect(final InetAddress host, final int port)
     throws SocketException, IOException
     {
         _hostname_ = null;
@@ -195,7 +195,7 @@ public abstract class SocketClient
      *  derived from it.
      * @throws java.net.UnknownHostException If the hostname cannot be resolved.
      */
-    public void connect(String hostname, int port)
+    public void connect(final String hostname, final int port)
     throws SocketException, IOException
     {
         _hostname_ = hostname;
@@ -218,8 +218,8 @@ public abstract class SocketClient
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
      */
-    public void connect(InetAddress host, int port,
-                        InetAddress localAddr, int localPort)
+    public void connect(final InetAddress host, final int port,
+                        final InetAddress localAddr, final int localPort)
     throws SocketException, IOException
     {
         _hostname_ = null;
@@ -227,7 +227,7 @@ public abstract class SocketClient
     }
 
     // helper method to allow code to be shared with connect(String,...) methods
-    private void _connect(InetAddress host, int port, InetAddress localAddr, int localPort)
+    private void _connect(final InetAddress host, final int port, final InetAddress localAddr, final int localPort)
         throws SocketException, IOException
     {
         _socket_ = _socketFactory_.createSocket();
@@ -260,8 +260,8 @@ public abstract class SocketClient
      *  derived from it.
      * @throws java.net.UnknownHostException If the hostname cannot be resolved.
      */
-    public void connect(String hostname, int port,
-                        InetAddress localAddr, int localPort)
+    public void connect(final String hostname, final int port,
+                        final InetAddress localAddr, final int localPort)
     throws SocketException, IOException
     {
         _hostname_ = hostname;
@@ -281,7 +281,7 @@ public abstract class SocketClient
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
      */
-    public void connect(InetAddress host) throws SocketException, IOException
+    public void connect(final InetAddress host) throws SocketException, IOException
     {
         _hostname_ = null;
         connect(host, _defaultPort_);
@@ -301,7 +301,7 @@ public abstract class SocketClient
      *  derived from it.
      * @throws java.net.UnknownHostException If the hostname cannot be resolved.
      */
-    public void connect(String hostname) throws SocketException, IOException
+    public void connect(final String hostname) throws SocketException, IOException
     {
         connect(hostname, _defaultPort_);
     }
@@ -328,21 +328,21 @@ public abstract class SocketClient
         _output_ = null;
     }
 
-    private void closeQuietly(Socket socket) {
+    private void closeQuietly(final Socket socket) {
         if (socket != null){
             try {
                 socket.close();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 // Ignored
             }
         }
     }
 
-    private void closeQuietly(Closeable close){
+    private void closeQuietly(final Closeable close){
         if (close != null){
             try {
                 close.close();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 // Ignored
             }
         }
@@ -400,7 +400,7 @@ public abstract class SocketClient
                 _socket_.getInputStream();
                 _socket_.getOutputStream();
             }
-            catch (IOException ioex)
+            catch (final IOException ioex)
             {
                 return false;
             }
@@ -418,7 +418,7 @@ public abstract class SocketClient
      * <p>
      * @param port  The default port to set.
      */
-    public void setDefaultPort(int port)
+    public void setDefaultPort(final int port)
     {
         _defaultPort_ = port;
     }
@@ -446,7 +446,7 @@ public abstract class SocketClient
      * @param timeout  The timeout in milliseconds to use for the socket
      *                 connection.
      */
-    public void setDefaultTimeout(int timeout)
+    public void setDefaultTimeout(final int timeout)
     {
         _timeout_ = timeout;
     }
@@ -477,7 +477,7 @@ public abstract class SocketClient
      * @throws SocketException If the operation fails.
      * @throws NullPointerException if the socket is not currently open
      */
-    public void setSoTimeout(int timeout) throws SocketException
+    public void setSoTimeout(final int timeout) throws SocketException
     {
         _socket_.setSoTimeout(timeout);
     }
@@ -490,7 +490,7 @@ public abstract class SocketClient
      * @throws SocketException never thrown, but subclasses might want to do so
      * @since 2.0
      */
-    public void setSendBufferSize(int size) throws SocketException {
+    public void setSendBufferSize(final int size) throws SocketException {
         sendBufferSize = size;
     }
 
@@ -510,7 +510,7 @@ public abstract class SocketClient
      * @throws SocketException never (but subclasses may wish to do so)
      * @since 2.0
      */
-    public void setReceiveBufferSize(int size) throws SocketException  {
+    public void setReceiveBufferSize(final int size) throws SocketException  {
         receiveBufferSize = size;
     }
 
@@ -543,7 +543,7 @@ public abstract class SocketClient
      * @throws SocketException If the operation fails.
      * @throws NullPointerException if the socket is not currently open
      */
-    public void setTcpNoDelay(boolean on) throws SocketException
+    public void setTcpNoDelay(final boolean on) throws SocketException
     {
         _socket_.setTcpNoDelay(on);
     }
@@ -575,7 +575,7 @@ public abstract class SocketClient
      * @throws NullPointerException if the socket is not currently open
      * @since 2.2
      */
-    public void setKeepAlive(boolean keepAlive) throws SocketException {
+    public void setKeepAlive(final boolean keepAlive) throws SocketException {
         _socket_.setKeepAlive(keepAlive);
     }
 
@@ -599,7 +599,7 @@ public abstract class SocketClient
      * @throws SocketException If the operation fails.
      * @throws NullPointerException if the socket is not currently open
      */
-    public void setSoLinger(boolean on, int val) throws SocketException
+    public void setSoLinger(final boolean on, final int val) throws SocketException
     {
         _socket_.setSoLinger(on, val);
     }
@@ -682,7 +682,7 @@ public abstract class SocketClient
      * @param socket the item to check against
      * @return True if the remote hosts are the same, false if not.
      */
-    public boolean verifyRemote(Socket socket)
+    public boolean verifyRemote(final Socket socket)
     {
         InetAddress host1, host2;
 
@@ -702,7 +702,7 @@ public abstract class SocketClient
      * <p>
      * @param factory  The new SocketFactory the SocketClient should use.
      */
-    public void setSocketFactory(SocketFactory factory)
+    public void setSocketFactory(final SocketFactory factory)
     {
         if (factory == null) {
             _socketFactory_ = __DEFAULT_SOCKET_FACTORY;
@@ -724,7 +724,7 @@ public abstract class SocketClient
      * @param factory  The new ServerSocketFactory the SocketClient should use.
      * @since 2.0
      */
-    public void setServerSocketFactory(ServerSocketFactory factory) {
+    public void setServerSocketFactory(final ServerSocketFactory factory) {
         if (factory == null) {
             _serverSocketFactory_ = __DEFAULT_SERVER_SOCKET_FACTORY;
         } else {
@@ -738,7 +738,7 @@ public abstract class SocketClient
      * @param connectTimeout The connection timeout to use (in ms)
      * @since 2.0
      */
-    public void setConnectTimeout(int connectTimeout) {
+    public void setConnectTimeout(final int connectTimeout) {
         this.connectTimeout = connectTimeout;
     }
 
@@ -767,7 +767,7 @@ public abstract class SocketClient
      * @param listener  The ProtocolCommandListener to add.
      * @since 3.0
      */
-    public void addProtocolCommandListener(ProtocolCommandListener listener) {
+    public void addProtocolCommandListener(final ProtocolCommandListener listener) {
         getCommandSupport().addProtocolCommandListener(listener);
     }
 
@@ -777,7 +777,7 @@ public abstract class SocketClient
      * @param listener  The ProtocolCommandListener to remove.
      * @since 3.0
      */
-    public void removeProtocolCommandListener(ProtocolCommandListener listener) {
+    public void removeProtocolCommandListener(final ProtocolCommandListener listener) {
         getCommandSupport().removeProtocolCommandListener(listener);
     }
 
@@ -788,7 +788,7 @@ public abstract class SocketClient
      * @param reply the full reply text
      * @since 3.0
      */
-    protected void fireReplyReceived(int replyCode, String reply) {
+    protected void fireReplyReceived(final int replyCode, final String reply) {
         if (getCommandSupport().getListenerCount() > 0) {
             getCommandSupport().fireReplyReceived(replyCode, reply);
         }
@@ -801,7 +801,7 @@ public abstract class SocketClient
      * @param message the complete message, including command name
      * @since 3.0
      */
-    protected void fireCommandSent(String command, String message) {
+    protected void fireCommandSent(final String command, final String message) {
         if (getCommandSupport().getListenerCount() > 0) {
             getCommandSupport().fireCommandSent(command, message);
         }
@@ -833,7 +833,7 @@ public abstract class SocketClient
      * @param proxy the new proxy for connections.
      * @since 3.2
      */
-    public void setProxy(Proxy proxy) {
+    public void setProxy(final Proxy proxy) {
         setSocketFactory(new DefaultSocketFactory(proxy));
         connProxy = proxy;
     }
@@ -874,7 +874,7 @@ public abstract class SocketClient
      * @param charset the charset.
      * @since 3.3
      */
-    public void setCharset(Charset charset) {
+    public void setCharset(final Charset charset) {
         this.charset = charset;
     }
 

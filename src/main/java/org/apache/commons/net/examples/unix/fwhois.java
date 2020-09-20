@@ -30,7 +30,7 @@ import org.apache.commons.net.whois.WhoisClient;
 public final class fwhois
 {
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         int index;
         String handle, host;
@@ -65,7 +65,7 @@ public final class fwhois
             address = InetAddress.getByName(host);
             System.out.println("[" + address.getHostName() + "]");
         }
-        catch (UnknownHostException e)
+        catch (final UnknownHostException e)
         {
             System.err.println("Error unknown host: " + e.getMessage());
             System.exit(1);
@@ -77,7 +77,7 @@ public final class fwhois
             System.out.print(whois.query(handle));
             whois.disconnect();
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             System.err.println("Error I/O exception: " + e.getMessage());
             System.exit(1);

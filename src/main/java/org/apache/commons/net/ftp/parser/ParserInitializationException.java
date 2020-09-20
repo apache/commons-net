@@ -31,7 +31,7 @@ public class ParserInitializationException extends RuntimeException {
      *
      * @param message Exception message
      */
-    public ParserInitializationException(String message) {
+    public ParserInitializationException(final String message) {
         super(message);
     }
 
@@ -43,7 +43,7 @@ public class ParserInitializationException extends RuntimeException {
      * @param rootCause root cause throwable that caused
      * this to be thrown
      */
-    public ParserInitializationException(String message, Throwable rootCause) {
+    public ParserInitializationException(final String message, final Throwable rootCause) {
         super(message, rootCause);
     }
 

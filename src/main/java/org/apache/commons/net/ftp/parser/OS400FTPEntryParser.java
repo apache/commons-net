@@ -271,7 +271,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * <code>REGEX</code> is  not a valid regular expression.
      * @since 1.4
      */
-    public OS400FTPEntryParser(FTPClientConfig config)
+    public OS400FTPEntryParser(final FTPClientConfig config)
     {
         super(REGEX);
         configure(config);
@@ -279,23 +279,23 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 
 
     @Override
-    public FTPFile parseFTPEntry(String entry)
+    public FTPFile parseFTPEntry(final String entry)
     {
 
-        FTPFile file = new FTPFile();
+        final FTPFile file = new FTPFile();
         file.setRawListing(entry);
         int type;
 
         if (matches(entry))
         {
-            String usr = group(1);
-            String filesize = group(2);
+            final String usr = group(1);
+            final String filesize = group(2);
             String datestr = "";
             if (!isNullOrEmpty(group(3)) || !isNullOrEmpty(group(4)))
             {
                 datestr = group(3)+" "+group(4);
             }
-            String typeStr = group(5);
+            final String typeStr = group(5);
             String name = group(6);
 
             boolean mustScanForPathSeparator = true;
@@ -304,7 +304,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             {
                 file.setTimestamp(super.parseTimestamp(datestr));
             }
-            catch (ParseException e)
+            catch (final ParseException e)
             {
                 // intentionally do nothing
             }
@@ -379,7 +379,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             {
                 file.setSize(Long.parseLong(filesize));
             }
-            catch (NumberFormatException e)
+            catch (final NumberFormatException e)
             {
                 // intentionally do nothing
             }
@@ -390,7 +390,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             }
             if (mustScanForPathSeparator)
             {
-                int pos = name.lastIndexOf('/');
+                final int pos = name.lastIndexOf('/');
                 if (pos > -1)
                 {
                     name = name.substring(pos + 1);
@@ -411,7 +411,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * @return <code>true</code> for <code>null</code> or empty values,
      * else <code>false</code>.
      */
-    private boolean isNullOrEmpty(String string) {
+    private boolean isNullOrEmpty(final String string) {
         if (string == null || string.length() == 0) {
             return true;
         }

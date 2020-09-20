@@ -42,7 +42,7 @@ public class MacOsPeterFTPEntryParserTest extends FTPParseTestFramework {
         "-rwx------        0       12713    12713 Jul  8  2009 Twitter_Avatar.png",
     };
 
-    public MacOsPeterFTPEntryParserTest(String name) {
+    public MacOsPeterFTPEntryParserTest(final String name) {
         super(name);
     }
 
@@ -63,7 +63,7 @@ public class MacOsPeterFTPEntryParserTest extends FTPParseTestFramework {
 
     @Override
     public void testParseFieldsOnDirectory() throws Exception {
-        FTPFile f = getParser().parseFTPEntry(
+        final FTPFile f = getParser().parseFTPEntry(
                 "drwxr-xr-x               folder        0 Mar  2 15:13 Alias_to_Steak");
         assertNotNull("Could not parse entry.", f);
         assertTrue("Should have been a directory.", f.isDirectory());
@@ -74,7 +74,7 @@ public class MacOsPeterFTPEntryParserTest extends FTPParseTestFramework {
         assertEquals(0, f.getSize());
         assertEquals("Alias_to_Steak", f.getName());
 
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MONTH, Calendar.MARCH);
 
         cal.set(Calendar.DAY_OF_MONTH, 1);
@@ -94,7 +94,7 @@ public class MacOsPeterFTPEntryParserTest extends FTPParseTestFramework {
 
     @Override
     public void testParseFieldsOnFile() throws Exception {
-        FTPFile f = getParser().parseFTPEntry(
+        final FTPFile f = getParser().parseFTPEntry(
             "-rwxr-xr-x    78440       49231   127671 Jul  2 14:51 Filename with whitespace.jpg"
             );
         assertNotNull("Could not parse entry.", f);
@@ -106,7 +106,7 @@ public class MacOsPeterFTPEntryParserTest extends FTPParseTestFramework {
         assertEquals("Filename with whitespace.jpg", f.getName());
         assertEquals(127671L, f.getSize());
 
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MONTH, Calendar.JULY);
 
         cal.set(Calendar.DAY_OF_MONTH, 1);
@@ -127,7 +127,7 @@ public class MacOsPeterFTPEntryParserTest extends FTPParseTestFramework {
      * Verify that the persmissions were properly set.
      * @param f
      */
-    private void checkPermissions(FTPFile f) {
+    private void checkPermissions(final FTPFile f) {
         assertTrue("Should have user read permission.", f.hasPermission(
                 FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
         assertTrue("Should have user write permission.", f.hasPermission(

@@ -80,19 +80,19 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     /**
      * @see junit.framework.TestCase#TestCase(String)
      */
-    public VMSFTPEntryParserTest(String name)
+    public VMSFTPEntryParserTest(final String name)
     {
         super(name);
     }
 
     public void testWholeListParse() throws IOException
     {
-        VMSFTPEntryParser parser = new VMSFTPEntryParser();
+        final VMSFTPEntryParser parser = new VMSFTPEntryParser();
         parser.configure(null);
-        FTPListParseEngine engine = new FTPListParseEngine(parser);
+        final FTPListParseEngine engine = new FTPListParseEngine(parser);
         engine.readServerList(
                 new ByteArrayInputStream(fullListing.getBytes()), null); // use default encoding
-        FTPFile[] files = engine.getFiles();
+        final FTPFile[] files = engine.getFiles();
         assertEquals(6, files.length);
         assertFileInListing(files, "2-JUN.LIS");
         assertFileInListing(files, "3-JUN.LIS");
@@ -104,12 +104,12 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     public void testWholeListParseWithVersioning() throws IOException
     {
 
-        VMSFTPEntryParser parser = new VMSVersioningFTPEntryParser();
+        final VMSFTPEntryParser parser = new VMSVersioningFTPEntryParser();
         parser.configure(null);
-        FTPListParseEngine engine = new FTPListParseEngine(parser);
+        final FTPListParseEngine engine = new FTPListParseEngine(parser);
         engine.readServerList(
                 new ByteArrayInputStream(fullListing.getBytes()), null); // use default encoding
-        FTPFile[] files = engine.getFiles();
+        final FTPFile[] files = engine.getFiles();
         assertEquals(3, files.length);
         assertFileInListing(files, "1-JUN.LIS;1");
         assertFileInListing(files, "2-JUN.LIS;1");
@@ -119,8 +119,8 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
 
     }
 
-    public void assertFileInListing(FTPFile[] listing, String name) {
-        for (FTPFile element : listing)
+    public void assertFileInListing(final FTPFile[] listing, final String name) {
+        for (final FTPFile element : listing)
         {
             if (name.equals(element.getName())) {
                 return;
@@ -128,8 +128,8 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         }
         fail("File " + name + " not found in supplied listing");
     }
-    public void assertFileNotInListing(FTPFile[] listing, String name) {
-        for (FTPFile element : listing)
+    public void assertFileNotInListing(final FTPFile[] listing, final String name) {
+        for (final FTPFile element : listing)
         {
             if (name.equals(element.getName())) {
                 fail("Unexpected File " + name + " found in supplied listing");
@@ -239,7 +239,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     @Override
     protected FTPFileEntryParser getParser()
     {
-        ConfigurableFTPFileEntryParserImpl parser =
+        final ConfigurableFTPFileEntryParserImpl parser =
             new VMSFTPEntryParser();
         parser.configure(null);
         return parser;
@@ -247,7 +247,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
 
     protected FTPFileEntryParser getVersioningParser()
     {
-        ConfigurableFTPFileEntryParserImpl parser =
+        final ConfigurableFTPFileEntryParserImpl parser =
             new VMSVersioningFTPEntryParser();
         parser.configure(null);
         return parser;
@@ -256,7 +256,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     /*
      * Verify that the VMS parser does NOT  set the permissions.
      */
-    private void checkPermisions(FTPFile dir, int octalPerm)
+    private void checkPermisions(final FTPFile dir, final int octalPerm)
     {
         int permMask = 1<<8;
         assertTrue("Owner should not have read permission.",

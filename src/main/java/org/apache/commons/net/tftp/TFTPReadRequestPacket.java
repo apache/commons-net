@@ -55,8 +55,8 @@ public final class TFTPReadRequestPacket extends TFTPRequestPacket
      * @param mode The requested transfer mode.  This should be on of the TFTP
      *        class MODE constants (e.g., TFTP.NETASCII_MODE).
      ***/
-    public TFTPReadRequestPacket(InetAddress destination, int port,
-                                 String fileName, int mode)
+    public TFTPReadRequestPacket(final InetAddress destination, final int port,
+                                 final String fileName, final int mode)
     {
         super(destination, port, TFTPPacket.READ_REQUEST, fileName, mode);
     }
@@ -71,7 +71,7 @@ public final class TFTPReadRequestPacket extends TFTPRequestPacket
      * @throws TFTPPacketException  If the datagram isn't a valid TFTP
      *         request packet.
      ***/
-    TFTPReadRequestPacket(DatagramPacket datagram) throws TFTPPacketException
+    TFTPReadRequestPacket(final DatagramPacket datagram) throws TFTPPacketException
     {
         super(TFTPPacket.READ_REQUEST, datagram);
     }

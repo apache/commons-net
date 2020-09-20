@@ -41,7 +41,7 @@ public class SocketClientFunctionalTest extends TestCase
      * The constructor for this test case.
      * @param name passed to TestCase
      */
-    public SocketClientFunctionalTest(String name)
+    public SocketClientFunctionalTest(final String name)
     {
         super(name);
     }
@@ -53,7 +53,7 @@ public class SocketClientFunctionalTest extends TestCase
     public void testProxySettings() throws Exception
     {
         // NOTE: HTTP Proxies seem to be invalid for raw sockets
-        Proxy proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(PROXY_HOST, PROXY_PORT));
+        final Proxy proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(PROXY_HOST, PROXY_PORT));
         sc.setProxy(proxy);
         sc.connect(DEST_HOST, DEST_PORT);
         assertTrue(sc.isConnected());

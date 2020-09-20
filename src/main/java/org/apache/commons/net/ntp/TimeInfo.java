@@ -51,7 +51,7 @@ public class TimeInfo {
      * @param returnTime  destination receive time
      * @throws IllegalArgumentException if message is null
      */
-    public TimeInfo(NtpV3Packet message, long returnTime) {
+    public TimeInfo(final NtpV3Packet message, final long returnTime) {
         this(message, returnTime, null, true);
     }
 
@@ -63,7 +63,7 @@ public class TimeInfo {
      * @param comments List of errors/warnings identified during processing
      * @throws IllegalArgumentException if message is null
      */
-    public TimeInfo(NtpV3Packet message, long returnTime, List<String> comments)
+    public TimeInfo(final NtpV3Packet message, final long returnTime, final List<String> comments)
     {
             this(message, returnTime, comments, true);
     }
@@ -79,7 +79,7 @@ public class TimeInfo {
      * @param doComputeDetails  flag to pre-compute delay/offset values
      * @throws IllegalArgumentException if message is null
      */
-    public TimeInfo(NtpV3Packet msgPacket, long returnTime, boolean doComputeDetails)
+    public TimeInfo(final NtpV3Packet msgPacket, final long returnTime, final boolean doComputeDetails)
     {
             this(msgPacket, returnTime, null, doComputeDetails);
     }
@@ -96,8 +96,8 @@ public class TimeInfo {
      * @param doComputeDetails  flag to pre-compute delay/offset values
      * @throws IllegalArgumentException if message is null
      */
-    public TimeInfo(NtpV3Packet message, long returnTime, List<String> comments,
-                   boolean doComputeDetails)
+    public TimeInfo(final NtpV3Packet message, final long returnTime, final List<String> comments,
+                   final boolean doComputeDetails)
     {
         if (message == null) {
             throw new IllegalArgumentException("message cannot be null");
@@ -117,7 +117,7 @@ public class TimeInfo {
      *
      * @param comment the comment
      */
-    public void addComment(String comment)
+    public void addComment(final String comment)
     {
         if (_comments == null) {
             _comments = new ArrayList<>();
@@ -139,16 +139,16 @@ public class TimeInfo {
             _comments = new ArrayList<>();
         }
 
-        TimeStamp origNtpTime = _message.getOriginateTimeStamp();
-        long origTime = origNtpTime.getTime();
+        final TimeStamp origNtpTime = _message.getOriginateTimeStamp();
+        final long origTime = origNtpTime.getTime();
 
         // Receive Time is time request received by server (t2)
-        TimeStamp rcvNtpTime = _message.getReceiveTimeStamp();
-        long rcvTime = rcvNtpTime.getTime();
+        final TimeStamp rcvNtpTime = _message.getReceiveTimeStamp();
+        final long rcvTime = rcvNtpTime.getTime();
 
         // Transmit time is time reply sent by server (t3)
-        TimeStamp xmitNtpTime = _message.getTransmitTimeStamp();
-        long xmitTime = xmitNtpTime.getTime();
+        final TimeStamp xmitNtpTime = _message.getTransmitTimeStamp();
+        final long xmitTime = xmitNtpTime.getTime();
 
         /*
          * Round-trip network delay and local clock offset (or time drift) is calculated
@@ -211,7 +211,7 @@ public class TimeInfo {
              } else
              {
                  // subtract processing time from round-trip network delay
-                 long delta = xmitTime - rcvTime;
+                 final long delta = xmitTime - rcvTime;
                  // in normal cases the processing delta is less than
                  // the total roundtrip network travel time.
                  if (delta <= delayValue)
@@ -290,7 +290,7 @@ public class TimeInfo {
      * @since 3.4
      */
     public InetAddress getAddress() {
-        DatagramPacket pkt = _message.getDatagramPacket();
+        final DatagramPacket pkt = _message.getDatagramPacket();
         return pkt == null ? null : pkt.getAddress();
     }
 
@@ -316,7 +316,7 @@ public class TimeInfo {
      * @since 3.4
      */
     @Override
-    public boolean equals(Object obj)
+    public boolean equals(final Object obj)
     {
         if (this == obj) {
             return true;
@@ -324,7 +324,7 @@ public class TimeInfo {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        TimeInfo other = (TimeInfo) obj;
+        final TimeInfo other = (TimeInfo) obj;
         return _returnTime == other._returnTime && _message.equals(other._message);
     }
 

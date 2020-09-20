@@ -34,7 +34,7 @@ public class FTPSServerSocketFactory extends ServerSocketFactory {
     /** Factory for secure socket factories */
     private final SSLContext context;
 
-    public FTPSServerSocketFactory(SSLContext context) {
+    public FTPSServerSocketFactory(final SSLContext context) {
         this.context = context;
     }
 
@@ -45,17 +45,17 @@ public class FTPSServerSocketFactory extends ServerSocketFactory {
     }
 
     @Override
-    public ServerSocket createServerSocket(int port) throws IOException {
+    public ServerSocket createServerSocket(final int port) throws IOException {
         return init(this.context.getServerSocketFactory().createServerSocket(port));
     }
 
     @Override
-    public ServerSocket createServerSocket(int port, int backlog) throws IOException {
+    public ServerSocket createServerSocket(final int port, final int backlog) throws IOException {
         return init(this.context.getServerSocketFactory().createServerSocket(port, backlog));
     }
 
     @Override
-    public ServerSocket createServerSocket(int port, int backlog, InetAddress ifAddress) throws IOException {
+    public ServerSocket createServerSocket(final int port, final int backlog, final InetAddress ifAddress) throws IOException {
         return init(this.context.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
     }
 
@@ -66,7 +66,7 @@ public class FTPSServerSocketFactory extends ServerSocketFactory {
      * @return the socket
      * @throws ClassCastException if socket is not an instance of SSLServerSocket
      */
-    public ServerSocket init(ServerSocket socket) {
+    public ServerSocket init(final ServerSocket socket) {
         ((SSLServerSocket) socket).setUseClientMode(true);
         return socket;
     }

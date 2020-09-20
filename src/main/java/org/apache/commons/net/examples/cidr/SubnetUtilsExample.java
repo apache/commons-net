@@ -28,10 +28,10 @@ import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
  */
 public class SubnetUtilsExample {
 
-    public static void main(String[] args) {
-        String subnet = "192.168.0.3/31";
-        SubnetUtils utils = new SubnetUtils(subnet);
-        SubnetInfo info = utils.getInfo();
+    public static void main(final String[] args) {
+        final String subnet = "192.168.0.3/31";
+        final SubnetUtils utils = new SubnetUtils(subnet);
+        final SubnetInfo info = utils.getInfo();
 
         System.out.printf("Subnet Information for %s:%n", subnet);
         System.out.println("--------------------------------------");
@@ -57,9 +57,9 @@ public class SubnetUtilsExample {
 
         final String prompt ="Enter an IP address (e.g. 192.168.0.10):";
         System.out.println(prompt);
-        Scanner scanner = new Scanner(System.in);
+        final Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
-            String address = scanner.nextLine();
+            final String address = scanner.nextLine();
             System.out.println("The IP address [" + address + "] is "
                     + (info.isInRange(address) ? "" : "not ")
                     + "within the subnet [" + subnet + "]");

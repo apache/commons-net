@@ -41,7 +41,7 @@ public class Main {
      * are passed to the target class.
      * @throws Throwable if an error occurs
      */
-    public static void main(String[] args) throws Throwable  {
+    public static void main(final String[] args) throws Throwable  {
         final Properties fp = new Properties();
         final InputStream ras = Main.class.getResourceAsStream("examples.properties");
         if (ras != null) {
@@ -65,40 +65,41 @@ public class Main {
                 }
             }
             @SuppressWarnings("unchecked") // property names are Strings
+            final
             List<String> l = (List<String>) Collections.list(fp.propertyNames());
             if (l.isEmpty()) {
                 return;
             }
             Collections.sort(l);
             System.out.println("\nAliases and their classes:");
-            for(String s : l) {
+            for(final String s : l) {
                 System.out.printf("%-25s %s%n",s,fp.getProperty(s));
             }
             return;
         }
 
-        String shortName = args[0];
+        final String shortName = args[0];
         String fullName = fp.getProperty(shortName);
         if (fullName == null) {
             fullName = shortName;
         }
         fullName = fullName.replace('/', '.');
         try {
-            Class<?> clazz = Class.forName(fullName);
-            Method m = clazz.getDeclaredMethod("main", args.getClass());
-            String[] args2 = new String[args.length-1];
+            final Class<?> clazz = Class.forName(fullName);
+            final Method m = clazz.getDeclaredMethod("main", args.getClass());
+            final String[] args2 = new String[args.length-1];
             System.arraycopy(args, 1, args2, 0, args2.length);
             try {
                 m.invoke(null, (Object)args2);
-            } catch (InvocationTargetException ite) {
-                Throwable cause = ite.getCause();
+            } catch (final InvocationTargetException ite) {
+                final Throwable cause = ite.getCause();
                 if (cause != null) {
                     throw cause;
                 } else {
                     throw ite;
                 }
             }
-        } catch (ClassNotFoundException e) {
+        } catch (final ClassNotFoundException e) {
             System.out.println(e);
         }
     }

@@ -38,7 +38,7 @@ import org.apache.commons.net.imap.IMAPClient;
 public final class IMAPMail
 {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(final String[] args) throws IOException {
         if (args.length != 1)
         {
             System.err.println(
@@ -47,7 +47,7 @@ public final class IMAPMail
             System.exit(1);
         }
 
-        URI uri = URI.create(args[0]);
+        final URI uri = URI.create(args[0]);
 
         // Connect and login
         final IMAPClient imap = IMAPUtils.imapLogin(uri, 10000, null);
@@ -68,7 +68,7 @@ public final class IMAPMail
 
             imap.list("", "*"); // Show the folders
 
-        } catch (IOException e) {
+        } catch (final IOException e) {
             System.out.println(imap.getReplyString());
             e.printStackTrace();
             System.exit(10);

@@ -134,7 +134,7 @@ public class SMTPClient extends SMTP
      * @param encoding The encoding to use
      * @since 2.0
      */
-    public SMTPClient(String encoding) {
+    public SMTPClient(final String encoding) {
         super(encoding);
     }
 
@@ -192,7 +192,7 @@ public class SMTPClient extends SMTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean login(String hostname) throws IOException
+    public boolean login(final String hostname) throws IOException
     {
         return SMTPReply.isPositiveCompletion(helo(hostname));
     }
@@ -244,7 +244,7 @@ public class SMTPClient extends SMTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean setSender(RelayPath path) throws IOException
+    public boolean setSender(final RelayPath path) throws IOException
     {
         return SMTPReply.isPositiveCompletion(mail(path.toString()));
     }
@@ -266,7 +266,7 @@ public class SMTPClient extends SMTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean setSender(String address) throws IOException
+    public boolean setSender(final String address) throws IOException
     {
         return SMTPReply.isPositiveCompletion(mail("<" + address + ">"));
     }
@@ -288,7 +288,7 @@ public class SMTPClient extends SMTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean addRecipient(RelayPath path) throws IOException
+    public boolean addRecipient(final RelayPath path) throws IOException
     {
         return SMTPReply.isPositiveCompletion(rcpt(path.toString()));
     }
@@ -310,7 +310,7 @@ public class SMTPClient extends SMTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean addRecipient(String address) throws IOException
+    public boolean addRecipient(final String address) throws IOException
     {
         return SMTPReply.isPositiveCompletion(rcpt("<" + address + ">"));
     }
@@ -386,7 +386,7 @@ public class SMTPClient extends SMTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean sendShortMessageData(String message) throws IOException
+    public boolean sendShortMessageData(final String message) throws IOException
     {
         Writer writer;
 
@@ -424,8 +424,8 @@ public class SMTPClient extends SMTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean sendSimpleMessage(String sender, String recipient,
-                                     String message)
+    public boolean sendSimpleMessage(final String sender, final String recipient,
+                                     final String message)
     throws IOException
     {
         if (!setSender(sender)) {
@@ -468,8 +468,8 @@ public class SMTPClient extends SMTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean sendSimpleMessage(String sender, String[] recipients,
-                                     String message)
+    public boolean sendSimpleMessage(final String sender, final String[] recipients,
+                                     final String message)
     throws IOException
     {
         boolean oneSuccess = false;
@@ -546,7 +546,7 @@ public class SMTPClient extends SMTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      ***/
-    public boolean verify(String username) throws IOException
+    public boolean verify(final String username) throws IOException
     {
         int result;
 
@@ -595,7 +595,7 @@ public class SMTPClient extends SMTP
      * @throws IOException  If an I/O error occurs while either sending a
      *  command to the server or receiving a reply from the server.
      ***/
-    public String listHelp(String command) throws IOException
+    public String listHelp(final String command) throws IOException
     {
         if (SMTPReply.isPositiveCompletion(help(command))) {
             return getReplyString();

@@ -34,14 +34,14 @@ public class MainTest {
 
     @Test
     public void checkExamplesPropertiesIsComplete() throws Exception {
-        Properties cp = scanClasses();
-        Properties fp = new Properties();
+        final Properties cp = scanClasses();
+        final Properties fp = new Properties();
         fp.load(this.getClass().getResourceAsStream("examples.properties"));
         @SuppressWarnings("unchecked") // OK
         final Enumeration<String> propertyNames = (Enumeration<String>) cp.propertyNames();
         while(propertyNames.hasMoreElements()){
-            String c = propertyNames.nextElement();
-            String fv = fp.getProperty(c);
+            final String c = propertyNames.nextElement();
+            final String fv = fp.getProperty(c);
             final String cv = cp.getProperty(c);
             if (fv == null) {
                 System.out.printf("%-25s %s - missing from examples.properties%n",c,cv);
@@ -52,21 +52,21 @@ public class MainTest {
     }
 
     private Properties scanClasses() throws IOException {
-        CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
+        final CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
         // ensure special characters are decoded OK by uing the charset
         final String sourceFile = URLDecoder.decode(codeSource.getLocation().getFile(),"UTF-8");
-        Properties p = new Properties();
+        final Properties p = new Properties();
         if (sourceFile.endsWith(".jar")) {
-            JarFile jf = new JarFile(sourceFile);
-            Enumeration<JarEntry> e = jf.entries();
+            final JarFile jf = new JarFile(sourceFile);
+            final Enumeration<JarEntry> e = jf.entries();
             while (e.hasMoreElements()) {
-              JarEntry je = e.nextElement();
-              String name = je.getName();
+              final JarEntry je = e.nextElement();
+              final String name = je.getName();
               processFileName(name, p);
             }
             jf.close();
         } else {
-            File examples = new File(sourceFile, "org/apache/commons/net/examples"); // must match top level examples package name
+            final File examples = new File(sourceFile, "org/apache/commons/net/examples"); // must match top level examples package name
             if (examples.exists()) {
                 scanForClasses(sourceFile.length(), examples, p);
             } else {
@@ -76,8 +76,8 @@ public class MainTest {
         return p;
     }
 
-    private static void scanForClasses(int rootLength, File current, Properties p) {
-        for(File file : current.listFiles()) {
+    private static void scanForClasses(final int rootLength, final File current, final Properties p) {
+        for(final File file : current.listFiles()) {
             if (file.isDirectory()) {
                 scanForClasses(rootLength, file, p);
             } else {
@@ -86,7 +86,7 @@ public class MainTest {
         }
     }
 
-    private static void processFileName(String name, Properties p) {
+    private static void processFileName(String name, final Properties p) {
         if (!name.endsWith(".class")
                 || name.contains("$") // subclasses
                 || name.endsWith("examples/Main.class")  // the initial class, don't want to add that
@@ -108,15 +108,15 @@ public class MainTest {
         name = name.replace(".class", "");
         name = name.replace("/", ".");
         try {
-            Class<?> clazz = Class.forName(name, false, MainTest.class.getClassLoader());
+            final Class<?> clazz = Class.forName(name, false, MainTest.class.getClassLoader());
             clazz.getMethod("main", String[].class);
             return true;
-        } catch (ClassNotFoundException e) {
+        } catch (final ClassNotFoundException e) {
             System.out.println("Cannot find " + name);
             return false;
-        } catch (NoSuchMethodException e) {
+        } catch (final NoSuchMethodException e) {
             return false;
-        } catch (SecurityException e) {
+        } catch (final SecurityException e) {
             e.printStackTrace();
         }
         return true;

@@ -123,7 +123,7 @@ public class RCommandClient extends RExecClient
                          getLocalAddress());
                 break; // got a socket
             }
-            catch (SocketException e)
+            catch (final SocketException e)
             {
                 continue;
             }
@@ -177,7 +177,7 @@ public class RCommandClient extends RExecClient
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
      ***/
-    public void connect(InetAddress host, int port, InetAddress localAddr)
+    public void connect(final InetAddress host, final int port, final InetAddress localAddr)
     throws SocketException, BindException, IOException
     {
         int localPort;
@@ -191,10 +191,10 @@ public class RCommandClient extends RExecClient
                 _socket_ =
                     _socketFactory_.createSocket(host, port, localAddr, localPort);
             }
-            catch (BindException be) {
+            catch (final BindException be) {
                 continue;
             }
-            catch (SocketException e)
+            catch (final SocketException e)
             {
                 continue;
             }
@@ -226,7 +226,7 @@ public class RCommandClient extends RExecClient
      *  derived from it.
      ***/
     @Override
-    public void connect(InetAddress host, int port)
+    public void connect(final InetAddress host, final int port)
     throws SocketException, IOException
     {
         connect(host, port, InetAddress.getLocalHost());
@@ -250,7 +250,7 @@ public class RCommandClient extends RExecClient
      * @throws UnknownHostException If the hostname cannot be resolved.
      ***/
     @Override
-    public void connect(String hostname, int port)
+    public void connect(final String hostname, final int port)
     throws SocketException, IOException, UnknownHostException
     {
         connect(InetAddress.getByName(hostname), port, InetAddress.getLocalHost());
@@ -273,7 +273,7 @@ public class RCommandClient extends RExecClient
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
      ***/
-    public void connect(String hostname, int port, InetAddress localAddr)
+    public void connect(final String hostname, final int port, final InetAddress localAddr)
     throws SocketException, IOException
     {
         connect(InetAddress.getByName(hostname), port, localAddr);
@@ -301,8 +301,8 @@ public class RCommandClient extends RExecClient
      *            is specified.
      ***/
     @Override
-    public void connect(InetAddress host, int port,
-                        InetAddress localAddr, int localPort)
+    public void connect(final InetAddress host, final int port,
+                        final InetAddress localAddr, final int localPort)
     throws SocketException, IOException, IllegalArgumentException
     {
         if (localPort < MIN_CLIENT_PORT || localPort > MAX_CLIENT_PORT) {
@@ -334,8 +334,8 @@ public class RCommandClient extends RExecClient
      *            is specified.
      ***/
     @Override
-    public void connect(String hostname, int port,
-                        InetAddress localAddr, int localPort)
+    public void connect(final String hostname, final int port,
+                        final InetAddress localAddr, final int localPort)
     throws SocketException, IOException, IllegalArgumentException, UnknownHostException
     {
         if (localPort < MIN_CLIENT_PORT || localPort > MAX_CLIENT_PORT) {
@@ -381,8 +381,8 @@ public class RCommandClient extends RExecClient
      * @throws IOException If the rcommand() attempt fails.  The exception
      *            will contain a message indicating the nature of the failure.
      ***/
-    public void rcommand(String localUsername, String remoteUsername,
-                         String command, boolean separateErrorStream)
+    public void rcommand(final String localUsername, final String remoteUsername,
+                         final String command, final boolean separateErrorStream)
     throws IOException
     {
         rexec(localUsername, remoteUsername, command, separateErrorStream);
@@ -397,8 +397,8 @@ public class RCommandClient extends RExecClient
      * @param command the command
      * @throws IOException on error
      ***/
-    public void rcommand(String localUsername, String remoteUsername,
-                         String command)
+    public void rcommand(final String localUsername, final String remoteUsername,
+                         final String command)
     throws IOException
     {
         rcommand(localUsername, remoteUsername, command, false);

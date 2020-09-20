@@ -68,7 +68,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
      *
      * @param name Test name.
      */
-    public EnterpriseUnixFTPEntryParserTest(String name)
+    public EnterpriseUnixFTPEntryParserTest(final String name)
     {
         super(name);
     }
@@ -88,8 +88,8 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     @Override
     public void testParseFieldsOnFile() throws Exception
     {
-        FTPFile file = getParser().parseFTPEntry("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 13:56 QUADTEST");
-        Calendar today  = Calendar.getInstance();
+        final FTPFile file = getParser().parseFTPEntry("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 13:56 QUADTEST");
+        final Calendar today  = Calendar.getInstance();
         int year        = today.get(Calendar.YEAR);
 
         assertTrue("Should be a file.", file.isFile());
@@ -102,7 +102,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
             --year;
         }
 
-        Calendar timestamp = file.getTimestamp();
+        final Calendar timestamp = file.getTimestamp();
         assertEquals(year, timestamp.get(Calendar.YEAR));
         assertEquals(Calendar.AUGUST, timestamp.get(Calendar.MONTH));
         assertEquals(12, timestamp.get(Calendar.DAY_OF_MONTH));
@@ -156,7 +156,7 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
      *
      * @param dir
      */
-    private void checkPermisions(FTPFile dir)
+    private void checkPermisions(final FTPFile dir)
     {
         assertTrue("Owner should not have read permission.",
                    !dir.hasPermission(FTPFile.USER_ACCESS,

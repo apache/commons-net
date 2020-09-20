@@ -45,7 +45,7 @@ class ReplyIterator implements Iterator<String>, Iterable<String> {
      * @param addDotReader whether to additionally wrap the reader in a DotTerminatedMessageReader
      * @throws IOException
      */
-    ReplyIterator(BufferedReader _reader, boolean addDotReader) throws IOException {
+    ReplyIterator(final BufferedReader _reader, final boolean addDotReader) throws IOException {
         reader = addDotReader ? new DotTerminatedMessageReader(_reader) : _reader;
         line = reader.readLine(); // prime the iterator
         if (line == null) {
@@ -53,7 +53,7 @@ class ReplyIterator implements Iterator<String>, Iterable<String> {
         }
     }
 
-    ReplyIterator(BufferedReader _reader) throws IOException {
+    ReplyIterator(final BufferedReader _reader) throws IOException {
         this(_reader, true);
     }
 
@@ -70,7 +70,7 @@ class ReplyIterator implements Iterator<String>, Iterable<String> {
         if (savedException != null){
             throw new NoSuchElementException(savedException.toString());
         }
-        String prev = line;
+        final String prev = line;
         if (prev == null) {
             throw new NoSuchElementException();
         }
@@ -79,7 +79,7 @@ class ReplyIterator implements Iterator<String>, Iterable<String> {
             if (line == null) {
                 Util.closeQuietly(reader);
             }
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             savedException = ex; // if it fails, save the exception, as it does not apply to this call
             Util.closeQuietly(reader);
         }

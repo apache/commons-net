@@ -72,7 +72,7 @@ public class SimpleSMTPHeader
      *              This should be the subject of the message.
      *              May be null
      ***/
-    public SimpleSMTPHeader(String from, String to, String subject)
+    public SimpleSMTPHeader(final String from, final String to, final String subject)
     {
         if (from == null) {
             throw new IllegalArgumentException("From cannot be null");
@@ -96,7 +96,7 @@ public class SimpleSMTPHeader
      * @param headerField  The header field to add, not including the colon.
      * @param value  The value of the added header field.
      ***/
-    public void addHeaderField(String headerField, String value)
+    public void addHeaderField(final String headerField, final String value)
     {
         if (!hasHeaderDate && "Date".equals(headerField)) {
             hasHeaderDate = true;
@@ -113,7 +113,7 @@ public class SimpleSMTPHeader
      * <p>
      * @param address The email address to add to the CC list.
      ***/
-    public void addCC(String address)
+    public void addCC(final String address)
     {
         if (__cc == null) {
             __cc = new StringBuffer();
@@ -136,7 +136,7 @@ public class SimpleSMTPHeader
     @Override
     public String toString()
     {
-        StringBuilder header = new StringBuilder();
+        final StringBuilder header = new StringBuilder();
 
         final String pattern = "EEE, dd MMM yyyy HH:mm:ss Z"; // Fri, 21 Nov 1997 09:55:06 -0600
         final SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.ENGLISH);

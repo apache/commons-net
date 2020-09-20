@@ -44,51 +44,51 @@ public class MLSDComparison {
 
     private final Comparator<FTPFile> cmp = new Comparator<FTPFile>() {
         @Override
-        public int compare(FTPFile o1, FTPFile o2) {
-                String n1 = o1.getName();
-                String n2 = o2.getName();
+        public int compare(final FTPFile o1, final FTPFile o2) {
+                final String n1 = o1.getName();
+                final String n2 = o2.getName();
                 return n1.compareTo(n2);
             }
     };
 
     @Test
     public void testFile() throws Exception{
-        File path = new File(DownloadListings.DOWNLOAD_DIR);
-        FilenameFilter filter = new FilenameFilter(){
+        final File path = new File(DownloadListings.DOWNLOAD_DIR);
+        final FilenameFilter filter = new FilenameFilter(){
             @Override
-            public boolean accept(File dir, String name) {
+            public boolean accept(final File dir, final String name) {
                 return name.endsWith("_mlsd.txt");
             }
 
         };
-        for (File mlsd : path.listFiles(filter)){
+        for (final File mlsd : path.listFiles(filter)){
             System.out.println(mlsd);
             InputStream is = new FileInputStream(mlsd);
             FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance());
             engine.readServerList(is, FTP.DEFAULT_CONTROL_ENCODING);
-            FTPFile [] mlsds = engine.getFiles(FTPFileFilters.ALL);
+            final FTPFile [] mlsds = engine.getFiles(FTPFileFilters.ALL);
             is.close();
-            File list = new File(mlsd.getParentFile(),mlsd.getName().replace("_mlsd", "_list"));
+            final File list = new File(mlsd.getParentFile(),mlsd.getName().replace("_mlsd", "_list"));
 
             System.out.println(list);
             is = new FileInputStream(list);
-            FTPClientConfig cfg = new FTPClientConfig();
+            final FTPClientConfig cfg = new FTPClientConfig();
             cfg.setServerTimeZoneId("GMT");
-            UnixFTPEntryParser parser = new UnixFTPEntryParser(cfg);
+            final UnixFTPEntryParser parser = new UnixFTPEntryParser(cfg);
             engine = new FTPListParseEngine(parser);
             engine.readServerList(is, FTP.DEFAULT_CONTROL_ENCODING);
-            FTPFile [] lists = engine.getFiles(FTPFileFilters.ALL);
+            final FTPFile [] lists = engine.getFiles(FTPFileFilters.ALL);
             is.close();
             compareSortedLists(mlsds, lists);
         }
     }
 
-    private void compareSortedLists(FTPFile[] lst, FTPFile[] mlst){
+    private void compareSortedLists(final FTPFile[] lst, final FTPFile[] mlst){
         Arrays.sort(lst, cmp );
         Arrays.sort(mlst, cmp );
         FTPFile first, second;
-        int firstl=lst.length;
-        int secondl=mlst.length;
+        final int firstl=lst.length;
+        final int secondl=mlst.length;
         int one=0, two=0;
         first = lst[one++];
         second = mlst[two++];
@@ -96,8 +96,8 @@ public class MLSDComparison {
         while (one < firstl || two < secondl) {
 //            String fs1 = first.toFormattedString();
 //            String fs2 = second.toFormattedString();
-            String rl1 = first.getRawListing();
-            String rl2 = second.getRawListing();
+            final String rl1 = first.getRawListing();
+            final String rl2 = second.getRawListing();
             cmp = first.getName().compareTo(second.getName());
             if (cmp == 0) {
                 if (first.getName().endsWith("HEADER.html")){
@@ -106,7 +106,7 @@ public class MLSDComparison {
                 if (!areEquivalent(first, second)){
 //                    System.out.println(rl1);
 //                    System.out.println(fs1);
-                    long tdiff = first.getTimestamp().getTimeInMillis()-second.getTimestamp().getTimeInMillis();
+                    final long tdiff = first.getTimestamp().getTimeInMillis()-second.getTimestamp().getTimeInMillis();
                     System.out.println("Minutes diff "+tdiff/(1000*60));
 //                    System.out.println(fs2);
 //                    System.out.println(rl2);
@@ -142,7 +142,7 @@ public class MLSDComparison {
      * @return true if the initialised fields are the same
      * @since 3.0
      */
-    public boolean areEquivalent(FTPFile a, FTPFile b) {
+    public boolean areEquivalent(final FTPFile a, final FTPFile b) {
         return
             a.getName().equals(b.getName()) &&
             areSame(a.getSize(), b.getSize(), -1L) &&
@@ -175,35 +175,35 @@ public class MLSDComparison {
 //    }
 
 
-    private boolean areSame(Calendar a, Calendar b) {
+    private boolean areSame(final Calendar a, final Calendar b) {
         return a == null || b == null || areSameDateTime(a, b);
     }
 
-    private boolean areSameDateTime(Calendar a, Calendar b) {
-        TimeZone UTC = TimeZone.getTimeZone("UTC");
-        Calendar ac = Calendar.getInstance(UTC);
+    private boolean areSameDateTime(final Calendar a, final Calendar b) {
+        final TimeZone UTC = TimeZone.getTimeZone("UTC");
+        final Calendar ac = Calendar.getInstance(UTC);
         ac.setTime(a.getTime());
-        Calendar bc = Calendar.getInstance(UTC);
+        final Calendar bc = Calendar.getInstance(UTC);
         bc.setTime(b.getTime());
         return isSameDay(ac, bc) && isSameTime(ac, bc);
     }
 
-    private boolean isSameDay(Calendar a, Calendar b) {
-        int ad = a.get(Calendar.DAY_OF_MONTH);
-        int bd = b.get(Calendar.DAY_OF_MONTH);
+    private boolean isSameDay(final Calendar a, final Calendar b) {
+        final int ad = a.get(Calendar.DAY_OF_MONTH);
+        final int bd = b.get(Calendar.DAY_OF_MONTH);
         return
             a.get(Calendar.YEAR) == b.get(Calendar.YEAR) &&
             a.get(Calendar.MONTH) == b.get(Calendar.MONTH) &&
             ad == bd
             ;
     }
-    private boolean isSameTime(Calendar a, Calendar b) {
-        int ah = a.get(Calendar.HOUR_OF_DAY);
-        int bh = b.get(Calendar.HOUR_OF_DAY);
-        int am = a.get(Calendar.MINUTE);
-        int bm = b.get(Calendar.MINUTE);
-        int as = a.get(Calendar.SECOND);
-        int bs = b.get(Calendar.SECOND);
+    private boolean isSameTime(final Calendar a, final Calendar b) {
+        final int ah = a.get(Calendar.HOUR_OF_DAY);
+        final int bh = b.get(Calendar.HOUR_OF_DAY);
+        final int am = a.get(Calendar.MINUTE);
+        final int bm = b.get(Calendar.MINUTE);
+        final int as = a.get(Calendar.SECOND);
+        final int bs = b.get(Calendar.SECOND);
         return
             (ah == 0 && am == 0 && as ==0) ||
             (bh == 0 && bm == 0 && bs ==0) ||
@@ -212,7 +212,7 @@ public class MLSDComparison {
     }
 
 
-    private boolean areSame(long a, long b, long d) {
+    private boolean areSame(final long a, final long b, final long d) {
         return a == d || b == d || a == b;
     }
 

@@ -73,7 +73,7 @@ public final class IMAPReply
      * @param line to be checked
      * @return {@code true} if the line is untagged
      */
-    public static boolean isUntagged(String line) {
+    public static boolean isUntagged(final String line) {
         return line.startsWith(IMAP_UNTAGGED_PREFIX);
     }
 
@@ -82,7 +82,7 @@ public final class IMAPReply
      * @param line the line to be checked
      * @return {@code true} if the line is untagged
      */
-    public static boolean isContinuation(String line) {
+    public static boolean isContinuation(final String line) {
         return line.startsWith(IMAP_CONTINUATION_PREFIX);
     }
 
@@ -97,7 +97,7 @@ public final class IMAPReply
      * @return {@link #OK} or {@link #NO} or {@link #BAD} or {@link #CONT}
      * @throws IOException if the input has an unexpected format
      */
-    public static int getReplyCode(String line) throws IOException {
+    public static int getReplyCode(final String line) throws IOException {
         return getReplyCode(line, TAGGED_PATTERN);
     }
 
@@ -112,8 +112,8 @@ public final class IMAPReply
      *
      * @return the literal count, or -1 if there was no literal.
      */
-    public static int literalCount(String line) {
-        Matcher m = LITERAL_PATTERN.matcher(line);
+    public static int literalCount(final String line) {
+        final Matcher m = LITERAL_PATTERN.matcher(line);
         if (m.find()) {
             return Integer.parseInt(m.group(1)); // Should always parse because we matched \d+
         }
@@ -127,18 +127,18 @@ public final class IMAPReply
      * @return {@link #OK} or {@link #NO} or {@link #BAD} or {@link #CONT}
      * @throws IOException if the input has an unexpected format
      */
-    public static int getUntaggedReplyCode(String line) throws IOException {
+    public static int getUntaggedReplyCode(final String line) throws IOException {
         return getReplyCode(line, UNTAGGED_PATTERN);
     }
 
     // Helper method to process both tagged and untagged replies.
-    private static int getReplyCode(String line, Pattern pattern) throws IOException{
+    private static int getReplyCode(final String line, final Pattern pattern) throws IOException{
         if (isContinuation(line)) {
             return CONT;
         }
-        Matcher m = pattern.matcher(line);
+        final Matcher m = pattern.matcher(line);
         if (m.matches()) { // TODO would lookingAt() be more efficient? If so, then drop trailing .* from patterns
-            String code = m.group(1);
+            final String code = m.group(1);
             if (code.equals(IMAP_OK)) {
                 return OK;
             }
@@ -159,7 +159,7 @@ public final class IMAPReply
      * @param replyCode the code to check
      * @return {@code true} if the code equals {@link #OK}
      */
-    public static boolean isSuccess(int replyCode) {
+    public static boolean isSuccess(final int replyCode) {
         return replyCode == OK;
     }
     /**
@@ -167,7 +167,7 @@ public final class IMAPReply
      * @param replyCode the code to be checked
      * @return {@code true} if the response was a continuation
      */
-    public static boolean isContinuation(int replyCode) {
+    public static boolean isContinuation(final int replyCode) {
         return replyCode == CONT;
     }
 

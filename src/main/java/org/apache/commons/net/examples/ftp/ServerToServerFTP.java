@@ -39,7 +39,7 @@ import org.apache.commons.net.ftp.FTPReply;
 public final class ServerToServerFTP
 {
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         String server1, username1, password1, file1;
         String server2, username2, password2, file2;
@@ -100,7 +100,7 @@ public final class ServerToServerFTP
                 System.exit(1);
             }
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             if (ftp1.isConnected())
             {
@@ -108,7 +108,7 @@ public final class ServerToServerFTP
                 {
                     ftp1.disconnect();
                 }
-                catch (IOException f)
+                catch (final IOException f)
                 {
                     // do nothing
                 }
@@ -137,7 +137,7 @@ public final class ServerToServerFTP
                 System.exit(1);
             }
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             if (ftp2.isConnected())
             {
@@ -145,7 +145,7 @@ public final class ServerToServerFTP
                 {
                     ftp2.disconnect();
                 }
-                catch (IOException f)
+                catch (final IOException f)
                 {
                     // do nothing
                 }
@@ -198,7 +198,7 @@ __main:
             }
 
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             e.printStackTrace();
             System.exit(1);
@@ -213,7 +213,7 @@ __main:
                     ftp1.disconnect();
                 }
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 // do nothing
             }
@@ -226,7 +226,7 @@ __main:
                     ftp2.disconnect();
                 }
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 // do nothing
             }

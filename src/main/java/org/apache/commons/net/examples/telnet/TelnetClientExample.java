@@ -54,7 +54,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
      * @param args input params
      * @throws Exception on error
      ***/
-    public static void main(String[] args) throws Exception
+    public static void main(final String[] args) throws Exception
     {
         FileOutputStream fout = null;
 
@@ -64,7 +64,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
             System.exit(1);
         }
 
-        String remoteip = args[0];
+        final String remoteip = args[0];
 
         int remoteport;
 
@@ -81,7 +81,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
         {
             fout = new FileOutputStream ("spy.log", true);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             System.err.println(
                 "Exception while opening the spy file: "
@@ -90,9 +90,9 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
 
         tc = new TelnetClient();
 
-        TerminalTypeOptionHandler ttopt = new TerminalTypeOptionHandler("VT100", false, false, true, false);
-        EchoOptionHandler echoopt = new EchoOptionHandler(true, false, true, false);
-        SuppressGAOptionHandler gaopt = new SuppressGAOptionHandler(true, true, true, true);
+        final TerminalTypeOptionHandler ttopt = new TerminalTypeOptionHandler("VT100", false, false, true, false);
+        final EchoOptionHandler echoopt = new EchoOptionHandler(true, false, true, false);
+        final SuppressGAOptionHandler gaopt = new SuppressGAOptionHandler(true, true, true, true);
 
         try
         {
@@ -100,7 +100,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
             tc.addOptionHandler(echoopt);
             tc.addOptionHandler(gaopt);
         }
-        catch (InvalidTelnetOptionException e)
+        catch (final InvalidTelnetOptionException e)
         {
             System.err.println("Error registering option handlers: " + e.getMessage());
         }
@@ -113,7 +113,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                 tc.connect(remoteip, remoteport);
 
 
-                Thread reader = new Thread (new TelnetClientExample());
+                final Thread reader = new Thread (new TelnetClientExample());
                 tc.registerNotifHandler(new TelnetClientExample());
                 System.out.println("TelnetClientExample");
                 System.out.println("Type AYT to send an AYT telnet command");
@@ -125,9 +125,9 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                 System.out.println("Type ^[A-Z] to send the control character; use ^^ to send ^");
 
                 reader.start();
-                OutputStream outstr = tc.getOutputStream();
+                final OutputStream outstr = tc.getOutputStream();
 
-                byte[] buff = new byte[1024];
+                final byte[] buff = new byte[1024];
                 int ret_read = 0;
 
                 do
@@ -146,7 +146,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
 
                                     System.out.println("AYT response:" + tc.sendAYT(5000));
                                 }
-                                catch (IOException e)
+                                catch (final IOException e)
                                 {
                                     System.err.println("Exception waiting AYT response: " + e.getMessage());
                                 }
@@ -161,20 +161,20 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                             }
                             else if(line.startsWith("REGISTER"))
                             {
-                                StringTokenizer st = new StringTokenizer(new String(buff));
+                                final StringTokenizer st = new StringTokenizer(new String(buff));
                                 try
                                 {
                                     st.nextToken();
-                                    int opcode = Integer.parseInt(st.nextToken());
-                                    boolean initlocal = Boolean.parseBoolean(st.nextToken());
-                                    boolean initremote = Boolean.parseBoolean(st.nextToken());
-                                    boolean acceptlocal = Boolean.parseBoolean(st.nextToken());
-                                    boolean acceptremote = Boolean.parseBoolean(st.nextToken());
-                                    SimpleOptionHandler opthand = new SimpleOptionHandler(opcode, initlocal, initremote,
+                                    final int opcode = Integer.parseInt(st.nextToken());
+                                    final boolean initlocal = Boolean.parseBoolean(st.nextToken());
+                                    final boolean initremote = Boolean.parseBoolean(st.nextToken());
+                                    final boolean acceptlocal = Boolean.parseBoolean(st.nextToken());
+                                    final boolean acceptremote = Boolean.parseBoolean(st.nextToken());
+                                    final SimpleOptionHandler opthand = new SimpleOptionHandler(opcode, initlocal, initremote,
                                                                     acceptlocal, acceptremote);
                                     tc.addOptionHandler(opthand);
                                 }
-                                catch (Exception e)
+                                catch (final Exception e)
                                 {
                                     if(e instanceof InvalidTelnetOptionException)
                                     {
@@ -191,14 +191,14 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                             }
                             else if(line.startsWith("UNREGISTER"))
                             {
-                                StringTokenizer st = new StringTokenizer(new String(buff));
+                                final StringTokenizer st = new StringTokenizer(new String(buff));
                                 try
                                 {
                                     st.nextToken();
-                                    int opcode = (new Integer(st.nextToken())).intValue();
+                                    final int opcode = (new Integer(st.nextToken())).intValue();
                                     tc.deleteOptionHandler(opcode);
                                 }
-                                catch (Exception e)
+                                catch (final Exception e)
                                 {
                                     if(e instanceof InvalidTelnetOptionException)
                                     {
@@ -222,7 +222,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                             }
                             else if(line.matches("^\\^[A-Z^]\\r?\\n?$"))
                             {
-                                byte toSend = buff[1];
+                                final byte toSend = buff[1];
                                 if (toSend == '^') {
                                     outstr.write(toSend);
                                 } else {
@@ -237,14 +237,14 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                                         outstr.write(buff, 0 , ret_read);
                                         outstr.flush();
                                 }
-                                catch (IOException e)
+                                catch (final IOException e)
                                 {
                                         end_loop = true;
                                 }
                             }
                         }
                     }
-                    catch (IOException e)
+                    catch (final IOException e)
                     {
                         System.err.println("Exception while reading keyboard:" + e.getMessage());
                         end_loop = true;
@@ -256,12 +256,12 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                 {
                     tc.disconnect();
                 }
-                catch (IOException e)
+                catch (final IOException e)
                 {
                           System.err.println("Exception while connecting:" + e.getMessage());
                 }
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                     System.err.println("Exception while connecting:" + e.getMessage());
                     System.exit(1);
@@ -279,7 +279,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
      * @param option_code - code of the option negotiated
      ***/
     @Override
-    public void receivedNegotiation(int negotiation_code, int option_code)
+    public void receivedNegotiation(final int negotiation_code, final int option_code)
     {
         String command = null;
         switch (negotiation_code) {
@@ -313,11 +313,11 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
     @Override
     public void run()
     {
-        InputStream instr = tc.getInputStream();
+        final InputStream instr = tc.getInputStream();
 
         try
         {
-            byte[] buff = new byte[1024];
+            final byte[] buff = new byte[1024];
             int ret_read = 0;
 
             do
@@ -330,7 +330,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
             }
             while (ret_read >= 0);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             System.err.println("Exception while reading socket:" + e.getMessage());
         }
@@ -339,7 +339,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
         {
             tc.disconnect();
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             System.err.println("Exception while closing telnet:" + e.getMessage());
         }

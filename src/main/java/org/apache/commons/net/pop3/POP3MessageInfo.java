@@ -61,7 +61,7 @@ public final class POP3MessageInfo
      * @param num the number
      * @param octets the size
      ***/
-    public POP3MessageInfo(int num, int octets)
+    public POP3MessageInfo(final int num, final int octets)
     {
         this(num, null, octets);
     }
@@ -73,12 +73,12 @@ public final class POP3MessageInfo
      * @param num the number
      * @param uid the UID
      ***/
-    public POP3MessageInfo(int num, String uid)
+    public POP3MessageInfo(final int num, final String uid)
     {
         this(num, uid, -1);
     }
 
-    private POP3MessageInfo(int num, String uid, int size) {
+    private POP3MessageInfo(final int num, final String uid, final int size) {
         this.number = num;
         this.size = size;
         this.identifier = uid;

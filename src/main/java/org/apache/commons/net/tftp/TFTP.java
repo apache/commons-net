@@ -115,7 +115,7 @@ public class TFTP extends DatagramSocketClient
      * @param mode  The TFTP transfer mode.  One of the MODE constants.
      * @return  The TFTP string representation of the TFTP transfer mode.
      ***/
-    public static final String getModeName(int mode)
+    public static final String getModeName(final int mode)
     {
         return TFTPRequestPacket._modeStrings[mode];
     }
@@ -154,11 +154,11 @@ public class TFTP extends DatagramSocketClient
                 _socket_.receive(datagram);
             }
         }
-        catch (SocketException e)
+        catch (final SocketException e)
         {
             // Do nothing.  We timed out so we hope we're caught up.
         }
-        catch (InterruptedIOException e)
+        catch (final InterruptedIOException e)
         {
             // Do nothing.  We timed out so we hope we're caught up.
         }
@@ -201,7 +201,7 @@ public class TFTP extends DatagramSocketClient
         __receiveDatagram.setLength(__receiveBuffer.length);
         _socket_.receive(__receiveDatagram);
 
-        TFTPPacket newTFTPPacket = TFTPPacket.newTFTPPacket(__receiveDatagram);
+        final TFTPPacket newTFTPPacket = TFTPPacket.newTFTPPacket(__receiveDatagram);
         trace("<", newTFTPPacket);
         return newTFTPPacket;
     }
@@ -224,7 +224,7 @@ public class TFTP extends DatagramSocketClient
      * @param packet  The TFTP packet to send.
      * @throws IOException  If some  I/O error occurs.
      ***/
-    public final void bufferedSend(TFTPPacket packet) throws IOException
+    public final void bufferedSend(final TFTPPacket packet) throws IOException
     {
         trace(">", packet);
         _socket_.send(packet._newDatagram(__sendDatagram, _sendBuffer));
@@ -267,7 +267,7 @@ public class TFTP extends DatagramSocketClient
      * @param packet  The TFTP packet to send.
      * @throws IOException  If some  I/O error occurs.
      ***/
-    public final void send(TFTPPacket packet) throws IOException
+    public final void send(final TFTPPacket packet) throws IOException
     {
         trace(">", packet);
         _socket_.send(packet.newDatagram());
@@ -298,7 +298,7 @@ public class TFTP extends DatagramSocketClient
 
         _socket_.receive(packet);
 
-        TFTPPacket newTFTPPacket = TFTPPacket.newTFTPPacket(packet);
+        final TFTPPacket newTFTPPacket = TFTPPacket.newTFTPPacket(packet);
         trace("<", newTFTPPacket);
         return newTFTPPacket;
     }
@@ -312,7 +312,7 @@ public class TFTP extends DatagramSocketClient
      * @param packet the packet to be sent or that has been received respectively
      * @since 3.6
      */
-    protected void trace(String direction, TFTPPacket packet) {
+    protected void trace(final String direction, final TFTPPacket packet) {
     }
 
 }

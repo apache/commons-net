@@ -68,7 +68,7 @@ public final class DaytimeTCPClient extends SocketClient
     public String getTime() throws IOException
     {
         int read;
-        StringBuilder result = new StringBuilder(__buffer.length);
+        final StringBuilder result = new StringBuilder(__buffer.length);
         BufferedReader reader;
 
         reader = new BufferedReader(new InputStreamReader(_input_, getCharset()));

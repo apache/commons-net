@@ -73,23 +73,23 @@ public enum IMAPCommand
         this(null);
     }
 
-    IMAPCommand(String name){
+    IMAPCommand(final String name){
         this(name, 0);
     }
 
-    IMAPCommand(int paramCount){
+    IMAPCommand(final int paramCount){
         this(null, paramCount, paramCount);
    }
 
-    IMAPCommand(int minCount, int maxCount){
+    IMAPCommand(final int minCount, final int maxCount){
         this(null, minCount, maxCount);
    }
 
-    IMAPCommand(String name, int paramCount){
+    IMAPCommand(final String name, final int paramCount){
         this(name, paramCount, paramCount);
     }
 
-    IMAPCommand(String name, int minCount, int maxCount){
+    IMAPCommand(final String name, final int minCount, final int maxCount){
         this.imapCommand = name;
         this.minParamCount = minCount;
         this.maxParamCount = maxCount;
@@ -101,7 +101,7 @@ public enum IMAPCommand
      * @param command the IMAPCommand whose command string is required.
      * @return The IMAP protocol string command corresponding to a command code.
      */
-    public static final String getCommand(IMAPCommand command) {
+    public static final String getCommand(final IMAPCommand command) {
         return command.getIMAPCommand();
     }
 

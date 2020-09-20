@@ -46,7 +46,7 @@ public class SocketOutputStream extends FilterOutputStream
      * @param socket  The socket to close on closing the stream.
      * @param stream  The input stream to wrap.
      ***/
-    public SocketOutputStream(Socket socket, OutputStream stream)
+    public SocketOutputStream(final Socket socket, final OutputStream stream)
     {
         super(stream);
         __socket = socket;
@@ -66,7 +66,7 @@ public class SocketOutputStream extends FilterOutputStream
      *            stream.
      ***/
     @Override
-    public void write(byte buffer[], int offset, int length) throws IOException
+    public void write(final byte buffer[], final int offset, final int length) throws IOException
     {
         out.write(buffer, offset, length);
     }

@@ -59,7 +59,7 @@ public class FTPHTTPClient extends FTPClient {
      * @param proxyPass the password for the proxy
      * @param encoding the encoding to use
      */
-    public FTPHTTPClient(String proxyHost, int proxyPort, String proxyUser, String proxyPass, Charset encoding) {
+    public FTPHTTPClient(final String proxyHost, final int proxyPort, final String proxyUser, final String proxyPass, final Charset encoding) {
         this.proxyHost = proxyHost;
         this.proxyPort = proxyPort;
         this.proxyUsername = proxyUser;
@@ -76,7 +76,7 @@ public class FTPHTTPClient extends FTPClient {
      * @param proxyUser the user name for the proxy
      * @param proxyPass the password for the proxy
      */
-    public FTPHTTPClient(String proxyHost, int proxyPort, String proxyUser, String proxyPass) {
+    public FTPHTTPClient(final String proxyHost, final int proxyPort, final String proxyUser, final String proxyPass) {
         this(proxyHost, proxyPort, proxyUser, proxyPass, Charset.forName("UTF-8"));
     }
 
@@ -86,7 +86,7 @@ public class FTPHTTPClient extends FTPClient {
      * @param proxyHost the hostname to use
      * @param proxyPort the port to use
      */
-    public FTPHTTPClient(String proxyHost, int proxyPort) {
+    public FTPHTTPClient(final String proxyHost, final int proxyPort) {
         this(proxyHost, proxyPort, null, null);
     }
 
@@ -98,7 +98,7 @@ public class FTPHTTPClient extends FTPClient {
      * @param proxyPort the port to use
      * @param encoding the encoding to use
      */
-    public FTPHTTPClient(String proxyHost, int proxyPort, Charset encoding) {
+    public FTPHTTPClient(final String proxyHost, final int proxyPort, final Charset encoding) {
         this(proxyHost, proxyPort, null, null, encoding);
     }
 
@@ -113,7 +113,7 @@ public class FTPHTTPClient extends FTPClient {
     // Not strictly necessary, but Clirr complains even though there is a super-impl
     @Override
     @Deprecated
-    protected Socket _openDataConnection_(int command, String arg)
+    protected Socket _openDataConnection_(final int command, final String arg)
     throws IOException {
         return super._openDataConnection_(command, arg);
     }
@@ -125,7 +125,7 @@ public class FTPHTTPClient extends FTPClient {
      * @since 3.1
      */
     @Override
-    protected Socket _openDataConnection_(String command, String arg)
+    protected Socket _openDataConnection_(final String command, final String arg)
     throws IOException {
         //Force local passive mode, active mode not supported by through proxy
         if (getDataConnectionMode() != PASSIVE_LOCAL_DATA_CONNECTION_MODE) {
@@ -135,7 +135,7 @@ public class FTPHTTPClient extends FTPClient {
         final boolean isInet6Address = getRemoteAddress() instanceof Inet6Address;
         String passiveHost = null;
 
-        boolean attemptEPSV = isUseEPSVwithIPv4() || isInet6Address;
+        final boolean attemptEPSV = isUseEPSVwithIPv4() || isInet6Address;
         if (attemptEPSV && epsv() == FTPReply.ENTERING_EPSV_MODE) {
             _parseExtendedPassiveModeReply(_replyLines.get(0));
             passiveHost = this.tunnelHost;
@@ -151,9 +151,9 @@ public class FTPHTTPClient extends FTPClient {
             passiveHost = this.getPassiveHost();
         }
 
-        Socket socket = _socketFactory_.createSocket(proxyHost, proxyPort);
-        InputStream is = socket.getInputStream();
-        OutputStream os = socket.getOutputStream();
+        final Socket socket = _socketFactory_.createSocket(proxyHost, proxyPort);
+        final InputStream is = socket.getInputStream();
+        final OutputStream os = socket.getOutputStream();
         tunnelHandshake(passiveHost, this.getPassivePort(), is, os);
         if ((getRestartOffset() > 0) && !restart(getRestartOffset())) {
             socket.close();
@@ -169,7 +169,7 @@ public class FTPHTTPClient extends FTPClient {
     }
 
     @Override
-    public void connect(String host, int port) throws SocketException, IOException {
+    public void connect(final String host, final int port) throws SocketException, IOException {
 
         _socket_ = _socketFactory_.createSocket(proxyHost, proxyPort);
         _input_ = _socket_.getInputStream();
@@ -178,15 +178,15 @@ public class FTPHTTPClient extends FTPClient {
         try {
             socketIsReader = tunnelHandshake(host, port, _input_, _output_);
         }
-        catch (Exception e) {
-            IOException ioe = new IOException("Could not connect to " + host+ " using port " + port);
+        catch (final Exception e) {
+            final IOException ioe = new IOException("Could not connect to " + host+ " using port " + port);
             ioe.initCause(e);
             throw ioe;
         }
         super._connectAction_(socketIsReader);
     }
 
-    private BufferedReader tunnelHandshake(String host, int port, InputStream input, OutputStream output) throws IOException,
+    private BufferedReader tunnelHandshake(final String host, final int port, final InputStream input, final OutputStream output) throws IOException,
     UnsupportedEncodingException {
         final String connectString = "CONNECT "  + host + ":" + port  + " HTTP/1.1";
         final String hostString = "Host: " + host + ":" + port;
@@ -205,8 +205,8 @@ public class FTPHTTPClient extends FTPClient {
         }
         output.write(CRLF);
 
-        List<String> response = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(
+        final List<String> response = new ArrayList<>();
+        final BufferedReader reader = new BufferedReader(
                 new InputStreamReader(input, getCharset()));
 
         for (String line = reader.readLine(); line != null
@@ -214,13 +214,13 @@ public class FTPHTTPClient extends FTPClient {
             response.add(line);
         }
 
-        int size = response.size();
+        final int size = response.size();
         if (size == 0) {
             throw new IOException("No response from proxy");
         }
 
         String code = null;
-        String resp = response.get(0);
+        final String resp = response.get(0);
         if (resp.startsWith("HTTP/") && resp.length() >= 12) {
             code = resp.substring(9, 12);
         } else {
@@ -228,10 +228,10 @@ public class FTPHTTPClient extends FTPClient {
         }
 
         if (!"200".equals(code)) {
-            StringBuilder msg = new StringBuilder();
+            final StringBuilder msg = new StringBuilder();
             msg.append("HTTPTunnelConnector: connection failed\r\n");
             msg.append("Response received from the proxy:\r\n");
-            for (String line : response) {
+            for (final String line : response) {
                 msg.append(line);
                 msg.append("\r\n");
             }

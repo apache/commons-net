@@ -51,7 +51,7 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
             }
     };
 
-    public OS400FTPEntryParserAdditionalTest(String name)
+    public OS400FTPEntryParserAdditionalTest(final String name)
     {
         super(name);
     }
@@ -81,7 +81,7 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
     @Override
     public void testParseFieldsOnDirectory() throws Exception
     {
-        FTPFile f = getParser().parseFTPEntry("PEP             36864 04/03/24 14:06:34 *DIR       dir1/");
+        final FTPFile f = getParser().parseFTPEntry("PEP             36864 04/03/24 14:06:34 *DIR       dir1/");
         assertNotNull("Could not parse entry.",
                       f);
         assertTrue("Should have been a directory.",
@@ -93,7 +93,7 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
         assertEquals(36864,
                      f.getSize());
 
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MONTH, Calendar.MARCH);
 
         cal.set(Calendar.YEAR, 2004);
@@ -107,7 +107,7 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
     }
 
     @Override
-    protected void doAdditionalGoodTests(String test, FTPFile f)
+    protected void doAdditionalGoodTests(final String test, final FTPFile f)
     {
         if (test.startsWith("d"))
         {
@@ -119,7 +119,7 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
     @Override
     public void testParseFieldsOnFile() throws Exception
     {
-        FTPFile f = getParser().parseFTPEntry("PEP              5000000000 04/03/24 14:06:29 *STMF      build.xml");
+        final FTPFile f = getParser().parseFTPEntry("PEP              5000000000 04/03/24 14:06:29 *STMF      build.xml");
         assertNotNull("Could not parse entry.",
                       f);
         assertTrue("Should have been a file.",
@@ -131,7 +131,7 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
         assertEquals(5000000000L,
                      f.getSize());
 
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
 
         cal.set(Calendar.DAY_OF_MONTH, 24);
         cal.set(Calendar.MONTH, Calendar.MARCH);

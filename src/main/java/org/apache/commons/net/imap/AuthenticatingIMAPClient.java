@@ -46,7 +46,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
      * Constructor for AuthenticatingIMAPClient that delegates to IMAPSClient.
      * @param implicit The security mode (Implicit/Explicit).
      */
-    public AuthenticatingIMAPClient(boolean implicit)
+    public AuthenticatingIMAPClient(final boolean implicit)
     {
         this(DEFAULT_PROTOCOL, implicit);
     }
@@ -55,7 +55,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
      * Constructor for AuthenticatingIMAPClient that delegates to IMAPSClient.
      * @param proto the protocol.
      */
-    public AuthenticatingIMAPClient(String proto)
+    public AuthenticatingIMAPClient(final String proto)
     {
         this(proto, false);
     }
@@ -65,7 +65,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
      * @param proto the protocol.
      * @param implicit The security mode(Implicit/Explicit).
      */
-    public AuthenticatingIMAPClient(String proto, boolean implicit)
+    public AuthenticatingIMAPClient(final String proto, final boolean implicit)
     {
         this(proto, implicit, null);
     }
@@ -76,7 +76,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
      * @param implicit The security mode(Implicit/Explicit).
      * @param ctx the context
      */
-    public AuthenticatingIMAPClient(String proto, boolean implicit, SSLContext ctx)
+    public AuthenticatingIMAPClient(final String proto, final boolean implicit, final SSLContext ctx)
     {
         super(proto, implicit, ctx);
     }
@@ -86,7 +86,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
      * @param implicit The security mode(Implicit/Explicit).
      * @param ctx A pre-configured SSL Context.
      */
-    public AuthenticatingIMAPClient(boolean implicit, SSLContext ctx)
+    public AuthenticatingIMAPClient(final boolean implicit, final SSLContext ctx)
     {
         this(DEFAULT_PROTOCOL, implicit, ctx);
     }
@@ -95,7 +95,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
      * Constructor for AuthenticatingIMAPClient that delegates to IMAPSClient.
      * @param context A pre-configured SSL Context.
      */
-    public AuthenticatingIMAPClient(SSLContext context)
+    public AuthenticatingIMAPClient(final SSLContext context)
     {
         this(false, context);
     }
@@ -117,8 +117,8 @@ public class AuthenticatingIMAPClient extends IMAPSClient
      * @throws InvalidKeySpecException If the CRAM hash algorithm
      *      failed to use the given password.
      */
-    public boolean authenticate(AuthenticatingIMAPClient.AUTH_METHOD method,
-                        String username, String password)
+    public boolean authenticate(final AuthenticatingIMAPClient.AUTH_METHOD method,
+                        final String username, final String password)
                         throws IOException, NoSuchAlgorithmException,
                         InvalidKeyException, InvalidKeySpecException
     {
@@ -142,8 +142,8 @@ public class AuthenticatingIMAPClient extends IMAPSClient
      * @throws InvalidKeySpecException If the CRAM hash algorithm
      *      failed to use the given password.
      */
-    public boolean auth(AuthenticatingIMAPClient.AUTH_METHOD method,
-                        String username, String password)
+    public boolean auth(final AuthenticatingIMAPClient.AUTH_METHOD method,
+                        final String username, final String password)
                         throws IOException, NoSuchAlgorithmException,
                         InvalidKeyException, InvalidKeySpecException
     {
@@ -156,7 +156,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
             case PLAIN:
             {
                 // the server sends an empty response ("+ "), so we don't have to read it.
-                int result = sendData(
+                final int result = sendData(
                     Base64.encodeBase64StringUnChunked(("\000" + username + "\000" + password)
                             .getBytes(getCharset())));
                 if (result == IMAPReply.OK)
@@ -168,20 +168,20 @@ public class AuthenticatingIMAPClient extends IMAPSClient
             case CRAM_MD5:
             {
                 // get the CRAM challenge (after "+ ")
-                byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(2).trim());
+                final byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(2).trim());
                 // get the Mac instance
-                Mac hmac_md5 = Mac.getInstance("HmacMD5");
+                final Mac hmac_md5 = Mac.getInstance("HmacMD5");
                 hmac_md5.init(new SecretKeySpec(password.getBytes(getCharset()), "HmacMD5"));
                 // compute the result:
-                byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharset());
+                final byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharset());
                 // join the byte arrays to form the reply
-                byte[] usernameBytes = username.getBytes(getCharset());
-                byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
+                final byte[] usernameBytes = username.getBytes(getCharset());
+                final byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
                 System.arraycopy(usernameBytes, 0, toEncode, 0, usernameBytes.length);
                 toEncode[usernameBytes.length] = ' ';
                 System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
                 // send the reply and read the server code:
-                int result = sendData(Base64.encodeBase64StringUnChunked(toEncode));
+                final int result = sendData(Base64.encodeBase64StringUnChunked(toEncode));
                 if (result == IMAPReply.OK)
                 {
                     setState(IMAP.IMAPState.AUTH_STATE);
@@ -196,7 +196,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
                 {
                     return false;
                 }
-                int result = sendData(Base64.encodeBase64StringUnChunked(password.getBytes(getCharset())));
+                final int result = sendData(Base64.encodeBase64StringUnChunked(password.getBytes(getCharset())));
                 if (result == IMAPReply.OK)
                 {
                     setState(IMAP.IMAPState.AUTH_STATE);
@@ -206,7 +206,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
             case XOAUTH:
             case XOAUTH2:
             {
-                int result = sendData(username);
+                final int result = sendData(username);
                 if (result == IMAPReply.OK)
                 {
                     setState(IMAP.IMAPState.AUTH_STATE);
@@ -224,10 +224,10 @@ public class AuthenticatingIMAPClient extends IMAPSClient
      * @param a The byte array to convert.
      * @return The resulting String of hex codes.
      */
-    private String _convertToHexString(byte[] a)
+    private String _convertToHexString(final byte[] a)
     {
-        StringBuilder result = new StringBuilder(a.length*2);
-        for (byte element : a)
+        final StringBuilder result = new StringBuilder(a.length*2);
+        for (final byte element : a)
         {
             if ( (element & 0x0FF) <= 15 ) {
                 result.append("0");
@@ -255,7 +255,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
 
         private final String authName;
 
-        private AUTH_METHOD(String name){
+        private AUTH_METHOD(final String name){
             this.authName=name;
         }
         /**

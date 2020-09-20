@@ -47,7 +47,7 @@ public class FTPConnectionClosedException extends IOException
      *
      * @param message  The message explaining the reason for the exception.
      ***/
-    public FTPConnectionClosedException(String message)
+    public FTPConnectionClosedException(final String message)
     {
         super(message);
     }

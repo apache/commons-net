@@ -108,7 +108,7 @@ public final class TelnetCommand
      * @param code The command code of the telnet protocol command.
      * @return The string representation of the telnet protocol command.
      ***/
-    public static final String getCommand(int code)
+    public static final String getCommand(final int code)
     {
         return __commandString[__FIRST_COMMAND - code];
     }
@@ -120,7 +120,7 @@ public final class TelnetCommand
      * @param code  The command code to test.
      * @return True if the command code is valid, false if not.
      **/
-    public static final boolean isValidCommand(int code)
+    public static final boolean isValidCommand(final int code)
     {
         return (code <= __FIRST_COMMAND && code >= __LAST_COMMAND);
     }

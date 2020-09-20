@@ -82,7 +82,7 @@ public final class NNTPReply
      * @return True if a reply code is an informational response, false
      *         if not.
      ***/
-    public static boolean isInformational(int reply)
+    public static boolean isInformational(final int reply)
     {
         return (reply >= 100 && reply < 200);
     }
@@ -97,7 +97,7 @@ public final class NNTPReply
      * @return True if a reply code is a postive completion response, false
      *         if not.
      ***/
-    public static boolean isPositiveCompletion(int reply)
+    public static boolean isPositiveCompletion(final int reply)
     {
         return (reply >= 200 && reply < 300);
     }
@@ -115,7 +115,7 @@ public final class NNTPReply
      * @return True if a reply code is a postive intermediate response, false
      *         if not.
      ***/
-    public static boolean isPositiveIntermediate(int reply)
+    public static boolean isPositiveIntermediate(final int reply)
     {
         return (reply >= 300 && reply < 400);
     }
@@ -132,7 +132,7 @@ public final class NNTPReply
      * @return True if a reply code is a negative transient response, false
      *         if not.
      ***/
-    public static boolean isNegativeTransient(int reply)
+    public static boolean isNegativeTransient(final int reply)
     {
         return (reply >= 400 && reply < 500);
     }
@@ -148,7 +148,7 @@ public final class NNTPReply
      * @return True if a reply code is a negative permanent response, false
      *         if not.
      ***/
-    public static boolean isNegativePermanent(int reply)
+    public static boolean isNegativePermanent(final int reply)
     {
         return (reply >= 500 && reply < 600);
     }

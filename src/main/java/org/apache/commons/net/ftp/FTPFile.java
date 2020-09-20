@@ -88,7 +88,7 @@ public class FTPFile implements Serializable
      * @param rawListing line that could not be parsed.
      * @since 3.4
      */
-    FTPFile(String rawListing)
+    FTPFile(final String rawListing)
     {
         _permissions = null; // flag that entry is invalid
         _rawListing = rawListing;
@@ -110,7 +110,7 @@ public class FTPFile implements Serializable
      *
      * @param rawListing  The raw FTP server listing.
      ***/
-    public void setRawListing(String rawListing)
+    public void setRawListing(final String rawListing)
     {
         _rawListing = rawListing;
     }
@@ -191,7 +191,7 @@ public class FTPFile implements Serializable
      *
      * @param type  The integer code representing the type of the file.
      ***/
-    public void setType(int type)
+    public void setType(final int type)
     {
         _type = type;
     }
@@ -214,7 +214,7 @@ public class FTPFile implements Serializable
      *
      * @param name  The name of the file.
      ***/
-    public void setName(String name)
+    public void setName(final String name)
     {
         _name = name;
     }
@@ -234,7 +234,7 @@ public class FTPFile implements Serializable
      * Set the file size in bytes.
      * @param size The file size in bytes.
      */
-    public void setSize(long size)
+    public void setSize(final long size)
     {
         _size = size;
     }
@@ -257,7 +257,7 @@ public class FTPFile implements Serializable
      *
      * @param links  The number of hard links to this file.
      ***/
-    public void setHardLinkCount(int links)
+    public void setHardLinkCount(final int links)
     {
         _hardLinkCount = links;
     }
@@ -281,7 +281,7 @@ public class FTPFile implements Serializable
      *
      * @param group The name of the group owning the file.
      ***/
-    public void setGroup(String group)
+    public void setGroup(final String group)
     {
         _group = group;
     }
@@ -305,7 +305,7 @@ public class FTPFile implements Serializable
      *
      * @param user The name of the user owning the file.
      ***/
-    public void setUser(String user)
+    public void setUser(final String user)
     {
         _user = user;
     }
@@ -328,7 +328,7 @@ public class FTPFile implements Serializable
      *
      * @param link  The file pointed to by the symbolic link.
      ***/
-    public void setLink(String link)
+    public void setLink(final String link)
     {
         _link = link;
     }
@@ -354,7 +354,7 @@ public class FTPFile implements Serializable
      *
      * @param date A Calendar instance representing the file timestamp.
      ***/
-    public void setTimestamp(Calendar date)
+    public void setTimestamp(final Calendar date)
     {
         _date = date;
     }
@@ -383,7 +383,7 @@ public class FTPFile implements Serializable
      * @param value  True if permission is allowed, false if not.
      * @throws ArrayIndexOutOfBoundsException if either of the parameters is out of range
      ***/
-    public void setPermission(int access, int permission, boolean value)
+    public void setPermission(final int access, final int permission, final boolean value)
     {
         _permissions[access][permission] = value;
     }
@@ -402,7 +402,7 @@ public class FTPFile implements Serializable
      * @return true if {@link #isValid()} is {@code true &&} the associated permission is set;
      * {@code false} otherwise.
      ***/
-    public boolean hasPermission(int access, int permission)
+    public boolean hasPermission(final int access, final int permission)
     {
         if (_permissions == null) {
             return false;
@@ -459,8 +459,8 @@ public class FTPFile implements Serializable
         if (!isValid()) {
             return "[Invalid: could not parse file entry]";
         }
-        StringBuilder sb = new StringBuilder();
-        Formatter fmt = new Formatter(sb);
+        final StringBuilder sb = new StringBuilder();
+        final Formatter fmt = new Formatter(sb);
         sb.append(formatType());
         sb.append(permissionToString(USER_ACCESS));
         sb.append(permissionToString(GROUP_ACCESS));
@@ -471,10 +471,10 @@ public class FTPFile implements Serializable
         Calendar timestamp = getTimestamp();
         if (timestamp != null) {
             if (timezone != null) {
-                TimeZone newZone = TimeZone.getTimeZone(timezone);
+                final TimeZone newZone = TimeZone.getTimeZone(timezone);
                 if (!newZone.equals(timestamp.getTimeZone())){
-                    Date original = timestamp.getTime();
-                    Calendar newStamp = Calendar.getInstance(newZone);
+                    final Date original = timestamp.getTime();
+                    final Calendar newStamp = Calendar.getInstance(newZone);
                     newStamp.setTime(original);
                     timestamp = newStamp;
                 }
@@ -514,8 +514,8 @@ public class FTPFile implements Serializable
         }
     }
 
-    private String permissionToString(int access ){
-        StringBuilder sb = new StringBuilder();
+    private String permissionToString(final int access ){
+        final StringBuilder sb = new StringBuilder();
         if (hasPermission(access, READ_PERMISSION)) {
             sb.append('r');
         } else {

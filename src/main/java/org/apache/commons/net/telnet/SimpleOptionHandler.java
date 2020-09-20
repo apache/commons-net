@@ -35,11 +35,11 @@ public class SimpleOptionHandler extends TelnetOptionHandler
      * @param acceptlocal - if set to true, any DO request is accepted.
      * @param acceptremote - if set to true, any WILL request is accepted.
      ***/
-    public SimpleOptionHandler(int optcode,
-                                boolean initlocal,
-                                boolean initremote,
-                                boolean acceptlocal,
-                                boolean acceptremote)
+    public SimpleOptionHandler(final int optcode,
+                                final boolean initlocal,
+                                final boolean initremote,
+                                final boolean acceptlocal,
+                                final boolean acceptremote)
     {
         super(optcode, initlocal, initremote,
                                       acceptlocal, acceptremote);
@@ -51,7 +51,7 @@ public class SimpleOptionHandler extends TelnetOptionHandler
      * <p>
      * @param optcode - option code.
      ***/
-    public SimpleOptionHandler(int optcode)
+    public SimpleOptionHandler(final int optcode)
     {
         super(optcode, false, false, false, false);
     }

@@ -33,8 +33,8 @@ public class SuppressGAOptionHandler extends TelnetOptionHandler
      * @param acceptlocal - if set to true, any DO request is accepted.
      * @param acceptremote - if set to true, any WILL request is accepted.
      ***/
-    public SuppressGAOptionHandler(boolean initlocal, boolean initremote,
-                                boolean acceptlocal, boolean acceptremote)
+    public SuppressGAOptionHandler(final boolean initlocal, final boolean initremote,
+                                final boolean acceptlocal, final boolean acceptremote)
     {
         super(TelnetOption.SUPPRESS_GO_AHEAD, initlocal, initremote,
                                       acceptlocal, acceptremote);

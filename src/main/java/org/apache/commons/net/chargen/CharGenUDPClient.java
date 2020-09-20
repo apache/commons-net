@@ -89,7 +89,7 @@ public final class CharGenUDPClient extends DatagramSocketClient
      * @param port The port of the service.
      * @throws IOException If an error occurs while sending the datagram.
      ***/
-    public void send(InetAddress host, int port) throws IOException
+    public void send(final InetAddress host, final int port) throws IOException
     {
         __sendPacket.setAddress(host);
         __sendPacket.setPort(port);
@@ -100,7 +100,7 @@ public final class CharGenUDPClient extends DatagramSocketClient
      * @param host the destination host
      * @throws IOException on error
      ***/
-    public void send(InetAddress host) throws IOException
+    public void send(final InetAddress host) throws IOException
     {
         send(host, DEFAULT_PORT);
     }

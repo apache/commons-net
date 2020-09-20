@@ -62,8 +62,8 @@ public class ExtendedPOP3Client extends POP3SClient
      * @throws InvalidKeySpecException If the CRAM hash algorithm
      *      failed to use the given password.
      ***/
-    public boolean auth(AUTH_METHOD method,
-                        String username, String password)
+    public boolean auth(final AUTH_METHOD method,
+                        final String username, final String password)
                         throws IOException, NoSuchAlgorithmException,
                         InvalidKeyException, InvalidKeySpecException
     {
@@ -82,15 +82,15 @@ public class ExtendedPOP3Client extends POP3SClient
                     ) == POP3Reply.OK;
             case CRAM_MD5:
                 // get the CRAM challenge
-                byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(2).trim());
+                final byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(2).trim());
                 // get the Mac instance
-                Mac hmac_md5 = Mac.getInstance("HmacMD5");
+                final Mac hmac_md5 = Mac.getInstance("HmacMD5");
                 hmac_md5.init(new SecretKeySpec(password.getBytes(getCharset()), "HmacMD5"));
                 // compute the result:
-                byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharset());
+                final byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharset());
                 // join the byte arrays to form the reply
-                byte[] usernameBytes = username.getBytes(getCharset());
-                byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
+                final byte[] usernameBytes = username.getBytes(getCharset());
+                final byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
                 System.arraycopy(usernameBytes, 0, toEncode, 0, usernameBytes.length);
                 toEncode[usernameBytes.length] = ' ';
                 System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
@@ -108,10 +108,10 @@ public class ExtendedPOP3Client extends POP3SClient
      * @param a The byte array to convert.
      * @return The resulting String of hex codes.
      */
-    private String _convertToHexString(byte[] a)
+    private String _convertToHexString(final byte[] a)
     {
-        StringBuilder result = new StringBuilder(a.length*2);
-        for (byte element : a)
+        final StringBuilder result = new StringBuilder(a.length*2);
+        for (final byte element : a)
         {
             if ( (element & 0x0FF) <= 15 ) {
                 result.append("0");
@@ -134,7 +134,7 @@ public class ExtendedPOP3Client extends POP3SClient
 
         private final String methodName;
 
-        AUTH_METHOD(String methodName){
+        AUTH_METHOD(final String methodName){
             this.methodName = methodName;
         }
         /**

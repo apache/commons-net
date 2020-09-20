@@ -39,13 +39,13 @@ public class FTPConfigEntryParserTest extends TestCase {
     public void testParseFieldsOnAIX() {
 
         // Set a date format for this server type
-        FTPClientConfig config = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
+        final FTPClientConfig config = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
         config.setDefaultDateFormatStr("dd MMM HH:mm");
 
-        UnixFTPEntryParser parser = new UnixFTPEntryParser();
+        final UnixFTPEntryParser parser = new UnixFTPEntryParser();
         parser.configure(config);
 
-        FTPFile f = parser.parseFTPEntry("-rw-r-----   1 ravensm  sca          814 02 Mar 16:27 ZMIR2.m");
+        final FTPFile f = parser.parseFTPEntry("-rw-r-----   1 ravensm  sca          814 02 Mar 16:27 ZMIR2.m");
 
         assertNotNull("Could not parse entry.", f);
         assertFalse("Is not a directory.", f.isDirectory());
@@ -79,7 +79,7 @@ public class FTPConfigEntryParserTest extends TestCase {
         assertEquals("ZMIR2.m", f.getName());
         assertEquals(814, f.getSize());
 
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
 
         cal.set(Calendar.MONTH, Calendar.MARCH);
         cal.set(Calendar.DAY_OF_MONTH, 2);
@@ -102,13 +102,13 @@ public class FTPConfigEntryParserTest extends TestCase {
      */
     public void testParseEntryWithSymlink() {
 
-        FTPClientConfig config = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
+        final FTPClientConfig config = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
         config.setDefaultDateFormatStr("yyyy-MM-dd HH:mm");
 
-        UnixFTPEntryParser parser = new UnixFTPEntryParser();
+        final UnixFTPEntryParser parser = new UnixFTPEntryParser();
         parser.configure(config);
 
-        FTPFile f = parser.parseFTPEntry("lrwxrwxrwx   1 neeme neeme    23 2005-03-02 18:06 macros");
+        final FTPFile f = parser.parseFTPEntry("lrwxrwxrwx   1 neeme neeme    23 2005-03-02 18:06 macros");
 
         assertNotNull("Could not parse entry.", f);
         assertFalse("Is not a directory.", f.isDirectory());
@@ -141,7 +141,7 @@ public class FTPConfigEntryParserTest extends TestCase {
         assertEquals("macros", f.getName());
         assertEquals(23, f.getSize());
 
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
 
         cal.set(Calendar.MONTH, Calendar.MARCH);
         cal.set(Calendar.DAY_OF_MONTH, 2);

@@ -34,50 +34,50 @@ public class MessageThreading {
     public MessageThreading() {
     }
 
-    public static void main(String[] args) throws SocketException, IOException {
+    public static void main(final String[] args) throws SocketException, IOException {
 
         if (args.length != 2 && args.length != 4) {
             System.out.println("Usage: MessageThreading <hostname> <groupname> [<user> <password>]");
             return;
         }
 
-        String hostname = args[0];
-        String newsgroup = args[1];
+        final String hostname = args[0];
+        final String newsgroup = args[1];
 
-        NNTPClient client = new NNTPClient();
+        final NNTPClient client = new NNTPClient();
         client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
         client.connect(hostname);
 
         if (args.length == 4) { // Optional auth
-            String user = args[2];
-            String password = args[3];
+            final String user = args[2];
+            final String password = args[3];
             if(!client.authenticate(user, password)) {
                 System.out.println("Authentication failed for user " + user + "!");
                 System.exit(1);
             }
         }
 
-        String fmt[] = client.listOverviewFmt();
+        final String fmt[] = client.listOverviewFmt();
         if (fmt != null) {
             System.out.println("LIST OVERVIEW.FMT:");
-            for(String s : fmt) {
+            for(final String s : fmt) {
                 System.out.println(s);
             }
         } else {
             System.out.println("Failed to get OVERVIEW.FMT");
         }
-        NewsgroupInfo group = new NewsgroupInfo();
+        final NewsgroupInfo group = new NewsgroupInfo();
         client.selectNewsgroup(newsgroup, group);
 
-        long lowArticleNumber = group.getFirstArticleLong();
-        long highArticleNumber = lowArticleNumber + 5000;
+        final long lowArticleNumber = group.getFirstArticleLong();
+        final long highArticleNumber = lowArticleNumber + 5000;
 
         System.out.println("Retrieving articles between [" + lowArticleNumber + "] and [" + highArticleNumber + "]");
-        Iterable<Article> articles = client.iterateArticleInfo(lowArticleNumber, highArticleNumber);
+        final Iterable<Article> articles = client.iterateArticleInfo(lowArticleNumber, highArticleNumber);
 
         System.out.println("Building message thread tree...");
-        Threader threader = new Threader();
-        Article root = (Article)threader.thread(articles);
+        final Threader threader = new Threader();
+        final Article root = (Article)threader.thread(articles);
 
         Article.printThread(root, 0);
     }

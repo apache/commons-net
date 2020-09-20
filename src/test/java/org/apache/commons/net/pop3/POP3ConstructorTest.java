@@ -41,7 +41,7 @@ public class POP3ConstructorTest extends TestCase
     String password = POP3Constants.password;
     String mailhost = POP3Constants.mailhost;
 
-    public POP3ConstructorTest(String name)
+    public POP3ConstructorTest(final String name)
     {
         super(name);
     }
@@ -77,7 +77,7 @@ public class POP3ConstructorTest extends TestCase
 
     public void testPOP3DefaultConstructor()
     {
-        POP3 pop = new POP3();
+        final POP3 pop = new POP3();
 
         assertEquals(110, pop.getDefaultPort());
         assertEquals(POP3.DISCONNECTED_STATE, pop.getState());
@@ -87,7 +87,7 @@ public class POP3ConstructorTest extends TestCase
 
     public void testPOP3ClientStateTransition() throws Exception
     {
-        POP3Client pop = new POP3Client();
+        final POP3Client pop = new POP3Client();
 
         //Initial state
         assertEquals(110, pop.getDefaultPort());
@@ -110,7 +110,7 @@ public class POP3ConstructorTest extends TestCase
         assertEquals(POP3.TRANSACTION_STATE, pop.getState());
 
         //Make sure we have at least one message to test
-        POP3MessageInfo[] msg = pop.listMessages();
+        final POP3MessageInfo[] msg = pop.listMessages();
 
         if (msg.length > 0)
         {

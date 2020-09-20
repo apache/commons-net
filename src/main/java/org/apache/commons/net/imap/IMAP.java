@@ -102,7 +102,7 @@ public class IMAP extends SocketClient
      */
     public static final IMAPChunkListener TRUE_CHUNK_LISTENER = new IMAPChunkListener(){
         @Override
-        public boolean chunkReceived(IMAP imap) {
+        public boolean chunkReceived(final IMAP imap) {
             return true;
         }
 
@@ -142,7 +142,7 @@ public class IMAP extends SocketClient
      * @param wantTag {@code true} if the command expects a tagged response.
      * @throws IOException
      */
-    private void __getReply(boolean wantTag) throws IOException
+    private void __getReply(final boolean wantTag) throws IOException
     {
         _replyLines.clear();
         String line = _reader.readLine();
@@ -166,9 +166,9 @@ public class IMAP extends SocketClient
                     literalCount -= (line.length() + 2); // Allow for CRLF
                 }
                 if (isMultiLine) {
-                    IMAPChunkListener il = __chunkListener;
+                    final IMAPChunkListener il = __chunkListener;
                     if (il != null) {
-                        boolean clear = il.chunkReceived(this);
+                        final boolean clear = il.chunkReceived(this);
                         if (clear) {
                             fireReplyReceived(IMAPReply.PARTIAL, getReplyString());
                             _replyLines.clear();
@@ -200,7 +200,7 @@ public class IMAP extends SocketClient
      * @since 3.4
      */
     @Override
-    protected void fireReplyReceived(int replyCode, String ignored) {
+    protected void fireReplyReceived(final int replyCode, final String ignored) {
         if (getCommandSupport().getListenerCount() > 0) {
             getCommandSupport().fireReplyReceived(replyCode, getReplyString());
         }
@@ -220,7 +220,7 @@ public class IMAP extends SocketClient
         __writer =
           new BufferedWriter(new OutputStreamWriter(_output_,
                                                     __DEFAULT_ENCODING));
-        int tmo = getSoTimeout();
+        final int tmo = getSoTimeout();
         if (tmo <= 0) { // none set currently
             setSoTimeout(connectTimeout); // use connect timeout to ensure we don't block forever
         }
@@ -237,7 +237,7 @@ public class IMAP extends SocketClient
      *
      * @param state  The new state.
      */
-    protected void setState(IMAP.IMAPState state)
+    protected void setState(final IMAP.IMAPState state)
     {
         __state = state;
     }
@@ -280,9 +280,9 @@ public class IMAP extends SocketClient
      * @param args     The command arguments.
      * @return  The server reply code (either IMAPReply.OK, IMAPReply.NO or IMAPReply.BAD).
      */
-    private int sendCommandWithID(String commandID, String command, String args) throws IOException
+    private int sendCommandWithID(final String commandID, final String command, final String args) throws IOException
     {
-        StringBuilder __commandBuffer = new StringBuilder();
+        final StringBuilder __commandBuffer = new StringBuilder();
         if (commandID != null)
         {
             __commandBuffer.append(commandID);
@@ -297,7 +297,7 @@ public class IMAP extends SocketClient
         }
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
-        String message = __commandBuffer.toString();
+        final String message = __commandBuffer.toString();
         __writer.write(message);
         __writer.flush();
 
@@ -315,7 +315,7 @@ public class IMAP extends SocketClient
      * @return  The server reply code (see IMAPReply).
      * @throws IOException on error
      */
-    public int sendCommand(String command, String args) throws IOException
+    public int sendCommand(final String command, final String args) throws IOException
     {
         return sendCommandWithID(generateCommandID(), command, args);
     }
@@ -328,7 +328,7 @@ public class IMAP extends SocketClient
      * @return  The server reply code (see IMAPReply).
      * @throws IOException on error
      */
-    public int sendCommand(String command) throws IOException
+    public int sendCommand(final String command) throws IOException
     {
         return sendCommand(command, null);
     }
@@ -342,7 +342,7 @@ public class IMAP extends SocketClient
      * @return  The server reply code (see IMAPReply).
      * @throws IOException on error
      */
-    public int sendCommand(IMAPCommand command, String args) throws IOException
+    public int sendCommand(final IMAPCommand command, final String args) throws IOException
     {
         return sendCommand(command.getIMAPCommand(), args);
     }
@@ -356,7 +356,7 @@ public class IMAP extends SocketClient
      * @return  {@code true} if the command was successful
      * @throws IOException on error
      */
-    public boolean doCommand(IMAPCommand command, String args) throws IOException
+    public boolean doCommand(final IMAPCommand command, final String args) throws IOException
     {
         return IMAPReply.isSuccess(sendCommand(command, args));
     }
@@ -370,7 +370,7 @@ public class IMAP extends SocketClient
      * @return  The server reply code (see IMAPReply).
      * @throws IOException on error
     **/
-    public int sendCommand(IMAPCommand command) throws IOException
+    public int sendCommand(final IMAPCommand command) throws IOException
     {
         return sendCommand(command, null);
     }
@@ -383,7 +383,7 @@ public class IMAP extends SocketClient
      * @return  {@code true} if the command was successful
      * @throws IOException on error
      */
-    public boolean doCommand(IMAPCommand command) throws IOException
+    public boolean doCommand(final IMAPCommand command) throws IOException
     {
         return IMAPReply.isSuccess(sendCommand(command));
     }
@@ -395,7 +395,7 @@ public class IMAP extends SocketClient
      * @return  The server reply code (see IMAPReply).
      * @throws IOException on error
      */
-    public int sendData(String command) throws IOException
+    public int sendData(final String command) throws IOException
     {
         return sendCommandWithID(null, command, null);
     }
@@ -419,8 +419,8 @@ public class IMAP extends SocketClient
      */
     public String getReplyString()
     {
-        StringBuilder buffer = new StringBuilder(256);
-        for (String s : _replyLines)
+        final StringBuilder buffer = new StringBuilder(256);
+        for (final String s : _replyLines)
         {
             buffer.append(s);
             buffer.append(SocketClient.NETASCII_EOL);
@@ -440,7 +440,7 @@ public class IMAP extends SocketClient
      * @see #TRUE_CHUNK_LISTENER
      * @since 3.4
      */
-    public void setChunkListener(IMAPChunkListener listener) {
+    public void setChunkListener(final IMAPChunkListener listener) {
         __chunkListener = listener;
     }
 
@@ -450,7 +450,7 @@ public class IMAP extends SocketClient
      */
     protected String generateCommandID()
     {
-        String res = new String (_initialID);
+        final String res = new String (_initialID);
         // "increase" the ID for the next call
         boolean carry = true; // want to increment initially
         for (int i = _initialID.length-1; carry && i>=0; i--)
@@ -480,7 +480,7 @@ public class IMAP extends SocketClient
      * @param input the value to be quoted, may be null
      * @return the quoted value
      */
-    static String quoteMailboxName(String input) {
+    static String quoteMailboxName(final String input) {
         if (input == null) { // Don't throw NPE here
             return null;
         }

@@ -51,7 +51,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
      * input source.
      * @param reader  The Reader input source containing the message.
      */
-    public DotTerminatedMessageReader(Reader reader)
+    public DotTerminatedMessageReader(final Reader reader)
     {
         super(reader);
         // Assumes input is at start of message
@@ -143,7 +143,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
      *            stream.
      */
     @Override
-    public int read(char[] buffer) throws IOException
+    public int read(final char[] buffer) throws IOException
     {
         return read(buffer, 0, buffer.length);
     }
@@ -163,7 +163,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
      *            stream.
      */
     @Override
-    public int read(char[] buffer, int offset, int length) throws IOException
+    public int read(final char[] buffer, int offset, int length) throws IOException
     {
         if (length < 1)
         {
@@ -177,7 +177,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
                 return -1;
             }
 
-            int off = offset;
+            final int off = offset;
 
             do
             {
@@ -228,7 +228,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
      */
     @Override
     public String readLine() throws IOException {
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         int intch;
         synchronized(lock) { // make thread-safe (hopefully!)
             while((intch = read()) != -1)
@@ -239,7 +239,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
                 sb.append((char) intch);
             }
         }
-        String string = sb.toString();
+        final String string = sb.toString();
         if (string.length() == 0) { // immediate EOF
             return null;
         }
