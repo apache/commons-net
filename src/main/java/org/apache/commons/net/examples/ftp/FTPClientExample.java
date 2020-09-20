@@ -397,13 +397,9 @@ __main:
 
             if (storeFile)
             {
-                InputStream input;
-
-                input = new FileInputStream(local);
-
-                ftp.storeFile(remote, input);
-
-                input.close();
+                try (InputStream input = new FileInputStream(local)) {
+                    ftp.storeFile(remote, input);
+                }
 
                 if (keepAliveTimeout > 0) {
                     showCslStats(ftp);
@@ -505,13 +501,9 @@ __main:
             }
             else
             {
-                OutputStream output;
-
-                output = new FileOutputStream(local);
-
-                ftp.retrieveFile(remote, output);
-
-                output.close();
+                try (OutputStream output = new FileOutputStream(local)) {
+                    ftp.retrieveFile(remote, output);
+                }
 
                 if (keepAliveTimeout > 0) {
                     showCslStats(ftp);

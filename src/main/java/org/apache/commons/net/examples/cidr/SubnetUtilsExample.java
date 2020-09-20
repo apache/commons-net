@@ -55,17 +55,16 @@ public class SubnetUtilsExample {
         System.out.printf("Total usable addresses: \t%d%n", Long.valueOf(info.getAddressCountLong()));
         System.out.printf("Address List: %s%n%n", Arrays.toString(info.getAllAddresses()));
 
-        final String prompt ="Enter an IP address (e.g. 192.168.0.10):";
+        final String prompt = "Enter an IP address (e.g. 192.168.0.10):";
         System.out.println(prompt);
-        final Scanner scanner = new Scanner(System.in);
-        while (scanner.hasNextLine()) {
-            final String address = scanner.nextLine();
-            System.out.println("The IP address [" + address + "] is "
-                    + (info.isInRange(address) ? "" : "not ")
-                    + "within the subnet [" + subnet + "]");
-            System.out.println(prompt);
+        try (final Scanner scanner = new Scanner(System.in)) {
+            while (scanner.hasNextLine()) {
+                final String address = scanner.nextLine();
+                System.out.println("The IP address [" + address + "] is " + (info.isInRange(address) ? "" : "not ")
+                        + "within the subnet [" + subnet + "]");
+                System.out.println(prompt);
+            }
         }
-        scanner.close();
     }
 
 }

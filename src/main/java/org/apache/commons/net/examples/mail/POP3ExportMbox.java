@@ -141,19 +141,20 @@ public final class POP3ExportMbox
                     System.out.println("Writing dir: " + mbox);
                     // Currently POP3Client uses iso-8859-1
                     for (int i = 1; i <= count; i++) {
-                        final OutputStreamWriter fw = new OutputStreamWriter(
-                            new FileOutputStream(new File(mbox,i+".eml")),StandardCharsets.ISO_8859_1);
-                        writeFile(pop3, fw, i);
-                        fw.close();
+                        try (final OutputStreamWriter fw = new OutputStreamWriter(
+                                new FileOutputStream(new File(mbox, i + ".eml")), StandardCharsets.ISO_8859_1)) {
+                            writeFile(pop3, fw, i);
+                        }
                     }
                 } else {
                     System.out.println("Writing file: " + mbox);
                     // Currently POP3Client uses iso-8859-1
-                    final OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(mbox),StandardCharsets.ISO_8859_1);
-                    for (int i = 1; i <= count; i++) {
-                        writeMbox(pop3, fw, i);
+                    try (final OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(mbox),
+                            StandardCharsets.ISO_8859_1)) {
+                        for (int i = 1; i <= count; i++) {
+                            writeMbox(pop3, fw, i);
+                        }
                     }
-                    fw.close();
                 }
             }
 
@@ -168,38 +169,36 @@ public final class POP3ExportMbox
     }
 
     private static void writeFile(final POP3Client pop3, final OutputStreamWriter fw, final int i) throws IOException {
-        final BufferedReader r = (BufferedReader) pop3.retrieveMessage(i);
-        String line;
-        while ((line = r.readLine()) != null)
-        {
-            fw.write(line);
-            fw.write("\n");
+        try (final BufferedReader r = (BufferedReader) pop3.retrieveMessage(i)) {
+            String line;
+            while ((line = r.readLine()) != null) {
+                fw.write(line);
+                fw.write("\n");
+            }
         }
-        r.close();
     }
 
     private static void writeMbox(final POP3Client pop3, final OutputStreamWriter fw, final int i) throws IOException {
         final SimpleDateFormat DATE_FORMAT // for mbox From_ lines
-        = new SimpleDateFormat("EEE MMM dd HH:mm:ss YYYY");
+                = new SimpleDateFormat("EEE MMM dd HH:mm:ss YYYY");
         final String replyTo = "MAILER-DAEMON"; // default
         final Date received = new Date();
-        final BufferedReader r = (BufferedReader) pop3.retrieveMessage(i);
-        fw.append("From ");
-        fw.append(replyTo);
-        fw.append(' ');
-        fw.append(DATE_FORMAT.format(received));
-        fw.append("\n");
-        String line;
-        while ((line = r.readLine()) != null)
-        {
-            if (startsWith(line, PATFROM)) {
-                fw.write(">");
+        try (final BufferedReader r = (BufferedReader) pop3.retrieveMessage(i)) {
+            fw.append("From ");
+            fw.append(replyTo);
+            fw.append(' ');
+            fw.append(DATE_FORMAT.format(received));
+            fw.append("\n");
+            String line;
+            while ((line = r.readLine()) != null) {
+                if (startsWith(line, PATFROM)) {
+                    fw.write(">");
+                }
+                fw.write(line);
+                fw.write("\n");
             }
-            fw.write(line);
             fw.write("\n");
         }
-        fw.write("\n");
-        r.close();
     }
 
     private static boolean startsWith(final String input, final Pattern pat) {

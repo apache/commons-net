@@ -47,26 +47,22 @@ public final class chargen
         int lines = 100;
         String line;
         final CharGenTCPClient client = new CharGenTCPClient();
-        BufferedReader chargenInput;
 
         // We want to timeout if a response takes longer than 60 seconds
         client.setDefaultTimeout(60000);
         client.connect(host);
-        chargenInput =
-            new BufferedReader(new InputStreamReader(client.getInputStream()));
+        try (BufferedReader chargenInput = new BufferedReader(new InputStreamReader(client.getInputStream()))) {
 
-        // We assume the chargen service outputs lines, but it really doesn't
-        // have to, so this code might actually not work if no newlines are
-        // present.
-        while (lines-- > 0)
-        {
-            if ((line = chargenInput.readLine()) == null) {
-                break;
+            // We assume the chargen service outputs lines, but it really doesn't
+            // have to, so this code might actually not work if no newlines are
+            // present.
+            while (lines-- > 0) {
+                if ((line = chargenInput.readLine()) == null) {
+                    break;
+                }
+                System.out.println(line);
             }
-            System.out.println(line);
         }
-
-        chargenInput.close();
         client.disconnect();
     }
 

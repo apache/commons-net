@@ -388,16 +388,14 @@ public class SMTPClient extends SMTP
      ***/
     public boolean sendShortMessageData(final String message) throws IOException
     {
-        Writer writer;
+        try (Writer writer = sendMessageData()) {
 
-        writer = sendMessageData();
+            if (writer == null) {
+                return false;
+            }
 
-        if (writer == null) {
-            return false;
+            writer.write(message);
         }
-
-        writer.write(message);
-        writer.close();
 
         return completePendingCommand();
     }

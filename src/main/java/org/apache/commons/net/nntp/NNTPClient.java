@@ -244,13 +244,12 @@ public class NNTPClient extends NNTP
     private NewsgroupInfo[] __readNewsgroupListing() throws IOException
     {
 
-        final BufferedReader reader = new DotTerminatedMessageReader(_reader_);
         // Start of with a big vector because we may be reading a very large
         // amount of groups.
         final Vector<NewsgroupInfo> list = new Vector<>(2048);
 
         String line;
-        try {
+        try (final BufferedReader reader = new DotTerminatedMessageReader(_reader_)) {
             while ((line = reader.readLine()) != null) {
                 final NewsgroupInfo tmp = __parseNewsgroupListEntry(line);
                 if (tmp != null) {
@@ -259,8 +258,6 @@ public class NNTPClient extends NNTP
                     throw new MalformedServerReplyException(line);
                 }
             }
-        } finally {
-            reader.close();
         }
         int size;
         if ((size = list.size()) < 1) {
@@ -769,12 +766,11 @@ public class NNTPClient extends NNTP
             return null;
         }
 
-        final StringWriter help = new StringWriter();
-        final BufferedReader reader = new DotTerminatedMessageReader(_reader_);
-        Util.copyReader(reader, help);
-        reader.close();
-        help.close();
-        return help.toString();
+        try (final StringWriter help = new StringWriter();
+                final BufferedReader reader = new DotTerminatedMessageReader(_reader_)) {
+            Util.copyReader(reader, help);
+            return help.toString();
+        }
     }
 
     /**
@@ -785,18 +781,18 @@ public class NNTPClient extends NNTP
      */
     public String[] listOverviewFmt() throws IOException
     {
-        if (!NNTPReply.isPositiveCompletion(sendCommand("LIST", "OVERVIEW.FMT"))){
+        if (!NNTPReply.isPositiveCompletion(sendCommand("LIST", "OVERVIEW.FMT"))) {
             return null;
         }
 
-        final BufferedReader reader = new DotTerminatedMessageReader(_reader_);
-        String line;
-        final ArrayList<String> list = new ArrayList<>();
-        while((line=reader.readLine()) != null) {
-            list.add(line);
+        try (final BufferedReader reader = new DotTerminatedMessageReader(_reader_)) {
+            String line;
+            final ArrayList<String> list = new ArrayList<>();
+            while ((line = reader.readLine()) != null) {
+                list.add(line);
+            }
+            return list.toArray(new String[list.size()]);
         }
-        reader.close();
-        return list.toArray(new String[list.size()]);
     }
 
     /***
@@ -1258,22 +1254,18 @@ public class NNTPClient extends NNTP
     public String[] listNewNews(final NewGroupsOrNewsQuery query)
     throws IOException
     {
-        if (!NNTPReply.isPositiveCompletion(
-                newnews(query.getNewsgroups(), query.getDate(), query.getTime(),
-                        query.isGMT(), query.getDistributions()))) {
+        if (!NNTPReply.isPositiveCompletion(newnews(query.getNewsgroups(), query.getDate(), query.getTime(),
+                query.isGMT(), query.getDistributions()))) {
             return null;
         }
 
         final Vector<String> list = new Vector<>();
-        final BufferedReader reader = new DotTerminatedMessageReader(_reader_);
+        try (final BufferedReader reader = new DotTerminatedMessageReader(_reader_)) {
 
-        String line;
-        try {
+            String line;
             while ((line = reader.readLine()) != null) {
                 list.addElement(line);
             }
-        } finally {
-            reader.close();
         }
 
         final int size = list.size();

@@ -825,9 +825,7 @@ implements Configurable
         {
             // if no activePortRange was set (correctly) -> getActivePort() = 0
             // -> new ServerSocket(0) -> bind to any free local port
-            final ServerSocket server = _serverSocketFactory_.createServerSocket(getActivePort(), 1, getHostAddress());
-
-            try {
+            try (final ServerSocket server = _serverSocketFactory_.createServerSocket(getActivePort(), 1, getHostAddress())) {
                 // Try EPRT only if remote server is over IPv6, if not use PORT,
                 // because EPRT has no advantage over PORT on IPv4.
                 // It could even have the disadvantage,
@@ -872,8 +870,6 @@ implements Configurable
                 if (__sendDataSocketBufferSize > 0) {
                     socket.setSendBufferSize(__sendDataSocketBufferSize);
                 }
-            } finally {
-                server.close();
             }
         }
         else
@@ -2940,27 +2936,25 @@ implements Configurable
      */
     public String[] listNames(final String pathname) throws IOException
     {
-        final Socket socket = _openDataConnection_(FTPCmd.NLST, getListArguments(pathname));
-
-        if (socket == null) {
-            return null;
-        }
-
-        final BufferedReader reader =
-            new BufferedReader(new InputStreamReader(socket.getInputStream(), getControlEncoding()));
-
         final ArrayList<String> results = new ArrayList<>();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            results.add(line);
+        try (final Socket socket = _openDataConnection_(FTPCmd.NLST, getListArguments(pathname))) {
+
+            if (socket == null) {
+                return null;
+            }
+
+            try (final BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(socket.getInputStream(), getControlEncoding()))) {
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    results.add(line);
+                }
+            }
         }
 
-        reader.close();
-        socket.close();
-
-        if (completePendingCommand())
-        {
-            final String[] names = new String[ results.size() ];
+        if (completePendingCommand()) {
+            final String[] names = new String[results.size()];
             return results.toArray(names);
         }
 

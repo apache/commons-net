@@ -85,23 +85,16 @@ public class FingerClient extends SocketClient
     {
         int read;
         final StringBuilder result = new StringBuilder(__buffer.length);
-        BufferedReader input;
 
-        input =
-            new BufferedReader(new InputStreamReader(getInputStream(longOutput,
-                               username), getCharset()));
-
-        try {
-            while (true)
-            {
+        try (BufferedReader input = new BufferedReader(
+                new InputStreamReader(getInputStream(longOutput, username), getCharset()));) {
+            while (true) {
                 read = input.read(__buffer, 0, __buffer.length);
                 if (read <= 0) {
                     break;
                 }
                 result.append(__buffer, 0, read);
             }
-        } finally {
-            input.close();
         }
 
         return result.toString();

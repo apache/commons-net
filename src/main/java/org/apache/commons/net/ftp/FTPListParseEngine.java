@@ -136,17 +136,16 @@ public class FTPListParseEngine {
      */
     private void readStream(final InputStream stream, final String encoding) throws IOException
     {
-        final BufferedReader reader = new BufferedReader(
-                new InputStreamReader(stream, Charsets.toCharset(encoding)));
+        try (final BufferedReader reader = new BufferedReader(
+                new InputStreamReader(stream, Charsets.toCharset(encoding)))) {
 
-        String line = this.parser.readNextEntry(reader);
+            String line = this.parser.readNextEntry(reader);
 
-        while (line != null)
-        {
-            this.entries.add(line);
-            line = this.parser.readNextEntry(reader);
+            while (line != null) {
+                this.entries.add(line);
+                line = this.parser.readNextEntry(reader);
+            }
         }
-        reader.close();
     }
 
     /**
