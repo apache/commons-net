@@ -627,34 +627,31 @@ public class TFTPServer implements Runnable
                         }
                         break;
                     }
+                    // once we get here, we know we have an answer packet
+                    // from the correct host.
+                    final TFTPAckPacket ack = (TFTPAckPacket) answer;
+                    if (ack.getBlockNumber() != block)
+                    {
+                        /*
+                         * The origional tftp spec would have called on us to resend the
+                         * previous data here, however, that causes the SAS Syndrome.
+                         * http://www.faqs.org/rfcs/rfc1123.html section 4.2.3.1 The modified
+                         * spec says that we ignore a duplicate ack. If the packet was really
+                         * lost, we will time out on receive, and resend the previous data at
+                         * that point.
+                         */
+                        sendNext = false;
+                    }
                     else
                     {
-                        // once we get here, we know we have an answer packet
-                        // from the correct host.
-                        final TFTPAckPacket ack = (TFTPAckPacket) answer;
-                        if (ack.getBlockNumber() != block)
+                        // send the next block
+                        block++;
+                        if (block > 65535)
                         {
-                            /*
-                             * The origional tftp spec would have called on us to resend the
-                             * previous data here, however, that causes the SAS Syndrome.
-                             * http://www.faqs.org/rfcs/rfc1123.html section 4.2.3.1 The modified
-                             * spec says that we ignore a duplicate ack. If the packet was really
-                             * lost, we will time out on receive, and resend the previous data at
-                             * that point.
-                             */
-                            sendNext = false;
+                            // wrap the block number
+                            block = 0;
                         }
-                        else
-                        {
-                            // send the next block
-                            block++;
-                            if (block > 65535)
-                            {
-                                // wrap the block number
-                                block = 0;
-                            }
-                            sendNext = true;
-                        }
+                        sendNext = true;
                     }
                 }
             }
@@ -922,10 +919,7 @@ public class TFTPServer implements Runnable
             {
                 return true;
             }
-            else
-            {
-                return isSubdirectoryOf(parent, childsParent);
-            }
+            return isSubdirectoryOf(parent, childsParent);
         }
     }
 

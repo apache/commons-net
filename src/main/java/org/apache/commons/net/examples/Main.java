@@ -95,9 +95,8 @@ public class Main {
                 final Throwable cause = ite.getCause();
                 if (cause != null) {
                     throw cause;
-                } else {
-                    throw ite;
                 }
+                throw ite;
             }
         } catch (final ClassNotFoundException e) {
             System.out.println(e);

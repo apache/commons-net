@@ -168,10 +168,7 @@ public class TelnetOption
         {
             return "UNASSIGNED";
         }
-        else
-        {
-            return __optionString[code];
-        }
+        return __optionString[code];
     }
 
 

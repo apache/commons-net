@@ -928,18 +928,15 @@ extends TestCase implements TelnetNotificationHandler
         {
             return(false);
         }
-        else
+        boolean result = true;
+        for(int ii=0; ii<a1.length; ii++)
         {
-            boolean result = true;
-            for(int ii=0; ii<a1.length; ii++)
-            {
 
-                if (a1[ii]!= a2[ii]) {
-                    result = false;
-                }
+            if (a1[ii]!= a2[ii]) {
+                result = false;
             }
-            return(result);
         }
+        return(result);
     }
 
     /*

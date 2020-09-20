@@ -405,9 +405,8 @@ public abstract class SocketClient
                 return false;
             }
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

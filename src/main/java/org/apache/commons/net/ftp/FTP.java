@@ -549,10 +549,7 @@ public class FTP extends SocketClient
             {
                 throw new FTPConnectionClosedException("Connection unexpectedly closed.");
             }
-            else
-            {
-                throw e;
-            }
+            throw e;
         }
     }
 

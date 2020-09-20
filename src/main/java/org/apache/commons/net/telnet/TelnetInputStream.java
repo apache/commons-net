@@ -451,25 +451,22 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                     }
                     continue;
                 }
-                else
-                {
-                    int ch;
+                int ch;
 
-                    ch = __queue[__queueHead];
+                ch = __queue[__queueHead];
 
-                    if (++__queueHead >= __queue.length) {
-                        __queueHead = 0;
-                    }
-
-                    --__bytesAvailable;
-
-            // Need to explicitly notify() so available() works properly
-            if(__bytesAvailable == 0 && __threaded) {
-                __queue.notify();
-            }
-
-                    return ch;
+                if (++__queueHead >= __queue.length) {
+                    __queueHead = 0;
                 }
+
+                --__bytesAvailable;
+
+         // Need to explicitly notify() so available() works properly
+         if(__bytesAvailable == 0 && __threaded) {
+            __queue.notify();
+         }
+
+                return ch;
             }
         }
     }
@@ -556,9 +553,8 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         {
             if (__threaded) { // Must not call super.available when running threaded: NET-466
                 return __bytesAvailable;
-            } else {
-                return __bytesAvailable + super.available();
             }
+            return __bytesAvailable + super.available();
         }
     }
 

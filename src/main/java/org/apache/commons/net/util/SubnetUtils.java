@@ -329,9 +329,8 @@ public class SubnetUtils {
         final Matcher matcher = addressPattern.matcher(address);
         if (matcher.matches()) {
             return matchAddress(matcher);
-        } else {
-            throw new IllegalArgumentException(String.format(PARSE_FAIL, address));
         }
+        throw new IllegalArgumentException(String.format(PARSE_FAIL, address));
     }
 
     /*

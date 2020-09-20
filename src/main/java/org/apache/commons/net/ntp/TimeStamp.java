@@ -203,10 +203,9 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
         if (msb == 0) {
             // use base: 7-Feb-2036 @ 06:28:16 UTC
             return msb0baseTime + (seconds * 1000) + fraction;
-        } else {
-            // use base: 1-Jan-1900 @ 01:00:00 UTC
-            return msb1baseTime + (seconds * 1000) + fraction;
         }
+        // use base: 1-Jan-1900 @ 01:00:00 UTC
+        return msb1baseTime + (seconds * 1000) + fraction;
     }
 
     /***

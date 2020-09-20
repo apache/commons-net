@@ -129,9 +129,8 @@ public class TFTPServerMain {
                           System.out.println(direction + " " + packet.toString());
                       }
                     };
-                } else {
-                    return new TFTP();
                 }
+                return new TFTP();
             }
         };
 

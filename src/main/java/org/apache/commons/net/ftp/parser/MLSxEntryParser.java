@@ -101,9 +101,8 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
                 file.setRawListing(entry);
                 file.setName(entry.substring(1));
                 return file;
-            } else {
-                return null; // Invalid - no pathname
             }
+            return null; // Invalid - no pathname
 
         }
         final String parts[] = entry.split(" ",2); // Path may contain space

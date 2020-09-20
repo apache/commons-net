@@ -111,9 +111,6 @@ public class TelnetClientFunctionalTest extends TestCase
         {
             return (true);
         }
-        else
-        {
-            return (false);
-        }
+        return (false);
     }
 }

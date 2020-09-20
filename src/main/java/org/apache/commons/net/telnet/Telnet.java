@@ -1141,20 +1141,17 @@ class Telnet extends SocketClient
                 throw (new InvalidTelnetOptionException(
                     "Unregistered option", optcode));
             }
-            else
+            final TelnetOptionHandler opthand = optionHandlers[optcode];
+            optionHandlers[optcode] = null;
+
+            if (opthand.getWill())
             {
-                final TelnetOptionHandler opthand = optionHandlers[optcode];
-                optionHandlers[optcode] = null;
+                _requestWont(optcode);
+            }
 
-                if (opthand.getWill())
-                {
-                    _requestWont(optcode);
-                }
-
-                if (opthand.getDo())
-                {
-                    _requestDont(optcode);
-                }
+            if (opthand.getDo())
+            {
+                _requestDont(optcode);
             }
         }
         else

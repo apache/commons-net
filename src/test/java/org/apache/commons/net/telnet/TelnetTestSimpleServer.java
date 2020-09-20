@@ -130,10 +130,7 @@ public class TelnetTestSimpleServer implements Runnable
         {
             return(clientSocket.getInputStream());
         }
-        else
-        {
-            return(null);
-        }
+        return(null);
     }
 
     public OutputStream getOutputStream() throws IOException
@@ -142,9 +139,6 @@ public class TelnetTestSimpleServer implements Runnable
         {
             return(clientSocket.getOutputStream());
         }
-        else
-        {
-            return(null);
-        }
+        return(null);
     }
 }

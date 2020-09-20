@@ -1419,11 +1419,8 @@ implements Configurable
             // Get a random port between the min and max port range
             return __random.nextInt(__activeMaxPort - __activeMinPort + 1) + __activeMinPort;
         }
-        else
-        {
-            // default port
-            return 0;
-        }
+        // default port
+        return 0;
     }
 
     /**
@@ -1438,11 +1435,8 @@ implements Configurable
         {
             return __activeExternalHost;
         }
-        else
-        {
-            // default local address
-            return getLocalAddress();
-        }
+        // default local address
+        return getLocalAddress();
     }
 
     /**
@@ -1456,9 +1450,8 @@ implements Configurable
     private InetAddress getReportHostAddress() {
         if (__reportActiveExternalHost != null) {
             return __reportActiveExternalHost ;
-        } else {
-            return getHostAddress();
         }
+        return getHostAddress();
     }
 
     /**
@@ -2530,9 +2523,8 @@ implements Configurable
         final boolean success = FTPReply.isPositiveCompletion(sendCommand(command, params));
         if (success){
             return getReplyStrings();
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -2560,9 +2552,8 @@ implements Configurable
             // some FTP server reply contains more than one space before fact(s)
             final String entry = reply.replaceAll("^\\s+", ""); // skip leading space for parser
             return MLSxEntryParser.parseEntry(entry);
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -3524,10 +3515,7 @@ implements Configurable
                 sb.append(pathname);
                 return sb.toString();
             }
-            else
-            {
-                return "-a";
-            }
+            return "-a";
         }
 
         return pathname;

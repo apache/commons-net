@@ -776,10 +776,7 @@ public class FTPSClient extends FTPClient {
         {
             return sendCommand(CMD_ADAT, Base64.encodeBase64StringUnChunked(data));
         }
-        else
-        {
-            return sendCommand(CMD_ADAT);
-        }
+        return sendCommand(CMD_ADAT);
     }
 
     /**
@@ -822,10 +819,7 @@ public class FTPSClient extends FTPClient {
         {
             return sendCommand(CMD_MIC, Base64.encodeBase64StringUnChunked(data));
         }
-        else
-        {
-            return sendCommand(CMD_MIC, ""); // perhaps "=" or just sendCommand(String)?
-        }
+        return sendCommand(CMD_MIC, ""); // perhaps "=" or just sendCommand(String)?
     }
 
     /**
@@ -842,10 +836,7 @@ public class FTPSClient extends FTPClient {
         {
             return sendCommand(CMD_CONF, Base64.encodeBase64StringUnChunked(data));
         }
-        else
-        {
-            return sendCommand(CMD_CONF, ""); // perhaps "=" or just sendCommand(String)?
-        }
+        return sendCommand(CMD_CONF, ""); // perhaps "=" or just sendCommand(String)?
     }
 
     /**
@@ -862,10 +853,7 @@ public class FTPSClient extends FTPClient {
         {
             return sendCommand(CMD_ENC, Base64.encodeBase64StringUnChunked(data));
         }
-        else
-        {
-            return sendCommand(CMD_ENC, ""); // perhaps "=" or just sendCommand(String)?
-        }
+        return sendCommand(CMD_ENC, ""); // perhaps "=" or just sendCommand(String)?
     }
 
     /**
@@ -878,9 +866,8 @@ public class FTPSClient extends FTPClient {
     {
         if (reply == null) {
             return null;
-        } else {
-            return Base64.decodeBase64(extractPrefixedData("ADAT=", reply));
         }
+        return Base64.decodeBase64(extractPrefixedData("ADAT=", reply));
     }
 
     /**
@@ -909,9 +896,8 @@ public class FTPSClient extends FTPClient {
         if (socket != null) {
             final SSLSocketFactory f = context.getSocketFactory();
             return f.createSocket(socket, socket.getInetAddress().getHostAddress(), socket.getPort(), false);
-        } else {
-            return null;
         }
+        return null;
     }
 
     // DEPRECATED - for API compatibility only - DO NOT USE

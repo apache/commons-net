@@ -115,12 +115,10 @@ public class SimpleSMTPHeaderTestCase {
             final int end = m.end(1);
             if (start == 0) {
                 return msg.substring(end+1);
-            } else {
-                return msg.substring(0, start)+msg.substring(end+1);
             }
-        } else {
-            fail("Expecting Date header in "+msg);
+            return msg.substring(0, start)+msg.substring(end+1);
         }
+        fail("Expecting Date header in "+msg);
         return null;
     }
 }
