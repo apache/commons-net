@@ -604,8 +604,8 @@ public class Base64 {
      *         false, otherwise
      */
     public static boolean isArrayByteBase64(byte[] arrayOctet) {
-        for (int i = 0; i < arrayOctet.length; i++) {
-            if (!isBase64(arrayOctet[i]) && !isWhiteSpace(arrayOctet[i])) {
+        for (byte element : arrayOctet) {
+            if (!isBase64(element) && !isWhiteSpace(element)) {
                 return false;
             }
         }
