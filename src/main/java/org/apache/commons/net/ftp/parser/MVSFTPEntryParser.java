@@ -55,11 +55,15 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
     /**
      * Matches these entries:
+     *
      * <pre>
      *  Volume Unit    Referred Ext Used Recfm Lrecl BlkSz Dsorg Dsname
      *  B10142 3390   2006/03/20  2   31  F       80    80  PS   MDI.OKL.WORK
      * </pre>
-     * @see https://www.ibm.com/support/knowledgecenter/zosbasics/com.ibm.zos.zconcepts/zconcepts_159.htm
+     * 
+     * @see <a href=
+     *      "https://www.ibm.com/support/knowledgecenter/zosbasics/com.ibm.zos.zconcepts/zconcepts_159.htm">Data
+     *      set record formats</a>
      */
     static final String FILE_LIST_REGEX = "\\S+\\s+" + // volume
                                                                 // ignored
