@@ -290,7 +290,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
     /**
      * The enumeration of currently-supported authentication methods.
      */
-    public static enum AUTH_METHOD
+    public enum AUTH_METHOD
     {
         /** The standarised (RFC4616) PLAIN method, which sends the password unencrypted (insecure). */
         PLAIN,

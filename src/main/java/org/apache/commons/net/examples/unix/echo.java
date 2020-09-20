@@ -42,7 +42,7 @@ import org.apache.commons.net.echo.EchoUDPClient;
 public final class echo
 {
 
-    public static final void echoTCP(final String host) throws IOException
+    public static void echoTCP(final String host) throws IOException
     {
         final EchoTCPClient client = new EchoTCPClient();
         BufferedReader input, echoInput;
@@ -70,7 +70,7 @@ public final class echo
         client.disconnect();
     }
 
-    public static final void echoUDP(final String host) throws IOException
+    public static void echoUDP(final String host) throws IOException
     {
         int length, count;
         byte[] data;

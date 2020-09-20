@@ -37,7 +37,7 @@ public interface FTPFileEntryParserFactory
      * @throws ParserInitializationException
      *                   Thrown on any exception in instantiation
      */
-    public FTPFileEntryParser createFileEntryParser(String key)
+    FTPFileEntryParser createFileEntryParser(String key)
         throws ParserInitializationException;
 
     /**
@@ -62,7 +62,7 @@ public interface FTPFileEntryParserFactory
      *                   Thrown on any exception in instantiation
      * @since 1.4
      */
-    public FTPFileEntryParser createFileEntryParser(FTPClientConfig config)
+    FTPFileEntryParser createFileEntryParser(FTPClientConfig config)
         throws ParserInitializationException;
 
 }

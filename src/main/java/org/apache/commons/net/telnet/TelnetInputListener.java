@@ -33,5 +33,5 @@ public interface TelnetInputListener
      *
      * @see TelnetClient#registerInputListener
      ***/
-    public void telnetInputAvailable();
+    void telnetInputAvailable();
 }

@@ -31,5 +31,5 @@ public interface Configurable {
      * <code>config</code> are somehow inadequate to configure the
      * Configurable object.
      */
-    public void configure(FTPClientConfig config);
+    void configure(FTPClientConfig config);
 }

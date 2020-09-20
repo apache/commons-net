@@ -59,7 +59,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      * @return True if the NETASCII line separator differs from the local
      *   system line separator, false if they are the same.
      ***/
-    public static final boolean isConversionRequired()
+    public static boolean isConversionRequired()
     {
         return !_noConversionRequired;
     }

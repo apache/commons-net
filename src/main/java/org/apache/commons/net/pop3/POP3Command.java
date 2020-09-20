@@ -83,7 +83,7 @@ public final class POP3Command
      *
      * @return The POP3 protocol string command corresponding to a command code.
      ***/
-    public static final String getCommand(final int command)
+    public static String getCommand(final int command)
     {
         return _commands[command];
     }

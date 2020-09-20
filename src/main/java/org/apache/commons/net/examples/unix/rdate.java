@@ -37,7 +37,7 @@ import org.apache.commons.net.time.TimeUDPClient;
 public final class rdate
 {
 
-    public static final void timeTCP(final String host) throws IOException
+    public static void timeTCP(final String host) throws IOException
     {
         final TimeTCPClient client = new TimeTCPClient();
 
@@ -48,7 +48,7 @@ public final class rdate
         client.disconnect();
     }
 
-    public static final void timeUDP(final String host) throws IOException
+    public static void timeUDP(final String host) throws IOException
     {
         final TimeUDPClient client = new TimeUDPClient();
 

@@ -30,95 +30,95 @@ public interface NtpV3Packet
     /**
      * Standard NTP UDP port
      */
-    public static final int NTP_PORT = 123;
+    int NTP_PORT = 123;
 
-    public static final int LI_NO_WARNING = 0;
-    public static final int LI_LAST_MINUTE_HAS_61_SECONDS = 1;
-    public static final int LI_LAST_MINUTE_HAS_59_SECONDS = 2;
-    public static final int LI_ALARM_CONDITION = 3;
+    int LI_NO_WARNING = 0;
+    int LI_LAST_MINUTE_HAS_61_SECONDS = 1;
+    int LI_LAST_MINUTE_HAS_59_SECONDS = 2;
+    int LI_ALARM_CONDITION = 3;
 
     /* mode options */
-    public static final int MODE_RESERVED = 0;
-    public static final int MODE_SYMMETRIC_ACTIVE = 1;
-    public static final int MODE_SYMMETRIC_PASSIVE = 2;
-    public static final int MODE_CLIENT = 3;
-    public static final int MODE_SERVER = 4;
-    public static final int MODE_BROADCAST = 5;
-    public static final int MODE_CONTROL_MESSAGE = 6;
-    public static final int MODE_PRIVATE = 7;
+    int MODE_RESERVED = 0;
+    int MODE_SYMMETRIC_ACTIVE = 1;
+    int MODE_SYMMETRIC_PASSIVE = 2;
+    int MODE_CLIENT = 3;
+    int MODE_SERVER = 4;
+    int MODE_BROADCAST = 5;
+    int MODE_CONTROL_MESSAGE = 6;
+    int MODE_PRIVATE = 7;
 
-    public static final int NTP_MINPOLL = 4;  // 16 seconds
-    public static final int NTP_MAXPOLL = 14; // 16284 seconds
+    int NTP_MINPOLL = 4;  // 16 seconds
+    int NTP_MAXPOLL = 14; // 16284 seconds
 
-    public static final int NTP_MINCLOCK = 1;
-    public static final int NTP_MAXCLOCK = 10;
+    int NTP_MINCLOCK = 1;
+    int NTP_MAXCLOCK = 10;
 
-    public static final int VERSION_3 = 3;
-    public static final int VERSION_4 = 4;
+    int VERSION_3 = 3;
+    int VERSION_4 = 4;
 
     /* possible getType values such that other time-related protocols can
      * have its information represented as NTP packets
      */
-    public static final String TYPE_NTP = "NTP";         // RFC-1305/2030
-    public static final String TYPE_ICMP = "ICMP";       // RFC-792
-    public static final String TYPE_TIME = "TIME";       // RFC-868
-    public static final String TYPE_DAYTIME = "DAYTIME"; // RFC-867
+    String TYPE_NTP = "NTP";         // RFC-1305/2030
+    String TYPE_ICMP = "ICMP";       // RFC-792
+    String TYPE_TIME = "TIME";       // RFC-868
+    String TYPE_DAYTIME = "DAYTIME"; // RFC-867
 
     /**
      * @return a datagram packet with the NTP parts already filled in
      */
-    public DatagramPacket getDatagramPacket();
+    DatagramPacket getDatagramPacket();
 
     /**
      * Set the contents of this object from the datagram packet
      * @param dp the packet
      */
-    public void setDatagramPacket(DatagramPacket dp);
+    void setDatagramPacket(DatagramPacket dp);
 
     /**
      * @return leap indicator as defined in RFC-1305
      */
-    public int getLeapIndicator();
+    int getLeapIndicator();
 
     /**
      * Set leap indicator.
      * @param li - leap indicator code
      */
-    public void setLeapIndicator(int li);
+    void setLeapIndicator(int li);
 
     /**
      * @return mode as defined in RFC-1305
      */
-    public int getMode();
+    int getMode();
 
     /**
      * @return mode as human readable string; e.g. 3=Client
      */
-    public String getModeName();
+    String getModeName();
 
     /**
      * Set mode as defined in RFC-1305
      * @param mode the mode to set
      */
-    public void setMode(int mode);
+    void setMode(int mode);
 
     /**
      * @return poll interval as defined in RFC-1305.
      * Field range between NTP_MINPOLL and NTP_MAXPOLL.
      */
-    public int getPoll();
+    int getPoll();
 
     /**
      * Set poll interval as defined in RFC-1305.
      * Field range between NTP_MINPOLL and NTP_MAXPOLL.
      * @param poll the interval to set
      */
-    public void setPoll(int poll);
+    void setPoll(int poll);
 
     /**
      * @return precision as defined in RFC-1305
      */
-    public int getPrecision();
+    int getPrecision();
 
     /**
      * Set precision as defined in RFC-1305
@@ -130,7 +130,7 @@ public interface NtpV3Packet
     /**
      * @return root delay as defined in RFC-1305
      */
-    public int getRootDelay();
+    int getRootDelay();
 
     /**
      * Set root delay as defined in RFC-1305
@@ -142,12 +142,12 @@ public interface NtpV3Packet
     /**
      * @return root delay in milliseconds
      */
-    public double getRootDelayInMillisDouble();
+    double getRootDelayInMillisDouble();
 
     /**
      * @return root dispersion as defined in RFC-1305
      */
-    public int getRootDispersion();
+    int getRootDispersion();
 
     /**
      *
@@ -159,94 +159,94 @@ public interface NtpV3Packet
     /**
      * @return root dispersion in milliseconds
      */
-    public long getRootDispersionInMillis();
+    long getRootDispersionInMillis();
 
     /**
      * @return root dispersion in milliseconds
      */
-    public double getRootDispersionInMillisDouble();
+    double getRootDispersionInMillisDouble();
 
     /**
      * @return version as defined in RFC-1305
      */
-    public int getVersion();
+    int getVersion();
 
     /**
      * Set version as defined in RFC-1305
      * @param version the version to set
      */
-    public void setVersion(int version);
+    void setVersion(int version);
 
     /**
      * @return stratum as defined in RFC-1305
      */
-    public int getStratum();
+    int getStratum();
 
     /**
      * Set stratum as defined in RFC-1305
      * @param stratum the stratum to set
      */
-    public void setStratum(int stratum);
+    void setStratum(int stratum);
 
     /**
      * @return the reference id string
      */
-    public String getReferenceIdString();
+    String getReferenceIdString();
 
     /**
      * @return the reference id (32-bit code) as defined in RFC-1305
      */
-    public int getReferenceId();
+    int getReferenceId();
 
     /**
      * Set reference clock identifier field.
      * @param refId the clock id field to set
      */
-    public void setReferenceId(int refId);
+    void setReferenceId(int refId);
 
     /**
      * @return the transmit timestamp as defined in RFC-1305
      */
-    public TimeStamp getTransmitTimeStamp();
+    TimeStamp getTransmitTimeStamp();
 
     /**
      * @return the reference time as defined in RFC-1305
      */
-    public TimeStamp getReferenceTimeStamp();
+    TimeStamp getReferenceTimeStamp();
 
     /**
      * @return the originate time as defined in RFC-1305
      */
-    public TimeStamp getOriginateTimeStamp();
+    TimeStamp getOriginateTimeStamp();
 
     /**
      * @return the receive time as defined in RFC-1305
      */
-    public TimeStamp getReceiveTimeStamp();
+    TimeStamp getReceiveTimeStamp();
 
     /**
      * Set the transmit timestamp given NTP TimeStamp object.
      * @param ts - timestamp
      */
-    public void setTransmitTime(TimeStamp ts);
+    void setTransmitTime(TimeStamp ts);
 
     /**
      * Set the reference timestamp given NTP TimeStamp object.
      * @param ts - timestamp
      */
-    public void setReferenceTime(TimeStamp ts);
+    void setReferenceTime(TimeStamp ts);
 
     /**
      * Set originate timestamp given NTP TimeStamp object.
      * @param ts - timestamp
      */
-    public void setOriginateTimeStamp(TimeStamp ts);
+    void setOriginateTimeStamp(TimeStamp ts);
 
     /**
      * Set receive timestamp given NTP TimeStamp object.
      * @param ts - timestamp
      */
-    public void setReceiveTimeStamp(TimeStamp ts);
+    void setReceiveTimeStamp(TimeStamp ts);
 
     /**
      * Return type of time packet. The values (e.g. NTP, TIME, ICMP, ...)
@@ -254,6 +254,6 @@ public interface NtpV3Packet
      *
      * @return packet type string identifier
      */
-    public String getType();
+    String getType();
 
 }

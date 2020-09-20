@@ -164,7 +164,7 @@ public final class FTPCommand
      * @return The FTP protcol command string corresponding to a specified
      *         command code.
      */
-    public static final String getCommand(final int command)
+    public static String getCommand(final int command)
     {
         return _commands[command];
     }

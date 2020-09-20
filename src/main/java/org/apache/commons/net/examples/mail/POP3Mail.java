@@ -38,7 +38,7 @@ import org.apache.commons.net.pop3.POP3SClient;
 public final class POP3Mail
 {
 
-    public static final void printMessageInfo(final BufferedReader reader, final int id) throws IOException  {
+    public static void printMessageInfo(final BufferedReader reader, final int id) throws IOException  {
         String from = "";
         String subject = "";
         String line;

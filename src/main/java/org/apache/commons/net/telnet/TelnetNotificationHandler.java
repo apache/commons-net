@@ -32,28 +32,28 @@ public interface TelnetNotificationHandler
     /***
      * The remote party sent a DO command.
      ***/
-    public static final int RECEIVED_DO =   1;
+    int RECEIVED_DO =   1;
 
     /***
      * The remote party sent a DONT command.
      ***/
-    public static final int RECEIVED_DONT = 2;
+    int RECEIVED_DONT = 2;
 
     /***
      * The remote party sent a WILL command.
      ***/
-    public static final int RECEIVED_WILL = 3;
+    int RECEIVED_WILL = 3;
 
     /***
      * The remote party sent a WONT command.
      ***/
-    public static final int RECEIVED_WONT = 4;
+    int RECEIVED_WONT = 4;
 
     /***
      * The remote party sent a COMMAND.
      * @since 2.2
      ***/
-    public static final int RECEIVED_COMMAND = 5;
+    int RECEIVED_COMMAND = 5;
 
     /***
      * Callback method called when TelnetClient receives an
@@ -64,5 +64,5 @@ public interface TelnetNotificationHandler
      *
      * @param option_code - code of the option negotiated, or the command code itself (e.g. NOP).
      ***/
-    public void receivedNegotiation(int negotiation_code, int option_code);
+    void receivedNegotiation(int negotiation_code, int option_code);
 }

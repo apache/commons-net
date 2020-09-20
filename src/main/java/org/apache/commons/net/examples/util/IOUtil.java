@@ -36,7 +36,7 @@ import org.apache.commons.net.io.Util;
 public final class IOUtil
 {
 
-    public static final void readWrite(final InputStream remoteInput,
+    public static void readWrite(final InputStream remoteInput,
                                        final OutputStream remoteOutput,
                                        final InputStream localInput,
                                        final OutputStream localOutput)

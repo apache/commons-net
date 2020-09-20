@@ -42,7 +42,7 @@ import org.apache.commons.net.chargen.CharGenUDPClient;
 public final class chargen
 {
 
-    public static final void chargenTCP(final String host) throws IOException
+    public static void chargenTCP(final String host) throws IOException
     {
         int lines = 100;
         String line;
@@ -70,7 +70,7 @@ public final class chargen
         client.disconnect();
     }
 
-    public static final void chargenUDP(final String host) throws IOException
+    public static void chargenUDP(final String host) throws IOException
     {
         int packets = 50;
         byte[] data;

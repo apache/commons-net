@@ -46,7 +46,7 @@ public final class FTPSCommand {
      * @return The FTPS command string corresponding to a specified
      *  command code.
      */
-    public static final String getCommand(final int command) {
+    public static String getCommand(final int command) {
         return _commands[command];
     }
 }

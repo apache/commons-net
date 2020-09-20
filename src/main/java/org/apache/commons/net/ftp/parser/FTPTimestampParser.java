@@ -30,11 +30,11 @@ public interface FTPTimestampParser {
     /**
      * the default default date format.
      */
-    public static final String DEFAULT_SDF = UnixFTPEntryParser.DEFAULT_DATE_FORMAT;
+    String DEFAULT_SDF = UnixFTPEntryParser.DEFAULT_DATE_FORMAT;
     /**
      * the default recent date format.
      */
-    public static final String DEFAULT_RECENT_SDF = UnixFTPEntryParser.DEFAULT_RECENT_DATE_FORMAT;
+    String DEFAULT_RECENT_SDF = UnixFTPEntryParser.DEFAULT_RECENT_DATE_FORMAT;
 
     /**
      * Parses the supplied datestamp parameter.  This parameter typically would
@@ -47,6 +47,6 @@ public interface FTPTimestampParser {
      * @throws ParseException if none of the parser mechanisms belonging to
      * the implementor can parse the input.
      */
-    public Calendar parseTimestamp(String timestampStr) throws ParseException;
+    Calendar parseTimestamp(String timestampStr) throws ParseException;
 
 }

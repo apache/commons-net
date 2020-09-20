@@ -38,7 +38,7 @@ import org.apache.commons.net.time.TimeUDPClient;
 public final class TimeClient
 {
 
-    public static final void timeTCP(final String host) throws IOException
+    public static void timeTCP(final String host) throws IOException
     {
         final TimeTCPClient client = new TimeTCPClient();
     try {
@@ -51,7 +51,7 @@ public final class TimeClient
     }
     }
 
-    public static final void timeUDP(final String host) throws IOException
+    public static void timeUDP(final String host) throws IOException
     {
         final TimeUDPClient client = new TimeUDPClient();
 

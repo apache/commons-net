@@ -3919,7 +3919,7 @@ implements Configurable
      *
      * @since 3.6
      */
-    public static interface HostnameResolver {
+    public interface HostnameResolver {
         String resolve(String hostname) throws UnknownHostException;
     }
 

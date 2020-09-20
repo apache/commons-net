@@ -36,7 +36,7 @@ import org.apache.commons.net.daytime.DaytimeUDPClient;
 public final class daytime
 {
 
-    public static final void daytimeTCP(final String host) throws IOException
+    public static void daytimeTCP(final String host) throws IOException
     {
         final DaytimeTCPClient client = new DaytimeTCPClient();
 
@@ -47,7 +47,7 @@ public final class daytime
         client.disconnect();
     }
 
-    public static final void daytimeUDP(final String host) throws IOException
+    public static void daytimeUDP(final String host) throws IOException
     {
         final DaytimeUDPClient client = new DaytimeUDPClient();
 
