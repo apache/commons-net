@@ -42,7 +42,7 @@ public final class RelayPath
      ***/
     public RelayPath(String emailAddress)
     {
-        _path = new Vector<String>();
+        _path = new Vector<>();
         _emailAddress = emailAddress;
     }
 

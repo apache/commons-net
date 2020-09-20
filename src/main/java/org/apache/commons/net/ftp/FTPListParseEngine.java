@@ -75,7 +75,7 @@ import org.apache.commons.net.util.Charsets;
  * uses this class transparently.
  */
 public class FTPListParseEngine {
-    private List<String> entries = new LinkedList<String>();
+    private List<String> entries = new LinkedList<>();
     private ListIterator<String> _internalIterator = entries.listIterator();
 
     private final FTPFileEntryParser parser;
@@ -114,7 +114,7 @@ public class FTPListParseEngine {
     public void readServerList(InputStream stream, String encoding)
     throws IOException
     {
-        this.entries = new LinkedList<String>();
+        this.entries = new LinkedList<>();
         readStream(stream, encoding);
         this.parser.preParse(this.entries);
         resetIterator();
@@ -173,7 +173,7 @@ public class FTPListParseEngine {
      * check each entry for null before referencing it.
      */
     public FTPFile[] getNext(int quantityRequested) {
-        List<FTPFile> tmpResults = new LinkedList<FTPFile>();
+        List<FTPFile> tmpResults = new LinkedList<>();
         int count = quantityRequested;
         while (count > 0 && this._internalIterator.hasNext()) {
             String entry = this._internalIterator.next();
@@ -215,7 +215,7 @@ public class FTPListParseEngine {
      * check each entry for null before referencing it.
      */
     public FTPFile[] getPrevious(int quantityRequested) {
-        List<FTPFile> tmpResults = new LinkedList<FTPFile>();
+        List<FTPFile> tmpResults = new LinkedList<>();
         int count = quantityRequested;
         while (count > 0 && this._internalIterator.hasPrevious()) {
             String entry = this._internalIterator.previous();
@@ -265,7 +265,7 @@ public class FTPListParseEngine {
     public FTPFile[] getFiles(FTPFileFilter filter)
     throws IOException // TODO remove; not actually thrown
     {
-        List<FTPFile> tmpResults = new ArrayList<FTPFile>();
+        List<FTPFile> tmpResults = new ArrayList<>();
         Iterator<String> iter = this.entries.iterator();
         while (iter.hasNext()) {
             String entry = iter.next();

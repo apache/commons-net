@@ -59,7 +59,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
     // This class is immutable, so a single instance can be shared.
     private static final MLSxEntryParser PARSER = new MLSxEntryParser();
 
-    private static final HashMap<String, Integer> TYPE_TO_INT = new HashMap<String, Integer>();
+    private static final HashMap<String, Integer> TYPE_TO_INT = new HashMap<>();
     static {
         TYPE_TO_INT.put("file", Integer.valueOf(FTPFile.FILE_TYPE));
         TYPE_TO_INT.put("cdir", Integer.valueOf(FTPFile.DIRECTORY_TYPE)); // listed directory

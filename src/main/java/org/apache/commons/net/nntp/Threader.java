@@ -57,7 +57,7 @@ public class Threader {
             return null;
         }
 
-        HashMap<String,ThreadContainer> idTable = new HashMap<String,ThreadContainer>();
+        HashMap<String,ThreadContainer> idTable = new HashMap<>();
 
         // walk through each Threadable element
         for (Threadable t : messages) {
@@ -309,7 +309,7 @@ public class Threader {
         }
 
         // TODO verify this will avoid rehashing
-        HashMap<String, ThreadContainer> subjectTable = new HashMap<String, ThreadContainer>((int) (count * 1.2), (float) 0.9);
+        HashMap<String, ThreadContainer> subjectTable = new HashMap<>((int) (count * 1.2), (float) 0.9);
         count = 0;
 
         for (ThreadContainer c = root.child; c != null; c = c.next) {

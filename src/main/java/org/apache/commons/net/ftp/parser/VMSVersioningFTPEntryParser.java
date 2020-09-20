@@ -102,7 +102,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
      */
     @Override
     public List<String> preParse(List<String> original) {
-        HashMap<String, Integer> existingEntries = new HashMap<String, Integer>();
+        HashMap<String, Integer> existingEntries = new HashMap<>();
         ListIterator<String> iter = original.listIterator();
         while (iter.hasNext()) {
             String entry = iter.next().trim();

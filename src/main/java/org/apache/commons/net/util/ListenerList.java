@@ -33,7 +33,7 @@ public class ListenerList implements Serializable, Iterable<EventListener>
 
     public ListenerList()
     {
-        __listeners = new CopyOnWriteArrayList<EventListener>();
+        __listeners = new CopyOnWriteArrayList<>();
     }
 
     public void addListener(EventListener listener)

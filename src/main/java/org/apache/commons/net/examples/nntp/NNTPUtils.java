@@ -38,7 +38,7 @@ public class NNTPUtils {
      */
     public  static List<Article> getArticleInfo(NNTPClient client, long lowArticleNumber, long highArticleNumber)
     throws IOException {
-        List<Article> articles = new ArrayList<Article>();
+        List<Article> articles = new ArrayList<>();
         Iterable<Article> arts = client.iterateArticleInfo(lowArticleNumber, highArticleNumber);
         for(Article article : arts){
             articles.add(article);

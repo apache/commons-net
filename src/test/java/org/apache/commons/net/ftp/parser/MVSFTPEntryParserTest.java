@@ -102,7 +102,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
     }
 
     protected List<String[]> getAllGoodListings() {
-        List<String[]> l = new ArrayList<String[]>();
+        List<String[]> l = new ArrayList<>();
         l.add(goodsamplesDatasetList);
         l.add(goodsamplesMemberList);
         l.add(goodsamplesJES1List);
@@ -175,7 +175,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
 
     public void testUnixListings() {
         MVSFTPEntryParser parser = new MVSFTPEntryParser();
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         Collections.addAll(list, goodsamplesUnixList);
         parser.preParse(list);
         for (String test : list) {

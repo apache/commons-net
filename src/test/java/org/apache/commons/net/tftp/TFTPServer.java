@@ -86,7 +86,7 @@ public class TFTPServer implements Runnable
     private static final int DEFAULT_TFTP_PORT = 69;
     public static enum ServerMode { GET_ONLY, PUT_ONLY, GET_AND_PUT; }
 
-    private final HashSet<TFTPTransfer> transfers_ = new HashSet<TFTPTransfer>();
+    private final HashSet<TFTPTransfer> transfers_ = new HashSet<>();
     private volatile boolean shutdownServer = false;
     private TFTP serverTftp_;
     private File serverReadDirectory_;

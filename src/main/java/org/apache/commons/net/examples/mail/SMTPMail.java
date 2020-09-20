@@ -45,7 +45,7 @@ public final class SMTPMail
     public static void main(String[] args)
     {
         String sender, recipient, subject, fileName, server, cc;
-        List<String> ccList = new ArrayList<String>();
+        List<String> ccList = new ArrayList<>();
         BufferedReader stdin;
         FileReader fileReader = null;
         Writer writer;

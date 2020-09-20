@@ -104,7 +104,7 @@ public class POP3 extends SocketClient
         __popState = DISCONNECTED_STATE;
         _reader = null;
         _writer = null;
-        _replyLines = new ArrayList<String>();
+        _replyLines = new ArrayList<>();
         _commandSupport_ = new ProtocolCommandSupport(this);
     }
 

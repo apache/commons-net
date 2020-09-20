@@ -973,7 +973,7 @@ implements Configurable
         // Exception claiming we're not connected
         if ( __autodetectEncoding )
         {
-            ArrayList<String> oldReplyLines = new ArrayList<String> (_replyLines);
+            ArrayList<String> oldReplyLines = new ArrayList<> (_replyLines);
             int oldReplyCode = _replyCode;
             if ( hasFeature("UTF8") || hasFeature("UTF-8")) // UTF8 appears to be the default
             {
@@ -2421,7 +2421,7 @@ implements Configurable
             }
             boolean success = FTPReply.isPositiveCompletion(replyCode);
             // we init the map here, so we don't keep trying if we know the command will fail
-            __featuresMap = new HashMap<String, Set<String>>();
+            __featuresMap = new HashMap<>();
             if (!success) {
                 return false;
             }
@@ -2439,7 +2439,7 @@ implements Configurable
                     key = key.toUpperCase(Locale.ENGLISH);
                     Set<String> entries = __featuresMap.get(key);
                     if (entries == null) {
-                        entries = new HashSet<String>();
+                        entries = new HashSet<>();
                         __featuresMap.put(key, entries);
                     }
                     entries.add(value);
@@ -2958,7 +2958,7 @@ implements Configurable
         BufferedReader reader =
             new BufferedReader(new InputStreamReader(socket.getInputStream(), getControlEncoding()));
 
-        ArrayList<String> results = new ArrayList<String>();
+        ArrayList<String> results = new ArrayList<>();
         String line;
         while ((line = reader.readLine()) != null) {
             results.add(line);

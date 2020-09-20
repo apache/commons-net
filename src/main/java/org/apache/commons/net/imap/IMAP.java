@@ -121,7 +121,7 @@ public class IMAP extends SocketClient
         __state = IMAPState.DISCONNECTED_STATE;
         _reader = null;
         __writer = null;
-        _replyLines = new ArrayList<String>();
+        _replyLines = new ArrayList<>();
         createCommandSupport();
     }
 

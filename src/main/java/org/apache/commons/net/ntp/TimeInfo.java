@@ -120,7 +120,7 @@ public class TimeInfo {
     public void addComment(String comment)
     {
         if (_comments == null) {
-            _comments = new ArrayList<String>();
+            _comments = new ArrayList<>();
         }
         _comments.add(comment);
     }
@@ -136,7 +136,7 @@ public class TimeInfo {
         }
         _detailsComputed = true;
         if (_comments == null) {
-            _comments = new ArrayList<String>();
+            _comments = new ArrayList<>();
         }
 
         TimeStamp origNtpTime = _message.getOriginateTimeStamp();

@@ -332,7 +332,7 @@ public final class IMAPExportMbox
         private final BufferedWriter bw;
         volatile int total = 0;
         volatile String lastFetched;
-        volatile List<String> missingIds = new ArrayList<String>();
+        volatile List<String> missingIds = new ArrayList<>();
         volatile long lastSeq = -1;
         private final String eol;
         private final SimpleDateFormat DATE_FORMAT // for mbox From_ lines

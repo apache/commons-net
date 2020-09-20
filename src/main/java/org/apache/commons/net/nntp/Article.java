@@ -49,7 +49,7 @@ public class Article implements Threadable {
             return;
         }
         if (references == null) {
-            references = new ArrayList<String>();
+            references = new ArrayList<>();
         }
         isReply = true;
         for(String s : msgId.split(" ")) {

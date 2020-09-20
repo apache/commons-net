@@ -41,7 +41,7 @@ public class TFTPServerMain {
     public static void main(String [] args) throws Exception {
         int port = 6901;
         int argc;
-        Map<String,String> opts = new HashMap<String,String>();
+        Map<String,String> opts = new HashMap<>();
         opts.put("-p", System.getProperty("java.io.tmpdir"));
         // Parse options
         for (argc = 0; argc < args.length; argc++)

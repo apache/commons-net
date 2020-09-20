@@ -247,7 +247,7 @@ public class NNTPClient extends NNTP
         BufferedReader reader = new DotTerminatedMessageReader(_reader_);
         // Start of with a big vector because we may be reading a very large
         // amount of groups.
-        Vector<NewsgroupInfo> list = new Vector<NewsgroupInfo>(2048);
+        Vector<NewsgroupInfo> list = new Vector<>(2048);
 
         String line;
         try {
@@ -791,7 +791,7 @@ public class NNTPClient extends NNTP
 
         BufferedReader reader = new DotTerminatedMessageReader(_reader_);
         String line;
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         while((line=reader.readLine()) != null) {
             list.add(line);
         }
@@ -1264,7 +1264,7 @@ public class NNTPClient extends NNTP
             return null;
         }
 
-        Vector<String> list = new Vector<String>();
+        Vector<String> list = new Vector<>();
         BufferedReader reader = new DotTerminatedMessageReader(_reader_);
 
         String line;
