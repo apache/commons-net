@@ -27,6 +27,7 @@ import java.net.SocketException;
 import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.output.NullOutputStream;
 import org.apache.ftpserver.FtpServer;
 import org.apache.ftpserver.FtpServerFactory;
 import org.apache.ftpserver.ftplet.FtpException;
@@ -56,13 +57,10 @@ public class FTPSClientTest {
 
     /**
      * Returns the test directory as a String.
-     * <p>
-     * {@link #getTestDirectoryFile()} should be preferred.
-     *
      * @return the test directory as a String
      */
-    private static String getTestDirectory() {
-        return System.getProperty("test.basedir", "target/test-classes/test-data");
+    private static String getTestHomeDirectory() {
+        return System.getProperty("test.basedir", "target/test-classes/org/apache/commons/net/test-data");
     }
 
     private static final boolean implicit = false;
@@ -83,6 +81,7 @@ public class FTPSClientTest {
         if (Server != null) {
             return;
         }
+        // Use an ephemeral port.
         SocketPort = 0;
         final FtpServerFactory serverFactory = new FtpServerFactory();
         final PropertiesUserManagerFactory propertiesUserManagerFactory = new PropertiesUserManagerFactory();
@@ -93,7 +92,7 @@ public class FTPSClientTest {
         final BaseUser user = (BaseUser) userManager.getUserByName("test");
         // Pickup the home dir value at runtime even though we have it set in the user prop file
         // The user prop file requires the "homedirectory" to be set
-        user.setHomeDirectory(getTestDirectory());
+        user.setHomeDirectory(getTestHomeDirectory());
         serverFactory.setUserManager(userManager);
         final ListenerFactory factory = new ListenerFactory();
         // set the port of the listener
@@ -125,11 +124,26 @@ public class FTPSClientTest {
     private FTPSClient loginClient() throws SocketException, IOException {
         FTPSClient client = new FTPSClient(implicit);
         client.connect("localhost", SocketPort);
+        assertClientCode(client);
         assertEquals(SocketPort, client.getRemotePort());
+        //
+        assertTrue(client.login("test", "test"));
+        assertClientCode(client);
+        //
+        client.setFileType(FTP.BINARY_FILE_TYPE);
+        assertClientCode(client);
+        //
+        client.execPBSZ(0);
+        assertClientCode(client);
+        //
+        client.execPROT("P");
+        assertClientCode(client);
+        return client;
+    }
+
+    private void assertClientCode(FTPSClient client) {
         final int replyCode = client.getReplyCode();
         assertTrue(FTPReply.isPositiveCompletion(replyCode));
-        assertTrue(client.login("test", "test"));
-        return client;
     }
 
     @Test
@@ -148,9 +162,26 @@ public class FTPSClientTest {
         }
     }
 
+    private void retrieveFile(String pathname) throws SocketException, IOException {
+        FTPSClient client = loginClient();
+        try {
+            // Do it twice.
+            // Just testing that we are not getting an SSL error (the file MUST be present).
+            assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.NULL_OUTPUT_STREAM));
+            assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.NULL_OUTPUT_STREAM));
+        } finally {
+            client.disconnect();
+        }
+    }
+
     @Test
     public void testListFilesPathNameRoot() throws SocketException, IOException {
         testListFiles("/");
+    }
+
+    @Test
+    public void testRetrieveFilePathNameRoot() throws SocketException, IOException {
+        retrieveFile("/file.txt");
     }
 
     @Test
@@ -168,3 +199,4 @@ public class FTPSClientTest {
         testListFiles("   Junk   ");
     }
 }
+

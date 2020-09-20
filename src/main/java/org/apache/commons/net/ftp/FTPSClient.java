@@ -620,7 +620,6 @@ public class FTPSClient extends FTPClient {
     protected Socket _openDataConnection_(String command, String arg)
             throws IOException {
         Socket socket = super._openDataConnection_(command, arg);
-        socket = createSSLSocket(socket);
         _prepareDataSocket_(socket);
         if (socket instanceof SSLSocket) {
             SSLSocket sslSocket = (SSLSocket)socket;
