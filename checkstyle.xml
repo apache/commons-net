@@ -48,6 +48,10 @@ limitations under the License.
     <property name="fileExtensions" value="java" />
   </module>
 
+  <module name="LineLength">
+    <property name="max" value="132"/>
+  </module>
+
   <module name="TreeWalker">
     <module name="AvoidStarImport">
       <property name="excludes" value="org.junit.Assert"/>
@@ -55,9 +59,6 @@ limitations under the License.
     <module name="RedundantImport"/>
     <module name="UnusedImports"/>
     <module name="NeedBraces"/>
-    <module name="LineLength">
-      <property name="max" value="132"/>
-    </module>
 
     <!-- Modifier Checks                                    -->
     <!-- See http://checkstyle.sf.net/config_modifiers.html -->
@@ -75,10 +76,7 @@ limitations under the License.
 
     <module name="JavadocMethod">
       <property name="scope" value="public"/>
-      <property name="allowUndeclaredRTE" value="true"/>
-      <property name="allowMissingJavadoc" value="true"/>
       <property name="allowMissingParamTags" value="true"/>
-      <property name="allowMissingThrowsTags" value="true"/>
     </module>
 
     <module name="SuppressionCommentFilter"/>

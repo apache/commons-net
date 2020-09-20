@@ -107,6 +107,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
     </dependencies>
 
     <build>
+        <defaultGoal>clean apache-rat:check javadoc:javadoc checkstyle:check clirr:check package</defaultGoal>
         <pluginManagement>
           <plugins>
             <!-- Allow CLI usage -->
