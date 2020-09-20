@@ -120,6 +120,7 @@ public class TFTPServerMain {
                 }
             }
 
+            @Override
             TFTP newTFTP(){
                 if (verbose) {
                     return new TFTP() {
@@ -135,6 +136,7 @@ public class TFTPServerMain {
         };
 
         Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
             public void run() {
                 System.out.println("Server shutting down");
                 tftpS.shutdown();
