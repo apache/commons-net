@@ -42,10 +42,10 @@ import java.util.Calendar;
 
 public final class NewGroupsOrNewsQuery
 {
-    private final String __date, __time;
-    private StringBuffer __distributions;
-    private StringBuffer __newsgroups;
-    private final boolean __isGMT;
+    private final String date, time;
+    private StringBuffer distributions;
+    private StringBuffer newsgroups;
+    private final boolean isGMT;
 
 
     /***
@@ -60,9 +60,9 @@ public final class NewGroupsOrNewsQuery
         String str;
         StringBuilder buffer;
 
-        __distributions = null;
-        __newsgroups = null;
-        __isGMT = gmt;
+        this.distributions = null;
+        this.newsgroups = null;
+        this.isGMT = gmt;
 
         buffer = new StringBuilder();
 
@@ -105,7 +105,7 @@ public final class NewGroupsOrNewsQuery
             buffer.append("01");
         }
 
-        __date = buffer.toString();
+        this.date = buffer.toString();
 
         buffer.setLength(0);
 
@@ -152,7 +152,7 @@ public final class NewGroupsOrNewsQuery
             buffer.append("00");
         }
 
-        __time = buffer.toString();
+        this.time = buffer.toString();
     }
 
 
@@ -168,12 +168,12 @@ public final class NewGroupsOrNewsQuery
      ***/
     public void addNewsgroup(final String newsgroup)
     {
-        if (__newsgroups != null) {
-            __newsgroups.append(',');
+        if (newsgroups != null) {
+            newsgroups.append(',');
         } else {
-            __newsgroups = new StringBuffer();
+            newsgroups = new StringBuffer();
         }
-        __newsgroups.append(newsgroup);
+        newsgroups.append(newsgroup);
     }
 
 
@@ -213,12 +213,12 @@ public final class NewGroupsOrNewsQuery
      ***/
     public void addDistribution(final String distribution)
     {
-        if (__distributions != null) {
-            __distributions.append(',');
+        if (distributions != null) {
+            distributions.append(',');
         } else {
-            __distributions = new StringBuffer();
+            distributions = new StringBuffer();
         }
-        __distributions.append(distribution);
+        distributions.append(distribution);
     }
 
     /***
@@ -229,7 +229,7 @@ public final class NewGroupsOrNewsQuery
      ***/
     public String getDate()
     {
-        return __date;
+        return date;
     }
 
     /***
@@ -240,7 +240,7 @@ public final class NewGroupsOrNewsQuery
      ***/
     public String getTime()
     {
-        return __time;
+        return time;
     }
 
     /***
@@ -250,7 +250,7 @@ public final class NewGroupsOrNewsQuery
      ***/
     public boolean isGMT()
     {
-        return __isGMT;
+        return isGMT;
     }
 
     /***
@@ -262,7 +262,7 @@ public final class NewGroupsOrNewsQuery
      ***/
     public String getDistributions()
     {
-        return __distributions == null ? null : __distributions.toString();
+        return distributions == null ? null : distributions.toString();
     }
 
     /***
@@ -274,6 +274,6 @@ public final class NewGroupsOrNewsQuery
      ***/
     public String getNewsgroups()
     {
-        return __newsgroups == null ? null : __newsgroups.toString();
+        return newsgroups == null ? null : newsgroups.toString();
     }
 }

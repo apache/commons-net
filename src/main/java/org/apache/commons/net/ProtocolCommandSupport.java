@@ -37,8 +37,8 @@ public class ProtocolCommandSupport implements Serializable
 {
     private static final long serialVersionUID = -8017692739988399978L;
 
-    private final Object __source;
-    private final ListenerList __listeners;
+    private final Object source;
+    private final ListenerList listeners;
 
     /***
      * Creates a ProtocolCommandSupport instance using the indicated source
@@ -48,8 +48,8 @@ public class ProtocolCommandSupport implements Serializable
      ***/
     public ProtocolCommandSupport(final Object source)
     {
-        __listeners = new ListenerList();
-        __source = source;
+        this.listeners = new ListenerList();
+        this.source = source;
     }
 
 
@@ -68,9 +68,9 @@ public class ProtocolCommandSupport implements Serializable
     {
         ProtocolCommandEvent event;
 
-        event = new ProtocolCommandEvent(__source, command, message);
+        event = new ProtocolCommandEvent(source, command, message);
 
-        for (final EventListener listener : __listeners)
+        for (final EventListener listener : listeners)
         {
            ((ProtocolCommandListener)listener).protocolCommandSent(event);
         }
@@ -92,9 +92,9 @@ public class ProtocolCommandSupport implements Serializable
     public void fireReplyReceived(final int replyCode, final String message)
     {
         ProtocolCommandEvent event;
-        event = new ProtocolCommandEvent(__source, replyCode, message);
+        event = new ProtocolCommandEvent(source, replyCode, message);
 
-        for (final EventListener listener : __listeners)
+        for (final EventListener listener : listeners)
         {
             ((ProtocolCommandListener)listener).protocolReplyReceived(event);
         }
@@ -107,7 +107,7 @@ public class ProtocolCommandSupport implements Serializable
      ***/
     public void addProtocolCommandListener(final ProtocolCommandListener listener)
     {
-        __listeners.addListener(listener);
+        listeners.addListener(listener);
     }
 
     /***
@@ -117,7 +117,7 @@ public class ProtocolCommandSupport implements Serializable
      ***/
     public void removeProtocolCommandListener(final ProtocolCommandListener listener)
     {
-        __listeners.removeListener(listener);
+        listeners.removeListener(listener);
     }
 
 
@@ -128,7 +128,7 @@ public class ProtocolCommandSupport implements Serializable
      ***/
     public int getListenerCount()
     {
-        return __listeners.getListenerCount();
+        return listeners.getListenerCount();
     }
 
 }

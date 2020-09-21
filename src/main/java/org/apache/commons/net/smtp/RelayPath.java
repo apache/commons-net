@@ -31,8 +31,8 @@ import java.util.Vector;
 
 public final class RelayPath
 {
-    Vector<String> _path;
-    String _emailAddress;
+    Vector<String> path;
+    String emailAddress;
 
     /***
      * Create a relay path with the specified email address as the ultimate
@@ -42,8 +42,8 @@ public final class RelayPath
      ***/
     public RelayPath(final String emailAddress)
     {
-        _path = new Vector<>();
-        _emailAddress = emailAddress;
+        this.path = new Vector<>();
+        this.emailAddress = emailAddress;
     }
 
     /***
@@ -60,7 +60,7 @@ public final class RelayPath
      ***/
     public void addRelay(final String hostname)
     {
-        _path.addElement(hostname);
+        path.addElement(hostname);
     }
 
     /***
@@ -76,7 +76,7 @@ public final class RelayPath
 
         buffer.append('<');
 
-        hosts = _path.elements();
+        hosts = path.elements();
 
         if (hosts.hasMoreElements())
         {
@@ -91,7 +91,7 @@ public final class RelayPath
             buffer.append(':');
         }
 
-        buffer.append(_emailAddress);
+        buffer.append(emailAddress);
         buffer.append('>');
 
         return buffer.toString();

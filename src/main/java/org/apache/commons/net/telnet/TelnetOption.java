@@ -116,10 +116,10 @@ public class TelnetOption
     public static final int EXTENDED_OPTIONS_LIST = 255;
 
     @SuppressWarnings("unused")
-    private static final int __FIRST_OPTION = BINARY;
-    private static final int __LAST_OPTION = EXTENDED_OPTIONS_LIST;
+    private static final int FIRST_OPTION = BINARY;
+    private static final int LAST_OPTION = EXTENDED_OPTIONS_LIST;
 
-    private static final String __optionString[] = {
+    private static final String optionString[] = {
                 "BINARY", "ECHO", "RCP", "SUPPRESS GO AHEAD", "NAME", "STATUS",
                 "TIMING MARK", "RCTE", "NAOL", "NAOP", "NAOCRD", "NAOHTS", "NAOHTD",
                 "NAOFFD", "NAOVTS", "NAOVTD", "NAOLFD", "EXTEND ASCII", "LOGOUT",
@@ -164,11 +164,11 @@ public class TelnetOption
      ***/
     public static final String getOption(final int code)
     {
-        if(__optionString[code].length() == 0)
+        if(optionString[code].length() == 0)
         {
             return "UNASSIGNED";
         }
-        return __optionString[code];
+        return optionString[code];
     }
 
 
@@ -181,7 +181,7 @@ public class TelnetOption
      **/
     public static final boolean isValidOption(final int code)
     {
-        return code <= __LAST_OPTION;
+        return code <= LAST_OPTION;
     }
 
     // Cannot be instantiated

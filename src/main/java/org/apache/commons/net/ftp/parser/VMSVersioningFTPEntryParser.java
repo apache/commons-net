@@ -45,7 +45,7 @@ import org.apache.commons.net.ftp.FTPClientConfig;
 public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
 {
 
-    private final Pattern _preparse_pattern_;
+    private final Pattern preparsePattern;
     private static final String PRE_PARSE_REGEX =
         "(.*?);([0-9]+)\\s*.*";
 
@@ -81,7 +81,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
         try
         {
             //_preparse_matcher_ = new Perl5Matcher();
-            _preparse_pattern_ = Pattern.compile(PRE_PARSE_REGEX);
+            preparsePattern = Pattern.compile(PRE_PARSE_REGEX);
         }
         catch (final PatternSyntaxException pse)
         {
@@ -107,7 +107,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
         while (iter.hasNext()) {
             final String entry = iter.next().trim();
             MatchResult result = null;
-            final Matcher _preparse_matcher_ = _preparse_pattern_.matcher(entry);
+            final Matcher _preparse_matcher_ = preparsePattern.matcher(entry);
             if (_preparse_matcher_.matches()) {
                 result = _preparse_matcher_.toMatchResult();
                 final String name = result.group(1);
@@ -131,7 +131,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
         while (iter.hasPrevious()) {
             final String entry = iter.previous().trim();
             MatchResult result = null;
-            final Matcher _preparse_matcher_ = _preparse_pattern_.matcher(entry);
+            final Matcher _preparse_matcher_ = preparsePattern.matcher(entry);
             if (_preparse_matcher_.matches()) {
                 result = _preparse_matcher_.toMatchResult();
                 final String name = result.group(1);

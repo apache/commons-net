@@ -42,7 +42,7 @@ public final class NTPUDPClient extends DatagramSocketClient
     /*** The default NTP port.  It is set to 123 according to RFC 1305. ***/
     public static final int DEFAULT_PORT = 123;
 
-    private int _version = NtpV3Packet.VERSION_3;
+    private int version = NtpV3Packet.VERSION_3;
 
     /***
      * Retrieves the time information from the specified server and port and
@@ -66,7 +66,7 @@ public final class NTPUDPClient extends DatagramSocketClient
 
         final NtpV3Packet message = new NtpV3Impl();
         message.setMode(NtpV3Packet.MODE_CLIENT);
-        message.setVersion(_version);
+        message.setVersion(version);
         final DatagramPacket sendPacket = message.getDatagramPacket();
         sendPacket.setAddress(host);
         sendPacket.setPort(port);
@@ -121,7 +121,7 @@ public final class NTPUDPClient extends DatagramSocketClient
      ***/
     public int getVersion()
     {
-        return _version;
+        return version;
     }
 
     /***
@@ -132,7 +132,7 @@ public final class NTPUDPClient extends DatagramSocketClient
      ***/
     public void setVersion(final int version)
     {
-        _version = version;
+        this.version = version;
     }
 
 }

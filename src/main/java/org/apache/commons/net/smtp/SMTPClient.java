@@ -363,7 +363,7 @@ public class SMTPClient extends SMTP
             return null;
         }
 
-        return new DotTerminatedMessageWriter(_writer);
+        return new DotTerminatedMessageWriter(writer);
     }
 
 

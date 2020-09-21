@@ -38,12 +38,12 @@ import java.io.Writer;
 
 public final class DotTerminatedMessageWriter extends Writer
 {
-    private static final int __NOTHING_SPECIAL_STATE = 0;
-    private static final int __LAST_WAS_CR_STATE = 1;
-    private static final int __LAST_WAS_NL_STATE = 2;
+    private static final int NOTHING_SPECIAL_STATE = 0;
+    private static final int LAST_WAS_CR_STATE = 1;
+    private static final int LAST_WAS_NL_STATE = 2;
 
-    private int __state;
-    private Writer __output;
+    private int state;
+    private Writer output;
 
 
     /***
@@ -55,8 +55,8 @@ public final class DotTerminatedMessageWriter extends Writer
     public DotTerminatedMessageWriter(final Writer output)
     {
         super(output);
-        __output = output;
-        __state = __NOTHING_SPECIAL_STATE;
+        this.output = output;
+        this.state = NOTHING_SPECIAL_STATE;
     }
 
 
@@ -79,25 +79,25 @@ public final class DotTerminatedMessageWriter extends Writer
             switch (ch)
             {
             case '\r':
-                __state = __LAST_WAS_CR_STATE;
-                __output.write('\r');
+                state = LAST_WAS_CR_STATE;
+                output.write('\r');
                 return ;
             case '\n':
-                if (__state != __LAST_WAS_CR_STATE) {
-                    __output.write('\r');
+                if (state != LAST_WAS_CR_STATE) {
+                    output.write('\r');
                 }
-                __output.write('\n');
-                __state = __LAST_WAS_NL_STATE;
+                output.write('\n');
+                state = LAST_WAS_NL_STATE;
                 return ;
             case '.':
                 // Double the dot at the beginning of a line
-                if (__state == __LAST_WAS_NL_STATE) {
-                    __output.write('.');
+                if (state == LAST_WAS_NL_STATE) {
+                    output.write('.');
                 }
                 //$FALL-THROUGH$
             default:
-                __state = __NOTHING_SPECIAL_STATE;
-                __output.write(ch);
+                state = NOTHING_SPECIAL_STATE;
+                output.write(ch);
                 return ;
             }
         }
@@ -181,7 +181,7 @@ public final class DotTerminatedMessageWriter extends Writer
     {
         synchronized (lock)
         {
-            __output.flush();
+            output.flush();
         }
     }
 
@@ -199,20 +199,20 @@ public final class DotTerminatedMessageWriter extends Writer
     {
         synchronized (lock)
         {
-            if (__output == null) {
+            if (output == null) {
                 return ;
             }
 
-            if (__state == __LAST_WAS_CR_STATE) {
-                __output.write('\n');
-            } else if (__state != __LAST_WAS_NL_STATE) {
-                __output.write("\r\n");
+            if (state == LAST_WAS_CR_STATE) {
+                output.write('\n');
+            } else if (state != LAST_WAS_NL_STATE) {
+                output.write("\r\n");
             }
 
-            __output.write(".\r\n");
+            output.write(".\r\n");
 
-            __output.flush();
-            __output = null;
+            output.flush();
+            output = null;
         }
     }
 

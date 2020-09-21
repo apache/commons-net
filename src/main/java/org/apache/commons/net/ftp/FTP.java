@@ -213,7 +213,7 @@ public class FTP extends SocketClient
     /** Length of the FTP reply code (3 alphanumerics) */
     public static final int REPLY_CODE_LEN = 3;
 
-    private static final String __modes = "AEILNTCFRPSBC";
+    private static final String modes = "AEILNTCFRPSBC";
 
     protected int _replyCode;
     protected ArrayList<String> _replyLines;
@@ -1083,12 +1083,12 @@ public class FTP extends SocketClient
     {
         final StringBuilder arg = new StringBuilder();
 
-        arg.append(__modes.charAt(fileType));
+        arg.append(modes.charAt(fileType));
         arg.append(' ');
         if (fileType == LOCAL_FILE_TYPE) {
             arg.append(formatOrByteSize);
         } else {
-            arg.append(__modes.charAt(formatOrByteSize));
+            arg.append(modes.charAt(formatOrByteSize));
         }
 
         return sendCommand(FTPCmd.TYPE, arg.toString());
@@ -1113,7 +1113,7 @@ public class FTP extends SocketClient
     public int type(final int fileType) throws IOException
     {
         return sendCommand(FTPCmd.TYPE,
-                           __modes.substring(fileType, fileType + 1));
+                           modes.substring(fileType, fileType + 1));
     }
 
     /***
@@ -1134,7 +1134,7 @@ public class FTP extends SocketClient
     public int stru(final int structure) throws IOException
     {
         return sendCommand(FTPCmd.STRU,
-                           __modes.substring(structure, structure + 1));
+                           modes.substring(structure, structure + 1));
     }
 
     /***
@@ -1155,7 +1155,7 @@ public class FTP extends SocketClient
     public int mode(final int mode) throws IOException
     {
         return sendCommand(FTPCmd.MODE,
-                           __modes.substring(mode, mode + 1));
+                           modes.substring(mode, mode + 1));
     }
 
     /***

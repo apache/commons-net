@@ -94,9 +94,9 @@ public class TFTPServerMain {
                         if (packet instanceof TFTPDataPacket) {
                             final TFTPDataPacket data = (TFTPDataPacket) packet;
                             System.out.println("Change data block num");
-                            data._blockNumber--;
+                            data.blockNumber--;
                             super.sendData(tftp, packet);
-                            data._blockNumber++;
+                            data.blockNumber++;
                         }
                         if (packet instanceof TFTPAckPacket) {
                             final TFTPAckPacket ack = (TFTPAckPacket) packet;

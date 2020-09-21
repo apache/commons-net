@@ -30,10 +30,10 @@ import java.io.PrintWriter;
 
 public class PrintCommandListener implements ProtocolCommandListener
 {
-    private final PrintWriter __writer;
-    private final boolean __nologin;
-    private final char __eolMarker;
-    private final boolean __directionMarker;
+    private final PrintWriter writer;
+    private final boolean nologin;
+    private final char eolMarker;
+    private final boolean directionMarker;
 
     /**
      * Create the default instance which prints everything.
@@ -141,49 +141,49 @@ public class PrintCommandListener implements ProtocolCommandListener
      */
     public PrintCommandListener(final PrintWriter writer, final boolean suppressLogin, final char eolMarker,
             final boolean showDirection) {
-        __writer = writer;
-        __nologin = suppressLogin;
-        __eolMarker = eolMarker;
-        __directionMarker = showDirection;
+        this.writer = writer;
+        this.nologin = suppressLogin;
+        this.eolMarker = eolMarker;
+        this.directionMarker = showDirection;
     }
 
     @Override
     public void protocolCommandSent(final ProtocolCommandEvent event)
     {
-        if (__directionMarker) {
-            __writer.print("> ");
+        if (directionMarker) {
+            writer.print("> ");
         }
-        if (__nologin) {
+        if (nologin) {
             final String cmd = event.getCommand();
             if ("PASS".equalsIgnoreCase(cmd) || "USER".equalsIgnoreCase(cmd)) {
-                __writer.print(cmd);
-                __writer.println(" *******"); // Don't bother with EOL marker for this!
+                writer.print(cmd);
+                writer.println(" *******"); // Don't bother with EOL marker for this!
             } else {
                 final String IMAP_LOGIN = "LOGIN";
                 if (IMAP_LOGIN.equalsIgnoreCase(cmd)) { // IMAP
                     String msg = event.getMessage();
                     msg=msg.substring(0, msg.indexOf(IMAP_LOGIN)+IMAP_LOGIN.length());
-                    __writer.print(msg);
-                    __writer.println(" *******"); // Don't bother with EOL marker for this!
+                    writer.print(msg);
+                    writer.println(" *******"); // Don't bother with EOL marker for this!
                 } else {
-                    __writer.print(getPrintableString(event.getMessage()));
+                    writer.print(getPrintableString(event.getMessage()));
                 }
             }
         } else {
-            __writer.print(getPrintableString(event.getMessage()));
+            writer.print(getPrintableString(event.getMessage()));
         }
-        __writer.flush();
+        writer.flush();
     }
 
     private String getPrintableString(final String msg){
-        if (__eolMarker == 0) {
+        if (eolMarker == 0) {
             return msg;
         }
         final int pos = msg.indexOf(SocketClient.NETASCII_EOL);
         if (pos > 0) {
             final StringBuilder sb = new StringBuilder();
             sb.append(msg.substring(0,pos));
-            sb.append(__eolMarker);
+            sb.append(eolMarker);
             sb.append(msg.substring(pos));
             return sb.toString();
         }
@@ -193,11 +193,11 @@ public class PrintCommandListener implements ProtocolCommandListener
     @Override
     public void protocolReplyReceived(final ProtocolCommandEvent event)
     {
-        if (__directionMarker) {
-            __writer.print("< ");
+        if (directionMarker) {
+            writer.print("< ");
         }
-        __writer.print(event.getMessage());
-        __writer.flush();
+        writer.print(event.getMessage());
+        writer.flush();
     }
 }
 

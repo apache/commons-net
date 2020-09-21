@@ -41,7 +41,7 @@ public final class DaytimeTCPClient extends SocketClient
 
     // Received dates will likely be less than 64 characters.
     // This is a temporary buffer used while receiving data.
-    private final char[] __buffer = new char[64];
+    private final char[] buffer = new char[64];
 
     /**
      * The default DaytimeTCPClient constructor.  It merely sets the default
@@ -68,18 +68,18 @@ public final class DaytimeTCPClient extends SocketClient
     public String getTime() throws IOException
     {
         int read;
-        final StringBuilder result = new StringBuilder(__buffer.length);
+        final StringBuilder result = new StringBuilder(buffer.length);
         BufferedReader reader;
 
         reader = new BufferedReader(new InputStreamReader(_input_, getCharset()));
 
         while (true)
         {
-            read = reader.read(__buffer, 0, __buffer.length);
+            read = reader.read(buffer, 0, buffer.length);
             if (read <= 0) {
                 break;
             }
-            result.append(__buffer, 0, read);
+            result.append(buffer, 0, read);
         }
 
         return result.toString();

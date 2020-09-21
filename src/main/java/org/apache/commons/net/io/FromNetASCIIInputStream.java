@@ -48,7 +48,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
         }
     }
 
-    private int __length = 0;
+    private int length = 0;
 
     /***
      * Returns true if the NetASCII line separator differs from the system
@@ -89,7 +89,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
                 unread(_lineSeparatorBytes);
                 ch = super.read();
                 // This is a kluge for read(byte[], ...) to read the right amount
-                --__length;
+                --length;
             }
             else
             {
@@ -175,11 +175,11 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
 
         ch = available();
 
-        __length = length > ch ? ch : length;
+        this.length = length > ch ? ch : length;
 
         // If nothing is available, block to read only one character
-        if (__length < 1) {
-            __length = 1;
+        if (this.length < 1) {
+            this.length = 1;
         }
 
 
@@ -193,7 +193,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
         {
             buffer[offset++] = (byte)ch;
         }
-        while (--__length > 0 && (ch = __read()) != -1);
+        while (--this.length > 0 && (ch = __read()) != -1);
 
 
         return offset - off;

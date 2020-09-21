@@ -365,7 +365,7 @@ public class TFTPClient extends TFTP
         }
 
         TFTPPacket sent = new TFTPWriteRequestPacket(host, port, fileName, mode);
-        final TFTPDataPacket data = new TFTPDataPacket(host, port, 0, _sendBuffer, 4, 0);
+        final TFTPDataPacket data = new TFTPDataPacket(host, port, 0, sendBuffer, 4, 0);
 
         beginBufferedOps();
 
@@ -457,7 +457,7 @@ public class TFTPClient extends TFTP
                 int totalThisPacket = 0;
                 int bytesRead = 0;
                 while (dataLength > 0 &&
-                        (bytesRead = input.read(_sendBuffer, offset, dataLength)) > 0) {
+                        (bytesRead = input.read(sendBuffer, offset, dataLength)) > 0) {
                     offset += bytesRead;
                     dataLength -= bytesRead;
                     totalThisPacket += bytesRead;
@@ -467,7 +467,7 @@ public class TFTPClient extends TFTP
                     lastAckWait = true;
                 }
                 data.setBlockNumber(block);
-                data.setData(_sendBuffer, 4, totalThisPacket);
+                data.setData(sendBuffer, 4, totalThisPacket);
                 sent = data;
                 totalBytesSent += totalThisPacket;
             } while (true); // loops until after lastAckWait is set

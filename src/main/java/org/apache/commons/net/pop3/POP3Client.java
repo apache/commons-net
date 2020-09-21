@@ -51,7 +51,7 @@ import org.apache.commons.net.io.DotTerminatedMessageReader;
 public class POP3Client extends POP3
 {
 
-    private static POP3MessageInfo __parseStatus(final String line)
+    private static POP3MessageInfo parseStatus(final String line)
     {
         int num, size;
         StringTokenizer tokenizer;
@@ -82,7 +82,7 @@ public class POP3Client extends POP3
         return new POP3MessageInfo(num, size);
     }
 
-    private static POP3MessageInfo __parseUID(String line)
+    private static POP3MessageInfo parseUID(String line)
     {
         int num;
         StringTokenizer tokenizer;
@@ -261,7 +261,7 @@ public class POP3Client extends POP3
             setState(UPDATE_STATE);
         }
         sendCommand(POP3Command.QUIT);
-        return _replyCode == POP3Reply.OK;
+        return replyCode == POP3Reply.OK;
     }
 
 
@@ -353,7 +353,7 @@ public class POP3Client extends POP3
         if (sendCommand(POP3Command.STAT) != POP3Reply.OK) {
             return null;
         }
-        return __parseStatus(_lastReplyLine.substring(3));
+        return parseStatus(lastReplyLine.substring(3));
     }
 
 
@@ -383,7 +383,7 @@ public class POP3Client extends POP3
                 != POP3Reply.OK) {
             return null;
         }
-        return __parseStatus(_lastReplyLine.substring(3));
+        return parseStatus(lastReplyLine.substring(3));
     }
 
 
@@ -415,13 +415,13 @@ public class POP3Client extends POP3
         getAdditionalReply();
 
         // This could be a zero length array if no messages present
-        final POP3MessageInfo[] messages = new POP3MessageInfo[_replyLines.size() - 2]; // skip first and last lines
+        final POP3MessageInfo[] messages = new POP3MessageInfo[replyLines.size() - 2]; // skip first and last lines
 
-        final ListIterator<String> en = _replyLines.listIterator(1); // Skip first line
+        final ListIterator<String> en = replyLines.listIterator(1); // Skip first line
 
         // Fetch lines.
         for (int line = 0; line < messages.length; line++) {
-            messages[line] = __parseStatus(en.next());
+            messages[line] = parseStatus(en.next());
         }
 
         return messages;
@@ -454,7 +454,7 @@ public class POP3Client extends POP3
                 != POP3Reply.OK) {
             return null;
         }
-        return __parseUID(_lastReplyLine.substring(3));
+        return parseUID(lastReplyLine.substring(3));
     }
 
 
@@ -486,13 +486,13 @@ public class POP3Client extends POP3
         getAdditionalReply();
 
         // This could be a zero length array if no messages present
-        final POP3MessageInfo[] messages = new POP3MessageInfo[_replyLines.size() - 2]; // skip first and last lines
+        final POP3MessageInfo[] messages = new POP3MessageInfo[replyLines.size() - 2]; // skip first and last lines
 
-        final ListIterator<String> en = _replyLines.listIterator(1); // skip first line
+        final ListIterator<String> en = replyLines.listIterator(1); // skip first line
 
         // Fetch lines.
         for (int line = 0; line < messages.length; line++) {
-            messages[line] = __parseUID(en.next());
+            messages[line] = parseUID(en.next());
         }
 
         return messages;
@@ -533,7 +533,7 @@ public class POP3Client extends POP3
             return null;
         }
 
-        return new DotTerminatedMessageReader(_reader);
+        return new DotTerminatedMessageReader(reader);
     }
 
 
@@ -576,7 +576,7 @@ public class POP3Client extends POP3
             return null;
         }
 
-        return new DotTerminatedMessageReader(_reader);
+        return new DotTerminatedMessageReader(reader);
     }
 
 

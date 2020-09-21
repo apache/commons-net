@@ -41,11 +41,11 @@ public class DiscardUDPClient extends DatagramSocketClient
     /*** The default discard port.  It is set to 9 according to RFC 863. ***/
     public static final int DEFAULT_PORT = 9;
 
-    DatagramPacket _sendPacket;
+    DatagramPacket sendPacket;
 
     public DiscardUDPClient()
     {
-        _sendPacket = new DatagramPacket(new byte[0], 0);
+        sendPacket = new DatagramPacket(new byte[0], 0);
     }
 
 
@@ -63,11 +63,11 @@ public class DiscardUDPClient extends DatagramSocketClient
     public void send(final byte[] data, final int length, final InetAddress host, final int port)
     throws IOException
     {
-        _sendPacket.setData(data);
-        _sendPacket.setLength(length);
-        _sendPacket.setAddress(host);
-        _sendPacket.setPort(port);
-        _socket_.send(_sendPacket);
+        sendPacket.setData(data);
+        sendPacket.setLength(length);
+        sendPacket.setAddress(host);
+        sendPacket.setPort(port);
+        _socket_.send(sendPacket);
     }
 
 

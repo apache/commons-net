@@ -356,65 +356,65 @@ implements Configurable
      */
     public static final int PASSIVE_REMOTE_DATA_CONNECTION_MODE = 3;
 
-    private int __dataConnectionMode;
-    private int __dataTimeout;
-    private int __passivePort;
+    private int dataConnectionMode;
+    private int dataTimeout;
+    private int passivePort;
     private String __passiveHost;
-    private final Random __random;
-    private int __activeMinPort;
-    private int __activeMaxPort;
-    private InetAddress __activeExternalHost;
-    private InetAddress __reportActiveExternalHost; // overrides __activeExternalHost in EPRT/PORT commands
+    private final Random random;
+    private int activeMinPort;
+    private int activeMaxPort;
+    private InetAddress activeExternalHost;
+    private InetAddress reportActiveExternalHost; // overrides __activeExternalHost in EPRT/PORT commands
     /** The address to bind to on passive connections, if necessary. */
-    private InetAddress __passiveLocalHost;
+    private InetAddress passiveLocalHost;
 
     private int __fileType;
     @SuppressWarnings("unused") // fields are written, but currently not read
-    private int __fileFormat;
+    private int fileFormat;
     @SuppressWarnings("unused") // field is written, but currently not read
-    private int __fileStructure;
+    private int fileStructure;
     @SuppressWarnings("unused") // field is written, but currently not read
-    private int __fileTransferMode;
-    private boolean __remoteVerificationEnabled;
-    private long __restartOffset;
+    private int fileTransferMode;
+    private boolean remoteVerificationEnabled;
+    private long restartOffset;
     private FTPFileEntryParserFactory __parserFactory;
-    private int __bufferSize; // buffersize for buffered data streams
-    private int __sendDataSocketBufferSize;
-    private int __receiveDataSocketBufferSize;
-    private boolean __listHiddenFiles;
-    private boolean __useEPSVwithIPv4; // whether to attempt EPSV with an IPv4 connection
+    private int bufferSize; // buffersize for buffered data streams
+    private int sendDataSocketBufferSize;
+    private int receiveDataSocketBufferSize;
+    private boolean listHiddenFiles;
+    private boolean useEPSVwithIPv4; // whether to attempt EPSV with an IPv4 connection
 
     // __systemName is a cached value that should not be referenced directly
     // except when assigned in getSystemName and __initDefaults.
-    private String __systemName;
+    private String systemName;
 
     // __entryParser is a cached value that should not be referenced directly
     // except when assigned in listFiles(String, String) and __initDefaults.
-    private FTPFileEntryParser __entryParser;
+    private FTPFileEntryParser entryParser;
 
     // Key used to create the parser; necessary to ensure that the parser type is not ignored
-    private String __entryParserKey;
+    private String entryParserKey;
 
-    private FTPClientConfig __configuration;
+    private FTPClientConfig configuration;
 
     // Listener used by store/retrieve methods to handle keepalive
-    private CopyStreamListener __copyStreamListener;
+    private CopyStreamListener copyStreamListener;
 
     // How long to wait before sending another control keep-alive message
-    private long __controlKeepAliveTimeout;
+    private long controlKeepAliveTimeout;
 
     // How long to wait (ms) for keepalive message replies before continuing
     // Most FTP servers don't seem to support concurrent control and data connection usage
-    private int __controlKeepAliveReplyTimeout=1000;
+    private int controlKeepAliveReplyTimeout=1000;
 
     // Debug counts for NOOP acks
-    private int[] __cslDebug;
+    private int[] cslDebug;
 
     /**
      * Enable or disable replacement of internal IP in passive mode. Default enabled
      * using {code NatServerResolverImpl}.
      */
-    private HostnameResolver __passiveNatWorkaroundStrategy = new NatServerResolverImpl(this);
+    private HostnameResolver passiveNatWorkaroundStrategy = new NatServerResolverImpl(this);
 
     /** Pattern for PASV mode responses. Groups: (n,n,n,n),(n),(n) */
     private static final java.util.regex.Pattern __PARMS_PAT;
@@ -425,10 +425,10 @@ implements Configurable
     }
 
     /** Controls the automatic server encoding detection (only UTF-8 supported). */
-    private boolean __autodetectEncoding = false;
+    private boolean autodetectEncoding = false;
 
     /** Map of FEAT responses. If null, has not been initialised. */
-    private HashMap<String, Set<String>> __featuresMap;
+    private HashMap<String, Set<String>> featuresMap;
 
     private static class PropertiesSingleton {
 
@@ -479,36 +479,36 @@ implements Configurable
      */
     public FTPClient()
     {
-        __initDefaults();
-        __dataTimeout = -1;
-        __remoteVerificationEnabled = true;
+        initDefaults();
+        dataTimeout = -1;
+        remoteVerificationEnabled = true;
         __parserFactory = new DefaultFTPFileEntryParserFactory();
-        __configuration      = null;
-        __listHiddenFiles = false;
-        __useEPSVwithIPv4 = false;
-        __random = new Random();
-        __passiveLocalHost   = null;
+        configuration      = null;
+        listHiddenFiles = false;
+        useEPSVwithIPv4 = false;
+        random = new Random();
+        passiveLocalHost   = null;
     }
 
 
-    private void __initDefaults()
+    private void initDefaults()
     {
-        __dataConnectionMode = ACTIVE_LOCAL_DATA_CONNECTION_MODE;
+        dataConnectionMode = ACTIVE_LOCAL_DATA_CONNECTION_MODE;
         __passiveHost        = null;
-        __passivePort        = -1;
-        __activeExternalHost = null;
-        __reportActiveExternalHost = null;
-        __activeMinPort = 0;
-        __activeMaxPort = 0;
+        passivePort        = -1;
+        activeExternalHost = null;
+        reportActiveExternalHost = null;
+        activeMinPort = 0;
+        activeMaxPort = 0;
         __fileType           = FTP.ASCII_FILE_TYPE;
-        __fileStructure      = FTP.FILE_STRUCTURE;
-        __fileFormat         = FTP.NON_PRINT_TEXT_FORMAT;
-        __fileTransferMode   = FTP.STREAM_TRANSFER_MODE;
-        __restartOffset      = 0;
-        __systemName         = null;
-        __entryParser        = null;
-        __entryParserKey    = "";
-        __featuresMap = null;
+        fileStructure      = FTP.FILE_STRUCTURE;
+        fileFormat         = FTP.NON_PRINT_TEXT_FORMAT;
+        fileTransferMode   = FTP.STREAM_TRANSFER_MODE;
+        restartOffset      = 0;
+        systemName         = null;
+        entryParser        = null;
+        entryParserKey    = "";
+        featuresMap = null;
     }
 
     /**
@@ -528,7 +528,7 @@ implements Configurable
      * (i.e. enclosing quotes are missing or embedded quotes are not doubled)
      */
     // package protected for access by test cases
-    static String __parsePathname(final String reply)
+    static String parsePathname(final String reply)
     {
         final String param = reply.substring(REPLY_CODE_LEN + 1);
         if (param.startsWith("\"")) {
@@ -581,7 +581,7 @@ implements Configurable
         {
             final int oct1 = Integer.parseInt(m.group(2));
             final int oct2 = Integer.parseInt(m.group(3));
-            __passivePort = (oct1 << 8) | oct2;
+            passivePort = (oct1 << 8) | oct2;
         }
         catch (final NumberFormatException e)
         {
@@ -589,9 +589,9 @@ implements Configurable
                     "Could not parse passive port information.\nServer Reply: " + reply);
         }
 
-        if (__passiveNatWorkaroundStrategy != null) {
+        if (passiveNatWorkaroundStrategy != null) {
             try {
-                final String passiveHost = __passiveNatWorkaroundStrategy.resolve(__passiveHost);
+                final String passiveHost = passiveNatWorkaroundStrategy.resolve(__passiveHost);
                 if (!__passiveHost.equals(passiveHost)) {
                     fireReplyReceived(0,
                             "[Replacing PASV mode reply address "+__passiveHost+" with "+passiveHost+"]\n");
@@ -636,10 +636,10 @@ implements Configurable
 
         // in EPSV mode, the passive host address is implicit
         __passiveHost = getRemoteAddress().getHostAddress();
-        __passivePort = port;
+        passivePort = port;
     }
 
-    private boolean __storeFile(final FTPCmd command, final String remote, final InputStream local)
+    private boolean storeFile(final FTPCmd command, final String remote, final InputStream local)
     throws IOException
     {
         return _storeFile(command.getCommand(), remote, local);
@@ -672,15 +672,15 @@ implements Configurable
         }
 
         CSL csl = null;
-        if (__controlKeepAliveTimeout > 0) {
-            csl = new CSL(this, __controlKeepAliveTimeout, __controlKeepAliveReplyTimeout);
+        if (controlKeepAliveTimeout > 0) {
+            csl = new CSL(this, controlKeepAliveTimeout, controlKeepAliveReplyTimeout);
         }
 
         // Treat everything else as binary for now
         try
         {
             Util.copyStream(local, output, getBufferSize(),
-                    CopyStreamEvent.UNKNOWN_STREAM_SIZE, __mergeListeners(csl),
+                    CopyStreamEvent.UNKNOWN_STREAM_SIZE, mergeListeners(csl),
                     false);
             output.close(); // ensure the file is fully written
             socket.close(); // done writing the file
@@ -695,12 +695,12 @@ implements Configurable
             throw e;
         } finally {
             if (csl != null) {
-                __cslDebug = csl.cleanUp(); // fetch any outstanding keepalive replies
+                cslDebug = csl.cleanUp(); // fetch any outstanding keepalive replies
             }
         }
     }
 
-    private OutputStream __storeFileStream(final FTPCmd command, final String remote)
+    private OutputStream storeFileStream(final FTPCmd command, final String remote)
     throws IOException
     {
         return _storeFileStream(command.getCommand(), remote);
@@ -812,8 +812,8 @@ implements Configurable
     protected Socket _openDataConnection_(final String command, final String arg)
     throws IOException
     {
-        if (__dataConnectionMode != ACTIVE_LOCAL_DATA_CONNECTION_MODE &&
-                __dataConnectionMode != PASSIVE_LOCAL_DATA_CONNECTION_MODE) {
+        if (dataConnectionMode != ACTIVE_LOCAL_DATA_CONNECTION_MODE &&
+                dataConnectionMode != PASSIVE_LOCAL_DATA_CONNECTION_MODE) {
             return null;
         }
 
@@ -821,7 +821,7 @@ implements Configurable
 
         Socket socket;
 
-        if (__dataConnectionMode == ACTIVE_LOCAL_DATA_CONNECTION_MODE)
+        if (dataConnectionMode == ACTIVE_LOCAL_DATA_CONNECTION_MODE)
         {
             // if no activePortRange was set (correctly) -> getActivePort() = 0
             // -> new ServerSocket(0) -> bind to any free local port
@@ -843,7 +843,7 @@ implements Configurable
                     }
                 }
 
-                if ((__restartOffset > 0) && !restart(__restartOffset)) {
+                if ((restartOffset > 0) && !restart(restartOffset)) {
                     return null;
                 }
 
@@ -855,20 +855,20 @@ implements Configurable
                 // the data connection.  It may be desirable to let this be a
                 // separately configurable value.  In any case, we really want
                 // to allow preventing the accept from blocking indefinitely.
-                if (__dataTimeout >= 0) {
-                    server.setSoTimeout(__dataTimeout);
+                if (dataTimeout >= 0) {
+                    server.setSoTimeout(dataTimeout);
                 }
                 socket = server.accept();
 
                 // Ensure the timeout is set before any commands are issued on the new socket
-                if (__dataTimeout >= 0) {
-                    socket.setSoTimeout(__dataTimeout);
+                if (dataTimeout >= 0) {
+                    socket.setSoTimeout(dataTimeout);
                 }
-                if (__receiveDataSocketBufferSize > 0) {
-                    socket.setReceiveBufferSize(__receiveDataSocketBufferSize);
+                if (receiveDataSocketBufferSize > 0) {
+                    socket.setReceiveBufferSize(receiveDataSocketBufferSize);
                 }
-                if (__sendDataSocketBufferSize > 0) {
-                    socket.setSendBufferSize(__sendDataSocketBufferSize);
+                if (sendDataSocketBufferSize > 0) {
+                    socket.setSendBufferSize(sendDataSocketBufferSize);
                 }
             }
         }
@@ -900,26 +900,26 @@ implements Configurable
             }
 
             socket = _socketFactory_.createSocket();
-            if (__receiveDataSocketBufferSize > 0) {
-                socket.setReceiveBufferSize(__receiveDataSocketBufferSize);
+            if (receiveDataSocketBufferSize > 0) {
+                socket.setReceiveBufferSize(receiveDataSocketBufferSize);
             }
-            if (__sendDataSocketBufferSize > 0) {
-                socket.setSendBufferSize(__sendDataSocketBufferSize);
+            if (sendDataSocketBufferSize > 0) {
+                socket.setSendBufferSize(sendDataSocketBufferSize);
             }
-            if (__passiveLocalHost != null) {
-                socket.bind(new InetSocketAddress(__passiveLocalHost, 0));
+            if (passiveLocalHost != null) {
+                socket.bind(new InetSocketAddress(passiveLocalHost, 0));
             }
 
             // For now, let's just use the data timeout value for waiting for
             // the data connection.  It may be desirable to let this be a
             // separately configurable value.  In any case, we really want
             // to allow preventing the accept from blocking indefinitely.
-            if (__dataTimeout >= 0) {
-                socket.setSoTimeout(__dataTimeout);
+            if (dataTimeout >= 0) {
+                socket.setSoTimeout(dataTimeout);
             }
 
-            socket.connect(new InetSocketAddress(__passiveHost, __passivePort), connectTimeout);
-            if ((__restartOffset > 0) && !restart(__restartOffset))
+            socket.connect(new InetSocketAddress(__passiveHost, passivePort), connectTimeout);
+            if ((restartOffset > 0) && !restart(restartOffset))
             {
                 socket.close();
                 return null;
@@ -932,7 +932,7 @@ implements Configurable
             }
         }
 
-        if (__remoteVerificationEnabled && !verifyRemote(socket))
+        if (remoteVerificationEnabled && !verifyRemote(socket))
         {
             // Grab the host before we close the socket to avoid NET-663
             final InetAddress socketHost = socket.getInetAddress();
@@ -964,10 +964,10 @@ implements Configurable
     protected void _connectAction_(final Reader socketIsReader) throws IOException
     {
         super._connectAction_(socketIsReader); // sets up _input_ and _output_
-        __initDefaults();
+        initDefaults();
         // must be after super._connectAction_(), because otherwise we get an
         // Exception claiming we're not connected
-        if ( __autodetectEncoding )
+        if ( autodetectEncoding )
         {
             final ArrayList<String> oldReplyLines = new ArrayList<> (_replyLines);
             final int oldReplyCode = _replyCode;
@@ -1000,7 +1000,7 @@ implements Configurable
      */
     public void setDataTimeout(final int timeout)
     {
-        __dataTimeout = timeout;
+        dataTimeout = timeout;
     }
 
     /**
@@ -1027,7 +1027,7 @@ implements Configurable
     public void disconnect() throws IOException
     {
         super.disconnect();
-        __initDefaults();
+        initDefaults();
     }
 
 
@@ -1042,7 +1042,7 @@ implements Configurable
      */
     public void setRemoteVerificationEnabled(final boolean enable)
     {
-        __remoteVerificationEnabled = enable;
+        remoteVerificationEnabled = enable;
     }
 
     /**
@@ -1054,7 +1054,7 @@ implements Configurable
      */
     public boolean isRemoteVerificationEnabled()
     {
-        return __remoteVerificationEnabled;
+        return remoteVerificationEnabled;
     }
 
     /**
@@ -1231,7 +1231,7 @@ implements Configurable
                         FTPReply.isPositiveCompletion(getReply())))
         {
 
-            __initDefaults();
+            initDefaults();
 
             return true;
         }
@@ -1251,9 +1251,9 @@ implements Configurable
      */
     public void enterLocalActiveMode()
     {
-        __dataConnectionMode = ACTIVE_LOCAL_DATA_CONNECTION_MODE;
+        dataConnectionMode = ACTIVE_LOCAL_DATA_CONNECTION_MODE;
         __passiveHost = null;
-        __passivePort = -1;
+        passivePort = -1;
     }
 
 
@@ -1274,11 +1274,11 @@ implements Configurable
      */
     public void enterLocalPassiveMode()
     {
-        __dataConnectionMode = PASSIVE_LOCAL_DATA_CONNECTION_MODE;
+        dataConnectionMode = PASSIVE_LOCAL_DATA_CONNECTION_MODE;
         // These will be set when just before a data connection is opened
         // in _openDataConnection_()
         __passiveHost = null;
-        __passivePort = -1;
+        passivePort = -1;
     }
 
 
@@ -1311,9 +1311,9 @@ implements Configurable
     {
         if (FTPReply.isPositiveCompletion(port(host, port)))
         {
-            __dataConnectionMode = ACTIVE_REMOTE_DATA_CONNECTION_MODE;
+            dataConnectionMode = ACTIVE_REMOTE_DATA_CONNECTION_MODE;
             __passiveHost = null;
-            __passivePort = -1;
+            passivePort = -1;
             return true;
         }
         return false;
@@ -1347,7 +1347,7 @@ implements Configurable
             return false;
         }
 
-        __dataConnectionMode = PASSIVE_REMOTE_DATA_CONNECTION_MODE;
+        dataConnectionMode = PASSIVE_REMOTE_DATA_CONNECTION_MODE;
         _parsePassiveModeReply(_replyLines.get(0));
 
         return true;
@@ -1384,7 +1384,7 @@ implements Configurable
      */
     public int getPassivePort()
     {
-        return __passivePort;
+        return passivePort;
     }
 
 
@@ -1397,7 +1397,7 @@ implements Configurable
      */
     public int getDataConnectionMode()
     {
-        return __dataConnectionMode;
+        return dataConnectionMode;
     }
 
     /**
@@ -1407,13 +1407,13 @@ implements Configurable
      */
     private int getActivePort()
     {
-        if (__activeMinPort > 0 && __activeMaxPort >= __activeMinPort)
+        if (activeMinPort > 0 && activeMaxPort >= activeMinPort)
         {
-            if (__activeMaxPort == __activeMinPort) {
-                return __activeMaxPort;
+            if (activeMaxPort == activeMinPort) {
+                return activeMaxPort;
             }
             // Get a random port between the min and max port range
-            return __random.nextInt(__activeMaxPort - __activeMinPort + 1) + __activeMinPort;
+            return random.nextInt(activeMaxPort - activeMinPort + 1) + activeMinPort;
         }
         // default port
         return 0;
@@ -1427,9 +1427,9 @@ implements Configurable
      */
     private InetAddress getHostAddress()
     {
-        if (__activeExternalHost != null)
+        if (activeExternalHost != null)
         {
-            return __activeExternalHost;
+            return activeExternalHost;
         }
         // default local address
         return getLocalAddress();
@@ -1444,8 +1444,8 @@ implements Configurable
      * @return __reportActiveExternalHost if non-null, else getHostAddress();
      */
     private InetAddress getReportHostAddress() {
-        if (__reportActiveExternalHost != null) {
-            return __reportActiveExternalHost ;
+        if (reportActiveExternalHost != null) {
+            return reportActiveExternalHost ;
         }
         return getHostAddress();
     }
@@ -1459,8 +1459,8 @@ implements Configurable
      */
     public void setActivePortRange(final int minPort, final int maxPort)
     {
-        this.__activeMinPort = minPort;
-        this.__activeMaxPort = maxPort;
+        this.activeMinPort = minPort;
+        this.activeMaxPort = maxPort;
     }
 
     /**
@@ -1473,7 +1473,7 @@ implements Configurable
      */
     public void setActiveExternalIPAddress(final String ipAddress) throws UnknownHostException
     {
-        this.__activeExternalHost = InetAddress.getByName(ipAddress);
+        this.activeExternalHost = InetAddress.getByName(ipAddress);
     }
 
     /**
@@ -1485,7 +1485,7 @@ implements Configurable
      */
     public void setPassiveLocalIPAddress(final String ipAddress) throws UnknownHostException
     {
-        this.__passiveLocalHost = InetAddress.getByName(ipAddress);
+        this.passiveLocalHost = InetAddress.getByName(ipAddress);
     }
 
     /**
@@ -1496,7 +1496,7 @@ implements Configurable
      */
     public void setPassiveLocalIPAddress(final InetAddress inetAddress)
     {
-        this.__passiveLocalHost = inetAddress;
+        this.passiveLocalHost = inetAddress;
     }
 
     /**
@@ -1507,7 +1507,7 @@ implements Configurable
      */
     public InetAddress getPassiveLocalIPAddress()
     {
-        return this.__passiveLocalHost;
+        return this.passiveLocalHost;
     }
 
     /**
@@ -1521,7 +1521,7 @@ implements Configurable
      */
     public void setReportActiveExternalIPAddress(final String ipAddress) throws UnknownHostException
     {
-        this.__reportActiveExternalHost = InetAddress.getByName(ipAddress);
+        this.reportActiveExternalHost = InetAddress.getByName(ipAddress);
     }
 
 
@@ -1556,7 +1556,7 @@ implements Configurable
         if (FTPReply.isPositiveCompletion(type(fileType)))
         {
             __fileType = fileType;
-            __fileFormat = FTP.NON_PRINT_TEXT_FORMAT;
+            fileFormat = FTP.NON_PRINT_TEXT_FORMAT;
             return true;
         }
         return false;
@@ -1605,7 +1605,7 @@ implements Configurable
         if (FTPReply.isPositiveCompletion(type(fileType, formatOrByteSize)))
         {
             __fileType = fileType;
-            __fileFormat = formatOrByteSize;
+            fileFormat = formatOrByteSize;
             return true;
         }
         return false;
@@ -1632,7 +1632,7 @@ implements Configurable
     {
         if (FTPReply.isPositiveCompletion(stru(structure)))
         {
-            __fileStructure = structure;
+            fileStructure = structure;
             return true;
         }
         return false;
@@ -1659,7 +1659,7 @@ implements Configurable
     {
         if (FTPReply.isPositiveCompletion(mode(mode)))
         {
-            __fileTransferMode = mode;
+            fileTransferMode = mode;
             return true;
         }
         return false;
@@ -1683,8 +1683,8 @@ implements Configurable
      */
     public boolean remoteRetrieve(final String fileName) throws IOException
     {
-        if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
-                __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
+        if (dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
+                dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
             return FTPReply.isPositivePreliminary(retr(fileName));
         }
         return false;
@@ -1710,8 +1710,8 @@ implements Configurable
      */
     public boolean remoteStore(final String fileName) throws IOException
     {
-        if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
-                __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
+        if (dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
+                dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
             return FTPReply.isPositivePreliminary(stor(fileName));
         }
         return false;
@@ -1738,8 +1738,8 @@ implements Configurable
      */
     public boolean remoteStoreUnique(final String fileName) throws IOException
     {
-        if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
-                __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
+        if (dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
+                dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
             return FTPReply.isPositivePreliminary(stou(fileName));
         }
         return false;
@@ -1766,8 +1766,8 @@ implements Configurable
      */
     public boolean remoteStoreUnique() throws IOException
     {
-        if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
-                __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
+        if (dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
+                dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
             return FTPReply.isPositivePreliminary(stou());
         }
         return false;
@@ -1794,8 +1794,8 @@ implements Configurable
      */
     public boolean remoteAppend(final String fileName) throws IOException
     {
-        if (__dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
-                __dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
+        if (dataConnectionMode == ACTIVE_REMOTE_DATA_CONNECTION_MODE ||
+                dataConnectionMode == PASSIVE_REMOTE_DATA_CONNECTION_MODE) {
             return FTPReply.isPositivePreliminary(appe(fileName));
         }
         return false;
@@ -1907,15 +1907,15 @@ implements Configurable
         }
 
         CSL csl = null;
-        if (__controlKeepAliveTimeout > 0) {
-            csl = new CSL(this, __controlKeepAliveTimeout, __controlKeepAliveReplyTimeout);
+        if (controlKeepAliveTimeout > 0) {
+            csl = new CSL(this, controlKeepAliveTimeout, controlKeepAliveReplyTimeout);
         }
 
         // Treat everything else as binary for now
         try
         {
             Util.copyStream(input, local, getBufferSize(),
-                    CopyStreamEvent.UNKNOWN_STREAM_SIZE, __mergeListeners(csl),
+                    CopyStreamEvent.UNKNOWN_STREAM_SIZE, mergeListeners(csl),
                     false);
 
             // Get the transfer response
@@ -1924,7 +1924,7 @@ implements Configurable
             Util.closeQuietly(input);
             Util.closeQuietly(socket);
             if (csl != null) {
-                __cslDebug = csl.cleanUp(); // fetch any outstanding keepalive replies
+                cslDebug = csl.cleanUp(); // fetch any outstanding keepalive replies
             }
         }
     }
@@ -2023,7 +2023,7 @@ implements Configurable
     public boolean storeFile(final String remote, final InputStream local)
     throws IOException
     {
-        return __storeFile(FTPCmd.STOR, remote, local);
+        return storeFile(FTPCmd.STOR, remote, local);
     }
 
 
@@ -2057,7 +2057,7 @@ implements Configurable
      */
     public OutputStream storeFileStream(final String remote) throws IOException
     {
-        return __storeFileStream(FTPCmd.STOR, remote);
+        return storeFileStream(FTPCmd.STOR, remote);
     }
 
     /**
@@ -2088,7 +2088,7 @@ implements Configurable
     public boolean appendFile(final String remote, final InputStream local)
     throws IOException
     {
-        return __storeFile(FTPCmd.APPE, remote, local);
+        return storeFile(FTPCmd.APPE, remote, local);
     }
 
     /**
@@ -2121,7 +2121,7 @@ implements Configurable
      */
     public OutputStream appendFileStream(final String remote) throws IOException
     {
-        return __storeFileStream(FTPCmd.APPE, remote);
+        return storeFileStream(FTPCmd.APPE, remote);
     }
 
     /**
@@ -2153,7 +2153,7 @@ implements Configurable
     public boolean storeUniqueFile(final String remote, final InputStream local)
     throws IOException
     {
-        return __storeFile(FTPCmd.STOU, remote, local);
+        return storeFile(FTPCmd.STOU, remote, local);
     }
 
 
@@ -2189,7 +2189,7 @@ implements Configurable
      */
     public OutputStream storeUniqueFileStream(final String remote) throws IOException
     {
-        return __storeFileStream(FTPCmd.STOU, remote);
+        return storeFileStream(FTPCmd.STOU, remote);
     }
 
     /**
@@ -2218,7 +2218,7 @@ implements Configurable
      */
     public boolean storeUniqueFile(final InputStream local) throws IOException
     {
-        return __storeFile(FTPCmd.STOU, null, local);
+        return storeFile(FTPCmd.STOU, null, local);
     }
 
     /**
@@ -2251,7 +2251,7 @@ implements Configurable
      */
     public OutputStream storeUniqueFileStream() throws IOException
     {
-        return __storeFileStream(FTPCmd.STOU, null);
+        return storeFileStream(FTPCmd.STOU, null);
     }
 
     /**
@@ -2326,7 +2326,7 @@ implements Configurable
         if (!initFeatureMap()) {
             return null;
         }
-        final Set<String> entries = __featuresMap.get(feature.toUpperCase(Locale.ENGLISH));
+        final Set<String> entries = featuresMap.get(feature.toUpperCase(Locale.ENGLISH));
         if (entries != null) {
             return entries.toArray(new String[entries.size()]);
         }
@@ -2369,7 +2369,7 @@ implements Configurable
         if (!initFeatureMap()) {
             return false;
         }
-        return __featuresMap.containsKey(feature.toUpperCase(Locale.ENGLISH));
+        return featuresMap.containsKey(feature.toUpperCase(Locale.ENGLISH));
     }
 
     /**
@@ -2391,7 +2391,7 @@ implements Configurable
         if (!initFeatureMap()) {
             return false;
         }
-        final Set<String> entries = __featuresMap.get(feature.toUpperCase(Locale.ENGLISH));
+        final Set<String> entries = featuresMap.get(feature.toUpperCase(Locale.ENGLISH));
         if (entries != null) {
             return entries.contains(value);
         }
@@ -2402,7 +2402,7 @@ implements Configurable
      * Create the feature map if not already created.
      */
     private boolean initFeatureMap() throws IOException {
-        if (__featuresMap == null) {
+        if (featuresMap == null) {
             // Don't create map here, because next line may throw exception
             final int replyCode = feat();
             if (replyCode == FTPReply.NOT_LOGGED_IN) { // 503
@@ -2410,7 +2410,7 @@ implements Configurable
             }
             final boolean success = FTPReply.isPositiveCompletion(replyCode);
             // we init the map here, so we don't keep trying if we know the command will fail
-            __featuresMap = new HashMap<>();
+            featuresMap = new HashMap<>();
             if (!success) {
                 return false;
             }
@@ -2426,10 +2426,10 @@ implements Configurable
                         key = l.substring(1);
                     }
                     key = key.toUpperCase(Locale.ENGLISH);
-                    Set<String> entries = __featuresMap.get(key);
+                    Set<String> entries = featuresMap.get(key);
                     if (entries == null) {
                         entries = new HashSet<>();
-                        __featuresMap.put(key, entries);
+                        featuresMap.put(key, entries);
                     }
                     entries.add(value);
                 }
@@ -2614,7 +2614,7 @@ implements Configurable
      */
     protected boolean restart(final long offset) throws IOException
     {
-        __restartOffset = 0;
+        restartOffset = 0;
         return FTPReply.isPositiveIntermediate(rest(Long.toString(offset)));
     }
 
@@ -2637,7 +2637,7 @@ implements Configurable
     public void setRestartOffset(final long offset)
     {
         if (offset >= 0) {
-            __restartOffset = offset;
+            restartOffset = offset;
         }
     }
 
@@ -2649,7 +2649,7 @@ implements Configurable
      */
     public long getRestartOffset()
     {
-        return __restartOffset;
+        return restartOffset;
     }
 
 
@@ -2773,7 +2773,7 @@ implements Configurable
             return null;
         }
 
-        return __parsePathname(_replyLines.get( _replyLines.size() - 1));
+        return parsePathname(_replyLines.get( _replyLines.size() - 1));
     }
 
 
@@ -2822,21 +2822,21 @@ implements Configurable
         // Technically, we should expect a NAME_SYSTEM_TYPE response, but
         // in practice FTP servers deviate, so we soften the condition to
         // a positive completion.
-        if (__systemName == null){
+        if (systemName == null){
             if (FTPReply.isPositiveCompletion(syst())) {
                 // Assume that response is not empty here (cannot be null)
-                __systemName = _replyLines.get(_replyLines.size() - 1).substring(4);
+                systemName = _replyLines.get(_replyLines.size() - 1).substring(4);
             } else {
                 // Check if the user has provided a default for when the SYST command fails
                 final String systDefault = System.getProperty(FTP_SYSTEM_TYPE_DEFAULT);
                 if (systDefault != null) {
-                    __systemName = systDefault;
+                    systemName = systDefault;
                 } else {
                     throw new IOException("Unable to determine system type - response: " + getReplyString());
                 }
             }
         }
-        return __systemName;
+        return systemName;
     }
 
 
@@ -3367,30 +3367,30 @@ implements Configurable
             final String parserKey, final String pathname)
     throws IOException
     {
-        __createParser(parserKey); // create and cache parser
-        return initiateListParsing(__entryParser, pathname);
+        createParser(parserKey); // create and cache parser
+        return initiateListParsing(entryParser, pathname);
     }
 
     // package access for test purposes
-    void __createParser(final String parserKey) throws IOException {
+    void createParser(final String parserKey) throws IOException {
         // We cache the value to avoid creation of a new object every
         // time a file listing is generated.
         // Note: we don't check against a null parserKey (NET-544)
-        if(__entryParser == null ||  (parserKey != null && ! __entryParserKey.equals(parserKey))) {
+        if(entryParser == null ||  (parserKey != null && ! entryParserKey.equals(parserKey))) {
             if (null != parserKey) {
                 // if a parser key was supplied in the parameters,
                 // use that to create the parser
-                __entryParser =
+                entryParser =
                     __parserFactory.createFileEntryParser(parserKey);
-                __entryParserKey = parserKey;
+                entryParserKey = parserKey;
 
             } else {
                 // if no parserKey was supplied, check for a configuration
                 // in the params, and if it has a non-empty system type, use that.
-                if (null != __configuration && __configuration.getServerSystemKey().length() > 0) {
-                    __entryParser =
-                        __parserFactory.createFileEntryParser(__configuration);
-                    __entryParserKey = __configuration.getServerSystemKey();
+                if (null != configuration && configuration.getServerSystemKey().length() > 0) {
+                    entryParser =
+                        __parserFactory.createFileEntryParser(configuration);
+                    entryParserKey = configuration.getServerSystemKey();
                 } else {
                     // if a parserKey hasn't been supplied, and a configuration
                     // hasn't been supplied, and the override property is not set
@@ -3407,12 +3407,12 @@ implements Configurable
                             }
                         }
                     }
-                    if (null != __configuration) { // system type must have been empty above
-                        __entryParser = __parserFactory.createFileEntryParser(new FTPClientConfig(systemType, __configuration));
+                    if (null != configuration) { // system type must have been empty above
+                        entryParser = __parserFactory.createFileEntryParser(new FTPClientConfig(systemType, configuration));
                     } else {
-                        __entryParser = __parserFactory.createFileEntryParser(systemType);
+                        entryParser = __parserFactory.createFileEntryParser(systemType);
                     }
-                    __entryParserKey = systemType;
+                    entryParserKey = systemType;
                 }
             }
         }
@@ -3440,7 +3440,7 @@ implements Configurable
     {
         final Socket socket = _openDataConnection_(FTPCmd.LIST, getListArguments(pathname));
 
-        final FTPListParseEngine engine = new FTPListParseEngine(parser, __configuration);
+        final FTPListParseEngine engine = new FTPListParseEngine(parser, configuration);
         if (socket == null)
         {
             return engine;
@@ -3478,7 +3478,7 @@ implements Configurable
     public FTPListParseEngine initiateMListParsing(final String pathname) throws IOException
     {
         final Socket socket = _openDataConnection_(FTPCmd.MLSD, pathname);
-        final FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance(), __configuration);
+        final FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance(), configuration);
         if (socket == null)
         {
             return engine;
@@ -3657,7 +3657,7 @@ implements Configurable
      * @param bufSize The size of the buffer. Use a non-positive value to use the default.
      */
     public void setBufferSize(final int bufSize) {
-        __bufferSize = bufSize;
+        bufferSize = bufSize;
     }
 
     /**
@@ -3665,7 +3665,7 @@ implements Configurable
      * @return The current buffer size.
      */
     public int getBufferSize() {
-        return __bufferSize;
+        return bufferSize;
     }
 
     /**
@@ -3676,7 +3676,7 @@ implements Configurable
       * @since 3.3
     */
     public void setSendDataSocketBufferSize(final int bufSize) {
-        __sendDataSocketBufferSize = bufSize;
+        sendDataSocketBufferSize = bufSize;
     }
 
     /**
@@ -3685,7 +3685,7 @@ implements Configurable
      * @since 3.3
      */
     public int getSendDataSocketBufferSize() {
-        return __sendDataSocketBufferSize;
+        return sendDataSocketBufferSize;
     }
 
     /**
@@ -3696,7 +3696,7 @@ implements Configurable
      * @since 3.3
      */
     public void setReceieveDataSocketBufferSize(final int bufSize) {
-        __receiveDataSocketBufferSize = bufSize;
+        receiveDataSocketBufferSize = bufSize;
     }
 
     /**
@@ -3705,7 +3705,7 @@ implements Configurable
      * @since 3.3
      */
     public int getReceiveDataSocketBufferSize() {
-        return __receiveDataSocketBufferSize;
+        return receiveDataSocketBufferSize;
     }
 
     /**
@@ -3718,7 +3718,7 @@ implements Configurable
      */
     @Override
     public void configure(final FTPClientConfig config) {
-        this.__configuration = config;
+        this.configuration = config;
     }
 
     /**
@@ -3731,7 +3731,7 @@ implements Configurable
      * @since 2.0
      */
     public void setListHiddenFiles(final boolean listHiddenFiles) {
-        this.__listHiddenFiles = listHiddenFiles;
+        this.listHiddenFiles = listHiddenFiles;
     }
 
     /**
@@ -3740,7 +3740,7 @@ implements Configurable
      * @since 2.0
      */
     public boolean getListHiddenFiles() {
-        return this.__listHiddenFiles;
+        return this.listHiddenFiles;
     }
 
     /**
@@ -3750,7 +3750,7 @@ implements Configurable
      * @since 2.2
      */
     public boolean isUseEPSVwithIPv4() {
-        return __useEPSVwithIPv4;
+        return useEPSVwithIPv4;
     }
 
 
@@ -3769,7 +3769,7 @@ implements Configurable
      * @since 2.2
      */
     public void setUseEPSVwithIPv4(final boolean selected) {
-        this.__useEPSVwithIPv4 = selected;
+        this.useEPSVwithIPv4 = selected;
     }
 
     /**
@@ -3780,7 +3780,7 @@ implements Configurable
      * @since 3.0
      */
     public void setCopyStreamListener(final CopyStreamListener listener){
-        __copyStreamListener = listener;
+        copyStreamListener = listener;
     }
 
     /**
@@ -3790,7 +3790,7 @@ implements Configurable
      * @since 3.0
      */
     public CopyStreamListener getCopyStreamListener(){
-        return __copyStreamListener;
+        return copyStreamListener;
     }
 
     /**
@@ -3804,7 +3804,7 @@ implements Configurable
      * @see #setControlKeepAliveReplyTimeout(int)
      */
     public void setControlKeepAliveTimeout(final long controlIdle){
-        __controlKeepAliveTimeout = controlIdle * 1000;
+        controlKeepAliveTimeout = controlIdle * 1000;
     }
 
     /**
@@ -3817,7 +3817,7 @@ implements Configurable
      * @since 3.0
      */
     public long getControlKeepAliveTimeout() {
-        return __controlKeepAliveTimeout / 1000;
+        return controlKeepAliveTimeout / 1000;
     }
 
     /**
@@ -3837,7 +3837,7 @@ implements Configurable
      */
     @Deprecated // only for use in testing
     public int[] getCslDebug() {
-        return __cslDebug;
+        return cslDebug;
     }
     /**
      * Set how long to wait for control keep-alive message replies.
@@ -3847,7 +3847,7 @@ implements Configurable
      * @see #setControlKeepAliveTimeout(long)
      */
     public void setControlKeepAliveReplyTimeout(final int timeout) {
-        __controlKeepAliveReplyTimeout = timeout;
+        controlKeepAliveReplyTimeout = timeout;
     }
 
     /**
@@ -3856,7 +3856,7 @@ implements Configurable
      * @since 3.0
      */
     public int getControlKeepAliveReplyTimeout() {
-        return __controlKeepAliveReplyTimeout;
+        return controlKeepAliveReplyTimeout;
     }
 
     /**
@@ -3875,9 +3875,9 @@ implements Configurable
     @Deprecated
     public void setPassiveNatWorkaround(final boolean enabled) {
         if (enabled) {
-            this.__passiveNatWorkaroundStrategy = new NatServerResolverImpl(this);
+            this.passiveNatWorkaroundStrategy = new NatServerResolverImpl(this);
         } else {
-            this.__passiveNatWorkaroundStrategy = null;
+            this.passiveNatWorkaroundStrategy = null;
         }
     }
 
@@ -3892,7 +3892,7 @@ implements Configurable
      * @since 3.6
      */
     public void setPassiveNatWorkaroundStrategy(final HostnameResolver resolver) {
-        this.__passiveNatWorkaroundStrategy = resolver;
+        this.passiveNatWorkaroundStrategy = resolver;
     }
 
     /**
@@ -3933,15 +3933,15 @@ implements Configurable
     }
 
     private OutputStream getBufferedOutputStream(final OutputStream outputStream) {
-        if (__bufferSize > 0) {
-            return new BufferedOutputStream(outputStream, __bufferSize);
+        if (bufferSize > 0) {
+            return new BufferedOutputStream(outputStream, bufferSize);
         }
         return new BufferedOutputStream(outputStream);
     }
 
     private InputStream getBufferedInputStream(final InputStream inputStream) {
-        if (__bufferSize > 0) {
-            return new BufferedInputStream(inputStream, __bufferSize);
+        if (bufferSize > 0) {
+            return new BufferedInputStream(inputStream, bufferSize);
         }
         return new BufferedInputStream(inputStream);
     }
@@ -4012,17 +4012,17 @@ implements Configurable
      * @return a merged listener or a single listener or null
      * @since 3.0
      */
-    private CopyStreamListener __mergeListeners(final CopyStreamListener local) {
+    private CopyStreamListener mergeListeners(final CopyStreamListener local) {
         if (local == null) {
-            return __copyStreamListener;
+            return copyStreamListener;
         }
-        if (__copyStreamListener == null) {
+        if (copyStreamListener == null) {
             return local;
         }
         // Both are non-null
         final CopyStreamAdapter merged = new CopyStreamAdapter();
         merged.addCopyStreamListener(local);
-        merged.addCopyStreamListener(__copyStreamListener);
+        merged.addCopyStreamListener(copyStreamListener);
         return merged;
     }
 
@@ -4035,7 +4035,7 @@ implements Configurable
      */
     public void setAutodetectUTF8(final boolean autodetect)
     {
-        __autodetectEncoding = autodetect;
+        autodetectEncoding = autodetect;
     }
 
     /**
@@ -4044,12 +4044,12 @@ implements Configurable
      */
     public boolean getAutodetectUTF8()
     {
-        return __autodetectEncoding;
+        return autodetectEncoding;
     }
 
     // Method for use by unit test code only
     FTPFileEntryParser getEntryParser() {
-        return __entryParser;
+        return entryParser;
     }
 
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE
@@ -4062,10 +4062,10 @@ implements Configurable
     @Deprecated
     public String getSystemName() throws IOException
     {
-        if (__systemName == null && FTPReply.isPositiveCompletion(syst())) {
-            __systemName = _replyLines.get(_replyLines.size() - 1).substring(4);
+        if (systemName == null && FTPReply.isPositiveCompletion(syst())) {
+            systemName = _replyLines.get(_replyLines.size() - 1).substring(4);
         }
-        return __systemName;
+        return systemName;
     }
 }
 

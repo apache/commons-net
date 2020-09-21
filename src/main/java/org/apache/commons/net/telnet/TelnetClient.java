@@ -45,9 +45,9 @@ public class TelnetClient extends Telnet
 {
     private static final int DEFAULT_MAX_SUBNEGOTIATION_LENGTH = 512;
 
-    final int _maxSubnegotiationLength;
-    private InputStream __input;
-    private OutputStream __output;
+    final int maxSubnegotiationLength;
+    private InputStream input;
+    private OutputStream output;
     protected boolean readerThread = true;
     private TelnetInputListener inputListener;
 
@@ -93,19 +93,19 @@ public class TelnetClient extends Telnet
     /* TERMINAL-TYPE option (start)*/
         super(termtype);
     /* TERMINAL-TYPE option (end)*/
-        __input = null;
-        __output = null;
-        _maxSubnegotiationLength = maxSubnegotiationLength;
+        this.input = null;
+        this.output = null;
+        this.maxSubnegotiationLength = maxSubnegotiationLength;
     }
 
-    void _flushOutputStream() throws IOException
+    void flushOutputStream() throws IOException
     {
         if (_output_ == null) {
             throw new IOException("Stream closed");
         }
         _output_.flush();
     }
-    void _closeOutputStream() throws IOException
+    void closeOutputStream() throws IOException
     {
         if (_output_ == null) {
             return;
@@ -137,8 +137,8 @@ public class TelnetClient extends Telnet
         // This blocking behavior requires further investigation, but right
         // now it looks like classes like InputStreamReader are not implemented
         // in a safe manner.
-        __input = new BufferedInputStream(tmp);
-        __output = new TelnetOutputStream(this);
+        input = new BufferedInputStream(tmp);
+        output = new TelnetOutputStream(this);
     }
 
     /***
@@ -152,15 +152,15 @@ public class TelnetClient extends Telnet
     public void disconnect() throws IOException
     {
         try {
-            if (__input != null) {
-                __input.close();
+            if (input != null) {
+                input.close();
             }
-            if (__output != null) {
-                __output.close();
+            if (output != null) {
+                output.close();
             }
         } finally { // NET-594
-            __output = null;
-            __input = null;
+            output = null;
+            input = null;
             super.disconnect();
         }
     }
@@ -174,7 +174,7 @@ public class TelnetClient extends Telnet
      ***/
     public OutputStream getOutputStream()
     {
-        return __output;
+        return output;
     }
 
     /***
@@ -186,7 +186,7 @@ public class TelnetClient extends Telnet
      ***/
     public InputStream getInputStream()
     {
-        return __input;
+        return input;
     }
 
     /***
@@ -199,7 +199,7 @@ public class TelnetClient extends Telnet
     public boolean getLocalOptionState(final int option)
     {
         /* BUG (option active when not already acknowledged) (start)*/
-        return _stateIsWill(option) && _requestedWill(option);
+        return stateIsWill(option) && requestedWill(option);
         /* BUG (option active when not already acknowledged) (end)*/
     }
 
@@ -213,7 +213,7 @@ public class TelnetClient extends Telnet
     public boolean getRemoteOptionState(final int option)
     {
         /* BUG (option active when not already acknowledged) (start)*/
-        return _stateIsDo(option) && _requestedDo(option);
+        return stateIsDo(option) && requestedDo(option);
         /* BUG (option active when not already acknowledged) (end)*/
     }
     /* open TelnetOptionHandler functionality (end)*/

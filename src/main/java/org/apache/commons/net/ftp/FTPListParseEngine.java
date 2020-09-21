@@ -76,7 +76,7 @@ import org.apache.commons.net.util.Charsets;
  */
 public class FTPListParseEngine {
     private List<String> entries = new LinkedList<>();
-    private ListIterator<String> _internalIterator = entries.listIterator();
+    private ListIterator<String> internalIterator = entries.listIterator();
 
     private final FTPFileEntryParser parser;
     // Should invalid files (parse failures) be allowed?
@@ -174,8 +174,8 @@ public class FTPListParseEngine {
     public FTPFile[] getNext(final int quantityRequested) {
         final List<FTPFile> tmpResults = new LinkedList<>();
         int count = quantityRequested;
-        while (count > 0 && this._internalIterator.hasNext()) {
-            final String entry = this._internalIterator.next();
+        while (count > 0 && this.internalIterator.hasNext()) {
+            final String entry = this.internalIterator.next();
             FTPFile temp = this.parser.parseFTPEntry(entry);
             if (temp == null && saveUnparseableEntries) {
                 temp = new FTPFile(entry);
@@ -216,8 +216,8 @@ public class FTPListParseEngine {
     public FTPFile[] getPrevious(final int quantityRequested) {
         final List<FTPFile> tmpResults = new LinkedList<>();
         int count = quantityRequested;
-        while (count > 0 && this._internalIterator.hasPrevious()) {
-            final String entry = this._internalIterator.previous();
+        while (count > 0 && this.internalIterator.hasPrevious()) {
+            final String entry = this.internalIterator.previous();
             FTPFile temp = this.parser.parseFTPEntry(entry);
             if (temp == null && saveUnparseableEntries) {
                 temp = new FTPFile(entry);
@@ -288,7 +288,7 @@ public class FTPListParseEngine {
      * otherwise.
      */
     public boolean hasNext() {
-        return _internalIterator.hasNext();
+        return internalIterator.hasNext();
     }
 
     /**
@@ -299,14 +299,14 @@ public class FTPListParseEngine {
      * otherwise.
      */
     public boolean hasPrevious() {
-        return _internalIterator.hasPrevious();
+        return internalIterator.hasPrevious();
     }
 
     /**
      * resets this object's internal iterator to the beginning of the list.
      */
     public void resetIterator() {
-        this._internalIterator = this.entries.listIterator();
+        this.internalIterator = this.entries.listIterator();
     }
 
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE

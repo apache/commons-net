@@ -31,48 +31,48 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     private static final int WOULD_BLOCK = -2;
 
     // TODO should these be private enums?
-    static final int _STATE_DATA = 0, _STATE_IAC = 1, _STATE_WILL = 2,
-                     _STATE_WONT = 3, _STATE_DO = 4, _STATE_DONT = 5,
-                     _STATE_SB = 6, _STATE_SE = 7, _STATE_CR = 8, _STATE_IAC_SB = 9;
+    static final int STATE_DATA = 0, STATE_IAC = 1, STATE_WILL = 2,
+                     STATE_WONT = 3, STATE_DO = 4, STATE_DONT = 5,
+                     STATE_SB = 6, STATE_SE = 7, STATE_CR = 8, STATE_IAC_SB = 9;
 
-    private boolean __hasReachedEOF; // @GuardedBy("__queue")
-    private volatile boolean __isClosed;
-    private boolean __readIsWaiting;
-    private int __receiveState, __queueHead, __queueTail, __bytesAvailable;
-    private final int[] __queue;
-    private final TelnetClient __client;
-    private final Thread __thread;
-    private IOException __ioException;
+    private boolean hasReachedEOF; // @GuardedBy("__queue")
+    private volatile boolean isClosed;
+    private boolean readIsWaiting;
+    private int receiveState, queueHead, queueTail, bytesAvailable;
+    private final int[] queue;
+    private final TelnetClient client;
+    private final Thread thread;
+    private IOException ioException;
 
     /* TERMINAL-TYPE option (start)*/
-    private final int __suboption[];
-    private int __suboption_count = 0;
+    private final int suboption[];
+    private int suboptionCount = 0;
     /* TERMINAL-TYPE option (end)*/
 
-    private volatile boolean __threaded;
+    private volatile boolean threaded;
 
     TelnetInputStream(final InputStream input, final TelnetClient client,
                       final boolean readerThread)
     {
         super(input);
-        __client = client;
-        __receiveState = _STATE_DATA;
-        __isClosed = true;
-        __hasReachedEOF = false;
+        this.client = client;
+        this.receiveState = STATE_DATA;
+        this.isClosed = true;
+        this.hasReachedEOF = false;
         // Make it 2049, because when full, one slot will go unused, and we
         // want a 2048 byte buffer just to have a round number (base 2 that is)
-        __queue = new int[2049];
-        __queueHead = 0;
-        __queueTail = 0;
-        __suboption = new int[client._maxSubnegotiationLength];
-        __bytesAvailable = 0;
-        __ioException = null;
-        __readIsWaiting = false;
-        __threaded = false;
+        this.queue = new int[2049];
+        this.queueHead = 0;
+        this.queueTail = 0;
+        this.suboption = new int[client.maxSubnegotiationLength];
+        this.bytesAvailable = 0;
+        this.ioException = null;
+        this.readIsWaiting = false;
+        this.threaded = false;
         if(readerThread) {
-            __thread = new Thread(this);
+            this.thread = new Thread(this);
         } else {
-            __thread = null;
+            this.thread = null;
         }
     }
 
@@ -82,12 +82,12 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
 
     void _start()
     {
-        if(__thread == null) {
+        if(thread == null) {
             return;
         }
 
         int priority;
-        __isClosed = false;
+        isClosed = false;
         // TODO remove this
         // Need to set a higher priority in case JVM does not use pre-emptive
         // threads.  This should prevent scheduler induced deadlock (rather than
@@ -96,10 +96,10 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         if (priority > Thread.MAX_PRIORITY) {
             priority = Thread.MAX_PRIORITY;
         }
-        __thread.setPriority(priority);
-        __thread.setDaemon(true);
-        __thread.start();
-        __threaded = true; // tell _processChar that we are running threaded
+        thread.setPriority(priority);
+        thread.setDaemon(true);
+        thread.start();
+        threaded = true; // tell _processChar that we are running threaded
     }
 
 
@@ -137,20 +137,20 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
             ch = ch & 0xff;
 
             /* Code Section added for supporting AYT (start)*/
-            synchronized (__client)
+            synchronized (client)
             {
-                __client._processAYTResponse();
+                client.processAYTResponse();
             }
             /* Code Section added for supporting AYT (end)*/
 
             /* Code Section added for supporting spystreams (start)*/
-            __client._spyRead(ch);
+            client.spyRead(ch);
             /* Code Section added for supporting spystreams (end)*/
 
-            switch (__receiveState)
+            switch (receiveState)
             {
 
-            case _STATE_CR:
+            case STATE_CR:
                 if (ch == '\0')
                 {
                     // Strip null
@@ -162,130 +162,130 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                 // Handle as normal data by falling through to _STATE_DATA case
 
                 //$FALL-THROUGH$
-            case _STATE_DATA:
+            case STATE_DATA:
                 if (ch == TelnetCommand.IAC)
                 {
-                    __receiveState = _STATE_IAC;
+                    receiveState = STATE_IAC;
                     continue;
                 }
 
 
                 if (ch == '\r')
                 {
-                    synchronized (__client)
+                    synchronized (client)
                     {
-                        if (__client._requestedDont(TelnetOption.BINARY)) {
-                            __receiveState = _STATE_CR;
+                        if (client.requestedDont(TelnetOption.BINARY)) {
+                            receiveState = STATE_CR;
                         } else {
-                            __receiveState = _STATE_DATA;
+                            receiveState = STATE_DATA;
                         }
                     }
                 } else {
-                    __receiveState = _STATE_DATA;
+                    receiveState = STATE_DATA;
                 }
                 break;
 
-            case _STATE_IAC:
+            case STATE_IAC:
                 switch (ch)
                 {
                 case TelnetCommand.WILL:
-                    __receiveState = _STATE_WILL;
+                    receiveState = STATE_WILL;
                     continue;
                 case TelnetCommand.WONT:
-                    __receiveState = _STATE_WONT;
+                    receiveState = STATE_WONT;
                     continue;
                 case TelnetCommand.DO:
-                    __receiveState = _STATE_DO;
+                    receiveState = STATE_DO;
                     continue;
                 case TelnetCommand.DONT:
-                    __receiveState = _STATE_DONT;
+                    receiveState = STATE_DONT;
                     continue;
                 /* TERMINAL-TYPE option (start)*/
                 case TelnetCommand.SB:
-                    __suboption_count = 0;
-                    __receiveState = _STATE_SB;
+                    suboptionCount = 0;
+                    receiveState = STATE_SB;
                     continue;
                 /* TERMINAL-TYPE option (end)*/
                 case TelnetCommand.IAC:
-                    __receiveState = _STATE_DATA;
+                    receiveState = STATE_DATA;
                     break; // exit to enclosing switch to return IAC from read
                 case TelnetCommand.SE: // unexpected byte! ignore it (don't send it as a command)
-                    __receiveState = _STATE_DATA;
+                    receiveState = STATE_DATA;
                     continue;
                 default:
-                    __receiveState = _STATE_DATA;
-                    __client._processCommand(ch); // Notify the user
+                    receiveState = STATE_DATA;
+                    client.processCommand(ch); // Notify the user
                     continue; // move on the next char
                 }
                 break; // exit and return from read
-            case _STATE_WILL:
-                synchronized (__client)
+            case STATE_WILL:
+                synchronized (client)
                 {
-                    __client._processWill(ch);
-                    __client._flushOutputStream();
+                    client.processWill(ch);
+                    client.flushOutputStream();
                 }
-                __receiveState = _STATE_DATA;
+                receiveState = STATE_DATA;
                 continue;
-            case _STATE_WONT:
-                synchronized (__client)
+            case STATE_WONT:
+                synchronized (client)
                 {
-                    __client._processWont(ch);
-                    __client._flushOutputStream();
+                    client.processWont(ch);
+                    client.flushOutputStream();
                 }
-                __receiveState = _STATE_DATA;
+                receiveState = STATE_DATA;
                 continue;
-            case _STATE_DO:
-                synchronized (__client)
+            case STATE_DO:
+                synchronized (client)
                 {
-                    __client._processDo(ch);
-                    __client._flushOutputStream();
+                    client.processDo(ch);
+                    client.flushOutputStream();
                 }
-                __receiveState = _STATE_DATA;
+                receiveState = STATE_DATA;
                 continue;
-            case _STATE_DONT:
-                synchronized (__client)
+            case STATE_DONT:
+                synchronized (client)
                 {
-                    __client._processDont(ch);
-                    __client._flushOutputStream();
+                    client.processDont(ch);
+                    client.flushOutputStream();
                 }
-                __receiveState = _STATE_DATA;
+                receiveState = STATE_DATA;
                 continue;
             /* TERMINAL-TYPE option (start)*/
-            case _STATE_SB:
+            case STATE_SB:
                 switch (ch)
                 {
                 case TelnetCommand.IAC:
-                    __receiveState = _STATE_IAC_SB;
+                    receiveState = STATE_IAC_SB;
                     continue;
                 default:
                     // store suboption char
-                    if (__suboption_count < __suboption.length) {
-                        __suboption[__suboption_count++] = ch;
+                    if (suboptionCount < suboption.length) {
+                        suboption[suboptionCount++] = ch;
                     }
                     break;
                 }
-                __receiveState = _STATE_SB;
+                receiveState = STATE_SB;
                 continue;
-            case _STATE_IAC_SB: // IAC received during SB phase
+            case STATE_IAC_SB: // IAC received during SB phase
                 switch (ch)
                 {
                 case TelnetCommand.SE:
-                    synchronized (__client)
+                    synchronized (client)
                     {
-                        __client._processSuboption(__suboption, __suboption_count);
-                        __client._flushOutputStream();
+                        client.processSuboption(suboption, suboptionCount);
+                        client.flushOutputStream();
                     }
-                    __receiveState = _STATE_DATA;
+                    receiveState = STATE_DATA;
                     continue;
                 case TelnetCommand.IAC: // De-dup the duplicated IAC
-                    if (__suboption_count < __suboption.length) {
-                        __suboption[__suboption_count++] = ch;
+                    if (suboptionCount < suboption.length) {
+                        suboption[suboptionCount++] = ch;
                     }
                     break;
                 default:            // unexpected byte! ignore it
                     break;
                 }
-                __receiveState = _STATE_SB;
+                receiveState = STATE_SB;
                 continue;
             /* TERMINAL-TYPE option (end)*/
             }
@@ -300,24 +300,24 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     // TelnetOutputStream writing through the telnet client at same time
     // as a processDo/Will/etc. command invoked from TelnetInputStream
     // tries to write. Returns true if buffer was previously empty.
-    private boolean __processChar(final int ch) throws InterruptedException
+    private boolean processChar(final int ch) throws InterruptedException
     {
         // Critical section because we're altering __bytesAvailable,
         // __queueTail, and the contents of _queue.
         boolean bufferWasEmpty;
-        synchronized (__queue)
+        synchronized (queue)
         {
-            bufferWasEmpty = __bytesAvailable == 0;
-            while (__bytesAvailable >= __queue.length - 1)
+            bufferWasEmpty = bytesAvailable == 0;
+            while (bytesAvailable >= queue.length - 1)
             {
                 // The queue is full. We need to wait before adding any more data to it. Hopefully the stream owner
                 // will consume some data soon!
-                if(__threaded)
+                if(threaded)
                 {
-                    __queue.notify();
+                    queue.notify();
                     try
                     {
-                        __queue.wait();
+                        queue.wait();
                     }
                     catch (final InterruptedException e)
                     {
@@ -333,16 +333,16 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
             }
 
             // Need to do this in case we're not full, but block on a read
-            if (__readIsWaiting && __threaded)
+            if (readIsWaiting && threaded)
             {
-                __queue.notify();
+                queue.notify();
             }
 
-            __queue[__queueTail] = ch;
-            ++__bytesAvailable;
+            queue[queueTail] = ch;
+            ++bytesAvailable;
 
-            if (++__queueTail >= __queue.length) {
-                __queueTail = 0;
+            if (++queueTail >= queue.length) {
+                queueTail = 0;
             }
         }
         return bufferWasEmpty;
@@ -354,35 +354,35 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         // Critical section because we're altering __bytesAvailable,
         // __queueHead, and the contents of _queue in addition to
         // testing value of __hasReachedEOF.
-        synchronized (__queue)
+        synchronized (queue)
         {
 
             while (true)
             {
-                if (__ioException != null)
+                if (ioException != null)
                 {
                     IOException e;
-                    e = __ioException;
-                    __ioException = null;
+                    e = ioException;
+                    ioException = null;
                     throw e;
                 }
 
-                if (__bytesAvailable == 0)
+                if (bytesAvailable == 0)
                 {
                     // Return EOF if at end of file
-                    if (__hasReachedEOF) {
+                    if (hasReachedEOF) {
                         return EOF;
                     }
 
                     // Otherwise, we have to wait for queue to get something
-                    if(__threaded)
+                    if(threaded)
                     {
-                        __queue.notify();
+                        queue.notify();
                         try
                         {
-                            __readIsWaiting = true;
-                            __queue.wait();
-                            __readIsWaiting = false;
+                            readIsWaiting = true;
+                            queue.wait();
+                            readIsWaiting = false;
                         }
                         catch (final InterruptedException e)
                         {
@@ -392,7 +392,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                     else
                     {
                         //__alreadyread = false;
-                        __readIsWaiting = true;
+                        readIsWaiting = true;
                         int ch;
                         boolean mayBlock = true;    // block on the first read only
 
@@ -408,13 +408,13 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                             }
                             catch (final InterruptedIOException e)
                             {
-                                synchronized (__queue)
+                                synchronized (queue)
                                 {
-                                    __ioException = e;
-                                    __queue.notifyAll();
+                                    ioException = e;
+                                    queue.notifyAll();
                                     try
                                     {
-                                        __queue.wait(100);
+                                        queue.wait(100);
                                     }
                                     catch (final InterruptedException interrupted)
                                     {
@@ -429,12 +429,12 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                             {
                                 if(ch != WOULD_BLOCK)
                                 {
-                                    __processChar(ch);
+                                    processChar(ch);
                                 }
                             }
                             catch (final InterruptedException e)
                             {
-                                if (__isClosed) {
+                                if (isClosed) {
                                     return EOF;
                                 }
                             }
@@ -445,25 +445,25 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
 
                         }
                         // Continue reading as long as there is data available and the queue is not full.
-                        while (super.available() > 0 && __bytesAvailable < __queue.length - 1);
+                        while (super.available() > 0 && bytesAvailable < queue.length - 1);
 
-                        __readIsWaiting = false;
+                        readIsWaiting = false;
                     }
                     continue;
                 }
                 int ch;
 
-                ch = __queue[__queueHead];
+                ch = queue[queueHead];
 
-                if (++__queueHead >= __queue.length) {
-                    __queueHead = 0;
+                if (++queueHead >= queue.length) {
+                    queueHead = 0;
                 }
 
-                --__bytesAvailable;
+                --bytesAvailable;
 
          // Need to explicitly notify() so available() works properly
-         if(__bytesAvailable == 0 && __threaded) {
-            __queue.notify();
+         if(bytesAvailable == 0 && threaded) {
+            queue.notify();
          }
 
                 return ch;
@@ -514,10 +514,10 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         }
 
         // Critical section because run() may change __bytesAvailable
-        synchronized (__queue)
+        synchronized (queue)
         {
-            if (length > __bytesAvailable) {
-                length = __bytesAvailable;
+            if (length > bytesAvailable) {
+                length = bytesAvailable;
             }
         }
 
@@ -549,12 +549,12 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     public int available() throws IOException
     {
         // Critical section because run() may change __bytesAvailable
-        synchronized (__queue)
+        synchronized (queue)
         {
-            if (__threaded) { // Must not call super.available when running threaded: NET-466
-                return __bytesAvailable;
+            if (threaded) { // Must not call super.available when running threaded: NET-466
+                return bytesAvailable;
             }
-            return __bytesAvailable + super.available();
+            return bytesAvailable + super.available();
         }
     }
 
@@ -570,17 +570,17 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         // interrupt a system read() from the interrupt() method.
         super.close();
 
-        synchronized (__queue)
+        synchronized (queue)
         {
-            __hasReachedEOF = true;
-            __isClosed      = true;
+            hasReachedEOF = true;
+            isClosed      = true;
 
-            if (__thread != null && __thread.isAlive())
+            if (thread != null && thread.isAlive())
             {
-                __thread.interrupt();
+                thread.interrupt();
             }
 
-            __queue.notifyAll();
+            queue.notifyAll();
         }
 
     }
@@ -593,7 +593,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         try
         {
 _outerLoop:
-            while (!__isClosed)
+            while (!isClosed)
             {
                 try
                 {
@@ -603,17 +603,17 @@ _outerLoop:
                 }
                 catch (final InterruptedIOException e)
                 {
-                    synchronized (__queue)
+                    synchronized (queue)
                     {
-                        __ioException = e;
-                        __queue.notifyAll();
+                        ioException = e;
+                        queue.notifyAll();
                         try
                         {
-                            __queue.wait(100);
+                            queue.wait(100);
                         }
                         catch (final InterruptedException interrupted)
                         {
-                            if (__isClosed) {
+                            if (isClosed) {
                                 break _outerLoop;
                             }
                         }
@@ -633,38 +633,38 @@ _outerLoop:
                 boolean notify = false;
                 try
                 {
-                    notify = __processChar(ch);
+                    notify = processChar(ch);
                 }
                 catch (final InterruptedException e)
                 {
-                    if (__isClosed) {
+                    if (isClosed) {
                         break _outerLoop;
                     }
                 }
 
                 // Notify input listener if buffer was previously empty
                 if (notify) {
-                    __client.notifyInputListener();
+                    client.notifyInputListener();
                 }
             }
         }
         catch (final IOException ioe)
         {
-            synchronized (__queue)
+            synchronized (queue)
             {
-                __ioException = ioe;
+                ioException = ioe;
             }
-            __client.notifyInputListener();
+            client.notifyInputListener();
         }
 
-        synchronized (__queue)
+        synchronized (queue)
         {
-            __isClosed      = true; // Possibly redundant
-            __hasReachedEOF = true;
-            __queue.notify();
+            isClosed      = true; // Possibly redundant
+            hasReachedEOF = true;
+            queue.notify();
         }
 
-        __threaded = false;
+        threaded = false;
     }
 }
 

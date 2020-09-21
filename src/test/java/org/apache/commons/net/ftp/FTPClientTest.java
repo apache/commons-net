@@ -62,24 +62,24 @@ public class FTPClientTest extends TestCase {
 
     public void testParseClient() {
         for(int i=0; i<TESTS.length; i+=2) {
-            assertEquals("Failed to parse",TESTS[i+1], FTPClient.__parsePathname(TESTS[i]));
+            assertEquals("Failed to parse",TESTS[i+1], FTPClient.parsePathname(TESTS[i]));
         }
     }
 
     public void testParserCachingWithKey() throws Exception {
         final FTPClient client = new FTPClient();
         assertNull(client.getEntryParser());
-        client.__createParser(FTPClientConfig.SYST_UNIX);
+        client.createParser(FTPClientConfig.SYST_UNIX);
         final FTPFileEntryParser entryParserSYST = client.getEntryParser();
         assertNotNull(entryParserSYST);
-        client.__createParser(FTPClientConfig.SYST_UNIX);
+        client.createParser(FTPClientConfig.SYST_UNIX);
         assertSame(entryParserSYST, client.getEntryParser()); // the previous entry was cached
-        client.__createParser(FTPClientConfig.SYST_VMS);
+        client.createParser(FTPClientConfig.SYST_VMS);
         final FTPFileEntryParser entryParserVMS = client.getEntryParser();
         assertNotSame(entryParserSYST, entryParserVMS); // the previous entry was replaced
-        client.__createParser(FTPClientConfig.SYST_VMS);
+        client.createParser(FTPClientConfig.SYST_VMS);
         assertSame(entryParserVMS, client.getEntryParser()); // the previous entry was cached
-        client.__createParser(FTPClientConfig.SYST_UNIX); // revert
+        client.createParser(FTPClientConfig.SYST_UNIX); // revert
         assertNotSame(entryParserVMS, client.getEntryParser()); // the previous entry was replaced
     }
 
@@ -97,13 +97,13 @@ public class FTPClientTest extends TestCase {
         final LocalClient client = new LocalClient();
         client.setSystemType(FTPClientConfig.SYST_UNIX);
         assertNull(client.getEntryParser());
-        client.__createParser(null);
+        client.createParser(null);
         final FTPFileEntryParser entryParser = client.getEntryParser();
         assertNotNull(entryParser);
-        client.__createParser(null);
+        client.createParser(null);
         assertSame(entryParser, client.getEntryParser()); // parser was cached
         client.setSystemType(FTPClientConfig.SYST_NT);
-        client.__createParser(null);
+        client.createParser(null);
         assertSame(entryParser, client.getEntryParser()); // parser was cached
     }
     public void testUnparseableFiles() throws Exception {

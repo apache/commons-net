@@ -38,7 +38,7 @@ import java.io.OutputStream;
 
 public final class FromNetASCIIOutputStream extends FilterOutputStream
 {
-    private boolean __lastWasCR;
+    private boolean lastWasCR;
 
     /***
      * Creates a FromNetASCIIOutputStream instance that wraps an existing
@@ -49,7 +49,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
     public FromNetASCIIOutputStream(final OutputStream output)
     {
         super(output);
-        __lastWasCR = false;
+        lastWasCR = false;
     }
 
 
@@ -58,24 +58,24 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
         switch (ch)
         {
         case '\r':
-            __lastWasCR = true;
+            lastWasCR = true;
             // Don't write anything.  We need to see if next one is linefeed
             break;
         case '\n':
-            if (__lastWasCR)
+            if (lastWasCR)
             {
                 out.write(FromNetASCIIInputStream._lineSeparatorBytes);
-                __lastWasCR = false;
+                lastWasCR = false;
                 break;
             }
-            __lastWasCR = false;
+            lastWasCR = false;
             out.write('\n');
             break;
         default:
-            if (__lastWasCR)
+            if (lastWasCR)
             {
                 out.write('\r');
-                __lastWasCR = false;
+                lastWasCR = false;
             }
             out.write(ch);
             break;
@@ -167,7 +167,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
             return ;
         }
 
-        if (__lastWasCR) {
+        if (lastWasCR) {
             out.write('\r');
         }
         super.close();

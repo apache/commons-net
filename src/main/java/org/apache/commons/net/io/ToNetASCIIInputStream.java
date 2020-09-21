@@ -34,10 +34,10 @@ import java.io.InputStream;
 
 public final class ToNetASCIIInputStream extends FilterInputStream
 {
-    private static final int __NOTHING_SPECIAL = 0;
-    private static final int __LAST_WAS_CR = 1;
-    private static final int __LAST_WAS_NL = 2;
-    private int __status;
+    private static final int NOTHING_SPECIAL = 0;
+    private static final int LAST_WAS_CR = 1;
+    private static final int LAST_WAS_NL = 2;
+    private int status;
 
     /***
      * Creates a ToNetASCIIInputStream instance that wraps an existing
@@ -48,7 +48,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
     public ToNetASCIIInputStream(final InputStream input)
     {
         super(input);
-        __status = __NOTHING_SPECIAL;
+        status = NOTHING_SPECIAL;
     }
 
 
@@ -66,9 +66,9 @@ public final class ToNetASCIIInputStream extends FilterInputStream
     {
         int ch;
 
-        if (__status == __LAST_WAS_NL)
+        if (status == LAST_WAS_NL)
         {
-            __status = __NOTHING_SPECIAL;
+            status = NOTHING_SPECIAL;
             return '\n';
         }
 
@@ -77,17 +77,17 @@ public final class ToNetASCIIInputStream extends FilterInputStream
         switch (ch)
         {
         case '\r':
-            __status = __LAST_WAS_CR;
+            status = LAST_WAS_CR;
             return '\r';
         case '\n':
-            if (__status != __LAST_WAS_CR)
+            if (status != LAST_WAS_CR)
             {
-                __status = __LAST_WAS_NL;
+                status = LAST_WAS_NL;
                 return '\r';
             }
             //$FALL-THROUGH$
         default:
-            __status = __NOTHING_SPECIAL;
+            status = NOTHING_SPECIAL;
             return ch;
         }
         // statement not reached
@@ -176,7 +176,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
 
         result = in.available();
 
-        if (__status == __LAST_WAS_NL) {
+        if (status == LAST_WAS_NL) {
             return result + 1;
         }
 

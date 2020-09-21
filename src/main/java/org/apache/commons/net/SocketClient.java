@@ -72,7 +72,7 @@ public abstract class SocketClient
      * A ProtocolCommandSupport object used to manage the registering of
      * ProtocolCommandListeners and the firing of ProtocolCommandEvents.
      */
-    private ProtocolCommandSupport __commandSupport;
+    private ProtocolCommandSupport commandSupport;
 
     /** The timeout to use after opening a socket. */
     protected int _timeout_;
@@ -810,7 +810,7 @@ public abstract class SocketClient
      * Create the CommandSupport instance if required
      */
     protected void createCommandSupport(){
-        __commandSupport = new ProtocolCommandSupport(this);
+        commandSupport = new ProtocolCommandSupport(this);
     }
 
     /**
@@ -821,7 +821,7 @@ public abstract class SocketClient
      * @since 3.0
      */
     protected ProtocolCommandSupport getCommandSupport() {
-        return __commandSupport;
+        return commandSupport;
     }
 
     /**

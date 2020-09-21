@@ -36,7 +36,7 @@ import java.net.Socket;
 
 public class SocketOutputStream extends FilterOutputStream
 {
-    private final Socket __socket;
+    private final Socket socket;
 
     /***
      * Creates a SocketOutputStream instance wrapping an output stream and
@@ -49,7 +49,7 @@ public class SocketOutputStream extends FilterOutputStream
     public SocketOutputStream(final Socket socket, final OutputStream stream)
     {
         super(stream);
-        __socket = socket;
+        this.socket = socket;
     }
 
 
@@ -83,6 +83,6 @@ public class SocketOutputStream extends FilterOutputStream
     public void close() throws IOException
     {
         super.close();
-        __socket.close();
+        socket.close();
     }
 }

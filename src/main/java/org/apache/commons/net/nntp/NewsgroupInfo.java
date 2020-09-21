@@ -51,35 +51,35 @@ public final class NewsgroupInfo
      ***/
     public static final int PROHIBITED_POSTING_PERMISSION = 3;
 
-    private String __newsgroup;
-    private long __estimatedArticleCount;
-    private long __firstArticle;
-    private long __lastArticle;
-    private int __postingPermission;
+    private String newsgroup;
+    private long estimatedArticleCount;
+    private long firstArticle;
+    private long lastArticle;
+    private int postingPermission;
 
     void _setNewsgroup(final String newsgroup)
     {
-        __newsgroup = newsgroup;
+        this.newsgroup = newsgroup;
     }
 
     void _setArticleCount(final long count)
     {
-        __estimatedArticleCount = count;
+        estimatedArticleCount = count;
     }
 
     void _setFirstArticle(final long first)
     {
-        __firstArticle = first;
+        firstArticle = first;
     }
 
     void _setLastArticle(final long last)
     {
-        __lastArticle = last;
+        lastArticle = last;
     }
 
     void _setPostingPermission(final int permission)
     {
-        __postingPermission = permission;
+        postingPermission = permission;
     }
 
     /***
@@ -89,7 +89,7 @@ public final class NewsgroupInfo
      ***/
     public String getNewsgroup()
     {
-        return __newsgroup;
+        return newsgroup;
     }
 
     /***
@@ -100,7 +100,7 @@ public final class NewsgroupInfo
      ***/
     public long getArticleCountLong()
     {
-        return __estimatedArticleCount;
+        return estimatedArticleCount;
     }
 
     /***
@@ -110,7 +110,7 @@ public final class NewsgroupInfo
      ***/
     public long getFirstArticleLong()
     {
-        return __firstArticle;
+        return firstArticle;
     }
 
     /***
@@ -120,7 +120,7 @@ public final class NewsgroupInfo
      ***/
     public long getLastArticleLong()
     {
-        return __lastArticle;
+        return lastArticle;
     }
 
     /***
@@ -131,7 +131,7 @@ public final class NewsgroupInfo
      ***/
     public int getPostingPermission()
     {
-        return __postingPermission;
+        return postingPermission;
     }
 
     /*
@@ -156,16 +156,16 @@ public final class NewsgroupInfo
 
     @Deprecated
     public int getArticleCount() {
-        return (int) __estimatedArticleCount;
+        return (int) estimatedArticleCount;
     }
 
     @Deprecated
     public int getFirstArticle() {
-        return (int) __firstArticle;
+        return (int) firstArticle;
     }
 
     @Deprecated
     public int getLastArticle() {
-        return (int) __lastArticle;
+        return (int) lastArticle;
     }
 }

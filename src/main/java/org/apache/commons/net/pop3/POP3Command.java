@@ -60,15 +60,15 @@ public final class POP3Command
      */
     public static final int AUTH = 13;
 
-    private static final int _NEXT_ = AUTH + 1; // update as necessary when adding new entries
+    private static final int NEXT = AUTH + 1; // update as necessary when adding new entries
 
-    static final String[] _commands = {
+    static final String[] commands = {
                                           "USER", "PASS", "QUIT", "STAT", "LIST", "RETR", "DELE", "NOOP", "RSET",
                                           "APOP", "TOP", "UIDL", "CAPA", "AUTH",
                                       };
 
     static {
-        if (_commands.length != _NEXT_) {
+        if (commands.length != NEXT) {
             throw new RuntimeException("Error in array definition");
         }
     }
@@ -85,6 +85,6 @@ public final class POP3Command
      ***/
     public static String getCommand(final int command)
     {
-        return _commands[command];
+        return commands[command];
     }
 }

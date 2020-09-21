@@ -50,16 +50,16 @@ public final class TFTPDataPacket extends TFTPPacket
     public static final int MIN_DATA_LENGTH = 0;
 
     /*** The block number of the packet. ***/
-    int _blockNumber;
+    int blockNumber;
 
     /*** The length of the data. ***/
-    int _length;
+    int length;
 
     /*** The offset into the _data array at which the data begins. ***/
-    int _offset;
+    int offset;
 
     /*** The data stored in the packet. ***/
-    byte[] _data;
+    byte[] data;
 
     /***
      * Creates a data packet to be sent to a host at a given port
@@ -81,14 +81,14 @@ public final class TFTPDataPacket extends TFTPPacket
     {
         super(TFTPPacket.DATA, destination, port);
 
-        _blockNumber = blockNumber;
-        _data = data;
-        _offset = offset;
+        this.blockNumber = blockNumber;
+        this.data = data;
+        this.offset = offset;
 
         if (length > MAX_DATA_LENGTH) {
-            _length = MAX_DATA_LENGTH;
+            this.length = MAX_DATA_LENGTH;
         } else {
-            _length = length;
+            this.length = length;
         }
     }
 
@@ -112,19 +112,19 @@ public final class TFTPDataPacket extends TFTPPacket
     {
         super(TFTPPacket.DATA, datagram.getAddress(), datagram.getPort());
 
-        _data = datagram.getData();
-        _offset = 4;
+        this.data = datagram.getData();
+        this.offset = 4;
 
-        if (getType() != _data[1]) {
+        if (getType() != this.data[1]) {
             throw new TFTPPacketException("TFTP operator code does not match type.");
         }
 
-        _blockNumber = (((_data[2] & 0xff) << 8) | (_data[3] & 0xff));
+        this.blockNumber = (((this.data[2] & 0xff) << 8) | (this.data[3] & 0xff));
 
-        _length = datagram.getLength() - 4;
+        this.length = datagram.getLength() - 4;
 
-        if (_length > MAX_DATA_LENGTH) {
-            _length = MAX_DATA_LENGTH;
+        if (this.length > MAX_DATA_LENGTH) {
+            this.length = MAX_DATA_LENGTH;
         }
     }
 
@@ -143,19 +143,19 @@ public final class TFTPDataPacket extends TFTPPacket
     DatagramPacket _newDatagram(final DatagramPacket datagram, final byte[] data)
     {
         data[0] = 0;
-        data[1] = (byte)_type;
-        data[2] = (byte)((_blockNumber & 0xffff) >> 8);
-        data[3] = (byte)(_blockNumber & 0xff);
+        data[1] = (byte)type;
+        data[2] = (byte)((blockNumber & 0xffff) >> 8);
+        data[3] = (byte)(blockNumber & 0xff);
 
         // Doublecheck we're not the same
-        if (data != _data) {
-            System.arraycopy(_data, _offset, data, 4, _length);
+        if (data != this.data) {
+            System.arraycopy(this.data, offset, data, 4, length);
         }
 
         datagram.setAddress(_address);
         datagram.setPort(_port);
         datagram.setData(data);
-        datagram.setLength(_length + 4);
+        datagram.setLength(length + 4);
 
         return datagram;
     }
@@ -177,15 +177,15 @@ public final class TFTPDataPacket extends TFTPPacket
     {
         byte[] data;
 
-        data = new byte[_length + 4];
+        data = new byte[length + 4];
         data[0] = 0;
-        data[1] = (byte)_type;
-        data[2] = (byte)((_blockNumber & 0xffff) >> 8);
-        data[3] = (byte)(_blockNumber & 0xff);
+        data[1] = (byte)type;
+        data[2] = (byte)((blockNumber & 0xffff) >> 8);
+        data[3] = (byte)(blockNumber & 0xff);
 
-        System.arraycopy(_data, _offset, data, 4, _length);
+        System.arraycopy(this.data, offset, data, 4, length);
 
-        return new DatagramPacket(data, _length + 4, _address, _port);
+        return new DatagramPacket(data, length + 4, _address, _port);
     }
 
     /***
@@ -195,7 +195,7 @@ public final class TFTPDataPacket extends TFTPPacket
      ***/
     public int getBlockNumber()
     {
-        return _blockNumber;
+        return blockNumber;
     }
 
     /*** Sets the block number of the data packet.
@@ -203,7 +203,7 @@ public final class TFTPDataPacket extends TFTPPacket
      ***/
     public void setBlockNumber(final int blockNumber)
     {
-        _blockNumber = blockNumber;
+        this.blockNumber = blockNumber;
     }
 
     /***
@@ -215,14 +215,14 @@ public final class TFTPDataPacket extends TFTPPacket
      ***/
     public void setData(final byte[] data, final int offset, final int length)
     {
-        _data = data;
-        _offset = offset;
-        _length = length;
+        this.data = data;
+        this.offset = offset;
+        this.length = length;
 
         if (length > MAX_DATA_LENGTH) {
-            _length = MAX_DATA_LENGTH;
+            this.length = MAX_DATA_LENGTH;
         } else {
-            _length = length;
+            this.length = length;
         }
     }
 
@@ -233,7 +233,7 @@ public final class TFTPDataPacket extends TFTPPacket
      ***/
     public int getDataLength()
     {
-        return _length;
+        return length;
     }
 
     /***
@@ -245,7 +245,7 @@ public final class TFTPDataPacket extends TFTPPacket
      ***/
     public int getDataOffset()
     {
-        return _offset;
+        return offset;
     }
 
     /***
@@ -255,7 +255,7 @@ public final class TFTPDataPacket extends TFTPPacket
      ***/
     public byte[] getData()
     {
-        return _data;
+        return data;
     }
 
     /**
@@ -264,6 +264,6 @@ public final class TFTPDataPacket extends TFTPPacket
      */
     @Override
     public String toString() {
-        return super.toString() + " DATA " + _blockNumber + " " + _length;
+        return super.toString() + " DATA " + blockNumber + " " + length;
     }
 }

@@ -46,10 +46,10 @@ package org.apache.commons.net.nntp;
 
 public class SimpleNNTPHeader
 {
-    private final String __subject, __from;
-    private final StringBuilder __newsgroups;
-    private final StringBuilder __headerFields;
-    private int __newsgroupCount;
+    private final String subject, from;
+    private final StringBuilder newsgroups;
+    private final StringBuilder headerFields;
+    private int newsgroupCount;
 
     /***
      * Creates a new SimpleNNTPHeader instance initialized with the given
@@ -62,11 +62,11 @@ public class SimpleNNTPHeader
      ***/
     public SimpleNNTPHeader(final String from, final String subject)
     {
-        __from = from;
-        __subject = subject;
-        __newsgroups = new StringBuilder();
-        __headerFields = new StringBuilder();
-        __newsgroupCount = 0;
+        this.from = from;
+        this.subject = subject;
+        this.newsgroups = new StringBuilder();
+        this.headerFields = new StringBuilder();
+        this.newsgroupCount = 0;
     }
 
     /***
@@ -77,10 +77,10 @@ public class SimpleNNTPHeader
      ***/
     public void addNewsgroup(final String newsgroup)
     {
-        if (__newsgroupCount++ > 0) {
-            __newsgroups.append(',');
+        if (newsgroupCount++ > 0) {
+            newsgroups.append(',');
         }
-        __newsgroups.append(newsgroup);
+        newsgroups.append(newsgroup);
     }
 
     /***
@@ -97,10 +97,10 @@ public class SimpleNNTPHeader
      ***/
     public void addHeaderField(final String headerField, final String value)
     {
-        __headerFields.append(headerField);
-        __headerFields.append(": ");
-        __headerFields.append(value);
-        __headerFields.append('\n');
+        headerFields.append(headerField);
+        headerFields.append(": ");
+        headerFields.append(value);
+        headerFields.append('\n');
     }
 
 
@@ -111,7 +111,7 @@ public class SimpleNNTPHeader
      ***/
     public String getFromAddress()
     {
-        return __from;
+        return from;
     }
 
     /***
@@ -121,7 +121,7 @@ public class SimpleNNTPHeader
      ***/
     public String getSubject()
     {
-        return __subject;
+        return subject;
     }
 
     /***
@@ -132,7 +132,7 @@ public class SimpleNNTPHeader
      ***/
     public String getNewsgroups()
     {
-        return __newsgroups.toString();
+        return newsgroups.toString();
     }
 
     /***
@@ -148,14 +148,14 @@ public class SimpleNNTPHeader
         final StringBuilder header = new StringBuilder();
 
         header.append("From: ");
-        header.append(__from);
+        header.append(from);
         header.append("\nNewsgroups: ");
-        header.append(__newsgroups.toString());
+        header.append(newsgroups.toString());
         header.append("\nSubject: ");
-        header.append(__subject);
+        header.append(subject);
         header.append('\n');
-        if (__headerFields.length() > 0) {
-            header.append(__headerFields.toString());
+        if (headerFields.length() > 0) {
+            header.append(headerFields.toString());
         }
         header.append('\n');
 

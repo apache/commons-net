@@ -51,12 +51,12 @@ import java.util.Locale;
 
 public class SimpleSMTPHeader
 {
-    private final String __subject;
-    private final String __from;
-    private final String __to;
-    private final StringBuffer __headerFields;
+    private final String subject;
+    private final String from;
+    private final String to;
+    private final StringBuffer headerFields;
     private boolean hasHeaderDate;
-    private StringBuffer __cc;
+    private StringBuffer cc;
 
     /***
      * Creates a new SimpleSMTPHeader instance initialized with the given
@@ -77,11 +77,11 @@ public class SimpleSMTPHeader
         if (from == null) {
             throw new IllegalArgumentException("From cannot be null");
         }
-        __to = to;
-        __from = from;
-        __subject = subject;
-        __headerFields = new StringBuffer();
-        __cc = null;
+        this.to = to;
+        this.from = from;
+        this.subject = subject;
+        this.headerFields = new StringBuffer();
+        this.cc = null;
     }
 
     /***
@@ -101,10 +101,10 @@ public class SimpleSMTPHeader
         if (!hasHeaderDate && "Date".equals(headerField)) {
             hasHeaderDate = true;
         }
-        __headerFields.append(headerField);
-        __headerFields.append(": ");
-        __headerFields.append(value);
-        __headerFields.append('\n');
+        headerFields.append(headerField);
+        headerFields.append(": ");
+        headerFields.append(value);
+        headerFields.append('\n');
     }
 
 
@@ -115,13 +115,13 @@ public class SimpleSMTPHeader
      ***/
     public void addCC(final String address)
     {
-        if (__cc == null) {
-            __cc = new StringBuffer();
+        if (cc == null) {
+            cc = new StringBuffer();
         } else {
-            __cc.append(", ");
+            cc.append(", ");
         }
 
-        __cc.append(address);
+        cc.append(address);
     }
 
 
@@ -144,24 +144,24 @@ public class SimpleSMTPHeader
         if (!hasHeaderDate) {
             addHeaderField("Date", format.format(new Date()));
         }
-        if (__headerFields.length() > 0) {
-            header.append(__headerFields.toString());
+        if (headerFields.length() > 0) {
+            header.append(headerFields.toString());
         }
 
-        header.append("From: ").append(__from).append("\n");
+        header.append("From: ").append(from).append("\n");
 
-        if (__to != null) {
-            header.append("To: ").append(__to).append("\n");
+        if (to != null) {
+            header.append("To: ").append(to).append("\n");
         }
 
-        if (__cc != null)
+        if (cc != null)
         {
-            header.append("Cc: ").append(__cc.toString()).append("\n");
+            header.append("Cc: ").append(cc.toString()).append("\n");
         }
 
-        if (__subject != null)
+        if (subject != null)
         {
-            header.append("Subject: ").append(__subject).append("\n");
+            header.append("Subject: ").append(subject).append("\n");
         }
 
         header.append('\n'); // end of headers; body follows

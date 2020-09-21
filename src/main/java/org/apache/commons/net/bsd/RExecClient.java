@@ -74,7 +74,7 @@ public class RExecClient extends SocketClient
      ***/
     public static final int DEFAULT_PORT = 512;
 
-    private boolean __remoteVerificationEnabled;
+    private boolean remoteVerificationEnabled;
 
     /***
      * If a separate error stream is requested, <code>_errorStream_</code>
@@ -86,7 +86,7 @@ public class RExecClient extends SocketClient
 
     // This can be overridden in local package to implement port range
     // limitations of rcmd and rlogin
-    InputStream _createErrorStream() throws IOException
+    InputStream createErrorStream() throws IOException
     {
         ServerSocket server;
         Socket socket;
@@ -100,7 +100,7 @@ public class RExecClient extends SocketClient
         socket = server.accept();
         server.close();
 
-        if (__remoteVerificationEnabled && !verifyRemote(socket))
+        if (remoteVerificationEnabled && !verifyRemote(socket))
         {
             socket.close();
             throw new IOException(
@@ -207,7 +207,7 @@ public class RExecClient extends SocketClient
 
         if (separateErrorStream)
         {
-            _errorStream_ = _createErrorStream();
+            _errorStream_ = createErrorStream();
         }
         else
         {
@@ -279,7 +279,7 @@ public class RExecClient extends SocketClient
      ***/
     public final void setRemoteVerificationEnabled(final boolean enable)
     {
-        __remoteVerificationEnabled = enable;
+        remoteVerificationEnabled = enable;
     }
 
     /***
@@ -291,7 +291,7 @@ public class RExecClient extends SocketClient
      ***/
     public final boolean isRemoteVerificationEnabled()
     {
-        return __remoteVerificationEnabled;
+        return remoteVerificationEnabled;
     }
 
 }

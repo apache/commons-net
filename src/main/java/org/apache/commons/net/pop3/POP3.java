@@ -80,13 +80,13 @@ public class POP3 extends SocketClient
     // the wire.
     static final Charset _DEFAULT_ENCODING = StandardCharsets.ISO_8859_1;
 
-    private int __popState;
-    BufferedWriter _writer;
+    private int popState;
+    BufferedWriter writer;
 
-    BufferedReader _reader;
-    int _replyCode;
-    String _lastReplyLine;
-    List<String> _replyLines;
+    BufferedReader reader;
+    int replyCode;
+    String lastReplyLine;
+    List<String> replyLines;
 
     /**
      * A ProtocolCommandSupport object used to manage the registering of
@@ -101,40 +101,40 @@ public class POP3 extends SocketClient
     public POP3()
     {
         setDefaultPort(DEFAULT_PORT);
-        __popState = DISCONNECTED_STATE;
-        _reader = null;
-        _writer = null;
-        _replyLines = new ArrayList<>();
+        popState = DISCONNECTED_STATE;
+        reader = null;
+        writer = null;
+        replyLines = new ArrayList<>();
         _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
-    private void __getReply() throws IOException
+    private void getReply() throws IOException
     {
         String line;
 
-        _replyLines.clear();
-        line = _reader.readLine();
+        replyLines.clear();
+        line = reader.readLine();
 
         if (line == null) {
             throw new EOFException("Connection closed without indication.");
         }
 
         if (line.startsWith(_OK)) {
-            _replyCode = POP3Reply.OK;
+            replyCode = POP3Reply.OK;
         } else if (line.startsWith(_ERROR)) {
-            _replyCode = POP3Reply.ERROR;
+            replyCode = POP3Reply.ERROR;
         } else if (line.startsWith(_OK_INT)) {
-            _replyCode = POP3Reply.OK_INT;
+            replyCode = POP3Reply.OK_INT;
         } else {
             throw new
             MalformedServerReplyException(
                 "Received invalid POP3 protocol response from server." + line);
         }
 
-        _replyLines.add(line);
-        _lastReplyLine = line;
+        replyLines.add(line);
+        lastReplyLine = line;
 
-        fireReplyReceived(_replyCode, getReplyString());
+        fireReplyReceived(replyCode, getReplyString());
     }
 
 
@@ -146,13 +146,13 @@ public class POP3 extends SocketClient
     protected void _connectAction_() throws IOException
     {
         super._connectAction_();
-        _reader =
+        reader =
           new CRLFLineReader(new InputStreamReader(_input_,
                                                    _DEFAULT_ENCODING));
-        _writer =
+        writer =
           new BufferedWriter(new OutputStreamWriter(_output_,
                                                     _DEFAULT_ENCODING));
-        __getReply();
+        getReply();
         setState(AUTHORIZATION_STATE);
     }
 
@@ -163,7 +163,7 @@ public class POP3 extends SocketClient
      */
     public void setState(final int state)
     {
-        __popState = state;
+        popState = state;
     }
 
 
@@ -174,7 +174,7 @@ public class POP3 extends SocketClient
      ***/
     public int getState()
     {
-        return __popState;
+        return popState;
     }
 
 
@@ -186,14 +186,14 @@ public class POP3 extends SocketClient
     {
         String line;
 
-        line = _reader.readLine();
+        line = reader.readLine();
         while (line != null)
         {
-            _replyLines.add(line);
+            replyLines.add(line);
             if (line.equals(".")) {
                 break;
             }
-            line = _reader.readLine();
+            line = reader.readLine();
         }
     }
 
@@ -210,10 +210,10 @@ public class POP3 extends SocketClient
     public void disconnect() throws IOException
     {
         super.disconnect();
-        _reader = null;
-        _writer = null;
-        _lastReplyLine = null;
-        _replyLines.clear();
+        reader = null;
+        writer = null;
+        lastReplyLine = null;
+        replyLines.clear();
         setState(DISCONNECTED_STATE);
     }
 
@@ -228,7 +228,7 @@ public class POP3 extends SocketClient
      ***/
     public int sendCommand(final String command, final String args) throws IOException
     {
-        if (_writer == null) {
+        if (writer == null) {
             throw new IllegalStateException("Socket is not connected");
         }
         final StringBuilder __commandBuffer = new StringBuilder();
@@ -242,13 +242,13 @@ public class POP3 extends SocketClient
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
         final String message = __commandBuffer.toString();
-        _writer.write(message);
-        _writer.flush();
+        writer.write(message);
+        writer.flush();
 
         fireCommandSent(command, message);
 
-        __getReply();
-        return _replyCode;
+        getReply();
+        return replyCode;
     }
 
     /***
@@ -275,7 +275,7 @@ public class POP3 extends SocketClient
      ***/
     public int sendCommand(final int command, final String args) throws IOException
     {
-        return sendCommand(POP3Command._commands[command], args);
+        return sendCommand(POP3Command.commands[command], args);
     }
 
     /***
@@ -289,7 +289,7 @@ public class POP3 extends SocketClient
      ***/
     public int sendCommand(final int command) throws IOException
     {
-        return sendCommand(POP3Command._commands[command], null);
+        return sendCommand(POP3Command.commands[command], null);
     }
 
 
@@ -307,7 +307,7 @@ public class POP3 extends SocketClient
      ***/
     public String[] getReplyStrings()
     {
-        return _replyLines.toArray(new String[_replyLines.size()]);
+        return replyLines.toArray(new String[replyLines.size()]);
     }
 
     /***
@@ -326,7 +326,7 @@ public class POP3 extends SocketClient
     {
         final StringBuilder buffer = new StringBuilder(256);
 
-        for (final String entry : _replyLines)
+        for (final String entry : replyLines)
         {
             buffer.append(entry);
             buffer.append(SocketClient.NETASCII_EOL);

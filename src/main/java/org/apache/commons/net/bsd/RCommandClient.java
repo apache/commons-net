@@ -106,7 +106,7 @@ public class RCommandClient extends RExecClient
     // Overrides method in RExecClient in order to implement proper
     // port number limitations.
     @Override
-    InputStream _createErrorStream() throws IOException
+    InputStream createErrorStream() throws IOException
     {
         int localPort;
         ServerSocket server;

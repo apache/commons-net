@@ -218,9 +218,9 @@ public class SMTPSClient extends SMTPClient
         _socket_ = socket;
         _input_ = socket.getInputStream();
         _output_ = socket.getOutputStream();
-        _reader = new CRLFLineReader(
+        reader = new CRLFLineReader(
                         new InputStreamReader(_input_, encoding));
-        _writer = new BufferedWriter(
+        writer = new BufferedWriter(
                         new OutputStreamWriter(_output_, encoding));
 
         if (hostnameVerifier != null && !hostnameVerifier.verify(host, socket.getSession())) {

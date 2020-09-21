@@ -90,13 +90,13 @@ public class TFTP extends DatagramSocketClient
     static final int PACKET_SIZE = TFTPPacket.SEGMENT_SIZE + 4;
 
     /*** A buffer used to accelerate receives in bufferedReceive() ***/
-    private byte[] __receiveBuffer;
+    private byte[] receiveBuffer;
 
     /*** A datagram used to minimize memory allocation in bufferedReceive() ***/
-    private DatagramPacket __receiveDatagram;
+    private DatagramPacket receiveDatagram;
 
     /*** A datagram used to minimize memory allocation in bufferedSend() ***/
-    private DatagramPacket __sendDatagram;
+    private DatagramPacket sendDatagram;
 
     /***
      * A buffer used to accelerate sends in bufferedSend().
@@ -104,7 +104,7 @@ public class TFTP extends DatagramSocketClient
      * efficient during file sends.  It saves the creation of an
      * additional buffer and prevents a buffer copy in _newDataPcket().
      ***/
-    byte[] _sendBuffer;
+    byte[] sendBuffer;
 
 
     /***
@@ -127,8 +127,8 @@ public class TFTP extends DatagramSocketClient
     public TFTP()
     {
         setDefaultTimeout(DEFAULT_TIMEOUT);
-        __receiveBuffer = null;
-        __receiveDatagram = null;
+        receiveBuffer = null;
+        receiveDatagram = null;
     }
 
     /***
@@ -197,11 +197,11 @@ public class TFTP extends DatagramSocketClient
     public final TFTPPacket bufferedReceive() throws IOException,
                 InterruptedIOException, SocketException, TFTPPacketException
     {
-        __receiveDatagram.setData(__receiveBuffer);
-        __receiveDatagram.setLength(__receiveBuffer.length);
-        _socket_.receive(__receiveDatagram);
+        receiveDatagram.setData(receiveBuffer);
+        receiveDatagram.setLength(receiveBuffer.length);
+        _socket_.receive(receiveDatagram);
 
-        final TFTPPacket newTFTPPacket = TFTPPacket.newTFTPPacket(__receiveDatagram);
+        final TFTPPacket newTFTPPacket = TFTPPacket.newTFTPPacket(receiveDatagram);
         trace("<", newTFTPPacket);
         return newTFTPPacket;
     }
@@ -227,7 +227,7 @@ public class TFTP extends DatagramSocketClient
     public final void bufferedSend(final TFTPPacket packet) throws IOException
     {
         trace(">", packet);
-        _socket_.send(packet._newDatagram(__sendDatagram, _sendBuffer));
+        _socket_.send(packet._newDatagram(sendDatagram, sendBuffer));
     }
 
 
@@ -241,12 +241,12 @@ public class TFTP extends DatagramSocketClient
      ***/
     public final void beginBufferedOps()
     {
-        __receiveBuffer = new byte[PACKET_SIZE];
-        __receiveDatagram =
-            new DatagramPacket(__receiveBuffer, __receiveBuffer.length);
-        _sendBuffer = new byte[PACKET_SIZE];
-        __sendDatagram =
-            new DatagramPacket(_sendBuffer, _sendBuffer.length);
+        receiveBuffer = new byte[PACKET_SIZE];
+        receiveDatagram =
+            new DatagramPacket(receiveBuffer, receiveBuffer.length);
+        sendBuffer = new byte[PACKET_SIZE];
+        sendDatagram =
+            new DatagramPacket(sendBuffer, sendBuffer.length);
     }
 
     /***
@@ -254,10 +254,10 @@ public class TFTP extends DatagramSocketClient
      ***/
     public final void endBufferedOps()
     {
-        __receiveBuffer = null;
-        __receiveDatagram = null;
-        _sendBuffer = null;
-        __sendDatagram = null;
+        receiveBuffer = null;
+        receiveDatagram = null;
+        sendBuffer = null;
+        sendDatagram = null;
     }
 
 

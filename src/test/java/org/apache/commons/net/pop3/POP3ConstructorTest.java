@@ -81,8 +81,8 @@ public class POP3ConstructorTest extends TestCase
 
         assertEquals(110, pop.getDefaultPort());
         assertEquals(POP3.DISCONNECTED_STATE, pop.getState());
-        assertNull(pop._reader);
-        assertNotNull(pop._replyLines);
+        assertNull(pop.reader);
+        assertNotNull(pop.replyLines);
     }
 
     public void testPOP3ClientStateTransition() throws Exception
@@ -92,8 +92,8 @@ public class POP3ConstructorTest extends TestCase
         //Initial state
         assertEquals(110, pop.getDefaultPort());
         assertEquals(POP3.DISCONNECTED_STATE, pop.getState());
-        assertNull(pop._reader);
-        assertNotNull(pop._replyLines);
+        assertNull(pop.reader);
+        assertNotNull(pop.replyLines);
 
         //Now connect
         pop.connect(mailhost);

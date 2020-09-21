@@ -29,26 +29,26 @@ public class ListenerList implements Serializable, Iterable<EventListener>
 {
     private static final long serialVersionUID = -1934227607974228213L;
 
-    private final CopyOnWriteArrayList<EventListener> __listeners;
+    private final CopyOnWriteArrayList<EventListener> listeners;
 
     public ListenerList()
     {
-        __listeners = new CopyOnWriteArrayList<>();
+        listeners = new CopyOnWriteArrayList<>();
     }
 
     public void addListener(final EventListener listener)
     {
-            __listeners.add(listener);
+            listeners.add(listener);
     }
 
     public  void removeListener(final EventListener listener)
     {
-            __listeners.remove(listener);
+            listeners.remove(listener);
     }
 
     public int getListenerCount()
     {
-        return __listeners.size();
+        return listeners.size();
     }
 
     /**
@@ -60,7 +60,7 @@ public class ListenerList implements Serializable, Iterable<EventListener>
      */
     @Override
     public Iterator<EventListener> iterator() {
-            return __listeners.iterator();
+            return listeners.iterator();
     }
 
 }

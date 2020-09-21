@@ -55,8 +55,8 @@ public final class TimeUDPClient extends DatagramSocketClient
      ***/
     public static final long SECONDS_1900_TO_1970 = 2208988800L;
 
-    private final byte[] __dummyData = new byte[1];
-    private final byte[] __timeData = new byte[4];
+    private final byte[] dummyData = new byte[1];
+    private final byte[] timeData = new byte[4];
 
     /***
      * Retrieves the time from the specified server and port and
@@ -77,17 +77,17 @@ public final class TimeUDPClient extends DatagramSocketClient
         DatagramPacket sendPacket, receivePacket;
 
         sendPacket =
-            new DatagramPacket(__dummyData, __dummyData.length, host, port);
-        receivePacket = new DatagramPacket(__timeData, __timeData.length);
+            new DatagramPacket(dummyData, dummyData.length, host, port);
+        receivePacket = new DatagramPacket(timeData, timeData.length);
 
         _socket_.send(sendPacket);
         _socket_.receive(receivePacket);
 
         time = 0L;
-        time |= (((__timeData[0] & 0xff) << 24) & 0xffffffffL);
-        time |= (((__timeData[1] & 0xff) << 16) & 0xffffffffL);
-        time |= (((__timeData[2] & 0xff) << 8) & 0xffffffffL);
-        time |= ((__timeData[3] & 0xff) & 0xffffffffL);
+        time |= (((timeData[0] & 0xff) << 24) & 0xffffffffL);
+        time |= (((timeData[1] & 0xff) << 16) & 0xffffffffL);
+        time |= (((timeData[2] & 0xff) << 8) & 0xffffffffL);
+        time |= ((timeData[3] & 0xff) & 0xffffffffL);
 
         return time;
     }

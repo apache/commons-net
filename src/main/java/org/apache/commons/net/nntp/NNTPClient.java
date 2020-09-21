@@ -94,7 +94,7 @@ public class NNTPClient extends NNTP
      *
      * @throws MalformedServerReplyException if response could not be parsed
      */
-    private void __parseArticlePointer(final String reply, final ArticleInfo pointer)
+    private void parseArticlePointer(final String reply, final ArticleInfo pointer)
     throws MalformedServerReplyException
     {
         final String tokens[] = reply.split(" ");
@@ -241,7 +241,7 @@ public class NNTPClient extends NNTP
         return article;
     }
 
-    private NewsgroupInfo[] __readNewsgroupListing() throws IOException
+    private NewsgroupInfo[] readNewsgroupListing() throws IOException
     {
 
         // Start of with a big vector because we may be reading a very large
@@ -289,14 +289,14 @@ public class NNTPClient extends NNTP
 
 
         if (pointer != null) {
-            __parseArticlePointer(getReplyString(), pointer);
+            parseArticlePointer(getReplyString(), pointer);
         }
 
         return new DotTerminatedMessageReader(_reader_);
     }
 
 
-    private BufferedReader __retrieve(final int command, final long articleNumber, final ArticleInfo pointer)
+    private BufferedReader retrieve(final int command, final long articleNumber, final ArticleInfo pointer)
     throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(sendCommand(command,
@@ -305,7 +305,7 @@ public class NNTPClient extends NNTP
         }
 
         if (pointer != null) {
-            __parseArticlePointer(getReplyString(), pointer);
+            parseArticlePointer(getReplyString(), pointer);
         }
 
         return new DotTerminatedMessageReader(_reader_);
@@ -426,7 +426,7 @@ public class NNTPClient extends NNTP
     public BufferedReader retrieveArticle(final long articleNumber, final ArticleInfo pointer)
     throws IOException
     {
-        return __retrieve(NNTPCommand.ARTICLE, articleNumber, pointer);
+        return retrieve(NNTPCommand.ARTICLE, articleNumber, pointer);
     }
 
     /**
@@ -556,7 +556,7 @@ public class NNTPClient extends NNTP
                                         final ArticleInfo pointer)
     throws IOException
     {
-        return __retrieve(NNTPCommand.HEAD, articleNumber, pointer);
+        return retrieve(NNTPCommand.HEAD, articleNumber, pointer);
     }
 
 
@@ -689,7 +689,7 @@ public class NNTPClient extends NNTP
                                       final ArticleInfo pointer)
     throws IOException
     {
-        return __retrieve(NNTPCommand.BODY, articleNumber, pointer);
+        return retrieve(NNTPCommand.BODY, articleNumber, pointer);
     }
 
 
@@ -834,7 +834,7 @@ public class NNTPClient extends NNTP
         }
 
         if (pointer != null) {
-            __parseArticlePointer(getReplyString(), pointer);
+            parseArticlePointer(getReplyString(), pointer);
         }
 
         return true;
@@ -897,7 +897,7 @@ public class NNTPClient extends NNTP
         }
 
         if (pointer != null) {
-            __parseArticlePointer(getReplyString(), pointer);
+            parseArticlePointer(getReplyString(), pointer);
         }
 
         return true;
@@ -946,7 +946,7 @@ public class NNTPClient extends NNTP
         }
 
         if (pointer != null) {
-            __parseArticlePointer(getReplyString(), pointer);
+            parseArticlePointer(getReplyString(), pointer);
         }
 
         return true;
@@ -992,7 +992,7 @@ public class NNTPClient extends NNTP
         }
 
         if (pointer != null) {
-            __parseArticlePointer(getReplyString(), pointer);
+            parseArticlePointer(getReplyString(), pointer);
         }
 
         return true;
@@ -1034,7 +1034,7 @@ public class NNTPClient extends NNTP
             return null;
         }
 
-        return __readNewsgroupListing();
+        return readNewsgroupListing();
     }
 
     /**
@@ -1100,7 +1100,7 @@ public class NNTPClient extends NNTP
         if(!NNTPReply.isPositiveCompletion(listActive(wildmat))) {
             return null;
         }
-        return __readNewsgroupListing();
+        return readNewsgroupListing();
     }
 
 
@@ -1171,7 +1171,7 @@ public class NNTPClient extends NNTP
             return null;
         }
 
-        return __readNewsgroupListing();
+        return readNewsgroupListing();
     }
 
     /**
@@ -1632,9 +1632,9 @@ public class NNTPClient extends NNTP
      */
     @Deprecated
     public boolean selectArticle(final int a, final ArticlePointer ap) throws IOException {
-        final ArticleInfo ai =  __ap2ai(ap);
+        final ArticleInfo ai =  ap2ai(ap);
         final boolean b = selectArticle(a, ai);
-        __ai2ap(ai, ap);
+        ai2ap(ai, ap);
         return b;
     }
 
@@ -1680,9 +1680,9 @@ public class NNTPClient extends NNTP
      */
     @Deprecated
     public Reader retrieveArticleHeader(final int a, final ArticlePointer ap) throws IOException {
-        final ArticleInfo ai =  __ap2ai(ap);
+        final ArticleInfo ai =  ap2ai(ap);
         final Reader rdr = retrieveArticleHeader(a, ai);
-        __ai2ap(ai, ap);
+        ai2ap(ai, ap);
         return rdr;
     }
 
@@ -1707,9 +1707,9 @@ public class NNTPClient extends NNTP
      */
     @Deprecated
     public Reader retrieveArticle(final int articleNumber, final ArticlePointer pointer) throws IOException {
-        final ArticleInfo ai =  __ap2ai(pointer);
+        final ArticleInfo ai =  ap2ai(pointer);
         final Reader rdr = retrieveArticle(articleNumber, ai);
-        __ai2ap(ai, pointer);
+        ai2ap(ai, pointer);
         return rdr;
     }
 
@@ -1734,9 +1734,9 @@ public class NNTPClient extends NNTP
      */
     @Deprecated
     public Reader retrieveArticleBody(final int a, final ArticlePointer ap) throws IOException {
-        final ArticleInfo ai =  __ap2ai(ap);
+        final ArticleInfo ai =  ap2ai(ap);
         final Reader rdr = retrieveArticleBody(a, ai);
-        __ai2ap(ai, ap);
+        ai2ap(ai, ap);
         return rdr;
     }
 
@@ -1750,9 +1750,9 @@ public class NNTPClient extends NNTP
      */
     @Deprecated
     public Reader retrieveArticle(final String articleId, final ArticlePointer pointer) throws IOException {
-        final ArticleInfo ai =  __ap2ai(pointer);
+        final ArticleInfo ai =  ap2ai(pointer);
         final Reader rdr = retrieveArticle(articleId, ai);
-        __ai2ap(ai, pointer);
+        ai2ap(ai, pointer);
         return rdr;
     }
 
@@ -1766,9 +1766,9 @@ public class NNTPClient extends NNTP
      */
     @Deprecated
     public Reader retrieveArticleBody(final String articleId, final ArticlePointer pointer) throws IOException {
-        final ArticleInfo ai =  __ap2ai(pointer);
+        final ArticleInfo ai =  ap2ai(pointer);
         final Reader rdr = retrieveArticleBody(articleId, ai);
-        __ai2ap(ai, pointer);
+        ai2ap(ai, pointer);
         return rdr;
     }
 
@@ -1782,9 +1782,9 @@ public class NNTPClient extends NNTP
      */
     @Deprecated
     public Reader retrieveArticleHeader(final String articleId, final ArticlePointer pointer) throws IOException {
-        final ArticleInfo ai =  __ap2ai(pointer);
+        final ArticleInfo ai =  ap2ai(pointer);
         final Reader rdr = retrieveArticleHeader(articleId, ai);
-        __ai2ap(ai, pointer);
+        ai2ap(ai, pointer);
         return rdr;
     }
 
@@ -1798,9 +1798,9 @@ public class NNTPClient extends NNTP
      */
     @Deprecated
     public boolean selectArticle(final String articleId, final ArticlePointer pointer) throws IOException {
-        final ArticleInfo ai =  __ap2ai(pointer);
+        final ArticleInfo ai =  ap2ai(pointer);
         final boolean b = selectArticle(articleId, ai);
-        __ai2ap(ai, pointer);
+        ai2ap(ai, pointer);
         return b;
 
     }
@@ -1813,9 +1813,9 @@ public class NNTPClient extends NNTP
      */
     @Deprecated
     public boolean selectArticle(final ArticlePointer pointer) throws IOException {
-        final ArticleInfo ai =  __ap2ai(pointer);
+        final ArticleInfo ai =  ap2ai(pointer);
         final boolean b = selectArticle(ai);
-        __ai2ap(ai, pointer);
+        ai2ap(ai, pointer);
         return b;
 
     }
@@ -1828,9 +1828,9 @@ public class NNTPClient extends NNTP
      */
     @Deprecated
     public boolean selectNextArticle(final ArticlePointer pointer) throws IOException {
-        final ArticleInfo ai =  __ap2ai(pointer);
+        final ArticleInfo ai =  ap2ai(pointer);
         final boolean b = selectNextArticle(ai);
-        __ai2ap(ai, pointer);
+        ai2ap(ai, pointer);
         return b;
 
     }
@@ -1843,15 +1843,15 @@ public class NNTPClient extends NNTP
      */
     @Deprecated
     public boolean selectPreviousArticle(final ArticlePointer pointer) throws IOException {
-        final ArticleInfo ai =  __ap2ai(pointer);
+        final ArticleInfo ai =  ap2ai(pointer);
         final boolean b = selectPreviousArticle(ai);
-        __ai2ap(ai, pointer);
+        ai2ap(ai, pointer);
         return b;
     }
 
    // Helper methods
 
-    private ArticleInfo __ap2ai(@SuppressWarnings("deprecation") final ArticlePointer ap) {
+    private ArticleInfo ap2ai(@SuppressWarnings("deprecation") final ArticlePointer ap) {
         if (ap == null) {
             return null;
         }
@@ -1860,7 +1860,7 @@ public class NNTPClient extends NNTP
     }
 
     @SuppressWarnings("deprecation")
-    private void __ai2ap(final ArticleInfo ai, final ArticlePointer ap){
+    private void ai2ap(final ArticleInfo ai, final ArticlePointer ap){
         if (ap != null) { // ai cannot be null
             ap.articleId = ai.articleId;
             ap.articleNumber = (int) ai.articleNumber;

@@ -34,7 +34,7 @@ import java.io.OutputStream;
 
 public final class ToNetASCIIOutputStream extends FilterOutputStream
 {
-    private boolean __lastWasCR;
+    private boolean lastWasCR;
 
     /***
      * Creates a ToNetASCIIOutputStream instance that wraps an existing
@@ -45,7 +45,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
     public ToNetASCIIOutputStream(final OutputStream output)
     {
         super(output);
-        __lastWasCR = false;
+        lastWasCR = false;
     }
 
 
@@ -67,16 +67,16 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
         switch (ch)
         {
         case '\r':
-            __lastWasCR = true;
+            lastWasCR = true;
             out.write('\r');
             return ;
         case '\n':
-            if (!__lastWasCR) {
+            if (!lastWasCR) {
                 out.write('\r');
             }
             //$FALL-THROUGH$
         default:
-            __lastWasCR = false;
+            lastWasCR = false;
             out.write(ch);
             return ;
         }

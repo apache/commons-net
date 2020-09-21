@@ -43,7 +43,7 @@ public final class EchoUDPClient extends DiscardUDPClient
     /*** The default echo port.  It is set to 7 according to RFC 862. ***/
     public static final int DEFAULT_PORT = 7;
 
-    private final DatagramPacket __receivePacket = new DatagramPacket(new byte[0], 0);
+    private final DatagramPacket receivePacket = new DatagramPacket(new byte[0], 0);
 
     /***
      * Sends the specified data to the specified server at the default echo
@@ -85,10 +85,10 @@ public final class EchoUDPClient extends DiscardUDPClient
      ***/
     public int receive(final byte[] data, final int length) throws IOException
     {
-        __receivePacket.setData(data);
-        __receivePacket.setLength(length);
-        _socket_.receive(__receivePacket);
-        return __receivePacket.getLength();
+        receivePacket.setData(data);
+        receivePacket.setLength(length);
+        _socket_.receive(receivePacket);
+        return receivePacket.getLength();
     }
 
     /*** Same as <code> receive(data, data.length)</code>

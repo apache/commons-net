@@ -101,7 +101,7 @@ public abstract class TFTPPacket
     public static final int SEGMENT_SIZE = 512;
 
     /*** The type of packet. ***/
-    int _type;
+    int type;
 
     /*** The port the packet came from or is going to. ***/
     int _port;
@@ -169,9 +169,9 @@ public abstract class TFTPPacket
      **/
     TFTPPacket(final int type, final InetAddress address, final int port)
     {
-        _type = type;
-        _address = address;
-        _port = port;
+        this.type = type;
+        this._address = address;
+        this._port = port;
     }
 
     /***
@@ -208,7 +208,7 @@ public abstract class TFTPPacket
      ***/
     public final int getType()
     {
-        return _type;
+        return type;
     }
 
     /***
@@ -256,6 +256,6 @@ public abstract class TFTPPacket
      */
     @Override
     public String toString() {
-        return _address + " " + _port + " " + _type;
+        return _address + " " + _port + " " + type;
     }
 }

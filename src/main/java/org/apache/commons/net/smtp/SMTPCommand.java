@@ -57,7 +57,7 @@ public final class SMTPCommand
      */
     public static final int EHLO = 15 ;
 
-    private static final int _NEXT_ = EHLO + 1; // update as necessary when adding new entries
+    private static final int NEXT = EHLO + 1; // update as necessary when adding new entries
 
     public static final int HELLO = HELO;
     public static final int LOGIN = HELO;
@@ -80,7 +80,7 @@ public final class SMTPCommand
     private SMTPCommand()
     {}
 
-    private static final String[] _commands = {
+    private static final String[] commands = {
                                           "HELO", "MAIL FROM:", "RCPT TO:", "DATA", "SEND FROM:", "SOML FROM:",
                                           "SAML FROM:", "RSET", "VRFY", "EXPN", "HELP", "NOOP", "TURN", "QUIT",
                                           "AUTH", "EHLO"
@@ -88,7 +88,7 @@ public final class SMTPCommand
 
 
     static {
-        if (_commands.length != _NEXT_) {
+        if (commands.length != NEXT) {
             throw new RuntimeException("Error in array definition");
         }
     }
@@ -103,7 +103,7 @@ public final class SMTPCommand
      ***/
     public static String getCommand(final int command)
     {
-        return _commands[command];
+        return commands[command];
     }
 
 }

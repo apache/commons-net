@@ -36,9 +36,9 @@ public class ProtocolCommandEvent extends EventObject
 {
     private static final long serialVersionUID = 403743538418947240L;
 
-    private final int __replyCode;
-    private final boolean __isCommand;
-    private final String __message, __command;
+    private final int replyCode;
+    private final boolean isCommand;
+    private final String message, command;
 
     /***
      * Creates a ProtocolCommandEvent signalling a command was sent to
@@ -55,10 +55,10 @@ public class ProtocolCommandEvent extends EventObject
     public ProtocolCommandEvent(final Object source, final String command, final String message)
     {
         super(source);
-        __replyCode = 0;
-        __message = message;
-        __isCommand = true;
-        __command = command;
+        this.replyCode = 0;
+        this.message = message;
+        this.isCommand = true;
+        this.command = command;
     }
 
 
@@ -79,10 +79,10 @@ public class ProtocolCommandEvent extends EventObject
     public ProtocolCommandEvent(final Object source, final int replyCode, final String message)
     {
         super(source);
-        __replyCode = replyCode;
-        __message = message;
-        __isCommand = false;
-        __command = null;
+        this.replyCode = replyCode;
+        this.message = message;
+        this.isCommand = false;
+        this.command = null;
     }
 
     /***
@@ -95,7 +95,7 @@ public class ProtocolCommandEvent extends EventObject
      ***/
     public String getCommand()
     {
-        return __command;
+        return command;
     }
 
 
@@ -108,7 +108,7 @@ public class ProtocolCommandEvent extends EventObject
      ***/
     public int getReplyCode()
     {
-        return __replyCode;
+        return replyCode;
     }
 
     /***
@@ -120,7 +120,7 @@ public class ProtocolCommandEvent extends EventObject
      ***/
     public boolean isCommand()
     {
-        return __isCommand;
+        return isCommand;
     }
 
     /***
@@ -143,6 +143,6 @@ public class ProtocolCommandEvent extends EventObject
      ***/
     public String getMessage()
     {
-        return __message;
+        return message;
     }
 }

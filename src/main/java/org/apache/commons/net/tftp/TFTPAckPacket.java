@@ -99,7 +99,7 @@ public final class TFTPAckPacket extends TFTPPacket
     DatagramPacket _newDatagram(final DatagramPacket datagram, final byte[] data)
     {
         data[0] = 0;
-        data[1] = (byte)_type;
+        data[1] = (byte)type;
         data[2] = (byte)((_blockNumber & 0xffff) >> 8);
         data[3] = (byte)(_blockNumber & 0xff);
 
@@ -130,7 +130,7 @@ public final class TFTPAckPacket extends TFTPPacket
 
         data = new byte[4];
         data[0] = 0;
-        data[1] = (byte)_type;
+        data[1] = (byte)type;
         data[2] = (byte)((_blockNumber & 0xffff) >> 8);
         data[3] = (byte)(_blockNumber & 0xff);
 

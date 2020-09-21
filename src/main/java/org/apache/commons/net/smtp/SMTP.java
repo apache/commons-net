@@ -89,7 +89,7 @@ public class SMTP extends SocketClient
     // We have to ensure that the protocol communication is in ASCII
     // but we use ISO-8859-1 just in case 8-bit characters cross
     // the wire.
-    private static final String __DEFAULT_ENCODING = "ISO-8859-1";
+    private static final String DEFAULT_ENCODING = "ISO-8859-1";
 
     /**
      * The encoding to use (user-settable).
@@ -104,13 +104,13 @@ public class SMTP extends SocketClient
      */
     protected ProtocolCommandSupport _commandSupport_;
 
-    BufferedReader _reader;
-    BufferedWriter _writer;
+    BufferedReader reader;
+    BufferedWriter writer;
 
-    private int _replyCode;
-    private final ArrayList<String> _replyLines;
-    private boolean _newReplyString;
-    private String _replyString;
+    private int replyCode;
+    private final ArrayList<String> replyLines;
+    private boolean newReplyString;
+    private String replyString;
 
     /***
      * The default SMTP constructor.  Sets the default port to
@@ -119,7 +119,7 @@ public class SMTP extends SocketClient
      ***/
     public SMTP()
     {
-        this(__DEFAULT_ENCODING);
+        this(DEFAULT_ENCODING);
     }
 
     /**
@@ -129,9 +129,9 @@ public class SMTP extends SocketClient
      */
     public SMTP(final String encoding) {
         setDefaultPort(DEFAULT_PORT);
-        _replyLines = new ArrayList<>();
-        _newReplyString = false;
-        _replyString = null;
+        replyLines = new ArrayList<>();
+        newReplyString = false;
+        replyString = null;
         _commandSupport_ = new ProtocolCommandSupport(this);
         this.encoding = encoding;
     }
@@ -162,13 +162,13 @@ public class SMTP extends SocketClient
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
         final String message = __commandBuffer.toString();
-        _writer.write(message);
-        _writer.flush();
+        writer.write(message);
+        writer.flush();
 
         fireCommandSent(command, message);
 
         __getReply();
-        return _replyCode;
+        return replyCode;
     }
 
     /**
@@ -189,10 +189,10 @@ public class SMTP extends SocketClient
     {
         int length;
 
-        _newReplyString = true;
-        _replyLines.clear();
+        newReplyString = true;
+        replyLines.clear();
 
-        String line = _reader.readLine();
+        String line = reader.readLine();
 
         if (line == null) {
             throw new SMTPConnectionClosedException(
@@ -210,7 +210,7 @@ public class SMTP extends SocketClient
         try
         {
             final String code = line.substring(0, 3);
-            _replyCode = Integer.parseInt(code);
+            replyCode = Integer.parseInt(code);
         }
         catch (final NumberFormatException e)
         {
@@ -218,21 +218,21 @@ public class SMTP extends SocketClient
                 "Could not parse response code.\nServer Reply: " + line);
         }
 
-        _replyLines.add(line);
+        replyLines.add(line);
 
         // Get extra lines if message continues.
         if (length > 3 && line.charAt(3) == '-')
         {
             do
             {
-                line = _reader.readLine();
+                line = reader.readLine();
 
                 if (line == null) {
                     throw new SMTPConnectionClosedException(
                         "Connection closed without indication.");
                 }
 
-                _replyLines.add(line);
+                replyLines.add(line);
 
                 // The length() check handles problems that could arise from readLine()
                 // returning too soon after encountering a naked CR or some other
@@ -245,9 +245,9 @@ public class SMTP extends SocketClient
             // line.startsWith(code)));
         }
 
-        fireReplyReceived(_replyCode, getReplyString());
+        fireReplyReceived(replyCode, getReplyString());
 
-        if (_replyCode == SMTPReply.SERVICE_NOT_AVAILABLE) {
+        if (replyCode == SMTPReply.SERVICE_NOT_AVAILABLE) {
             throw new SMTPConnectionClosedException(
                 "SMTP response 421 received.  Server closed connection.");
         }
@@ -258,10 +258,10 @@ public class SMTP extends SocketClient
     protected void _connectAction_() throws IOException
     {
         super._connectAction_();
-        _reader =
+        reader =
             new CRLFLineReader(new InputStreamReader(_input_,
                                                     encoding));
-        _writer =
+        writer =
             new BufferedWriter(new OutputStreamWriter(_output_,
                                                       encoding));
         __getReply();
@@ -281,11 +281,11 @@ public class SMTP extends SocketClient
     public void disconnect() throws IOException
     {
         super.disconnect();
-        _reader = null;
-        _writer = null;
-        _replyString = null;
-        _replyLines.clear();
-        _newReplyString = false;
+        reader = null;
+        writer = null;
+        replyString = null;
+        replyLines.clear();
+        newReplyString = false;
     }
 
 
@@ -401,7 +401,7 @@ public class SMTP extends SocketClient
      ***/
     public int getReplyCode()
     {
-        return _replyCode;
+        return replyCode;
     }
 
     /***
@@ -424,7 +424,7 @@ public class SMTP extends SocketClient
     public int getReply() throws IOException
     {
         __getReply();
-        return _replyCode;
+        return replyCode;
     }
 
 
@@ -437,7 +437,7 @@ public class SMTP extends SocketClient
      ***/
     public String[] getReplyStrings()
     {
-        return _replyLines.toArray(new String[_replyLines.size()]);
+        return replyLines.toArray(new String[replyLines.size()]);
     }
 
     /***
@@ -451,22 +451,22 @@ public class SMTP extends SocketClient
     {
         StringBuilder buffer;
 
-        if (!_newReplyString) {
-            return _replyString;
+        if (!newReplyString) {
+            return replyString;
         }
 
         buffer = new StringBuilder();
 
-        for (final String line : _replyLines)
+        for (final String line : replyLines)
         {
             buffer.append(line);
             buffer.append(SocketClient.NETASCII_EOL);
         }
 
-        _newReplyString = false;
+        newReplyString = false;
 
-        _replyString = buffer.toString();
-        return _replyString;
+        replyString = buffer.toString();
+        return replyString;
     }
 
 
