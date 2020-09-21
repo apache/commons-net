@@ -36,14 +36,27 @@ import org.apache.ftpserver.listener.ListenerFactory;
 import org.apache.ftpserver.ssl.SslConfigurationFactory;
 import org.apache.ftpserver.usermanager.PropertiesUserManagerFactory;
 import org.apache.ftpserver.usermanager.impl.BaseUser;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * Tests {@link FTPSClient}.
+ * <p>
+ * To get our test cert to work on Java 11, this test must be run with:
+ * </p>
+ * 
+ * <pre>
+ * -Djdk.tls.client.protocols="TLSv1.1"
+ * </pre>
+ * <p>
+ * This test does the above programmatically.
+ * </p>
  */
 public class FTPSClientTest {
+
+    private static final String JDK_TLS_CLIENT_PROTOCOLS = "jdk.tls.client.protocols";
 
     private static int SocketPort;
 
@@ -55,19 +68,37 @@ public class FTPSClientTest {
 
     private static final String SERVER_JKS_RES = "org/apache/commons/net/ftpsserver/ftpserver.jks";
 
+    private static final boolean implicit = false;
+
+    private static String TlsProtocols;
+
+    @AfterClass
+    public static void afterClass() {
+        if (TlsProtocols == null) {
+            System.getProperties().remove(JDK_TLS_CLIENT_PROTOCOLS);
+        } else {
+            System.setProperty(JDK_TLS_CLIENT_PROTOCOLS, TlsProtocols);
+        }
+    }
+
     /**
      * Returns the test directory as a String.
+     * 
      * @return the test directory as a String
      */
     private static String getTestHomeDirectory() {
         return System.getProperty("test.basedir", "target/test-classes/org/apache/commons/net/test-data");
     }
 
-    private static final boolean implicit = false;
-
     @BeforeClass
     public static void setUp() throws Exception {
         setUpClass(implicit);
+    }
+
+    @BeforeClass
+    public static void setUpClass() {
+        TlsProtocols = System.getProperty(JDK_TLS_CLIENT_PROTOCOLS);
+        System.setProperty(JDK_TLS_CLIENT_PROTOCOLS, "TLSv1");
     }
 
     /**
@@ -90,7 +121,8 @@ public class FTPSClientTest {
         propertiesUserManagerFactory.setUrl(userPropsResource);
         final UserManager userManager = propertiesUserManagerFactory.createUserManager();
         final BaseUser user = (BaseUser) userManager.getUserByName("test");
-        // Pickup the home dir value at runtime even though we have it set in the user prop file
+        // Pickup the home dir value at runtime even though we have it set in the user
+        // prop file
         // The user prop file requires the "homedirectory" to be set
         user.setHomeDirectory(getTestHomeDirectory());
         serverFactory.setUserManager(userManager);
@@ -101,14 +133,15 @@ public class FTPSClientTest {
         // define SSL configuration
         final URL serverJksResource = ClassLoader.getSystemClassLoader().getResource(SERVER_JKS_RES);
         Assert.assertNotNull(SERVER_JKS_RES, serverJksResource);
-        final SslConfigurationFactory ssl = new SslConfigurationFactory();
+        final SslConfigurationFactory sllConfigFactory = new SslConfigurationFactory();
         final File keyStoreFile = FileUtils.toFile(serverJksResource);
         Assert.assertTrue(keyStoreFile.toString(), keyStoreFile.exists());
-        ssl.setKeystoreFile(keyStoreFile);
-        ssl.setKeystorePassword("password");
+        sllConfigFactory.setKeystoreFile(keyStoreFile);
+        sllConfigFactory.setKeystorePassword("password");
+        sllConfigFactory.setSslProtocol("TLSv1.1");
 
         // set the SSL configuration for the listener
-        factory.setSslConfiguration(ssl.createSslConfiguration());
+        factory.setSslConfiguration(sllConfigFactory.createSslConfiguration());
         factory.setImplicitSsl(implicit);
 
         // replace the default listener
@@ -119,6 +152,12 @@ public class FTPSClientTest {
         Server.start();
         SocketPort = ((org.apache.ftpserver.impl.DefaultFtpServer) Server).getListener("default").getPort();
         ConnectionUri = "ftps://test:test@localhost:" + SocketPort;
+        System.out.printf("jdk.tls.disabledAlgorithms = %s%n", System.getProperty("jdk.tls.disabledAlgorithms"));
+    }
+
+    private void assertClientCode(final FTPSClient client) {
+        final int replyCode = client.getReplyCode();
+        assertTrue(FTPReply.isPositiveCompletion(replyCode));
     }
 
     private FTPSClient loginClient() throws SocketException, IOException {
@@ -141,14 +180,16 @@ public class FTPSClientTest {
         return client;
     }
 
-    private void assertClientCode(final FTPSClient client) {
-        final int replyCode = client.getReplyCode();
-        assertTrue(FTPReply.isPositiveCompletion(replyCode));
-    }
-
-    @Test
-    public void testOpenClose() throws SocketException, IOException {
-        loginClient().disconnect();
+    private void retrieveFile(final String pathname) throws SocketException, IOException {
+        final FTPSClient client = loginClient();
+        try {
+            // Do it twice.
+            // Just testing that we are not getting an SSL error (the file MUST be present).
+            assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.NULL_OUTPUT_STREAM));
+            assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.NULL_OUTPUT_STREAM));
+        } finally {
+            client.disconnect();
+        }
     }
 
     private void testListFiles(final String pathname) throws SocketException, IOException {
@@ -162,16 +203,19 @@ public class FTPSClientTest {
         }
     }
 
-    private void retrieveFile(final String pathname) throws SocketException, IOException {
-        final FTPSClient client = loginClient();
-        try {
-            // Do it twice.
-            // Just testing that we are not getting an SSL error (the file MUST be present).
-            assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.NULL_OUTPUT_STREAM));
-            assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.NULL_OUTPUT_STREAM));
-        } finally {
-            client.disconnect();
-        }
+    @Test
+    public void testListFilesPathNameEmpty() throws SocketException, IOException {
+        testListFiles("");
+    }
+
+    @Test
+    public void testListFilesPathNameJunk() throws SocketException, IOException {
+        testListFiles("   Junk   ");
+    }
+
+    @Test
+    public void testListFilesPathNameNull() throws SocketException, IOException {
+        testListFiles(null);
     }
 
     @Test
@@ -180,23 +224,12 @@ public class FTPSClientTest {
     }
 
     @Test
+    public void testOpenClose() throws SocketException, IOException {
+        loginClient().disconnect();
+    }
+
+    @Test
     public void testRetrieveFilePathNameRoot() throws SocketException, IOException {
         retrieveFile("/file.txt");
     }
-
-    @Test
-    public void testListFilesPathNameEmpty() throws SocketException, IOException {
-        testListFiles("");
-    }
-
-    @Test
-    public void testListFilesPathNameNull() throws SocketException, IOException {
-        testListFiles(null);
-    }
-    
-    @Test
-    public void testListFilesPathNameJunk() throws SocketException, IOException {
-        testListFiles("   Junk   ");
-    }
 }
-
