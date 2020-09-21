@@ -371,6 +371,7 @@ public abstract class SocketClient
      * @return {@code true} if the socket appears to be available for use
      * @since 3.0
      */
+    @SuppressWarnings("resource")
     public boolean isAvailable(){
         if (isConnected()) {
             try
@@ -397,7 +398,9 @@ public abstract class SocketClient
                     return false;
                 }
                 /* ignore the result, catch exceptions: */
+                // No need to close
                 _socket_.getInputStream();
+                // No need to close
                 _socket_.getOutputStream();
             }
             catch (final IOException ioex)
