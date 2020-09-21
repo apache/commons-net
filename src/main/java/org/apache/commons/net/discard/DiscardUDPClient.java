@@ -41,7 +41,7 @@ public class DiscardUDPClient extends DatagramSocketClient
     /*** The default discard port.  It is set to 9 according to RFC 863. ***/
     public static final int DEFAULT_PORT = 9;
 
-    private DatagramPacket sendPacket;
+    private final DatagramPacket sendPacket;
 
     public DiscardUDPClient()
     {

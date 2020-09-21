@@ -70,10 +70,10 @@ public final class TFTPErrorPacket extends TFTPPacket
     public static final int NO_SUCH_USER = 7;
 
     /*** The error code of this packet. ***/
-    private int error;
+    private final int error;
 
     /*** The error message of this packet. ***/
-    private String message;
+    private final String message;
 
     /***
      * Creates an error packet to be sent to a host at a given port

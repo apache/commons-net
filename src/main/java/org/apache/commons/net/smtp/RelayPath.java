@@ -31,8 +31,8 @@ import java.util.Vector;
 
 public final class RelayPath
 {
-    private Vector<String> path;
-    private String emailAddress;
+    private final Vector<String> path;
+    private final String emailAddress;
 
     /***
      * Create a relay path with the specified email address as the ultimate
