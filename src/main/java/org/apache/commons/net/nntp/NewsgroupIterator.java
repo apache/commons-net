@@ -40,7 +40,7 @@ class NewsgroupIterator implements Iterator<NewsgroupInfo>, Iterable<NewsgroupIn
     @Override
     public NewsgroupInfo next() {
         final String line = stringIterator.next();
-        return NNTPClient.__parseNewsgroupListEntry(line);
+        return NNTPClient.parseNewsgroupListEntry(line);
     }
 
     @Override

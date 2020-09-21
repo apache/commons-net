@@ -359,7 +359,7 @@ implements Configurable
     private int dataConnectionMode;
     private int dataTimeout;
     private int passivePort;
-    private String __passiveHost;
+    private String passiveHost;
     private final Random random;
     private int activeMinPort;
     private int activeMaxPort;
@@ -368,7 +368,7 @@ implements Configurable
     /** The address to bind to on passive connections, if necessary. */
     private InetAddress passiveLocalHost;
 
-    private int __fileType;
+    private int fileType;
     @SuppressWarnings("unused") // fields are written, but currently not read
     private int fileFormat;
     @SuppressWarnings("unused") // field is written, but currently not read
@@ -377,7 +377,7 @@ implements Configurable
     private int fileTransferMode;
     private boolean remoteVerificationEnabled;
     private long restartOffset;
-    private FTPFileEntryParserFactory __parserFactory;
+    private FTPFileEntryParserFactory parserFactory;
     private int bufferSize; // buffersize for buffered data streams
     private int sendDataSocketBufferSize;
     private int receiveDataSocketBufferSize;
@@ -417,10 +417,10 @@ implements Configurable
     private HostnameResolver passiveNatWorkaroundStrategy = new NatServerResolverImpl(this);
 
     /** Pattern for PASV mode responses. Groups: (n,n,n,n),(n),(n) */
-    private static final java.util.regex.Pattern __PARMS_PAT;
+    private static final java.util.regex.Pattern PARMS_PAT;
 
     static {
-        __PARMS_PAT = java.util.regex.Pattern.compile(
+        PARMS_PAT = java.util.regex.Pattern.compile(
                 "(\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3}),(\\d{1,3}),(\\d{1,3})");
     }
 
@@ -482,7 +482,7 @@ implements Configurable
         initDefaults();
         dataTimeout = -1;
         remoteVerificationEnabled = true;
-        __parserFactory = new DefaultFTPFileEntryParserFactory();
+        parserFactory = new DefaultFTPFileEntryParserFactory();
         configuration      = null;
         listHiddenFiles = false;
         useEPSVwithIPv4 = false;
@@ -494,13 +494,13 @@ implements Configurable
     private void initDefaults()
     {
         dataConnectionMode = ACTIVE_LOCAL_DATA_CONNECTION_MODE;
-        __passiveHost        = null;
+        passiveHost        = null;
         passivePort        = -1;
         activeExternalHost = null;
         reportActiveExternalHost = null;
         activeMinPort = 0;
         activeMaxPort = 0;
-        __fileType           = FTP.ASCII_FILE_TYPE;
+        fileType           = FTP.ASCII_FILE_TYPE;
         fileStructure      = FTP.FILE_STRUCTURE;
         fileFormat         = FTP.NON_PRINT_TEXT_FORMAT;
         fileTransferMode   = FTP.STREAM_TRANSFER_MODE;
@@ -568,13 +568,13 @@ implements Configurable
     protected void _parsePassiveModeReply(final String reply)
     throws MalformedServerReplyException
     {
-        final java.util.regex.Matcher m = __PARMS_PAT.matcher(reply);
+        final java.util.regex.Matcher m = PARMS_PAT.matcher(reply);
         if (!m.find()) {
             throw new MalformedServerReplyException(
                     "Could not parse passive host information.\nServer Reply: " + reply);
         }
 
-        __passiveHost = "0,0,0,0".equals(m.group(1)) ? _socket_.getInetAddress().getHostAddress() :
+        this.passiveHost = "0,0,0,0".equals(m.group(1)) ? _socket_.getInetAddress().getHostAddress() :
                 m.group(1).replace(',', '.'); // Fix up to look like IP address
 
         try
@@ -591,11 +591,11 @@ implements Configurable
 
         if (passiveNatWorkaroundStrategy != null) {
             try {
-                final String passiveHost = passiveNatWorkaroundStrategy.resolve(__passiveHost);
-                if (!__passiveHost.equals(passiveHost)) {
+                final String newPassiveHost = passiveNatWorkaroundStrategy.resolve(this.passiveHost);
+                if (!this.passiveHost.equals(newPassiveHost)) {
                     fireReplyReceived(0,
-                            "[Replacing PASV mode reply address "+__passiveHost+" with "+passiveHost+"]\n");
-                    __passiveHost = passiveHost;
+                            "[Replacing PASV mode reply address "+this.passiveHost+" with "+newPassiveHost+"]\n");
+                    this.passiveHost = newPassiveHost;
                 }
             } catch (final UnknownHostException e) { // Should not happen as we are passing in an IP address
                 throw new MalformedServerReplyException(
@@ -635,8 +635,8 @@ implements Configurable
 
 
         // in EPSV mode, the passive host address is implicit
-        __passiveHost = getRemoteAddress().getHostAddress();
-        passivePort = port;
+        this.passiveHost = getRemoteAddress().getHostAddress();
+        this.passivePort = port;
     }
 
     private boolean storeFile(final FTPCmd command, final String remote, final InputStream local)
@@ -665,7 +665,7 @@ implements Configurable
 
         final OutputStream output;
 
-        if (__fileType == ASCII_FILE_TYPE) {
+        if (fileType == ASCII_FILE_TYPE) {
             output = new ToNetASCIIOutputStream(getBufferedOutputStream(socket.getOutputStream()));
         } else {
             output = getBufferedOutputStream(socket.getOutputStream());
@@ -723,7 +723,7 @@ implements Configurable
         }
 
         final OutputStream output;
-        if (__fileType == ASCII_FILE_TYPE) {
+        if (fileType == ASCII_FILE_TYPE) {
             // We buffer ascii transfers because the buffering has to
             // be interposed between ToNetASCIIOutputSream and the underlying
             // socket output stream.  We don't buffer binary transfers
@@ -918,7 +918,7 @@ implements Configurable
                 socket.setSoTimeout(dataTimeout);
             }
 
-            socket.connect(new InetSocketAddress(__passiveHost, passivePort), connectTimeout);
+            socket.connect(new InetSocketAddress(passiveHost, passivePort), connectTimeout);
             if ((restartOffset > 0) && !restart(restartOffset))
             {
                 socket.close();
@@ -1013,7 +1013,7 @@ implements Configurable
      * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
      */
     public void setParserFactory(final FTPFileEntryParserFactory parserFactory) {
-        __parserFactory = parserFactory;
+        this.parserFactory = parserFactory;
     }
 
 
@@ -1252,7 +1252,7 @@ implements Configurable
     public void enterLocalActiveMode()
     {
         dataConnectionMode = ACTIVE_LOCAL_DATA_CONNECTION_MODE;
-        __passiveHost = null;
+        passiveHost = null;
         passivePort = -1;
     }
 
@@ -1277,7 +1277,7 @@ implements Configurable
         dataConnectionMode = PASSIVE_LOCAL_DATA_CONNECTION_MODE;
         // These will be set when just before a data connection is opened
         // in _openDataConnection_()
-        __passiveHost = null;
+        passiveHost = null;
         passivePort = -1;
     }
 
@@ -1312,7 +1312,7 @@ implements Configurable
         if (FTPReply.isPositiveCompletion(port(host, port)))
         {
             dataConnectionMode = ACTIVE_REMOTE_DATA_CONNECTION_MODE;
-            __passiveHost = null;
+            passiveHost = null;
             passivePort = -1;
             return true;
         }
@@ -1367,7 +1367,7 @@ implements Configurable
      */
     public String getPassiveHost()
     {
-        return __passiveHost;
+        return passiveHost;
     }
 
     /**
@@ -1555,8 +1555,8 @@ implements Configurable
     {
         if (FTPReply.isPositiveCompletion(type(fileType)))
         {
-            __fileType = fileType;
-            fileFormat = FTP.NON_PRINT_TEXT_FORMAT;
+            this.fileType = fileType;
+            this.fileFormat = FTP.NON_PRINT_TEXT_FORMAT;
             return true;
         }
         return false;
@@ -1604,8 +1604,8 @@ implements Configurable
     {
         if (FTPReply.isPositiveCompletion(type(fileType, formatOrByteSize)))
         {
-            __fileType = fileType;
-            fileFormat = formatOrByteSize;
+            this.fileType = fileType;
+            this.fileFormat = formatOrByteSize;
             return true;
         }
         return false;
@@ -1900,7 +1900,7 @@ implements Configurable
         }
 
         final InputStream input;
-        if (__fileType == ASCII_FILE_TYPE) {
+        if (fileType == ASCII_FILE_TYPE) {
             input = new FromNetASCIIInputStream(getBufferedInputStream(socket.getInputStream()));
         } else {
             input = getBufferedInputStream(socket.getInputStream());
@@ -1980,7 +1980,7 @@ implements Configurable
         }
 
         final InputStream input;
-        if (__fileType == ASCII_FILE_TYPE) {
+        if (fileType == ASCII_FILE_TYPE) {
             // We buffer ascii transfers because the buffering has to
             // be interposed between FromNetASCIIOutputSream and the underlying
             // socket input stream.  We don't buffer binary transfers
@@ -3381,7 +3381,7 @@ implements Configurable
                 // if a parser key was supplied in the parameters,
                 // use that to create the parser
                 entryParser =
-                    __parserFactory.createFileEntryParser(parserKey);
+                    parserFactory.createFileEntryParser(parserKey);
                 entryParserKey = parserKey;
 
             } else {
@@ -3389,7 +3389,7 @@ implements Configurable
                 // in the params, and if it has a non-empty system type, use that.
                 if (null != configuration && configuration.getServerSystemKey().length() > 0) {
                     entryParser =
-                        __parserFactory.createFileEntryParser(configuration);
+                        parserFactory.createFileEntryParser(configuration);
                     entryParserKey = configuration.getServerSystemKey();
                 } else {
                     // if a parserKey hasn't been supplied, and a configuration
@@ -3408,9 +3408,9 @@ implements Configurable
                         }
                     }
                     if (null != configuration) { // system type must have been empty above
-                        entryParser = __parserFactory.createFileEntryParser(new FTPClientConfig(systemType, configuration));
+                        entryParser = parserFactory.createFileEntryParser(new FTPClientConfig(systemType, configuration));
                     } else {
-                        entryParser = __parserFactory.createFileEntryParser(systemType);
+                        entryParser = parserFactory.createFileEntryParser(systemType);
                     }
                     entryParserKey = systemType;
                 }

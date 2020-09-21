@@ -26,12 +26,12 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
     /***
      * Horizontal Size
      ***/
-    private int m_nWidth = 80;
+    private int width = 80;
 
     /***
      * Vertical Size
      ***/
-    private int m_nHeight = 24;
+    private int height = 24;
 
     /***
      * Window size option
@@ -67,8 +67,8 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
             acceptremote
         );
 
-        m_nWidth = nWidth;
-        m_nHeight = nHeight;
+        width = nWidth;
+        height = nHeight;
     }
 
     /***
@@ -90,8 +90,8 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
             false
         );
 
-        m_nWidth = nWidth;
-        m_nHeight = nHeight;
+        width = nWidth;
+        height = nHeight;
     }
 
     /***
@@ -103,25 +103,25 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
     @Override
     public int[] startSubnegotiationLocal()
     {
-        final int nCompoundWindowSize = m_nWidth * 0x10000 + m_nHeight;
+        final int nCompoundWindowSize = width * 0x10000 + height;
         int nResponseSize = 5;
         int nIndex;
         int nShift;
         int nTurnedOnBits;
 
-        if (m_nWidth % 0x100 == 0xFF) {
+        if (width % 0x100 == 0xFF) {
             nResponseSize += 1;
         }
 
-        if (m_nWidth / 0x100 == 0xFF) {
+        if (width / 0x100 == 0xFF) {
             nResponseSize += 1;
         }
 
-        if (m_nHeight % 0x100 == 0xFF) {
+        if (height % 0x100 == 0xFF) {
             nResponseSize += 1;
         }
 
-        if (m_nHeight / 0x100 == 0xFF) {
+        if (height / 0x100 == 0xFF) {
             nResponseSize += 1;
         }
 

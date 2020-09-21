@@ -62,9 +62,9 @@ public final class CharGenUDPClient extends DatagramSocketClient
     /*** The default chargen port.  It is set to 19 according to RFC 864. ***/
     public static final int DEFAULT_PORT = 19;
 
-    private final byte[] __receiveData;
-    private final DatagramPacket __receivePacket;
-    private final DatagramPacket __sendPacket;
+    private final byte[] receiveData;
+    private final DatagramPacket receivePacket;
+    private final DatagramPacket sendPacket;
 
     /***
      * The default CharGenUDPClient constructor.  It initializes some internal
@@ -74,9 +74,9 @@ public final class CharGenUDPClient extends DatagramSocketClient
     public CharGenUDPClient()
     {
         // CharGen return packets have a maximum length of 512
-        __receiveData = new byte[512];
-        __receivePacket = new DatagramPacket(__receiveData, __receiveData.length);
-        __sendPacket = new DatagramPacket(new byte[0], 0);
+        receiveData = new byte[512];
+        receivePacket = new DatagramPacket(receiveData, receiveData.length);
+        sendPacket = new DatagramPacket(new byte[0], 0);
     }
 
 
@@ -91,9 +91,9 @@ public final class CharGenUDPClient extends DatagramSocketClient
      ***/
     public void send(final InetAddress host, final int port) throws IOException
     {
-        __sendPacket.setAddress(host);
-        __sendPacket.setPort(port);
-        _socket_.send(__sendPacket);
+        sendPacket.setAddress(host);
+        sendPacket.setPort(port);
+        _socket_.send(sendPacket);
     }
 
     /*** Same as <code>send(host, CharGenUDPClient.DEFAULT_PORT);</code>
@@ -118,10 +118,10 @@ public final class CharGenUDPClient extends DatagramSocketClient
         int length;
         byte[] result;
 
-        _socket_.receive(__receivePacket);
+        _socket_.receive(receivePacket);
 
-        result = new byte[length = __receivePacket.getLength()];
-        System.arraycopy(__receiveData, 0, result, 0, length);
+        result = new byte[length = receivePacket.getLength()];
+        System.arraycopy(receiveData, 0, result, 0, length);
 
         return result;
     }

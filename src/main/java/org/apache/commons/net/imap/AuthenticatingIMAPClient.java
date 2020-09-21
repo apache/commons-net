@@ -173,7 +173,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
                 final Mac hmac_md5 = Mac.getInstance("HmacMD5");
                 hmac_md5.init(new SecretKeySpec(password.getBytes(getCharset()), "HmacMD5"));
                 // compute the result:
-                final byte[] hmacResult = _convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharset());
+                final byte[] hmacResult = convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharset());
                 // join the byte arrays to form the reply
                 final byte[] usernameBytes = username.getBytes(getCharset());
                 final byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
@@ -224,7 +224,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
      * @param a The byte array to convert.
      * @return The resulting String of hex codes.
      */
-    private String _convertToHexString(final byte[] a)
+    private String convertToHexString(final byte[] a)
     {
         final StringBuilder result = new StringBuilder(a.length*2);
         for (final byte element : a)

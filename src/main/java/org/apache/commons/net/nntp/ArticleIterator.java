@@ -45,7 +45,7 @@ class ArticleIterator implements Iterator<Article>, Iterable<Article> {
     @Override
     public Article next() {
         final String line = stringIterator.next();
-        return NNTPClient.__parseArticleEntry(line);
+        return NNTPClient.parseArticleEntry(line);
     }
 
     @Override

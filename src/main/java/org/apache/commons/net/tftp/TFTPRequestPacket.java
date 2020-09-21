@@ -191,8 +191,8 @@ public abstract class TFTPRequestPacket extends TFTPPacket
         System.arraycopy(modeBytes[mode], 0, data, fileLength + 3,
                          modeLength);
 
-        datagram.setAddress(_address);
-        datagram.setPort(_port);
+        datagram.setAddress(address);
+        datagram.setPort(port);
         datagram.setData(data);
         datagram.setLength(fileLength + modeLength + 3);
 
@@ -227,7 +227,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
         System.arraycopy(modeBytes[mode], 0, data, fileLength + 3,
                          modeLength);
 
-        return new DatagramPacket(data, data.length, _address, _port);
+        return new DatagramPacket(data, data.length, address, port);
     }
 
     /***

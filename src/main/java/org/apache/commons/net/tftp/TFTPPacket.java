@@ -104,10 +104,10 @@ public abstract class TFTPPacket
     int type;
 
     /*** The port the packet came from or is going to. ***/
-    int _port;
+    int port;
 
     /*** The host the packet is going to be sent or where it came from. ***/
-    InetAddress _address;
+    InetAddress address;
 
     /***
      * When you receive a datagram that you expect to be a TFTP packet, you use
@@ -170,8 +170,8 @@ public abstract class TFTPPacket
     TFTPPacket(final int type, final InetAddress address, final int port)
     {
         this.type = type;
-        this._address = address;
-        this._port = port;
+        this.address = address;
+        this.port = port;
     }
 
     /***
@@ -219,7 +219,7 @@ public abstract class TFTPPacket
      ***/
     public final InetAddress getAddress()
     {
-        return _address;
+        return address;
     }
 
     /***
@@ -230,7 +230,7 @@ public abstract class TFTPPacket
      ***/
     public final int getPort()
     {
-        return _port;
+        return port;
     }
 
     /***
@@ -239,7 +239,7 @@ public abstract class TFTPPacket
      ***/
     public final void setPort(final int port)
     {
-        _port = port;
+        this.port = port;
     }
 
     /*** Sets the host address where the packet is going to be sent.
@@ -247,7 +247,7 @@ public abstract class TFTPPacket
      ***/
     public final void setAddress(final InetAddress address)
     {
-        _address = address;
+        this.address = address;
     }
 
     /**
@@ -256,6 +256,6 @@ public abstract class TFTPPacket
      */
     @Override
     public String toString() {
-        return _address + " " + _port + " " + type;
+        return address + " " + port + " " + type;
     }
 }

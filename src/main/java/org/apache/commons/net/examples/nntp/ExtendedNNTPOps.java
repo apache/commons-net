@@ -32,7 +32,7 @@ import org.apache.commons.net.nntp.NewsgroupInfo;
 public class ExtendedNNTPOps {
 
 
-    NNTPClient client;
+    private NNTPClient client;
 
     public ExtendedNNTPOps() {
         client = new NNTPClient();

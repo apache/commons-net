@@ -125,7 +125,7 @@ public class NNTPClient extends NNTP
      *     s = name of the group.)
      */
 
-    private static void __parseGroupReply(final String reply, final NewsgroupInfo info)
+    private static void parseGroupReply(final String reply, final NewsgroupInfo info)
     throws MalformedServerReplyException
     {
         final String tokens[] = reply.split(" ");
@@ -134,15 +134,15 @@ public class NNTPClient extends NNTP
             try
             {
                 // Get estimated article count
-                info._setArticleCount(Long.parseLong(tokens[i++]));
+                info.setArticleCount(Long.parseLong(tokens[i++]));
                 // Get first article number
-                info._setFirstArticle(Long.parseLong(tokens[i++]));
+                info.setFirstArticle(Long.parseLong(tokens[i++]));
                 // Get last article number
-                info._setLastArticle(Long.parseLong(tokens[i++]));
+                info.setLastArticle(Long.parseLong(tokens[i++]));
                 // Get newsgroup name
-                info._setNewsgroup(tokens[i++]);
+                info.setNewsgroup(tokens[i++]);
 
-                info._setPostingPermission(NewsgroupInfo.UNKNOWN_POSTING_PERMISSION);
+                info.setPostingPermission(NewsgroupInfo.UNKNOWN_POSTING_PERMISSION);
                 return ;
             } catch (final NumberFormatException e)
             {
@@ -156,7 +156,7 @@ public class NNTPClient extends NNTP
 
 
     // Format: group last first p
-    static NewsgroupInfo __parseNewsgroupListEntry(final String entry)
+    static NewsgroupInfo parseNewsgroupListEntry(final String entry)
     {
         final String tokens[] = entry.split(" ");
         if (tokens.length < 4) {
@@ -166,18 +166,18 @@ public class NNTPClient extends NNTP
 
         int i = 0;
 
-        result._setNewsgroup(tokens[i++]);
+        result.setNewsgroup(tokens[i++]);
 
         try
         {
             final long lastNum = Long.parseLong(tokens[i++]);
             final long firstNum = Long.parseLong(tokens[i++]);
-            result._setFirstArticle(firstNum);
-            result._setLastArticle(lastNum);
+            result.setFirstArticle(firstNum);
+            result.setLastArticle(lastNum);
             if ((firstNum == 0) && (lastNum == 0)) {
-                result._setArticleCount(0);
+                result.setArticleCount(0);
             } else {
-                result._setArticleCount(lastNum - firstNum + 1);
+                result.setArticleCount(lastNum - firstNum + 1);
             }
         } catch (final NumberFormatException e) {
             return null;
@@ -187,21 +187,21 @@ public class NNTPClient extends NNTP
         {
         case 'y':
         case 'Y':
-            result._setPostingPermission(
+            result.setPostingPermission(
                 NewsgroupInfo.PERMITTED_POSTING_PERMISSION);
             break;
         case 'n':
         case 'N':
-            result._setPostingPermission(
+            result.setPostingPermission(
                 NewsgroupInfo.PROHIBITED_POSTING_PERMISSION);
             break;
         case 'm':
         case 'M':
-            result._setPostingPermission(
+            result.setPostingPermission(
                 NewsgroupInfo.MODERATED_POSTING_PERMISSION);
             break;
         default:
-            result._setPostingPermission(
+            result.setPostingPermission(
                 NewsgroupInfo.UNKNOWN_POSTING_PERMISSION);
             break;
         }
@@ -217,7 +217,7 @@ public class NNTPClient extends NNTP
      * will be true, and the subject will contain the raw info.
      * @since 3.0
      */
-    static Article __parseArticleEntry(final String line) {
+    static Article parseArticleEntry(final String line) {
         // Extract the article information
         // Mandatory format (from NNTP RFC 2980) is :
         // articleNumber\tSubject\tAuthor\tDate\tID\tReference(s)\tByte Count\tLine Count
@@ -251,7 +251,7 @@ public class NNTPClient extends NNTP
         String line;
         try (final BufferedReader reader = new DotTerminatedMessageReader(_reader_)) {
             while ((line = reader.readLine()) != null) {
-                final NewsgroupInfo tmp = __parseNewsgroupListEntry(line);
+                final NewsgroupInfo tmp = parseNewsgroupListEntry(line);
                 if (tmp != null) {
                     list.addElement(tmp);
                 } else {
@@ -731,7 +731,7 @@ public class NNTPClient extends NNTP
         }
 
         if (info != null) {
-            __parseGroupReply(getReplyString(), info);
+            parseGroupReply(getReplyString(), info);
         }
 
         return true;
@@ -1442,7 +1442,7 @@ public class NNTPClient extends NNTP
 
                 if (replyCode == NNTPReply.AUTHENTICATION_ACCEPTED)
                     {
-                        _isAllowedToPost = true;
+                        this._isAllowedToPost = true;
                         return true;
                     }
             }

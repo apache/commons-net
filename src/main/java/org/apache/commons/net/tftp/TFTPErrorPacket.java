@@ -70,10 +70,10 @@ public final class TFTPErrorPacket extends TFTPPacket
     public static final int NO_SUCH_USER = 7;
 
     /*** The error code of this packet. ***/
-    int error;
+    private int error;
 
     /*** The error message of this packet. ***/
-    String message;
+    private String message;
 
     /***
      * Creates an error packet to be sent to a host at a given port
@@ -161,8 +161,8 @@ public final class TFTPErrorPacket extends TFTPPacket
 
         data[length + 4] = 0;
 
-        datagram.setAddress(_address);
-        datagram.setPort(_port);
+        datagram.setAddress(address);
+        datagram.setPort(port);
         datagram.setData(data);
         datagram.setLength(length + 4);
 
@@ -200,7 +200,7 @@ public final class TFTPErrorPacket extends TFTPPacket
 
         data[length + 4] = 0;
 
-        return new DatagramPacket(data, data.length, _address, _port);
+        return new DatagramPacket(data, data.length, address, port);
     }
 
 

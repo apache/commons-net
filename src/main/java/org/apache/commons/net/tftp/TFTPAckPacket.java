@@ -44,7 +44,7 @@ import java.net.InetAddress;
 public final class TFTPAckPacket extends TFTPPacket
 {
     /*** The block number being acknowledged by the packet. ***/
-    int _blockNumber;
+    int blockNumber;
 
     /***
      * Creates an acknowledgment packet to be sent to a host at a given port
@@ -57,7 +57,7 @@ public final class TFTPAckPacket extends TFTPPacket
     public TFTPAckPacket(final InetAddress destination, final int port, final int blockNumber)
     {
         super(TFTPPacket.ACKNOWLEDGEMENT, destination, port);
-        _blockNumber = blockNumber;
+        this.blockNumber = blockNumber;
     }
 
     /***
@@ -81,7 +81,7 @@ public final class TFTPAckPacket extends TFTPPacket
             throw new TFTPPacketException("TFTP operator code does not match type.");
         }
 
-        _blockNumber = (((data[2] & 0xff) << 8) | (data[3] & 0xff));
+        this.blockNumber = (((data[2] & 0xff) << 8) | (data[3] & 0xff));
     }
 
     /***
@@ -100,11 +100,11 @@ public final class TFTPAckPacket extends TFTPPacket
     {
         data[0] = 0;
         data[1] = (byte)type;
-        data[2] = (byte)((_blockNumber & 0xffff) >> 8);
-        data[3] = (byte)(_blockNumber & 0xff);
+        data[2] = (byte)((blockNumber & 0xffff) >> 8);
+        data[3] = (byte)(blockNumber & 0xff);
 
-        datagram.setAddress(_address);
-        datagram.setPort(_port);
+        datagram.setAddress(address);
+        datagram.setPort(port);
         datagram.setData(data);
         datagram.setLength(4);
 
@@ -131,10 +131,10 @@ public final class TFTPAckPacket extends TFTPPacket
         data = new byte[4];
         data[0] = 0;
         data[1] = (byte)type;
-        data[2] = (byte)((_blockNumber & 0xffff) >> 8);
-        data[3] = (byte)(_blockNumber & 0xff);
+        data[2] = (byte)((blockNumber & 0xffff) >> 8);
+        data[3] = (byte)(blockNumber & 0xff);
 
-        return new DatagramPacket(data, data.length, _address, _port);
+        return new DatagramPacket(data, data.length, address, port);
     }
 
 
@@ -145,7 +145,7 @@ public final class TFTPAckPacket extends TFTPPacket
      ***/
     public int getBlockNumber()
     {
-        return _blockNumber;
+        return blockNumber;
     }
 
 
@@ -156,7 +156,7 @@ public final class TFTPAckPacket extends TFTPPacket
      ***/
     public void setBlockNumber(final int blockNumber)
     {
-        _blockNumber = blockNumber;
+        this.blockNumber = blockNumber;
     }
 
     /**
@@ -165,7 +165,7 @@ public final class TFTPAckPacket extends TFTPPacket
      */
     @Override
     public String toString() {
-        return super.toString() + " ACK " + _blockNumber;
+        return super.toString() + " ACK " + blockNumber;
     }
 }
 

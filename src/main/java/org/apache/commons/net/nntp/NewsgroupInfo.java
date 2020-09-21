@@ -57,27 +57,27 @@ public final class NewsgroupInfo
     private long lastArticle;
     private int postingPermission;
 
-    void _setNewsgroup(final String newsgroup)
+    void setNewsgroup(final String newsgroup)
     {
         this.newsgroup = newsgroup;
     }
 
-    void _setArticleCount(final long count)
+    void setArticleCount(final long count)
     {
         estimatedArticleCount = count;
     }
 
-    void _setFirstArticle(final long first)
+    void setFirstArticle(final long first)
     {
         firstArticle = first;
     }
 
-    void _setLastArticle(final long last)
+    void setLastArticle(final long last)
     {
         lastArticle = last;
     }
 
-    void _setPostingPermission(final int permission)
+    void setPostingPermission(final int permission)
     {
         postingPermission = permission;
     }

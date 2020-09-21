@@ -48,7 +48,7 @@ public final class NNTPCommand
     private NNTPCommand()
     {}
 
-    private static final String[] _commands = {
+    private static final String[] commands = {
         "ARTICLE", "BODY", "GROUP", "HEAD", "HELP", "IHAVE", "LAST", "LIST",
         "NEWGROUPS", "NEWNEWS", "NEXT", "POST", "QUIT", "SLAVE", "STAT",
         "AUTHINFO", "XOVER", "XHDR"
@@ -65,7 +65,7 @@ public final class NNTPCommand
      ***/
     public static String getCommand(final int command)
     {
-        return _commands[command];
+        return commands[command];
     }
 
 }

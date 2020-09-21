@@ -53,13 +53,13 @@ public final class TFTPDataPacket extends TFTPPacket
     int blockNumber;
 
     /*** The length of the data. ***/
-    int length;
+    private int length;
 
     /*** The offset into the _data array at which the data begins. ***/
-    int offset;
+    private int offset;
 
     /*** The data stored in the packet. ***/
-    byte[] data;
+    private byte[] data;
 
     /***
      * Creates a data packet to be sent to a host at a given port
@@ -152,8 +152,8 @@ public final class TFTPDataPacket extends TFTPPacket
             System.arraycopy(this.data, offset, data, 4, length);
         }
 
-        datagram.setAddress(_address);
-        datagram.setPort(_port);
+        datagram.setAddress(address);
+        datagram.setPort(port);
         datagram.setData(data);
         datagram.setLength(length + 4);
 
@@ -185,7 +185,7 @@ public final class TFTPDataPacket extends TFTPPacket
 
         System.arraycopy(this.data, offset, data, 4, length);
 
-        return new DatagramPacket(data, length + 4, _address, _port);
+        return new DatagramPacket(data, length + 4, address, port);
     }
 
     /***

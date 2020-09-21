@@ -47,7 +47,7 @@ import org.apache.commons.net.telnet.InvalidTelnetOptionException;
  ***/
 public class TelnetClientExample implements Runnable, TelnetNotificationHandler
 {
-    static TelnetClient tc = null;
+    private static TelnetClient tc = null;
 
     /***
      * Main for the TelnetClientExample.

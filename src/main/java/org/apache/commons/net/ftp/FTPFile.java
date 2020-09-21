@@ -60,26 +60,26 @@ public class FTPFile implements Serializable
      ***/
     public static final int EXECUTE_PERMISSION = 2;
 
-    private int _type, _hardLinkCount;
-    private long _size;
-    private String _rawListing, _user, _group, _name, _link;
-    private Calendar _date;
+    private int type, hardLinkCount;
+    private long size;
+    private String rawListing, user, group, name, link;
+    private Calendar date;
     // If this is null, then list entry parsing failed
-    private final boolean[] _permissions[]; // e.g. _permissions[USER_ACCESS][READ_PERMISSION]
+    private final boolean[] permissions[]; // e.g. _permissions[USER_ACCESS][READ_PERMISSION]
 
     /*** Creates an empty FTPFile. ***/
     public FTPFile()
     {
-        _permissions = new boolean[3][3];
-        _type = UNKNOWN_TYPE;
+        permissions = new boolean[3][3];
+        type = UNKNOWN_TYPE;
         // init these to values that do not occur in listings
         // so can distinguish which fields are unset
-        _hardLinkCount = 0; // 0 is invalid as a link count
-        _size = -1; // 0 is valid, so use -1
-        _user = "";
-        _group = "";
-        _date = null;
-        _name = null;
+        hardLinkCount = 0; // 0 is invalid as a link count
+        size = -1; // 0 is valid, so use -1
+        user = "";
+        group = "";
+        date = null;
+        name = null;
     }
 
     /**
@@ -90,17 +90,17 @@ public class FTPFile implements Serializable
      */
     FTPFile(final String rawListing)
     {
-        _permissions = null; // flag that entry is invalid
-        _rawListing = rawListing;
-        _type = UNKNOWN_TYPE;
+        this.permissions = null; // flag that entry is invalid
+        this.rawListing = rawListing;
+        this.type = UNKNOWN_TYPE;
         // init these to values that do not occur in listings
         // so can distinguish which fields are unset
-        _hardLinkCount = 0; // 0 is invalid as a link count
-        _size = -1; // 0 is valid, so use -1
-        _user = "";
-        _group = "";
-        _date = null;
-        _name = null;
+        this.hardLinkCount = 0; // 0 is invalid as a link count
+        this.size = -1; // 0 is valid, so use -1
+        this.user = "";
+        this.group = "";
+        this.date = null;
+        this.name = null;
     }
 
 
@@ -112,7 +112,7 @@ public class FTPFile implements Serializable
      ***/
     public void setRawListing(final String rawListing)
     {
-        _rawListing = rawListing;
+        this.rawListing = rawListing;
     }
 
     /***
@@ -123,7 +123,7 @@ public class FTPFile implements Serializable
      ***/
     public String getRawListing()
     {
-        return _rawListing;
+        return rawListing;
     }
 
 
@@ -135,7 +135,7 @@ public class FTPFile implements Serializable
      ***/
     public boolean isDirectory()
     {
-        return _type == DIRECTORY_TYPE;
+        return type == DIRECTORY_TYPE;
     }
 
     /***
@@ -146,7 +146,7 @@ public class FTPFile implements Serializable
      ***/
     public boolean isFile()
     {
-        return _type == FILE_TYPE;
+        return type == FILE_TYPE;
     }
 
     /***
@@ -157,7 +157,7 @@ public class FTPFile implements Serializable
      ***/
     public boolean isSymbolicLink()
     {
-        return _type == SYMBOLIC_LINK_TYPE;
+        return type == SYMBOLIC_LINK_TYPE;
     }
 
     /***
@@ -168,7 +168,7 @@ public class FTPFile implements Serializable
      ***/
     public boolean isUnknown()
     {
-        return _type == UNKNOWN_TYPE;
+        return type == UNKNOWN_TYPE;
     }
 
     /**
@@ -182,7 +182,7 @@ public class FTPFile implements Serializable
      * @since 3.4
      */
     public boolean isValid() {
-        return _permissions != null;
+        return permissions != null;
     }
 
     /***
@@ -193,7 +193,7 @@ public class FTPFile implements Serializable
      ***/
     public void setType(final int type)
     {
-        _type = type;
+        this.type = type;
     }
 
 
@@ -205,7 +205,7 @@ public class FTPFile implements Serializable
      ***/
     public int getType()
     {
-        return _type;
+        return type;
     }
 
 
@@ -216,7 +216,7 @@ public class FTPFile implements Serializable
      ***/
     public void setName(final String name)
     {
-        _name = name;
+        this.name = name;
     }
 
     /***
@@ -226,7 +226,7 @@ public class FTPFile implements Serializable
      ***/
     public String getName()
     {
-        return _name;
+        return name;
     }
 
 
@@ -236,7 +236,7 @@ public class FTPFile implements Serializable
      */
     public void setSize(final long size)
     {
-        _size = size;
+        this.size = size;
     }
 
 
@@ -247,7 +247,7 @@ public class FTPFile implements Serializable
      ***/
     public long getSize()
     {
-        return _size;
+        return size;
     }
 
 
@@ -259,7 +259,7 @@ public class FTPFile implements Serializable
      ***/
     public void setHardLinkCount(final int links)
     {
-        _hardLinkCount = links;
+        this.hardLinkCount = links;
     }
 
 
@@ -271,7 +271,7 @@ public class FTPFile implements Serializable
      ***/
     public int getHardLinkCount()
     {
-        return _hardLinkCount;
+        return hardLinkCount;
     }
 
 
@@ -283,7 +283,7 @@ public class FTPFile implements Serializable
      ***/
     public void setGroup(final String group)
     {
-        _group = group;
+        this.group = group;
     }
 
 
@@ -295,7 +295,7 @@ public class FTPFile implements Serializable
      ***/
     public String getGroup()
     {
-        return _group;
+        return group;
     }
 
 
@@ -307,7 +307,7 @@ public class FTPFile implements Serializable
      ***/
     public void setUser(final String user)
     {
-        _user = user;
+        this.user = user;
     }
 
     /***
@@ -318,7 +318,7 @@ public class FTPFile implements Serializable
      ***/
     public String getUser()
     {
-        return _user;
+        return user;
     }
 
 
@@ -330,7 +330,7 @@ public class FTPFile implements Serializable
      ***/
     public void setLink(final String link)
     {
-        _link = link;
+        this.link = link;
     }
 
 
@@ -343,7 +343,7 @@ public class FTPFile implements Serializable
      ***/
     public String getLink()
     {
-        return _link;
+        return link;
     }
 
 
@@ -356,7 +356,7 @@ public class FTPFile implements Serializable
      ***/
     public void setTimestamp(final Calendar date)
     {
-        _date = date;
+        this.date = date;
     }
 
 
@@ -367,7 +367,7 @@ public class FTPFile implements Serializable
      ***/
     public Calendar getTimestamp()
     {
-        return _date;
+        return date;
     }
 
 
@@ -385,7 +385,7 @@ public class FTPFile implements Serializable
      ***/
     public void setPermission(final int access, final int permission, final boolean value)
     {
-        _permissions[access][permission] = value;
+        permissions[access][permission] = value;
     }
 
 
@@ -404,10 +404,10 @@ public class FTPFile implements Serializable
      ***/
     public boolean hasPermission(final int access, final int permission)
     {
-        if (_permissions == null) {
+        if (permissions == null) {
             return false;
         }
-        return _permissions[access][permission];
+        return permissions[access][permission];
     }
 
     /***
@@ -502,7 +502,7 @@ public class FTPFile implements Serializable
     }
 
     private char formatType(){
-        switch(_type) {
+        switch(type) {
             case FILE_TYPE:
                 return '-';
             case DIRECTORY_TYPE:

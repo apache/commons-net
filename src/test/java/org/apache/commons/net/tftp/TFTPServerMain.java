@@ -101,9 +101,9 @@ public class TFTPServerMain {
                         if (packet instanceof TFTPAckPacket) {
                             final TFTPAckPacket ack = (TFTPAckPacket) packet;
                             System.out.println("Change ack block num");
-                            ack._blockNumber--;
+                            ack.blockNumber--;
                             super.sendData(tftp, packet);
-                            ack._blockNumber++;
+                            ack.blockNumber++;
                         }
                         break;
                     case 2:

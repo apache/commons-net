@@ -57,11 +57,11 @@ public class IMAP extends SocketClient
      */
     protected static final String __DEFAULT_ENCODING = "ISO-8859-1";
 
-    private IMAPState __state;
+    private IMAPState state;
     protected BufferedWriter __writer;
 
     protected BufferedReader _reader;
-    private int _replyCode;
+    private int replyCode;
     private final List<String> _replyLines;
 
     /**
@@ -107,9 +107,9 @@ public class IMAP extends SocketClient
         }
 
     };
-    private volatile IMAPChunkListener __chunkListener;
+    private volatile IMAPChunkListener chunkListener;
 
-    private final char[] _initialID = { 'A', 'A', 'A', 'A' };
+    private final char[] initialID = { 'A', 'A', 'A', 'A' };
 
     /**
      * The default IMAPClient constructor.  Initializes the state
@@ -118,7 +118,7 @@ public class IMAP extends SocketClient
     public IMAP()
     {
         setDefaultPort(DEFAULT_PORT);
-        __state = IMAPState.DISCONNECTED_STATE;
+        state = IMAPState.DISCONNECTED_STATE;
         _reader = null;
         __writer = null;
         _replyLines = new ArrayList<>();
@@ -130,9 +130,9 @@ public class IMAP extends SocketClient
      *
      * @throws IOException
      */
-    private void __getReply() throws IOException
+    private void getReply() throws IOException
     {
-        __getReply(true); // tagged response
+        getReply(true); // tagged response
     }
 
     /**
@@ -142,7 +142,7 @@ public class IMAP extends SocketClient
      * @param wantTag {@code true} if the command expects a tagged response.
      * @throws IOException
      */
-    private void __getReply(final boolean wantTag) throws IOException
+    private void getReply(final boolean wantTag) throws IOException
     {
         _replyLines.clear();
         String line = _reader.readLine();
@@ -166,7 +166,7 @@ public class IMAP extends SocketClient
                     literalCount -= line.length() + 2; // Allow for CRLF
                 }
                 if (isMultiLine) {
-                    final IMAPChunkListener il = __chunkListener;
+                    final IMAPChunkListener il = chunkListener;
                     if (il != null) {
                         final boolean clear = il.chunkReceived(this);
                         if (clear) {
@@ -182,12 +182,12 @@ public class IMAP extends SocketClient
                 _replyLines.add(line);
             }
             // check the response code on the last line
-            _replyCode = IMAPReply.getReplyCode(line);
+            replyCode = IMAPReply.getReplyCode(line);
         } else {
-            _replyCode = IMAPReply.getUntaggedReplyCode(line);
+            replyCode = IMAPReply.getUntaggedReplyCode(line);
         }
 
-        fireReplyReceived(_replyCode, getReplyString());
+        fireReplyReceived(replyCode, getReplyString());
     }
 
     /**
@@ -224,7 +224,7 @@ public class IMAP extends SocketClient
         if (tmo <= 0) { // none set currently
             setSoTimeout(connectTimeout); // use connect timeout to ensure we don't block forever
         }
-        __getReply(false); // untagged response
+        getReply(false); // untagged response
         if (tmo <= 0) {
             setSoTimeout(tmo); // restore the original value
         }
@@ -239,7 +239,7 @@ public class IMAP extends SocketClient
      */
     protected void setState(final IMAP.IMAPState state)
     {
-        __state = state;
+        this.state = state;
     }
 
 
@@ -250,7 +250,7 @@ public class IMAP extends SocketClient
      */
     public IMAP.IMAPState getState()
     {
-        return __state;
+        return state;
     }
 
     /**
@@ -303,8 +303,8 @@ public class IMAP extends SocketClient
 
         fireCommandSent(command, message);
 
-        __getReply();
-        return _replyCode;
+        getReply();
+        return replyCode;
     }
 
     /**
@@ -441,7 +441,7 @@ public class IMAP extends SocketClient
      * @since 3.4
      */
     public void setChunkListener(final IMAPChunkListener listener) {
-        __chunkListener = listener;
+        chunkListener = listener;
     }
 
     /**
@@ -450,18 +450,18 @@ public class IMAP extends SocketClient
      */
     protected String generateCommandID()
     {
-        final String res = new String (_initialID);
+        final String res = new String (initialID);
         // "increase" the ID for the next call
         boolean carry = true; // want to increment initially
-        for (int i = _initialID.length-1; carry && i>=0; i--)
+        for (int i = initialID.length-1; carry && i>=0; i--)
         {
-            if (_initialID[i] == 'Z')
+            if (initialID[i] == 'Z')
             {
-                _initialID[i] = 'A';
+                initialID[i] = 'A';
             }
             else
             {
-                _initialID[i]++;
+                initialID[i]++;
                 carry = false; // did not wrap round
             }
         }

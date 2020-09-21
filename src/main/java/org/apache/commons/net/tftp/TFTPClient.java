@@ -63,7 +63,7 @@ public class TFTPClient extends TFTP
     public static final int DEFAULT_MAX_TIMEOUTS = 5;
 
     /*** The maximum number of timeouts allowed before failing. ***/
-    private int __maxTimeouts;
+    private int maxTimeouts;
 
     /*** The number of bytes received in the ongoing download. ***/
     private long totalBytesReceived = 0;
@@ -78,7 +78,7 @@ public class TFTPClient extends TFTP
      ***/
     public TFTPClient()
     {
-        __maxTimeouts = DEFAULT_MAX_TIMEOUTS;
+        maxTimeouts = DEFAULT_MAX_TIMEOUTS;
     }
 
     /***
@@ -94,9 +94,9 @@ public class TFTPClient extends TFTP
     public void setMaxTimeouts(final int numTimeouts)
     {
         if (numTimeouts < 1) {
-            __maxTimeouts = 1;
+            maxTimeouts = 1;
         } else {
-            __maxTimeouts = numTimeouts;
+            maxTimeouts = numTimeouts;
         }
     }
 
@@ -108,7 +108,7 @@ public class TFTPClient extends TFTP
      ***/
     public int getMaxTimeouts()
     {
-        return __maxTimeouts;
+        return maxTimeouts;
     }
 
 
@@ -242,11 +242,11 @@ public class TFTPClient extends TFTP
                             bufferedSend(error);
                         }
                     } catch (final SocketException e) {
-                        if (++timeouts >= __maxTimeouts) {
+                        if (++timeouts >= maxTimeouts) {
                             throw new IOException("Connection timed out.");
                         }
                     } catch (final InterruptedIOException e) {
-                        if (++timeouts >= __maxTimeouts) {
+                        if (++timeouts >= maxTimeouts) {
                             throw new IOException("Connection timed out.");
                         }
                     } catch (final TFTPPacketException e) {
@@ -435,11 +435,11 @@ public class TFTPClient extends TFTP
                             bufferedSend(error);
                         }
                     } catch (final SocketException e) {
-                        if (++timeouts >= __maxTimeouts) {
+                        if (++timeouts >= maxTimeouts) {
                             throw new IOException("Connection timed out.");
                         }
                     } catch (final InterruptedIOException e) {
-                        if (++timeouts >= __maxTimeouts) {
+                        if (++timeouts >= maxTimeouts) {
                             throw new IOException("Connection timed out.");
                         }
                     } catch (final TFTPPacketException e) {

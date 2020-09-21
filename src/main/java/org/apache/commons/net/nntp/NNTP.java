@@ -87,11 +87,11 @@ public class NNTP extends SocketClient
     // We have to ensure that the protocol communication is in ASCII
     // but we use ISO-8859-1 just in case 8-bit characters cross
     // the wire.
-    private static final Charset __DEFAULT_ENCODING = StandardCharsets.ISO_8859_1;
+    private static final Charset DEFAULT_ENCODING = StandardCharsets.ISO_8859_1;
 
     boolean _isAllowedToPost;
-    int _replyCode;
-    String _replyString;
+    private int replyCode;
+    private String replyString;
 
     /**
      * Wraps {@link SocketClient#_input_}
@@ -121,7 +121,7 @@ public class NNTP extends SocketClient
     public NNTP()
     {
         setDefaultPort(DEFAULT_PORT);
-        _replyString = null;
+        replyString = null;
         _reader_ = null;
         _writer_ = null;
         _isAllowedToPost = false;
@@ -130,33 +130,33 @@ public class NNTP extends SocketClient
 
     private void __getReply() throws IOException
     {
-        _replyString = _reader_.readLine();
+        replyString = _reader_.readLine();
 
-        if (_replyString == null) {
+        if (replyString == null) {
             throw new NNTPConnectionClosedException(
                     "Connection closed without indication.");
         }
 
         // In case we run into an anomaly we don't want fatal index exceptions
         // to be thrown.
-        if (_replyString.length() < 3) {
+        if (replyString.length() < 3) {
             throw new MalformedServerReplyException(
-                "Truncated server reply: " + _replyString);
+                "Truncated server reply: " + replyString);
         }
 
         try
         {
-            _replyCode = Integer.parseInt(_replyString.substring(0, 3));
+            replyCode = Integer.parseInt(replyString.substring(0, 3));
         }
         catch (final NumberFormatException e)
         {
             throw new MalformedServerReplyException(
-                "Could not parse response code.\nServer Reply: " + _replyString);
+                "Could not parse response code.\nServer Reply: " + replyString);
         }
 
-        fireReplyReceived(_replyCode, _replyString + SocketClient.NETASCII_EOL);
+        fireReplyReceived(replyCode, replyString + SocketClient.NETASCII_EOL);
 
-        if (_replyCode == NNTPReply.SERVICE_DISCONTINUED) {
+        if (replyCode == NNTPReply.SERVICE_DISCONTINUED) {
             throw new NNTPConnectionClosedException(
                 "NNTP response 400 received.  Server closed connection.");
         }
@@ -174,13 +174,13 @@ public class NNTP extends SocketClient
         super._connectAction_();
         _reader_ =
             new CRLFLineReader(new InputStreamReader(_input_,
-                                                     __DEFAULT_ENCODING));
+                                                     DEFAULT_ENCODING));
         _writer_ =
             new BufferedWriter(new OutputStreamWriter(_output_,
-                                                      __DEFAULT_ENCODING));
+                                                      DEFAULT_ENCODING));
         __getReply();
 
-        _isAllowedToPost = _replyCode == NNTPReply.SERVER_READY_POSTING_ALLOWED;
+        _isAllowedToPost = replyCode == NNTPReply.SERVER_READY_POSTING_ALLOWED;
     }
 
     /***
@@ -197,7 +197,7 @@ public class NNTP extends SocketClient
         super.disconnect();
         _reader_ = null;
         _writer_ = null;
-        _replyString = null;
+        replyString = null;
         _isAllowedToPost = false;
     }
 
@@ -253,7 +253,7 @@ public class NNTP extends SocketClient
         fireCommandSent(command, message);
 
         __getReply();
-        return _replyCode;
+        return replyCode;
     }
 
 
@@ -343,7 +343,7 @@ public class NNTP extends SocketClient
      ***/
     public int getReplyCode()
     {
-        return _replyCode;
+        return replyCode;
     }
 
     /***
@@ -366,7 +366,7 @@ public class NNTP extends SocketClient
     public int getReply() throws IOException
     {
         __getReply();
-        return _replyCode;
+        return replyCode;
     }
 
 
@@ -378,7 +378,7 @@ public class NNTP extends SocketClient
      ***/
     public String getReplyString()
     {
-        return _replyString;
+        return replyString;
     }
 
 

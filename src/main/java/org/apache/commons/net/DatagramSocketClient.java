@@ -53,7 +53,7 @@ public abstract class DatagramSocketClient
      * The default DatagramSocketFactory shared by all DatagramSocketClient
      * instances.
      ***/
-    private static final DatagramSocketFactory __DEFAULT_SOCKET_FACTORY =
+    private static final DatagramSocketFactory DEFAULT_SOCKET_FACTORY =
         new DefaultDatagramSocketFactory();
 
     /**
@@ -84,7 +84,7 @@ public abstract class DatagramSocketClient
         _socket_ = null;
         _timeout_ = 0;
         _isOpen_ = false;
-        _socketFactory_ = __DEFAULT_SOCKET_FACTORY;
+        _socketFactory_ = DEFAULT_SOCKET_FACTORY;
     }
 
 
@@ -275,7 +275,7 @@ public abstract class DatagramSocketClient
     public void setDatagramSocketFactory(final DatagramSocketFactory factory)
     {
         if (factory == null) {
-            _socketFactory_ = __DEFAULT_SOCKET_FACTORY;
+            _socketFactory_ = DEFAULT_SOCKET_FACTORY;
         } else {
             _socketFactory_ = factory;
         }

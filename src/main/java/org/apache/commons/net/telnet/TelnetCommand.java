@@ -93,13 +93,13 @@ public final class TelnetCommand
     public static final int SYNCH = 242;
 
     /*** String representations of commands. ***/
-    private static final String __commandString[] = {
+    private static final String commandString[] = {
                 "IAC", "DONT", "DO", "WONT", "WILL", "SB", "GA", "EL", "EC", "AYT",
                 "AO", "IP", "BRK", "DMARK", "NOP", "SE", "EOR", "ABORT", "SUSP", "EOF"
             };
 
-    private static final int __FIRST_COMMAND = IAC;
-    private static final int __LAST_COMMAND = EOF;
+    private static final int FIRST_COMMAND = IAC;
+    private static final int LAST_COMMAND = EOF;
 
     /***
      * Returns the string representation of the telnet protocol command
@@ -110,7 +110,7 @@ public final class TelnetCommand
      ***/
     public static String getCommand(final int code)
     {
-        return __commandString[__FIRST_COMMAND - code];
+        return commandString[FIRST_COMMAND - code];
     }
 
     /***
@@ -122,7 +122,7 @@ public final class TelnetCommand
      **/
     public static boolean isValidCommand(final int code)
     {
-        return code <= __FIRST_COMMAND && code >= __LAST_COMMAND;
+        return code <= FIRST_COMMAND && code >= LAST_COMMAND;
     }
 
     // Cannot be instantiated

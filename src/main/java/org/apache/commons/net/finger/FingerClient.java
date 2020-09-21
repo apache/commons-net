@@ -57,7 +57,7 @@ public class FingerClient extends SocketClient
      ***/
     public static final int DEFAULT_PORT = 79;
 
-    private static final String __LONG_FLAG = "/W ";
+    private static final String LONG_FLAG = "/W ";
 
     private transient char[] buffer = new char[1024];
 
@@ -154,7 +154,7 @@ public class FingerClient extends SocketClient
         DataOutputStream output;
         final StringBuilder buffer = new StringBuilder(64);
         if (longOutput) {
-            buffer.append(__LONG_FLAG);
+            buffer.append(LONG_FLAG);
         }
         buffer.append(username);
         buffer.append(SocketClient.NETASCII_EOL);

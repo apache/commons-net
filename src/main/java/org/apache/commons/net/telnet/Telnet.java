@@ -61,7 +61,7 @@ class Telnet extends SocketClient
     /* public */
     static final int DEFAULT_PORT =  23;
 
-    int[] doResponse, willResponse, options;
+    private int[] doResponse, willResponse, options;
 
     /* TERMINAL-TYPE option (start)*/
     /***

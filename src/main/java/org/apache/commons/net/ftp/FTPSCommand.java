@@ -36,7 +36,7 @@ public final class FTPSCommand {
     public static final int DATA_CHANNEL_PROTECTION_LEVEL = PROT;
     public static final int CLEAR_COMMAND_CHANNEL = CCC;
 
-    private static final String[] _commands = {"AUTH","ADAT","PBSZ","PROT","CCC"};
+    private static final String[] commands = {"AUTH","ADAT","PBSZ","PROT","CCC"};
 
     /**
      * Retrieve the FTPS command string corresponding to a specified
@@ -47,6 +47,6 @@ public final class FTPSCommand {
      *  command code.
      */
     public static String getCommand(final int command) {
-        return _commands[command];
+        return commands[command];
     }
 }
