@@ -815,17 +815,17 @@ public class Base64 {
      *             Thrown when the input array needs an output array bigger than maxResultSize
      * @since 1.4
      */
-    public static byte[] encodeBase64(final byte[] binaryData, final boolean isChunked, final boolean urlSafe, final int maxResultSize) {
+    public static byte[] encodeBase64(final byte[] binaryData, final boolean isChunked, final boolean urlSafe,
+            final int maxResultSize) {
         if (binaryData == null || binaryData.length == 0) {
             return binaryData;
         }
 
-        final long len = getEncodeLength(binaryData, isChunked ? CHUNK_SIZE : 0, isChunked ? CHUNK_SEPARATOR : EMPTY_BYTE_ARRAY);
+        final long len = getEncodeLength(binaryData, isChunked ? CHUNK_SIZE : 0,
+                isChunked ? CHUNK_SEPARATOR : EMPTY_BYTE_ARRAY);
         if (len > maxResultSize) {
-            throw new IllegalArgumentException("Input array too big, the output array would be bigger (" +
-                len +
-                ") than the specified maxium size of " +
-                maxResultSize);
+            throw new IllegalArgumentException("Input array too big, the output array would be bigger (" + len
+                    + ") than the specified maxium size of " + maxResultSize);
         }
 
         final Base64 b64 = isChunked ? new Base64(urlSafe) : new Base64(0, CHUNK_SEPARATOR, urlSafe);

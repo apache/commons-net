@@ -40,7 +40,8 @@ public class SSLSocketUtils {
     public static boolean enableEndpointNameVerification(final SSLSocket socket) {
         try {
             final Class<?> cls = Class.forName("javax.net.ssl.SSLParameters");
-            final Method setEndpointIdentificationAlgorithm = cls.getDeclaredMethod("setEndpointIdentificationAlgorithm", String.class);
+            final Method setEndpointIdentificationAlgorithm = cls
+                    .getDeclaredMethod("setEndpointIdentificationAlgorithm", String.class);
             final Method getSSLParameters = SSLSocket.class.getDeclaredMethod("getSSLParameters");
             final Method setSSLParameters = SSLSocket.class.getDeclaredMethod("setSSLParameters", cls);
             if (setEndpointIdentificationAlgorithm != null && getSSLParameters != null && setSSLParameters != null) {

@@ -150,8 +150,7 @@ public class FingerClient extends SocketClient
      * @throws IOException If an I/O error during the operation.
      ***/
     public InputStream getInputStream(final boolean longOutput, final String username, final String encoding)
-    throws IOException
-    {
+            throws IOException {
         DataOutputStream output;
         final StringBuilder buffer = new StringBuilder(64);
         if (longOutput) {
@@ -161,7 +160,8 @@ public class FingerClient extends SocketClient
         buffer.append(SocketClient.NETASCII_EOL);
 
         // Note: Charsets.toCharset() returns the platform default for null input
-        final byte[] encodedQuery = buffer.toString().getBytes(Charsets.toCharset(encoding).name()); // Java 1.6 can use charset directly
+        final byte[] encodedQuery = buffer.toString().getBytes(Charsets.toCharset(encoding).name()); // Java 1.6 can use
+                                                                                                     // charset directly
 
         output = new DataOutputStream(new BufferedOutputStream(_output_, 1024));
         output.write(encodedQuery, 0, encodedQuery.length);
@@ -169,7 +169,6 @@ public class FingerClient extends SocketClient
 
         return _input_;
     }
-
 
     /***
      * Fingers the connected host and returns the input stream from

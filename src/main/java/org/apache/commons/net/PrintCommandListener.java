@@ -85,7 +85,8 @@ public class PrintCommandListener implements ProtocolCommandListener
      *
      * @since 3.0
      */
-    public PrintCommandListener(final PrintStream stream, final boolean suppressLogin, final char eolMarker, final boolean showDirection) {
+    public PrintCommandListener(final PrintStream stream, final boolean suppressLogin, final char eolMarker,
+            final boolean showDirection) {
         this(new PrintWriter(stream), suppressLogin, eolMarker, showDirection);
     }
 
@@ -138,8 +139,8 @@ public class PrintCommandListener implements ProtocolCommandListener
      *
      * @since 3.0
      */
-    public PrintCommandListener(final PrintWriter writer, final boolean suppressLogin, final char eolMarker, final boolean showDirection)
-    {
+    public PrintCommandListener(final PrintWriter writer, final boolean suppressLogin, final char eolMarker,
+            final boolean showDirection) {
         __writer = writer;
         __nologin = suppressLogin;
         __eolMarker = eolMarker;

@@ -251,8 +251,8 @@ public class IMAPClient extends IMAP
      * @throws IOException If a network I/O error occurs.
      * @since 3.4
      */
-    public boolean append(final String mailboxName, final String flags, final String datetime, final String message) throws IOException
-    {
+    public boolean append(final String mailboxName, final String flags, final String datetime, final String message)
+            throws IOException {
         final StringBuilder args = new StringBuilder(quoteMailboxName(mailboxName));
         if (flags != null) {
             args.append(" ").append(flags);
@@ -269,12 +269,12 @@ public class IMAPClient extends IMAP
         // String literal (probably not used much - if at all)
         if (message.startsWith(DQUOTE_S) && message.endsWith(DQUOTE_S)) {
             args.append(message);
-            return doCommand (IMAPCommand.APPEND, args.toString());
+            return doCommand(IMAPCommand.APPEND, args.toString());
         }
         args.append('{').append(message.getBytes(IMAP.__DEFAULT_ENCODING).length).append('}'); // length of message
         final int status = sendCommand(IMAPCommand.APPEND, args.toString());
         return IMAPReply.isContinuation(status) // expecting continuation response
-            && IMAPReply.isSuccess(sendData(message)); // if so, send the data
+                && IMAPReply.isSuccess(sendData(message)); // if so, send the data
     }
 
     /**

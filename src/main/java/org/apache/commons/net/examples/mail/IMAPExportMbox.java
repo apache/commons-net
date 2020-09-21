@@ -345,13 +345,14 @@ public final class IMAPExportMbox
         private final boolean printMarker;
         private final boolean checkSequence;
 
-        MboxListener(final BufferedWriter bw, final String eol, final boolean printHash, final boolean printMarker, final boolean checkSequence) {
-          this.eol = eol;
-          this.printHash = printHash;
-          this.printMarker = printMarker;
-          DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT"));
-          this.bw = bw;
-          this.checkSequence = checkSequence;
+        MboxListener(final BufferedWriter bw, final String eol, final boolean printHash, final boolean printMarker,
+                final boolean checkSequence) {
+            this.eol = eol;
+            this.printHash = printHash;
+            this.printMarker = printMarker;
+            DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT"));
+            this.bw = bw;
+            this.checkSequence = checkSequence;
         }
 
         @Override

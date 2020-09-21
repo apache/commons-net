@@ -40,7 +40,8 @@ class IMAPUtils {
      * @return the IMAP client - connected and logged in
      * @throws IOException if any problems occur
      */
-    static IMAPClient imapLogin(final URI uri, final int defaultTimeout, final ProtocolCommandListener listener) throws IOException {
+    static IMAPClient imapLogin(final URI uri, final int defaultTimeout, final ProtocolCommandListener listener)
+            throws IOException {
         final String userInfo = uri.getUserInfo();
         if (userInfo == null) {
             throw new IllegalArgumentException("Missing userInfo details");

@@ -59,7 +59,8 @@ public class FTPHTTPClient extends FTPClient {
      * @param proxyPass the password for the proxy
      * @param encoding the encoding to use
      */
-    public FTPHTTPClient(final String proxyHost, final int proxyPort, final String proxyUser, final String proxyPass, final Charset encoding) {
+    public FTPHTTPClient(final String proxyHost, final int proxyPort, final String proxyUser, final String proxyPass,
+            final Charset encoding) {
         this.proxyHost = proxyHost;
         this.proxyPort = proxyPort;
         this.proxyUsername = proxyUser;
@@ -186,9 +187,9 @@ public class FTPHTTPClient extends FTPClient {
         super._connectAction_(socketIsReader);
     }
 
-    private BufferedReader tunnelHandshake(final String host, final int port, final InputStream input, final OutputStream output) throws IOException,
-    UnsupportedEncodingException {
-        final String connectString = "CONNECT "  + host + ":" + port  + " HTTP/1.1";
+    private BufferedReader tunnelHandshake(final String host, final int port, final InputStream input,
+            final OutputStream output) throws IOException, UnsupportedEncodingException {
+        final String connectString = "CONNECT " + host + ":" + port + " HTTP/1.1";
         final String hostString = "Host: " + host + ":" + port;
 
         this.tunnelHost = host;
@@ -199,18 +200,15 @@ public class FTPHTTPClient extends FTPClient {
 
         if (proxyUsername != null && proxyPassword != null) {
             final String auth = proxyUsername + ":" + proxyPassword;
-            final String header = "Proxy-Authorization: Basic "
-                + base64.encodeToString(auth.getBytes(charset));
+            final String header = "Proxy-Authorization: Basic " + base64.encodeToString(auth.getBytes(charset));
             output.write(header.getBytes(charset));
         }
         output.write(CRLF);
 
         final List<String> response = new ArrayList<>();
-        final BufferedReader reader = new BufferedReader(
-                new InputStreamReader(input, getCharset()));
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(input, getCharset()));
 
-        for (String line = reader.readLine(); line != null
-        && line.length() > 0; line = reader.readLine()) {
+        for (String line = reader.readLine(); line != null && line.length() > 0; line = reader.readLine()) {
             response.add(line);
         }
 

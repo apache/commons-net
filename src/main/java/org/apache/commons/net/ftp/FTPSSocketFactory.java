@@ -62,10 +62,10 @@ public class FTPSSocketFactory extends SocketFactory {
     }
 
     @Override
-    public Socket createSocket(final InetAddress address, final int port, final InetAddress localAddress, final int localPort) throws IOException {
+    public Socket createSocket(final InetAddress address, final int port, final InetAddress localAddress,
+            final int localPort) throws IOException {
         return this.context.getSocketFactory().createSocket(address, port, localAddress, localPort);
     }
-
 
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE
 
@@ -95,7 +95,8 @@ public class FTPSSocketFactory extends SocketFactory {
      * @throws IOException  on error
      * @deprecated  (2.2) use {@link FTPSServerSocketFactory#createServerSocket(int, int, InetAddress) instead} */
     @Deprecated
-    public java.net.ServerSocket createServerSocket(final int port, final int backlog, final InetAddress ifAddress) throws IOException {
+    public java.net.ServerSocket createServerSocket(final int port, final int backlog, final InetAddress ifAddress)
+            throws IOException {
         return this.init(this.context.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
     }
 

@@ -150,8 +150,8 @@ public final class TFTPExample
         System.out.println("OK");
     }
 
-    private static boolean send(final int transferMode, final String hostname, final String localFilename, final String remoteFilename,
-            final TFTPClient tftp) {
+    private static boolean send(final int transferMode, final String hostname, final String localFilename,
+            final String remoteFilename, final TFTPClient tftp) {
         boolean closed;
         FileInputStream input = null;
 
@@ -199,8 +199,8 @@ public final class TFTPExample
         return closed;
     }
 
-    private static boolean receive(final int transferMode, final String hostname, final String localFilename, final String remoteFilename,
-            final TFTPClient tftp) {
+    private static boolean receive(final int transferMode, final String hostname, final String localFilename,
+            final String remoteFilename, final TFTPClient tftp) {
         boolean closed;
         FileOutputStream output = null;
         File file;
