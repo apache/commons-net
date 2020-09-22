@@ -92,13 +92,12 @@ public class TFTPTest extends TestCase
      */
     private static File createFile(final File file, final int size) throws IOException
     {
-        final OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
-        final byte[] temp = "0".getBytes();
-        for (int i = 0; i < size; i++)
-        {
-            os.write(temp);
+        try (final OutputStream os = new BufferedOutputStream(new FileOutputStream(file))) {
+            final byte[] temp = "0".getBytes();
+            for (int i = 0; i < size; i++) {
+                os.write(temp);
+            }
         }
-        os.close();
         return file;
     }
 
@@ -173,10 +172,9 @@ public class TFTPTest extends TestCase
         out.delete();
         assertTrue("Couldn't clear output location", !out.exists());
 
-        final FileOutputStream output = new FileOutputStream(out);
-
-        tftp.receiveFile(file.getName(), mode, output, "localhost", SERVER_PORT);
-        output.close();
+        try (final FileOutputStream output = new FileOutputStream(out)) {
+            tftp.receiveFile(file.getName(), mode, output, "localhost", SERVER_PORT);
+        }
 
         assertTrue("file not created", out.exists());
         assertTrue("files not identical on file " + file, filesIdentical(out, file));
@@ -197,9 +195,9 @@ public class TFTPTest extends TestCase
         in.delete();
         assertTrue("Couldn't clear output location", !in.exists());
 
-        final FileInputStream fis = new FileInputStream(file);
-        tftp.sendFile(in.getName(), mode, fis, "localhost", SERVER_PORT);
-        fis.close();
+        try (final FileInputStream fis = new FileInputStream(file)) {
+            tftp.sendFile(in.getName(), mode, fis, "localhost", SERVER_PORT);
+        }
 
         // need to give the server a bit of time to receive our last packet, and
         // close out its file buffers, etc.
@@ -212,36 +210,31 @@ public class TFTPTest extends TestCase
 
     private boolean filesIdentical(final File a, final File b) throws IOException
     {
-        if (!a.exists() || !b.exists())
-        {
+        if (!a.exists() || !b.exists()) {
             return false;
         }
 
-        if (a.length() != b.length())
-        {
+        if (a.length() != b.length()) {
             return false;
         }
 
-        final InputStream fisA = new BufferedInputStream(new FileInputStream(a));
-        final InputStream fisB = new BufferedInputStream(new FileInputStream(b));
+        try (final InputStream fisA = new BufferedInputStream(new FileInputStream(a));
+            final InputStream fisB = new BufferedInputStream(new FileInputStream(b))) {
 
-        int aBit = fisA.read();
-        int bBit = fisB.read();
+            int aBit = fisA.read();
+            int bBit = fisB.read();
 
-        while (aBit != -1)
-        {
-            if (aBit != bBit)
-            {
-                fisA.close();
-                fisB.close();
-                return false;
+            while (aBit != -1) {
+                if (aBit != bBit) {
+                    fisA.close();
+                    fisB.close();
+                    return false;
+                }
+                aBit = fisA.read();
+                bBit = fisB.read();
             }
-            aBit = fisA.read();
-            bBit = fisB.read();
-        }
 
-        fisA.close();
-        fisB.close();
+        }
         return true;
     }
 }

@@ -21,6 +21,7 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLDecoder;
 import java.security.CodeSource;
 import java.util.Enumeration;
@@ -36,7 +37,9 @@ public class MainTest {
     public void checkExamplesPropertiesIsComplete() throws Exception {
         final Properties cp = scanClasses();
         final Properties fp = new Properties();
-        fp.load(this.getClass().getResourceAsStream("examples.properties"));
+        try (final InputStream inputStream = this.getClass().getResourceAsStream("examples.properties")) {
+            fp.load(inputStream);
+        }
         @SuppressWarnings("unchecked") // OK
         final Enumeration<String> propertyNames = (Enumeration<String>) cp.propertyNames();
         while(propertyNames.hasMoreElements()){
@@ -57,14 +60,14 @@ public class MainTest {
         final String sourceFile = URLDecoder.decode(codeSource.getLocation().getFile(),"UTF-8");
         final Properties p = new Properties();
         if (sourceFile.endsWith(".jar")) {
-            final JarFile jf = new JarFile(sourceFile);
-            final Enumeration<JarEntry> e = jf.entries();
-            while (e.hasMoreElements()) {
-              final JarEntry je = e.nextElement();
-              final String name = je.getName();
-              processFileName(name, p);
+            try (final JarFile jf = new JarFile(sourceFile)) {
+                final Enumeration<JarEntry> e = jf.entries();
+                while (e.hasMoreElements()) {
+                    final JarEntry je = e.nextElement();
+                    final String name = je.getName();
+                    processFileName(name, p);
+                }
             }
-            jf.close();
         } else {
             final File examples = new File(sourceFile, "org/apache/commons/net/examples"); // must match top level examples package name
             if (examples.exists()) {

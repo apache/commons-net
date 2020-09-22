@@ -721,63 +721,56 @@ extends TestCase implements TelnetNotificationHandler
         boolean test1spy_ok = false;
         boolean test2spy_ok = false;
         boolean stopspy_ok = false;
-        final byte expected1[] =
-            { (byte) 't', (byte) 'e', (byte) 's', (byte) 't', (byte) '1' };
-        final byte expected2[] =
-            { (byte) 't', (byte) 'e', (byte) 's', (byte) 't', (byte) '2' };
+        final byte expected1[] = {(byte) 't', (byte) 'e', (byte) 's', (byte) 't', (byte) '1'};
+        final byte expected2[] = {(byte) 't', (byte) 'e', (byte) 's', (byte) 't', (byte) '2'};
 
+        try (final PipedOutputStream po = new PipedOutputStream();
+            final PipedInputStream pi = new PipedInputStream(po)) {
 
-        final PipedOutputStream po = new PipedOutputStream();
-        final PipedInputStream pi = new PipedInputStream(po);
+            final OutputStream os = STANDARD.server.getOutputStream();
+            final OutputStream ostc = STANDARD.client.getOutputStream();
 
-        final OutputStream os = STANDARD.server.getOutputStream();
-        final OutputStream ostc = STANDARD.client.getOutputStream();
+            STANDARD.client.registerSpyStream(po);
 
-        STANDARD.client.registerSpyStream(po);
+            os.write("test1".getBytes());
+            os.flush();
 
-        os.write("test1".getBytes());
-        os.flush();
+            Thread.sleep(1000);
+            final byte buffer[] = new byte[5];
 
-        Thread.sleep(1000);
-        final byte buffer[] = new byte[5];
-
-        if(pi.available() == 5)
-        {
-            pi.read(buffer);
-            if (equalBytes(buffer, expected1)) {
-                test1spy_ok = true;
+            if (pi.available() == 5) {
+                pi.read(buffer);
+                if (equalBytes(buffer, expected1)) {
+                    test1spy_ok = true;
+                }
             }
-        }
 
-        ostc.write("test2".getBytes());
-        ostc.flush();
+            ostc.write("test2".getBytes());
+            ostc.flush();
 
-        Thread.sleep(1000);
+            Thread.sleep(1000);
 
-        if(pi.available() == 5)
-        {
-            pi.read(buffer);
-            if (equalBytes(buffer, expected2)) {
-                test2spy_ok = true;
+            if (pi.available() == 5) {
+                pi.read(buffer);
+                if (equalBytes(buffer, expected2)) {
+                    test2spy_ok = true;
+                }
             }
+
+            STANDARD.client.stopSpyStream();
+            os.write("test1".getBytes());
+            os.flush();
+            ostc.write("test2".getBytes());
+            ostc.flush();
+            Thread.sleep(1000);
+            if (pi.available() == 0) {
+                stopspy_ok = true;
+            }
+
+            assertTrue(test1spy_ok);
+            assertTrue(test2spy_ok);
+            assertTrue(stopspy_ok);
         }
-
-        STANDARD.client.stopSpyStream();
-        os.write("test1".getBytes());
-        os.flush();
-        ostc.write("test2".getBytes());
-        ostc.flush();
-        Thread.sleep(1000);
-        if(pi.available() == 0)
-        {
-            stopspy_ok = true;
-        }
-
-
-        assertTrue(test1spy_ok);
-        assertTrue(test2spy_ok);
-        assertTrue(stopspy_ok);
-        pi.close();
     }
 
     /*

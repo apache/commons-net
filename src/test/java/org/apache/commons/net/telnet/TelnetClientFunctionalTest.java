@@ -50,37 +50,32 @@ public class TelnetClientFunctionalTest extends TestCase
         boolean testresult = false;
         tc1.connect("rainmaker.wunderground.com", 3000);
 
-        final InputStream is = tc1.getInputStream();
-        final OutputStream os = tc1.getOutputStream();
+        try (final InputStream is = tc1.getInputStream(); 
+            final OutputStream os = tc1.getOutputStream()) {
 
-        boolean cont = waitForString(is, "Return to continue:", 30000);
-        if (cont)
-        {
-            os.write("\n".getBytes());
-            os.flush();
-            cont = waitForString(is, "city code--", 30000);
-        }
-        if (cont)
-        {
-            os.write("LAX\n".getBytes());
-            os.flush();
-            cont = waitForString(is, "Los Angeles", 30000);
-        }
-        if (cont)
-        {
-            cont = waitForString(is, "X to exit:", 30000);
-        }
-        if (cont)
-        {
-            os.write("X\n".getBytes());
-            os.flush();
-            tc1.disconnect();
-            testresult = true;
-        }
+            boolean cont = waitForString(is, "Return to continue:", 30000);
+            if (cont) {
+                os.write("\n".getBytes());
+                os.flush();
+                cont = waitForString(is, "city code--", 30000);
+            }
+            if (cont) {
+                os.write("LAX\n".getBytes());
+                os.flush();
+                cont = waitForString(is, "Los Angeles", 30000);
+            }
+            if (cont) {
+                cont = waitForString(is, "X to exit:", 30000);
+            }
+            if (cont) {
+                os.write("X\n".getBytes());
+                os.flush();
+                tc1.disconnect();
+                testresult = true;
+            }
 
-        assertTrue(testresult);
-        os.close();
-        is.close();
+            assertTrue(testresult);
+        }
     }
 
 

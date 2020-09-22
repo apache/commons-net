@@ -61,17 +61,15 @@ public class ToNetASCIIInputStreamTest {
         final byte[] data = input.getBytes(ASCII);
         final byte[] expected = expect.getBytes(ASCII);
         final InputStream source = new ByteArrayInputStream(data);
-        final ToNetASCIIInputStream toNetASCII = new ToNetASCIIInputStream(source);
-        final byte[] output = new byte[data.length*2]; // cannot be longer than twice the input
+        try (final ToNetASCIIInputStream toNetASCII = new ToNetASCIIInputStream(source)) {
+            final byte[] output = new byte[data.length * 2]; // cannot be longer than twice the input
 
-        final int length = byByte ?
-                getSingleBytes(toNetASCII, output) :
-                    getBuffer(toNetASCII, output);
+            final int length = byByte ? getSingleBytes(toNetASCII, output) : getBuffer(toNetASCII, output);
 
-        final byte[] result = new byte[length];
-        System.arraycopy(output, 0, result, 0, length);
-        Assert.assertArrayEquals("Failed converting "+input,expected, result);
-        toNetASCII.close();
+            final byte[] result = new byte[length];
+            System.arraycopy(output, 0, result, 0, length);
+            Assert.assertArrayEquals("Failed converting " + input, expected, result);
+        }
     }
 
     private int getSingleBytes(final ToNetASCIIInputStream toNetASCII, final byte[] output)

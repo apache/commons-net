@@ -40,7 +40,7 @@ import java.io.Reader;
  */
 public class POP3ClientCommandsTest extends TestCase
 {
-    POP3Client p = null;
+    POP3Client pop3Client;
 
     String user = POP3Constants.user;
     String emptyUser = POP3Constants.emptyuser;
@@ -55,29 +55,29 @@ public class POP3ClientCommandsTest extends TestCase
     private void reset() throws IOException
     {
         //Case where this is the first time reset is called
-        if (p == null)
+        if (pop3Client == null)
         {
             //Do nothing
         }
-        else if (p.isConnected())
+        else if (pop3Client.isConnected())
         {
-            p.disconnect();
+            pop3Client.disconnect();
         }
-        p = null;
-        p = new POP3Client();
+        pop3Client = null;
+        pop3Client = new POP3Client();
     }
 
     private void connect() throws Exception
     {
-        p.connect(InetAddress.getByName(mailhost));
-        assertTrue(p.isConnected());
-        assertEquals(POP3.AUTHORIZATION_STATE, p.getState());
+        pop3Client.connect(InetAddress.getByName(mailhost));
+        assertTrue(pop3Client.isConnected());
+        assertEquals(POP3.AUTHORIZATION_STATE, pop3Client.getState());
     }
 
     private void login() throws Exception
     {
-        assertTrue(p.login(user, password));
-        assertEquals(POP3.TRANSACTION_STATE, p.getState());
+        assertTrue(pop3Client.login(user, password));
+        assertEquals(POP3.TRANSACTION_STATE, pop3Client.getState());
     }
 
     public void testNoopCommand() throws Exception
@@ -86,15 +86,15 @@ public class POP3ClientCommandsTest extends TestCase
         connect();
 
         //Should fail before authorization
-        assertFalse(p.noop());
+        assertFalse(pop3Client.noop());
 
         //Should pass in transaction state
         login();
-        assertTrue(p.noop());
+        assertTrue(pop3Client.noop());
 
         //Should fail in update state
-        p.setState(POP3.UPDATE_STATE);
-        assertFalse(p.noop());
+        pop3Client.setState(POP3.UPDATE_STATE);
+        assertFalse(pop3Client.noop());
     }
 
     public void testStatus() throws Exception
@@ -103,32 +103,32 @@ public class POP3ClientCommandsTest extends TestCase
         connect();
 
         //Should fail in authorization state
-        assertNull(p.status());
+        assertNull(pop3Client.status());
 
         //Should pass on a mailbox with mail in it
         login();
-        final POP3MessageInfo msg = p.status();
+        final POP3MessageInfo msg = pop3Client.status();
         assertTrue(msg.number > 0);
         assertTrue(msg.size > 0);
         assertNull(msg.identifier);
-        p.logout();
+        pop3Client.logout();
 
         //Should also pass on a mailbox with no mail in it
         reset();
         connect();
-        assertTrue(p.login(emptyUser, password));
-        final POP3MessageInfo msg2 = p.status();
+        assertTrue(pop3Client.login(emptyUser, password));
+        final POP3MessageInfo msg2 = pop3Client.status();
         assertEquals(0, msg2.number);
         assertEquals(0, msg2.size);
         assertNull(msg2.identifier);
-        p.logout();
+        pop3Client.logout();
 
         //Should fail in the 'update' state
         reset();
         connect();
         login();
-        p.setState(POP3.UPDATE_STATE);
-        assertNull(p.status());
+        pop3Client.setState(POP3.UPDATE_STATE);
+        assertNull(pop3Client.status());
     }
 
     public void testListMessagesOnFullMailbox() throws Exception
@@ -137,7 +137,7 @@ public class POP3ClientCommandsTest extends TestCase
         connect();
         login();
 
-        POP3MessageInfo[] msg = p.listMessages();
+        POP3MessageInfo[] msg = pop3Client.listMessages();
         assertTrue(msg.length > 0);
 
         for(int i = 0; i < msg.length; i++)
@@ -149,8 +149,8 @@ public class POP3ClientCommandsTest extends TestCase
         }
 
         //Now test from the update state
-        p.setState(POP3.UPDATE_STATE);
-        msg = p.listMessages();
+        pop3Client.setState(POP3.UPDATE_STATE);
+        msg = pop3Client.listMessages();
         assertNull(msg);
     }
 
@@ -161,27 +161,27 @@ public class POP3ClientCommandsTest extends TestCase
         login();
 
         //The first message is always at index 1
-        POP3MessageInfo msg = p.listMessage(1);
+        POP3MessageInfo msg = pop3Client.listMessage(1);
         assertNotNull(msg);
         assertEquals(1, msg.number);
         assertTrue(msg.size > 0);
         assertNull(msg.identifier);
 
         //Now retrieve a message from index 0
-        msg = p.listMessage(0);
+        msg = pop3Client.listMessage(0);
         assertNull(msg);
 
         //Now retrieve a msg that is not there
-        msg = p.listMessage(100000);
+        msg = pop3Client.listMessage(100000);
         assertNull(msg);
 
         //Now retrieve a msg with a negative index
-        msg = p.listMessage(-2);
+        msg = pop3Client.listMessage(-2);
         assertNull(msg);
 
         //Now try to get a valid message from the update state
-        p.setState(POP3.UPDATE_STATE);
-        msg = p.listMessage(1);
+        pop3Client.setState(POP3.UPDATE_STATE);
+        msg = pop3Client.listMessage(1);
         assertNull(msg);
     }
 
@@ -189,14 +189,14 @@ public class POP3ClientCommandsTest extends TestCase
     {
         reset();
         connect();
-        assertTrue(p.login(emptyUser, password));
+        assertTrue(pop3Client.login(emptyUser, password));
 
-        POP3MessageInfo[] msg = p.listMessages();
+        POP3MessageInfo[] msg = pop3Client.listMessages();
         assertEquals(0, msg.length);
 
         //Now test from the update state
-        p.setState(POP3.UPDATE_STATE);
-        msg = p.listMessages();
+        pop3Client.setState(POP3.UPDATE_STATE);
+        msg = pop3Client.listMessages();
         assertNull(msg);
     }
 
@@ -204,10 +204,10 @@ public class POP3ClientCommandsTest extends TestCase
     {
         reset();
         connect();
-        assertTrue(p.login(emptyUser, password));
+        assertTrue(pop3Client.login(emptyUser, password));
 
         //The first message is always at index 1
-        final POP3MessageInfo msg = p.listMessage(1);
+        final POP3MessageInfo msg = pop3Client.listMessage(1);
         assertNull(msg);
     }
 
@@ -217,7 +217,7 @@ public class POP3ClientCommandsTest extends TestCase
         connect();
         login();
 
-        POP3MessageInfo[] msg = p.listUniqueIdentifiers();
+        POP3MessageInfo[] msg = pop3Client.listUniqueIdentifiers();
         assertTrue(msg.length > 0);
 
         for(int i = 0; i < msg.length; i++)
@@ -228,8 +228,8 @@ public class POP3ClientCommandsTest extends TestCase
         }
 
         //Now test from the update state
-        p.setState(POP3.UPDATE_STATE);
-        msg = p.listUniqueIdentifiers();
+        pop3Client.setState(POP3.UPDATE_STATE);
+        msg = pop3Client.listUniqueIdentifiers();
         assertNull(msg);
     }
 
@@ -240,26 +240,26 @@ public class POP3ClientCommandsTest extends TestCase
         login();
 
         //The first message is always at index 1
-        POP3MessageInfo msg = p.listUniqueIdentifier(1);
+        POP3MessageInfo msg = pop3Client.listUniqueIdentifier(1);
         assertNotNull(msg);
         assertEquals(1, msg.number);
         assertNotNull(msg.identifier);
 
         //Now retrieve a message from index 0
-        msg = p.listUniqueIdentifier(0);
+        msg = pop3Client.listUniqueIdentifier(0);
         assertNull(msg);
 
         //Now retrieve a msg that is not there
-        msg = p.listUniqueIdentifier(100000);
+        msg = pop3Client.listUniqueIdentifier(100000);
         assertNull(msg);
 
         //Now retrieve a msg with a negative index
-        msg = p.listUniqueIdentifier(-2);
+        msg = pop3Client.listUniqueIdentifier(-2);
         assertNull(msg);
 
         //Now try to get a valid message from the update state
-        p.setState(POP3.UPDATE_STATE);
-        msg = p.listUniqueIdentifier(1);
+        pop3Client.setState(POP3.UPDATE_STATE);
+        msg = pop3Client.listUniqueIdentifier(1);
         assertNull(msg);
     }
 
@@ -267,14 +267,14 @@ public class POP3ClientCommandsTest extends TestCase
     {
         reset();
         connect();
-        assertTrue(p.login(emptyUser, password));
+        assertTrue(pop3Client.login(emptyUser, password));
 
-        POP3MessageInfo[] msg = p.listUniqueIdentifiers();
+        POP3MessageInfo[] msg = pop3Client.listUniqueIdentifiers();
         assertEquals(0, msg.length);
 
         //Now test from the update state
-        p.setState(POP3.UPDATE_STATE);
-        msg = p.listUniqueIdentifiers();
+        pop3Client.setState(POP3.UPDATE_STATE);
+        msg = pop3Client.listUniqueIdentifiers();
         assertNull(msg);
     }
 
@@ -282,10 +282,10 @@ public class POP3ClientCommandsTest extends TestCase
     {
         reset();
         connect();
-        assertTrue(p.login(emptyUser, password));
+        assertTrue(pop3Client.login(emptyUser, password));
 
         //The first message is always at index 1
-        final POP3MessageInfo msg = p.listUniqueIdentifier(1);
+        final POP3MessageInfo msg = pop3Client.listUniqueIdentifier(1);
         assertNull(msg);
     }
 
@@ -297,13 +297,13 @@ public class POP3ClientCommandsTest extends TestCase
         int reportedSize = 0;
         int actualSize = 0;
 
-        final POP3MessageInfo[] msg = p.listMessages();
+        final POP3MessageInfo[] msg = pop3Client.listMessages();
         assertTrue(msg.length > 0);
 
         for (int i = msg.length; i > 0; i--)
         {
             reportedSize = msg[i - 1].size;
-            final Reader r = p.retrieveMessage(i);
+            final Reader r = pop3Client.retrieveMessage(i);
             assertNotNull(r);
 
             int delaycount = 0;
@@ -337,8 +337,8 @@ public class POP3ClientCommandsTest extends TestCase
     {
         reset();
         connect();
-        assertTrue(p.login(emptyUser, password));
-        assertNull(p.retrieveMessage(1));
+        assertTrue(pop3Client.login(emptyUser, password));
+        assertNull(pop3Client.retrieveMessage(1));
     }
 
     public void testRetrieveMessageShouldFails() throws Exception
@@ -348,17 +348,17 @@ public class POP3ClientCommandsTest extends TestCase
         login();
 
         //Try to get message 0
-        assertNull(p.retrieveMessage(0));
+        assertNull(pop3Client.retrieveMessage(0));
 
         //Try to get a negative message
-        assertNull(p.retrieveMessage(-2));
+        assertNull(pop3Client.retrieveMessage(-2));
 
         //Try to get a message that is not there
-        assertNull(p.retrieveMessage(100000));
+        assertNull(pop3Client.retrieveMessage(100000));
 
         //Change states and try to get a valid message
-        p.setState(POP3.UPDATE_STATE);
-        assertNull(p.retrieveMessage(1));
+        pop3Client.setState(POP3.UPDATE_STATE);
+        assertNull(pop3Client.retrieveMessage(1));
     }
 
     public void testRetrieveMessageTopOnFullMailbox() throws Exception
@@ -368,12 +368,12 @@ public class POP3ClientCommandsTest extends TestCase
         login();
         final int numLines = 10;
 
-        final POP3MessageInfo[] msg = p.listMessages();
+        final POP3MessageInfo[] msg = pop3Client.listMessages();
         assertTrue(msg.length > 0);
 
         for (int i = 0; i < msg.length; i++)
         {
-            Reader r = p.retrieveMessageTop(i + 1, numLines);
+            Reader r = pop3Client.retrieveMessageTop(i + 1, numLines);
             assertNotNull(r);
             r.close();
             r = null;
@@ -388,11 +388,11 @@ public class POP3ClientCommandsTest extends TestCase
         int reportedSize = 0;
         int actualSize = 0;
 
-        final POP3MessageInfo msg = p.listMessage(1);
+        final POP3MessageInfo msg = pop3Client.listMessage(1);
         reportedSize = msg.size;
 
         //Now try to retrieve more lines than exist in the message
-        final Reader r = p.retrieveMessageTop(1, 100000);
+        final Reader r = pop3Client.retrieveMessageTop(1, 100000);
         assertNotNull(r);
 
         int delaycount = 0;
@@ -425,8 +425,8 @@ public class POP3ClientCommandsTest extends TestCase
     {
         reset();
         connect();
-        assertTrue(p.login(emptyUser, password));
-        assertNull(p.retrieveMessageTop(1, 10));
+        assertTrue(pop3Client.login(emptyUser, password));
+        assertNull(pop3Client.retrieveMessageTop(1, 10));
     }
 
     public void testRetrieveMessageTopShouldFails() throws Exception
@@ -436,17 +436,17 @@ public class POP3ClientCommandsTest extends TestCase
         login();
 
         //Try to get message 0
-        assertNull(p.retrieveMessageTop(0, 10));
+        assertNull(pop3Client.retrieveMessageTop(0, 10));
 
         //Try to get a negative message
-        assertNull(p.retrieveMessageTop(-2, 10));
+        assertNull(pop3Client.retrieveMessageTop(-2, 10));
 
         //Try to get a message that is not there
-        assertNull(p.retrieveMessageTop(100000, 10));
+        assertNull(pop3Client.retrieveMessageTop(100000, 10));
 
         //Change states and try to get a valid message
-        p.setState(POP3.UPDATE_STATE);
-        assertNull(p.retrieveMessageTop(1, 10));
+        pop3Client.setState(POP3.UPDATE_STATE);
+        assertNull(pop3Client.retrieveMessageTop(1, 10));
     }
 
     public void testDeleteWithReset() throws Exception
@@ -455,31 +455,31 @@ public class POP3ClientCommandsTest extends TestCase
         connect();
         login();
         //Get the original number of messages
-        POP3MessageInfo[] msg = p.listMessages();
+        POP3MessageInfo[] msg = pop3Client.listMessages();
         final int numMessages = msg.length;
         int numDeleted = 0;
 
         //Now delete some and logout
         for (int i = 0; i < numMessages - 1; i ++)
         {
-            p.deleteMessage(i + 1);
+            pop3Client.deleteMessage(i + 1);
             numDeleted++;
         }
         //Check to see that they are marked as deleted
         assertEquals(numMessages, numDeleted + 1);
 
         //Now reset to unmark the messages as deleted
-        p.reset();
+        pop3Client.reset();
 
         //Logout and come back in
-        p.logout();
+        pop3Client.logout();
         reset();
         connect();
         login();
 
         //Get the new number of messages, because of
         //reset, new number should match old number
-        msg = p.listMessages();
+        msg = pop3Client.listMessages();
         assertEquals(numMessages, msg.length);
     }
 
@@ -489,28 +489,28 @@ public class POP3ClientCommandsTest extends TestCase
         connect();
         login();
         //Get the original number of messages
-        POP3MessageInfo[] msg = p.listMessages();
+        POP3MessageInfo[] msg = pop3Client.listMessages();
         final int numMessages = msg.length;
         int numDeleted = 0;
 
         //Now delete some and logout
         for (int i = 0; i < numMessages - 3; i ++)
         {
-            p.deleteMessage(i + 1);
+            pop3Client.deleteMessage(i + 1);
             numDeleted++;
         }
         //Check to see that they are marked as deleted
         assertEquals(numMessages, numDeleted + 3);
 
         //Logout and come back in
-        p.logout();
+        pop3Client.logout();
         reset();
         connect();
         login();
 
         //Get the new number of messages, because of
         //reset, new number should match old number
-        msg = p.listMessages();
+        msg = pop3Client.listMessages();
         assertEquals(numMessages - numDeleted, msg.length);
     }
 
@@ -520,9 +520,9 @@ public class POP3ClientCommandsTest extends TestCase
         connect();
         login();
 
-        p.setState(POP3.UPDATE_STATE);
-        assertFalse(p.reset());
+        pop3Client.setState(POP3.UPDATE_STATE);
+        assertFalse(pop3Client.reset());
 
-        assertFalse(p.deleteMessage(1));
+        assertFalse(pop3Client.deleteMessage(1));
     }
 }

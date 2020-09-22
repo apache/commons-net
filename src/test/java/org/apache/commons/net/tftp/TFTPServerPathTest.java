@@ -57,26 +57,20 @@ public class TFTPServerPathTest extends TestCase
         out.delete();
         assertTrue("Couldn't clear output location", !out.exists());
 
-        final FileOutputStream output = new FileOutputStream(out);
-
-        tftp.receiveFile(file.getName(), TFTP.BINARY_MODE, output, "localhost", SERVER_PORT);
-        output.close();
+        try (final FileOutputStream output = new FileOutputStream(out)) {
+            tftp.receiveFile(file.getName(), TFTP.BINARY_MODE, output, "localhost", SERVER_PORT);
+        }
 
         assertTrue("file not created", out.exists());
 
         out.delete();
 
-        final FileInputStream fis = new FileInputStream(file);
-        try
-        {
+        try (final FileInputStream fis = new FileInputStream(file)) {
             tftp.sendFile(out.getName(), TFTP.BINARY_MODE, fis, "localhost", SERVER_PORT);
             fail("Server allowed write");
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             // expected path
         }
-        fis.close();
         file.delete();
         tftpS.shutdown();
     }
@@ -102,24 +96,17 @@ public class TFTPServerPathTest extends TestCase
         out.delete();
         assertTrue("Couldn't clear output location", !out.exists());
 
-        final FileOutputStream output = new FileOutputStream(out);
-
-        try
-        {
+        try (final FileOutputStream output = new FileOutputStream(out)) {
             tftp.receiveFile(file.getName(), TFTP.BINARY_MODE, output, "localhost", SERVER_PORT);
             fail("Server allowed read");
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             // expected path
         }
-        output.close();
         out.delete();
 
-        final FileInputStream fis = new FileInputStream(file);
-        tftp.sendFile(out.getName(), TFTP.BINARY_MODE, fis, "localhost", SERVER_PORT);
-
-        fis.close();
+        try (final FileInputStream fis = new FileInputStream(file)) {
+            tftp.sendFile(out.getName(), TFTP.BINARY_MODE, fis, "localhost", SERVER_PORT);
+        }
 
         assertTrue("file not created", out.exists());
 
@@ -144,18 +131,12 @@ public class TFTPServerPathTest extends TestCase
 
         assertFalse("test construction error", new File(serverDirectory, "../foo").exists());
 
-        final FileInputStream fis = new FileInputStream(file);
-        try
-        {
+        try (final FileInputStream fis = new FileInputStream(file)) {
             tftp.sendFile("../foo", TFTP.BINARY_MODE, fis, "localhost", SERVER_PORT);
             fail("Server allowed write!");
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             // expected path
         }
-
-        fis.close();
 
         assertFalse("file created when it should not have been",
                 new File(serverDirectory, "../foo").exists());
