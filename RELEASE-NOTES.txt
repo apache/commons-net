@@ -1,3 +1,37 @@
+              Apache Commons Net 3.7.1
+                  RELEASE NOTES
+
+The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.7.1
+
+Apache Commons Net library contains a collection of network utilities and protocol implementations.
+Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
+
+
+Maintenance and bug fix release.
+
+For complete information on Apache Commons Net, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Apache Commons Net website:
+
+https://commons.apache.org/proper/commons-net/
+
+Download page: https://commons.apache.org/proper/commons-net/download_validator.cgi
+
+Changes in this version include:
+===============================
+
+Fixed Bugs:
+o NET-687:  [FTPS] javax.net.ssl.SSLException: Unsupported or unrecognized SSL message, #59. Thanks to Gary Gregory, Mikael, j-verse.
+o NET-673:  Update actions/checkout from v2.3.1 to v2.3.3 #56, #61. Thanks to Dependabot.
+o NET-673:  Update actions/setup-java from v1.4.0 to v1.4.2 #58. Thanks to Dependabot.
+
+
+Historical list of changes: https://commons.apache.org/proper/commons-net/changes-report.html
+
+Enjoy!
+-Apache Commons Net team
+
+-----------------------------------------------------------------------------
+
               Apache Commons Net 3.7
                   RELEASE NOTES
 
