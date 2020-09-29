@@ -30,7 +30,8 @@
       <item name="Migration How-to"            href="migration.html"/>
       <item name="FAQ"                         href="faq.html"/>
       <item name="Download"                    href="/download_net.cgi"/>
-      <item name="Javadoc 3.7 (Java 1.7)"      href="/javadocs/api-3.7/index.html"/>
+      <item name="Javadoc"                     href="/apidocs/index.html"/>
+      <item name="Javadoc Archive"             href="https://javadoc.io/doc/commons-net/commons-net/latest/index.html"/>
     </menu>
     <menu name="Development">
       <item name="Coding Specifications"       href="code-standards.html"/>
