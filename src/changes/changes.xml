@@ -63,11 +63,17 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
     <body>
+        <release version="3.7.2" date="20YY-MM-DD" description="Maintenance and bug fix release.">
+            <!--  UPDATES -->
+            <action type="update" dev="ggregory" due-to="Dependabot">
+            Bump actions/setup-java from v1.4.2 to v1.4.3 #62.
+            </action>
+        </release>
         <release version="3.7.1" date="2020-09-30" description="Maintenance and bug fix release.">
             <action issue="NET-687" type="fix" dev="ggregory" due-to="Gary Gregory, Mikael, j-verse">
             [FTPS] javax.net.ssl.SSLException: Unsupported or unrecognized SSL message, #59.
             </action>
-        	<!--  UPDATES -->
+            <!--  UPDATES -->
             <action type="update" dev="ggregory" due-to="Dependabot">
             Update actions/checkout from v2.3.1 to v2.3.3 #56, #61.
             </action>
