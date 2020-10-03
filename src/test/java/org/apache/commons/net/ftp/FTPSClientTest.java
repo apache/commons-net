@@ -162,6 +162,7 @@ public class FTPSClientTest {
 
     private FTPSClient loginClient() throws SocketException, IOException {
         final FTPSClient client = new FTPSClient(implicit);
+        client.setEndpointCheckingEnabled(true);
         client.connect("localhost", SocketPort);
         assertClientCode(client);
         assertEquals(SocketPort, client.getRemotePort());

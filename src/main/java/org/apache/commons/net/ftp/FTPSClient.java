@@ -291,7 +291,7 @@ public class FTPSClient extends FTPClient {
 
         if (isClientMode) {
             if (hostnameVerifier != null &&
-                !hostnameVerifier.verify(socket.getInetAddress().getHostAddress(), socket.getSession())) {
+                !hostnameVerifier.verify(_hostname_, socket.getSession())) {
                 throw new SSLHandshakeException("Hostname doesn't match certificate");
             }
         }
@@ -895,7 +895,7 @@ public class FTPSClient extends FTPClient {
     private Socket createSSLSocket(final Socket socket) throws IOException {
         if (socket != null) {
             final SSLSocketFactory f = context.getSocketFactory();
-            return f.createSocket(socket, socket.getInetAddress().getHostAddress(), socket.getPort(), false);
+            return f.createSocket(socket, _hostname_, socket.getPort(), false);
         }
         return null;
     }
