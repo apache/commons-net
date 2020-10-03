@@ -40,13 +40,16 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 /**
  * Tests {@link FTPSClient}.
  * <p>
  * To get our test cert to work on Java 11, this test must be run with:
  * </p>
- * 
+ *
  * <pre>
  * -Djdk.tls.client.protocols="TLSv1.1"
  * </pre>
@@ -54,7 +57,15 @@ import org.junit.Test;
  * This test does the above programmatically.
  * </p>
  */
+@RunWith(Parameterized.class)
 public class FTPSClientTest {
+
+    private final boolean endpointCheckingEnabled;
+
+    public FTPSClientTest(final boolean endpointCheckingEnabled) {
+        super();
+        this.endpointCheckingEnabled = endpointCheckingEnabled;
+    }
 
     private static final String JDK_TLS_CLIENT_PROTOCOLS = "jdk.tls.client.protocols";
 
@@ -72,6 +83,11 @@ public class FTPSClientTest {
 
     private static String TlsProtocols;
 
+    @Parameters(name = "endpointCheckingEnabled={0}")
+    public static Boolean[] testConstructurData() {
+        return new Boolean[] {Boolean.FALSE, Boolean.TRUE};
+    }
+
     @AfterClass
     public static void afterClass() {
         if (TlsProtocols == null) {
@@ -83,7 +99,7 @@ public class FTPSClientTest {
 
     /**
      * Returns the test directory as a String.
-     * 
+     *
      * @return the test directory as a String
      */
     private static String getTestHomeDirectory() {
@@ -91,14 +107,10 @@ public class FTPSClientTest {
     }
 
     @BeforeClass
-    public static void setUp() throws Exception {
-        setUpClass(implicit);
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() throws Exception {
         TlsProtocols = System.getProperty(JDK_TLS_CLIENT_PROTOCOLS);
         System.setProperty(JDK_TLS_CLIENT_PROTOCOLS, "TLSv1");
+        setUpClass(implicit);
     }
 
     /**
@@ -152,7 +164,7 @@ public class FTPSClientTest {
         Server.start();
         SocketPort = ((org.apache.ftpserver.impl.DefaultFtpServer) Server).getListener("default").getPort();
         ConnectionUri = "ftps://test:test@localhost:" + SocketPort;
-        System.out.printf("jdk.tls.disabledAlgorithms = %s%n", System.getProperty("jdk.tls.disabledAlgorithms"));
+        // System.out.printf("jdk.tls.disabledAlgorithms = %s%n", System.getProperty("jdk.tls.disabledAlgorithms"));
     }
 
     private void assertClientCode(final FTPSClient client) {
@@ -162,6 +174,7 @@ public class FTPSClientTest {
 
     private FTPSClient loginClient() throws SocketException, IOException {
         final FTPSClient client = new FTPSClient(implicit);
+        client.setEndpointCheckingEnabled(endpointCheckingEnabled);
         client.connect("localhost", SocketPort);
         assertClientCode(client);
         assertEquals(SocketPort, client.getRemotePort());

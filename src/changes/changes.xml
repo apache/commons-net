@@ -64,6 +64,9 @@ The <action> type attribute can be add,update,fix,remove.
 
     <body>
         <release version="3.7.2" date="20YY-MM-DD" description="Maintenance and bug fix release.">
+            <action issue="NET-689" type="update" dev="ggregory" due-to="Charlie, Gary Gregory">
+            Hostname is not set on the SSLSocket causing isEndpointCheckingEnabled to fail.
+            </action>
             <!--  UPDATES -->
             <action type="update" dev="ggregory" due-to="Dependabot">
             Bump actions/setup-java from v1.4.2 to v1.4.3 #62.
