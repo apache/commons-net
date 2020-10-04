@@ -14,7 +14,7 @@ patches, or suggestions for improvement, see the Apache Apache Commons Net websi
 
 https://commons.apache.org/proper/commons-net/
 
-Download page: https://commons.apache.org/proper/commons-net/download_validator.cgi
+Download page: https://commons.apache.org/proper/commons-net/download_net.cgi
 
 Changes in this version include:
 ===============================
