@@ -67,6 +67,9 @@ The <action> type attribute can be add,update,fix,remove.
             <action issue="NET-689" type="update" dev="ggregory" due-to="Charlie, Gary Gregory">
             Hostname is not set on the SSLSocket causing isEndpointCheckingEnabled to fail.
             </action>
+            <action type="update" dev="ggregory" due-to="Dependabot">
+            Fix possible socket and input stream leak on socket exception in org.apache.commons.net.ftp.FTPClient._retrieveFile(String, String, OutputStream).
+            </action>
             <!--  UPDATES -->
             <action type="update" dev="ggregory" due-to="Dependabot">
             Bump actions/setup-java from v1.4.2 to v1.4.3 #62.

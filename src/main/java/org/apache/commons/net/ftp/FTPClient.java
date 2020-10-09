@@ -1907,16 +1907,14 @@ implements Configurable
         }
 
         CSL csl = null;
-        if (controlKeepAliveTimeout > 0) {
-            csl = new CSL(this, controlKeepAliveTimeout, controlKeepAliveReplyTimeout);
-        }
+        try {
+            if (controlKeepAliveTimeout > 0) {
+                csl = new CSL(this, controlKeepAliveTimeout, controlKeepAliveReplyTimeout);
+            }
 
-        // Treat everything else as binary for now
-        try
-        {
-            Util.copyStream(input, local, getBufferSize(),
-                    CopyStreamEvent.UNKNOWN_STREAM_SIZE, mergeListeners(csl),
-                    false);
+            // Treat everything else as binary for now
+            Util.copyStream(input, local, getBufferSize(), CopyStreamEvent.UNKNOWN_STREAM_SIZE, mergeListeners(csl),
+                false);
 
             // Get the transfer response
             return completePendingCommand();
