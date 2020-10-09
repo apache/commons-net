@@ -1917,6 +1917,7 @@ implements Configurable
             Util.copyStream(input, local, getBufferSize(),
                     CopyStreamEvent.UNKNOWN_STREAM_SIZE, mergeListeners(csl),
                     false);
+            input.close();
 
             // Get the transfer response
             return completePendingCommand();
