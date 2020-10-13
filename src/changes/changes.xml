@@ -73,6 +73,9 @@ The <action> type attribute can be add,update,fix,remove.
             <action issue="NET-690" type="fix" dev="ggregory" due-to="payal-meh, Gary Gregory">
             Performance issue when using the FTPClient to retrieve files #65.
             </action>
+            <action issue="NET-691" type="fix" dev="ggregory" due-to="Lewis John McGibbney">
+            Improve Javadoc for IMAPSClient #68.
+            </action>
             <!--  UPDATES -->
             <action type="update" dev="ggregory" due-to="Dependabot">
             Bump actions/setup-java from v1.4.2 to v1.4.3 #62.
