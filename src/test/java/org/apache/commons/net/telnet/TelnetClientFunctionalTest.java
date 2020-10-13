@@ -50,7 +50,7 @@ public class TelnetClientFunctionalTest extends TestCase
         boolean testresult = false;
         tc1.connect("rainmaker.wunderground.com", 3000);
 
-        try (final InputStream is = tc1.getInputStream(); 
+        try (final InputStream is = tc1.getInputStream();
             final OutputStream os = tc1.getOutputStream()) {
 
             boolean cont = waitForString(is, "Return to continue:", 30000);
