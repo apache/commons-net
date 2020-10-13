@@ -37,19 +37,28 @@ import org.apache.commons.net.util.SSLSocketUtils;
 
 /**
  * The IMAPSClient class provides SSL/TLS connection encryption to IMAPClient.
- *  Copied from FTPSClient.java and modified to suit IMAP.
+ * Copied from 
+ * <a href="http://commons.apache.org/proper/commons-net/apidocs/index.html?org/apache/commons/net/ftp/FTPSClient.html">
+ * FTPSClient</a> and modified to suit IMAP.
  * If implicit mode is selected (NOT the default), SSL/TLS negotiation starts right
  * after the connection has been established. In explicit mode (the default), SSL/TLS
  * negotiation starts when the user calls execTLS() and the server accepts the command.
- * Implicit usage:
+ *
+ * <pre>
+ * {@code
+ * //Implicit usage:
+ * 
  *               IMAPSClient c = new IMAPSClient(true);
  *               c.connect("127.0.0.1", 993);
- * Explicit usage:
+ *
+ * //Explicit usage:
+ *
  *               IMAPSClient c = new IMAPSClient();
  *               c.connect("127.0.0.1", 143);
  *               if (c.execTLS()) { /rest of the commands here/ }
- *
- * Warning: the hostname is not verified against the certificate by default, use
+ * }
+ * </pre>
+ * <b>Warning</b>: the hostname is not verified against the certificate by default, use
  * {@link #setHostnameVerifier(HostnameVerifier)} or {@link #setEndpointCheckingEnabled(boolean)}
  * (on Java 1.7+) to enable verification.
  */
