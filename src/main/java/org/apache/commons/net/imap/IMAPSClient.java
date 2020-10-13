@@ -37,7 +37,7 @@ import org.apache.commons.net.util.SSLSocketUtils;
 
 /**
  * The IMAPSClient class provides SSL/TLS connection encryption to IMAPClient.
- * Copied from 
+ * Copied from
  * <a href="http://commons.apache.org/proper/commons-net/apidocs/index.html?org/apache/commons/net/ftp/FTPSClient.html">
  * FTPSClient</a> and modified to suit IMAP.
  * If implicit mode is selected (NOT the default), SSL/TLS negotiation starts right
@@ -47,7 +47,7 @@ import org.apache.commons.net.util.SSLSocketUtils;
  * <pre>
  * {@code
  * //Implicit usage:
- * 
+ *
  *               IMAPSClient c = new IMAPSClient(true);
  *               c.connect("127.0.0.1", 993);
  *
