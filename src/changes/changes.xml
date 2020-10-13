@@ -77,6 +77,9 @@ The <action> type attribute can be add,update,fix,remove.
             <action type="update" dev="ggregory" due-to="Dependabot">
             Bump actions/setup-java from v1.4.2 to v1.4.3 #62.
             </action>
+            <action type="update" dev="ggregory" due-to="Dependabot">
+            Bump junit from 4.13 to 4.13.1 #67.
+            </action>
         </release>
         <release version="3.7.1" date="2020-09-30" description="Maintenance and bug fix release.">
             <action issue="NET-687" type="fix" dev="ggregory" due-to="Gary Gregory, Mikael, j-verse">
