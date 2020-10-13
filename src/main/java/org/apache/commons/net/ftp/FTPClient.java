@@ -1899,15 +1899,15 @@ implements Configurable
             return false;
         }
 
-        final InputStream input;
-        if (fileType == ASCII_FILE_TYPE) {
-            input = new FromNetASCIIInputStream(getBufferedInputStream(socket.getInputStream()));
-        } else {
-            input = getBufferedInputStream(socket.getInputStream());
-        }
-
+        InputStream input = null;
         CSL csl = null;
         try {
+            if (fileType == ASCII_FILE_TYPE) {
+                input = new FromNetASCIIInputStream(getBufferedInputStream(socket.getInputStream()));
+            } else {
+                input = getBufferedInputStream(socket.getInputStream());
+            }
+
             if (controlKeepAliveTimeout > 0) {
                 csl = new CSL(this, controlKeepAliveTimeout, controlKeepAliveReplyTimeout);
             }
