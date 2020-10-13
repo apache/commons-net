@@ -65,7 +65,7 @@ The <action> type attribute can be add,update,fix,remove.
     <body>
         <release version="3.7.2" date="20YY-MM-DD" description="Maintenance and bug fix release.">
             <action issue="NET-689" type="update" dev="ggregory" due-to="Charlie, Gary Gregory">
-            Hostname is not set on the SSLSocket causing isEndpointCheckingEnabled to fail.
+            Host name is not set on the SSLSocket causing isEndpointCheckingEnabled to fail.
             </action>
             <action type="update" dev="ggregory" due-to="Dependabot">
             Fix possible socket and input stream leak on socket exception in org.apache.commons.net.ftp.FTPClient._retrieveFile(String, String, OutputStream).
