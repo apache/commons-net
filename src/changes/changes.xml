@@ -70,6 +70,9 @@ The <action> type attribute can be add,update,fix,remove.
             <action type="update" dev="ggregory" due-to="Dependabot">
             Fix possible socket and input stream leak on socket exception in org.apache.commons.net.ftp.FTPClient._retrieveFile(String, String, OutputStream).
             </action>
+            <action issue="NET-690" type="fix" dev="ggregory" due-to="payal-meh, Gary Gregory">
+            Performance issue when using the FTPClient to retrieve files #65.
+            </action>
             <!--  UPDATES -->
             <action type="update" dev="ggregory" due-to="Dependabot">
             Bump actions/setup-java from v1.4.2 to v1.4.3 #62.
@@ -82,9 +85,6 @@ The <action> type attribute can be add,update,fix,remove.
             <!--  UPDATES -->
             <action type="update" dev="ggregory" due-to="Dependabot">
             Update actions/checkout from v2.3.1 to v2.3.3 #56, #61.
-            </action>
-            <action type="update" dev="ggregory" due-to="Dependabot">
-            Update actions/setup-java from v1.4.0 to v1.4.2 #58.
             </action>
         </release>
         <release version="3.7" date="2020-08-05" description="

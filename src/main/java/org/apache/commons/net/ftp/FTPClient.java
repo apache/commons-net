@@ -1902,24 +1902,26 @@ implements Configurable
         InputStream input = null;
         CSL csl = null;
         try {
-            if (fileType == ASCII_FILE_TYPE) {
-                input = new FromNetASCIIInputStream(getBufferedInputStream(socket.getInputStream()));
-            } else {
-                input = getBufferedInputStream(socket.getInputStream());
+            try {
+                if (fileType == ASCII_FILE_TYPE) {
+                    input = new FromNetASCIIInputStream(getBufferedInputStream(socket.getInputStream()));
+                } else {
+                    input = getBufferedInputStream(socket.getInputStream());
+                }
+
+                if (controlKeepAliveTimeout > 0) {
+                    csl = new CSL(this, controlKeepAliveTimeout, controlKeepAliveReplyTimeout);
+                }
+
+                // Treat everything else as binary for now
+                Util.copyStream(input, local, getBufferSize(), CopyStreamEvent.UNKNOWN_STREAM_SIZE, mergeListeners(csl),
+                    false);
+            } finally {
+                Util.closeQuietly(input);
             }
-
-            if (controlKeepAliveTimeout > 0) {
-                csl = new CSL(this, controlKeepAliveTimeout, controlKeepAliveReplyTimeout);
-            }
-
-            // Treat everything else as binary for now
-            Util.copyStream(input, local, getBufferSize(), CopyStreamEvent.UNKNOWN_STREAM_SIZE, mergeListeners(csl),
-                false);
-
             // Get the transfer response
             return completePendingCommand();
         } finally {
-            Util.closeQuietly(input);
             Util.closeQuietly(socket);
             if (csl != null) {
                 cslDebug = csl.cleanUp(); // fetch any outstanding keepalive replies
