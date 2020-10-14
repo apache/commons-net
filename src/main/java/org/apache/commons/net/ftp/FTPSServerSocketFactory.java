@@ -32,31 +32,31 @@ import javax.net.ssl.SSLServerSocket;
 public class FTPSServerSocketFactory extends ServerSocketFactory {
 
     /** Factory for secure socket factories */
-    private final SSLContext context;
+    private final SSLContext sslContext;
 
     public FTPSServerSocketFactory(final SSLContext context) {
-        this.context = context;
+        this.sslContext = context;
     }
 
     // Override the default superclass method
     @Override
     public ServerSocket createServerSocket() throws IOException {
-        return init(this.context.getServerSocketFactory().createServerSocket());
+        return init(this.sslContext.getServerSocketFactory().createServerSocket());
     }
 
     @Override
     public ServerSocket createServerSocket(final int port) throws IOException {
-        return init(this.context.getServerSocketFactory().createServerSocket(port));
+        return init(this.sslContext.getServerSocketFactory().createServerSocket(port));
     }
 
     @Override
     public ServerSocket createServerSocket(final int port, final int backlog) throws IOException {
-        return init(this.context.getServerSocketFactory().createServerSocket(port, backlog));
+        return init(this.sslContext.getServerSocketFactory().createServerSocket(port, backlog));
     }
 
     @Override
     public ServerSocket createServerSocket(final int port, final int backlog, final InetAddress ifAddress) throws IOException {
-        return init(this.context.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
+        return init(this.sslContext.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
     }
 
     /**
