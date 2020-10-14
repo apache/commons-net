@@ -28,7 +28,7 @@ import javax.net.ssl.SSLServerSocketFactory;
 
 /**
  * Server socket factory for FTPS connections.
- * 
+ *
  * @since 2.2
  */
 public class FTPSServerSocketFactory extends ServerSocketFactory {
@@ -38,7 +38,7 @@ public class FTPSServerSocketFactory extends ServerSocketFactory {
 
     /**
      * Constructs a new instance for the given SSL context.
-     * 
+     *
      * @param sslContext The SSL context.
      */
     public FTPSServerSocketFactory(final SSLContext sslContext) {
