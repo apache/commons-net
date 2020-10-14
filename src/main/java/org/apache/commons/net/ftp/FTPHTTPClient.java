@@ -180,7 +180,7 @@ public class FTPHTTPClient extends FTPClient {
             socketIsReader = tunnelHandshake(host, port, _input_, _output_);
         }
         catch (final Exception e) {
-            final IOException ioe = new IOException("Could not connect to " + host+ " using port " + port);
+            final IOException ioe = new IOException("Could not connect to " + host + " using port " + port);
             ioe.initCause(e);
             throw ioe;
         }
