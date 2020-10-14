@@ -24,9 +24,11 @@ import java.net.ServerSocket;
 import javax.net.ServerSocketFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
 
 /**
  * Server socket factory for FTPS connections.
+ * 
  * @since 2.2
  */
 public class FTPSServerSocketFactory extends ServerSocketFactory {
@@ -34,35 +36,48 @@ public class FTPSServerSocketFactory extends ServerSocketFactory {
     /** Factory for secure socket factories */
     private final SSLContext sslContext;
 
-    public FTPSServerSocketFactory(final SSLContext context) {
-        this.sslContext = context;
+    /**
+     * Constructs a new instance for the given SSL context.
+     * 
+     * @param sslContext The SSL context.
+     */
+    public FTPSServerSocketFactory(final SSLContext sslContext) {
+        this.sslContext = sslContext;
     }
 
-    // Override the default superclass method
+    @SuppressWarnings("resource") // Factory method.
     @Override
     public ServerSocket createServerSocket() throws IOException {
-        return init(this.sslContext.getServerSocketFactory().createServerSocket());
+        return init(getServerSocketFactory().createServerSocket());
     }
 
+    @SuppressWarnings("resource") // Factory method.
     @Override
     public ServerSocket createServerSocket(final int port) throws IOException {
-        return init(this.sslContext.getServerSocketFactory().createServerSocket(port));
+        return init(getServerSocketFactory().createServerSocket(port));
     }
 
+    @SuppressWarnings("resource") // Factory method.
     @Override
     public ServerSocket createServerSocket(final int port, final int backlog) throws IOException {
-        return init(this.sslContext.getServerSocketFactory().createServerSocket(port, backlog));
+        return init(getServerSocketFactory().createServerSocket(port, backlog));
     }
 
+    @SuppressWarnings("resource") // Factory method.
     @Override
-    public ServerSocket createServerSocket(final int port, final int backlog, final InetAddress ifAddress) throws IOException {
-        return init(this.sslContext.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
+    public ServerSocket createServerSocket(final int port, final int backlog, final InetAddress ifAddress)
+        throws IOException {
+        return init(getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
+    }
+
+    private SSLServerSocketFactory getServerSocketFactory() {
+        return this.sslContext.getServerSocketFactory();
     }
 
     /**
      * Sets the socket so newly accepted connections will use SSL client mode.
      *
-     * @param socket the SSLServerSocket to initialise
+     * @param socket the SSLServerSocket to initialize
      * @return the socket
      * @throws ClassCastException if socket is not an instance of SSLServerSocket
      */
@@ -71,4 +86,3 @@ public class FTPSServerSocketFactory extends ServerSocketFactory {
         return socket;
     }
 }
-
