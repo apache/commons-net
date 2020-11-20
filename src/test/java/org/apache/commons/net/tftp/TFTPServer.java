@@ -758,7 +758,7 @@ public class TFTPServer implements Runnable
                         }
                     }
 
-                    if (dataPacket != null && dataPacket instanceof TFTPWriteRequestPacket)
+                    if (dataPacket instanceof TFTPWriteRequestPacket)
                     {
                         // it must have missed our initial ack. Send another.
                         lastSentAck = new TFTPAckPacket(twrp.getAddress(), twrp.getPort(), 0);
