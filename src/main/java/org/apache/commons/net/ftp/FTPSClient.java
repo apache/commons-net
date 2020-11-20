@@ -216,6 +216,9 @@ public class FTPSClient extends FTPClient {
     protected void _connectAction_() throws IOException {
         // Implicit mode.
         if (isImplicit) {
+            // Set the socket timeout to avoid an indefinite hang in startHandshake()
+            // We can't call super._connectAction_() yet because we're not connected
+            _socket_.setSoTimeout(_timeout_);
             sslNegotiation();
         }
         super._connectAction_();
