@@ -40,7 +40,6 @@ public final class NNTPConnectionClosedException extends IOException
     /*** Constructs a NNTPConnectionClosedException with no message ***/
     public NNTPConnectionClosedException()
     {
-        super();
     }
 
     /***

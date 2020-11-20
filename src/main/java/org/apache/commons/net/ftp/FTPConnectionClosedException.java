@@ -39,7 +39,6 @@ public class FTPConnectionClosedException extends IOException
     /*** Constructs a FTPConnectionClosedException with no message ***/
     public FTPConnectionClosedException()
     {
-        super();
     }
 
     /***

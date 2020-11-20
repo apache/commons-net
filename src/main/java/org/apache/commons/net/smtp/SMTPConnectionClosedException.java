@@ -41,7 +41,6 @@ public final class SMTPConnectionClosedException extends IOException
     /*** Constructs a SMTPConnectionClosedException with no message ***/
     public SMTPConnectionClosedException()
     {
-        super();
     }
 
     /***

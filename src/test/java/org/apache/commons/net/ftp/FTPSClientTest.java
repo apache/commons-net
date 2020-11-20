@@ -63,7 +63,6 @@ public class FTPSClientTest {
     private final boolean endpointCheckingEnabled;
 
     public FTPSClientTest(final boolean endpointCheckingEnabled) {
-        super();
         this.endpointCheckingEnabled = endpointCheckingEnabled;
     }
 

@@ -57,7 +57,6 @@ public class FTPClientConfigFunctionalTest extends TestCase {
      *
      */
     public FTPClientConfigFunctionalTest() {
-        super();
 
     }
 

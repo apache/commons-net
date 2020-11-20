@@ -156,7 +156,6 @@ public class FTPSClient extends FTPClient {
      * @param isImplicit The security mode(Implicit/Explicit).
      */
     public FTPSClient(final String protocol, final boolean isImplicit) {
-        super();
         this.protocol = protocol;
         this.isImplicit = isImplicit;
         if (isImplicit) {

@@ -67,7 +67,6 @@ public abstract class RegexFTPFileEntryParserImpl extends
      */
 
     public RegexFTPFileEntryParserImpl(final String regex) {
-        super();
         compileRegex(regex, 0);
     }
 
@@ -87,7 +86,6 @@ public abstract class RegexFTPFileEntryParserImpl extends
      * @since 3.4
      */
     public RegexFTPFileEntryParserImpl(final String regex, final int flags) {
-        super();
         compileRegex(regex, flags);
     }
 

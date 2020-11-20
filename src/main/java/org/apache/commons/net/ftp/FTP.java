@@ -267,7 +267,6 @@ public class FTP extends SocketClient
      ***/
     public FTP()
     {
-        super();
         setDefaultPort(DEFAULT_PORT);
         _replyLines = new ArrayList<>();
         _newReplyString = false;

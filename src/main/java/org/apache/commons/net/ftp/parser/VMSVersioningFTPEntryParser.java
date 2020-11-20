@@ -76,7 +76,6 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
      */
     public VMSVersioningFTPEntryParser(final FTPClientConfig config)
     {
-        super();
         configure(config);
         try
         {

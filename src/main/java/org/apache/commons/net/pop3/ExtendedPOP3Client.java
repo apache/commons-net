@@ -42,7 +42,6 @@ public class ExtendedPOP3Client extends POP3SClient
      */
     public ExtendedPOP3Client() throws NoSuchAlgorithmException
     {
-        super();
     }
 
     /***

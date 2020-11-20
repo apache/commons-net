@@ -140,7 +140,6 @@ public class IMAPSClient extends IMAPClient
      */
     public IMAPSClient(final String proto, final boolean implicit, final SSLContext ctx)
     {
-        super();
         setDefaultPort(DEFAULT_IMAPS_PORT);
         protocol = proto;
         isImplicit = implicit;

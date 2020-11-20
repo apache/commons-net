@@ -40,7 +40,6 @@ public class MalformedServerReplyException extends IOException
     /*** Constructs a MalformedServerReplyException with no message ***/
     public MalformedServerReplyException()
     {
-        super();
     }
 
     /***

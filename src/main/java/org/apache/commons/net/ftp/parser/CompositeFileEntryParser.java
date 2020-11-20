@@ -35,8 +35,6 @@ public class CompositeFileEntryParser extends FTPFileEntryParserImpl
 
     public CompositeFileEntryParser(final FTPFileEntryParser[] ftpFileEntryParsers)
     {
-        super();
-
         this.cachedFtpFileEntryParser = null;
         this.ftpFileEntryParsers = ftpFileEntryParsers;
     }

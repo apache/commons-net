@@ -90,7 +90,6 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
      */
     public MLSxEntryParser()
     {
-        super();
     }
 
     @Override

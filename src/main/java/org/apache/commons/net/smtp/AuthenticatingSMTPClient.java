@@ -43,7 +43,6 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      */
     public AuthenticatingSMTPClient()
     {
-        super();
     }
 
     /**

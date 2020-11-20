@@ -45,7 +45,6 @@ public class TFTPPacketException extends Exception
      ***/
     public TFTPPacketException()
     {
-        super();
     }
 
     /***

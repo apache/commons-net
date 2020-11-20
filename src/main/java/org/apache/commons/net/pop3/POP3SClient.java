@@ -137,7 +137,6 @@ public class POP3SClient extends POP3Client
      */
     public POP3SClient(final String proto, final boolean implicit, final SSLContext ctx)
     {
-        super();
         protocol = proto;
         isImplicit = implicit;
         context = ctx;
