@@ -48,7 +48,6 @@ public final class TrustManagerUtils
         @Override
         public void checkClientTrusted(final X509Certificate[] certificates, final String authType)
         {
-            return;
         }
 
         @Override

@@ -78,7 +78,6 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
         default:
             lastWasCR = false;
             out.write(ch);
-            return ;
         }
     }
 
