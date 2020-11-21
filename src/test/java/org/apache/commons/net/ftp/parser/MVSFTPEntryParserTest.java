@@ -212,7 +212,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
      */
     @Override
     public void testParseFieldsOnFile() throws Exception {
-        FTPFile file = null;
+        FTPFile file;
 
         final MVSFTPEntryParser parser = new MVSFTPEntryParser();
 
