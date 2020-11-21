@@ -255,7 +255,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient
 
         private final String authName;
 
-        private AUTH_METHOD(final String name){
+        AUTH_METHOD(final String name){
             this.authName=name;
         }
         /**
