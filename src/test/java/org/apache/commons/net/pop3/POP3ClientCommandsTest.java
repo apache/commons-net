@@ -388,7 +388,7 @@ public class POP3ClientCommandsTest extends TestCase
         int actualSize = 0;
 
         final POP3MessageInfo msg = pop3Client.listMessage(1);
-        int reportedSize = msg.size;
+        final int reportedSize = msg.size;
 
         //Now try to retrieve more lines than exist in the message
         final Reader r = pop3Client.retrieveMessageTop(1, 100000);

@@ -805,7 +805,7 @@ extends TestCase implements TelnetNotificationHandler
         final InputStream instr = NOREAD.client.getInputStream();
         final byte[] buff = new byte[4];
 
-        int ret_read = instr.read(buff);
+        final int ret_read = instr.read(buff);
         if(ret_read == 1 && buff[0] == 'A')
         {
             read_ok = true;
