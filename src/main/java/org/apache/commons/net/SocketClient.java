@@ -155,9 +155,14 @@ public abstract class SocketClient
      */
     protected void _connectAction_() throws IOException
     {
-        _socket_.setSoTimeout(_timeout_);
+        applySocketAttributes();
         _input_ = _socket_.getInputStream();
         _output_ = _socket_.getOutputStream();
+    }
+
+
+    protected void applySocketAttributes() throws SocketException {
+        _socket_.setSoTimeout(_timeout_);
     }
 
 

@@ -178,6 +178,7 @@ public class POP3SClient extends POP3Client
     {
         // Implicit mode.
         if (isImplicit) {
+            applySocketAttributes();
             performSSLNegotiation();
         }
         super._connectAction_();

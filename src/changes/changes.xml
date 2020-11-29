@@ -91,6 +91,9 @@ The <action> type attribute can be add,update,fix,remove.
             <action issue="NET-685" type="update" dev="ggregory" due-to="Simo385">
             Update SocketClient default connect timeout from ∞ to 60 seconds #51.
             </action>
+            <action issue="NET-695" type="update" dev="ggregory" due-to="Gary Gregory, Possibly Cott">
+            Apply SocketClient timeout after connection but before SSL negotiation.
+            </action>
         </release>
         <release version="3.7.1" date="2020-09-30" description="Maintenance and bug fix release.">
             <action issue="NET-687" type="fix" dev="ggregory" due-to="Gary Gregory, Mikael, j-verse">

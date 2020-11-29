@@ -168,6 +168,7 @@ public class SMTPSClient extends SMTPClient
     {
         // Implicit mode.
         if (isImplicit) {
+            applySocketAttributes();
             performSSLNegotiation();
         }
         super._connectAction_();

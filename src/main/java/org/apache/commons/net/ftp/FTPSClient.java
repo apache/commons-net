@@ -215,6 +215,7 @@ public class FTPSClient extends FTPClient {
     protected void _connectAction_() throws IOException {
         // Implicit mode.
         if (isImplicit) {
+            applySocketAttributes();
             sslNegotiation();
         }
         super._connectAction_();
