@@ -259,7 +259,7 @@ public class FTPSClient extends FTPClient {
     protected void sslNegotiation() throws IOException {
         plainSocket = _socket_;
         initSslContext();
-        final SSLSocket socket = (SSLSocket)createSSLSocket(_socket_);
+        final SSLSocket socket = createSSLSocket(_socket_);
         socket.setEnableSessionCreation(isCreation);
         socket.setUseClientMode(isClientMode);
 
@@ -888,13 +888,13 @@ public class FTPSClient extends FTPClient {
      * Create SSL socket from plain socket.
      *
      * @param socket
-     * @return SSL Sockect
+     * @return SSL Socket
      * @throws IOException
      */
-    private Socket createSSLSocket(final Socket socket) throws IOException {
+    private SSLSocket createSSLSocket(final Socket socket) throws IOException {
         if (socket != null) {
             final SSLSocketFactory f = context.getSocketFactory();
-            return f.createSocket(socket, _hostname_, socket.getPort(), false);
+            return (SSLSocket) f.createSocket(socket, _hostname_, socket.getPort(), false);
         }
         return null;
     }
