@@ -104,7 +104,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
             <artifactId>commons-io</artifactId>
             <!-- Sigh, Net is on Java 7, IO 2.7 and up require Java 8. -->
             <!-- <version>2.8.0</version> -->
-            <version>2.6</version>
+            <version>2.8.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
