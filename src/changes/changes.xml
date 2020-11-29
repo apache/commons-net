@@ -67,6 +67,12 @@ The <action> type attribute can be add,update,fix,remove.
             <action type="update" dev="ggregory" due-to="Dependabot">
             Bump actions/checkout from v2.3.3 to v2.3.4 #69.
             </action>
+            <action issue="NET-685" type="update" dev="ggregory" due-to="Simo385">
+            Update SocketClient default connect timeout from ∞ to 60 seconds #51.
+            </action>
+            <action issue="NET-695" type="update" dev="ggregory" due-to="Gary Gregory, Possibly Cott">
+            Apply SocketClient timeout after connection but before SSL negotiation.
+            </action>
         </release>
         <release version="3.7.2" date="2020-10-14" description="Maintenance and bug fix release.">
             <action issue="NET-689" type="fix" dev="ggregory" due-to="Charlie, Gary Gregory">
@@ -87,12 +93,6 @@ The <action> type attribute can be add,update,fix,remove.
             </action>
             <action type="update" dev="ggregory" due-to="Dependabot">
             Bump junit from 4.13 to 4.13.1 #67.
-            </action>
-            <action issue="NET-685" type="update" dev="ggregory" due-to="Simo385">
-            Update SocketClient default connect timeout from ∞ to 60 seconds #51.
-            </action>
-            <action issue="NET-695" type="update" dev="ggregory" due-to="Gary Gregory, Possibly Cott">
-            Apply SocketClient timeout after connection but before SSL negotiation.
             </action>
         </release>
         <release version="3.7.1" date="2020-09-30" description="Maintenance and bug fix release.">
