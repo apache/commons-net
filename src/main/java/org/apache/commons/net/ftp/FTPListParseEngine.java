@@ -272,7 +272,7 @@ public class FTPListParseEngine {
             if (temp == null && saveUnparseableEntries) {
                 temp = new FTPFile(entry);
             }
-            if (filter.accept(temp)){
+            if (filter.accept(temp)) {
                 tmpResults.add(temp);
             }
         }
