@@ -329,7 +329,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
     }
 
     // https://mail-archives.apache.org/mod_mbox/commons-dev/200408.mbox/%3c4122F3C1.9090402@tanukisoftware.com%3e
-    public void testParseFieldsOnFileJapaneseTime() throws Exception
+    public void testParseFieldsOnFileJapaneseTime()
     {
         final FTPFile f = getParser().parseFTPEntry("-rwxr-xr-x 2 user group 4096 3\u6708 2\u65e5 15:13 zxbox");
         assertNotNull("Could not parse entry.", f);
@@ -358,7 +358,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
     }
 
  // https://mail-archives.apache.org/mod_mbox/commons-dev/200408.mbox/%3c4122F3C1.9090402@tanukisoftware.com%3e
-    public void testParseFieldsOnFileJapaneseYear() throws Exception {
+    public void testParseFieldsOnFileJapaneseYear() {
         final FTPFile f = getParser().parseFTPEntry(
                 "-rwxr-xr-x 2 user group 4096 3\u6708 2\u65e5 2003\u5e74 \u8a66\u9a13\u30d5\u30a1\u30a4\u30eb.csv");
         assertNotNull("Could not parse entry.", f);

@@ -23,7 +23,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 public class DefaultFTPFileEntryParserFactoryTest extends TestCase
 {
-    public void testDefaultParserFactory() throws Exception {
+    public void testDefaultParserFactory() {
         final DefaultFTPFileEntryParserFactory factory =
             new DefaultFTPFileEntryParserFactory();
 

@@ -117,9 +117,8 @@ public class FTPSClientTest {
      *
      * @param implicit FTPS connection mode
      * @throws FtpException
-     * @throws IOException
      */
-    static void setUpClass(final boolean implicit) throws FtpException, IOException {
+    static void setUpClass(final boolean implicit) throws FtpException {
         if (Server != null) {
             return;
         }

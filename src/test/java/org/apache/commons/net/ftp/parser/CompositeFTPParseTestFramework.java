@@ -61,7 +61,7 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
     /* (non-Javadoc)
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testGoodListing()
      */
-    public void testConsistentListing() throws Exception
+    public void testConsistentListing()
     {
         final String goodsamples[][] = getGoodListings();
 
@@ -82,7 +82,7 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testGoodListing()
      */
     @Override
-    public void testBadListing() throws Exception
+    public void testBadListing()
     {
         final String badsamples[][] = getBadListings();
 
@@ -102,7 +102,7 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
     // even though all these listings are good using one parser
     // or the other, this tests that a parser that has succeeded
     // on one format will fail if another format is substituted.
-    public void testInconsistentListing() throws Exception
+    public void testInconsistentListing()
     {
         final String goodsamples[][] = getGoodListings();
 

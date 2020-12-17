@@ -183,7 +183,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
         testPrecision("----rwxr-x   1 PEP      0           4019 Mar 18 18:58 einladung.zip", CalendarUnit.MINUTE);
     }
 
-    public void testNET573() throws Exception
+    public void testNET573()
     {
         final FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_AS400);
         conf.setDefaultDateFormatStr("MM/dd/yy HH:mm:ss");

@@ -128,7 +128,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testGoodListing()
      */
     @Override
-    public void testGoodListing() throws Exception {
+    public void testGoodListing() {
         final String[] goodsamples = getGoodListing();
         final MVSFTPEntryParser parser = new MVSFTPEntryParser();
         parser.setType(MVSFTPEntryParser.FILE_LIST_TYPE);
@@ -140,7 +140,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
         }
     }
 
-    public void testMemberListing() throws Exception {
+    public void testMemberListing() {
         final MVSFTPEntryParser parser = new MVSFTPEntryParser();
         parser.setType(MVSFTPEntryParser.MEMBER_LIST_TYPE);
         parser.setRegex(MVSFTPEntryParser.MEMBER_LIST_REGEX);

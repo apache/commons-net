@@ -222,13 +222,13 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
      * directory with name beginning with a numeric character
      * was not parsing correctly
      */
-    public void testDirectoryBeginningWithNumber() throws Exception
+    public void testDirectoryBeginningWithNumber()
     {
         final FTPFile f = getParser().parseFTPEntry(directoryBeginningWithNumber);
         assertEquals("name", "123xyz", f.getName());
     }
 
-    public void testDirectoryBeginningWithNumberFollowedBySpaces() throws Exception
+    public void testDirectoryBeginningWithNumberFollowedBySpaces()
     {
         FTPFile f = getParser().parseFTPEntry("12-03-96  06:38AM       <DIR>          123 xyz");
         assertEquals("name", "123 xyz", f.getName());

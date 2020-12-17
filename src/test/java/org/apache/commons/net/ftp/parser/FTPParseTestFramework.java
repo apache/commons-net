@@ -38,7 +38,7 @@ public abstract class FTPParseTestFramework extends TestCase
         super(name);
     }
 
-    public void testBadListing() throws Exception
+    public void testBadListing()
     {
 
         final String[] badsamples = getBadListing();
@@ -53,7 +53,7 @@ public abstract class FTPParseTestFramework extends TestCase
         }
     }
 
-    public void testGoodListing() throws Exception
+    public void testGoodListing()
     {
 
         final String[] goodsamples = getGoodListing();
