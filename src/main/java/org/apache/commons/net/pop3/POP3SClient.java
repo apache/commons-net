@@ -230,8 +230,8 @@ public class POP3SClient extends POP3Client
         _socket_ = socket;
         _input_ = socket.getInputStream();
         _output_ = socket.getOutputStream();
-        reader = new CRLFLineReader(new InputStreamReader(_input_, _DEFAULT_ENCODING));
-        writer = new BufferedWriter(new OutputStreamWriter(_output_, _DEFAULT_ENCODING));
+        reader = new CRLFLineReader(new InputStreamReader(_input_, DEFAULT_ENCODING));
+        writer = new BufferedWriter(new OutputStreamWriter(_output_, DEFAULT_ENCODING));
 
         if (hostnameVerifier != null && !hostnameVerifier.verify(host, socket.getSession())) {
             throw new SSLHandshakeException("Hostname doesn't match certificate");

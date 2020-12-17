@@ -53,7 +53,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
     }
 
 
-    private void __write(final int ch) throws IOException
+    private void writeInt(final int ch) throws IOException
     {
         switch (ch)
         {
@@ -105,7 +105,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
             return ;
         }
 
-        __write(ch);
+        writeInt(ch);
     }
 
 
@@ -147,7 +147,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
         }
 
         while (length-- > 0) {
-            __write(buffer[offset++]);
+            writeInt(buffer[offset++]);
         }
     }
 

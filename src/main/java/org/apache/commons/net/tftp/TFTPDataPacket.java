@@ -140,7 +140,7 @@ public final class TFTPDataPacket extends TFTPPacket
      * @return The datagram argument.
      ***/
     @Override
-    DatagramPacket _newDatagram(final DatagramPacket datagram, final byte[] data)
+    DatagramPacket newDatagram(final DatagramPacket datagram, final byte[] data)
     {
         data[0] = 0;
         data[1] = (byte)type;

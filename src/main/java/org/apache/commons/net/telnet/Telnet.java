@@ -31,32 +31,32 @@ class Telnet extends SocketClient
 
     static final boolean debugoptions =  /*true;*/ false;
 
-    static final byte[] _COMMAND_DO = {
+    static final byte[] COMMAND_DO = {
                                           (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO
                                       };
 
-    static final byte[] _COMMAND_DONT = {
+    static final byte[] COMMAND_DONT = {
                                             (byte)TelnetCommand.IAC, (byte)TelnetCommand.DONT
                                         };
 
-    static final byte[] _COMMAND_WILL = {
+    static final byte[] COMMAND_WILL = {
                                             (byte)TelnetCommand.IAC, (byte)TelnetCommand.WILL
                                         };
 
-    static final byte[] _COMMAND_WONT = {
+    static final byte[] COMMAND_WONT = {
                                             (byte)TelnetCommand.IAC, (byte)TelnetCommand.WONT
                                         };
 
-    static final byte[] _COMMAND_SB = {
+    static final byte[] COMMAND_SB = {
                                           (byte)TelnetCommand.IAC, (byte)TelnetCommand.SB
                                       };
 
-    static final byte[] _COMMAND_SE = {
+    static final byte[] COMMAND_SE = {
                                           (byte)TelnetCommand.IAC, (byte)TelnetCommand.SE
                                       };
 
-    static final int _WILL_MASK = 0x01, _DO_MASK = 0x02,
-                                  _REQUESTED_WILL_MASK = 0x04, _REQUESTED_DO_MASK = 0x08;
+    static final int WILL_MASK = 0x01, DO_MASK = 0x02,
+                                  REQUESTED_WILL_MASK = 0x04, REQUESTED_DO_MASK = 0x08;
 
     /* public */
     static final int DEFAULT_PORT =  23;
@@ -82,7 +82,7 @@ class Telnet extends SocketClient
     /***
      * Is sequence (for subnegotiation)
      ***/
-    static final byte[] _COMMAND_IS = {
+    static final byte[] COMMAND_IS = {
                                           (byte) TERMINAL_TYPE, (byte) TERMINAL_TYPE_IS
                                       };
 
@@ -104,7 +104,7 @@ class Telnet extends SocketClient
     /***
      * AYT sequence
      ***/
-    static final byte[] _COMMAND_AYT = {
+    static final byte[] COMMAND_AYT = {
                                           (byte) TelnetCommand.IAC, (byte) TelnetCommand.AYT
                                        };
 
@@ -168,7 +168,7 @@ class Telnet extends SocketClient
      ***/
     boolean stateIsWill(final int option)
     {
-        return (options[option] & _WILL_MASK) != 0;
+        return (options[option] & WILL_MASK) != 0;
     }
 
     /***
@@ -192,7 +192,7 @@ class Telnet extends SocketClient
      ***/
     boolean stateIsDo(final int option)
     {
-        return (options[option] & _DO_MASK) != 0;
+        return (options[option] & DO_MASK) != 0;
     }
 
     /***
@@ -216,7 +216,7 @@ class Telnet extends SocketClient
      ***/
     boolean requestedWill(final int option)
     {
-        return (options[option] & _REQUESTED_WILL_MASK) != 0;
+        return (options[option] & REQUESTED_WILL_MASK) != 0;
     }
 
     /***
@@ -240,7 +240,7 @@ class Telnet extends SocketClient
      ***/
     boolean requestedDo(final int option)
     {
-        return (options[option] & _REQUESTED_DO_MASK) != 0;
+        return (options[option] & REQUESTED_DO_MASK) != 0;
     }
 
     /***
@@ -263,7 +263,7 @@ class Telnet extends SocketClient
      ***/
     void setWill(final int option) throws IOException
     {
-        options[option] |= _WILL_MASK;
+        options[option] |= WILL_MASK;
 
         /* open TelnetOptionHandler functionality (start)*/
         if (requestedWill(option))
@@ -292,7 +292,7 @@ class Telnet extends SocketClient
      ***/
     void setDo(final int option) throws IOException
     {
-        options[option] |= _DO_MASK;
+        options[option] |= DO_MASK;
 
         /* open TelnetOptionHandler functionality (start)*/
         if (requestedDo(option))
@@ -320,7 +320,7 @@ class Telnet extends SocketClient
      ***/
     void setWantWill(final int option)
     {
-        options[option] |= _REQUESTED_WILL_MASK;
+        options[option] |= REQUESTED_WILL_MASK;
     }
 
     /***
@@ -330,7 +330,7 @@ class Telnet extends SocketClient
      ***/
     void setWantDo(final int option)
     {
-        options[option] |= _REQUESTED_DO_MASK;
+        options[option] |= REQUESTED_DO_MASK;
     }
 
     /***
@@ -340,7 +340,7 @@ class Telnet extends SocketClient
      ***/
     void setWont(final int option)
     {
-        options[option] &= ~_WILL_MASK;
+        options[option] &= ~WILL_MASK;
 
         /* open TelnetOptionHandler functionality (start)*/
         if (optionHandlers[option] != null)
@@ -357,7 +357,7 @@ class Telnet extends SocketClient
      ***/
     void setDont(final int option)
     {
-        options[option] &= ~_DO_MASK;
+        options[option] &= ~DO_MASK;
 
         /* open TelnetOptionHandler functionality (start)*/
         if (optionHandlers[option] != null)
@@ -374,7 +374,7 @@ class Telnet extends SocketClient
      ***/
     void setWantWont(final int option)
     {
-        options[option] &= ~_REQUESTED_WILL_MASK;
+        options[option] &= ~REQUESTED_WILL_MASK;
     }
 
     /***
@@ -384,7 +384,7 @@ class Telnet extends SocketClient
      ***/
     void setWantDont(final int option)
     {
-        options[option] &= ~_REQUESTED_DO_MASK;
+        options[option] &= ~REQUESTED_DO_MASK;
     }
 
     /**
@@ -739,10 +739,10 @@ class Telnet extends SocketClient
         }
         if (terminalType != null)
         {
-            _output_.write(_COMMAND_SB);
-            _output_.write(_COMMAND_IS);
+            _output_.write(COMMAND_SB);
+            _output_.write(COMMAND_IS);
             _output_.write(terminalType.getBytes(getCharset()));
-            _output_.write(_COMMAND_SE);
+            _output_.write(COMMAND_SE);
             _output_.flush();
         }
     }
@@ -769,7 +769,7 @@ class Telnet extends SocketClient
         }
         if (subn != null)
         {
-            _output_.write(_COMMAND_SB);
+            _output_.write(COMMAND_SB);
             // Note _output_ is buffered, so might as well simplify by writing single bytes
             for (final int element : subn)
             {
@@ -779,7 +779,7 @@ class Telnet extends SocketClient
                 }
                 _output_.write(b);
             }
-            _output_.write(_COMMAND_SE);
+            _output_.write(COMMAND_SE);
 
             /* Code Section added for sending the negotiation ASAP (start)*/
             _output_.flush();
@@ -877,7 +877,7 @@ class Telnet extends SocketClient
         {
             System.err.println("DO: " + TelnetOption.getOption(option));
         }
-        _output_.write(_COMMAND_DO);
+        _output_.write(COMMAND_DO);
         _output_.write(option);
 
         /* Code Section added for sending the negotiation ASAP (start)*/
@@ -917,7 +917,7 @@ class Telnet extends SocketClient
         {
             System.err.println("DONT: " + TelnetOption.getOption(option));
         }
-        _output_.write(_COMMAND_DONT);
+        _output_.write(COMMAND_DONT);
         _output_.write(option);
 
         /* Code Section added for sending the negotiation ASAP (start)*/
@@ -958,7 +958,7 @@ class Telnet extends SocketClient
         {
             System.err.println("WILL: " + TelnetOption.getOption(option));
         }
-        _output_.write(_COMMAND_WILL);
+        _output_.write(COMMAND_WILL);
         _output_.write(option);
 
         /* Code Section added for sending the negotiation ASAP (start)*/
@@ -998,7 +998,7 @@ class Telnet extends SocketClient
         {
             System.err.println("WONT: " + TelnetOption.getOption(option));
         }
-        _output_.write(_COMMAND_WONT);
+        _output_.write(COMMAND_WONT);
         _output_.write(option);
 
         /* Code Section added for sending the negotiation ASAP (start)*/
@@ -1061,7 +1061,7 @@ class Telnet extends SocketClient
             synchronized (this)
             {
                 aytFlag = false;
-                _output_.write(_COMMAND_AYT);
+                _output_.write(COMMAND_AYT);
                 _output_.flush();
             }
             aytMonitor.wait(timeout);

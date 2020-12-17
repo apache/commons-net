@@ -80,7 +80,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         this(input, client, true);
     }
 
-    void _start()
+    void start()
     {
         if(thread == null) {
             return;
@@ -116,7 +116,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
      * or -1 (EOF) if end of stread reached,
      * or -2 (WOULD_BLOCK) if mayBlock is false and there is no data available
      */
-    private int __read(final boolean mayBlock) throws IOException
+    private int read(final boolean mayBlock) throws IOException
     {
         int ch;
 
@@ -400,7 +400,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                         {
                             try
                             {
-                                if ((ch = __read(mayBlock)) < 0) { // must be EOF
+                                if ((ch = read(mayBlock)) < 0) { // must be EOF
                                     if(ch != WOULD_BLOCK) {
                                         return ch;
                                     }
@@ -597,7 +597,7 @@ _outerLoop:
             {
                 try
                 {
-                    if ((ch = __read(true)) < 0) {
+                    if ((ch = read(true)) < 0) {
                         break;
                     }
                 }

@@ -271,7 +271,7 @@ public class NNTPClient extends NNTP
     }
 
 
-    private BufferedReader __retrieve(final int command, final String articleId, final ArticleInfo pointer)
+    private BufferedReader retrieve(final int command, final String articleId, final ArticleInfo pointer)
     throws IOException
     {
         if (articleId != null)
@@ -355,7 +355,7 @@ public class NNTPClient extends NNTP
     public BufferedReader retrieveArticle(final String articleId, final ArticleInfo pointer)
     throws IOException
     {
-        return __retrieve(NNTPCommand.ARTICLE, articleId, pointer);
+        return retrieve(NNTPCommand.ARTICLE, articleId, pointer);
 
     }
 
@@ -486,7 +486,7 @@ public class NNTPClient extends NNTP
     public BufferedReader retrieveArticleHeader(final String articleId, final ArticleInfo pointer)
     throws IOException
     {
-        return __retrieve(NNTPCommand.HEAD, articleId, pointer);
+        return retrieve(NNTPCommand.HEAD, articleId, pointer);
 
     }
 
@@ -617,7 +617,7 @@ public class NNTPClient extends NNTP
     public BufferedReader retrieveArticleBody(final String articleId, final ArticleInfo pointer)
     throws IOException
     {
-        return __retrieve(NNTPCommand.BODY, articleId, pointer);
+        return retrieve(NNTPCommand.BODY, articleId, pointer);
 
     }
 
@@ -1460,7 +1460,7 @@ public class NNTPClient extends NNTP
      *         otherwise
      * @throws IOException
      */
-    private BufferedReader __retrieveArticleInfo(final String articleRange)
+    private BufferedReader retrieveArticleInfo(final String articleRange)
         throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(xover(articleRange))) {
@@ -1479,7 +1479,7 @@ public class NNTPClient extends NNTP
      */
     public BufferedReader retrieveArticleInfo(final long articleNumber) throws IOException
     {
-        return __retrieveArticleInfo(Long.toString(articleNumber));
+        return retrieveArticleInfo(Long.toString(articleNumber));
     }
 
     /**
@@ -1496,7 +1496,7 @@ public class NNTPClient extends NNTP
         throws IOException
     {
         return
-            __retrieveArticleInfo(lowArticleNumber + "-" +
+            retrieveArticleInfo(lowArticleNumber + "-" +
                                              highArticleNumber);
     }
 
@@ -1533,7 +1533,7 @@ public class NNTPClient extends NNTP
      *         otherwise
      * @throws IOException
      */
-    private BufferedReader __retrieveHeader(final String header, final String articleRange)
+    private BufferedReader retrieveHeader(final String header, final String articleRange)
         throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(xhdr(header, articleRange))) {
@@ -1554,7 +1554,7 @@ public class NNTPClient extends NNTP
     public BufferedReader retrieveHeader(final String header, final long articleNumber)
         throws IOException
     {
-        return __retrieveHeader(header, Long.toString(articleNumber));
+        return retrieveHeader(header, Long.toString(articleNumber));
     }
 
     /**
@@ -1572,7 +1572,7 @@ public class NNTPClient extends NNTP
         throws IOException
     {
         return
-            __retrieveHeader(header,lowArticleNumber + "-" + highArticleNumber);
+            retrieveHeader(header,lowArticleNumber + "-" + highArticleNumber);
     }
 
 

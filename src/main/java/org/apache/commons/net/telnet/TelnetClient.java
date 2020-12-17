@@ -129,7 +129,7 @@ public class TelnetClient extends Telnet
         final TelnetInputStream tmp = new TelnetInputStream(_input_, this, readerThread);
         if(readerThread)
         {
-            tmp._start();
+            tmp.start();
         }
         // __input CANNOT refer to the TelnetInputStream.  We run into
         // blocking problems when some classes use TelnetInputStream, so

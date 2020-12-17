@@ -75,7 +75,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
     }
 
 
-    private int __read() throws IOException
+    private int readInt() throws IOException
     {
         int ch;
 
@@ -124,7 +124,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
             return super.read();
         }
 
-        return __read();
+        return readInt();
     }
 
 
@@ -183,7 +183,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
         }
 
 
-        if ((ch = __read()) == -1) {
+        if ((ch = readInt()) == -1) {
             return -1;
         }
 
@@ -193,7 +193,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
         {
             buffer[offset++] = (byte)ch;
         }
-        while (--this.length > 0 && (ch = __read()) != -1);
+        while (--this.length > 0 && (ch = readInt()) != -1);
 
 
         return offset - off;

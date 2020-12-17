@@ -185,7 +185,7 @@ public abstract class TFTPPacket
      * @param data The buffer to store the packet and to use in the datagram.
      * @return The datagram argument.
      ***/
-    abstract DatagramPacket _newDatagram(DatagramPacket datagram, byte[] data);
+    abstract DatagramPacket newDatagram(DatagramPacket datagram, byte[] data);
 
     /***
      * Creates a UDP datagram containing all the TFTP packet

@@ -53,7 +53,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
      * An array containing the string names of the transfer modes and indexed
      * by the transfer mode constants.
      ***/
-    static final String[] _modeStrings = { "netascii", "octet" };
+    static final String[] modeStrings = { "netascii", "octet" };
 
     /***
      * A null terminated byte array representation of the ascii names of the
@@ -141,12 +141,12 @@ public abstract class TFTPRequestPacket extends TFTPPacket
         }
 
         final String modeString = buffer.toString().toLowerCase(java.util.Locale.ENGLISH);
-        length = _modeStrings.length;
+        length = modeStrings.length;
 
         int mode = 0;
         for (index = 0; index < length; index++)
         {
-            if (modeString.equals(_modeStrings[index]))
+            if (modeString.equals(modeStrings[index]))
             {
                 mode = index;
                 break;
@@ -177,7 +177,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
      * @return The datagram argument.
      ***/
     @Override
-    final DatagramPacket _newDatagram(final DatagramPacket datagram, final byte[] data)
+    final DatagramPacket newDatagram(final DatagramPacket datagram, final byte[] data)
     {
         int fileLength, modeLength;
 

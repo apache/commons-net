@@ -70,15 +70,15 @@ public class POP3 extends SocketClient
     /***  A constant representing the POP3 update state. ***/
     public static final int UPDATE_STATE = 2;
 
-    static final String _OK = "+OK";
+    static final String OK = "+OK";
     // The reply indicating intermediate response to a command.
-    static final String _OK_INT = "+ ";
-    static final String _ERROR = "-ERR";
+    static final String OK_INT = "+ ";
+    static final String ERROR = "-ERR";
 
     // We have to ensure that the protocol communication is in ASCII
     // but we use ISO-8859-1 just in case 8-bit characters cross
     // the wire.
-    static final Charset _DEFAULT_ENCODING = StandardCharsets.ISO_8859_1;
+    static final Charset DEFAULT_ENCODING = StandardCharsets.ISO_8859_1;
 
     private int popState;
     BufferedWriter writer;
@@ -119,11 +119,11 @@ public class POP3 extends SocketClient
             throw new EOFException("Connection closed without indication.");
         }
 
-        if (line.startsWith(_OK)) {
+        if (line.startsWith(OK)) {
             replyCode = POP3Reply.OK;
-        } else if (line.startsWith(_ERROR)) {
+        } else if (line.startsWith(ERROR)) {
             replyCode = POP3Reply.ERROR;
-        } else if (line.startsWith(_OK_INT)) {
+        } else if (line.startsWith(OK_INT)) {
             replyCode = POP3Reply.OK_INT;
         } else {
             throw new
@@ -148,10 +148,10 @@ public class POP3 extends SocketClient
         super._connectAction_();
         reader =
           new CRLFLineReader(new InputStreamReader(_input_,
-                                                   _DEFAULT_ENCODING));
+                                                   DEFAULT_ENCODING));
         writer =
           new BufferedWriter(new OutputStreamWriter(_output_,
-                                                    _DEFAULT_ENCODING));
+                                                    DEFAULT_ENCODING));
         getReply();
         setState(AUTHORIZATION_STATE);
     }

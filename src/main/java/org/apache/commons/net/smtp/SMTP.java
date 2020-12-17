@@ -145,7 +145,7 @@ public class SMTP extends SocketClient
      * @return the reply code
      * @throws IOException
      */
-    private int __sendCommand(final String command, final String args, final boolean includeSpace)
+    private int sendCommand(final String command, final String args, final boolean includeSpace)
     throws IOException
     {
         final StringBuilder __commandBuffer = new StringBuilder();
@@ -167,8 +167,7 @@ public class SMTP extends SocketClient
 
         fireCommandSent(command, message);
 
-        __getReply();
-        return replyCode;
+        return getReply();
     }
 
     /**
@@ -179,78 +178,10 @@ public class SMTP extends SocketClient
      * @return the reply code
      * @throws IOException
      */
-    private int __sendCommand(final int command, final String args, final boolean includeSpace)
+    private int sendCommand(final int command, final String args, final boolean includeSpace)
     throws IOException
     {
-        return __sendCommand(SMTPCommand.getCommand(command), args, includeSpace);
-    }
-
-    private void __getReply() throws IOException
-    {
-        int length;
-
-        newReplyString = true;
-        replyLines.clear();
-
-        String line = reader.readLine();
-
-        if (line == null) {
-            throw new SMTPConnectionClosedException(
-                "Connection closed without indication.");
-        }
-
-        // In case we run into an anomaly we don't want fatal index exceptions
-        // to be thrown.
-        length = line.length();
-        if (length < 3) {
-            throw new MalformedServerReplyException(
-                "Truncated server reply: " + line);
-        }
-
-        try
-        {
-            final String code = line.substring(0, 3);
-            replyCode = Integer.parseInt(code);
-        }
-        catch (final NumberFormatException e)
-        {
-            throw new MalformedServerReplyException(
-                "Could not parse response code.\nServer Reply: " + line);
-        }
-
-        replyLines.add(line);
-
-        // Get extra lines if message continues.
-        if (length > 3 && line.charAt(3) == '-')
-        {
-            do
-            {
-                line = reader.readLine();
-
-                if (line == null) {
-                    throw new SMTPConnectionClosedException(
-                        "Connection closed without indication.");
-                }
-
-                replyLines.add(line);
-
-                // The length() check handles problems that could arise from readLine()
-                // returning too soon after encountering a naked CR or some other
-                // anomaly.
-            }
-            while (!(line.length() >= 4 && line.charAt(3) != '-' &&
-                     Character.isDigit(line.charAt(0))));
-            // This is too strong a condition because a non-conforming server
-            // could screw things up like ftp.funet.fi does for FTP
-            // line.startsWith(code)));
-        }
-
-        fireReplyReceived(replyCode, getReplyString());
-
-        if (replyCode == SMTPReply.SERVICE_NOT_AVAILABLE) {
-            throw new SMTPConnectionClosedException(
-                "SMTP response 421 received.  Server closed connection.");
-        }
+        return sendCommand(SMTPCommand.getCommand(command), args, includeSpace);
     }
 
     /*** Initiates control connections and gets initial reply. ***/
@@ -264,8 +195,7 @@ public class SMTP extends SocketClient
         writer =
             new BufferedWriter(new OutputStreamWriter(_output_,
                                                       encoding));
-        __getReply();
-
+        getReply();
     }
 
 
@@ -311,7 +241,7 @@ public class SMTP extends SocketClient
      ***/
     public int sendCommand(final String command, final String args) throws IOException
     {
-        return __sendCommand(command, args, true);
+        return sendCommand(command, args, true);
     }
 
 
@@ -423,7 +353,70 @@ public class SMTP extends SocketClient
      ***/
     public int getReply() throws IOException
     {
-        __getReply();
+        int length;
+
+        newReplyString = true;
+        replyLines.clear();
+
+        String line = reader.readLine();
+
+        if (line == null) {
+            throw new SMTPConnectionClosedException(
+                "Connection closed without indication.");
+        }
+
+        // In case we run into an anomaly we don't want fatal index exceptions
+        // to be thrown.
+        length = line.length();
+        if (length < 3) {
+            throw new MalformedServerReplyException(
+                "Truncated server reply: " + line);
+        }
+
+        try
+        {
+            final String code = line.substring(0, 3);
+            replyCode = Integer.parseInt(code);
+        }
+        catch (final NumberFormatException e)
+        {
+            throw new MalformedServerReplyException(
+                "Could not parse response code.\nServer Reply: " + line);
+        }
+
+        replyLines.add(line);
+
+        // Get extra lines if message continues.
+        if (length > 3 && line.charAt(3) == '-')
+        {
+            do
+            {
+                line = reader.readLine();
+
+                if (line == null) {
+                    throw new SMTPConnectionClosedException(
+                        "Connection closed without indication.");
+                }
+
+                replyLines.add(line);
+
+                // The length() check handles problems that could arise from readLine()
+                // returning too soon after encountering a naked CR or some other
+                // anomaly.
+            }
+            while (!(line.length() >= 4 && line.charAt(3) != '-' &&
+                     Character.isDigit(line.charAt(0))));
+            // This is too strong a condition because a non-conforming server
+            // could screw things up like ftp.funet.fi does for FTP
+            // line.startsWith(code)));
+        }
+
+        fireReplyReceived(replyCode, getReplyString());
+
+        if (replyCode == SMTPReply.SERVICE_NOT_AVAILABLE) {
+            throw new SMTPConnectionClosedException(
+                "SMTP response 421 received.  Server closed connection.");
+        }
         return replyCode;
     }
 
@@ -506,7 +499,7 @@ public class SMTP extends SocketClient
      ***/
     public int mail(final String reversePath) throws IOException
     {
-        return __sendCommand(SMTPCommand.MAIL, reversePath, false);
+        return sendCommand(SMTPCommand.MAIL, reversePath, false);
     }
 
 
@@ -526,7 +519,7 @@ public class SMTP extends SocketClient
      ***/
     public int rcpt(final String forwardPath) throws IOException
     {
-        return __sendCommand(SMTPCommand.RCPT, forwardPath, false);
+        return sendCommand(SMTPCommand.RCPT, forwardPath, false);
     }
 
 

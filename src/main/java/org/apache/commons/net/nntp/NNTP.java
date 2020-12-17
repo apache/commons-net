@@ -128,40 +128,6 @@ public class NNTP extends SocketClient
         _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
-    private void __getReply() throws IOException
-    {
-        replyString = _reader_.readLine();
-
-        if (replyString == null) {
-            throw new NNTPConnectionClosedException(
-                    "Connection closed without indication.");
-        }
-
-        // In case we run into an anomaly we don't want fatal index exceptions
-        // to be thrown.
-        if (replyString.length() < 3) {
-            throw new MalformedServerReplyException(
-                "Truncated server reply: " + replyString);
-        }
-
-        try
-        {
-            replyCode = Integer.parseInt(replyString.substring(0, 3));
-        }
-        catch (final NumberFormatException e)
-        {
-            throw new MalformedServerReplyException(
-                "Could not parse response code.\nServer Reply: " + replyString);
-        }
-
-        fireReplyReceived(replyCode, replyString + SocketClient.NETASCII_EOL);
-
-        if (replyCode == NNTPReply.SERVICE_DISCONTINUED) {
-            throw new NNTPConnectionClosedException(
-                "NNTP response 400 received.  Server closed connection.");
-        }
-    }
-
     /***
      * Initiates control connections and gets initial reply, determining
      * if the client is allowed to post to the server.  Initializes
@@ -178,7 +144,7 @@ public class NNTP extends SocketClient
         _writer_ =
             new BufferedWriter(new OutputStreamWriter(_output_,
                                                       DEFAULT_ENCODING));
-        __getReply();
+        getReply();
 
         _isAllowedToPost = replyCode == NNTPReply.SERVER_READY_POSTING_ALLOWED;
     }
@@ -252,8 +218,7 @@ public class NNTP extends SocketClient
 
         fireCommandSent(command, message);
 
-        __getReply();
-        return replyCode;
+        return getReply();
     }
 
 
@@ -365,7 +330,36 @@ public class NNTP extends SocketClient
      ***/
     public int getReply() throws IOException
     {
-        __getReply();
+        replyString = _reader_.readLine();
+
+        if (replyString == null) {
+            throw new NNTPConnectionClosedException(
+                    "Connection closed without indication.");
+        }
+
+        // In case we run into an anomaly we don't want fatal index exceptions
+        // to be thrown.
+        if (replyString.length() < 3) {
+            throw new MalformedServerReplyException(
+                "Truncated server reply: " + replyString);
+        }
+
+        try
+        {
+            replyCode = Integer.parseInt(replyString.substring(0, 3));
+        }
+        catch (final NumberFormatException e)
+        {
+            throw new MalformedServerReplyException(
+                "Could not parse response code.\nServer Reply: " + replyString);
+        }
+
+        fireReplyReceived(replyCode, replyString + SocketClient.NETASCII_EOL);
+
+        if (replyCode == NNTPReply.SERVICE_DISCONTINUED) {
+            throw new NNTPConnectionClosedException(
+                "NNTP response 400 received.  Server closed connection.");
+        }
         return replyCode;
     }
 

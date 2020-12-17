@@ -276,7 +276,7 @@ public class FTP extends SocketClient
     }
 
     // The RFC-compliant multiline termination check
-    private boolean __strictCheck(final String line, final String code) {
+    private boolean strictCheck(final String line, final String code) {
         return !(line.startsWith(code) && line.charAt(REPLY_CODE_LEN) == ' ');
     }
 
@@ -285,17 +285,9 @@ public class FTP extends SocketClient
     // 426 multi-line reply in response to ls /.  We relax the condition to
     // test that the line starts with a digit rather than starting with
     // the code.
-    private boolean __lenientCheck(final String line) {
+    private boolean lenientCheck(final String line) {
         return !(line.length() > REPLY_CODE_LEN&& line.charAt(REPLY_CODE_LEN) != '-' &&
                 Character.isDigit(line.charAt(0)));
-    }
-
-    /**
-     * Get the reply, and pass it to command listeners
-     */
-    private void __getReply()  throws IOException
-    {
-        __getReply(true);
     }
 
     /**
@@ -306,10 +298,10 @@ public class FTP extends SocketClient
      */
     protected void __getReplyNoReport()  throws IOException
     {
-        __getReply(false);
+        getReply(false);
     }
 
-    private void __getReply(final boolean reportReply) throws IOException
+    private int getReply(final boolean reportReply) throws IOException
     {
         int length;
 
@@ -365,7 +357,7 @@ public class FTP extends SocketClient
                     // returning too soon after encountering a naked CR or some other
                     // anomaly.
                 }
-                while ( isStrictMultilineParsing() ? __strictCheck(line, code) : __lenientCheck(line));
+                while ( isStrictMultilineParsing() ? strictCheck(line, code) : lenientCheck(line));
 
             } else if (isStrictReplyParsing()) {
                 if (length == REPLY_CODE_LEN + 1) { // expecting some text
@@ -385,6 +377,7 @@ public class FTP extends SocketClient
         if (_replyCode == FTPReply.SERVICE_NOT_AVAILABLE) {
             throw new FTPConnectionClosedException("FTP response 421 received.  Server closed connection.");
         }
+        return _replyCode;
     }
 
     /**
@@ -420,10 +413,10 @@ public class FTP extends SocketClient
             final int original = _socket_.getSoTimeout();
             _socket_.setSoTimeout(connectTimeout);
             try {
-                __getReply();
+                getReply();
                 // If we received code 120, we have to fetch completion reply.
                 if (FTPReply.isPositivePreliminary(_replyCode)) {
-                    __getReply();
+                    getReply();
                 }
             } catch (final SocketTimeoutException e) {
                 final IOException ioe = new IOException("Timed out waiting for initial connect reply");
@@ -433,10 +426,10 @@ public class FTP extends SocketClient
                 _socket_.setSoTimeout(original);
             }
         } else {
-            __getReply();
+            getReply();
             // If we received code 120, we have to fetch completion reply.
             if (FTPReply.isPositivePreliminary(_replyCode)) {
-                __getReply();
+                getReply();
             }
         }
     }
@@ -512,17 +505,16 @@ public class FTP extends SocketClient
             throw new IOException("Connection is not open");
         }
 
-        final String message = __buildMessage(command, args);
+        final String message = buildMessage(command, args);
 
-        __send(message);
+        send(message);
 
         fireCommandSent(command, message);
 
-        __getReply();
-        return _replyCode;
+        return getReply();
     }
 
-    private String __buildMessage(final String command, final String args) {
+    private String buildMessage(final String command, final String args) {
         final StringBuilder __commandBuffer = new StringBuilder();
 
         __commandBuffer.append(command);
@@ -536,7 +528,7 @@ public class FTP extends SocketClient
         return __commandBuffer.toString();
     }
 
-    private void __send(final String message) throws IOException,
+    private void send(final String message) throws IOException,
             FTPConnectionClosedException, SocketException {
         try{
             _controlOutput_.write(message);
@@ -560,8 +552,8 @@ public class FTP extends SocketClient
      * @since 3.0
      */
     protected void __noop() throws IOException {
-        final String msg = __buildMessage(FTPCmd.NOOP.getCommand(), null);
-        __send(msg);
+        final String msg = buildMessage(FTPCmd.NOOP.getCommand(), null);
+        send(msg);
         __getReplyNoReport(); // This may timeout
     }
 
@@ -724,8 +716,7 @@ public class FTP extends SocketClient
      ***/
     public int getReply() throws IOException
     {
-        __getReply();
-        return _replyCode;
+        return getReply(true);
     }
 
 

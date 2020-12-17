@@ -146,7 +146,7 @@ public final class TFTPErrorPacket extends TFTPPacket
      * @return The datagram argument.
      ***/
     @Override
-    DatagramPacket _newDatagram(final DatagramPacket datagram, final byte[] data)
+    DatagramPacket newDatagram(final DatagramPacket datagram, final byte[] data)
     {
         int length;
 

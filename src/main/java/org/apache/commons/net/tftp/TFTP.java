@@ -117,7 +117,7 @@ public class TFTP extends DatagramSocketClient
      ***/
     public static final String getModeName(final int mode)
     {
-        return TFTPRequestPacket._modeStrings[mode];
+        return TFTPRequestPacket.modeStrings[mode];
     }
 
     /***
@@ -227,7 +227,7 @@ public class TFTP extends DatagramSocketClient
     public final void bufferedSend(final TFTPPacket packet) throws IOException
     {
         trace(">", packet);
-        _socket_.send(packet._newDatagram(sendDatagram, sendBuffer));
+        _socket_.send(packet.newDatagram(sendDatagram, sendBuffer));
     }
 
 
