@@ -3589,7 +3589,7 @@ implements Configurable
      * Issue the FTP MDTM command (not supported by all servers) to retrieve the last
      * modification time of a file. The modification string should be in the
      * ISO 3077 form "YYYYMMDDhhmmss(.xxx)?". The timestamp represented should also be in
-     * GMT, but not all FTP servers honour this.
+     * GMT, but not all FTP servers honor this.
      *
      * @param pathname The file path to query.
      * @return A string representing the last file modification time in <code>YYYYMMDDhhmmss</code> format.
@@ -3608,7 +3608,7 @@ implements Configurable
      * Issue the FTP MDTM command (not supported by all servers) to retrieve the last
      * modification time of a file. The modification string should be in the
      * ISO 3077 form "YYYYMMDDhhmmss(.xxx)?". The timestamp represented should also be in
-     * GMT, but not all FTP servers honour this.
+     * GMT, but not all FTP servers honor this.
      *
      * @param pathname The file path to query.
      * @return A FTPFile representing the last file modification time, may be {@code null}.
@@ -3634,7 +3634,7 @@ implements Configurable
      * modified time of a file.
      *
      * The timestamp should be in the form <code>YYYYMMDDhhmmss</code>. It should also
-     * be in GMT, but not all servers honour this.
+     * be in GMT, but not all servers honor this.
      *
      * An FTP server would indicate its support of this feature by including "MFMT"
      * in its response to the FEAT command, which may be retrieved by FTPClient.features()
