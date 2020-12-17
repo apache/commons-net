@@ -40,14 +40,19 @@ import org.apache.commons.net.util.SSLSocketUtils;
  * after the connection has been established. In explicit mode (the default), SSL/TLS
  * negotiation starts when the user calls execTLS() and the server accepts the command.
  * Implicit usage:
+ * <pre>
  *               SMTPSClient c = new SMTPSClient(true);
  *               c.connect("127.0.0.1", 465);
+ * </pre>
  * Explicit usage:
+ * <pre>
  *               SMTPSClient c = new SMTPSClient();
  *               c.connect("127.0.0.1", 25);
- *               if (c.execTLS()) { /rest of the commands here/ }
- *
- * Warning: the hostname is not verified against the certificate by default, use
+ *               if (c.execTLS()) {
+ *                 // Rest of the commands here
+ *               }
+ * </pre>
+ * <em>Warning</em>: the hostname is not verified against the certificate by default, use
  * {@link #setHostnameVerifier(HostnameVerifier)} or {@link #setEndpointCheckingEnabled(boolean)}
  * (on Java 1.7+) to enable verification.
  * @since 3.0
@@ -58,15 +63,20 @@ public class SMTPSClient extends SMTPClient
     private static final String DEFAULT_PROTOCOL = "TLS";
 
     /** The security mode. True - Implicit Mode / False - Explicit Mode. */
+
     private final boolean isImplicit;
     /** The secure socket protocol to be used, like SSL/TLS. */
+
     private final String protocol;
     /** The context object. */
+
     private SSLContext context = null;
     /** The cipher suites. SSLSockets have a default set of these anyway,
         so no initialization required. */
+
     private String[] suites = null;
     /** The protocol versions. */
+
     private String[] protocols = null;
 
     /** The {@link TrustManager} implementation, default null (i.e. use system managers). */
