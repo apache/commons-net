@@ -60,7 +60,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
 public class MLSxEntryParser extends FTPFileEntryParserImpl
 {
     // This class is immutable, so a single instance can be shared.
-    private static final MLSxEntryParser PARSER = new MLSxEntryParser();
+    private static final MLSxEntryParser INSTANCE = new MLSxEntryParser();
 
     private static final HashMap<String, Integer> TYPE_TO_INT = new HashMap<>();
     static {
@@ -258,10 +258,10 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
     }
 
     public static FTPFile parseEntry(final String entry) {
-        return PARSER.parseFTPEntry(entry);
+        return INSTANCE.parseFTPEntry(entry);
     }
 
     public static  MLSxEntryParser getInstance() {
-        return PARSER;
+        return INSTANCE;
     }
 }
