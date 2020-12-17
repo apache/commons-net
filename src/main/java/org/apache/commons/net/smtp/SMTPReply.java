@@ -65,7 +65,7 @@ public final class SMTPReply
      * type of reply. </em>
      * <p>
      * @param reply  The reply code to test.
-     * @return True if a reply code is a postive preliminary response, false
+     * @return True if a reply code is a positive preliminary response, false
      *         if not.
      */
     public static boolean isPositivePreliminary(final int reply)
@@ -80,7 +80,7 @@ public final class SMTPReply
      * successful completion of a command.
      * <p>
      * @param reply  The reply code to test.
-     * @return True if a reply code is a postive completion response, false
+     * @return True if a reply code is a positive completion response, false
      *         if not.
      */
     public static boolean isPositiveCompletion(final int reply)
@@ -98,7 +98,7 @@ public final class SMTPReply
      * ready to receive the message data.
      * <p>
      * @param reply  The reply code to test.
-     * @return True if a reply code is a postive intermediate response, false
+     * @return True if a reply code is a positive intermediate response, false
      *         if not.
      */
     public static boolean isPositiveIntermediate(final int reply)
