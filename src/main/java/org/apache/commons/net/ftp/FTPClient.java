@@ -3598,7 +3598,8 @@ implements Configurable
      */
     public String getModificationTime(final String pathname) throws IOException {
         if (FTPReply.isPositiveCompletion(mdtm(pathname))) {
-            return getReplyStrings()[0].substring(4); // skip the return code (e.g. 213) and the space
+            // skip the return code (e.g. 213) and the space
+            return getReplyStrings()[0].substring(4);
         }
         return null;
     }
@@ -3617,12 +3618,12 @@ implements Configurable
      * @since 3.4
      */
     public FTPFile mdtmFile(final String pathname) throws IOException {
-        if (FTPReply.isPositiveCompletion(mdtm(pathname))) {
-            final String reply = getReplyStrings()[0].substring(4); // skip the return code (e.g. 213) and the space
+        final String modificationTime = getModificationTime(pathname);
+        if (modificationTime != null) {
             final FTPFile file = new FTPFile();
             file.setName(pathname);
-            file.setRawListing(reply);
-            file.setTimestamp(MLSxEntryParser.parseGMTdateTime(reply));
+            file.setRawListing(modificationTime);
+            file.setTimestamp(MLSxEntryParser.parseGMTdateTime(modificationTime));
             return file;
         }
         return null;
