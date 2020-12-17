@@ -32,6 +32,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
  * Parser class for MSLT and MLSD replies. See RFC 3659.
  * <p>
  * Format is as follows:
+ * </p>
  * <pre>
  * entry            = [ facts ] SP pathname
  * facts            = 1*( fact ";" )
@@ -47,10 +48,12 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
  * Sample os-depend-fact:
  * UNIX.group=0;UNIX.mode=0755;UNIX.owner=0;
  * </pre>
+ * <p>
  * A single control response entry (MLST) is returned with a leading space;
  * multiple (data) entries are returned without any leading spaces.
  * The parser requires that the leading space from the MLST entry is removed.
  * MLSD entries can begin with a single space if there are no facts.
+ * </p>
  *
  * @since 3.0
  */
