@@ -36,22 +36,28 @@ public class FTPFile implements Serializable
 
     /** A constant indicating an FTPFile is a file. */
     public static final int FILE_TYPE = 0;
+
     /** A constant indicating an FTPFile is a directory. */
     public static final int DIRECTORY_TYPE = 1;
+
     /** A constant indicating an FTPFile is a symbolic link. */
     public static final int SYMBOLIC_LINK_TYPE = 2;
+
     /** A constant indicating an FTPFile is of unknown type. */
     public static final int UNKNOWN_TYPE = 3;
 
     /** A constant indicating user access permissions. */
     public static final int USER_ACCESS = 0;
+
     /** A constant indicating group access permissions. */
     public static final int GROUP_ACCESS = 1;
+
     /** A constant indicating world access permissions. */
     public static final int WORLD_ACCESS = 2;
 
     /** A constant indicating file/directory read permission. */
     public static final int READ_PERMISSION = 0;
+
     /** A constant indicating file/directory write permission. */
     public static final int WRITE_PERMISSION = 1;
     /**
@@ -60,26 +66,27 @@ public class FTPFile implements Serializable
      */
     public static final int EXECUTE_PERMISSION = 2;
 
-    private int type, hardLinkCount;
-    private long size;
-    private String rawListing, user, group, name, link;
+    private int type = UNKNOWN_TYPE;
+
+    /** 0 is invalid as a link count. */
+    private int hardLinkCount;
+
+    /** 0 is valid, so use -1. */
+    private long size = -1;
+    private String rawListing;
+    private String user = "";
+    private String group = "";
+    private String name;
+    private String link;
     private Calendar date;
-    // If this is null, then list entry parsing failed
+
+    /** If this is null, then list entry parsing failed. */
     private final boolean[] permissions[]; // e.g. _permissions[USER_ACCESS][READ_PERMISSION]
 
     /** Creates an empty FTPFile. */
     public FTPFile()
     {
         permissions = new boolean[3][3];
-        type = UNKNOWN_TYPE;
-        // init these to values that do not occur in listings
-        // so can distinguish which fields are unset
-        hardLinkCount = 0; // 0 is invalid as a link count
-        size = -1; // 0 is valid, so use -1
-        user = "";
-        group = "";
-        date = null;
-        name = null;
     }
 
     /**
@@ -92,15 +99,6 @@ public class FTPFile implements Serializable
     {
         this.permissions = null; // flag that entry is invalid
         this.rawListing = rawListing;
-        this.type = UNKNOWN_TYPE;
-        // init these to values that do not occur in listings
-        // so can distinguish which fields are unset
-        this.hardLinkCount = 0; // 0 is invalid as a link count
-        this.size = -1; // 0 is valid, so use -1
-        this.user = "";
-        this.group = "";
-        this.date = null;
-        this.name = null;
     }
 
 
