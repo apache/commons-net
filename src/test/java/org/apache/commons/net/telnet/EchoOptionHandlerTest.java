@@ -16,15 +16,15 @@
  */
 package org.apache.commons.net.telnet;
 
-/***
+/**
  * JUnit test class for EchoOptionHandler
- ***/
+ */
 public class EchoOptionHandlerTest extends TelnetOptionHandlerTestAbstract
 {
 
-    /***
+    /**
      * setUp for the test.
-     ***/
+     */
     @Override
     protected void setUp()
     {
@@ -33,9 +33,9 @@ public class EchoOptionHandlerTest extends TelnetOptionHandlerTestAbstract
         opthand3 = new EchoOptionHandler(false, false, false, false);
     }
 
-    /***
+    /**
      * test of the constructors.
-     ***/
+     */
     @Override
     public void testConstructors()
     {
@@ -43,10 +43,10 @@ public class EchoOptionHandlerTest extends TelnetOptionHandlerTestAbstract
         super.testConstructors();
     }
 
-    /***
+    /**
      * test of client-driven subnegotiation.
      * Checks that no subnegotiation is made.
-     ***/
+     */
     @Override
     public void testStartSubnegotiation()
     {
@@ -57,10 +57,10 @@ public class EchoOptionHandlerTest extends TelnetOptionHandlerTestAbstract
         assertEquals(resp2, null);
     }
 
-    /***
+    /**
      * test of server-driven subnegotiation.
      * Checks that no subnegotiation is made.
-     ***/
+     */
     @Override
     public void testAnswerSubnegotiation()
     {

@@ -29,7 +29,7 @@ import org.apache.commons.net.ntp.NtpV3Packet;
 import org.apache.commons.net.ntp.TimeInfo;
 import org.apache.commons.net.ntp.TimeStamp;
 
-/***
+/**
  * This is an example program demonstrating how to use the NTPUDPClient
  * class. This program sends a Datagram client request packet to a
  * Network time Protocol (NTP) service port on a specified server,
@@ -43,7 +43,7 @@ import org.apache.commons.net.ntp.TimeStamp;
  * <br>
  * Example: NTPClient clock.psu.edu
  *
- ***/
+ */
 public final class NTPClient
 {
 

@@ -32,7 +32,7 @@ import org.apache.commons.net.telnet.SuppressGAOptionHandler;
 import org.apache.commons.net.telnet.InvalidTelnetOptionException;
 
 
-/***
+/**
  * This is a simple example of use of TelnetClient.
  * An external option handler (SimpleTelnetOptionHandler) is used.
  * Initial configuration requested by TelnetClient will be:
@@ -44,16 +44,16 @@ import org.apache.commons.net.telnet.InvalidTelnetOptionException;
  * When connected, type AYT to send an AYT command to the server and see
  * the result.
  * Type OPT to see a report of the state of the first 25 options.
- ***/
+ */
 public class TelnetClientExample implements Runnable, TelnetNotificationHandler
 {
     private static TelnetClient tc = null;
 
-    /***
+    /**
      * Main for the TelnetClientExample.
      * @param args input params
      * @throws Exception on error
-     ***/
+     */
     public static void main(final String[] args) throws Exception
     {
         FileOutputStream fout = null;
@@ -270,14 +270,14 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
     }
 
 
-    /***
+    /**
      * Callback method called when TelnetClient receives an option
      * negotiation command.
      *
      * @param negotiation_code - type of negotiation command received
      * (RECEIVED_DO, RECEIVED_DONT, RECEIVED_WILL, RECEIVED_WONT, RECEIVED_COMMAND)
      * @param option_code - code of the option negotiated
-     ***/
+     */
     @Override
     public void receivedNegotiation(final int negotiation_code, final int option_code)
     {
@@ -305,11 +305,11 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
         System.out.println("Received " + command + " for option code " + option_code);
    }
 
-    /***
+    /**
      * Reader thread.
      * Reads lines from the TelnetClient and echoes them
      * on the screen.
-     ***/
+     */
     @Override
     public void run()
     {

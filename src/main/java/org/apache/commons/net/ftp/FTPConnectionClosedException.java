@@ -18,7 +18,7 @@
 package org.apache.commons.net.ftp;
 import java.io.IOException;
 
-/***
+/**
  * FTPConnectionClosedException is used to indicate the premature or
  * unexpected closing of an FTP connection resulting from a
  * {@link org.apache.commons.net.ftp.FTPReply#SERVICE_NOT_AVAILABLE FTPReply.SERVICE_NOT_AVAILABLE }
@@ -29,23 +29,23 @@ import java.io.IOException;
  *
  * @see FTP
  * @see FTPClient
- ***/
+ */
 
 public class FTPConnectionClosedException extends IOException
 {
 
     private static final long serialVersionUID = 3500547241659379952L;
 
-    /*** Constructs a FTPConnectionClosedException with no message ***/
+    /** Constructs a FTPConnectionClosedException with no message */
     public FTPConnectionClosedException()
     {
     }
 
-    /***
+    /**
      * Constructs a FTPConnectionClosedException with a specified message.
      *
      * @param message  The message explaining the reason for the exception.
-     ***/
+     */
     public FTPConnectionClosedException(final String message)
     {
         super(message);

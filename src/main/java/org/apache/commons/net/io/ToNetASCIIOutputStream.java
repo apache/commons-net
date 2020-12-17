@@ -21,7 +21,7 @@ import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-/***
+/**
  * This class wraps an output stream, replacing all singly occurring
  * &lt;LF&gt; (linefeed) characters with &lt;CR&gt;&lt;LF&gt; (carriage return
  * followed by linefeed), which is the NETASCII standard for representing
@@ -30,18 +30,18 @@ import java.io.OutputStream;
  * conversion to NETASCII.
  *
  *
- ***/
+ */
 
 public final class ToNetASCIIOutputStream extends FilterOutputStream
 {
     private boolean lastWasCR;
 
-    /***
+    /**
      * Creates a ToNetASCIIOutputStream instance that wraps an existing
      * OutputStream.
      *
      * @param output  The OutputStream to wrap.
-     ***/
+     */
     public ToNetASCIIOutputStream(final OutputStream output)
     {
         super(output);
@@ -49,7 +49,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
     }
 
 
-    /***
+    /**
      * Writes a byte to the stream.    Note that a call to this method
      * may result in multiple writes to the underlying input stream in order
      * to convert naked newlines to NETASCII line separators.
@@ -59,7 +59,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
      * @param ch The byte to write.
      * @throws IOException If an error occurs while writing to the underlying
      *            stream.
-     ***/
+     */
     @Override
     public synchronized void write(final int ch)
     throws IOException
@@ -82,13 +82,13 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
     }
 
 
-    /***
+    /**
      * Writes a byte array to the stream.
      *
      * @param buffer  The byte array to write.
      * @throws IOException If an error occurs while writing to the underlying
      *            stream.
-     ***/
+     */
     @Override
     public synchronized void write(final byte buffer[])
     throws IOException
@@ -97,7 +97,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
     }
 
 
-    /***
+    /**
      * Writes a number of bytes from a byte array to the stream starting from
      * a given offset.
      *
@@ -106,7 +106,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
      * @param length  The number of bytes to write.
      * @throws IOException If an error occurs while writing to the underlying
      *            stream.
-     ***/
+     */
     @Override
     public synchronized void write(final byte buffer[], int offset, int length)
     throws IOException

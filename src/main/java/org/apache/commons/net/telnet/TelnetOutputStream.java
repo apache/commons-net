@@ -29,7 +29,7 @@ import java.io.OutputStream;
  * IACs are doubled.
  * Also a bare LF is converted to CRLF and a bare CR is converted to CR\0
  * <p>
- ***/
+ */
 
 
 final class TelnetOutputStream extends OutputStream
@@ -45,13 +45,13 @@ final class TelnetOutputStream extends OutputStream
     }
 
 
-    /***
+    /**
      * Writes a byte to the stream.
      * <p>
      * @param ch The byte to write.
      * @throws IOException If an error occurs while writing to the underlying
      *            stream.
-     ***/
+     */
     @Override
     public void write(int ch) throws IOException
     {
@@ -114,13 +114,13 @@ final class TelnetOutputStream extends OutputStream
     }
 
 
-    /***
+    /**
      * Writes a byte array to the stream.
      * <p>
      * @param buffer  The byte array to write.
      * @throws IOException If an error occurs while writing to the underlying
      *            stream.
-     ***/
+     */
     @Override
     public void write(final byte buffer[]) throws IOException
     {
@@ -128,7 +128,7 @@ final class TelnetOutputStream extends OutputStream
     }
 
 
-    /***
+    /**
      * Writes a number of bytes from a byte array to the stream starting from
      * a given offset.
      * <p>
@@ -137,7 +137,7 @@ final class TelnetOutputStream extends OutputStream
      * @param length  The number of bytes to write.
      * @throws IOException If an error occurs while writing to the underlying
      *            stream.
-     ***/
+     */
     @Override
     public void write(final byte buffer[], int offset, int length) throws IOException
     {
@@ -149,14 +149,14 @@ final class TelnetOutputStream extends OutputStream
         }
     }
 
-    /*** Flushes the stream. ***/
+    /** Flushes the stream. */
     @Override
     public void flush() throws IOException
     {
         client.flushOutputStream();
     }
 
-    /*** Closes the stream. ***/
+    /** Closes the stream. */
     @Override
     public void close() throws IOException
     {

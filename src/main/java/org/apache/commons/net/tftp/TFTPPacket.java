@@ -20,7 +20,7 @@ package org.apache.commons.net.tftp;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 
-/***
+/**
  * TFTPPacket is an abstract class encapsulating the functionality common
  * to the 5 types of TFTP packets.  It also provides a static factory
  * method that will create the correct TFTP packet instance from a
@@ -41,75 +41,75 @@ import java.net.InetAddress;
  *
  * @see TFTPPacketException
  * @see TFTP
- ***/
+ */
 
 public abstract class TFTPPacket
 {
-    /***
+    /**
      * The minimum size of a packet.  This is 4 bytes.  It is enough
      * to store the opcode and blocknumber or other required data
      * depending on the packet type.
-     ***/
+     */
     static final int MIN_PACKET_SIZE = 4;
 
-    /***
+    /**
      * This is the actual TFTP spec
      * identifier and is equal to 1.
      * Identifier returned by {@link #getType getType()}
      * indicating a read request packet.
-     ***/
+     */
     public static final int READ_REQUEST = 1;
 
-    /***
+    /**
      * This is the actual TFTP spec
      * identifier and is equal to 2.
      * Identifier returned by {@link #getType getType()}
      * indicating a write request packet.
-     ***/
+     */
     public static final int WRITE_REQUEST = 2;
 
-    /***
+    /**
      * This is the actual TFTP spec
      * identifier and is equal to 3.
      * Identifier returned by {@link #getType getType()}
      * indicating a data packet.
-     ***/
+     */
     public static final int DATA = 3;
 
-    /***
+    /**
      * This is the actual TFTP spec
      * identifier and is equal to 4.
      * Identifier returned by {@link #getType getType()}
      * indicating an acknowledgement packet.
-     ***/
+     */
     public static final int ACKNOWLEDGEMENT = 4;
 
-    /***
+    /**
      * This is the actual TFTP spec
      * identifier and is equal to 5.
      * Identifier returned by {@link #getType getType()}
      * indicating an error packet.
-     ***/
+     */
     public static final int ERROR = 5;
 
-    /***
+    /**
      * The TFTP data packet maximum segment size in bytes.  This is 512
      * and is useful for those familiar with the TFTP protocol who want
      * to use the {@link org.apache.commons.net.tftp.TFTP}
      * class methods to implement their own TFTP servers or clients.
-     ***/
+     */
     public static final int SEGMENT_SIZE = 512;
 
-    /*** The type of packet. ***/
+    /** The type of packet. */
     int type;
 
-    /*** The port the packet came from or is going to. ***/
+    /** The port the packet came from or is going to. */
     int port;
 
-    /*** The host the packet is going to be sent or where it came from. ***/
+    /** The host the packet is going to be sent or where it came from. */
     InetAddress address;
 
-    /***
+    /**
      * When you receive a datagram that you expect to be a TFTP packet, you use
      * this factory method to create the proper TFTPPacket object
      * encapsulating the data contained in that datagram.  This method is the
@@ -120,7 +120,7 @@ public abstract class TFTPPacket
      * @return The TFTPPacket object corresponding to the datagram.
      * @throws TFTPPacketException  If the datagram does not contain a valid
      *             TFTP packet.
-     ***/
+     */
     public static final TFTPPacket newTFTPPacket(final DatagramPacket datagram)
     throws TFTPPacketException
     {
@@ -159,7 +159,7 @@ public abstract class TFTPPacket
         return packet;
     }
 
-    /***
+    /**
      * This constructor is not visible outside of the package.  It is used
      * by subclasses within the package to initialize base data.
      *
@@ -174,7 +174,7 @@ public abstract class TFTPPacket
         this.port = port;
     }
 
-    /***
+    /**
      * This is an abstract method only available within the package for
      * implementing efficient datagram transport by elminating buffering.
      * It takes a datagram as an argument, and a byte buffer in which
@@ -184,10 +184,10 @@ public abstract class TFTPPacket
      * @param datagram  The datagram to create.
      * @param data The buffer to store the packet and to use in the datagram.
      * @return The datagram argument.
-     ***/
+     */
     abstract DatagramPacket newDatagram(DatagramPacket datagram, byte[] data);
 
-    /***
+    /**
      * Creates a UDP datagram containing all the TFTP packet
      * data in the proper format.
      * This is an abstract method, exposed to the programmer in case he
@@ -198,53 +198,53 @@ public abstract class TFTPPacket
      * method.
      *
      * @return A UDP datagram containing the TFTP packet.
-     ***/
+     */
     public abstract DatagramPacket newDatagram();
 
-    /***
+    /**
      * Returns the type of the packet.
      *
      * @return The type of the packet.
-     ***/
+     */
     public final int getType()
     {
         return type;
     }
 
-    /***
+    /**
      * Returns the address of the host where the packet is going to be sent
      * or where it came from.
      *
      * @return The type of the packet.
-     ***/
+     */
     public final InetAddress getAddress()
     {
         return address;
     }
 
-    /***
+    /**
      * Returns the port where the packet is going to be sent
      * or where it came from.
      *
      * @return The port where the packet came from or where it is going.
-     ***/
+     */
     public final int getPort()
     {
         return port;
     }
 
-    /***
+    /**
      * Sets the port where the packet is going to be sent.
      * @param port the port to set
-     ***/
+     */
     public final void setPort(final int port)
     {
         this.port = port;
     }
 
-    /*** Sets the host address where the packet is going to be sent.
+    /** Sets the host address where the packet is going to be sent.
      * @param address the address to set
-     ***/
+     */
     public final void setAddress(final InetAddress address)
     {
         this.address = address;

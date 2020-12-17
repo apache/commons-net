@@ -26,7 +26,7 @@ import java.net.Socket;
 import org.apache.commons.net.SocketClient;
 import org.apache.commons.net.io.SocketInputStream;
 
-/***
+/**
  * RExecClient implements the rexec() facility that first appeared in
  * 4.2BSD Unix.  This class will probably only be of use for connecting
  * to Unix systems and only when the rexecd daemon is configured to run,
@@ -60,7 +60,7 @@ import org.apache.commons.net.io.SocketInputStream;
  * @see SocketClient
  * @see RCommandClient
  * @see RLoginClient
- ***/
+ */
 
 public class RExecClient extends SocketClient
 {
@@ -69,19 +69,19 @@ public class RExecClient extends SocketClient
      */
     protected static final char NULL_CHAR = '\0';
 
-    /***
+    /**
      * The default rexec port.  Set to 512 in BSD Unix.
-     ***/
+     */
     public static final int DEFAULT_PORT = 512;
 
     private boolean remoteVerificationEnabled;
 
-    /***
+    /**
      * If a separate error stream is requested, <code>_errorStream_</code>
      * will point to an InputStream from which the standard error of the
      * remote process can be read (after a call to rexec()).  Otherwise,
      * <code> _errorStream_ </code> will be null.
-     ***/
+     */
     protected InputStream _errorStream_;
 
     // This can be overridden in local package to implement port range
@@ -112,10 +112,10 @@ public class RExecClient extends SocketClient
     }
 
 
-    /***
+    /**
      * The default RExecClient constructor.  Initializes the
      * default port to <code> DEFAULT_PORT </code>.
-     ***/
+     */
     public RExecClient()
     {
         _errorStream_ = null;
@@ -123,35 +123,35 @@ public class RExecClient extends SocketClient
     }
 
 
-    /***
+    /**
      * Returns the InputStream from which the standard output of the remote
      * process can be read.  The input stream will only be set after a
      * successful rexec() invocation.
      *
      * @return The InputStream from which the standard output of the remote
      * process can be read.
-     ***/
+     */
     public InputStream getInputStream()
     {
         return _input_;
     }
 
 
-    /***
+    /**
      * Returns the OutputStream through which the standard input of the remote
      * process can be written.  The output stream will only be set after a
      * successful rexec() invocation.
      *
      * @return The OutputStream through which the standard input of the remote
      * process can be written.
-     ***/
+     */
     public OutputStream getOutputStream()
     {
         return _output_;
     }
 
 
-    /***
+    /**
      * Returns the InputStream from which the standard error of the remote
      * process can be read if a separate error stream is requested from
      * the server.  Otherwise, null will be returned.  The error stream
@@ -160,14 +160,14 @@ public class RExecClient extends SocketClient
      * @return The InputStream from which the standard error of the remote
      * process can be read if a separate error stream is requested from
      * the server.  Otherwise, null will be returned.
-     ***/
+     */
     public InputStream getErrorStream()
     {
         return _errorStream_;
     }
 
 
-    /***
+    /**
      * Remotely executes a command through the rexecd daemon on the server
      * to which the RExecClient is connected.  After calling this method,
      * you may interact with the remote process through its standard input,
@@ -198,7 +198,7 @@ public class RExecClient extends SocketClient
      *        False if not.
      * @throws IOException If the rexec() attempt fails.  The exception
      *            will contain a message indicating the nature of the failure.
-     ***/
+     */
     public void rexec(final String username, final String password,
                       final String command, final boolean separateErrorStream)
     throws IOException
@@ -237,13 +237,13 @@ public class RExecClient extends SocketClient
     }
 
 
-    /***
+    /**
      * Same as <code> rexec(username, password, command, false); </code>
      * @param username the user name
      * @param password the password
      * @param command the command to run
      * @throws IOException if an error occurs
-     ***/
+     */
     public void rexec(final String username, final String password,
                       final String command)
     throws IOException
@@ -251,12 +251,12 @@ public class RExecClient extends SocketClient
         rexec(username, password, command, false);
     }
 
-    /***
+    /**
      * Disconnects from the server, closing all associated open sockets and
      * streams.
      *
      * @throws IOException If there an error occurs while disconnecting.
-     ***/
+     */
     @Override
     public void disconnect() throws IOException
     {
@@ -268,7 +268,7 @@ public class RExecClient extends SocketClient
     }
 
 
-    /***
+    /**
      * Enable or disable verification that the remote host connecting to
      * create a separate error stream is the same as the host to which
      * the standard out stream is connected.  The default is for verification
@@ -276,19 +276,19 @@ public class RExecClient extends SocketClient
      * client is currently connected or not.
      *
      * @param enable True to enable verification, false to disable verification.
-     ***/
+     */
     public final void setRemoteVerificationEnabled(final boolean enable)
     {
         remoteVerificationEnabled = enable;
     }
 
-    /***
+    /**
      * Return whether or not verification of the remote host providing a
      * separate error stream is enabled.  The default behavior is for
      * verification to be enabled.
      *
      * @return True if verification is enabled, false if not.
-     ***/
+     */
     public final boolean isRemoteVerificationEnabled()
     {
         return remoteVerificationEnabled;

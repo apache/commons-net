@@ -23,7 +23,7 @@ import java.net.InetAddress;
 
 import org.apache.commons.net.discard.DiscardUDPClient;
 
-/***
+/**
  * The EchoUDPClient class is a UDP implementation of a client for the
  * Echo protocol described in RFC 862.  To use the class,
  * just open a local UDP port
@@ -36,16 +36,16 @@ import org.apache.commons.net.discard.DiscardUDPClient;
  *
  * @see EchoTCPClient
  * @see DiscardUDPClient
- ***/
+ */
 
 public final class EchoUDPClient extends DiscardUDPClient
 {
-    /*** The default echo port.  It is set to 7 according to RFC 862. ***/
+    /** The default echo port.  It is set to 7 according to RFC 862. */
     public static final int DEFAULT_PORT = 7;
 
     private final DatagramPacket receivePacket = new DatagramPacket(new byte[0], 0);
 
-    /***
+    /**
      * Sends the specified data to the specified server at the default echo
      * port.
      *
@@ -55,7 +55,7 @@ public final class EchoUDPClient extends DiscardUDPClient
      * @param host  The address of the server.
      * @throws IOException If an error occurs during the datagram send
      *     operation.
-     ***/
+     */
     @Override
     public void send(final byte[] data, final int length, final InetAddress host)
     throws IOException
@@ -64,7 +64,7 @@ public final class EchoUDPClient extends DiscardUDPClient
     }
 
 
-    /*** Same as <code> send(data, data.length, host) </code> ***/
+    /** Same as <code> send(data, data.length, host) </code> */
     @Override
     public void send(final byte[] data, final InetAddress host) throws IOException
     {
@@ -72,7 +72,7 @@ public final class EchoUDPClient extends DiscardUDPClient
     }
 
 
-    /***
+    /**
      * Receives echoed data and returns its length.  The data may be divided
      * up among multiple datagrams, requiring multiple calls to receive.
      * Also, the UDP packets will not necessarily arrive in the same order
@@ -82,7 +82,7 @@ public final class EchoUDPClient extends DiscardUDPClient
      *
      * @return  Length of actual data received.
      * @throws IOException If an error occurs while receiving the data.
-     ***/
+     */
     public int receive(final byte[] data, final int length) throws IOException
     {
         receivePacket.setData(data);
@@ -91,11 +91,11 @@ public final class EchoUDPClient extends DiscardUDPClient
         return receivePacket.getLength();
     }
 
-    /*** Same as <code> receive(data, data.length)</code>
+    /** Same as <code> receive(data, data.length)</code>
      * @param data the buffer to receive the input
      * @return the number of bytes
      * @throws IOException on error
-     ***/
+     */
     public int receive(final byte[] data) throws IOException
     {
         return receive(data, data.length);

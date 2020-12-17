@@ -29,7 +29,7 @@ import java.net.SocketException;
 import org.apache.commons.net.echo.EchoTCPClient;
 import org.apache.commons.net.echo.EchoUDPClient;
 
-/***
+/**
  * This is an example program demonstrating how to use the EchoTCPClient
  * and EchoUDPClient classes.  This program connects to the default echo
  * service port of a specified server, then reads lines from standard
@@ -38,7 +38,7 @@ import org.apache.commons.net.echo.EchoUDPClient;
  * port.
  * <p>
  * Usage: echo [-udp] <hostname>
- ***/
+ */
 public final class echo
 {
 

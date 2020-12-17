@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 
-/***
+/**
  * This class wraps an input stream, storing a reference to its originating
  * socket.  When the stream is closed, it will also close the socket
  * immediately afterward.  This class is useful for situations where you
@@ -32,33 +32,33 @@ import java.net.Socket;
  *
  *
  * @see SocketOutputStream
- ***/
+ */
 
 public class SocketInputStream extends FilterInputStream
 {
     private final Socket socket;
 
-    /***
+    /**
      * Creates a SocketInputStream instance wrapping an input stream and
      * storing a reference to a socket that should be closed on closing
      * the stream.
      *
      * @param socket  The socket to close on closing the stream.
      * @param stream  The input stream to wrap.
-     ***/
+     */
     public SocketInputStream(final Socket socket, final InputStream stream)
     {
         super(stream);
         this.socket = socket;
     }
 
-    /***
+    /**
      * Closes the stream and immediately afterward closes the referenced
      * socket.
      *
      * @throws IOException  If there is an error in closing the stream
      *                         or socket.
-     ***/
+     */
     @Override
     public void close() throws IOException
     {

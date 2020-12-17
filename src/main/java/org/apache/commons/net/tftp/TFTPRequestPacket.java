@@ -20,7 +20,7 @@ package org.apache.commons.net.tftp;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 
-/***
+/**
  * An abstract class derived from TFTPPacket definiing a TFTP Request
  * packet type.  It is subclassed by the
  * {@link org.apache.commons.net.tftp.TFTPReadRequestPacket}
@@ -45,34 +45,34 @@ import java.net.InetAddress;
  * @see TFTPWriteRequestPacket
  * @see TFTPPacketException
  * @see TFTP
- ***/
+ */
 
 public abstract class TFTPRequestPacket extends TFTPPacket
 {
-    /***
+    /**
      * An array containing the string names of the transfer modes and indexed
      * by the transfer mode constants.
-     ***/
+     */
     static final String[] modeStrings = { "netascii", "octet" };
 
-    /***
+    /**
      * A null terminated byte array representation of the ascii names of the
      * transfer mode constants.  This is convenient for creating the TFTP
      * request packets.
-     ***/
+     */
     private static final byte[] modeBytes[] = {
                                            { (byte)'n', (byte)'e', (byte)'t', (byte)'a', (byte)'s', (byte)'c',
                                              (byte)'i', (byte)'i', 0 },
                                            { (byte)'o', (byte)'c', (byte)'t', (byte)'e', (byte)'t', 0 }
                                        };
 
-    /*** The transfer mode of the request. ***/
+    /** The transfer mode of the request. */
     private final int mode;
 
-    /*** The file name of the request. ***/
+    /** The file name of the request. */
     private final String fileName;
 
-    /***
+    /**
      * Creates a request packet of a given type to be sent to a host at a
      * given port with a file name and transfer mode request.
      *
@@ -83,7 +83,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
      * @param fileName The requested file name.
      * @param mode The requested transfer mode.  This should be on of the TFTP
      *        class MODE constants (e.g., TFTP.NETASCII_MODE).
-     ***/
+     */
     TFTPRequestPacket(final InetAddress destination, final int port,
                       final int type, final String fileName, final int mode)
     {
@@ -93,7 +93,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
         this.mode = mode;
     }
 
-    /***
+    /**
      * Creates a request packet of a given type based on a received
      * datagram.  Assumes the datagram is at least length 4, else an
      * ArrayIndexOutOfBoundsException may be thrown.
@@ -103,7 +103,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
      * @param datagram  The datagram containing the received request.
      * @throws TFTPPacketException  If the datagram isn't a valid TFTP
      *         request packet of the appropriate type.
-     ***/
+     */
     TFTPRequestPacket(final int type, final DatagramPacket datagram)
     throws TFTPPacketException
     {
@@ -165,7 +165,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
     }
 
 
-    /***
+    /**
      * This is a method only available within the package for
      * implementing efficient datagram transport by elminating buffering.
      * It takes a datagram as an argument, and a byte buffer in which
@@ -175,7 +175,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
      * @param datagram  The datagram to create.
      * @param data The buffer to store the packet and to use in the datagram.
      * @return The datagram argument.
-     ***/
+     */
     @Override
     final DatagramPacket newDatagram(final DatagramPacket datagram, final byte[] data)
     {
@@ -199,7 +199,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
         return datagram;
     }
 
-    /***
+    /**
      * Creates a UDP datagram containing all the TFTP
      * request packet data in the proper format.
      * This is a method exposed to the programmer in case he
@@ -209,7 +209,7 @@ public abstract class TFTPRequestPacket extends TFTPPacket
      * this method.
      *
      * @return A UDP datagram containing the TFTP request packet.
-     ***/
+     */
     @Override
     public final DatagramPacket newDatagram()
     {
@@ -230,21 +230,21 @@ public abstract class TFTPRequestPacket extends TFTPPacket
         return new DatagramPacket(data, data.length, address, port);
     }
 
-    /***
+    /**
      * Returns the transfer mode of the request.
      *
      * @return The transfer mode of the request.
-     ***/
+     */
     public final int getMode()
     {
         return mode;
     }
 
-    /***
+    /**
      * Returns the requested file name.
      *
      * @return The requested file name.
-     ***/
+     */
     public final String getFilename()
     {
         return fileName;

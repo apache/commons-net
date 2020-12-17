@@ -17,28 +17,28 @@
 
 package org.apache.commons.net.telnet;
 
-/***
+/**
  * Implements the telnet window size option RFC 1073.
  * @since 2.0
- ***/
+ */
 public class WindowSizeOptionHandler extends TelnetOptionHandler
 {
-    /***
+    /**
      * Horizontal Size
-     ***/
+     */
     private int width = 80;
 
-    /***
+    /**
      * Vertical Size
-     ***/
+     */
     private int height = 24;
 
-    /***
+    /**
      * Window size option
-     ***/
+     */
     protected static final int WINDOW_SIZE = 31;
 
-    /***
+    /**
      * Constructor for the WindowSizeOptionHandler. Allows defining desired
      * initial setting for local/remote activation of this option and
      * behavior in case a local/remote activation request for this
@@ -50,7 +50,7 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
      * @param initremote - if set to true, a DO is sent upon connection.
      * @param acceptlocal - if set to true, any DO request is accepted.
      * @param acceptremote - if set to true, any WILL request is accepted.
-     ***/
+     */
     public WindowSizeOptionHandler(
         final int nWidth,
         final int nHeight,
@@ -71,13 +71,13 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
         height = nHeight;
     }
 
-    /***
+    /**
      * Constructor for the WindowSizeOptionHandler. Initial and accept
      * behavior flags are set to false
      * <p>
      * @param nWidth - Window width.
      * @param nHeight - Window Height
-     ***/
+     */
     public WindowSizeOptionHandler(
         final int nWidth,
         final int nHeight
@@ -94,12 +94,12 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
         height = nHeight;
     }
 
-    /***
+    /**
      * Implements the abstract method of TelnetOptionHandler.
      * This will send the client Height and Width to the server.
      * <p>
      * @return array to send to remote system
-     ***/
+     */
     @Override
     public int[] startSubnegotiationLocal()
     {

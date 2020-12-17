@@ -18,7 +18,7 @@ package org.apache.commons.net.ntp;
 
 import java.net.DatagramPacket;
 
-/***
+/**
  * Implementation of NtpV3Packet with methods converting Java objects to/from
  * the Network Time Protocol (NTP) data message header format described in RFC-1305.
  *
@@ -60,7 +60,7 @@ public class NtpV3Impl implements NtpV3Packet
     {
     }
 
-    /***
+    /**
      * Returns mode as defined in RFC-1305 which is a 3-bit integer
      * whose value is indicated by the MODE_xxx parameters.
      *
@@ -72,7 +72,7 @@ public class NtpV3Impl implements NtpV3Packet
         return (ui(buf[MODE_INDEX]) >> MODE_SHIFT) & 0x7;
     }
 
-    /***
+    /**
      * Return human-readable name of message mode type as described in
      * RFC 1305.
      * @return mode name as string.
@@ -83,7 +83,7 @@ public class NtpV3Impl implements NtpV3Packet
         return NtpUtils.getModeName(getMode());
     }
 
-    /***
+    /**
      * Set mode as defined in RFC-1305.
      *
      * @param mode the mode to set
@@ -94,7 +94,7 @@ public class NtpV3Impl implements NtpV3Packet
         buf[MODE_INDEX] = (byte) (buf[MODE_INDEX] & 0xF8 | mode & 0x7);
     }
 
-    /***
+    /**
      * Returns leap indicator as defined in RFC-1305 which is a two-bit code:
      *  0=no warning
      *  1=last minute has 61 seconds
@@ -109,7 +109,7 @@ public class NtpV3Impl implements NtpV3Packet
         return (ui(buf[LI_INDEX]) >> LI_SHIFT) & 0x3;
     }
 
-    /***
+    /**
      * Set leap indicator as defined in RFC-1305.
      *
      * @param li leap indicator.
@@ -120,7 +120,7 @@ public class NtpV3Impl implements NtpV3Packet
         buf[LI_INDEX] = (byte) (buf[LI_INDEX] & 0x3F | ((li & 0x3) << LI_SHIFT));
     }
 
-    /***
+    /**
      * Returns poll interval as defined in RFC-1305, which is an eight-bit
      * signed integer indicating the maximum interval between successive
      * messages, in seconds to the nearest power of two (e.g. value of six
@@ -135,7 +135,7 @@ public class NtpV3Impl implements NtpV3Packet
         return buf[POLL_INDEX];
     }
 
-    /***
+    /**
      * Set poll interval as defined in RFC-1305.
      *
      * @param poll poll interval.
@@ -146,7 +146,7 @@ public class NtpV3Impl implements NtpV3Packet
         buf[POLL_INDEX] = (byte) (poll & 0xFF);
     }
 
-    /***
+    /**
      * Returns precision as defined in RFC-1305 encoded as an 8-bit signed
      * integer (seconds to nearest power of two).
      * Values normally range from -6 to -20.
@@ -159,7 +159,7 @@ public class NtpV3Impl implements NtpV3Packet
         return buf[PRECISION_INDEX];
     }
 
-    /***
+    /**
      * Set precision as defined in RFC-1305.
      * @param precision the precision to set
      * @since 3.4
@@ -170,7 +170,7 @@ public class NtpV3Impl implements NtpV3Packet
         buf[PRECISION_INDEX] = (byte) (precision & 0xFF);
     }
 
-    /***
+    /**
      * Returns NTP version number as defined in RFC-1305.
      *
      * @return NTP version number.
@@ -181,7 +181,7 @@ public class NtpV3Impl implements NtpV3Packet
         return (ui(buf[VERSION_INDEX]) >> VERSION_SHIFT) & 0x7;
     }
 
-    /***
+    /**
      * Set NTP version as defined in RFC-1305.
      *
      * @param version NTP version.
@@ -192,7 +192,7 @@ public class NtpV3Impl implements NtpV3Packet
         buf[VERSION_INDEX] = (byte) (buf[VERSION_INDEX] & 0xC7 | ((version & 0x7) << VERSION_SHIFT));
     }
 
-    /***
+    /**
      * Returns Stratum as defined in RFC-1305, which indicates the stratum level
      * of the local clock, with values defined as follows: 0=unspecified,
      * 1=primary ref clock, and all others a secondary reference (via NTP).
@@ -205,7 +205,7 @@ public class NtpV3Impl implements NtpV3Packet
         return ui(buf[STRATUM_INDEX]);
     }
 
-    /***
+    /**
      * Set stratum level as defined in RFC-1305.
      *
      * @param stratum stratum level.
@@ -216,7 +216,7 @@ public class NtpV3Impl implements NtpV3Packet
         buf[STRATUM_INDEX] = (byte) (stratum & 0xFF);
     }
 
-    /***
+    /**
      * Return root delay as defined in RFC-1305, which is the total roundtrip delay
      * to the primary reference source, in seconds. Values can take positive and
      * negative values, depending on clock precision and skew.
@@ -229,7 +229,7 @@ public class NtpV3Impl implements NtpV3Packet
         return getInt(ROOT_DELAY_INDEX);
     }
 
-    /***
+    /**
      * Set root delay as defined in RFC-1305.
      *
      * @param delay root delay
@@ -256,7 +256,7 @@ public class NtpV3Impl implements NtpV3Packet
         return l / 65.536;
     }
 
-    /***
+    /**
      * Returns root dispersion as defined in RFC-1305.
      * @return root dispersion.
      */
@@ -266,7 +266,7 @@ public class NtpV3Impl implements NtpV3Packet
         return getInt(ROOT_DISPERSION_INDEX);
     }
 
-    /***
+    /**
      * Set root dispersion as defined in RFC-1305.
      *
      * @param dispersion root dispersion
@@ -278,7 +278,7 @@ public class NtpV3Impl implements NtpV3Packet
         setInt(ROOT_DISPERSION_INDEX, dispersion);
     }
 
-    /***
+    /**
      * Returns root dispersion (as defined in RFC-1305) in milliseconds.
      *
      * @return root dispersion in milliseconds
@@ -290,7 +290,7 @@ public class NtpV3Impl implements NtpV3Packet
         return (l * 1000) / 65536L;
     }
 
-    /***
+    /**
      * Returns root dispersion (as defined in RFC-1305) in milliseconds
      * as double precision value.
      *
@@ -303,7 +303,7 @@ public class NtpV3Impl implements NtpV3Packet
         return l / 65.536;
     }
 
-    /***
+    /**
      * Set reference clock identifier field with 32-bit unsigned integer value.
      * See RFC-1305 for description.
      *
@@ -315,7 +315,7 @@ public class NtpV3Impl implements NtpV3Packet
         setInt(REFERENCE_ID_INDEX, refId);
     }
 
-    /***
+    /**
      * Returns the reference id as defined in RFC-1305, which is
      * a 32-bit integer whose value is dependent on several criteria.
      *
@@ -327,7 +327,7 @@ public class NtpV3Impl implements NtpV3Packet
         return getInt(REFERENCE_ID_INDEX);
     }
 
-    /***
+    /**
      * Returns the reference id string. String cannot be null but
      * value is dependent on the version of the NTP spec supported
      * and stratum level. Value can be an empty string, clock type string,
@@ -358,7 +358,7 @@ public class NtpV3Impl implements NtpV3Packet
         return idAsHex();
     }
 
-    /***
+    /**
      * Returns Reference id as dotted IP address.
      * @return refId as IP address string.
      */
@@ -388,7 +388,7 @@ public class NtpV3Impl implements NtpV3Packet
         return Integer.toHexString(getReferenceId());
     }
 
-    /***
+    /**
      * Returns the transmit timestamp as defined in RFC-1305.
      *
      * @return the transmit timestamp as defined in RFC-1305.
@@ -400,7 +400,7 @@ public class NtpV3Impl implements NtpV3Packet
         return getTimestamp(TRANSMIT_TIMESTAMP_INDEX);
     }
 
-    /***
+    /**
      * Set transmit time with NTP timestamp.
      * If <code>ts</code> is null then zero time is used.
      *
@@ -412,7 +412,7 @@ public class NtpV3Impl implements NtpV3Packet
         setTimestamp(TRANSMIT_TIMESTAMP_INDEX, ts);
     }
 
-    /***
+    /**
      * Set originate timestamp given NTP TimeStamp object.
      * If <code>ts</code> is null then zero time is used.
      *
@@ -424,7 +424,7 @@ public class NtpV3Impl implements NtpV3Packet
         setTimestamp(ORIGINATE_TIMESTAMP_INDEX, ts);
     }
 
-    /***
+    /**
      * Returns the originate time as defined in RFC-1305.
      *
      * @return the originate time.
@@ -436,7 +436,7 @@ public class NtpV3Impl implements NtpV3Packet
         return getTimestamp(ORIGINATE_TIMESTAMP_INDEX);
     }
 
-    /***
+    /**
      * Returns the reference time as defined in RFC-1305.
      *
      * @return the reference time as <code>TimeStamp</code> object.
@@ -448,7 +448,7 @@ public class NtpV3Impl implements NtpV3Packet
         return getTimestamp(REFERENCE_TIMESTAMP_INDEX);
     }
 
-    /***
+    /**
      * Set Reference time with NTP timestamp. If <code>ts</code> is null
      * then zero time is used.
      *
@@ -460,7 +460,7 @@ public class NtpV3Impl implements NtpV3Packet
         setTimestamp(REFERENCE_TIMESTAMP_INDEX, ts);
     }
 
-    /***
+    /**
      * Returns receive timestamp as defined in RFC-1305.
      *
      * @return the receive time.
@@ -472,7 +472,7 @@ public class NtpV3Impl implements NtpV3Packet
         return getTimestamp(RECEIVE_TIMESTAMP_INDEX);
     }
 
-    /***
+    /**
      * Set receive timestamp given NTP TimeStamp object.
      * If <code>ts</code> is null then zero time is used.
      *
@@ -484,7 +484,7 @@ public class NtpV3Impl implements NtpV3Packet
         setTimestamp(RECEIVE_TIMESTAMP_INDEX, ts);
     }
 
-    /***
+    /**
      * Return type of time packet. The values (e.g. NTP, TIME, ICMP, ...)
      * correspond to the protocol used to obtain the timing information.
      *
@@ -496,7 +496,7 @@ public class NtpV3Impl implements NtpV3Packet
         return "NTP";
     }
 
-    /***
+    /**
      * @return 4 bytes as 32-bit int
      */
     private int getInt(final int index)
@@ -509,7 +509,7 @@ public class NtpV3Impl implements NtpV3Packet
         return i;
     }
 
-    /***
+    /**
      * Set integer value at index position.
      *
      * @param idx index position
@@ -534,7 +534,7 @@ public class NtpV3Impl implements NtpV3Packet
         return new TimeStamp(getLong(index));
     }
 
-    /***
+    /**
      * Get Long value represented by bits starting at specified index.
      *
      * @return 8 bytes as 64-bit long
@@ -552,7 +552,7 @@ public class NtpV3Impl implements NtpV3Packet
         return i;
     }
 
-    /***
+    /**
      * Sets the NTP timestamp at the given array index.
      *
      * @param index index into the byte array.
@@ -570,7 +570,7 @@ public class NtpV3Impl implements NtpV3Packet
         // buf[index] |= 0x80;  // only set if 1900 baseline....
     }
 
-    /***
+    /**
      * Returns the datagram packet with the NTP details already filled in.
      *
      * @return a datagram packet.
@@ -585,7 +585,7 @@ public class NtpV3Impl implements NtpV3Packet
         return dp;
     }
 
-    /***
+    /**
      * Set the contents of this object from source datagram packet.
      *
      * @param srcDp source DatagramPacket to copy contents from, never null.
@@ -610,7 +610,7 @@ public class NtpV3Impl implements NtpV3Packet
         dp.setData(buf);
     }
 
-    /***
+    /**
      * Compares this object against the specified object.
      * The result is <code>true</code> if and only if the argument is
      * not <code>null</code> and is a <code>NtpV3Impl</code> object that
@@ -634,7 +634,7 @@ public class NtpV3Impl implements NtpV3Packet
         return java.util.Arrays.equals(buf, other.buf);
     }
 
-    /***
+    /**
      * Computes a hashcode for this object. The result is the exclusive
      * OR of the values of this object stored as a byte array.
      *
@@ -647,7 +647,7 @@ public class NtpV3Impl implements NtpV3Packet
         return java.util.Arrays.hashCode(buf);
     }
 
-    /***
+    /**
      * Convert byte to unsigned integer.
      * Java only has signed types so we have to do
      * more work to get unsigned ops.
@@ -661,7 +661,7 @@ public class NtpV3Impl implements NtpV3Packet
         return i;
     }
 
-    /***
+    /**
      * Convert byte to unsigned long.
      * Java only has signed types so we have to do
      * more work to get unsigned ops
@@ -675,7 +675,7 @@ public class NtpV3Impl implements NtpV3Packet
         return i;
     }
 
-    /***
+    /**
      * Returns details of NTP packet as a string.
      *
      * @return details of NTP packet as a string.

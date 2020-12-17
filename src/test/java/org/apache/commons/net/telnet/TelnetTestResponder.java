@@ -20,12 +20,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 
-/***
+/**
  * Simple stream responder.
  * Waits for strings on an input stream and answers
  * sending corresponfing strings on an output stream.
  * The reader runs in a separate thread.
- ***/
+ */
 public class TelnetTestResponder implements Runnable
 {
     InputStream _is;
@@ -33,7 +33,7 @@ public class TelnetTestResponder implements Runnable
     String _inputs[], _outputs[];
     long _timeout;
 
-    /***
+    /**
      * Constructor.
      * Starts a new thread for the reader.
      * <p>
@@ -42,7 +42,7 @@ public class TelnetTestResponder implements Runnable
      * @param inputs - Array of waited for Strings.
      * @param outputs - Array of answers.
      * @param timeout - milliseconds
-     ***/
+     */
     public TelnetTestResponder(final InputStream is, final OutputStream os, final String inputs[], final String outputs[], final long timeout)
     {
         _is = is;
@@ -55,9 +55,9 @@ public class TelnetTestResponder implements Runnable
         reader.start();
     }
 
-    /***
+    /**
      * Runs the responder
-     ***/
+     */
     @Override
     public void run()
     {

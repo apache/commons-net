@@ -18,14 +18,14 @@ package org.apache.commons.net.telnet;
 
 import junit.framework.TestCase;
 
-/***
+/**
  * JUnit test class for TelnetOption
- ***/
+ */
 public class TelnetOptionTest extends TestCase
 {
-    /***
+    /**
      * test of the isValidOption method.
-     ***/
+     */
     public void testisValidOption()
     {
         assertTrue(TelnetOption.isValidOption(0));
@@ -34,9 +34,9 @@ public class TelnetOptionTest extends TestCase
         assertTrue(!TelnetOption.isValidOption(256));
     }
 
-    /***
+    /**
      * test of the getOption method.
-     ***/
+     */
     public void testGetOption()
     {
         assertEquals(TelnetOption.getOption(0), "BINARY");

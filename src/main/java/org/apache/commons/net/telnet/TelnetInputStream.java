@@ -472,7 +472,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     }
 
 
-    /***
+    /**
      * Reads the next number of bytes from the stream into an array and
      * returns the number of bytes read.  Returns -1 if the end of the
      * stream has been reached.
@@ -482,7 +482,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
      *          end of the message has been reached.
      * @throws IOException If an error occurs in reading the underlying
      *            stream.
-     ***/
+     */
     @Override
     public int read(final byte buffer[]) throws IOException
     {
@@ -490,7 +490,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     }
 
 
-    /***
+    /**
      * Reads the next number of bytes from the stream into an array and returns
      * the number of bytes read.  Returns -1 if the end of the
      * message has been reached.  The characters are stored in the array
@@ -503,7 +503,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
      *          end of the stream has been reached.
      * @throws IOException If an error occurs while reading the underlying
      *            stream.
-     ***/
+     */
     @Override
     public int read(final byte buffer[], int offset, int length) throws IOException
     {
@@ -538,7 +538,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     }
 
 
-    /*** Returns false.  Mark is not supported. ***/
+    /** Returns false.  Mark is not supported. */
     @Override
     public boolean markSupported()
     {

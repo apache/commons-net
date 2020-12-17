@@ -19,7 +19,7 @@ package org.apache.commons.net.bsd;
 
 import java.io.IOException;
 
-/***
+/**
  * RLoginClient is very similar to
  * {@link org.apache.commons.net.bsd.RCommandClient},
  * from which it is derived, and uses the rcmd() facility implemented
@@ -60,27 +60,27 @@ import java.io.IOException;
  * @see org.apache.commons.net.SocketClient
  * @see RExecClient
  * @see RCommandClient
- ***/
+ */
 
 public class RLoginClient extends RCommandClient
 {
-    /***
+    /**
      * The default rlogin port.  Set to 513 in BSD Unix and according
      * to RFC 1282.
-     ***/
+     */
     public static final int DEFAULT_PORT = 513;
 
-    /***
+    /**
      * The default RLoginClient constructor.  Initializes the
      * default port to <code> DEFAULT_PORT </code>.
-     ***/
+     */
     public RLoginClient()
     {
         setDefaultPort(DEFAULT_PORT);
     }
 
 
-    /***
+    /**
      * Logins into a remote machine through the rlogind daemon on the server
      * to which the RLoginClient is connected.  After calling this method,
      * you may interact with the remote login shell through its standard input
@@ -107,7 +107,7 @@ public class RLoginClient extends RCommandClient
      *        as a baud rate or bps (e.g., 9600 or 38400)
      * @throws IOException If the rlogin() attempt fails.  The exception
      *            will contain a message indicating the nature of the failure.
-     ***/
+     */
     public void rlogin(final String localUsername, final String remoteUsername,
                        final String terminalType, final int terminalSpeed)
     throws IOException
@@ -116,13 +116,13 @@ public class RLoginClient extends RCommandClient
               false);
     }
 
-    /***
+    /**
      * Same as the other rlogin method, but no terminal speed is defined.
      * @param localUsername the local user
      * @param remoteUsername the remote user
      * @param terminalType the terminal type
      * @throws IOException on error
-     ***/
+     */
     public void rlogin(final String localUsername, final String remoteUsername,
                        final String terminalType)
     throws IOException

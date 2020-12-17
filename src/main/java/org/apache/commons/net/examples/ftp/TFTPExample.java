@@ -28,7 +28,7 @@ import org.apache.commons.net.tftp.TFTP;
 import org.apache.commons.net.tftp.TFTPClient;
 import org.apache.commons.net.tftp.TFTPPacket;
 
-/***
+/**
  * This is an example of a simple Java tftp client.
  * Notice how all of the code is really just argument processing and
  * error handling.
@@ -44,7 +44,7 @@ import org.apache.commons.net.tftp.TFTPPacket;
  *        -r Receive a remote file
  *        -a Use ASCII transfer mode
  *        -b Use binary transfer mode
- ***/
+ */
 public final class TFTPExample
 {
     static final String USAGE =

@@ -17,32 +17,32 @@
 
 package org.apache.commons.net.telnet;
 
-/***
+/**
  * Implements the telnet terminal type option RFC 1091.
- ***/
+ */
 public class TerminalTypeOptionHandler extends TelnetOptionHandler
 {
-    /***
+    /**
      * Terminal type
-     ***/
+     */
     private final String termType;
 
-    /***
+    /**
      * Terminal type option
-     ***/
+     */
     protected static final int TERMINAL_TYPE = 24;
 
-    /***
+    /**
      * Send (for subnegotiation)
-     ***/
+     */
     protected static final int TERMINAL_TYPE_SEND =  1;
 
-    /***
+    /**
      * Is (for subnegotiation)
-     ***/
+     */
     protected static final int TERMINAL_TYPE_IS =  0;
 
-    /***
+    /**
      * Constructor for the TerminalTypeOptionHandler. Allows defining desired
      * initial setting for local/remote activation of this option and
      * behavior in case a local/remote activation request for this
@@ -53,7 +53,7 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler
      * @param initremote - if set to true, a DO is sent upon connection.
      * @param acceptlocal - if set to true, any DO request is accepted.
      * @param acceptremote - if set to true, any WILL request is accepted.
-     ***/
+     */
     public TerminalTypeOptionHandler(final String termtype,
                                 final boolean initlocal,
                                 final boolean initremote,
@@ -65,26 +65,26 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler
         termType = termtype;
     }
 
-    /***
+    /**
      * Constructor for the TerminalTypeOptionHandler. Initial and accept
      * behavior flags are set to false
      * <p>
      * @param termtype - terminal type that will be negotiated.
-     ***/
+     */
     public TerminalTypeOptionHandler(final String termtype)
     {
         super(TelnetOption.TERMINAL_TYPE, false, false, false, false);
         termType = termtype;
     }
 
-    /***
+    /**
      * Implements the abstract method of TelnetOptionHandler.
      * <p>
      * @param suboptionData - the sequence received, without IAC SB &amp; IAC SE
      * @param suboptionLength - the length of data in suboption_data
      * <p>
      * @return terminal type information
-     ***/
+     */
     @Override
     public int[] answerSubnegotiation(final int suboptionData[], final int suboptionLength)
     {

@@ -17,7 +17,7 @@
 
 package org.apache.commons.net.telnet;
 
-/***
+/**
  * The TelnetOption class cannot be instantiated and only serves as a
  * storehouse for telnet option constants.
  * <p>
@@ -26,11 +26,11 @@ package org.apache.commons.net.telnet;
  *
  * @see org.apache.commons.net.telnet.Telnet
  * @see org.apache.commons.net.telnet.TelnetClient
- ***/
+ */
 
 public class TelnetOption
 {
-    /*** The maximum value an option code can have.  This value is 255. ***/
+    /** The maximum value an option code can have.  This value is 255. */
     public static final int MAX_OPTION_VALUE = 255;
 
     public static final int BINARY = 0;
@@ -155,13 +155,13 @@ public class TelnetOption
             };
 
 
-    /***
+    /**
      * Returns the string representation of the telnet protocol option
      * corresponding to the given option code.
      *
      * @param code The option code of the telnet protocol option
      * @return The string representation of the telnet protocol option.
-     ***/
+     */
     public static final String getOption(final int code)
     {
         if(optionString[code].length() == 0)
@@ -172,7 +172,7 @@ public class TelnetOption
     }
 
 
-    /***
+    /**
      * Determines if a given option code is valid.  Returns true if valid,
      * false if not.
      *

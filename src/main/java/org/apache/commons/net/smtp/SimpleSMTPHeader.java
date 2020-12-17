@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-/***
+/**
  * This class is used to construct a bare minimum
  * acceptable header for an email message.  To construct more
  * complicated headers you should refer to RFC 5322.  When the
@@ -47,7 +47,7 @@ import java.util.Locale;
  * </pre>
  *
  * @see SMTPClient
- ***/
+ */
 
 public class SimpleSMTPHeader
 {
@@ -58,7 +58,7 @@ public class SimpleSMTPHeader
     private boolean hasHeaderDate;
     private StringBuffer cc;
 
-    /***
+    /**
      * Creates a new SimpleSMTPHeader instance initialized with the given
      * from, to, and subject header field values.
      * <p>
@@ -71,7 +71,7 @@ public class SimpleSMTPHeader
      * @param subject  The value of the <code>Subject:</code> header field.
      *              This should be the subject of the message.
      *              May be null
-     ***/
+     */
     public SimpleSMTPHeader(final String from, final String to, final String subject)
     {
         if (from == null) {
@@ -84,7 +84,7 @@ public class SimpleSMTPHeader
         this.cc = null;
     }
 
-    /***
+    /**
      * Adds an arbitrary header field with the given value to the article
      * header.  These headers will be written before the From, To, Subject, and
      * Cc fields when the SimpleSMTPHeader is convertered to a string.
@@ -95,7 +95,7 @@ public class SimpleSMTPHeader
      * <p>
      * @param headerField  The header field to add, not including the colon.
      * @param value  The value of the added header field.
-     ***/
+     */
     public void addHeaderField(final String headerField, final String value)
     {
         if (!hasHeaderDate && "Date".equals(headerField)) {
@@ -108,11 +108,11 @@ public class SimpleSMTPHeader
     }
 
 
-    /***
+    /**
      * Add an email address to the CC (carbon copy or courtesy copy) list.
      * <p>
      * @param address The email address to add to the CC list.
-     ***/
+     */
     public void addCC(final String address)
     {
         if (cc == null) {
@@ -125,14 +125,14 @@ public class SimpleSMTPHeader
     }
 
 
-    /***
+    /**
      * Converts the SimpleSMTPHeader to a properly formatted header in
      * the form of a String, including the blank line used to separate
      * the header from the article body.  The header fields CC and Subject
      * are only included when they are non-null.
      * <p>
      * @return The message header in the form of a String.
-     ***/
+     */
     @Override
     public String toString()
     {

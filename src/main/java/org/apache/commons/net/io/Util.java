@@ -25,7 +25,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.net.Socket;
 
-/***
+/**
  * The Util class cannot be instantiated and stores short static convenience
  * methods that are often quite useful.
  *
@@ -33,7 +33,7 @@ import java.net.Socket;
  * @see CopyStreamException
  * @see CopyStreamListener
  * @see CopyStreamAdapter
- ***/
+ */
 
 public final class Util
 {
@@ -49,7 +49,7 @@ public final class Util
     { }
 
 
-    /***
+    /**
      * Copies the contents of an InputStream to an OutputStream using a
      * copy buffer of a given size and notifies the provided
      * CopyStreamListener of the progress of the copy operation by calling
@@ -86,7 +86,7 @@ public final class Util
      *            that caused the error.  These values can be retrieved with
      *            the CopyStreamException getTotalBytesTransferred() and
      *            getIOException() methods.
-     ***/
+     */
     public static long copyStream(final InputStream source, final OutputStream dest,
                                         final int bufferSize, final long streamSize,
                                         final CopyStreamListener listener,
@@ -141,7 +141,7 @@ public final class Util
     }
 
 
-    /***
+    /**
      * Copies the contents of an InputStream to an OutputStream using a
      * copy buffer of a given size and notifies the provided
      * CopyStreamListener of the progress of the copy operation by calling
@@ -174,7 +174,7 @@ public final class Util
      *            that caused the error.  These values can be retrieved with
      *            the CopyStreamException getTotalBytesTransferred() and
      *            getIOException() methods.
-     ***/
+     */
     public static long copyStream(final InputStream source, final OutputStream dest,
                                         final int bufferSize, final long streamSize,
                                         final CopyStreamListener listener)
@@ -185,7 +185,7 @@ public final class Util
     }
 
 
-    /***
+    /**
      * Copies the contents of an InputStream to an OutputStream using a
      * copy buffer of a given size.  The contents of the InputStream are
      * read until the end of the stream is reached, but neither the
@@ -206,7 +206,7 @@ public final class Util
      *            that caused the error.  These values can be retrieved with
      *            the CopyStreamException getTotalBytesTransferred() and
      *            getIOException() methods.
-     ***/
+     */
     public static long copyStream(final InputStream source, final OutputStream dest,
                                         final int bufferSize)
     throws CopyStreamException
@@ -216,13 +216,13 @@ public final class Util
     }
 
 
-    /***
+    /**
      * Same as <code> copyStream(source, dest, DEFAULT_COPY_BUFFER_SIZE); </code>
      * @param source where to copy from
      * @param dest  where to copy to
      * @return number of bytes copied
      * @throws CopyStreamException on error
-     ***/
+     */
     public static long copyStream(final InputStream source, final OutputStream dest)
     throws CopyStreamException
     {
@@ -230,7 +230,7 @@ public final class Util
     }
 
 
-    /***
+    /**
      * Copies the contents of a Reader to a Writer using a
      * copy buffer of a given size and notifies the provided
      * CopyStreamListener of the progress of the copy operation by calling
@@ -262,7 +262,7 @@ public final class Util
      *            that caused the error.  These values can be retrieved with
      *            the CopyStreamException getTotalBytesTransferred() and
      *            getIOException() methods.
-     ***/
+     */
     public static long copyReader(final Reader source, final Writer dest,
                                         final int bufferSize, final long streamSize,
                                         final CopyStreamListener listener)
@@ -311,7 +311,7 @@ public final class Util
     }
 
 
-    /***
+    /**
      * Copies the contents of a Reader to a Writer using a
      * copy buffer of a given size.  The contents of the Reader are
      * read until its end is reached, but neither the source nor the
@@ -331,7 +331,7 @@ public final class Util
      *            that caused the error.  These values can be retrieved with
      *            the CopyStreamException getTotalBytesTransferred() and
      *            getIOException() methods.
-     ***/
+     */
     public static long copyReader(final Reader source, final Writer dest,
                                         final int bufferSize)
     throws CopyStreamException
@@ -341,13 +341,13 @@ public final class Util
     }
 
 
-    /***
+    /**
      * Same as <code> copyReader(source, dest, DEFAULT_COPY_BUFFER_SIZE); </code>
      * @param source where to copy from
      * @param dest  where to copy to
      * @return number of bytes copied
      * @throws CopyStreamException on error
-     ***/
+     */
     public static long copyReader(final Reader source, final Writer dest)
     throws CopyStreamException
     {

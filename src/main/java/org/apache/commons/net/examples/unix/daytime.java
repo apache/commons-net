@@ -23,7 +23,7 @@ import java.net.InetAddress;
 import org.apache.commons.net.daytime.DaytimeTCPClient;
 import org.apache.commons.net.daytime.DaytimeUDPClient;
 
-/***
+/**
  * This is an example program demonstrating how to use the DaytimeTCP
  * and DaytimeUDP classes.
  * This program connects to the default daytime service port of a
@@ -32,7 +32,7 @@ import org.apache.commons.net.daytime.DaytimeUDPClient;
  * port.
  * <p>
  * Usage: daytime [-udp] <hostname>
- ***/
+ */
 public final class daytime
 {
 

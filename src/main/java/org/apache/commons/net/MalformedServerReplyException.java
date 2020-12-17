@@ -19,7 +19,7 @@ package org.apache.commons.net;
 
 import java.io.IOException;
 
-/***
+/**
  * This exception is used to indicate that the reply from a server
  * could not be interpreted.  Most of the NetComponents classes attempt
  * to be as lenient as possible when receiving server replies.  Many
@@ -30,23 +30,23 @@ import java.io.IOException;
  * In these cases, a MalformedServerReplyException should be thrown.
  *
  *
- ***/
+ */
 
 public class MalformedServerReplyException extends IOException
 {
 
     private static final long serialVersionUID = 6006765264250543945L;
 
-    /*** Constructs a MalformedServerReplyException with no message ***/
+    /** Constructs a MalformedServerReplyException with no message */
     public MalformedServerReplyException()
     {
     }
 
-    /***
+    /**
      * Constructs a MalformedServerReplyException with a specified message.
      *
      * @param message  The message explaining the reason for the exception.
-     ***/
+     */
     public MalformedServerReplyException(final String message)
     {
         super(message);

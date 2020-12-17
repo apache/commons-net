@@ -22,7 +22,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import org.apache.commons.net.io.Util;
 
-/***
+/**
  * This is a utility class providing a reader/writer capability required
  * by the weatherTelnet, rexec, rshell, and rlogin example programs.
  * The only point of the class is to hold the static method readWrite
@@ -31,7 +31,7 @@ import org.apache.commons.net.io.Util;
  * data to a remote output destination.  The writer thread reads from
  * a remote input source and writes to a local output destination.
  * The threads terminate when the remote input source closes.
- ***/
+ */
 
 public final class IOUtil
 {

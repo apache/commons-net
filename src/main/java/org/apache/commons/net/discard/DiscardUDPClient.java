@@ -23,7 +23,7 @@ import java.net.InetAddress;
 
 import org.apache.commons.net.DatagramSocketClient;
 
-/***
+/**
  * The DiscardUDPClient class is a UDP implementation of a client for the
  * Discard protocol described in RFC 863.  To use the class,
  * just open a local UDP port
@@ -34,11 +34,11 @@ import org.apache.commons.net.DatagramSocketClient;
  * to clean up properly.
  *
  * @see DiscardTCPClient
- ***/
+ */
 
 public class DiscardUDPClient extends DatagramSocketClient
 {
-    /*** The default discard port.  It is set to 9 according to RFC 863. ***/
+    /** The default discard port.  It is set to 9 according to RFC 863. */
     public static final int DEFAULT_PORT = 9;
 
     private final DatagramPacket sendPacket;
@@ -49,7 +49,7 @@ public class DiscardUDPClient extends DatagramSocketClient
     }
 
 
-    /***
+    /**
      * Sends the specified data to the specified server at the specified port.
      *
      * @param data  The discard data to send.
@@ -59,7 +59,7 @@ public class DiscardUDPClient extends DatagramSocketClient
      * @param port  The service port.
      * @throws IOException If an error occurs during the datagram send
      *            operation.
-     ***/
+     */
     public void send(final byte[] data, final int length, final InetAddress host, final int port)
     throws IOException
     {
@@ -71,7 +71,7 @@ public class DiscardUDPClient extends DatagramSocketClient
     }
 
 
-    /***
+    /**
      * Same as
      * <code>send(data, length, host. DiscardUDPClient.DEFAULT_PORT)</code>.
      * @param data the buffer to send
@@ -79,7 +79,7 @@ public class DiscardUDPClient extends DatagramSocketClient
      * @param host the target host
      * @see #send(byte[], int, InetAddress, int)
      * @throws IOException if an error occurs
-     ***/
+     */
     public void send(final byte[] data, final int length, final InetAddress host)
     throws IOException
     {
@@ -87,14 +87,14 @@ public class DiscardUDPClient extends DatagramSocketClient
     }
 
 
-    /***
+    /**
      * Same as
      * <code>send(data, data.length, host. DiscardUDPClient.DEFAULT_PORT)</code>.
      * @param data the buffer to send
      * @param host the target host
      * @see #send(byte[], int, InetAddress, int)
      * @throws IOException if an error occurs
-     ***/
+     */
     public void send(final byte[] data, final InetAddress host) throws IOException
     {
         send(data, data.length, host, DEFAULT_PORT);

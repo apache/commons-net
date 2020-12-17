@@ -26,73 +26,73 @@ package org.apache.commons.net.telnet;
 
 public final class TelnetCommand
 {
-    /*** The maximum value a command code can have.  This value is 255. ***/
+    /** The maximum value a command code can have.  This value is 255. */
     public static final int MAX_COMMAND_VALUE = 255;
 
-    /*** Interpret As Command code.  Value is 255 according to RFC 854. ***/
+    /** Interpret As Command code.  Value is 255 according to RFC 854. */
     public static final int IAC = 255;
 
-    /*** Don't use option code.  Value is 254 according to RFC 854. ***/
+    /** Don't use option code.  Value is 254 according to RFC 854. */
     public static final int DONT = 254;
 
-    /*** Request to use option code.  Value is 253 according to RFC 854. ***/
+    /** Request to use option code.  Value is 253 according to RFC 854. */
     public static final int DO = 253;
 
-    /*** Refuse to use option code.  Value is 252 according to RFC 854. ***/
+    /** Refuse to use option code.  Value is 252 according to RFC 854. */
     public static final int WONT = 252;
 
-    /*** Agree to use option code.  Value is 251 according to RFC 854. ***/
+    /** Agree to use option code.  Value is 251 according to RFC 854. */
     public static final int WILL = 251;
 
-    /*** Start subnegotiation code.  Value is 250 according to RFC 854. ***/
+    /** Start subnegotiation code.  Value is 250 according to RFC 854. */
     public static final int SB = 250;
 
-    /*** Go Ahead code.  Value is 249 according to RFC 854. ***/
+    /** Go Ahead code.  Value is 249 according to RFC 854. */
     public static final int GA = 249;
 
-    /*** Erase Line code.  Value is 248 according to RFC 854. ***/
+    /** Erase Line code.  Value is 248 according to RFC 854. */
     public static final int EL = 248;
 
-    /*** Erase Character code.  Value is 247 according to RFC 854. ***/
+    /** Erase Character code.  Value is 247 according to RFC 854. */
     public static final int EC = 247;
 
-    /*** Are You There code.  Value is 246 according to RFC 854. ***/
+    /** Are You There code.  Value is 246 according to RFC 854. */
     public static final int AYT = 246;
 
-    /*** Abort Output code.  Value is 245 according to RFC 854. ***/
+    /** Abort Output code.  Value is 245 according to RFC 854. */
     public static final int AO = 245;
 
-    /*** Interrupt Process code.  Value is 244 according to RFC 854. ***/
+    /** Interrupt Process code.  Value is 244 according to RFC 854. */
     public static final int IP = 244;
 
-    /*** Break code.  Value is 243 according to RFC 854. ***/
+    /** Break code.  Value is 243 according to RFC 854. */
     public static final int BREAK = 243;
 
-    /*** Data mark code.  Value is 242 according to RFC 854. ***/
+    /** Data mark code.  Value is 242 according to RFC 854. */
     public static final int DM = 242;
 
-    /*** No Operation code.  Value is 241 according to RFC 854. ***/
+    /** No Operation code.  Value is 241 according to RFC 854. */
     public static final int NOP = 241;
 
-    /*** End subnegotiation code.  Value is 240 according to RFC 854. ***/
+    /** End subnegotiation code.  Value is 240 according to RFC 854. */
     public static final int SE = 240;
 
-    /*** End of record code.  Value is 239. ***/
+    /** End of record code.  Value is 239. */
     public static final int EOR = 239;
 
-    /*** Abort code.  Value is 238. ***/
+    /** Abort code.  Value is 238. */
     public static final int ABORT = 238;
 
-    /*** Suspend process code.  Value is 237. ***/
+    /** Suspend process code.  Value is 237. */
     public static final int SUSP = 237;
 
-    /*** End of file code.  Value is 236. ***/
+    /** End of file code.  Value is 236. */
     public static final int EOF = 236;
 
-    /*** Synchronize code.  Value is 242. ***/
+    /** Synchronize code.  Value is 242. */
     public static final int SYNCH = 242;
 
-    /*** String representations of commands. ***/
+    /** String representations of commands. */
     private static final String commandString[] = {
                 "IAC", "DONT", "DO", "WONT", "WILL", "SB", "GA", "EL", "EC", "AYT",
                 "AO", "IP", "BRK", "DMARK", "NOP", "SE", "EOR", "ABORT", "SUSP", "EOF"
@@ -101,19 +101,19 @@ public final class TelnetCommand
     private static final int FIRST_COMMAND = IAC;
     private static final int LAST_COMMAND = EOF;
 
-    /***
+    /**
      * Returns the string representation of the telnet protocol command
      * corresponding to the given command code.
      * <p>
      * @param code The command code of the telnet protocol command.
      * @return The string representation of the telnet protocol command.
-     ***/
+     */
     public static String getCommand(final int code)
     {
         return commandString[FIRST_COMMAND - code];
     }
 
-    /***
+    /**
      * Determines if a given command code is valid.  Returns true if valid,
      * false if not.
      * <p>

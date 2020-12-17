@@ -17,13 +17,13 @@ package org.apache.commons.net.ntp;
  */
 
 
-/***
+/**
  * Common NtpUtils Helper class.
  *
  */
 public final class NtpUtils {
 
-    /***
+    /**
       * Returns 32-bit integer address to IPv4 address string "%d.%d.%d.%d" format.
       *
       * @param address  the 32-bit address
@@ -37,7 +37,7 @@ public final class NtpUtils {
                  ((address >>>  0) & 0xFF);
      }
 
-    /***
+    /**
      * Returns NTP packet reference identifier as IP address.
      *
      * @param packet  NTP packet
@@ -49,7 +49,7 @@ public final class NtpUtils {
          return getHostAddress(address);
      }
 
-    /***
+    /**
      * Get refId as reference clock string (e.g. GPS, WWV, LCL). If string is
      * invalid (non-ASCII character) then returns empty string "".
      * For details refer to the <A HREF="http://www.eecis.udel.edu/~mills/ntp/html/refclock.html#list">Comprehensive
@@ -82,7 +82,7 @@ public final class NtpUtils {
         return buf.toString();
     }
 
-    /***
+    /**
      * Return human-readable name of message mode type (RFC 1305).
      *
      * @param mode the mode type

@@ -24,7 +24,7 @@ import java.net.InetAddress;
 import org.apache.commons.net.time.TimeTCPClient;
 import org.apache.commons.net.time.TimeUDPClient;
 
-/***
+/**
  * This is an example program demonstrating how to use the TimeTCPClient
  * and TimeUDPClient classes.
  * This program connects to the default time service port of a
@@ -34,7 +34,7 @@ import org.apache.commons.net.time.TimeUDPClient;
  * use the UDP port.
  * <p>
  * Usage: TimeClient [-udp] <hostname>
- ***/
+ */
 public final class TimeClient
 {
 

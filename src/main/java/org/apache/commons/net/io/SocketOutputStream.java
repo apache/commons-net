@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 
-/***
+/**
  * This class wraps an output stream, storing a reference to its originating
  * socket.  When the stream is closed, it will also close the socket
  * immediately afterward.  This class is useful for situations where you
@@ -32,20 +32,20 @@ import java.net.Socket;
  *
  *
  * @see SocketInputStream
- ***/
+ */
 
 public class SocketOutputStream extends FilterOutputStream
 {
     private final Socket socket;
 
-    /***
+    /**
      * Creates a SocketOutputStream instance wrapping an output stream and
      * storing a reference to a socket that should be closed on closing
      * the stream.
      *
      * @param socket  The socket to close on closing the stream.
      * @param stream  The input stream to wrap.
-     ***/
+     */
     public SocketOutputStream(final Socket socket, final OutputStream stream)
     {
         super(stream);
@@ -53,7 +53,7 @@ public class SocketOutputStream extends FilterOutputStream
     }
 
 
-    /***
+    /**
      * Writes a number of bytes from a byte array to the stream starting from
      * a given offset.  This method bypasses the equivalent method in
      * FilterOutputStream because the FilterOutputStream implementation is
@@ -64,7 +64,7 @@ public class SocketOutputStream extends FilterOutputStream
      * @param length  The number of bytes to write.
      * @throws IOException If an error occurs while writing to the underlying
      *            stream.
-     ***/
+     */
     @Override
     public void write(final byte buffer[], final int offset, final int length) throws IOException
     {
@@ -72,13 +72,13 @@ public class SocketOutputStream extends FilterOutputStream
     }
 
 
-    /***
+    /**
      * Closes the stream and immediately afterward closes the referenced
      * socket.
      *
      * @throws IOException  If there is an error in closing the stream
      *                         or socket.
-     ***/
+     */
     @Override
     public void close() throws IOException
     {

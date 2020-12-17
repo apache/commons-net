@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-/***
+/**
  * The TelnetClient class implements the simple network virtual
  * terminal (NVT) for the Telnet protocol according to RFC 854.  It
  * does not implement any of the extra Telnet options because it
@@ -39,7 +39,7 @@ import java.io.OutputStream;
  * When you finish using the streams, you must call
  * {@link #disconnect  disconnect } rather than simply
  * closing the streams.
- ***/
+ */
 
 public class TelnetClient extends Telnet
 {
@@ -51,9 +51,9 @@ public class TelnetClient extends Telnet
     protected boolean readerThread = true;
     private TelnetInputListener inputListener;
 
-    /***
+    /**
      * Default TelnetClient constructor, sets terminal-type {@code VT100}.
-     ***/
+     */
     public TelnetClient()
     {
         this("VT100", DEFAULT_MAX_SUBNEGOTIATION_LENGTH);
@@ -117,11 +117,11 @@ public class TelnetClient extends Telnet
         }
     }
 
-    /***
+    /**
      * Handles special connection requirements.
      *
      * @throws IOException  If an error occurs during connection setup.
-     ***/
+     */
     @Override
     protected void _connectAction_() throws IOException
     {
@@ -141,13 +141,13 @@ public class TelnetClient extends Telnet
         output = new TelnetOutputStream(this);
     }
 
-    /***
+    /**
      * Disconnects the telnet session, closing the input and output streams
      * as well as the socket.  If you have references to the
      * input and output streams of the telnet connection, you should not
      * close them yourself, but rather call disconnect to properly close
      * the connection.
-     ***/
+     */
     @Override
     public void disconnect() throws IOException
     {
@@ -165,37 +165,37 @@ public class TelnetClient extends Telnet
         }
     }
 
-    /***
+    /**
      * Returns the telnet connection output stream.  You should not close the
      * stream when you finish with it.  Rather, you should call
      * {@link #disconnect  disconnect }.
      *
      * @return The telnet connection output stream.
-     ***/
+     */
     public OutputStream getOutputStream()
     {
         return output;
     }
 
-    /***
+    /**
      * Returns the telnet connection input stream.  You should not close the
      * stream when you finish with it.  Rather, you should call
      * {@link #disconnect  disconnect }.
      *
      * @return The telnet connection input stream.
-     ***/
+     */
     public InputStream getInputStream()
     {
         return input;
     }
 
-    /***
+    /**
      * Returns the state of the option on the local side.
      *
      * @param option - Option to be checked.
      *
      * @return The state of the option on the local side.
-     ***/
+     */
     public boolean getLocalOptionState(final int option)
     {
         /* BUG (option active when not already acknowledged) (start)*/
@@ -203,13 +203,13 @@ public class TelnetClient extends Telnet
         /* BUG (option active when not already acknowledged) (end)*/
     }
 
-    /***
+    /**
      * Returns the state of the option on the remote side.
      *
      * @param option - Option to be checked.
      *
      * @return The state of the option on the remote side.
-     ***/
+     */
     public boolean getRemoteOptionState(final int option)
     {
         /* BUG (option active when not already acknowledged) (start)*/
@@ -220,7 +220,7 @@ public class TelnetClient extends Telnet
 
     /* Code Section added for supporting AYT (start)*/
 
-    /***
+    /**
      * Sends an Are You There sequence and waits for the result.
      *
      * @param timeout - Time to wait for a response (millis.)
@@ -230,7 +230,7 @@ public class TelnetClient extends Telnet
      * @throws InterruptedException on error
      * @throws IllegalArgumentException on error
      * @throws IOException on error
-     ***/
+     */
     public boolean sendAYT(final long timeout)
     throws IOException, IllegalArgumentException, InterruptedException
     {
@@ -238,7 +238,7 @@ public class TelnetClient extends Telnet
     }
     /* Code Section added for supporting AYT (start)*/
 
-    /***
+    /**
      * Sends a protocol-specific subnegotiation message to the remote peer.
      * {@link TelnetClient} will add the IAC SB &amp; IAC SE framing bytes;
      * the first byte in {@code message} should be the appropriate telnet
@@ -254,7 +254,7 @@ public class TelnetClient extends Telnet
      * @throws IllegalArgumentException if {@code message} has length zero
      * @throws IOException if an I/O error occurs while writing the message
      * @since 3.0
-     ***/
+     */
     public void sendSubnegotiation(final int[] message)
     throws IOException, IllegalArgumentException
     {
@@ -264,7 +264,7 @@ public class TelnetClient extends Telnet
         _sendSubnegotiation(message);
     }
 
-    /***
+    /**
      * Sends a command byte to the remote peer, adding the IAC prefix.
      *
      * <p>
@@ -277,7 +277,7 @@ public class TelnetClient extends Telnet
      * @throws IOException if an I/O error occurs while writing the message
      * @throws IllegalArgumentException  on error
      * @since 3.0
-     ***/
+     */
     public void sendCommand(final byte command)
     throws IOException, IllegalArgumentException
     {
@@ -286,14 +286,14 @@ public class TelnetClient extends Telnet
 
     /* open TelnetOptionHandler functionality (start)*/
 
-    /***
+    /**
      * Registers a new TelnetOptionHandler for this telnet client to use.
      *
      * @param opthand - option handler to be registered.
      *
      * @throws InvalidTelnetOptionException on error
      * @throws IOException on error
-     ***/
+     */
     @Override
     public void addOptionHandler(final TelnetOptionHandler opthand)
     throws InvalidTelnetOptionException, IOException
@@ -302,14 +302,14 @@ public class TelnetClient extends Telnet
     }
     /* open TelnetOptionHandler functionality (end)*/
 
-    /***
+    /**
      * Unregisters a  TelnetOptionHandler.
      *
      * @param optcode - Code of the option to be unregistered.
      *
      * @throws InvalidTelnetOptionException on error
      * @throws IOException on error
-     ***/
+     */
     @Override
     public void deleteOptionHandler(final int optcode)
     throws InvalidTelnetOptionException, IOException
@@ -318,51 +318,51 @@ public class TelnetClient extends Telnet
     }
 
     /* Code Section added for supporting spystreams (start)*/
-    /***
+    /**
      * Registers an OutputStream for spying what's going on in
      * the TelnetClient session.
      *
      * @param spystream - OutputStream on which session activity
      * will be echoed.
-     ***/
+     */
     public void registerSpyStream(final OutputStream  spystream)
     {
         super._registerSpyStream(spystream);
     }
 
-    /***
+    /**
      * Stops spying this TelnetClient.
      *
-     ***/
+     */
     public void stopSpyStream()
     {
         super._stopSpyStream();
     }
     /* Code Section added for supporting spystreams (end)*/
 
-    /***
+    /**
      * Registers a notification handler to which will be sent
      * notifications of received telnet option negotiation commands.
      *
      * @param notifhand - TelnetNotificationHandler to be registered
-     ***/
+     */
     @Override
     public void registerNotifHandler(final TelnetNotificationHandler  notifhand)
     {
         super.registerNotifHandler(notifhand);
     }
 
-    /***
+    /**
      * Unregisters the current notification handler.
      *
-     ***/
+     */
     @Override
     public void unregisterNotifHandler()
     {
         super.unregisterNotifHandler();
     }
 
-    /***
+    /**
      * Sets the status of the reader thread.
      *
      * <p>
@@ -387,23 +387,23 @@ public class TelnetClient extends Telnet
      *
      * @param flag true to enable the reader thread, false to disable
      * @see #registerInputListener
-     ***/
+     */
     public void setReaderThread(final boolean flag)
     {
         readerThread = flag;
     }
 
-    /***
+    /**
      * Gets the status of the reader thread.
      *
      * @return true if the reader thread is enabled, false otherwise
-     ***/
+     */
     public boolean getReaderThread()
     {
         return readerThread;
     }
 
-    /***
+    /**
      * Register a listener to be notified when new incoming data is
      * available to be read on the {@link #getInputStream input stream}.
      * Only one listener is supported at a time.
@@ -424,17 +424,17 @@ public class TelnetClient extends Telnet
      *
      * @param listener listener to be registered; replaces any previous
      * @since 3.0
-     ***/
+     */
     public synchronized void registerInputListener(final TelnetInputListener listener)
     {
         this.inputListener = listener;
     }
 
-    /***
+    /**
      * Unregisters the current {@link TelnetInputListener}, if any.
      *
      * @since 3.0
-     ***/
+     */
     public synchronized void unregisterInputListener()
     {
         this.inputListener = null;

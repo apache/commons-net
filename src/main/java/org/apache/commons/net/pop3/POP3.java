@@ -33,7 +33,7 @@ import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
 import org.apache.commons.net.io.CRLFLineReader;
 
-/***
+/**
  * The POP3 class is not meant to be used by itself and is provided
  * only so that you may easily implement your own POP3 client if
  * you so desire.  If you have no need to perform your own implementation,
@@ -52,22 +52,22 @@ import org.apache.commons.net.io.CRLFLineReader;
  *
  * @see POP3Client
  * @see org.apache.commons.net.MalformedServerReplyException
- ***/
+ */
 
 public class POP3 extends SocketClient
 {
-    /*** The default POP3 port.  Set to 110 according to RFC 1288. ***/
+    /** The default POP3 port.  Set to 110 according to RFC 1288. */
     public static final int DEFAULT_PORT = 110;
-    /***
+    /**
      * A constant representing the state where the client is not yet connected
      * to a POP3 server.
-     ***/
+     */
     public static final int DISCONNECTED_STATE = -1;
-    /***  A constant representing the POP3 authorization state. ***/
+    /**  A constant representing the POP3 authorization state. */
     public static final int AUTHORIZATION_STATE = 0;
-    /***  A constant representing the POP3 transaction state. ***/
+    /**  A constant representing the POP3 transaction state. */
     public static final int TRANSACTION_STATE = 1;
-    /***  A constant representing the POP3 update state. ***/
+    /**  A constant representing the POP3 update state. */
     public static final int UPDATE_STATE = 2;
 
     static final String OK = "+OK";
@@ -94,10 +94,10 @@ public class POP3 extends SocketClient
      */
     protected ProtocolCommandSupport _commandSupport_;
 
-    /***
+    /**
      * The default POP3Client constructor.  Initializes the state
      * to <code>DISCONNECTED_STATE</code>.
-     ***/
+     */
     public POP3()
     {
         setDefaultPort(DEFAULT_PORT);
@@ -138,10 +138,10 @@ public class POP3 extends SocketClient
     }
 
 
-    /***
+    /**
      * Performs connection initialization and sets state to
      * <code> AUTHORIZATION_STATE </code>.
-     ***/
+     */
     @Override
     protected void _connectAction_() throws IOException
     {
@@ -167,21 +167,21 @@ public class POP3 extends SocketClient
     }
 
 
-    /***
+    /**
      * Returns the current POP3 client state.
      *
      * @return The current POP3 client state.
-     ***/
+     */
     public int getState()
     {
         return popState;
     }
 
 
-    /***
+    /**
      * Retrieves the additional lines of a multi-line server reply.
      * @throws IOException on error
-     ***/
+     */
     public void getAdditionalReply() throws IOException
     {
         String line;
@@ -198,14 +198,14 @@ public class POP3 extends SocketClient
     }
 
 
-    /***
+    /**
      * Disconnects the client from the server, and sets the state to
      * <code> DISCONNECTED_STATE </code>.  The reply text information
      * from the last issued command is voided to allow garbage collection
      * of the memory used to store that information.
      *
      * @throws IOException  If there is an error in disconnecting.
-     ***/
+     */
     @Override
     public void disconnect() throws IOException
     {
@@ -218,14 +218,14 @@ public class POP3 extends SocketClient
     }
 
 
-    /***
+    /**
      * Sends a command an arguments to the server and returns the reply code.
      *
      * @param command  The POP3 command to send.
      * @param args     The command arguments.
      * @return  The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
      * @throws IOException on error
-     ***/
+     */
     public int sendCommand(final String command, final String args) throws IOException
     {
         if (writer == null) {
@@ -251,20 +251,20 @@ public class POP3 extends SocketClient
         return replyCode;
     }
 
-    /***
+    /**
      * Sends a command with no arguments to the server and returns the
      * reply code.
      *
      * @param command  The POP3 command to send.
      * @return  The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
      * @throws IOException on error
-     ***/
+     */
     public int sendCommand(final String command) throws IOException
     {
         return sendCommand(command, null);
     }
 
-    /***
+    /**
      * Sends a command an arguments to the server and returns the reply code.
      *
      * @param command  The POP3 command to send
@@ -272,13 +272,13 @@ public class POP3 extends SocketClient
      * @param args     The command arguments.
      * @return  The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
      * @throws IOException on error
-     ***/
+     */
     public int sendCommand(final int command, final String args) throws IOException
     {
         return sendCommand(POP3Command.commands[command], args);
     }
 
-    /***
+    /**
      * Sends a command with no arguments to the server and returns the
      * reply code.
      *
@@ -286,14 +286,14 @@ public class POP3 extends SocketClient
      *                  (one of the POP3Command constants).
      * @return  The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
      * @throws IOException on error
-     ***/
+     */
     public int sendCommand(final int command) throws IOException
     {
         return sendCommand(POP3Command.commands[command], null);
     }
 
 
-    /***
+    /**
      * Returns an array of lines received as a reply to the last command
      * sent to the server.  The lines have end of lines truncated.  If
      * the reply is a single line, but its format ndicates it should be
@@ -304,13 +304,13 @@ public class POP3 extends SocketClient
      * your own client using the {@link #sendCommand  sendCommand } methods.
      *
      * @return The last server response.
-     ***/
+     */
     public String[] getReplyStrings()
     {
         return replyLines.toArray(new String[replyLines.size()]);
     }
 
-    /***
+    /**
      * Returns the reply to the last command sent to the server.
      * The value is a single string containing all the reply lines including
      * newlines.  If the reply is a single line, but its format ndicates it
@@ -321,7 +321,7 @@ public class POP3 extends SocketClient
      * your own client using the {@link #sendCommand  sendCommand } methods.
      *
      * @return The last server response.
-     ***/
+     */
     public String getReplyString()
     {
         final StringBuilder buffer = new StringBuilder(256);

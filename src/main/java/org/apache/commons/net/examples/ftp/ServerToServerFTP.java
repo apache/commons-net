@@ -26,7 +26,7 @@ import org.apache.commons.net.ProtocolCommandListener;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 
-/***
+/**
  * This is an example program demonstrating how to use the FTPClient class.
  * This program arranges a server to server file transfer that transfers
  * a file from host1 to host2.  Keep in mind, this program might only work
@@ -35,7 +35,7 @@ import org.apache.commons.net.ftp.FTPReply;
  * argument equal to the client host).
  * <p>
  * Usage: ftp <host1> <user1> <pass1> <file1> <host2> <user2> <pass2> <file2>
- ***/
+ */
 public final class ServerToServerFTP
 {
 

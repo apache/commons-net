@@ -18,7 +18,7 @@
 package org.apache.commons.net;
 import java.util.EventListener;
 
-/***
+/**
  * There exists a large class of IETF protocols that work by sending an
  * ASCII text command and arguments to a server, and then receiving an
  * ASCII text reply.  For debugging and other purposes, it is extremely
@@ -34,25 +34,25 @@ import java.util.EventListener;
  *
  * @see ProtocolCommandEvent
  * @see ProtocolCommandSupport
- ***/
+ */
 
 public interface ProtocolCommandListener extends EventListener
 {
 
-    /***
+    /**
      * This method is invoked by a ProtocolCommandEvent source after
      * sending a protocol command to a server.
      *
      * @param event The ProtocolCommandEvent fired.
-     ***/
+     */
     void protocolCommandSent(ProtocolCommandEvent event);
 
-    /***
+    /**
      * This method is invoked by a ProtocolCommandEvent source after
      * receiving a reply from a server.
      *
      * @param event The ProtocolCommandEvent fired.
-     ***/
+     */
     void protocolReplyReceived(ProtocolCommandEvent event);
 
 }

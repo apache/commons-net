@@ -23,10 +23,10 @@ import java.net.UnknownHostException;
 
 import org.apache.commons.net.whois.WhoisClient;
 
-/***
+/**
  * This is an example of how you would implement the Linux fwhois command
  * in Java using NetComponents.  The Java version is much shorter.
- ***/
+ */
 public final class fwhois
 {
 

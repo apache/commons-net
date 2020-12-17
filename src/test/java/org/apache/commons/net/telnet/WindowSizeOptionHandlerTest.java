@@ -16,14 +16,14 @@
  */
 package org.apache.commons.net.telnet;
 
-/***
+/**
  * JUnit test class for TerminalTypeOptionHandler
- ***/
+ */
 public class WindowSizeOptionHandlerTest extends TelnetOptionHandlerTestAbstract
 {
-    /***
+    /**
      * setUp for the test.
-     ***/
+     */
     @Override
     protected void setUp()
     {
@@ -32,9 +32,9 @@ public class WindowSizeOptionHandlerTest extends TelnetOptionHandlerTestAbstract
         opthand3 = new WindowSizeOptionHandler(0xFFFF, 0x00FF, false, false, false, false);
     }
 
-    /***
+    /**
      * test of the constructors.
-     ***/
+     */
     @Override
     public void testConstructors()
     {
@@ -42,10 +42,10 @@ public class WindowSizeOptionHandlerTest extends TelnetOptionHandlerTestAbstract
         super.testConstructors();
     }
 
-    /***
+    /**
      * test of client-driven subnegotiation.
      * Checks that no subnegotiation is made.
-     ***/
+     */
     @Override
     public void testStartSubnegotiation()
     {
@@ -54,10 +54,10 @@ public class WindowSizeOptionHandlerTest extends TelnetOptionHandlerTestAbstract
         assertNull(opthand3.startSubnegotiationRemote());
     }
 
-    /***
+    /**
      * test of client-driven subnegotiation.
      *
-     ***/
+     */
     public void testStartSubnegotiationLocal()
     {
         final int[] exp1 = {31, 0, 80, 0, 24};
@@ -76,10 +76,10 @@ public class WindowSizeOptionHandlerTest extends TelnetOptionHandlerTestAbstract
 
 
 
-    /***
+    /**
      * test of client-driven subnegotiation.
      * Checks that nothing is sent
-     ***/
+     */
     @Override
     public void testAnswerSubnegotiation()
     {
@@ -97,9 +97,9 @@ public class WindowSizeOptionHandlerTest extends TelnetOptionHandlerTestAbstract
         assertNull(resp3);
     }
 
-    /***
+    /**
      * compares two arrays of int
-     ***/
+     */
     private void equalInts(final int a1[], final int a2[])
     {
         assertEquals("Arrays should be the same length", a1.length, a2.length);

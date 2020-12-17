@@ -27,7 +27,7 @@ import java.net.UnknownHostException;
 
 import javax.net.SocketFactory;
 
-/***
+/**
  * DefaultSocketFactory implements the SocketFactory interface by
  * simply wrapping the java.net.Socket and java.net.ServerSocket
  * constructors.  It is the default SocketFactory used by
@@ -38,7 +38,7 @@ import javax.net.SocketFactory;
  * @see SocketFactory
  * @see SocketClient
  * @see SocketClient#setSocketFactory
- ***/
+ */
 
 public class DefaultSocketFactory extends SocketFactory
 {
@@ -81,7 +81,7 @@ public class DefaultSocketFactory extends SocketFactory
         return new Socket();
     }
 
-    /***
+    /**
      * Creates a Socket connected to the given host and port.
      *
      * @param host The hostname to connect to.
@@ -89,7 +89,7 @@ public class DefaultSocketFactory extends SocketFactory
      * @return A Socket connected to the given host and port.
      * @throws UnknownHostException  If the hostname cannot be resolved.
      * @throws IOException If an I/O error occurs while creating the Socket.
-     ***/
+     */
     @Override
     public Socket createSocket(final String host, final int port)
     throws UnknownHostException, IOException
@@ -103,14 +103,14 @@ public class DefaultSocketFactory extends SocketFactory
         return new Socket(host, port);
     }
 
-    /***
+    /**
      * Creates a Socket connected to the given host and port.
      *
      * @param address The address of the host to connect to.
      * @param port The port to connect to.
      * @return A Socket connected to the given host and port.
      * @throws IOException If an I/O error occurs while creating the Socket.
-     ***/
+     */
     @Override
     public Socket createSocket(final InetAddress address, final int port)
     throws IOException
@@ -124,7 +124,7 @@ public class DefaultSocketFactory extends SocketFactory
         return new Socket(address, port);
     }
 
-    /***
+    /**
      * Creates a Socket connected to the given host and port and
      * originating from the specified local address and port.
      *
@@ -135,7 +135,7 @@ public class DefaultSocketFactory extends SocketFactory
      * @return A Socket connected to the given host and port.
      * @throws UnknownHostException  If the hostname cannot be resolved.
      * @throws IOException If an I/O error occurs while creating the Socket.
-     ***/
+     */
     @Override
     public Socket createSocket(final String host, final int port,
                                final InetAddress localAddr, final int localPort)
@@ -151,7 +151,7 @@ public class DefaultSocketFactory extends SocketFactory
         return new Socket(host, port, localAddr, localPort);
     }
 
-    /***
+    /**
      * Creates a Socket connected to the given host and port and
      * originating from the specified local address and port.
      *
@@ -161,7 +161,7 @@ public class DefaultSocketFactory extends SocketFactory
      * @param localPort  The local port to use.
      * @return A Socket connected to the given host and port.
      * @throws IOException If an I/O error occurs while creating the Socket.
-     ***/
+     */
     @Override
     public Socket createSocket(final InetAddress address, final int port,
                                final InetAddress localAddr, final int localPort)
@@ -177,7 +177,7 @@ public class DefaultSocketFactory extends SocketFactory
         return new Socket(address, port, localAddr, localPort);
     }
 
-    /***
+    /**
      * Creates a ServerSocket bound to a specified port.  A port
      * of 0 will create the ServerSocket on a system-determined free port.
      *
@@ -185,13 +185,13 @@ public class DefaultSocketFactory extends SocketFactory
      * @return A ServerSocket that will listen on a specified port.
      * @throws IOException If an I/O error occurs while creating
      *                        the ServerSocket.
-     ***/
+     */
     public ServerSocket createServerSocket(final int port) throws IOException
     {
         return new ServerSocket(port);
     }
 
-    /***
+    /**
      * Creates a ServerSocket bound to a specified port with a given
      * maximum queue length for incoming connections.  A port of 0 will
      * create the ServerSocket on a system-determined free port.
@@ -201,14 +201,14 @@ public class DefaultSocketFactory extends SocketFactory
      * @return A ServerSocket that will listen on a specified port.
      * @throws IOException If an I/O error occurs while creating
      *                        the ServerSocket.
-     ***/
+     */
     public ServerSocket createServerSocket(final int port, final int backlog)
     throws IOException
     {
         return new ServerSocket(port, backlog);
     }
 
-    /***
+    /**
      * Creates a ServerSocket bound to a specified port on a given local
      * address with a given maximum queue length for incoming connections.
      * A port of 0 will
@@ -220,7 +220,7 @@ public class DefaultSocketFactory extends SocketFactory
      * @return A ServerSocket that will listen on a specified port.
      * @throws IOException If an I/O error occurs while creating
      *                        the ServerSocket.
-     ***/
+     */
     public ServerSocket createServerSocket(final int port, final int backlog,
                                            final InetAddress bindAddr)
     throws IOException

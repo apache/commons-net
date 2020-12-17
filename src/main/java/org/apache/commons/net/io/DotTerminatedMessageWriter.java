@@ -20,7 +20,7 @@ package org.apache.commons.net.io;
 import java.io.IOException;
 import java.io.Writer;
 
-/***
+/**
  * DotTerminatedMessageWriter is a class used to write messages to a
  * server that are terminated by a single dot followed by a
  * &lt;CR&gt;&lt;LF&gt;
@@ -34,7 +34,7 @@ import java.io.Writer;
  * sequence.
  *
  *
- ***/
+ */
 
 public final class DotTerminatedMessageWriter extends Writer
 {
@@ -46,12 +46,12 @@ public final class DotTerminatedMessageWriter extends Writer
     private Writer output;
 
 
-    /***
+    /**
      * Creates a DotTerminatedMessageWriter that wraps an existing Writer
      * output destination.
      *
      * @param output  The Writer output destination to write the message.
-     ***/
+     */
     public DotTerminatedMessageWriter(final Writer output)
     {
         super(output);
@@ -60,7 +60,7 @@ public final class DotTerminatedMessageWriter extends Writer
     }
 
 
-    /***
+    /**
      * Writes a character to the output.  Note that a call to this method
      * may result in multiple writes to the underling Writer in order to
      * convert naked linefeeds to NETASCII line separators and to double
@@ -70,7 +70,7 @@ public final class DotTerminatedMessageWriter extends Writer
      * @param ch  The character to write.
      * @throws IOException  If an error occurs while writing to the
      *            underlying output.
-     ***/
+     */
     @Override
     public void write(final int ch) throws IOException
     {
@@ -103,7 +103,7 @@ public final class DotTerminatedMessageWriter extends Writer
     }
 
 
-    /***
+    /**
      * Writes a number of characters from a character array to the output
      * starting from a given offset.
      *
@@ -112,7 +112,7 @@ public final class DotTerminatedMessageWriter extends Writer
      * @param length  The number of characters to write.
      * @throws IOException If an error occurs while writing to the underlying
      *            output.
-     ***/
+     */
     @Override
     public void write(final char[] buffer, int offset, int length) throws IOException
     {
@@ -125,13 +125,13 @@ public final class DotTerminatedMessageWriter extends Writer
     }
 
 
-    /***
+    /**
      * Writes a character array to the output.
      *
      * @param buffer  The character array to write.
      * @throws IOException If an error occurs while writing to the underlying
      *            output.
-     ***/
+     */
     @Override
     public void write(final char[] buffer) throws IOException
     {
@@ -139,13 +139,13 @@ public final class DotTerminatedMessageWriter extends Writer
     }
 
 
-    /***
+    /**
      * Writes a String to the output.
      *
      * @param string  The String to write.
      * @throws IOException If an error occurs while writing to the underlying
      *            output.
-     ***/
+     */
     @Override
     public void write(final String string) throws IOException
     {
@@ -153,7 +153,7 @@ public final class DotTerminatedMessageWriter extends Writer
     }
 
 
-    /***
+    /**
      * Writes part of a String to the output starting from a given offset.
      *
      * @param string  The String to write.
@@ -161,7 +161,7 @@ public final class DotTerminatedMessageWriter extends Writer
      * @param length  The number of characters to write.
      * @throws IOException If an error occurs while writing to the underlying
      *            output.
-     ***/
+     */
     @Override
     public void write(final String string, final int offset, final int length) throws IOException
     {
@@ -169,12 +169,12 @@ public final class DotTerminatedMessageWriter extends Writer
     }
 
 
-    /***
+    /**
      * Flushes the underlying output, writing all buffered output.
      *
      * @throws IOException If an error occurs while writing to the underlying
      *            output.
-     ***/
+     */
     @Override
     public void flush() throws IOException
     {
@@ -185,14 +185,14 @@ public final class DotTerminatedMessageWriter extends Writer
     }
 
 
-    /***
+    /**
      * Flushes the underlying output, writing all buffered output, but doesn't
      * actually close the underlying stream.  The underlying stream may still
      * be used for communicating with the server and therefore is not closed.
      *
      * @throws IOException If an error occurs while writing to the underlying
      *            output or closing the Writer.
-     ***/
+     */
     @Override
     public void close() throws IOException
     {

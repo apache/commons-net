@@ -23,7 +23,7 @@ import java.net.InetAddress;
 
 import org.apache.commons.net.io.DotTerminatedMessageWriter;
 
-/***
+/**
  * SMTPClient encapsulates all the functionality necessary to send files
  * through an SMTP server.  This class takes care of all
  * low level details of interacting with an SMTP server and provides
@@ -119,7 +119,7 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  * @see RelayPath
  * @see SMTPConnectionClosedException
  * @see org.apache.commons.net.MalformedServerReplyException
- ***/
+ */
 
 public class SMTPClient extends SMTP
 {
@@ -139,7 +139,7 @@ public class SMTPClient extends SMTP
     }
 
 
-    /***
+    /**
      * At least one SMTPClient method ({@link #sendMessageData  sendMessageData })
      * does not complete the entire sequence of SMTP commands to complete a
      * transaction.  These types of commands require some action by the
@@ -170,14 +170,14 @@ public class SMTPClient extends SMTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean completePendingCommand() throws IOException
     {
         return SMTPReply.isPositiveCompletion(getReply());
     }
 
 
-    /***
+    /**
      * Login to the SMTP server by sending the HELO command with the
      * given hostname as an argument.  Before performing any mail commands,
      * you must first login.
@@ -191,14 +191,14 @@ public class SMTPClient extends SMTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean login(final String hostname) throws IOException
     {
         return SMTPReply.isPositiveCompletion(helo(hostname));
     }
 
 
-    /***
+    /**
      * Login to the SMTP server by sending the HELO command with the
      * client hostname as an argument.  Before performing any mail commands,
      * you must first login.
@@ -211,7 +211,7 @@ public class SMTPClient extends SMTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean login() throws IOException
     {
         String name;
@@ -228,7 +228,7 @@ public class SMTPClient extends SMTP
     }
 
 
-    /***
+    /**
      * Set the sender of a message using the SMTP MAIL command, specifying
      * a reverse relay path.  The sender must be set first before any
      * recipients may be specified, otherwise the mail server will reject
@@ -243,14 +243,14 @@ public class SMTPClient extends SMTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean setSender(final RelayPath path) throws IOException
     {
         return SMTPReply.isPositiveCompletion(mail(path.toString()));
     }
 
 
-    /***
+    /**
      * Set the sender of a message using the SMTP MAIL command, specifying
      * the sender's email address. The sender must be set first before any
      * recipients may be specified, otherwise the mail server will reject
@@ -265,14 +265,14 @@ public class SMTPClient extends SMTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean setSender(final String address) throws IOException
     {
         return SMTPReply.isPositiveCompletion(mail("<" + address + ">"));
     }
 
 
-    /***
+    /**
      * Add a recipient for a message using the SMTP RCPT command, specifying
      * a forward relay path.  The sender must be set first before any
      * recipients may be specified, otherwise the mail server will reject
@@ -287,14 +287,14 @@ public class SMTPClient extends SMTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean addRecipient(final RelayPath path) throws IOException
     {
         return SMTPReply.isPositiveCompletion(rcpt(path.toString()));
     }
 
 
-    /***
+    /**
      * Add a recipient for a message using the SMTP RCPT command, the
      * recipient's email address.  The sender must be set first before any
      * recipients may be specified, otherwise the mail server will reject
@@ -309,7 +309,7 @@ public class SMTPClient extends SMTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean addRecipient(final String address) throws IOException
     {
         return SMTPReply.isPositiveCompletion(rcpt("<" + address + ">"));
@@ -317,7 +317,7 @@ public class SMTPClient extends SMTP
 
 
 
-    /***
+    /**
      * Send the SMTP DATA command in preparation to send an email message.
      * This method returns a DotTerminatedMessageWriter instance to which
      * the message can be written.  Null is returned if the DATA command
@@ -356,7 +356,7 @@ public class SMTPClient extends SMTP
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
      * @see #sendShortMessageData(String)
-     ***/
+     */
     public Writer sendMessageData() throws IOException
     {
         if (!SMTPReply.isPositiveIntermediate(data())) {
@@ -367,7 +367,7 @@ public class SMTPClient extends SMTP
     }
 
 
-    /***
+    /**
      * A convenience method for sending short messages.  This method fetches
      * the Writer returned by {@link #sendMessageData  sendMessageData() }
      * and writes the specified String to it.  After writing the message,
@@ -385,7 +385,7 @@ public class SMTPClient extends SMTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean sendShortMessageData(final String message) throws IOException
     {
         try (Writer writer = sendMessageData()) {
@@ -401,7 +401,7 @@ public class SMTPClient extends SMTP
     }
 
 
-    /***
+    /**
      * A convenience method for a sending short email without having to
      * explicitly set the sender and recipient(s).  This method
      * sets the sender and recipient using
@@ -421,7 +421,7 @@ public class SMTPClient extends SMTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean sendSimpleMessage(final String sender, final String recipient,
                                      final String message)
     throws IOException
@@ -439,7 +439,7 @@ public class SMTPClient extends SMTP
 
 
 
-    /***
+    /**
      * A convenience method for a sending short email without having to
      * explicitly set the sender and recipient(s).  This method
      * sets the sender and recipients using
@@ -465,7 +465,7 @@ public class SMTPClient extends SMTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean sendSimpleMessage(final String sender, final String[] recipients,
                                      final String message)
     throws IOException
@@ -492,7 +492,7 @@ public class SMTPClient extends SMTP
     }
 
 
-    /***
+    /**
      * Logout of the SMTP server by sending the QUIT command.
      * <p>
      * @return True if successfully completed, false if not.
@@ -503,7 +503,7 @@ public class SMTPClient extends SMTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean logout() throws IOException
     {
         return SMTPReply.isPositiveCompletion(quit());
@@ -511,7 +511,7 @@ public class SMTPClient extends SMTP
 
 
 
-    /***
+    /**
      * Aborts the current mail transaction, resetting all server stored
      * sender, recipient, and mail data, cleaing all buffers and tables.
      * <p>
@@ -523,14 +523,14 @@ public class SMTPClient extends SMTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean reset() throws IOException
     {
         return SMTPReply.isPositiveCompletion(rset());
     }
 
 
-    /***
+    /**
      * Verify that a username or email address is valid, i.e., that mail
      * can be delivered to that mailbox on the server.
      * <p>
@@ -543,7 +543,7 @@ public class SMTPClient extends SMTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean verify(final String username) throws IOException
     {
         int result;
@@ -555,7 +555,7 @@ public class SMTPClient extends SMTP
     }
 
 
-    /***
+    /**
      * Fetches the system help information from the server and returns the
      * full string.
      * <p>
@@ -568,7 +568,7 @@ public class SMTPClient extends SMTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *  command to the server or receiving a reply from the server.
-     ***/
+     */
     public String listHelp() throws IOException
     {
         if (SMTPReply.isPositiveCompletion(help())) {
@@ -578,7 +578,7 @@ public class SMTPClient extends SMTP
     }
 
 
-    /***
+    /**
      * Fetches the help information for a given command from the server and
      * returns the full string.
      * <p>
@@ -592,7 +592,7 @@ public class SMTPClient extends SMTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *  command to the server or receiving a reply from the server.
-     ***/
+     */
     public String listHelp(final String command) throws IOException
     {
         if (SMTPReply.isPositiveCompletion(help(command))) {
@@ -602,7 +602,7 @@ public class SMTPClient extends SMTP
     }
 
 
-    /***
+    /**
      * Sends a NOOP command to the SMTP server.  This is useful for preventing
      * server timeouts.
      * <p>
@@ -614,7 +614,7 @@ public class SMTPClient extends SMTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean sendNoOp() throws IOException
     {
         return SMTPReply.isPositiveCompletion(noop());

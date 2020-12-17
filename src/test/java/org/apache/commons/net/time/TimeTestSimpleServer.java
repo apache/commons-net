@@ -43,7 +43,7 @@ public class TimeTestSimpleServer implements Runnable
      */
     public static final long SECONDS_1900_TO_1970 = 2208988800L;
 
-    /*** The default time port.  It is set to 37 according to RFC 868. ***/
+    /** The default time port.  It is set to 37 according to RFC 868. */
     public static final int DEFAULT_PORT = 37;
 
     private ServerSocket server;

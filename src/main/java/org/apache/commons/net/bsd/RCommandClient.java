@@ -28,7 +28,7 @@ import java.net.UnknownHostException;
 
 import org.apache.commons.net.io.SocketInputStream;
 
-/***
+/**
  * RCommandClient is very similar to
  * {@link org.apache.commons.net.bsd.RExecClient},
  * from which it is derived, and implements the rcmd() facility that
@@ -82,25 +82,25 @@ import org.apache.commons.net.io.SocketInputStream;
  * @see org.apache.commons.net.SocketClient
  * @see RExecClient
  * @see RLoginClient
- ***/
+ */
 
 public class RCommandClient extends RExecClient
 {
-    /***
+    /**
      * The default rshell port.  Set to 514 in BSD Unix.
-     ***/
+     */
     public static final int DEFAULT_PORT = 514;
 
-    /***
+    /**
      * The smallest port number an rcmd client may use.  By BSD convention
      * this number is 512.
-     ***/
+     */
     public static final int MIN_CLIENT_PORT = 512;
 
-    /***
+    /**
      * The largest port number an rcmd client may use.  By BSD convention
      * this number is 1023.
-     ***/
+     */
     public static final int MAX_CLIENT_PORT = 1023;
 
     // Overrides method in RExecClient in order to implement proper
@@ -151,17 +151,17 @@ public class RCommandClient extends RExecClient
         return new SocketInputStream(socket, socket.getInputStream());
     }
 
-    /***
+    /**
      * The default RCommandClient constructor.  Initializes the
      * default port to <code> DEFAULT_PORT </code>.
-     ***/
+     */
     public RCommandClient()
     {
         setDefaultPort(DEFAULT_PORT);
     }
 
 
-    /***
+    /**
      * Opens a Socket connected to a remote host at the specified port and
      * originating from the specified local address using a port in a range
      * acceptable to the BSD rshell daemon.
@@ -176,7 +176,7 @@ public class RCommandClient extends RExecClient
      * @throws IOException If the socket could not be opened.  In most
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
-     ***/
+     */
     public void connect(final InetAddress host, final int port, final InetAddress localAddr)
     throws SocketException, BindException, IOException
     {
@@ -210,7 +210,7 @@ public class RCommandClient extends RExecClient
 
 
 
-    /***
+    /**
      * Opens a Socket connected to a remote host at the specified port and
      * originating from the current host at a port in a range acceptable
      * to the BSD rshell daemon.
@@ -224,7 +224,7 @@ public class RCommandClient extends RExecClient
      * @throws IOException If the socket could not be opened.  In most
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
-     ***/
+     */
     @Override
     public void connect(final InetAddress host, final int port)
     throws SocketException, IOException
@@ -233,7 +233,7 @@ public class RCommandClient extends RExecClient
     }
 
 
-    /***
+    /**
      * Opens a Socket connected to a remote host at the specified port and
      * originating from the current host at a port in a range acceptable
      * to the BSD rshell daemon.
@@ -248,7 +248,7 @@ public class RCommandClient extends RExecClient
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
      * @throws UnknownHostException If the hostname cannot be resolved.
-     ***/
+     */
     @Override
     public void connect(final String hostname, final int port)
     throws SocketException, IOException, UnknownHostException
@@ -257,7 +257,7 @@ public class RCommandClient extends RExecClient
     }
 
 
-    /***
+    /**
      * Opens a Socket connected to a remote host at the specified port and
      * originating from the specified local address using a port in a range
      * acceptable to the BSD rshell daemon.
@@ -272,7 +272,7 @@ public class RCommandClient extends RExecClient
      * @throws IOException If the socket could not be opened.  In most
      *  cases you will only want to catch IOException since SocketException is
      *  derived from it.
-     ***/
+     */
     public void connect(final String hostname, final int port, final InetAddress localAddr)
     throws SocketException, IOException
     {
@@ -280,7 +280,7 @@ public class RCommandClient extends RExecClient
     }
 
 
-    /***
+    /**
      * Opens a Socket connected to a remote host at the specified port and
      * originating from the specified local address and port. The
      * local port must lie between <code> MIN_CLIENT_PORT </code> and
@@ -299,7 +299,7 @@ public class RCommandClient extends RExecClient
      *  derived from it.
      * @throws IllegalArgumentException If an invalid local port number
      *            is specified.
-     ***/
+     */
     @Override
     public void connect(final InetAddress host, final int port,
                         final InetAddress localAddr, final int localPort)
@@ -312,7 +312,7 @@ public class RCommandClient extends RExecClient
     }
 
 
-    /***
+    /**
      * Opens a Socket connected to a remote host at the specified port and
      * originating from the specified local address and port. The
      * local port must lie between <code> MIN_CLIENT_PORT </code> and
@@ -332,7 +332,7 @@ public class RCommandClient extends RExecClient
      * @throws UnknownHostException If the hostname cannot be resolved.
      * @throws IllegalArgumentException If an invalid local port number
      *            is specified.
-     ***/
+     */
     @Override
     public void connect(final String hostname, final int port,
                         final InetAddress localAddr, final int localPort)
@@ -345,7 +345,7 @@ public class RCommandClient extends RExecClient
     }
 
 
-    /***
+    /**
      * Remotely executes a command through the rshd daemon on the server
      * to which the RCommandClient is connected.  After calling this method,
      * you may interact with the remote process through its standard input,
@@ -380,7 +380,7 @@ public class RCommandClient extends RExecClient
      *        False if not.
      * @throws IOException If the rcommand() attempt fails.  The exception
      *            will contain a message indicating the nature of the failure.
-     ***/
+     */
     public void rcommand(final String localUsername, final String remoteUsername,
                          final String command, final boolean separateErrorStream)
     throws IOException
@@ -389,14 +389,14 @@ public class RCommandClient extends RExecClient
     }
 
 
-    /***
+    /**
      * Same as
      * <code> rcommand(localUsername, remoteUsername, command, false); </code>
      * @param localUsername the local user
      * @param remoteUsername the remote user
      * @param command the command
      * @throws IOException on error
-     ***/
+     */
     public void rcommand(final String localUsername, final String remoteUsername,
                          final String command)
     throws IOException

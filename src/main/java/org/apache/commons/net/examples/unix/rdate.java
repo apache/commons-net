@@ -23,7 +23,7 @@ import java.net.InetAddress;
 import org.apache.commons.net.time.TimeTCPClient;
 import org.apache.commons.net.time.TimeUDPClient;
 
-/***
+/**
  * This is an example program demonstrating how to use the TimeTCPClient
  * and TimeUDPClient classes.  It's very similar to the simple Unix rdate
  * command.  This program connects to the default time service port of a
@@ -33,7 +33,7 @@ import org.apache.commons.net.time.TimeUDPClient;
  * 132.163.135.130 (warning: the IP address may change).
  * <p>
  * Usage: rdate [-udp] <hostname>
- ***/
+ */
 public final class rdate
 {
 

@@ -20,13 +20,13 @@ package org.apache.commons.net;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
-/***
+/**
  * This is a support class for some of the example programs.  It is
  * a sample implementation of the ProtocolCommandListener interface
  * which just prints out to a specified stream all command/reply traffic.
  *
  * @since 2.0
- ***/
+ */
 
 public class PrintCommandListener implements ProtocolCommandListener
 {

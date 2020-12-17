@@ -20,33 +20,33 @@ package org.apache.commons.net.smtp;
 import java.util.Enumeration;
 import java.util.Vector;
 
-/***
+/**
  * A class used to represent forward and reverse relay paths.  The
  * SMTP MAIL command requires a reverse relay path while the SMTP RCPT
  * command requires a forward relay path.  See RFC 821 for more details.
  * In general, you will not have to deal with relay paths.
  *
  * @see SMTPClient
- ***/
+ */
 
 public final class RelayPath
 {
     private final Vector<String> path;
     private final String emailAddress;
 
-    /***
+    /**
      * Create a relay path with the specified email address as the ultimate
      * destination.
      * <p>
      * @param emailAddress The destination email address.
-     ***/
+     */
     public RelayPath(final String emailAddress)
     {
         this.path = new Vector<>();
         this.emailAddress = emailAddress;
     }
 
-    /***
+    /**
      * Add a mail relay host to the relay path.  Hosts are added left to
      * right.  For example, the following will create the path
      * <code><b> &lt; @bar.com,@foo.com:foobar@foo.com &gt; </b></code>
@@ -57,17 +57,17 @@ public final class RelayPath
      * </pre>
      * <p>
      * @param hostname The host to add to the relay path.
-     ***/
+     */
     public void addRelay(final String hostname)
     {
         path.addElement(hostname);
     }
 
-    /***
+    /**
      * Return the properly formatted string representation of the relay path.
      * <p>
      * @return The properly formatted string representation of the relay path.
-     ***/
+     */
     @Override
     public String toString()
     {

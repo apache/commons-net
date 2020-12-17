@@ -21,7 +21,7 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-/***
+/**
  * This class wraps an input stream, replacing all singly occurring
  * &lt;LF&gt; (linefeed) characters with &lt;CR&gt;&lt;LF&gt; (carriage return
  * followed by linefeed), which is the NETASCII standard for representing
@@ -30,7 +30,7 @@ import java.io.InputStream;
  * conversion to NETASCII.
  *
  *
- ***/
+ */
 
 public final class ToNetASCIIInputStream extends FilterInputStream
 {
@@ -39,12 +39,12 @@ public final class ToNetASCIIInputStream extends FilterInputStream
     private static final int LAST_WAS_NL = 2;
     private int status;
 
-    /***
+    /**
      * Creates a ToNetASCIIInputStream instance that wraps an existing
      * InputStream.
      *
      * @param input  The InputStream to wrap.
-     ***/
+     */
     public ToNetASCIIInputStream(final InputStream input)
     {
         super(input);
@@ -52,7 +52,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
     }
 
 
-    /***
+    /**
      * Reads and returns the next byte in the stream.  If the end of the
      * message has been reached, returns -1.
      *
@@ -60,7 +60,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
      *          stream has been reached.
      * @throws IOException If an error occurs while reading the underlying
      *            stream.
-     ***/
+     */
     @Override
     public int read() throws IOException
     {
@@ -95,7 +95,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
     }
 
 
-    /***
+    /**
      * Reads the next number of bytes from the stream into an array and
      * returns the number of bytes read.  Returns -1 if the end of the
      * stream has been reached.
@@ -105,7 +105,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
      *          end of the message has been reached.
      * @throws IOException If an error occurs in reading the underlying
      *            stream.
-     ***/
+     */
     @Override
     public int read(final byte buffer[]) throws IOException
     {
@@ -113,7 +113,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
     }
 
 
-    /***
+    /**
      * Reads the next number of bytes from the stream into an array and returns
      * the number of bytes read.  Returns -1 if the end of the
      * message has been reached.  The characters are stored in the array
@@ -126,7 +126,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
      *          end of the stream has been reached.
      * @throws IOException If an error occurs while reading the underlying
      *            stream.
-     ***/
+     */
     @Override
     public int read(final byte buffer[], int offset, int length) throws IOException
     {
@@ -162,7 +162,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
         return offset - off;
     }
 
-    /*** Returns false.  Mark is not supported. ***/
+    /** Returns false.  Mark is not supported. */
     @Override
     public boolean markSupported()
     {

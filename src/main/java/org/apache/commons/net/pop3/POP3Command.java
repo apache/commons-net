@@ -17,37 +17,37 @@
 
 package org.apache.commons.net.pop3;
 
-/***
+/**
  * POP3Command stores POP3 command code constants.
  *
  *
- ***/
+ */
 
 public final class POP3Command
 {
-    /*** Send user name. ***/
+    /** Send user name. */
     public static final int USER = 0;
-    /*** Send password. ***/
+    /** Send password. */
     public static final int PASS = 1;
-    /*** Quit session. ***/
+    /** Quit session. */
     public static final int QUIT = 2;
-    /*** Get status. ***/
+    /** Get status. */
     public static final int STAT = 3;
-    /*** List message(s). ***/
+    /** List message(s). */
     public static final int LIST = 4;
-    /*** Retrieve message(s). ***/
+    /** Retrieve message(s). */
     public static final int RETR = 5;
-    /*** Delete message(s). ***/
+    /** Delete message(s). */
     public static final int DELE = 6;
-    /*** No operation.  Used as a session keepalive. ***/
+    /** No operation.  Used as a session keepalive. */
     public static final int NOOP = 7;
-    /*** Reset session. ***/
+    /** Reset session. */
     public static final int RSET = 8;
-    /*** Authorization. ***/
+    /** Authorization. */
     public static final int APOP = 9;
-    /*** Retrieve top number lines from message. ***/
+    /** Retrieve top number lines from message. */
     public static final int TOP = 10;
-    /*** List unique message identifier(s). ***/
+    /** List unique message identifier(s). */
     public static final int UIDL = 11;
     /**
      * The capabilities command.
@@ -77,12 +77,12 @@ public final class POP3Command
     private POP3Command()
     {}
 
-    /***
+    /**
      * Get the POP3 protocol string command corresponding to a command code.
      * @param command the command code
      *
      * @return The POP3 protocol string command corresponding to a command code.
-     ***/
+     */
     public static String getCommand(final int command)
     {
         return commands[command];

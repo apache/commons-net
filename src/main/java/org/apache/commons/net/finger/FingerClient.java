@@ -26,7 +26,7 @@ import java.io.DataOutputStream;
 import org.apache.commons.net.SocketClient;
 import org.apache.commons.net.util.Charsets;
 
-/***
+/**
  * The FingerClient class implements the client side of the Internet Finger
  * Protocol defined in RFC 1288.  To finger a host you create a
  * FingerClient instance, connect to the host, query the host, and finally
@@ -48,30 +48,30 @@ import org.apache.commons.net.util.Charsets;
  *    }
  * </pre>
  *
- ***/
+ */
 
 public class FingerClient extends SocketClient
 {
-    /***
+    /**
      * The default FINGER port.  Set to 79 according to RFC 1288.
-     ***/
+     */
     public static final int DEFAULT_PORT = 79;
 
     private static final String LONG_FLAG = "/W ";
 
     private transient char[] buffer = new char[1024];
 
-    /***
+    /**
      * The default FingerClient constructor.  Initializes the
      * default port to <code> DEFAULT_PORT </code>.
-     ***/
+     */
     public FingerClient()
     {
         setDefaultPort(DEFAULT_PORT);
     }
 
 
-    /***
+    /**
      * Fingers a user at the connected host and returns the output
      * as a String.  You must first connect to a finger server before
      * calling this method, and you should disconnect afterward.
@@ -80,7 +80,7 @@ public class FingerClient extends SocketClient
      * @param username  The name of the user to finger.
      * @return The result of the finger query.
      * @throws IOException If an I/O error occurs while reading the socket.
-     ***/
+     */
     public String query(final boolean longOutput, final String username) throws IOException
     {
         int read;
@@ -101,7 +101,7 @@ public class FingerClient extends SocketClient
     }
 
 
-    /***
+    /**
      * Fingers the connected host and returns the output
      * as a String.  You must first connect to a finger server before
      * calling this method, and you should disconnect afterward.
@@ -110,14 +110,14 @@ public class FingerClient extends SocketClient
      * @param longOutput Set to true if long output is requested, false if not.
      * @return The result of the finger query.
      * @throws IOException If an I/O error occurs while reading the socket.
-     ***/
+     */
     public String query(final boolean longOutput) throws IOException
     {
         return query(longOutput, "");
     }
 
 
-    /***
+    /**
      * Fingers a user and returns the input stream from the network connection
      * of the finger query.  You must first connect to a finger server before
      * calling this method, and you should disconnect after finishing reading
@@ -128,14 +128,14 @@ public class FingerClient extends SocketClient
      * @return The InputStream of the network connection of the finger query.
      *         Can be read to obtain finger results.
      * @throws IOException If an I/O error during the operation.
-     ***/
+     */
     public InputStream getInputStream(final boolean longOutput, final String username)
     throws IOException
     {
         return getInputStream(longOutput, username, null);
     }
 
-    /***
+    /**
      * Fingers a user and returns the input stream from the network connection
      * of the finger query.  You must first connect to a finger server before
      * calling this method, and you should disconnect after finishing reading
@@ -148,7 +148,7 @@ public class FingerClient extends SocketClient
      * @return The InputStream of the network connection of the finger query.
      *         Can be read to obtain finger results.
      * @throws IOException If an I/O error during the operation.
-     ***/
+     */
     public InputStream getInputStream(final boolean longOutput, final String username, final String encoding)
             throws IOException {
         DataOutputStream output;
@@ -170,7 +170,7 @@ public class FingerClient extends SocketClient
         return _input_;
     }
 
-    /***
+    /**
      * Fingers the connected host and returns the input stream from
      * the network connection of the finger query.  This is equivalent to
      * calling getInputStream(longOutput, "").  You must first connect to a
@@ -181,7 +181,7 @@ public class FingerClient extends SocketClient
      * @return The InputStream of the network connection of the finger query.
      *         Can be read to obtain finger results.
      * @throws IOException If an I/O error during the operation.
-     ***/
+     */
     public InputStream getInputStream(final boolean longOutput) throws IOException
     {
         return getInputStream(longOutput, "");

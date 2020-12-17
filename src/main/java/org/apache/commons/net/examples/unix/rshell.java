@@ -22,7 +22,7 @@ import org.apache.commons.net.bsd.RCommandClient;
 
 import org.apache.commons.net.examples.util.IOUtil;
 
-/***
+/**
  * This is an example program demonstrating how to use the RCommandClient
  * class. This program connects to an rshell daemon and requests that the
  * given command be executed on the server.  It then reads input from stdin
@@ -37,7 +37,7 @@ import org.apache.commons.net.examples.util.IOUtil;
  * Example: java rshell myhost localusername remoteusername "ps -aux"
  * <p>
  * Usage: rshell <hostname> <localuser> <remoteuser> <command>
- ***/
+ */
 
 // This class requires the IOUtil support class!
 public final class rshell

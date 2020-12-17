@@ -24,7 +24,7 @@ import java.net.SocketException;
 
 import org.apache.commons.net.DatagramSocketClient;
 
-/***
+/**
  * The TFTP class exposes a set of methods to allow you to deal with the TFTP
  * protocol directly, in case you want to write your own TFTP client or
  * server.  However, almost every user should only be concerend with
@@ -43,87 +43,87 @@ import org.apache.commons.net.DatagramSocketClient;
  * @see TFTPPacket
  * @see TFTPPacketException
  * @see TFTPClient
- ***/
+ */
 
 public class TFTP extends DatagramSocketClient
 {
-    /***
+    /**
      * The ascii transfer mode.  Its value is 0 and equivalent to NETASCII_MODE
-     ***/
+     */
     public static final int ASCII_MODE = 0;
 
-    /***
+    /**
      * The netascii transfer mode.  Its value is 0.
-     ***/
+     */
     public static final int NETASCII_MODE = 0;
 
-    /***
+    /**
      * The binary transfer mode.  Its value is 1 and equivalent to OCTET_MODE.
-     ***/
+     */
     public static final int BINARY_MODE = 1;
 
-    /***
+    /**
      * The image transfer mode.  Its value is 1 and equivalent to OCTET_MODE.
-     ***/
+     */
     public static final int IMAGE_MODE = 1;
 
-    /***
+    /**
      * The octet transfer mode.  Its value is 1.
-     ***/
+     */
     public static final int OCTET_MODE = 1;
 
-    /***
+    /**
      * The default number of milliseconds to wait to receive a datagram
      * before timing out.  The default is 5000 milliseconds (5 seconds).
-     ***/
+     */
     public static final int DEFAULT_TIMEOUT = 5000;
 
-    /***
+    /**
      * The default TFTP port according to RFC 783 is 69.
-     ***/
+     */
     public static final int DEFAULT_PORT = 69;
 
-    /***
+    /**
      * The size to use for TFTP packet buffers.  Its 4 plus the
      * TFTPPacket.SEGMENT_SIZE, i.e. 516.
-     ***/
+     */
     static final int PACKET_SIZE = TFTPPacket.SEGMENT_SIZE + 4;
 
-    /*** A buffer used to accelerate receives in bufferedReceive() ***/
+    /** A buffer used to accelerate receives in bufferedReceive() */
     private byte[] receiveBuffer;
 
-    /*** A datagram used to minimize memory allocation in bufferedReceive() ***/
+    /** A datagram used to minimize memory allocation in bufferedReceive() */
     private DatagramPacket receiveDatagram;
 
-    /*** A datagram used to minimize memory allocation in bufferedSend() ***/
+    /** A datagram used to minimize memory allocation in bufferedSend() */
     private DatagramPacket sendDatagram;
 
-    /***
+    /**
      * A buffer used to accelerate sends in bufferedSend().
      * It is left package visible so that TFTPClient may be slightly more
      * efficient during file sends.  It saves the creation of an
      * additional buffer and prevents a buffer copy in _newDataPcket().
-     ***/
+     */
     byte[] sendBuffer;
 
 
-    /***
+    /**
      * Returns the TFTP string representation of a TFTP transfer mode.
      * Will throw an ArrayIndexOutOfBoundsException if an invalid transfer
      * mode is specified.
      *
      * @param mode  The TFTP transfer mode.  One of the MODE constants.
      * @return  The TFTP string representation of the TFTP transfer mode.
-     ***/
+     */
     public static final String getModeName(final int mode)
     {
         return TFTPRequestPacket.modeStrings[mode];
     }
 
-    /***
+    /**
      * Creates a TFTP instance with a default timeout of DEFAULT_TIMEOUT,
      * a null socket, and buffered operations disabled.
-     ***/
+     */
     public TFTP()
     {
         setDefaultTimeout(DEFAULT_TIMEOUT);
@@ -131,13 +131,13 @@ public class TFTP extends DatagramSocketClient
         receiveDatagram = null;
     }
 
-    /***
+    /**
      * This method synchronizes a connection by discarding all packets that
      * may be in the local socket buffer.  This method need only be called
      * when you implement your own TFTP client or server.
      *
      * @throws IOException if an I/O error occurs.
-     ***/
+     */
     public final void discardPackets() throws IOException
     {
         int to;
@@ -167,7 +167,7 @@ public class TFTP extends DatagramSocketClient
     }
 
 
-    /***
+    /**
      * This is a special method to perform a more efficient packet receive.
      * It should only be used after calling
      * {@link #beginBufferedOps  beginBufferedOps() }.  beginBufferedOps()
@@ -193,7 +193,7 @@ public class TFTP extends DatagramSocketClient
      *       SocketException is thrown.  You should catch both to be safe.
      * @throws IOException  If some other I/O error occurs.
      * @throws TFTPPacketException If an invalid TFTP packet is received.
-     ***/
+     */
     public final TFTPPacket bufferedReceive() throws IOException,
                 InterruptedIOException, SocketException, TFTPPacketException
     {
@@ -206,7 +206,7 @@ public class TFTP extends DatagramSocketClient
         return newTFTPPacket;
     }
 
-    /***
+    /**
      * This is a special method to perform a more efficient packet send.
      * It should only be used after calling
      * {@link #beginBufferedOps  beginBufferedOps() }.  beginBufferedOps()
@@ -223,7 +223,7 @@ public class TFTP extends DatagramSocketClient
      *
      * @param packet  The TFTP packet to send.
      * @throws IOException  If some  I/O error occurs.
-     ***/
+     */
     public final void bufferedSend(final TFTPPacket packet) throws IOException
     {
         trace(">", packet);
@@ -231,14 +231,14 @@ public class TFTP extends DatagramSocketClient
     }
 
 
-    /***
+    /**
      * Initializes the internal buffers. Buffers are used by
      * {@link #bufferedSend  bufferedSend() } and
      * {@link #bufferedReceive  bufferedReceive() }.  This
      * method must be called before calling either one of those two
      * methods.  When you finish using buffered operations, you must
      * call {@link #endBufferedOps  endBufferedOps() }.
-     ***/
+     */
     public final void beginBufferedOps()
     {
         receiveBuffer = new byte[PACKET_SIZE];
@@ -249,9 +249,9 @@ public class TFTP extends DatagramSocketClient
             new DatagramPacket(sendBuffer, sendBuffer.length);
     }
 
-    /***
+    /**
      * Releases the resources used to perform buffered sends and receives.
-     ***/
+     */
     public final void endBufferedOps()
     {
         receiveBuffer = null;
@@ -261,12 +261,12 @@ public class TFTP extends DatagramSocketClient
     }
 
 
-    /***
+    /**
      * Sends a TFTP packet to its destination.
      *
      * @param packet  The TFTP packet to send.
      * @throws IOException  If some  I/O error occurs.
-     ***/
+     */
     public final void send(final TFTPPacket packet) throws IOException
     {
         trace(">", packet);
@@ -274,7 +274,7 @@ public class TFTP extends DatagramSocketClient
     }
 
 
-    /***
+    /**
      * Receives a TFTPPacket.
      *
      * @return The TFTPPacket received.
@@ -288,7 +288,7 @@ public class TFTP extends DatagramSocketClient
      *       SocketException is thrown.  You should catch both to be safe.
      * @throws IOException  If some other I/O error occurs.
      * @throws TFTPPacketException If an invalid TFTP packet is received.
-     ***/
+     */
     public final TFTPPacket receive() throws IOException, InterruptedIOException,
                 SocketException, TFTPPacketException
     {

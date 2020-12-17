@@ -19,7 +19,7 @@ package org.apache.commons.net.nntp;
 
 import java.io.IOException;
 
-/***
+/**
  * NNTPConnectionClosedException is used to indicate the premature or
  * unexpected closing of an NNTP connection resulting from a
  * {@link org.apache.commons.net.nntp.NNTPReply#SERVICE_DISCONTINUED NNTPReply.SERVICE_DISCONTINUED }
@@ -30,23 +30,23 @@ import java.io.IOException;
  *
  * @see NNTP
  * @see NNTPClient
- ***/
+ */
 
 public final class NNTPConnectionClosedException extends IOException
 {
 
     private static final long serialVersionUID = 1029785635891040770L;
 
-    /*** Constructs a NNTPConnectionClosedException with no message ***/
+    /** Constructs a NNTPConnectionClosedException with no message */
     public NNTPConnectionClosedException()
     {
     }
 
-    /***
+    /**
      * Constructs a NNTPConnectionClosedException with a specified message.
      * <p>
      * @param message  The message explaining the reason for the exception.
-     ***/
+     */
     public NNTPConnectionClosedException(final String message)
     {
         super(message);

@@ -27,7 +27,7 @@ import java.net.SocketException;
 import org.apache.commons.net.chargen.CharGenTCPClient;
 import org.apache.commons.net.chargen.CharGenUDPClient;
 
-/***
+/**
  * This is an example program demonstrating how to use the CharGenTCPClient
  * and CharGenUDPClient classes.  This program connects to the default
  * chargen service port of a specified server, then reads 100 lines from
@@ -38,7 +38,7 @@ import org.apache.commons.net.chargen.CharGenUDPClient;
  * port.
  * <p>
  * Usage: chargen [-udp] <hostname>
- ***/
+ */
 public final class chargen
 {
 

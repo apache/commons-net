@@ -26,7 +26,7 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.net.io.DotTerminatedMessageReader;
 
-/***
+/**
  * The POP3Client class implements the client side of the Internet POP3
  * Protocol defined in RFC 1939.  All commands are supported, including
  * the APOP command which requires MD5 encryption.  See RFC 1939 for
@@ -46,7 +46,7 @@ import org.apache.commons.net.io.DotTerminatedMessageReader;
  * @see POP3MessageInfo
  * @see org.apache.commons.net.io.DotTerminatedMessageReader
  * @see org.apache.commons.net.MalformedServerReplyException
- ***/
+ */
 
 public class POP3Client extends POP3
 {
@@ -113,13 +113,13 @@ public class POP3Client extends POP3
         return new POP3MessageInfo(num, line);
     }
 
-    /***
+    /**
      * Send a CAPA command to the POP3 server.
      * @return True if the command was successful, false if not.
      * @throws IOException If a network I/O error occurs in the process of
      *        sending the CAPA command.
      * @since 3.1 (was previously in ExtendedPOP3Client)
-     ***/
+     */
     public boolean capa() throws IOException
     {
         if (sendCommand(POP3Command.CAPA) == POP3Reply.OK) {
@@ -130,7 +130,7 @@ public class POP3Client extends POP3
 
     }
 
-    /***
+    /**
      * Login to the POP3 server with the given username and password.  You
      * must first connect to the server with
      * {@link org.apache.commons.net.SocketClient#connect  connect }
@@ -146,7 +146,7 @@ public class POP3Client extends POP3
      * @return True if the login attempt was successful, false if not.
      * @throws IOException If a network I/O error occurs in the process of
      *            logging in.
-     ***/
+     */
     public boolean login(final String username, final String password) throws IOException
     {
         if (getState() != AUTHORIZATION_STATE) {
@@ -167,7 +167,7 @@ public class POP3Client extends POP3
     }
 
 
-    /***
+    /**
      * Login to the POP3 server with the given username and authentication
      * information.  Use this method when connecting to a server requiring
      * authentication using the APOP command.  Because the timestamp
@@ -199,7 +199,7 @@ public class POP3Client extends POP3
      *            logging in.
      * @throws NoSuchAlgorithmException If the MD5 encryption algorithm
      *      cannot be instantiated by the Java runtime system.
-     ***/
+     */
     public boolean login(final String username, String timestamp, final String secret)
     throws IOException, NoSuchAlgorithmException
     {
@@ -240,7 +240,7 @@ public class POP3Client extends POP3
     }
 
 
-    /***
+    /**
      * Logout of the POP3 server.  To fully disconnect from the server
      * you must call
      * {@link org.apache.commons.net.pop3.POP3#disconnect  disconnect }.
@@ -254,7 +254,7 @@ public class POP3Client extends POP3
      * @return True if the logout attempt was successful, false if not.
      * @throws IOException If a network I/O error occurs in the process
      *           of logging out.
-     ***/
+     */
     public boolean logout() throws IOException
     {
         if (getState() == TRANSACTION_STATE) {
@@ -265,7 +265,7 @@ public class POP3Client extends POP3
     }
 
 
-    /***
+    /**
      * Send a NOOP command to the POP3 server.  This is useful for keeping
      * a connection alive since most POP3 servers will timeout after 10
      * minutes of inactivity.  A noop attempt will only succeed if
@@ -276,7 +276,7 @@ public class POP3Client extends POP3
      * @return True if the noop attempt was successful, false if not.
      * @throws IOException If a network I/O error occurs in the process of
      *        sending the NOOP command.
-     ***/
+     */
     public boolean noop() throws IOException
     {
         if (getState() == TRANSACTION_STATE) {
@@ -286,7 +286,7 @@ public class POP3Client extends POP3
     }
 
 
-    /***
+    /**
      * Delete a message from the POP3 server.  The message is only marked
      * for deletion by the server.  If you decide to unmark the message, you
      * must issuse a {@link #reset  reset } command.  Messages marked
@@ -300,7 +300,7 @@ public class POP3Client extends POP3
      * @return True if the deletion attempt was successful, false if not.
      * @throws IOException If a network I/O error occurs in the process of
      *           sending the delete command.
-     ***/
+     */
     public boolean deleteMessage(final int messageId) throws IOException
     {
         if (getState() == TRANSACTION_STATE) {
@@ -311,7 +311,7 @@ public class POP3Client extends POP3
     }
 
 
-    /***
+    /**
      * Reset the POP3 session.  This is useful for undoing any message
      * deletions that may have been performed.  A reset attempt can only
      * succeed if the client is in the
@@ -321,7 +321,7 @@ public class POP3Client extends POP3
      * @return True if the reset attempt was successful, false if not.
      * @throws IOException If a network I/O error occurs in the process of
      *      sending the reset command.
-     ***/
+     */
     public boolean reset() throws IOException
     {
         if (getState() == TRANSACTION_STATE) {
@@ -330,7 +330,7 @@ public class POP3Client extends POP3
         return false;
     }
 
-    /***
+    /**
      * Get the mailbox status.  A status attempt can only
      * succeed if the client is in the
      * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
@@ -344,7 +344,7 @@ public class POP3Client extends POP3
      *         in bytes.  Returns null if the status the attempt fails.
      * @throws IOException If a network I/O error occurs in the process of
      *       sending the status command.
-     ***/
+     */
     public POP3MessageInfo status() throws IOException
     {
         if (getState() != TRANSACTION_STATE) {
@@ -357,7 +357,7 @@ public class POP3Client extends POP3
     }
 
 
-    /***
+    /**
      * List an individual message.  A list attempt can only
      * succeed if the client is in the
      * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
@@ -373,7 +373,7 @@ public class POP3Client extends POP3
      *         null if the list attempt fails.
      * @throws IOException If a network I/O error occurs in the process of
      *         sending the list command.
-     ***/
+     */
     public POP3MessageInfo listMessage(final int messageId) throws IOException
     {
         if (getState() != TRANSACTION_STATE) {
@@ -387,7 +387,7 @@ public class POP3Client extends POP3
     }
 
 
-    /***
+    /**
      * List all messages.  A list attempt can only
      * succeed if the client is in the
      * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
@@ -403,7 +403,7 @@ public class POP3Client extends POP3
      * If the list attempt fails, it returns null.
      * @throws IOException If a network I/O error occurs in the process of
      *     sending the list command.
-     ***/
+     */
     public POP3MessageInfo[] listMessages() throws IOException
     {
         if (getState() != TRANSACTION_STATE) {
@@ -427,7 +427,7 @@ public class POP3Client extends POP3
         return messages;
     }
 
-    /***
+    /**
      * List the unique identifier for a message.  A list attempt can only
      * succeed if the client is in the
      * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
@@ -443,7 +443,7 @@ public class POP3Client extends POP3
      *         Returns null if the list attempt fails.
      * @throws IOException If a network I/O error occurs in the process of
      *        sending the list unique identifier command.
-     ***/
+     */
     public POP3MessageInfo listUniqueIdentifier(final int messageId)
     throws IOException
     {
@@ -458,7 +458,7 @@ public class POP3Client extends POP3
     }
 
 
-    /***
+    /**
      * List the unique identifiers for all messages.  A list attempt can only
      * succeed if the client is in the
      * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
@@ -474,7 +474,7 @@ public class POP3Client extends POP3
      * If the list attempt fails, it returns null.
      * @throws IOException If a network I/O error occurs in the process of
      *     sending the list unique identifier command.
-     ***/
+     */
     public POP3MessageInfo[] listUniqueIdentifiers() throws IOException
     {
         if (getState() != TRANSACTION_STATE) {

@@ -22,7 +22,7 @@ import org.apache.commons.net.bsd.RLoginClient;
 
 import org.apache.commons.net.examples.util.IOUtil;
 
-/***
+/**
  * This is an example program demonstrating how to use the RLoginClient
  * class. This program connects to an rlogin daemon and begins to
  * interactively read input from stdin (this will be line buffered on most
@@ -44,7 +44,7 @@ import org.apache.commons.net.examples.util.IOUtil;
  * Example: java rlogin myhost localusername remoteusername vt100
  * <p>
  * Usage: rlogin <hostname> <localuser> <remoteuser> <terminal>
- ***/
+ */
 
 // This class requires the IOUtil support class!
 public final class rlogin

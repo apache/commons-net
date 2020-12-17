@@ -30,7 +30,7 @@ import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
 import org.apache.commons.net.io.CRLFLineReader;
 
-/***
+/**
  * The NNTP class is not meant to be used by itself and is provided
  * only so that you may easily implement your own NNTP client if
  * you so desire.  If you have no need to perform your own implementation,
@@ -77,11 +77,11 @@ import org.apache.commons.net.io.CRLFLineReader;
  * @see NNTPClient
  * @see NNTPConnectionClosedException
  * @see org.apache.commons.net.MalformedServerReplyException
- ***/
+ */
 
 public class NNTP extends SocketClient
 {
-    /*** The default NNTP port.  Its value is 119 according to RFC 977. ***/
+    /** The default NNTP port.  Its value is 119 according to RFC 977. */
     public static final int DEFAULT_PORT = 119;
 
     // We have to ensure that the protocol communication is in ASCII
@@ -113,11 +113,11 @@ public class NNTP extends SocketClient
      */
     protected ProtocolCommandSupport _commandSupport_;
 
-    /***
+    /**
      * The default NNTP constructor.  Sets the default port to
      * <code>DEFAULT_PORT</code> and initializes internal data structures
      * for saving NNTP reply information.
-     ***/
+     */
     public NNTP()
     {
         setDefaultPort(DEFAULT_PORT);
@@ -128,12 +128,12 @@ public class NNTP extends SocketClient
         _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
-    /***
+    /**
      * Initiates control connections and gets initial reply, determining
      * if the client is allowed to post to the server.  Initializes
      * {@link #_reader_} and {@link #_writer_} to wrap
      * {@link SocketClient#_input_} and {@link SocketClient#_output_}.
-     ***/
+     */
     @Override
     protected void _connectAction_() throws IOException
     {
@@ -149,14 +149,14 @@ public class NNTP extends SocketClient
         _isAllowedToPost = replyCode == NNTPReply.SERVER_READY_POSTING_ALLOWED;
     }
 
-    /***
+    /**
      * Closes the connection to the NNTP server and sets to null
      * some internal data so that the memory may be reclaimed by the
      * garbage collector.  The reply text and code information from the
      * last command is voided so that the memory it used may be reclaimed.
      * <p>
      * @throws IOException If an error occurs while disconnecting.
-     ***/
+     */
     @Override
     public void disconnect() throws IOException
     {
@@ -168,20 +168,20 @@ public class NNTP extends SocketClient
     }
 
 
-    /***
+    /**
      * Indicates whether or not the client is allowed to post articles to
      * the server it is currently connected to.
      * <p>
      * @return True if the client can post articles to the server, false
      *         otherwise.
-     ***/
+     */
     public boolean isAllowedToPost()
     {
         return _isAllowedToPost;
     }
 
 
-    /***
+    /**
      * Sends an NNTP command to the server, waits for a reply and returns the
      * numerical response code.  After invocation, for more detailed
      * information, the actual reply text can be accessed by calling
@@ -199,7 +199,7 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int sendCommand(final String command, final String args) throws IOException
     {
         final StringBuilder __commandBuffer = new StringBuilder();
@@ -222,7 +222,7 @@ public class NNTP extends SocketClient
     }
 
 
-    /***
+    /**
      * Sends an NNTP command to the server, waits for a reply and returns the
      * numerical response code.  After invocation, for more detailed
      * information, the actual reply text can be accessed by calling
@@ -242,14 +242,14 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int sendCommand(final int command, final String args) throws IOException
     {
         return sendCommand(NNTPCommand.getCommand(command), args);
     }
 
 
-    /***
+    /**
      * Sends an NNTP command with no arguments to the server, waits for a
      * reply and returns the numerical response code.  After invocation, for
      * more detailed information, the actual reply text can be accessed by
@@ -266,14 +266,14 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int sendCommand(final String command) throws IOException
     {
         return sendCommand(command, null);
     }
 
 
-    /***
+    /**
      * Sends an NNTP command with no arguments to the server, waits for a
      * reply and returns the numerical response code.  After invocation, for
      * more detailed information, the actual reply text can be accessed by
@@ -291,27 +291,27 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int sendCommand(final int command) throws IOException
     {
         return sendCommand(command, null);
     }
 
 
-    /***
+    /**
      * Returns the integer value of the reply code of the last NNTP reply.
      * You will usually only use this method after you connect to the
      * NNTP server to check that the connection was successful since
      * <code> connect </code> is of type void.
      * <p>
      * @return The integer value of the reply code of the last NNTP reply.
-     ***/
+     */
     public int getReplyCode()
     {
         return replyCode;
     }
 
-    /***
+    /**
      * Fetches a reply from the NNTP server and returns the integer reply
      * code.  After calling this method, the actual reply text can be accessed
      * from {@link #getReplyString  getReplyString }.  Only use this
@@ -327,7 +327,7 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while
      *      receiving the server reply.
-     ***/
+     */
     public int getReply() throws IOException
     {
         replyString = _reader_.readLine();
@@ -364,19 +364,19 @@ public class NNTP extends SocketClient
     }
 
 
-    /***
+    /**
      * Returns the entire text of the last NNTP server response exactly
      * as it was received, not including the end of line marker.
      * <p>
      * @return The entire text from the last NNTP response as a String.
-     ***/
+     */
     public String getReplyString()
     {
         return replyString;
     }
 
 
-    /***
+    /**
      * A convenience method to send the NNTP ARTICLE command to the server,
      * receive the initial reply, and return the reply code.
      * <p>
@@ -390,13 +390,13 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int article(final String messageId) throws IOException
     {
         return sendCommand(NNTPCommand.ARTICLE, messageId);
     }
 
-    /***
+    /**
      * A convenience method to send the NNTP ARTICLE command to the server,
      * receive the initial reply, and return the reply code.
      * <p>
@@ -410,13 +410,13 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int article(final long articleNumber) throws IOException
     {
         return sendCommand(NNTPCommand.ARTICLE, Long.toString(articleNumber));
     }
 
-    /***
+    /**
      * A convenience method to send the NNTP ARTICLE command to the server,
      * receive the initial reply, and return the reply code.
      * <p>
@@ -428,7 +428,7 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int article() throws IOException
     {
         return sendCommand(NNTPCommand.ARTICLE);
@@ -436,7 +436,7 @@ public class NNTP extends SocketClient
 
 
 
-    /***
+    /**
      * A convenience method to send the NNTP BODY command to the server,
      * receive the initial reply, and return the reply code.
      * <p>
@@ -450,13 +450,13 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int body(final String messageId) throws IOException
     {
         return sendCommand(NNTPCommand.BODY, messageId);
     }
 
-    /***
+    /**
      * A convenience method to send the NNTP BODY command to the server,
      * receive the initial reply, and return the reply code.
      * <p>
@@ -470,13 +470,13 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int body(final long articleNumber) throws IOException
     {
         return sendCommand(NNTPCommand.BODY, Long.toString(articleNumber));
     }
 
-    /***
+    /**
      * A convenience method to send the NNTP BODY command to the server,
      * receive the initial reply, and return the reply code.
      * <p>
@@ -488,7 +488,7 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int body() throws IOException
     {
         return sendCommand(NNTPCommand.BODY);
@@ -496,7 +496,7 @@ public class NNTP extends SocketClient
 
 
 
-    /***
+    /**
      * A convenience method to send the NNTP HEAD command to the server,
      * receive the initial reply, and return the reply code.
      * <p>
@@ -510,13 +510,13 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int head(final String messageId) throws IOException
     {
         return sendCommand(NNTPCommand.HEAD, messageId);
     }
 
-    /***
+    /**
      * A convenience method to send the NNTP HEAD command to the server,
      * receive the initial reply, and return the reply code.
      * <p>
@@ -530,13 +530,13 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int head(final long articleNumber) throws IOException
     {
         return sendCommand(NNTPCommand.HEAD, Long.toString(articleNumber));
     }
 
-    /***
+    /**
      * A convenience method to send the NNTP HEAD command to the server,
      * receive the initial reply, and return the reply code.
      * <p>
@@ -548,7 +548,7 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int head() throws IOException
     {
         return sendCommand(NNTPCommand.HEAD);
@@ -556,7 +556,7 @@ public class NNTP extends SocketClient
 
 
 
-    /***
+    /**
      * A convenience method to send the NNTP STAT command to the server,
      * receive the initial reply, and return the reply code.
      * <p>
@@ -570,13 +570,13 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int stat(final String messageId) throws IOException
     {
         return sendCommand(NNTPCommand.STAT, messageId);
     }
 
-    /***
+    /**
      * A convenience method to send the NNTP STAT command to the server,
      * receive the initial reply, and return the reply code.
      * <p>
@@ -590,13 +590,13 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int stat(final long articleNumber) throws IOException
     {
         return sendCommand(NNTPCommand.STAT, Long.toString(articleNumber));
     }
 
-    /***
+    /**
      * A convenience method to send the NNTP STAT command to the server,
      * receive the initial reply, and return the reply code.
      * <p>
@@ -608,14 +608,14 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int stat() throws IOException
     {
         return sendCommand(NNTPCommand.STAT);
     }
 
 
-    /***
+    /**
      * A convenience method to send the NNTP GROUP command to the server,
      * receive the reply, and return the reply code.
      * <p>
@@ -628,14 +628,14 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int group(final String newsgroup) throws IOException
     {
         return sendCommand(NNTPCommand.GROUP, newsgroup);
     }
 
 
-    /***
+    /**
      * A convenience method to send the NNTP HELP command to the server,
      * receive the reply, and return the reply code.
      * <p>
@@ -647,14 +647,14 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int help() throws IOException
     {
         return sendCommand(NNTPCommand.HELP);
     }
 
 
-    /***
+    /**
      * A convenience method to send the NNTP IHAVE command to the server,
      * receive the reply, and return the reply code.
      * <p>
@@ -668,14 +668,14 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int ihave(final String messageId) throws IOException
     {
         return sendCommand(NNTPCommand.IHAVE, messageId);
     }
 
 
-    /***
+    /**
      * A convenience method to send the NNTP LAST command to the server,
      * receive the reply, and return the reply code.
      * <p>
@@ -687,7 +687,7 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int last() throws IOException
     {
         return sendCommand(NNTPCommand.LAST);
@@ -695,7 +695,7 @@ public class NNTP extends SocketClient
 
 
 
-    /***
+    /**
      * A convenience method to send the NNTP LIST command to the server,
      * receive the reply, and return the reply code.
      * <p>
@@ -707,7 +707,7 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int list() throws IOException
     {
         return sendCommand(NNTPCommand.LIST);
@@ -715,7 +715,7 @@ public class NNTP extends SocketClient
 
 
 
-    /***
+    /**
      * A convenience method to send the NNTP NEXT command to the server,
      * receive the reply, and return the reply code.
      * <p>
@@ -727,14 +727,14 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int next() throws IOException
     {
         return sendCommand(NNTPCommand.NEXT);
     }
 
 
-    /***
+    /**
      * A convenience method to send the "NEWGROUPS" command to the server,
      * receive the reply, and return the reply code.
      * <p>
@@ -753,7 +753,7 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int newgroups(final String date, final String time, final boolean GMT,
                          final String distributions) throws IOException
     {
@@ -780,7 +780,7 @@ public class NNTP extends SocketClient
     }
 
 
-    /***
+    /**
      * A convenience method to send the "NEWNEWS" command to the server,
      * receive the reply, and return the reply code.
      * <p>
@@ -801,7 +801,7 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int newnews(final String newsgroups, final String date, final String time, final boolean GMT,
                        final String distributions) throws IOException
     {
@@ -831,7 +831,7 @@ public class NNTP extends SocketClient
 
 
 
-    /***
+    /**
      * A convenience method to send the NNTP POST command to the server,
      * receive the reply, and return the reply code.
      * <p>
@@ -843,7 +843,7 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int post() throws IOException
     {
         return sendCommand(NNTPCommand.POST);
@@ -851,7 +851,7 @@ public class NNTP extends SocketClient
 
 
 
-    /***
+    /**
      * A convenience method to send the NNTP QUIT command to the server,
      * receive the reply, and return the reply code.
      * <p>
@@ -863,13 +863,13 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int quit() throws IOException
     {
         return sendCommand(NNTPCommand.QUIT);
     }
 
-    /***
+    /**
      * A convenience method to send the AUTHINFO USER command to the server,
      *  receive the reply, and return the reply code. (See RFC 2980)
      * <p>
@@ -883,13 +883,13 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int authinfoUser(final String username) throws IOException {
         final String userParameter = "USER " + username;
         return sendCommand(NNTPCommand.AUTHINFO, userParameter);
     }
 
-    /***
+    /**
      * A convenience method to send the AUTHINFO PASS command to the server,
      * receive the reply, and return the reply code.  If this step is
      * required, it should immediately follow the AUTHINFO USER command
@@ -905,13 +905,13 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int authinfoPass(final String password) throws IOException {
         final String passParameter = "PASS " + password;
         return sendCommand(NNTPCommand.AUTHINFO, passParameter);
     }
 
-    /***
+    /**
      * A convenience method to send the NNTP XOVER command to the server,
      * receive the reply, and return the reply code.
      * <p>
@@ -930,12 +930,12 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int xover(final String selectedArticles) throws IOException {
         return sendCommand(NNTPCommand.XOVER, selectedArticles);
     }
 
-    /***
+    /**
      * A convenience method to send the NNTP XHDR command to the server,
      * receive the reply, and return the reply code.
      * <p>
@@ -956,7 +956,7 @@ public class NNTP extends SocketClient
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
-     ***/
+     */
     public int xhdr(final String header, final String selectedArticles) throws IOException {
         final StringBuilder command = new StringBuilder(header);
         command.append(" ");

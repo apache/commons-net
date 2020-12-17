@@ -23,7 +23,7 @@ import java.net.UnknownHostException;
 
 import org.apache.commons.net.finger.FingerClient;
 
-/***
+/**
  * This is an example of how you would implement the finger command
  * in Java using NetComponents.  The Java version is much shorter.
  * But keep in mind that the Unix finger command reads all sorts of
@@ -31,7 +31,7 @@ import org.apache.commons.net.finger.FingerClient;
  * queries the finger daemon.
  * <p>
  * The -l flag is used to request long output from the server.
- ***/
+ */
 public final class finger
 {
 

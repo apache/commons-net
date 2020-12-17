@@ -19,7 +19,7 @@ package org.apache.commons.net.nntp;
 
 import java.util.Calendar;
 
-/***
+/**
  * The NewGroupsOrNewsQuery class.  This is used to issue NNTP NEWGROUPS and
  * NEWNEWS queries, implemented by
  * {@link org.apache.commons.net.nntp.NNTPClient#listNewNewsgroups listNewNewsGroups }
@@ -38,7 +38,7 @@ import java.util.Calendar;
  * distribution prefix created since midnight 11/15/97.
  *
  * @see NNTPClient
- ***/
+ */
 
 public final class NewGroupsOrNewsQuery
 {
@@ -48,12 +48,12 @@ public final class NewGroupsOrNewsQuery
     private final boolean isGMT;
 
 
-    /***
+    /**
      * Creates a new query using the given time as a reference point.
      * <p>
      * @param date  The date since which new groups or news have arrived.
      * @param gmt   True if the date should be considered as GMT, false if not.
-     ***/
+     */
     public NewGroupsOrNewsQuery(final Calendar date, final boolean gmt)
     {
         int num;
@@ -156,7 +156,7 @@ public final class NewGroupsOrNewsQuery
     }
 
 
-    /***
+    /**
      * Add a newsgroup to the list of newsgroups being queried.  Newsgroups
      * added this way are only meaningful to the NEWNEWS command.  Newsgroup
      * names may include the <code> * </code> wildcard, as in
@@ -165,7 +165,7 @@ public final class NewGroupsOrNewsQuery
      * <p>
      * @param newsgroup  The newsgroup to add to the list of groups to be
      *                   checked for new news.
-     ***/
+     */
     public void addNewsgroup(final String newsgroup)
     {
         if (newsgroups != null) {
@@ -177,7 +177,7 @@ public final class NewGroupsOrNewsQuery
     }
 
 
-    /***
+    /**
      * Add a newsgroup to the list of newsgroups being queried, but indicate
      * that group should not be checked for new news.  Newsgroups
      * added this way are only meaningful to the NEWNEWS command.
@@ -194,14 +194,14 @@ public final class NewGroupsOrNewsQuery
      * @param newsgroup  The newsgroup to add to the list of groups to be
      *                   checked for new news, but which should be omitted from
      *                   the search for new news..
-     ***/
+     */
     public void omitNewsgroup(final String newsgroup)
     {
         addNewsgroup("!" + newsgroup);
     }
 
 
-    /***
+    /**
      * Add a distribution group to the query.  The distribution part of a
      * newsgroup is the segment of the name preceding the first dot (e.g.,
      * comp, alt, rec).  Only those newsgroups matching one of the
@@ -210,7 +210,7 @@ public final class NewGroupsOrNewsQuery
      * Adding distributions is purely optional.
      * <p>
      * @param distribution A distribution to add to the query.
-     ***/
+     */
     public void addDistribution(final String distribution)
     {
         if (distributions != null) {
@@ -221,57 +221,57 @@ public final class NewGroupsOrNewsQuery
         distributions.append(distribution);
     }
 
-    /***
+    /**
      * Return the NNTP query formatted date (year, month, day in the form
      * YYMMDD.
      * <p>
      * @return The NNTP query formatted date.
-     ***/
+     */
     public String getDate()
     {
         return date;
     }
 
-    /***
+    /**
      * Return the NNTP query formatted time (hour, minutes, seconds in the form
      * HHMMSS.
      * <p>
      * @return The NNTP query formatted time.
-     ***/
+     */
     public String getTime()
     {
         return time;
     }
 
-    /***
+    /**
      * Return whether or not the query date should be treated as GMT.
      * <p>
      * @return True if the query date is to be treated as GMT, false if not.
-     ***/
+     */
     public boolean isGMT()
     {
         return isGMT;
     }
 
-    /***
+    /**
      * Return the comma separated list of distributions.  This may be null
      * if there are no distributions.
      * <p>
      * @return The list of distributions, which may be null if no distributions
      *         have been specified.
-     ***/
+     */
     public String getDistributions()
     {
         return distributions == null ? null : distributions.toString();
     }
 
-    /***
+    /**
      * Return the comma separated list of newsgroups.  This may be null
      * if there are no newsgroups
      * <p>
      * @return The list of newsgroups, which may be null if no newsgroups
      *         have been specified.
-     ***/
+     */
     public String getNewsgroups()
     {
         return newsgroups == null ? null : newsgroups.toString();

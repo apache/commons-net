@@ -22,7 +22,7 @@ import java.util.EventListener;
 
 import org.apache.commons.net.util.ListenerList;
 
-/***
+/**
  * ProtocolCommandSupport is a convenience class for managing a list of
  * ProtocolCommandListeners and firing ProtocolCommandEvents.  You can
  * simply delegate ProtocolCommandEvent firing and listener
@@ -31,7 +31,7 @@ import org.apache.commons.net.util.ListenerList;
  *
  * @see ProtocolCommandEvent
  * @see ProtocolCommandListener
- ***/
+ */
 
 public class ProtocolCommandSupport implements Serializable
 {
@@ -40,12 +40,12 @@ public class ProtocolCommandSupport implements Serializable
     private final Object source;
     private final ListenerList listeners;
 
-    /***
+    /**
      * Creates a ProtocolCommandSupport instance using the indicated source
      * as the source of ProtocolCommandEvents.
      *
      * @param source  The source to use for all generated ProtocolCommandEvents.
-     ***/
+     */
     public ProtocolCommandSupport(final Object source)
     {
         this.listeners = new ListenerList();
@@ -53,7 +53,7 @@ public class ProtocolCommandSupport implements Serializable
     }
 
 
-    /***
+    /**
      * Fires a ProtocolCommandEvent signalling the sending of a command to all
      * registered listeners, invoking their
      * {@link org.apache.commons.net.ProtocolCommandListener#protocolCommandSent protocolCommandSent() }
@@ -63,7 +63,7 @@ public class ProtocolCommandSupport implements Serializable
      *      including the arguments (e.g., "STAT" or "GET").
      * @param message The entire command string verbatim as sent to the server,
      *        including all arguments.
-     ***/
+     */
     public void fireCommandSent(final String command, final String message)
     {
         ProtocolCommandEvent event;
@@ -76,7 +76,7 @@ public class ProtocolCommandSupport implements Serializable
         }
     }
 
-    /***
+    /**
      * Fires a ProtocolCommandEvent signalling the reception of a command reply
      * to all registered listeners, invoking their
      * {@link org.apache.commons.net.ProtocolCommandListener#protocolReplyReceived protocolReplyReceived() }
@@ -88,7 +88,7 @@ public class ProtocolCommandSupport implements Serializable
      *   corresponding to the reply for protocols like POP3 that use
      *   strings like OK rather than integer codes (i.e., POP3Repy.OK).
      * @param message The entire reply as received from the server.
-     ***/
+     */
     public void fireReplyReceived(final int replyCode, final String message)
     {
         ProtocolCommandEvent event;
@@ -100,32 +100,32 @@ public class ProtocolCommandSupport implements Serializable
         }
     }
 
-    /***
+    /**
      * Adds a ProtocolCommandListener.
      *
      * @param listener  The ProtocolCommandListener to add.
-     ***/
+     */
     public void addProtocolCommandListener(final ProtocolCommandListener listener)
     {
         listeners.addListener(listener);
     }
 
-    /***
+    /**
      * Removes a ProtocolCommandListener.
      *
      * @param listener  The ProtocolCommandListener to remove.
-     ***/
+     */
     public void removeProtocolCommandListener(final ProtocolCommandListener listener)
     {
         listeners.removeListener(listener);
     }
 
 
-    /***
+    /**
      * Returns the number of ProtocolCommandListeners currently registered.
      *
      * @return The number of ProtocolCommandListeners currently registered.
-     ***/
+     */
     public int getListenerCount()
     {
         return listeners.getListenerCount();

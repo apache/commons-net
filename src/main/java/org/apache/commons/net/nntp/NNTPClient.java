@@ -30,7 +30,7 @@ import org.apache.commons.net.io.DotTerminatedMessageReader;
 import org.apache.commons.net.io.DotTerminatedMessageWriter;
 import org.apache.commons.net.io.Util;
 
-/***
+/**
  * NNTPClient encapsulates all the functionality necessary to post and
  * retrieve articles from an NNTP server.  As with all classes derived
  * from {@link org.apache.commons.net.SocketClient},
@@ -81,7 +81,7 @@ import org.apache.commons.net.io.Util;
  * @see NNTP
  * @see NNTPConnectionClosedException
  * @see org.apache.commons.net.MalformedServerReplyException
- ***/
+ */
 
 public class NNTPClient extends NNTP
 {
@@ -313,7 +313,7 @@ public class NNTPClient extends NNTP
 
 
 
-    /***
+    /**
      * Retrieves an article from the NNTP server.  The article is referenced
      * by its unique article identifier (including the enclosing &lt; and &gt;).
      * The article number and identifier contained in the server reply
@@ -351,7 +351,7 @@ public class NNTPClient extends NNTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public BufferedReader retrieveArticle(final String articleId, final ArticleInfo pointer)
     throws IOException
     {
@@ -385,7 +385,7 @@ public class NNTPClient extends NNTP
     }
 
 
-    /***
+    /**
      * Retrieves an article from the currently selected newsgroup.  The
      * article is referenced by its article number.
      * The article number and identifier contained in the server reply
@@ -422,7 +422,7 @@ public class NNTPClient extends NNTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public BufferedReader retrieveArticle(final long articleNumber, final ArticleInfo pointer)
     throws IOException
     {
@@ -443,7 +443,7 @@ public class NNTPClient extends NNTP
 
 
 
-    /***
+    /**
      * Retrieves an article header from the NNTP server.  The article is
      * referenced
      * by its unique article identifier (including the enclosing &lt; and &gt;).
@@ -482,7 +482,7 @@ public class NNTPClient extends NNTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public BufferedReader retrieveArticleHeader(final String articleId, final ArticleInfo pointer)
     throws IOException
     {
@@ -514,7 +514,7 @@ public class NNTPClient extends NNTP
     }
 
 
-    /***
+    /**
      * Retrieves an article header from the currently selected newsgroup.  The
      * article is referenced by its article number.
      * The article number and identifier contained in the server reply
@@ -551,7 +551,7 @@ public class NNTPClient extends NNTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public BufferedReader retrieveArticleHeader(final long articleNumber,
                                         final ArticleInfo pointer)
     throws IOException
@@ -574,7 +574,7 @@ public class NNTPClient extends NNTP
 
 
 
-    /***
+    /**
      * Retrieves an article body from the NNTP server.  The article is
      * referenced
      * by its unique article identifier (including the enclosing &lt; and &gt;).
@@ -613,7 +613,7 @@ public class NNTPClient extends NNTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public BufferedReader retrieveArticleBody(final String articleId, final ArticleInfo pointer)
     throws IOException
     {
@@ -647,7 +647,7 @@ public class NNTPClient extends NNTP
     }
 
 
-    /***
+    /**
      * Retrieves an article body from the currently selected newsgroup.  The
      * article is referenced by its article number.
      * The article number and identifier contained in the server reply
@@ -684,7 +684,7 @@ public class NNTPClient extends NNTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public BufferedReader retrieveArticleBody(final long articleNumber,
                                       final ArticleInfo pointer)
     throws IOException
@@ -705,7 +705,7 @@ public class NNTPClient extends NNTP
     }
 
 
-    /***
+    /**
      * Select the specified newsgroup to be the target of for future article
      * retrieval and posting operations.  Also return the newsgroup
      * information contained in the server reply through the info parameter.
@@ -722,7 +722,7 @@ public class NNTPClient extends NNTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean selectNewsgroup(final String newsgroup, final NewsgroupInfo info)
     throws IOException
     {
@@ -748,7 +748,7 @@ public class NNTPClient extends NNTP
         return selectNewsgroup(newsgroup, null);
     }
 
-    /***
+    /**
      * List the command help from the server.
      * <p>
      * @return The sever help information.
@@ -759,7 +759,7 @@ public class NNTPClient extends NNTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public String listHelp() throws IOException
     {
         if (!NNTPReply.isInformational(help())) {
@@ -795,7 +795,7 @@ public class NNTPClient extends NNTP
         }
     }
 
-    /***
+    /**
      * Select an article by its unique identifier (including enclosing
      * &lt; and &gt;) and return its article number and id through the
      * pointer parameter.  This is achieved through the STAT command.
@@ -819,7 +819,7 @@ public class NNTPClient extends NNTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean selectArticle(final String articleId, final ArticleInfo pointer)
     throws IOException
     {
@@ -851,20 +851,20 @@ public class NNTPClient extends NNTP
         return selectArticle(articleId, (ArticleInfo) null);
     }
 
-    /****
+    /***
      * Same as <code> selectArticle((String) null, articleId) </code>.  Useful
      * for retrieving the current article number.
      * @param pointer to the article
      * @return true if OK
      * @throws IOException on error
-     ***/
+     */
     public boolean selectArticle(final ArticleInfo pointer) throws IOException
     {
         return selectArticle(null, pointer);
     }
 
 
-    /***
+    /**
      * Select an article in the currently selected newsgroup by its number.
      * and return its article number and id through the
      * pointer parameter.  This is achieved through the STAT command.
@@ -888,7 +888,7 @@ public class NNTPClient extends NNTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean selectArticle(final long articleNumber, final ArticleInfo pointer)
     throws IOException
     {
@@ -904,17 +904,17 @@ public class NNTPClient extends NNTP
     }
 
 
-    /*** Same as <code> selectArticle(articleNumber, null) </code>
+    /** Same as <code> selectArticle(articleNumber, null) </code>
      * @param articleNumber the numger
      * @return true if successful
-     * @throws IOException on error ***/
+     * @throws IOException on error */
     public boolean selectArticle(final long articleNumber) throws IOException
     {
         return selectArticle(articleNumber, null);
     }
 
 
-    /***
+    /**
      * Select the article preceeding the currently selected article in the
      * currently selected newsgroup and return its number and unique id
      * through the pointer parameter.  Because of deviating server
@@ -937,7 +937,7 @@ public class NNTPClient extends NNTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean selectPreviousArticle(final ArticleInfo pointer)
     throws IOException
     {
@@ -952,16 +952,16 @@ public class NNTPClient extends NNTP
         return true;
     }
 
-    /*** Same as <code> selectPreviousArticle((ArticleInfo) null) </code>
+    /** Same as <code> selectPreviousArticle((ArticleInfo) null) </code>
      * @return true if successful
-     * @throws IOException on error ***/
+     * @throws IOException on error */
     public boolean selectPreviousArticle() throws IOException
     {
         return selectPreviousArticle((ArticleInfo) null);
     }
 
 
-    /***
+    /**
      * Select the article following the currently selected article in the
      * currently selected newsgroup and return its number and unique id
      * through the pointer parameter.  Because of deviating server
@@ -984,7 +984,7 @@ public class NNTPClient extends NNTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean selectNextArticle(final ArticleInfo pointer) throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(next())) {
@@ -999,16 +999,16 @@ public class NNTPClient extends NNTP
     }
 
 
-    /*** Same as <code> selectNextArticle((ArticleInfo) null) </code>
+    /** Same as <code> selectNextArticle((ArticleInfo) null) </code>
      * @return true if successful
-     * @throws IOException on error ***/
+     * @throws IOException on error */
     public boolean selectNextArticle() throws IOException
     {
         return selectNextArticle((ArticleInfo) null);
     }
 
 
-    /***
+    /**
      * List all newsgroups served by the NNTP server.  If no newsgroups
      * are served, a zero length array will be returned.  If the command
      * fails, null will be returned.
@@ -1027,7 +1027,7 @@ public class NNTPClient extends NNTP
      *      command to the server or receiving a reply from the server.
      * @see #iterateNewsgroupListing()
      * @see #iterateNewsgroups()
-     ***/
+     */
     public NewsgroupInfo[] listNewsgroups() throws IOException
     {
         if (!NNTPReply.isPositiveCompletion(list())) {
@@ -1139,7 +1139,7 @@ public class NNTPClient extends NNTP
         return new NewsgroupIterator(iterateNewsgroupListing(wildmat));
     }
 
-    /***
+    /**
      * List all new newsgroups added to the NNTP server since a particular
      * date subject to the conditions of the specified query.  If no new
      * newsgroups were added, a zero length array will be returned.  If the
@@ -1160,7 +1160,7 @@ public class NNTPClient extends NNTP
      *      command to the server or receiving a reply from the server.
      * @see #iterateNewNewsgroups(NewGroupsOrNewsQuery)
      * @see #iterateNewNewsgroupListing(NewGroupsOrNewsQuery)
-     ***/
+     */
     public NewsgroupInfo[] listNewNewsgroups(final NewGroupsOrNewsQuery query)
     throws IOException
     {
@@ -1225,7 +1225,7 @@ public class NNTPClient extends NNTP
         return new NewsgroupIterator(iterateNewNewsgroupListing(query));
     }
 
-    /***
+    /**
      * List all new articles added to the NNTP server since a particular
      * date subject to the conditions of the specified query.  If no new
      * new news is found, a zero length array will be returned.  If the
@@ -1250,7 +1250,7 @@ public class NNTPClient extends NNTP
      *      command to the server or receiving a reply from the server.
      *
      * @see #iterateNewNews(NewGroupsOrNewsQuery)
-     ***/
+     */
     public String[] listNewNews(final NewGroupsOrNewsQuery query)
     throws IOException
     {
@@ -1311,7 +1311,7 @@ public class NNTPClient extends NNTP
         throw new IOException("NEWNEWS command failed: "+getReplyString());
     }
 
-    /***
+    /**
      * There are a few NNTPClient methods that do not complete the
      * entire sequence of NNTP commands to complete a transaction.  These
      * commands require some action by the programmer after the reception
@@ -1342,13 +1342,13 @@ public class NNTPClient extends NNTP
      *      as an IOException or independently as itself.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean completePendingCommand() throws IOException
     {
         return NNTPReply.isPositiveCompletion(getReply());
     }
 
-    /***
+    /**
      * Post an article to the NNTP server.  This method returns a
      * DotTerminatedMessageWriter instance to which the article can be
      * written.  Null is returned if the posting attempt fails.  You
@@ -1384,7 +1384,7 @@ public class NNTPClient extends NNTP
      *      header) can be written.  Returns null if the command fails.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
 
     public Writer postArticle() throws IOException
     {
@@ -1406,7 +1406,7 @@ public class NNTPClient extends NNTP
     }
 
 
-    /***
+    /**
      * Logs out of the news server gracefully by sending the QUIT command.
      * However, you must still disconnect from the server before you can open
      * a new connection.
@@ -1414,7 +1414,7 @@ public class NNTPClient extends NNTP
      * @return True if successfully completed, false if not.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     ***/
+     */
     public boolean logout() throws IOException
     {
         return NNTPReply.isPositiveCompletion(quit());
@@ -1449,7 +1449,7 @@ public class NNTPClient extends NNTP
         return false;
     }
 
-    /***
+    /**
      * Private implementation of XOVER functionality.
      *
      * See {@link NNTP#xover}
@@ -1521,7 +1521,7 @@ public class NNTPClient extends NNTP
         return new ArticleIterator(new ReplyIterator(info, false));
     }
 
-    /***
+    /**
      * Private implementation of XHDR functionality.
      *
      * See {@link NNTP#xhdr}

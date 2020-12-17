@@ -22,10 +22,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.IOException;
 
-/***
+/**
  * Simple TCP server.
  * Waits for connections on a TCP port in a separate thread.
- ***/
+ */
 public class TelnetTestSimpleServer implements Runnable
 {
     ServerSocket serverSocket = null;

@@ -22,42 +22,42 @@ import java.util.Date;
 import java.util.Formatter;
 import java.util.TimeZone;
 
-/***
+/**
  * The FTPFile class is used to represent information about files stored
  * on an FTP server.
  *
  * @see FTPFileEntryParser
  * @see FTPClient#listFiles
- ***/
+ */
 
 public class FTPFile implements Serializable
 {
     private static final long serialVersionUID = 9010790363003271996L;
 
-    /** A constant indicating an FTPFile is a file. ***/
+    /** A constant indicating an FTPFile is a file. */
     public static final int FILE_TYPE = 0;
-    /** A constant indicating an FTPFile is a directory. ***/
+    /** A constant indicating an FTPFile is a directory. */
     public static final int DIRECTORY_TYPE = 1;
-    /** A constant indicating an FTPFile is a symbolic link. ***/
+    /** A constant indicating an FTPFile is a symbolic link. */
     public static final int SYMBOLIC_LINK_TYPE = 2;
-    /** A constant indicating an FTPFile is of unknown type. ***/
+    /** A constant indicating an FTPFile is of unknown type. */
     public static final int UNKNOWN_TYPE = 3;
 
-    /** A constant indicating user access permissions. ***/
+    /** A constant indicating user access permissions. */
     public static final int USER_ACCESS = 0;
-    /** A constant indicating group access permissions. ***/
+    /** A constant indicating group access permissions. */
     public static final int GROUP_ACCESS = 1;
-    /** A constant indicating world access permissions. ***/
+    /** A constant indicating world access permissions. */
     public static final int WORLD_ACCESS = 2;
 
-    /** A constant indicating file/directory read permission. ***/
+    /** A constant indicating file/directory read permission. */
     public static final int READ_PERMISSION = 0;
-    /** A constant indicating file/directory write permission. ***/
+    /** A constant indicating file/directory write permission. */
     public static final int WRITE_PERMISSION = 1;
     /**
      * A constant indicating file execute permission or directory listing
      * permission.
-     ***/
+     */
     public static final int EXECUTE_PERMISSION = 2;
 
     private int type, hardLinkCount;
@@ -67,7 +67,7 @@ public class FTPFile implements Serializable
     // If this is null, then list entry parsing failed
     private final boolean[] permissions[]; // e.g. _permissions[USER_ACCESS][READ_PERMISSION]
 
-    /*** Creates an empty FTPFile. ***/
+    /** Creates an empty FTPFile. */
     public FTPFile()
     {
         permissions = new boolean[3][3];
@@ -104,68 +104,68 @@ public class FTPFile implements Serializable
     }
 
 
-    /***
+    /**
      * Set the original FTP server raw listing from which the FTPFile was
      * created.
      *
      * @param rawListing  The raw FTP server listing.
-     ***/
+     */
     public void setRawListing(final String rawListing)
     {
         this.rawListing = rawListing;
     }
 
-    /***
+    /**
      * Get the original FTP server raw listing used to initialize the FTPFile.
      *
      * @return The original FTP server raw listing used to initialize the
      *         FTPFile.
-     ***/
+     */
     public String getRawListing()
     {
         return rawListing;
     }
 
 
-    /***
+    /**
      * Determine if the file is a directory.
      *
      * @return True if the file is of type <code>DIRECTORY_TYPE</code>, false if
      *         not.
-     ***/
+     */
     public boolean isDirectory()
     {
         return type == DIRECTORY_TYPE;
     }
 
-    /***
+    /**
      * Determine if the file is a regular file.
      *
      * @return True if the file is of type <code>FILE_TYPE</code>, false if
      *         not.
-     ***/
+     */
     public boolean isFile()
     {
         return type == FILE_TYPE;
     }
 
-    /***
+    /**
      * Determine if the file is a symbolic link.
      *
      * @return True if the file is of type <code>UNKNOWN_TYPE</code>, false if
      *         not.
-     ***/
+     */
     public boolean isSymbolicLink()
     {
         return type == SYMBOLIC_LINK_TYPE;
     }
 
-    /***
+    /**
      * Determine if the type of the file is unknown.
      *
      * @return True if the file is of type <code>UNKNOWN_TYPE</code>, false if
      *         not.
-     ***/
+     */
     public boolean isUnknown()
     {
         return type == UNKNOWN_TYPE;
@@ -185,45 +185,45 @@ public class FTPFile implements Serializable
         return permissions != null;
     }
 
-    /***
+    /**
      * Set the type of the file (<code>DIRECTORY_TYPE</code>,
      * <code>FILE_TYPE</code>, etc.).
      *
      * @param type  The integer code representing the type of the file.
-     ***/
+     */
     public void setType(final int type)
     {
         this.type = type;
     }
 
 
-    /***
+    /**
      * Return the type of the file (one of the <code>_TYPE</code> constants),
      * e.g., if it is a directory, a regular file, or a symbolic link.
      *
      * @return The type of the file.
-     ***/
+     */
     public int getType()
     {
         return type;
     }
 
 
-    /***
+    /**
      * Set the name of the file.
      *
      * @param name  The name of the file.
-     ***/
+     */
     public void setName(final String name)
     {
         this.name = name;
     }
 
-    /***
+    /**
      * Return the name of the file.
      *
      * @return The name of the file.
-     ***/
+     */
     public String getName()
     {
         return name;
@@ -240,138 +240,138 @@ public class FTPFile implements Serializable
     }
 
 
-    /***
+    /**
      * Return the file size in bytes.
      *
      * @return The file size in bytes.
-     ***/
+     */
     public long getSize()
     {
         return size;
     }
 
 
-    /***
+    /**
      * Set the number of hard links to this file.  This is not to be
      * confused with symbolic links.
      *
      * @param links  The number of hard links to this file.
-     ***/
+     */
     public void setHardLinkCount(final int links)
     {
         this.hardLinkCount = links;
     }
 
 
-    /***
+    /**
      * Return the number of hard links to this file.  This is not to be
      * confused with symbolic links.
      *
      * @return The number of hard links to this file.
-     ***/
+     */
     public int getHardLinkCount()
     {
         return hardLinkCount;
     }
 
 
-    /***
+    /**
      * Set the name of the group owning the file.  This may be
      * a string representation of the group number.
      *
      * @param group The name of the group owning the file.
-     ***/
+     */
     public void setGroup(final String group)
     {
         this.group = group;
     }
 
 
-    /***
+    /**
      * Returns the name of the group owning the file.  Sometimes this will be
      * a string representation of the group number.
      *
      * @return The name of the group owning the file.
-     ***/
+     */
     public String getGroup()
     {
         return group;
     }
 
 
-    /***
+    /**
      * Set the name of the user owning the file.  This may be
      * a string representation of the user number;
      *
      * @param user The name of the user owning the file.
-     ***/
+     */
     public void setUser(final String user)
     {
         this.user = user;
     }
 
-    /***
+    /**
      * Returns the name of the user owning the file.  Sometimes this will be
      * a string representation of the user number.
      *
      * @return The name of the user owning the file.
-     ***/
+     */
     public String getUser()
     {
         return user;
     }
 
 
-    /***
+    /**
      * If the FTPFile is a symbolic link, use this method to set the name of the
      * file being pointed to by the symbolic link.
      *
      * @param link  The file pointed to by the symbolic link.
-     ***/
+     */
     public void setLink(final String link)
     {
         this.link = link;
     }
 
 
-    /***
+    /**
      * If the FTPFile is a symbolic link, this method returns the name of the
      * file being pointed to by the symbolic link.  Otherwise it returns null.
      *
      * @return The file pointed to by the symbolic link (null if the FTPFile
      *         is not a symbolic link).
-     ***/
+     */
     public String getLink()
     {
         return link;
     }
 
 
-    /***
+    /**
      * Set the file timestamp.  This usually the last modification time.
      * The parameter is not cloned, so do not alter its value after calling
      * this method.
      *
      * @param date A Calendar instance representing the file timestamp.
-     ***/
+     */
     public void setTimestamp(final Calendar date)
     {
         this.date = date;
     }
 
 
-    /***
+    /**
      * Returns the file timestamp.  This usually the last modification time.
      *
      * @return A Calendar instance representing the file timestamp.
-     ***/
+     */
     public Calendar getTimestamp()
     {
         return date;
     }
 
 
-    /***
+    /**
      * Set if the given access group (one of the <code> _ACCESS </code>
      * constants) has the given access permission (one of the
      * <code> _PERMISSION </code> constants) to the file.
@@ -382,14 +382,14 @@ public class FTPFile implements Serializable
      *               <code> _PERMISSION </code> constants)
      * @param value  True if permission is allowed, false if not.
      * @throws ArrayIndexOutOfBoundsException if either of the parameters is out of range
-     ***/
+     */
     public void setPermission(final int access, final int permission, final boolean value)
     {
         permissions[access][permission] = value;
     }
 
 
-    /***
+    /**
      * Determines if the given access group (one of the <code> _ACCESS </code>
      * constants) has the given access permission (one of the
      * <code> _PERMISSION </code> constants) to the file.
@@ -401,7 +401,7 @@ public class FTPFile implements Serializable
      * @throws ArrayIndexOutOfBoundsException if either of the parameters is out of range
      * @return true if {@link #isValid()} is {@code true &&} the associated permission is set;
      * {@code false} otherwise.
-     ***/
+     */
     public boolean hasPermission(final int access, final int permission)
     {
         if (permissions == null) {
@@ -410,7 +410,7 @@ public class FTPFile implements Serializable
         return permissions[access][permission];
     }
 
-    /***
+    /**
      * Returns a string representation of the FTPFile information.
      *
      * @return A string representation of the FTPFile information.
@@ -421,7 +421,7 @@ public class FTPFile implements Serializable
         return getRawListing();
     }
 
-    /***
+    /**
      * Returns a string representation of the FTPFile information.
      * This currently mimics the Unix listing format.
      * This method uses the timezone of the Calendar entry, which is

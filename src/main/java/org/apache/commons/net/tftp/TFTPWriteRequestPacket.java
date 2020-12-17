@@ -20,7 +20,7 @@ package org.apache.commons.net.tftp;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 
-/***
+/**
  * A class derived from TFTPRequestPacket definiing a TFTP write request
  * packet type.
  * <p>
@@ -40,12 +40,12 @@ import java.net.InetAddress;
  * @see TFTPRequestPacket
  * @see TFTPPacketException
  * @see TFTP
- ***/
+ */
 
 public final class TFTPWriteRequestPacket extends TFTPRequestPacket
 {
 
-    /***
+    /**
      * Creates a write request packet to be sent to a host at a
      * given port with a file name and transfer mode request.
      *
@@ -54,14 +54,14 @@ public final class TFTPWriteRequestPacket extends TFTPRequestPacket
      * @param fileName The requested file name.
      * @param mode The requested transfer mode.  This should be on of the TFTP
      *        class MODE constants (e.g., TFTP.NETASCII_MODE).
-     ***/
+     */
     public TFTPWriteRequestPacket(final InetAddress destination, final int port,
                                   final String fileName, final int mode)
     {
         super(destination, port, TFTPPacket.WRITE_REQUEST, fileName, mode);
     }
 
-    /***
+    /**
      * Creates a write request packet of based on a received
      * datagram and assumes the datagram has already been identified as a
      * write request.  Assumes the datagram is at least length 4, else an
@@ -70,7 +70,7 @@ public final class TFTPWriteRequestPacket extends TFTPRequestPacket
      * @param datagram  The datagram containing the received request.
      * @throws TFTPPacketException  If the datagram isn't a valid TFTP
      *         request packet.
-     ***/
+     */
     TFTPWriteRequestPacket(final DatagramPacket datagram) throws TFTPPacketException
     {
         super(TFTPPacket.WRITE_REQUEST, datagram);

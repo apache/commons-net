@@ -17,10 +17,10 @@
 
 package org.apache.commons.net.nntp;
 
-/***
+/**
  * NNTPCommand stores a set of constants for NNTP command codes.  To interpret
  * the meaning of the codes, familiarity with RFC 977 is assumed.
- ***/
+ */
 
 public final class NNTPCommand
 {
@@ -55,14 +55,14 @@ public final class NNTPCommand
     };
 
 
-    /***
+    /**
      * Retrieve the NNTP protocol command string corresponding to a specified
      * command code.
      * <p>
      * @param command The command code.
      * @return The NNTP protcol command string corresponding to a specified
      *         command code.
-     ***/
+     */
     public static String getCommand(final int command)
     {
         return commands[command];

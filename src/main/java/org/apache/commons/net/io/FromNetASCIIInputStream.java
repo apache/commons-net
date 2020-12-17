@@ -22,7 +22,7 @@ import java.io.InputStream;
 import java.io.PushbackInputStream;
 import java.io.UnsupportedEncodingException;
 
-/***
+/**
  * This class wraps an input stream, replacing all occurrences
  * of &lt;CR&gt;&lt;LF&gt; (carriage return followed by a linefeed),
  * which is the NETASCII standard for representing a newline, with the
@@ -30,7 +30,7 @@ import java.io.UnsupportedEncodingException;
  * implement ASCII file transfers requiring conversion from NETASCII.
  *
  *
- ***/
+ */
 
 public final class FromNetASCIIInputStream extends PushbackInputStream
 {
@@ -50,7 +50,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
 
     private int length = 0;
 
-    /***
+    /**
      * Returns true if the NetASCII line separator differs from the system
      * line separator, false if they are the same.  This method is useful
      * to determine whether or not you need to instantiate a
@@ -58,17 +58,17 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      *
      * @return True if the NETASCII line separator differs from the local
      *   system line separator, false if they are the same.
-     ***/
+     */
     public static boolean isConversionRequired()
     {
         return !_noConversionRequired;
     }
 
-    /***
+    /**
      * Creates a FromNetASCIIInputStream instance that wraps an existing
      * InputStream.
      * @param input the stream to wrap
-     ***/
+     */
     public FromNetASCIIInputStream(final InputStream input)
     {
         super(input, _lineSeparatorBytes.length + 1);
@@ -104,7 +104,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
     }
 
 
-    /***
+    /**
      * Reads and returns the next byte in the stream.  If the end of the
      * message has been reached, returns -1.  Note that a call to this method
      * may result in multiple reads from the underlying input stream in order
@@ -116,7 +116,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      *          stream has been reached.
      * @throws IOException If an error occurs while reading the underlying
      *            stream.
-     ***/
+     */
     @Override
     public int read() throws IOException
     {
@@ -128,7 +128,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
     }
 
 
-    /***
+    /**
      * Reads the next number of bytes from the stream into an array and
      * returns the number of bytes read.  Returns -1 if the end of the
      * stream has been reached.
@@ -138,7 +138,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      *          end of the message has been reached.
      * @throws IOException If an error occurs in reading the underlying
      *            stream.
-     ***/
+     */
     @Override
     public int read(final byte buffer[]) throws IOException
     {
@@ -146,7 +146,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
     }
 
 
-    /***
+    /**
      * Reads the next number of bytes from the stream into an array and returns
      * the number of bytes read.  Returns -1 if the end of the
      * message has been reached.  The characters are stored in the array
@@ -159,7 +159,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      *          end of the stream has been reached.
      * @throws IOException If an error occurs while reading the underlying
      *            stream.
-     ***/
+     */
     @Override
     public int read(final byte buffer[], int offset, final int length) throws IOException
     {
@@ -202,13 +202,13 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
 
     // PushbackInputStream in JDK 1.1.3 returns the wrong thing
     // TODO - can we delete this override now?
-    /***
+    /**
      * Returns the number of bytes that can be read without blocking EXCEPT
      * when newline conversions have to be made somewhere within the
      * available block of bytes.  In other words, you really should not
      * rely on the value returned by this method if you are trying to avoid
      * blocking.
-     ***/
+     */
     @Override
     public int available() throws IOException
     {

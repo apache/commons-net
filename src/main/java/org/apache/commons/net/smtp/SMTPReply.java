@@ -17,12 +17,12 @@
 
 package org.apache.commons.net.smtp;
 
-/***
+/**
  * SMTPReply stores a set of constants for SMTP reply codes.  To interpret
  * the meaning of the codes, familiarity with RFC 821 is assumed.
  * The mnemonic constant names are transcriptions from the code descriptions
  * of RFC 821.
- ***/
+ */
 
 public final class SMTPReply
 {
@@ -53,7 +53,7 @@ public final class SMTPReply
     private SMTPReply()
     {}
 
-    /***
+    /**
      * Determine if a reply code is a positive preliminary response.  All
      * codes beginning with a 1 are positive preliminary responses.
      * Postitive preliminary responses are used to indicate tentative success.
@@ -67,13 +67,13 @@ public final class SMTPReply
      * @param reply  The reply code to test.
      * @return True if a reply code is a postive preliminary response, false
      *         if not.
-     ***/
+     */
     public static boolean isPositivePreliminary(final int reply)
     {
         return reply >= 100 && reply < 200;
     }
 
-    /***
+    /**
      * Determine if a reply code is a positive completion response.  All
      * codes beginning with a 2 are positive completion responses.
      * The SMTP server will send a positive completion response on the final
@@ -82,13 +82,13 @@ public final class SMTPReply
      * @param reply  The reply code to test.
      * @return True if a reply code is a postive completion response, false
      *         if not.
-     ***/
+     */
     public static boolean isPositiveCompletion(final int reply)
     {
         return reply >= 200 && reply < 300;
     }
 
-    /***
+    /**
      * Determine if a reply code is a positive intermediate response.  All
      * codes beginning with a 3 are positive intermediate responses.
      * The SMTP server will send a positive intermediate response on the
@@ -100,13 +100,13 @@ public final class SMTPReply
      * @param reply  The reply code to test.
      * @return True if a reply code is a postive intermediate response, false
      *         if not.
-     ***/
+     */
     public static boolean isPositiveIntermediate(final int reply)
     {
         return reply >= 300 && reply < 400;
     }
 
-    /***
+    /**
      * Determine if a reply code is a negative transient response.  All
      * codes beginning with a 4 are negative transient responses.
      * The SMTP server will send a negative transient response on the
@@ -115,13 +115,13 @@ public final class SMTPReply
      * @param reply  The reply code to test.
      * @return True if a reply code is a negative transient response, false
      *         if not.
-     ***/
+     */
     public static boolean isNegativeTransient(final int reply)
     {
         return reply >= 400 && reply < 500;
     }
 
-    /***
+    /**
      * Determine if a reply code is a negative permanent response.  All
      * codes beginning with a 5 are negative permanent responses.
      * The SMTP server will send a negative permanent response on the
@@ -130,7 +130,7 @@ public final class SMTPReply
      * @param reply  The reply code to test.
      * @return True if a reply code is a negative permanent response, false
      *         if not.
-     ***/
+     */
     public static boolean isNegativePermanent(final int reply)
     {
         return reply >= 500 && reply < 600;

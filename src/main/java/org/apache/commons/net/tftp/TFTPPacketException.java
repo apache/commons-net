@@ -17,7 +17,7 @@
 
 package org.apache.commons.net.tftp;
 
-/***
+/**
  * A class used to signify the occurrence of an error in the creation of
  * a TFTP packet.  It is not declared final so that it may be subclassed
  * to identify more specific errors.  You would only want to do this if
@@ -33,24 +33,24 @@ package org.apache.commons.net.tftp;
  *
  * @see TFTPPacket
  * @see TFTP
- ***/
+ */
 
 public class TFTPPacketException extends Exception
 {
 
     private static final long serialVersionUID = -8114699256840851439L;
 
-    /***
+    /**
      * Simply calls the corresponding constructor of its superclass.
-     ***/
+     */
     public TFTPPacketException()
     {
     }
 
-    /***
+    /**
      * Simply calls the corresponding constructor of its superclass.
      * @param message the message
-     ***/
+     */
     public TFTPPacketException(final String message)
     {
         super(message);

@@ -20,18 +20,18 @@ import junit.framework.TestCase;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-/***
+/**
  * JUnit functional test for TelnetClient.
  * Connects to the weather forecast service
  * rainmaker.wunderground.com and asks for Los Angeles forecast.
- ***/
+ */
 public class TelnetClientFunctionalTest extends TestCase
 {
     protected TelnetClient tc1;
 
-    /***
+    /**
      * test setUp
-     ***/
+     */
     @Override
     protected void setUp()
     {
@@ -44,7 +44,7 @@ public class TelnetClientFunctionalTest extends TestCase
      * - press return on the first menu
      * - send LAX on the second menu
      * - send X to exit
-     ***/
+     */
     public void testFunctionalTest() throws Exception
     {
         boolean testresult = false;

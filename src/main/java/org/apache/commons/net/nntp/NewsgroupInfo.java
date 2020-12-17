@@ -17,7 +17,7 @@
 
 package org.apache.commons.net.nntp;
 
-/***
+/**
  * NewsgroupInfo stores information pertaining to a newsgroup returned by
  * the NNTP GROUP, LIST, and NEWGROUPS commands, implemented by
  * {@link org.apache.commons.net.nntp.NNTPClient#selectNewsgroup selectNewsgroup }
@@ -28,27 +28,27 @@ package org.apache.commons.net.nntp;
  *  respectively.
  *
  * @see NNTPClient
- ***/
+ */
 
 public final class NewsgroupInfo
 {
-    /***
+    /**
      * A constant indicating that the posting permission of a newsgroup is
      * unknown.  For example, the NNTP GROUP command does not return posting
      * information, so NewsgroupInfo instances obtained from that command
      * willhave an UNKNOWN_POSTING_PERMISSION.
-     ***/
+     */
     public static final int UNKNOWN_POSTING_PERMISSION = 0;
 
-    /*** A constant indicating that a newsgroup is moderated. ***/
+    /** A constant indicating that a newsgroup is moderated. */
     public static final int MODERATED_POSTING_PERMISSION = 1;
 
-    /*** A constant indicating that a newsgroup is public and unmoderated. ***/
+    /** A constant indicating that a newsgroup is public and unmoderated. */
     public static final int PERMITTED_POSTING_PERMISSION = 2;
 
-    /***
+    /**
      * A constant indicating that a newsgroup is closed for general posting.
-     ***/
+     */
     public static final int PROHIBITED_POSTING_PERMISSION = 3;
 
     private String newsgroup;
@@ -82,53 +82,53 @@ public final class NewsgroupInfo
         postingPermission = permission;
     }
 
-    /***
+    /**
      * Get the newsgroup name.
      * <p>
      * @return The name of the newsgroup.
-     ***/
+     */
     public String getNewsgroup()
     {
         return newsgroup;
     }
 
-    /***
+    /**
      * Get the estimated number of articles in the newsgroup.  The
      * accuracy of this value will depend on the server implementation.
      * <p>
      * @return The estimated number of articles in the newsgroup.
-     ***/
+     */
     public long getArticleCountLong()
     {
         return estimatedArticleCount;
     }
 
-    /***
+    /**
      * Get the number of the first article in the newsgroup.
      * <p>
      * @return The number of the first article in the newsgroup.
-     ***/
+     */
     public long getFirstArticleLong()
     {
         return firstArticle;
     }
 
-    /***
+    /**
      * Get the number of the last article in the newsgroup.
      * <p>
      * @return The number of the last article in the newsgroup.
-     ***/
+     */
     public long getLastArticleLong()
     {
         return lastArticle;
     }
 
-    /***
+    /**
      * Get the posting permission of the newsgroup.  This will be one of
      * the <code> POSTING_PERMISSION </code> constants.
      * <p>
      * @return The posting permission status of the newsgroup.
-     ***/
+     */
     public int getPostingPermission()
     {
         return postingPermission;
