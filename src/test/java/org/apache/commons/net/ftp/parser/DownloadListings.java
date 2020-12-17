@@ -102,20 +102,20 @@ public class DownloadListings extends FTPClient {
         final Reader is = new FileReader("mirrors.list");
         final BufferedReader rdr = new BufferedReader(is);
         String line;
-        while((line=rdr.readLine()) != null){
-            if (line.startsWith("ftp")){
-                final String []parts = line.split("\\s+");
+        while ((line = rdr.readLine()) != null) {
+            if (line.startsWith("ftp")) {
+                final String[] parts = line.split("\\s+");
                 final String target = parts[2];
                 host = target.substring("ftp://".length());
                 final int slash = host.indexOf('/');
                 path = host.substring(slash);
-                host = host.substring(0,slash);
-                System.out.println(host+ " "+path);
+                host = host.substring(0, slash);
+                System.out.println(host + " " + path);
                 if (self.open(host, port)) {
                     try {
                         self.info();
-                        self.download(path, FTPCmd.LIST, new File(DOWNLOAD_DIR, host+"_list.txt"));
-                        self.download(path, FTPCmd.MLSD, new File(DOWNLOAD_DIR, host+"_mlsd.txt"));
+                        self.download(path, FTPCmd.LIST, new File(DOWNLOAD_DIR, host + "_list.txt"));
+                        self.download(path, FTPCmd.MLSD, new File(DOWNLOAD_DIR, host + "_mlsd.txt"));
                     } catch (final Exception e) {
                         e.printStackTrace();
                     } finally {
