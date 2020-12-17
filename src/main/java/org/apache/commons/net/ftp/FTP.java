@@ -1375,7 +1375,7 @@ public class FTP extends SocketClient
 
     /**
      * Sends the MDTM command for the given file.
-     * 
+     *
      * @param file name of file
      * @return the status
      * @throws IOException on error
