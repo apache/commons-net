@@ -733,6 +733,19 @@ public class FTP extends SocketClient
     }
 
     /**
+     * Returns the noth line of text from the last FTP server response as a string. The end of line markers of each are
+     * stripped from the line.
+     *
+     * @param index The index of the line to return, 0-based.
+     *
+     * @return The lines of text from the last FTP response as an array.
+     */
+    String getReplyString(final int index)
+    {
+        return _replyLines.get(index);
+    }
+
+    /**
      * Returns the entire text of the last FTP server response exactly
      * as it was received, including all end of line markers in NETASCII
      * format.

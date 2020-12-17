@@ -2414,16 +2414,16 @@ implements Configurable
             if (!success) {
                 return false;
             }
-            for (final String l : getReplyStrings()) {
-                if (l.startsWith(" ")) { // it's a FEAT entry
+            for (final String line : _replyLines) {
+                if (line.startsWith(" ")) { // it's a FEAT entry
                     String key;
                     String value="";
-                    final int varsep = l.indexOf(' ', 1);
+                    final int varsep = line.indexOf(' ', 1);
                     if (varsep > 0) {
-                        key = l.substring(1, varsep);
-                        value = l.substring(varsep+1);
+                        key = line.substring(1, varsep);
+                        value = line.substring(varsep+1);
                     } else {
-                        key = l.substring(1);
+                        key = line.substring(1);
                     }
                     key = key.toUpperCase(Locale.ENGLISH);
                     Set<String> entries = featuresMap.get(key);
@@ -2535,7 +2535,7 @@ implements Configurable
     {
         final boolean success = FTPReply.isPositiveCompletion(sendCommand(FTPCmd.MLST, pathname));
         if (success){
-            String reply = getReplyStrings()[1];
+            String reply = getReplyString(1);
             // some FTP server reply not contains space before fact(s)
             if(reply.charAt(0) != ' ') { reply = " " + reply; }
             /* check the response makes sense.
@@ -3579,7 +3579,7 @@ implements Configurable
     public String getSize(final String pathname) throws IOException
     {
         if (FTPReply.isPositiveCompletion(size(pathname))) {
-            return getReplyStrings()[0].substring(4); // skip the return code (e.g. 213) and the space
+            return getReplyString(0).substring(4); // skip the return code (e.g. 213) and the space
         }
         return null;
     }
@@ -3599,7 +3599,7 @@ implements Configurable
     public String getModificationTime(final String pathname) throws IOException {
         if (FTPReply.isPositiveCompletion(mdtm(pathname))) {
             // skip the return code (e.g. 213) and the space
-            return getReplyStrings()[0].substring(4);
+            return getReplyString(0).substring(4);
         }
         return null;
     }
