@@ -105,12 +105,12 @@ public final class TimeUDPClient extends DatagramSocketClient
 
     /**
      * Retrieves the time from the server and returns a Java Date
-     * containing the time converted to the local timezone.
+     * containing the time converted to the local time zone.
      *
      * @param host The address of the server.
      * @param port The port of the service.
      * @return A Date value containing the time retrieved from the server
-     *     converted to the local timezone.
+     *     converted to the local time zone.
      * @throws IOException  If an error occurs while fetching the time.
      */
     public Date getDate(final InetAddress host, final int port) throws IOException

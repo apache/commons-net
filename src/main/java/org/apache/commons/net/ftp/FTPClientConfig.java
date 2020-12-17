@@ -52,7 +52,7 @@ import java.util.TreeMap;
  * than English</li>
  * <li>lists files with timestamps that use date formats other
  * than the American English "standard" <code>MM dd yyyy</code></li>
- * <li>is in different timezone and you need accurate timestamps for
+ * <li>is in different time zone and you need accurate timestamps for
  * dependency checking as in Ant</li>
  * </ul>
  * <p>

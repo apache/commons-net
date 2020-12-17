@@ -378,7 +378,7 @@ public class FTPFile implements Serializable {
 
     /**
      * Gets a string representation of the FTPFile information. This currently mimics the Unix listing format. This
-     * method uses the timezone of the Calendar entry, which is the server time zone (if one was provided) otherwise it
+     * method uses the time zone of the Calendar entry, which is the server time zone (if one was provided) otherwise it
      * is the local time zone.
      * <p>
      * Note: if the instance is not valid {@link #isValid()}, no useful information can be returned. In this case, use
@@ -400,8 +400,8 @@ public class FTPFile implements Serializable {
      * {@link #getRawListing()} instead.
      * </p>
      *
-     * @param timezone the timezone to use for displaying the time stamp If {@code null}, then use the Calendar entry
-     *        timezone
+     * @param timezone the time zone to use for displaying the time stamp If {@code null}, then use the Calendar entry
+     *
      * @return A string representation of the FTPFile information.
      * @since 3.4
      */

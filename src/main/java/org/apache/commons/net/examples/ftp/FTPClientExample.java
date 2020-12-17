@@ -80,8 +80,8 @@ public final class FTPClientExample
         "\t-T  all|valid|none - use one of the built-in TrustManager implementations (none = JVM default)\n" +
         "\t-y format - set default date format string\n" +
         "\t-Y format - set recent date format string\n" +
-        "\t-Z timezone - set the server timezone for parsing LIST responses\n" +
-        "\t-z timezone - set the timezone for displaying MDTM, LIST, MLSD, MLST responses\n" +
+        "\t-Z timezone - set the server time zone for parsing LIST responses\n" +
+        "\t-z timezone - set the time zone for displaying MDTM, LIST, MLSD, MLST responses\n" +
         "\t-PrH server[:port] - HTTP Proxy host and optional port[80] \n" +
         "\t-PrU user - HTTP Proxy server username\n" +
         "\t-PrP password - HTTP Proxy server password\n" +

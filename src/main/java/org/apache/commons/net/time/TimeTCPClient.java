@@ -85,7 +85,7 @@ public final class TimeTCPClient extends SocketClient
 
     /**
      * Retrieves the time from the server and returns a Java Date
-     * containing the time converted to the local timezone.
+     * containing the time converted to the local time zone.
      * <p>
      * The server will have closed the connection at this point, so you should
      * call
@@ -96,7 +96,7 @@ public final class TimeTCPClient extends SocketClient
      * before calling <code> getDate() </code> again.
      *
      * @return A Date value containing the time retrieved from the server
-     *     converted to the local timezone.
+     *     converted to the local time zone.
      * @throws IOException  If an error occurs while fetching the time.
      */
     public Date getDate() throws IOException

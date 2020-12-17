@@ -194,7 +194,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
             hasMillis = false;
         }
         final TimeZone GMT = TimeZone.getTimeZone("GMT");
-        // both timezones need to be set for the parse to work OK
+        // both time zones need to be set for the parse to work OK
         sdf.setTimeZone(GMT);
         final GregorianCalendar gc = new GregorianCalendar(GMT);
         final ParsePosition pos = new ParsePosition(0);

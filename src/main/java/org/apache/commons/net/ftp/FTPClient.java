@@ -237,7 +237,7 @@ import org.apache.commons.net.io.Util;
  * <ul>
  * <li>use languages other than English</li>
  * <li>use date formats other than the American English "standard" <code>MM d yyyy</code></li>
- * <li>are in different timezones and you need accurate timestamps for dependency checking
+ * <li>are in different time zones and you need accurate timestamps for dependency checking
  *     as in Ant</li>
  * </ul>see {@link  FTPClientConfig  FTPClientConfig}.
  * <p>
