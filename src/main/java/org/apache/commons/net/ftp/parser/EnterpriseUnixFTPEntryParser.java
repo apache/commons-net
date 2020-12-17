@@ -23,12 +23,14 @@ import org.apache.commons.net.ftp.FTPFile;
 /**
  * Parser for the Connect Enterprise Unix FTP Server From Sterling Commerce.
  * Here is a sample of the sort of output line this parser processes:
+ * <pre>
  *  "-C--E-----FTP B QUA1I1      18128       41 Aug 12 13:56 QUADTEST"
- * <P><B>
+ * </pre>
+ * <p>
  * Note: EnterpriseUnixFTPEntryParser can only be instantiated through the
  * DefaultFTPParserFactory by classname.  It will not be chosen
  * by the autodetection scheme.
- * </B>
+ * </p>
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @see org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory
  */

@@ -31,14 +31,14 @@ import org.apache.commons.net.ftp.FTPClientConfig;
  * Special implementation VMSFTPEntryParser with versioning turned on.
  * This parser removes all duplicates and only leaves the version with the highest
  * version number for each file name.
- *
+ * <p>
  * This is a sample of VMS LIST output
- *
+ * </p>
+ * <pre>
  *  "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
  *  "1-JUN.LIS;2              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
  *  "DATA.DIR;1               1/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
- * <P>
- *
+ * </pre>
  *
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
