@@ -284,7 +284,7 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
     protected static long toNtpTime(final long t)
     {
         final boolean useBase1 = t < msb0baseTime;    // time < Feb-2036
-        long baseTime;
+        final long baseTime;
         if (useBase1) {
             baseTime = t - msb1baseTime; // dates <= Feb-2036
         } else {

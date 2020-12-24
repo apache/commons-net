@@ -59,7 +59,7 @@ public class SSLContextUtils {
      */
     public static SSLContext createSSLContext(final String protocol, final KeyManager[] keyManagers,
             final TrustManager[] trustManagers) throws IOException {
-        SSLContext ctx;
+        final SSLContext ctx;
         try {
             ctx = SSLContext.getInstance(protocol);
             ctx.init(keyManagers, trustManagers, /* SecureRandom */ null);

@@ -64,7 +64,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
     @Override
     public int read() throws IOException
     {
-        int ch;
+        final int ch;
 
         if (status == LAST_WAS_NL)
         {
@@ -130,7 +130,8 @@ public final class ToNetASCIIInputStream extends FilterInputStream
     @Override
     public int read(final byte buffer[], int offset, int length) throws IOException
     {
-        int ch, off;
+        int ch;
+        final int off;
 
         if (length < 1) {
             return 0;
@@ -172,7 +173,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
     @Override
     public int available() throws IOException
     {
-        int result;
+        final int result;
 
         result = in.available();
 

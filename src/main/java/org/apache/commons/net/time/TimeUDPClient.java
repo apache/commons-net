@@ -74,7 +74,8 @@ public final class TimeUDPClient extends DatagramSocketClient
     public long getTime(final InetAddress host, final int port) throws IOException
     {
         long time;
-        DatagramPacket sendPacket, receivePacket;
+        final DatagramPacket sendPacket;
+        final DatagramPacket receivePacket;
 
         sendPacket =
             new DatagramPacket(dummyData, dummyData.length, host, port);

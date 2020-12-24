@@ -84,7 +84,7 @@ public final class POP3ExportMbox
         final String proto = argCount > 3 ? args[argIdx++] : null;
         final boolean implicit = argCount > 4 ? Boolean.parseBoolean(args[argIdx++]) : false;
 
-        POP3Client pop3;
+        final POP3Client pop3;
 
         if (proto != null) {
             System.out.println("Using secure protocol: "+proto);
@@ -93,7 +93,7 @@ public final class POP3ExportMbox
             pop3 = new POP3Client();
         }
 
-        int port;
+        final int port;
         if (arg0.length == 2) {
             port = Integer.parseInt(arg0[1]);
         } else {

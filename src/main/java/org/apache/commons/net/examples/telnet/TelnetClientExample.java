@@ -66,7 +66,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
 
         final String remoteip = args[0];
 
-        int remoteport;
+        final int remoteport;
 
         if (args.length > 1)
         {

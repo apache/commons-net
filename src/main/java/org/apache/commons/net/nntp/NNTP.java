@@ -212,7 +212,7 @@ public class NNTP extends SocketClient
         }
         __commandBuffer.append(SocketClient.NETASCII_EOL);
 
-        String message;
+        final String message;
         _writer_.write(message = __commandBuffer.toString());
         _writer_.flush();
 

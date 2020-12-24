@@ -284,7 +284,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 
         final FTPFile file = new FTPFile();
         file.setRawListing(entry);
-        int type;
+        final int type;
 
         if (matches(entry))
         {

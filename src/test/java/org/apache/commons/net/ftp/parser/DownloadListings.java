@@ -71,7 +71,7 @@ public class DownloadListings extends FTPClient {
     }
 
     private void download(final String path, final FTPCmd command, final File fileName) throws Exception {
-        Socket socket;
+        final Socket socket;
         if ((socket = _openDataConnection_(command, getListArguments(path))) == null) {
             System.out.println(getReplyString());
             return;

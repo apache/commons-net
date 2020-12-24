@@ -58,7 +58,7 @@ public final class NewGroupsOrNewsQuery
     {
         int num;
         String str;
-        StringBuilder buffer;
+        final StringBuilder buffer;
 
         this.distributions = null;
         this.newsgroups = null;

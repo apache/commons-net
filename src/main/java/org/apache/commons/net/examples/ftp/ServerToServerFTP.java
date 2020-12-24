@@ -41,12 +41,19 @@ public final class ServerToServerFTP
 
     public static void main(final String[] args)
     {
-        String server1, username1, password1, file1;
-        String server2, username2, password2, file2;
+        String server1;
+        final String username1;
+        final String password1;
+        final String file1;
+        String server2;
+        final String username2;
+        final String password2;
+        final String file2;
         String [] parts;
         int port1=0, port2=0;
-        FTPClient ftp1, ftp2;
-        ProtocolCommandListener listener;
+        final FTPClient ftp1;
+        final FTPClient ftp2;
+        final ProtocolCommandListener listener;
 
         if (args.length < 8)
         {
@@ -83,7 +90,7 @@ public final class ServerToServerFTP
 
         try
         {
-            int reply;
+            final int reply;
             if (port1 > 0) {
                 ftp1.connect(server1, port1);
             } else {
@@ -120,7 +127,7 @@ public final class ServerToServerFTP
 
         try
         {
-            int reply;
+            final int reply;
             if (port2 > 0) {
                 ftp2.connect(server2, port2);
             } else {

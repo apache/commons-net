@@ -70,13 +70,13 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
         TYPE_TO_INT.put("dir", Integer.valueOf(FTPFile.DIRECTORY_TYPE)); // dir or sub-dir
     }
 
-    private static int UNIX_GROUPS[] = { // Groups in order of mode digits
+    private static final int[] UNIX_GROUPS = { // Groups in order of mode digits
         FTPFile.USER_ACCESS,
         FTPFile.GROUP_ACCESS,
         FTPFile.WORLD_ACCESS,
     };
 
-    private static int UNIX_PERMS[][] = { // perm bits, broken down by octal int value
+    private static final int[][] UNIX_PERMS = { // perm bits, broken down by octal int value
 /* 0 */  {},
 /* 1 */  {FTPFile.EXECUTE_PERMISSION},
 /* 2 */  {FTPFile.WRITE_PERMISSION},

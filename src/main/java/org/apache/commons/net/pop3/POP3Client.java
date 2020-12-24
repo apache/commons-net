@@ -54,7 +54,7 @@ public class POP3Client extends POP3
     private static POP3MessageInfo parseStatus(final String line)
     {
         int num, size;
-        StringTokenizer tokenizer;
+        final StringTokenizer tokenizer;
 
         tokenizer = new StringTokenizer(line);
 
@@ -85,7 +85,7 @@ public class POP3Client extends POP3
     private static POP3MessageInfo parseUID(String line)
     {
         int num;
-        StringTokenizer tokenizer;
+        final StringTokenizer tokenizer;
 
         tokenizer = new StringTokenizer(line);
 
@@ -204,9 +204,10 @@ public class POP3Client extends POP3
     throws IOException, NoSuchAlgorithmException
     {
         int i;
-        byte[] digest;
-        StringBuilder buffer, digestBuffer;
-        MessageDigest md5;
+        final byte[] digest;
+        final StringBuilder buffer;
+        final StringBuilder digestBuffer;
+        final MessageDigest md5;
 
         if (getState() != AUTHORIZATION_STATE) {
             return false;

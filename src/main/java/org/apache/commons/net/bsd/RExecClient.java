@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.net.SocketClient;
 import org.apache.commons.net.io.SocketInputStream;
@@ -88,12 +89,12 @@ public class RExecClient extends SocketClient
     // limitations of rcmd and rlogin
     InputStream createErrorStream() throws IOException
     {
-        ServerSocket server;
-        Socket socket;
+        final ServerSocket server;
+        final Socket socket;
 
         server = _serverSocketFactory_.createServerSocket(0, 1, getLocalAddress());
 
-        _output_.write(Integer.toString(server.getLocalPort()).getBytes("UTF-8")); // $NON-NLS-1$
+        _output_.write(Integer.toString(server.getLocalPort()).getBytes(StandardCharsets.UTF_8)); // $NON-NLS-1$
         _output_.write(NULL_CHAR);
         _output_.flush();
 

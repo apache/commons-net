@@ -259,7 +259,7 @@ public class NNTPClient extends NNTP
                 }
             }
         }
-        int size;
+        final int size;
         if ((size = list.size()) < 1) {
             return new NewsgroupInfo[0];
         }

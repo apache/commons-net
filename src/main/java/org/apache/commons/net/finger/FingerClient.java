@@ -59,7 +59,7 @@ public class FingerClient extends SocketClient
 
     private static final String LONG_FLAG = "/W ";
 
-    private transient char[] buffer = new char[1024];
+    private final transient char[] buffer = new char[1024];
 
     /**
      * The default FingerClient constructor.  Initializes the
@@ -86,8 +86,8 @@ public class FingerClient extends SocketClient
         int read;
         final StringBuilder result = new StringBuilder(buffer.length);
 
-        try (BufferedReader input = new BufferedReader(
-                new InputStreamReader(getInputStream(longOutput, username), getCharset()));) {
+        try (final BufferedReader input = new BufferedReader(
+                new InputStreamReader(getInputStream(longOutput, username), getCharset()))) {
             while (true) {
                 read = input.read(buffer, 0, buffer.length);
                 if (read <= 0) {
@@ -151,7 +151,7 @@ public class FingerClient extends SocketClient
      */
     public InputStream getInputStream(final boolean longOutput, final String username, final String encoding)
             throws IOException {
-        DataOutputStream output;
+        final DataOutputStream output;
         final StringBuilder buffer = new StringBuilder(64);
         if (longOutput) {
             buffer.append(LONG_FLAG);

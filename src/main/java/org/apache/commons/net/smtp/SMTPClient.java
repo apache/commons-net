@@ -214,8 +214,8 @@ public class SMTPClient extends SMTP
      */
     public boolean login() throws IOException
     {
-        String name;
-        InetAddress host;
+        final String name;
+        final InetAddress host;
 
         host = getLocalAddress();
         name = host.getHostName();
@@ -388,7 +388,7 @@ public class SMTPClient extends SMTP
      */
     public boolean sendShortMessageData(final String message) throws IOException
     {
-        try (Writer writer = sendMessageData()) {
+        try (final Writer writer = sendMessageData()) {
 
             if (writer == null) {
                 return false;
@@ -546,7 +546,7 @@ public class SMTPClient extends SMTP
      */
     public boolean verify(final String username) throws IOException
     {
-        int result;
+        final int result;
 
         result = vrfy(username);
 

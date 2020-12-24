@@ -271,7 +271,7 @@ public final class FTPClientExample
                 ftp = new FTPClient();
             }
         } else {
-            FTPSClient ftps;
+            final FTPSClient ftps;
             if (protocol.equals("true")) {
                 ftps = new FTPSClient(true);
             } else if (protocol.equals("false")) {
@@ -328,7 +328,7 @@ public final class FTPClientExample
 
         try
         {
-            int reply;
+            final int reply;
             if (port > 0) {
                 ftp.connect(server, port);
             } else {
@@ -397,7 +397,7 @@ __main:
 
             if (storeFile)
             {
-                try (InputStream input = new FileInputStream(local)) {
+                try (final InputStream input = new FileInputStream(local)) {
                     ftp.storeFile(remote, input);
                 }
 
@@ -501,7 +501,7 @@ __main:
             }
             else
             {
-                try (OutputStream output = new FileOutputStream(local)) {
+                try (final OutputStream output = new FileOutputStream(local)) {
                     ftp.retrieveFile(remote, output);
                 }
 

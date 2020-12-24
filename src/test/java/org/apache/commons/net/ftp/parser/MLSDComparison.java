@@ -64,12 +64,12 @@ public class MLSDComparison {
         for (final File mlsd : path.listFiles(filter)) {
             System.out.println(mlsd);
             FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance());
-            try (InputStream is = new FileInputStream(mlsd)) {
+            try (final InputStream is = new FileInputStream(mlsd)) {
                 engine.readServerList(is, FTP.DEFAULT_CONTROL_ENCODING);
             }
             final FTPFile[] mlsds = engine.getFiles(FTPFileFilters.ALL);
             final File listFile = new File(mlsd.getParentFile(), mlsd.getName().replace("_mlsd", "_list"));
-            try (InputStream inputStream = new FileInputStream(listFile)) {
+            try (final InputStream inputStream = new FileInputStream(listFile)) {
                 final FTPClientConfig cfg = new FTPClientConfig();
                 cfg.setServerTimeZoneId("GMT");
                 final UnixFTPEntryParser parser = new UnixFTPEntryParser(cfg);

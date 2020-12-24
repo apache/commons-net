@@ -82,7 +82,7 @@ public class ExtendedNNTPOps {
     }
 
     public static void main(final String[] args) {
-        ExtendedNNTPOps ops;
+        final ExtendedNNTPOps ops;
 
         final int argc = args.length;
         if (argc < 1) {

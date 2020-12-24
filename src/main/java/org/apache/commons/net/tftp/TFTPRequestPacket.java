@@ -179,7 +179,8 @@ public abstract class TFTPRequestPacket extends TFTPPacket
     @Override
     final DatagramPacket newDatagram(final DatagramPacket datagram, final byte[] data)
     {
-        int fileLength, modeLength;
+        final int fileLength;
+        final int modeLength;
 
         fileLength = fileName.length();
         modeLength = modeBytes[mode].length;
@@ -213,8 +214,9 @@ public abstract class TFTPRequestPacket extends TFTPPacket
     @Override
     public final DatagramPacket newDatagram()
     {
-        int fileLength, modeLength;
-        byte[] data;
+        final int fileLength;
+        final int modeLength;
+        final byte[] data;
 
         fileLength = fileName.length();
         modeLength = modeBytes[mode].length;

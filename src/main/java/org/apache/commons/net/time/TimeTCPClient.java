@@ -78,7 +78,7 @@ public final class TimeTCPClient extends SocketClient
      */
     public long getTime() throws IOException
     {
-        DataInputStream input;
+        final DataInputStream input;
         input = new DataInputStream(_input_);
         return input.readInt() & 0xffffffffL;
     }

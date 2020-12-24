@@ -57,7 +57,7 @@ public final class NTPClient
     {
         final NtpV3Packet message = info.getMessage();
         final int stratum = message.getStratum();
-        String refType;
+        final String refType;
         if (stratum <= 0) {
             refType = "(Unspecified or Unavailable)";
         } else if (stratum == 1) {

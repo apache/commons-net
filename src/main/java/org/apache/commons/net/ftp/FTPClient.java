@@ -610,7 +610,10 @@ implements Configurable
         reply = reply.substring(reply.indexOf('(') + 1,
                 reply.indexOf(')')).trim();
 
-        char delim1, delim2, delim3, delim4;
+        final char delim1;
+        final char delim2;
+        final char delim3;
+        final char delim4;
         delim1 = reply.charAt(0);
         delim2 = reply.charAt(1);
         delim3 = reply.charAt(2);
@@ -622,7 +625,7 @@ implements Configurable
                     "Could not parse extended passive host information.\nServer Reply: " + reply);
         }
 
-        int port;
+        final int port;
         try
         {
             port = Integer.parseInt(reply.substring(3, reply.length()-1));
@@ -819,7 +822,7 @@ implements Configurable
 
         final boolean isInet6Address = getRemoteAddress() instanceof Inet6Address;
 
-        Socket socket;
+        final Socket socket;
 
         if (dataConnectionMode == ACTIVE_LOCAL_DATA_CONNECTION_MODE)
         {

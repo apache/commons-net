@@ -41,8 +41,11 @@ public final class rexec
 
     public static void main(final String[] args)
     {
-        String server, username, password, command;
-        RExecClient client;
+        final String server;
+        final String username;
+        final String password;
+        final String command;
+        final RExecClient client;
 
         if (args.length != 4)
         {

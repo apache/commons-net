@@ -67,7 +67,10 @@ public final class TFTPExample
     {
         boolean receiveFile = true, closed;
         int transferMode = TFTP.BINARY_MODE, argc;
-        String arg, hostname, localFilename, remoteFilename;
+        String arg;
+        final String hostname;
+        final String localFilename;
+        final String remoteFilename;
         final TFTPClient tftp;
         int timeout = 60000;
         boolean verbose = false;
@@ -152,7 +155,7 @@ public final class TFTPExample
 
     private static boolean send(final int transferMode, final String hostname, final String localFilename,
             final String remoteFilename, final TFTPClient tftp) {
-        boolean closed;
+        final boolean closed;
         FileInputStream input = null;
 
         // Try to open local file for reading
@@ -201,9 +204,9 @@ public final class TFTPExample
 
     private static boolean receive(final int transferMode, final String hostname, final String localFilename,
             final String remoteFilename, final TFTPClient tftp) {
-        boolean closed;
+        final boolean closed;
         FileOutputStream output = null;
-        File file;
+        final File file;
 
         file = new File(localFilename);
 

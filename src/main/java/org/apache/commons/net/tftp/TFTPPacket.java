@@ -124,7 +124,7 @@ public abstract class TFTPPacket
     public static final TFTPPacket newTFTPPacket(final DatagramPacket datagram)
     throws TFTPPacketException
     {
-        byte[] data;
+        final byte[] data;
         TFTPPacket packet = null;
 
         if (datagram.getLength() < MIN_PACKET_SIZE) {

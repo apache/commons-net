@@ -303,7 +303,7 @@ public class FTP extends SocketClient
 
     private int getReply(final boolean reportReply) throws IOException
     {
-        int length;
+        final int length;
 
         _newReplyString = true;
         _replyLines.clear();
@@ -754,7 +754,7 @@ public class FTP extends SocketClient
      */
     public String getReplyString()
     {
-        StringBuilder buffer;
+        final StringBuilder buffer;
 
         if (!_newReplyString) {
             return _replyString;
@@ -997,7 +997,7 @@ public class FTP extends SocketClient
      */
     public int eprt(final InetAddress host, final int port) throws IOException
     {
-        int num;
+        final int num;
         final StringBuilder info = new StringBuilder();
         String h;
 

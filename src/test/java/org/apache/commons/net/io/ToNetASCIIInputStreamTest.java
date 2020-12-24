@@ -21,6 +21,7 @@ package org.apache.commons.net.io;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 //import java.nio.charset.Charset;
 import org.junit.Assert;
 import org.junit.Test;
@@ -58,8 +59,8 @@ public class ToNetASCIIInputStreamTest {
     }
 
     private void byteTest(final boolean byByte, final String input, final String expect) throws IOException {
-        final byte[] data = input.getBytes(ASCII);
-        final byte[] expected = expect.getBytes(ASCII);
+        final byte[] data = input.getBytes(StandardCharsets.US_ASCII);
+        final byte[] expected = expect.getBytes(StandardCharsets.US_ASCII);
         final InputStream source = new ByteArrayInputStream(data);
         try (final ToNetASCIIInputStream toNetASCII = new ToNetASCIIInputStream(source)) {
             final byte[] output = new byte[data.length * 2]; // cannot be longer than twice the input

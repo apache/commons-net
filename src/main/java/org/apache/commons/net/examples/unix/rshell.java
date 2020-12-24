@@ -45,8 +45,11 @@ public final class rshell
 
     public static void main(final String[] args)
     {
-        String server, localuser, remoteuser, command;
-        RCommandClient client;
+        final String server;
+        final String localuser;
+        final String remoteuser;
+        final String command;
+        final RCommandClient client;
 
         if (args.length != 4)
         {

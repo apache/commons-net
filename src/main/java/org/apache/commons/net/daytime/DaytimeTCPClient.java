@@ -69,7 +69,7 @@ public final class DaytimeTCPClient extends SocketClient
     {
         int read;
         final StringBuilder result = new StringBuilder(buffer.length);
-        BufferedReader reader;
+        final BufferedReader reader;
 
         reader = new BufferedReader(new InputStreamReader(_input_, getCharset()));
 

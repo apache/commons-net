@@ -72,7 +72,7 @@ public final class RelayPath
     public String toString()
     {
         final StringBuilder buffer = new StringBuilder();
-        Enumeration<String> hosts;
+        final Enumeration<String> hosts;
 
         buffer.append('<');
 
