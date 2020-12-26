@@ -73,6 +73,9 @@ The <action> type attribute can be add,update,fix,remove.
             <action issue="NET-695" type="update" dev="ggregory" due-to="Gary Gregory, Possibly Cott">
             Apply SocketClient timeout after connection but before SSL negotiation.
             </action>
+           <action type="update" dev="ggregory" due-to="Arturo Bernal">
+            Minor Improvements #71.
+            </action>
         </release>
         <release version="3.7.2" date="2020-10-14" description="Maintenance and bug fix release.">
             <action issue="NET-689" type="fix" dev="ggregory" due-to="Charlie, Gary Gregory">
