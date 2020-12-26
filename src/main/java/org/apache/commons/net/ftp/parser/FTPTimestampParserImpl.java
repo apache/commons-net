@@ -326,7 +326,7 @@ public class FTPTimestampParserImpl implements
     /**
      * sets a TimeZone represented by the supplied ID string into all
      * of the parsers used by this server.
-     * @param serverTimeZone Time Id java.util.TimeZone id used by
+     * @param serverTimeZoneId Time Id java.util.TimeZone id used by
      * the ftp server.  If null the client's local time zone is assumed.
      */
     private void setServerTimeZone(final String serverTimeZoneId) {

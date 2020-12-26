@@ -105,9 +105,10 @@ public final class TFTPErrorPacket extends TFTPPacket
     TFTPErrorPacket(final DatagramPacket datagram) throws TFTPPacketException
     {
         super(TFTPPacket.ERROR, datagram.getAddress(), datagram.getPort());
-        int index, length;
-        byte[] data;
-        StringBuilder buffer;
+        int index;
+        final int length;
+        final byte[] data;
+        final StringBuilder buffer;
 
         data = datagram.getData();
         length = datagram.getLength();
@@ -148,7 +149,7 @@ public final class TFTPErrorPacket extends TFTPPacket
     @Override
     DatagramPacket newDatagram(final DatagramPacket datagram, final byte[] data)
     {
-        int length;
+        final int length;
 
         length = message.length();
 
@@ -185,8 +186,8 @@ public final class TFTPErrorPacket extends TFTPPacket
     @Override
     public DatagramPacket newDatagram()
     {
-        byte[] data;
-        int length;
+        final byte[] data;
+        final int length;
 
         length = message.length();
 

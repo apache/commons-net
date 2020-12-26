@@ -52,8 +52,11 @@ public final class rlogin
 
     public static void main(final String[] args)
     {
-        String server, localuser, remoteuser, terminal;
-        RLoginClient client;
+        final String server;
+        final String localuser;
+        final String remoteuser;
+        final String terminal;
+        final RLoginClient client;
 
         if (args.length != 4)
         {

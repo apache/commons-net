@@ -128,7 +128,7 @@ public class MacOsPeterFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     public FTPFile parseFTPEntry(final String entry) {
         final FTPFile file = new FTPFile();
         file.setRawListing(entry);
-        int type;
+        final int type;
         boolean isDevice = false;
 
         if (matches(entry))

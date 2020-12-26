@@ -442,7 +442,7 @@ public class TelnetClient extends Telnet
 
     // Notify input listener
     void notifyInputListener() {
-        TelnetInputListener listener;
+        final TelnetInputListener listener;
         synchronized (this) {
             listener = this.inputListener;
         }

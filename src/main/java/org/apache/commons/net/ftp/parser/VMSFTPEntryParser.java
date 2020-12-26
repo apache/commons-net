@@ -129,8 +129,8 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             }
 
 
-            String grp;
-            String user;
+            final String grp;
+            final String user;
             final StringTokenizer t = new StringTokenizer(owner, ",");
             switch (t.countTokens()) {
                 case 1:

@@ -115,8 +115,8 @@ public final class CharGenUDPClient extends DatagramSocketClient
      */
     public byte[] receive() throws IOException
     {
-        int length;
-        byte[] result;
+        final int length;
+        final byte[] result;
 
         _socket_.receive(receivePacket);
 

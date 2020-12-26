@@ -110,7 +110,7 @@ public class POP3 extends SocketClient
 
     private void getReply() throws IOException
     {
-        String line;
+        final String line;
 
         replyLines.clear();
         line = reader.readLine();

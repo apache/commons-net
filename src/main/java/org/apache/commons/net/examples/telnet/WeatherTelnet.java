@@ -40,7 +40,7 @@ public final class WeatherTelnet
 
     public static void main(final String[] args)
     {
-        TelnetClient telnet;
+        final TelnetClient telnet;
 
         telnet = new TelnetClient();
 

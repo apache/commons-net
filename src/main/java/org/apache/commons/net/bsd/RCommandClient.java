@@ -25,6 +25,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.net.io.SocketInputStream;
 
@@ -110,7 +111,7 @@ public class RCommandClient extends RExecClient
     {
         int localPort;
         ServerSocket server;
-        Socket socket;
+        final Socket socket;
 
         localPort = MAX_CLIENT_PORT;
         server = null; // Keep compiler from barfing
@@ -133,7 +134,7 @@ public class RCommandClient extends RExecClient
             throw new BindException("All ports in use.");
         }
 
-        _output_.write(Integer.toString(server.getLocalPort()).getBytes("UTF-8")); // $NON-NLS
+        _output_.write(Integer.toString(server.getLocalPort()).getBytes(StandardCharsets.UTF_8)); // $NON-NLS
         _output_.write(NULL_CHAR);
         _output_.flush();
 

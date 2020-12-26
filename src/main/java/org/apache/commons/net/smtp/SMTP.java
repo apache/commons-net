@@ -353,7 +353,7 @@ public class SMTP extends SocketClient
      */
     public int getReply() throws IOException
     {
-        int length;
+        final int length;
 
         newReplyString = true;
         replyLines.clear();
@@ -442,7 +442,7 @@ public class SMTP extends SocketClient
      */
     public String getReplyString()
     {
-        StringBuilder buffer;
+        final StringBuilder buffer;
 
         if (!newReplyString) {
             return replyString;

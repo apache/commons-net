@@ -59,7 +59,7 @@ public class ArticleReader {
         final NewsgroupInfo group = new NewsgroupInfo();
         client.selectNewsgroup(newsgroup, group);
 
-        BufferedReader brHdr;
+        final BufferedReader brHdr;
         String line;
         if (articleSpec != null) {
             brHdr = (BufferedReader) client.retrieveArticleHeader(articleSpec);
@@ -73,7 +73,7 @@ public class ArticleReader {
             }
             brHdr.close();
         }
-        BufferedReader brBody;
+        final BufferedReader brBody;
         if (articleSpec != null) {
             brBody = (BufferedReader) client.retrieveArticleBody(articleSpec);
         } else {

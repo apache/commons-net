@@ -45,8 +45,9 @@ public final class echo
     public static void echoTCP(final String host) throws IOException
     {
         final EchoTCPClient client = new EchoTCPClient();
-        BufferedReader input, echoInput;
-        PrintWriter echoOutput;
+        final BufferedReader input;
+        final BufferedReader echoInput;
+        final PrintWriter echoOutput;
         String line;
 
         // We want to timeout if a response takes longer than 60 seconds
@@ -75,9 +76,9 @@ public final class echo
         int length, count;
         byte[] data;
         String line;
-        BufferedReader input;
-        InetAddress address;
-        EchoUDPClient client;
+        final BufferedReader input;
+        final InetAddress address;
+        final EchoUDPClient client;
 
         input = new BufferedReader(new InputStreamReader(System.in));
         address = InetAddress.getByName(host);

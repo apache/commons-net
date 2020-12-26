@@ -44,13 +44,18 @@ public final class SMTPMail
 
     public static void main(final String[] args)
     {
-        String sender, recipient, subject, fileName, server, cc;
+        final String sender;
+        final String recipient;
+        final String subject;
+        final String fileName;
+        final String server;
+        String cc;
         final List<String> ccList = new ArrayList<>();
-        BufferedReader stdin;
+        final BufferedReader stdin;
         FileReader fileReader = null;
-        Writer writer;
-        SimpleSMTPHeader header;
-        SMTPClient client;
+        final Writer writer;
+        final SimpleSMTPHeader header;
+        final SMTPClient client;
 
         if (args.length < 1)
         {

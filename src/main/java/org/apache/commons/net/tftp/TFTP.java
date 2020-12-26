@@ -140,8 +140,8 @@ public class TFTP extends DatagramSocketClient
      */
     public final void discardPackets() throws IOException
     {
-        int to;
-        DatagramPacket datagram;
+        final int to;
+        final DatagramPacket datagram;
 
         datagram = new DatagramPacket(new byte[PACKET_SIZE], PACKET_SIZE);
 
@@ -292,7 +292,7 @@ public class TFTP extends DatagramSocketClient
     public final TFTPPacket receive() throws IOException, InterruptedIOException,
                 SocketException, TFTPPacketException
     {
-        DatagramPacket packet;
+        final DatagramPacket packet;
 
         packet = new DatagramPacket(new byte[PACKET_SIZE], PACKET_SIZE);
 

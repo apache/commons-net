@@ -66,7 +66,7 @@ public class ProtocolCommandSupport implements Serializable
      */
     public void fireCommandSent(final String command, final String message)
     {
-        ProtocolCommandEvent event;
+        final ProtocolCommandEvent event;
 
         event = new ProtocolCommandEvent(source, command, message);
 
@@ -91,7 +91,7 @@ public class ProtocolCommandSupport implements Serializable
      */
     public void fireReplyReceived(final int replyCode, final String message)
     {
-        ProtocolCommandEvent event;
+        final ProtocolCommandEvent event;
         event = new ProtocolCommandEvent(source, replyCode, message);
 
         for (final EventListener listener : listeners)

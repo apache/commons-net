@@ -175,7 +175,7 @@ public final class TFTPDataPacket extends TFTPPacket
     @Override
     public DatagramPacket newDatagram()
     {
-        byte[] data;
+        final byte[] data;
 
         data = new byte[length + 4];
         data[0] = 0;

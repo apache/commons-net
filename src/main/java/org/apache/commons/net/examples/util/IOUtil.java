@@ -41,7 +41,8 @@ public final class IOUtil
                                        final InputStream localInput,
                                        final OutputStream localOutput)
     {
-        Thread reader, writer;
+        final Thread reader;
+        final Thread writer;
 
         reader = new Thread()
                  {

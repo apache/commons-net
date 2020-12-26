@@ -691,7 +691,8 @@ public abstract class SocketClient
      */
     public boolean verifyRemote(final Socket socket)
     {
-        InetAddress host1, host2;
+        final InetAddress host1;
+        final InetAddress host2;
 
         host1 = socket.getInetAddress();
         host2 = getRemoteAddress();

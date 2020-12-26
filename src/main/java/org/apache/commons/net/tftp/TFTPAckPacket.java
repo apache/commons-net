@@ -73,7 +73,7 @@ public final class TFTPAckPacket extends TFTPPacket
     {
         super(TFTPPacket.ACKNOWLEDGEMENT, datagram.getAddress(),
               datagram.getPort());
-        byte[] data;
+        final byte[] data;
 
         data = datagram.getData();
 
@@ -126,7 +126,7 @@ public final class TFTPAckPacket extends TFTPPacket
     @Override
     public DatagramPacket newDatagram()
     {
-        byte[] data;
+        final byte[] data;
 
         data = new byte[4];
         data[0] = 0;

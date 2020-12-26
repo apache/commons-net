@@ -79,7 +79,7 @@ public final class POP3Mail
         final String proto = args.length > 3 ? args[3] : null;
         final boolean implicit = args.length > 4 ? Boolean.parseBoolean(args[4]) : false;
 
-        POP3Client pop3;
+        final POP3Client pop3;
 
         if (proto != null) {
             System.out.println("Using secure protocol: "+proto);
@@ -88,7 +88,7 @@ public final class POP3Mail
             pop3 = new POP3Client();
         }
 
-        int port;
+        final int port;
         if (arg0.length == 2) {
             port = Integer.parseInt(arg0[1]);
         } else {

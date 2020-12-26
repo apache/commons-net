@@ -40,7 +40,7 @@ public final class finger
         boolean longOutput = false;
         int arg = 0, index;
         String handle, host;
-        FingerClient finger;
+        final FingerClient finger;
         InetAddress address = null;
 
         // Get flags.  If an invalid flag is present, exit with usage message.

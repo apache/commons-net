@@ -153,8 +153,8 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      */
     public boolean elogin() throws IOException
     {
-        String name;
-        InetAddress host;
+        final String name;
+        final InetAddress host;
 
         host = getLocalAddress();
         name = host.getHostName();

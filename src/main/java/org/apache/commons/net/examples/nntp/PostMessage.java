@@ -43,12 +43,17 @@ public final class PostMessage
 
     public static void main(final String[] args)
     {
-        String from, subject, newsgroup, fileName, server, organization;
-        String references;
-        BufferedReader stdin;
+        final String from;
+        final String subject;
+        String newsgroup;
+        final String fileName;
+        final String server;
+        final String organization;
+        final String references;
+        final BufferedReader stdin;
         FileReader fileReader = null;
-        SimpleNNTPHeader header;
-        NNTPClient client;
+        final SimpleNNTPHeader header;
+        final NNTPClient client;
 
         if (args.length < 1)
         {

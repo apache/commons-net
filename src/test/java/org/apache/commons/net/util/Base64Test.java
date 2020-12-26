@@ -52,7 +52,7 @@ public class Base64Test {
 
     @Test
     public void testBase64IntByteArray() {
-        Base64 b64;
+        final Base64 b64;
         b64 = new Base64(8, new byte[]{});
         assertFalse(b64.isUrlSafe());
         assertTrue(Arrays.equals(new byte[]{}, b64.getLineSeparator()));

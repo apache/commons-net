@@ -304,7 +304,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     {
         // Critical section because we're altering __bytesAvailable,
         // __queueTail, and the contents of _queue.
-        boolean bufferWasEmpty;
+        final boolean bufferWasEmpty;
         synchronized (queue)
         {
             bufferWasEmpty = bytesAvailable == 0;
@@ -361,7 +361,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
             {
                 if (ioException != null)
                 {
-                    IOException e;
+                    final IOException e;
                     e = ioException;
                     ioException = null;
                     throw e;
@@ -451,7 +451,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                     }
                     continue;
                 }
-                int ch;
+                final int ch;
 
                 ch = queue[queueHead];
 
@@ -507,7 +507,8 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     @Override
     public int read(final byte buffer[], int offset, int length) throws IOException
     {
-        int ch, off;
+        int ch;
+        final int off;
 
         if (length < 1) {
             return 0;

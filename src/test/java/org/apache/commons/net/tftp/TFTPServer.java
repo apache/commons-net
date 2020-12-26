@@ -84,7 +84,7 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
 public class TFTPServer implements Runnable
 {
     private static final int DEFAULT_TFTP_PORT = 69;
-    public enum ServerMode { GET_ONLY, PUT_ONLY, GET_AND_PUT; }
+    public enum ServerMode { GET_ONLY, PUT_ONLY, GET_AND_PUT}
 
     private final HashSet<TFTPTransfer> transfers_ = new HashSet<>();
     private volatile boolean shutdownServer = false;
@@ -363,7 +363,7 @@ public class TFTPServer implements Runnable
         {
             while (!shutdownServer)
             {
-                TFTPPacket tftpPacket;
+                final TFTPPacket tftpPacket;
 
                 tftpPacket = serverTftp_.receive();
 

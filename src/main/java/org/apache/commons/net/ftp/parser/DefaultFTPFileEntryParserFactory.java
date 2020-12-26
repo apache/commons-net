@@ -228,7 +228,7 @@ public class DefaultFTPFileEntryParserFactory
 
     /**
      * Creates an NT FTP parser: if the config exists, and the system key equals
-     * {@link FTPClientConfig.SYST_NT} then a plain {@link NTFTPEntryParser} is used,
+     * {@link FTPClientConfig#SYST_NT} then a plain {@link NTFTPEntryParser} is used,
      * otherwise a composite of {@link NTFTPEntryParser} and {@link UnixFTPEntryParser} is used.
      * @param config the config to use, may be {@code null}
      * @return the parser
@@ -262,7 +262,7 @@ public class DefaultFTPFileEntryParserFactory
 
     /**
      * Creates an OS400 FTP parser: if the config exists, and the system key equals
-     * {@link FTPClientConfig.SYST_OS400} then a plain {@link OS400FTPEntryParser} is used,
+     * {@link FTPClientConfig#SYST_OS400} then a plain {@link OS400FTPEntryParser} is used,
      * otherwise a composite of {@link OS400FTPEntryParser} and {@link UnixFTPEntryParser} is used.
      * @param config the config to use, may be {@code null}
      * @return the parser
