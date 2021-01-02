@@ -117,7 +117,7 @@ public class FTPSClient extends FTPClient {
     /** The {@link HostnameVerifier} to use post-TLS, default null (i.e. no verification). */
     private HostnameVerifier hostnameVerifier = null;
 
-    /** Use Java 1.7+ HTTPS Endpoint Identification Algorithim. */
+    /** Use Java 1.7+ HTTPS Endpoint Identification Algorithm. */
     private boolean tlsEndpointChecking;
 
     /**
