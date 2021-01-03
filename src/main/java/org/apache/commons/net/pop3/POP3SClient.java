@@ -264,8 +264,7 @@ public class POP3SClient extends POP3Client
      */
     public void setEnabledCipherSuites(final String[] cipherSuites)
     {
-        suites = new String[cipherSuites.length];
-        System.arraycopy(cipherSuites, 0, suites, 0, cipherSuites.length);
+        suites = cipherSuites.clone();
     }
 
     /**
@@ -290,8 +289,7 @@ public class POP3SClient extends POP3Client
      */
     public void setEnabledProtocols(final String[] protocolVersions)
     {
-        protocols = new String[protocolVersions.length];
-        System.arraycopy(protocolVersions, 0, protocols, 0, protocolVersions.length);
+        protocols = protocolVersions.clone();
     }
 
     /**
