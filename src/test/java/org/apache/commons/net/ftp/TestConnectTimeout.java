@@ -38,14 +38,7 @@ public class TestConnectTimeout extends TestCase {
             // TODO use a local server if possible
             client.connect("www.apache.org", 1234);
             fail("Expecting an Exception");
-        }
-        catch (final ConnectException se) {
-            assertTrue(true);
-        }
-        catch (final SocketTimeoutException se) {
-            assertTrue(true);
-        }
-        catch (final UnknownHostException ue) {
+        } catch (final ConnectException | SocketTimeoutException | UnknownHostException ue) {
             // Not much we can do about this, we may be firewalled
             assertTrue(true);
         }

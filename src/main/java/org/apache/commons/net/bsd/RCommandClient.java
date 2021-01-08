@@ -192,9 +192,6 @@ public class RCommandClient extends RExecClient
                 _socket_ =
                     _socketFactory_.createSocket(host, port, localAddr, localPort);
             }
-            catch (final BindException be) {
-                continue;
-            }
             catch (final SocketException e)
             {
                 continue;

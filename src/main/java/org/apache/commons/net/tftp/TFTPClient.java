@@ -241,11 +241,7 @@ public class TFTPClient extends TFTP
                                     "Unexpected host or port.");
                             bufferedSend(error);
                         }
-                    } catch (final SocketException e) {
-                        if (++timeouts >= maxTimeouts) {
-                            throw new IOException("Connection timed out.");
-                        }
-                    } catch (final InterruptedIOException e) {
+                    } catch (final SocketException | InterruptedIOException e) {
                         if (++timeouts >= maxTimeouts) {
                             throw new IOException("Connection timed out.");
                         }
@@ -434,11 +430,7 @@ public class TFTPClient extends TFTP
                                                         "Unexpected host or port.");
                             bufferedSend(error);
                         }
-                    } catch (final SocketException e) {
-                        if (++timeouts >= maxTimeouts) {
-                            throw new IOException("Connection timed out.");
-                        }
-                    } catch (final InterruptedIOException e) {
+                    } catch (final SocketException | InterruptedIOException e) {
                         if (++timeouts >= maxTimeouts) {
                             throw new IOException("Connection timed out.");
                         }

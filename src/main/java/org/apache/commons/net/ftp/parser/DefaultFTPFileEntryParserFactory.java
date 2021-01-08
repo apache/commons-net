@@ -109,9 +109,7 @@ public class DefaultFTPFileEntryParserFactory
                     throw new ParserInitializationException(parserClass.getName()
                         + " does not implement the interface "
                         + "org.apache.commons.net.ftp.FTPFileEntryParser.", e);
-                } catch (final Exception e) {
-                    throw new ParserInitializationException("Error initializing parser", e);
-                } catch (final ExceptionInInitializerError e) {
+                } catch (final Exception | ExceptionInInitializerError e) {
                     throw new ParserInitializationException("Error initializing parser", e);
                 }
             } catch (final ClassNotFoundException e) {

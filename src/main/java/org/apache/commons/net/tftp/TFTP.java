@@ -154,11 +154,7 @@ public class TFTP extends DatagramSocketClient
                 _socket_.receive(datagram);
             }
         }
-        catch (final SocketException e)
-        {
-            // Do nothing.  We timed out so we hope we're caught up.
-        }
-        catch (final InterruptedIOException e)
+        catch (final SocketException | InterruptedIOException e)
         {
             // Do nothing.  We timed out so we hope we're caught up.
         }

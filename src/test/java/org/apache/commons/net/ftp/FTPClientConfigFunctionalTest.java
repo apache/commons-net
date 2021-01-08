@@ -74,8 +74,6 @@ public class FTPClientConfigFunctionalTest extends TestCase {
             FTP.login("anonymous","testing@apache.org");
             FTP.changeWorkingDirectory("SL.us008001/DF.an/DC.sflnd/DS.metar");
             FTP.enterLocalPassiveMode();
-        } catch (final SocketException e) {
-            e.printStackTrace();
         } catch (final IOException e) {
             e.printStackTrace();
         }
