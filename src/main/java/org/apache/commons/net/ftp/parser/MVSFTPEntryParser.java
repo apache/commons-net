@@ -471,7 +471,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
         // simply remove the header line. Composite logic will take care of the
         // two different types of
         // list in short order.
-        if (orig != null && orig.size() > 0) {
+        if (orig != null && !orig.isEmpty()) {
             final String header = orig.get(0);
             if (header.indexOf("Volume") >= 0 && header.indexOf("Dsname") >= 0) {
                 setType(FILE_LIST_TYPE);
