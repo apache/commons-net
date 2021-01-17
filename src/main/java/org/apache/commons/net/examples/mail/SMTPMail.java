@@ -94,7 +94,7 @@ public final class SMTPMail
 
                 cc = stdin.readLine();
 
-                if (cc== null || cc.length() == 0) {
+                if (cc== null || cc.isEmpty()) {
                     break;
                 }
 

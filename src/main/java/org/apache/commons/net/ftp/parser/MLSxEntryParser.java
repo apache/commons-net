@@ -108,7 +108,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
 
         }
         final String parts[] = entry.split(" ",2); // Path may contain space
-        if (parts.length != 2 || parts[1].length() == 0) {
+        if (parts.length != 2 || parts[1].isEmpty()) {
             return null; // no space found or no file name
         }
         final String factList = parts[0];
@@ -130,7 +130,7 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
             }
             final String factname = factparts[0].toLowerCase(Locale.ENGLISH);
             final String factvalue = factparts[1];
-            if (factvalue.length() == 0) {
+            if (factvalue.isEmpty()) {
                 continue; // nothing to see here
             }
             final String valueLowerCase = factvalue.toLowerCase(Locale.ENGLISH);

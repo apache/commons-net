@@ -46,7 +46,7 @@ public class Article implements Threadable {
      * @param msgId the message id to add
      */
     public void addReference(final String msgId) {
-        if (msgId == null || msgId.length() == 0) {
+        if (msgId == null || msgId.isEmpty()) {
             return;
         }
         if (references == null) {

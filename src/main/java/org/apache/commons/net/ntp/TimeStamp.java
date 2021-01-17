@@ -251,7 +251,7 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
         }
         final int ind = hexString.indexOf('.');
         if (ind == -1) {
-            if (hexString.length() == 0) {
+            if (hexString.isEmpty()) {
                 return 0;
             }
             return Long.parseLong(hexString, 16) << 32; // no decimal

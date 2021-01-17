@@ -324,7 +324,7 @@ public class Threader {
 
             final String subj = threadable.simplifiedSubject();
 
-            if (subj == null || subj.length() == 0) {
+            if (subj == null || subj.isEmpty()) {
                 continue;
             }
 
@@ -369,7 +369,7 @@ public class Threader {
             final String subj = threadable.simplifiedSubject();
 
             // Dont thread together all subjectless messages
-            if (subj == null || subj.length() == 0) {
+            if (subj == null || subj.isEmpty()) {
                 continue;
             }
 

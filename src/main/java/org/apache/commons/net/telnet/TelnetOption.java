@@ -164,7 +164,7 @@ public class TelnetOption
      */
     public static final String getOption(final int code)
     {
-        if(optionString[code].length() == 0)
+        if(optionString[code].isEmpty())
         {
             return "UNASSIGNED";
         }

@@ -97,7 +97,7 @@ public final class PostMessage
 
                 newsgroup = newsgroup.trim();
 
-                if (newsgroup.length() == 0) {
+                if (newsgroup.isEmpty()) {
                     break;
                 }
 

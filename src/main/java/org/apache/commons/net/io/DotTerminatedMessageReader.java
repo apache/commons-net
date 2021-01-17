@@ -240,7 +240,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
             }
         }
         final String string = sb.toString();
-        if (string.length() == 0) { // immediate EOF
+        if (string.isEmpty()) { // immediate EOF
             return null;
         }
         // Should not happen - EOF without CRLF
