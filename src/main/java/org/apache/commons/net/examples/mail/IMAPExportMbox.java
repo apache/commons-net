@@ -204,12 +204,12 @@ public final class IMAPExportMbox
             chunkListener = new MboxListener(
                 new BufferedWriter(new FileWriter(mbox, false)), eol, printHash, printMarker, checkSequence);
         } else {
-            final File mbox = new File(file);
-            if (mbox.exists() && mbox.length() > 0) {
-                throw new IOException("mailbox file: " + mbox + " already exists and is non-empty!");
+            final File mboxFile = new File(file);
+            if (mboxFile.exists() && mboxFile.length() > 0) {
+                throw new IOException("mailbox file: " + mboxFile + " already exists and is non-empty!");
             }
-            System.out.println("Creating file " + mbox);
-            chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mbox)), eol, printHash, printMarker, checkSequence);
+            System.out.println("Creating file " + mboxFile);
+            chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mboxFile)), eol, printHash, printMarker, checkSequence);
         }
 
         final String path = uri.getPath();
