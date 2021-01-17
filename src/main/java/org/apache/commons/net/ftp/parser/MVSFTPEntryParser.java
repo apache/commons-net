@@ -376,7 +376,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
          * safe context, for example from a memberlist, where the regex for some
          * reason fails. Then just assign the name field of FTPFile.
          */
-        if (entry != null && entry.trim().length() > 0) {
+        if (entry != null && !entry.trim().isEmpty()) {
             file.setRawListing(entry);
             final String name = entry.split(" ")[0];
             file.setName(name);

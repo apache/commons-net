@@ -209,7 +209,7 @@ public class FTPHTTPClient extends FTPClient {
         final List<String> response = new ArrayList<>();
         final BufferedReader reader = new BufferedReader(new InputStreamReader(input, getCharset()));
 
-        for (String line = reader.readLine(); line != null && line.length() > 0; line = reader.readLine()) {
+        for (String line = reader.readLine(); line != null && !line.isEmpty(); line = reader.readLine()) {
             response.add(line);
         }
 

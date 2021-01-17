@@ -114,11 +114,11 @@ public final class PostMessage
 
             references = stdin.readLine();
 
-            if (organization != null && organization.length() > 0) {
+            if (organization != null && !organization.isEmpty()) {
                 header.addHeaderField("Organization", organization);
             }
 
-            if (references != null && references.length() > 0) {
+            if (references != null && !references.isEmpty()) {
                 header.addHeaderField("References", references);
             }
 

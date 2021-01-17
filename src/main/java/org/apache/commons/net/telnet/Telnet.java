@@ -441,7 +441,7 @@ class Telnet extends SocketClient
             /* TERMINAL-TYPE option (start)*/
             if (option == TERMINAL_TYPE)
             {
-                if (terminalType != null && terminalType.length() > 0)
+                if (terminalType != null && !terminalType.isEmpty())
                 {
                     acceptNewState = true;
                 }
