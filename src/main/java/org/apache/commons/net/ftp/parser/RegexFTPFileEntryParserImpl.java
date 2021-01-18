@@ -38,18 +38,18 @@ public abstract class RegexFTPFileEntryParserImpl extends
      * internal pattern the matcher tries to match, representing a file
      * entry
      */
-    private Pattern pattern = null;
+    private Pattern pattern;
 
     /**
      * internal match result used by the parser
      */
-    private MatchResult result = null;
+    private MatchResult result;
 
     /**
      * Internal PatternMatcher object used by the parser.  It has protected
      * scope in case subclasses want to make use of it for their own purposes.
      */
-    protected Matcher _matcher_ = null;
+    protected Matcher _matcher_;
 
     /**
      * The constructor for a RegexFTPFileEntryParserImpl object.

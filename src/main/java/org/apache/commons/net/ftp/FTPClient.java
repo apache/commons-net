@@ -52,6 +52,7 @@ import org.apache.commons.net.io.CopyStreamListener;
 import org.apache.commons.net.io.FromNetASCIIInputStream;
 import org.apache.commons.net.io.ToNetASCIIOutputStream;
 import org.apache.commons.net.io.Util;
+import org.apache.commons.net.util.NetConstants;
 
 /**
  * FTPClient encapsulates all the functionality necessary to store and
@@ -425,7 +426,7 @@ implements Configurable
     }
 
     /** Controls the automatic server encoding detection (only UTF-8 supported). */
-    private boolean autodetectEncoding = false;
+    private boolean autodetectEncoding;
 
     /** Map of FEAT responses. If null, has not been initialised. */
     private HashMap<String, Set<String>> featuresMap;
@@ -2331,7 +2332,7 @@ implements Configurable
         }
         final Set<String> entries = featuresMap.get(feature.toUpperCase(Locale.ENGLISH));
         if (entries != null) {
-            return entries.toArray(new String[entries.size()]);
+            return entries.toArray(NetConstants.EMPTY_STRING_ARRAY);
         }
         return null;
     }

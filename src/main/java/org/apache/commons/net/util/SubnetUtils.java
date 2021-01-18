@@ -40,7 +40,7 @@ public class SubnetUtils {
     private final int broadcast;
 
     /** Whether the broadcast/network address are included in host count */
-    private boolean inclusiveHostCount = false;
+    private boolean inclusiveHostCount;
 
 
     /**

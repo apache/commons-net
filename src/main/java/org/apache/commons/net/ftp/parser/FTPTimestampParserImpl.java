@@ -51,7 +51,7 @@ public class FTPTimestampParserImpl implements
     /* The index in CALENDAR_UNITS of the smallest time unit in recentDateFormat */
     private int recentDateSmallestUnitIndex;
 
-    private boolean lenientFutureDates = false;
+    private boolean lenientFutureDates;
 
     /*
      * List of units in order of increasing significance.

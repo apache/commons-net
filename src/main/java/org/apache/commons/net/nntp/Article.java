@@ -17,6 +17,8 @@
 
 package org.apache.commons.net.nntp;
 
+import org.apache.commons.net.util.NetConstants;
+
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,14 +35,13 @@ public class Article implements Threadable {
     private String simplifiedSubject;
     private String from;
     private ArrayList<String> references;
-    private boolean isReply = false;
+    private boolean isReply;
 
     public Article kid, next;
 
     public Article() {
         articleNumber = -1; // isDummy
     }
-
     /**
      * Adds a message-id to the list of messages that this message references (i.e. replies to)
      * @param msgId the message id to add
@@ -64,7 +65,7 @@ public class Article implements Threadable {
         if (references == null) {
             return new String[0];
         }
-        return references.toArray(new String[references.size()]);
+        return references.toArray(NetConstants.EMPTY_STRING_ARRAY);
     }
 
     /**

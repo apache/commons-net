@@ -32,6 +32,7 @@ import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
 import org.apache.commons.net.io.CRLFLineReader;
+import org.apache.commons.net.util.NetConstants;
 
 /**
  * The POP3 class is not meant to be used by itself and is provided
@@ -307,7 +308,7 @@ public class POP3 extends SocketClient
      */
     public String[] getReplyStrings()
     {
-        return replyLines.toArray(new String[replyLines.size()]);
+        return replyLines.toArray(NetConstants.EMPTY_STRING_ARRAY);
     }
 
     /**

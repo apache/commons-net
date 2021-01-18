@@ -37,7 +37,7 @@ final class TelnetOutputStream extends OutputStream
     private final TelnetClient client;
     // TODO there does not appear to be any way to change this value - should it be a ctor parameter?
     private final boolean convertCRtoCRLF = true;
-    private boolean lastWasCR = false;
+    private boolean lastWasCR;
 
     TelnetOutputStream(final TelnetClient client)
     {

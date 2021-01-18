@@ -66,10 +66,10 @@ public class TFTPClient extends TFTP
     private int maxTimeouts;
 
     /** The number of bytes received in the ongoing download. */
-    private long totalBytesReceived = 0;
+    private long totalBytesReceived;
 
     /** The number of bytes sent in the ongoing upload. */
-    private long totalBytesSent = 0;
+    private long totalBytesSent;
 
     /**
      * Creates a TFTPClient instance with a default timeout of DEFAULT_TIMEOUT,

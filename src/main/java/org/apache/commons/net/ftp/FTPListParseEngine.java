@@ -82,6 +82,11 @@ public class FTPListParseEngine {
     // Should invalid files (parse failures) be allowed?
     private final boolean saveUnparseableEntries;
 
+    /**
+     * An empty immutable {@code FTPFile} array.
+     */
+    private static final FTPFile[] EMPTY_FTP_FILE_ARRAY = new FTPFile[0];
+
     public FTPListParseEngine(final FTPFileEntryParser parser) {
         this(parser, null);
     }
@@ -183,7 +188,7 @@ public class FTPListParseEngine {
             tmpResults.add(temp);
             count--;
         }
-        return tmpResults.toArray(new FTPFile[tmpResults.size()]);
+        return tmpResults.toArray(EMPTY_FTP_FILE_ARRAY);
 
     }
 
@@ -225,7 +230,7 @@ public class FTPListParseEngine {
             tmpResults.add(0,temp);
             count--;
         }
-        return tmpResults.toArray(new FTPFile[tmpResults.size()]);
+        return tmpResults.toArray(EMPTY_FTP_FILE_ARRAY);
     }
 
     /**
@@ -276,7 +281,7 @@ public class FTPListParseEngine {
                 tmpResults.add(temp);
             }
         }
-        return tmpResults.toArray(new FTPFile[tmpResults.size()]);
+        return tmpResults.toArray(EMPTY_FTP_FILE_ARRAY);
 
     }
 

@@ -47,7 +47,7 @@ import org.apache.commons.net.telnet.InvalidTelnetOptionException;
  */
 public class TelnetClientExample implements Runnable, TelnetNotificationHandler
 {
-    private static TelnetClient tc = null;
+    private static TelnetClient tc;
 
     /**
      * Main for the TelnetClientExample.
@@ -195,7 +195,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler
                                 try
                                 {
                                     st.nextToken();
-                                    final int opcode = new Integer(st.nextToken()).intValue();
+                                    final int opcode = Integer.parseInt(st.nextToken());
                                     tc.deleteOptionHandler(opcode);
                                 }
                                 catch (final Exception e)

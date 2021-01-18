@@ -70,23 +70,23 @@ public class SMTPSClient extends SMTPClient
     private final String protocol;
     /** The context object. */
 
-    private SSLContext context = null;
+    private SSLContext context;
     /** The cipher suites. SSLSockets have a default set of these anyway,
         so no initialization required. */
 
-    private String[] suites = null;
+    private String[] suites;
     /** The protocol versions. */
 
-    private String[] protocols = null;
+    private String[] protocols;
 
     /** The {@link TrustManager} implementation, default null (i.e. use system managers). */
-    private TrustManager trustManager = null;
+    private TrustManager trustManager;
 
     /** The {@link KeyManager}, default null (i.e. use system managers). */
-    private KeyManager keyManager = null; // seems not to be required
+    private KeyManager keyManager; // seems not to be required
 
     /** The {@link HostnameVerifier} to use post-TLS, default null (i.e. no verification). */
-    private HostnameVerifier hostnameVerifier = null;
+    private HostnameVerifier hostnameVerifier;
 
     /** Use Java 1.7+ HTTPS Endpoint Identification Algorithim. */
     private boolean tlsEndpointChecking;

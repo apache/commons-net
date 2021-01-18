@@ -64,10 +64,10 @@ extends TestCase implements TelnetNotificationHandler
     private final int NUM_CONNECTIONS = 5;
 
 
-    protected int numdo = 0;
-    protected int numdont = 0;
-    protected int numwill = 0;
-    protected int numwont = 0;
+    protected int numdo;
+    protected int numdont;
+    protected int numwill;
+    protected int numwont;
 
     protected int[] lastSubnegotiation;
     protected int lastSubnegotiationLength;

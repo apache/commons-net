@@ -209,7 +209,8 @@ public final class IMAPExportMbox
                 throw new IOException("mailbox file: " + mboxFile + " already exists and is non-empty!");
             }
             System.out.println("Creating file " + mboxFile);
-            chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mboxFile)), eol, printHash, printMarker, checkSequence);
+            chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mboxFile)), eol, printHash, printMarker,
+                    checkSequence);
         }
 
         final String path = uri.getPath();
@@ -330,7 +331,7 @@ public final class IMAPExportMbox
     private static class MboxListener implements IMAPChunkListener {
 
         private final BufferedWriter bw;
-        volatile int total = 0;
+        volatile int total;
         volatile String lastFetched;
         volatile List<String> missingIds = new ArrayList<>();
         volatile long lastSeq = -1;

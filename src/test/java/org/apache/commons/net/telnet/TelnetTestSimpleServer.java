@@ -28,9 +28,9 @@ import java.io.IOException;
  */
 public class TelnetTestSimpleServer implements Runnable
 {
-    ServerSocket serverSocket = null;
-    Socket clientSocket = null;
-    Thread listener = null;
+    ServerSocket serverSocket;
+    Socket clientSocket;
+    Thread listener;
 
     /*
      * test of client-driven subnegotiation.

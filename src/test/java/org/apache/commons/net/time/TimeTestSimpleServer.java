@@ -48,7 +48,7 @@ public class TimeTestSimpleServer implements Runnable
 
     private ServerSocket server;
     private final int port;
-    private boolean running = false;
+    private boolean running;
 
     public TimeTestSimpleServer()
     {

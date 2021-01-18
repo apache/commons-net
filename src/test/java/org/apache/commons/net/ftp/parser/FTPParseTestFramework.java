@@ -27,8 +27,8 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
  */
 public abstract class FTPParseTestFramework extends TestCase
 {
-    private FTPFileEntryParser parser = null;
-    protected SimpleDateFormat df = null;
+    private FTPFileEntryParser parser;
+    protected SimpleDateFormat df;
 
     /**
      * @see junit.framework.TestCase#TestCase(String)
