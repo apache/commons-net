@@ -55,13 +55,17 @@ class Telnet extends SocketClient
                                           (byte)TelnetCommand.IAC, (byte)TelnetCommand.SE
                                       };
 
-    static final int WILL_MASK = 0x01, DO_MASK = 0x02,
-                                  REQUESTED_WILL_MASK = 0x04, REQUESTED_DO_MASK = 0x08;
+    static final int WILL_MASK = 0x01;
+    static final int DO_MASK = 0x02;
+    static final int REQUESTED_WILL_MASK = 0x04;
+    static final int REQUESTED_DO_MASK = 0x08;
 
     /* public */
     static final int DEFAULT_PORT =  23;
 
-    private final int[] doResponse, willResponse, options;
+    private final int[] doResponse;
+    private final int[] willResponse;
+    private final int[] options;
 
     /* TERMINAL-TYPE option (start)*/
     /**
@@ -96,7 +100,7 @@ class Telnet extends SocketClient
     /**
      * Array of option handlers
      */
-    private final TelnetOptionHandler optionHandlers[];
+    private final TelnetOptionHandler[] optionHandlers;
 
     /* open TelnetOptionHandler functionality (end)*/
 
@@ -272,7 +276,7 @@ class Telnet extends SocketClient
             {
                 optionHandlers[option].setWill(true);
 
-                final int subneg[] =
+                final int[] subneg =
                     optionHandlers[option].startSubnegotiationLocal();
 
                 if (subneg != null)
@@ -301,7 +305,7 @@ class Telnet extends SocketClient
             {
                 optionHandlers[option].setDo(true);
 
-                final int subneg[] =
+                final int[] subneg =
                     optionHandlers[option].startSubnegotiationRemote();
 
                 if (subneg != null)
@@ -684,7 +688,7 @@ class Telnet extends SocketClient
      * @param suboptionLength - length of data received
      * @throws IOException - Exception in I/O.
      **/
-    void processSuboption(final int suboption[], final int suboptionLength)
+    void processSuboption(final int[] suboption, final int suboptionLength)
     throws IOException
     {
         if (debug)
@@ -697,7 +701,7 @@ class Telnet extends SocketClient
         {
             if (optionHandlers[suboption[0]] != null)
             {
-                final int responseSuboption[] =
+                final int[] responseSuboption =
                   optionHandlers[suboption[0]].answerSubnegotiation(suboption,
                   suboptionLength);
                 _sendSubnegotiation(responseSuboption);
@@ -756,7 +760,7 @@ class Telnet extends SocketClient
      * @param subn - subnegotiation data to be sent
      * @throws IOException - Exception in I/O.
      **/
-    final synchronized void _sendSubnegotiation(final int subn[])
+    final synchronized void _sendSubnegotiation(final int[] subn)
     throws IOException
     {
         if (debug)
