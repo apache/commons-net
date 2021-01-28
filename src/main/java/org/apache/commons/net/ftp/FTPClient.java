@@ -619,8 +619,7 @@ implements Configurable
         delim3 = reply.charAt(2);
         delim4 = reply.charAt(reply.length()-1);
 
-        if (!(delim1 == delim2) || !(delim2 == delim3)
-                || !(delim3 == delim4)) {
+        if ((delim1 != delim2) || (delim2 != delim3) || (delim3 != delim4)) {
             throw new MalformedServerReplyException(
                     "Could not parse extended passive host information.\nServer Reply: " + reply);
         }
