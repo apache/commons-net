@@ -74,7 +74,7 @@ public class TestNtpClient {
 
     @Test
     public void testGetTime() throws IOException {
-        final long currentTime = System.currentTimeMillis();
+        final long currentTimeMillis = System.currentTimeMillis();
         final NTPUDPClient client = new NTPUDPClient();
         // timeout if response takes longer than 2 seconds
         client.setDefaultTimeout(2000);
@@ -83,7 +83,7 @@ public class TestNtpClient {
             final InetAddress addr = InetAddress.getByAddress("loopback", new byte[]{127, 0, 0, 1});
             final TimeInfo timeInfo = client.getTime(addr, server.getPort());
             Assert.assertNotNull(timeInfo);
-            Assert.assertTrue(timeInfo.getReturnTime() >= currentTime);
+            Assert.assertTrue(timeInfo.getReturnTime() >= currentTimeMillis);
             final NtpV3Packet message = timeInfo.getMessage();
             Assert.assertNotNull(message);
 
@@ -93,7 +93,7 @@ public class TestNtpClient {
 
             final TimeStamp originateTimeStamp = message.getOriginateTimeStamp();
             Assert.assertNotNull(originateTimeStamp);
-            Assert.assertTrue(originateTimeStamp.getTime() >= currentTime);
+            Assert.assertTrue(originateTimeStamp.getTime() >= currentTimeMillis);
 
             Assert.assertEquals(NtpV3Packet.MODE_SERVER, message.getMode());
 
@@ -101,7 +101,7 @@ public class TestNtpClient {
 
             final TimeStamp referenceTimeStamp = message.getReferenceTimeStamp();
             Assert.assertNotNull(referenceTimeStamp);
-            Assert.assertTrue(referenceTimeStamp.getTime() >= currentTime);
+            Assert.assertTrue(referenceTimeStamp.getTime() >= currentTimeMillis);
 
             Assert.assertEquals(NtpV3Packet.VERSION_3, message.getVersion());
             Assert.assertEquals(1, message.getStratum());

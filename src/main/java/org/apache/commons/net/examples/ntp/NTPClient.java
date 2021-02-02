@@ -123,7 +123,7 @@ public final class NTPClient
         final TimeStamp origNtpTime = message.getOriginateTimeStamp();
         System.out.println(" Originate Timestamp:\t" + origNtpTime + "  " + origNtpTime.toDateString());
 
-        final long destTime = info.getReturnTime();
+        final long destTimeMillis = info.getReturnTime();
         // Receive Time is time request received by server (t2)
         final TimeStamp rcvNtpTime = message.getReceiveTimeStamp();
         System.out.println(" Receive Timestamp:\t" + rcvNtpTime + "  " + rcvNtpTime.toDateString());
@@ -133,14 +133,14 @@ public final class NTPClient
         System.out.println(" Transmit Timestamp:\t" + xmitNtpTime + "  " + xmitNtpTime.toDateString());
 
         // Destination time is time reply received by client (t4)
-        final TimeStamp destNtpTime = TimeStamp.getNtpTime(destTime);
+        final TimeStamp destNtpTime = TimeStamp.getNtpTime(destTimeMillis);
         System.out.println(" Destination Timestamp:\t" + destNtpTime + "  " + destNtpTime.toDateString());
 
         info.computeDetails(); // compute offset/delay if not already done
-        final Long offsetValue = info.getOffset();
-        final Long delayValue = info.getDelay();
-        final String delay = delayValue == null ? "N/A" : delayValue.toString();
-        final String offset = offsetValue == null ? "N/A" : offsetValue.toString();
+        final Long offsetMillis = info.getOffset();
+        final Long delayMillis = info.getDelay();
+        final String delay = delayMillis == null ? "N/A" : delayMillis.toString();
+        final String offset = offsetMillis == null ? "N/A" : offsetMillis.toString();
 
         System.out.println(" Roundtrip delay(ms)=" + delay
                 + ", clock offset(ms)=" + offset); // offset in ms
