@@ -94,8 +94,8 @@ public final class FTPClientExample
         boolean mlst = false, mlsd = false, mdtm = false, saveUnparseable = false;
         boolean size = false;
         boolean lenient = false;
-        long keepAliveTimeout = -1;
-        int controlKeepAliveReplyTimeout = -1;
+        long keepAliveTimeoutSeconds = -1;
+        int controlKeepAliveReplyTimeoutMillis = -1;
         int minParams = 5; // listings require 3 params
         String protocol = null; // SSL protocol
         String doCommand = null;
@@ -156,7 +156,7 @@ public final class FTPClientExample
                 minParams = 3;
             }
             else if (args[base].equals("-k")) {
-                keepAliveTimeout = Long.parseLong(args[++base]);
+                keepAliveTimeoutSeconds = Long.parseLong(args[++base]);
             }
             else if (args[base].equals("-l")) {
                 listFiles = true;
@@ -187,7 +187,7 @@ public final class FTPClientExample
                 saveUnparseable = true;
             }
             else if (args[base].equals("-w")) {
-                controlKeepAliveReplyTimeout = Integer.parseInt(args[++base]);
+                controlKeepAliveReplyTimeoutMillis = Integer.parseInt(args[++base]);
             }
             else if (args[base].equals("-T")) {
                 trustmgr = args[++base];
@@ -297,11 +297,11 @@ public final class FTPClientExample
         if (printHash) {
             ftp.setCopyStreamListener(createListener());
         }
-        if (keepAliveTimeout >= 0) {
-            ftp.setControlKeepAliveTimeout(keepAliveTimeout);
+        if (keepAliveTimeoutSeconds >= 0) {
+            ftp.setControlKeepAliveTimeout(keepAliveTimeoutSeconds);
         }
-        if (controlKeepAliveReplyTimeout >= 0) {
-            ftp.setControlKeepAliveReplyTimeout(controlKeepAliveReplyTimeout);
+        if (controlKeepAliveReplyTimeoutMillis >= 0) {
+            ftp.setControlKeepAliveReplyTimeout(controlKeepAliveReplyTimeoutMillis);
         }
         if (encoding != null) {
             ftp.setControlEncoding(encoding);
@@ -401,7 +401,7 @@ __main:
                     ftp.storeFile(remote, input);
                 }
 
-                if (keepAliveTimeout > 0) {
+                if (keepAliveTimeoutSeconds > 0) {
                     showCslStats(ftp);
                 }
             }
@@ -505,7 +505,7 @@ __main:
                     ftp.retrieveFile(remote, output);
                 }
 
-                if (keepAliveTimeout > 0) {
+                if (keepAliveTimeoutSeconds > 0) {
                     showCslStats(ftp);
                 }
             }

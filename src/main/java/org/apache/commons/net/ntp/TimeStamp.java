@@ -45,12 +45,12 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
     private static final long serialVersionUID = 8139806907588338737L;
 
     /**
-     * baseline NTP time if bit-0=0 is 7-Feb-2036 @ 06:28:16 UTC
+     * Baseline NTP time if bit-0=0 is 7-Feb-2036 @ 06:28:16 UTC
      */
     protected static final long msb0baseTime = 2085978496000L;
 
     /**
-     *  baseline NTP time if bit-0=1 is 1-Jan-1900 @ 01:00:00 UTC
+     * Baseline NTP time if bit-0=1 is 1-Jan-1900 @ 01:00:00 UTC
      */
     protected static final long msb1baseTime = -2208988800000L;
 
@@ -115,7 +115,7 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
      */
     public TimeStamp(final Date d)
     {
-        ntpTime = (d == null) ? 0 : toNtpTime(d.getTime());
+        ntpTime = d == null ? 0 : toNtpTime(d.getTime());
     }
 
     /**
@@ -149,9 +149,10 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
     }
 
     /**
-     * Convert NTP timestamp to Java standard time.
+     * Converts NTP timestamp to Java standard time.
      *
-     * @return NTP Timestamp in Java time
+     * @return the number of milliseconds since January 1, 1970, 00:00:00 GMT
+     * represented by this NTP timestamp value.
      */
     public long getTime()
     {
@@ -159,18 +160,17 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
     }
 
     /**
-     * Convert NTP timestamp to Java Date object.
+     * Converts NTP timestamp to Java Date object.
      *
      * @return NTP Timestamp in Java Date
      */
     public Date getDate()
     {
-        final long time = getTime(ntpTime);
-        return new Date(time);
+        return new Date(getTime(ntpTime));
     }
 
     /**
-     * Convert 64-bit NTP timestamp to Java standard time.
+     * Converts 64-bit NTP timestamp to Java standard time.
      *
      * Note that java time (milliseconds) by definition has less precision
      * then NTP time (picoseconds) so converting NTP timestamp to java time and back
@@ -215,12 +215,12 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
      * to Ntptime loses precision. For example, Tue, Dec 17 2002 09:07:24.810
      * is represented by a single Java-based time value of f22cd1fc8a, but its
      * NTP equivalent are all values from c1a9ae1c.cf5c28f5 to c1a9ae1c.cf9db22c.
-     * @param   date   the milliseconds since January 1, 1970, 00:00:00 GMT.
+     * @param   dateMillis   the milliseconds since January 1, 1970, 00:00:00 GMT.
      * @return NTP timestamp object at the specified date.
      */
-    public static TimeStamp getNtpTime(final long date)
+    public static TimeStamp getNtpTime(final long dateMillis)
     {
-        return new TimeStamp(toNtpTime(date));
+        return new TimeStamp(toNtpTime(dateMillis));
     }
 
     /**
@@ -278,29 +278,28 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
     /**
      * Converts Java time to 64-bit NTP time representation.
      *
-     * @param t Java time
+     * @param millis Java time
      * @return NTP timestamp representation of Java time value.
      */
-    protected static long toNtpTime(final long t)
+    protected static long toNtpTime(final long millis)
     {
-        final boolean useBase1 = t < msb0baseTime;    // time < Feb-2036
-        final long baseTime;
+        final boolean useBase1 = millis < msb0baseTime;    // time < Feb-2036
+        final long baseTimeMillis;
         if (useBase1) {
-            baseTime = t - msb1baseTime; // dates <= Feb-2036
+            baseTimeMillis = millis - msb1baseTime; // dates <= Feb-2036
         } else {
             // if base0 needed for dates >= Feb-2036
-            baseTime = t - msb0baseTime;
+            baseTimeMillis = millis - msb0baseTime;
         }
 
-        long seconds = baseTime / 1000;
-        final long fraction = ((baseTime % 1000) * 0x100000000L) / 1000;
+        long seconds = baseTimeMillis / 1000;
+        final long fraction = ((baseTimeMillis % 1000) * 0x100000000L) / 1000;
 
         if (useBase1) {
             seconds |= 0x80000000L; // set high-order bit if msb1baseTime 1900 used
         }
 
-        final long time = seconds << 32 | fraction;
-        return time;
+        return seconds << 32 | fraction;
     }
 
     /**

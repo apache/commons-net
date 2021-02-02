@@ -25,19 +25,18 @@ import java.util.List;
 /**
  * Wrapper class to network time packet messages (NTP, etc) that computes
  * related timing info and stats.
- *
  */
 public class TimeInfo {
 
     private final NtpV3Packet message;
     private List<String> comments;
-    private Long delay;
-    private Long offset;
+    private Long delayMillis;
+    private Long offsetMillis;
 
     /**
      * time at which time message packet was received by local machine
      */
-    private final long returnTime;
+    private final long returnTimeMillis;
 
     /**
      * flag indicating that the TimeInfo details was processed and delay/offset were computed
@@ -48,24 +47,24 @@ public class TimeInfo {
      * Create TimeInfo object with raw packet message and destination time received.
      *
      * @param message NTP message packet
-     * @param returnTime  destination receive time
+     * @param returnTimeMillis  destination receive time
      * @throws IllegalArgumentException if message is null
      */
-    public TimeInfo(final NtpV3Packet message, final long returnTime) {
-        this(message, returnTime, null, true);
+    public TimeInfo(final NtpV3Packet message, final long returnTimeMillis) {
+        this(message, returnTimeMillis, null, true);
     }
 
     /**
      * Create TimeInfo object with raw packet message and destination time received.
      *
      * @param message NTP message packet
-     * @param returnTime  destination receive time
+     * @param returnTimeMillis  destination receive time
      * @param comments List of errors/warnings identified during processing
      * @throws IllegalArgumentException if message is null
      */
-    public TimeInfo(final NtpV3Packet message, final long returnTime, final List<String> comments)
+    public TimeInfo(final NtpV3Packet message, final long returnTimeMillis, final List<String> comments)
     {
-            this(message, returnTime, comments, true);
+            this(message, returnTimeMillis, comments, true);
     }
 
     /**
@@ -75,13 +74,13 @@ public class TimeInfo {
      * intialization when sub-millisecond timing is needed.
      *
      * @param msgPacket NTP message packet
-     * @param returnTime  destination receive time
+     * @param returnTimeMillis  destination receive time
      * @param doComputeDetails  flag to pre-compute delay/offset values
      * @throws IllegalArgumentException if message is null
      */
-    public TimeInfo(final NtpV3Packet msgPacket, final long returnTime, final boolean doComputeDetails)
+    public TimeInfo(final NtpV3Packet msgPacket, final long returnTimeMillis, final boolean doComputeDetails)
     {
-            this(msgPacket, returnTime, null, doComputeDetails);
+            this(msgPacket, returnTimeMillis, null, doComputeDetails);
     }
 
     /**
@@ -91,18 +90,18 @@ public class TimeInfo {
      * intialization when sub-millisecond timing is needed.
      *
      * @param message NTP message packet
-     * @param returnTime  destination receive time
+     * @param returnTimeMillis  destination receive time
      * @param comments  list of comments used to store errors/warnings with message
      * @param doComputeDetails  flag to pre-compute delay/offset values
      * @throws IllegalArgumentException if message is null
      */
-    public TimeInfo(final NtpV3Packet message, final long returnTime, final List<String> comments,
+    public TimeInfo(final NtpV3Packet message, final long returnTimeMillis, final List<String> comments,
                    final boolean doComputeDetails)
     {
         if (message == null) {
             throw new IllegalArgumentException("message cannot be null");
         }
-        this.returnTime = returnTime;
+        this.returnTimeMillis = returnTimeMillis;
         this.message = message;
         this.comments = comments;
         if (doComputeDetails) {
@@ -140,15 +139,15 @@ public class TimeInfo {
         }
 
         final TimeStamp origNtpTime = message.getOriginateTimeStamp();
-        final long origTime = origNtpTime.getTime();
+        final long origTimeMillis = origNtpTime.getTime();
 
         // Receive Time is time request received by server (t2)
         final TimeStamp rcvNtpTime = message.getReceiveTimeStamp();
-        final long rcvTime = rcvNtpTime.getTime();
+        final long rcvTimeMillis = rcvNtpTime.getTime();
 
         // Transmit time is time reply sent by server (t3)
         final TimeStamp xmitNtpTime = message.getTransmitTimeStamp();
-        final long xmitTime = xmitNtpTime.getTime();
+        final long xmitTimeMillis = xmitNtpTime.getTime();
 
         /*
          * Round-trip network delay and local clock offset (or time drift) is calculated
@@ -172,7 +171,7 @@ public class TimeInfo {
             // might be via a broadcast NTP packet...
             if (xmitNtpTime.ntpValue() != 0)
             {
-                offset = Long.valueOf(xmitTime - returnTime);
+                offsetMillis = Long.valueOf(xmitTimeMillis - returnTimeMillis);
                 comments.add("Error: zero orig time -- cannot compute delay");
             } else {
                 comments.add("Error: zero orig time -- cannot compute delay/offset");
@@ -180,12 +179,12 @@ public class TimeInfo {
         } else if (rcvNtpTime.ntpValue() == 0 || xmitNtpTime.ntpValue() == 0) {
             comments.add("Warning: zero rcvNtpTime or xmitNtpTime");
             // assert destTime >= origTime since network delay cannot be negative
-            if (origTime > returnTime) {
+            if (origTimeMillis > returnTimeMillis) {
                 comments.add("Error: OrigTime > DestRcvTime");
             } else {
                 // without receive or xmit time cannot figure out processing time
                 // so delay is simply the network travel time
-                delay = Long.valueOf(returnTime - origTime);
+                delayMillis = Long.valueOf(returnTimeMillis - origTimeMillis);
             }
             // TODO: is offset still valid if rcvNtpTime=0 || xmitNtpTime=0 ???
             // Could always hash origNtpTime (sendTime) but if host doesn't set it
@@ -194,52 +193,52 @@ public class TimeInfo {
             if (rcvNtpTime.ntpValue() != 0)
             {
                 // xmitTime is 0 just use rcv time
-                offset = Long.valueOf(rcvTime - origTime);
+                offsetMillis = Long.valueOf(rcvTimeMillis - origTimeMillis);
             } else if (xmitNtpTime.ntpValue() != 0)
             {
                 // rcvTime is 0 just use xmitTime time
-                offset = Long.valueOf(xmitTime - returnTime);
+                offsetMillis = Long.valueOf(xmitTimeMillis - returnTimeMillis);
             }
         } else
         {
-             long delayValue = returnTime - origTime;
+             long delayValueMillis = returnTimeMillis - origTimeMillis;
              // assert xmitTime >= rcvTime: difference typically < 1ms
-             if (xmitTime < rcvTime)
+             if (xmitTimeMillis < rcvTimeMillis)
              {
                  // server cannot send out a packet before receiving it...
                  comments.add("Error: xmitTime < rcvTime"); // time-travel not allowed
              } else
              {
                  // subtract processing time from round-trip network delay
-                 final long delta = xmitTime - rcvTime;
+                 final long deltaMillis = xmitTimeMillis - rcvTimeMillis;
                  // in normal cases the processing delta is less than
                  // the total roundtrip network travel time.
-                 if (delta <= delayValue)
+                 if (deltaMillis <= delayValueMillis)
                  {
-                     delayValue -= delta; // delay = (t4 - t1) - (t3 - t2)
+                     delayValueMillis -= deltaMillis; // delay = (t4 - t1) - (t3 - t2)
                  } else
                  {
                      // if delta - delayValue == 1 ms then it's a round-off error
                      // e.g. delay=3ms, processing=4ms
-                     if (delta - delayValue == 1)
+                     if (deltaMillis - delayValueMillis == 1)
                      {
                          // delayValue == 0 -> local clock saw no tick change but destination clock did
-                         if (delayValue != 0)
+                         if (delayValueMillis != 0)
                          {
                              comments.add("Info: processing time > total network time by 1 ms -> assume zero delay");
-                             delayValue = 0;
+                             delayValueMillis = 0;
                          }
                      } else {
                         comments.add("Warning: processing time > total network time");
                     }
                  }
              }
-             delay = Long.valueOf(delayValue);
-            if (origTime > returnTime) {
+             delayMillis = Long.valueOf(delayValueMillis);
+            if (origTimeMillis > returnTimeMillis) {
                 comments.add("Error: OrigTime > DestRcvTime");
             }
 
-            offset = Long.valueOf(((rcvTime - origTime) + (xmitTime - returnTime)) / 2);
+            offsetMillis = Long.valueOf(((rcvTimeMillis - origTimeMillis) + (xmitTimeMillis - returnTimeMillis)) / 2);
         }
     }
 
@@ -260,7 +259,7 @@ public class TimeInfo {
      */
     public Long getDelay()
     {
-        return delay;
+        return delayMillis;
     }
 
     /**
@@ -271,7 +270,7 @@ public class TimeInfo {
      */
     public Long getOffset()
     {
-        return offset;
+        return offsetMillis;
     }
 
     /**
@@ -301,7 +300,7 @@ public class TimeInfo {
      */
     public long getReturnTime()
     {
-        return returnTime;
+        return returnTimeMillis;
     }
 
     /**
@@ -325,7 +324,7 @@ public class TimeInfo {
             return false;
         }
         final TimeInfo other = (TimeInfo) obj;
-        return returnTime == other.returnTime && message.equals(other.message);
+        return returnTimeMillis == other.returnTimeMillis && message.equals(other.message);
     }
 
     /**
@@ -339,7 +338,7 @@ public class TimeInfo {
     public int hashCode()
     {
         final int prime = 31;
-        int result = (int)returnTime;
+        int result = (int)returnTimeMillis;
         result = prime * result + message.hashCode();
         return result;
     }

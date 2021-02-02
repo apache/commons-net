@@ -358,7 +358,7 @@ implements Configurable
     public static final int PASSIVE_REMOTE_DATA_CONNECTION_MODE = 3;
 
     private int dataConnectionMode;
-    private int dataTimeout;
+    private int dataTimeoutMillis;
     private int passivePort;
     private String passiveHost;
     private final Random random;
@@ -402,11 +402,11 @@ implements Configurable
     private CopyStreamListener copyStreamListener;
 
     // How long to wait before sending another control keep-alive message
-    private long controlKeepAliveTimeout;
+    private long controlKeepAliveTimeoutMillis;
 
-    // How long to wait (ms) for keepalive message replies before continuing
+    // How long to wait (millis) for keepalive message replies before continuing
     // Most FTP servers don't seem to support concurrent control and data connection usage
-    private int controlKeepAliveReplyTimeout = 1000;
+    private int controlKeepAliveReplyTimeoutMillis = 1000;
 
     // Debug counts for NOOP acks
     private int[] cslDebug;
@@ -481,7 +481,7 @@ implements Configurable
     public FTPClient()
     {
         initDefaults();
-        dataTimeout = -1;
+        dataTimeoutMillis = -1;
         remoteVerificationEnabled = true;
         parserFactory = new DefaultFTPFileEntryParserFactory();
         configuration      = null;
@@ -675,8 +675,8 @@ implements Configurable
         }
 
         CSL csl = null;
-        if (controlKeepAliveTimeout > 0) {
-            csl = new CSL(this, controlKeepAliveTimeout, controlKeepAliveReplyTimeout);
+        if (controlKeepAliveTimeoutMillis > 0) {
+            csl = new CSL(this, controlKeepAliveTimeoutMillis, controlKeepAliveReplyTimeoutMillis);
         }
 
         // Treat everything else as binary for now
@@ -858,14 +858,14 @@ implements Configurable
                 // the data connection.  It may be desirable to let this be a
                 // separately configurable value.  In any case, we really want
                 // to allow preventing the accept from blocking indefinitely.
-                if (dataTimeout >= 0) {
-                    server.setSoTimeout(dataTimeout);
+                if (dataTimeoutMillis >= 0) {
+                    server.setSoTimeout(dataTimeoutMillis);
                 }
                 socket = server.accept();
 
                 // Ensure the timeout is set before any commands are issued on the new socket
-                if (dataTimeout >= 0) {
-                    socket.setSoTimeout(dataTimeout);
+                if (dataTimeoutMillis >= 0) {
+                    socket.setSoTimeout(dataTimeoutMillis);
                 }
                 if (receiveDataSocketBufferSize > 0) {
                     socket.setReceiveBufferSize(receiveDataSocketBufferSize);
@@ -917,8 +917,8 @@ implements Configurable
             // the data connection.  It may be desirable to let this be a
             // separately configurable value.  In any case, we really want
             // to allow preventing the accept from blocking indefinitely.
-            if (dataTimeout >= 0) {
-                socket.setSoTimeout(dataTimeout);
+            if (dataTimeoutMillis >= 0) {
+                socket.setSoTimeout(dataTimeoutMillis);
             }
 
             socket.connect(new InetSocketAddress(passiveHost, passivePort), connectTimeout);
@@ -998,12 +998,12 @@ implements Configurable
      * <p>
      * <b>Note:</b> the timeout will also be applied when calling accept()
      * whilst establishing an active local data connection.
-     * @param  timeout The default timeout in milliseconds that is used when
+     * @param  timeoutMillis The default timeout in milliseconds that is used when
      *        opening a data connection socket. The value 0 means an infinite timeout.
      */
-    public void setDataTimeout(final int timeout)
+    public void setDataTimeout(final int timeoutMillis)
     {
-        dataTimeout = timeout;
+        dataTimeoutMillis = timeoutMillis;
     }
 
     /**
@@ -1912,8 +1912,8 @@ implements Configurable
                     input = getBufferedInputStream(socket.getInputStream());
                 }
 
-                if (controlKeepAliveTimeout > 0) {
-                    csl = new CSL(this, controlKeepAliveTimeout, controlKeepAliveReplyTimeout);
+                if (controlKeepAliveTimeoutMillis > 0) {
+                    csl = new CSL(this, controlKeepAliveTimeoutMillis, controlKeepAliveReplyTimeoutMillis);
                 }
 
                 // Treat everything else as binary for now
@@ -3803,16 +3803,16 @@ implements Configurable
      * <p>
      * See the class Javadoc section "Control channel keep-alive feature:"
      *
-     * @param controlIdle the wait (in seconds) between keepalive messages. Zero (or less) disables.
+     * @param controlIdleSeconds the wait (in seconds) between keepalive messages. Zero (or less) disables.
      * @since 3.0
      * @see #setControlKeepAliveReplyTimeout(int)
      */
-    public void setControlKeepAliveTimeout(final long controlIdle){
-        controlKeepAliveTimeout = controlIdle * 1000;
+    public void setControlKeepAliveTimeout(final long controlIdleSeconds){
+        controlKeepAliveTimeoutMillis = controlIdleSeconds * 1000;
     }
 
     /**
-     * Get the time to wait between sending control connection keepalive messages
+     * Gets the time to wait between sending control connection keepalive messages
      * when processing file upload or download.
      * <p>
      * See the class Javadoc section "Control channel keep-alive feature:"
@@ -3821,7 +3821,7 @@ implements Configurable
      * @since 3.0
      */
     public long getControlKeepAliveTimeout() {
-        return controlKeepAliveTimeout / 1000;
+        return controlKeepAliveTimeoutMillis / 1000;
     }
 
     /**
@@ -3843,28 +3843,29 @@ implements Configurable
     public int[] getCslDebug() {
         return cslDebug;
     }
+
     /**
-     * Set how long to wait for control keep-alive message replies.
+     * Sets how long to wait for control keep-alive message replies.
      *
-     * @param timeout number of milliseconds to wait (defaults to 1000)
+     * @param timeoutMillis number of milliseconds to wait (defaults to 1000)
      * @since 3.0
      * @see #setControlKeepAliveTimeout(long)
      */
-    public void setControlKeepAliveReplyTimeout(final int timeout) {
-        controlKeepAliveReplyTimeout = timeout;
+    public void setControlKeepAliveReplyTimeout(final int timeoutMillis) {
+        controlKeepAliveReplyTimeoutMillis = timeoutMillis;
     }
 
     /**
-     * Get how long to wait for control keep-alive message replies.
-     * @return wait time in msec
+     * Gets how long to wait for control keep-alive message replies.
+     * @return wait time in milliseconds.
      * @since 3.0
      */
     public int getControlKeepAliveReplyTimeout() {
-        return controlKeepAliveReplyTimeout;
+        return controlKeepAliveReplyTimeoutMillis;
     }
 
     /**
-     * Enable or disable passive mode NAT workaround.
+     * Enables or disables passive mode NAT workaround.
      * If enabled, a site-local PASV mode reply address will be replaced with the
      * remote host address to which the PASV mode request was sent
      * (unless that is also a site local address).
@@ -3954,19 +3955,19 @@ implements Configurable
     private static class CSL implements CopyStreamListener {
 
         private final FTPClient parent;
-        private final long idle;
-        private final int currentSoTimeout;
+        private final long idleMillis;
+        private final int currentSoTimeoutMillis;
 
-        private long time = System.currentTimeMillis();
+        private long timeMillis = System.currentTimeMillis();
         private int notAcked;
         private int acksAcked;
         private int ioErrors;
 
-        CSL(final FTPClient parent, final long idleTime, final int maxWait) throws SocketException {
-            this.idle = idleTime;
+        CSL(final FTPClient parent, final long idleTimeMillis, final int maxWaitMillis) throws SocketException {
+            this.idleMillis = idleTimeMillis;
             this.parent = parent;
-            this.currentSoTimeout = parent.getSoTimeout();
-            parent.setSoTimeout(maxWait);
+            this.currentSoTimeoutMillis = parent.getSoTimeout();
+            parent.setSoTimeout(maxWaitMillis);
         }
 
         @Override
@@ -3977,8 +3978,8 @@ implements Configurable
         @Override
         public void bytesTransferred(final long totalBytesTransferred,
                 final int bytesTransferred, final long streamSize) {
-            final long now = System.currentTimeMillis();
-            if (now - time > idle) {
+            final long nowMillis = System.currentTimeMillis();
+            if (nowMillis - timeMillis > idleMillis) {
                 try {
                     parent.__noop();
                     acksAcked++;
@@ -3988,7 +3989,7 @@ implements Configurable
                     ioErrors++;
                     // Ignored
                 }
-                time = now;
+                timeMillis = nowMillis;
             }
         }
 
@@ -4002,7 +4003,7 @@ implements Configurable
             } catch (final SocketTimeoutException e) { // NET-584
                 // ignored
             } finally {
-                parent.setSoTimeout(currentSoTimeout);
+                parent.setSoTimeout(currentSoTimeoutMillis);
             }
             return new int [] {acksAcked, remain, notAcked, ioErrors}; // debug counts
         }

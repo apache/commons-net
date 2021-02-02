@@ -47,14 +47,14 @@ public class TestTimeInfo {
     public void testComputeDetails() {
         // if (origTime > returnTime) // assert destTime >= origTime
         final NtpV3Packet packet = new NtpV3Impl();
-        final long returnTime = System.currentTimeMillis();
+        final long returnTimeMillis = System.currentTimeMillis();
 
         // example
         // returntime=1370571658178
         // origTime=  1370571659178
 
         // originate time as defined in RFC-1305 (t1)
-        packet.setOriginateTimeStamp(TimeStamp.getNtpTime(returnTime + 1000));
+        packet.setOriginateTimeStamp(TimeStamp.getNtpTime(returnTimeMillis + 1000));
         // Receive Time is time request received by server (t2)
         packet.setReceiveTimeStamp(packet.getOriginateTimeStamp());
         // Transmit time is time reply sent by server (t3)
@@ -65,11 +65,11 @@ public class TestTimeInfo {
         //System.out.println("returntime=" + returnTime);
         //System.out.println("origTime=  " + origTime);
 
-        final TimeInfo info = new TimeInfo(packet, returnTime);
+        final TimeInfo info = new TimeInfo(packet, returnTimeMillis);
         info.computeDetails();
 
         Assert.assertSame(packet, info.getMessage());
-        Assert.assertEquals(returnTime, info.getReturnTime());
+        Assert.assertEquals(returnTimeMillis, info.getReturnTime());
         Assert.assertEquals(Long.valueOf(500), info.getOffset());
         Assert.assertEquals(Long.valueOf(-1000), info.getDelay());
 
