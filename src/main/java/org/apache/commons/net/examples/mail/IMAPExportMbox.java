@@ -209,7 +209,8 @@ public final class IMAPExportMbox
                 throw new IOException("mailbox file: " + mboxFile + " already exists and is non-empty!");
             }
             System.out.println("Creating file " + mboxFile);
-            chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mboxFile)), eol, printHash, printMarker, checkSequence);
+            chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mboxFile)), eol, printHash, printMarker,
+                checkSequence);
         }
 
         final String path = uri.getPath();
