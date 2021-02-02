@@ -406,7 +406,7 @@ implements Configurable
 
     // How long to wait (ms) for keepalive message replies before continuing
     // Most FTP servers don't seem to support concurrent control and data connection usage
-    private int controlKeepAliveReplyTimeout=1000;
+    private int controlKeepAliveReplyTimeout = 1000;
 
     // Debug counts for NOOP acks
     private int[] cslDebug;
@@ -3803,7 +3803,7 @@ implements Configurable
      * <p>
      * See the class Javadoc section "Control channel keep-alive feature:"
      *
-     * @param controlIdle the wait (in secs) between keepalive messages. Zero (or less) disables.
+     * @param controlIdle the wait (in seconds) between keepalive messages. Zero (or less) disables.
      * @since 3.0
      * @see #setControlKeepAliveReplyTimeout(int)
      */
