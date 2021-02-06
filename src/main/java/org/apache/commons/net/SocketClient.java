@@ -100,6 +100,7 @@ public abstract class SocketClient
 
     /** The socket's connect timeout (0 = infinite timeout) */
     private static final int DEFAULT_CONNECT_TIMEOUT = 60000;
+
     protected int connectTimeout = DEFAULT_CONNECT_TIMEOUT;
 
     /** Hint for SO_RCVBUF size */
@@ -160,11 +161,15 @@ public abstract class SocketClient
         _output_ = _socket_.getOutputStream();
     }
 
-
+    /**
+     * Applies socket attributes.
+     *
+     * @throws SocketException if there is an error in the underlying protocol, such as a TCP error.
+     * @since 3.8.0
+     */
     protected void applySocketAttributes() throws SocketException {
         _socket_.setSoTimeout(_timeout_);
     }
-
 
     /**
      * Opens a Socket connected to a remote host at the specified port and

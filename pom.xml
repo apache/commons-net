@@ -29,7 +29,7 @@
 
     <groupId>commons-net</groupId>
     <artifactId>commons-net</artifactId>
-    <version>3.7.3-SNAPSHOT</version>
+    <version>3.8.0-SNAPSHOT</version>
     <name>Apache Commons Net</name>
     <!-- N.B. the description content is deliberately not indented ! to improve the layout of the Release Notes generated 
         by mvn changes:announcement-generate -->
@@ -54,7 +54,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-net</commons.scmPubUrl>
 
         <!-- Current release -->
-        <commons.release.version>3.7.3</commons.release.version>
+        <commons.release.version>3.8.0</commons.release.version>
         <commons.rc.version>RC1</commons.rc.version>
         <commons.release.desc>(Requires Java ${maven.compiler.target} or
             later)</commons.release.desc>

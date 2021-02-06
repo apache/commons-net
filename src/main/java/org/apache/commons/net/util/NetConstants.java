@@ -21,7 +21,7 @@ import java.security.cert.X509Certificate;
 /**
  * Constants provided as public only for our own implementation, you can consider this private for now.
  *
- * @since 3.7.3
+ * @since 3.8.0
  */
 public class NetConstants {
 

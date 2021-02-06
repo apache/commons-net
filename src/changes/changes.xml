@@ -63,7 +63,7 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
     <body>
-        <release version="3.7.3" date="2020-MM-DD" description="Maintenance and bug fix release.">
+        <release version="3.8.0" date="2020-MM-DD" description="Maintenance and bug fix release (Java 7).">
             <action type="update" dev="ggregory" due-to="Dependabot">
             Bump actions/checkout from v2.3.3 to v2.3.4 #69.
             </action>
@@ -76,8 +76,14 @@ The <action> type attribute can be add,update,fix,remove.
            <action type="update" dev="ggregory" due-to="Arturo Bernal, Gary Gregory">
             Minor Improvements #71, #72.
             </action>
+           <action type="update" dev="ggregory" due-to="Arturo Bernal, Gary Gregory">
+            Add and use NetConstants.
+            </action>
+           <action type="update" dev="ggregory" due-to="Gary Gregory">
+            Add and use SocketClient.applySocketAttributes().
+            </action>
         </release>
-        <release version="3.7.2" date="2020-10-14" description="Maintenance and bug fix release.">
+        <release version="3.7.2" date="2020-10-14" description="Maintenance and bug fix release (Java 7).">
             <action issue="NET-689" type="fix" dev="ggregory" due-to="Charlie, Gary Gregory">
             Host name is not set on the SSLSocket causing isEndpointCheckingEnabled to fail.
             </action>
@@ -98,7 +104,7 @@ The <action> type attribute can be add,update,fix,remove.
             Bump junit from 4.13 to 4.13.1 #67.
             </action>
         </release>
-        <release version="3.7.1" date="2020-09-30" description="Maintenance and bug fix release.">
+        <release version="3.7.1" date="2020-09-30" description="Maintenance and bug fix release (Java 7).">
             <action issue="NET-687" type="fix" dev="ggregory" due-to="Gary Gregory, Mikael, j-verse">
             [FTPS] javax.net.ssl.SSLException: Unsupported or unrecognized SSL message, #59.
             </action>
@@ -108,7 +114,7 @@ The <action> type attribute can be add,update,fix,remove.
             </action>
         </release>
         <release version="3.7" date="2020-08-05" description="
-This is mainly a bug-fix release. See further details below.
+This is mainly a bug-fix release (Java 7). See further details below.
 
  This release requires a minimum of Java 7.
 
@@ -211,13 +217,13 @@ This is mainly a bug-fix release. See further details below.
             </action>
         </release>
         <release version="3.6" date="2017-02-15" description="
-This is mainly a bug-fix release. See further details below.
+This is mainly a bug-fix release (Java 6). See further details below.
 
 
  This release is binary compatible with previous releases.
  However it is not source compatible with releases before 3.4, as some methods were added to the interface NtpV3Packet in 3.4
 
-  The code now requires a minimum of Java 1.6.
+  The code now requires a minimum of Java 6.
 
   Changes to functionality:
  * The FTP client now performs stricter checks on non-multiline command replies.
@@ -292,13 +298,13 @@ without checking it if is a space.
             </action>
         </release>
         <release version="3.5" date="2016-05-05" description="
-This is mainly a bug-fix release. See further details below.
+This is mainly a bug-fix release (Java 6). See further details below.
 
 
  This release is binary compatible with previous releases.
  However it is not source compatible with releases before 3.4, as some methods were added to the interface NtpV3Packet in 3.4
 
-  The code now requires a minimum of Java 1.6.
+  The code now requires a minimum of Java 6.
 
   Notable additions:
   The IMAP examples can now get password from console, stdin or an environment variable.
