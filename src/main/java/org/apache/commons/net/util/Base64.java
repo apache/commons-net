@@ -848,8 +848,6 @@ public class Base64 {
         return new Base64().decode(base64Data);
     }
 
-
-
     /**
      * Checks if a byte value is whitespace or not.
      *
@@ -882,9 +880,7 @@ public class Base64 {
     }
 
     private static String newStringUtf8(final byte[] encode) {
-        String str = null;
-        str = new String(encode, StandardCharsets.UTF_8);
-        return str;
+        return new String(encode, StandardCharsets.UTF_8);
     }
 
     /**
