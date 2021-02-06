@@ -18,7 +18,7 @@ package org.apache.commons.net.util;
 
 /**
  * <p>
- * Constants provided as public only for our own implementation, you can consider this private for now..
+ * Constants provided as public only for our own implementation, you can consider this private for now.
  * </p>
  *
  * @since 3.7.3
