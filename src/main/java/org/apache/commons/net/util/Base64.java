@@ -826,7 +826,7 @@ public class Base64 {
     }
 
     /**
-     * Decodes a Base64 String into octets
+     * Decodes a Base64 String into octets.
      *
      * @param base64String
      *            String containing Base64 data
@@ -838,7 +838,7 @@ public class Base64 {
     }
 
     /**
-     * Decodes Base64 data into octets
+     * Decodes Base64 data into octets.
      *
      * @param base64Data
      *            Byte array containing Base64 data
