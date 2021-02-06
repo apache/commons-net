@@ -26,18 +26,18 @@
 
   <body>
     <menu name="Documentation">
-      <item name="Overview"                    href="index.html"/>
-      <item name="Migration How-to"            href="migration.html"/>
-      <item name="FAQ"                         href="faq.html"/>
-      <item name="Download"                    href="/download_net.cgi"/>
-      <item name="Javadoc"                     href="/apidocs/index.html"/>
-      <item name="Javadoc Archive"             href="https://javadoc.io/doc/commons-net/commons-net/latest/index.html"/>
+      <item name="Overview"               href="index.html"/>
+      <item name="Migration How-to"       href="migration.html"/>
+      <item name="FAQ"                    href="faq.html"/>
+      <item name="Download"               href="/download_net.cgi"/>
+      <item name="Javadoc"                href="/apidocs/index.html"/>
+      <item name="Javadoc Archive"        href="https://javadoc.io/doc/commons-net/commons-net/latest/index.html"/>
     </menu>
     <menu name="Development">
-      <item name="Coding Specifications"       href="code-standards.html"/>
-      <item name="Mailing lists"               href="mail-lists.html"/>
-      <item name="Issue Tracking"              href="issue-tracking.html"/>
-      <item name="SVN repository"              href="scm.html"/>
+      <item name="Coding Specifications"  href="code-standards.html"/>
+      <item name="Mailing lists"          href="mail-lists.html"/>
+      <item name="Issue Tracking"         href="issue-tracking.html"/>
+      <item name="Repository"             href="scm.html"/>
     </menu>
 
   </body>
