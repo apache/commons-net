@@ -17,9 +17,7 @@
 package org.apache.commons.net.util;
 
 /**
- * <p>
  * Constants provided as public only for our own implementation, you can consider this private for now.
- * </p>
  *
  * @since 3.7.3
  */
@@ -29,6 +27,7 @@ public class NetConstants {
      * An empty immutable {@code String} array.
      */
     public static final String[] EMPTY_STRING_ARRAY = new String[0];
+
     /**
      * Prevents instantiation.
      */
