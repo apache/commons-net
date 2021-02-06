@@ -18,9 +18,9 @@
 package org.apache.commons.net.examples.telnet;
 
 import java.io.IOException;
-import org.apache.commons.net.telnet.TelnetClient;
 
 import org.apache.commons.net.examples.util.IOUtil;
+import org.apache.commons.net.telnet.TelnetClient;
 
 /**
  * This is an example of a trivial use of the TelnetClient class.

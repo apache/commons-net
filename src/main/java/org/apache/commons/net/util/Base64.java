@@ -68,8 +68,6 @@ public class Base64 {
      */
     private static final byte[] CHUNK_SEPARATOR = {'\r', '\n'};
 
-    private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
-
     /**
      * This array is a lookup table that translates 6-bit positive integer index values into their "Base64 Alphabet"
      * equivalents as specified in Table 1 of RFC 2045.
@@ -312,7 +310,7 @@ public class Base64 {
     public Base64(int lineLength, byte[] lineSeparator, final boolean urlSafe) {
         if (lineSeparator == null) {
             lineLength = 0;  // disable chunk-separating
-            lineSeparator = EMPTY_BYTE_ARRAY;  // this just gets ignored
+            lineSeparator = NetConstants.EMPTY_BTYE_ARRAY;  // this just gets ignored
         }
         this.lineLength = lineLength > 0 ? (lineLength / 4) * 4 : 0;
         this.lineSeparator = new byte[lineSeparator.length];
@@ -817,7 +815,7 @@ public class Base64 {
         }
 
         final long len = getEncodeLength(binaryData, isChunked ? CHUNK_SIZE : 0,
-                isChunked ? CHUNK_SEPARATOR : EMPTY_BYTE_ARRAY);
+                isChunked ? CHUNK_SEPARATOR : NetConstants.EMPTY_BTYE_ARRAY);
         if (len > maxResultSize) {
             throw new IllegalArgumentException("Input array too big, the output array would be bigger (" + len
                     + ") than the specified maxium size of " + maxResultSize);

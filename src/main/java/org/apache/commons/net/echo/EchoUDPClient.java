@@ -22,6 +22,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 
 import org.apache.commons.net.discard.DiscardUDPClient;
+import org.apache.commons.net.util.NetConstants;
 
 /**
  * The EchoUDPClient class is a UDP implementation of a client for the
@@ -43,7 +44,7 @@ public final class EchoUDPClient extends DiscardUDPClient
     /** The default echo port.  It is set to 7 according to RFC 862. */
     public static final int DEFAULT_PORT = 7;
 
-    private final DatagramPacket receivePacket = new DatagramPacket(new byte[0], 0);
+    private final DatagramPacket receivePacket = new DatagramPacket(NetConstants.EMPTY_BTYE_ARRAY, 0);
 
     /**
      * Sends the specified data to the specified server at the default echo

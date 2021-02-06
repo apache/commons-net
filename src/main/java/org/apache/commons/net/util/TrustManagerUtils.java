@@ -32,8 +32,6 @@ import javax.net.ssl.X509TrustManager;
  */
 public final class TrustManagerUtils
 {
-    private static final X509Certificate[] EMPTY_X509CERTIFICATE_ARRAY = new X509Certificate[]{};
-
     private static class TrustManager implements X509TrustManager {
 
         private final boolean checkServerValidity;
@@ -68,7 +66,7 @@ public final class TrustManagerUtils
         @Override
         public X509Certificate[] getAcceptedIssuers()
         {
-            return EMPTY_X509CERTIFICATE_ARRAY;
+            return NetConstants.EMPTY_X509_CERTIFICATE_ARRAY;
         }
     }
 

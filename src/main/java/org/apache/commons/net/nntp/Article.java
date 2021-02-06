@@ -17,11 +17,11 @@
 
 package org.apache.commons.net.nntp;
 
-import org.apache.commons.net.util.NetConstants;
-
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import org.apache.commons.net.util.NetConstants;
 
 /**
  * This is a class that contains the basic state needed for message retrieval and threading.
@@ -63,7 +63,7 @@ public class Article implements Threadable {
      */
     public String[] getReferences() {
         if (references == null) {
-            return new String[0];
+            return NetConstants.EMPTY_STRING_ARRAY;
         }
         return references.toArray(NetConstants.EMPTY_STRING_ARRAY);
     }

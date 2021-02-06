@@ -18,6 +18,7 @@
 package org.apache.commons.net.examples.nntp;
 
 import java.io.IOException;
+
 import org.apache.commons.net.nntp.NNTPClient;
 import org.apache.commons.net.nntp.NewsgroupInfo;
 

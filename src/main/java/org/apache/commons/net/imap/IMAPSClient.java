@@ -18,8 +18,8 @@
 package org.apache.commons.net.imap;
 
 import java.io.BufferedWriter;
-import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import javax.net.ssl.HostnameVerifier;

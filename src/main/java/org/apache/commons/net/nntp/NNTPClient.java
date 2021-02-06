@@ -87,6 +87,8 @@ import org.apache.commons.net.util.NetConstants;
 public class NNTPClient extends NNTP
 {
 
+    private static final NewsgroupInfo[] EMPTY_NEWSGROUP_INFO_ARRAY = new NewsgroupInfo[0];
+
     /**
      * Parse the reply and store the id and number in the pointer.
      *
@@ -262,7 +264,7 @@ public class NNTPClient extends NNTP
         }
         final int size;
         if ((size = list.size()) < 1) {
-            return new NewsgroupInfo[0];
+            return EMPTY_NEWSGROUP_INFO_ARRAY;
         }
 
         final NewsgroupInfo[] info = new NewsgroupInfo[size];
@@ -1271,7 +1273,7 @@ public class NNTPClient extends NNTP
 
         final int size = list.size();
         if (size < 1) {
-            return new String[0];
+            return NetConstants.EMPTY_STRING_ARRAY;
         }
 
         final String[] result = new String[size];

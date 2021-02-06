@@ -16,6 +16,8 @@
  */
 package org.apache.commons.net.util;
 
+import java.security.cert.X509Certificate;
+
 /**
  * Constants provided as public only for our own implementation, you can consider this private for now.
  *
@@ -27,6 +29,16 @@ public class NetConstants {
      * An empty immutable {@code String} array.
      */
     public static final String[] EMPTY_STRING_ARRAY = new String[0];
+
+    /**
+     * An empty immutable {@code byte} array.
+     */
+    public static final byte[] EMPTY_BTYE_ARRAY = new byte[0];
+
+    /**
+     * An empty immutable {link X509Certificate} array.
+     */
+    public static final X509Certificate[] EMPTY_X509_CERTIFICATE_ARRAY = new X509Certificate[0];
 
     /**
      * Prevents instantiation.

@@ -22,6 +22,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 
 import org.apache.commons.net.DatagramSocketClient;
+import org.apache.commons.net.util.NetConstants;
 
 /**
  * The DiscardUDPClient class is a UDP implementation of a client for the
@@ -45,7 +46,7 @@ public class DiscardUDPClient extends DatagramSocketClient
 
     public DiscardUDPClient()
     {
-        sendPacket = new DatagramPacket(new byte[0], 0);
+        sendPacket = new DatagramPacket(NetConstants.EMPTY_BTYE_ARRAY, 0);
     }
 
 

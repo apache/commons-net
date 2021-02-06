@@ -35,8 +35,8 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ProtocolCommandEvent;
-import org.apache.commons.net.imap.IMAP.IMAPChunkListener;
 import org.apache.commons.net.imap.IMAP;
+import org.apache.commons.net.imap.IMAP.IMAPChunkListener;
 import org.apache.commons.net.imap.IMAPClient;
 import org.apache.commons.net.imap.IMAPReply;
 

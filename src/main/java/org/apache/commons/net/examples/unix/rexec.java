@@ -18,8 +18,8 @@
 package org.apache.commons.net.examples.unix;
 
 import java.io.IOException;
-import org.apache.commons.net.bsd.RExecClient;
 
+import org.apache.commons.net.bsd.RExecClient;
 import org.apache.commons.net.examples.util.IOUtil;
 
 /**
