@@ -733,7 +733,7 @@ public class FTP extends SocketClient
     }
 
     /**
-     * Returns the noth line of text from the last FTP server response as a string. The end of line markers of each are
+     * Returns the nth line of text from the last FTP server response as a string. The end of line markers of each are
      * stripped from the line.
      *
      * @param index The index of the line to return, 0-based.
