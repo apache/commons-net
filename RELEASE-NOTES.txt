@@ -1,3 +1,40 @@
+              Apache Commons Net 3.8.0
+                  RELEASE NOTES
+
+The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.8.0.
+
+Apache Commons Net library contains a collection of network utilities and protocol implementations.
+Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
+
+
+Maintenance and bug fix release (Java 7).
+
+For complete information on Apache Commons Net, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Apache Commons Net website:
+
+https://commons.apache.org/proper/commons-net/
+
+Download page: https://commons.apache.org/proper/commons-net/download_net.cgi
+
+Changes in this version include:
+===============================
+
+Changes:
+o NET-685:  Update SocketClient default connect timeout from ? to 60 seconds #51. Thanks to Simo385.
+o NET-695:  Apply SocketClient timeout after connection but before SSL negotiation. Thanks to Gary Gregory, Possibly Cott.
+o           Add and use NetConstants. Thanks to Arturo Bernal, Gary Gregory.
+o           Add and use SocketClient.applySocketAttributes(). Thanks to Gary Gregory.
+o           Minor Improvements #71, #72. Thanks to Arturo Bernal, Gary Gregory.
+o           Bump actions/checkout from v2.3.3 to v2.3.4 #69. Thanks to Dependabot.
+
+
+Historical list of changes: https://commons.apache.org/proper/commons-net/changes-report.html
+
+Enjoy!
+-Apache Commons Net team
+
+-----------------------------------------------------------------------------
+
               Apache Commons Net 3.7.2
                   RELEASE NOTES
 
