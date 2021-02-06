@@ -16,13 +16,13 @@
  */
 package org.apache.commons.net.ntp;
 
-import org.junit.Test;
-import org.junit.Assert;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 public class TestTimeInfo {
 

@@ -16,10 +16,10 @@
  */
 package org.apache.commons.net.ntp;
 
-import org.junit.Test;
-import org.junit.Assert;
-
 import java.net.DatagramPacket;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 public class TestNtpPacket {
 

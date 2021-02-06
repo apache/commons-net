@@ -16,8 +16,9 @@
  */
 package org.apache.commons.net.pop3;
 
-import junit.framework.TestCase;
 import java.io.Reader;
+
+import junit.framework.TestCase;
 
 /**
  * The POP3* tests all presume the existence of the following parameters:

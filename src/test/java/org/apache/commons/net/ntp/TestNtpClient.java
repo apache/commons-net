@@ -16,15 +16,14 @@
  */
 package org.apache.commons.net.ntp;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Assert;
-import org.junit.Test;
-
-import org.apache.commons.net.examples.ntp.SimpleNTPServer;
-
 import java.io.IOException;
 import java.net.InetAddress;
+
+import org.apache.commons.net.examples.ntp.SimpleNTPServer;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * JUnit test class for NtpClient using SimpleNTPServer

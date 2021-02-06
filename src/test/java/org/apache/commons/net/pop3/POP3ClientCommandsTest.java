@@ -16,11 +16,11 @@
  */
 package org.apache.commons.net.pop3;
 
-import junit.framework.TestCase;
-
-import java.net.InetAddress;
 import java.io.IOException;
 import java.io.Reader;
+import java.net.InetAddress;
+
+import junit.framework.TestCase;
 
 /**
  *

@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 package org.apache.commons.net.telnet;
-import junit.framework.TestCase;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+
+import junit.framework.TestCase;
 
 /**
  * JUnit test class for TelnetClient.s

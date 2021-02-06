@@ -16,11 +16,11 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import java.util.Calendar;
+
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
-
-import java.util.Calendar;
 
 /**
  */

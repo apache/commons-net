@@ -19,7 +19,6 @@
 package org.apache.commons.net.imap;
 
 import org.junit.Assert;
-
 import org.junit.Test;
 
 

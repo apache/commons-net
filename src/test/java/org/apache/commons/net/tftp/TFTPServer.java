@@ -30,8 +30,8 @@ import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketTimeoutException;
-import java.util.HashSet;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Iterator;
 
 import org.apache.commons.net.io.FromNetASCIIOutputStream;

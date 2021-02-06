@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.parser;
-import junit.framework.TestCase;
-
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
+
+import junit.framework.TestCase;
 
 
 public class DefaultFTPFileEntryParserFactoryTest extends TestCase

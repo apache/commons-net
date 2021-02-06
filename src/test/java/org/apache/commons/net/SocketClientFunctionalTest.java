@@ -16,12 +16,12 @@
  */
 package org.apache.commons.net;
 
-import junit.framework.TestCase;
-
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 
 import org.apache.commons.net.ftp.FTPClient;
+
+import junit.framework.TestCase;
 
 /**
  * A simple functional test class for SocketClients.

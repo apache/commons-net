@@ -16,9 +16,10 @@
  */
 package org.apache.commons.net.telnet;
 
-import junit.framework.TestCase;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import junit.framework.TestCase;
 
 /**
  * JUnit functional test for TelnetClient.

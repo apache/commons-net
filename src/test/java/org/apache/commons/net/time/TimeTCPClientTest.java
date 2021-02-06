@@ -16,9 +16,9 @@
  */
 package org.apache.commons.net.time;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Calendar;
-import java.io.IOException;
 import java.util.TimeZone;
 
 import junit.framework.TestCase;

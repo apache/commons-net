@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.parser;
-import junit.framework.TestCase;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
+
+import junit.framework.TestCase;
 
 /**
  */

@@ -16,8 +16,9 @@
  */
 package org.apache.commons.net.ntp;
 
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
+
 import junit.framework.TestCase;
 
 /**
