@@ -210,7 +210,7 @@ public final class IMAPExportMbox
             }
             System.out.println("Creating file " + mboxFile);
             chunkListener = new MboxListener(new BufferedWriter(new FileWriter(mboxFile)), eol, printHash, printMarker,
-                checkSequence);
+                    checkSequence);
         }
 
         final String path = uri.getPath();
@@ -331,7 +331,7 @@ public final class IMAPExportMbox
     private static class MboxListener implements IMAPChunkListener {
 
         private final BufferedWriter bw;
-        volatile int total = 0;
+        volatile int total;
         volatile String lastFetched;
         volatile List<String> missingIds = new ArrayList<>();
         volatile long lastSeq = -1;

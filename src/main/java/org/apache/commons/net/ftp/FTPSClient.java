@@ -98,13 +98,13 @@ public class FTPSClient extends FTPClient {
     /** The use client mode flag. */
     private boolean isClientMode = true;
     /** The need client auth flag. */
-    private boolean isNeedClientAuth = false;
+    private boolean isNeedClientAuth;
     /** The want client auth flag. */
-    private boolean isWantClientAuth = false;
+    private boolean isWantClientAuth;
     /** The cipher suites */
-    private String[] suites = null;
+    private String[] suites;
     /** The protocol versions */
-    private String[] protocols = null;
+    private String[] protocols;
 
     /** The FTPS {@link TrustManager} implementation, default validate only
      * {@link TrustManagerUtils#getValidateServerCertificateTrustManager()}.
@@ -112,10 +112,10 @@ public class FTPSClient extends FTPClient {
     private TrustManager trustManager = TrustManagerUtils.getValidateServerCertificateTrustManager();
 
     /** The {@link KeyManager}, default null (i.e. use system default). */
-    private KeyManager keyManager = null;
+    private KeyManager keyManager;
 
     /** The {@link HostnameVerifier} to use post-TLS, default null (i.e. no verification). */
-    private HostnameVerifier hostnameVerifier = null;
+    private HostnameVerifier hostnameVerifier;
 
     /** Use Java 1.7+ HTTPS Endpoint Identification Algorithm. */
     private boolean tlsEndpointChecking;

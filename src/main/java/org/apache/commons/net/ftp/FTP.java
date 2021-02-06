@@ -33,6 +33,7 @@ import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
 import org.apache.commons.net.io.CRLFLineReader;
+import org.apache.commons.net.util.NetConstants;
 
 /**
  * FTP provides the basic the functionality necessary to implement your
@@ -214,7 +215,6 @@ public class FTP extends SocketClient
     public static final int REPLY_CODE_LEN = 3;
 
     private static final String modes = "AEILNTCFRPSBC";
-
     protected int _replyCode;
     protected ArrayList<String> _replyLines;
     protected boolean _newReplyString;
@@ -232,7 +232,7 @@ public class FTP extends SocketClient
      * with xxx must be terminated by the same numeric code xxx
      * See section 4.2 of RFC 959 for details.
      */
-    protected boolean strictMultilineParsing = false;
+    protected boolean strictMultilineParsing;
 
     /**
      * If this is true, then non-multiline replies must have the format:
@@ -729,7 +729,7 @@ public class FTP extends SocketClient
      */
     public String[] getReplyStrings()
     {
-        return _replyLines.toArray(new String[_replyLines.size()]);
+        return _replyLines.toArray(NetConstants.EMPTY_STRING_ARRAY);
     }
 
     /**

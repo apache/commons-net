@@ -28,6 +28,7 @@ import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ProtocolCommandSupport;
 import org.apache.commons.net.SocketClient;
 import org.apache.commons.net.io.CRLFLineReader;
+import org.apache.commons.net.util.NetConstants;
 
 /**
  * SMTP provides the basic the functionality necessary to implement your
@@ -430,7 +431,7 @@ public class SMTP extends SocketClient
      */
     public String[] getReplyStrings()
     {
-        return replyLines.toArray(new String[replyLines.size()]);
+        return replyLines.toArray(NetConstants.EMPTY_STRING_ARRAY);
     }
 
     /**

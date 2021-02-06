@@ -40,7 +40,7 @@ import java.io.IOException;
  */
 public class POP3ClientTest extends TestCase
 {
-    POP3Client p = null;
+    POP3Client p;
 
     String user = POP3Constants.user;
     String emptyUser = POP3Constants.emptyuser;

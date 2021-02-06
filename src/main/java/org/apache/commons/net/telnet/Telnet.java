@@ -93,7 +93,7 @@ class Telnet extends SocketClient
     /**
      * Terminal type
      */
-    private String terminalType = null;
+    private String terminalType;
     /* TERMINAL-TYPE option (end)*/
 
     /* open TelnetOptionHandler functionality (start)*/
@@ -126,12 +126,12 @@ class Telnet extends SocketClient
     /**
      * The stream on which to spy
      */
-    private volatile OutputStream spyStream = null;
+    private volatile OutputStream spyStream;
 
     /**
      * The notification handler
      */
-    private TelnetNotificationHandler notifhand = null;
+    private TelnetNotificationHandler notifhand;
     /**
      * Empty Constructor
      */

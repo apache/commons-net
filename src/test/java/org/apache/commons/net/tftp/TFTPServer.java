@@ -87,13 +87,13 @@ public class TFTPServer implements Runnable
     public enum ServerMode { GET_ONLY, PUT_ONLY, GET_AND_PUT}
 
     private final HashSet<TFTPTransfer> transfers_ = new HashSet<>();
-    private volatile boolean shutdownServer = false;
+    private volatile boolean shutdownServer;
     private TFTP serverTftp_;
     private File serverReadDirectory_;
     private File serverWriteDirectory_;
     private final int port_;
     private final InetAddress laddr_;
-    private Exception serverException = null;
+    private Exception serverException;
     private final ServerMode mode_;
 
     /* /dev/null output stream (default) */
@@ -436,9 +436,9 @@ public class TFTPServer implements Runnable
     {
         private final TFTPPacket tftpPacket_;
 
-        private boolean shutdownTransfer = false;
+        private boolean shutdownTransfer;
 
-        TFTP transferTftp_ = null;
+        TFTP transferTftp_;
 
         public TFTPTransfer(final TFTPPacket tftpPacket)
         {

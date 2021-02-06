@@ -29,6 +29,7 @@ import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.io.DotTerminatedMessageReader;
 import org.apache.commons.net.io.DotTerminatedMessageWriter;
 import org.apache.commons.net.io.Util;
+import org.apache.commons.net.util.NetConstants;
 
 /**
  * NNTPClient encapsulates all the functionality necessary to post and
@@ -791,7 +792,7 @@ public class NNTPClient extends NNTP
             while ((line = reader.readLine()) != null) {
                 list.add(line);
             }
-            return list.toArray(new String[list.size()]);
+            return list.toArray(NetConstants.EMPTY_STRING_ARRAY);
         }
     }
 

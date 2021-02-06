@@ -46,7 +46,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
 
     /* TERMINAL-TYPE option (start)*/
     private final int suboption[];
-    private int suboptionCount = 0;
+    private int suboptionCount;
     /* TERMINAL-TYPE option (end)*/
 
     private volatile boolean threaded;

@@ -35,32 +35,32 @@ public abstract class TelnetOptionHandler
     /**
      * true if the option should be activated on the local side
      */
-    private boolean initialLocal = false;
+    private boolean initialLocal;
 
     /**
      * true if the option should be activated on the remote side
      */
-    private boolean initialRemote = false;
+    private boolean initialRemote;
 
     /**
      * true if the option should be accepted on the local side
      */
-    private boolean acceptLocal = false;
+    private boolean acceptLocal;
 
     /**
      * true if the option should be accepted on the remote side
      */
-    private boolean acceptRemote = false;
+    private boolean acceptRemote;
 
     /**
      * true if the option is active on the local side
      */
-    private boolean doFlag = false;
+    private boolean doFlag;
 
     /**
      * true if the option is active on the remote side
      */
-    private boolean willFlag = false;
+    private boolean willFlag;
 
     /**
      * Constructor for the TelnetOptionHandler. Allows defining desired

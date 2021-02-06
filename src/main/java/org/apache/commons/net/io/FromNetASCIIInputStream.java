@@ -44,7 +44,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
         _lineSeparatorBytes = _lineSeparator.getBytes(StandardCharsets.US_ASCII);
     }
 
-    private int length = 0;
+    private int length;
 
     /**
      * Returns true if the NetASCII line separator differs from the system

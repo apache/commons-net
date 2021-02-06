@@ -553,7 +553,7 @@ __main:
 
     private static CopyStreamListener createListener(){
         return new CopyStreamListener(){
-            private long megsTotal = 0;
+            private long megsTotal;
 
             @Override
             public void bytesTransferred(final CopyStreamEvent event) {

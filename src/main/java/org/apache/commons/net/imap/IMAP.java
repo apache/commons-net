@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.apache.commons.net.SocketClient;
 import org.apache.commons.net.io.CRLFLineReader;
+import org.apache.commons.net.util.NetConstants;
 
 
 /**
@@ -407,7 +408,7 @@ public class IMAP extends SocketClient
      */
     public String[] getReplyStrings()
     {
-        return replyLines.toArray(new String[replyLines.size()]);
+        return replyLines.toArray(NetConstants.EMPTY_STRING_ARRAY);
     }
 
     /**
