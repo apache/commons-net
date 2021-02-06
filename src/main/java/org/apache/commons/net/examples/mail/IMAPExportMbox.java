@@ -330,29 +330,29 @@ public final class IMAPExportMbox
 
     private static class MboxListener implements IMAPChunkListener {
 
-        private final BufferedWriter bw;
+        private final BufferedWriter bufferedWriter;
         volatile int total;
         volatile String lastFetched;
         volatile List<String> missingIds = new ArrayList<>();
         volatile long lastSeq = -1;
-        private final String eol;
+        private final String lineSeparator;
         private final SimpleDateFormat DATE_FORMAT // for mbox From_ lines
             = new SimpleDateFormat("EEE MMM dd HH:mm:ss YYYY");
 
         // e.g. INTERNALDATE "27-Oct-2013 07:43:24 +0000"
-        private final SimpleDateFormat IDPARSE // for parsing INTERNALDATE
-        = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss Z");
+        // for parsing INTERNALDATE
+        private final SimpleDateFormat IDPARSE = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss Z");
         private final boolean printHash;
         private final boolean printMarker;
         private final boolean checkSequence;
 
-        MboxListener(final BufferedWriter bw, final String eol, final boolean printHash, final boolean printMarker,
-                final boolean checkSequence) {
-            this.eol = eol;
+        MboxListener(final BufferedWriter bufferedWriter, final String lineSeparator, final boolean printHash,
+            final boolean printMarker, final boolean checkSequence) {
+            this.lineSeparator = lineSeparator;
             this.printHash = printHash;
             this.printMarker = printMarker;
             DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT"));
-            this.bw = bw;
+            this.bufferedWriter = bufferedWriter;
             this.checkSequence = checkSequence;
         }
 
@@ -392,13 +392,13 @@ public final class IMAPExportMbox
             }
             try {
                 // Add initial mbox header line
-                bw.append("From ");
-                bw.append(replyTo);
-                bw.append(' ');
-                bw.append(DATE_FORMAT.format(received));
-                bw.append(eol);
+                bufferedWriter.append("From ");
+                bufferedWriter.append(replyTo);
+                bufferedWriter.append(' ');
+                bufferedWriter.append(DATE_FORMAT.format(received));
+                bufferedWriter.append(lineSeparator);
                 // Debug
-                bw.append("X-IMAP-Response: ").append(firstLine).append(eol);
+                bufferedWriter.append("X-IMAP-Response: ").append(firstLine).append(lineSeparator);
                 if (printMarker) {
                     System.err.println("[" + total + "] " + firstLine);
                 }
@@ -406,19 +406,19 @@ public final class IMAPExportMbox
                 for(int i=1; i< replyStrings.length - 1; i++) {
                     final String line = replyStrings[i];
                         if (startsWith(line, PATFROM)) {
-                            bw.append('>'); // Escape a From_ line
+                            bufferedWriter.append('>'); // Escape a From_ line
                         }
-                        bw.append(line);
-                        bw.append(eol);
+                        bufferedWriter.append(line);
+                        bufferedWriter.append(lineSeparator);
                 }
                 // The last line ends with the trailing closing ")" which needs to be stripped
                 final String lastLine = replyStrings[replyStrings.length-1];
                 final int lastLength = lastLine.length();
                 if (lastLength > 1) { // there's some content, we need to save it
-                    bw.append(lastLine, 0, lastLength-1);
-                    bw.append(eol);
+                    bufferedWriter.append(lastLine, 0, lastLength-1);
+                    bufferedWriter.append(lineSeparator);
                 }
-                bw.append(eol); // blank line between entries
+                bufferedWriter.append(lineSeparator); // blank line between entries
             } catch (final IOException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e); // chunkReceived cannot throw a checked Exception
@@ -449,8 +449,8 @@ public final class IMAPExportMbox
         }
 
         public void close() throws IOException {
-            if (bw != null) {
-                bw.close();
+            if (bufferedWriter != null) {
+                bufferedWriter.close();
             }
         }
     }
