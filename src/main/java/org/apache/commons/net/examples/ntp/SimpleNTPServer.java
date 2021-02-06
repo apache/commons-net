@@ -39,14 +39,12 @@ import org.apache.commons.net.ntp.TimeStamp;
 public class SimpleNTPServer implements Runnable {
 
     private int port;
-
     private volatile boolean running;
     private boolean started;
-
     private DatagramSocket socket;
 
     /**
-     * Create SimpleNTPServer listening on default NTP port.
+     * Creates SimpleNTPServer listening on default NTP port.
      */
     public SimpleNTPServer()
     {
@@ -54,7 +52,7 @@ public class SimpleNTPServer implements Runnable {
     }
 
     /**
-     * Create SimpleNTPServer.
+     * Creates SimpleNTPServer.
      *
      * @param port the local port the server socket is bound to, or
      *             <code>zero</code> for a system selected free port.
@@ -74,7 +72,7 @@ public class SimpleNTPServer implements Runnable {
     }
 
     /**
-     * Return state of whether time service is running.
+     * Returns state of whether time service is running.
      *
      * @return true if time service is running
      */
@@ -84,7 +82,7 @@ public class SimpleNTPServer implements Runnable {
     }
 
     /**
-     * Return state of whether time service is running.
+     * Returns state of whether time service is running.
      *
      * @return true if time service is running
      */
@@ -94,7 +92,7 @@ public class SimpleNTPServer implements Runnable {
     }
 
     /**
-     * Connect to server socket and listen for client connections.
+     * Connects to server socket and listen for client connections.
      *
      * @throws IOException if an I/O error occurs when creating the socket.
      */
@@ -112,7 +110,7 @@ public class SimpleNTPServer implements Runnable {
     }
 
     /**
-     * Start time service and provide time to client connections.
+     * Starts time service and provide time to client connections.
      *
      * @throws java.io.IOException if an I/O error occurs when creating the socket.
      */
@@ -130,7 +128,7 @@ public class SimpleNTPServer implements Runnable {
     }
 
     /**
-     * main thread to service client connections.
+     * Main method to service client connections.
      */
     @Override
     public void run()
@@ -154,7 +152,7 @@ public class SimpleNTPServer implements Runnable {
     }
 
     /**
-     * Handle incoming packet. If NTP packet is client-mode then respond
+     * Handles incoming packet. If NTP packet is client-mode then respond
      * to that host with a NTP response packet otherwise ignore.
      *
      * @param request incoming DatagramPacket
@@ -198,7 +196,7 @@ public class SimpleNTPServer implements Runnable {
     }
 
     /**
-     * Close server socket and stop listening.
+     * Closes server socket and stop listening.
      */
     public void stop()
     {
