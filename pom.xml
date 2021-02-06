@@ -29,7 +29,7 @@
 
     <groupId>commons-net</groupId>
     <artifactId>commons-net</artifactId>
-    <version>3.8.0-SNAPSHOT</version>
+    <version>3.8.0</version>
     <name>Apache Commons Net</name>
     <!-- N.B. the description content is deliberately not indented ! to improve the layout of the Release Notes generated 
         by mvn changes:announcement-generate -->
