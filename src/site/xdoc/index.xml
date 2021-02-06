@@ -82,12 +82,12 @@
        </p>
            To use one of the sample applications, ensure that the example and main jars are both in the same directory.
            Then run the class as per the following example:
-           <pre>java -jar [path/]commons-net-examples-3.5.jar FTPClientExample [parameters]</pre>
+           <pre>java -jar [path/]commons-net-examples-3.7.3.jar FTPClientExample [parameters]</pre>
            This uses the helper application which supports shorthand class names.
            <br/>
            Alternatively, ensure that the example and main jars are on the classpath.
            Then invoke the class directly, for example:
-           <pre>java -cp commons-net-examples-3.5.jar;commons-net-3.5.jar examples/ftp/FTPClientExample [parameters]</pre>
+           <pre>java -cp commons-net-examples-3.7.3.jar;commons-net-3.5.jar examples/ftp/FTPClientExample [parameters]</pre>
 
        <subsection name="FTP (package: examples/ftp)">
            <ul>
