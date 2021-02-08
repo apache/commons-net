@@ -1634,7 +1634,7 @@ implements Configurable
     }
 
     /**
-     * Query the server for supported features. The server may reply with a list of server-supported exensions.
+     * Query the server for supported features. The server may reply with a list of server-supported extensions.
      * For example, a typical client-server interaction might be (from RFC 2389):
      * <pre>
         C&gt; feat
