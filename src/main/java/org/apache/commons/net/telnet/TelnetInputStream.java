@@ -668,11 +668,3 @@ _outerLoop:
         threaded = false;
     }
 }
-
-/* Emacs configuration
- * Local variables:        **
- * mode:             java  **
- * c-basic-offset:   4     **
- * indent-tabs-mode: nil   **
- * End:                    **
- */

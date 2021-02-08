@@ -263,11 +263,3 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     }
 
 }
-
-/* Emacs configuration
- * Local variables:        **
- * mode:             java  **
- * c-basic-offset:   4     **
- * indent-tabs-mode: nil   **
- * End:                    **
- */

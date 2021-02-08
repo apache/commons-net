@@ -69,11 +69,3 @@ public abstract class FTPFileEntryParserImpl
          return original;
      }
 }
-
-/* Emacs configuration
- * Local variables:        **
- * mode:             java  **
- * c-basic-offset:   4     **
- * indent-tabs-mode: nil   **
- * End:                    **
- */

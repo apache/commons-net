@@ -1870,12 +1870,3 @@ public class NNTPClient extends NNTP
         }
     }
 }
-
-
-/* Emacs configuration
- * Local variables:        **
- * mode:             java  **
- * c-basic-offset:   4     **
- * indent-tabs-mode: nil   **
- * End:                    **
- */

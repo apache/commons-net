@@ -1037,11 +1037,3 @@ public class NNTP extends SocketClient
         return _commandSupport_;
     }
 }
-
-/* Emacs configuration
- * Local variables:        **
- * mode:             java  **
- * c-basic-offset:   4     **
- * indent-tabs-mode: nil   **
- * End:                    **
- */

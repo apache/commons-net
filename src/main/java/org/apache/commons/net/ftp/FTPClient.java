@@ -4072,12 +4072,3 @@ implements Configurable
         return FTPReply.isPositiveCompletion(smnt(pathname));
     }
 }
-
-/* Emacs configuration
- * Local variables:        **
- * mode:             java  **
- * c-basic-offset:   4     **
- * indent-tabs-mode: nil   **
- * End:                    **
- */
-/* kate: indent-width 4; replace-tabs on; */
