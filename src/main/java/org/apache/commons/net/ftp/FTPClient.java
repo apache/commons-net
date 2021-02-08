@@ -291,9 +291,7 @@ import org.apache.commons.net.util.NetConstants;
  *
  * @see org.apache.commons.net.MalformedServerReplyException
  */
-public class FTPClient extends FTP
-implements Configurable
-{
+public class FTPClient extends FTP implements Configurable {
     // @since 3.0
     private static class CSL implements CopyStreamListener {
 
@@ -475,15 +473,19 @@ implements Configurable
      * transfer.
      */
     public static final int PASSIVE_REMOTE_DATA_CONNECTION_MODE = 3;
+    
     /** Pattern for PASV mode responses. Groups: (n,n,n,n),(n),(n) */
     private static final java.util.regex.Pattern PARMS_PAT;
+    
     static {
         PARMS_PAT = java.util.regex.Pattern.compile(
                 "(\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3}),(\\d{1,3}),(\\d{1,3})");
     }
-    private static Properties getOverrideProperties(){
+    
+    private static Properties getOverrideProperties() {
         return PropertiesSingleton.PROPERTIES;
     }
+
     /**
      * Parse the pathname from a CWD reply.
      * <p>
@@ -532,6 +534,7 @@ implements Configurable
         // malformed reply, return all after reply code and space
         return param;
     }
+    
     private int dataConnectionMode;
     private int dataTimeoutMillis;
 
@@ -541,7 +544,10 @@ implements Configurable
     private int activeMinPort;
     private int activeMaxPort;
     private InetAddress activeExternalHost;
-    private InetAddress reportActiveExternalHost; // overrides __activeExternalHost in EPRT/PORT commands
+    
+    /** overrides __activeExternalHost in EPRT/PORT commands. */
+    private InetAddress reportActiveExternalHost;
+    
     /** The address to bind to on passive connections, if necessary. */
     private InetAddress passiveLocalHost;
     private int fileType;
@@ -2103,6 +2109,22 @@ implements Configurable
             }
         }
         return systemName;
+    }
+
+    /**
+     * Queries the server for a supported feature.
+     * Caches the parsed response to avoid resending the command repeatedly.
+     *
+     * @param feature the name of the feature; it is converted to upper case.
+     * @return {@code true} if the feature is present, {@code false} if the feature is not present
+     * or the {@link #feat()} command failed. Check {@link #getReplyCode()} or {@link #getReplyString()}
+     * if it is necessary to distinguish these cases.
+     *
+     * @throws IOException on error
+     * @since 3.8.0
+     */
+    public boolean hasFeature(final FTPCmd feature) throws IOException {
+        return hasFeature(feature.name());
     }
 
     /**
