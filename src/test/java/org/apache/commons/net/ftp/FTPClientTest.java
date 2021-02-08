@@ -61,8 +61,8 @@ public class FTPClientTest extends TestCase {
     }
 
     public void testParseClient() {
-        for(int i=0; i<TESTS.length; i+=2) {
-            assertEquals("Failed to parse",TESTS[i+1], FTPClient.parsePathname(TESTS[i]));
+        for (int i = 0; i < TESTS.length; i += 2) {
+            assertEquals("Failed to parse", TESTS[i + 1], FTPClient.parsePathname(TESTS[i]));
         }
     }
 
@@ -84,7 +84,9 @@ public class FTPClientTest extends TestCase {
     }
 
     private static class LocalClient extends FTPClient {
+
         private String systemType;
+
         @Override
         public String getSystemType() throws IOException {
             return systemType;
@@ -93,6 +95,7 @@ public class FTPClientTest extends TestCase {
             systemType = type;
         }
     }
+
     public void testParserCachingNullKey() throws Exception {
         final LocalClient client = new LocalClient();
         client.setSystemType(FTPClientConfig.SYST_UNIX);
@@ -106,6 +109,7 @@ public class FTPClientTest extends TestCase {
         client.createParser(null);
         assertSame(entryParser, client.getEntryParser()); // parser was cached
     }
+
     public void testUnparseableFiles() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write("-rwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox".getBytes());
