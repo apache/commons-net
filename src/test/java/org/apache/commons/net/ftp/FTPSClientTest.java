@@ -236,6 +236,17 @@ public class FTPSClientTest {
 
     @Test
     public void testOpenClose() throws SocketException, IOException {
+        final FTPSClient ftpsClient = loginClient();
+        try {
+            assertTrue(ftpsClient.hasFeature("MODE"));
+            assertTrue(ftpsClient.hasFeature(FTPCmd.MODE));
+        } finally {
+            ftpsClient.disconnect();
+        }
+    }
+
+    @Test
+    public void testHasFeature() throws SocketException, IOException {
         loginClient().disconnect();
     }
 
