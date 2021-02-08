@@ -1634,7 +1634,7 @@ implements Configurable
     }
 
     /**
-     * Query the server for supported features. The server may reply with a list of server-supported extensions.
+     * Queries the server for supported features. The server may reply with a list of server-supported extensions.
      * For example, a typical client-server interaction might be (from RFC 2389):
      * <pre>
         C&gt; feat
@@ -1655,7 +1655,7 @@ implements Configurable
     }
 
     /**
-     * Query the server for a supported feature, and returns the its value (if any).
+     * Queries the server for a supported feature, and returns the its value (if any).
      * Caches the parsed response to avoid resending the command repeatedly.
      * @param feature the feature to check
      *
@@ -1675,7 +1675,7 @@ implements Configurable
     }
 
     /**
-     * Query the server for a supported feature, and returns its values (if any).
+     * Queries the server for a supported feature, and returns its values (if any).
      * Caches the parsed response to avoid resending the command repeatedly.
      * @param feature the feature to check
      *
@@ -2106,7 +2106,7 @@ implements Configurable
     }
 
     /**
-     * Query the server for a supported feature.
+     * Queries the server for a supported feature.
      * Caches the parsed response to avoid resending the command repeatedly.
      *
      * @param feature the name of the feature; it is converted to upper case.
@@ -2125,7 +2125,7 @@ implements Configurable
     }
 
     /**
-     * Query the server for a supported feature with particular value,
+     * Queries the server for a supported feature with particular value,
      * for example "AUTH SSL" or "AUTH TLS".
      * Caches the parsed response to avoid resending the command repeatedly.
      *
