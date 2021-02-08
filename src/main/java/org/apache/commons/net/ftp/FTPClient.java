@@ -40,6 +40,7 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
+import java.util.regex.Matcher;
 
 import org.apache.commons.net.MalformedServerReplyException;
 import org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory;
@@ -50,6 +51,7 @@ import org.apache.commons.net.io.CopyStreamAdapter;
 import org.apache.commons.net.io.CopyStreamEvent;
 import org.apache.commons.net.io.CopyStreamListener;
 import org.apache.commons.net.io.FromNetASCIIInputStream;
+import org.apache.commons.net.io.SocketOutputStream;
 import org.apache.commons.net.io.ToNetASCIIOutputStream;
 import org.apache.commons.net.io.Util;
 import org.apache.commons.net.util.NetConstants;
@@ -644,8 +646,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     @Override
-    protected void _connectAction_() throws IOException
-    {
+    protected void _connectAction_() throws IOException {
         _connectAction_(null);
     }
 
@@ -655,23 +656,19 @@ public class FTPClient extends FTP implements Configurable {
      * @since 3.4
      */
     @Override
-    protected void _connectAction_(final Reader socketIsReader) throws IOException
-    {
+    protected void _connectAction_(final Reader socketIsReader) throws IOException {
         super._connectAction_(socketIsReader); // sets up _input_ and _output_
         initDefaults();
         // must be after super._connectAction_(), because otherwise we get an
         // Exception claiming we're not connected
-        if ( autodetectEncoding )
-        {
-            final ArrayList<String> oldReplyLines = new ArrayList<> (_replyLines);
+        if (autodetectEncoding) {
+            final ArrayList<String> oldReplyLines = new ArrayList<>(_replyLines);
             final int oldReplyCode = _replyCode;
-            if ( hasFeature("UTF8") || hasFeature("UTF-8")) // UTF8 appears to be the default
+            if (hasFeature("UTF8") || hasFeature("UTF-8")) // UTF8 appears to be the default
             {
-                 setControlEncoding("UTF-8");
-                 _controlInput_ =
-                     new CRLFLineReader(new InputStreamReader(_input_, getControlEncoding()));
-                 _controlOutput_ =
-                    new BufferedWriter(new OutputStreamWriter(_output_, getControlEncoding()));
+                setControlEncoding("UTF-8");
+                _controlInput_ = new CRLFLineReader(new InputStreamReader(_input_, getControlEncoding()));
+                _controlOutput_ = new BufferedWriter(new OutputStreamWriter(_output_, getControlEncoding()));
             }
             // restore the original reply (server greeting)
             _replyLines.clear();
@@ -726,12 +723,9 @@ public class FTPClient extends FTP implements Configurable {
      * @deprecated (3.3) Use {@link #_openDataConnection_(FTPCmd, String)} instead
      */
     @Deprecated
-    protected Socket _openDataConnection_(final int command, final String arg)
-    throws IOException
-    {
+    protected Socket _openDataConnection_(final int command, final String arg) throws IOException {
         return _openDataConnection_(FTPCommand.getCommand(command), arg);
     }
-
 
     /**
      * Establishes a data connection with the FTP server, returning
@@ -890,37 +884,26 @@ public class FTPClient extends FTP implements Configurable {
         return socket;
     }
 
-    protected void _parseExtendedPassiveModeReply(String reply)
-    throws MalformedServerReplyException
-    {
-        reply = reply.substring(reply.indexOf('(') + 1,
-                reply.indexOf(')')).trim();
+    protected void _parseExtendedPassiveModeReply(String reply) throws MalformedServerReplyException {
+        reply = reply.substring(reply.indexOf('(') + 1, reply.indexOf(')')).trim();
 
-        final char delim1;
-        final char delim2;
-        final char delim3;
-        final char delim4;
-        delim1 = reply.charAt(0);
-        delim2 = reply.charAt(1);
-        delim3 = reply.charAt(2);
-        delim4 = reply.charAt(reply.length()-1);
+        final char delim1 = reply.charAt(0);
+        final char delim2 = reply.charAt(1);
+        final char delim3 = reply.charAt(2);
+        final char delim4 = reply.charAt(reply.length() - 1);
 
         if ((delim1 != delim2) || (delim2 != delim3) || (delim3 != delim4)) {
             throw new MalformedServerReplyException(
-                    "Could not parse extended passive host information.\nServer Reply: " + reply);
+                "Could not parse extended passive host information.\nServer Reply: " + reply);
         }
 
         final int port;
-        try
-        {
-            port = Integer.parseInt(reply.substring(3, reply.length()-1));
-        }
-        catch (final NumberFormatException e)
-        {
+        try {
+            port = Integer.parseInt(reply.substring(3, reply.length() - 1));
+        } catch (final NumberFormatException e) {
             throw new MalformedServerReplyException(
-                    "Could not parse extended passive host information.\nServer Reply: " + reply);
+                "Could not parse extended passive host information.\nServer Reply: " + reply);
         }
-
 
         // in EPSV mode, the passive host address is implicit
         this.passiveHost = getRemoteAddress().getHostAddress();
@@ -932,28 +915,23 @@ public class FTPClient extends FTP implements Configurable {
      * @param reply the reply to parse
      * @throws MalformedServerReplyException if the server reply does not match  (n,n,n,n),(n),(n)
      */
-    protected void _parsePassiveModeReply(final String reply)
-    throws MalformedServerReplyException
-    {
-        final java.util.regex.Matcher m = PARMS_PAT.matcher(reply);
+    protected void _parsePassiveModeReply(final String reply) throws MalformedServerReplyException {
+        final Matcher m = PARMS_PAT.matcher(reply);
         if (!m.find()) {
             throw new MalformedServerReplyException(
-                    "Could not parse passive host information.\nServer Reply: " + reply);
+                "Could not parse passive host information.\nServer Reply: " + reply);
         }
 
-        this.passiveHost = "0,0,0,0".equals(m.group(1)) ? _socket_.getInetAddress().getHostAddress() :
-                m.group(1).replace(',', '.'); // Fix up to look like IP address
+        this.passiveHost = "0,0,0,0".equals(m.group(1)) ? _socket_.getInetAddress().getHostAddress()
+            : m.group(1).replace(',', '.'); // Fix up to look like IP address
 
-        try
-        {
+        try {
             final int oct1 = Integer.parseInt(m.group(2));
             final int oct2 = Integer.parseInt(m.group(3));
             passivePort = (oct1 << 8) | oct2;
-        }
-        catch (final NumberFormatException e)
-        {
+        } catch (final NumberFormatException e) {
             throw new MalformedServerReplyException(
-                    "Could not parse passive port information.\nServer Reply: " + reply);
+                "Could not parse passive port information.\nServer Reply: " + reply);
         }
 
         if (passiveNatWorkaroundStrategy != null) {
@@ -961,16 +939,15 @@ public class FTPClient extends FTP implements Configurable {
                 final String newPassiveHost = passiveNatWorkaroundStrategy.resolve(this.passiveHost);
                 if (!this.passiveHost.equals(newPassiveHost)) {
                     fireReplyReceived(0,
-                            "[Replacing PASV mode reply address "+this.passiveHost+" with "+newPassiveHost+"]\n");
+                        "[Replacing PASV mode reply address " + this.passiveHost + " with " + newPassiveHost + "]\n");
                     this.passiveHost = newPassiveHost;
                 }
             } catch (final UnknownHostException e) { // Should not happen as we are passing in an IP address
                 throw new MalformedServerReplyException(
-                        "Could not parse passive host information.\nServer Reply: " + reply);
+                    "Could not parse passive host information.\nServer Reply: " + reply);
             }
         }
     }
-
 
     /**
      * @param command the command to get
@@ -1137,9 +1114,8 @@ public class FTPClient extends FTP implements Configurable {
         } else {
             output = socket.getOutputStream();
         }
-        return new org.apache.commons.net.io.SocketOutputStream(socket, output);
+        return new SocketOutputStream(socket, output);
     }
-
 
     /**
      * Abort a transfer in progress.
@@ -1157,7 +1133,6 @@ public class FTPClient extends FTP implements Configurable {
     {
         return FTPReply.isPositiveCompletion(abor());
     }
-
 
     /**
      * Reserve a number of bytes on the server for the next file transfer.
@@ -1214,7 +1189,6 @@ public class FTPClient extends FTP implements Configurable {
         return FTPReply.isPositiveCompletion(allo(bytes));
     }
 
-
     /**
      * Reserve space on the server for the next file transfer.
      *
@@ -1264,7 +1238,6 @@ public class FTPClient extends FTP implements Configurable {
     {
         return storeFile(FTPCmd.APPE, remote, local);
     }
-
 
     /**
      * Returns an OutputStream through which data can be written to append
@@ -1385,7 +1358,6 @@ public class FTPClient extends FTP implements Configurable {
         return FTPReply.isPositiveCompletion(getReply());
     }
 
-
     /**
      * Implementation of the {@link Configurable Configurable} interface.
      * In the case of this class, configuring merely makes the config object available for the
@@ -1398,7 +1370,6 @@ public class FTPClient extends FTP implements Configurable {
     public void configure(final FTPClientConfig config) {
         this.configuration = config;
     }
-
 
     // package access for test purposes
     void createParser(final String parserKey) throws IOException {
@@ -1445,10 +1416,7 @@ public class FTPClient extends FTP implements Configurable {
                 }
             }
         }
-
-
     }
-
 
     /**
      * Deletes a file on the FTP server.
@@ -1526,7 +1494,6 @@ public class FTPClient extends FTP implements Configurable {
         }
         return null;
     }
-
 
     /**
      * Set the current data connection mode to
@@ -1737,14 +1704,12 @@ public class FTPClient extends FTP implements Configurable {
         return new BufferedInputStream(inputStream);
     }
 
-
     private OutputStream getBufferedOutputStream(final OutputStream outputStream) {
         if (bufferSize > 0) {
             return new BufferedOutputStream(outputStream, bufferSize);
         }
         return new BufferedOutputStream(outputStream);
     }
-
 
     /**
      * Retrieve the current internal buffer size for buffered data streams.
@@ -1754,7 +1719,6 @@ public class FTPClient extends FTP implements Configurable {
         return bufferSize;
     }
 
-
     /**
      * Gets how long to wait for control keep-alive message replies.
      * @return wait time in milliseconds.
@@ -1763,7 +1727,6 @@ public class FTPClient extends FTP implements Configurable {
     public int getControlKeepAliveReplyTimeout() {
         return controlKeepAliveReplyTimeoutMillis;
     }
-
 
     /**
      * Gets the time to wait between sending control connection keepalive messages
@@ -1778,7 +1741,6 @@ public class FTPClient extends FTP implements Configurable {
         return controlKeepAliveTimeoutMillis / 1000;
     }
 
-
     /**
      * Obtain the currently active listener.
      *
@@ -1788,7 +1750,6 @@ public class FTPClient extends FTP implements Configurable {
     public CopyStreamListener getCopyStreamListener(){
         return copyStreamListener;
     }
-
 
     /**
      * Get the CSL debug array.
@@ -1810,7 +1771,6 @@ public class FTPClient extends FTP implements Configurable {
         return cslDebug;
     }
 
-
     /**
      * Returns the current data connection mode (one of the
      * <code> _DATA_CONNECTION_MODE </code> constants.
@@ -1822,7 +1782,6 @@ public class FTPClient extends FTP implements Configurable {
     {
         return dataConnectionMode;
     }
-
 
     // Method for use by unit test code only
     FTPFileEntryParser getEntryParser() {
@@ -1865,7 +1824,6 @@ public class FTPClient extends FTP implements Configurable {
 
         return pathname;
     }
-
 
     /**
      * @see #setListHiddenFiles(boolean)
@@ -1923,7 +1881,6 @@ public class FTPClient extends FTP implements Configurable {
         return this.passiveLocalHost;
     }
 
-
     /**
      * If in passive mode, returns the data port of the passive host.
      * This method only returns a valid value AFTER a
@@ -1940,7 +1897,6 @@ public class FTPClient extends FTP implements Configurable {
     {
         return passivePort;
     }
-
 
     /**
      * Retrieve the value to be used for the data socket SO_RCVBUF option.
@@ -1985,7 +1941,6 @@ public class FTPClient extends FTP implements Configurable {
     public int getSendDataSocketBufferSize() {
         return sendDataSocketBufferSize;
     }
-
 
     /**
      * Issue the FTP SIZE command to the server for a given pathname.
@@ -2427,7 +2382,6 @@ public class FTPClient extends FTP implements Configurable {
         return initiateListParsing(entryParser, pathname);
     }
 
-
     /**
      * Initiate list parsing for MLSD listings in the current working directory.
      *
@@ -2685,12 +2639,8 @@ public class FTPClient extends FTP implements Configurable {
      * @see org.apache.commons.net.ftp.parser.FTPFileEntryParserFactory
      * @see org.apache.commons.net.ftp.FTPFileEntryParser
      */
-    public FTPFile[] listFiles(final String pathname)
-    throws IOException
-    {
-        final FTPListParseEngine engine = initiateListParsing((String) null, pathname);
-        return engine.getFiles();
-
+    public FTPFile[] listFiles(final String pathname) throws IOException {
+        return initiateListParsing((String) null, pathname).getFiles();
     }
 
     /**
@@ -2702,15 +2652,9 @@ public class FTPClient extends FTP implements Configurable {
      * @throws IOException on error
      * @since 2.2
      */
-    public FTPFile[] listFiles(final String pathname, final FTPFileFilter filter)
-    throws IOException
-    {
-        final FTPListParseEngine engine = initiateListParsing((String) null, pathname);
-        return engine.getFiles(filter);
-
+    public FTPFile[] listFiles(final String pathname, final FTPFileFilter filter) throws IOException {
+        return initiateListParsing((String) null, pathname).getFiles(filter);
     }
-
-
 
     /**
      * Fetches the system help information from the server and returns the
@@ -2726,14 +2670,9 @@ public class FTPClient extends FTP implements Configurable {
      * @throws IOException  If an I/O error occurs while either sending a
      *  command to the server or receiving a reply from the server.
      */
-    public String listHelp() throws IOException
-    {
-        if (FTPReply.isPositiveCompletion(help())) {
-            return getReplyString();
-        }
-        return null;
+    public String listHelp() throws IOException {
+        return FTPReply.isPositiveCompletion(help()) ? getReplyString() : null;
     }
-
 
     /**
      * Fetches the help information for a given command from the server and
@@ -2749,12 +2688,8 @@ public class FTPClient extends FTP implements Configurable {
      * @throws IOException  If an I/O error occurs while either sending a
      *  command to the server or receiving a reply from the server.
      */
-    public String listHelp(final String command) throws IOException
-    {
-        if (FTPReply.isPositiveCompletion(help(command))) {
-            return getReplyString();
-        }
-        return null;
+    public String listHelp(final String command) throws IOException {
+        return FTPReply.isPositiveCompletion(help(command)) ? getReplyString() : null;
     }
 
     /**
@@ -2782,7 +2717,6 @@ public class FTPClient extends FTP implements Configurable {
     {
         return listNames(null);
     }
-
 
     /**
      * Obtain a list of file names in a directory (or just the name of a given
@@ -2839,7 +2773,6 @@ public class FTPClient extends FTP implements Configurable {
         return null;
     }
 
-
     /**
      * Login to the FTP server using the provided username and password.
      *
@@ -2871,7 +2804,6 @@ public class FTPClient extends FTP implements Configurable {
 
         return FTPReply.isPositiveCompletion(pass(password));
     }
-
 
     /**
      * Login to the FTP server using the provided username, password,
@@ -2918,7 +2850,6 @@ public class FTPClient extends FTP implements Configurable {
         return FTPReply.isPositiveCompletion(acct(account));
     }
 
-
     /**
      * Logout of the FTP server by sending the QUIT command.
      *
@@ -2935,7 +2866,6 @@ public class FTPClient extends FTP implements Configurable {
     {
         return FTPReply.isPositiveCompletion(quit());
     }
-
 
     /**
      * Creates a new subdirectory on the FTP server in the current directory
@@ -2956,7 +2886,6 @@ public class FTPClient extends FTP implements Configurable {
     {
         return FTPReply.isPositiveCompletion(mkd(pathname));
     }
-
 
     /**
      * Issue the FTP MDTM command (not supported by all servers) to retrieve the last
@@ -2982,7 +2911,6 @@ public class FTPClient extends FTP implements Configurable {
         return null;
     }
 
-
     /**
      * Merge two copystream listeners, either or both of which may be null.
      *
@@ -3004,7 +2932,6 @@ public class FTPClient extends FTP implements Configurable {
         return merged;
     }
 
-
     /**
      * Generate a directory listing for the current directory using the MLSD command.
      *
@@ -3017,7 +2944,6 @@ public class FTPClient extends FTP implements Configurable {
         return mlistDir(null);
     }
 
-
     /**
      * Generate a directory listing using the MLSD command.
      *
@@ -3026,12 +2952,9 @@ public class FTPClient extends FTP implements Configurable {
      * @throws IOException on error
      * @since 3.0
      */
-    public FTPFile[] mlistDir(final String pathname) throws IOException
-    {
-        final FTPListParseEngine engine = initiateMListParsing( pathname);
-        return engine.getFiles();
+    public FTPFile[] mlistDir(final String pathname) throws IOException {
+        return initiateMListParsing(pathname).getFiles();
     }
-
 
     /**
      * Generate a directory listing using the MLSD command.
@@ -3042,13 +2965,9 @@ public class FTPClient extends FTP implements Configurable {
      * @throws IOException on error
      * @since 3.0
      */
-    public FTPFile[] mlistDir(final String pathname, final FTPFileFilter filter) throws IOException
-    {
-        final FTPListParseEngine engine = initiateMListParsing( pathname);
-        return engine.getFiles(filter);
+    public FTPFile[] mlistDir(final String pathname, final FTPFileFilter filter) throws IOException {
+        return initiateMListParsing(pathname).getFiles(filter);
     }
-
-
 
     /**
      * Get file details using the MLST command
@@ -3414,7 +3333,6 @@ public class FTPClient extends FTP implements Configurable {
         return FTPReply.isPositiveCompletion(noop());
     }
 
-
     /**
      * Send a site specific command.
      * @param arguments The site specific command and arguments.
@@ -3432,7 +3350,6 @@ public class FTPClient extends FTP implements Configurable {
         return FTPReply.isPositiveCompletion(site(arguments));
     }
 
-
     /**
      * Set the external IP address in active mode.
      * Useful when there are multiple network cards.
@@ -3445,7 +3362,6 @@ public class FTPClient extends FTP implements Configurable {
     {
         this.activeExternalHost = InetAddress.getByName(ipAddress);
     }
-
 
     /**
      * Set the client side port range in active mode.
@@ -3460,7 +3376,6 @@ public class FTPClient extends FTP implements Configurable {
         this.activeMaxPort = maxPort;
     }
 
-
     /**
      * Enables or disables automatic server encoding detection (only UTF-8 supported).
      * <p>
@@ -3473,7 +3388,6 @@ public class FTPClient extends FTP implements Configurable {
         autodetectEncoding = autodetect;
     }
 
-
     /**
      * Set the internal buffer size for buffered data streams.
      *
@@ -3482,7 +3396,6 @@ public class FTPClient extends FTP implements Configurable {
     public void setBufferSize(final int bufSize) {
         bufferSize = bufSize;
     }
-
 
     /**
      * Sets how long to wait for control keep-alive message replies.
@@ -3705,7 +3618,6 @@ public class FTPClient extends FTP implements Configurable {
     public boolean setModificationTime(final String pathname, final String timeval) throws IOException {
         return (FTPReply.isPositiveCompletion(mfmt(pathname, timeval)));
     }
-
 
     /**
      * set the factory used for parser creation to the supplied factory object.
@@ -4073,8 +3985,6 @@ public class FTPClient extends FTP implements Configurable {
     {
         return storeFileStream(FTPCmd.STOU, remote);
     }
-
-    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
 
     /**
      * Issue the FTP SMNT command.
