@@ -473,15 +473,15 @@ public class FTPClient extends FTP implements Configurable {
      * transfer.
      */
     public static final int PASSIVE_REMOTE_DATA_CONNECTION_MODE = 3;
-    
+
     /** Pattern for PASV mode responses. Groups: (n,n,n,n),(n),(n) */
     private static final java.util.regex.Pattern PARMS_PAT;
-    
+
     static {
         PARMS_PAT = java.util.regex.Pattern.compile(
                 "(\\d{1,3},\\d{1,3},\\d{1,3},\\d{1,3}),(\\d{1,3}),(\\d{1,3})");
     }
-    
+
     private static Properties getOverrideProperties() {
         return PropertiesSingleton.PROPERTIES;
     }
@@ -534,7 +534,7 @@ public class FTPClient extends FTP implements Configurable {
         // malformed reply, return all after reply code and space
         return param;
     }
-    
+
     private int dataConnectionMode;
     private int dataTimeoutMillis;
 
@@ -544,10 +544,10 @@ public class FTPClient extends FTP implements Configurable {
     private int activeMinPort;
     private int activeMaxPort;
     private InetAddress activeExternalHost;
-    
+
     /** overrides __activeExternalHost in EPRT/PORT commands. */
     private InetAddress reportActiveExternalHost;
-    
+
     /** The address to bind to on passive connections, if necessary. */
     private InetAddress passiveLocalHost;
     private int fileType;
@@ -2211,11 +2211,11 @@ public class FTPClient extends FTP implements Configurable {
             for (final String line : _replyLines) {
                 if (line.startsWith(" ")) { // it's a FEAT entry
                     String key;
-                    String value="";
+                    String value = "";
                     final int varsep = line.indexOf(' ', 1);
                     if (varsep > 0) {
                         key = line.substring(1, varsep);
-                        value = line.substring(varsep+1);
+                        value = line.substring(varsep + 1);
                     } else {
                         key = line.substring(1);
                     }
