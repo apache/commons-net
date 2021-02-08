@@ -36,7 +36,7 @@ public class SSLContextUtils {
     }
 
     /**
-     * Create and initialise an SSLContext.
+     * Create and initialize an SSLContext.
      * @param protocol the protocol used to instatiate the context
      * @param keyManager the key manager, may be {@code null}
      * @param trustManager the trust manager, may be {@code null}
@@ -51,7 +51,7 @@ public class SSLContextUtils {
     }
 
     /**
-     * Create and initialise an SSLContext.
+     * Create and initialize an SSLContext.
      * @param protocol the protocol used to instatiate the context
      * @param keyManagers the array of key managers, may be {@code null} but array entries must not be {@code null}
      * @param trustManagers the array of trust managers, may be {@code null} but array entries must not be {@code null}
