@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -415,6 +416,7 @@ public class FTPClient extends FTP implements Configurable {
         }
 
     }
+
     /**
      * The system property ({@value}) which can be used to override the system type.<br>
      * If defined, the value will be used to create any automatically created parsers.
@@ -422,6 +424,7 @@ public class FTPClient extends FTP implements Configurable {
      * @since 3.0
      */
     public static final String FTP_SYSTEM_TYPE = "org.apache.commons.net.ftp.systemType";
+    
     /**
      * The system property ({@value}) which can be used as the default system type.<br>
      * If defined, the value will be used if the SYST command fails.
@@ -429,6 +432,7 @@ public class FTPClient extends FTP implements Configurable {
      * @since 3.1
      */
     public static final String FTP_SYSTEM_TYPE_DEFAULT = "org.apache.commons.net.ftp.systemType.default";
+    
     /**
      * The name of an optional systemType properties file ({@value}), which is loaded
      * using {@link Class#getResourceAsStream(String)}.<br>
@@ -453,6 +457,7 @@ public class FTPClient extends FTP implements Configurable {
      * is created.
      */
     public static final int ACTIVE_LOCAL_DATA_CONNECTION_MODE = 0;
+    
     /**
      * A constant indicating the FTP session is expecting all transfers
      * to occur between two remote servers and that the server
@@ -460,6 +465,7 @@ public class FTPClient extends FTP implements Configurable {
      * data port to initiate a data transfer.
      */
     public static final int ACTIVE_REMOTE_DATA_CONNECTION_MODE = 1;
+    
     /**
      * A constant indicating the FTP session is expecting all transfers
      * to occur between the client (local) and server and that the server
@@ -467,6 +473,7 @@ public class FTPClient extends FTP implements Configurable {
      * server's data port to initiate a transfer.
      */
     public static final int PASSIVE_LOCAL_DATA_CONNECTION_MODE = 2;
+    
     /**
      * A constant indicating the FTP session is expecting all transfers
      * to occur between two remote servers and that the server
@@ -611,7 +618,7 @@ public class FTPClient extends FTP implements Configurable {
     /** Controls the automatic server encoding detection (only UTF-8 supported). */
     private boolean autodetectEncoding = false;
 
-    /** Map of FEAT responses. If null, has not been initialised. */
+    /** Map of FEAT responses. If null, has not been initialized. */
     private HashMap<String, Set<String>> featuresMap;
 
     /**

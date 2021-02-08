@@ -65,6 +65,6 @@ public class CopyStreamException extends IOException
      */
     public IOException getIOException()
     {
-        return (IOException) getCause(); // cast is OK because it was initialised with an IOException
+        return (IOException) getCause(); // cast is OK because it was initialized with an IOException
     }
 }

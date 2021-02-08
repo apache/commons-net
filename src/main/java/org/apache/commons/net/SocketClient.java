@@ -508,7 +508,7 @@ public abstract class SocketClient
 
     /**
      * Get the current sendBuffer size
-     * @return the size, or -1 if not initialised
+     * @return the size, or -1 if not initialized
      * @since 3.0
      */
     protected int getSendBufferSize(){
@@ -528,7 +528,7 @@ public abstract class SocketClient
 
     /**
      * Get the current receivedBuffer size
-     * @return the size, or -1 if not initialised
+     * @return the size, or -1 if not initialized
      * @since 3.0
      */
     protected int getReceiveBufferSize(){

@@ -133,10 +133,10 @@ public class MLSDComparison {
     }
     /**
      * Compare two instances to see if they are the same,
-     * ignoring any uninitialised fields.
+     * ignoring any uninitialized fields.
      * @param a first instance
      * @param b second instance
-     * @return true if the initialised fields are the same
+     * @return true if the initialized fields are the same
      * @since 3.0
      */
     public boolean areEquivalent(final FTPFile a, final FTPFile b) {
