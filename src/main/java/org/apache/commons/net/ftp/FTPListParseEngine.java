@@ -105,44 +105,36 @@ public class FTPListParseEngine {
     }
 
     /**
-     * handle the initial reading and preparsing of the list returned by
-     * the server.  After this method has completed, this object will contain
-     * a list of unparsed entries (Strings) each referring to a unique file
-     * on the server.
+     * Reads (and closes) the initial reading and preparsing of the list returned by the server. After this method has
+     * completed, this object will contain a list of unparsed entries (Strings) each referring to a unique file on the
+     * server.
      *
-     * @param stream input stream provided by the server socket.
-     * @param encoding the encoding to be used for reading the stream
+     * @param inputStream input stream provided by the server socket.
+     * @param charsetName the encoding to be used for reading the stream
      *
-     * @throws IOException
-     *                   thrown on any failure to read from the sever.
+     * @throws IOException thrown on any failure to read from the sever.
      */
-    public void readServerList(final InputStream stream, final String encoding)
-    throws IOException
-    {
+    public void readServerList(final InputStream inputStream, final String charsetName) throws IOException {
         this.entries = new LinkedList<>();
-        readStream(stream, encoding);
+        read(inputStream, charsetName);
         this.parser.preParse(this.entries);
         resetIterator();
     }
 
     /**
-     * Internal method for reading the input into the <code>entries</code> list.
-     * After this method has completed, <code>entries</code> will contain a
-     * collection of entries (as defined by
-     * <code>FTPFileEntryParser.readNextEntry()</code>), but this may contain
-     * various non-entry preliminary lines from the server output, duplicates,
-     * and other data that will not be part of the final listing.
+     * Internal method for reading (and closing) the input into the <code>entries</code> list. After this method has
+     * completed, <code>entries</code> will contain a collection of entries (as defined by
+     * <code>FTPFileEntryParser.readNextEntry()</code>), but this may contain various non-entry preliminary lines from
+     * the server output, duplicates, and other data that will not be part of the final listing.
      *
-     * @param stream The socket stream on which the input will be read.
-     * @param encoding The encoding to use.
+     * @param inputStream The socket stream on which the input will be read.
+     * @param charsetName The encoding to use.
      *
-     * @throws IOException
-     *                   thrown on any failure to read the stream
+     * @throws IOException thrown on any failure to read the stream
      */
-    private void readStream(final InputStream stream, final String encoding) throws IOException
-    {
+    private void read(final InputStream inputStream, final String charsetName) throws IOException {
         try (final BufferedReader reader = new BufferedReader(
-                new InputStreamReader(stream, Charsets.toCharset(encoding)))) {
+            new InputStreamReader(inputStream, Charsets.toCharset(charsetName)))) {
 
             String line = this.parser.readNextEntry(reader);
 
@@ -318,15 +310,13 @@ public class FTPListParseEngine {
 
     /**
      * Do not use.
-     * @param stream the stream from which to read
+     * @param inputStream the stream from which to read
      * @throws IOException on error
      * @deprecated use {@link #readServerList(InputStream, String)} instead
     */
     @Deprecated
-    public void readServerList(final InputStream stream)
-    throws IOException
-    {
-        readServerList(stream, null);
+    public void readServerList(final InputStream inputStream) throws IOException {
+        readServerList(inputStream, null);
     }
 
 }
