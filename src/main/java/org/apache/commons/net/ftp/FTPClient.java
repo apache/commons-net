@@ -35,6 +35,7 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
@@ -2892,6 +2893,26 @@ public class FTPClient extends FTP implements Configurable {
     public boolean makeDirectory(final String pathname) throws IOException
     {
         return FTPReply.isPositiveCompletion(mkd(pathname));
+    }
+
+    /**
+     * Issue the FTP MDTM command (not supported by all servers) to retrieve the last
+     * modification time of a file. The modification string should be in the
+     * ISO 3077 form "YYYYMMDDhhmmss(.xxx)?". The timestamp represented should also be in
+     * GMT, but not all FTP servers honor this.
+     *
+     * @param pathname The file path to query.
+     * @return A Calendar representing the last file modification time, may be {@code null}.
+     * The Calendar timestamp will be null if a parse error occurs.
+     * @throws IOException if an I/O error occurs.
+     * @since 3.8.0
+     */
+    public Calendar mdtmCalendar(final String pathname) throws IOException {
+        final String modificationTime = getModificationTime(pathname);
+        if (modificationTime != null) {
+            return MLSxEntryParser.parseGMTdateTime(modificationTime);
+        }
+        return null;
     }
 
     /**

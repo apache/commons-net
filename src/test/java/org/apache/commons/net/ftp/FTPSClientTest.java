@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.SocketException;
 import java.net.URL;
+import java.util.Calendar;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.output.NullOutputStream;
@@ -240,6 +241,24 @@ public class FTPSClientTest {
     }
 
     @Test
+    public void testMdtmCalendar() throws SocketException, IOException {
+        testMdtmCalendar("/file.txt");
+    }
+
+    private void testMdtmCalendar(final String pathname) throws SocketException, IOException {
+        final FTPSClient client = loginClient();
+        try {
+            // do it twice
+            final Calendar mdtmCalendar1 = client.mdtmCalendar(pathname);
+            final Calendar mdtmCalendar2 = client.mdtmCalendar(pathname);
+            assertNotNull(mdtmCalendar1);
+            assertNotNull(mdtmCalendar2);
+            assertEquals(mdtmCalendar1, mdtmCalendar2);
+        } finally {
+            client.disconnect();
+        }
+    }
+
     public void testMdtmFile() throws SocketException, IOException {
         testMdtmFile("/file.txt");
     }
@@ -248,8 +267,11 @@ public class FTPSClientTest {
         final FTPSClient client = loginClient();
         try {
             // do it twice
-            assertNotNull(client.mdtmFile(pathname));
-            assertNotNull(client.mdtmFile(pathname));
+            final FTPFile mdtmFile1 = client.mdtmFile(pathname);
+            final FTPFile mdtmFile2 = client.mdtmFile(pathname);
+            assertNotNull(mdtmFile1);
+            assertNotNull(mdtmFile2);
+            assertEquals(mdtmFile1, mdtmFile2);
         } finally {
             client.disconnect();
         }

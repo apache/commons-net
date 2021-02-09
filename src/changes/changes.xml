@@ -71,8 +71,11 @@ The <action> type attribute can be add,update,fix,remove.
            <action type="update" dev="ggregory" due-to="Gary Gregory">
             Add and use SocketClient.applySocketAttributes().
             </action>
-            <action type="update" dev="ggregory" due-to="Dependabot">
+            <action type="update" dev="ggregory" due-to="Gary Gregory">
             Add FTPClient.hasFeature(FTPCmd).
+            </action>
+            <action type="update" dev="ggregory" due-to="Gary Gregory">
+            Add FTPClient.mdtmCalendar(String).
             </action>
             <!-- UPDATE -->
             <action type="update" dev="ggregory" due-to="Dependabot">
