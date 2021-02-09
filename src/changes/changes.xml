@@ -90,6 +90,9 @@ The <action> type attribute can be add,update,fix,remove.
            <action type="update" dev="ggregory" due-to="Arturo Bernal, Gary Gregory">
             Minor Improvements #71, #72.
             </action>
+           <action type="update" dev="ggregory" due-to="Dependabot">
+            Bump actions/cache from v2 to v2.1.4 #73.
+            </action>            
         </release>
         <release version="3.7.2" date="2020-10-14" description="Maintenance and bug fix release (Java 7).">
             <action issue="NET-689" type="fix" dev="ggregory" due-to="Charlie, Gary Gregory">
