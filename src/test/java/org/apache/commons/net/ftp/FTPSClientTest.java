@@ -60,12 +60,6 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class FTPSClientTest {
 
-    private final boolean endpointCheckingEnabled;
-
-    public FTPSClientTest(final boolean endpointCheckingEnabled) {
-        this.endpointCheckingEnabled = endpointCheckingEnabled;
-    }
-
     private static final String JDK_TLS_CLIENT_PROTOCOLS = "jdk.tls.client.protocols";
 
     private static int SocketPort;
@@ -81,11 +75,6 @@ public class FTPSClientTest {
     private static final boolean implicit = false;
 
     private static String TlsProtocols;
-
-    @Parameters(name = "endpointCheckingEnabled={0}")
-    public static Boolean[] testConstructurData() {
-        return new Boolean[] {Boolean.FALSE, Boolean.TRUE};
-    }
 
     @AfterClass
     public static void afterClass() {
@@ -165,6 +154,17 @@ public class FTPSClientTest {
         // System.out.printf("jdk.tls.disabledAlgorithms = %s%n", System.getProperty("jdk.tls.disabledAlgorithms"));
     }
 
+    @Parameters(name = "endpointCheckingEnabled={0}")
+    public static Boolean[] testConstructurData() {
+        return new Boolean[] {Boolean.FALSE, Boolean.TRUE};
+    }
+
+    private final boolean endpointCheckingEnabled;
+
+    public FTPSClientTest(final boolean endpointCheckingEnabled) {
+        this.endpointCheckingEnabled = endpointCheckingEnabled;
+    }
+
     private void assertClientCode(final FTPSClient client) {
         final int replyCode = client.getReplyCode();
         assertTrue(FTPReply.isPositiveCompletion(replyCode));
@@ -203,6 +203,11 @@ public class FTPSClientTest {
         }
     }
 
+    @Test
+    public void testHasFeature() throws SocketException, IOException {
+        loginClient().disconnect();
+    }
+
     private void testListFiles(final String pathname) throws SocketException, IOException {
         final FTPSClient client = loginClient();
         try {
@@ -235,6 +240,22 @@ public class FTPSClientTest {
     }
 
     @Test
+    public void testMdtmFile() throws SocketException, IOException {
+        testMdtmFile("/file.txt");
+    }
+
+    private void testMdtmFile(final String pathname) throws SocketException, IOException {
+        final FTPSClient client = loginClient();
+        try {
+            // do it twice
+            assertNotNull(client.mdtmFile(pathname));
+            assertNotNull(client.mdtmFile(pathname));
+        } finally {
+            client.disconnect();
+        }
+    }
+
+    @Test
     public void testOpenClose() throws SocketException, IOException {
         final FTPSClient ftpsClient = loginClient();
         try {
@@ -243,11 +264,6 @@ public class FTPSClientTest {
         } finally {
             ftpsClient.disconnect();
         }
-    }
-
-    @Test
-    public void testHasFeature() throws SocketException, IOException {
-        loginClient().disconnect();
     }
 
     @Test
