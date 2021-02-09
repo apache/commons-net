@@ -67,7 +67,7 @@ public class FTPSClientTest {
 
     private static String ConnectionUri;
 
-    private static FtpServer Server;
+    private static FtpServer EmbeddedFtpServer;
 
     private static final String USER_PROPS_RES = "org/apache/commons/net/ftpsserver/users.properties";
 
@@ -108,8 +108,8 @@ public class FTPSClientTest {
      * @param implicit FTPS connection mode
      * @throws FtpException
      */
-    static void setUpClass(final boolean implicit) throws FtpException {
-        if (Server != null) {
+    private synchronized static void setUpClass(final boolean implicit) throws FtpException {
+        if (EmbeddedFtpServer != null) {
             return;
         }
         // Use an ephemeral port.
@@ -148,9 +148,9 @@ public class FTPSClientTest {
         serverFactory.addListener("default", factory.createListener());
 
         // start the server
-        Server = serverFactory.createServer();
-        Server.start();
-        SocketPort = ((org.apache.ftpserver.impl.DefaultFtpServer) Server).getListener("default").getPort();
+        EmbeddedFtpServer = serverFactory.createServer();
+        EmbeddedFtpServer.start();
+        SocketPort = ((org.apache.ftpserver.impl.DefaultFtpServer) EmbeddedFtpServer).getListener("default").getPort();
         ConnectionUri = "ftps://test:test@localhost:" + SocketPort;
         // System.out.printf("jdk.tls.disabledAlgorithms = %s%n", System.getProperty("jdk.tls.disabledAlgorithms"));
     }
