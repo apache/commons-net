@@ -78,7 +78,7 @@ The <action> type attribute can be add,update,fix,remove.
             Add FTPClient.mdtmCalendar(String).
             </action>
             <!--  FIX -->
-            <action type="fox" dev="ggregory" due-to="Gary Gregory">
+            <action type="fix" dev="ggregory" due-to="Gary Gregory">
             Fix concurrent counting of chunks in IMAPExportMbox.
             </action>
             <!-- UPDATE -->
