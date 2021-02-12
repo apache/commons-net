@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -276,7 +277,7 @@ public final class IMAPExportMbox
             }
 
         } catch (final IOException ioe) {
-            final String count = mboxListener == null ? "?" : Integer.toString(mboxListener.total);
+            final String count = mboxListener == null ? "?" : mboxListener.total.toString();
             System.err.println(
                     "FETCH " + sequenceSet + " " + itemNames + " failed after processing " + count + " complete messages ");
             if (mboxListener != null) {
@@ -331,7 +332,7 @@ public final class IMAPExportMbox
     private static class MboxListener implements IMAPChunkListener {
 
         private final BufferedWriter bufferedWriter;
-        volatile int total;
+        volatile AtomicInteger total = new AtomicInteger();
         volatile String lastFetched;
         volatile List<String> missingIds = new ArrayList<>();
         volatile long lastSeq = -1;
@@ -424,7 +425,7 @@ public final class IMAPExportMbox
                 throw new RuntimeException(e); // chunkReceived cannot throw a checked Exception
             }
             lastFetched = firstLine;
-            total++;
+            total.incrementAndGet();
             if (checkSequence) {
                 m = PATSEQ.matcher(firstLine);
                 if (m.lookingAt()) { // found a match

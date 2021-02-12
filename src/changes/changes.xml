@@ -65,17 +65,21 @@ The <action> type attribute can be add,update,fix,remove.
     <body>
         <release version="3.8.0" date="2020-MM-DD" description="Maintenance and bug fix release (Java 7).">
             <!-- ADD -->
-           <action type="update" dev="ggregory" due-to="Arturo Bernal, Gary Gregory">
+           <action type="add" dev="ggregory" due-to="Arturo Bernal, Gary Gregory">
             Add and use NetConstants.
             </action>
-           <action type="update" dev="ggregory" due-to="Gary Gregory">
+           <action type="add" dev="ggregory" due-to="Gary Gregory">
             Add and use SocketClient.applySocketAttributes().
             </action>
-            <action type="update" dev="ggregory" due-to="Gary Gregory">
+            <action type="add" dev="ggregory" due-to="Gary Gregory">
             Add FTPClient.hasFeature(FTPCmd).
             </action>
-            <action type="update" dev="ggregory" due-to="Gary Gregory">
+            <action type="add" dev="ggregory" due-to="Gary Gregory">
             Add FTPClient.mdtmCalendar(String).
+            </action>
+            <!--  FIX -->
+            <action type="fox" dev="ggregory" due-to="Gary Gregory">
+            Fix concurrent counting of chunks in IMAPExportMbox.
             </action>
             <!-- UPDATE -->
             <action type="update" dev="ggregory" due-to="Dependabot">
