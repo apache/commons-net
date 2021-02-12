@@ -80,11 +80,14 @@ public class MainTest {
     }
 
     private static void scanForClasses(final int rootLength, final File current, final Properties p) {
-        for(final File file : current.listFiles()) {
-            if (file.isDirectory()) {
-                scanForClasses(rootLength, file, p);
-            } else {
-                processFileName(file.getPath().substring(rootLength), p);
+        final File[] files = current.listFiles();
+        if (files != null) {
+            for (final File file : files) {
+                if (file.isDirectory()) {
+                    scanForClasses(rootLength, file, p);
+                } else {
+                    processFileName(file.getPath().substring(rootLength), p);
+                }
             }
         }
     }

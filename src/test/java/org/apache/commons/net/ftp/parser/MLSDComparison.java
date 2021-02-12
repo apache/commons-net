@@ -60,22 +60,25 @@ public class MLSDComparison {
             }
 
         };
-        for (final File mlsd : path.listFiles(filter)) {
-            System.out.println(mlsd);
-            FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance());
-            try (final InputStream is = new FileInputStream(mlsd)) {
-                engine.readServerList(is, FTP.DEFAULT_CONTROL_ENCODING);
-            }
-            final FTPFile[] mlsds = engine.getFiles(FTPFileFilters.ALL);
-            final File listFile = new File(mlsd.getParentFile(), mlsd.getName().replace("_mlsd", "_list"));
-            try (final InputStream inputStream = new FileInputStream(listFile)) {
-                final FTPClientConfig cfg = new FTPClientConfig();
-                cfg.setServerTimeZoneId("GMT");
-                final UnixFTPEntryParser parser = new UnixFTPEntryParser(cfg);
-                engine = new FTPListParseEngine(parser);
-                engine.readServerList(inputStream, FTP.DEFAULT_CONTROL_ENCODING);
-                final FTPFile[] lists = engine.getFiles(FTPFileFilters.ALL);
-                compareSortedLists(mlsds, lists);
+        final File[] files = path.listFiles(filter);
+        if (files != null) {
+            for (final File mlsd : files) {
+                System.out.println(mlsd);
+                FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance());
+                try (final InputStream is = new FileInputStream(mlsd)) {
+                    engine.readServerList(is, FTP.DEFAULT_CONTROL_ENCODING);
+                }
+                final FTPFile[] mlsds = engine.getFiles(FTPFileFilters.ALL);
+                final File listFile = new File(mlsd.getParentFile(), mlsd.getName().replace("_mlsd", "_list"));
+                try (final InputStream inputStream = new FileInputStream(listFile)) {
+                    final FTPClientConfig cfg = new FTPClientConfig();
+                    cfg.setServerTimeZoneId("GMT");
+                    final UnixFTPEntryParser parser = new UnixFTPEntryParser(cfg);
+                    engine = new FTPListParseEngine(parser);
+                    engine.readServerList(inputStream, FTP.DEFAULT_CONTROL_ENCODING);
+                    final FTPFile[] lists = engine.getFiles(FTPFileFilters.ALL);
+                    compareSortedLists(mlsds, lists);
+                }
             }
         }
     }
