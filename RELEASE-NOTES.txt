@@ -19,13 +19,22 @@ Download page: https://commons.apache.org/proper/commons-net/download_net.cgi
 Changes in this version include:
 ===============================
 
-Changes:
-o NET-685:  Update SocketClient default connect timeout from ? to 60 seconds #51. Thanks to Simo385.
-o NET-695:  Apply SocketClient timeout after connection but before SSL negotiation. Thanks to Gary Gregory, Possibly Cott.
+New features:
 o           Add and use NetConstants. Thanks to Arturo Bernal, Gary Gregory.
 o           Add and use SocketClient.applySocketAttributes(). Thanks to Gary Gregory.
-o           Minor Improvements #71, #72. Thanks to Arturo Bernal, Gary Gregory.
+o           Add FTPClient.hasFeature(FTPCmd). Thanks to Gary Gregory.
+o           Add FTPClient.mdtmCalendar(String). Thanks to Gary Gregory.
+
+Fixed Bugs:
+o           Fix concurrent counting of chunks in IMAPExportMbox. Thanks to Gary Gregory.
+o           Fix possible if rare NPEs in tests. Thanks to Gary Gregory.
+
+Changes:
 o           Bump actions/checkout from v2.3.3 to v2.3.4 #69. Thanks to Dependabot.
+o NET-685:  Update SocketClient default connect timeout from ? to 60 seconds #51. Thanks to Simo385.
+o NET-695:  Apply SocketClient timeout after connection but before SSL negotiation. Thanks to Gary Gregory, Possibly Cott.
+o           Minor Improvements #71, #72. Thanks to Arturo Bernal, Gary Gregory.
+o           Bump actions/cache from v2 to v2.1.4 #73. Thanks to Dependabot.
 
 
 Historical list of changes: https://commons.apache.org/proper/commons-net/changes-report.html
