@@ -67,7 +67,7 @@ public class TelnetTestResponder implements Runnable
 
         try
         {
-            StringBuilder readbytes = new StringBuilder();
+            final StringBuilder readbytes = new StringBuilder();
             while(!result &&
                   System.currentTimeMillis() - starttime < _timeout)
             {
