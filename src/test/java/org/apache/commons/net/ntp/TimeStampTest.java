@@ -26,16 +26,16 @@ import junit.framework.TestCase;
  */
 public class TimeStampTest extends TestCase {
 
-    private static final String TIME1 = "c1a9ae1c.cf6ac48d";  // Tue, Dec 17 2002 14:07:24.810 UTC
-    private static final String TIME2 = "c1a9ae1c.cf6ac48f";  // Tue, Dec 17 2002 14:07:24.810 UTC
-    private static final String TIME3 = "c1a9ae1d.cf6ac48e";  // Tue, Dec 17 2002 14:07:25.810 UTC
+    private static final String TIME1 = "c1a9ae1c.cf6ac48d"; // Tue, Dec 17 2002 14:07:24.810 UTC
+    private static final String TIME2 = "c1a9ae1c.cf6ac48f"; // Tue, Dec 17 2002 14:07:24.810 UTC
+    private static final String TIME3 = "c1a9ae1d.cf6ac48e"; // Tue, Dec 17 2002 14:07:25.810 UTC
 
     public void testCompare() {
 
-        final TimeStamp ts1 = new TimeStamp(TIME1);   // Tue, Dec 17 2002 14:07:24.810 UTC
+        final TimeStamp ts1 = new TimeStamp(TIME1); // Tue, Dec 17 2002 14:07:24.810 UTC
         final TimeStamp ts2 = new TimeStamp(TIME1);
-        final TimeStamp ts3 = new TimeStamp(TIME2);   // Tue, Dec 17 2002 14:07:24.810 UTC
-        final TimeStamp ts4 = new TimeStamp(TIME3);   // Tue, Dec 17 2002 14:07:25.810 UTC
+        final TimeStamp ts3 = new TimeStamp(TIME2); // Tue, Dec 17 2002 14:07:24.810 UTC
+        final TimeStamp ts4 = new TimeStamp(TIME3); // Tue, Dec 17 2002 14:07:25.810 UTC
 
         // do assertion tests on TimeStamp class
         assertEquals("equals(1,2)", ts1, ts2);
@@ -44,9 +44,9 @@ public class TimeStampTest extends TestCase {
         assertEquals("hashCode(1,2)", ts1.hashCode(), ts2.hashCode());
         assertEquals("ts1==ts1", ts1, ts1);
 
-    // timestamps in ts1 (TIME1) and ts3 (TIME2) are only off by the smallest
-    // fraction of a second (~200 picoseconds) so the times are not equal but
-    // when converted to Java dates (in milliseconds) they will be equal.
+        // timestamps in ts1 (TIME1) and ts3 (TIME2) are only off by the smallest
+        // fraction of a second (~200 picoseconds) so the times are not equal but
+        // when converted to Java dates (in milliseconds) they will be equal.
         assertTrue("ts1 != ts3", !ts1.equals(ts3));
         assertEquals("compareTo(1,3)", -1, ts1.compareTo(ts3));
         assertEquals("seconds", ts1.getSeconds(), ts3.getSeconds());
@@ -62,7 +62,7 @@ public class TimeStampTest extends TestCase {
     }
 
     public void testUTCString() {
-        final TimeStamp ts1 = new TimeStamp(TIME1);   // Tue, Dec 17 2002 14:07:24.810 UTC
+        final TimeStamp ts1 = new TimeStamp(TIME1); // Tue, Dec 17 2002 14:07:24.810 UTC
         final String actual = ts1.toUTCString();
         assertEquals("Tue, Dec 17 2002 14:07:24.810 UTC", actual);
     }
@@ -81,11 +81,11 @@ public class TimeStampTest extends TestCase {
     public void testNotSame() {
         final TimeStamp time = TimeStamp.getCurrentTime();
         Object other = Integer.valueOf(0);
-        if(time.equals(other)) {
-          fail("TimeStamp cannot equal Date");
+        if (time.equals(other)) {
+            fail("TimeStamp cannot equal Date");
         }
         other = null;
-        if(time.equals(other)) {
+        if (time.equals(other)) {
             fail("TimeStamp cannot equal null");
         }
     }
