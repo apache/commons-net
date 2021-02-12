@@ -81,6 +81,9 @@ The <action> type attribute can be add,update,fix,remove.
             <action type="fix" dev="ggregory" due-to="Gary Gregory">
             Fix concurrent counting of chunks in IMAPExportMbox.
             </action>
+            <action type="fix" dev="ggregory" due-to="Gary Gregory">
+            Fix possible if rare NPEs in tests.
+            </action>
             <!-- UPDATE -->
             <action type="update" dev="ggregory" due-to="Dependabot">
             Bump actions/checkout from v2.3.3 to v2.3.4 #69.
