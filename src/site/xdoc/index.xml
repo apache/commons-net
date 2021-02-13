@@ -87,7 +87,7 @@
            <br/>
            Alternatively, ensure that the example and main jars are on the classpath.
            Then invoke the class directly, for example:
-           <pre>java -cp commons-net-examples-3.8.0.jar;commons-net-3.5.jar examples/ftp/FTPClientExample [parameters]</pre>
+           <pre>java -cp commons-net-examples-3.8.0.jar;commons-net-3.8.0.jar examples/ftp/FTPClientExample [parameters]</pre>
 
        <subsection name="FTP (package: examples/ftp)">
            <ul>
