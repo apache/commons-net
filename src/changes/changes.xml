@@ -63,7 +63,7 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
     <body>
-        <release version="3.8.0" date="2020-MM-DD" description="Maintenance and bug fix release (Java 7).">
+        <release version="3.8.0" date="2020-02-13" description="Maintenance and bug fix release (Java 7).">
             <!-- ADD -->
            <action type="add" dev="ggregory" due-to="Arturo Bernal, Gary Gregory">
             Add and use NetConstants.
