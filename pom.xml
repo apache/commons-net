@@ -42,8 +42,8 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
 
     <properties>
         <!-- Environment -->
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <commons.javadoc.java.link>${commons.javadoc7.java.link}</commons.javadoc.java.link>
         <commons.componentid>net</commons.componentid>
         <commons.module.name>org.apache.commons.net</commons.module.name>
@@ -54,13 +54,13 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-net</commons.scmPubUrl>
 
         <!-- Current release -->
-        <commons.release.version>3.8.0</commons.release.version>
+        <commons.release.version>3.9.0</commons.release.version>
         <commons.rc.version>RC1</commons.rc.version>
         <commons.release.desc>(Requires Java ${maven.compiler.target} or
             later)</commons.release.desc>
 
         <!-- Release plugin defines -->
-        <commons.bc.version>3.7.2</commons.bc.version>
+        <commons.bc.version>3.8.0</commons.bc.version>
         <commons.release.isDistModule>true</commons.release.isDistModule>
         <commons.releaseManagerName>Gary Gregory</commons.releaseManagerName>
         <commons.releaseManagerKey>86fdc7e2a11262cb</commons.releaseManagerKey>
