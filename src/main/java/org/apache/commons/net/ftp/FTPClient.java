@@ -264,7 +264,8 @@ import org.apache.commons.net.util.NetConstants;
  * One solution to this is to send a safe command (i.e. NOOP) over the control connection to reset the router's
  * idle timer. This is enabled as follows:
  * <pre>
- *     ftpClient.setControlKeepAliveTimeout(300); // set timeout to 5 minutes
+ *     // Set timeout to 5 minutes
+ *     ftpClient.setControlKeepAliveTimeout(Duration.ofMinutes(5));
  * </pre>
  * This will cause the file upload/download methods to send a NOOP approximately every 5 minutes.
  * The following public methods support this:
