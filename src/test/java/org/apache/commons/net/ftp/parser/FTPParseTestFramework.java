@@ -16,6 +16,7 @@
  */
 package org.apache.commons.net.ftp.parser;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -138,10 +139,10 @@ public abstract class FTPParseTestFramework extends TestCase
      * @return null if f is null or the date is null
      */
     protected FTPFile nullFileOrNullDate(final FTPFile f) {
-        if (f==null){
+        if (f == null) {
             return null;
         }
-        if (f.getTimestamp() == null){
+        if (f.getTimestamp() == null) {
             return null;
         }
         return f;
@@ -157,9 +158,10 @@ public abstract class FTPParseTestFramework extends TestCase
         HOUR_OF_DAY(Calendar.HOUR_OF_DAY),
         DAY_OF_MONTH(Calendar.DAY_OF_MONTH),
         MONTH(Calendar.MONTH),
-        YEAR(Calendar.YEAR),
-        ;
+        YEAR(Calendar.YEAR);
+        
         final int unit;
+        
         CalendarUnit(final int calUnit) {
             unit = calUnit;
         }
@@ -167,22 +169,24 @@ public abstract class FTPParseTestFramework extends TestCase
 
     protected void testPrecision(final String listEntry, final CalendarUnit expectedPrecision) {
         final FTPFile file = getParser().parseFTPEntry(listEntry);
-        assertNotNull("Could not parse "+listEntry, file);
+        assertNotNull("Could not parse " + listEntry, file);
         final Calendar stamp = file.getTimestamp();
-        assertNotNull("Failed to parse time in "+listEntry, stamp);
+        assertNotNull("Failed to parse time in " + listEntry, stamp);
+        final Instant instant = file.getTimestampInstant();
+        assertNotNull("Failed to parse time in " + listEntry, instant);
         final int ordinal = expectedPrecision.ordinal();
         final CalendarUnit[] values = CalendarUnit.values();
         // Check expected unit and all more significant ones are set
         // This is needed for FTPFile.toFormattedString() to work correctly
-        for(int i = ordinal; i < values.length; i++) {
+        for (int i = ordinal; i < values.length; i++) {
             final CalendarUnit unit = values[i];
-            assertTrue("Expected set "+unit+" in "+listEntry, stamp.isSet(unit.unit));
+            assertTrue("Expected set " + unit + " in " + listEntry, stamp.isSet(unit.unit));
         }
         // Check previous entry (if any) is not set
         // This is also needed for FTPFile.toFormattedString() to work correctly
         if (ordinal > 0) {
-            final CalendarUnit prevUnit = values[ordinal-1];
-            assertFalse("Expected not set "+prevUnit+" in "+listEntry, stamp.isSet(prevUnit.unit));
+            final CalendarUnit prevUnit = values[ordinal - 1];
+            assertFalse("Expected not set " + prevUnit + " in " + listEntry, stamp.isSet(prevUnit.unit));
         }
     }
 

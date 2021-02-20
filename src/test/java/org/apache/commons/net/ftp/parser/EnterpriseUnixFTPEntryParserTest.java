@@ -16,7 +16,15 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import java.time.Clock;
+import java.time.Instant;
+import java.time.Month;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalField;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
@@ -88,29 +96,43 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     @Override
     public void testParseFieldsOnFile() throws Exception
     {
-        final FTPFile file = getParser().parseFTPEntry("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 13:56 QUADTEST");
-        final Calendar today  = Calendar.getInstance();
-        int year        = today.get(Calendar.YEAR);
+        // Note: No time zone.
+        final FTPFile ftpFile = getParser()
+            .parseFTPEntry("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 13:56 QUADTEST");
+        final Calendar today = Calendar.getInstance();
+        int year = today.get(Calendar.YEAR);
 
-        assertTrue("Should be a file.", file.isFile());
-        assertEquals("QUADTEST", file.getName());
-        assertEquals(5000000000L, file.getSize());
-        assertEquals("QUA1I1", file.getUser());
-        assertEquals("18128", file.getGroup());
+        assertTrue("Should be a file.", ftpFile.isFile());
+        assertEquals("QUADTEST", ftpFile.getName());
+        assertEquals(5000000000L, ftpFile.getSize());
+        assertEquals("QUA1I1", ftpFile.getUser());
+        assertEquals("18128", ftpFile.getGroup());
 
         if (today.get(Calendar.MONTH) < Calendar.AUGUST) {
             --year;
         }
 
-        final Calendar timestamp = file.getTimestamp();
+        final Calendar timestamp = ftpFile.getTimestamp();
         assertEquals(year, timestamp.get(Calendar.YEAR));
         assertEquals(Calendar.AUGUST, timestamp.get(Calendar.MONTH));
         assertEquals(12, timestamp.get(Calendar.DAY_OF_MONTH));
         assertEquals(13, timestamp.get(Calendar.HOUR_OF_DAY));
         assertEquals(56, timestamp.get(Calendar.MINUTE));
         assertEquals(0, timestamp.get(Calendar.SECOND));
+        // No time zone -> local.
+        final TimeZone timeZone = TimeZone.getDefault();
+        assertEquals(timeZone, timestamp.getTimeZone());
 
-        checkPermisions(file);
+        checkPermisions(ftpFile);
+
+        final Instant instant = ftpFile.getTimestampInstant();
+        final ZonedDateTime zDateTime = ZonedDateTime.ofInstant(instant, ZoneId.of(timeZone.getID()));
+        assertEquals(year, zDateTime.getYear());
+        assertEquals(Month.AUGUST, zDateTime.getMonth());
+        assertEquals(12, zDateTime.getDayOfMonth());
+        assertEquals(13, zDateTime.getHour());
+        assertEquals(56, zDateTime.getMinute());
+        assertEquals(0, zDateTime.getSecond());
     }
 
     @Override

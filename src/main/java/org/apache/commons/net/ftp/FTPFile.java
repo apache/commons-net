@@ -18,6 +18,7 @@
 package org.apache.commons.net.ftp;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Formatter;
@@ -76,7 +77,9 @@ public class FTPFile implements Serializable {
     private String group = "";
     private String name;
     private String link;
-    private Calendar date;
+
+    // TODO Consider changing internal representation to java.time.
+    private Calendar calendar;
 
     /** If this is null, then list entry parsing failed. */
     private final boolean[] permissions[]; // e.g. _permissions[USER_ACCESS][READ_PERMISSION]
@@ -172,8 +175,19 @@ public class FTPFile implements Serializable {
      * @return A Calendar instance representing the file timestamp.
      */
     public Calendar getTimestamp() {
-        return date;
+        return calendar;
     }
+
+    /**
+     * Gets the file timestamp. This usually the last modification time.
+     *
+     * @return A Calendar instance representing the file timestamp.
+     * @since 3.9.0
+     */
+    public Instant getTimestampInstant() {
+        return calendar == null ? null : calendar.toInstant();
+    }
+
 
     /**
      * Gets the type of the file (one of the <code>_TYPE</code> constants), e.g., if it is a directory, a regular
@@ -355,7 +369,7 @@ public class FTPFile implements Serializable {
      * @param date A Calendar instance representing the file timestamp.
      */
     public void setTimestamp(final Calendar date) {
-        this.date = date;
+        this.calendar = date;
     }
 
     /**
