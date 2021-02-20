@@ -66,6 +66,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <commons.releaseManagerKey>86fdc7e2a11262cb</commons.releaseManagerKey>
         <!-- Local version defines -->
         <commons.changes.onlyCurrentVersion>true</commons.changes.onlyCurrentVersion>
+        <clirr.skip>true</clirr.skip>
     </properties>
 
     <scm>
@@ -108,7 +109,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
     </dependencies>
 
     <build>
-        <defaultGoal>clean apache-rat:check javadoc:javadoc checkstyle:check clirr:check package</defaultGoal>
+        <defaultGoal>clean apache-rat:check javadoc:javadoc checkstyle:check package japicmp:cmp</defaultGoal>
         <pluginManagement>
             <plugins>
                 <!-- Allow CLI usage -->
