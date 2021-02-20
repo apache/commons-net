@@ -249,58 +249,54 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-         * Returns a socket of the data connection.
-         * Wrapped as an {@link SSLSocket}, which carries out handshake processing.
-         * @param command The textual representation of the FTP command to send.
-         * @param arg The arguments to the FTP command.
-         * If this parameter is set to null, then the command is sent with
-         * no arguments.
-         * @return corresponding to the established data connection.
-         * Null is returned if an FTP protocol error is reported at any point
-         * during the establishment and initialization of the connection.
-         * @throws IOException If there is any problem with the connection.
-         * @see FTPClient#_openDataConnection_(int, String)
-         * @since 3.2
-         */
-        @Override
-        protected Socket _openDataConnection_(final String command, final String arg)
-                throws IOException {
-            final Socket socket = super._openDataConnection_(command, arg);
-            _prepareDataSocket_(socket);
-            if (socket instanceof SSLSocket) {
-                final SSLSocket sslSocket = (SSLSocket)socket;
+     * Returns a socket of the data connection. Wrapped as an {@link SSLSocket}, which carries out handshake processing.
+     * 
+     * @param command The textual representation of the FTP command to send.
+     * @param arg The arguments to the FTP command. If this parameter is set to null, then the command is sent with no
+     *        arguments.
+     * @return corresponding to the established data connection. Null is returned if an FTP protocol error is reported
+     *         at any point during the establishment and initialization of the connection.
+     * @throws IOException If there is any problem with the connection.
+     * @see FTPClient#_openDataConnection_(int, String)
+     * @since 3.2
+     */
+    @Override
+    protected Socket _openDataConnection_(final String command, final String arg) throws IOException {
+        final Socket socket = super._openDataConnection_(command, arg);
+        _prepareDataSocket_(socket);
+        if (socket instanceof SSLSocket) {
+            final SSLSocket sslSocket = (SSLSocket) socket;
 
-                sslSocket.setUseClientMode(isClientMode);
-                sslSocket.setEnableSessionCreation(isCreation);
+            sslSocket.setUseClientMode(isClientMode);
+            sslSocket.setEnableSessionCreation(isCreation);
 
-                // server mode
-                if (!isClientMode) {
-                    sslSocket.setNeedClientAuth(isNeedClientAuth);
-                    sslSocket.setWantClientAuth(isWantClientAuth);
-                }
-                if (suites != null) {
-                    sslSocket.setEnabledCipherSuites(suites);
-                }
-                if (protocols != null) {
-                    sslSocket.setEnabledProtocols(protocols);
-                }
-                sslSocket.startHandshake();
+            // server mode
+            if (!isClientMode) {
+                sslSocket.setNeedClientAuth(isNeedClientAuth);
+                sslSocket.setWantClientAuth(isWantClientAuth);
             }
-
-            return socket;
+            if (suites != null) {
+                sslSocket.setEnabledCipherSuites(suites);
+            }
+            if (protocols != null) {
+                sslSocket.setEnabledProtocols(protocols);
+            }
+            sslSocket.startHandshake();
         }
 
-    /**
-    * Performs any custom initialization for a newly created SSLSocket (before
-    * the SSL handshake happens).
-    * Called by {@link #_openDataConnection_(int, String)} immediately
-    * after creating the socket.
-    * The default implementation is a no-op
-     * @param socket the socket to set up
-    * @throws IOException on error
-    * @since 3.1
-    */
-    protected void _prepareDataSocket_(final Socket socket)
+        return socket;
+    }
+
+        /**
+         * Performs any custom initialization for a newly created SSLSocket (before the SSL handshake happens). Called
+         * by {@link #_openDataConnection_(int, String)} immediately after creating the socket. The default
+         * implementation is a no-op
+         * 
+         * @param socket the socket to set up
+         * @throws IOException on error
+         * @since 3.1
+         */
+        protected void _prepareDataSocket_(final Socket socket)
             throws IOException {
     }
 
