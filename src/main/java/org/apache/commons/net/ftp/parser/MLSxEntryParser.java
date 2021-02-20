@@ -188,30 +188,30 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
      * @since 3.4
      */
     public static Calendar parseGMTdateTime(final String timestamp) {
-        final SimpleDateFormat sdf;
+        final SimpleDateFormat dateFormat;
         final boolean hasMillis;
         if (timestamp.contains(".")){
-            sdf = new SimpleDateFormat("yyyyMMddHHmmss.SSS");
+            dateFormat = new SimpleDateFormat("yyyyMMddHHmmss.SSS");
             hasMillis = true;
         } else {
-            sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+            dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
             hasMillis = false;
         }
-        final TimeZone GMT = TimeZone.getTimeZone("GMT");
+        final TimeZone gmtTimeZone = TimeZone.getTimeZone("GMT");
         // both time zones need to be set for the parse to work OK
-        sdf.setTimeZone(GMT);
-        final GregorianCalendar gc = new GregorianCalendar(GMT);
+        dateFormat.setTimeZone(gmtTimeZone);
+        final GregorianCalendar gCalendar = new GregorianCalendar(gmtTimeZone);
         final ParsePosition pos = new ParsePosition(0);
-        sdf.setLenient(false); // We want to parse the whole string
-        final Date parsed = sdf.parse(timestamp, pos);
+        dateFormat.setLenient(false); // We want to parse the whole string
+        final Date parsed = dateFormat.parse(timestamp, pos);
         if (pos.getIndex()  != timestamp.length()) {
             return null; // did not fully parse the input
         }
-        gc.setTime(parsed);
+        gCalendar.setTime(parsed);
         if (!hasMillis) {
-            gc.clear(Calendar.MILLISECOND); // flag up missing ms units
+            gCalendar.clear(Calendar.MILLISECOND); // flag up missing ms units
         }
-        return gc;
+        return gCalendar;
     }
 
     /**
