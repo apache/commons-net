@@ -80,8 +80,7 @@ public final class TFTPExample
         for (argc = 0; argc < args.length; argc++)
         {
             arg = args[argc];
-            if (arg.startsWith("-"))
-            {
+            if (arg.startsWith("-")) {
                 if (arg.equals("-r")) {
                     receiveFile = true;
                 } else if (arg.equals("-s")) {
@@ -91,7 +90,7 @@ public final class TFTPExample
                 } else if (arg.equals("-b")) {
                     transferMode = TFTP.BINARY_MODE;
                 } else if (arg.equals("-t")) {
-                    timeout = 1000*Integer.parseInt(args[++argc]);
+                    timeout = 1000 * Integer.parseInt(args[++argc]);
                 } else if (arg.equals("-v")) {
                     verbose = true;
                 } else {
