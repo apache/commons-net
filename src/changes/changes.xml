@@ -82,6 +82,12 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="add" dev="ggregory" due-to="Gary Gregory">
         [FTP] Add FTPClient.setControlKeepAliveTimeout(Duration).
       </action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">
+        [FTP] Add FTPClient.getDataTimeout().
+      </action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">
+        [FTP] Add FTPClient.setDataTimeout(Duration).
+      </action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Dependabot">
         Bump junit from 4.13.1 to 4.13.2 #74.

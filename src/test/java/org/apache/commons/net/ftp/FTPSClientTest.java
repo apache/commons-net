@@ -178,13 +178,18 @@ public class FTPSClientTest {
         //
         client.setControlKeepAliveReplyTimeout(null);
         assertEquals(0, client.getControlKeepAliveReplyTimeoutDuration().getSeconds());
-        client.setControlKeepAliveReplyTimeout(Duration.ofSeconds(30));
-        assertEquals(30, client.getControlKeepAliveReplyTimeoutDuration().getSeconds());
+        client.setControlKeepAliveReplyTimeout(Duration.ofSeconds(60));
+        assertEquals(60, client.getControlKeepAliveReplyTimeoutDuration().getSeconds());
         //
         client.setControlKeepAliveTimeout(null);
         assertEquals(0, client.getControlKeepAliveTimeoutDuration().getSeconds());
-        client.setControlKeepAliveTimeout(Duration.ofSeconds(40));
-        assertEquals(40, client.getControlKeepAliveTimeoutDuration().getSeconds());
+        client.setControlKeepAliveTimeout(Duration.ofSeconds(61));
+        assertEquals(61, client.getControlKeepAliveTimeoutDuration().getSeconds());
+        //
+        client.setDataTimeout(null);
+        assertEquals(0, client.getDataTimeout().getSeconds());
+        client.setDataTimeout(Duration.ofSeconds(62));
+        assertEquals(62, client.getDataTimeout().getSeconds());
         //
         client.setEndpointCheckingEnabled(endpointCheckingEnabled);
         client.connect("localhost", SocketPort);

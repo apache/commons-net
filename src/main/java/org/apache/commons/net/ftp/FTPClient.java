@@ -548,7 +548,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     private int dataConnectionMode;
-    private int dataTimeoutMillis;
+    private Duration dataTimeout;
 
     private int passivePort;
     private String passiveHost;
@@ -645,7 +645,7 @@ public class FTPClient extends FTP implements Configurable {
     public FTPClient()
     {
         initDefaults();
-        dataTimeoutMillis = -1;
+        dataTimeout = Duration.ofMillis(-1);
         remoteVerificationEnabled = true;
         parserFactory = new DefaultFTPFileEntryParserFactory();
         configuration      = null;
@@ -768,6 +768,7 @@ public class FTPClient extends FTP implements Configurable {
 
         final Socket socket;
 
+        final int soTimeoutMillis = DurationUtils.toMillisInt(dataTimeout);
         if (dataConnectionMode == ACTIVE_LOCAL_DATA_CONNECTION_MODE)
         {
             // if no activePortRange was set (correctly) -> getActivePort() = 0
@@ -802,14 +803,14 @@ public class FTPClient extends FTP implements Configurable {
                 // the data connection.  It may be desirable to let this be a
                 // separately configurable value.  In any case, we really want
                 // to allow preventing the accept from blocking indefinitely.
-                if (dataTimeoutMillis >= 0) {
-                    server.setSoTimeout(dataTimeoutMillis);
+                if (soTimeoutMillis >= 0) {
+                    server.setSoTimeout(soTimeoutMillis);
                 }
                 socket = server.accept();
 
                 // Ensure the timeout is set before any commands are issued on the new socket
-                if (dataTimeoutMillis >= 0) {
-                    socket.setSoTimeout(dataTimeoutMillis);
+                if (soTimeoutMillis >= 0) {
+                    socket.setSoTimeout(soTimeoutMillis);
                 }
                 if (receiveDataSocketBufferSize > 0) {
                     socket.setReceiveBufferSize(receiveDataSocketBufferSize);
@@ -861,8 +862,8 @@ public class FTPClient extends FTP implements Configurable {
             // the data connection.  It may be desirable to let this be a
             // separately configurable value.  In any case, we really want
             // to allow preventing the accept from blocking indefinitely.
-            if (dataTimeoutMillis >= 0) {
-                socket.setSoTimeout(dataTimeoutMillis);
+            if (soTimeoutMillis >= 0) {
+                socket.setSoTimeout(soTimeoutMillis);
             }
 
             socket.connect(new InetSocketAddress(passiveHost, passivePort), connectTimeout);
@@ -1821,6 +1822,22 @@ public class FTPClient extends FTP implements Configurable {
     public int getDataConnectionMode()
     {
         return dataConnectionMode;
+    }
+
+    /**
+     * Gets the timeout to use when reading from the data connection. This timeout will be set immediately after opening
+     * the data connection, provided that the value is &ge; 0.
+     * <p>
+     * <b>Note:</b> the timeout will also be applied when calling accept() whilst establishing an active local data
+     * connection.
+     * </p>
+     *
+     * @return The default timeout used when opening a data connection socket. The value 0 means an infinite timeout.
+     * @since 3.9.0
+     */
+    public Duration getDataTimeout()
+    {
+        return dataTimeout;
     }
 
     // Method for use by unit test code only
@@ -3360,6 +3377,7 @@ public class FTPClient extends FTP implements Configurable {
         return _retrieveFile(FTPCmd.RETR.getCommand(), remote, local);
     }
 
+
     /**
      * Returns an InputStream from which a named file from the server
      * can be read.  If the current file type is ASCII, the returned
@@ -3393,7 +3411,6 @@ public class FTPClient extends FTP implements Configurable {
     {
         return _retrieveFileStream(FTPCmd.RETR.getCommand(), remote);
     }
-
 
     /**
      * Sends a NOOP command to the FTP server.  This is useful for preventing
@@ -3480,6 +3497,17 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Sets how long to wait for control keep-alive message replies.
      *
+     * @param timeout number of milliseconds to wait (defaults to 1000)
+     * @since 3.0
+     * @see #setControlKeepAliveTimeout(Duration)
+     */
+    public void setControlKeepAliveReplyTimeout(final Duration timeout) {
+        controlKeepAliveReplyTimeout = DurationUtils.zeroIfNull(timeout);
+    }
+
+    /**
+     * Sets how long to wait for control keep-alive message replies.
+     *
      * @deprecated Use {@link #setControlKeepAliveReplyTimeout(Duration)}.
      * @param timeoutMillis number of milliseconds to wait (defaults to 1000)
      * @since 3.0
@@ -3488,17 +3516,6 @@ public class FTPClient extends FTP implements Configurable {
     @Deprecated
     public void setControlKeepAliveReplyTimeout(final int timeoutMillis) {
         controlKeepAliveReplyTimeout = Duration.ofMillis(timeoutMillis);
-    }
-
-    /**
-     * Sets how long to wait for control keep-alive message replies.
-     *
-     * @param timeoutMillis number of milliseconds to wait (defaults to 1000)
-     * @since 3.0
-     * @see #setControlKeepAliveTimeout(Duration)
-     */
-    public void setControlKeepAliveReplyTimeout(final Duration timeoutMillis) {
-        controlKeepAliveReplyTimeout = DurationUtils.zeroIfNull(timeoutMillis);
     }
 
     /**
@@ -3545,18 +3562,38 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
+     * Sets the timeout to use when reading from the
+     * data connection.  This timeout will be set immediately after
+     * opening the data connection, provided that the value is &ge; 0.
+     * <p>
+     * <b>Note:</b> the timeout will also be applied when calling accept()
+     * whilst establishing an active local data connection.
+     * @param  timeout The default timeout that is used when
+     *        opening a data connection socket. The value 0 (or null) means an infinite timeout.
+     * @since 3.9.0
+     */
+    public void setDataTimeout(final Duration timeout)
+    {
+        dataTimeout = DurationUtils.zeroIfNull(timeout);
+    }
+
+    /**
      * Sets the timeout in milliseconds to use when reading from the
      * data connection.  This timeout will be set immediately after
      * opening the data connection, provided that the value is &ge; 0.
      * <p>
      * <b>Note:</b> the timeout will also be applied when calling accept()
      * whilst establishing an active local data connection.
+     * </p>
+     *
+     * @deprecated Use {@link #setDataTimeout(Duration)}.
      * @param  timeoutMillis The default timeout in milliseconds that is used when
      *        opening a data connection socket. The value 0 means an infinite timeout.
      */
+    @Deprecated
     public void setDataTimeout(final int timeoutMillis)
     {
-        dataTimeoutMillis = timeoutMillis;
+        dataTimeout = Duration.ofMillis(timeoutMillis);
     }
 
     /**
