@@ -33,6 +33,7 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
         "12-05-96  05:03PM       <DIR>          absoft2",
         "11-14-97  04:21PM                  953 AUDITOR3.INI"
     };
+
     private static final String[] goodsamples =
     {
         "     0           DIR   12-30-97   12:32  jbrekke",
@@ -59,12 +60,10 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
     {
         final FTPFile dir = getParser().parseFTPEntry("     0           DIR   11-28-97   09:42  PC");
         assertNotNull("Could not parse entry.", dir);
-        assertTrue("Should have been a directory.",
-                   dir.isDirectory());
-        assertEquals(0,dir.getSize());
+        assertTrue("Should have been a directory.", dir.isDirectory());
+        assertEquals(0, dir.getSize());
         assertEquals("PC", dir.getName());
-        assertEquals("Fri Nov 28 09:42:00 1997",
-                     df.format(dir.getTimestamp().getTime()));
+        assertEquals("Fri Nov 28 09:42:00 1997", df.format(dir.getTimestamp().getTime()));
     }
 
     @Override
@@ -72,12 +71,10 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
     {
         final FTPFile file = getParser().parseFTPEntry("5000000000      A          11-17-98   16:07  POPUPLOG.OS2");
         assertNotNull("Could not parse entry.", file);
-        assertTrue("Should have been a file.",
-                   file.isFile());
+        assertTrue("Should have been a file.", file.isFile());
         assertEquals(5000000000L, file.getSize());
         assertEquals("POPUPLOG.OS2", file.getName());
-        assertEquals("Tue Nov 17 16:07:00 1998",
-                     df.format(file.getTimestamp().getTime()));
+        assertEquals("Tue Nov 17 16:07:00 1998", df.format(file.getTimestamp().getTime()));
     }
 
     @Override
@@ -97,8 +94,7 @@ public class OS2FTPEntryParserTest extends FTPParseTestFramework
     @Override
     protected FTPFileEntryParser getParser()
     {
-        final ConfigurableFTPFileEntryParserImpl parser =
-            new OS2FTPEntryParser();
+        final ConfigurableFTPFileEntryParserImpl parser = new OS2FTPEntryParser();
         parser.configure(null);
         return parser;
     }

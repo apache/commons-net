@@ -27,7 +27,7 @@ import org.apache.commons.net.ftp.FTPListParseEngine;
  */
 public class VMSFTPEntryParserTest extends FTPParseTestFramework
 {
-    private static final String[] badsamples =
+    private static final String[] BAD_SAMPLES =
     {
 
         "1-JUN.LIS;2              9/9           JUN-2-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)",
@@ -42,7 +42,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     };
 
     // CHECKSTYLE:OFF (long lines)
-    private static final String[] goodsamples =
+    private static final String[] GOOD_SAMPLES =
     {
         "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
         "1-JUN.LIS;3              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)",
@@ -68,7 +68,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     };
     // CHECKSTYLE:ON
 
-    private static final String fullListing = "Directory USER1:[TEMP]\r\n\r\n"+
+    private static final String FULL_LISTING = "Directory USER1:[TEMP]\r\n\r\n"+
     "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)\r\n"+
     "2-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)\r\n"+
     "3-JUN.LIS;1              9/9           3-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)\r\n"+
@@ -91,7 +91,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         parser.configure(null);
         final FTPListParseEngine engine = new FTPListParseEngine(parser);
         engine.readServerList(
-                new ByteArrayInputStream(fullListing.getBytes()), null); // use default encoding
+                new ByteArrayInputStream(FULL_LISTING.getBytes()), null); // use default encoding
         final FTPFile[] files = engine.getFiles();
         assertEquals(6, files.length);
         assertFileInListing(files, "2-JUN.LIS");
@@ -108,7 +108,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         parser.configure(null);
         final FTPListParseEngine engine = new FTPListParseEngine(parser);
         engine.readServerList(
-                new ByteArrayInputStream(fullListing.getBytes()), null); // use default encoding
+                new ByteArrayInputStream(FULL_LISTING.getBytes()), null); // use default encoding
         final FTPFile[] files = engine.getFiles();
         assertEquals(3, files.length);
         assertFileInListing(files, "1-JUN.LIS;1");
@@ -226,14 +226,14 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     protected String[] getBadListing()
     {
 
-        return badsamples;
+        return BAD_SAMPLES;
     }
 
     @Override
     protected String[] getGoodListing()
     {
 
-        return goodsamples;
+        return GOOD_SAMPLES;
     }
 
     @Override
