@@ -117,37 +117,36 @@ public class FTPClientConfigFunctionalTest extends TestCase {
         final FTPFile[] files = FTP.listFiles();
         final TreeSet<FTPFile> sorted = getSortedList(files);
         //SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm z" );
-        FTPFile lastfile = null;
-        FTPFile firstfile = null;
-        for (final FTPFile thisfile : sorted) {
-            if (firstfile == null) {
-                firstfile = thisfile;
+        FTPFile lastFile = null;
+        FTPFile firstFile = null;
+        for (final FTPFile thisFile : sorted) {
+            if (firstFile == null) {
+                firstFile = thisFile;
             }
             //System.out.println(sdf.format(thisfile.getTimestamp().getTime())
             //        + " " +thisfile.getName());
-            if (lastfile != null) {
+            if (lastFile != null) {
                 // verify that the list is sorted earliest to latest.
-                assertTrue(lastfile.getTimestamp()
-                        .before(thisfile.getTimestamp()));
+                assertTrue(lastFile.getTimestamp().before(thisFile.getTimestamp()));
             }
-            lastfile = thisfile;
+            lastFile = thisFile;
         }
 
-        if (firstfile == null || lastfile == null)  {
+        if (firstFile == null || lastFile == null)  {
             fail("No files found");
         } else {
             // test that notwithstanding any time zone differences, the newest file
             // is older than now.
-            assertTrue(lastfile.getTimestamp().getTime().before(now));
-            final Calendar first = firstfile.getTimestamp();
+            assertTrue(lastFile.getTimestamp().getTime().before(now));
+            final Calendar first = firstFile.getTimestamp();
 
             // test that the oldest is less than two days older than the newest
             // and, in particular, that no files have been considered "future"
             // by the parser and therefore been relegated to the same date a
             // year ago.
             first.add(Calendar.DAY_OF_MONTH, 2);
-            assertTrue(lastfile.getTimestamp().getTime().toString() +
-                    " before "+ first.getTime().toString(),lastfile.getTimestamp().before(first));
+            assertTrue(lastFile.getTimestamp().getTime().toString() +
+                    " before "+ first.getTime().toString(),lastFile.getTimestamp().before(first));
         }
     }
 }
