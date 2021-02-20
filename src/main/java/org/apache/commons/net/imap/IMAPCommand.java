@@ -62,19 +62,25 @@ public enum IMAPCommand
     UID(2, Integer.MAX_VALUE),
     ;
 
-    private final String imapCommand;
+    /**
+     * Get the IMAP protocol string command corresponding to a command code.
+     *
+     * @param command the IMAPCommand whose command string is required.
+     * @return The IMAP protocol string command corresponding to a command code.
+     */
+    public static final String getCommand(final IMAPCommand command) {
+        return command.getIMAPCommand();
+    }
 
+    private final String imapCommand;
     @SuppressWarnings("unused") // not yet used
     private final int minParamCount;
+
     @SuppressWarnings("unused") // not yet used
     private final int maxParamCount;
 
     IMAPCommand(){
         this(null);
-    }
-
-    IMAPCommand(final String name){
-        this(name, 0);
     }
 
     IMAPCommand(final int paramCount){
@@ -85,6 +91,10 @@ public enum IMAPCommand
         this(null, minCount, maxCount);
    }
 
+    IMAPCommand(final String name){
+        this(name, 0);
+    }
+
     IMAPCommand(final String name, final int paramCount){
         this(name, paramCount, paramCount);
     }
@@ -93,16 +103,6 @@ public enum IMAPCommand
         this.imapCommand = name;
         this.minParamCount = minCount;
         this.maxParamCount = maxCount;
-    }
-
-    /**
-     * Get the IMAP protocol string command corresponding to a command code.
-     *
-     * @param command the IMAPCommand whose command string is required.
-     * @return The IMAP protocol string command corresponding to a command code.
-     */
-    public static final String getCommand(final IMAPCommand command) {
-        return command.getIMAPCommand();
     }
 
     /**

@@ -85,6 +85,17 @@ public class RExecClient extends SocketClient
      */
     protected InputStream _errorStream_;
 
+    /**
+     * The default RExecClient constructor.  Initializes the
+     * default port to <code> DEFAULT_PORT </code>.
+     */
+    public RExecClient()
+    {
+        _errorStream_ = null;
+        setDefaultPort(DEFAULT_PORT);
+    }
+
+
     // This can be overridden in local package to implement port range
     // limitations of rcmd and rlogin
     InputStream createErrorStream() throws IOException
@@ -114,13 +125,35 @@ public class RExecClient extends SocketClient
 
 
     /**
-     * The default RExecClient constructor.  Initializes the
-     * default port to <code> DEFAULT_PORT </code>.
+     * Disconnects from the server, closing all associated open sockets and
+     * streams.
+     *
+     * @throws IOException If there an error occurs while disconnecting.
      */
-    public RExecClient()
+    @Override
+    public void disconnect() throws IOException
     {
+        if (_errorStream_ != null) {
+            _errorStream_.close();
+        }
         _errorStream_ = null;
-        setDefaultPort(DEFAULT_PORT);
+        super.disconnect();
+    }
+
+
+    /**
+     * Returns the InputStream from which the standard error of the remote
+     * process can be read if a separate error stream is requested from
+     * the server.  Otherwise, null will be returned.  The error stream
+     * will only be set after a successful rexec() invocation.
+     *
+     * @return The InputStream from which the standard error of the remote
+     * process can be read if a separate error stream is requested from
+     * the server.  Otherwise, null will be returned.
+     */
+    public InputStream getErrorStream()
+    {
+        return _errorStream_;
     }
 
 
@@ -153,18 +186,29 @@ public class RExecClient extends SocketClient
 
 
     /**
-     * Returns the InputStream from which the standard error of the remote
-     * process can be read if a separate error stream is requested from
-     * the server.  Otherwise, null will be returned.  The error stream
-     * will only be set after a successful rexec() invocation.
+     * Return whether or not verification of the remote host providing a
+     * separate error stream is enabled.  The default behavior is for
+     * verification to be enabled.
      *
-     * @return The InputStream from which the standard error of the remote
-     * process can be read if a separate error stream is requested from
-     * the server.  Otherwise, null will be returned.
+     * @return True if verification is enabled, false if not.
      */
-    public InputStream getErrorStream()
+    public final boolean isRemoteVerificationEnabled()
     {
-        return _errorStream_;
+        return remoteVerificationEnabled;
+    }
+
+    /**
+     * Same as <code> rexec(username, password, command, false); </code>
+     * @param username the user name
+     * @param password the password
+     * @param command the command to run
+     * @throws IOException if an error occurs
+     */
+    public void rexec(final String username, final String password,
+                      final String command)
+    throws IOException
+    {
+        rexec(username, password, command, false);
     }
 
 
@@ -237,38 +281,6 @@ public class RExecClient extends SocketClient
         }
     }
 
-
-    /**
-     * Same as <code> rexec(username, password, command, false); </code>
-     * @param username the user name
-     * @param password the password
-     * @param command the command to run
-     * @throws IOException if an error occurs
-     */
-    public void rexec(final String username, final String password,
-                      final String command)
-    throws IOException
-    {
-        rexec(username, password, command, false);
-    }
-
-    /**
-     * Disconnects from the server, closing all associated open sockets and
-     * streams.
-     *
-     * @throws IOException If there an error occurs while disconnecting.
-     */
-    @Override
-    public void disconnect() throws IOException
-    {
-        if (_errorStream_ != null) {
-            _errorStream_.close();
-        }
-        _errorStream_ = null;
-        super.disconnect();
-    }
-
-
     /**
      * Enable or disable verification that the remote host connecting to
      * create a separate error stream is the same as the host to which
@@ -281,18 +293,6 @@ public class RExecClient extends SocketClient
     public final void setRemoteVerificationEnabled(final boolean enable)
     {
         remoteVerificationEnabled = enable;
-    }
-
-    /**
-     * Return whether or not verification of the remote host providing a
-     * separate error stream is enabled.  The default behavior is for
-     * verification to be enabled.
-     *
-     * @return True if verification is enabled, false if not.
-     */
-    public final boolean isRemoteVerificationEnabled()
-    {
-        return remoteVerificationEnabled;
     }
 
 }

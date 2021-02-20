@@ -53,59 +53,25 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
     }
 
 
-    private void writeInt(final int ch) throws IOException
-    {
-        switch (ch)
-        {
-        case '\r':
-            lastWasCR = true;
-            // Don't write anything.  We need to see if next one is linefeed
-            break;
-        case '\n':
-            if (lastWasCR)
-            {
-                out.write(FromNetASCIIInputStream._lineSeparatorBytes);
-                lastWasCR = false;
-                break;
-            }
-            lastWasCR = false;
-            out.write('\n');
-            break;
-        default:
-            if (lastWasCR)
-            {
-                out.write('\r');
-                lastWasCR = false;
-            }
-            out.write(ch);
-            break;
-        }
-    }
-
-
     /**
-     * Writes a byte to the stream.    Note that a call to this method
-     * might not actually write a byte to the underlying stream until a
-     * subsequent character is written, from which it can be determined if
-     * a NETASCII line separator was encountered.
-     * This is transparent to the programmer and is only mentioned for
-     * completeness.
+     * Closes the stream, writing all pending data.
      *
-     * @param ch The byte to write.
-     * @throws IOException If an error occurs while writing to the underlying
-     *            stream.
+     * @throws IOException  If an error occurs while closing the stream.
      */
     @Override
-    public synchronized void write(final int ch)
+    public synchronized void close()
     throws IOException
     {
         if (FromNetASCIIInputStream._noConversionRequired)
         {
-            out.write(ch);
+            super.close();
             return ;
         }
 
-        writeInt(ch);
+        if (lastWasCR) {
+            out.write('\r');
+        }
+        super.close();
     }
 
 
@@ -153,23 +119,57 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
 
 
     /**
-     * Closes the stream, writing all pending data.
+     * Writes a byte to the stream.    Note that a call to this method
+     * might not actually write a byte to the underlying stream until a
+     * subsequent character is written, from which it can be determined if
+     * a NETASCII line separator was encountered.
+     * This is transparent to the programmer and is only mentioned for
+     * completeness.
      *
-     * @throws IOException  If an error occurs while closing the stream.
+     * @param ch The byte to write.
+     * @throws IOException If an error occurs while writing to the underlying
+     *            stream.
      */
     @Override
-    public synchronized void close()
+    public synchronized void write(final int ch)
     throws IOException
     {
         if (FromNetASCIIInputStream._noConversionRequired)
         {
-            super.close();
+            out.write(ch);
             return ;
         }
 
-        if (lastWasCR) {
-            out.write('\r');
+        writeInt(ch);
+    }
+
+
+    private void writeInt(final int ch) throws IOException
+    {
+        switch (ch)
+        {
+        case '\r':
+            lastWasCR = true;
+            // Don't write anything.  We need to see if next one is linefeed
+            break;
+        case '\n':
+            if (lastWasCR)
+            {
+                out.write(FromNetASCIIInputStream._lineSeparatorBytes);
+                lastWasCR = false;
+                break;
+            }
+            lastWasCR = false;
+            out.write('\n');
+            break;
+        default:
+            if (lastWasCR)
+            {
+                out.write('\r');
+                lastWasCR = false;
+            }
+            out.write(ch);
+            break;
         }
-        super.close();
     }
 }

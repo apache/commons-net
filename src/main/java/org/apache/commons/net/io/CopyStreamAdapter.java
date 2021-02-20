@@ -50,6 +50,17 @@ public class CopyStreamAdapter implements CopyStreamListener
     }
 
     /**
+     * Registers a CopyStreamListener to receive CopyStreamEvents.
+     * Although this method is not declared to be synchronized, it is
+     * implemented in a thread safe manner.
+     * @param listener  The CopyStreamlistener to register.
+     */
+    public void addCopyStreamListener(final CopyStreamListener listener)
+    {
+        internalListeners.addListener(listener);
+    }
+
+    /**
      * This method is invoked by a CopyStreamEvent source after copying
      * a block of bytes from a stream.  The CopyStreamEvent will contain
      * the total number of bytes transferred so far and the number of bytes
@@ -92,17 +103,6 @@ public class CopyStreamAdapter implements CopyStreamListener
             ((CopyStreamListener) listener).bytesTransferred(
                     totalBytesTransferred, bytesTransferred, streamSize);
         }
-    }
-
-    /**
-     * Registers a CopyStreamListener to receive CopyStreamEvents.
-     * Although this method is not declared to be synchronized, it is
-     * implemented in a thread safe manner.
-     * @param listener  The CopyStreamlistener to register.
-     */
-    public void addCopyStreamListener(final CopyStreamListener listener)
-    {
-        internalListeners.addListener(listener);
     }
 
     /**

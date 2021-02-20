@@ -86,6 +86,77 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
         super(name);
     }
 
+    private void checkPermissions(final FTPFile f) {
+        assertTrue("Should have user read permission.", f.hasPermission(
+                FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
+        assertTrue("Should have user write permission.", f.hasPermission(
+                FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION));
+        assertTrue("Should have user execute permission.", f.hasPermission(
+                FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION));
+        assertTrue("Should have group read permission.", f.hasPermission(
+                FTPFile.GROUP_ACCESS, FTPFile.READ_PERMISSION));
+        assertTrue("Should NOT have group write permission.", !f.hasPermission(
+                FTPFile.GROUP_ACCESS, FTPFile.WRITE_PERMISSION));
+        assertTrue("Should have group execute permission.", f.hasPermission(
+                FTPFile.GROUP_ACCESS, FTPFile.EXECUTE_PERMISSION));
+        assertTrue("Should have world read permission.", f.hasPermission(
+                FTPFile.WORLD_ACCESS, FTPFile.READ_PERMISSION));
+        assertTrue("Should NOT have world write permission.", !f.hasPermission(
+                FTPFile.WORLD_ACCESS, FTPFile.WRITE_PERMISSION));
+        assertTrue("Should have world execute permission.", f.hasPermission(
+                FTPFile.WORLD_ACCESS, FTPFile.EXECUTE_PERMISSION));
+    }
+
+    @Override
+    protected void doAdditionalGoodTests(final String test, final FTPFile f) {
+        final String link = f.getLink();
+        if (null != link) {
+            final int linklen = link.length();
+            if (linklen > 0) {
+                assertEquals(link, test.substring(test.length() - linklen));
+                assertEquals(f.getType(), FTPFile.SYMBOLIC_LINK_TYPE);
+            }
+        }
+        final int type = f.getType();
+        switch (test.charAt(0))
+        {
+        case 'd':
+            assertEquals("Type of "+ test, type, FTPFile.DIRECTORY_TYPE);
+            break;
+        case 'l':
+             assertEquals("Type of "+ test, type, FTPFile.SYMBOLIC_LINK_TYPE);
+             break;
+        case 'b':
+        case 'c':
+            assertEquals(0, f.getHardLinkCount());
+            //$FALL-THROUGH$ TODO this needs to be fixed if a device type is introduced
+        case 'f':
+        case '-':
+            assertEquals("Type of "+ test, type, FTPFile.FILE_TYPE);
+            break;
+        default:
+            assertEquals("Type of "+ test, type, FTPFile.UNKNOWN_TYPE);
+        }
+
+        for (int access = FTPFile.USER_ACCESS;
+            access <= FTPFile.WORLD_ACCESS; access++)
+        {
+            for (int perm = FTPFile.READ_PERMISSION;
+                perm <= FTPFile.EXECUTE_PERMISSION; perm++)
+            {
+                final int pos = 3*access + perm + 1;
+                final char permchar = test.charAt(pos);
+                assertEquals("Permission " + test.substring(1,10),
+                        Boolean.valueOf(f.hasPermission(access, perm)),
+                        Boolean.valueOf(permchar != '-' && !Character.isUpperCase(permchar)));
+            }
+        }
+
+        assertNotNull("Expected to find a timestamp",f.getTimestamp());
+// Perhaps check date range (need to ensure all good examples qualify)
+//        assertTrue(test,f.getTimestamp().get(Calendar.YEAR)>=2000);
+    }
+
     @Override
     protected String[] getBadListing() {
         return badsamples;
@@ -94,6 +165,96 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
     @Override
     protected String[] getGoodListing() {
         return goodsamples;
+    }
+
+    @Override
+    protected FTPFileEntryParser getParser() {
+        return new UnixFTPEntryParser();
+    }
+
+    public void testCorrectGroupNameParsing() {
+        final FTPFile f = getParser().parseFTPEntry("-rw-r--r--   1 ftpuser  ftpusers 12414535 Mar 17 11:07 test 1999 abc.pdf");
+        assertNotNull(f);
+        assertEquals(1, f.getHardLinkCount());
+        assertEquals("ftpuser", f.getUser());
+        assertEquals("ftpusers", f.getGroup());
+        assertEquals(12414535, f.getSize());
+        assertEquals("test 1999 abc.pdf", f.getName());
+
+        final Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.MONTH, Calendar.MARCH);
+        cal.set(Calendar.DAY_OF_MONTH, 17);
+        cal.set(Calendar.HOUR_OF_DAY, 11);
+        cal.set(Calendar.MINUTE, 7);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        assertEquals(f.getTimestamp().get(Calendar.MONTH), cal.get(Calendar.MONTH));
+        assertEquals(f.getTimestamp().get(Calendar.DAY_OF_MONTH), cal.get(Calendar.DAY_OF_MONTH));
+        assertEquals(f.getTimestamp().get(Calendar.HOUR_OF_DAY), cal.get(Calendar.HOUR_OF_DAY));
+        assertEquals(f.getTimestamp().get(Calendar.MINUTE), cal.get(Calendar.MINUTE));
+        assertEquals(f.getTimestamp().get(Calendar.SECOND), cal.get(Calendar.SECOND));
+    }
+
+    @Override
+    public void testDefaultPrecision() {
+        testPrecision("drwxr-xr-x   2 user     group         4096 Mar  2 2014 zxbox", CalendarUnit.DAY_OF_MONTH);
+    }
+
+    public void testFilenamesWithEmbeddedNumbers() {
+        final FTPFile f = getParser().parseFTPEntry("-rw-rw-rw-   1 user group 5840 Mar 19 09:34 123 456 abc.csv");
+        assertEquals("123 456 abc.csv", f.getName());
+        assertEquals(5840, f.getSize());
+        assertEquals("user", f.getUser());
+        assertEquals("group", f.getGroup());
+    }
+
+    public void testGroupNameWithSpaces() {
+        final FTPFile f = getParser().parseFTPEntry("drwx------ 4 maxm Domain Users 512 Oct 2 10:59 .metadata");
+        assertNotNull(f);
+        assertEquals("maxm", f.getUser());
+        assertEquals("Domain Users", f.getGroup());
+    }
+
+    public void testLeadingSpacesDefault() { // the default has been changed to keep spaces
+        final FTPFile f = getParser().parseFTPEntry("drwxr-xr-x   2 john smith     group         4096 Mar  2 15:13   zxbox");
+        assertNotNull(f);
+        assertEquals("  zxbox", f.getName() ); // leading spaces retained
+    }
+
+    public void testLeadingSpacesNET566() { // check new behavior
+        final FTPFile f = new UnixFTPEntryParser(null, false).parseFTPEntry(
+            "drwxr-xr-x   2 john smith     group         4096 Mar  2 15:13   zxbox");
+        assertNotNull(f);
+        assertEquals("  zxbox", f.getName() ); // leading spaces retained
+    }
+
+    public void testNameWIthPunctuation() {
+        final FTPFile f = getParser().parseFTPEntry("drwx------ 4 maxm Domain Users 512 Oct 2 10:59 abc(test)123.pdf");
+        assertNotNull(f);
+        assertEquals("abc(test)123.pdf", f.getName());
+    }
+
+    public void testNET294() {
+        final FTPFile f = getParser().parseFTPEntry(
+                "-rwxrwx---   1 ftp      ftp-admin 816026400 Oct  5  2008 bloplab 7 cd1.img");
+        assertNotNull(f);
+        assertEquals("ftp", f.getUser());
+        assertEquals("ftp-admin", f.getGroup());
+        assertEquals(816026400L,f.getSize());
+        assertNotNull("Timestamp should not be null",f.getTimestamp());
+        assertEquals(2008,f.getTimestamp().get(Calendar.YEAR));
+        assertEquals("bloplab 7 cd1.img",f.getName());
+    }
+
+    public void testNoSpacesBeforeFileSize() {
+        final FTPFile f = getParser().parseFTPEntry("drwxr-x---+1464 chrism   chrism     41472 Feb 25 13:17 20090225");
+        assertNotNull(f);
+        assertEquals(41472, f.getSize());
+        assertEquals(f.getType(), FTPFile.DIRECTORY_TYPE);
+        assertEquals("chrism", f.getUser());
+        assertEquals("chrism", f.getGroup());
+        assertEquals(1464, f.getHardLinkCount());
     }
 
     public void testNumericDateFormat()
@@ -126,9 +287,11 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
 
     }
 
-    @Override
-    protected FTPFileEntryParser getParser() {
-        return new UnixFTPEntryParser();
+    public void testOwnerAndGroupNameWithSpaces() {
+        final FTPFile f = getParser().parseFTPEntry("drwxr-xr-x   2 john smith     test group         4096 Mar  2 15:13 zxbox");
+        assertNotNull(f);
+        assertEquals("john smith", f.getUser());
+        assertEquals("test group", f.getGroup());
     }
 
     public void testOwnerNameWithSpaces() {
@@ -137,105 +300,6 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
         assertEquals("john smith", f.getUser());
     }
 
-    public void testOwnerAndGroupNameWithSpaces() {
-        final FTPFile f = getParser().parseFTPEntry("drwxr-xr-x   2 john smith     test group         4096 Mar  2 15:13 zxbox");
-        assertNotNull(f);
-        assertEquals("john smith", f.getUser());
-        assertEquals("test group", f.getGroup());
-    }
-
-    public void testNET294() {
-        final FTPFile f = getParser().parseFTPEntry(
-                "-rwxrwx---   1 ftp      ftp-admin 816026400 Oct  5  2008 bloplab 7 cd1.img");
-        assertNotNull(f);
-        assertEquals("ftp", f.getUser());
-        assertEquals("ftp-admin", f.getGroup());
-        assertEquals(816026400L,f.getSize());
-        assertNotNull("Timestamp should not be null",f.getTimestamp());
-        assertEquals(2008,f.getTimestamp().get(Calendar.YEAR));
-        assertEquals("bloplab 7 cd1.img",f.getName());
-    }
-
-    public void testGroupNameWithSpaces() {
-        final FTPFile f = getParser().parseFTPEntry("drwx------ 4 maxm Domain Users 512 Oct 2 10:59 .metadata");
-        assertNotNull(f);
-        assertEquals("maxm", f.getUser());
-        assertEquals("Domain Users", f.getGroup());
-    }
-
-    public void testTrailingSpaces() {
-        final FTPFile f = getParser().parseFTPEntry("drwxr-xr-x   2 john smith     group         4096 Mar  2 15:13 zxbox     ");
-        assertNotNull(f);
-        assertEquals("zxbox     ", f.getName());
-    }
-
-    public void testLeadingSpacesDefault() { // the default has been changed to keep spaces
-        final FTPFile f = getParser().parseFTPEntry("drwxr-xr-x   2 john smith     group         4096 Mar  2 15:13   zxbox");
-        assertNotNull(f);
-        assertEquals("  zxbox", f.getName() ); // leading spaces retained
-    }
-
-    public void testLeadingSpacesNET566() { // check new behavior
-        final FTPFile f = new UnixFTPEntryParser(null, false).parseFTPEntry(
-            "drwxr-xr-x   2 john smith     group         4096 Mar  2 15:13   zxbox");
-        assertNotNull(f);
-        assertEquals("  zxbox", f.getName() ); // leading spaces retained
-    }
-
-    public void testTrimLeadingSpacesNET566() { // check can trim spaces as before
-        final FTPFile f = new UnixFTPEntryParser(null, true).parseFTPEntry(
-            "drwxr-xr-x   2 john smith     group         4096 Mar  2 15:13   zxbox");
-        assertNotNull(f);
-        assertEquals("zxbox", f.getName() ); // leading spaces trimmed
-    }
-
-    public void testNameWIthPunctuation() {
-        final FTPFile f = getParser().parseFTPEntry("drwx------ 4 maxm Domain Users 512 Oct 2 10:59 abc(test)123.pdf");
-        assertNotNull(f);
-        assertEquals("abc(test)123.pdf", f.getName());
-    }
-
-    public void testNoSpacesBeforeFileSize() {
-        final FTPFile f = getParser().parseFTPEntry("drwxr-x---+1464 chrism   chrism     41472 Feb 25 13:17 20090225");
-        assertNotNull(f);
-        assertEquals(41472, f.getSize());
-        assertEquals(f.getType(), FTPFile.DIRECTORY_TYPE);
-        assertEquals("chrism", f.getUser());
-        assertEquals("chrism", f.getGroup());
-        assertEquals(1464, f.getHardLinkCount());
-    }
-
-    public void testCorrectGroupNameParsing() {
-        final FTPFile f = getParser().parseFTPEntry("-rw-r--r--   1 ftpuser  ftpusers 12414535 Mar 17 11:07 test 1999 abc.pdf");
-        assertNotNull(f);
-        assertEquals(1, f.getHardLinkCount());
-        assertEquals("ftpuser", f.getUser());
-        assertEquals("ftpusers", f.getGroup());
-        assertEquals(12414535, f.getSize());
-        assertEquals("test 1999 abc.pdf", f.getName());
-
-        final Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.MONTH, Calendar.MARCH);
-        cal.set(Calendar.DAY_OF_MONTH, 17);
-        cal.set(Calendar.HOUR_OF_DAY, 11);
-        cal.set(Calendar.MINUTE, 7);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-
-        assertEquals(f.getTimestamp().get(Calendar.MONTH), cal.get(Calendar.MONTH));
-        assertEquals(f.getTimestamp().get(Calendar.DAY_OF_MONTH), cal.get(Calendar.DAY_OF_MONTH));
-        assertEquals(f.getTimestamp().get(Calendar.HOUR_OF_DAY), cal.get(Calendar.HOUR_OF_DAY));
-        assertEquals(f.getTimestamp().get(Calendar.MINUTE), cal.get(Calendar.MINUTE));
-        assertEquals(f.getTimestamp().get(Calendar.SECOND), cal.get(Calendar.SECOND));
-    }
-
-    public void testFilenamesWithEmbeddedNumbers() {
-        final FTPFile f = getParser().parseFTPEntry("-rw-rw-rw-   1 user group 5840 Mar 19 09:34 123 456 abc.csv");
-        assertEquals("123 456 abc.csv", f.getName());
-        assertEquals(5840, f.getSize());
-        assertEquals("user", f.getUser());
-        assertEquals("group", f.getGroup());
-    }
 
     @Override
     public void testParseFieldsOnDirectory() throws Exception {
@@ -264,38 +328,6 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
         cal.set(Calendar.MINUTE, 13);
 
         assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp().getTime()));
-    }
-
-
-    @Override
-    public void testRecentPrecision() {
-        testPrecision("drwxr-xr-x   2 user     group         4096 Mar  2 15:13 zxbox", CalendarUnit.MINUTE);
-    }
-
-    @Override
-    public void testDefaultPrecision() {
-        testPrecision("drwxr-xr-x   2 user     group         4096 Mar  2 2014 zxbox", CalendarUnit.DAY_OF_MONTH);
-    }
-
-    private void checkPermissions(final FTPFile f) {
-        assertTrue("Should have user read permission.", f.hasPermission(
-                FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
-        assertTrue("Should have user write permission.", f.hasPermission(
-                FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertTrue("Should have user execute permission.", f.hasPermission(
-                FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION));
-        assertTrue("Should have group read permission.", f.hasPermission(
-                FTPFile.GROUP_ACCESS, FTPFile.READ_PERMISSION));
-        assertTrue("Should NOT have group write permission.", !f.hasPermission(
-                FTPFile.GROUP_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertTrue("Should have group execute permission.", f.hasPermission(
-                FTPFile.GROUP_ACCESS, FTPFile.EXECUTE_PERMISSION));
-        assertTrue("Should have world read permission.", f.hasPermission(
-                FTPFile.WORLD_ACCESS, FTPFile.READ_PERMISSION));
-        assertTrue("Should NOT have world write permission.", !f.hasPermission(
-                FTPFile.WORLD_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertTrue("Should have world execute permission.", f.hasPermission(
-                FTPFile.WORLD_ACCESS, FTPFile.EXECUTE_PERMISSION));
     }
 
     @Override
@@ -357,7 +389,7 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
         assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp().getTime()));
     }
 
- // https://mail-archives.apache.org/mod_mbox/commons-dev/200408.mbox/%3c4122F3C1.9090402@tanukisoftware.com%3e
+    // https://mail-archives.apache.org/mod_mbox/commons-dev/200408.mbox/%3c4122F3C1.9090402@tanukisoftware.com%3e
     public void testParseFieldsOnFileJapaneseYear() {
         final FTPFile f = getParser().parseFTPEntry(
                 "-rwxr-xr-x 2 user group 4096 3\u6708 2\u65e5 2003\u5e74 \u8a66\u9a13\u30d5\u30a1\u30a4\u30eb.csv");
@@ -382,52 +414,20 @@ public class UnixFTPEntryParserTest extends FTPParseTestFramework {
     }
 
     @Override
-    protected void doAdditionalGoodTests(final String test, final FTPFile f) {
-        final String link = f.getLink();
-        if (null != link) {
-            final int linklen = link.length();
-            if (linklen > 0) {
-                assertEquals(link, test.substring(test.length() - linklen));
-                assertEquals(f.getType(), FTPFile.SYMBOLIC_LINK_TYPE);
-            }
-        }
-        final int type = f.getType();
-        switch (test.charAt(0))
-        {
-        case 'd':
-            assertEquals("Type of "+ test, type, FTPFile.DIRECTORY_TYPE);
-            break;
-        case 'l':
-             assertEquals("Type of "+ test, type, FTPFile.SYMBOLIC_LINK_TYPE);
-             break;
-        case 'b':
-        case 'c':
-            assertEquals(0, f.getHardLinkCount());
-            //$FALL-THROUGH$ TODO this needs to be fixed if a device type is introduced
-        case 'f':
-        case '-':
-            assertEquals("Type of "+ test, type, FTPFile.FILE_TYPE);
-            break;
-        default:
-            assertEquals("Type of "+ test, type, FTPFile.UNKNOWN_TYPE);
-        }
+    public void testRecentPrecision() {
+        testPrecision("drwxr-xr-x   2 user     group         4096 Mar  2 15:13 zxbox", CalendarUnit.MINUTE);
+    }
 
-        for (int access = FTPFile.USER_ACCESS;
-            access <= FTPFile.WORLD_ACCESS; access++)
-        {
-            for (int perm = FTPFile.READ_PERMISSION;
-                perm <= FTPFile.EXECUTE_PERMISSION; perm++)
-            {
-                final int pos = 3*access + perm + 1;
-                final char permchar = test.charAt(pos);
-                assertEquals("Permission " + test.substring(1,10),
-                        Boolean.valueOf(f.hasPermission(access, perm)),
-                        Boolean.valueOf(permchar != '-' && !Character.isUpperCase(permchar)));
-            }
-        }
+ public void testTrailingSpaces() {
+        final FTPFile f = getParser().parseFTPEntry("drwxr-xr-x   2 john smith     group         4096 Mar  2 15:13 zxbox     ");
+        assertNotNull(f);
+        assertEquals("zxbox     ", f.getName());
+    }
 
-        assertNotNull("Expected to find a timestamp",f.getTimestamp());
-// Perhaps check date range (need to ensure all good examples qualify)
-//        assertTrue(test,f.getTimestamp().get(Calendar.YEAR)>=2000);
+    public void testTrimLeadingSpacesNET566() { // check can trim spaces as before
+        final FTPFile f = new UnixFTPEntryParser(null, true).parseFTPEntry(
+            "drwxr-xr-x   2 john smith     group         4096 Mar  2 15:13   zxbox");
+        assertNotNull(f);
+        assertEquals("zxbox", f.getName() ); // leading spaces trimmed
     }
 }

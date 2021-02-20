@@ -85,20 +85,11 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
 
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.commons.net.ftp.parser.CompositeFTPParseTestFramework#getBadListings()
-     */
     @Override
-    protected String[] getBadListing() {
-        return badsamples;
-    }
-
-    /* (non-Javadoc)
-     * @see org.apache.commons.net.ftp.parser.CompositeFTPParseTestFramework#getGoodListings()
-     */
-    @Override
-    protected String[] getGoodListing() {
-        return goodsamplesDatasetList;
+    public void doAdditionalGoodTests(final String test, final FTPFile f) {
+        assertNotNull("Could not parse raw listing in " + test, f.getRawListing());
+        assertNotNull("Could not parse name in " + test, f.getName());
+        // some tests don't produce any further details
     }
 
     protected List<String[]> getAllGoodListings() {
@@ -111,6 +102,22 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
         return l;
     }
 
+    /* (non-Javadoc)
+     * @see org.apache.commons.net.ftp.parser.CompositeFTPParseTestFramework#getBadListings()
+     */
+    @Override
+    protected String[] getBadListing() {
+        return badsamples;
+    }
+
+
+    /* (non-Javadoc)
+     * @see org.apache.commons.net.ftp.parser.CompositeFTPParseTestFramework#getGoodListings()
+     */
+    @Override
+    protected String[] getGoodListing() {
+        return goodsamplesDatasetList;
+    }
 
     /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
@@ -118,6 +125,11 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
     @Override
     protected FTPFileEntryParser getParser() {
         return new MVSFTPEntryParser();
+    }
+
+    @Override
+    public void testDefaultPrecision() {
+        // TODO Not sure what dates are parsed
     }
 
     /*
@@ -134,17 +146,6 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
         parser.setType(MVSFTPEntryParser.FILE_LIST_TYPE);
         parser.setRegex(MVSFTPEntryParser.FILE_LIST_REGEX);
         for (final String test : goodsamples) {
-            final FTPFile f = parser.parseFTPEntry(test);
-            assertNotNull("Failed to parse " + test, f);
-            doAdditionalGoodTests(test, f);
-        }
-    }
-
-    public void testMemberListing() {
-        final MVSFTPEntryParser parser = new MVSFTPEntryParser();
-        parser.setType(MVSFTPEntryParser.MEMBER_LIST_TYPE);
-        parser.setRegex(MVSFTPEntryParser.MEMBER_LIST_REGEX);
-        for (final String test : goodsamplesMemberList) {
             final FTPFile f = parser.parseFTPEntry(test);
             assertNotNull("Failed to parse " + test, f);
             doAdditionalGoodTests(test, f);
@@ -173,17 +174,14 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
         }
     }
 
-    public void testUnixListings() {
+    public void testMemberListing() {
         final MVSFTPEntryParser parser = new MVSFTPEntryParser();
-        final List<String> list = new ArrayList<>();
-        Collections.addAll(list, goodsamplesUnixList);
-        parser.preParse(list);
-        for (final String test : list) {
+        parser.setType(MVSFTPEntryParser.MEMBER_LIST_TYPE);
+        parser.setRegex(MVSFTPEntryParser.MEMBER_LIST_REGEX);
+        for (final String test : goodsamplesMemberList) {
             final FTPFile f = parser.parseFTPEntry(test);
             assertNotNull("Failed to parse " + test, f);
-            assertNotNull("Failed to parse name " + test, f.getName());
-            assertNotNull("Failed to parse group " + test, f.getGroup());
-            assertNotNull("Failed to parse user " + test, f.getUser());
+            doAdditionalGoodTests(test, f);
         }
     }
 
@@ -243,19 +241,21 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
     }
 
     @Override
-    public void doAdditionalGoodTests(final String test, final FTPFile f) {
-        assertNotNull("Could not parse raw listing in " + test, f.getRawListing());
-        assertNotNull("Could not parse name in " + test, f.getName());
-        // some tests don't produce any further details
-    }
-
-    @Override
-    public void testDefaultPrecision() {
-        // TODO Not sure what dates are parsed
-    }
-
-    @Override
     public void testRecentPrecision() {
         // TODO Auto-generated method stub
+    }
+
+    public void testUnixListings() {
+        final MVSFTPEntryParser parser = new MVSFTPEntryParser();
+        final List<String> list = new ArrayList<>();
+        Collections.addAll(list, goodsamplesUnixList);
+        parser.preParse(list);
+        for (final String test : list) {
+            final FTPFile f = parser.parseFTPEntry(test);
+            assertNotNull("Failed to parse " + test, f);
+            assertNotNull("Failed to parse name " + test, f.getName());
+            assertNotNull("Failed to parse group " + test, f.getGroup());
+            assertNotNull("Failed to parse user " + test, f.getUser());
+        }
     }
 }

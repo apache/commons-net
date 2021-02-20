@@ -37,6 +37,11 @@ class ArticleIterator implements Iterator<Article>, Iterable<Article> {
         return stringIterator.hasNext();
     }
 
+    @Override
+    public Iterator<Article> iterator() {
+        return this;
+    }
+
     /**
      * Get the next Article
      * @return the next {@link Article}, never {@code null}, if unparseable then isDummy()
@@ -51,10 +56,5 @@ class ArticleIterator implements Iterator<Article>, Iterable<Article> {
     @Override
     public void remove() {
         stringIterator.remove();
-    }
-
-    @Override
-    public Iterator<Article> iterator() {
-        return this;
     }
 }

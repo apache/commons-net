@@ -23,6 +23,15 @@ package org.apache.commons.net.telnet;
 public class SuppressGAOptionHandler extends TelnetOptionHandler
 {
     /**
+     * Constructor for the SuppressGAOptionHandler. Initial and accept
+     * behavior flags are set to false
+     */
+    public SuppressGAOptionHandler()
+    {
+        super(TelnetOption.SUPPRESS_GO_AHEAD, false, false, false, false);
+    }
+
+    /**
      * Constructor for the SuppressGAOptionHandler. Allows defining desired
      * initial setting for local/remote activation of this option and
      * behavior in case a local/remote activation request for this
@@ -38,15 +47,6 @@ public class SuppressGAOptionHandler extends TelnetOptionHandler
     {
         super(TelnetOption.SUPPRESS_GO_AHEAD, initlocal, initremote,
                                       acceptlocal, acceptremote);
-    }
-
-    /**
-     * Constructor for the SuppressGAOptionHandler. Initial and accept
-     * behavior flags are set to false
-     */
-    public SuppressGAOptionHandler()
-    {
-        super(TelnetOption.SUPPRESS_GO_AHEAD, false, false, false, false);
     }
 
 }

@@ -39,13 +39,6 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     static final int JES_LEVEL_1_LIST_TYPE = 3;
     static final int JES_LEVEL_2_LIST_TYPE = 4;
 
-    private int isType = UNKNOWN_LIST_TYPE;
-
-    /**
-     * Fallback parser for Unix-style listings
-     */
-    private UnixFTPEntryParser unixFTPEntryParser;
-
     /**
      * Dates are ignored for file lists, but are used for member lists where
      * possible
@@ -156,6 +149,13 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             "(\\S+).*" // rest ignored
     ;
 
+    private int isType = UNKNOWN_LIST_TYPE;
+
+    /**
+     * Fallback parser for Unix-style listings
+     */
+    private UnixFTPEntryParser unixFTPEntryParser;
+
     /*
      * ---------------------------------------------------------------------
      * Very brief and incomplete description of the zOS/MVS-file system. (Note:
@@ -252,32 +252,13 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
         super.configure(null); // configure parser with default configurations
     }
 
-    /**
-     * Parses a line of an z/OS - MVS FTP server file listing and converts it
-     * into a usable format in the form of an <code> FTPFile </code> instance.
-     * If the file listing line doesn't describe a file, then
-     * <code> null </code> is returned. Otherwise a <code> FTPFile </code>
-     * instance representing the file is returned.
-     *
-     * @param entry
-     *            A line of text from the file listing
-     * @return An FTPFile instance corresponding to the supplied entry
+    /*
+     * @return
      */
     @Override
-    public FTPFile parseFTPEntry(final String entry) {
-        if (isType == FILE_LIST_TYPE) {
-            return parseFileList(entry);
-        } else if (isType == MEMBER_LIST_TYPE) {
-            return parseMemberList(entry);
-        } else if (isType == UNIX_LIST_TYPE) {
-             return unixFTPEntryParser.parseFTPEntry(entry);
-        } else if (isType == JES_LEVEL_1_LIST_TYPE) {
-            return parseJeslevel1List(entry);
-        } else if (isType == JES_LEVEL_2_LIST_TYPE) {
-            return parseJeslevel2List(entry);
-        }
-
-        return null;
+    protected FTPClientConfig getDefaultConfiguration() {
+        return new FTPClientConfig(FTPClientConfig.SYST_MVS,
+                DEFAULT_DATE_FORMAT, null);
     }
 
     /**
@@ -330,59 +311,30 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * Parse entries within a partitioned dataset.
+     * Parses a line of an z/OS - MVS FTP server file listing and converts it
+     * into a usable format in the form of an <code> FTPFile </code> instance.
+     * If the file listing line doesn't describe a file, then
+     * <code> null </code> is returned. Otherwise a <code> FTPFile </code>
+     * instance representing the file is returned.
      *
-     * Format of a memberlist within a PDS:
-     * <pre>
-     *    0         1        2          3        4     5     6      7    8
-     *   Name      VV.MM   Created       Changed      Size  Init   Mod   Id
-     *   TBSHELF   01.03 2002/09/12 2002/10/11 09:37    11    11     0 KIL001
-     *   TBTOOL    01.12 2002/09/12 2004/11/26 19:54    51    28     0 KIL001
-     *
-     * -------------------------------------------
-     * [1] Name
-     * [2] VV.MM: Version . modification
-     * [3] Created: yyyy / MM / dd
-     * [4,5] Changed: yyyy / MM / dd HH:mm
-     * [6] Size: number of lines
-     * [7] Init: number of lines when first created
-     * [8] Mod: number of modified lines a last save
-     * [9] Id: User id for last update
-     * </pre>
-     *
-     * @param entry zosDirectoryEntry
-     * @return null: entry was not parsed.
+     * @param entry
+     *            A line of text from the file listing
+     * @return An FTPFile instance corresponding to the supplied entry
      */
-    private FTPFile parseMemberList(final String entry) {
-        final FTPFile file = new FTPFile();
-        if (matches(entry)) {
-            file.setRawListing(entry);
-            final String name = group(1);
-            final String datestr = group(2) + " " + group(3);
-            file.setName(name);
-            file.setType(FTPFile.FILE_TYPE);
-            try {
-                file.setTimestamp(super.parseTimestamp(datestr));
-            } catch (final ParseException e) {
-                // just ignore parsing errors.
-                // TODO check this is ok
-                // Drop thru to try simple parser
-            }
-            return file;
+    @Override
+    public FTPFile parseFTPEntry(final String entry) {
+        if (isType == FILE_LIST_TYPE) {
+            return parseFileList(entry);
+        } else if (isType == MEMBER_LIST_TYPE) {
+            return parseMemberList(entry);
+        } else if (isType == UNIX_LIST_TYPE) {
+             return unixFTPEntryParser.parseFTPEntry(entry);
+        } else if (isType == JES_LEVEL_1_LIST_TYPE) {
+            return parseJeslevel1List(entry);
+        } else if (isType == JES_LEVEL_2_LIST_TYPE) {
+            return parseJeslevel2List(entry);
         }
 
-        /*
-         * Assigns the name to the first word of the entry. Only to be used from a
-         * safe context, for example from a memberlist, where the regex for some
-         * reason fails. Then just assign the name field of FTPFile.
-         */
-        if (entry != null && !entry.trim().isEmpty()) {
-            file.setRawListing(entry);
-            final String name = entry.split(" ")[0];
-            file.setName(name);
-            file.setType(FTPFile.FILE_TYPE);
-            return file;
-        }
         return null;
     }
 
@@ -458,6 +410,63 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
+     * Parse entries within a partitioned dataset.
+     *
+     * Format of a memberlist within a PDS:
+     * <pre>
+     *    0         1        2          3        4     5     6      7    8
+     *   Name      VV.MM   Created       Changed      Size  Init   Mod   Id
+     *   TBSHELF   01.03 2002/09/12 2002/10/11 09:37    11    11     0 KIL001
+     *   TBTOOL    01.12 2002/09/12 2004/11/26 19:54    51    28     0 KIL001
+     *
+     * -------------------------------------------
+     * [1] Name
+     * [2] VV.MM: Version . modification
+     * [3] Created: yyyy / MM / dd
+     * [4,5] Changed: yyyy / MM / dd HH:mm
+     * [6] Size: number of lines
+     * [7] Init: number of lines when first created
+     * [8] Mod: number of modified lines a last save
+     * [9] Id: User id for last update
+     * </pre>
+     *
+     * @param entry zosDirectoryEntry
+     * @return null: entry was not parsed.
+     */
+    private FTPFile parseMemberList(final String entry) {
+        final FTPFile file = new FTPFile();
+        if (matches(entry)) {
+            file.setRawListing(entry);
+            final String name = group(1);
+            final String datestr = group(2) + " " + group(3);
+            file.setName(name);
+            file.setType(FTPFile.FILE_TYPE);
+            try {
+                file.setTimestamp(super.parseTimestamp(datestr));
+            } catch (final ParseException e) {
+                // just ignore parsing errors.
+                // TODO check this is ok
+                // Drop thru to try simple parser
+            }
+            return file;
+        }
+
+        /*
+         * Assigns the name to the first word of the entry. Only to be used from a
+         * safe context, for example from a memberlist, where the regex for some
+         * reason fails. Then just assign the name field of FTPFile.
+         */
+        if (entry != null && !entry.trim().isEmpty()) {
+            file.setRawListing(entry);
+            final String name = entry.split(" ")[0];
+            file.setName(name);
+            file.setType(FTPFile.FILE_TYPE);
+            return file;
+        }
+        return null;
+    }
+
+    /**
      * preParse is called as part of the interface. Per definition is is called
      * before the parsing takes place.
      * Three kind of lists is recognize:
@@ -507,15 +516,6 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      */
     void setType(final int type) {
         isType = type;
-    }
-
-    /*
-     * @return
-     */
-    @Override
-    protected FTPClientConfig getDefaultConfiguration() {
-        return new FTPClientConfig(FTPClientConfig.SYST_MVS,
-                DEFAULT_DATE_FORMAT, null);
     }
 
 }

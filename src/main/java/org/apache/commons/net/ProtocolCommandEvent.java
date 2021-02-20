@@ -41,28 +41,6 @@ public class ProtocolCommandEvent extends EventObject
     private final String message, command;
 
     /**
-     * Creates a ProtocolCommandEvent signalling a command was sent to
-     * the server.  ProtocolCommandEvents created with this constructor
-     * should only be sent after a command has been sent, but before the
-     * reply has been received.
-     *
-     * @param source  The source of the event.
-     * @param command The string representation of the command type sent, not
-     *      including the arguments (e.g., "STAT" or "GET").
-     * @param message The entire command string verbatim as sent to the server,
-     *        including all arguments.
-     */
-    public ProtocolCommandEvent(final Object source, final String command, final String message)
-    {
-        super(source);
-        this.replyCode = 0;
-        this.message = message;
-        this.isCommand = true;
-        this.command = command;
-    }
-
-
-    /**
      * Creates a ProtocolCommandEvent signalling a reply to a command was
      * received.  ProtocolCommandEvents created with this constructor
      * should only be sent after a complete command reply has been received
@@ -85,6 +63,28 @@ public class ProtocolCommandEvent extends EventObject
         this.command = null;
     }
 
+
+    /**
+     * Creates a ProtocolCommandEvent signalling a command was sent to
+     * the server.  ProtocolCommandEvents created with this constructor
+     * should only be sent after a command has been sent, but before the
+     * reply has been received.
+     *
+     * @param source  The source of the event.
+     * @param command The string representation of the command type sent, not
+     *      including the arguments (e.g., "STAT" or "GET").
+     * @param message The entire command string verbatim as sent to the server,
+     *        including all arguments.
+     */
+    public ProtocolCommandEvent(final Object source, final String command, final String message)
+    {
+        super(source);
+        this.replyCode = 0;
+        this.message = message;
+        this.isCommand = true;
+        this.command = command;
+    }
+
     /**
      * Returns the string representation of the command type sent (e.g., "STAT"
      * or "GET").  If the ProtocolCommandEvent is a reply event, then null
@@ -98,6 +98,17 @@ public class ProtocolCommandEvent extends EventObject
         return command;
     }
 
+
+    /**
+     * Returns the entire message sent to or received from the server.
+     * Includes the line terminator.
+     *
+     * @return The entire message sent to or received from the server.
+     */
+    public String getMessage()
+    {
+        return message;
+    }
 
     /**
      * Returns the reply code of the received server reply.  Undefined if
@@ -133,16 +144,5 @@ public class ProtocolCommandEvent extends EventObject
     public boolean isReply()
     {
         return !isCommand();
-    }
-
-    /**
-     * Returns the entire message sent to or received from the server.
-     * Includes the line terminator.
-     *
-     * @return The entire message sent to or received from the server.
-     */
-    public String getMessage()
-    {
-        return message;
     }
 }

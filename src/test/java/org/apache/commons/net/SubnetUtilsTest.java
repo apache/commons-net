@@ -210,21 +210,6 @@ public class SubnetUtilsTest extends TestCase {
 
     }
 
-    public void testNET675() {
-        final SubnetUtils utils = new SubnetUtils("192.168.0.15/32");
-        utils.setInclusiveHostCount(true);
-        final SubnetInfo info = utils.getInfo();
-        assertTrue(info.isInRange("192.168.0.15"));
-    }
-
-    public void testNET679() {
-        final SubnetUtils utils = new SubnetUtils("10.213.160.0/16");
-        utils.setInclusiveHostCount(true);
-        final SubnetInfo info = utils.getInfo();
-        assertTrue(info.isInRange("10.213.0.0"));
-        assertTrue(info.isInRange("10.213.255.255"));
-    }
-
     public void testInvalidMasks() {
         try {
             new SubnetUtils("192.168.0.1/33");
@@ -248,6 +233,89 @@ public class SubnetUtilsTest extends TestCase {
         final String[] address = subnetUtils.getInfo().getAllAddresses();
         assertNotNull(address);
         assertEquals(0, address.length);
+    }
+
+    public void testNET520() {
+        final SubnetUtils utils = new SubnetUtils("0.0.0.0/0");
+        utils.setInclusiveHostCount(true);
+        final SubnetInfo info = utils.getInfo();
+        assertEquals("0.0.0.0",info.getNetworkAddress());
+        assertEquals("255.255.255.255",info.getBroadcastAddress());
+        assertTrue(info.isInRange("127.0.0.0"));
+        utils.setInclusiveHostCount(false);
+        assertTrue(info.isInRange("127.0.0.0"));
+    }
+
+    public void testNET521() {
+        SubnetUtils utils;
+        SubnetInfo info;
+
+        utils = new SubnetUtils("0.0.0.0/0");
+        utils.setInclusiveHostCount(true);
+        info = utils.getInfo();
+        assertEquals("0.0.0.0", info.getNetmask());
+        assertEquals(4294967296L, info.getAddressCountLong());
+        try {
+            info.getAddressCount();
+            fail("Expected RuntimeException");
+        } catch (final RuntimeException expected) {
+            // ignored
+        }
+        utils = new SubnetUtils("128.0.0.0/1");
+        utils.setInclusiveHostCount(true);
+        info = utils.getInfo();
+        assertEquals("128.0.0.0", info.getNetmask());
+        assertEquals(2147483648L, info.getAddressCountLong());
+        try {
+            info.getAddressCount();
+            fail("Expected RuntimeException");
+        } catch (final RuntimeException expected) {
+            // ignored
+        }
+        // if we exclude the broadcast and network addresses, the count is less than Integer.MAX_VALUE
+        utils.setInclusiveHostCount(false);
+        info = utils.getInfo();
+        assertEquals(2147483646, info.getAddressCount());
+    }
+
+    public void testNET624() {
+        new SubnetUtils("0.0.0.0/0");
+        new SubnetUtils("0.0.0.0","0.0.0.0");
+        new SubnetUtils("0.0.0.0","128.0.0.0");
+        try {
+            new SubnetUtils("0.0.0.0","64.0.0.0");
+            fail("Should have thrown IllegalArgumentException");
+        } catch (final IllegalArgumentException expected) {
+            // Ignored
+        }
+        try {
+            new SubnetUtils("0.0.0.0","0.0.0.1");
+            fail("Should have thrown IllegalArgumentException");
+        } catch (final IllegalArgumentException expected) {
+            // Ignored
+        }
+    }
+
+    public void testNET641() {
+        assertFalse(new SubnetUtils("192.168.1.0/00").getInfo().isInRange("0.0.0.0"));
+        assertFalse(new SubnetUtils("192.168.1.0/30").getInfo().isInRange("0.0.0.0"));
+        assertFalse(new SubnetUtils("192.168.1.0/31").getInfo().isInRange("0.0.0.0"));
+        assertFalse(new SubnetUtils("192.168.1.0/32").getInfo().isInRange("0.0.0.0"));
+    }
+
+    public void testNET675() {
+        final SubnetUtils utils = new SubnetUtils("192.168.0.15/32");
+        utils.setInclusiveHostCount(true);
+        final SubnetInfo info = utils.getInfo();
+        assertTrue(info.isInRange("192.168.0.15"));
+    }
+
+    public void testNET679() {
+        final SubnetUtils utils = new SubnetUtils("10.213.160.0/16");
+        utils.setInclusiveHostCount(true);
+        final SubnetInfo info = utils.getInfo();
+        assertTrue(info.isInRange("10.213.0.0"));
+        assertTrue(info.isInRange("10.213.255.255"));
     }
 
     public void testParseSimpleNetmask() {
@@ -331,73 +399,5 @@ public class SubnetUtilsTest extends TestCase {
     public void testZeroAddressAndCidr() {
         final SubnetUtils snu = new SubnetUtils("0.0.0.0/0");
         assertNotNull(snu);
-    }
-
-    public void testNET521() {
-        SubnetUtils utils;
-        SubnetInfo info;
-
-        utils = new SubnetUtils("0.0.0.0/0");
-        utils.setInclusiveHostCount(true);
-        info = utils.getInfo();
-        assertEquals("0.0.0.0", info.getNetmask());
-        assertEquals(4294967296L, info.getAddressCountLong());
-        try {
-            info.getAddressCount();
-            fail("Expected RuntimeException");
-        } catch (final RuntimeException expected) {
-            // ignored
-        }
-        utils = new SubnetUtils("128.0.0.0/1");
-        utils.setInclusiveHostCount(true);
-        info = utils.getInfo();
-        assertEquals("128.0.0.0", info.getNetmask());
-        assertEquals(2147483648L, info.getAddressCountLong());
-        try {
-            info.getAddressCount();
-            fail("Expected RuntimeException");
-        } catch (final RuntimeException expected) {
-            // ignored
-        }
-        // if we exclude the broadcast and network addresses, the count is less than Integer.MAX_VALUE
-        utils.setInclusiveHostCount(false);
-        info = utils.getInfo();
-        assertEquals(2147483646, info.getAddressCount());
-    }
-
-    public void testNET624() {
-        new SubnetUtils("0.0.0.0/0");
-        new SubnetUtils("0.0.0.0","0.0.0.0");
-        new SubnetUtils("0.0.0.0","128.0.0.0");
-        try {
-            new SubnetUtils("0.0.0.0","64.0.0.0");
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // Ignored
-        }
-        try {
-            new SubnetUtils("0.0.0.0","0.0.0.1");
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // Ignored
-        }
-    }
-
-    public void testNET520() {
-        final SubnetUtils utils = new SubnetUtils("0.0.0.0/0");
-        utils.setInclusiveHostCount(true);
-        final SubnetInfo info = utils.getInfo();
-        assertEquals("0.0.0.0",info.getNetworkAddress());
-        assertEquals("255.255.255.255",info.getBroadcastAddress());
-        assertTrue(info.isInRange("127.0.0.0"));
-        utils.setInclusiveHostCount(false);
-        assertTrue(info.isInRange("127.0.0.0"));
-    }
-
-    public void testNET641() {
-        assertFalse(new SubnetUtils("192.168.1.0/00").getInfo().isInRange("0.0.0.0"));
-        assertFalse(new SubnetUtils("192.168.1.0/30").getInfo().isInRange("0.0.0.0"));
-        assertFalse(new SubnetUtils("192.168.1.0/31").getInfo().isInRange("0.0.0.0"));
-        assertFalse(new SubnetUtils("192.168.1.0/32").getInfo().isInRange("0.0.0.0"));
     }
 }

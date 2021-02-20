@@ -45,6 +45,56 @@ final class TelnetOutputStream extends OutputStream
     }
 
 
+    /** Closes the stream. */
+    @Override
+    public void close() throws IOException
+    {
+        client.closeOutputStream();
+    }
+
+
+    /** Flushes the stream. */
+    @Override
+    public void flush() throws IOException
+    {
+        client.flushOutputStream();
+    }
+
+
+    /**
+     * Writes a byte array to the stream.
+     * <p>
+     * @param buffer  The byte array to write.
+     * @throws IOException If an error occurs while writing to the underlying
+     *            stream.
+     */
+    @Override
+    public void write(final byte buffer[]) throws IOException
+    {
+        write(buffer, 0, buffer.length);
+    }
+
+    /**
+     * Writes a number of bytes from a byte array to the stream starting from
+     * a given offset.
+     * <p>
+     * @param buffer  The byte array to write.
+     * @param offset  The offset into the array at which to start copying data.
+     * @param length  The number of bytes to write.
+     * @throws IOException If an error occurs while writing to the underlying
+     *            stream.
+     */
+    @Override
+    public void write(final byte buffer[], int offset, int length) throws IOException
+    {
+        synchronized (client)
+        {
+            while (length-- > 0) {
+                write(buffer[offset++]);
+            }
+        }
+    }
+
     /**
      * Writes a byte to the stream.
      * <p>
@@ -111,55 +161,5 @@ final class TelnetOutputStream extends OutputStream
                 client.sendByte(ch);
             }
         }
-    }
-
-
-    /**
-     * Writes a byte array to the stream.
-     * <p>
-     * @param buffer  The byte array to write.
-     * @throws IOException If an error occurs while writing to the underlying
-     *            stream.
-     */
-    @Override
-    public void write(final byte buffer[]) throws IOException
-    {
-        write(buffer, 0, buffer.length);
-    }
-
-
-    /**
-     * Writes a number of bytes from a byte array to the stream starting from
-     * a given offset.
-     * <p>
-     * @param buffer  The byte array to write.
-     * @param offset  The offset into the array at which to start copying data.
-     * @param length  The number of bytes to write.
-     * @throws IOException If an error occurs while writing to the underlying
-     *            stream.
-     */
-    @Override
-    public void write(final byte buffer[], int offset, int length) throws IOException
-    {
-        synchronized (client)
-        {
-            while (length-- > 0) {
-                write(buffer[offset++]);
-            }
-        }
-    }
-
-    /** Flushes the stream. */
-    @Override
-    public void flush() throws IOException
-    {
-        client.flushOutputStream();
-    }
-
-    /** Closes the stream. */
-    @Override
-    public void close() throws IOException
-    {
-        client.closeOutputStream();
     }
 }

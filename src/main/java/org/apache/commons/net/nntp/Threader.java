@@ -35,67 +35,6 @@ import java.util.Map;
 public class Threader {
 
     /**
-     * The client passes in a list of Threadable objects, and
-     * the Threader constructs a connected 'graph' of messages
-     * @param messages list of messages to thread, must not be empty
-     * @return null if messages == null or root.child == null or messages list is empty
-     * @since 2.2
-     */
-    public Threadable thread(final List<? extends Threadable> messages) {
-        return thread((Iterable<? extends Threadable>)messages);
-    }
-
-    /**
-     * The client passes in a list of Iterable objects, and
-     * the Threader constructs a connected 'graph' of messages
-     * @param messages iterable of messages to thread, must not be empty
-     * @return null if messages == null or root.child == null or messages list is empty
-     * @since 3.0
-     */
-    public Threadable thread(final Iterable<? extends Threadable> messages) {
-        if (messages == null) {
-            return null;
-        }
-
-        HashMap<String,ThreadContainer> idTable = new HashMap<>();
-
-        // walk through each Threadable element
-        for (final Threadable t : messages) {
-            if (!t.isDummy()) {
-                buildContainer(t, idTable);
-            }
-        }
-
-        if (idTable.isEmpty()) {
-            return null;
-        }
-
-        final ThreadContainer root = findRootSet(idTable);
-        idTable.clear();
-        idTable = null;
-
-        pruneEmptyContainers(root);
-
-        root.reverseChildren();
-        gatherSubjects(root);
-
-        if (root.next != null) {
-            throw new RuntimeException("root node has a next:" + root);
-        }
-
-        for (ThreadContainer r = root.child; r != null; r = r.next) {
-            if (r.threadable == null) {
-                r.threadable = r.child.threadable.makeDummy();
-            }
-        }
-
-        final Threadable result = (root.child == null ? null : root.child.threadable);
-        root.flush();
-
-        return result;
-    }
-
-    /**
      *
      * @param threadable
      * @param idTable
@@ -228,71 +167,6 @@ public class Threader {
             }
         }
         return root;
-    }
-
-    /**
-     * Delete any empty or dummy ThreadContainers
-     * @param parent
-     */
-    private void pruneEmptyContainers(final ThreadContainer parent) {
-        ThreadContainer container, prev, next;
-        for (prev = null, container = parent.child, next = container.next;
-            container != null;
-            prev = container,
-                container = next,
-                next = (container == null ? null : container.next)) {
-
-            // Is it empty and without any children? If so,delete it
-            if (container.threadable == null && container.child == null) {
-                if (prev == null) {
-                    parent.child = container.next;
-                } else {
-                    prev.next = container.next;
-                }
-
-                // Set container to prev so that prev keeps its same value the next time through the loop
-                container = prev;
-            }
-
-            // Else if empty, with kids, and (not at root or only one kid)
-            else if (
-                container.threadable == null
-                    && container.child != null
-                    && (container.parent != null
-                        || container.child.next == null)) {
-                // We have an invalid/expired message with kids. Promote the kids to this level.
-                ThreadContainer tail;
-                final ThreadContainer kids = container.child;
-
-                // Remove this container and replace with 'kids'.
-                if (prev == null) {
-                    parent.child = kids;
-                } else {
-                    prev.next = kids;
-                }
-
-                // Make each child's parent be this level's parent -> i.e. promote the children.
-                // Make the last child's next point to this container's next
-                // i.e. splice kids into the list in place of container
-                for (tail = kids; tail.next != null; tail = tail.next) {
-                    tail.parent = container.parent;
-                }
-
-                tail.parent = container.parent;
-                tail.next = container.next;
-
-                // next currently points to the item after the inserted items in the chain - reset that so we process the newly
-                // promoted items next time round
-                next = kids;
-
-                // Set container to prev so that prev keeps its same value the next time through the loop
-                container = prev;
-            } else if (container.child != null) {
-                // A real message , with kids
-                // Iterate over the children
-                pruneEmptyContainers(container);
-            }
-        }
     }
 
     /**
@@ -446,6 +320,132 @@ public class Threader {
         subjectTable.clear();
         subjectTable = null;
 
+    }
+
+    /**
+     * Delete any empty or dummy ThreadContainers
+     * @param parent
+     */
+    private void pruneEmptyContainers(final ThreadContainer parent) {
+        ThreadContainer container, prev, next;
+        for (prev = null, container = parent.child, next = container.next;
+            container != null;
+            prev = container,
+                container = next,
+                next = (container == null ? null : container.next)) {
+
+            // Is it empty and without any children? If so,delete it
+            if (container.threadable == null && container.child == null) {
+                if (prev == null) {
+                    parent.child = container.next;
+                } else {
+                    prev.next = container.next;
+                }
+
+                // Set container to prev so that prev keeps its same value the next time through the loop
+                container = prev;
+            }
+
+            // Else if empty, with kids, and (not at root or only one kid)
+            else if (
+                container.threadable == null
+                    && container.child != null
+                    && (container.parent != null
+                        || container.child.next == null)) {
+                // We have an invalid/expired message with kids. Promote the kids to this level.
+                ThreadContainer tail;
+                final ThreadContainer kids = container.child;
+
+                // Remove this container and replace with 'kids'.
+                if (prev == null) {
+                    parent.child = kids;
+                } else {
+                    prev.next = kids;
+                }
+
+                // Make each child's parent be this level's parent -> i.e. promote the children.
+                // Make the last child's next point to this container's next
+                // i.e. splice kids into the list in place of container
+                for (tail = kids; tail.next != null; tail = tail.next) {
+                    tail.parent = container.parent;
+                }
+
+                tail.parent = container.parent;
+                tail.next = container.next;
+
+                // next currently points to the item after the inserted items in the chain - reset that so we process the newly
+                // promoted items next time round
+                next = kids;
+
+                // Set container to prev so that prev keeps its same value the next time through the loop
+                container = prev;
+            } else if (container.child != null) {
+                // A real message , with kids
+                // Iterate over the children
+                pruneEmptyContainers(container);
+            }
+        }
+    }
+
+    /**
+     * The client passes in a list of Iterable objects, and
+     * the Threader constructs a connected 'graph' of messages
+     * @param messages iterable of messages to thread, must not be empty
+     * @return null if messages == null or root.child == null or messages list is empty
+     * @since 3.0
+     */
+    public Threadable thread(final Iterable<? extends Threadable> messages) {
+        if (messages == null) {
+            return null;
+        }
+
+        HashMap<String,ThreadContainer> idTable = new HashMap<>();
+
+        // walk through each Threadable element
+        for (final Threadable t : messages) {
+            if (!t.isDummy()) {
+                buildContainer(t, idTable);
+            }
+        }
+
+        if (idTable.isEmpty()) {
+            return null;
+        }
+
+        final ThreadContainer root = findRootSet(idTable);
+        idTable.clear();
+        idTable = null;
+
+        pruneEmptyContainers(root);
+
+        root.reverseChildren();
+        gatherSubjects(root);
+
+        if (root.next != null) {
+            throw new RuntimeException("root node has a next:" + root);
+        }
+
+        for (ThreadContainer r = root.child; r != null; r = r.next) {
+            if (r.threadable == null) {
+                r.threadable = r.child.threadable.makeDummy();
+            }
+        }
+
+        final Threadable result = (root.child == null ? null : root.child.threadable);
+        root.flush();
+
+        return result;
+    }
+
+    /**
+     * The client passes in a list of Threadable objects, and
+     * the Threader constructs a connected 'graph' of messages
+     * @param messages list of messages to thread, must not be empty
+     * @return null if messages == null or root.child == null or messages list is empty
+     * @since 2.2
+     */
+    public Threadable thread(final List<? extends Threadable> messages) {
+        return thread((Iterable<? extends Threadable>)messages);
     }
 
 

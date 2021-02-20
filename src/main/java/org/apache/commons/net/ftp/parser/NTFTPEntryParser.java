@@ -37,8 +37,6 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     private static final String DEFAULT_DATE_FORMAT2
         = "MM-dd-yy kk:mm"; //11-09-01 18:30
 
-    private final FTPTimestampParser timestampParser;
-
     /**
      * this is the regular expression used by this parser.
      */
@@ -46,6 +44,8 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         "(\\S+)\\s+(\\S+)\\s+"          // MM-dd-yy whitespace hh:mma|kk:mm; swallow trailing spaces
         + "(?:(<DIR>)|([0-9]+))\\s+"    // <DIR> or ddddd; swallow trailing spaces
         + "(\\S.*)";                    // First non-space followed by rest of line (name)
+
+    private final FTPTimestampParser timestampParser;
 
     /**
      * The sole constructor for an NTFTPEntryParser object.
@@ -83,6 +83,20 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         config2.setDefaultDateFormatStr(DEFAULT_DATE_FORMAT2);
         this.timestampParser = new FTPTimestampParserImpl();
         ((Configurable)this.timestampParser).configure(config2);
+    }
+
+    /**
+     * Defines a default configuration to be used when this class is
+     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
+     * parameter being specified.
+     * @return the default configuration for this parser.
+     */
+    @Override
+    public FTPClientConfig getDefaultConfiguration() {
+        return new FTPClientConfig(
+                FTPClientConfig.SYST_NT,
+                DEFAULT_DATE_FORMAT,
+                null);
     }
 
     /**
@@ -147,20 +161,6 @@ public class NTFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             return f;
         }
         return null;
-    }
-
-    /**
-     * Defines a default configuration to be used when this class is
-     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
-     * parameter being specified.
-     * @return the default configuration for this parser.
-     */
-    @Override
-    public FTPClientConfig getDefaultConfiguration() {
-        return new FTPClientConfig(
-                FTPClientConfig.SYST_NT,
-                DEFAULT_DATE_FORMAT,
-                null);
     }
 
 }

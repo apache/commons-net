@@ -52,21 +52,6 @@ public class POP3ClientTest extends TestCase
         super(name);
     }
 
-    private void reset() throws IOException
-    {
-        //Case where this is the first time reset is called
-        if (p == null)
-        {
-            //Do nothing
-        }
-        else if (p.isConnected())
-        {
-            p.disconnect();
-        }
-        p = null;
-        p = new POP3Client();
-    }
-
     private void connect() throws Exception
     {
         p.connect(InetAddress.getByName(mailhost));
@@ -80,17 +65,19 @@ public class POP3ClientTest extends TestCase
         assertEquals(POP3.TRANSACTION_STATE, p.getState());
     }
 
-    /*
-     * Simple test to logon to a valid server using a valid
-     * user name and password.
-     */
-    public void testValidLoginWithNameAndPassword() throws Exception
+    private void reset() throws IOException
     {
-        reset();
-        connect();
-
-        //Try with a valid user
-        login();
+        //Case where this is the first time reset is called
+        if (p == null)
+        {
+            //Do nothing
+        }
+        else if (p.isConnected())
+        {
+            p.disconnect();
+        }
+        p = null;
+        p = new POP3Client();
     }
 
     public void testInvalidLoginWithBadName() throws Exception
@@ -151,5 +138,18 @@ public class POP3ClientTest extends TestCase
         login();
         p.setState(POP3.UPDATE_STATE);
         assertTrue(p.logout());
+    }
+
+    /*
+     * Simple test to logon to a valid server using a valid
+     * user name and password.
+     */
+    public void testValidLoginWithNameAndPassword() throws Exception
+    {
+        reset();
+        connect();
+
+        //Try with a valid user
+        login();
     }
 }

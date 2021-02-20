@@ -37,57 +37,68 @@ import org.junit.Test;
 
 public class UtilTest {
 
+    static class CSL implements CopyStreamListener {
+
+        final long expectedTotal;
+        final int expectedBytes;
+        final long expectedSize;
+        CSL(final long totalBytesTransferred, final int bytesTransferred, final long streamSize) {
+            this.expectedTotal = totalBytesTransferred;
+            this.expectedBytes = bytesTransferred;
+            this.expectedSize = streamSize;
+        }
+        @Override
+        public void bytesTransferred(final CopyStreamEvent event) {
+        }
+
+        @Override
+        public void bytesTransferred(final long totalBytesTransferred, final int bytesTransferred, final long streamSize) {
+            Assert.assertEquals("Wrong total", expectedTotal, totalBytesTransferred);
+            Assert.assertEquals("Wrong streamSize", expectedSize, streamSize);
+            Assert.assertEquals("Wrong bytes", expectedBytes, bytesTransferred);
+        }
+
+    }
+    // Class to check overall counts as well as batch size
+    static class CSLtotal implements CopyStreamListener {
+
+        final long expectedTotal;
+        final long expectedBytes;
+        volatile long totalBytesTransferredTotal;
+        volatile long bytesTransferredTotal;
+
+        CSLtotal(final long totalBytesTransferred, final long bytesTransferred) {
+            this.expectedTotal = totalBytesTransferred;
+            this.expectedBytes = bytesTransferred;
+        }
+        @Override
+        public void bytesTransferred(final CopyStreamEvent event) {
+        }
+
+        @Override
+        public void bytesTransferred(final long totalBytesTransferred, final int bytesTransferred, final long streamSize) {
+            Assert.assertEquals("Wrong bytes", expectedBytes, bytesTransferred);
+            this.totalBytesTransferredTotal = totalBytesTransferred;
+            this.bytesTransferredTotal += bytesTransferred;
+        }
+
+        void checkExpected() {
+            Assert.assertEquals("Wrong totalBytesTransferred total", expectedTotal, totalBytesTransferredTotal);
+            Assert.assertEquals("Total should equal sum of parts", totalBytesTransferredTotal, bytesTransferredTotal);
+        }
+
+    }
     private final Writer dest = new CharArrayWriter();
     private final Reader source = new CharArrayReader(new char[]{'a'});
+
     private final InputStream src = new ByteArrayInputStream(new byte[]{'z'});
+
     private final OutputStream dst = new ByteArrayOutputStream();
 
     @Test
     public void testcloseQuietly() {
         Util.closeQuietly((Closeable) null);
         Util.closeQuietly((Socket) null);
-    }
-
-    @Test
-    public void testReader0() throws Exception {
-        final long streamSize=0;
-        final int bufferSize=0;
-        Util.copyReader(source, dest, bufferSize, streamSize, new CSL(1,1,streamSize));
-    }
-
-    @Test
-    public void testReader1() throws Exception {
-        final long streamSize=0;
-        final int bufferSize=1;
-        Util.copyReader(source, dest, bufferSize, streamSize, new CSL(1,1,streamSize));
-    }
-
-    @Test
-    public void testReader_1() throws Exception {
-        final long streamSize=0;
-        final int bufferSize=-1;
-        Util.copyReader(source, dest, bufferSize, streamSize, new CSL(1,1,streamSize));
-    }
-
-    @Test
-    public void testStream0() throws Exception {
-        final long streamSize=0;
-        final int bufferSize=0;
-        Util.copyStream(src, dst, bufferSize, streamSize, new CSL(1,1,streamSize));
-    }
-
-    @Test
-    public void testStream1() throws Exception {
-        final long streamSize=0;
-        final int bufferSize=1;
-        Util.copyStream(src, dst, bufferSize, streamSize, new CSL(1,1,streamSize));
-    }
-
-    @Test
-    public void testStream_1() throws Exception {
-        final long streamSize=0;
-        final int bufferSize=-1;
-        Util.copyStream(src, dst, bufferSize, streamSize, new CSL(1,1,streamSize));
     }
 
     @Test
@@ -162,56 +173,45 @@ public class UtilTest {
         }
     }
 
-    static class CSL implements CopyStreamListener {
-
-        final long expectedTotal;
-        final int expectedBytes;
-        final long expectedSize;
-        CSL(final long totalBytesTransferred, final int bytesTransferred, final long streamSize) {
-            this.expectedTotal = totalBytesTransferred;
-            this.expectedBytes = bytesTransferred;
-            this.expectedSize = streamSize;
-        }
-        @Override
-        public void bytesTransferred(final CopyStreamEvent event) {
-        }
-
-        @Override
-        public void bytesTransferred(final long totalBytesTransferred, final int bytesTransferred, final long streamSize) {
-            Assert.assertEquals("Wrong total", expectedTotal, totalBytesTransferred);
-            Assert.assertEquals("Wrong streamSize", expectedSize, streamSize);
-            Assert.assertEquals("Wrong bytes", expectedBytes, bytesTransferred);
-        }
-
+    @Test
+    public void testReader_1() throws Exception {
+        final long streamSize=0;
+        final int bufferSize=-1;
+        Util.copyReader(source, dest, bufferSize, streamSize, new CSL(1,1,streamSize));
     }
 
-    // Class to check overall counts as well as batch size
-    static class CSLtotal implements CopyStreamListener {
+    @Test
+    public void testReader0() throws Exception {
+        final long streamSize=0;
+        final int bufferSize=0;
+        Util.copyReader(source, dest, bufferSize, streamSize, new CSL(1,1,streamSize));
+    }
 
-        final long expectedTotal;
-        final long expectedBytes;
-        volatile long totalBytesTransferredTotal;
-        volatile long bytesTransferredTotal;
+    @Test
+    public void testReader1() throws Exception {
+        final long streamSize=0;
+        final int bufferSize=1;
+        Util.copyReader(source, dest, bufferSize, streamSize, new CSL(1,1,streamSize));
+    }
 
-        CSLtotal(final long totalBytesTransferred, final long bytesTransferred) {
-            this.expectedTotal = totalBytesTransferred;
-            this.expectedBytes = bytesTransferred;
-        }
-        @Override
-        public void bytesTransferred(final CopyStreamEvent event) {
-        }
+    @Test
+    public void testStream_1() throws Exception {
+        final long streamSize=0;
+        final int bufferSize=-1;
+        Util.copyStream(src, dst, bufferSize, streamSize, new CSL(1,1,streamSize));
+    }
 
-        @Override
-        public void bytesTransferred(final long totalBytesTransferred, final int bytesTransferred, final long streamSize) {
-            Assert.assertEquals("Wrong bytes", expectedBytes, bytesTransferred);
-            this.totalBytesTransferredTotal = totalBytesTransferred;
-            this.bytesTransferredTotal += bytesTransferred;
-        }
+    @Test
+    public void testStream0() throws Exception {
+        final long streamSize=0;
+        final int bufferSize=0;
+        Util.copyStream(src, dst, bufferSize, streamSize, new CSL(1,1,streamSize));
+    }
 
-        void checkExpected() {
-            Assert.assertEquals("Wrong totalBytesTransferred total", expectedTotal, totalBytesTransferredTotal);
-            Assert.assertEquals("Total should equal sum of parts", totalBytesTransferredTotal, bytesTransferredTotal);
-        }
-
+    @Test
+    public void testStream1() throws Exception {
+        final long streamSize=0;
+        final int bufferSize=1;
+        Util.copyStream(src, dst, bufferSize, streamSize, new CSL(1,1,streamSize));
     }
 }

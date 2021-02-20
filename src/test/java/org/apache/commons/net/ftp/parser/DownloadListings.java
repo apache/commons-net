@@ -43,52 +43,6 @@ public class DownloadListings extends FTPClient {
     // Also used by MLDSComparison
     static final String DOWNLOAD_DIR = "target/ftptest";
 
-    private PrintCommandListener listener;
-    private PrintWriter out;
-
-    private boolean open(final String host, final int port) throws Exception{
-        System.out.println("Connecting to "+host);
-        out = new PrintWriter(new FileWriter(new File(DOWNLOAD_DIR, host+"_info.txt")));
-        listener = new PrintCommandListener(out);
-        addProtocolCommandListener(listener);
-        setConnectTimeout(30000);
-        try {
-            connect(host, port);
-        } catch (final Exception e) {
-            System.out.println(e);
-            return false;
-        }
-        enterLocalPassiveMode(); // this is reset by connect
-        System.out.println("Logging in to "+host);
-        return login("anonymous", "user@localhost");
-    }
-
-    private void info() throws IOException {
-        syst();
-        help();
-        feat();
-        removeProtocolCommandListener(listener);
-    }
-
-    private void download(final String path, final FTPCmd command, final File fileName) throws Exception {
-        final Socket socket;
-        if ((socket = _openDataConnection_(command, getListArguments(path))) == null) {
-            System.out.println(getReplyString());
-            return;
-        }
-        final InputStream inputStream = socket.getInputStream();
-        final OutputStream outputStream = new FileOutputStream(fileName);
-        Util.copyStream(inputStream, outputStream );
-        inputStream.close();
-        socket.close();
-        outputStream.close();
-
-        if (!completePendingCommand())
-        {
-            System.out.println(getReplyString());
-        }
-    }
-
     public static void main(final String[] args) throws Exception {
         String host;// = "ftp.funet.fi";
         final int port = 21;
@@ -128,5 +82,51 @@ public class DownloadListings extends FTPClient {
         }
         os.close();
         rdr.close();
+    }
+    private PrintCommandListener listener;
+
+    private PrintWriter out;
+
+    private void download(final String path, final FTPCmd command, final File fileName) throws Exception {
+        final Socket socket;
+        if ((socket = _openDataConnection_(command, getListArguments(path))) == null) {
+            System.out.println(getReplyString());
+            return;
+        }
+        final InputStream inputStream = socket.getInputStream();
+        final OutputStream outputStream = new FileOutputStream(fileName);
+        Util.copyStream(inputStream, outputStream );
+        inputStream.close();
+        socket.close();
+        outputStream.close();
+
+        if (!completePendingCommand())
+        {
+            System.out.println(getReplyString());
+        }
+    }
+
+    private void info() throws IOException {
+        syst();
+        help();
+        feat();
+        removeProtocolCommandListener(listener);
+    }
+
+    private boolean open(final String host, final int port) throws Exception{
+        System.out.println("Connecting to "+host);
+        out = new PrintWriter(new FileWriter(new File(DOWNLOAD_DIR, host+"_info.txt")));
+        listener = new PrintCommandListener(out);
+        addProtocolCommandListener(listener);
+        setConnectTimeout(30000);
+        try {
+            connect(host, port);
+        } catch (final Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        enterLocalPassiveMode(); // this is reset by connect
+        System.out.println("Logging in to "+host);
+        return login("anonymous", "user@localhost");
     }
 }

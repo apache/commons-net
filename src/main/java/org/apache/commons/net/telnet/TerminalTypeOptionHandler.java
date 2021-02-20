@@ -23,11 +23,6 @@ package org.apache.commons.net.telnet;
 public class TerminalTypeOptionHandler extends TelnetOptionHandler
 {
     /**
-     * Terminal type
-     */
-    private final String termType;
-
-    /**
      * Terminal type option
      */
     protected static final int TERMINAL_TYPE = 24;
@@ -41,6 +36,23 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler
      * Is (for subnegotiation)
      */
     protected static final int TERMINAL_TYPE_IS =  0;
+
+    /**
+     * Terminal type
+     */
+    private final String termType;
+
+    /**
+     * Constructor for the TerminalTypeOptionHandler. Initial and accept
+     * behavior flags are set to false
+     * <p>
+     * @param termtype - terminal type that will be negotiated.
+     */
+    public TerminalTypeOptionHandler(final String termtype)
+    {
+        super(TelnetOption.TERMINAL_TYPE, false, false, false, false);
+        termType = termtype;
+    }
 
     /**
      * Constructor for the TerminalTypeOptionHandler. Allows defining desired
@@ -62,18 +74,6 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler
     {
         super(TelnetOption.TERMINAL_TYPE, initlocal, initremote,
                                       acceptlocal, acceptremote);
-        termType = termtype;
-    }
-
-    /**
-     * Constructor for the TerminalTypeOptionHandler. Initial and accept
-     * behavior flags are set to false
-     * <p>
-     * @param termtype - terminal type that will be negotiated.
-     */
-    public TerminalTypeOptionHandler(final String termtype)
-    {
-        super(TelnetOption.TERMINAL_TYPE, false, false, false, false);
         termType = termtype;
     }
 

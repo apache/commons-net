@@ -72,22 +72,6 @@ public final class WhoisClient extends FingerClient
 
     /**
      * Queries the connected whois server for information regarding
-     * the given handle.  It is up to the programmer to be familiar with the
-     * handle syntax of the whois server.  You must first connect to a whois
-     * server before calling this method, and you should disconnect afterward.
-     *
-     * @param handle  The handle to lookup.
-     * @return The result of the whois query.
-     * @throws IOException  If an I/O error occurs during the operation.
-     */
-    public String query(final String handle) throws IOException
-    {
-        return query(false, handle);
-    }
-
-
-    /**
-     * Queries the connected whois server for information regarding
      * the given handle and returns the InputStream of the network connection.
      * It is up to the programmer to be familiar with the handle syntax
      * of the whois server.  You must first connect to a finger server before
@@ -102,6 +86,22 @@ public final class WhoisClient extends FingerClient
     public InputStream getInputStream(final String handle) throws IOException
     {
         return getInputStream(false, handle);
+    }
+
+
+    /**
+     * Queries the connected whois server for information regarding
+     * the given handle.  It is up to the programmer to be familiar with the
+     * handle syntax of the whois server.  You must first connect to a whois
+     * server before calling this method, and you should disconnect afterward.
+     *
+     * @param handle  The handle to lookup.
+     * @return The result of the whois query.
+     * @throws IOException  If an I/O error occurs during the operation.
+     */
+    public String query(final String handle) throws IOException
+    {
+        return query(false, handle);
     }
 
 }

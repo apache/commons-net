@@ -115,6 +115,20 @@ public class MacOsPeterFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     }
 
     /**
+     * Defines a default configuration to be used when this class is
+     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
+     * parameter being specified.
+     * @return the default configuration for this parser.
+     */
+    @Override
+    protected FTPClientConfig getDefaultConfiguration() {
+        return new FTPClientConfig(
+                FTPClientConfig.SYST_UNIX,
+                DEFAULT_DATE_FORMAT,
+                DEFAULT_RECENT_DATE_FORMAT);
+    }
+
+    /**
      * Parses a line of a unix (standard) FTP server file listing and converts
      * it into a usable format in the form of an <code> FTPFile </code>
      * instance.  If the file listing line doesn't describe a file,
@@ -258,20 +272,6 @@ public class MacOsPeterFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             return file;
         }
         return null;
-    }
-
-    /**
-     * Defines a default configuration to be used when this class is
-     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
-     * parameter being specified.
-     * @return the default configuration for this parser.
-     */
-    @Override
-    protected FTPClientConfig getDefaultConfiguration() {
-        return new FTPClientConfig(
-                FTPClientConfig.SYST_UNIX,
-                DEFAULT_DATE_FORMAT,
-                DEFAULT_RECENT_DATE_FORMAT);
     }
 
 }

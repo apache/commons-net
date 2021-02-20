@@ -46,6 +46,32 @@ public class MacOsPeterFTPEntryParserTest extends FTPParseTestFramework {
         super(name);
     }
 
+    /**
+     * Method checkPermissions.
+     * Verify that the persmissions were properly set.
+     * @param f
+     */
+    private void checkPermissions(final FTPFile f) {
+        assertTrue("Should have user read permission.", f.hasPermission(
+                FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
+        assertTrue("Should have user write permission.", f.hasPermission(
+                FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION));
+        assertTrue("Should have user execute permission.", f.hasPermission(
+                FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION));
+        assertTrue("Should have group read permission.", f.hasPermission(
+                FTPFile.GROUP_ACCESS, FTPFile.READ_PERMISSION));
+        assertTrue("Should NOT have group write permission.", !f.hasPermission(
+                FTPFile.GROUP_ACCESS, FTPFile.WRITE_PERMISSION));
+        assertTrue("Should have group execute permission.", f.hasPermission(
+                FTPFile.GROUP_ACCESS, FTPFile.EXECUTE_PERMISSION));
+        assertTrue("Should have world read permission.", f.hasPermission(
+                FTPFile.WORLD_ACCESS, FTPFile.READ_PERMISSION));
+        assertTrue("Should NOT have world write permission.", !f.hasPermission(
+                FTPFile.WORLD_ACCESS, FTPFile.WRITE_PERMISSION));
+        assertTrue("Should have world execute permission.", f.hasPermission(
+                FTPFile.WORLD_ACCESS, FTPFile.EXECUTE_PERMISSION));
+    }
+
     @Override
     protected String[] getBadListing() {
         return badsamples;
@@ -59,6 +85,12 @@ public class MacOsPeterFTPEntryParserTest extends FTPParseTestFramework {
     @Override
     protected FTPFileEntryParser getParser() {
         return new MacOsPeterFTPEntryParser();
+    }
+
+    @Override
+    public void testDefaultPrecision() {
+        testPrecision(
+            "-rw-r--r--    78440       49231   127671 Jul 22  2010 Filename with whitespace.jpg", CalendarUnit.DAY_OF_MONTH);
     }
 
     @Override
@@ -120,38 +152,6 @@ public class MacOsPeterFTPEntryParserTest extends FTPParseTestFramework {
         cal.set(Calendar.HOUR_OF_DAY, 14);
         cal.set(Calendar.MINUTE, 51);
         assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp().getTime()));
-    }
-
-    /**
-     * Method checkPermissions.
-     * Verify that the persmissions were properly set.
-     * @param f
-     */
-    private void checkPermissions(final FTPFile f) {
-        assertTrue("Should have user read permission.", f.hasPermission(
-                FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
-        assertTrue("Should have user write permission.", f.hasPermission(
-                FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertTrue("Should have user execute permission.", f.hasPermission(
-                FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION));
-        assertTrue("Should have group read permission.", f.hasPermission(
-                FTPFile.GROUP_ACCESS, FTPFile.READ_PERMISSION));
-        assertTrue("Should NOT have group write permission.", !f.hasPermission(
-                FTPFile.GROUP_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertTrue("Should have group execute permission.", f.hasPermission(
-                FTPFile.GROUP_ACCESS, FTPFile.EXECUTE_PERMISSION));
-        assertTrue("Should have world read permission.", f.hasPermission(
-                FTPFile.WORLD_ACCESS, FTPFile.READ_PERMISSION));
-        assertTrue("Should NOT have world write permission.", !f.hasPermission(
-                FTPFile.WORLD_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertTrue("Should have world execute permission.", f.hasPermission(
-                FTPFile.WORLD_ACCESS, FTPFile.EXECUTE_PERMISSION));
-    }
-
-    @Override
-    public void testDefaultPrecision() {
-        testPrecision(
-            "-rw-r--r--    78440       49231   127671 Jul 22  2010 Filename with whitespace.jpg", CalendarUnit.DAY_OF_MONTH);
     }
 
     @Override

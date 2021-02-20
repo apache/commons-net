@@ -134,10 +134,6 @@ public final class FTPCommand
     /** @since 2.2 */
     public static final int SET_MOD_TIME = MFMT;
 
-    // Cannot be instantiated
-    private FTPCommand()
-    {}
-
     private static final String[] _commands = {
                                           "USER", "PASS", "ACCT", "CWD", "CDUP", "SMNT", "REIN", "QUIT", "PORT",
                                           "PASV", "TYPE", "STRU", "MODE", "RETR", "STOR", "STOU", "APPE", "ALLO",
@@ -145,16 +141,16 @@ public final class FTPCommand
                                           "NLST", "SITE", "SYST", "STAT", "HELP", "NOOP", "MDTM", "FEAT", "MFMT",
                                           "EPSV", "EPRT", "MLSD", "MLST" };
 
-
-
     // default access needed for Unit test
-    static void checkArray(){
-        final int expectedLength = LAST+1;
+    static void checkArray() {
+        final int expectedLength = LAST + 1;
         if (_commands.length != expectedLength) {
-            throw new RuntimeException("Incorrect _commands array. Should have length "
-                    +expectedLength+" found "+_commands.length);
+            throw new RuntimeException(
+                "Incorrect _commands array. Should have length " + expectedLength + " found " + _commands.length);
         }
     }
+
+
 
     /**
      * Retrieve the FTP protocol command string corresponding to a specified
@@ -168,4 +164,8 @@ public final class FTPCommand
     {
         return _commands[command];
     }
+
+    // Cannot be instantiated
+    private FTPCommand()
+    {}
 }

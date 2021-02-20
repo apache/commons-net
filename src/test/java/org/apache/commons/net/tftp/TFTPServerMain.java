@@ -76,6 +76,19 @@ public class TFTPServerMain {
         final TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, port,
                 TFTPServer.ServerMode.GET_AND_PUT, null, null){
             @Override
+            TFTP newTFTP(){
+                if (verbose) {
+                    return new TFTP() {
+                      @Override
+                      protected void trace(final String direction, final TFTPPacket packet) {
+                          System.out.println(direction + " " + packet.toString());
+                      }
+                    };
+                }
+                return new TFTP();
+            }
+
+            @Override
             void sendData(final TFTP tftp, final TFTPPacket packet) throws IOException {
                 if (rand == null) {
                     super.sendData(tftp, packet);
@@ -118,19 +131,6 @@ public class TFTPServerMain {
                         super.sendData(tftp, packet);
                         break;
                 }
-            }
-
-            @Override
-            TFTP newTFTP(){
-                if (verbose) {
-                    return new TFTP() {
-                      @Override
-                      protected void trace(final String direction, final TFTPPacket packet) {
-                          System.out.println(direction + " " + packet.toString());
-                      }
-                    };
-                }
-                return new TFTP();
             }
         };
 

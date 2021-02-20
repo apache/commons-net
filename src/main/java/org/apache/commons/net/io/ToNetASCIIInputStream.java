@@ -52,6 +52,29 @@ public final class ToNetASCIIInputStream extends FilterInputStream
     }
 
 
+    @Override
+    public int available() throws IOException
+    {
+        final int result;
+
+        result = in.available();
+
+        if (status == LAST_WAS_NL) {
+            return result + 1;
+        }
+
+        return result;
+    }
+
+
+    /** Returns false.  Mark is not supported. */
+    @Override
+    public boolean markSupported()
+    {
+        return false;
+    }
+
+
     /**
      * Reads and returns the next byte in the stream.  If the end of the
      * message has been reached, returns -1.
@@ -94,7 +117,6 @@ public final class ToNetASCIIInputStream extends FilterInputStream
         //return ch;
     }
 
-
     /**
      * Reads the next number of bytes from the stream into an array and
      * returns the number of bytes read.  Returns -1 if the end of the
@@ -111,7 +133,6 @@ public final class ToNetASCIIInputStream extends FilterInputStream
     {
         return read(buffer, 0, buffer.length);
     }
-
 
     /**
      * Reads the next number of bytes from the stream into an array and returns
@@ -161,26 +182,5 @@ public final class ToNetASCIIInputStream extends FilterInputStream
         while (--length > 0 && (ch = read()) != -1);
 
         return offset - off;
-    }
-
-    /** Returns false.  Mark is not supported. */
-    @Override
-    public boolean markSupported()
-    {
-        return false;
-    }
-
-    @Override
-    public int available() throws IOException
-    {
-        final int result;
-
-        result = in.available();
-
-        if (status == LAST_WAS_NL) {
-            return result + 1;
-        }
-
-        return result;
     }
 }

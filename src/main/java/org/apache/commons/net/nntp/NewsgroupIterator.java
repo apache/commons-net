@@ -38,6 +38,11 @@ class NewsgroupIterator implements Iterator<NewsgroupInfo>, Iterable<NewsgroupIn
     }
 
     @Override
+    public Iterator<NewsgroupInfo> iterator() {
+        return this;
+    }
+
+    @Override
     public NewsgroupInfo next() {
         final String line = stringIterator.next();
         return NNTPClient.parseNewsgroupListEntry(line);
@@ -46,10 +51,5 @@ class NewsgroupIterator implements Iterator<NewsgroupInfo>, Iterable<NewsgroupIn
     @Override
     public void remove() {
         stringIterator.remove();
-    }
-
-    @Override
-    public Iterator<NewsgroupInfo> iterator() {
-        return this;
     }
 }

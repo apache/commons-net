@@ -89,13 +89,21 @@ public abstract class TelnetOptionHandler
 
 
     /**
-     * Returns the option code for this option.
+     * Method called upon reception of a subnegotiation for this option
+     * coming from the other end.
      * <p>
-     * @return Option code.
+     * This implementation returns null, and
+     * must be overridden by the actual TelnetOptionHandler to specify
+     * which response must be sent for the subnegotiation request.
+     * <p>
+     * @param suboptionData - the sequence received, without IAC SB &amp; IAC SE
+     * @param suboptionLength - the length of data in suboption_data
+     * <p>
+     * @return response to be sent to the subnegotiation sequence. TelnetClient
+     * will add IAC SB &amp; IAC SE. null means no response
      */
-    public int getOptionCode()
-    {
-        return optionCode;
+    public int[] answerSubnegotiation(final int suboptionData[], final int suboptionLength) {
+        return null;
     }
 
     /**
@@ -121,25 +129,14 @@ public abstract class TelnetOptionHandler
     }
 
     /**
-     * Set behavior of the option for DO requests coming from
-     * the other end.
+     * Returns a boolean indicating whether a DO request sent to the other
+     * side has been acknowledged.
      * <p>
-     * @param accept - if true, subsequent DO requests will be accepted.
+     * @return true if a DO sent to the other side has been acknowledged.
      */
-    public void setAcceptLocal(final boolean accept)
+    boolean getDo()
     {
-        acceptLocal = accept;
-    }
-
-    /**
-     * Set behavior of the option for WILL requests coming from
-     * the other end.
-     * <p>
-     * @param accept - if true, subsequent WILL requests will be accepted.
-     */
-    public void setAcceptRemote(final boolean accept)
-    {
-        acceptRemote = accept;
+        return doFlag;
     }
 
     /**
@@ -165,6 +162,60 @@ public abstract class TelnetOptionHandler
     }
 
     /**
+     * Returns the option code for this option.
+     * <p>
+     * @return Option code.
+     */
+    public int getOptionCode()
+    {
+        return optionCode;
+    }
+
+    /**
+     * Returns a boolean indicating whether a WILL request sent to the other
+     * side has been acknowledged.
+     * <p>
+     * @return true if a WILL sent to the other side has been acknowledged.
+     */
+    boolean getWill()
+    {
+        return willFlag;
+    }
+
+    /**
+     * Set behavior of the option for DO requests coming from
+     * the other end.
+     * <p>
+     * @param accept - if true, subsequent DO requests will be accepted.
+     */
+    public void setAcceptLocal(final boolean accept)
+    {
+        acceptLocal = accept;
+    }
+
+    /**
+     * Set behavior of the option for WILL requests coming from
+     * the other end.
+     * <p>
+     * @param accept - if true, subsequent WILL requests will be accepted.
+     */
+    public void setAcceptRemote(final boolean accept)
+    {
+        acceptRemote = accept;
+    }
+
+    /**
+     * Tells this option whether a DO request sent to the other
+     * side has been acknowledged (invoked by TelnetClient).
+     * <p>
+     * @param state - if true, a DO request has been acknowledged.
+     */
+    void setDo(final boolean state)
+    {
+        doFlag = state;
+    }
+
+    /**
      * Tells this option whether to send a WILL request upon connection.
      * <p>
      * @param init - if true, a WILL request will be sent upon subsequent
@@ -187,21 +238,14 @@ public abstract class TelnetOptionHandler
     }
 
     /**
-     * Method called upon reception of a subnegotiation for this option
-     * coming from the other end.
+     * Tells this option whether a WILL request sent to the other
+     * side has been acknowledged (invoked by TelnetClient).
      * <p>
-     * This implementation returns null, and
-     * must be overridden by the actual TelnetOptionHandler to specify
-     * which response must be sent for the subnegotiation request.
-     * <p>
-     * @param suboptionData - the sequence received, without IAC SB &amp; IAC SE
-     * @param suboptionLength - the length of data in suboption_data
-     * <p>
-     * @return response to be sent to the subnegotiation sequence. TelnetClient
-     * will add IAC SB &amp; IAC SE. null means no response
+     * @param state - if true, a WILL request has been acknowledged.
      */
-    public int[] answerSubnegotiation(final int suboptionData[], final int suboptionLength) {
-        return null;
+    void setWill(final boolean state)
+    {
+        willFlag = state;
     }
 
     /**
@@ -220,6 +264,7 @@ public abstract class TelnetOptionHandler
         return null;
     }
 
+
     /**
      * This method is invoked whenever this option is acknowledged active on
      * the remote end (TelnetClient sent a DO, remote side sent a WILL).
@@ -234,50 +279,5 @@ public abstract class TelnetOptionHandler
      */
     public int[] startSubnegotiationRemote() {
         return null;
-    }
-
-    /**
-     * Returns a boolean indicating whether a WILL request sent to the other
-     * side has been acknowledged.
-     * <p>
-     * @return true if a WILL sent to the other side has been acknowledged.
-     */
-    boolean getWill()
-    {
-        return willFlag;
-    }
-
-    /**
-     * Tells this option whether a WILL request sent to the other
-     * side has been acknowledged (invoked by TelnetClient).
-     * <p>
-     * @param state - if true, a WILL request has been acknowledged.
-     */
-    void setWill(final boolean state)
-    {
-        willFlag = state;
-    }
-
-    /**
-     * Returns a boolean indicating whether a DO request sent to the other
-     * side has been acknowledged.
-     * <p>
-     * @return true if a DO sent to the other side has been acknowledged.
-     */
-    boolean getDo()
-    {
-        return doFlag;
-    }
-
-
-    /**
-     * Tells this option whether a DO request sent to the other
-     * side has been acknowledged (invoked by TelnetClient).
-     * <p>
-     * @param state - if true, a DO request has been acknowledged.
-     */
-    void setDo(final boolean state)
-    {
-        doFlag = state;
     }
 }

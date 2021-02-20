@@ -46,6 +46,21 @@ public final class TFTPWriteRequestPacket extends TFTPRequestPacket
 {
 
     /**
+     * Creates a write request packet of based on a received
+     * datagram and assumes the datagram has already been identified as a
+     * write request.  Assumes the datagram is at least length 4, else an
+     * ArrayIndexOutOfBoundsException may be thrown.
+     *
+     * @param datagram  The datagram containing the received request.
+     * @throws TFTPPacketException  If the datagram isn't a valid TFTP
+     *         request packet.
+     */
+    TFTPWriteRequestPacket(final DatagramPacket datagram) throws TFTPPacketException
+    {
+        super(TFTPPacket.WRITE_REQUEST, datagram);
+    }
+
+    /**
      * Creates a write request packet to be sent to a host at a
      * given port with a file name and transfer mode request.
      *
@@ -59,21 +74,6 @@ public final class TFTPWriteRequestPacket extends TFTPRequestPacket
                                   final String fileName, final int mode)
     {
         super(destination, port, TFTPPacket.WRITE_REQUEST, fileName, mode);
-    }
-
-    /**
-     * Creates a write request packet of based on a received
-     * datagram and assumes the datagram has already been identified as a
-     * write request.  Assumes the datagram is at least length 4, else an
-     * ArrayIndexOutOfBoundsException may be thrown.
-     *
-     * @param datagram  The datagram containing the received request.
-     * @throws TFTPPacketException  If the datagram isn't a valid TFTP
-     *         request packet.
-     */
-    TFTPWriteRequestPacket(final DatagramPacket datagram) throws TFTPPacketException
-    {
-        super(TFTPPacket.WRITE_REQUEST, datagram);
     }
 
     /**

@@ -275,21 +275,6 @@ public class FTP extends SocketClient
         _commandSupport_ = new ProtocolCommandSupport(this);
     }
 
-    // The RFC-compliant multiline termination check
-    private boolean strictCheck(final String line, final String code) {
-        return !(line.startsWith(code) && line.charAt(REPLY_CODE_LEN) == ' ');
-    }
-
-    // The strict check is too strong a condition because of non-conforming ftp
-    // servers like ftp.funet.fi which sent 226 as the last line of a
-    // 426 multi-line reply in response to ls /.  We relax the condition to
-    // test that the line starts with a digit rather than starting with
-    // the code.
-    private boolean lenientCheck(final String line) {
-        return !(line.length() > REPLY_CODE_LEN&& line.charAt(REPLY_CODE_LEN) != '-' &&
-                Character.isDigit(line.charAt(0)));
-    }
-
     /**
      * Get the reply, but don't pass it to command listeners.
      * Used for keep-alive processing only.
@@ -299,6 +284,434 @@ public class FTP extends SocketClient
     protected void __getReplyNoReport()  throws IOException
     {
         getReply(false);
+    }
+
+    /**
+     * Send a noop and get the reply without reporting to the command listener.
+     * Intended for use with keep-alive.
+     *
+     * @throws IOException on error
+     * @since 3.0
+     */
+    protected void __noop() throws IOException {
+        final String msg = buildMessage(FTPCmd.NOOP.getCommand(), null);
+        send(msg);
+        __getReplyNoReport(); // This may timeout
+    }
+
+    /**
+     * Initiates control connections and gets initial reply.
+     * Initializes {@link #_controlInput_} and {@link #_controlOutput_}.
+     */
+    @Override
+    protected void _connectAction_() throws IOException
+    {
+        _connectAction_(null);
+    }
+
+    /**
+     * Initiates control connections and gets initial reply.
+     * Initializes {@link #_controlInput_} and {@link #_controlOutput_}.
+     *
+     * @param socketIsReader the reader to reuse (if non-null)
+     * @throws IOException on error
+     * @since 3.4
+     */
+    protected void _connectAction_(final Reader socketIsReader) throws IOException {
+        super._connectAction_(); // sets up _input_ and _output_
+        if(socketIsReader == null) {
+            _controlInput_ =
+                    new CRLFLineReader(new InputStreamReader(_input_, getControlEncoding()));
+        } else {
+            _controlInput_ = new CRLFLineReader(socketIsReader);
+        }
+        _controlOutput_ =
+            new BufferedWriter(new OutputStreamWriter(_output_, getControlEncoding()));
+        if (connectTimeout > 0) { // NET-385
+            final int original = _socket_.getSoTimeout();
+            _socket_.setSoTimeout(connectTimeout);
+            try {
+                getReply();
+                // If we received code 120, we have to fetch completion reply.
+                if (FTPReply.isPositivePreliminary(_replyCode)) {
+                    getReply();
+                }
+            } catch (final SocketTimeoutException e) {
+                final IOException ioe = new IOException("Timed out waiting for initial connect reply");
+                ioe.initCause(e);
+                throw ioe;
+            } finally {
+                _socket_.setSoTimeout(original);
+            }
+        } else {
+            getReply();
+            // If we received code 120, we have to fetch completion reply.
+            if (FTPReply.isPositivePreliminary(_replyCode)) {
+                getReply();
+            }
+        }
+    }
+
+    /**
+     * A convenience method to send the FTP ABOR command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int abor() throws IOException
+    {
+        return sendCommand(FTPCmd.ABOR);
+    }
+
+
+    /**
+     * A convenience method to send the FTP ACCT command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param account  The account name to access.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int acct(final String account) throws IOException
+    {
+        return sendCommand(FTPCmd.ACCT, account);
+    }
+
+
+    /**
+     * A convenience method to send the FTP ALLO command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param bytes The number of bytes to allocate.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int allo(final int bytes) throws IOException
+    {
+        return sendCommand(FTPCmd.ALLO, Integer.toString(bytes));
+    }
+
+
+    /**
+     * A convenience method to send the FTP ALLO command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param bytes The number of bytes to allocate.
+     * @param recordSize  The size of a record.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int allo(final int bytes, final int recordSize) throws IOException
+    {
+        return sendCommand(FTPCmd.ALLO, Integer.toString(bytes) + " R " +
+                           Integer.toString(recordSize));
+    }
+
+
+    /**
+     * A convenience method to send the FTP ALLO command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param bytes The number of bytes to allocate.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int allo(final long bytes) throws IOException
+    {
+        return sendCommand(FTPCmd.ALLO, Long.toString(bytes));
+    }
+
+
+    /**
+     * A convenience method to send the FTP ALLO command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param bytes The number of bytes to allocate.
+     * @param recordSize  The size of a record.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int allo(final long bytes, final int recordSize) throws IOException
+    {
+        return sendCommand(FTPCmd.ALLO, Long.toString(bytes) + " R " +
+                           Integer.toString(recordSize));
+    }
+
+    /**
+     * A convenience method to send the FTP APPE command to the server,
+     * receive the reply, and return the reply code.  Remember, it is up
+     * to you to manage the data connection.  If you don't need this low
+     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
+     * , which will handle all low level details for you.
+     *
+     * @param pathname  The pathname to use for the file when stored at
+     *                  the remote end of the transfer.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int appe(final String pathname) throws IOException
+    {
+        return sendCommand(FTPCmd.APPE, pathname);
+    }
+
+    private String buildMessage(final String command, final String args) {
+        final StringBuilder __commandBuffer = new StringBuilder();
+
+        __commandBuffer.append(command);
+
+        if (args != null)
+        {
+            __commandBuffer.append(' ');
+            __commandBuffer.append(args);
+        }
+        __commandBuffer.append(SocketClient.NETASCII_EOL);
+        return __commandBuffer.toString();
+    }
+
+    /**
+     * A convenience method to send the FTP CDUP command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int cdup() throws IOException
+    {
+        return sendCommand(FTPCmd.CDUP);
+    }
+
+    /**
+     * A convenience method to send the FTP CWD command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param directory The new working directory.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int cwd(final String directory) throws IOException
+    {
+        return sendCommand(FTPCmd.CWD, directory);
+    }
+
+    /**
+     * A convenience method to send the FTP DELE command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param pathname The pathname to delete.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int dele(final String pathname) throws IOException
+    {
+        return sendCommand(FTPCmd.DELE, pathname);
+    }
+
+    /**
+     * Closes the control connection to the FTP server and sets to null
+     * some internal data so that the memory may be reclaimed by the
+     * garbage collector.  The reply text and code information from the
+     * last command is voided so that the memory it used may be reclaimed.
+     * Also sets {@link #_controlInput_} and {@link #_controlOutput_} to null.
+     *
+     * @throws IOException If an error occurs while disconnecting.
+     */
+    @Override
+    public void disconnect() throws IOException
+    {
+        super.disconnect();
+        _controlInput_ = null;
+        _controlOutput_ = null;
+        _newReplyString = false;
+        _replyString = null;
+    }
+
+    /**
+     * A convenience method to send the FTP EPRT command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * Examples:
+     * <ul>
+     * <li>EPRT |1|132.235.1.2|6275|</li>
+     * <li>EPRT |2|1080::8:800:200C:417A|5282|</li>
+     * </ul>
+     *
+     * @see "http://www.faqs.org/rfcs/rfc2428.html"
+     *
+     * @param host  The host owning the port.
+     * @param port  The new port.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     * @since 2.2
+     */
+    public int eprt(final InetAddress host, final int port) throws IOException
+    {
+        final int num;
+        final StringBuilder info = new StringBuilder();
+        String h;
+
+        // If IPv6, trim the zone index
+        h = host.getHostAddress();
+        num = h.indexOf('%');
+        if (num > 0) {
+            h = h.substring(0, num);
+        }
+
+        info.append("|");
+
+        if (host instanceof Inet4Address) {
+            info.append("1");
+        } else if (host instanceof Inet6Address) {
+            info.append("2");
+        }
+        info.append("|");
+        info.append(h);
+        info.append("|");
+        info.append(port);
+        info.append("|");
+
+        return sendCommand(FTPCmd.EPRT, info.toString());
+    }
+
+
+    /**
+     * A convenience method to send the FTP EPSV command to the server,
+     * receive the reply, and return the reply code.  Remember, it's up
+     * to you to interpret the reply string containing the host/port
+     * information.
+     *
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     * @since 2.2
+     */
+    public int epsv() throws IOException
+    {
+        return sendCommand(FTPCmd.EPSV);
+    }
+
+
+    /**
+     * A convenience method to send the FTP FEAT command to the server, receive the reply,
+     * and return the reply code.
+     * @return The reply code received by the server
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     * @since 2.2
+     */
+    public int feat() throws IOException
+    {
+        return sendCommand(FTPCmd.FEAT);
+    }
+
+    /**
+     * Provide command support to super-class
+     */
+    @Override
+    protected ProtocolCommandSupport getCommandSupport() {
+        return _commandSupport_;
+    }
+
+
+    /**
+     * @return The character encoding used to communicate over the
+     * control connection.
+     */
+    public String getControlEncoding() {
+        return _controlEncoding;
+    }
+
+    /**
+     * Fetches a reply from the FTP server and returns the integer reply
+     * code.  After calling this method, the actual reply text can be accessed
+     * from either  calling {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.  Only use this
+     * method if you are implementing your own FTP client or if you need to
+     * fetch a secondary response from the FTP server.
+     *
+     * @return The integer value of the reply code of the fetched FTP reply.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while receiving the
+     *                         server reply.
+     */
+    public int getReply() throws IOException
+    {
+        return getReply(true);
     }
 
     private int getReply(final boolean reportReply) throws IOException
@@ -380,309 +793,6 @@ public class FTP extends SocketClient
         return _replyCode;
     }
 
-    /**
-     * Initiates control connections and gets initial reply.
-     * Initializes {@link #_controlInput_} and {@link #_controlOutput_}.
-     */
-    @Override
-    protected void _connectAction_() throws IOException
-    {
-        _connectAction_(null);
-    }
-
-
-    /**
-     * Initiates control connections and gets initial reply.
-     * Initializes {@link #_controlInput_} and {@link #_controlOutput_}.
-     *
-     * @param socketIsReader the reader to reuse (if non-null)
-     * @throws IOException on error
-     * @since 3.4
-     */
-    protected void _connectAction_(final Reader socketIsReader) throws IOException {
-        super._connectAction_(); // sets up _input_ and _output_
-        if(socketIsReader == null) {
-            _controlInput_ =
-                    new CRLFLineReader(new InputStreamReader(_input_, getControlEncoding()));
-        } else {
-            _controlInput_ = new CRLFLineReader(socketIsReader);
-        }
-        _controlOutput_ =
-            new BufferedWriter(new OutputStreamWriter(_output_, getControlEncoding()));
-        if (connectTimeout > 0) { // NET-385
-            final int original = _socket_.getSoTimeout();
-            _socket_.setSoTimeout(connectTimeout);
-            try {
-                getReply();
-                // If we received code 120, we have to fetch completion reply.
-                if (FTPReply.isPositivePreliminary(_replyCode)) {
-                    getReply();
-                }
-            } catch (final SocketTimeoutException e) {
-                final IOException ioe = new IOException("Timed out waiting for initial connect reply");
-                ioe.initCause(e);
-                throw ioe;
-            } finally {
-                _socket_.setSoTimeout(original);
-            }
-        } else {
-            getReply();
-            // If we received code 120, we have to fetch completion reply.
-            if (FTPReply.isPositivePreliminary(_replyCode)) {
-                getReply();
-            }
-        }
-    }
-
-
-    /**
-     * Saves the character encoding to be used by the FTP control connection.
-     * Some FTP servers require that commands be issued in a non-ASCII
-     * encoding like UTF-8 so that file names with multi-byte character
-     * representations (e.g, Big 8) can be specified.
-     * <p>
-     * Please note that this has to be set before the connection is established.
-     *
-     * @param encoding The new character encoding for the control connection.
-     */
-    public void setControlEncoding(final String encoding) {
-        _controlEncoding = encoding;
-    }
-
-
-    /**
-     * @return The character encoding used to communicate over the
-     * control connection.
-     */
-    public String getControlEncoding() {
-        return _controlEncoding;
-    }
-
-
-    /**
-     * Closes the control connection to the FTP server and sets to null
-     * some internal data so that the memory may be reclaimed by the
-     * garbage collector.  The reply text and code information from the
-     * last command is voided so that the memory it used may be reclaimed.
-     * Also sets {@link #_controlInput_} and {@link #_controlOutput_} to null.
-     *
-     * @throws IOException If an error occurs while disconnecting.
-     */
-    @Override
-    public void disconnect() throws IOException
-    {
-        super.disconnect();
-        _controlInput_ = null;
-        _controlOutput_ = null;
-        _newReplyString = false;
-        _replyString = null;
-    }
-
-
-    /**
-     * Sends an FTP command to the server, waits for a reply and returns the
-     * numerical response code.  After invocation, for more detailed
-     * information, the actual reply text can be accessed by calling
-     * {@link #getReplyString  getReplyString } or
-     * {@link #getReplyStrings  getReplyStrings }.
-     *
-     * @param command  The text representation of the  FTP command to send.
-     * @param args The arguments to the FTP command.  If this parameter is
-     *             set to null, then the command is sent with no argument.
-     * @return The integer value of the FTP reply code returned by the server
-     *         in response to the command.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int sendCommand(final String command, final String args) throws IOException
-    {
-        if (_controlOutput_ == null) {
-            throw new IOException("Connection is not open");
-        }
-
-        final String message = buildMessage(command, args);
-
-        send(message);
-
-        fireCommandSent(command, message);
-
-        return getReply();
-    }
-
-    private String buildMessage(final String command, final String args) {
-        final StringBuilder __commandBuffer = new StringBuilder();
-
-        __commandBuffer.append(command);
-
-        if (args != null)
-        {
-            __commandBuffer.append(' ');
-            __commandBuffer.append(args);
-        }
-        __commandBuffer.append(SocketClient.NETASCII_EOL);
-        return __commandBuffer.toString();
-    }
-
-    private void send(final String message) throws IOException,
-            FTPConnectionClosedException, SocketException {
-        try{
-            _controlOutput_.write(message);
-            _controlOutput_.flush();
-        }
-        catch (final SocketException e)
-        {
-            if (!isConnected())
-            {
-                throw new FTPConnectionClosedException("Connection unexpectedly closed.");
-            }
-            throw e;
-        }
-    }
-
-    /**
-     * Send a noop and get the reply without reporting to the command listener.
-     * Intended for use with keep-alive.
-     *
-     * @throws IOException on error
-     * @since 3.0
-     */
-    protected void __noop() throws IOException {
-        final String msg = buildMessage(FTPCmd.NOOP.getCommand(), null);
-        send(msg);
-        __getReplyNoReport(); // This may timeout
-    }
-
-    /**
-     * Sends an FTP command to the server, waits for a reply and returns the
-     * numerical response code.  After invocation, for more detailed
-     * information, the actual reply text can be accessed by calling
-     * {@link #getReplyString  getReplyString } or
-     * {@link #getReplyStrings  getReplyStrings }.
-     *
-     * @param command  The FTPCommand constant corresponding to the FTP command
-     *                 to send.
-     * @param args The arguments to the FTP command.  If this parameter is
-     *             set to null, then the command is sent with no argument.
-     * @return The integer value of the FTP reply code returned by the server
-     *         in response to the command.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     * @deprecated (3.3) Use {@link #sendCommand(FTPCmd, String)} instead
-     */
-    @Deprecated
-    public int sendCommand(final int command, final String args) throws IOException
-    {
-        return sendCommand(FTPCommand.getCommand(command), args);
-    }
-
-    /**
-     * Sends an FTP command to the server, waits for a reply and returns the
-     * numerical response code.  After invocation, for more detailed
-     * information, the actual reply text can be accessed by calling
-     * {@link #getReplyString  getReplyString } or
-     * {@link #getReplyStrings  getReplyStrings }.
-     *
-     * @param command  The FTPCmd enum corresponding to the FTP command
-     *                 to send.
-     * @return The integer value of the FTP reply code returned by the server
-     *         in response to the command.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     * @since 3.3
-     */
-    public int sendCommand(final FTPCmd command)  throws IOException{
-        return sendCommand(command, null);
-    }
-
-    /**
-     * Sends an FTP command to the server, waits for a reply and returns the
-     * numerical response code.  After invocation, for more detailed
-     * information, the actual reply text can be accessed by calling
-     * {@link #getReplyString  getReplyString } or
-     * {@link #getReplyStrings  getReplyStrings }.
-     *
-     * @param command  The FTPCmd enum corresponding to the FTP command
-     *                 to send.
-     * @param args The arguments to the FTP command.  If this parameter is
-     *             set to null, then the command is sent with no argument.
-     * @return The integer value of the FTP reply code returned by the server
-     *         in response to the command.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     * @since 3.3
-     */
-    public int sendCommand(final FTPCmd command, final String args)  throws IOException{
-        return sendCommand(command.getCommand(), args);
-    }
-
-    /**
-     * Sends an FTP command with no arguments to the server, waits for a
-     * reply and returns the numerical response code.  After invocation, for
-     * more detailed information, the actual reply text can be accessed by
-     * calling {@link #getReplyString  getReplyString } or
-     * {@link #getReplyStrings  getReplyStrings }.
-     *
-     * @param command  The text representation of the  FTP command to send.
-     * @return The integer value of the FTP reply code returned by the server
-     *         in response to the command.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int sendCommand(final String command) throws IOException
-    {
-        return sendCommand(command, null);
-    }
-
-
-    /**
-     * Sends an FTP command with no arguments to the server, waits for a
-     * reply and returns the numerical response code.  After invocation, for
-     * more detailed information, the actual reply text can be accessed by
-     * calling {@link #getReplyString  getReplyString } or
-     * {@link #getReplyStrings  getReplyStrings }.
-     *
-     * @param command  The FTPCommand constant corresponding to the FTP command
-     *                 to send.
-     * @return The integer value of the FTP reply code returned by the server
-     *         in response to the command.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int sendCommand(final int command) throws IOException
-    {
-        return sendCommand(command, null);
-    }
-
 
     /**
      * Returns the integer value of the reply code of the last FTP reply.
@@ -695,54 +805,6 @@ public class FTP extends SocketClient
     public int getReplyCode()
     {
         return _replyCode;
-    }
-
-    /**
-     * Fetches a reply from the FTP server and returns the integer reply
-     * code.  After calling this method, the actual reply text can be accessed
-     * from either  calling {@link #getReplyString  getReplyString } or
-     * {@link #getReplyStrings  getReplyStrings }.  Only use this
-     * method if you are implementing your own FTP client or if you need to
-     * fetch a secondary response from the FTP server.
-     *
-     * @return The integer value of the reply code of the fetched FTP reply.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while receiving the
-     *                         server reply.
-     */
-    public int getReply() throws IOException
-    {
-        return getReply(true);
-    }
-
-
-    /**
-     * Returns the lines of text from the last FTP server response as an array
-     * of strings, one entry per line.  The end of line markers of each are
-     * stripped from each line.
-     *
-     * @return The lines of text from the last FTP response as an array.
-     */
-    public String[] getReplyStrings()
-    {
-        return _replyLines.toArray(NetConstants.EMPTY_STRING_ARRAY);
-    }
-
-    /**
-     * Returns the nth line of text from the last FTP server response as a string. The end of line markers of each are
-     * stripped from the line.
-     *
-     * @param index The index of the line to return, 0-based.
-     *
-     * @return The lines of text from the last FTP response as an array.
-     */
-    String getReplyString(final int index)
-    {
-        return _replyLines.get(index);
     }
 
     /**
@@ -772,66 +834,34 @@ public class FTP extends SocketClient
         return _replyString = buffer.toString();
     }
 
-
     /**
-     * A convenience method to send the FTP USER command to the server,
-     * receive the reply, and return the reply code.
+     * Returns the nth line of text from the last FTP server response as a string. The end of line markers of each are
+     * stripped from the line.
      *
-     * @param username  The username to login under.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int user(final String username) throws IOException
-    {
-        return sendCommand(FTPCmd.USER, username);
-    }
-
-    /**
-     * A convenience method to send the FTP PASS command to the server,
-     * receive the reply, and return the reply code.
-     * @param password The plain text password of the username being logged into.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int pass(final String password) throws IOException
-    {
-        return sendCommand(FTPCmd.PASS, password);
-    }
-
-    /**
-     * A convenience method to send the FTP ACCT command to the server,
-     * receive the reply, and return the reply code.
+     * @param index The index of the line to return, 0-based.
      *
-     * @param account  The account name to access.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
+     * @return The lines of text from the last FTP response as an array.
      */
-    public int acct(final String account) throws IOException
+    String getReplyString(final int index)
     {
-        return sendCommand(FTPCmd.ACCT, account);
+        return _replyLines.get(index);
     }
 
 
     /**
-     * A convenience method to send the FTP ABOR command to the server,
+     * Returns the lines of text from the last FTP server response as an array
+     * of strings, one entry per line.  The end of line markers of each are
+     * stripped from each line.
+     *
+     * @return The lines of text from the last FTP response as an array.
+     */
+    public String[] getReplyStrings()
+    {
+        return _replyLines.toArray(NetConstants.EMPTY_STRING_ARRAY);
+    }
+
+    /**
+     * A convenience method to send the FTP HELP command to the server,
      * receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
@@ -843,16 +873,16 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
-    public int abor() throws IOException
+    public int help() throws IOException
     {
-        return sendCommand(FTPCmd.ABOR);
+        return sendCommand(FTPCmd.HELP);
     }
 
     /**
-     * A convenience method to send the FTP CWD command to the server,
+     * A convenience method to send the FTP HELP command to the server,
      * receive the reply, and return the reply code.
      *
-     * @param directory The new working directory.
+     * @param command  The command name on which to request help.
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -862,678 +892,42 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
-    public int cwd(final String directory) throws IOException
+    public int help(final String command) throws IOException
     {
-        return sendCommand(FTPCmd.CWD, directory);
+        return sendCommand(FTPCmd.HELP, command);
     }
 
     /**
-     * A convenience method to send the FTP CDUP command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int cdup() throws IOException
-    {
-        return sendCommand(FTPCmd.CDUP);
-    }
-
-    /**
-     * A convenience method to send the FTP QUIT command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int quit() throws IOException
-    {
-        return sendCommand(FTPCmd.QUIT);
-    }
-
-    /**
-     * A convenience method to send the FTP REIN command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int rein() throws IOException
-    {
-        return sendCommand(FTPCmd.REIN);
-    }
-
-    /**
-     * A convenience method to send the FTP SMNT command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @param dir  The directory name.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int smnt(final String dir) throws IOException
-    {
-        return sendCommand(FTPCmd.SMNT, dir);
-    }
-
-    /**
-     * A convenience method to send the FTP PORT command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @param host  The host owning the port.
-     * @param port  The new port.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int port(final InetAddress host, final int port) throws IOException
-    {
-        int num;
-        final StringBuilder info = new StringBuilder(24);
-
-        info.append(host.getHostAddress().replace('.', ','));
-        num = port >>> 8;
-        info.append(',');
-        info.append(num);
-        info.append(',');
-        num = port & 0xff;
-        info.append(num);
-
-        return sendCommand(FTPCmd.PORT, info.toString());
-    }
-
-    /**
-     * A convenience method to send the FTP EPRT command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * Examples:
-     * <ul>
-     * <li>EPRT |1|132.235.1.2|6275|</li>
-     * <li>EPRT |2|1080::8:800:200C:417A|5282|</li>
-     * </ul>
-     *
-     * @see "http://www.faqs.org/rfcs/rfc2428.html"
-     *
-     * @param host  The host owning the port.
-     * @param port  The new port.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     * @since 2.2
-     */
-    public int eprt(final InetAddress host, final int port) throws IOException
-    {
-        final int num;
-        final StringBuilder info = new StringBuilder();
-        String h;
-
-        // If IPv6, trim the zone index
-        h = host.getHostAddress();
-        num = h.indexOf('%');
-        if (num > 0) {
-            h = h.substring(0, num);
-        }
-
-        info.append("|");
-
-        if (host instanceof Inet4Address) {
-            info.append("1");
-        } else if (host instanceof Inet6Address) {
-            info.append("2");
-        }
-        info.append("|");
-        info.append(h);
-        info.append("|");
-        info.append(port);
-        info.append("|");
-
-        return sendCommand(FTPCmd.EPRT, info.toString());
-    }
-
-    /**
-     * A convenience method to send the FTP PASV command to the server,
-     * receive the reply, and return the reply code.  Remember, it's up
-     * to you to interpret the reply string containing the host/port
-     * information.
-     *
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int pasv() throws IOException
-    {
-        return sendCommand(FTPCmd.PASV);
-    }
-
-     /**
-     * A convenience method to send the FTP EPSV command to the server,
-     * receive the reply, and return the reply code.  Remember, it's up
-     * to you to interpret the reply string containing the host/port
-     * information.
-     *
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     * @since 2.2
-     */
-    public int epsv() throws IOException
-    {
-        return sendCommand(FTPCmd.EPSV);
-    }
-
-    /**
-     * A convenience method to send the FTP TYPE command for text files
-     * to the server, receive the reply, and return the reply code.
-     * @param fileType  The type of the file (one of the <code>FILE_TYPE</code>
-     *              constants).
-     * @param formatOrByteSize  The format of the file (one of the
-     *              <code>_FORMAT</code> constants.  In the case of
-     *              <code>LOCAL_FILE_TYPE</code>, the byte size.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int type(final int fileType, final int formatOrByteSize) throws IOException
-    {
-        final StringBuilder arg = new StringBuilder();
-
-        arg.append(modes.charAt(fileType));
-        arg.append(' ');
-        if (fileType == LOCAL_FILE_TYPE) {
-            arg.append(formatOrByteSize);
-        } else {
-            arg.append(modes.charAt(formatOrByteSize));
-        }
-
-        return sendCommand(FTPCmd.TYPE, arg.toString());
-    }
-
-
-    /**
-     * A convenience method to send the FTP TYPE command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @param fileType  The type of the file (one of the <code>FILE_TYPE</code>
-     *              constants).
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int type(final int fileType) throws IOException
-    {
-        return sendCommand(FTPCmd.TYPE,
-                           modes.substring(fileType, fileType + 1));
-    }
-
-    /**
-     * A convenience method to send the FTP STRU command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @param structure  The structure of the file (one of the
-     *         <code>_STRUCTURE</code> constants).
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int stru(final int structure) throws IOException
-    {
-        return sendCommand(FTPCmd.STRU,
-                           modes.substring(structure, structure + 1));
-    }
-
-    /**
-     * A convenience method to send the FTP MODE command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @param mode  The transfer mode to use (one of the
-     *         <code>TRANSFER_MODE</code> constants).
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int mode(final int mode) throws IOException
-    {
-        return sendCommand(FTPCmd.MODE,
-                           modes.substring(mode, mode + 1));
-    }
-
-    /**
-     * A convenience method to send the FTP RETR command to the server,
-     * receive the reply, and return the reply code.  Remember, it is up
-     * to you to manage the data connection.  If you don't need this low
-     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
-     * , which will handle all low level details for you.
-     *
-     * @param pathname  The pathname of the file to retrieve.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int retr(final String pathname) throws IOException
-    {
-        return sendCommand(FTPCmd.RETR, pathname);
-    }
-
-    /**
-     * A convenience method to send the FTP STOR command to the server,
-     * receive the reply, and return the reply code.  Remember, it is up
-     * to you to manage the data connection.  If you don't need this low
-     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
-     * , which will handle all low level details for you.
-     *
-     * @param pathname  The pathname to use for the file when stored at
-     *                  the remote end of the transfer.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int stor(final String pathname) throws IOException
-    {
-        return sendCommand(FTPCmd.STOR, pathname);
-    }
-
-    /**
-     * A convenience method to send the FTP STOU command to the server,
-     * receive the reply, and return the reply code.  Remember, it is up
-     * to you to manage the data connection.  If you don't need this low
-     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
-     * , which will handle all low level details for you.
-     *
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int stou() throws IOException
-    {
-        return sendCommand(FTPCmd.STOU);
-    }
-
-    /**
-     * A convenience method to send the FTP STOU command to the server,
-     * receive the reply, and return the reply code.  Remember, it is up
-     * to you to manage the data connection.  If you don't need this low
-     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
-     * , which will handle all low level details for you.
-     * @param pathname  The base pathname to use for the file when stored at
-     *                  the remote end of the transfer.  Some FTP servers
-     *                  require this.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int stou(final String pathname) throws IOException
-    {
-        return sendCommand(FTPCmd.STOU, pathname);
-    }
-
-    /**
-     * A convenience method to send the FTP APPE command to the server,
-     * receive the reply, and return the reply code.  Remember, it is up
-     * to you to manage the data connection.  If you don't need this low
-     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
-     * , which will handle all low level details for you.
-     *
-     * @param pathname  The pathname to use for the file when stored at
-     *                  the remote end of the transfer.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int appe(final String pathname) throws IOException
-    {
-        return sendCommand(FTPCmd.APPE, pathname);
-    }
-
-    /**
-     * A convenience method to send the FTP ALLO command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @param bytes The number of bytes to allocate.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int allo(final int bytes) throws IOException
-    {
-        return sendCommand(FTPCmd.ALLO, Integer.toString(bytes));
-    }
-
-    /**
-     * A convenience method to send the FTP ALLO command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @param bytes The number of bytes to allocate.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int allo(final long bytes) throws IOException
-    {
-        return sendCommand(FTPCmd.ALLO, Long.toString(bytes));
-    }
-
-    /**
-     * A convenience method to send the FTP FEAT command to the server, receive the reply,
-     * and return the reply code.
-     * @return The reply code received by the server
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     * @since 2.2
-     */
-    public int feat() throws IOException
-    {
-        return sendCommand(FTPCmd.FEAT);
-    }
-
-    /**
-     * A convenience method to send the FTP ALLO command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @param bytes The number of bytes to allocate.
-     * @param recordSize  The size of a record.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int allo(final int bytes, final int recordSize) throws IOException
-    {
-        return sendCommand(FTPCmd.ALLO, Integer.toString(bytes) + " R " +
-                           Integer.toString(recordSize));
-    }
-
-    /**
-     * A convenience method to send the FTP ALLO command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @param bytes The number of bytes to allocate.
-     * @param recordSize  The size of a record.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int allo(final long bytes, final int recordSize) throws IOException
-    {
-        return sendCommand(FTPCmd.ALLO, Long.toString(bytes) + " R " +
-                           Integer.toString(recordSize));
-    }
-
-    /**
-     * A convenience method to send the FTP REST command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @param marker The marker at which to restart a transfer.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int rest(final String marker) throws IOException
-    {
-        return sendCommand(FTPCmd.REST, marker);
-    }
-
-
-    /**
-     * Sends the MDTM command for the given file.
-     *
-     * @param file name of file
-     * @return the status
-     * @throws IOException on error
+     * Return whether strict multiline parsing is enabled, as per RFC 959, section 4.2.
+     * @return True if strict, false if lenient
      * @since 2.0
-     **/
-    public int mdtm(final String file) throws IOException
-    {
-        return sendCommand(FTPCmd.MDTM, file);
-    }
-
-
-    /**
-     * A convenience method to send the FTP MFMT command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @param pathname The pathname for which mtime is to be changed
-     * @param timeval Timestamp in <code>YYYYMMDDhhmmss</code> format
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     * @since 2.2
-     * @see <a href="http://tools.ietf.org/html/draft-somers-ftp-mfxx-04">http://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
-     **/
-    public int mfmt(final String pathname, final String timeval) throws IOException
-    {
-        return sendCommand(FTPCmd.MFMT, timeval + " " + pathname);
-    }
-
-
-    /**
-     * A convenience method to send the FTP RNFR command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @param pathname The pathname to rename from.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
      */
-    public int rnfr(final String pathname) throws IOException
-    {
-        return sendCommand(FTPCmd.RNFR, pathname);
+    public boolean isStrictMultilineParsing() {
+        return strictMultilineParsing;
     }
 
     /**
-     * A convenience method to send the FTP RNTO command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @param pathname The pathname to rename to
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
+     * Return whether strict non-multiline parsing is enabled, as per RFC 959, section 4.2.
+     * <p>
+     * The default is true, which requires the 3 digit code be followed by space and some text.
+     * <br>
+     * If false, only the 3 digit code is required (as was the case for versions up to 3.5)
+     * <br>
+     * @return True if strict (default), false if additional checks are not made
+     * @since 3.6
      */
-    public int rnto(final String pathname) throws IOException
-    {
-        return sendCommand(FTPCmd.RNTO, pathname);
+    public boolean isStrictReplyParsing() {
+        return strictReplyParsing;
     }
 
-    /**
-     * A convenience method to send the FTP DELE command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @param pathname The pathname to delete.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int dele(final String pathname) throws IOException
-    {
-        return sendCommand(FTPCmd.DELE, pathname);
-    }
-
-    /**
-     * A convenience method to send the FTP RMD command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @param pathname The pathname of the directory to remove.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int rmd(final String pathname) throws IOException
-    {
-        return sendCommand(FTPCmd.RMD, pathname);
-    }
-
-    /**
-     * A convenience method to send the FTP MKD command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @param pathname The pathname of the new directory to create.
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int mkd(final String pathname) throws IOException
-    {
-        return sendCommand(FTPCmd.MKD, pathname);
-    }
-
-    /**
-     * A convenience method to send the FTP PWD command to the server,
-     * receive the reply, and return the reply code.
-     *
-     * @return The reply code received from the server.
-     * @throws FTPConnectionClosedException
-     *      If the FTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send FTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int pwd() throws IOException
-    {
-        return sendCommand(FTPCmd.PWD);
+    // The strict check is too strong a condition because of non-conforming ftp
+    // servers like ftp.funet.fi which sent 226 as the last line of a
+    // 426 multi-line reply in response to ls /.  We relax the condition to
+    // test that the line starts with a digit rather than starting with
+    // the code.
+    private boolean lenientCheck(final String line) {
+        return !(line.length() > REPLY_CODE_LEN&& line.charAt(REPLY_CODE_LEN) != '-' &&
+                Character.isDigit(line.charAt(0)));
     }
 
     /**
@@ -1579,6 +973,61 @@ public class FTP extends SocketClient
     {
         return sendCommand(FTPCmd.LIST, pathname);
     }
+
+    /**
+     * Sends the MDTM command for the given file.
+     *
+     * @param file name of file
+     * @return the status
+     * @throws IOException on error
+     * @since 2.0
+     **/
+    public int mdtm(final String file) throws IOException
+    {
+        return sendCommand(FTPCmd.MDTM, file);
+    }
+
+     /**
+     * A convenience method to send the FTP MFMT command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param pathname The pathname for which mtime is to be changed
+     * @param timeval Timestamp in <code>YYYYMMDDhhmmss</code> format
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     * @since 2.2
+     * @see <a href="http://tools.ietf.org/html/draft-somers-ftp-mfxx-04">http://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
+     **/
+    public int mfmt(final String pathname, final String timeval) throws IOException
+    {
+        return sendCommand(FTPCmd.MFMT, timeval + " " + pathname);
+    }
+
+    /**
+     * A convenience method to send the FTP MKD command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param pathname The pathname of the new directory to create.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int mkd(final String pathname) throws IOException
+    {
+        return sendCommand(FTPCmd.MKD, pathname);
+    }
+
 
     /**
      * A convenience method to send the FTP MLSD command to the server,
@@ -1673,6 +1122,27 @@ public class FTP extends SocketClient
     }
 
     /**
+     * A convenience method to send the FTP MODE command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param mode  The transfer mode to use (one of the
+     *         <code>TRANSFER_MODE</code> constants).
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int mode(final int mode) throws IOException
+    {
+        return sendCommand(FTPCmd.MODE,
+                           modes.substring(mode, mode + 1));
+    }
+
+    /**
      * A convenience method to send the FTP NLST command to the server,
      * receive the reply, and return the reply code.  Remember, it is up
      * to you to manage the data connection.  If you don't need this low
@@ -1717,6 +1187,463 @@ public class FTP extends SocketClient
     }
 
     /**
+     * A convenience method to send the FTP NOOP command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int noop() throws IOException
+    {
+        return sendCommand(FTPCmd.NOOP);
+    }
+
+    /**
+     * A convenience method to send the FTP PASS command to the server,
+     * receive the reply, and return the reply code.
+     * @param password The plain text password of the username being logged into.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int pass(final String password) throws IOException
+    {
+        return sendCommand(FTPCmd.PASS, password);
+    }
+
+    /**
+     * A convenience method to send the FTP PASV command to the server,
+     * receive the reply, and return the reply code.  Remember, it's up
+     * to you to interpret the reply string containing the host/port
+     * information.
+     *
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int pasv() throws IOException
+    {
+        return sendCommand(FTPCmd.PASV);
+    }
+
+    /**
+     * A convenience method to send the FTP PORT command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param host  The host owning the port.
+     * @param port  The new port.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int port(final InetAddress host, final int port) throws IOException
+    {
+        int num;
+        final StringBuilder info = new StringBuilder(24);
+
+        info.append(host.getHostAddress().replace('.', ','));
+        num = port >>> 8;
+        info.append(',');
+        info.append(num);
+        info.append(',');
+        num = port & 0xff;
+        info.append(num);
+
+        return sendCommand(FTPCmd.PORT, info.toString());
+    }
+
+    /**
+     * A convenience method to send the FTP PWD command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int pwd() throws IOException
+    {
+        return sendCommand(FTPCmd.PWD);
+    }
+
+    /**
+     * A convenience method to send the FTP QUIT command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int quit() throws IOException
+    {
+        return sendCommand(FTPCmd.QUIT);
+    }
+
+    /**
+     * A convenience method to send the FTP REIN command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int rein() throws IOException
+    {
+        return sendCommand(FTPCmd.REIN);
+    }
+
+
+    /**
+     * A convenience method to send the FTP REST command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param marker The marker at which to restart a transfer.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int rest(final String marker) throws IOException
+    {
+        return sendCommand(FTPCmd.REST, marker);
+    }
+
+
+    /**
+     * A convenience method to send the FTP RETR command to the server,
+     * receive the reply, and return the reply code.  Remember, it is up
+     * to you to manage the data connection.  If you don't need this low
+     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
+     * , which will handle all low level details for you.
+     *
+     * @param pathname  The pathname of the file to retrieve.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int retr(final String pathname) throws IOException
+    {
+        return sendCommand(FTPCmd.RETR, pathname);
+    }
+
+
+    /**
+     * A convenience method to send the FTP RMD command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param pathname The pathname of the directory to remove.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int rmd(final String pathname) throws IOException
+    {
+        return sendCommand(FTPCmd.RMD, pathname);
+    }
+
+    /**
+     * A convenience method to send the FTP RNFR command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param pathname The pathname to rename from.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int rnfr(final String pathname) throws IOException
+    {
+        return sendCommand(FTPCmd.RNFR, pathname);
+    }
+
+    /**
+     * A convenience method to send the FTP RNTO command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param pathname The pathname to rename to
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int rnto(final String pathname) throws IOException
+    {
+        return sendCommand(FTPCmd.RNTO, pathname);
+    }
+
+    private void send(final String message) throws IOException,
+            FTPConnectionClosedException, SocketException {
+        try{
+            _controlOutput_.write(message);
+            _controlOutput_.flush();
+        }
+        catch (final SocketException e)
+        {
+            if (!isConnected())
+            {
+                throw new FTPConnectionClosedException("Connection unexpectedly closed.");
+            }
+            throw e;
+        }
+    }
+
+    /**
+     * Sends an FTP command to the server, waits for a reply and returns the
+     * numerical response code.  After invocation, for more detailed
+     * information, the actual reply text can be accessed by calling
+     * {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.
+     *
+     * @param command  The FTPCmd enum corresponding to the FTP command
+     *                 to send.
+     * @return The integer value of the FTP reply code returned by the server
+     *         in response to the command.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     * @since 3.3
+     */
+    public int sendCommand(final FTPCmd command)  throws IOException{
+        return sendCommand(command, null);
+    }
+
+    /**
+     * Sends an FTP command to the server, waits for a reply and returns the
+     * numerical response code.  After invocation, for more detailed
+     * information, the actual reply text can be accessed by calling
+     * {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.
+     *
+     * @param command  The FTPCmd enum corresponding to the FTP command
+     *                 to send.
+     * @param args The arguments to the FTP command.  If this parameter is
+     *             set to null, then the command is sent with no argument.
+     * @return The integer value of the FTP reply code returned by the server
+     *         in response to the command.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     * @since 3.3
+     */
+    public int sendCommand(final FTPCmd command, final String args)  throws IOException{
+        return sendCommand(command.getCommand(), args);
+    }
+
+    /**
+     * Sends an FTP command with no arguments to the server, waits for a
+     * reply and returns the numerical response code.  After invocation, for
+     * more detailed information, the actual reply text can be accessed by
+     * calling {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.
+     *
+     * @param command  The FTPCommand constant corresponding to the FTP command
+     *                 to send.
+     * @return The integer value of the FTP reply code returned by the server
+     *         in response to the command.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int sendCommand(final int command) throws IOException
+    {
+        return sendCommand(command, null);
+    }
+
+    /**
+     * Sends an FTP command to the server, waits for a reply and returns the
+     * numerical response code.  After invocation, for more detailed
+     * information, the actual reply text can be accessed by calling
+     * {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.
+     *
+     * @param command  The FTPCommand constant corresponding to the FTP command
+     *                 to send.
+     * @param args The arguments to the FTP command.  If this parameter is
+     *             set to null, then the command is sent with no argument.
+     * @return The integer value of the FTP reply code returned by the server
+     *         in response to the command.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     * @deprecated (3.3) Use {@link #sendCommand(FTPCmd, String)} instead
+     */
+    @Deprecated
+    public int sendCommand(final int command, final String args) throws IOException
+    {
+        return sendCommand(FTPCommand.getCommand(command), args);
+    }
+
+    /**
+     * Sends an FTP command with no arguments to the server, waits for a
+     * reply and returns the numerical response code.  After invocation, for
+     * more detailed information, the actual reply text can be accessed by
+     * calling {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.
+     *
+     * @param command  The text representation of the  FTP command to send.
+     * @return The integer value of the FTP reply code returned by the server
+     *         in response to the command.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int sendCommand(final String command) throws IOException
+    {
+        return sendCommand(command, null);
+    }
+
+    /**
+     * Sends an FTP command to the server, waits for a reply and returns the
+     * numerical response code.  After invocation, for more detailed
+     * information, the actual reply text can be accessed by calling
+     * {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.
+     *
+     * @param command  The text representation of the  FTP command to send.
+     * @param args The arguments to the FTP command.  If this parameter is
+     *             set to null, then the command is sent with no argument.
+     * @return The integer value of the FTP reply code returned by the server
+     *         in response to the command.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int sendCommand(final String command, final String args) throws IOException
+    {
+        if (_controlOutput_ == null) {
+            throw new IOException("Connection is not open");
+        }
+
+        final String message = buildMessage(command, args);
+
+        send(message);
+
+        fireCommandSent(command, message);
+
+        return getReply();
+    }
+
+    /**
+     * Saves the character encoding to be used by the FTP control connection.
+     * Some FTP servers require that commands be issued in a non-ASCII
+     * encoding like UTF-8 so that file names with multi-byte character
+     * representations (e.g, Big 8) can be specified.
+     * <p>
+     * Please note that this has to be set before the connection is established.
+     *
+     * @param encoding The new character encoding for the control connection.
+     */
+    public void setControlEncoding(final String encoding) {
+        _controlEncoding = encoding;
+    }
+
+    /**
+     * Set strict multiline parsing.
+     * @param strictMultilineParsing the setting
+     * @since 2.0
+     */
+    public void setStrictMultilineParsing(final boolean strictMultilineParsing) {
+        this.strictMultilineParsing = strictMultilineParsing;
+    }
+
+    /**
+     * Set strict non-multiline parsing.
+     * <p>
+     * If true, it requires the 3 digit code be followed by space and some text.
+     * <br>
+     * If false, only the 3 digit code is required (as was the case for versions up to 3.5)
+     * <p>
+     * <b>This should not be required by a well-behaved FTP server</b>
+     * <br>
+     * @param strictReplyParsing the setting
+     * @since 3.6
+     */
+    public void setStrictReplyParsing(final boolean strictReplyParsing) {
+        this.strictReplyParsing = strictReplyParsing;
+    }
+
+    /**
      * A convenience method to send the FTP SITE command to the server,
      * receive the reply, and return the reply code.
      *
@@ -1756,9 +1683,10 @@ public class FTP extends SocketClient
     }
 
     /**
-     * A convenience method to send the FTP SYST command to the server,
+     * A convenience method to send the FTP SMNT command to the server,
      * receive the reply, and return the reply code.
      *
+     * @param dir  The directory name.
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -1768,9 +1696,9 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
-    public int syst() throws IOException
+    public int smnt(final String dir) throws IOException
     {
-        return sendCommand(FTPCmd.SYST);
+        return sendCommand(FTPCmd.SMNT, dir);
     }
 
     /**
@@ -1811,7 +1739,100 @@ public class FTP extends SocketClient
     }
 
     /**
-     * A convenience method to send the FTP HELP command to the server,
+     * A convenience method to send the FTP STOR command to the server,
+     * receive the reply, and return the reply code.  Remember, it is up
+     * to you to manage the data connection.  If you don't need this low
+     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
+     * , which will handle all low level details for you.
+     *
+     * @param pathname  The pathname to use for the file when stored at
+     *                  the remote end of the transfer.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int stor(final String pathname) throws IOException
+    {
+        return sendCommand(FTPCmd.STOR, pathname);
+    }
+
+    /**
+     * A convenience method to send the FTP STOU command to the server,
+     * receive the reply, and return the reply code.  Remember, it is up
+     * to you to manage the data connection.  If you don't need this low
+     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
+     * , which will handle all low level details for you.
+     *
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int stou() throws IOException
+    {
+        return sendCommand(FTPCmd.STOU);
+    }
+
+    /**
+     * A convenience method to send the FTP STOU command to the server,
+     * receive the reply, and return the reply code.  Remember, it is up
+     * to you to manage the data connection.  If you don't need this low
+     * level of access, use {@link org.apache.commons.net.ftp.FTPClient}
+     * , which will handle all low level details for you.
+     * @param pathname  The base pathname to use for the file when stored at
+     *                  the remote end of the transfer.  Some FTP servers
+     *                  require this.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int stou(final String pathname) throws IOException
+    {
+        return sendCommand(FTPCmd.STOU, pathname);
+    }
+
+    // The RFC-compliant multiline termination check
+    private boolean strictCheck(final String line, final String code) {
+        return !(line.startsWith(code) && line.charAt(REPLY_CODE_LEN) == ' ');
+    }
+
+    /**
+     * A convenience method to send the FTP STRU command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param structure  The structure of the file (one of the
+     *         <code>_STRUCTURE</code> constants).
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int stru(final int structure) throws IOException
+    {
+        return sendCommand(FTPCmd.STRU,
+                           modes.substring(structure, structure + 1));
+    }
+
+    /**
+     * A convenience method to send the FTP SYST command to the server,
      * receive the reply, and return the reply code.
      *
      * @return The reply code received from the server.
@@ -1823,16 +1844,17 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
-    public int help() throws IOException
+    public int syst() throws IOException
     {
-        return sendCommand(FTPCmd.HELP);
+        return sendCommand(FTPCmd.SYST);
     }
 
     /**
-     * A convenience method to send the FTP HELP command to the server,
+     * A convenience method to send the FTP TYPE command to the server,
      * receive the reply, and return the reply code.
      *
-     * @param command  The command name on which to request help.
+     * @param fileType  The type of the file (one of the <code>FILE_TYPE</code>
+     *              constants).
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -1842,15 +1864,20 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
-    public int help(final String command) throws IOException
+    public int type(final int fileType) throws IOException
     {
-        return sendCommand(FTPCmd.HELP, command);
+        return sendCommand(FTPCmd.TYPE,
+                           modes.substring(fileType, fileType + 1));
     }
 
     /**
-     * A convenience method to send the FTP NOOP command to the server,
-     * receive the reply, and return the reply code.
-     *
+     * A convenience method to send the FTP TYPE command for text files
+     * to the server, receive the reply, and return the reply code.
+     * @param fileType  The type of the file (one of the <code>FILE_TYPE</code>
+     *              constants).
+     * @param formatOrByteSize  The format of the file (one of the
+     *              <code>_FORMAT</code> constants.  In the case of
+     *              <code>LOCAL_FILE_TYPE</code>, the byte size.
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
@@ -1860,64 +1887,37 @@ public class FTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
-    public int noop() throws IOException
+    public int type(final int fileType, final int formatOrByteSize) throws IOException
     {
-        return sendCommand(FTPCmd.NOOP);
+        final StringBuilder arg = new StringBuilder();
+
+        arg.append(modes.charAt(fileType));
+        arg.append(' ');
+        if (fileType == LOCAL_FILE_TYPE) {
+            arg.append(formatOrByteSize);
+        } else {
+            arg.append(modes.charAt(formatOrByteSize));
+        }
+
+        return sendCommand(FTPCmd.TYPE, arg.toString());
     }
 
     /**
-     * Return whether strict multiline parsing is enabled, as per RFC 959, section 4.2.
-     * @return True if strict, false if lenient
-     * @since 2.0
+     * A convenience method to send the FTP USER command to the server,
+     * receive the reply, and return the reply code.
+     *
+     * @param username  The username to login under.
+     * @return The reply code received from the server.
+     * @throws FTPConnectionClosedException
+     *      If the FTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send FTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
      */
-    public boolean isStrictMultilineParsing() {
-        return strictMultilineParsing;
-    }
-
-    /**
-     * Set strict multiline parsing.
-     * @param strictMultilineParsing the setting
-     * @since 2.0
-     */
-    public void setStrictMultilineParsing(final boolean strictMultilineParsing) {
-        this.strictMultilineParsing = strictMultilineParsing;
-    }
-
-    /**
-     * Return whether strict non-multiline parsing is enabled, as per RFC 959, section 4.2.
-     * <p>
-     * The default is true, which requires the 3 digit code be followed by space and some text.
-     * <br>
-     * If false, only the 3 digit code is required (as was the case for versions up to 3.5)
-     * <br>
-     * @return True if strict (default), false if additional checks are not made
-     * @since 3.6
-     */
-    public boolean isStrictReplyParsing() {
-        return strictReplyParsing;
-    }
-
-    /**
-     * Set strict non-multiline parsing.
-     * <p>
-     * If true, it requires the 3 digit code be followed by space and some text.
-     * <br>
-     * If false, only the 3 digit code is required (as was the case for versions up to 3.5)
-     * <p>
-     * <b>This should not be required by a well-behaved FTP server</b>
-     * <br>
-     * @param strictReplyParsing the setting
-     * @since 3.6
-     */
-    public void setStrictReplyParsing(final boolean strictReplyParsing) {
-        this.strictReplyParsing = strictReplyParsing;
-    }
-
-    /**
-     * Provide command support to super-class
-     */
-    @Override
-    protected ProtocolCommandSupport getCommandSupport() {
-        return _commandSupport_;
+    public int user(final String username) throws IOException
+    {
+        return sendCommand(FTPCmd.USER, username);
     }
 }

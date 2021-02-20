@@ -38,6 +38,36 @@ public final class NtpUtils {
      }
 
     /**
+     * Return human-readable name of message mode type (RFC 1305).
+     *
+     * @param mode the mode type
+     * @return mode name
+     */
+    public static String getModeName(final int mode)
+    {
+        switch (mode) {
+            case NtpV3Packet.MODE_RESERVED:
+                return "Reserved";
+            case NtpV3Packet.MODE_SYMMETRIC_ACTIVE:
+                return "Symmetric Active";
+            case NtpV3Packet.MODE_SYMMETRIC_PASSIVE:
+                return "Symmetric Passive";
+            case NtpV3Packet.MODE_CLIENT:
+                return "Client";
+            case NtpV3Packet.MODE_SERVER:
+                return "Server";
+            case NtpV3Packet.MODE_BROADCAST:
+                return "Broadcast";
+            case NtpV3Packet.MODE_CONTROL_MESSAGE:
+                return "Control";
+            case NtpV3Packet.MODE_PRIVATE:
+                return "Private";
+            default:
+                return "Unknown";
+        }
+    }
+
+    /**
      * Returns NTP packet reference identifier as IP address.
      *
      * @param packet  NTP packet
@@ -80,36 +110,6 @@ public final class NtpUtils {
             buf.append(c);
         }
         return buf.toString();
-    }
-
-    /**
-     * Return human-readable name of message mode type (RFC 1305).
-     *
-     * @param mode the mode type
-     * @return mode name
-     */
-    public static String getModeName(final int mode)
-    {
-        switch (mode) {
-            case NtpV3Packet.MODE_RESERVED:
-                return "Reserved";
-            case NtpV3Packet.MODE_SYMMETRIC_ACTIVE:
-                return "Symmetric Active";
-            case NtpV3Packet.MODE_SYMMETRIC_PASSIVE:
-                return "Symmetric Passive";
-            case NtpV3Packet.MODE_CLIENT:
-                return "Client";
-            case NtpV3Packet.MODE_SERVER:
-                return "Server";
-            case NtpV3Packet.MODE_BROADCAST:
-                return "Broadcast";
-            case NtpV3Packet.MODE_CONTROL_MESSAGE:
-                return "Control";
-            case NtpV3Packet.MODE_PRIVATE:
-                return "Private";
-            default:
-                return "Unknown";
-        }
     }
 
 }

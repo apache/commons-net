@@ -29,18 +29,43 @@ import org.junit.Test;
 
 public class ToNetASCIIInputStreamTest {
 
-    @Test
-    public void testToNetASCIIInputStream1() throws Exception
-    {
-        byteTest(false, "", "");
-        byteTest(false, "\r", "\r");
-        byteTest(false, "a", "a");
-        byteTest(false, "a\nb", "a\r\nb");
-        byteTest(false, "a\r\nb", "a\r\nb");
-        byteTest(false, "\n", "\r\n");
-        byteTest(false, "Hello\nWorld\n", "Hello\r\nWorld\r\n");
-        byteTest(false, "Hello\nWorld\r\n", "Hello\r\nWorld\r\n");
-        byteTest(false, "Hello\nWorld\n\r", "Hello\r\nWorld\r\n\r");
+    private void byteTest(final boolean byByte, final String input, final String expect) throws IOException {
+        final byte[] data = input.getBytes(StandardCharsets.US_ASCII);
+        final byte[] expected = expect.getBytes(StandardCharsets.US_ASCII);
+        final InputStream source = new ByteArrayInputStream(data);
+        try (final ToNetASCIIInputStream toNetASCII = new ToNetASCIIInputStream(source)) {
+            final byte[] output = new byte[data.length * 2]; // cannot be longer than twice the input
+
+            final int length = byByte ? getSingleBytes(toNetASCII, output) : getBuffer(toNetASCII, output);
+
+            final byte[] result = new byte[length];
+            System.arraycopy(output, 0, result, 0, length);
+            Assert.assertArrayEquals("Failed converting " + input, expected, result);
+        }
+    }
+
+    private int getBuffer(final ToNetASCIIInputStream toNetASCII, final byte[] output)
+            throws IOException {
+        int length=0;
+        int remain=output.length;
+        int chunk;
+        int offset=0;
+        while(remain > 0 && (chunk=toNetASCII.read(output,offset,remain)) != -1){
+            length+=chunk;
+            offset+=chunk;
+            remain-=chunk;
+        }
+        return length;
+    }
+
+    private int getSingleBytes(final ToNetASCIIInputStream toNetASCII, final byte[] output)
+            throws IOException {
+        int b;
+        int length=0;
+        while((b=toNetASCII.read()) != -1) {
+            output[length++]=(byte)b;
+        }
+        return length;
     }
 
     @Test
@@ -57,43 +82,18 @@ public class ToNetASCIIInputStreamTest {
         byteTest(true, "Hello\nWorld\n\r", "Hello\r\nWorld\r\n\r");
     }
 
-    private void byteTest(final boolean byByte, final String input, final String expect) throws IOException {
-        final byte[] data = input.getBytes(StandardCharsets.US_ASCII);
-        final byte[] expected = expect.getBytes(StandardCharsets.US_ASCII);
-        final InputStream source = new ByteArrayInputStream(data);
-        try (final ToNetASCIIInputStream toNetASCII = new ToNetASCIIInputStream(source)) {
-            final byte[] output = new byte[data.length * 2]; // cannot be longer than twice the input
-
-            final int length = byByte ? getSingleBytes(toNetASCII, output) : getBuffer(toNetASCII, output);
-
-            final byte[] result = new byte[length];
-            System.arraycopy(output, 0, result, 0, length);
-            Assert.assertArrayEquals("Failed converting " + input, expected, result);
-        }
-    }
-
-    private int getSingleBytes(final ToNetASCIIInputStream toNetASCII, final byte[] output)
-            throws IOException {
-        int b;
-        int length=0;
-        while((b=toNetASCII.read()) != -1) {
-            output[length++]=(byte)b;
-        }
-        return length;
-    }
-
-    private int getBuffer(final ToNetASCIIInputStream toNetASCII, final byte[] output)
-            throws IOException {
-        int length=0;
-        int remain=output.length;
-        int chunk;
-        int offset=0;
-        while(remain > 0 && (chunk=toNetASCII.read(output,offset,remain)) != -1){
-            length+=chunk;
-            offset+=chunk;
-            remain-=chunk;
-        }
-        return length;
+    @Test
+    public void testToNetASCIIInputStream1() throws Exception
+    {
+        byteTest(false, "", "");
+        byteTest(false, "\r", "\r");
+        byteTest(false, "a", "a");
+        byteTest(false, "a\nb", "a\r\nb");
+        byteTest(false, "a\r\nb", "a\r\nb");
+        byteTest(false, "\n", "\r\n");
+        byteTest(false, "Hello\nWorld\n", "Hello\r\nWorld\r\n");
+        byteTest(false, "Hello\nWorld\r\n", "Hello\r\nWorld\r\n");
+        byteTest(false, "Hello\nWorld\n\r", "Hello\r\nWorld\r\n\r");
     }
 
 }

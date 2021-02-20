@@ -84,6 +84,18 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
+     * Defines a default configuration to be used when this class is
+     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
+     * parameter being specified.
+     * @return the default configuration for this parser.
+     */
+    @Override
+    protected FTPClientConfig getDefaultConfiguration() {
+        return new FTPClientConfig(FTPClientConfig.SYST_NETWARE,
+                DEFAULT_DATE_FORMAT, DEFAULT_RECENT_DATE_FORMAT);
+    }
+
+    /**
      * Parses a line of an NetwareFTP server file listing and converts it into a
      * usable format in the form of an <code> FTPFile </code> instance.  If the
      * file listing line doesn't describe a file, <code> null </code> is
@@ -159,18 +171,6 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
         }
         return null;
 
-    }
-
-    /**
-     * Defines a default configuration to be used when this class is
-     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
-     * parameter being specified.
-     * @return the default configuration for this parser.
-     */
-    @Override
-    protected FTPClientConfig getDefaultConfiguration() {
-        return new FTPClientConfig(FTPClientConfig.SYST_NETWARE,
-                DEFAULT_DATE_FORMAT, DEFAULT_RECENT_DATE_FORMAT);
     }
 
 }

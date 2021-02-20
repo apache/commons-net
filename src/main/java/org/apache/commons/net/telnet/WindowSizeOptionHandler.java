@@ -24,6 +24,11 @@ package org.apache.commons.net.telnet;
 public class WindowSizeOptionHandler extends TelnetOptionHandler
 {
     /**
+     * Window size option
+     */
+    protected static final int WINDOW_SIZE = 31;
+
+    /**
      * Horizontal Size
      */
     private int width = 80;
@@ -34,9 +39,27 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
     private int height = 24;
 
     /**
-     * Window size option
+     * Constructor for the WindowSizeOptionHandler. Initial and accept
+     * behavior flags are set to false
+     * <p>
+     * @param nWidth - Window width.
+     * @param nHeight - Window Height
      */
-    protected static final int WINDOW_SIZE = 31;
+    public WindowSizeOptionHandler(
+        final int nWidth,
+        final int nHeight
+    ) {
+        super (
+            TelnetOption.WINDOW_SIZE,
+            false,
+            false,
+            false,
+            false
+        );
+
+        width = nWidth;
+        height = nHeight;
+    }
 
     /**
      * Constructor for the WindowSizeOptionHandler. Allows defining desired
@@ -65,29 +88,6 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler
             initremote,
             acceptlocal,
             acceptremote
-        );
-
-        width = nWidth;
-        height = nHeight;
-    }
-
-    /**
-     * Constructor for the WindowSizeOptionHandler. Initial and accept
-     * behavior flags are set to false
-     * <p>
-     * @param nWidth - Window width.
-     * @param nHeight - Window Height
-     */
-    public WindowSizeOptionHandler(
-        final int nWidth,
-        final int nHeight
-    ) {
-        super (
-            TelnetOption.WINDOW_SIZE,
-            false,
-            false,
-            false,
-            false
         );
 
         width = nWidth;

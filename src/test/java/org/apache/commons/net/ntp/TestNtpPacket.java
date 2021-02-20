@@ -29,6 +29,16 @@ public class TestNtpPacket {
     static final byte[] ntpPacket = hexStringToByteArray(
             "1c0304ef0000006400000d3681531472d552447fec1d6000d5524718ac49ba5ed55247194b6d9000d55247194b797000");
 
+    private static byte[] hexStringToByteArray(final String s) {
+        final int len = s.length();
+        final byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                    + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
+    }
+
     @Test
     public void testCreate() {
         final NtpV3Packet message = new NtpV3Impl();
@@ -125,6 +135,27 @@ public class TestNtpPacket {
         Assert.assertEquals(2, message.getLeapIndicator());
     }
 
+    @Test(expected=IllegalArgumentException.class)
+    public void testCreateFromBadPacket() {
+        final NtpV3Packet message = new NtpV3Impl();
+        final DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length-4); // drop 4-bytes from packet
+        message.setDatagramPacket(dp);
+    }
+
+    @Test
+    public void testCreateFromBytes() {
+        final NtpV3Packet message = new NtpV3Impl();
+        final DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length);
+        message.setDatagramPacket(dp);
+        Assert.assertEquals(4, message.getMode());
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testCreateFromNullPacket() {
+        final NtpV3Packet message = new NtpV3Impl();
+        message.setDatagramPacket(null);
+    }
+
     @Test
     public void testCreateNtpV4() {
         final NtpV3Packet message = new NtpV3Impl();
@@ -145,27 +176,6 @@ public class TestNtpPacket {
     }
 
     @Test
-    public void testCreateFromBytes() {
-        final NtpV3Packet message = new NtpV3Impl();
-        final DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length);
-        message.setDatagramPacket(dp);
-        Assert.assertEquals(4, message.getMode());
-    }
-
-    @Test(expected=IllegalArgumentException.class)
-    public void testCreateFromBadPacket() {
-        final NtpV3Packet message = new NtpV3Impl();
-        final DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length-4); // drop 4-bytes from packet
-        message.setDatagramPacket(dp);
-    }
-
-    @Test(expected=IllegalArgumentException.class)
-    public void testCreateFromNullPacket() {
-        final NtpV3Packet message = new NtpV3Impl();
-        message.setDatagramPacket(null);
-    }
-
-    @Test
     public void testEquals() {
         final NtpV3Packet message1 = new NtpV3Impl();
         final DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length);
@@ -182,16 +192,6 @@ public class TestNtpPacket {
 
         final NtpV3Packet message3 = null;
         Assert.assertFalse(message1.equals(message3));
-    }
-
-    private static byte[] hexStringToByteArray(final String s) {
-        final int len = s.length();
-        final byte[] data = new byte[len / 2];
-        for (int i = 0; i < len; i += 2) {
-            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-                    + Character.digit(s.charAt(i+1), 16));
-        }
-        return data;
     }
 
 }

@@ -46,30 +46,14 @@ public final class EchoUDPClient extends DiscardUDPClient
 
     private final DatagramPacket receivePacket = new DatagramPacket(NetConstants.EMPTY_BTYE_ARRAY, 0);
 
-    /**
-     * Sends the specified data to the specified server at the default echo
-     * port.
-     *
-     * @param data  The echo data to send.
-     * @param length  The length of the data to send.  Should be less than
-     *    or equal to the length of the data byte array.
-     * @param host  The address of the server.
-     * @throws IOException If an error occurs during the datagram send
-     *     operation.
+    /** Same as <code> receive(data, data.length)</code>
+     * @param data the buffer to receive the input
+     * @return the number of bytes
+     * @throws IOException on error
      */
-    @Override
-    public void send(final byte[] data, final int length, final InetAddress host)
-    throws IOException
+    public int receive(final byte[] data) throws IOException
     {
-        send(data, length, host, DEFAULT_PORT);
-    }
-
-
-    /** Same as <code> send(data, data.length, host) </code> */
-    @Override
-    public void send(final byte[] data, final InetAddress host) throws IOException
-    {
-        send(data, data.length, host, DEFAULT_PORT);
+        return receive(data, data.length);
     }
 
 
@@ -92,14 +76,30 @@ public final class EchoUDPClient extends DiscardUDPClient
         return receivePacket.getLength();
     }
 
-    /** Same as <code> receive(data, data.length)</code>
-     * @param data the buffer to receive the input
-     * @return the number of bytes
-     * @throws IOException on error
-     */
-    public int receive(final byte[] data) throws IOException
+
+    /** Same as <code> send(data, data.length, host) </code> */
+    @Override
+    public void send(final byte[] data, final InetAddress host) throws IOException
     {
-        return receive(data, data.length);
+        send(data, data.length, host, DEFAULT_PORT);
+    }
+
+    /**
+     * Sends the specified data to the specified server at the default echo
+     * port.
+     *
+     * @param data  The echo data to send.
+     * @param length  The length of the data to send.  Should be less than
+     *    or equal to the length of the data byte array.
+     * @param host  The address of the server.
+     * @throws IOException If an error occurs during the datagram send
+     *     operation.
+     */
+    @Override
+    public void send(final byte[] data, final int length, final InetAddress host)
+    throws IOException
+    {
+        send(data, length, host, DEFAULT_PORT);
     }
 
 }

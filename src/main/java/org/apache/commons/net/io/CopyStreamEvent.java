@@ -75,17 +75,6 @@ public class CopyStreamEvent extends EventObject
     }
 
     /**
-     * Returns the total number of bytes transferred so far by the copy
-     * operation.
-     * @return The total number of bytes transferred so far by the copy
-     * operation.
-     */
-    public long getTotalBytesTransferred()
-    {
-        return totalBytesTransferred;
-    }
-
-    /**
      * Returns the size of the stream being copied.
      * This may be set to <code>UNKNOWN_STREAM_SIZE</code> if the
      * size is unknown.
@@ -94,6 +83,17 @@ public class CopyStreamEvent extends EventObject
     public long getStreamSize()
     {
         return streamSize;
+    }
+
+    /**
+     * Returns the total number of bytes transferred so far by the copy
+     * operation.
+     * @return The total number of bytes transferred so far by the copy
+     * operation.
+     */
+    public long getTotalBytesTransferred()
+    {
+        return totalBytesTransferred;
     }
 
     /**

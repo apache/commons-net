@@ -73,10 +73,6 @@ public final class POP3Command
         }
     }
 
-    // Cannot be instantiated.
-    private POP3Command()
-    {}
-
     /**
      * Get the POP3 protocol string command corresponding to a command code.
      * @param command the command code
@@ -87,4 +83,8 @@ public final class POP3Command
     {
         return commands[command];
     }
+
+    // Cannot be instantiated.
+    private POP3Command()
+    {}
 }

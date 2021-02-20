@@ -65,119 +65,6 @@ public class DefaultSocketFactory extends SocketFactory
     }
 
     /**
-     * Creates an unconnected Socket.
-     *
-     * @return A new unconnected Socket.
-     * @throws IOException If an I/O error occurs while creating the Socket.
-     * @since 3.2
-     */
-    @Override
-    public Socket createSocket() throws IOException
-    {
-        if (connProxy != null)
-        {
-            return new Socket(connProxy);
-        }
-        return new Socket();
-    }
-
-    /**
-     * Creates a Socket connected to the given host and port.
-     *
-     * @param host The hostname to connect to.
-     * @param port The port to connect to.
-     * @return A Socket connected to the given host and port.
-     * @throws UnknownHostException  If the hostname cannot be resolved.
-     * @throws IOException If an I/O error occurs while creating the Socket.
-     */
-    @Override
-    public Socket createSocket(final String host, final int port)
-    throws UnknownHostException, IOException
-    {
-        if (connProxy != null)
-        {
-            final Socket s = new Socket(connProxy);
-            s.connect(new InetSocketAddress(host, port));
-            return s;
-        }
-        return new Socket(host, port);
-    }
-
-    /**
-     * Creates a Socket connected to the given host and port.
-     *
-     * @param address The address of the host to connect to.
-     * @param port The port to connect to.
-     * @return A Socket connected to the given host and port.
-     * @throws IOException If an I/O error occurs while creating the Socket.
-     */
-    @Override
-    public Socket createSocket(final InetAddress address, final int port)
-    throws IOException
-    {
-        if (connProxy != null)
-        {
-            final Socket s = new Socket(connProxy);
-            s.connect(new InetSocketAddress(address, port));
-            return s;
-        }
-        return new Socket(address, port);
-    }
-
-    /**
-     * Creates a Socket connected to the given host and port and
-     * originating from the specified local address and port.
-     *
-     * @param host The hostname to connect to.
-     * @param port The port to connect to.
-     * @param localAddr  The local address to use.
-     * @param localPort  The local port to use.
-     * @return A Socket connected to the given host and port.
-     * @throws UnknownHostException  If the hostname cannot be resolved.
-     * @throws IOException If an I/O error occurs while creating the Socket.
-     */
-    @Override
-    public Socket createSocket(final String host, final int port,
-                               final InetAddress localAddr, final int localPort)
-    throws UnknownHostException, IOException
-    {
-        if (connProxy != null)
-        {
-            final Socket s = new Socket(connProxy);
-            s.bind(new InetSocketAddress(localAddr, localPort));
-            s.connect(new InetSocketAddress(host, port));
-            return s;
-        }
-        return new Socket(host, port, localAddr, localPort);
-    }
-
-    /**
-     * Creates a Socket connected to the given host and port and
-     * originating from the specified local address and port.
-     *
-     * @param address The address of the host to connect to.
-     * @param port The port to connect to.
-     * @param localAddr  The local address to use.
-     * @param localPort  The local port to use.
-     * @return A Socket connected to the given host and port.
-     * @throws IOException If an I/O error occurs while creating the Socket.
-     */
-    @Override
-    public Socket createSocket(final InetAddress address, final int port,
-                               final InetAddress localAddr, final int localPort)
-    throws IOException
-    {
-        if (connProxy != null)
-        {
-            final Socket s = new Socket(connProxy);
-            s.bind(new InetSocketAddress(localAddr, localPort));
-            s.connect(new InetSocketAddress(address, port));
-            return s;
-        }
-        return new Socket(address, port, localAddr, localPort);
-    }
-
-    /**
      * Creates a ServerSocket bound to a specified port.  A port
      * of 0 will create the ServerSocket on a system-determined free port.
      *
@@ -226,5 +113,118 @@ public class DefaultSocketFactory extends SocketFactory
     throws IOException
     {
         return new ServerSocket(port, backlog, bindAddr);
+    }
+
+    /**
+     * Creates an unconnected Socket.
+     *
+     * @return A new unconnected Socket.
+     * @throws IOException If an I/O error occurs while creating the Socket.
+     * @since 3.2
+     */
+    @Override
+    public Socket createSocket() throws IOException
+    {
+        if (connProxy != null)
+        {
+            return new Socket(connProxy);
+        }
+        return new Socket();
+    }
+
+    /**
+     * Creates a Socket connected to the given host and port.
+     *
+     * @param address The address of the host to connect to.
+     * @param port The port to connect to.
+     * @return A Socket connected to the given host and port.
+     * @throws IOException If an I/O error occurs while creating the Socket.
+     */
+    @Override
+    public Socket createSocket(final InetAddress address, final int port)
+    throws IOException
+    {
+        if (connProxy != null)
+        {
+            final Socket s = new Socket(connProxy);
+            s.connect(new InetSocketAddress(address, port));
+            return s;
+        }
+        return new Socket(address, port);
+    }
+
+    /**
+     * Creates a Socket connected to the given host and port and
+     * originating from the specified local address and port.
+     *
+     * @param address The address of the host to connect to.
+     * @param port The port to connect to.
+     * @param localAddr  The local address to use.
+     * @param localPort  The local port to use.
+     * @return A Socket connected to the given host and port.
+     * @throws IOException If an I/O error occurs while creating the Socket.
+     */
+    @Override
+    public Socket createSocket(final InetAddress address, final int port,
+                               final InetAddress localAddr, final int localPort)
+    throws IOException
+    {
+        if (connProxy != null)
+        {
+            final Socket s = new Socket(connProxy);
+            s.bind(new InetSocketAddress(localAddr, localPort));
+            s.connect(new InetSocketAddress(address, port));
+            return s;
+        }
+        return new Socket(address, port, localAddr, localPort);
+    }
+
+    /**
+     * Creates a Socket connected to the given host and port.
+     *
+     * @param host The hostname to connect to.
+     * @param port The port to connect to.
+     * @return A Socket connected to the given host and port.
+     * @throws UnknownHostException  If the hostname cannot be resolved.
+     * @throws IOException If an I/O error occurs while creating the Socket.
+     */
+    @Override
+    public Socket createSocket(final String host, final int port)
+    throws UnknownHostException, IOException
+    {
+        if (connProxy != null)
+        {
+            final Socket s = new Socket(connProxy);
+            s.connect(new InetSocketAddress(host, port));
+            return s;
+        }
+        return new Socket(host, port);
+    }
+
+    /**
+     * Creates a Socket connected to the given host and port and
+     * originating from the specified local address and port.
+     *
+     * @param host The hostname to connect to.
+     * @param port The port to connect to.
+     * @param localAddr  The local address to use.
+     * @param localPort  The local port to use.
+     * @return A Socket connected to the given host and port.
+     * @throws UnknownHostException  If the hostname cannot be resolved.
+     * @throws IOException If an I/O error occurs while creating the Socket.
+     */
+    @Override
+    public Socket createSocket(final String host, final int port,
+                               final InetAddress localAddr, final int localPort)
+    throws UnknownHostException, IOException
+    {
+        if (connProxy != null)
+        {
+            final Socket s = new Socket(connProxy);
+            s.bind(new InetSocketAddress(localAddr, localPort));
+            s.connect(new InetSocketAddress(host, port));
+            return s;
+        }
+        return new Socket(host, port, localAddr, localPort);
     }
 }

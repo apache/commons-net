@@ -71,22 +71,6 @@ implements Configurable
     }
 
     /**
-     * This method is called by the concrete parsers to delegate
-     * timestamp parsing to the timestamp parser.
-     *
-     * @param timestampStr the timestamp string pulled from the
-     * file listing by the regular expression parser, to be submitted
-     * to the <code>timestampParser</code> for extracting the timestamp.
-     * @return a <code>java.util.Calendar</code> containing results of the
-     * timestamp parse.
-     * @throws ParseException on parse error
-     */
-    public Calendar parseTimestamp(final String timestampStr) throws ParseException {
-        return this.timestampParser.parseTimestamp(timestampStr);
-    }
-
-
-    /**
      * Implementation of the {@link  Configurable  Configurable}
      * interface. Configures this parser by delegating to the
      * underlying Configurable FTPTimestampParser implementation, '
@@ -117,6 +101,7 @@ implements Configurable
         }
     }
 
+
     /**
      * Each concrete subclass must define this member to create
      * a default configuration to be used when that subclass is
@@ -125,4 +110,19 @@ implements Configurable
      * @return the default configuration for the subclass.
      */
     protected abstract FTPClientConfig getDefaultConfiguration();
+
+    /**
+     * This method is called by the concrete parsers to delegate
+     * timestamp parsing to the timestamp parser.
+     *
+     * @param timestampStr the timestamp string pulled from the
+     * file listing by the regular expression parser, to be submitted
+     * to the <code>timestampParser</code> for extracting the timestamp.
+     * @return a <code>java.util.Calendar</code> containing results of the
+     * timestamp parse.
+     * @throws ParseException on parse error
+     */
+    public Calendar parseTimestamp(final String timestampStr) throws ParseException {
+        return this.timestampParser.parseTimestamp(timestampStr);
+    }
 }

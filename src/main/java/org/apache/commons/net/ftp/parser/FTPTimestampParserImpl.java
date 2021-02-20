@@ -41,18 +41,6 @@ public class FTPTimestampParserImpl implements
 {
 
 
-    /** The date format for all dates, except possibly recent dates. Assumed to include the year. */
-    private SimpleDateFormat defaultDateFormat;
-    /* The index in CALENDAR_UNITS of the smallest time unit in defaultDateFormat */
-    private int defaultDateSmallestUnitIndex;
-
-    /** The format used for recent dates (which don't have the year). May be null. */
-    private SimpleDateFormat recentDateFormat;
-    /* The index in CALENDAR_UNITS of the smallest time unit in recentDateFormat */
-    private int recentDateSmallestUnitIndex;
-
-    private boolean lenientFutureDates;
-
     /*
      * List of units in order of increasing significance.
      * This allows the code to clear all units in the Calendar until it
@@ -73,7 +61,6 @@ public class FTPTimestampParserImpl implements
         Calendar.DAY_OF_MONTH,
         Calendar.MONTH,
         Calendar.YEAR};
-
     /*
      * Return the index to the array representing the least significant
      * unit found in the date format.
@@ -118,7 +105,6 @@ public class FTPTimestampParserImpl implements
         }
         return 0;
     }
-
     /*
      * Sets the Calendar precision (used by FTPFile#toFormattedDate) by clearing
      * the immediately preceeding unit (if any).
@@ -139,12 +125,123 @@ public class FTPTimestampParserImpl implements
         }
     }
 
+    /** The date format for all dates, except possibly recent dates. Assumed to include the year. */
+    private SimpleDateFormat defaultDateFormat;
+
+    /* The index in CALENDAR_UNITS of the smallest time unit in defaultDateFormat */
+    private int defaultDateSmallestUnitIndex;
+
+    /** The format used for recent dates (which don't have the year). May be null. */
+    private SimpleDateFormat recentDateFormat;
+
+    /* The index in CALENDAR_UNITS of the smallest time unit in recentDateFormat */
+    private int recentDateSmallestUnitIndex;
+
+    private boolean lenientFutureDates;
+
     /**
      * The only constructor for this class.
      */
     public FTPTimestampParserImpl() {
         setDefaultDateFormat(DEFAULT_SDF, null);
         setRecentDateFormat(DEFAULT_RECENT_SDF, null);
+    }
+
+    /**
+     * Implementation of the {@link  Configurable  Configurable}
+     * interface. Configures this <code>FTPTimestampParser</code> according
+     * to the following logic:
+     * <p>
+     * Set up the {@link  FTPClientConfig#setDefaultDateFormatStr(java.lang.String) defaultDateFormat}
+     * and optionally the {@link  FTPClientConfig#setRecentDateFormatStr(String) recentDateFormat}
+     * to values supplied in the config based on month names configured as follows:
+     * </p>
+     * <ul>
+     * <li>If a {@link  FTPClientConfig#setShortMonthNames(String) shortMonthString}
+     * has been supplied in the <code>config</code>, use that to parse  parse timestamps.</li>
+     * <li>Otherwise, if a {@link  FTPClientConfig#setServerLanguageCode(String) serverLanguageCode}
+     * has been supplied in the <code>config</code>, use the month names represented
+     * by that {@link  FTPClientConfig#lookupDateFormatSymbols(String) language}
+     * to parse timestamps.</li>
+     * <li>otherwise use default English month names</li>
+     * </ul><p>
+     * Finally if a {@link  org.apache.commons.net.ftp.FTPClientConfig#setServerTimeZoneId(String) serverTimeZoneId}
+     * has been supplied via the config, set that into all date formats that have
+     * been configured.
+     * </p>
+     */
+    @Override
+    public void configure(final FTPClientConfig config) {
+        DateFormatSymbols dfs = null;
+
+        final String languageCode = config.getServerLanguageCode();
+        final String shortmonths = config.getShortMonthNames();
+        if (shortmonths != null) {
+            dfs = FTPClientConfig.getDateFormatSymbols(shortmonths);
+        } else if (languageCode != null) {
+            dfs = FTPClientConfig.lookupDateFormatSymbols(languageCode);
+        } else {
+            dfs = FTPClientConfig.lookupDateFormatSymbols("en");
+        }
+
+
+        final String recentFormatString = config.getRecentDateFormatStr();
+        setRecentDateFormat(recentFormatString, dfs);
+
+        final String defaultFormatString = config.getDefaultDateFormatStr();
+        if (defaultFormatString == null) {
+            throw new IllegalArgumentException("defaultFormatString cannot be null");
+        }
+        setDefaultDateFormat(defaultFormatString, dfs);
+
+        setServerTimeZone(config.getServerTimeZoneId());
+
+        this.lenientFutureDates = config.isLenientFutureDates();
+    }
+
+    /**
+     * @return Returns the defaultDateFormat.
+     */
+    public SimpleDateFormat getDefaultDateFormat() {
+        return defaultDateFormat;
+    }
+
+    /**
+     * @return Returns the defaultDateFormat pattern string.
+     */
+    public String getDefaultDateFormatString() {
+        return defaultDateFormat.toPattern();
+    }
+    /**
+     * @return Returns the recentDateFormat.
+     */
+    public SimpleDateFormat getRecentDateFormat() {
+        return recentDateFormat;
+    }
+    /**
+     * @return Returns the recentDateFormat.
+     */
+    public String getRecentDateFormatString() {
+        return recentDateFormat.toPattern();
+    }
+    /**
+     * @return Returns the serverTimeZone used by this parser.
+     */
+    public TimeZone getServerTimeZone() {
+        return this.defaultDateFormat.getTimeZone();
+    }
+    /**
+     * @return returns an array of 12 strings representing the short
+     * month names used by this parse.
+     */
+    public String[] getShortMonths() {
+        return defaultDateFormat.getDateFormatSymbols().getShortMonths();
+    }
+    /**
+     * @return Returns the lenientFutureDates.
+     */
+    boolean isLenientFutureDates() {
+        return lenientFutureDates;
     }
 
     /**
@@ -169,6 +266,7 @@ public class FTPTimestampParserImpl implements
         final Calendar now = Calendar.getInstance();
         return parseTimestamp(timestampStr, now);
     }
+
 
     /**
      * If the recentDateFormat member has been defined, try to parse the
@@ -248,19 +346,6 @@ public class FTPTimestampParserImpl implements
         setPrecision(defaultDateSmallestUnitIndex, working);
         return working;
     }
-
-    /**
-     * @return Returns the defaultDateFormat.
-     */
-    public SimpleDateFormat getDefaultDateFormat() {
-        return defaultDateFormat;
-    }
-    /**
-     * @return Returns the defaultDateFormat pattern string.
-     */
-    public String getDefaultDateFormatString() {
-        return defaultDateFormat.toPattern();
-    }
     /**
      * @param format The defaultDateFormat to be set.
      * @param dfs the symbols to use (may be null)
@@ -278,17 +363,12 @@ public class FTPTimestampParserImpl implements
         }
         this.defaultDateSmallestUnitIndex = getEntry(this.defaultDateFormat);
     }
+
     /**
-     * @return Returns the recentDateFormat.
+     * @param lenientFutureDates The lenientFutureDates to set.
      */
-    public SimpleDateFormat getRecentDateFormat() {
-        return recentDateFormat;
-    }
-    /**
-     * @return Returns the recentDateFormat.
-     */
-    public String getRecentDateFormatString() {
-        return recentDateFormat.toPattern();
+    void setLenientFutureDates(final boolean lenientFutureDates) {
+        this.lenientFutureDates = lenientFutureDates;
     }
     /**
      * @param format The recentDateFormat to set.
@@ -307,22 +387,6 @@ public class FTPTimestampParserImpl implements
         }
         this.recentDateSmallestUnitIndex = getEntry(this.recentDateFormat);
     }
-
-    /**
-     * @return returns an array of 12 strings representing the short
-     * month names used by this parse.
-     */
-    public String[] getShortMonths() {
-        return defaultDateFormat.getDateFormatSymbols().getShortMonths();
-    }
-
-
-    /**
-     * @return Returns the serverTimeZone used by this parser.
-     */
-    public TimeZone getServerTimeZone() {
-        return this.defaultDateFormat.getTimeZone();
-    }
     /**
      * sets a TimeZone represented by the supplied ID string into all
      * of the parsers used by this server.
@@ -338,69 +402,5 @@ public class FTPTimestampParserImpl implements
         if (this.recentDateFormat != null) {
             this.recentDateFormat.setTimeZone(serverTimeZone);
         }
-    }
-
-    /**
-     * Implementation of the {@link  Configurable  Configurable}
-     * interface. Configures this <code>FTPTimestampParser</code> according
-     * to the following logic:
-     * <p>
-     * Set up the {@link  FTPClientConfig#setDefaultDateFormatStr(java.lang.String) defaultDateFormat}
-     * and optionally the {@link  FTPClientConfig#setRecentDateFormatStr(String) recentDateFormat}
-     * to values supplied in the config based on month names configured as follows:
-     * </p>
-     * <ul>
-     * <li>If a {@link  FTPClientConfig#setShortMonthNames(String) shortMonthString}
-     * has been supplied in the <code>config</code>, use that to parse  parse timestamps.</li>
-     * <li>Otherwise, if a {@link  FTPClientConfig#setServerLanguageCode(String) serverLanguageCode}
-     * has been supplied in the <code>config</code>, use the month names represented
-     * by that {@link  FTPClientConfig#lookupDateFormatSymbols(String) language}
-     * to parse timestamps.</li>
-     * <li>otherwise use default English month names</li>
-     * </ul><p>
-     * Finally if a {@link  org.apache.commons.net.ftp.FTPClientConfig#setServerTimeZoneId(String) serverTimeZoneId}
-     * has been supplied via the config, set that into all date formats that have
-     * been configured.
-     * </p>
-     */
-    @Override
-    public void configure(final FTPClientConfig config) {
-        DateFormatSymbols dfs = null;
-
-        final String languageCode = config.getServerLanguageCode();
-        final String shortmonths = config.getShortMonthNames();
-        if (shortmonths != null) {
-            dfs = FTPClientConfig.getDateFormatSymbols(shortmonths);
-        } else if (languageCode != null) {
-            dfs = FTPClientConfig.lookupDateFormatSymbols(languageCode);
-        } else {
-            dfs = FTPClientConfig.lookupDateFormatSymbols("en");
-        }
-
-
-        final String recentFormatString = config.getRecentDateFormatStr();
-        setRecentDateFormat(recentFormatString, dfs);
-
-        final String defaultFormatString = config.getDefaultDateFormatStr();
-        if (defaultFormatString == null) {
-            throw new IllegalArgumentException("defaultFormatString cannot be null");
-        }
-        setDefaultDateFormat(defaultFormatString, dfs);
-
-        setServerTimeZone(config.getServerTimeZoneId());
-
-        this.lenientFutureDates = config.isLenientFutureDates();
-    }
-    /**
-     * @return Returns the lenientFutureDates.
-     */
-    boolean isLenientFutureDates() {
-        return lenientFutureDates;
-    }
-    /**
-     * @param lenientFutureDates The lenientFutureDates to set.
-     */
-    void setLenientFutureDates(final boolean lenientFutureDates) {
-        this.lenientFutureDates = lenientFutureDates;
     }
 }

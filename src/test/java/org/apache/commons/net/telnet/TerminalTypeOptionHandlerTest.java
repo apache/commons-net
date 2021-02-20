@@ -18,6 +18,25 @@ package org.apache.commons.net.telnet;
 
 public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstract
 {
+    /*
+     * compares two arrays of int
+     */
+    protected boolean equalInts(final int a1[], final int a2[])
+    {
+        if(a1.length != a2.length)
+        {
+            return false;
+        }
+        boolean result = true;
+        for(int ii=0; ii<a1.length; ii++)
+        {
+            if(a1[ii]!= a2[ii]) {
+                result = false;
+            }
+        }
+        return result;
+    }
+
     @Override
     protected void setUp()
     {
@@ -25,29 +44,6 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
         opthand2 = new TerminalTypeOptionHandler("ANSI", true, true, true, true);
         opthand3 = new TerminalTypeOptionHandler("ANSI", false, false, false, false);
     }
-
-    @Override
-    public void testConstructors()
-    {
-        assertEquals(opthand1.getOptionCode(), TelnetOption.TERMINAL_TYPE);
-        super.testConstructors();
-    }
-
-    /*
-     * test of client-driven subnegotiation.
-     * Checks that no subnegotiation is made.
-     */
-    @Override
-    public void testStartSubnegotiation()
-    {
-
-        final int resp1[] = opthand1.startSubnegotiationLocal();
-        final int resp2[] = opthand1.startSubnegotiationRemote();
-
-        assertEquals(resp1, null);
-        assertEquals(resp2, null);
-    }
-
 
     /*
      * test of client-driven subnegotiation.
@@ -79,22 +75,26 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
     }
 
 
-    /*
-     * compares two arrays of int
-     */
-    protected boolean equalInts(final int a1[], final int a2[])
+    @Override
+    public void testConstructors()
     {
-        if(a1.length != a2.length)
-        {
-            return false;
-        }
-        boolean result = true;
-        for(int ii=0; ii<a1.length; ii++)
-        {
-            if(a1[ii]!= a2[ii]) {
-                result = false;
-            }
-        }
-        return result;
+        assertEquals(opthand1.getOptionCode(), TelnetOption.TERMINAL_TYPE);
+        super.testConstructors();
+    }
+
+
+    /*
+     * test of client-driven subnegotiation.
+     * Checks that no subnegotiation is made.
+     */
+    @Override
+    public void testStartSubnegotiation()
+    {
+
+        final int resp1[] = opthand1.startSubnegotiationLocal();
+        final int resp2[] = opthand1.startSubnegotiationRemote();
+
+        assertEquals(resp1, null);
+        assertEquals(resp2, null);
     }
 }

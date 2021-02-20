@@ -62,6 +62,42 @@ public final class TFTPDataPacket extends TFTPPacket
     private byte[] data;
 
     /**
+     * Creates a data packet based from a received
+     * datagram.  Assumes the datagram is at least length 4, else an
+     * ArrayIndexOutOfBoundsException may be thrown.
+     *
+     * @param datagram  The datagram containing the received data.
+     * @throws TFTPPacketException  If the datagram isn't a valid TFTP
+     *         data packet.
+     */
+    TFTPDataPacket(final DatagramPacket datagram) throws TFTPPacketException
+    {
+        super(TFTPPacket.DATA, datagram.getAddress(), datagram.getPort());
+
+        this.data = datagram.getData();
+        this.offset = 4;
+
+        if (getType() != this.data[1]) {
+            throw new TFTPPacketException("TFTP operator code does not match type.");
+        }
+
+        this.blockNumber = (((this.data[2] & 0xff) << 8) | (this.data[3] & 0xff));
+
+        this.length = datagram.getLength() - 4;
+
+        if (this.length > MAX_DATA_LENGTH) {
+            this.length = MAX_DATA_LENGTH;
+        }
+    }
+
+    public TFTPDataPacket(final InetAddress destination, final int port, final int blockNumber,
+                          final byte[] data)
+    {
+        this(destination, port, blockNumber, data, 0, data.length);
+    }
+
+
+    /**
      * Creates a data packet to be sent to a host at a given port
      * with a given block number.  The actual data to be sent is passed as
      * an array, an offset, and a length.  The offset is the offset into
@@ -92,40 +128,74 @@ public final class TFTPDataPacket extends TFTPPacket
         }
     }
 
-    public TFTPDataPacket(final InetAddress destination, final int port, final int blockNumber,
-                          final byte[] data)
+    /**
+     * Returns the block number of the data packet.
+     *
+     * @return The block number of the data packet.
+     */
+    public int getBlockNumber()
     {
-        this(destination, port, blockNumber, data, 0, data.length);
+        return blockNumber;
     }
 
+    /**
+     * Returns the byte array containing the packet data.
+     *
+     * @return The byte array containing the packet data.
+     */
+    public byte[] getData()
+    {
+        return data;
+    }
 
     /**
-     * Creates a data packet based from a received
-     * datagram.  Assumes the datagram is at least length 4, else an
-     * ArrayIndexOutOfBoundsException may be thrown.
+     * Returns the length of the data part of the data packet.
      *
-     * @param datagram  The datagram containing the received data.
-     * @throws TFTPPacketException  If the datagram isn't a valid TFTP
-     *         data packet.
+     * @return The length of the data part of the data packet.
      */
-    TFTPDataPacket(final DatagramPacket datagram) throws TFTPPacketException
+    public int getDataLength()
     {
-        super(TFTPPacket.DATA, datagram.getAddress(), datagram.getPort());
+        return length;
+    }
 
-        this.data = datagram.getData();
-        this.offset = 4;
+    /**
+     * Returns the offset into the byte array where the packet data actually
+     * starts.
+     *
+     * @return The offset into the byte array where the packet data actually
+     *         starts.
+     */
+    public int getDataOffset()
+    {
+        return offset;
+    }
 
-        if (getType() != this.data[1]) {
-            throw new TFTPPacketException("TFTP operator code does not match type.");
-        }
+    /**
+     * Creates a UDP datagram containing all the TFTP
+     * data packet data in the proper format.
+     * This is a method exposed to the programmer in case he
+     * wants to implement his own TFTP client instead of using
+     * the {@link org.apache.commons.net.tftp.TFTPClient}
+     * class.
+     * Under normal circumstances, you should not have a need to call this
+     * method.
+     *
+     * @return A UDP datagram containing the TFTP data packet.
+     */
+    @Override
+    public DatagramPacket newDatagram()
+    {
+        final byte[] data;
 
-        this.blockNumber = (((this.data[2] & 0xff) << 8) | (this.data[3] & 0xff));
+        data = new byte[length + 4];
+        data[0] = 0;
+        data[1] = (byte)type;
+        data[2] = (byte)((blockNumber & 0xffff) >> 8);
+        data[3] = (byte)(blockNumber & 0xff);
 
-        this.length = datagram.getLength() - 4;
+        System.arraycopy(this.data, offset, data, 4, length);
 
-        if (this.length > MAX_DATA_LENGTH) {
-            this.length = MAX_DATA_LENGTH;
-        }
+        return new DatagramPacket(data, length + 4, address, port);
     }
 
     /**
@@ -160,44 +230,6 @@ public final class TFTPDataPacket extends TFTPPacket
         return datagram;
     }
 
-    /**
-     * Creates a UDP datagram containing all the TFTP
-     * data packet data in the proper format.
-     * This is a method exposed to the programmer in case he
-     * wants to implement his own TFTP client instead of using
-     * the {@link org.apache.commons.net.tftp.TFTPClient}
-     * class.
-     * Under normal circumstances, you should not have a need to call this
-     * method.
-     *
-     * @return A UDP datagram containing the TFTP data packet.
-     */
-    @Override
-    public DatagramPacket newDatagram()
-    {
-        final byte[] data;
-
-        data = new byte[length + 4];
-        data[0] = 0;
-        data[1] = (byte)type;
-        data[2] = (byte)((blockNumber & 0xffff) >> 8);
-        data[3] = (byte)(blockNumber & 0xff);
-
-        System.arraycopy(this.data, offset, data, 4, length);
-
-        return new DatagramPacket(data, length + 4, address, port);
-    }
-
-    /**
-     * Returns the block number of the data packet.
-     *
-     * @return The block number of the data packet.
-     */
-    public int getBlockNumber()
-    {
-        return blockNumber;
-    }
-
     /** Sets the block number of the data packet.
      * @param blockNumber the number to set
      */
@@ -224,38 +256,6 @@ public final class TFTPDataPacket extends TFTPPacket
         } else {
             this.length = length;
         }
-    }
-
-    /**
-     * Returns the length of the data part of the data packet.
-     *
-     * @return The length of the data part of the data packet.
-     */
-    public int getDataLength()
-    {
-        return length;
-    }
-
-    /**
-     * Returns the offset into the byte array where the packet data actually
-     * starts.
-     *
-     * @return The offset into the byte array where the packet data actually
-     *         starts.
-     */
-    public int getDataOffset()
-    {
-        return offset;
-    }
-
-    /**
-     * Returns the byte array containing the packet data.
-     *
-     * @return The byte array containing the packet data.
-     */
-    public byte[] getData()
-    {
-        return data;
     }
 
     /**

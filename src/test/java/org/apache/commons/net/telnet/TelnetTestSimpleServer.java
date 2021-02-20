@@ -47,6 +47,43 @@ public class TelnetTestSimpleServer implements Runnable
         listener.start();
     }
 
+    public void disconnect()
+    {
+        if (clientSocket == null) {
+            return;
+        }
+        synchronized (clientSocket)
+        {
+            try
+            {
+                clientSocket.notify();
+            }
+            catch (final Exception e)
+            {
+                System.err.println("Exception in notify, "+ e.getMessage());
+            }
+        }
+    }
+
+
+    public InputStream getInputStream() throws IOException
+    {
+        if(clientSocket != null)
+        {
+            return clientSocket.getInputStream();
+        }
+        return null;
+    }
+
+    public OutputStream getOutputStream() throws IOException
+    {
+        if(clientSocket != null)
+        {
+            return clientSocket.getOutputStream();
+        }
+        return null;
+    }
+
     @Override
     public void run()
     {
@@ -92,25 +129,6 @@ public class TelnetTestSimpleServer implements Runnable
         }
     }
 
-
-    public void disconnect()
-    {
-        if (clientSocket == null) {
-            return;
-        }
-        synchronized (clientSocket)
-        {
-            try
-            {
-                clientSocket.notify();
-            }
-            catch (final Exception e)
-            {
-                System.err.println("Exception in notify, "+ e.getMessage());
-            }
-        }
-    }
-
     public void stop()
     {
         listener.interrupt();
@@ -122,23 +140,5 @@ public class TelnetTestSimpleServer implements Runnable
         {
             System.err.println("Exception in close, "+ e.getMessage());
         }
-    }
-
-    public InputStream getInputStream() throws IOException
-    {
-        if(clientSocket != null)
-        {
-            return clientSocket.getInputStream();
-        }
-        return null;
-    }
-
-    public OutputStream getOutputStream() throws IOException
-    {
-        if(clientSocket != null)
-        {
-            return clientSocket.getOutputStream();
-        }
-        return null;
     }
 }

@@ -38,9 +38,28 @@ import org.apache.commons.net.ntp.TimeStamp;
  */
 public class SimpleNTPServer implements Runnable {
 
+    public static void main(final String[] args)
+    {
+        int port = NtpV3Packet.NTP_PORT;
+        if (args.length != 0)
+        {
+            try {
+                port = Integer.parseInt(args[0]);
+            } catch (final NumberFormatException nfe) {
+                nfe.printStackTrace();
+            }
+        }
+        final SimpleNTPServer timeServer = new SimpleNTPServer(port);
+        try {
+            timeServer.start();
+        } catch (final IOException e) {
+            e.printStackTrace();
+        }
+    }
     private int port;
     private volatile boolean running;
     private boolean started;
+
     private DatagramSocket socket;
 
     /**
@@ -66,31 +85,6 @@ public class SimpleNTPServer implements Runnable {
         this.port = port;
     }
 
-    public int getPort()
-    {
-        return port;
-    }
-
-    /**
-     * Returns state of whether time service is running.
-     *
-     * @return true if time service is running
-     */
-    public boolean isRunning()
-    {
-        return running;
-    }
-
-    /**
-     * Returns state of whether time service is running.
-     *
-     * @return true if time service is running
-     */
-    public boolean isStarted()
-    {
-        return started;
-    }
-
     /**
      * Connects to server socket and listen for client connections.
      *
@@ -109,46 +103,9 @@ public class SimpleNTPServer implements Runnable {
         }
     }
 
-    /**
-     * Starts time service and provide time to client connections.
-     *
-     * @throws java.io.IOException if an I/O error occurs when creating the socket.
-     */
-    public void start() throws IOException
+    public int getPort()
     {
-        if (socket == null)
-        {
-            connect();
-        }
-        if (!started)
-        {
-            started = true;
-            new Thread(this).start();
-        }
-    }
-
-    /**
-     * Main method to service client connections.
-     */
-    @Override
-    public void run()
-    {
-        running = true;
-        final byte buffer[] = new byte[48];
-        final DatagramPacket request = new DatagramPacket(buffer, buffer.length);
-        do {
-            try {
-                socket.receive(request);
-                final long rcvTime = System.currentTimeMillis();
-                handlePacket(request, rcvTime);
-            } catch (final IOException e) {
-                if (running)
-                {
-                    e.printStackTrace();
-                }
-                // otherwise socket thrown exception during shutdown
-            }
-        } while (running);
+        return port;
     }
 
     /**
@@ -196,6 +153,68 @@ public class SimpleNTPServer implements Runnable {
     }
 
     /**
+     * Returns state of whether time service is running.
+     *
+     * @return true if time service is running
+     */
+    public boolean isRunning()
+    {
+        return running;
+    }
+
+    /**
+     * Returns state of whether time service is running.
+     *
+     * @return true if time service is running
+     */
+    public boolean isStarted()
+    {
+        return started;
+    }
+
+    /**
+     * Main method to service client connections.
+     */
+    @Override
+    public void run()
+    {
+        running = true;
+        final byte buffer[] = new byte[48];
+        final DatagramPacket request = new DatagramPacket(buffer, buffer.length);
+        do {
+            try {
+                socket.receive(request);
+                final long rcvTime = System.currentTimeMillis();
+                handlePacket(request, rcvTime);
+            } catch (final IOException e) {
+                if (running)
+                {
+                    e.printStackTrace();
+                }
+                // otherwise socket thrown exception during shutdown
+            }
+        } while (running);
+    }
+
+    /**
+     * Starts time service and provide time to client connections.
+     *
+     * @throws java.io.IOException if an I/O error occurs when creating the socket.
+     */
+    public void start() throws IOException
+    {
+        if (socket == null)
+        {
+            connect();
+        }
+        if (!started)
+        {
+            started = true;
+            new Thread(this).start();
+        }
+    }
+
+    /**
      * Closes server socket and stop listening.
      */
     public void stop()
@@ -207,25 +226,6 @@ public class SimpleNTPServer implements Runnable {
             socket = null;
         }
         started = false;
-    }
-
-    public static void main(final String[] args)
-    {
-        int port = NtpV3Packet.NTP_PORT;
-        if (args.length != 0)
-        {
-            try {
-                port = Integer.parseInt(args[0]);
-            } catch (final NumberFormatException nfe) {
-                nfe.printStackTrace();
-            }
-        }
-        final SimpleNTPServer timeServer = new SimpleNTPServer(port);
-        try {
-            timeServer.start();
-        } catch (final IOException e) {
-            e.printStackTrace();
-        }
     }
 
 }

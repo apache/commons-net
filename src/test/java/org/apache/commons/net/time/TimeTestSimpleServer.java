@@ -46,8 +46,20 @@ public class TimeTestSimpleServer implements Runnable
     /** The default time port.  It is set to 37 according to RFC 868. */
     public static final int DEFAULT_PORT = 37;
 
+    public static void main(final String[] args)
+    {
+        final TimeTestSimpleServer server = new TimeTestSimpleServer();
+        try
+        {
+            server.start();
+        } catch (final IOException e)
+        {
+            // ignored
+        }
+    }
     private ServerSocket server;
     private final int port;
+
     private boolean running;
 
     public TimeTestSimpleServer()
@@ -76,22 +88,6 @@ public class TimeTestSimpleServer implements Runnable
     public boolean isRunning()
     {
         return running;
-    }
-
-    /*
-     * Start time service and provide time to client connections.
-     */
-    public void start() throws IOException
-    {
-        if (server == null)
-    {
-            connect();
-    }
-    if (!running)
-    {
-        running = true;
-        new Thread(this).start();
-    }
     }
 
     @Override
@@ -127,6 +123,22 @@ public class TimeTestSimpleServer implements Runnable
     }
 
     /*
+     * Start time service and provide time to client connections.
+     */
+    public void start() throws IOException
+    {
+        if (server == null)
+    {
+            connect();
+    }
+    if (!running)
+    {
+        running = true;
+        new Thread(this).start();
+    }
+    }
+
+    /*
      * Close server socket.
      */
     public void stop()
@@ -142,18 +154,6 @@ public class TimeTestSimpleServer implements Runnable
                 System.err.println("close socket error: " + e);
             }
             server = null;
-        }
-    }
-
-    public static void main(final String[] args)
-    {
-        final TimeTestSimpleServer server = new TimeTestSimpleServer();
-        try
-        {
-            server.start();
-        } catch (final IOException e)
-        {
-            // ignored
         }
     }
 

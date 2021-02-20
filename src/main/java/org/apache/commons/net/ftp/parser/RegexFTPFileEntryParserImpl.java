@@ -90,20 +90,21 @@ public abstract class RegexFTPFileEntryParserImpl extends
     }
 
     /**
-     * Convenience method delegates to the internal MatchResult's matches()
-     * method.
+     * Compile the regex and store the {@link Pattern}.
      *
-     * @param s the String to be matched
-     * @return true if s matches this object's regular expression.
+     * This is an internal method to do the work so the constructor does not
+     * have to call an overrideable method.
+     *
+     * @param regex the expression to compile
+     * @param flags the flags to apply, see {@link Pattern#compile(String, int)}. Use 0 for none.
+     * @throws IllegalArgumentException if the regex cannot be compiled
      */
-
-    public boolean matches(final String s) {
-        this.result = null;
-        _matcher_ = pattern.matcher(s);
-        if (_matcher_.matches()) {
-            this.result = _matcher_.toMatchResult();
+    private void compileRegex(final String regex, final int flags) {
+        try {
+            pattern = Pattern.compile(regex, flags);
+        } catch (final PatternSyntaxException pse) {
+            throw new IllegalArgumentException("Unparseable regex supplied: " + regex);
         }
-        return null != this.result;
     }
 
     /**
@@ -117,6 +118,22 @@ public abstract class RegexFTPFileEntryParserImpl extends
             return 0;
         }
         return this.result.groupCount();
+    }
+
+    /**
+     * For debugging purposes - returns a string shows each match group by
+     * number.
+     *
+     * @return a string shows each match group by number.
+     */
+
+    public String getGroupsAsString() {
+        final StringBuilder b = new StringBuilder();
+        for (int i = 1; i <= this.result.groupCount(); i++) {
+            b.append(i).append(") ").append(this.result.group(i)).append(
+                    System.getProperty("line.separator"));
+        }
+        return b.toString();
     }
 
     /**
@@ -137,20 +154,22 @@ public abstract class RegexFTPFileEntryParserImpl extends
     }
 
     /**
-     * For debugging purposes - returns a string shows each match group by
-     * number.
+     * Convenience method delegates to the internal MatchResult's matches()
+     * method.
      *
-     * @return a string shows each match group by number.
+     * @param s the String to be matched
+     * @return true if s matches this object's regular expression.
      */
 
-    public String getGroupsAsString() {
-        final StringBuilder b = new StringBuilder();
-        for (int i = 1; i <= this.result.groupCount(); i++) {
-            b.append(i).append(") ").append(this.result.group(i)).append(
-                    System.getProperty("line.separator"));
+    public boolean matches(final String s) {
+        this.result = null;
+        _matcher_ = pattern.matcher(s);
+        if (_matcher_.matches()) {
+            this.result = _matcher_.toMatchResult();
         }
-        return b.toString();
+        return null != this.result;
     }
+
 
     /**
      * Alter the current regular expression being utilised for entry parsing
@@ -165,7 +184,6 @@ public abstract class RegexFTPFileEntryParserImpl extends
         return true;
     }
 
-
     /**
      * Alter the current regular expression being utilised for entry parsing
      * and create a new {@link Pattern} instance.
@@ -178,23 +196,5 @@ public abstract class RegexFTPFileEntryParserImpl extends
     public boolean setRegex(final String regex, final int flags) {
         compileRegex(regex, flags);
         return true;
-    }
-
-    /**
-     * Compile the regex and store the {@link Pattern}.
-     *
-     * This is an internal method to do the work so the constructor does not
-     * have to call an overrideable method.
-     *
-     * @param regex the expression to compile
-     * @param flags the flags to apply, see {@link Pattern#compile(String, int)}. Use 0 for none.
-     * @throws IllegalArgumentException if the regex cannot be compiled
-     */
-    private void compileRegex(final String regex, final int flags) {
-        try {
-            pattern = Pattern.compile(regex, flags);
-        } catch (final PatternSyntaxException pse) {
-            throw new IllegalArgumentException("Unparseable regex supplied: " + regex);
-        }
     }
 }

@@ -60,6 +60,38 @@ public final class DotTerminatedMessageReader extends BufferedReader
     }
 
     /**
+     * Closes the message for reading.  This doesn't actually close the
+     * underlying stream.  The underlying stream may still be used for
+     * communicating with the server and therefore is not closed.
+     * <p>
+     * If the end of the message has not yet been reached, this method
+     * will read the remainder of the message until it reaches the end,
+     * so that the underlying stream may continue to be used properly
+     * for communicating with the server.  If you do not fully read
+     * a message, you MUST close it, otherwise your program will likely
+     * hang or behave improperly.
+     * @throws IOException  If an error occurs while reading the
+     *            underlying stream.
+     */
+    @Override
+    public void close() throws IOException
+    {
+        synchronized (lock)
+        {
+            if (!eof)
+            {
+                while (read() != -1)
+                {
+                    // read to EOF
+                }
+            }
+            eof = true;
+            atBeginning = false;
+        }
+    }
+
+
+    /**
      * Reads and returns the next character in the message.  If the end of the
      * message has been reached, returns -1.  Note that a call to this method
      * may result in multiple reads from the underlying input stream to decode
@@ -131,7 +163,6 @@ public final class DotTerminatedMessageReader extends BufferedReader
         }
     }
 
-
     /**
      * Reads the next characters from the message into an array and
      * returns the number of characters read.  Returns -1 if the end of the
@@ -186,37 +217,6 @@ public final class DotTerminatedMessageReader extends BufferedReader
             while (--length > 0 && (ch = read()) != -1);
 
             return offset - off;
-        }
-    }
-
-    /**
-     * Closes the message for reading.  This doesn't actually close the
-     * underlying stream.  The underlying stream may still be used for
-     * communicating with the server and therefore is not closed.
-     * <p>
-     * If the end of the message has not yet been reached, this method
-     * will read the remainder of the message until it reaches the end,
-     * so that the underlying stream may continue to be used properly
-     * for communicating with the server.  If you do not fully read
-     * a message, you MUST close it, otherwise your program will likely
-     * hang or behave improperly.
-     * @throws IOException  If an error occurs while reading the
-     *            underlying stream.
-     */
-    @Override
-    public void close() throws IOException
-    {
-        synchronized (lock)
-        {
-            if (!eof)
-            {
-                while (read() != -1)
-                {
-                    // read to EOF
-                }
-            }
-            eof = true;
-            atBeginning = false;
         }
     }
 

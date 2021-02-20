@@ -115,6 +115,25 @@ public class IMAPSClient extends IMAPClient
 
     /**
      * Constructor for IMAPSClient.
+     * @param implicit The security mode(Implicit/Explicit).
+     * @param ctx A pre-configured SSL Context.
+     */
+    public IMAPSClient(final boolean implicit, final SSLContext ctx)
+    {
+        this(DEFAULT_PROTOCOL, implicit, ctx);
+    }
+
+    /**
+     * Constructor for IMAPSClient.
+     * @param context A pre-configured SSL Context.
+     */
+    public IMAPSClient(final SSLContext context)
+    {
+        this(false, context);
+    }
+
+    /**
+     * Constructor for IMAPSClient.
      * @param proto the protocol.
      */
     public IMAPSClient(final String proto)
@@ -147,25 +166,6 @@ public class IMAPSClient extends IMAPClient
     }
 
     /**
-     * Constructor for IMAPSClient.
-     * @param implicit The security mode(Implicit/Explicit).
-     * @param ctx A pre-configured SSL Context.
-     */
-    public IMAPSClient(final boolean implicit, final SSLContext ctx)
-    {
-        this(DEFAULT_PROTOCOL, implicit, ctx);
-    }
-
-    /**
-     * Constructor for IMAPSClient.
-     * @param context A pre-configured SSL Context.
-     */
-    public IMAPSClient(final SSLContext context)
-    {
-        this(false, context);
-    }
-
-    /**
      * Because there are so many connect() methods,
      * the _connectAction_() method is provided as a means of performing
      * some action immediately after establishing a connection,
@@ -185,6 +185,82 @@ public class IMAPSClient extends IMAPClient
     }
 
     /**
+     * The TLS command execution.
+     * @throws SSLException If the server reply code is not positive.
+     * @throws IOException If an I/O error occurs while sending
+     * the command or performing the negotiation.
+     * @return TRUE if the command and negotiation succeeded.
+     */
+    public boolean execTLS() throws SSLException, IOException
+    {
+        if (sendCommand(IMAPCommand.getCommand(IMAPCommand.STARTTLS)) != IMAPReply.OK)
+        {
+            return false;
+            //throw new SSLException(getReplyString());
+        }
+        performSSLNegotiation();
+        return true;
+    }
+
+    /**
+     * Returns the names of the cipher suites which could be enabled
+     * for use on this connection.
+     * When the underlying {@link java.net.Socket Socket} is not an {@link SSLSocket} instance, returns null.
+     * @return An array of cipher suite names, or <code>null</code>.
+     */
+    public String[] getEnabledCipherSuites()
+    {
+        if (_socket_ instanceof SSLSocket)
+        {
+            return ((SSLSocket)_socket_).getEnabledCipherSuites();
+        }
+        return null;
+    }
+
+    /**
+     * Returns the names of the protocol versions which are currently
+     * enabled for use on this connection.
+     * When the underlying {@link java.net.Socket Socket} is not an {@link SSLSocket} instance, returns null.
+     * @return An array of protocols, or <code>null</code>.
+     */
+    public String[] getEnabledProtocols()
+    {
+        if (_socket_ instanceof SSLSocket)
+        {
+            return ((SSLSocket)_socket_).getEnabledProtocols();
+        }
+        return null;
+    }
+
+    /**
+     * Get the currently configured {@link HostnameVerifier}.
+     * @return A HostnameVerifier instance.
+     * @since 3.4
+     */
+    public HostnameVerifier getHostnameVerifier()
+    {
+        return hostnameVerifier;
+    }
+
+    /**
+     * Get the {@link KeyManager} instance.
+     * @return The current {@link KeyManager} instance.
+     */
+    private KeyManager getKeyManager()
+    {
+        return keyManager;
+    }
+
+    /**
+     * Get the currently configured {@link TrustManager}.
+     * @return A TrustManager instance.
+     */
+    public TrustManager getTrustManager()
+    {
+        return trustManager;
+    }
+
+    /**
      * Performs a lazy init of the SSL context.
      * @throws IOException When could not initialize the SSL context.
      */
@@ -194,6 +270,18 @@ public class IMAPSClient extends IMAPClient
         {
             context = SSLContextUtils.createSSLContext(protocol, getKeyManager(), getTrustManager());
         }
+    }
+
+    /**
+     * Return whether or not endpoint identification using the HTTPS algorithm
+     * on Java 1.7+ is enabled. The default behavior is for this to be disabled.
+     *
+     * @return True if enabled, false if not.
+     * @since 3.4
+     */
+    public boolean isEndpointCheckingEnabled()
+    {
+        return tlsEndpointChecking;
     }
 
     /**
@@ -242,25 +330,6 @@ public class IMAPSClient extends IMAPClient
     }
 
     /**
-     * Get the {@link KeyManager} instance.
-     * @return The current {@link KeyManager} instance.
-     */
-    private KeyManager getKeyManager()
-    {
-        return keyManager;
-    }
-
-    /**
-     * Set a {@link KeyManager} to use.
-     * @param newKeyManager The KeyManager implementation to set.
-     * @see org.apache.commons.net.util.KeyManagerUtils
-     */
-    public void setKeyManager(final KeyManager newKeyManager)
-    {
-        keyManager = newKeyManager;
-    }
-
-    /**
      * Controls which particular cipher suites are enabled for use on this
      * connection. Called before server negotiation.
      * @param cipherSuites The cipher suites.
@@ -268,21 +337,6 @@ public class IMAPSClient extends IMAPClient
     public void setEnabledCipherSuites(final String[] cipherSuites)
     {
         suites = cipherSuites.clone();
-    }
-
-    /**
-     * Returns the names of the cipher suites which could be enabled
-     * for use on this connection.
-     * When the underlying {@link java.net.Socket Socket} is not an {@link SSLSocket} instance, returns null.
-     * @return An array of cipher suite names, or <code>null</code>.
-     */
-    public String[] getEnabledCipherSuites()
-    {
-        if (_socket_ instanceof SSLSocket)
-        {
-            return ((SSLSocket)_socket_).getEnabledCipherSuites();
-        }
-        return null;
     }
 
     /**
@@ -296,65 +350,15 @@ public class IMAPSClient extends IMAPClient
     }
 
     /**
-     * Returns the names of the protocol versions which are currently
-     * enabled for use on this connection.
-     * When the underlying {@link java.net.Socket Socket} is not an {@link SSLSocket} instance, returns null.
-     * @return An array of protocols, or <code>null</code>.
-     */
-    public String[] getEnabledProtocols()
-    {
-        if (_socket_ instanceof SSLSocket)
-        {
-            return ((SSLSocket)_socket_).getEnabledProtocols();
-        }
-        return null;
-    }
-
-    /**
-     * The TLS command execution.
-     * @throws SSLException If the server reply code is not positive.
-     * @throws IOException If an I/O error occurs while sending
-     * the command or performing the negotiation.
-     * @return TRUE if the command and negotiation succeeded.
-     */
-    public boolean execTLS() throws SSLException, IOException
-    {
-        if (sendCommand(IMAPCommand.getCommand(IMAPCommand.STARTTLS)) != IMAPReply.OK)
-        {
-            return false;
-            //throw new SSLException(getReplyString());
-        }
-        performSSLNegotiation();
-        return true;
-    }
-
-    /**
-     * Get the currently configured {@link TrustManager}.
-     * @return A TrustManager instance.
-     */
-    public TrustManager getTrustManager()
-    {
-        return trustManager;
-    }
-
-    /**
-     * Override the default {@link TrustManager} to use.
-     * @param newTrustManager The TrustManager implementation to set.
-     * @see org.apache.commons.net.util.TrustManagerUtils
-     */
-    public void setTrustManager(final TrustManager newTrustManager)
-    {
-        trustManager = newTrustManager;
-    }
-
-    /**
-     * Get the currently configured {@link HostnameVerifier}.
-     * @return A HostnameVerifier instance.
+     * Automatic endpoint identification checking using the HTTPS algorithm
+     * is supported on Java 1.7+. The default behavior is for this to be disabled.
+     *
+     * @param enable Enable automatic endpoint identification checking using the HTTPS algorithm on Java 1.7+.
      * @since 3.4
      */
-    public HostnameVerifier getHostnameVerifier()
+    public void setEndpointCheckingEnabled(final boolean enable)
     {
-        return hostnameVerifier;
+        tlsEndpointChecking = enable;
     }
 
     /**
@@ -368,27 +372,23 @@ public class IMAPSClient extends IMAPClient
     }
 
     /**
-     * Return whether or not endpoint identification using the HTTPS algorithm
-     * on Java 1.7+ is enabled. The default behavior is for this to be disabled.
-     *
-     * @return True if enabled, false if not.
-     * @since 3.4
+     * Set a {@link KeyManager} to use.
+     * @param newKeyManager The KeyManager implementation to set.
+     * @see org.apache.commons.net.util.KeyManagerUtils
      */
-    public boolean isEndpointCheckingEnabled()
+    public void setKeyManager(final KeyManager newKeyManager)
     {
-        return tlsEndpointChecking;
+        keyManager = newKeyManager;
     }
 
     /**
-     * Automatic endpoint identification checking using the HTTPS algorithm
-     * is supported on Java 1.7+. The default behavior is for this to be disabled.
-     *
-     * @param enable Enable automatic endpoint identification checking using the HTTPS algorithm on Java 1.7+.
-     * @since 3.4
+     * Override the default {@link TrustManager} to use.
+     * @param newTrustManager The TrustManager implementation to set.
+     * @see org.apache.commons.net.util.TrustManagerUtils
      */
-    public void setEndpointCheckingEnabled(final boolean enable)
+    public void setTrustManager(final TrustManager newTrustManager)
     {
-        tlsEndpointChecking = enable;
+        trustManager = newTrustManager;
     }
 }
 /* kate: indent-width 4; replace-tabs on; */

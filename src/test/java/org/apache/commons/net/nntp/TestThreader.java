@@ -30,34 +30,20 @@ public class TestThreader {
 
     private static final Threadable[] EMPTY_THREADABLE_ARRAY = new Threadable[0];
 
-    @Test
-    @SuppressWarnings("deprecation") // test of deprecated method
-    public void testNullArray() { // NET-539
-        final Threader t = new Threader();
-        final Threadable[] messages = null;
-        Assert.assertNull(t.thread(messages));
-    }
-
-    @Test
-    public void testNullList() {
-        final Threader t = new Threader();
-        final List<Threadable> messages = null;
-        Assert.assertNull(t.thread(messages));
-    }
-
-    @Test
-    public void testNullIterable() {
-        final Threader t = new Threader();
-        final Iterable<Threadable> messages = null;
-        Assert.assertNull(t.thread(messages));
-    }
-
     @SuppressWarnings("deprecation") // test of deprecated method
     @Test
     public void testEmptyArray() { // NET-539
         final Threader t = new Threader();
         final Threadable[] messages = EMPTY_THREADABLE_ARRAY;
         Assert.assertNull(t.thread(messages));
+    }
+
+    @Test
+    public void testEmptyIterable() { // NET-539
+        final Threader t = new Threader();
+        final Threadable[] messages = EMPTY_THREADABLE_ARRAY;
+        final Iterable<Threadable> asList = Arrays.asList(messages);
+        Assert.assertNull(t.thread(asList));
     }
 
     @Test
@@ -69,11 +55,25 @@ public class TestThreader {
     }
 
     @Test
-    public void testEmptyIterable() { // NET-539
+    @SuppressWarnings("deprecation") // test of deprecated method
+    public void testNullArray() { // NET-539
         final Threader t = new Threader();
-        final Threadable[] messages = EMPTY_THREADABLE_ARRAY;
-        final Iterable<Threadable> asList = Arrays.asList(messages);
-        Assert.assertNull(t.thread(asList));
+        final Threadable[] messages = null;
+        Assert.assertNull(t.thread(messages));
+    }
+
+    @Test
+    public void testNullIterable() {
+        final Threader t = new Threader();
+        final Iterable<Threadable> messages = null;
+        Assert.assertNull(t.thread(messages));
+    }
+
+    @Test
+    public void testNullList() {
+        final Threader t = new Threader();
+        final List<Threadable> messages = null;
+        Assert.assertNull(t.thread(messages));
     }
 
 }

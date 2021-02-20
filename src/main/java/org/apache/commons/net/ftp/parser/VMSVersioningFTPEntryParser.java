@@ -45,9 +45,9 @@ import org.apache.commons.net.ftp.FTPClientConfig;
 public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
 {
 
-    private final Pattern preparsePattern;
     private static final String PRE_PARSE_REGEX =
         "(.*?);([0-9]+)\\s*.*";
+    private final Pattern preparsePattern;
 
     /**
      * Constructor for a VMSFTPEntryParser object.
@@ -89,6 +89,12 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
         }
 
    }
+
+    @Override
+    protected boolean isVersioning() {
+        return true;
+    }
+
 
     /**
      * Implement hook provided for those implementers (such as
@@ -146,12 +152,6 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
 
         }
         return original;
-    }
-
-
-    @Override
-    protected boolean isVersioning() {
-        return true;
     }
 
 }

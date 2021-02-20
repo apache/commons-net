@@ -29,6 +29,18 @@ public class TimeTCPClientTest extends TestCase
 
     private int _port = 3333; // default test port
 
+    protected void closeConnections()
+    {
+        try
+        {
+            server1.stop();
+            Thread.sleep(1000);
+        } catch (final Exception e)
+        {
+            // ignored
+        }
+    }
+
     protected void openConnections() throws Exception
     {
         try {
@@ -42,20 +54,6 @@ public class TimeTCPClientTest extends TestCase
             server1.connect();
         }
         server1.start();
-    }
-
-    /*
-     *  tests the constant basetime used by TimeClient against tha
-     *  computed from Calendar class.
-     */
-    public void testInitial() {
-        final TimeZone utcZone = TimeZone.getTimeZone("UTC");
-        final Calendar calendar = Calendar.getInstance(utcZone);
-        calendar.set(1900, Calendar.JANUARY, 1, 0, 0, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        final long baseTime = calendar.getTime().getTime() / 1000L;
-
-        assertEquals(baseTime, -TimeTCPClient.SECONDS_1900_TO_1970);
     }
 
     /*
@@ -112,16 +110,18 @@ public class TimeTCPClientTest extends TestCase
         assertTrue(Math.abs(time2 - clientTime2) < 5000);
     }
 
-    protected void closeConnections()
-    {
-        try
-        {
-            server1.stop();
-            Thread.sleep(1000);
-        } catch (final Exception e)
-        {
-            // ignored
-        }
+    /*
+     *  tests the constant basetime used by TimeClient against tha
+     *  computed from Calendar class.
+     */
+    public void testInitial() {
+        final TimeZone utcZone = TimeZone.getTimeZone("UTC");
+        final Calendar calendar = Calendar.getInstance(utcZone);
+        calendar.set(1900, Calendar.JANUARY, 1, 0, 0, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        final long baseTime = calendar.getTime().getTime() / 1000L;
+
+        assertEquals(baseTime, -TimeTCPClient.SECONDS_1900_TO_1970);
     }
 }
 

@@ -51,24 +51,16 @@ public class DiscardUDPClient extends DatagramSocketClient
 
 
     /**
-     * Sends the specified data to the specified server at the specified port.
-     *
-     * @param data  The discard data to send.
-     * @param length  The length of the data to send.  Should be less than
-     *    or equal to the length of the data byte array.
-     * @param host  The address of the server.
-     * @param port  The service port.
-     * @throws IOException If an error occurs during the datagram send
-     *            operation.
+     * Same as
+     * <code>send(data, data.length, host. DiscardUDPClient.DEFAULT_PORT)</code>.
+     * @param data the buffer to send
+     * @param host the target host
+     * @see #send(byte[], int, InetAddress, int)
+     * @throws IOException if an error occurs
      */
-    public void send(final byte[] data, final int length, final InetAddress host, final int port)
-    throws IOException
+    public void send(final byte[] data, final InetAddress host) throws IOException
     {
-        sendPacket.setData(data);
-        sendPacket.setLength(length);
-        sendPacket.setAddress(host);
-        sendPacket.setPort(port);
-        _socket_.send(sendPacket);
+        send(data, data.length, host, DEFAULT_PORT);
     }
 
 
@@ -89,16 +81,24 @@ public class DiscardUDPClient extends DatagramSocketClient
 
 
     /**
-     * Same as
-     * <code>send(data, data.length, host. DiscardUDPClient.DEFAULT_PORT)</code>.
-     * @param data the buffer to send
-     * @param host the target host
-     * @see #send(byte[], int, InetAddress, int)
-     * @throws IOException if an error occurs
+     * Sends the specified data to the specified server at the specified port.
+     *
+     * @param data  The discard data to send.
+     * @param length  The length of the data to send.  Should be less than
+     *    or equal to the length of the data byte array.
+     * @param host  The address of the server.
+     * @param port  The service port.
+     * @throws IOException If an error occurs during the datagram send
+     *            operation.
      */
-    public void send(final byte[] data, final InetAddress host) throws IOException
+    public void send(final byte[] data, final int length, final InetAddress host, final int port)
+    throws IOException
     {
-        send(data, data.length, host, DEFAULT_PORT);
+        sendPacket.setData(data);
+        sendPacket.setLength(length);
+        sendPacket.setAddress(host);
+        sendPacket.setPort(port);
+        _socket_.send(sendPacket);
     }
 
 }

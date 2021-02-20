@@ -61,14 +61,56 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
     public static final String NTP_DATE_FORMAT = "EEE, MMM dd yyyy HH:mm:ss.SSS";
 
     /**
-     * NTP timestamp value: 64-bit unsigned fixed-point number as defined in RFC-1305
-     * with high-order 32 bits the seconds field and the low-order 32-bits the
-     * fractional field.
+     * Left-pad 8-character hex string with 0's
+     *
+     * @param buf - StringBuilder which is appended with leading 0's.
+     * @param l - a long.
      */
-    private final long ntpTime;
+    private static void appendHexString(final StringBuilder buf, final long l)
+    {
+        final String s = Long.toHexString(l);
+        for (int i = s.length(); i < 8; i++) {
+            buf.append('0');
+        }
+        buf.append(s);
+    }
 
-    private DateFormat simpleFormatter;
-    private DateFormat utcFormatter;
+    /**
+     * Convert NTP timestamp hexstring (e.g. "c1a089bd.fc904f6d") to the NTP
+     * 64-bit unsigned fixed-point number.
+     * @param hexString the string to convert
+     *
+     * @return NTP 64-bit timestamp value.
+     * @throws NumberFormatException - if the string does not contain a parsable timestamp.
+     */
+    protected static long decodeNtpHexString(final String hexString)
+            throws NumberFormatException
+    {
+        if (hexString == null) {
+            throw new NumberFormatException("null");
+        }
+        final int ind = hexString.indexOf('.');
+        if (ind == -1) {
+            if (hexString.isEmpty()) {
+                return 0;
+            }
+            return Long.parseLong(hexString, 16) << 32; // no decimal
+        }
+
+        return Long.parseLong(hexString.substring(0, ind), 16) << 32 |
+                Long.parseLong(hexString.substring(ind + 1), 16);
+    }
+    /**
+     * Constructs a NTP timestamp object and initializes it so that
+     * it represents the time at which it was allocated, measured to the
+     * nearest millisecond.
+     * @return NTP timestamp object set to the current time.
+     * @see     java.lang.System#currentTimeMillis()
+     */
+    public static TimeStamp getCurrentTime()
+    {
+        return getNtpTime(System.currentTimeMillis());
+    }
 
     // initialization of static time bases
     /*
@@ -85,88 +127,18 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
     */
 
     /**
-     * Constructs a newly allocated NTP timestamp object
-     * that represents the native 64-bit long argument.
-     * @param ntpTime the timestamp
+     * Helper method to convert Java time to NTP timestamp object.
+     * Note that Java time (milliseconds) by definition has less precision
+     * then NTP time (picoseconds) so converting Ntptime to Javatime and back
+     * to Ntptime loses precision. For example, Tue, Dec 17 2002 09:07:24.810
+     * is represented by a single Java-based time value of f22cd1fc8a, but its
+     * NTP equivalent are all values from c1a9ae1c.cf5c28f5 to c1a9ae1c.cf9db22c.
+     * @param   dateMillis   the milliseconds since January 1, 1970, 00:00:00 GMT.
+     * @return NTP timestamp object at the specified date.
      */
-    public TimeStamp(final long ntpTime)
+    public static TimeStamp getNtpTime(final long dateMillis)
     {
-        this.ntpTime = ntpTime;
-    }
-
-    /**
-     * Constructs a newly allocated NTP timestamp object
-     * that represents the value represented by the string
-     * in hexdecimal form (e.g. "c1a089bd.fc904f6d").
-     * @param hexStamp the hex timestamp
-     *
-     * @throws NumberFormatException - if the string does not contain a parsable timestamp.
-     */
-    public TimeStamp(final String hexStamp) throws NumberFormatException
-    {
-        ntpTime = decodeNtpHexString(hexStamp);
-    }
-
-    /**
-     * Constructs a newly allocated NTP timestamp object
-     * that represents the Java Date argument.
-     *
-     * @param d - the Date to be represented by the Timestamp object.
-     */
-    public TimeStamp(final Date d)
-    {
-        ntpTime = d == null ? 0 : toNtpTime(d.getTime());
-    }
-
-    /**
-     * Returns the value of this Timestamp as a long value.
-     *
-     * @return the 64-bit long value represented by this object.
-     */
-    public long ntpValue()
-    {
-        return ntpTime;
-    }
-
-    /**
-     * Returns high-order 32-bits representing the seconds of this NTP timestamp.
-     *
-     * @return seconds represented by this NTP timestamp.
-     */
-    public long getSeconds()
-    {
-        return (ntpTime >>> 32) & 0xffffffffL;
-    }
-
-    /**
-     * Returns low-order 32-bits representing the fractional seconds.
-     *
-     * @return fractional seconds represented by this NTP timestamp.
-     */
-    public long getFraction()
-    {
-        return ntpTime & 0xffffffffL;
-    }
-
-    /**
-     * Converts NTP timestamp to Java standard time.
-     *
-     * @return the number of milliseconds since January 1, 1970, 00:00:00 GMT
-     * represented by this NTP timestamp value.
-     */
-    public long getTime()
-    {
-        return getTime(ntpTime);
-    }
-
-    /**
-     * Converts NTP timestamp to Java Date object.
-     *
-     * @return NTP Timestamp in Java Date
-     */
-    public Date getDate()
-    {
-        return new Date(getTime(ntpTime));
+        return new TimeStamp(toNtpTime(dateMillis));
     }
 
     /**
@@ -206,59 +178,6 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
         }
         // use base: 1-Jan-1900 @ 01:00:00 UTC
         return msb1baseTime + (seconds * 1000) + fraction;
-    }
-
-    /**
-     * Helper method to convert Java time to NTP timestamp object.
-     * Note that Java time (milliseconds) by definition has less precision
-     * then NTP time (picoseconds) so converting Ntptime to Javatime and back
-     * to Ntptime loses precision. For example, Tue, Dec 17 2002 09:07:24.810
-     * is represented by a single Java-based time value of f22cd1fc8a, but its
-     * NTP equivalent are all values from c1a9ae1c.cf5c28f5 to c1a9ae1c.cf9db22c.
-     * @param   dateMillis   the milliseconds since January 1, 1970, 00:00:00 GMT.
-     * @return NTP timestamp object at the specified date.
-     */
-    public static TimeStamp getNtpTime(final long dateMillis)
-    {
-        return new TimeStamp(toNtpTime(dateMillis));
-    }
-
-    /**
-     * Constructs a NTP timestamp object and initializes it so that
-     * it represents the time at which it was allocated, measured to the
-     * nearest millisecond.
-     * @return NTP timestamp object set to the current time.
-     * @see     java.lang.System#currentTimeMillis()
-     */
-    public static TimeStamp getCurrentTime()
-    {
-        return getNtpTime(System.currentTimeMillis());
-    }
-
-    /**
-     * Convert NTP timestamp hexstring (e.g. "c1a089bd.fc904f6d") to the NTP
-     * 64-bit unsigned fixed-point number.
-     * @param hexString the string to convert
-     *
-     * @return NTP 64-bit timestamp value.
-     * @throws NumberFormatException - if the string does not contain a parsable timestamp.
-     */
-    protected static long decodeNtpHexString(final String hexString)
-            throws NumberFormatException
-    {
-        if (hexString == null) {
-            throw new NumberFormatException("null");
-        }
-        final int ind = hexString.indexOf('.');
-        if (ind == -1) {
-            if (hexString.isEmpty()) {
-                return 0;
-            }
-            return Long.parseLong(hexString, 16) << 32; // no decimal
-        }
-
-        return Long.parseLong(hexString.substring(0, ind), 16) << 32 |
-                Long.parseLong(hexString.substring(ind + 1), 16);
     }
 
     /**
@@ -303,72 +222,6 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
     }
 
     /**
-     * Computes a hashcode for this Timestamp. The result is the exclusive
-     * OR of the two halves of the primitive <code>long</code> value
-     * represented by this <code>TimeStamp</code> object. That is, the hashcode
-     * is the value of the expression:
-     * <blockquote><pre>
-     * {@code (int)(this.ntpValue()^(this.ntpValue() >>> 32))}
-     * </pre></blockquote>
-     *
-     * @return  a hash code value for this object.
-     */
-    @Override
-    public int hashCode()
-    {
-        return (int) (ntpTime ^ (ntpTime >>> 32));
-    }
-
-    /**
-     * Compares this object against the specified object.
-     * The result is <code>true</code> if and only if the argument is
-     * not <code>null</code> and is a <code>Long</code> object that
-     * contains the same <code>long</code> value as this object.
-     *
-     * @param   obj   the object to compare with.
-     * @return  <code>true</code> if the objects are the same;
-     *          <code>false</code> otherwise.
-     */
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (obj instanceof TimeStamp) {
-            return ntpTime == ((TimeStamp) obj).ntpValue();
-        }
-        return false;
-    }
-
-    /**
-     * Converts this <code>TimeStamp</code> object to a <code>String</code>.
-     * The NTP timestamp 64-bit long value is represented as hex string with
-     * seconds separated by fractional seconds by a decimal point;
-     * e.g. c1a089bd.fc904f6d == Tue, Dec 10 2002 10:41:49.986
-     *
-     * @return NTP timestamp 64-bit long value as hex string with seconds
-     * separated by fractional seconds.
-     */
-    @Override
-    public String toString()
-    {
-        return toString(ntpTime);
-    }
-
-    /**
-     * Left-pad 8-character hex string with 0's
-     *
-     * @param buf - StringBuilder which is appended with leading 0's.
-     * @param l - a long.
-     */
-    private static void appendHexString(final StringBuilder buf, final long l)
-    {
-        final String s = Long.toHexString(l);
-        for (int i = s.length(); i < 8; i++) {
-            buf.append('0');
-        }
-        buf.append(s);
-    }
-
-    /**
      * Converts 64-bit NTP timestamp value to a <code>String</code>.
      * The NTP timestamp value is represented as hex string with
      * seconds separated by fractional seconds by a decimal point;
@@ -392,6 +245,157 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
     }
 
     /**
+     * NTP timestamp value: 64-bit unsigned fixed-point number as defined in RFC-1305
+     * with high-order 32 bits the seconds field and the low-order 32-bits the
+     * fractional field.
+     */
+    private final long ntpTime;
+
+    private DateFormat simpleFormatter;
+
+    private DateFormat utcFormatter;
+
+    /**
+     * Constructs a newly allocated NTP timestamp object
+     * that represents the Java Date argument.
+     *
+     * @param d - the Date to be represented by the Timestamp object.
+     */
+    public TimeStamp(final Date d)
+    {
+        ntpTime = d == null ? 0 : toNtpTime(d.getTime());
+    }
+
+    /**
+     * Constructs a newly allocated NTP timestamp object
+     * that represents the native 64-bit long argument.
+     * @param ntpTime the timestamp
+     */
+    public TimeStamp(final long ntpTime)
+    {
+        this.ntpTime = ntpTime;
+    }
+
+    /**
+     * Constructs a newly allocated NTP timestamp object
+     * that represents the value represented by the string
+     * in hexdecimal form (e.g. "c1a089bd.fc904f6d").
+     * @param hexStamp the hex timestamp
+     *
+     * @throws NumberFormatException - if the string does not contain a parsable timestamp.
+     */
+    public TimeStamp(final String hexStamp) throws NumberFormatException
+    {
+        ntpTime = decodeNtpHexString(hexStamp);
+    }
+
+    /**
+     * Compares two Timestamps numerically.
+     *
+     * @param   anotherTimeStamp - the <code>TimeStamp</code> to be compared.
+     * @return  the value <code>0</code> if the argument TimeStamp is equal to
+     *          this TimeStamp; a value less than <code>0</code> if this TimeStamp
+     *          is numerically less than the TimeStamp argument; and a
+     *          value greater than <code>0</code> if this TimeStamp is
+     *          numerically greater than the TimeStamp argument
+     *          (signed comparison).
+     */
+    @Override
+    public int compareTo(final TimeStamp anotherTimeStamp)
+    {
+        final long thisVal = this.ntpTime;
+        final long anotherVal = anotherTimeStamp.ntpTime;
+        return (thisVal < anotherVal ? -1 : (thisVal == anotherVal ? 0 : 1));
+    }
+
+    /**
+     * Compares this object against the specified object.
+     * The result is <code>true</code> if and only if the argument is
+     * not <code>null</code> and is a <code>Long</code> object that
+     * contains the same <code>long</code> value as this object.
+     *
+     * @param   obj   the object to compare with.
+     * @return  <code>true</code> if the objects are the same;
+     *          <code>false</code> otherwise.
+     */
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (obj instanceof TimeStamp) {
+            return ntpTime == ((TimeStamp) obj).ntpValue();
+        }
+        return false;
+    }
+
+    /**
+     * Converts NTP timestamp to Java Date object.
+     *
+     * @return NTP Timestamp in Java Date
+     */
+    public Date getDate()
+    {
+        return new Date(getTime(ntpTime));
+    }
+
+    /**
+     * Returns low-order 32-bits representing the fractional seconds.
+     *
+     * @return fractional seconds represented by this NTP timestamp.
+     */
+    public long getFraction()
+    {
+        return ntpTime & 0xffffffffL;
+    }
+
+    /**
+     * Returns high-order 32-bits representing the seconds of this NTP timestamp.
+     *
+     * @return seconds represented by this NTP timestamp.
+     */
+    public long getSeconds()
+    {
+        return (ntpTime >>> 32) & 0xffffffffL;
+    }
+
+    /**
+     * Converts NTP timestamp to Java standard time.
+     *
+     * @return the number of milliseconds since January 1, 1970, 00:00:00 GMT
+     * represented by this NTP timestamp value.
+     */
+    public long getTime()
+    {
+        return getTime(ntpTime);
+    }
+
+    /**
+     * Computes a hashcode for this Timestamp. The result is the exclusive
+     * OR of the two halves of the primitive <code>long</code> value
+     * represented by this <code>TimeStamp</code> object. That is, the hashcode
+     * is the value of the expression:
+     * <blockquote><pre>
+     * {@code (int)(this.ntpValue()^(this.ntpValue() >>> 32))}
+     * </pre></blockquote>
+     *
+     * @return  a hash code value for this object.
+     */
+    @Override
+    public int hashCode()
+    {
+        return (int) (ntpTime ^ (ntpTime >>> 32));
+    }
+
+    /**
+     * Returns the value of this Timestamp as a long value.
+     *
+     * @return the 64-bit long value represented by this object.
+     */
+    public long ntpValue()
+    {
+        return ntpTime;
+    }
+
+    /**
      * Converts this <code>TimeStamp</code> object to a <code>String</code>
      * of the form:
      * <blockquote><pre>
@@ -408,6 +412,21 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
         }
         final Date ntpDate = getDate();
         return simpleFormatter.format(ntpDate);
+    }
+
+    /**
+     * Converts this <code>TimeStamp</code> object to a <code>String</code>.
+     * The NTP timestamp 64-bit long value is represented as hex string with
+     * seconds separated by fractional seconds by a decimal point;
+     * e.g. c1a089bd.fc904f6d == Tue, Dec 10 2002 10:41:49.986
+     *
+     * @return NTP timestamp 64-bit long value as hex string with seconds
+     * separated by fractional seconds.
+     */
+    @Override
+    public String toString()
+    {
+        return toString(ntpTime);
     }
 
     /**
@@ -428,25 +447,6 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
         }
         final Date ntpDate = getDate();
         return utcFormatter.format(ntpDate);
-    }
-
-    /**
-     * Compares two Timestamps numerically.
-     *
-     * @param   anotherTimeStamp - the <code>TimeStamp</code> to be compared.
-     * @return  the value <code>0</code> if the argument TimeStamp is equal to
-     *          this TimeStamp; a value less than <code>0</code> if this TimeStamp
-     *          is numerically less than the TimeStamp argument; and a
-     *          value greater than <code>0</code> if this TimeStamp is
-     *          numerically greater than the TimeStamp argument
-     *          (signed comparison).
-     */
-    @Override
-    public int compareTo(final TimeStamp anotherTimeStamp)
-    {
-        final long thisVal = this.ntpTime;
-        final long anotherVal = anotherTimeStamp.ntpTime;
-        return (thisVal < anotherVal ? -1 : (thisVal == anotherVal ? 0 : 1));
     }
 
 }

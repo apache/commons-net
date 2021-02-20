@@ -79,175 +79,6 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         "12-03-96  06:38AM       <DIR>          123xyz";
 
 
-    /**
-     * @see junit.framework.TestCase#TestCase(String)
-     */
-    public NTFTPEntryParserTest (final String name)
-    {
-        super(name);
-    }
-
-    /**
-     * @see org.apache.commons.net.ftp.parser.CompositeFTPParseTestFramework#getGoodListings()
-     */
-    @Override
-    protected String[][] getGoodListings()
-    {
-        return goodsamples;
-    }
-
-    /**
-     * @see org.apache.commons.net.ftp.parser.CompositeFTPParseTestFramework#getBadListings()
-     */
-    @Override
-    protected String[][] getBadListings()
-    {
-        return badsamples;
-    }
-
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
-     */
-    @Override
-    protected FTPFileEntryParser getParser()
-    {
-       return new CompositeFileEntryParser(new FTPFileEntryParser[]
-        {
-            new NTFTPEntryParser(),
-            new UnixFTPEntryParser()
-
-        });
-    }
-
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
-     */
-    @Override
-    public void testParseFieldsOnDirectory() throws Exception
-    {
-        FTPFile dir = getParser().parseFTPEntry("12-05-96  05:03PM       <DIR>          absoft2");
-        assertNotNull("Could not parse entry.", dir);
-        assertEquals("Thu Dec 05 17:03:00 1996",
-                     df.format(dir.getTimestamp().getTime()));
-        assertTrue("Should have been a directory.",
-                   dir.isDirectory());
-        assertEquals("absoft2", dir.getName());
-        assertEquals(0, dir.getSize());
-
-        dir = getParser().parseFTPEntry("12-03-96  06:38AM       <DIR>          123456");
-        assertNotNull("Could not parse entry.", dir);
-        assertTrue("Should have been a directory.",
-                dir.isDirectory());
-        assertEquals("123456", dir.getName());
-        assertEquals(0, dir.getSize());
-
-    }
-
-    public void testParseLeadingDigits() {
-            final FTPFile file = getParser().parseFTPEntry("05-22-97  12:08AM                  5000000000 10 years and under");
-            assertNotNull("Could not parse entry", file);
-            assertEquals("10 years and under", file.getName());
-            assertEquals(5000000000L, file.getSize());
-            Calendar timestamp = file.getTimestamp();
-            assertNotNull("Could not parse time",timestamp);
-            assertEquals("Thu May 22 00:08:00 1997",df.format(timestamp.getTime()));
-
-            final FTPFile dir = getParser().parseFTPEntry("12-03-96  06:38PM       <DIR>           10 years and under");
-            assertNotNull("Could not parse entry", dir);
-            assertEquals("10 years and under", dir.getName());
-            timestamp = dir.getTimestamp();
-            assertNotNull("Could not parse time",timestamp);
-            assertEquals("Tue Dec 03 18:38:00 1996",df.format(timestamp.getTime()));
-    }
-
-    public void testNET339() {
-        final FTPFile file = getParser().parseFTPEntry("05-22-97  12:08                  5000000000 10 years and under");
-        assertNotNull("Could not parse entry", file);
-        assertEquals("10 years and under", file.getName());
-        assertEquals(5000000000L, file.getSize());
-        Calendar timestamp = file.getTimestamp();
-        assertNotNull("Could not parse time",timestamp);
-        assertEquals("Thu May 22 12:08:00 1997",df.format(timestamp.getTime()));
-
-        final FTPFile dir = getParser().parseFTPEntry("12-03-96  06:38       <DIR>           10 years and under");
-        assertNotNull("Could not parse entry", dir);
-        assertEquals("10 years and under", dir.getName());
-        timestamp = dir.getTimestamp();
-        assertNotNull("Could not parse time",timestamp);
-        assertEquals("Tue Dec 03 06:38:00 1996",df.format(timestamp.getTime()));
-}
-
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
-     */
-    @Override
-    public void testParseFieldsOnFile() throws Exception
-    {
-        FTPFile f = getParser().parseFTPEntry("05-22-97  12:08AM                  5000000000 AUTOEXEC.BAK");
-        assertNotNull("Could not parse entry.", f);
-        assertEquals("Thu May 22 00:08:00 1997",
-                     df.format(f.getTimestamp().getTime()));
-        assertTrue("Should have been a file.",
-                   f.isFile());
-        assertEquals("AUTOEXEC.BAK", f.getName());
-        assertEquals(5000000000L, f.getSize());
-
-        // test an NT-unix style listing that does NOT have a leading zero
-        // on the hour.
-
-        f = getParser().parseFTPEntry(
-                "-rw-rw-r--   1 mqm        mqm          17707 Mar 12  3:33 killmq.sh.log");
-        assertNotNull("Could not parse entry.", f);
-        final Calendar cal = Calendar.getInstance();
-        cal.setTime(f.getTimestamp().getTime());
-        assertEquals("hour", 3, cal.get(Calendar.HOUR));
-        assertTrue("Should have been a file.",
-                f.isFile());
-        assertEquals(17707, f.getSize());
-    }
-
-
-    @Override
-    protected void doAdditionalGoodTests(final String test, final FTPFile f)
-    {
-        if (test.indexOf("<DIR>") >= 0)
-        {
-                    assertEquals("directory.type",
-                            FTPFile.DIRECTORY_TYPE, f.getType());
-        }
-    }
-
-    /*
-     * test condition reported as bug 20259 - now NET-106.
-     * directory with name beginning with a numeric character
-     * was not parsing correctly
-     */
-    public void testDirectoryBeginningWithNumber()
-    {
-        final FTPFile f = getParser().parseFTPEntry(directoryBeginningWithNumber);
-        assertEquals("name", "123xyz", f.getName());
-    }
-
-    public void testDirectoryBeginningWithNumberFollowedBySpaces()
-    {
-        FTPFile f = getParser().parseFTPEntry("12-03-96  06:38AM       <DIR>          123 xyz");
-        assertEquals("name", "123 xyz", f.getName());
-        f = getParser().parseFTPEntry("12-03-96  06:38AM       <DIR>          123 abc xyz");
-        assertNotNull(f);
-        assertEquals("name", "123 abc xyz", f.getName());
-    }
-
-    /*
-     * Test that group names with embedded spaces can be handled correctly
-     *
-     */
-    public void testGroupNameWithSpaces() {
-        final FTPFile f = getParser().parseFTPEntry("drwx------ 4 maxm Domain Users 512 Oct 2 10:59 .metadata");
-        assertNotNull(f);
-        assertEquals("maxm", f.getUser());
-        assertEquals("Domain Users", f.getGroup());
-    }
-
     // byte -123 when read using ISO-8859-1 encoding becomes 0X85 line terminator
     private static final byte[] listFilesByteTrace = {
         48, 57, 45, 48, 52, 45, 49, 51, 32, 32, 48, 53, 58, 53, 49, 80, 77,
@@ -321,13 +152,110 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
 
     private static final int LISTFILE_COUNT = 16;
 
-    private int testNET516(final String charset) throws Exception {
-        final FTPFileEntryParser parser = new NTFTPEntryParser();
-        final FTPListParseEngine engine = new FTPListParseEngine(parser );
-        engine.readServerList(new ByteArrayInputStream(listFilesByteTrace),charset);
-        final FTPFile[] ftpfiles = engine.getFiles();
-        return ftpfiles.length;
+    /**
+     * @see junit.framework.TestCase#TestCase(String)
+     */
+    public NTFTPEntryParserTest (final String name)
+    {
+        super(name);
     }
+
+    @Override
+    protected void doAdditionalGoodTests(final String test, final FTPFile f)
+    {
+        if (test.indexOf("<DIR>") >= 0)
+        {
+                    assertEquals("directory.type",
+                            FTPFile.DIRECTORY_TYPE, f.getType());
+        }
+    }
+
+    /**
+     * @see org.apache.commons.net.ftp.parser.CompositeFTPParseTestFramework#getBadListings()
+     */
+    @Override
+    protected String[][] getBadListings()
+    {
+        return badsamples;
+    }
+
+    /**
+     * @see org.apache.commons.net.ftp.parser.CompositeFTPParseTestFramework#getGoodListings()
+     */
+    @Override
+    protected String[][] getGoodListings()
+    {
+        return goodsamples;
+    }
+
+    /**
+     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
+     */
+    @Override
+    protected FTPFileEntryParser getParser()
+    {
+       return new CompositeFileEntryParser(new FTPFileEntryParser[]
+        {
+            new NTFTPEntryParser(),
+            new UnixFTPEntryParser()
+
+        });
+    }
+
+    @Override
+    public void testDefaultPrecision() {
+        testPrecision("05-26-1995  10:57AM               143712 $LDR$", CalendarUnit.MINUTE);
+        testPrecision("05-22-97  08:08                    828 AUTOEXEC.BAK", CalendarUnit.MINUTE);
+    }
+
+
+    /*
+     * test condition reported as bug 20259 - now NET-106.
+     * directory with name beginning with a numeric character
+     * was not parsing correctly
+     */
+    public void testDirectoryBeginningWithNumber()
+    {
+        final FTPFile f = getParser().parseFTPEntry(directoryBeginningWithNumber);
+        assertEquals("name", "123xyz", f.getName());
+    }
+
+    public void testDirectoryBeginningWithNumberFollowedBySpaces()
+    {
+        FTPFile f = getParser().parseFTPEntry("12-03-96  06:38AM       <DIR>          123 xyz");
+        assertEquals("name", "123 xyz", f.getName());
+        f = getParser().parseFTPEntry("12-03-96  06:38AM       <DIR>          123 abc xyz");
+        assertNotNull(f);
+        assertEquals("name", "123 abc xyz", f.getName());
+    }
+
+    /*
+     * Test that group names with embedded spaces can be handled correctly
+     *
+     */
+    public void testGroupNameWithSpaces() {
+        final FTPFile f = getParser().parseFTPEntry("drwx------ 4 maxm Domain Users 512 Oct 2 10:59 .metadata");
+        assertNotNull(f);
+        assertEquals("maxm", f.getUser());
+        assertEquals("Domain Users", f.getGroup());
+    }
+
+    public void testNET339() {
+        final FTPFile file = getParser().parseFTPEntry("05-22-97  12:08                  5000000000 10 years and under");
+        assertNotNull("Could not parse entry", file);
+        assertEquals("10 years and under", file.getName());
+        assertEquals(5000000000L, file.getSize());
+        Calendar timestamp = file.getTimestamp();
+        assertNotNull("Could not parse time",timestamp);
+        assertEquals("Thu May 22 12:08:00 1997",df.format(timestamp.getTime()));
+
+        final FTPFile dir = getParser().parseFTPEntry("12-03-96  06:38       <DIR>           10 years and under");
+        assertNotNull("Could not parse entry", dir);
+        assertEquals("10 years and under", dir.getName());
+        timestamp = dir.getTimestamp();
+        assertNotNull("Could not parse time",timestamp);
+        assertEquals("Tue Dec 03 06:38:00 1996",df.format(timestamp.getTime()));
+}
 
     public void testNET516() throws Exception { // problem where part of a multi-byte char gets converted to 0x85 = line term
         final int utf = testNET516("UTF-8");
@@ -338,10 +266,82 @@ public class NTFTPEntryParserTest extends CompositeFTPParseTestFramework
         assertEquals(LISTFILE_COUNT, iso8859_1);
     }
 
+    private int testNET516(final String charset) throws Exception {
+        final FTPFileEntryParser parser = new NTFTPEntryParser();
+        final FTPListParseEngine engine = new FTPListParseEngine(parser );
+        engine.readServerList(new ByteArrayInputStream(listFilesByteTrace),charset);
+        final FTPFile[] ftpfiles = engine.getFiles();
+        return ftpfiles.length;
+    }
+
+    /**
+     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
+     */
     @Override
-    public void testDefaultPrecision() {
-        testPrecision("05-26-1995  10:57AM               143712 $LDR$", CalendarUnit.MINUTE);
-        testPrecision("05-22-97  08:08                    828 AUTOEXEC.BAK", CalendarUnit.MINUTE);
+    public void testParseFieldsOnDirectory() throws Exception
+    {
+        FTPFile dir = getParser().parseFTPEntry("12-05-96  05:03PM       <DIR>          absoft2");
+        assertNotNull("Could not parse entry.", dir);
+        assertEquals("Thu Dec 05 17:03:00 1996",
+                     df.format(dir.getTimestamp().getTime()));
+        assertTrue("Should have been a directory.",
+                   dir.isDirectory());
+        assertEquals("absoft2", dir.getName());
+        assertEquals(0, dir.getSize());
+
+        dir = getParser().parseFTPEntry("12-03-96  06:38AM       <DIR>          123456");
+        assertNotNull("Could not parse entry.", dir);
+        assertTrue("Should have been a directory.",
+                dir.isDirectory());
+        assertEquals("123456", dir.getName());
+        assertEquals(0, dir.getSize());
+
+    }
+
+    /**
+     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnFile()
+     */
+    @Override
+    public void testParseFieldsOnFile() throws Exception
+    {
+        FTPFile f = getParser().parseFTPEntry("05-22-97  12:08AM                  5000000000 AUTOEXEC.BAK");
+        assertNotNull("Could not parse entry.", f);
+        assertEquals("Thu May 22 00:08:00 1997",
+                     df.format(f.getTimestamp().getTime()));
+        assertTrue("Should have been a file.",
+                   f.isFile());
+        assertEquals("AUTOEXEC.BAK", f.getName());
+        assertEquals(5000000000L, f.getSize());
+
+        // test an NT-unix style listing that does NOT have a leading zero
+        // on the hour.
+
+        f = getParser().parseFTPEntry(
+                "-rw-rw-r--   1 mqm        mqm          17707 Mar 12  3:33 killmq.sh.log");
+        assertNotNull("Could not parse entry.", f);
+        final Calendar cal = Calendar.getInstance();
+        cal.setTime(f.getTimestamp().getTime());
+        assertEquals("hour", 3, cal.get(Calendar.HOUR));
+        assertTrue("Should have been a file.",
+                f.isFile());
+        assertEquals(17707, f.getSize());
+    }
+
+    public void testParseLeadingDigits() {
+            final FTPFile file = getParser().parseFTPEntry("05-22-97  12:08AM                  5000000000 10 years and under");
+            assertNotNull("Could not parse entry", file);
+            assertEquals("10 years and under", file.getName());
+            assertEquals(5000000000L, file.getSize());
+            Calendar timestamp = file.getTimestamp();
+            assertNotNull("Could not parse time",timestamp);
+            assertEquals("Thu May 22 00:08:00 1997",df.format(timestamp.getTime()));
+
+            final FTPFile dir = getParser().parseFTPEntry("12-03-96  06:38PM       <DIR>           10 years and under");
+            assertNotNull("Could not parse entry", dir);
+            assertEquals("10 years and under", dir.getName());
+            timestamp = dir.getTimestamp();
+            assertNotNull("Could not parse time",timestamp);
+            assertEquals("Tue Dec 03 18:38:00 1996",df.format(timestamp.getTime()));
     }
 
     @Override

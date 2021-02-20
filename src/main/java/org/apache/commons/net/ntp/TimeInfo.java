@@ -56,19 +56,6 @@ public class TimeInfo {
 
     /**
      * Create TimeInfo object with raw packet message and destination time received.
-     *
-     * @param message NTP message packet
-     * @param returnTimeMillis  destination receive time
-     * @param comments List of errors/warnings identified during processing
-     * @throws IllegalArgumentException if message is null
-     */
-    public TimeInfo(final NtpV3Packet message, final long returnTimeMillis, final List<String> comments)
-    {
-            this(message, returnTimeMillis, comments, true);
-    }
-
-    /**
-     * Create TimeInfo object with raw packet message and destination time received.
      * Auto-computes details if computeDetails flag set otherwise this is delayed
      * until computeDetails() is called. Delayed computation is for fast
      * intialization when sub-millisecond timing is needed.
@@ -81,6 +68,19 @@ public class TimeInfo {
     public TimeInfo(final NtpV3Packet msgPacket, final long returnTimeMillis, final boolean doComputeDetails)
     {
             this(msgPacket, returnTimeMillis, null, doComputeDetails);
+    }
+
+    /**
+     * Create TimeInfo object with raw packet message and destination time received.
+     *
+     * @param message NTP message packet
+     * @param returnTimeMillis  destination receive time
+     * @param comments List of errors/warnings identified during processing
+     * @throws IllegalArgumentException if message is null
+     */
+    public TimeInfo(final NtpV3Packet message, final long returnTimeMillis, final List<String> comments)
+    {
+            this(message, returnTimeMillis, comments, true);
     }
 
     /**
@@ -243,67 +243,6 @@ public class TimeInfo {
     }
 
     /**
-     * Return list of comments (if any) during processing of NTP packet.
-     *
-     * @return List or null if not yet computed
-     */
-    public List<String> getComments()
-    {
-        return comments;
-    }
-
-    /**
-     * Get round-trip network delay. If null then could not compute the delay.
-     *
-     * @return Long or null if delay not available.
-     */
-    public Long getDelay()
-    {
-        return delayMillis;
-    }
-
-    /**
-     * Get clock offset needed to adjust local clock to match remote clock. If null then could not
-     * compute the offset.
-     *
-     * @return Long or null if offset not available.
-     */
-    public Long getOffset()
-    {
-        return offsetMillis;
-    }
-
-    /**
-     * Returns NTP message packet.
-     *
-     * @return NTP message packet.
-     */
-    public NtpV3Packet getMessage()
-    {
-        return message;
-    }
-
-    /**
-     * Get host address from message datagram if available
-     * @return host address of available otherwise null
-     * @since 3.4
-     */
-    public InetAddress getAddress() {
-        final DatagramPacket pkt = message.getDatagramPacket();
-        return pkt == null ? null : pkt.getAddress();
-    }
-
-    /**
-     * Returns time at which time message packet was received by local machine.
-     *
-     * @return packet return time.
-     */
-    public long getReturnTime()
-    {
-        return returnTimeMillis;
-    }
-
-    /**
      * Compares this object against the specified object.
      * The result is <code>true</code> if and only if the argument is
      * not <code>null</code> and is a <code>TimeStamp</code> object that
@@ -325,6 +264,67 @@ public class TimeInfo {
         }
         final TimeInfo other = (TimeInfo) obj;
         return returnTimeMillis == other.returnTimeMillis && message.equals(other.message);
+    }
+
+    /**
+     * Get host address from message datagram if available
+     * @return host address of available otherwise null
+     * @since 3.4
+     */
+    public InetAddress getAddress() {
+        final DatagramPacket pkt = message.getDatagramPacket();
+        return pkt == null ? null : pkt.getAddress();
+    }
+
+    /**
+     * Return list of comments (if any) during processing of NTP packet.
+     *
+     * @return List or null if not yet computed
+     */
+    public List<String> getComments()
+    {
+        return comments;
+    }
+
+    /**
+     * Get round-trip network delay. If null then could not compute the delay.
+     *
+     * @return Long or null if delay not available.
+     */
+    public Long getDelay()
+    {
+        return delayMillis;
+    }
+
+    /**
+     * Returns NTP message packet.
+     *
+     * @return NTP message packet.
+     */
+    public NtpV3Packet getMessage()
+    {
+        return message;
+    }
+
+    /**
+     * Get clock offset needed to adjust local clock to match remote clock. If null then could not
+     * compute the offset.
+     *
+     * @return Long or null if offset not available.
+     */
+    public Long getOffset()
+    {
+        return offsetMillis;
+    }
+
+    /**
+     * Returns time at which time message packet was received by local machine.
+     *
+     * @return packet return time.
+     */
+    public long getReturnTime()
+    {
+        return returnTimeMillis;
     }
 
     /**

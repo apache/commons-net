@@ -54,6 +54,21 @@ public class SocketOutputStream extends FilterOutputStream
 
 
     /**
+     * Closes the stream and immediately afterward closes the referenced
+     * socket.
+     *
+     * @throws IOException  If there is an error in closing the stream
+     *                         or socket.
+     */
+    @Override
+    public void close() throws IOException
+    {
+        super.close();
+        socket.close();
+    }
+
+
+    /**
      * Writes a number of bytes from a byte array to the stream starting from
      * a given offset.  This method bypasses the equivalent method in
      * FilterOutputStream because the FilterOutputStream implementation is
@@ -69,20 +84,5 @@ public class SocketOutputStream extends FilterOutputStream
     public void write(final byte buffer[], final int offset, final int length) throws IOException
     {
         out.write(buffer, offset, length);
-    }
-
-
-    /**
-     * Closes the stream and immediately afterward closes the referenced
-     * socket.
-     *
-     * @throws IOException  If there is an error in closing the stream
-     *                         or socket.
-     */
-    @Override
-    public void close() throws IOException
-    {
-        super.close();
-        socket.close();
     }
 }

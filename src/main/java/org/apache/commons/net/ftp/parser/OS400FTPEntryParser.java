@@ -278,6 +278,34 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     }
 
 
+    /**
+     * Defines a default configuration to be used when this class is
+     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
+     * parameter being specified.
+     * @return the default configuration for this parser.
+     */
+    @Override
+    protected FTPClientConfig getDefaultConfiguration() {
+        return new FTPClientConfig(
+                FTPClientConfig.SYST_OS400,
+                DEFAULT_DATE_FORMAT,
+                null);
+    }
+
+    /**
+     *
+     * @param string String value that is checked for <code>null</code>
+     * or empty.
+     * @return <code>true</code> for <code>null</code> or empty values,
+     * else <code>false</code>.
+     */
+    private boolean isNullOrEmpty(final String string) {
+        if (string == null || string.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public FTPFile parseFTPEntry(final String entry)
     {
@@ -402,34 +430,6 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             return file;
         }
         return null;
-    }
-
-    /**
-     *
-     * @param string String value that is checked for <code>null</code>
-     * or empty.
-     * @return <code>true</code> for <code>null</code> or empty values,
-     * else <code>false</code>.
-     */
-    private boolean isNullOrEmpty(final String string) {
-        if (string == null || string.isEmpty()) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Defines a default configuration to be used when this class is
-     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
-     * parameter being specified.
-     * @return the default configuration for this parser.
-     */
-    @Override
-    protected FTPClientConfig getDefaultConfiguration() {
-        return new FTPClientConfig(
-                FTPClientConfig.SYST_OS400,
-                DEFAULT_DATE_FORMAT,
-                null);
     }
 
 }

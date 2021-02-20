@@ -88,12 +88,109 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
 /* 7 */  {FTPFile.READ_PERMISSION, FTPFile.WRITE_PERMISSION, FTPFile.EXECUTE_PERMISSION},
     };
 
+    public static  MLSxEntryParser getInstance() {
+        return INSTANCE;
+    }
+
+    public static FTPFile parseEntry(final String entry) {
+        return INSTANCE.parseFTPEntry(entry);
+    }
+
+    /**
+     * Parse a GMT time stamp of the form YYYYMMDDHHMMSS[.sss]
+     *
+     * @param timestamp the date-time to parse
+     * @return a Calendar entry, may be {@code null}
+     * @since 3.4
+     */
+    public static Calendar parseGMTdateTime(final String timestamp) {
+        final SimpleDateFormat dateFormat;
+        final boolean hasMillis;
+        if (timestamp.contains(".")){
+            dateFormat = new SimpleDateFormat("yyyyMMddHHmmss.SSS");
+            hasMillis = true;
+        } else {
+            dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+            hasMillis = false;
+        }
+        final TimeZone gmtTimeZone = TimeZone.getTimeZone("GMT");
+        // both time zones need to be set for the parse to work OK
+        dateFormat.setTimeZone(gmtTimeZone);
+        final GregorianCalendar gCalendar = new GregorianCalendar(gmtTimeZone);
+        final ParsePosition pos = new ParsePosition(0);
+        dateFormat.setLenient(false); // We want to parse the whole string
+        final Date parsed = dateFormat.parse(timestamp, pos);
+        if (pos.getIndex()  != timestamp.length()) {
+            return null; // did not fully parse the input
+        }
+        gCalendar.setTime(parsed);
+        if (!hasMillis) {
+            gCalendar.clear(Calendar.MILLISECOND); // flag up missing ms units
+        }
+        return gCalendar;
+    }
+
+    /**
+     * Parse a GMT time stamp of the form YYYYMMDDHHMMSS[.sss]
+     *
+     * @param timestamp the date-time to parse
+     * @return a Calendar entry, may be {@code null}
+     * @since 3.9.0
+     */
+    public static Instant parseGmtInstant(final String timestamp) {
+        return parseGMTdateTime(timestamp).toInstant();
+    }
+
     /**
      * Create the parser for MSLT and MSLD listing entries
      * This class is immutable, so one can use {@link #getInstance()} instead.
      */
     public MLSxEntryParser()
     {
+    }
+
+    //              perm-fact    = "Perm" "=" *pvals
+    //              pvals        = "a" / "c" / "d" / "e" / "f" /
+    //                             "l" / "m" / "p" / "r" / "w"
+    private void doUnixPerms(final FTPFile file, final String valueLowerCase) {
+        for(final char c : valueLowerCase.toCharArray()) {
+            // TODO these are mostly just guesses at present
+            switch (c) {
+                case 'a':     // (file) may APPEnd
+                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
+                    break;
+                case 'c':     // (dir) files may be created in the dir
+                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
+                    break;
+                case 'd':     // deletable
+                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
+                    break;
+                case 'e':     // (dir) can change to this dir
+                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION, true);
+                    break;
+                case 'f':     // (file) renamable
+                    // ?? file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
+                    break;
+                case 'l':     // (dir) can be listed
+                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION, true);
+                    break;
+                case 'm':     // (dir) can create directory here
+                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
+                    break;
+                case 'p':     // (dir) entries may be deleted
+                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
+                    break;
+                case 'r':     // (files) file may be RETRieved
+                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION, true);
+                    break;
+                case 'w':     // (files) file may be STORed
+                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
+                    break;
+                default:
+                    break;
+                    // ignore unexpected flag for now.
+            } // switch
+        } // each char
     }
 
     @Override
@@ -178,102 +275,5 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
             } // process "perm"
         } // each fact
         return file;
-    }
-
-    /**
-     * Parse a GMT time stamp of the form YYYYMMDDHHMMSS[.sss]
-     *
-     * @param timestamp the date-time to parse
-     * @return a Calendar entry, may be {@code null}
-     * @since 3.4
-     */
-    public static Calendar parseGMTdateTime(final String timestamp) {
-        final SimpleDateFormat dateFormat;
-        final boolean hasMillis;
-        if (timestamp.contains(".")){
-            dateFormat = new SimpleDateFormat("yyyyMMddHHmmss.SSS");
-            hasMillis = true;
-        } else {
-            dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-            hasMillis = false;
-        }
-        final TimeZone gmtTimeZone = TimeZone.getTimeZone("GMT");
-        // both time zones need to be set for the parse to work OK
-        dateFormat.setTimeZone(gmtTimeZone);
-        final GregorianCalendar gCalendar = new GregorianCalendar(gmtTimeZone);
-        final ParsePosition pos = new ParsePosition(0);
-        dateFormat.setLenient(false); // We want to parse the whole string
-        final Date parsed = dateFormat.parse(timestamp, pos);
-        if (pos.getIndex()  != timestamp.length()) {
-            return null; // did not fully parse the input
-        }
-        gCalendar.setTime(parsed);
-        if (!hasMillis) {
-            gCalendar.clear(Calendar.MILLISECOND); // flag up missing ms units
-        }
-        return gCalendar;
-    }
-
-    /**
-     * Parse a GMT time stamp of the form YYYYMMDDHHMMSS[.sss]
-     *
-     * @param timestamp the date-time to parse
-     * @return a Calendar entry, may be {@code null}
-     * @since 3.9.0
-     */
-    public static Instant parseGmtInstant(final String timestamp) {
-        return parseGMTdateTime(timestamp).toInstant();
-    }
-
-    //              perm-fact    = "Perm" "=" *pvals
-    //              pvals        = "a" / "c" / "d" / "e" / "f" /
-    //                             "l" / "m" / "p" / "r" / "w"
-    private void doUnixPerms(final FTPFile file, final String valueLowerCase) {
-        for(final char c : valueLowerCase.toCharArray()) {
-            // TODO these are mostly just guesses at present
-            switch (c) {
-                case 'a':     // (file) may APPEnd
-                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
-                    break;
-                case 'c':     // (dir) files may be created in the dir
-                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
-                    break;
-                case 'd':     // deletable
-                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
-                    break;
-                case 'e':     // (dir) can change to this dir
-                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION, true);
-                    break;
-                case 'f':     // (file) renamable
-                    // ?? file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
-                    break;
-                case 'l':     // (dir) can be listed
-                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION, true);
-                    break;
-                case 'm':     // (dir) can create directory here
-                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
-                    break;
-                case 'p':     // (dir) entries may be deleted
-                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
-                    break;
-                case 'r':     // (files) file may be RETRieved
-                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION, true);
-                    break;
-                case 'w':     // (files) file may be STORed
-                    file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
-                    break;
-                default:
-                    break;
-                    // ignore unexpected flag for now.
-            } // switch
-        } // each char
-    }
-
-    public static FTPFile parseEntry(final String entry) {
-        return INSTANCE.parseFTPEntry(entry);
-    }
-
-    public static  MLSxEntryParser getInstance() {
-        return INSTANCE;
     }
 }

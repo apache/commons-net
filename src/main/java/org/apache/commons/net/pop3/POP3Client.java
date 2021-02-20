@@ -131,6 +131,174 @@ public class POP3Client extends POP3
     }
 
     /**
+     * Delete a message from the POP3 server.  The message is only marked
+     * for deletion by the server.  If you decide to unmark the message, you
+     * must issuse a {@link #reset  reset } command.  Messages marked
+     * for deletion are only deleted by the server on
+     * {@link #logout  logout }.
+     * A delete attempt can only succeed if the client is in the
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * .
+     *
+     * @param messageId  The message number to delete.
+     * @return True if the deletion attempt was successful, false if not.
+     * @throws IOException If a network I/O error occurs in the process of
+     *           sending the delete command.
+     */
+    public boolean deleteMessage(final int messageId) throws IOException
+    {
+        if (getState() == TRANSACTION_STATE) {
+            return sendCommand(POP3Command.DELE, Integer.toString(messageId))
+                    == POP3Reply.OK;
+        }
+        return false;
+    }
+
+
+    /**
+     * List an individual message.  A list attempt can only
+     * succeed if the client is in the
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * .  Returns a POP3MessageInfo instance
+     * containing the number of the listed message and the
+     * size of the message in bytes.  Returns null if the list
+     * attempt fails (e.g., if the specified message number does
+     * not exist).
+     *
+     * @param messageId  The number of the message list.
+     * @return A POP3MessageInfo instance containing the number of the
+     *         listed message and the size of the message in bytes.  Returns
+     *         null if the list attempt fails.
+     * @throws IOException If a network I/O error occurs in the process of
+     *         sending the list command.
+     */
+    public POP3MessageInfo listMessage(final int messageId) throws IOException
+    {
+        if (getState() != TRANSACTION_STATE) {
+            return null;
+        }
+        if (sendCommand(POP3Command.LIST, Integer.toString(messageId))
+                != POP3Reply.OK) {
+            return null;
+        }
+        return parseStatus(lastReplyLine.substring(3));
+    }
+
+
+    /**
+     * List all messages.  A list attempt can only
+     * succeed if the client is in the
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * .  Returns an array of POP3MessageInfo instances,
+     * each containing the number of a message and its size in bytes.
+     * If there are no messages, this method returns a zero length array.
+     * If the list attempt fails, it returns null.
+     *
+     * @return An array of POP3MessageInfo instances representing all messages
+     * in the order they appear in the mailbox,
+     * each containing the number of a message and its size in bytes.
+     * If there are no messages, this method returns a zero length array.
+     * If the list attempt fails, it returns null.
+     * @throws IOException If a network I/O error occurs in the process of
+     *     sending the list command.
+     */
+    public POP3MessageInfo[] listMessages() throws IOException
+    {
+        if (getState() != TRANSACTION_STATE) {
+            return null;
+        }
+        if (sendCommand(POP3Command.LIST) != POP3Reply.OK) {
+            return null;
+        }
+        getAdditionalReply();
+
+        // This could be a zero length array if no messages present
+        final POP3MessageInfo[] messages = new POP3MessageInfo[replyLines.size() - 2]; // skip first and last lines
+
+        final ListIterator<String> en = replyLines.listIterator(1); // Skip first line
+
+        // Fetch lines.
+        for (int line = 0; line < messages.length; line++) {
+            messages[line] = parseStatus(en.next());
+        }
+
+        return messages;
+    }
+
+
+    /**
+     * List the unique identifier for a message.  A list attempt can only
+     * succeed if the client is in the
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * .  Returns a POP3MessageInfo instance
+     * containing the number of the listed message and the
+     * unique identifier for that message.  Returns null if the list
+     * attempt fails  (e.g., if the specified message number does
+     * not exist).
+     *
+     * @param messageId  The number of the message list.
+     * @return A POP3MessageInfo instance containing the number of the
+     *         listed message and the unique identifier for that message.
+     *         Returns null if the list attempt fails.
+     * @throws IOException If a network I/O error occurs in the process of
+     *        sending the list unique identifier command.
+     */
+    public POP3MessageInfo listUniqueIdentifier(final int messageId)
+    throws IOException
+    {
+        if (getState() != TRANSACTION_STATE) {
+            return null;
+        }
+        if (sendCommand(POP3Command.UIDL, Integer.toString(messageId))
+                != POP3Reply.OK) {
+            return null;
+        }
+        return parseUID(lastReplyLine.substring(3));
+    }
+
+
+    /**
+     * List the unique identifiers for all messages.  A list attempt can only
+     * succeed if the client is in the
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * .  Returns an array of POP3MessageInfo instances,
+     * each containing the number of a message and its unique identifier.
+     * If there are no messages, this method returns a zero length array.
+     * If the list attempt fails, it returns null.
+     *
+     * @return An array of POP3MessageInfo instances representing all messages
+     * in the order they appear in the mailbox,
+     * each containing the number of a message and its unique identifier
+     * If there are no messages, this method returns a zero length array.
+     * If the list attempt fails, it returns null.
+     * @throws IOException If a network I/O error occurs in the process of
+     *     sending the list unique identifier command.
+     */
+    public POP3MessageInfo[] listUniqueIdentifiers() throws IOException
+    {
+        if (getState() != TRANSACTION_STATE) {
+            return null;
+        }
+        if (sendCommand(POP3Command.UIDL) != POP3Reply.OK) {
+            return null;
+        }
+        getAdditionalReply();
+
+        // This could be a zero length array if no messages present
+        final POP3MessageInfo[] messages = new POP3MessageInfo[replyLines.size() - 2]; // skip first and last lines
+
+        final ListIterator<String> en = replyLines.listIterator(1); // skip first line
+
+        // Fetch lines.
+        for (int line = 0; line < messages.length; line++) {
+            messages[line] = parseUID(en.next());
+        }
+
+        return messages;
+    }
+
+
+    /**
      * Login to the POP3 server with the given username and password.  You
      * must first connect to the server with
      * {@link org.apache.commons.net.SocketClient#connect  connect }
@@ -165,7 +333,6 @@ public class POP3Client extends POP3
 
         return true;
     }
-
 
     /**
      * Login to the POP3 server with the given username and authentication
@@ -286,32 +453,6 @@ public class POP3Client extends POP3
         return false;
     }
 
-
-    /**
-     * Delete a message from the POP3 server.  The message is only marked
-     * for deletion by the server.  If you decide to unmark the message, you
-     * must issuse a {@link #reset  reset } command.  Messages marked
-     * for deletion are only deleted by the server on
-     * {@link #logout  logout }.
-     * A delete attempt can only succeed if the client is in the
-     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
-     * .
-     *
-     * @param messageId  The message number to delete.
-     * @return True if the deletion attempt was successful, false if not.
-     * @throws IOException If a network I/O error occurs in the process of
-     *           sending the delete command.
-     */
-    public boolean deleteMessage(final int messageId) throws IOException
-    {
-        if (getState() == TRANSACTION_STATE) {
-            return sendCommand(POP3Command.DELE, Integer.toString(messageId))
-                    == POP3Reply.OK;
-        }
-        return false;
-    }
-
-
     /**
      * Reset the POP3 session.  This is useful for undoing any message
      * deletions that may have been performed.  A reset attempt can only
@@ -329,174 +470,6 @@ public class POP3Client extends POP3
             return sendCommand(POP3Command.RSET) == POP3Reply.OK;
         }
         return false;
-    }
-
-    /**
-     * Get the mailbox status.  A status attempt can only
-     * succeed if the client is in the
-     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
-     * .  Returns a POP3MessageInfo instance
-     * containing the number of messages in the mailbox and the total
-     * size of the messages in bytes.  Returns null if the status the
-     * attempt fails.
-     *
-     * @return A POP3MessageInfo instance containing the number of
-     *         messages in the mailbox and the total size of the messages
-     *         in bytes.  Returns null if the status the attempt fails.
-     * @throws IOException If a network I/O error occurs in the process of
-     *       sending the status command.
-     */
-    public POP3MessageInfo status() throws IOException
-    {
-        if (getState() != TRANSACTION_STATE) {
-            return null;
-        }
-        if (sendCommand(POP3Command.STAT) != POP3Reply.OK) {
-            return null;
-        }
-        return parseStatus(lastReplyLine.substring(3));
-    }
-
-
-    /**
-     * List an individual message.  A list attempt can only
-     * succeed if the client is in the
-     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
-     * .  Returns a POP3MessageInfo instance
-     * containing the number of the listed message and the
-     * size of the message in bytes.  Returns null if the list
-     * attempt fails (e.g., if the specified message number does
-     * not exist).
-     *
-     * @param messageId  The number of the message list.
-     * @return A POP3MessageInfo instance containing the number of the
-     *         listed message and the size of the message in bytes.  Returns
-     *         null if the list attempt fails.
-     * @throws IOException If a network I/O error occurs in the process of
-     *         sending the list command.
-     */
-    public POP3MessageInfo listMessage(final int messageId) throws IOException
-    {
-        if (getState() != TRANSACTION_STATE) {
-            return null;
-        }
-        if (sendCommand(POP3Command.LIST, Integer.toString(messageId))
-                != POP3Reply.OK) {
-            return null;
-        }
-        return parseStatus(lastReplyLine.substring(3));
-    }
-
-
-    /**
-     * List all messages.  A list attempt can only
-     * succeed if the client is in the
-     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
-     * .  Returns an array of POP3MessageInfo instances,
-     * each containing the number of a message and its size in bytes.
-     * If there are no messages, this method returns a zero length array.
-     * If the list attempt fails, it returns null.
-     *
-     * @return An array of POP3MessageInfo instances representing all messages
-     * in the order they appear in the mailbox,
-     * each containing the number of a message and its size in bytes.
-     * If there are no messages, this method returns a zero length array.
-     * If the list attempt fails, it returns null.
-     * @throws IOException If a network I/O error occurs in the process of
-     *     sending the list command.
-     */
-    public POP3MessageInfo[] listMessages() throws IOException
-    {
-        if (getState() != TRANSACTION_STATE) {
-            return null;
-        }
-        if (sendCommand(POP3Command.LIST) != POP3Reply.OK) {
-            return null;
-        }
-        getAdditionalReply();
-
-        // This could be a zero length array if no messages present
-        final POP3MessageInfo[] messages = new POP3MessageInfo[replyLines.size() - 2]; // skip first and last lines
-
-        final ListIterator<String> en = replyLines.listIterator(1); // Skip first line
-
-        // Fetch lines.
-        for (int line = 0; line < messages.length; line++) {
-            messages[line] = parseStatus(en.next());
-        }
-
-        return messages;
-    }
-
-    /**
-     * List the unique identifier for a message.  A list attempt can only
-     * succeed if the client is in the
-     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
-     * .  Returns a POP3MessageInfo instance
-     * containing the number of the listed message and the
-     * unique identifier for that message.  Returns null if the list
-     * attempt fails  (e.g., if the specified message number does
-     * not exist).
-     *
-     * @param messageId  The number of the message list.
-     * @return A POP3MessageInfo instance containing the number of the
-     *         listed message and the unique identifier for that message.
-     *         Returns null if the list attempt fails.
-     * @throws IOException If a network I/O error occurs in the process of
-     *        sending the list unique identifier command.
-     */
-    public POP3MessageInfo listUniqueIdentifier(final int messageId)
-    throws IOException
-    {
-        if (getState() != TRANSACTION_STATE) {
-            return null;
-        }
-        if (sendCommand(POP3Command.UIDL, Integer.toString(messageId))
-                != POP3Reply.OK) {
-            return null;
-        }
-        return parseUID(lastReplyLine.substring(3));
-    }
-
-
-    /**
-     * List the unique identifiers for all messages.  A list attempt can only
-     * succeed if the client is in the
-     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
-     * .  Returns an array of POP3MessageInfo instances,
-     * each containing the number of a message and its unique identifier.
-     * If there are no messages, this method returns a zero length array.
-     * If the list attempt fails, it returns null.
-     *
-     * @return An array of POP3MessageInfo instances representing all messages
-     * in the order they appear in the mailbox,
-     * each containing the number of a message and its unique identifier
-     * If there are no messages, this method returns a zero length array.
-     * If the list attempt fails, it returns null.
-     * @throws IOException If a network I/O error occurs in the process of
-     *     sending the list unique identifier command.
-     */
-    public POP3MessageInfo[] listUniqueIdentifiers() throws IOException
-    {
-        if (getState() != TRANSACTION_STATE) {
-            return null;
-        }
-        if (sendCommand(POP3Command.UIDL) != POP3Reply.OK) {
-            return null;
-        }
-        getAdditionalReply();
-
-        // This could be a zero length array if no messages present
-        final POP3MessageInfo[] messages = new POP3MessageInfo[replyLines.size() - 2]; // skip first and last lines
-
-        final ListIterator<String> en = replyLines.listIterator(1); // skip first line
-
-        // Fetch lines.
-        for (int line = 0; line < messages.length; line++) {
-            messages[line] = parseUID(en.next());
-        }
-
-        return messages;
     }
 
 
@@ -578,6 +551,33 @@ public class POP3Client extends POP3
         }
 
         return new DotTerminatedMessageReader(reader);
+    }
+
+
+    /**
+     * Get the mailbox status.  A status attempt can only
+     * succeed if the client is in the
+     * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }
+     * .  Returns a POP3MessageInfo instance
+     * containing the number of messages in the mailbox and the total
+     * size of the messages in bytes.  Returns null if the status the
+     * attempt fails.
+     *
+     * @return A POP3MessageInfo instance containing the number of
+     *         messages in the mailbox and the total size of the messages
+     *         in bytes.  Returns null if the status the attempt fails.
+     * @throws IOException If a network I/O error occurs in the process of
+     *       sending the status command.
+     */
+    public POP3MessageInfo status() throws IOException
+    {
+        if (getState() != TRANSACTION_STATE) {
+            return null;
+        }
+        if (sendCommand(POP3Command.STAT) != POP3Reply.OK) {
+            return null;
+        }
+        return parseStatus(lastReplyLine.substring(3));
     }
 
 

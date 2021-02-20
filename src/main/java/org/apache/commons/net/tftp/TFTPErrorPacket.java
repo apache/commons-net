@@ -76,24 +76,6 @@ public final class TFTPErrorPacket extends TFTPPacket
     private final String message;
 
     /**
-     * Creates an error packet to be sent to a host at a given port
-     * with an error code and error message.
-     *
-     * @param destination  The host to which the packet is going to be sent.
-     * @param port  The port to which the packet is going to be sent.
-     * @param error The error code of the packet.
-     * @param message The error message of the packet.
-     */
-    public TFTPErrorPacket(final InetAddress destination, final int port,
-                           final int error, final String message)
-    {
-        super(TFTPPacket.ERROR, destination, port);
-
-        this.error = error;
-        this.message = message;
-    }
-
-    /**
      * Creates an error packet based from a received
      * datagram.  Assumes the datagram is at least length 4, else an
      * ArrayIndexOutOfBoundsException may be thrown.
@@ -136,38 +118,42 @@ public final class TFTPErrorPacket extends TFTPPacket
     }
 
     /**
-     * This is a method only available within the package for
-     * implementing efficient datagram transport by elminating buffering.
-     * It takes a datagram as an argument, and a byte buffer in which
-     * to store the raw datagram data.  Inside the method, the data
-     * is set as the datagram's data and the datagram returned.
+     * Creates an error packet to be sent to a host at a given port
+     * with an error code and error message.
      *
-     * @param datagram  The datagram to create.
-     * @param data The buffer to store the packet and to use in the datagram.
-     * @return The datagram argument.
+     * @param destination  The host to which the packet is going to be sent.
+     * @param port  The port to which the packet is going to be sent.
+     * @param error The error code of the packet.
+     * @param message The error message of the packet.
      */
-    @Override
-    DatagramPacket newDatagram(final DatagramPacket datagram, final byte[] data)
+    public TFTPErrorPacket(final InetAddress destination, final int port,
+                           final int error, final String message)
     {
-        final int length;
+        super(TFTPPacket.ERROR, destination, port);
 
-        length = message.length();
+        this.error = error;
+        this.message = message;
+    }
 
-        data[0] = 0;
-        data[1] = (byte)type;
-        data[2] = (byte)((error & 0xffff) >> 8);
-        data[3] = (byte)(error & 0xff);
+    /**
+     * Returns the error code of the packet.
+     *
+     * @return The error code of the packet.
+     */
+    public int getError()
+    {
+        return error;
+    }
 
-        System.arraycopy(message.getBytes(), 0, data, 4, length);
 
-        data[length + 4] = 0;
-
-        datagram.setAddress(address);
-        datagram.setPort(port);
-        datagram.setData(data);
-        datagram.setLength(length + 4);
-
-        return datagram;
+    /**
+     * Returns the error message of the packet.
+     *
+     * @return The error message of the packet.
+     */
+    public String getMessage()
+    {
+        return message;
     }
 
 
@@ -206,24 +192,38 @@ public final class TFTPErrorPacket extends TFTPPacket
 
 
     /**
-     * Returns the error code of the packet.
+     * This is a method only available within the package for
+     * implementing efficient datagram transport by elminating buffering.
+     * It takes a datagram as an argument, and a byte buffer in which
+     * to store the raw datagram data.  Inside the method, the data
+     * is set as the datagram's data and the datagram returned.
      *
-     * @return The error code of the packet.
+     * @param datagram  The datagram to create.
+     * @param data The buffer to store the packet and to use in the datagram.
+     * @return The datagram argument.
      */
-    public int getError()
+    @Override
+    DatagramPacket newDatagram(final DatagramPacket datagram, final byte[] data)
     {
-        return error;
-    }
+        final int length;
 
+        length = message.length();
 
-    /**
-     * Returns the error message of the packet.
-     *
-     * @return The error message of the packet.
-     */
-    public String getMessage()
-    {
-        return message;
+        data[0] = 0;
+        data[1] = (byte)type;
+        data[2] = (byte)((error & 0xffff) >> 8);
+        data[3] = (byte)(error & 0xff);
+
+        System.arraycopy(message.getBytes(), 0, data, 4, length);
+
+        data[length + 4] = 0;
+
+        datagram.setAddress(address);
+        datagram.setPort(port);
+        datagram.setData(data);
+        datagram.setLength(length + 4);
+
+        return datagram;
     }
 
     /**

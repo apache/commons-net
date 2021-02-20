@@ -23,6 +23,15 @@ package org.apache.commons.net.telnet;
 public class EchoOptionHandler extends TelnetOptionHandler
 {
     /**
+     * Constructor for the EchoOptionHandler. Initial and accept
+     * behavior flags are set to false
+     */
+    public EchoOptionHandler()
+    {
+        super(TelnetOption.ECHO, false, false, false, false);
+    }
+
+    /**
      * Constructor for the EchoOptionHandler. Allows defining desired
      * initial setting for local/remote activation of this option and
      * behavior in case a local/remote activation request for this
@@ -38,15 +47,6 @@ public class EchoOptionHandler extends TelnetOptionHandler
     {
         super(TelnetOption.ECHO, initlocal, initremote,
                                       acceptlocal, acceptremote);
-    }
-
-    /**
-     * Constructor for the EchoOptionHandler. Initial and accept
-     * behavior flags are set to false
-     */
-    public EchoOptionHandler()
-    {
-        super(TelnetOption.ECHO, false, false, false, false);
     }
 
 }

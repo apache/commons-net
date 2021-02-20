@@ -31,6 +31,14 @@ import java.util.Properties;
  */
 public class Main {
 
+    private static boolean fromJar() {
+        final CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
+        if ( codeSource != null) {
+            return codeSource.getLocation().getFile().endsWith(".jar");
+        }
+        return false; // No idea if this can happen
+    }
+
     /**
      * Helper application for example classes.
      * Lists available classes, and provides shorthand invocation.
@@ -101,13 +109,5 @@ public class Main {
         } catch (final ClassNotFoundException e) {
             System.out.println(e);
         }
-    }
-
-    private static boolean fromJar() {
-        final CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
-        if ( codeSource != null) {
-            return codeSource.getLocation().getFile().endsWith(".jar");
-        }
-        return false; // No idea if this can happen
     }
 }

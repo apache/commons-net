@@ -37,6 +37,32 @@ import org.apache.commons.net.util.Base64;
 public class ExtendedPOP3Client extends POP3SClient
 {
     /**
+     * The enumeration of currently-supported authentication methods.
+     */
+    public enum AUTH_METHOD
+    {
+        /** The standarised (RFC4616) PLAIN method, which sends the password unencrypted (insecure). */
+        PLAIN("PLAIN"),
+
+        /** The standarised (RFC2195) CRAM-MD5 method, which doesn't send the password (secure). */
+        CRAM_MD5("CRAM-MD5");
+
+        private final String methodName;
+
+        AUTH_METHOD(final String methodName){
+            this.methodName = methodName;
+        }
+        /**
+         * Gets the name of the given authentication method suitable for the server.
+         * @return The name of the given authentication method suitable for the server.
+         */
+        public final String getAuthName()
+        {
+            return this.methodName;
+        }
+    }
+
+    /**
      * The default ExtendedPOP3Client constructor.
      * Creates a new Extended POP3 Client.
      * @throws NoSuchAlgorithmException on error
@@ -119,31 +145,5 @@ public class ExtendedPOP3Client extends POP3SClient
             result.append(Integer.toHexString(element & 0x0FF));
         }
         return result.toString();
-    }
-
-    /**
-     * The enumeration of currently-supported authentication methods.
-     */
-    public enum AUTH_METHOD
-    {
-        /** The standarised (RFC4616) PLAIN method, which sends the password unencrypted (insecure). */
-        PLAIN("PLAIN"),
-
-        /** The standarised (RFC2195) CRAM-MD5 method, which doesn't send the password (secure). */
-        CRAM_MD5("CRAM-MD5");
-
-        private final String methodName;
-
-        AUTH_METHOD(final String methodName){
-            this.methodName = methodName;
-        }
-        /**
-         * Gets the name of the given authentication method suitable for the server.
-         * @return The name of the given authentication method suitable for the server.
-         */
-        public final String getAuthName()
-        {
-            return this.methodName;
-        }
     }
 }

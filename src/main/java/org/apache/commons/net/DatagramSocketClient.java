@@ -89,6 +89,112 @@ public abstract class DatagramSocketClient
 
 
     /**
+     * Closes the DatagramSocket used for the connection.
+     * You should call this method after you've finished using the class
+     * instance and also before you call {@link #open open() }
+     * again.   _isOpen_ is set to false and  _socket_ is set to null.
+     */
+    public void close()
+    {
+        if (_socket_ != null) {
+            _socket_.close();
+        }
+        _socket_ = null;
+        _isOpen_ = false;
+    }
+
+
+    /**
+     * Gets the charset.
+     *
+     * @return the charset.
+     * @since 3.3
+     */
+    public Charset getCharset() {
+        return charset;
+    }
+
+
+    /**
+     * Gets the charset name.
+     *
+     * @return the charset name.
+     * @since 3.3
+     * @deprecated Use {@link #getCharset()} instead
+     */
+    @Deprecated
+    public String getCharsetName() {
+        return charset.name();
+    }
+
+
+
+    /**
+     * Returns the default timeout in milliseconds that is used when
+     * opening a socket.
+     *
+     * @return The default timeout in milliseconds that is used when
+     *         opening a socket.
+     */
+    public int getDefaultTimeout()
+    {
+        return _timeout_;
+    }
+
+
+    /**
+     * Returns the local address to which the client's socket is bound.
+     * If you call this method when the client socket is not open, a
+     * NullPointerException is thrown.
+     *
+     * @return The local address to which the client's socket is bound.
+     */
+    public InetAddress getLocalAddress()
+    {
+        return _socket_.getLocalAddress();
+    }
+
+
+    /**
+     * Returns the port number of the open socket on the local host used
+     * for the connection.  If you call this method when the client socket
+     * is not open, a NullPointerException is thrown.
+     *
+     * @return The port number of the open socket on the local host used
+     *         for the connection.
+     */
+    public int getLocalPort()
+    {
+        return _socket_.getLocalPort();
+    }
+
+
+    /**
+     * Returns the timeout in milliseconds of the currently opened socket.
+     * If you call this method when the client socket is not open,
+     * a NullPointerException is thrown.
+     *
+     * @return The timeout in milliseconds of the currently opened socket.
+     * @throws SocketException if an error getting the timeout
+     */
+    public int getSoTimeout() throws SocketException
+    {
+        return _socket_.getSoTimeout();
+    }
+
+
+    /**
+     * Returns true if the client has a currently open socket.
+     *
+     * @return True if the client has a currently open socket, false otherwise.
+     */
+    public boolean isOpen()
+    {
+        return _isOpen_;
+    }
+
+
+    /**
      * Opens a DatagramSocket on the local host at the first available port.
      * Also sets the timeout on the socket to the default timeout set
      * by {@link #setDefaultTimeout  setDefaultTimeout() }.
@@ -149,119 +255,15 @@ public abstract class DatagramSocketClient
     }
 
 
-
     /**
-     * Closes the DatagramSocket used for the connection.
-     * You should call this method after you've finished using the class
-     * instance and also before you call {@link #open open() }
-     * again.   _isOpen_ is set to false and  _socket_ is set to null.
-     */
-    public void close()
-    {
-        if (_socket_ != null) {
-            _socket_.close();
-        }
-        _socket_ = null;
-        _isOpen_ = false;
-    }
-
-
-    /**
-     * Returns true if the client has a currently open socket.
+     * Sets the charset.
      *
-     * @return True if the client has a currently open socket, false otherwise.
+     * @param charset the charset.
+     * @since 3.3
      */
-    public boolean isOpen()
-    {
-        return _isOpen_;
+    public void setCharset(final Charset charset) {
+        this.charset = charset;
     }
-
-
-    /**
-     * Set the default timeout in milliseconds to use when opening a socket.
-     * After a call to open, the timeout for the socket is set using this value.
-     * This method should be used prior to a call to {@link #open open()}
-     * and should not be confused with {@link #setSoTimeout setSoTimeout()}
-     * which operates on the currently open socket.  _timeout_ contains
-     * the new timeout value.
-     *
-     * @param timeout  The timeout in milliseconds to use for the datagram socket
-     *                 connection.
-     */
-    public void setDefaultTimeout(final int timeout)
-    {
-        _timeout_ = timeout;
-    }
-
-
-    /**
-     * Returns the default timeout in milliseconds that is used when
-     * opening a socket.
-     *
-     * @return The default timeout in milliseconds that is used when
-     *         opening a socket.
-     */
-    public int getDefaultTimeout()
-    {
-        return _timeout_;
-    }
-
-
-    /**
-     * Set the timeout in milliseconds of a currently open connection.
-     * Only call this method after a connection has been opened
-     * by {@link #open open()}.
-     *
-     * @param timeout  The timeout in milliseconds to use for the currently
-     *                 open datagram socket connection.
-     * @throws SocketException if an error setting the timeout
-     */
-    public void setSoTimeout(final int timeout) throws SocketException
-    {
-        _socket_.setSoTimeout(timeout);
-    }
-
-
-    /**
-     * Returns the timeout in milliseconds of the currently opened socket.
-     * If you call this method when the client socket is not open,
-     * a NullPointerException is thrown.
-     *
-     * @return The timeout in milliseconds of the currently opened socket.
-     * @throws SocketException if an error getting the timeout
-     */
-    public int getSoTimeout() throws SocketException
-    {
-        return _socket_.getSoTimeout();
-    }
-
-
-    /**
-     * Returns the port number of the open socket on the local host used
-     * for the connection.  If you call this method when the client socket
-     * is not open, a NullPointerException is thrown.
-     *
-     * @return The port number of the open socket on the local host used
-     *         for the connection.
-     */
-    public int getLocalPort()
-    {
-        return _socket_.getLocalPort();
-    }
-
-
-    /**
-     * Returns the local address to which the client's socket is bound.
-     * If you call this method when the client socket is not open, a
-     * NullPointerException is thrown.
-     *
-     * @return The local address to which the client's socket is bound.
-     */
-    public InetAddress getLocalAddress()
-    {
-        return _socket_.getLocalAddress();
-    }
-
 
     /**
      * Sets the DatagramSocketFactory used by the DatagramSocketClient
@@ -282,34 +284,32 @@ public abstract class DatagramSocketClient
     }
 
     /**
-     * Gets the charset name.
+     * Set the default timeout in milliseconds to use when opening a socket.
+     * After a call to open, the timeout for the socket is set using this value.
+     * This method should be used prior to a call to {@link #open open()}
+     * and should not be confused with {@link #setSoTimeout setSoTimeout()}
+     * which operates on the currently open socket.  _timeout_ contains
+     * the new timeout value.
      *
-     * @return the charset name.
-     * @since 3.3
-     * @deprecated Use {@link #getCharset()} instead
+     * @param timeout  The timeout in milliseconds to use for the datagram socket
+     *                 connection.
      */
-    @Deprecated
-    public String getCharsetName() {
-        return charset.name();
+    public void setDefaultTimeout(final int timeout)
+    {
+        _timeout_ = timeout;
     }
 
     /**
-     * Gets the charset.
+     * Set the timeout in milliseconds of a currently open connection.
+     * Only call this method after a connection has been opened
+     * by {@link #open open()}.
      *
-     * @return the charset.
-     * @since 3.3
+     * @param timeout  The timeout in milliseconds to use for the currently
+     *                 open datagram socket connection.
+     * @throws SocketException if an error setting the timeout
      */
-    public Charset getCharset() {
-        return charset;
-    }
-
-    /**
-     * Sets the charset.
-     *
-     * @param charset the charset.
-     * @since 3.3
-     */
-    public void setCharset(final Charset charset) {
-        this.charset = charset;
+    public void setSoTimeout(final int timeout) throws SocketException
+    {
+        _socket_.setSoTimeout(timeout);
     }
 }

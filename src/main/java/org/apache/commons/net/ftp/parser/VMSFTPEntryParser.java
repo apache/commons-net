@@ -92,6 +92,39 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     }
 
     /**
+     * Defines a default configuration to be used when this class is
+     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
+     * parameter being specified.
+     * @return the default configuration for this parser.
+     */
+    @Override
+    protected FTPClientConfig getDefaultConfiguration() {
+        return new FTPClientConfig(
+                FTPClientConfig.SYST_VMS,
+                DEFAULT_DATE_FORMAT,
+                null);
+    }
+
+
+    protected boolean isVersioning() {
+        return false;
+    }
+
+    /**
+     * DO NOT USE
+     * @param listStream the stream
+     * @return the array of files
+     * @throws IOException on error
+     * @deprecated (2.2) No other FTPFileEntryParser implementations have this method.
+     */
+    @Deprecated
+    public FTPFile[] parseFileList(final java.io.InputStream listStream) throws IOException {
+        final org.apache.commons.net.ftp.FTPListParseEngine engine = new org.apache.commons.net.ftp.FTPListParseEngine(this);
+        engine.readServerList(listStream, null);
+        return engine.getFiles();
+    }
+
+    /**
      * Parses a line of a VMS FTP server file listing and converts it into a
      * usable format in the form of an <code> FTPFile </code> instance.  If the
      * file listing line doesn't describe a file, <code> null </code> is
@@ -193,6 +226,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         return null;
     }
 
+    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
 
     /**
      * Reads the next entry using the supplied BufferedReader object up to
@@ -226,40 +260,6 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             line = reader.readLine();
         }
         return entry.length() == 0 ? null : entry.toString();
-    }
-
-    protected boolean isVersioning() {
-        return false;
-    }
-
-    /**
-     * Defines a default configuration to be used when this class is
-     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
-     * parameter being specified.
-     * @return the default configuration for this parser.
-     */
-    @Override
-    protected FTPClientConfig getDefaultConfiguration() {
-        return new FTPClientConfig(
-                FTPClientConfig.SYST_VMS,
-                DEFAULT_DATE_FORMAT,
-                null);
-    }
-
-    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
-
-    /**
-     * DO NOT USE
-     * @param listStream the stream
-     * @return the array of files
-     * @throws IOException on error
-     * @deprecated (2.2) No other FTPFileEntryParser implementations have this method.
-     */
-    @Deprecated
-    public FTPFile[] parseFileList(final java.io.InputStream listStream) throws IOException {
-        final org.apache.commons.net.ftp.FTPListParseEngine engine = new org.apache.commons.net.ftp.FTPListParseEngine(this);
-        engine.readServerList(listStream, null);
-        return engine.getFiles();
     }
 
 }

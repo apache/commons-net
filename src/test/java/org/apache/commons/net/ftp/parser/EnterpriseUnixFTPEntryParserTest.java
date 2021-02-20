@@ -16,13 +16,10 @@
  */
 package org.apache.commons.net.ftp.parser;
 
-import java.time.Clock;
 import java.time.Instant;
 import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoField;
-import java.time.temporal.TemporalField;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -82,6 +79,75 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     }
 
     /**
+     * Method checkPermisions. Verify that the parser does NOT  set the
+     * permissions.
+     *
+     * @param dir
+     */
+    private void checkPermisions(final FTPFile dir)
+    {
+        assertTrue("Owner should not have read permission.",
+                   !dir.hasPermission(FTPFile.USER_ACCESS,
+                                      FTPFile.READ_PERMISSION));
+        assertTrue("Owner should not have write permission.",
+                   !dir.hasPermission(FTPFile.USER_ACCESS,
+                                      FTPFile.WRITE_PERMISSION));
+        assertTrue("Owner should not have execute permission.",
+                   !dir.hasPermission(FTPFile.USER_ACCESS,
+                                      FTPFile.EXECUTE_PERMISSION));
+        assertTrue("Group should not have read permission.",
+                   !dir.hasPermission(FTPFile.GROUP_ACCESS,
+                                      FTPFile.READ_PERMISSION));
+        assertTrue("Group should not have write permission.",
+                   !dir.hasPermission(FTPFile.GROUP_ACCESS,
+                                      FTPFile.WRITE_PERMISSION));
+        assertTrue("Group should not have execute permission.",
+                   !dir.hasPermission(FTPFile.GROUP_ACCESS,
+                                      FTPFile.EXECUTE_PERMISSION));
+        assertTrue("World should not have read permission.",
+                   !dir.hasPermission(FTPFile.WORLD_ACCESS,
+                                      FTPFile.READ_PERMISSION));
+        assertTrue("World should not have write permission.",
+                   !dir.hasPermission(FTPFile.WORLD_ACCESS,
+                                      FTPFile.WRITE_PERMISSION));
+        assertTrue("World should not have execute permission.",
+                   !dir.hasPermission(FTPFile.WORLD_ACCESS,
+                                      FTPFile.EXECUTE_PERMISSION));
+    }
+
+    /**
+     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getBadListing()
+     */
+    @Override
+    protected String[] getBadListing()
+    {
+        return BADSAMPLES;
+    }
+
+    /**
+     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getGoodListing()
+     */
+    @Override
+    protected String[] getGoodListing()
+    {
+        return GOODSAMPLES;
+    }
+
+    /**
+     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
+     */
+    @Override
+    protected FTPFileEntryParser getParser()
+    {
+        return new EnterpriseUnixFTPEntryParser();
+    }
+
+    @Override
+    public void testDefaultPrecision() {
+        testPrecision("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 2014 QUADTEST", CalendarUnit.DAY_OF_MONTH);
+    }
+
+    /**
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testParseFieldsOnDirectory()
      */
     @Override
@@ -138,74 +204,5 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
     @Override
     public void testRecentPrecision() {
         testPrecision("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 13:56 QUADTEST", CalendarUnit.MINUTE);
-    }
-
-    @Override
-    public void testDefaultPrecision() {
-        testPrecision("-C--E-----FTP B QUA1I1      18128       5000000000 Aug 12 2014 QUADTEST", CalendarUnit.DAY_OF_MONTH);
-    }
-
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getBadListing()
-     */
-    @Override
-    protected String[] getBadListing()
-    {
-        return BADSAMPLES;
-    }
-
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getGoodListing()
-     */
-    @Override
-    protected String[] getGoodListing()
-    {
-        return GOODSAMPLES;
-    }
-
-    /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
-     */
-    @Override
-    protected FTPFileEntryParser getParser()
-    {
-        return new EnterpriseUnixFTPEntryParser();
-    }
-
-    /**
-     * Method checkPermisions. Verify that the parser does NOT  set the
-     * permissions.
-     *
-     * @param dir
-     */
-    private void checkPermisions(final FTPFile dir)
-    {
-        assertTrue("Owner should not have read permission.",
-                   !dir.hasPermission(FTPFile.USER_ACCESS,
-                                      FTPFile.READ_PERMISSION));
-        assertTrue("Owner should not have write permission.",
-                   !dir.hasPermission(FTPFile.USER_ACCESS,
-                                      FTPFile.WRITE_PERMISSION));
-        assertTrue("Owner should not have execute permission.",
-                   !dir.hasPermission(FTPFile.USER_ACCESS,
-                                      FTPFile.EXECUTE_PERMISSION));
-        assertTrue("Group should not have read permission.",
-                   !dir.hasPermission(FTPFile.GROUP_ACCESS,
-                                      FTPFile.READ_PERMISSION));
-        assertTrue("Group should not have write permission.",
-                   !dir.hasPermission(FTPFile.GROUP_ACCESS,
-                                      FTPFile.WRITE_PERMISSION));
-        assertTrue("Group should not have execute permission.",
-                   !dir.hasPermission(FTPFile.GROUP_ACCESS,
-                                      FTPFile.EXECUTE_PERMISSION));
-        assertTrue("World should not have read permission.",
-                   !dir.hasPermission(FTPFile.WORLD_ACCESS,
-                                      FTPFile.READ_PERMISSION));
-        assertTrue("World should not have write permission.",
-                   !dir.hasPermission(FTPFile.WORLD_ACCESS,
-                                      FTPFile.WRITE_PERMISSION));
-        assertTrue("World should not have execute permission.",
-                   !dir.hasPermission(FTPFile.WORLD_ACCESS,
-                                      FTPFile.EXECUTE_PERMISSION));
     }
 }

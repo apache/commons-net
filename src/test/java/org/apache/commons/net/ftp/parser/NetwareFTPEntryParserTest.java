@@ -58,6 +58,12 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
     }
 
     @Override
+    public void testDefaultPrecision() {
+        testPrecision("d [RWCEAFMS] rwinston                          512 Nov 24  2005 Favorites", CalendarUnit.DAY_OF_MONTH);
+    }
+
+
+    @Override
     public void testParseFieldsOnDirectory() throws Exception {
         final String reply = "d [-W---F--] testUser                        512 Apr 13 23:12 testFile";
         final FTPFile f = getParser().parseFTPEntry(reply);
@@ -82,7 +88,6 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
 
     }
 
-
     @Override
     public void testParseFieldsOnFile() throws Exception {
         final String reply = "- [R-CEAFMS] rwinston                        19968 Mar 12 15:20 Document name with spaces.doc";
@@ -97,11 +102,6 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
 
         assertTrue(f.hasPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
         assertFalse(f.hasPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION));
-    }
-
-    @Override
-    public void testDefaultPrecision() {
-        testPrecision("d [RWCEAFMS] rwinston                          512 Nov 24  2005 Favorites", CalendarUnit.DAY_OF_MONTH);
     }
 
     @Override

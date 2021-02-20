@@ -64,10 +64,117 @@ import org.apache.commons.net.io.Util;
  */
 public final class KeyManagerUtils {
 
+    private static class ClientKeyStore {
+
+        private final X509Certificate[] certChain;
+        private final PrivateKey key;
+        private final String keyAlias;
+
+        ClientKeyStore(final KeyStore ks, final String keyAlias, final String keyPass) throws GeneralSecurityException
+        {
+            this.keyAlias = keyAlias;
+            this.key = (PrivateKey) ks.getKey(this.keyAlias, keyPass.toCharArray());
+            final Certificate[] certs = ks.getCertificateChain(this.keyAlias);
+            final X509Certificate[] X509certs = new X509Certificate[certs.length];
+            for (int i=0; i < certs.length; i++) {
+                X509certs[i] = (X509Certificate) certs[i];
+            }
+            this.certChain = X509certs;
+        }
+
+        final String getAlias() {
+            return this.keyAlias;
+        }
+
+        final X509Certificate[] getCertificateChain() {
+            return this.certChain;
+        }
+
+        final PrivateKey getPrivateKey() {
+            return this.key;
+        }
+    }
+
+    private static class X509KeyManager extends X509ExtendedKeyManager  {
+
+        private final ClientKeyStore keyStore;
+
+        X509KeyManager(final ClientKeyStore keyStore) {
+            this.keyStore = keyStore;
+        }
+
+        // Call sequence: 1
+        @Override
+        public String chooseClientAlias(final String[] keyType, final Principal[] issuers,
+                final Socket socket) {
+            return keyStore.getAlias();
+        }
+
+        @Override
+        public String chooseServerAlias(final String keyType, final Principal[] issuers, final Socket socket) {
+            return null;
+        }
+
+        // Call sequence: 2
+        @Override
+        public X509Certificate[] getCertificateChain(final String alias) {
+            return keyStore.getCertificateChain();
+        }
+
+        @Override
+        public String[] getClientAliases(final String keyType, final Principal[] issuers) {
+            return new String[]{ keyStore.getAlias()};
+        }
+
+        // Call sequence: 3
+        @Override
+        public PrivateKey getPrivateKey(final String alias) {
+            return keyStore.getPrivateKey();
+        }
+
+        @Override
+        public String[] getServerAliases(final String keyType, final Principal[] issuers) {
+            return null;
+        }
+
+    }
+
     private static final String DEFAULT_STORE_TYPE = KeyStore.getDefaultType();
 
-    private KeyManagerUtils(){
-        // Not instantiable
+    /**
+     * Create a client key manager which returns a particular key.
+     * Does not handle server keys.
+     * Uses the default store type and assumes the key password is the same as the store password.
+     * The key alias is found by searching the keystore for the first private key entry
+     *
+     * @param storePath the path to the keyStore
+     * @param storePass the keyStore password
+     * @return the customised KeyManager
+     * @throws IOException if there is a problem creating the keystore
+     * @throws GeneralSecurityException if there is a problem creating the keystore
+     */
+    public static KeyManager createClientKeyManager(final File storePath, final String storePass)
+        throws IOException, GeneralSecurityException
+    {
+        return createClientKeyManager(DEFAULT_STORE_TYPE, storePath, storePass, null, storePass);
+    }
+
+    /**
+     * Create a client key manager which returns a particular key.
+     * Does not handle server keys.
+     * Uses the default store type and assumes the key password is the same as the store password
+     *
+     * @param storePath the path to the keyStore
+     * @param storePass the keyStore password
+     * @param keyAlias the alias of the key to use, may be {@code null} in which case the first key entry alias is used
+     * @return the customised KeyManager
+     * @throws IOException if there is a problem creating the keystore
+     * @throws GeneralSecurityException if there is a problem creating the keystore
+     */
+    public static KeyManager createClientKeyManager(final File storePath, final String storePass, final String keyAlias)
+        throws IOException, GeneralSecurityException
+    {
+        return createClientKeyManager(DEFAULT_STORE_TYPE, storePath, storePass, keyAlias, storePass);
     }
 
     /**
@@ -108,40 +215,15 @@ public final class KeyManagerUtils {
         return createClientKeyManager(ks, keyAlias, keyPass);
     }
 
-    /**
-     * Create a client key manager which returns a particular key.
-     * Does not handle server keys.
-     * Uses the default store type and assumes the key password is the same as the store password
-     *
-     * @param storePath the path to the keyStore
-     * @param storePass the keyStore password
-     * @param keyAlias the alias of the key to use, may be {@code null} in which case the first key entry alias is used
-     * @return the customised KeyManager
-     * @throws IOException if there is a problem creating the keystore
-     * @throws GeneralSecurityException if there is a problem creating the keystore
-     */
-    public static KeyManager createClientKeyManager(final File storePath, final String storePass, final String keyAlias)
-        throws IOException, GeneralSecurityException
-    {
-        return createClientKeyManager(DEFAULT_STORE_TYPE, storePath, storePass, keyAlias, storePass);
-    }
-
-    /**
-     * Create a client key manager which returns a particular key.
-     * Does not handle server keys.
-     * Uses the default store type and assumes the key password is the same as the store password.
-     * The key alias is found by searching the keystore for the first private key entry
-     *
-     * @param storePath the path to the keyStore
-     * @param storePass the keyStore password
-     * @return the customised KeyManager
-     * @throws IOException if there is a problem creating the keystore
-     * @throws GeneralSecurityException if there is a problem creating the keystore
-     */
-    public static KeyManager createClientKeyManager(final File storePath, final String storePass)
-        throws IOException, GeneralSecurityException
-    {
-        return createClientKeyManager(DEFAULT_STORE_TYPE, storePath, storePass, null, storePass);
+    private static String findAlias(final KeyStore ks) throws KeyStoreException {
+        final Enumeration<String> e = ks.aliases();
+        while(e.hasMoreElements()) {
+            final String entry = e.nextElement();
+            if (ks.isKeyEntry(entry)) {
+                return entry;
+            }
+        }
+        throw new KeyStoreException("Cannot find a private key entry");
     }
 
     private static KeyStore loadStore(final String storeType, final File storePath, final String storePass)
@@ -157,90 +239,8 @@ public final class KeyManagerUtils {
         return ks;
     }
 
-    private static String findAlias(final KeyStore ks) throws KeyStoreException {
-        final Enumeration<String> e = ks.aliases();
-        while(e.hasMoreElements()) {
-            final String entry = e.nextElement();
-            if (ks.isKeyEntry(entry)) {
-                return entry;
-            }
-        }
-        throw new KeyStoreException("Cannot find a private key entry");
-    }
-
-    private static class ClientKeyStore {
-
-        private final X509Certificate[] certChain;
-        private final PrivateKey key;
-        private final String keyAlias;
-
-        ClientKeyStore(final KeyStore ks, final String keyAlias, final String keyPass) throws GeneralSecurityException
-        {
-            this.keyAlias = keyAlias;
-            this.key = (PrivateKey) ks.getKey(this.keyAlias, keyPass.toCharArray());
-            final Certificate[] certs = ks.getCertificateChain(this.keyAlias);
-            final X509Certificate[] X509certs = new X509Certificate[certs.length];
-            for (int i=0; i < certs.length; i++) {
-                X509certs[i] = (X509Certificate) certs[i];
-            }
-            this.certChain = X509certs;
-        }
-
-        final X509Certificate[] getCertificateChain() {
-            return this.certChain;
-        }
-
-        final PrivateKey getPrivateKey() {
-            return this.key;
-        }
-
-        final String getAlias() {
-            return this.keyAlias;
-        }
-    }
-
-    private static class X509KeyManager extends X509ExtendedKeyManager  {
-
-        private final ClientKeyStore keyStore;
-
-        X509KeyManager(final ClientKeyStore keyStore) {
-            this.keyStore = keyStore;
-        }
-
-        // Call sequence: 1
-        @Override
-        public String chooseClientAlias(final String[] keyType, final Principal[] issuers,
-                final Socket socket) {
-            return keyStore.getAlias();
-        }
-
-        // Call sequence: 2
-        @Override
-        public X509Certificate[] getCertificateChain(final String alias) {
-            return keyStore.getCertificateChain();
-        }
-
-        @Override
-        public String[] getClientAliases(final String keyType, final Principal[] issuers) {
-            return new String[]{ keyStore.getAlias()};
-        }
-
-        // Call sequence: 3
-        @Override
-        public PrivateKey getPrivateKey(final String alias) {
-            return keyStore.getPrivateKey();
-        }
-
-        @Override
-        public String[] getServerAliases(final String keyType, final Principal[] issuers) {
-            return null;
-        }
-
-        @Override
-        public String chooseServerAlias(final String keyType, final Principal[] issuers, final Socket socket) {
-            return null;
-        }
-
+    private KeyManagerUtils(){
+        // Not instantiable
     }
 
 }

@@ -40,16 +40,50 @@ import org.apache.commons.net.util.Base64;
  * @since 2.2
  */
 public class FTPHTTPClient extends FTPClient {
+    private static final byte[] CRLF={'\r', '\n'};
     private final String proxyHost;
     private final int proxyPort;
     private final String proxyUsername;
     private final String proxyPassword;
-    private final Charset charset;
 
-    private static final byte[] CRLF={'\r', '\n'};
+    private final Charset charset;
     private final Base64 base64 = new Base64();
 
     private String tunnelHost; // Save the host when setting up a tunnel (needed for EPSV)
+
+    /**
+     * Create an instance using the UTF-8 encoding, with no proxy credentials.
+     *
+     * @param proxyHost the hostname to use
+     * @param proxyPort the port to use
+     */
+    public FTPHTTPClient(final String proxyHost, final int proxyPort) {
+        this(proxyHost, proxyPort, null, null);
+    }
+
+    /**
+     * Create an instance using the specified encoding, with no proxy credentials.
+     *
+     * @param proxyHost the hostname to use
+     * @param proxyPort the port to use
+     * @param encoding the encoding to use
+     */
+    public FTPHTTPClient(final String proxyHost, final int proxyPort, final Charset encoding) {
+        this(proxyHost, proxyPort, null, null, encoding);
+    }
+
+    /**
+     * Create an instance using the UTF-8 encoding
+     *
+     * @param proxyHost the hostname to use
+     * @param proxyPort the port to use
+     * @param proxyUser the user name for the proxy
+     * @param proxyPass the password for the proxy
+     */
+    public FTPHTTPClient(final String proxyHost, final int proxyPort, final String proxyUser, final String proxyPass) {
+        this(proxyHost, proxyPort, proxyUser, proxyPass, StandardCharsets.UTF_8);
+    }
+
 
     /**
      * Create an instance with the specified encoding
@@ -68,40 +102,6 @@ public class FTPHTTPClient extends FTPClient {
         this.proxyPassword = proxyPass;
         this.tunnelHost = null;
         this.charset = encoding;
-    }
-
-    /**
-     * Create an instance using the UTF-8 encoding
-     *
-     * @param proxyHost the hostname to use
-     * @param proxyPort the port to use
-     * @param proxyUser the user name for the proxy
-     * @param proxyPass the password for the proxy
-     */
-    public FTPHTTPClient(final String proxyHost, final int proxyPort, final String proxyUser, final String proxyPass) {
-        this(proxyHost, proxyPort, proxyUser, proxyPass, StandardCharsets.UTF_8);
-    }
-
-    /**
-     * Create an instance using the UTF-8 encoding, with no proxy credentials.
-     *
-     * @param proxyHost the hostname to use
-     * @param proxyPort the port to use
-     */
-    public FTPHTTPClient(final String proxyHost, final int proxyPort) {
-        this(proxyHost, proxyPort, null, null);
-    }
-
-
-    /**
-     * Create an instance using the specified encoding, with no proxy credentials.
-     *
-     * @param proxyHost the hostname to use
-     * @param proxyPort the port to use
-     * @param encoding the encoding to use
-     */
-    public FTPHTTPClient(final String proxyHost, final int proxyPort, final Charset encoding) {
-        this(proxyHost, proxyPort, null, null, encoding);
     }
 
 

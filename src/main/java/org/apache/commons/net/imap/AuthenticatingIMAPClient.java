@@ -35,6 +35,37 @@ import org.apache.commons.net.util.Base64;
 public class AuthenticatingIMAPClient extends IMAPSClient
 {
     /**
+     * The enumeration of currently-supported authentication methods.
+     */
+    public enum AUTH_METHOD
+    {
+        /** The standarised (RFC4616) PLAIN method, which sends the password unencrypted (insecure). */
+        PLAIN("PLAIN"),
+        /** The standarised (RFC2195) CRAM-MD5 method, which doesn't send the password (secure). */
+        CRAM_MD5("CRAM-MD5"),
+        /** The unstandarised Microsoft LOGIN method, which sends the password unencrypted (insecure). */
+        LOGIN("LOGIN"),
+        /** XOAUTH */
+        XOAUTH("XOAUTH"),
+        /** XOAUTH 2 */
+        XOAUTH2("XOAUTH2");
+
+        private final String authName;
+
+        AUTH_METHOD(final String name){
+            this.authName=name;
+        }
+        /**
+         * Gets the name of the given authentication method suitable for the server.
+         * @return The name of the given authentication method suitable for the server.
+         */
+        public final String getAuthName()
+        {
+            return authName;
+        }
+    }
+
+    /**
      * Constructor for AuthenticatingIMAPClient that delegates to IMAPSClient.
      * Sets security mode to explicit (isImplicit = false).
      */
@@ -50,6 +81,25 @@ public class AuthenticatingIMAPClient extends IMAPSClient
     public AuthenticatingIMAPClient(final boolean implicit)
     {
         this(DEFAULT_PROTOCOL, implicit);
+    }
+
+    /**
+     * Constructor for AuthenticatingIMAPClient that delegates to IMAPSClient.
+     * @param implicit The security mode(Implicit/Explicit).
+     * @param ctx A pre-configured SSL Context.
+     */
+    public AuthenticatingIMAPClient(final boolean implicit, final SSLContext ctx)
+    {
+        this(DEFAULT_PROTOCOL, implicit, ctx);
+    }
+
+    /**
+     * Constructor for AuthenticatingIMAPClient that delegates to IMAPSClient.
+     * @param context A pre-configured SSL Context.
+     */
+    public AuthenticatingIMAPClient(final SSLContext context)
+    {
+        this(false, context);
     }
 
     /**
@@ -80,50 +130,6 @@ public class AuthenticatingIMAPClient extends IMAPSClient
     public AuthenticatingIMAPClient(final String proto, final boolean implicit, final SSLContext ctx)
     {
         super(proto, implicit, ctx);
-    }
-
-    /**
-     * Constructor for AuthenticatingIMAPClient that delegates to IMAPSClient.
-     * @param implicit The security mode(Implicit/Explicit).
-     * @param ctx A pre-configured SSL Context.
-     */
-    public AuthenticatingIMAPClient(final boolean implicit, final SSLContext ctx)
-    {
-        this(DEFAULT_PROTOCOL, implicit, ctx);
-    }
-
-    /**
-     * Constructor for AuthenticatingIMAPClient that delegates to IMAPSClient.
-     * @param context A pre-configured SSL Context.
-     */
-    public AuthenticatingIMAPClient(final SSLContext context)
-    {
-        this(false, context);
-    }
-
-    /**
-     * Authenticate to the IMAP server by sending the AUTHENTICATE command with the
-     * selected mechanism, using the given username and the given password.
-     *
-     * @param method the method name
-     * @param username user
-     * @param password password
-     * @return True if successfully completed, false if not.
-     * @throws IOException  If an I/O error occurs while either sending a
-     *      command to the server or receiving a reply from the server.
-     * @throws NoSuchAlgorithmException If the CRAM hash algorithm
-     *      cannot be instantiated by the Java runtime system.
-     * @throws InvalidKeyException If the CRAM hash algorithm
-     *      failed to use the given password.
-     * @throws InvalidKeySpecException If the CRAM hash algorithm
-     *      failed to use the given password.
-     */
-    public boolean authenticate(final AuthenticatingIMAPClient.AUTH_METHOD method,
-                        final String username, final String password)
-                        throws IOException, NoSuchAlgorithmException,
-                        InvalidKeyException, InvalidKeySpecException
-    {
-        return auth(method, username, password);
     }
 
     /**
@@ -219,6 +225,31 @@ public class AuthenticatingIMAPClient extends IMAPSClient
     }
 
     /**
+     * Authenticate to the IMAP server by sending the AUTHENTICATE command with the
+     * selected mechanism, using the given username and the given password.
+     *
+     * @param method the method name
+     * @param username user
+     * @param password password
+     * @return True if successfully completed, false if not.
+     * @throws IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     * @throws NoSuchAlgorithmException If the CRAM hash algorithm
+     *      cannot be instantiated by the Java runtime system.
+     * @throws InvalidKeyException If the CRAM hash algorithm
+     *      failed to use the given password.
+     * @throws InvalidKeySpecException If the CRAM hash algorithm
+     *      failed to use the given password.
+     */
+    public boolean authenticate(final AuthenticatingIMAPClient.AUTH_METHOD method,
+                        final String username, final String password)
+                        throws IOException, NoSuchAlgorithmException,
+                        InvalidKeyException, InvalidKeySpecException
+    {
+        return auth(method, username, password);
+    }
+
+    /**
      * Converts the given byte array to a String containing the hex values of the bytes.
      * For example, the byte 'A' will be converted to '41', because this is the ASCII code
      * (and the byte value) of the capital letter 'A'.
@@ -236,37 +267,6 @@ public class AuthenticatingIMAPClient extends IMAPSClient
             result.append(Integer.toHexString(element & 0x0FF));
         }
         return result.toString();
-    }
-
-    /**
-     * The enumeration of currently-supported authentication methods.
-     */
-    public enum AUTH_METHOD
-    {
-        /** The standarised (RFC4616) PLAIN method, which sends the password unencrypted (insecure). */
-        PLAIN("PLAIN"),
-        /** The standarised (RFC2195) CRAM-MD5 method, which doesn't send the password (secure). */
-        CRAM_MD5("CRAM-MD5"),
-        /** The unstandarised Microsoft LOGIN method, which sends the password unencrypted (insecure). */
-        LOGIN("LOGIN"),
-        /** XOAUTH */
-        XOAUTH("XOAUTH"),
-        /** XOAUTH 2 */
-        XOAUTH2("XOAUTH2");
-
-        private final String authName;
-
-        AUTH_METHOD(final String name){
-            this.authName=name;
-        }
-        /**
-         * Gets the name of the given authentication method suitable for the server.
-         * @return The name of the given authentication method suitable for the server.
-         */
-        public final String getAuthName()
-        {
-            return authName;
-        }
     }
 }
 /* kate: indent-width 4; replace-tabs on; */

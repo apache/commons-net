@@ -52,6 +52,19 @@ public class POP3ClientCommandsTest extends TestCase
         super(name);
     }
 
+    private void connect() throws Exception
+    {
+        pop3Client.connect(InetAddress.getByName(mailhost));
+        assertTrue(pop3Client.isConnected());
+        assertEquals(POP3.AUTHORIZATION_STATE, pop3Client.getState());
+    }
+
+    private void login() throws Exception
+    {
+        assertTrue(pop3Client.login(user, password));
+        assertEquals(POP3.TRANSACTION_STATE, pop3Client.getState());
+    }
+
     private void reset() throws IOException
     {
         //Case where this is the first time reset is called
@@ -67,90 +80,79 @@ public class POP3ClientCommandsTest extends TestCase
         pop3Client = new POP3Client();
     }
 
-    private void connect() throws Exception
-    {
-        pop3Client.connect(InetAddress.getByName(mailhost));
-        assertTrue(pop3Client.isConnected());
-        assertEquals(POP3.AUTHORIZATION_STATE, pop3Client.getState());
-    }
-
-    private void login() throws Exception
-    {
-        assertTrue(pop3Client.login(user, password));
-        assertEquals(POP3.TRANSACTION_STATE, pop3Client.getState());
-    }
-
-    public void testNoopCommand() throws Exception
+    public void testDelete() throws Exception
     {
         reset();
         connect();
-
-        //Should fail before authorization
-        assertFalse(pop3Client.noop());
-
-        //Should pass in transaction state
         login();
-        assertTrue(pop3Client.noop());
+        //Get the original number of messages
+        POP3MessageInfo[] msg = pop3Client.listMessages();
+        final int numMessages = msg.length;
+        int numDeleted = 0;
 
-        //Should fail in update state
-        pop3Client.setState(POP3.UPDATE_STATE);
-        assertFalse(pop3Client.noop());
-    }
+        //Now delete some and logout
+        for (int i = 0; i < numMessages - 3; i ++)
+        {
+            pop3Client.deleteMessage(i + 1);
+            numDeleted++;
+        }
+        //Check to see that they are marked as deleted
+        assertEquals(numMessages, numDeleted + 3);
 
-    public void testStatus() throws Exception
-    {
-        reset();
-        connect();
-
-        //Should fail in authorization state
-        assertNull(pop3Client.status());
-
-        //Should pass on a mailbox with mail in it
-        login();
-        final POP3MessageInfo msg = pop3Client.status();
-        assertTrue(msg.number > 0);
-        assertTrue(msg.size > 0);
-        assertNull(msg.identifier);
+        //Logout and come back in
         pop3Client.logout();
+        reset();
+        connect();
+        login();
 
-        //Should also pass on a mailbox with no mail in it
+        //Get the new number of messages, because of
+        //reset, new number should match old number
+        msg = pop3Client.listMessages();
+        assertEquals(numMessages - numDeleted, msg.length);
+    }
+
+    public void testDeleteWithReset() throws Exception
+    {
+        reset();
+        connect();
+        login();
+        //Get the original number of messages
+        POP3MessageInfo[] msg = pop3Client.listMessages();
+        final int numMessages = msg.length;
+        int numDeleted = 0;
+
+        //Now delete some and logout
+        for (int i = 0; i < numMessages - 1; i ++)
+        {
+            pop3Client.deleteMessage(i + 1);
+            numDeleted++;
+        }
+        //Check to see that they are marked as deleted
+        assertEquals(numMessages, numDeleted + 1);
+
+        //Now reset to unmark the messages as deleted
+        pop3Client.reset();
+
+        //Logout and come back in
+        pop3Client.logout();
+        reset();
+        connect();
+        login();
+
+        //Get the new number of messages, because of
+        //reset, new number should match old number
+        msg = pop3Client.listMessages();
+        assertEquals(numMessages, msg.length);
+    }
+
+    public void testListMessageOnEmptyMailbox() throws Exception
+    {
         reset();
         connect();
         assertTrue(pop3Client.login(emptyUser, password));
-        final POP3MessageInfo msg2 = pop3Client.status();
-        assertEquals(0, msg2.number);
-        assertEquals(0, msg2.size);
-        assertNull(msg2.identifier);
-        pop3Client.logout();
 
-        //Should fail in the 'update' state
-        reset();
-        connect();
-        login();
-        pop3Client.setState(POP3.UPDATE_STATE);
-        assertNull(pop3Client.status());
-    }
-
-    public void testListMessagesOnFullMailbox() throws Exception
-    {
-        reset();
-        connect();
-        login();
-
-        POP3MessageInfo[] msg = pop3Client.listMessages();
-        assertTrue(msg.length > 0);
-
-        for(int i = 0; i < msg.length; i++)
-        {
-            assertNotNull(msg[i]);
-            assertEquals(i+1, msg[i].number);
-            assertTrue(msg[i].size > 0);
-            assertNull(msg[i].identifier);
-        }
-
-        //Now test from the update state
-        pop3Client.setState(POP3.UPDATE_STATE);
-        msg = pop3Client.listMessages();
+        //The first message is always at index 1
+        final POP3MessageInfo msg = pop3Client.listMessage(1);
         assertNull(msg);
     }
 
@@ -200,36 +202,37 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(msg);
     }
 
-    public void testListMessageOnEmptyMailbox() throws Exception
+    public void testListMessagesOnFullMailbox() throws Exception
+    {
+        reset();
+        connect();
+        login();
+
+        POP3MessageInfo[] msg = pop3Client.listMessages();
+        assertTrue(msg.length > 0);
+
+        for(int i = 0; i < msg.length; i++)
+        {
+            assertNotNull(msg[i]);
+            assertEquals(i+1, msg[i].number);
+            assertTrue(msg[i].size > 0);
+            assertNull(msg[i].identifier);
+        }
+
+        //Now test from the update state
+        pop3Client.setState(POP3.UPDATE_STATE);
+        msg = pop3Client.listMessages();
+        assertNull(msg);
+    }
+
+    public void testListUniqueIdentifierOnEmptyMailbox() throws Exception
     {
         reset();
         connect();
         assertTrue(pop3Client.login(emptyUser, password));
 
         //The first message is always at index 1
-        final POP3MessageInfo msg = pop3Client.listMessage(1);
-        assertNull(msg);
-    }
-
-    public void testListUniqueIDsOnFullMailbox() throws Exception
-    {
-        reset();
-        connect();
-        login();
-
-        POP3MessageInfo[] msg = pop3Client.listUniqueIdentifiers();
-        assertTrue(msg.length > 0);
-
-        for(int i = 0; i < msg.length; i++)
-        {
-            assertNotNull(msg[i]);
-            assertEquals(i + 1, msg[i].number);
-            assertNotNull(msg[i].identifier);
-        }
-
-        //Now test from the update state
-        pop3Client.setState(POP3.UPDATE_STATE);
-        msg = pop3Client.listUniqueIdentifiers();
+        final POP3MessageInfo msg = pop3Client.listUniqueIdentifier(1);
         assertNull(msg);
     }
 
@@ -278,15 +281,63 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(msg);
     }
 
-    public void testListUniqueIdentifierOnEmptyMailbox() throws Exception
+    public void testListUniqueIDsOnFullMailbox() throws Exception
+    {
+        reset();
+        connect();
+        login();
+
+        POP3MessageInfo[] msg = pop3Client.listUniqueIdentifiers();
+        assertTrue(msg.length > 0);
+
+        for(int i = 0; i < msg.length; i++)
+        {
+            assertNotNull(msg[i]);
+            assertEquals(i + 1, msg[i].number);
+            assertNotNull(msg[i].identifier);
+        }
+
+        //Now test from the update state
+        pop3Client.setState(POP3.UPDATE_STATE);
+        msg = pop3Client.listUniqueIdentifiers();
+        assertNull(msg);
+    }
+
+    public void testNoopCommand() throws Exception
+    {
+        reset();
+        connect();
+
+        //Should fail before authorization
+        assertFalse(pop3Client.noop());
+
+        //Should pass in transaction state
+        login();
+        assertTrue(pop3Client.noop());
+
+        //Should fail in update state
+        pop3Client.setState(POP3.UPDATE_STATE);
+        assertFalse(pop3Client.noop());
+    }
+
+    public void testResetAndDeleteShouldFails() throws Exception
+    {
+        reset();
+        connect();
+        login();
+
+        pop3Client.setState(POP3.UPDATE_STATE);
+        assertFalse(pop3Client.reset());
+
+        assertFalse(pop3Client.deleteMessage(1));
+    }
+
+    public void testRetrieveMessageOnEmptyMailbox() throws Exception
     {
         reset();
         connect();
         assertTrue(pop3Client.login(emptyUser, password));
-
-        //The first message is always at index 1
-        final POP3MessageInfo msg = pop3Client.listUniqueIdentifier(1);
-        assertNull(msg);
+        assertNull(pop3Client.retrieveMessage(1));
     }
 
     public void testRetrieveMessageOnFullMailbox() throws Exception
@@ -333,14 +384,6 @@ public class POP3ClientCommandsTest extends TestCase
         }
     }
 
-    public void testRetrieveMessageOnEmptyMailbox() throws Exception
-    {
-        reset();
-        connect();
-        assertTrue(pop3Client.login(emptyUser, password));
-        assertNull(pop3Client.retrieveMessage(1));
-    }
-
     public void testRetrieveMessageShouldFails() throws Exception
     {
         reset();
@@ -361,6 +404,14 @@ public class POP3ClientCommandsTest extends TestCase
         assertNull(pop3Client.retrieveMessage(1));
     }
 
+    public void testRetrieveMessageTopOnEmptyMailbox() throws Exception
+    {
+        reset();
+        connect();
+        assertTrue(pop3Client.login(emptyUser, password));
+        assertNull(pop3Client.retrieveMessageTop(1, 10));
+    }
+
     public void testRetrieveMessageTopOnFullMailbox() throws Exception
     {
         reset();
@@ -378,6 +429,26 @@ public class POP3ClientCommandsTest extends TestCase
             r.close();
             r = null;
         }
+    }
+
+    public void testRetrieveMessageTopShouldFails() throws Exception
+    {
+        reset();
+        connect();
+        login();
+
+        //Try to get message 0
+        assertNull(pop3Client.retrieveMessageTop(0, 10));
+
+        //Try to get a negative message
+        assertNull(pop3Client.retrieveMessageTop(-2, 10));
+
+        //Try to get a message that is not there
+        assertNull(pop3Client.retrieveMessageTop(100000, 10));
+
+        //Change states and try to get a valid message
+        pop3Client.setState(POP3.UPDATE_STATE);
+        assertNull(pop3Client.retrieveMessageTop(1, 10));
     }
 
     public void testRetrieveOverSizedMessageTopOnFullMailbox() throws Exception
@@ -420,108 +491,37 @@ public class POP3ClientCommandsTest extends TestCase
         assertTrue(actualSize >= reportedSize);
     }
 
-    public void testRetrieveMessageTopOnEmptyMailbox() throws Exception
+    public void testStatus() throws Exception
     {
+        reset();
+        connect();
+
+        //Should fail in authorization state
+        assertNull(pop3Client.status());
+
+        //Should pass on a mailbox with mail in it
+        login();
+        final POP3MessageInfo msg = pop3Client.status();
+        assertTrue(msg.number > 0);
+        assertTrue(msg.size > 0);
+        assertNull(msg.identifier);
+        pop3Client.logout();
+
+        //Should also pass on a mailbox with no mail in it
         reset();
         connect();
         assertTrue(pop3Client.login(emptyUser, password));
-        assertNull(pop3Client.retrieveMessageTop(1, 10));
-    }
-
-    public void testRetrieveMessageTopShouldFails() throws Exception
-    {
-        reset();
-        connect();
-        login();
-
-        //Try to get message 0
-        assertNull(pop3Client.retrieveMessageTop(0, 10));
-
-        //Try to get a negative message
-        assertNull(pop3Client.retrieveMessageTop(-2, 10));
-
-        //Try to get a message that is not there
-        assertNull(pop3Client.retrieveMessageTop(100000, 10));
-
-        //Change states and try to get a valid message
-        pop3Client.setState(POP3.UPDATE_STATE);
-        assertNull(pop3Client.retrieveMessageTop(1, 10));
-    }
-
-    public void testDeleteWithReset() throws Exception
-    {
-        reset();
-        connect();
-        login();
-        //Get the original number of messages
-        POP3MessageInfo[] msg = pop3Client.listMessages();
-        final int numMessages = msg.length;
-        int numDeleted = 0;
-
-        //Now delete some and logout
-        for (int i = 0; i < numMessages - 1; i ++)
-        {
-            pop3Client.deleteMessage(i + 1);
-            numDeleted++;
-        }
-        //Check to see that they are marked as deleted
-        assertEquals(numMessages, numDeleted + 1);
-
-        //Now reset to unmark the messages as deleted
-        pop3Client.reset();
-
-        //Logout and come back in
+        final POP3MessageInfo msg2 = pop3Client.status();
+        assertEquals(0, msg2.number);
+        assertEquals(0, msg2.size);
+        assertNull(msg2.identifier);
         pop3Client.logout();
+
+        //Should fail in the 'update' state
         reset();
         connect();
         login();
-
-        //Get the new number of messages, because of
-        //reset, new number should match old number
-        msg = pop3Client.listMessages();
-        assertEquals(numMessages, msg.length);
-    }
-
-    public void testDelete() throws Exception
-    {
-        reset();
-        connect();
-        login();
-        //Get the original number of messages
-        POP3MessageInfo[] msg = pop3Client.listMessages();
-        final int numMessages = msg.length;
-        int numDeleted = 0;
-
-        //Now delete some and logout
-        for (int i = 0; i < numMessages - 3; i ++)
-        {
-            pop3Client.deleteMessage(i + 1);
-            numDeleted++;
-        }
-        //Check to see that they are marked as deleted
-        assertEquals(numMessages, numDeleted + 3);
-
-        //Logout and come back in
-        pop3Client.logout();
-        reset();
-        connect();
-        login();
-
-        //Get the new number of messages, because of
-        //reset, new number should match old number
-        msg = pop3Client.listMessages();
-        assertEquals(numMessages - numDeleted, msg.length);
-    }
-
-    public void testResetAndDeleteShouldFails() throws Exception
-    {
-        reset();
-        connect();
-        login();
-
         pop3Client.setState(POP3.UPDATE_STATE);
-        assertFalse(pop3Client.reset());
-
-        assertFalse(pop3Client.deleteMessage(1));
+        assertNull(pop3Client.status());
     }
 }

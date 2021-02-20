@@ -85,40 +85,6 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         super(name);
     }
 
-    public void testWholeListParse() throws IOException
-    {
-        final VMSFTPEntryParser parser = new VMSFTPEntryParser();
-        parser.configure(null);
-        final FTPListParseEngine engine = new FTPListParseEngine(parser);
-        engine.readServerList(
-                new ByteArrayInputStream(FULL_LISTING.getBytes()), null); // use default encoding
-        final FTPFile[] files = engine.getFiles();
-        assertEquals(6, files.length);
-        assertFileInListing(files, "2-JUN.LIS");
-        assertFileInListing(files, "3-JUN.LIS");
-        assertFileInListing(files, "1-JUN.LIS");
-        assertFileNotInListing(files, "1-JUN.LIS;1");
-
-    }
-
-    public void testWholeListParseWithVersioning() throws IOException
-    {
-
-        final VMSFTPEntryParser parser = new VMSVersioningFTPEntryParser();
-        parser.configure(null);
-        final FTPListParseEngine engine = new FTPListParseEngine(parser);
-        engine.readServerList(
-                new ByteArrayInputStream(FULL_LISTING.getBytes()), null); // use default encoding
-        final FTPFile[] files = engine.getFiles();
-        assertEquals(3, files.length);
-        assertFileInListing(files, "1-JUN.LIS;1");
-        assertFileInListing(files, "2-JUN.LIS;1");
-        assertFileInListing(files, "3-JUN.LIS;4");
-        assertFileNotInListing(files, "3-JUN.LIS;1");
-        assertFileNotInListing(files, "3-JUN.LIS");
-
-    }
-
     public void assertFileInListing(final FTPFile[] listing, final String name) {
         for (final FTPFile element : listing)
         {
@@ -128,6 +94,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
         }
         fail("File " + name + " not found in supplied listing");
     }
+
     public void assertFileNotInListing(final FTPFile[] listing, final String name) {
         for (final FTPFile element : listing)
         {
@@ -135,6 +102,85 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
                 fail("Unexpected File " + name + " found in supplied listing");
             }
         }
+    }
+
+    /*
+     * Verify that the VMS parser does NOT  set the permissions.
+     */
+    private void checkPermisions(final FTPFile dir, final int octalPerm)
+    {
+        int permMask = 1<<8;
+        assertTrue("Owner should not have read permission.",
+                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.USER_ACCESS,
+                                      FTPFile.READ_PERMISSION));
+        permMask >>= 1;
+        assertTrue("Owner should not have write permission.",
+                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.USER_ACCESS,
+                                      FTPFile.WRITE_PERMISSION));
+        permMask >>= 1;
+        assertTrue("Owner should not have execute permission.",
+                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.USER_ACCESS,
+                                      FTPFile.EXECUTE_PERMISSION));
+        permMask >>= 1;
+        assertTrue("Group should not have read permission.",
+                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.GROUP_ACCESS,
+                                      FTPFile.READ_PERMISSION));
+        permMask >>= 1;
+        assertTrue("Group should not have write permission.",
+                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.GROUP_ACCESS,
+                                      FTPFile.WRITE_PERMISSION));
+        permMask >>= 1;
+        assertTrue("Group should not have execute permission.",
+                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.GROUP_ACCESS,
+                                      FTPFile.EXECUTE_PERMISSION));
+        permMask >>= 1;
+        assertTrue("World should not have read permission.",
+                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.WORLD_ACCESS,
+                                      FTPFile.READ_PERMISSION));
+        permMask >>= 1;
+        assertTrue("World should not have write permission.",
+                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.WORLD_ACCESS,
+                                      FTPFile.WRITE_PERMISSION));
+        permMask >>= 1;
+        assertTrue("World should not have execute permission.",
+                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.WORLD_ACCESS,
+                                      FTPFile.EXECUTE_PERMISSION));
+    }
+    @Override
+    protected String[] getBadListing()
+    {
+
+        return BAD_SAMPLES;
+    }
+
+    @Override
+    protected String[] getGoodListing()
+    {
+
+        return GOOD_SAMPLES;
+    }
+
+    @Override
+    protected FTPFileEntryParser getParser()
+    {
+        final ConfigurableFTPFileEntryParserImpl parser =
+            new VMSFTPEntryParser();
+        parser.configure(null);
+        return parser;
+    }
+
+    protected FTPFileEntryParser getVersioningParser()
+    {
+        final ConfigurableFTPFileEntryParserImpl parser =
+            new VMSVersioningFTPEntryParser();
+        parser.configure(null);
+        return parser;
+    }
+
+    @Override
+    public void testDefaultPrecision() {
+        testPrecision(
+                "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [TRANSLATED]    (RWED,RD,,)", CalendarUnit.SECOND);
     }
 
     @Override
@@ -212,87 +258,41 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     }
 
     @Override
-    public void testDefaultPrecision() {
-        testPrecision(
-                "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [TRANSLATED]    (RWED,RD,,)", CalendarUnit.SECOND);
-    }
-
-    @Override
     public void testRecentPrecision() {
         // Not used
     }
 
-    @Override
-    protected String[] getBadListing()
+    public void testWholeListParse() throws IOException
     {
-
-        return BAD_SAMPLES;
-    }
-
-    @Override
-    protected String[] getGoodListing()
-    {
-
-        return GOOD_SAMPLES;
-    }
-
-    @Override
-    protected FTPFileEntryParser getParser()
-    {
-        final ConfigurableFTPFileEntryParserImpl parser =
-            new VMSFTPEntryParser();
+        final VMSFTPEntryParser parser = new VMSFTPEntryParser();
         parser.configure(null);
-        return parser;
+        final FTPListParseEngine engine = new FTPListParseEngine(parser);
+        engine.readServerList(
+                new ByteArrayInputStream(FULL_LISTING.getBytes()), null); // use default encoding
+        final FTPFile[] files = engine.getFiles();
+        assertEquals(6, files.length);
+        assertFileInListing(files, "2-JUN.LIS");
+        assertFileInListing(files, "3-JUN.LIS");
+        assertFileInListing(files, "1-JUN.LIS");
+        assertFileNotInListing(files, "1-JUN.LIS;1");
+
     }
 
-    protected FTPFileEntryParser getVersioningParser()
+    public void testWholeListParseWithVersioning() throws IOException
     {
-        final ConfigurableFTPFileEntryParserImpl parser =
-            new VMSVersioningFTPEntryParser();
+
+        final VMSFTPEntryParser parser = new VMSVersioningFTPEntryParser();
         parser.configure(null);
-        return parser;
-    }
+        final FTPListParseEngine engine = new FTPListParseEngine(parser);
+        engine.readServerList(
+                new ByteArrayInputStream(FULL_LISTING.getBytes()), null); // use default encoding
+        final FTPFile[] files = engine.getFiles();
+        assertEquals(3, files.length);
+        assertFileInListing(files, "1-JUN.LIS;1");
+        assertFileInListing(files, "2-JUN.LIS;1");
+        assertFileInListing(files, "3-JUN.LIS;4");
+        assertFileNotInListing(files, "3-JUN.LIS;1");
+        assertFileNotInListing(files, "3-JUN.LIS");
 
-    /*
-     * Verify that the VMS parser does NOT  set the permissions.
-     */
-    private void checkPermisions(final FTPFile dir, final int octalPerm)
-    {
-        int permMask = 1<<8;
-        assertTrue("Owner should not have read permission.",
-                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.USER_ACCESS,
-                                      FTPFile.READ_PERMISSION));
-        permMask >>= 1;
-        assertTrue("Owner should not have write permission.",
-                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.USER_ACCESS,
-                                      FTPFile.WRITE_PERMISSION));
-        permMask >>= 1;
-        assertTrue("Owner should not have execute permission.",
-                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.USER_ACCESS,
-                                      FTPFile.EXECUTE_PERMISSION));
-        permMask >>= 1;
-        assertTrue("Group should not have read permission.",
-                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.GROUP_ACCESS,
-                                      FTPFile.READ_PERMISSION));
-        permMask >>= 1;
-        assertTrue("Group should not have write permission.",
-                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.GROUP_ACCESS,
-                                      FTPFile.WRITE_PERMISSION));
-        permMask >>= 1;
-        assertTrue("Group should not have execute permission.",
-                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.GROUP_ACCESS,
-                                      FTPFile.EXECUTE_PERMISSION));
-        permMask >>= 1;
-        assertTrue("World should not have read permission.",
-                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.WORLD_ACCESS,
-                                      FTPFile.READ_PERMISSION));
-        permMask >>= 1;
-        assertTrue("World should not have write permission.",
-                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.WORLD_ACCESS,
-                                      FTPFile.WRITE_PERMISSION));
-        permMask >>= 1;
-        assertTrue("World should not have execute permission.",
-                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.WORLD_ACCESS,
-                                      FTPFile.EXECUTE_PERMISSION));
     }
 }

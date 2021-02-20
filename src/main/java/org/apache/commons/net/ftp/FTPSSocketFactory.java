@@ -39,36 +39,6 @@ public class FTPSSocketFactory extends SocketFactory {
         this.context = context;
     }
 
-    // Override the default implementation
-    @Override
-    public Socket createSocket() throws IOException{
-        return this.context.getSocketFactory().createSocket();
-    }
-
-    @Override
-    public Socket createSocket(final String address, final int port) throws UnknownHostException, IOException {
-        return this.context.getSocketFactory().createSocket(address, port);
-    }
-
-    @Override
-    public Socket createSocket(final InetAddress address, final int port) throws IOException {
-        return this.context.getSocketFactory().createSocket(address, port);
-    }
-
-    @Override
-    public Socket createSocket(final String address, final int port, final InetAddress localAddress, final int localPort)
-            throws UnknownHostException, IOException {
-        return this.context.getSocketFactory().createSocket(address, port, localAddress, localPort);
-    }
-
-    @Override
-    public Socket createSocket(final InetAddress address, final int port, final InetAddress localAddress,
-            final int localPort) throws IOException {
-        return this.context.getSocketFactory().createSocket(address, port, localAddress, localPort);
-    }
-
-    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
-
     /** @param port the port
      * @return  the socket
      * @throws IOException on error
@@ -98,6 +68,36 @@ public class FTPSSocketFactory extends SocketFactory {
     public java.net.ServerSocket createServerSocket(final int port, final int backlog, final InetAddress ifAddress)
             throws IOException {
         return this.init(this.context.getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
+    }
+
+    // Override the default implementation
+    @Override
+    public Socket createSocket() throws IOException{
+        return this.context.getSocketFactory().createSocket();
+    }
+
+    @Override
+    public Socket createSocket(final InetAddress address, final int port) throws IOException {
+        return this.context.getSocketFactory().createSocket(address, port);
+    }
+
+    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
+
+    @Override
+    public Socket createSocket(final InetAddress address, final int port, final InetAddress localAddress,
+            final int localPort) throws IOException {
+        return this.context.getSocketFactory().createSocket(address, port, localAddress, localPort);
+    }
+
+    @Override
+    public Socket createSocket(final String address, final int port) throws UnknownHostException, IOException {
+        return this.context.getSocketFactory().createSocket(address, port);
+    }
+
+    @Override
+    public Socket createSocket(final String address, final int port, final InetAddress localAddress, final int localPort)
+            throws UnknownHostException, IOException {
+        return this.context.getSocketFactory().createSocket(address, port, localAddress, localPort);
     }
 
     /** @param socket the socket

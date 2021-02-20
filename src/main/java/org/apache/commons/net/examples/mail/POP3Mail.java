@@ -38,23 +38,6 @@ import org.apache.commons.net.pop3.POP3SClient;
 public final class POP3Mail
 {
 
-    public static void printMessageInfo(final BufferedReader reader, final int id) throws IOException  {
-        String from = "";
-        String subject = "";
-        String line;
-        while ((line = reader.readLine()) != null)
-        {
-            final String lower = line.toLowerCase(Locale.ENGLISH);
-            if (lower.startsWith("from: ")) {
-                from = line.substring(6).trim();
-            }  else if (lower.startsWith("subject: ")) {
-                subject = line.substring(9).trim();
-            }
-        }
-
-        System.out.println(Integer.toString(id) + " From: " + from + "  Subject: " + subject);
-    }
-
     public static void main(final String[] args)
     {
         if (args.length < 3)
@@ -171,6 +154,23 @@ public final class POP3Mail
             e.printStackTrace();
             return;
         }
+    }
+
+    public static void printMessageInfo(final BufferedReader reader, final int id) throws IOException  {
+        String from = "";
+        String subject = "";
+        String line;
+        while ((line = reader.readLine()) != null)
+        {
+            final String lower = line.toLowerCase(Locale.ENGLISH);
+            if (lower.startsWith("from: ")) {
+                from = line.substring(6).trim();
+            }  else if (lower.startsWith("subject: ")) {
+                subject = line.substring(9).trim();
+            }
+        }
+
+        System.out.println(Integer.toString(id) + " From: " + from + "  Subject: " + subject);
     }
 }
 

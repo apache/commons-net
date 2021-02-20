@@ -28,10 +28,6 @@ import java.util.Locale;
  */
 class Utils {
 
-    private Utils() {
-        // not instantiable
-    }
-
     /**
      * If the initial password is:
      * '*' - replace it with a line read from the system console
@@ -65,6 +61,10 @@ class Utils {
             }
         }
         return password;
+    }
+
+    private Utils() {
+        // not instantiable
     }
 
 }

@@ -76,16 +76,6 @@ public class POP3ConstructorTest extends TestCase
         assertEquals(11, POP3Command.UIDL);
     }
 
-    public void testPOP3DefaultConstructor()
-    {
-        final POP3 pop = new POP3();
-
-        assertEquals(110, pop.getDefaultPort());
-        assertEquals(POP3.DISCONNECTED_STATE, pop.getState());
-        assertNull(pop.reader);
-        assertNotNull(pop.replyLines);
-    }
-
     public void testPOP3ClientStateTransition() throws Exception
     {
         final POP3Client pop = new POP3Client();
@@ -160,5 +150,15 @@ public class POP3ConstructorTest extends TestCase
         //Now logout
         pop.logout();
         assertEquals(POP3.UPDATE_STATE, pop.getState());
+    }
+
+    public void testPOP3DefaultConstructor()
+    {
+        final POP3 pop = new POP3();
+
+        assertEquals(110, pop.getDefaultPort());
+        assertEquals(POP3.DISCONNECTED_STATE, pop.getState());
+        assertNull(pop.reader);
+        assertNotNull(pop.replyLines);
     }
 }

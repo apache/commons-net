@@ -264,11 +264,6 @@ public class FTPSClientTest {
         testMdtmCalendar("/file.txt");
     }
 
-    @Test
-    public void testMdtmInstant() throws SocketException, IOException {
-        testMdtmInstant("/file.txt");
-    }
-
     private void testMdtmCalendar(final String pathname) throws SocketException, IOException {
         final FTPSClient client = loginClient();
         try {
@@ -278,20 +273,6 @@ public class FTPSClientTest {
             assertNotNull(mdtmCalendar1);
             assertNotNull(mdtmCalendar2);
             assertEquals(mdtmCalendar1, mdtmCalendar2);
-        } finally {
-            client.disconnect();
-        }
-    }
-
-    private void testMdtmInstant(final String pathname) throws SocketException, IOException {
-        final FTPSClient client = loginClient();
-        try {
-            // do it twice
-            final Instant mdtmInstant1 = client.mdtmInstant(pathname);
-            final Instant mdtmInstant2 = client.mdtmInstant(pathname);
-            assertNotNull(mdtmInstant1);
-            assertNotNull(mdtmInstant2);
-            assertEquals(mdtmInstant1, mdtmInstant2);
         } finally {
             client.disconnect();
         }
@@ -310,6 +291,25 @@ public class FTPSClientTest {
             assertNotNull(mdtmFile1);
             assertNotNull(mdtmFile2);
             assertEquals(mdtmFile1, mdtmFile2);
+        } finally {
+            client.disconnect();
+        }
+    }
+
+    @Test
+    public void testMdtmInstant() throws SocketException, IOException {
+        testMdtmInstant("/file.txt");
+    }
+
+    private void testMdtmInstant(final String pathname) throws SocketException, IOException {
+        final FTPSClient client = loginClient();
+        try {
+            // do it twice
+            final Instant mdtmInstant1 = client.mdtmInstant(pathname);
+            final Instant mdtmInstant2 = client.mdtmInstant(pathname);
+            assertNotNull(mdtmInstant1);
+            assertNotNull(mdtmInstant2);
+            assertEquals(mdtmInstant1, mdtmInstant2);
         } finally {
             client.disconnect();
         }

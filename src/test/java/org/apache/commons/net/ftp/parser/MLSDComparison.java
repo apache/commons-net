@@ -47,31 +47,61 @@ public class MLSDComparison {
             return n1.compareTo(n2);
         };
 
-    @Test
-    public void testFile() throws Exception {
-        final File path = new File(DownloadListings.DOWNLOAD_DIR);
-        final FilenameFilter filter = (dir, name) -> name.endsWith("_mlsd.txt");
-        final File[] files = path.listFiles(filter);
-        if (files != null) {
-            for (final File mlsd : files) {
-                System.out.println(mlsd);
-                FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance());
-                try (final InputStream is = new FileInputStream(mlsd)) {
-                    engine.readServerList(is, FTP.DEFAULT_CONTROL_ENCODING);
-                }
-                final FTPFile[] mlsds = engine.getFiles(FTPFileFilters.ALL);
-                final File listFile = new File(mlsd.getParentFile(), mlsd.getName().replace("_mlsd", "_list"));
-                try (final InputStream inputStream = new FileInputStream(listFile)) {
-                    final FTPClientConfig cfg = new FTPClientConfig();
-                    cfg.setServerTimeZoneId("GMT");
-                    final UnixFTPEntryParser parser = new UnixFTPEntryParser(cfg);
-                    engine = new FTPListParseEngine(parser);
-                    engine.readServerList(inputStream, FTP.DEFAULT_CONTROL_ENCODING);
-                    final FTPFile[] lists = engine.getFiles(FTPFileFilters.ALL);
-                    compareSortedLists(mlsds, lists);
-                }
-            }
-        }
+    /**
+     * Compare two instances to see if they are the same,
+     * ignoring any uninitialized fields.
+     * @param a first instance
+     * @param b second instance
+     * @return true if the initialized fields are the same
+     * @since 3.0
+     */
+    public boolean areEquivalent(final FTPFile a, final FTPFile b) {
+        return
+            a.getName().equals(b.getName()) &&
+            areSame(a.getSize(), b.getSize(), -1L) &&
+//            areSame(a.getUser(), b.getUser()) &&
+//            areSame(a.getGroup(), b.getGroup()) &&
+            areSame(a.getTimestamp(), b.getTimestamp()) &&
+//            areSame(a.getType(), b.getType(), UNKNOWN_TYPE) &&
+//            areSame(a.getHardLinkCount(), b.getHardLinkCount(), 0) &&
+//            areSame(a._permissions, b._permissions)
+            true
+            ;
+    }
+
+    private boolean areSame(final Calendar a, final Calendar b) {
+        return a == null || b == null || areSameDateTime(a, b);
+    }
+    private boolean areSame(final long a, final long b, final long d) {
+        return a == d || b == d || a == b;
+    }
+
+    // compare permissions: default is all false, but that is also a possible
+    // state, so this may miss some differences
+//    private boolean areSame(boolean[][] a, boolean[][] b) {
+//        return isDefault(a) || isDefault(b) || Arrays.deepEquals(a, b);
+//    }
+
+    // Is the array in its default state?
+//    private boolean isDefault(boolean[][] a) {
+//        for(boolean[] r : a){
+//            for(boolean rc : r){
+//                if (rc) { // not default
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
+//    }
+
+
+    private boolean areSameDateTime(final Calendar a, final Calendar b) {
+        final TimeZone UTC = TimeZone.getTimeZone("UTC");
+        final Calendar ac = Calendar.getInstance(UTC);
+        ac.setTime(a.getTime());
+        final Calendar bc = Calendar.getInstance(UTC);
+        bc.setTime(b.getTime());
+        return isSameDay(ac, bc) && isSameTime(ac, bc);
     }
 
     private void compareSortedLists(final FTPFile[] lst, final FTPFile[] mlst){
@@ -125,59 +155,6 @@ public class MLSDComparison {
             }
         }
     }
-    /**
-     * Compare two instances to see if they are the same,
-     * ignoring any uninitialized fields.
-     * @param a first instance
-     * @param b second instance
-     * @return true if the initialized fields are the same
-     * @since 3.0
-     */
-    public boolean areEquivalent(final FTPFile a, final FTPFile b) {
-        return
-            a.getName().equals(b.getName()) &&
-            areSame(a.getSize(), b.getSize(), -1L) &&
-//            areSame(a.getUser(), b.getUser()) &&
-//            areSame(a.getGroup(), b.getGroup()) &&
-            areSame(a.getTimestamp(), b.getTimestamp()) &&
-//            areSame(a.getType(), b.getType(), UNKNOWN_TYPE) &&
-//            areSame(a.getHardLinkCount(), b.getHardLinkCount(), 0) &&
-//            areSame(a._permissions, b._permissions)
-            true
-            ;
-    }
-
-    // compare permissions: default is all false, but that is also a possible
-    // state, so this may miss some differences
-//    private boolean areSame(boolean[][] a, boolean[][] b) {
-//        return isDefault(a) || isDefault(b) || Arrays.deepEquals(a, b);
-//    }
-
-    // Is the array in its default state?
-//    private boolean isDefault(boolean[][] a) {
-//        for(boolean[] r : a){
-//            for(boolean rc : r){
-//                if (rc) { // not default
-//                    return false;
-//                }
-//            }
-//        }
-//        return true;
-//    }
-
-
-    private boolean areSame(final Calendar a, final Calendar b) {
-        return a == null || b == null || areSameDateTime(a, b);
-    }
-
-    private boolean areSameDateTime(final Calendar a, final Calendar b) {
-        final TimeZone UTC = TimeZone.getTimeZone("UTC");
-        final Calendar ac = Calendar.getInstance(UTC);
-        ac.setTime(a.getTime());
-        final Calendar bc = Calendar.getInstance(UTC);
-        bc.setTime(b.getTime());
-        return isSameDay(ac, bc) && isSameTime(ac, bc);
-    }
 
     private boolean isSameDay(final Calendar a, final Calendar b) {
         final int ad = a.get(Calendar.DAY_OF_MONTH);
@@ -203,8 +180,31 @@ public class MLSDComparison {
     }
 
 
-    private boolean areSame(final long a, final long b, final long d) {
-        return a == d || b == d || a == b;
+    @Test
+    public void testFile() throws Exception {
+        final File path = new File(DownloadListings.DOWNLOAD_DIR);
+        final FilenameFilter filter = (dir, name) -> name.endsWith("_mlsd.txt");
+        final File[] files = path.listFiles(filter);
+        if (files != null) {
+            for (final File mlsd : files) {
+                System.out.println(mlsd);
+                FTPListParseEngine engine = new FTPListParseEngine(MLSxEntryParser.getInstance());
+                try (final InputStream is = new FileInputStream(mlsd)) {
+                    engine.readServerList(is, FTP.DEFAULT_CONTROL_ENCODING);
+                }
+                final FTPFile[] mlsds = engine.getFiles(FTPFileFilters.ALL);
+                final File listFile = new File(mlsd.getParentFile(), mlsd.getName().replace("_mlsd", "_list"));
+                try (final InputStream inputStream = new FileInputStream(listFile)) {
+                    final FTPClientConfig cfg = new FTPClientConfig();
+                    cfg.setServerTimeZoneId("GMT");
+                    final UnixFTPEntryParser parser = new UnixFTPEntryParser(cfg);
+                    engine = new FTPListParseEngine(parser);
+                    engine.readServerList(inputStream, FTP.DEFAULT_CONTROL_ENCODING);
+                    final FTPFile[] lists = engine.getFiles(FTPFileFilters.ALL);
+                    compareSortedLists(mlsds, lists);
+                }
+            }
+        }
     }
 
 //    private boolean areSame(int a, int b, int d) {

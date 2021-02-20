@@ -47,20 +47,6 @@ public final class TFTPAckPacket extends TFTPPacket
     int blockNumber;
 
     /**
-     * Creates an acknowledgment packet to be sent to a host at a given port
-     * acknowledging receipt of a block.
-     *
-     * @param destination  The host to which the packet is going to be sent.
-     * @param port  The port to which the packet is going to be sent.
-     * @param blockNumber  The block number being acknowledged.
-     */
-    public TFTPAckPacket(final InetAddress destination, final int port, final int blockNumber)
-    {
-        super(TFTPPacket.ACKNOWLEDGEMENT, destination, port);
-        this.blockNumber = blockNumber;
-    }
-
-    /**
      * Creates an acknowledgement packet based from a received
      * datagram.  Assumes the datagram is at least length 4, else an
      * ArrayIndexOutOfBoundsException may be thrown.
@@ -85,30 +71,27 @@ public final class TFTPAckPacket extends TFTPPacket
     }
 
     /**
-     * This is a method only available within the package for
-     * implementing efficient datagram transport by elminating buffering.
-     * It takes a datagram as an argument, and a byte buffer in which
-     * to store the raw datagram data.  Inside the method, the data
-     * is set as the datagram's data and the datagram returned.
+     * Creates an acknowledgment packet to be sent to a host at a given port
+     * acknowledging receipt of a block.
      *
-     * @param datagram  The datagram to create.
-     * @param data The buffer to store the packet and to use in the datagram.
-     * @return The datagram argument.
+     * @param destination  The host to which the packet is going to be sent.
+     * @param port  The port to which the packet is going to be sent.
+     * @param blockNumber  The block number being acknowledged.
      */
-    @Override
-    DatagramPacket newDatagram(final DatagramPacket datagram, final byte[] data)
+    public TFTPAckPacket(final InetAddress destination, final int port, final int blockNumber)
     {
-        data[0] = 0;
-        data[1] = (byte)type;
-        data[2] = (byte)((blockNumber & 0xffff) >> 8);
-        data[3] = (byte)(blockNumber & 0xff);
+        super(TFTPPacket.ACKNOWLEDGEMENT, destination, port);
+        this.blockNumber = blockNumber;
+    }
 
-        datagram.setAddress(address);
-        datagram.setPort(port);
-        datagram.setData(data);
-        datagram.setLength(4);
-
-        return datagram;
+    /**
+     * Returns the block number of the acknowledgement.
+     *
+     * @return The block number of the acknowledgement.
+     */
+    public int getBlockNumber()
+    {
+        return blockNumber;
     }
 
 
@@ -139,13 +122,30 @@ public final class TFTPAckPacket extends TFTPPacket
 
 
     /**
-     * Returns the block number of the acknowledgement.
+     * This is a method only available within the package for
+     * implementing efficient datagram transport by elminating buffering.
+     * It takes a datagram as an argument, and a byte buffer in which
+     * to store the raw datagram data.  Inside the method, the data
+     * is set as the datagram's data and the datagram returned.
      *
-     * @return The block number of the acknowledgement.
+     * @param datagram  The datagram to create.
+     * @param data The buffer to store the packet and to use in the datagram.
+     * @return The datagram argument.
      */
-    public int getBlockNumber()
+    @Override
+    DatagramPacket newDatagram(final DatagramPacket datagram, final byte[] data)
     {
-        return blockNumber;
+        data[0] = 0;
+        data[1] = (byte)type;
+        data[2] = (byte)((blockNumber & 0xffff) >> 8);
+        data[3] = (byte)(blockNumber & 0xff);
+
+        datagram.setAddress(address);
+        datagram.setPort(port);
+        datagram.setData(data);
+        datagram.setLength(4);
+
+        return datagram;
     }
 
 

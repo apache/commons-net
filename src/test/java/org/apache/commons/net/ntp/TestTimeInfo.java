@@ -27,20 +27,12 @@ import org.junit.Test;
 public class TestTimeInfo {
 
     @Test
-    public void testEquals() {
+    public void testAddress() throws UnknownHostException {
         final NtpV3Packet packet = new NtpV3Impl();
-        final long returnTime = System.currentTimeMillis();
-        final TimeInfo info = new TimeInfo(packet, returnTime);
-        info.addComment("this is a comment");
-        final TimeInfo other = new TimeInfo(packet, returnTime);
-        other.addComment("this is a comment");
-        Assert.assertEquals(info, other); // fails
-        Assert.assertEquals(info.hashCode(), other.hashCode());
-        other.addComment("another comment");
-        //Assert.assertFalse(info.equals(other)); // comments not used for equality
-
-        final TimeInfo another = new TimeInfo(packet, returnTime, new ArrayList<String>());
-        Assert.assertEquals(info, another);
+        final TimeInfo info = new TimeInfo(packet, System.currentTimeMillis());
+        Assert.assertNull(info.getAddress());
+        packet.getDatagramPacket().setAddress(InetAddress.getByAddress("loopback", new byte[]{127, 0, 0, 1}));
+        Assert.assertNotNull(info.getAddress());
     }
 
     @Test
@@ -77,33 +69,27 @@ public class TestTimeInfo {
         Assert.assertEquals(2, info.getComments().size());
     }
 
+    @Test
+    public void testEquals() {
+        final NtpV3Packet packet = new NtpV3Impl();
+        final long returnTime = System.currentTimeMillis();
+        final TimeInfo info = new TimeInfo(packet, returnTime);
+        info.addComment("this is a comment");
+        final TimeInfo other = new TimeInfo(packet, returnTime);
+        other.addComment("this is a comment");
+        Assert.assertEquals(info, other); // fails
+        Assert.assertEquals(info.hashCode(), other.hashCode());
+        other.addComment("another comment");
+        //Assert.assertFalse(info.equals(other)); // comments not used for equality
+
+        final TimeInfo another = new TimeInfo(packet, returnTime, new ArrayList<String>());
+        Assert.assertEquals(info, another);
+    }
+
     @Test(expected=IllegalArgumentException.class)
     public void testException() {
         final NtpV3Packet packet = null;
         new TimeInfo(packet, 1L);
-    }
-
-    @Test
-    public void testAddress() throws UnknownHostException {
-        final NtpV3Packet packet = new NtpV3Impl();
-        final TimeInfo info = new TimeInfo(packet, System.currentTimeMillis());
-        Assert.assertNull(info.getAddress());
-        packet.getDatagramPacket().setAddress(InetAddress.getByAddress("loopback", new byte[]{127, 0, 0, 1}));
-        Assert.assertNotNull(info.getAddress());
-    }
-
-    @Test
-    public void testZeroTime() {
-        final NtpV3Packet packet = new NtpV3Impl();
-        final TimeInfo info = new TimeInfo(packet, 0);
-        info.computeDetails();
-        Assert.assertNull(info.getDelay());
-        Assert.assertNull(info.getOffset());
-        Assert.assertEquals(0L, info.getReturnTime());
-        // comments: Error: zero orig time -- cannot compute delay/offset
-        final List<String> comments = info.getComments();
-        Assert.assertEquals(1, comments.size());
-        Assert.assertTrue(comments.get(0).contains("zero orig time"));
     }
 
     @Test
@@ -131,6 +117,20 @@ public class TestTimeInfo {
         // 4. null comparison
         other = null;
         Assert.assertFalse(info.equals(other));
+    }
+
+    @Test
+    public void testZeroTime() {
+        final NtpV3Packet packet = new NtpV3Impl();
+        final TimeInfo info = new TimeInfo(packet, 0);
+        info.computeDetails();
+        Assert.assertNull(info.getDelay());
+        Assert.assertNull(info.getOffset());
+        Assert.assertEquals(0L, info.getReturnTime());
+        // comments: Error: zero orig time -- cannot compute delay/offset
+        final List<String> comments = info.getComments();
+        Assert.assertEquals(1, comments.size());
+        Assert.assertTrue(comments.get(0).contains("zero orig time"));
     }
 
 }

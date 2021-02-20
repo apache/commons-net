@@ -38,30 +38,6 @@ import org.apache.commons.net.time.TimeUDPClient;
 public final class TimeClient
 {
 
-    public static void timeTCP(final String host) throws IOException
-    {
-        final TimeTCPClient client = new TimeTCPClient();
-    try {
-          // We want to timeout if a response takes longer than 60 seconds
-          client.setDefaultTimeout(60000);
-      client.connect(host);
-          System.out.println(client.getDate());
-    } finally {
-          client.disconnect();
-    }
-    }
-
-    public static void timeUDP(final String host) throws IOException
-    {
-        final TimeUDPClient client = new TimeUDPClient();
-
-        // We want to timeout if a response takes longer than 60 seconds
-        client.setDefaultTimeout(60000);
-        client.open();
-        System.out.println(client.getDate(InetAddress.getByName(host)));
-        client.close();
-    }
-
     public static void main(final String[] args)
     {
 
@@ -95,6 +71,30 @@ public final class TimeClient
             System.exit(1);
         }
 
+    }
+
+    public static void timeTCP(final String host) throws IOException
+    {
+        final TimeTCPClient client = new TimeTCPClient();
+    try {
+          // We want to timeout if a response takes longer than 60 seconds
+          client.setDefaultTimeout(60000);
+      client.connect(host);
+          System.out.println(client.getDate());
+    } finally {
+          client.disconnect();
+    }
+    }
+
+    public static void timeUDP(final String host) throws IOException
+    {
+        final TimeUDPClient client = new TimeUDPClient();
+
+        // We want to timeout if a response takes longer than 60 seconds
+        client.setDefaultTimeout(60000);
+        client.open();
+        System.out.println(client.getDate(InetAddress.getByName(host)));
+        client.close();
     }
 
 }

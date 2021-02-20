@@ -100,15 +100,6 @@ public abstract class TFTPPacket
      */
     public static final int SEGMENT_SIZE = 512;
 
-    /** The type of packet. */
-    int type;
-
-    /** The port the packet came from or is going to. */
-    int port;
-
-    /** The host the packet is going to be sent or where it came from. */
-    InetAddress address;
-
     /**
      * When you receive a datagram that you expect to be a TFTP packet, you use
      * this factory method to create the proper TFTPPacket object
@@ -159,6 +150,15 @@ public abstract class TFTPPacket
         return packet;
     }
 
+    /** The type of packet. */
+    int type;
+
+    /** The port the packet came from or is going to. */
+    int port;
+
+    /** The host the packet is going to be sent or where it came from. */
+    InetAddress address;
+
     /**
      * This constructor is not visible outside of the package.  It is used
      * by subclasses within the package to initialize base data.
@@ -172,43 +172,6 @@ public abstract class TFTPPacket
         this.type = type;
         this.address = address;
         this.port = port;
-    }
-
-    /**
-     * This is an abstract method only available within the package for
-     * implementing efficient datagram transport by elminating buffering.
-     * It takes a datagram as an argument, and a byte buffer in which
-     * to store the raw datagram data.  Inside the method, the data
-     * should be set as the datagram's data and the datagram returned.
-     *
-     * @param datagram  The datagram to create.
-     * @param data The buffer to store the packet and to use in the datagram.
-     * @return The datagram argument.
-     */
-    abstract DatagramPacket newDatagram(DatagramPacket datagram, byte[] data);
-
-    /**
-     * Creates a UDP datagram containing all the TFTP packet
-     * data in the proper format.
-     * This is an abstract method, exposed to the programmer in case he
-     * wants to implement his own TFTP client instead of using
-     * the {@link org.apache.commons.net.tftp.TFTPClient}
-     * class.
-     * Under normal circumstances, you should not have a need to call this
-     * method.
-     *
-     * @return A UDP datagram containing the TFTP packet.
-     */
-    public abstract DatagramPacket newDatagram();
-
-    /**
-     * Returns the type of the packet.
-     *
-     * @return The type of the packet.
-     */
-    public final int getType()
-    {
-        return type;
     }
 
     /**
@@ -234,13 +197,41 @@ public abstract class TFTPPacket
     }
 
     /**
-     * Sets the port where the packet is going to be sent.
-     * @param port the port to set
+     * Returns the type of the packet.
+     *
+     * @return The type of the packet.
      */
-    public final void setPort(final int port)
+    public final int getType()
     {
-        this.port = port;
+        return type;
     }
+
+    /**
+     * Creates a UDP datagram containing all the TFTP packet
+     * data in the proper format.
+     * This is an abstract method, exposed to the programmer in case he
+     * wants to implement his own TFTP client instead of using
+     * the {@link org.apache.commons.net.tftp.TFTPClient}
+     * class.
+     * Under normal circumstances, you should not have a need to call this
+     * method.
+     *
+     * @return A UDP datagram containing the TFTP packet.
+     */
+    public abstract DatagramPacket newDatagram();
+
+    /**
+     * This is an abstract method only available within the package for
+     * implementing efficient datagram transport by elminating buffering.
+     * It takes a datagram as an argument, and a byte buffer in which
+     * to store the raw datagram data.  Inside the method, the data
+     * should be set as the datagram's data and the datagram returned.
+     *
+     * @param datagram  The datagram to create.
+     * @param data The buffer to store the packet and to use in the datagram.
+     * @return The datagram argument.
+     */
+    abstract DatagramPacket newDatagram(DatagramPacket datagram, byte[] data);
 
     /** Sets the host address where the packet is going to be sent.
      * @param address the address to set
@@ -248,6 +239,15 @@ public abstract class TFTPPacket
     public final void setAddress(final InetAddress address)
     {
         this.address = address;
+    }
+
+    /**
+     * Sets the port where the packet is going to be sent.
+     * @param port the port to set
+     */
+    public final void setPort(final int port)
+    {
+        this.port = port;
     }
 
     /**

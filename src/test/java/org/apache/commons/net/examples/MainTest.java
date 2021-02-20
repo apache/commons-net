@@ -33,6 +33,55 @@ import org.junit.Test;
 
 public class MainTest {
 
+    private static boolean hasMainMethod(String name) {
+        name = name.replace(".class", "");
+        name = name.replace("/", ".");
+        try {
+            final Class<?> clazz = Class.forName(name, false, MainTest.class.getClassLoader());
+            clazz.getMethod("main", String[].class);
+            return true;
+        } catch (final ClassNotFoundException e) {
+            System.out.println("Cannot find " + name);
+            return false;
+        } catch (final NoSuchMethodException e) {
+            return false;
+        } catch (final SecurityException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    private static void processFileName(String name, final Properties p) {
+        if (!name.endsWith(".class")
+                || name.contains("$") // subclasses
+                || name.endsWith("examples/Main.class")  // the initial class, don't want to add that
+                || !hasMainMethod(name)
+                ) {
+            return;
+        }
+        name = name.replace(".class", "");
+        final int lastSep = name.lastIndexOf('/');
+        final String alias = name.substring(lastSep+1);
+        if (p.containsKey(alias)) {
+            System.out.printf("Duplicate alias: %-25s %s %s %n",alias,name,p.getProperty(alias));
+        } else {
+            p.setProperty(alias, name);
+        }
+    }
+
+    private static void scanForClasses(final int rootLength, final File current, final Properties p) {
+        final File[] files = current.listFiles();
+        if (files != null) {
+            for (final File file : files) {
+                if (file.isDirectory()) {
+                    scanForClasses(rootLength, file, p);
+                } else {
+                    processFileName(file.getPath().substring(rootLength), p);
+                }
+            }
+        }
+    }
+
     @Test
     public void checkExamplesPropertiesIsComplete() throws Exception {
         final Properties cp = scanClasses();
@@ -77,54 +126,5 @@ public class MainTest {
             }
         }
         return p;
-    }
-
-    private static void scanForClasses(final int rootLength, final File current, final Properties p) {
-        final File[] files = current.listFiles();
-        if (files != null) {
-            for (final File file : files) {
-                if (file.isDirectory()) {
-                    scanForClasses(rootLength, file, p);
-                } else {
-                    processFileName(file.getPath().substring(rootLength), p);
-                }
-            }
-        }
-    }
-
-    private static void processFileName(String name, final Properties p) {
-        if (!name.endsWith(".class")
-                || name.contains("$") // subclasses
-                || name.endsWith("examples/Main.class")  // the initial class, don't want to add that
-                || !hasMainMethod(name)
-                ) {
-            return;
-        }
-        name = name.replace(".class", "");
-        final int lastSep = name.lastIndexOf('/');
-        final String alias = name.substring(lastSep+1);
-        if (p.containsKey(alias)) {
-            System.out.printf("Duplicate alias: %-25s %s %s %n",alias,name,p.getProperty(alias));
-        } else {
-            p.setProperty(alias, name);
-        }
-    }
-
-    private static boolean hasMainMethod(String name) {
-        name = name.replace(".class", "");
-        name = name.replace("/", ".");
-        try {
-            final Class<?> clazz = Class.forName(name, false, MainTest.class.getClassLoader());
-            clazz.getMethod("main", String[].class);
-            return true;
-        } catch (final ClassNotFoundException e) {
-            System.out.println("Cannot find " + name);
-            return false;
-        } catch (final NoSuchMethodException e) {
-            return false;
-        } catch (final SecurityException e) {
-            e.printStackTrace();
-        }
-        return true;
     }
 }

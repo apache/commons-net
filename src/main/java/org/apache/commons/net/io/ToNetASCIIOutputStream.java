@@ -50,39 +50,6 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
 
 
     /**
-     * Writes a byte to the stream.    Note that a call to this method
-     * may result in multiple writes to the underlying input stream in order
-     * to convert naked newlines to NETASCII line separators.
-     * This is transparent to the programmer and is only mentioned for
-     * completeness.
-     *
-     * @param ch The byte to write.
-     * @throws IOException If an error occurs while writing to the underlying
-     *            stream.
-     */
-    @Override
-    public synchronized void write(final int ch)
-    throws IOException
-    {
-        switch (ch)
-        {
-        case '\r':
-            lastWasCR = true;
-            out.write('\r');
-            return ;
-        case '\n':
-            if (!lastWasCR) {
-                out.write('\r');
-            }
-            //$FALL-THROUGH$
-        default:
-            lastWasCR = false;
-            out.write(ch);
-        }
-    }
-
-
-    /**
      * Writes a byte array to the stream.
      *
      * @param buffer  The byte array to write.
@@ -113,6 +80,39 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
     {
         while (length-- > 0) {
             write(buffer[offset++]);
+        }
+    }
+
+
+    /**
+     * Writes a byte to the stream.    Note that a call to this method
+     * may result in multiple writes to the underlying input stream in order
+     * to convert naked newlines to NETASCII line separators.
+     * This is transparent to the programmer and is only mentioned for
+     * completeness.
+     *
+     * @param ch The byte to write.
+     * @throws IOException If an error occurs while writing to the underlying
+     *            stream.
+     */
+    @Override
+    public synchronized void write(final int ch)
+    throws IOException
+    {
+        switch (ch)
+        {
+        case '\r':
+            lastWasCR = true;
+            out.write('\r');
+            return ;
+        case '\n':
+            if (!lastWasCR) {
+                out.write('\r');
+            }
+            //$FALL-THROUGH$
+        default:
+            lastWasCR = false;
+            out.write(ch);
         }
     }
 

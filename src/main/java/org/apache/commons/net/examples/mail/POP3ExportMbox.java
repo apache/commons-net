@@ -168,6 +168,11 @@ public final class POP3ExportMbox
         }
     }
 
+    private static boolean startsWith(final String input, final Pattern pat) {
+        final Matcher m = pat.matcher(input);
+        return m.lookingAt();
+    }
+
     private static void writeFile(final POP3Client pop3, final OutputStreamWriter fw, final int i) throws IOException {
         try (final BufferedReader r = (BufferedReader) pop3.retrieveMessage(i)) {
             String line;
@@ -199,11 +204,6 @@ public final class POP3ExportMbox
             }
             fw.write("\n");
         }
-    }
-
-    private static boolean startsWith(final String input, final Pattern pat) {
-        final Matcher m = pat.matcher(input);
-        return m.lookingAt();
     }
 }
 

@@ -72,48 +72,20 @@ public class FingerClient extends SocketClient
 
 
     /**
-     * Fingers a user at the connected host and returns the output
-     * as a String.  You must first connect to a finger server before
-     * calling this method, and you should disconnect afterward.
+     * Fingers the connected host and returns the input stream from
+     * the network connection of the finger query.  This is equivalent to
+     * calling getInputStream(longOutput, "").  You must first connect to a
+     * finger server before calling this method, and you should disconnect
+     * after finishing reading the stream.
      *
      * @param longOutput Set to true if long output is requested, false if not.
-     * @param username  The name of the user to finger.
-     * @return The result of the finger query.
-     * @throws IOException If an I/O error occurs while reading the socket.
+     * @return The InputStream of the network connection of the finger query.
+     *         Can be read to obtain finger results.
+     * @throws IOException If an I/O error during the operation.
      */
-    public String query(final boolean longOutput, final String username) throws IOException
+    public InputStream getInputStream(final boolean longOutput) throws IOException
     {
-        int read;
-        final StringBuilder result = new StringBuilder(buffer.length);
-
-        try (final BufferedReader input = new BufferedReader(
-                new InputStreamReader(getInputStream(longOutput, username), getCharset()))) {
-            while (true) {
-                read = input.read(buffer, 0, buffer.length);
-                if (read <= 0) {
-                    break;
-                }
-                result.append(buffer, 0, read);
-            }
-        }
-
-        return result.toString();
-    }
-
-
-    /**
-     * Fingers the connected host and returns the output
-     * as a String.  You must first connect to a finger server before
-     * calling this method, and you should disconnect afterward.
-     * This is equivalent to calling <code> query(longOutput, "") </code>.
-     *
-     * @param longOutput Set to true if long output is requested, false if not.
-     * @return The result of the finger query.
-     * @throws IOException If an I/O error occurs while reading the socket.
-     */
-    public String query(final boolean longOutput) throws IOException
-    {
-        return query(longOutput, "");
+        return getInputStream(longOutput, "");
     }
 
 
@@ -134,6 +106,7 @@ public class FingerClient extends SocketClient
     {
         return getInputStream(longOutput, username, null);
     }
+
 
     /**
      * Fingers a user and returns the input stream from the network connection
@@ -171,20 +144,47 @@ public class FingerClient extends SocketClient
     }
 
     /**
-     * Fingers the connected host and returns the input stream from
-     * the network connection of the finger query.  This is equivalent to
-     * calling getInputStream(longOutput, "").  You must first connect to a
-     * finger server before calling this method, and you should disconnect
-     * after finishing reading the stream.
+     * Fingers the connected host and returns the output
+     * as a String.  You must first connect to a finger server before
+     * calling this method, and you should disconnect afterward.
+     * This is equivalent to calling <code> query(longOutput, "") </code>.
      *
      * @param longOutput Set to true if long output is requested, false if not.
-     * @return The InputStream of the network connection of the finger query.
-     *         Can be read to obtain finger results.
-     * @throws IOException If an I/O error during the operation.
+     * @return The result of the finger query.
+     * @throws IOException If an I/O error occurs while reading the socket.
      */
-    public InputStream getInputStream(final boolean longOutput) throws IOException
+    public String query(final boolean longOutput) throws IOException
     {
-        return getInputStream(longOutput, "");
+        return query(longOutput, "");
+    }
+
+    /**
+     * Fingers a user at the connected host and returns the output
+     * as a String.  You must first connect to a finger server before
+     * calling this method, and you should disconnect afterward.
+     *
+     * @param longOutput Set to true if long output is requested, false if not.
+     * @param username  The name of the user to finger.
+     * @return The result of the finger query.
+     * @throws IOException If an I/O error occurs while reading the socket.
+     */
+    public String query(final boolean longOutput, final String username) throws IOException
+    {
+        int read;
+        final StringBuilder result = new StringBuilder(buffer.length);
+
+        try (final BufferedReader input = new BufferedReader(
+                new InputStreamReader(getInputStream(longOutput, username), getCharset()))) {
+            while (true) {
+                read = input.read(buffer, 0, buffer.length);
+                if (read <= 0) {
+                    break;
+                }
+                result.append(buffer, 0, read);
+            }
+        }
+
+        return result.toString();
     }
 
 }

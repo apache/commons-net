@@ -59,6 +59,33 @@ public class FTPClientConfigFunctionalTest extends TestCase {
 
     }
 
+    public FTPClientConfigFunctionalTest(final String arg0) {
+        super(arg0);
+    }
+
+    private TreeSet<FTPFile> getSortedSet(final FTPFile[] files) {
+        // create a TreeSet which will sort each element
+        // as it is added.
+        final TreeSet<FTPFile> sorted = new TreeSet<>((o1, o2) -> {
+            final FTPFile f1 = (FTPFile) o1;
+            final FTPFile f2 = (FTPFile) o2;
+            return f1.getTimestamp().getTime().compareTo(f2.getTimestamp().getTime());
+        });
+
+
+        for (final FTPFile file : files)
+        {
+            // The directory contains a few additional files at the beginning
+            // which aren't in the series we want. The series we want consists
+            // of files named sn.dddd. This adjusts the file list to get rid
+            // of the uninteresting ones.
+            if (file.getName().startsWith("sn")) {
+                sorted.add(file);
+            }
+        }
+        return sorted;
+    }
+
     /**
      * @throws java.lang.Exception
      */
@@ -85,33 +112,6 @@ public class FTPClientConfigFunctionalTest extends TestCase {
     protected void tearDown() throws Exception {
         ftpClient.disconnect();
         super.tearDown();
-    }
-
-    public FTPClientConfigFunctionalTest(final String arg0) {
-        super(arg0);
-    }
-
-    private TreeSet<FTPFile> getSortedSet(final FTPFile[] files) {
-        // create a TreeSet which will sort each element
-        // as it is added.
-        final TreeSet<FTPFile> sorted = new TreeSet<>((o1, o2) -> {
-            final FTPFile f1 = (FTPFile) o1;
-            final FTPFile f2 = (FTPFile) o2;
-            return f1.getTimestamp().getTime().compareTo(f2.getTimestamp().getTime());
-        });
-
-
-        for (final FTPFile file : files)
-        {
-            // The directory contains a few additional files at the beginning
-            // which aren't in the series we want. The series we want consists
-            // of files named sn.dddd. This adjusts the file list to get rid
-            // of the uninteresting ones.
-            if (file.getName().startsWith("sn")) {
-                sorted.add(file);
-            }
-        }
-        return sorted;
     }
 
     public void testTimeZoneFunctionality() throws Exception {

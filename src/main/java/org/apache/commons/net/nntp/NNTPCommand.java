@@ -44,16 +44,11 @@ public final class NNTPCommand
     public static final int XOVER     = 16;
     public static final int XHDR      = 17;
 
-    // Cannot be instantiated
-    private NNTPCommand()
-    {}
-
     private static final String[] commands = {
         "ARTICLE", "BODY", "GROUP", "HEAD", "HELP", "IHAVE", "LAST", "LIST",
         "NEWGROUPS", "NEWNEWS", "NEXT", "POST", "QUIT", "SLAVE", "STAT",
         "AUTHINFO", "XOVER", "XHDR"
     };
-
 
     /**
      * Retrieve the NNTP protocol command string corresponding to a specified
@@ -67,5 +62,10 @@ public final class NNTPCommand
     {
         return commands[command];
     }
+
+
+    // Cannot be instantiated
+    private NNTPCommand()
+    {}
 
 }

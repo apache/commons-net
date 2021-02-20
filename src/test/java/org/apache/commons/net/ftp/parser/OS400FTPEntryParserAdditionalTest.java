@@ -57,6 +57,16 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
     }
 
     @Override
+    protected void doAdditionalGoodTests(final String test, final FTPFile f)
+    {
+        if (test.startsWith("d"))
+        {
+            assertEquals("directory.type",
+                FTPFile.DIRECTORY_TYPE, f.getType());
+        }
+    }
+
+    @Override
     protected String[][] getBadListings()
     {
         return badsamples;
@@ -76,6 +86,11 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
             new OS400FTPEntryParser(),
             new UnixFTPEntryParser()
         });
+    }
+
+    @Override
+    public void testDefaultPrecision() {
+        // Done in other class
     }
 
     @Override
@@ -107,16 +122,6 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
     }
 
     @Override
-    protected void doAdditionalGoodTests(final String test, final FTPFile f)
-    {
-        if (test.startsWith("d"))
-        {
-            assertEquals("directory.type",
-                FTPFile.DIRECTORY_TYPE, f.getType());
-        }
-    }
-
-    @Override
     public void testParseFieldsOnFile() throws Exception
     {
         final FTPFile f = getParser().parseFTPEntry("PEP              5000000000 04/03/24 14:06:29 *STMF      build.xml");
@@ -141,11 +146,6 @@ public class OS400FTPEntryParserAdditionalTest extends CompositeFTPParseTestFram
         cal.set(Calendar.SECOND, 29);
         assertEquals(df.format(cal.getTime()),
                      df.format(f.getTimestamp().getTime()));
-    }
-
-    @Override
-    public void testDefaultPrecision() {
-        // Done in other class
     }
 
     @Override

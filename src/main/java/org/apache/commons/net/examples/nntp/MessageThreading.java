@@ -32,9 +32,6 @@ import org.apache.commons.net.nntp.Threader;
  * Sample program demonstrating the use of article iteration and threading.
  */
 public class MessageThreading {
-    public MessageThreading() {
-    }
-
     public static void main(final String[] args) throws SocketException, IOException {
 
         if (args.length != 2 && args.length != 4) {
@@ -81,6 +78,9 @@ public class MessageThreading {
         final Article root = (Article)threader.thread(articles);
 
         Article.printThread(root, 0);
+    }
+
+    public MessageThreading() {
     }
 
 }

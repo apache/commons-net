@@ -49,28 +49,34 @@ public final class SMTPReply
     public static final int MAILBOX_NAME_NOT_ALLOWED = 553;
     public static final int TRANSACTION_FAILED = 554;
 
-    // Cannot be instantiated
-    private SMTPReply()
-    {}
-
     /**
-     * Determine if a reply code is a positive preliminary response.  All
-     * codes beginning with a 1 are positive preliminary responses.
-     * Postitive preliminary responses are used to indicate tentative success.
-     * No further commands can be issued to the SMTP server after a positive
-     * preliminary response until a follow up response is received from the
-     * server.
-     * <p>
-     * <b> Note: </b> <em> No SMTP commands defined in RFC 822 provide this
-     * type of reply. </em>
+     * Determine if a reply code is a negative permanent response.  All
+     * codes beginning with a 5 are negative permanent responses.
+     * The SMTP server will send a negative permanent response on the
+     * failure of a command that cannot be reattempted with success.
      * <p>
      * @param reply  The reply code to test.
-     * @return True if a reply code is a positive preliminary response, false
+     * @return True if a reply code is a negative permanent response, false
      *         if not.
      */
-    public static boolean isPositivePreliminary(final int reply)
+    public static boolean isNegativePermanent(final int reply)
     {
-        return reply >= 100 && reply < 200;
+        return reply >= 500 && reply < 600;
+    }
+
+    /**
+     * Determine if a reply code is a negative transient response.  All
+     * codes beginning with a 4 are negative transient responses.
+     * The SMTP server will send a negative transient response on the
+     * failure of a command that can be reattempted with success.
+     * <p>
+     * @param reply  The reply code to test.
+     * @return True if a reply code is a negative transient response, false
+     *         if not.
+     */
+    public static boolean isNegativeTransient(final int reply)
+    {
+        return reply >= 400 && reply < 500;
     }
 
     /**
@@ -107,33 +113,27 @@ public final class SMTPReply
     }
 
     /**
-     * Determine if a reply code is a negative transient response.  All
-     * codes beginning with a 4 are negative transient responses.
-     * The SMTP server will send a negative transient response on the
-     * failure of a command that can be reattempted with success.
+     * Determine if a reply code is a positive preliminary response.  All
+     * codes beginning with a 1 are positive preliminary responses.
+     * Postitive preliminary responses are used to indicate tentative success.
+     * No further commands can be issued to the SMTP server after a positive
+     * preliminary response until a follow up response is received from the
+     * server.
+     * <p>
+     * <b> Note: </b> <em> No SMTP commands defined in RFC 822 provide this
+     * type of reply. </em>
      * <p>
      * @param reply  The reply code to test.
-     * @return True if a reply code is a negative transient response, false
+     * @return True if a reply code is a positive preliminary response, false
      *         if not.
      */
-    public static boolean isNegativeTransient(final int reply)
+    public static boolean isPositivePreliminary(final int reply)
     {
-        return reply >= 400 && reply < 500;
+        return reply >= 100 && reply < 200;
     }
 
-    /**
-     * Determine if a reply code is a negative permanent response.  All
-     * codes beginning with a 5 are negative permanent responses.
-     * The SMTP server will send a negative permanent response on the
-     * failure of a command that cannot be reattempted with success.
-     * <p>
-     * @param reply  The reply code to test.
-     * @return True if a reply code is a negative permanent response, false
-     *         if not.
-     */
-    public static boolean isNegativePermanent(final int reply)
-    {
-        return reply >= 500 && reply < 600;
-    }
+    // Cannot be instantiated
+    private SMTPReply()
+    {}
 
 }

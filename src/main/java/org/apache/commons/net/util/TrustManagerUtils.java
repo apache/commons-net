@@ -84,16 +84,6 @@ public final class TrustManagerUtils
     }
 
     /**
-     * Generate a TrustManager that checks server certificates for validity,
-     * but otherwise performs no checks.
-     *
-     * @return the validating TrustManager
-     */
-    public static X509TrustManager getValidateServerCertificateTrustManager(){
-        return CHECK_SERVER_VALIDITY;
-    }
-
-    /**
      * Return the default TrustManager provided by the JVM.
      * <p>
      * This should be the same as the default used by
@@ -109,6 +99,16 @@ public final class TrustManagerUtils
         final TrustManagerFactory instance = TrustManagerFactory.getInstance(defaultAlgorithm);
         instance.init(keyStore);
         return (X509TrustManager) instance.getTrustManagers()[0];
+    }
+
+    /**
+     * Generate a TrustManager that checks server certificates for validity,
+     * but otherwise performs no checks.
+     *
+     * @return the validating TrustManager
+     */
+    public static X509TrustManager getValidateServerCertificateTrustManager(){
+        return CHECK_SERVER_VALIDITY;
     }
 
 }

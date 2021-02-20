@@ -166,38 +166,23 @@ public abstract class TFTPRequestPacket extends TFTPPacket
 
 
     /**
-     * This is a method only available within the package for
-     * implementing efficient datagram transport by elminating buffering.
-     * It takes a datagram as an argument, and a byte buffer in which
-     * to store the raw datagram data.  Inside the method, the data
-     * is set as the datagram's data and the datagram returned.
+     * Returns the requested file name.
      *
-     * @param datagram  The datagram to create.
-     * @param data The buffer to store the packet and to use in the datagram.
-     * @return The datagram argument.
+     * @return The requested file name.
      */
-    @Override
-    final DatagramPacket newDatagram(final DatagramPacket datagram, final byte[] data)
+    public final String getFilename()
     {
-        final int fileLength;
-        final int modeLength;
+        return fileName;
+    }
 
-        fileLength = fileName.length();
-        modeLength = modeBytes[mode].length;
-
-        data[0] = 0;
-        data[1] = (byte)type;
-        System.arraycopy(fileName.getBytes(), 0, data, 2, fileLength);
-        data[fileLength + 2] = 0;
-        System.arraycopy(modeBytes[mode], 0, data, fileLength + 3,
-                         modeLength);
-
-        datagram.setAddress(address);
-        datagram.setPort(port);
-        datagram.setData(data);
-        datagram.setLength(fileLength + modeLength + 3);
-
-        return datagram;
+    /**
+     * Returns the transfer mode of the request.
+     *
+     * @return The transfer mode of the request.
+     */
+    public final int getMode()
+    {
+        return mode;
     }
 
     /**
@@ -233,22 +218,37 @@ public abstract class TFTPRequestPacket extends TFTPPacket
     }
 
     /**
-     * Returns the transfer mode of the request.
+     * This is a method only available within the package for
+     * implementing efficient datagram transport by elminating buffering.
+     * It takes a datagram as an argument, and a byte buffer in which
+     * to store the raw datagram data.  Inside the method, the data
+     * is set as the datagram's data and the datagram returned.
      *
-     * @return The transfer mode of the request.
+     * @param datagram  The datagram to create.
+     * @param data The buffer to store the packet and to use in the datagram.
+     * @return The datagram argument.
      */
-    public final int getMode()
+    @Override
+    final DatagramPacket newDatagram(final DatagramPacket datagram, final byte[] data)
     {
-        return mode;
-    }
+        final int fileLength;
+        final int modeLength;
 
-    /**
-     * Returns the requested file name.
-     *
-     * @return The requested file name.
-     */
-    public final String getFilename()
-    {
-        return fileName;
+        fileLength = fileName.length();
+        modeLength = modeBytes[mode].length;
+
+        data[0] = 0;
+        data[1] = (byte)type;
+        System.arraycopy(fileName.getBytes(), 0, data, 2, fileLength);
+        data[fileLength + 2] = 0;
+        System.arraycopy(modeBytes[mode], 0, data, fileLength + 3,
+                         modeLength);
+
+        datagram.setAddress(address);
+        datagram.setPort(port);
+        datagram.setData(data);
+        datagram.setLength(fileLength + modeLength + 3);
+
+        return datagram;
     }
 }

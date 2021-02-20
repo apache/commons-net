@@ -44,8 +44,6 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
         _lineSeparatorBytes = _lineSeparator.getBytes(StandardCharsets.US_ASCII);
     }
 
-    private int length;
-
     /**
      * Returns true if the NetASCII line separator differs from the system
      * line separator, false if they are the same.  This method is useful
@@ -60,6 +58,8 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
         return !_noConversionRequired;
     }
 
+    private int length;
+
     /**
      * Creates a FromNetASCIIInputStream instance that wraps an existing
      * InputStream.
@@ -71,32 +71,22 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
     }
 
 
-    private int readInt() throws IOException
+    // PushbackInputStream in JDK 1.1.3 returns the wrong thing
+    // TODO - can we delete this override now?
+    /**
+     * Returns the number of bytes that can be read without blocking EXCEPT
+     * when newline conversions have to be made somewhere within the
+     * available block of bytes.  In other words, you really should not
+     * rely on the value returned by this method if you are trying to avoid
+     * blocking.
+     */
+    @Override
+    public int available() throws IOException
     {
-        int ch;
-
-        ch = super.read();
-
-        if (ch == '\r')
-        {
-            ch = super.read();
-            if (ch == '\n')
-            {
-                unread(_lineSeparatorBytes);
-                ch = super.read();
-                // This is a kluge for read(byte[], ...) to read the right amount
-                --length;
-            }
-            else
-            {
-                if (ch != -1) {
-                    unread(ch);
-                }
-                return '\r';
-            }
+        if (in == null) {
+            throw new IOException("Stream closed");
         }
-
-        return ch;
+        return buf.length - pos + in.available();
     }
 
 
@@ -197,22 +187,32 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
     }
 
 
-    // PushbackInputStream in JDK 1.1.3 returns the wrong thing
-    // TODO - can we delete this override now?
-    /**
-     * Returns the number of bytes that can be read without blocking EXCEPT
-     * when newline conversions have to be made somewhere within the
-     * available block of bytes.  In other words, you really should not
-     * rely on the value returned by this method if you are trying to avoid
-     * blocking.
-     */
-    @Override
-    public int available() throws IOException
+    private int readInt() throws IOException
     {
-        if (in == null) {
-            throw new IOException("Stream closed");
+        int ch;
+
+        ch = super.read();
+
+        if (ch == '\r')
+        {
+            ch = super.read();
+            if (ch == '\n')
+            {
+                unread(_lineSeparatorBytes);
+                ch = super.read();
+                // This is a kluge for read(byte[], ...) to read the right amount
+                --length;
+            }
+            else
+            {
+                if (ch != -1) {
+                    unread(ch);
+                }
+                return '\r';
+            }
         }
-        return buf.length - pos + in.available();
+
+        return ch;
     }
 
 }

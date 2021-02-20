@@ -81,17 +81,144 @@ import org.apache.commons.net.imap.IMAPReply;
 public final class IMAPExportMbox
 {
 
+    private static class MboxListener implements IMAPChunkListener {
+
+        private final BufferedWriter bufferedWriter;
+        volatile AtomicInteger total = new AtomicInteger();
+        volatile String lastFetched;
+        volatile List<String> missingIds = new ArrayList<>();
+        volatile long lastSeq = -1;
+        private final String lineSeparator;
+        private final SimpleDateFormat DATE_FORMAT // for mbox From_ lines
+            = new SimpleDateFormat("EEE MMM dd HH:mm:ss YYYY");
+
+        // e.g. INTERNALDATE "27-Oct-2013 07:43:24 +0000"
+        // for parsing INTERNALDATE
+        private final SimpleDateFormat IDPARSE = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss Z");
+        private final boolean printHash;
+        private final boolean printMarker;
+        private final boolean checkSequence;
+
+        MboxListener(final BufferedWriter bufferedWriter, final String lineSeparator, final boolean printHash,
+            final boolean printMarker, final boolean checkSequence) {
+            this.lineSeparator = lineSeparator;
+            this.printHash = printHash;
+            this.printMarker = printMarker;
+            DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT"));
+            this.bufferedWriter = bufferedWriter;
+            this.checkSequence = checkSequence;
+        }
+
+        @Override
+        public boolean chunkReceived(final IMAP imap) {
+            final String[] replyStrings = imap.getReplyStrings();
+            Date received = new Date();
+            final String firstLine = replyStrings[0];
+            Matcher m = PATID.matcher(firstLine);
+            if (m.lookingAt()) { // found a match
+                final String date = m.group(PATID_DATE_GROUP);
+                try {
+                    received=IDPARSE.parse(date);
+                } catch (final ParseException e) {
+                    System.err.println(e);
+                }
+            } else {
+                System.err.println("No timestamp found in: " + firstLine + "  - using current time");
+            }
+            String replyTo = "MAILER-DAEMON"; // default
+            for(int i=1; i< replyStrings.length - 1; i++) {
+                final String line = replyStrings[i];
+                if (line.startsWith("Return-Path: ")) {
+                    final String[] parts = line.split(" ", 2);
+                    if (!parts[1].equals("<>")) {// Don't replace default with blank
+                        replyTo = parts[1];
+                        if (replyTo.startsWith("<")) {
+                            if (replyTo.endsWith(">")) {
+                                replyTo = replyTo.substring(1,replyTo.length()-1); // drop <> wrapper
+                            } else {
+                                System.err.println("Unexpected Return-path: '" + line+ "' in " + firstLine);
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+            try {
+                // Add initial mbox header line
+                bufferedWriter.append("From ");
+                bufferedWriter.append(replyTo);
+                bufferedWriter.append(' ');
+                bufferedWriter.append(DATE_FORMAT.format(received));
+                bufferedWriter.append(lineSeparator);
+                // Debug
+                bufferedWriter.append("X-IMAP-Response: ").append(firstLine).append(lineSeparator);
+                if (printMarker) {
+                    System.err.println("[" + total + "] " + firstLine);
+                }
+                // Skip first and last lines
+                for(int i=1; i< replyStrings.length - 1; i++) {
+                    final String line = replyStrings[i];
+                        if (startsWith(line, PATFROM)) {
+                            bufferedWriter.append('>'); // Escape a From_ line
+                        }
+                        bufferedWriter.append(line);
+                        bufferedWriter.append(lineSeparator);
+                }
+                // The last line ends with the trailing closing ")" which needs to be stripped
+                final String lastLine = replyStrings[replyStrings.length-1];
+                final int lastLength = lastLine.length();
+                if (lastLength > 1) { // there's some content, we need to save it
+                    bufferedWriter.append(lastLine, 0, lastLength-1);
+                    bufferedWriter.append(lineSeparator);
+                }
+                bufferedWriter.append(lineSeparator); // blank line between entries
+            } catch (final IOException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e); // chunkReceived cannot throw a checked Exception
+            }
+            lastFetched = firstLine;
+            total.incrementAndGet();
+            if (checkSequence) {
+                m = PATSEQ.matcher(firstLine);
+                if (m.lookingAt()) { // found a match
+                    final long msgSeq = Long.parseLong(m.group(PATSEQ_SEQUENCE_GROUP)); // Cannot fail to parse
+                    if (lastSeq != -1) {
+                        final long missing = msgSeq - lastSeq - 1;
+                        if (missing != 0) {
+                            for(long j = lastSeq + 1; j < msgSeq; j++) {
+                                missingIds.add(String.valueOf(j));
+                            }
+                            System.err.println(
+                                "*** Sequence error: current=" + msgSeq + " previous=" + lastSeq + " Missing=" + missing);
+                        }
+                    }
+                    lastSeq = msgSeq;
+                }
+            }
+            if (printHash) {
+                System.err.print(".");
+            }
+            return true;
+        }
+
+        public void close() throws IOException {
+            if (bufferedWriter != null) {
+                bufferedWriter.close();
+            }
+        }
+    }
     private static final String CRLF = "\r\n";
     private static final String LF = "\n";
-    private static final String EOL_DEFAULT = System.getProperty("line.separator");
 
+    private static final String EOL_DEFAULT = System.getProperty("line.separator");
     private static final Pattern PATFROM = Pattern.compile(">*From "); // unescaped From_
     // e.g. * nnn (INTERNALDATE "27-Oct-2013 07:43:24 +0000"  BODY[] {nn} ...)
     private static final Pattern PATID = // INTERNALDATE
             Pattern.compile(".*INTERNALDATE \"(\\d\\d-\\w{3}-\\d{4} \\d\\d:\\d\\d:\\d\\d [+-]\\d+)\"");
-    private static final int PATID_DATE_GROUP = 1;
 
+    private static final int PATID_DATE_GROUP = 1;
     private static final Pattern PATSEQ = Pattern.compile("\\* (\\d+) "); // Sequence number
+
     private static final int PATSEQ_SEQUENCE_GROUP = 1;
 
     // e.g. * 382 EXISTS
@@ -99,8 +226,8 @@ public final class IMAPExportMbox
 
     // AAAC NO [TEMPFAIL] FETCH Temporary failure on server [CODE: WBL]
     private static final Pattern PATTEMPFAIL = Pattern.compile("[A-Z]{4} NO \\[TEMPFAIL\\] FETCH .*");
-
     private static final int CONNECT_TIMEOUT = 10; // Seconds
+
     private static final int READ_TIMEOUT = 10;
 
     public static void main(final String[] args) throws IOException, URISyntaxException
@@ -316,11 +443,6 @@ public final class IMAPExportMbox
         }
     }
 
-    private static boolean startsWith(final String input, final Pattern pat) {
-        final Matcher m = pat.matcher(input);
-        return m.lookingAt();
-    }
-
     private static String matches(final String input, final Pattern pat, final int index) {
         final Matcher m = pat.matcher(input);
         if (m.lookingAt()) {
@@ -329,130 +451,8 @@ public final class IMAPExportMbox
         return null;
     }
 
-    private static class MboxListener implements IMAPChunkListener {
-
-        private final BufferedWriter bufferedWriter;
-        volatile AtomicInteger total = new AtomicInteger();
-        volatile String lastFetched;
-        volatile List<String> missingIds = new ArrayList<>();
-        volatile long lastSeq = -1;
-        private final String lineSeparator;
-        private final SimpleDateFormat DATE_FORMAT // for mbox From_ lines
-            = new SimpleDateFormat("EEE MMM dd HH:mm:ss YYYY");
-
-        // e.g. INTERNALDATE "27-Oct-2013 07:43:24 +0000"
-        // for parsing INTERNALDATE
-        private final SimpleDateFormat IDPARSE = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss Z");
-        private final boolean printHash;
-        private final boolean printMarker;
-        private final boolean checkSequence;
-
-        MboxListener(final BufferedWriter bufferedWriter, final String lineSeparator, final boolean printHash,
-            final boolean printMarker, final boolean checkSequence) {
-            this.lineSeparator = lineSeparator;
-            this.printHash = printHash;
-            this.printMarker = printMarker;
-            DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT"));
-            this.bufferedWriter = bufferedWriter;
-            this.checkSequence = checkSequence;
-        }
-
-        @Override
-        public boolean chunkReceived(final IMAP imap) {
-            final String[] replyStrings = imap.getReplyStrings();
-            Date received = new Date();
-            final String firstLine = replyStrings[0];
-            Matcher m = PATID.matcher(firstLine);
-            if (m.lookingAt()) { // found a match
-                final String date = m.group(PATID_DATE_GROUP);
-                try {
-                    received=IDPARSE.parse(date);
-                } catch (final ParseException e) {
-                    System.err.println(e);
-                }
-            } else {
-                System.err.println("No timestamp found in: " + firstLine + "  - using current time");
-            }
-            String replyTo = "MAILER-DAEMON"; // default
-            for(int i=1; i< replyStrings.length - 1; i++) {
-                final String line = replyStrings[i];
-                if (line.startsWith("Return-Path: ")) {
-                    final String[] parts = line.split(" ", 2);
-                    if (!parts[1].equals("<>")) {// Don't replace default with blank
-                        replyTo = parts[1];
-                        if (replyTo.startsWith("<")) {
-                            if (replyTo.endsWith(">")) {
-                                replyTo = replyTo.substring(1,replyTo.length()-1); // drop <> wrapper
-                            } else {
-                                System.err.println("Unexpected Return-path: '" + line+ "' in " + firstLine);
-                            }
-                        }
-                    }
-                    break;
-                }
-            }
-            try {
-                // Add initial mbox header line
-                bufferedWriter.append("From ");
-                bufferedWriter.append(replyTo);
-                bufferedWriter.append(' ');
-                bufferedWriter.append(DATE_FORMAT.format(received));
-                bufferedWriter.append(lineSeparator);
-                // Debug
-                bufferedWriter.append("X-IMAP-Response: ").append(firstLine).append(lineSeparator);
-                if (printMarker) {
-                    System.err.println("[" + total + "] " + firstLine);
-                }
-                // Skip first and last lines
-                for(int i=1; i< replyStrings.length - 1; i++) {
-                    final String line = replyStrings[i];
-                        if (startsWith(line, PATFROM)) {
-                            bufferedWriter.append('>'); // Escape a From_ line
-                        }
-                        bufferedWriter.append(line);
-                        bufferedWriter.append(lineSeparator);
-                }
-                // The last line ends with the trailing closing ")" which needs to be stripped
-                final String lastLine = replyStrings[replyStrings.length-1];
-                final int lastLength = lastLine.length();
-                if (lastLength > 1) { // there's some content, we need to save it
-                    bufferedWriter.append(lastLine, 0, lastLength-1);
-                    bufferedWriter.append(lineSeparator);
-                }
-                bufferedWriter.append(lineSeparator); // blank line between entries
-            } catch (final IOException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e); // chunkReceived cannot throw a checked Exception
-            }
-            lastFetched = firstLine;
-            total.incrementAndGet();
-            if (checkSequence) {
-                m = PATSEQ.matcher(firstLine);
-                if (m.lookingAt()) { // found a match
-                    final long msgSeq = Long.parseLong(m.group(PATSEQ_SEQUENCE_GROUP)); // Cannot fail to parse
-                    if (lastSeq != -1) {
-                        final long missing = msgSeq - lastSeq - 1;
-                        if (missing != 0) {
-                            for(long j = lastSeq + 1; j < msgSeq; j++) {
-                                missingIds.add(String.valueOf(j));
-                            }
-                            System.err.println(
-                                "*** Sequence error: current=" + msgSeq + " previous=" + lastSeq + " Missing=" + missing);
-                        }
-                    }
-                    lastSeq = msgSeq;
-                }
-            }
-            if (printHash) {
-                System.err.print(".");
-            }
-            return true;
-        }
-
-        public void close() throws IOException {
-            if (bufferedWriter != null) {
-                bufferedWriter.close();
-            }
-        }
+    private static boolean startsWith(final String input, final Pattern pat) {
+        final Matcher m = pat.matcher(input);
+        return m.lookingAt();
     }
 }

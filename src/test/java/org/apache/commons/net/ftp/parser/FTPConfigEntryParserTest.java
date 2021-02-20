@@ -36,62 +36,6 @@ public class FTPConfigEntryParserTest extends TestCase {
 
     private final SimpleDateFormat df = new SimpleDateFormat();
 
-    public void testParseFieldsOnAIX() {
-
-        // Set a date format for this server type
-        final FTPClientConfig config = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
-        config.setDefaultDateFormatStr("dd MMM HH:mm");
-
-        final UnixFTPEntryParser parser = new UnixFTPEntryParser();
-        parser.configure(config);
-
-        final FTPFile ftpFile = parser.parseFTPEntry("-rw-r-----   1 ravensm  sca          814 02 Mar 16:27 ZMIR2.m");
-
-        assertNotNull("Could not parse entry.", ftpFile);
-        assertFalse("Is not a directory.", ftpFile.isDirectory());
-
-        assertTrue("Should have user read permission.",
-            ftpFile.hasPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
-        assertTrue("Should have user write permission.",
-            ftpFile.hasPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertFalse("Should NOT have user execute permission.",
-            ftpFile.hasPermission(FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION));
-        assertTrue("Should have group read permission.",
-            ftpFile.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.READ_PERMISSION));
-        assertFalse("Should NOT have group write permission.",
-            ftpFile.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertFalse("Should NOT have group execute permission.",
-            ftpFile.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.EXECUTE_PERMISSION));
-        assertFalse("Should NOT have world read permission.",
-            ftpFile.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.READ_PERMISSION));
-        assertFalse("Should NOT have world write permission.",
-            ftpFile.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertFalse("Should NOT have world execute permission.",
-            ftpFile.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.EXECUTE_PERMISSION));
-
-        assertEquals(1, ftpFile.getHardLinkCount());
-
-        assertEquals("ravensm", ftpFile.getUser());
-        assertEquals("sca", ftpFile.getGroup());
-
-        assertEquals("ZMIR2.m", ftpFile.getName());
-        assertEquals(814, ftpFile.getSize());
-
-        final Calendar cal = Calendar.getInstance();
-
-        cal.set(Calendar.MONTH, Calendar.MARCH);
-        cal.set(Calendar.DAY_OF_MONTH, 2);
-        cal.set(Calendar.HOUR_OF_DAY, 16);
-        cal.set(Calendar.MINUTE, 27);
-        cal.set(Calendar.SECOND, 0);
-
-        // With no year specified, it defaults to 1970
-        // TODO this is probably a bug - it should default to the current year
-        cal.set(Calendar.YEAR, 1970);
-
-        assertEquals(df.format(cal.getTime()), df.format(ftpFile.getTimestamp().getTime()));
-    }
-
     /**
      * This is a new format reported on the mailing lists. Parsing this kind of
      * entry necessitated changing the regex in the parser.
@@ -148,6 +92,62 @@ public class FTPConfigEntryParserTest extends TestCase {
 
         assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp().getTime()));
 
+    }
+
+    public void testParseFieldsOnAIX() {
+
+        // Set a date format for this server type
+        final FTPClientConfig config = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
+        config.setDefaultDateFormatStr("dd MMM HH:mm");
+
+        final UnixFTPEntryParser parser = new UnixFTPEntryParser();
+        parser.configure(config);
+
+        final FTPFile ftpFile = parser.parseFTPEntry("-rw-r-----   1 ravensm  sca          814 02 Mar 16:27 ZMIR2.m");
+
+        assertNotNull("Could not parse entry.", ftpFile);
+        assertFalse("Is not a directory.", ftpFile.isDirectory());
+
+        assertTrue("Should have user read permission.",
+            ftpFile.hasPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
+        assertTrue("Should have user write permission.",
+            ftpFile.hasPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION));
+        assertFalse("Should NOT have user execute permission.",
+            ftpFile.hasPermission(FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION));
+        assertTrue("Should have group read permission.",
+            ftpFile.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.READ_PERMISSION));
+        assertFalse("Should NOT have group write permission.",
+            ftpFile.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.WRITE_PERMISSION));
+        assertFalse("Should NOT have group execute permission.",
+            ftpFile.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.EXECUTE_PERMISSION));
+        assertFalse("Should NOT have world read permission.",
+            ftpFile.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.READ_PERMISSION));
+        assertFalse("Should NOT have world write permission.",
+            ftpFile.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.WRITE_PERMISSION));
+        assertFalse("Should NOT have world execute permission.",
+            ftpFile.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.EXECUTE_PERMISSION));
+
+        assertEquals(1, ftpFile.getHardLinkCount());
+
+        assertEquals("ravensm", ftpFile.getUser());
+        assertEquals("sca", ftpFile.getGroup());
+
+        assertEquals("ZMIR2.m", ftpFile.getName());
+        assertEquals(814, ftpFile.getSize());
+
+        final Calendar cal = Calendar.getInstance();
+
+        cal.set(Calendar.MONTH, Calendar.MARCH);
+        cal.set(Calendar.DAY_OF_MONTH, 2);
+        cal.set(Calendar.HOUR_OF_DAY, 16);
+        cal.set(Calendar.MINUTE, 27);
+        cal.set(Calendar.SECOND, 0);
+
+        // With no year specified, it defaults to 1970
+        // TODO this is probably a bug - it should default to the current year
+        cal.set(Calendar.YEAR, 1970);
+
+        assertEquals(df.format(cal.getTime()), df.format(ftpFile.getTimestamp().getTime()));
     }
 
 }

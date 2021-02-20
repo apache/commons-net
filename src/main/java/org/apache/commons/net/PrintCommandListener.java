@@ -147,6 +147,21 @@ public class PrintCommandListener implements ProtocolCommandListener
         this.directionMarker = showDirection;
     }
 
+    private String getPrintableString(final String msg){
+        if (eolMarker == 0) {
+            return msg;
+        }
+        final int pos = msg.indexOf(SocketClient.NETASCII_EOL);
+        if (pos > 0) {
+            final StringBuilder sb = new StringBuilder();
+            sb.append(msg.substring(0,pos));
+            sb.append(eolMarker);
+            sb.append(msg.substring(pos));
+            return sb.toString();
+        }
+        return msg;
+    }
+
     @Override
     public void protocolCommandSent(final ProtocolCommandEvent event)
     {
@@ -173,21 +188,6 @@ public class PrintCommandListener implements ProtocolCommandListener
             writer.print(getPrintableString(event.getMessage()));
         }
         writer.flush();
-    }
-
-    private String getPrintableString(final String msg){
-        if (eolMarker == 0) {
-            return msg;
-        }
-        final int pos = msg.indexOf(SocketClient.NETASCII_EOL);
-        if (pos > 0) {
-            final StringBuilder sb = new StringBuilder();
-            sb.append(msg.substring(0,pos));
-            sb.append(eolMarker);
-            sb.append(msg.substring(pos));
-            return sb.toString();
-        }
-        return msg;
     }
 
     @Override

@@ -51,6 +51,10 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
 
     private volatile boolean threaded;
 
+    TelnetInputStream(final InputStream input, final TelnetClient client) {
+        this(input, client, true);
+    }
+
     TelnetInputStream(final InputStream input, final TelnetClient client,
                       final boolean readerThread)
     {
@@ -76,30 +80,227 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         }
     }
 
-    TelnetInputStream(final InputStream input, final TelnetClient client) {
-        this(input, client, true);
+    @Override
+    public int available() throws IOException
+    {
+        // Critical section because run() may change __bytesAvailable
+        synchronized (queue)
+        {
+            if (threaded) { // Must not call super.available when running threaded: NET-466
+                return bytesAvailable;
+            }
+            return bytesAvailable + super.available();
+        }
     }
 
-    void start()
+
+    // Cannot be synchronized.  Will cause deadlock if run() is blocked
+    // in read because BufferedInputStream read() is synchronized.
+    @Override
+    public void close() throws IOException
     {
-        if(thread == null) {
-            return;
+        // Completely disregard the fact thread may still be running.
+        // We can't afford to block on this close by waiting for
+        // thread to terminate because few if any JVM's will actually
+        // interrupt a system read() from the interrupt() method.
+        super.close();
+
+        synchronized (queue)
+        {
+            hasReachedEOF = true;
+            isClosed      = true;
+
+            if (thread != null && thread.isAlive())
+            {
+                thread.interrupt();
+            }
+
+            queue.notifyAll();
         }
 
-        int priority;
-        isClosed = false;
-        // TODO remove this
-        // Need to set a higher priority in case JVM does not use pre-emptive
-        // threads.  This should prevent scheduler induced deadlock (rather than
-        // deadlock caused by a bug in this code).
-        priority = Thread.currentThread().getPriority() + 1;
-        if (priority > Thread.MAX_PRIORITY) {
-            priority = Thread.MAX_PRIORITY;
+    }
+
+    /** Returns false.  Mark is not supported. */
+    @Override
+    public boolean markSupported()
+    {
+        return false;
+    }
+
+    // synchronized(__client) critical sections are to protect against
+    // TelnetOutputStream writing through the telnet client at same time
+    // as a processDo/Will/etc. command invoked from TelnetInputStream
+    // tries to write. Returns true if buffer was previously empty.
+    private boolean processChar(final int ch) throws InterruptedException
+    {
+        // Critical section because we're altering __bytesAvailable,
+        // __queueTail, and the contents of _queue.
+        final boolean bufferWasEmpty;
+        synchronized (queue)
+        {
+            bufferWasEmpty = bytesAvailable == 0;
+            while (bytesAvailable >= queue.length - 1)
+            {
+                // The queue is full. We need to wait before adding any more data to it. Hopefully the stream owner
+                // will consume some data soon!
+                if(threaded)
+                {
+                    queue.notify();
+                    try
+                    {
+                        queue.wait();
+                    }
+                    catch (final InterruptedException e)
+                    {
+                        throw e;
+                    }
+                }
+                else
+                {
+                    // We've been asked to add another character to the queue, but it is already full and there's
+                    // no other thread to drain it. This should not have happened!
+                    throw new IllegalStateException("Queue is full! Cannot process another character.");
+                }
+            }
+
+            // Need to do this in case we're not full, but block on a read
+            if (readIsWaiting && threaded)
+            {
+                queue.notify();
+            }
+
+            queue[queueTail] = ch;
+            ++bytesAvailable;
+
+            if (++queueTail >= queue.length) {
+                queueTail = 0;
+            }
         }
-        thread.setPriority(priority);
-        thread.setDaemon(true);
-        thread.start();
-        threaded = true; // tell _processChar that we are running threaded
+        return bufferWasEmpty;
+    }
+
+
+    @Override
+    public int read() throws IOException
+    {
+        // Critical section because we're altering __bytesAvailable,
+        // __queueHead, and the contents of _queue in addition to
+        // testing value of __hasReachedEOF.
+        synchronized (queue)
+        {
+
+            while (true)
+            {
+                if (ioException != null)
+                {
+                    final IOException e;
+                    e = ioException;
+                    ioException = null;
+                    throw e;
+                }
+
+                if (bytesAvailable == 0)
+                {
+                    // Return EOF if at end of file
+                    if (hasReachedEOF) {
+                        return EOF;
+                    }
+
+                    // Otherwise, we have to wait for queue to get something
+                    if(threaded)
+                    {
+                        queue.notify();
+                        try
+                        {
+                            readIsWaiting = true;
+                            queue.wait();
+                            readIsWaiting = false;
+                        }
+                        catch (final InterruptedException e)
+                        {
+                            throw new InterruptedIOException("Fatal thread interruption during read.");
+                        }
+                    }
+                    else
+                    {
+                        //__alreadyread = false;
+                        readIsWaiting = true;
+                        int ch;
+                        boolean mayBlock = true;    // block on the first read only
+
+                        do
+                        {
+                            try
+                            {
+                                if ((ch = read(mayBlock)) < 0) { // must be EOF
+                                    if(ch != WOULD_BLOCK) {
+                                        return ch;
+                                    }
+                                }
+                            }
+                            catch (final InterruptedIOException e)
+                            {
+                                synchronized (queue)
+                                {
+                                    ioException = e;
+                                    queue.notifyAll();
+                                    try
+                                    {
+                                        queue.wait(100);
+                                    }
+                                    catch (final InterruptedException interrupted)
+                                    {
+                                        // Ignored
+                                    }
+                                }
+                                return EOF;
+                            }
+
+
+                            try
+                            {
+                                if(ch != WOULD_BLOCK)
+                                {
+                                    processChar(ch);
+                                }
+                            }
+                            catch (final InterruptedException e)
+                            {
+                                if (isClosed) {
+                                    return EOF;
+                                }
+                            }
+
+                            // Reads should not block on subsequent iterations. Potentially, this could happen if the
+                            // remaining buffered socket data consists entirely of Telnet command sequence and no "user" data.
+                            mayBlock = false;
+
+                        }
+                        // Continue reading as long as there is data available and the queue is not full.
+                        while (super.available() > 0 && bytesAvailable < queue.length - 1);
+
+                        readIsWaiting = false;
+                    }
+                    continue;
+                }
+                final int ch;
+
+                ch = queue[queueHead];
+
+                if (++queueHead >= queue.length) {
+                    queueHead = 0;
+                }
+
+                --bytesAvailable;
+
+         // Need to explicitly notify() so available() works properly
+         if(bytesAvailable == 0 && threaded) {
+            queue.notify();
+         }
+
+                return ch;
+            }
+        }
     }
 
 
@@ -296,181 +497,6 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         return ch;
     }
 
-    // synchronized(__client) critical sections are to protect against
-    // TelnetOutputStream writing through the telnet client at same time
-    // as a processDo/Will/etc. command invoked from TelnetInputStream
-    // tries to write. Returns true if buffer was previously empty.
-    private boolean processChar(final int ch) throws InterruptedException
-    {
-        // Critical section because we're altering __bytesAvailable,
-        // __queueTail, and the contents of _queue.
-        final boolean bufferWasEmpty;
-        synchronized (queue)
-        {
-            bufferWasEmpty = bytesAvailable == 0;
-            while (bytesAvailable >= queue.length - 1)
-            {
-                // The queue is full. We need to wait before adding any more data to it. Hopefully the stream owner
-                // will consume some data soon!
-                if(threaded)
-                {
-                    queue.notify();
-                    try
-                    {
-                        queue.wait();
-                    }
-                    catch (final InterruptedException e)
-                    {
-                        throw e;
-                    }
-                }
-                else
-                {
-                    // We've been asked to add another character to the queue, but it is already full and there's
-                    // no other thread to drain it. This should not have happened!
-                    throw new IllegalStateException("Queue is full! Cannot process another character.");
-                }
-            }
-
-            // Need to do this in case we're not full, but block on a read
-            if (readIsWaiting && threaded)
-            {
-                queue.notify();
-            }
-
-            queue[queueTail] = ch;
-            ++bytesAvailable;
-
-            if (++queueTail >= queue.length) {
-                queueTail = 0;
-            }
-        }
-        return bufferWasEmpty;
-    }
-
-    @Override
-    public int read() throws IOException
-    {
-        // Critical section because we're altering __bytesAvailable,
-        // __queueHead, and the contents of _queue in addition to
-        // testing value of __hasReachedEOF.
-        synchronized (queue)
-        {
-
-            while (true)
-            {
-                if (ioException != null)
-                {
-                    final IOException e;
-                    e = ioException;
-                    ioException = null;
-                    throw e;
-                }
-
-                if (bytesAvailable == 0)
-                {
-                    // Return EOF if at end of file
-                    if (hasReachedEOF) {
-                        return EOF;
-                    }
-
-                    // Otherwise, we have to wait for queue to get something
-                    if(threaded)
-                    {
-                        queue.notify();
-                        try
-                        {
-                            readIsWaiting = true;
-                            queue.wait();
-                            readIsWaiting = false;
-                        }
-                        catch (final InterruptedException e)
-                        {
-                            throw new InterruptedIOException("Fatal thread interruption during read.");
-                        }
-                    }
-                    else
-                    {
-                        //__alreadyread = false;
-                        readIsWaiting = true;
-                        int ch;
-                        boolean mayBlock = true;    // block on the first read only
-
-                        do
-                        {
-                            try
-                            {
-                                if ((ch = read(mayBlock)) < 0) { // must be EOF
-                                    if(ch != WOULD_BLOCK) {
-                                        return ch;
-                                    }
-                                }
-                            }
-                            catch (final InterruptedIOException e)
-                            {
-                                synchronized (queue)
-                                {
-                                    ioException = e;
-                                    queue.notifyAll();
-                                    try
-                                    {
-                                        queue.wait(100);
-                                    }
-                                    catch (final InterruptedException interrupted)
-                                    {
-                                        // Ignored
-                                    }
-                                }
-                                return EOF;
-                            }
-
-
-                            try
-                            {
-                                if(ch != WOULD_BLOCK)
-                                {
-                                    processChar(ch);
-                                }
-                            }
-                            catch (final InterruptedException e)
-                            {
-                                if (isClosed) {
-                                    return EOF;
-                                }
-                            }
-
-                            // Reads should not block on subsequent iterations. Potentially, this could happen if the
-                            // remaining buffered socket data consists entirely of Telnet command sequence and no "user" data.
-                            mayBlock = false;
-
-                        }
-                        // Continue reading as long as there is data available and the queue is not full.
-                        while (super.available() > 0 && bytesAvailable < queue.length - 1);
-
-                        readIsWaiting = false;
-                    }
-                    continue;
-                }
-                final int ch;
-
-                ch = queue[queueHead];
-
-                if (++queueHead >= queue.length) {
-                    queueHead = 0;
-                }
-
-                --bytesAvailable;
-
-         // Need to explicitly notify() so available() works properly
-         if(bytesAvailable == 0 && threaded) {
-            queue.notify();
-         }
-
-                return ch;
-            }
-        }
-    }
-
 
     /**
      * Reads the next number of bytes from the stream into an array and
@@ -488,7 +514,6 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     {
         return read(buffer, 0, buffer.length);
     }
-
 
     /**
      * Reads the next number of bytes from the stream into an array and returns
@@ -538,53 +563,6 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         return offset - off;
     }
 
-
-    /** Returns false.  Mark is not supported. */
-    @Override
-    public boolean markSupported()
-    {
-        return false;
-    }
-
-    @Override
-    public int available() throws IOException
-    {
-        // Critical section because run() may change __bytesAvailable
-        synchronized (queue)
-        {
-            if (threaded) { // Must not call super.available when running threaded: NET-466
-                return bytesAvailable;
-            }
-            return bytesAvailable + super.available();
-        }
-    }
-
-
-    // Cannot be synchronized.  Will cause deadlock if run() is blocked
-    // in read because BufferedInputStream read() is synchronized.
-    @Override
-    public void close() throws IOException
-    {
-        // Completely disregard the fact thread may still be running.
-        // We can't afford to block on this close by waiting for
-        // thread to terminate because few if any JVM's will actually
-        // interrupt a system read() from the interrupt() method.
-        super.close();
-
-        synchronized (queue)
-        {
-            hasReachedEOF = true;
-            isClosed      = true;
-
-            if (thread != null && thread.isAlive())
-            {
-                thread.interrupt();
-            }
-
-            queue.notifyAll();
-        }
-
-    }
 
     @Override
     public void run()
@@ -666,5 +644,27 @@ _outerLoop:
         }
 
         threaded = false;
+    }
+
+    void start()
+    {
+        if(thread == null) {
+            return;
+        }
+
+        int priority;
+        isClosed = false;
+        // TODO remove this
+        // Need to set a higher priority in case JVM does not use pre-emptive
+        // threads.  This should prevent scheduler induced deadlock (rather than
+        // deadlock caused by a bug in this code).
+        priority = Thread.currentThread().getPriority() + 1;
+        if (priority > Thread.MAX_PRIORITY) {
+            priority = Thread.MAX_PRIORITY;
+        }
+        thread.setPriority(priority);
+        thread.setDaemon(true);
+        thread.start();
+        threaded = true; // tell _processChar that we are running threaded
     }
 }

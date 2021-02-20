@@ -23,6 +23,14 @@ import junit.framework.TestCase;
 
 public class DefaultFTPFileEntryParserFactoryTest extends TestCase
 {
+    private void checkParserClass(final FTPFileEntryParserFactory fact, final String key, final Class<?> expected){
+        final FTPClientConfig config = key == null ? new FTPClientConfig() : new FTPClientConfig(key);
+        final FTPFileEntryParser parser = fact.createFileEntryParser(config);
+        assertNotNull(parser);
+        assertTrue("Expected "+expected.getCanonicalName()+" got "+parser.getClass().getCanonicalName(),
+                expected.isInstance(parser));
+    }
+
     public void testDefaultParserFactory() {
         final DefaultFTPFileEntryParserFactory factory =
             new DefaultFTPFileEntryParserFactory();
@@ -114,14 +122,6 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase
             final Throwable root = pie.getCause();
             assertTrue(root instanceof InstantiationException);
         }
-    }
-
-    private void checkParserClass(final FTPFileEntryParserFactory fact, final String key, final Class<?> expected){
-        final FTPClientConfig config = key == null ? new FTPClientConfig() : new FTPClientConfig(key);
-        final FTPFileEntryParser parser = fact.createFileEntryParser(config);
-        assertNotNull(parser);
-        assertTrue("Expected "+expected.getCanonicalName()+" got "+parser.getClass().getCanonicalName(),
-                expected.isInstance(parser));
     }
     public void testDefaultParserFactoryConfig() throws Exception {
         final DefaultFTPFileEntryParserFactory factory =

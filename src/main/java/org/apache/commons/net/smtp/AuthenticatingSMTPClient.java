@@ -39,11 +39,61 @@ import org.apache.commons.net.util.Base64;
 public class AuthenticatingSMTPClient extends SMTPSClient
 {
     /**
+     * The enumeration of currently-supported authentication methods.
+     */
+    public enum AUTH_METHOD
+    {
+        /** The standarised (RFC4616) PLAIN method, which sends the password unencrypted (insecure). */
+        PLAIN,
+        /** The standarised (RFC2195) CRAM-MD5 method, which doesn't send the password (secure). */
+        CRAM_MD5,
+        /** The unstandarised Microsoft LOGIN method, which sends the password unencrypted (insecure). */
+        LOGIN,
+        /** XOAuth method which accepts a signed and base64ed OAuth URL. */
+        XOAUTH,
+        /** XOAuth 2 method which accepts a signed and base64ed OAuth JSON. */
+        XOAUTH2;
+
+        /**
+         * Gets the name of the given authentication method suitable for the server.
+         * @param method The authentication method to get the name for.
+         * @return The name of the given authentication method suitable for the server.
+         */
+        public static final String getAuthName(final AUTH_METHOD method)
+        {
+            if (method.equals(AUTH_METHOD.PLAIN)) {
+                return "PLAIN";
+            } else if (method.equals(AUTH_METHOD.CRAM_MD5)) {
+                return "CRAM-MD5";
+            } else if (method.equals(AUTH_METHOD.LOGIN)) {
+                return "LOGIN";
+            } else if (method.equals(AUTH_METHOD.XOAUTH)) {
+                return "XOAUTH";
+            } else if (method.equals(AUTH_METHOD.XOAUTH2)) {
+                return "XOAUTH2";
+            } else {
+                return null;
+            }
+        }
+    }
+
+    /**
      * The default AuthenticatingSMTPClient constructor.
      * Creates a new Authenticating SMTP Client.
      */
     public AuthenticatingSMTPClient()
     {
+    }
+
+    /**
+     * Overloaded constructor that takes the implicit argument, and using {@link #DEFAULT_PROTOCOL} i.e. TLS
+     * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
+     * @param ctx A pre-configured SSL Context.
+     * @since 3.3
+     */
+    public AuthenticatingSMTPClient(final boolean implicit, final SSLContext ctx)
+    {
+      super(implicit, ctx);
     }
 
     /**
@@ -78,17 +128,6 @@ public class AuthenticatingSMTPClient extends SMTPSClient
     }
 
     /**
-     * Overloaded constructor that takes the implicit argument, and using {@link #DEFAULT_PROTOCOL} i.e. TLS
-     * @param implicit The security mode, {@code true} for implicit, {@code false} for explicit
-     * @param ctx A pre-configured SSL Context.
-     * @since 3.3
-     */
-    public AuthenticatingSMTPClient(final boolean implicit, final SSLContext ctx)
-    {
-      super(implicit, ctx);
-    }
-
-    /**
      * Overloaded constructor that takes a protocol specification and encoding
      * @param protocol The protocol to use
      * @param encoding The encoding to use
@@ -96,92 +135,6 @@ public class AuthenticatingSMTPClient extends SMTPSClient
      */
     public AuthenticatingSMTPClient(final String protocol, final String encoding) {
         super(protocol, false, encoding);
-    }
-
-    /**
-     * A convenience method to send the ESMTP EHLO command to the server,
-     * receive the reply, and return the reply code.
-     * <p>
-     * @param hostname The hostname of the sender.
-     * @return The reply code received from the server.
-     * @throws SMTPConnectionClosedException
-     *      If the SMTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send SMTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int ehlo(final String hostname) throws IOException
-    {
-        return sendCommand(SMTPCommand.EHLO, hostname);
-    }
-
-    /**
-     * Login to the ESMTP server by sending the EHLO command with the
-     * given hostname as an argument.  Before performing any mail commands,
-     * you must first login.
-     * <p>
-     * @param hostname  The hostname with which to greet the SMTP server.
-     * @return True if successfully completed, false if not.
-     * @throws SMTPConnectionClosedException
-     *      If the SMTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send SMTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending a
-     *      command to the server or receiving a reply from the server.
-     */
-    public boolean elogin(final String hostname) throws IOException
-    {
-        return SMTPReply.isPositiveCompletion(ehlo(hostname));
-    }
-
-
-    /**
-     * Login to the ESMTP server by sending the EHLO command with the
-     * client hostname as an argument.  Before performing any mail commands,
-     * you must first login.
-     * <p>
-     * @return True if successfully completed, false if not.
-     * @throws SMTPConnectionClosedException
-     *      If the SMTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send SMTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending a
-     *      command to the server or receiving a reply from the server.
-     */
-    public boolean elogin() throws IOException
-    {
-        final String name;
-        final InetAddress host;
-
-        host = getLocalAddress();
-        name = host.getHostName();
-
-        if (name == null) {
-            return false;
-        }
-
-        return SMTPReply.isPositiveCompletion(ehlo(name));
-    }
-
-    /**
-     * Returns the integer values of the enhanced reply code of the last SMTP reply.
-     * @return The integer values of the enhanced reply code of the last SMTP reply.
-     *  First digit is in the first array element.
-     */
-    public int[] getEnhancedReplyCode()
-    {
-        final String reply = getReplyString().substring(4);
-        final String[] parts = reply.substring(0, reply.indexOf(' ')).split ("\\.");
-        final int[] res = new int[parts.length];
-        for (int i = 0; i < parts.length; i++)
-        {
-            res[i] = Integer.parseInt (parts[i]);
-        }
-        return res;
     }
 
     /**
@@ -267,6 +220,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
         }
     }
 
+
     /**
      * Converts the given byte array to a String containing the hex values of the bytes.
      * For example, the byte 'A' will be converted to '41', because this is the ASCII code
@@ -288,42 +242,88 @@ public class AuthenticatingSMTPClient extends SMTPSClient
     }
 
     /**
-     * The enumeration of currently-supported authentication methods.
+     * A convenience method to send the ESMTP EHLO command to the server,
+     * receive the reply, and return the reply code.
+     * <p>
+     * @param hostname The hostname of the sender.
+     * @return The reply code received from the server.
+     * @throws SMTPConnectionClosedException
+     *      If the SMTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send SMTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
      */
-    public enum AUTH_METHOD
+    public int ehlo(final String hostname) throws IOException
     {
-        /** The standarised (RFC4616) PLAIN method, which sends the password unencrypted (insecure). */
-        PLAIN,
-        /** The standarised (RFC2195) CRAM-MD5 method, which doesn't send the password (secure). */
-        CRAM_MD5,
-        /** The unstandarised Microsoft LOGIN method, which sends the password unencrypted (insecure). */
-        LOGIN,
-        /** XOAuth method which accepts a signed and base64ed OAuth URL. */
-        XOAUTH,
-        /** XOAuth 2 method which accepts a signed and base64ed OAuth JSON. */
-        XOAUTH2;
+        return sendCommand(SMTPCommand.EHLO, hostname);
+    }
 
-        /**
-         * Gets the name of the given authentication method suitable for the server.
-         * @param method The authentication method to get the name for.
-         * @return The name of the given authentication method suitable for the server.
-         */
-        public static final String getAuthName(final AUTH_METHOD method)
-        {
-            if (method.equals(AUTH_METHOD.PLAIN)) {
-                return "PLAIN";
-            } else if (method.equals(AUTH_METHOD.CRAM_MD5)) {
-                return "CRAM-MD5";
-            } else if (method.equals(AUTH_METHOD.LOGIN)) {
-                return "LOGIN";
-            } else if (method.equals(AUTH_METHOD.XOAUTH)) {
-                return "XOAUTH";
-            } else if (method.equals(AUTH_METHOD.XOAUTH2)) {
-                return "XOAUTH2";
-            } else {
-                return null;
-            }
+    /**
+     * Login to the ESMTP server by sending the EHLO command with the
+     * client hostname as an argument.  Before performing any mail commands,
+     * you must first login.
+     * <p>
+     * @return True if successfully completed, false if not.
+     * @throws SMTPConnectionClosedException
+     *      If the SMTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send SMTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     */
+    public boolean elogin() throws IOException
+    {
+        final String name;
+        final InetAddress host;
+
+        host = getLocalAddress();
+        name = host.getHostName();
+
+        if (name == null) {
+            return false;
         }
+
+        return SMTPReply.isPositiveCompletion(ehlo(name));
+    }
+
+    /**
+     * Login to the ESMTP server by sending the EHLO command with the
+     * given hostname as an argument.  Before performing any mail commands,
+     * you must first login.
+     * <p>
+     * @param hostname  The hostname with which to greet the SMTP server.
+     * @return True if successfully completed, false if not.
+     * @throws SMTPConnectionClosedException
+     *      If the SMTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send SMTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     */
+    public boolean elogin(final String hostname) throws IOException
+    {
+        return SMTPReply.isPositiveCompletion(ehlo(hostname));
+    }
+
+    /**
+     * Returns the integer values of the enhanced reply code of the last SMTP reply.
+     * @return The integer values of the enhanced reply code of the last SMTP reply.
+     *  First digit is in the first array element.
+     */
+    public int[] getEnhancedReplyCode()
+    {
+        final String reply = getReplyString().substring(4);
+        final String[] parts = reply.substring(0, reply.indexOf(' ')).split ("\\.");
+        final int[] res = new int[parts.length];
+        for (int i = 0; i < parts.length; i++)
+        {
+            res[i] = Integer.parseInt (parts[i]);
+        }
+        return res;
     }
 }
 

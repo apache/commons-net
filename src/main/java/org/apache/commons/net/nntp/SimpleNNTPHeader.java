@@ -70,20 +70,6 @@ public class SimpleNNTPHeader
     }
 
     /**
-     * Adds a newsgroup to the article <code>Newsgroups:</code> field.
-     * <p>
-     * @param newsgroup  The newsgroup to add to the article's newsgroup
-     *                   distribution list.
-     */
-    public void addNewsgroup(final String newsgroup)
-    {
-        if (newsgroupCount++ > 0) {
-            newsgroups.append(',');
-        }
-        newsgroups.append(newsgroup);
-    }
-
-    /**
      * Adds an arbitrary header field with the given value to the article
      * header.  These headers will be written after the From, Newsgroups,
      * and Subject fields when the SimpleNNTPHeader is convertered to a string.
@@ -103,6 +89,20 @@ public class SimpleNNTPHeader
         headerFields.append('\n');
     }
 
+    /**
+     * Adds a newsgroup to the article <code>Newsgroups:</code> field.
+     * <p>
+     * @param newsgroup  The newsgroup to add to the article's newsgroup
+     *                   distribution list.
+     */
+    public void addNewsgroup(final String newsgroup)
+    {
+        if (newsgroupCount++ > 0) {
+            newsgroups.append(',');
+        }
+        newsgroups.append(newsgroup);
+    }
+
 
     /**
      * Returns the address used in the <code> From: </code> header field.
@@ -115,16 +115,6 @@ public class SimpleNNTPHeader
     }
 
     /**
-     * Returns the subject used in the <code> Subject: </code> header field.
-     * <p>
-     * @return The subject.
-     */
-    public String getSubject()
-    {
-        return subject;
-    }
-
-    /**
      * Returns the contents of the <code> Newsgroups: </code> header field.
      * <p>
      * @return The comma-separated list of newsgroups to which the article
@@ -133,6 +123,16 @@ public class SimpleNNTPHeader
     public String getNewsgroups()
     {
         return newsgroups.toString();
+    }
+
+    /**
+     * Returns the subject used in the <code> Subject: </code> header field.
+     * <p>
+     * @return The subject.
+     */
+    public String getSubject()
+    {
+        return subject;
     }
 
     /**

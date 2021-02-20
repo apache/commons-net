@@ -45,6 +45,22 @@ public final class NTPUDPClient extends DatagramSocketClient
     private int version = NtpV3Packet.VERSION_3;
 
     /**
+     * Retrieves the time information from the specified server on the
+     * default NTP port and returns it. The time is the number of miliiseconds
+     * since 00:00 (midnight) 1 January 1900 UTC, as specified by RFC 1305.
+     * This method reads the raw NTP packet and constructs a <i>TimeInfo</i>
+     * object that allows access to all the fields of the NTP message header.
+     * <p>
+     * @param host The address of the server.
+     * @return The time value retrieved from the server.
+     * @throws IOException If an error occurs while retrieving the time.
+     */
+    public TimeInfo getTime(final InetAddress host) throws IOException
+    {
+        return getTime(host, NtpV3Packet.NTP_PORT);
+    }
+
+    /**
      * Retrieves the time information from the specified server and port and
      * returns it. The time is the number of miliiseconds since
      * 00:00 (midnight) 1 January 1900 UTC, as specified by RFC 1305.
@@ -92,22 +108,6 @@ public final class NTPUDPClient extends DatagramSocketClient
         final long returnTimeMillis = System.currentTimeMillis();
         // create TimeInfo message container but don't pre-compute the details yet
         return new TimeInfo(recMessage, returnTimeMillis, false);
-    }
-
-    /**
-     * Retrieves the time information from the specified server on the
-     * default NTP port and returns it. The time is the number of miliiseconds
-     * since 00:00 (midnight) 1 January 1900 UTC, as specified by RFC 1305.
-     * This method reads the raw NTP packet and constructs a <i>TimeInfo</i>
-     * object that allows access to all the fields of the NTP message header.
-     * <p>
-     * @param host The address of the server.
-     * @return The time value retrieved from the server.
-     * @throws IOException If an error occurs while retrieving the time.
-     */
-    public TimeInfo getTime(final InetAddress host) throws IOException
-    {
-        return getTime(host, NtpV3Packet.NTP_PORT);
     }
 
     /**

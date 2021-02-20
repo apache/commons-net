@@ -54,6 +54,16 @@ public class ProtocolCommandSupport implements Serializable
 
 
     /**
+     * Adds a ProtocolCommandListener.
+     *
+     * @param listener  The ProtocolCommandListener to add.
+     */
+    public void addProtocolCommandListener(final ProtocolCommandListener listener)
+    {
+        listeners.addListener(listener);
+    }
+
+    /**
      * Fires a ProtocolCommandEvent signalling the sending of a command to all
      * registered listeners, invoking their
      * {@link org.apache.commons.net.ProtocolCommandListener#protocolCommandSent protocolCommandSent() }
@@ -101,14 +111,15 @@ public class ProtocolCommandSupport implements Serializable
     }
 
     /**
-     * Adds a ProtocolCommandListener.
+     * Returns the number of ProtocolCommandListeners currently registered.
      *
-     * @param listener  The ProtocolCommandListener to add.
+     * @return The number of ProtocolCommandListeners currently registered.
      */
-    public void addProtocolCommandListener(final ProtocolCommandListener listener)
+    public int getListenerCount()
     {
-        listeners.addListener(listener);
+        return listeners.getListenerCount();
     }
+
 
     /**
      * Removes a ProtocolCommandListener.
@@ -118,17 +129,6 @@ public class ProtocolCommandSupport implements Serializable
     public void removeProtocolCommandListener(final ProtocolCommandListener listener)
     {
         listeners.removeListener(listener);
-    }
-
-
-    /**
-     * Returns the number of ProtocolCommandListeners currently registered.
-     *
-     * @return The number of ProtocolCommandListeners currently registered.
-     */
-    public int getListenerCount()
-    {
-        return listeners.getListenerCount();
     }
 
 }

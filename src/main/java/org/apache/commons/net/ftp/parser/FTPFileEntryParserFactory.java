@@ -26,21 +26,6 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 public interface FTPFileEntryParserFactory
 {
     /**
-     * Implementation should be a method that decodes the
-     * supplied key and creates an object implementing the
-     * interface FTPFileEntryParser.
-     *
-     * @param key    A string that somehow identifies an
-     *               FTPFileEntryParser to be created.
-     *
-     * @return the FTPFileEntryParser created.
-     * @throws ParserInitializationException
-     *                   Thrown on any exception in instantiation
-     */
-    FTPFileEntryParser createFileEntryParser(String key)
-        throws ParserInitializationException;
-
-    /**
      *<p>
      * Implementation should be a method that extracts
      * a key from the supplied {@link  FTPClientConfig FTPClientConfig}
@@ -63,6 +48,21 @@ public interface FTPFileEntryParserFactory
      * @since 1.4
      */
     FTPFileEntryParser createFileEntryParser(FTPClientConfig config)
+        throws ParserInitializationException;
+
+    /**
+     * Implementation should be a method that decodes the
+     * supplied key and creates an object implementing the
+     * interface FTPFileEntryParser.
+     *
+     * @param key    A string that somehow identifies an
+     *               FTPFileEntryParser to be created.
+     *
+     * @return the FTPFileEntryParser created.
+     * @throws ParserInitializationException
+     *                   Thrown on any exception in instantiation
+     */
+    FTPFileEntryParser createFileEntryParser(String key)
         throws ParserInitializationException;
 
 }

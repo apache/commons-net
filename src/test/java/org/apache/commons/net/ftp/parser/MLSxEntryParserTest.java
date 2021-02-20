@@ -87,7 +87,9 @@ public class MLSxEntryParserTest extends FTPParseTestFramework {
     }
 
     @Override
-    public void testParseFieldsOnFile() throws Exception {
+    public void testDefaultPrecision() {
+        testPrecision("Type=dir;Modify=20141022065102;UNIX.mode=0775; source", CalendarUnit.SECOND);
+
     }
 
     @Override
@@ -95,9 +97,7 @@ public class MLSxEntryParserTest extends FTPParseTestFramework {
     }
 
     @Override
-    public void testDefaultPrecision() {
-        testPrecision("Type=dir;Modify=20141022065102;UNIX.mode=0775; source", CalendarUnit.SECOND);
-
+    public void testParseFieldsOnFile() throws Exception {
     }
 
     @Override

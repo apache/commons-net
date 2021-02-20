@@ -41,11 +41,6 @@ public class ListenerList implements Serializable, Iterable<EventListener>
             listeners.add(listener);
     }
 
-    public  void removeListener(final EventListener listener)
-    {
-            listeners.remove(listener);
-    }
-
     public int getListenerCount()
     {
         return listeners.size();
@@ -61,6 +56,11 @@ public class ListenerList implements Serializable, Iterable<EventListener>
     @Override
     public Iterator<EventListener> iterator() {
             return listeners.iterator();
+    }
+
+    public  void removeListener(final EventListener listener)
+    {
+            listeners.remove(listener);
     }
 
 }

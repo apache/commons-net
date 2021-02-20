@@ -69,9 +69,6 @@ public final class NNTPReply
 
     // Cannot be instantiated
 
-    private NNTPReply()
-    {}
-
     /**
      * Determine if a reply code is an informational response.  All
      * codes beginning with a 1 are positive informational responses.
@@ -85,6 +82,39 @@ public final class NNTPReply
     public static boolean isInformational(final int reply)
     {
         return reply >= 100 && reply < 200;
+    }
+
+    /**
+     * Determine if a reply code is a negative permanent response.  All
+     * codes beginning with a 5 are negative permanent responses.
+     * The NNTP server will send a negative permanent response when
+     * it does not implement a command, a command is incorrectly formatted,
+     * or a serious program error occurs.
+     * <p>
+     * @param reply  The reply code to test.
+     * @return True if a reply code is a negative permanent response, false
+     *         if not.
+     */
+    public static boolean isNegativePermanent(final int reply)
+    {
+        return reply >= 500 && reply < 600;
+    }
+
+    /**
+     * Determine if a reply code is a negative transient response.  All
+     * codes beginning with a 4 are negative transient responses.
+     * The NNTP server will send a negative transient response on the
+     * failure of a correctly formatted command that could not be performed
+     * for some reason.  For example, retrieving an article that does not
+     * exist will result in a negative transient response.
+     * <p>
+     * @param reply  The reply code to test.
+     * @return True if a reply code is a negative transient response, false
+     *         if not.
+     */
+    public static boolean isNegativeTransient(final int reply)
+    {
+        return reply >= 400 && reply < 500;
     }
 
     /**
@@ -120,37 +150,7 @@ public final class NNTPReply
         return reply >= 300 && reply < 400;
     }
 
-    /**
-     * Determine if a reply code is a negative transient response.  All
-     * codes beginning with a 4 are negative transient responses.
-     * The NNTP server will send a negative transient response on the
-     * failure of a correctly formatted command that could not be performed
-     * for some reason.  For example, retrieving an article that does not
-     * exist will result in a negative transient response.
-     * <p>
-     * @param reply  The reply code to test.
-     * @return True if a reply code is a negative transient response, false
-     *         if not.
-     */
-    public static boolean isNegativeTransient(final int reply)
-    {
-        return reply >= 400 && reply < 500;
-    }
-
-    /**
-     * Determine if a reply code is a negative permanent response.  All
-     * codes beginning with a 5 are negative permanent responses.
-     * The NNTP server will send a negative permanent response when
-     * it does not implement a command, a command is incorrectly formatted,
-     * or a serious program error occurs.
-     * <p>
-     * @param reply  The reply code to test.
-     * @return True if a reply code is a negative permanent response, false
-     *         if not.
-     */
-    public static boolean isNegativePermanent(final int reply)
-    {
-        return reply >= 500 && reply < 600;
-    }
+    private NNTPReply()
+    {}
 
 }

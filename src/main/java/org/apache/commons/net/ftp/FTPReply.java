@@ -99,25 +99,34 @@ public final class FTPReply
     /** @since 2.2 */
     public static final int EXTENDED_PORT_FAILURE = 522;
 
-    // Cannot be instantiated
-    private FTPReply()
-    {}
-
     /**
-     * Determine if a reply code is a positive preliminary response.  All
-     * codes beginning with a 1 are positive preliminary responses.
-     * Postitive preliminary responses are used to indicate tentative success.
-     * No further commands can be issued to the FTP server after a positive
-     * preliminary response until a follow up response is received from the
-     * server.
+     * Determine if a reply code is a negative permanent response.  All
+     * codes beginning with a 5 are negative permanent responses.
+     * The FTP server will send a negative permanent response on the
+     * failure of a command that cannot be reattempted with success.
      *
      * @param reply  The reply code to test.
-     * @return True if a reply code is a positive preliminary response, false
+     * @return True if a reply code is a negative permanent response, false
      *         if not.
      */
-    public static boolean isPositivePreliminary(final int reply)
+    public static boolean isNegativePermanent(final int reply)
     {
-        return reply >= 100 && reply < 200;
+        return reply >= 500 && reply < 600;
+    }
+
+    /**
+     * Determine if a reply code is a negative transient response.  All
+     * codes beginning with a 4 are negative transient responses.
+     * The FTP server will send a negative transient response on the
+     * failure of a command that can be reattempted with success.
+     *
+     * @param reply  The reply code to test.
+     * @return True if a reply code is a negative transient response, false
+     *         if not.
+     */
+    public static boolean isNegativeTransient(final int reply)
+    {
+        return reply >= 400 && reply < 500;
     }
 
     /**
@@ -154,33 +163,20 @@ public final class FTPReply
     }
 
     /**
-     * Determine if a reply code is a negative transient response.  All
-     * codes beginning with a 4 are negative transient responses.
-     * The FTP server will send a negative transient response on the
-     * failure of a command that can be reattempted with success.
+     * Determine if a reply code is a positive preliminary response.  All
+     * codes beginning with a 1 are positive preliminary responses.
+     * Postitive preliminary responses are used to indicate tentative success.
+     * No further commands can be issued to the FTP server after a positive
+     * preliminary response until a follow up response is received from the
+     * server.
      *
      * @param reply  The reply code to test.
-     * @return True if a reply code is a negative transient response, false
+     * @return True if a reply code is a positive preliminary response, false
      *         if not.
      */
-    public static boolean isNegativeTransient(final int reply)
+    public static boolean isPositivePreliminary(final int reply)
     {
-        return reply >= 400 && reply < 500;
-    }
-
-    /**
-     * Determine if a reply code is a negative permanent response.  All
-     * codes beginning with a 5 are negative permanent responses.
-     * The FTP server will send a negative permanent response on the
-     * failure of a command that cannot be reattempted with success.
-     *
-     * @param reply  The reply code to test.
-     * @return True if a reply code is a negative permanent response, false
-     *         if not.
-     */
-    public static boolean isNegativePermanent(final int reply)
-    {
-        return reply >= 500 && reply < 600;
+        return reply >= 100 && reply < 200;
     }
 
     /**
@@ -196,6 +192,10 @@ public final class FTPReply
         // defined in RFC 2228: 631, 632 and 633.
         return reply >= 600 && reply < 700;
     }
+
+    // Cannot be instantiated
+    private FTPReply()
+    {}
 
 
 }

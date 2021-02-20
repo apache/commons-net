@@ -150,6 +150,196 @@ public class NNTP extends SocketClient
     }
 
     /**
+     * A convenience method to send the NNTP ARTICLE command to the server,
+     * receive the initial reply, and return the reply code.
+     * <p>
+     * @return The reply code received from the server.
+     * @throws NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int article() throws IOException
+    {
+        return sendCommand(NNTPCommand.ARTICLE);
+    }
+
+
+    /**
+     * @param a article number
+     * @return number
+     * @throws IOException on error
+     * @deprecated - for API compatibility only - DO NOT USE
+     */
+    @Deprecated
+    public int article(final int a) throws IOException
+    {
+        return article((long) a);
+    }
+
+
+    /**
+     * A convenience method to send the NNTP ARTICLE command to the server,
+     * receive the initial reply, and return the reply code.
+     * <p>
+     * @param articleNumber The number of the article to request from the
+     *                      currently selected newsgroup.
+     * @return The reply code received from the server.
+     * @throws NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int article(final long articleNumber) throws IOException
+    {
+        return sendCommand(NNTPCommand.ARTICLE, Long.toString(articleNumber));
+    }
+
+
+    /**
+     * A convenience method to send the NNTP ARTICLE command to the server,
+     * receive the initial reply, and return the reply code.
+     * <p>
+     * @param messageId  The message identifier of the requested article,
+     *                   including the encapsulating &lt; and &gt; characters.
+     * @return The reply code received from the server.
+     * @throws NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int article(final String messageId) throws IOException
+    {
+        return sendCommand(NNTPCommand.ARTICLE, messageId);
+    }
+
+
+    /**
+     * A convenience method to send the AUTHINFO PASS command to the server,
+     * receive the reply, and return the reply code.  If this step is
+     * required, it should immediately follow the AUTHINFO USER command
+     * (See RFC 2980)
+     * <p>
+     * @param password a valid password.
+     * @return The reply code received from the server. The server should
+     *         return a 281 or 502 for this command.
+     * @throws NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int authinfoPass(final String password) throws IOException {
+        final String passParameter = "PASS " + password;
+        return sendCommand(NNTPCommand.AUTHINFO, passParameter);
+    }
+
+
+    /**
+     * A convenience method to send the AUTHINFO USER command to the server,
+     *  receive the reply, and return the reply code. (See RFC 2980)
+     * <p>
+     * @param username A valid username.
+     * @return The reply code received from the server. The server should
+     *          return a 381 or 281 for this command.
+     * @throws NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int authinfoUser(final String username) throws IOException {
+        final String userParameter = "USER " + username;
+        return sendCommand(NNTPCommand.AUTHINFO, userParameter);
+    }
+
+
+    /**
+     * A convenience method to send the NNTP BODY command to the server,
+     * receive the initial reply, and return the reply code.
+     * <p>
+     * @return The reply code received from the server.
+     * @throws NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int body() throws IOException
+    {
+        return sendCommand(NNTPCommand.BODY);
+    }
+
+    /**
+     * @param a article number
+     * @return number
+     * @throws IOException on error
+     * @deprecated - for API compatibility only - DO NOT USE
+     */
+    @Deprecated
+    public int body(final int a) throws IOException
+    {
+        return body((long) a);
+    }
+
+
+    /**
+     * A convenience method to send the NNTP BODY command to the server,
+     * receive the initial reply, and return the reply code.
+     * <p>
+     * @param articleNumber The number of the article to request from the
+     *                      currently selected newsgroup.
+     * @return The reply code received from the server.
+     * @throws NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int body(final long articleNumber) throws IOException
+    {
+        return sendCommand(NNTPCommand.BODY, Long.toString(articleNumber));
+    }
+
+
+    /**
+     * A convenience method to send the NNTP BODY command to the server,
+     * receive the initial reply, and return the reply code.
+     * <p>
+     * @param messageId  The message identifier of the requested article,
+     *                   including the encapsulating &lt; and &gt; characters.
+     * @return The reply code received from the server.
+     * @throws NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int body(final String messageId) throws IOException
+    {
+        return sendCommand(NNTPCommand.BODY, messageId);
+    }
+
+    /**
      * Closes the connection to the NNTP server and sets to null
      * some internal data so that the memory may be reclaimed by the
      * garbage collector.  The reply text and code information from the
@@ -167,149 +357,15 @@ public class NNTP extends SocketClient
         _isAllowedToPost = false;
     }
 
-
     /**
-     * Indicates whether or not the client is allowed to post articles to
-     * the server it is currently connected to.
-     * <p>
-     * @return True if the client can post articles to the server, false
-     *         otherwise.
+     * Provide command support to super-class
      */
-    public boolean isAllowedToPost()
-    {
-        return _isAllowedToPost;
+    @Override
+    protected ProtocolCommandSupport getCommandSupport() {
+        return _commandSupport_;
     }
 
 
-    /**
-     * Sends an NNTP command to the server, waits for a reply and returns the
-     * numerical response code.  After invocation, for more detailed
-     * information, the actual reply text can be accessed by calling
-     * {@link #getReplyString  getReplyString }.
-     * <p>
-     * @param command  The text representation of the  NNTP command to send.
-     * @param args The arguments to the NNTP command.  If this parameter is
-     *             set to null, then the command is sent with no argument.
-     * @return The integer value of the NNTP reply code returned by the server
-     *         in response to the command.
-     * @throws NNTPConnectionClosedException
-     *      If the NNTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send NNTP reply code 400.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int sendCommand(final String command, final String args) throws IOException
-    {
-        final StringBuilder __commandBuffer = new StringBuilder();
-        __commandBuffer.append(command);
-
-        if (args != null)
-        {
-            __commandBuffer.append(' ');
-            __commandBuffer.append(args);
-        }
-        __commandBuffer.append(SocketClient.NETASCII_EOL);
-
-        final String message;
-        _writer_.write(message = __commandBuffer.toString());
-        _writer_.flush();
-
-        fireCommandSent(command, message);
-
-        return getReply();
-    }
-
-
-    /**
-     * Sends an NNTP command to the server, waits for a reply and returns the
-     * numerical response code.  After invocation, for more detailed
-     * information, the actual reply text can be accessed by calling
-     * {@link #getReplyString  getReplyString }.
-     * <p>
-     * @param command  The NNTPCommand constant corresponding to the NNTP command
-     *                 to send.
-     * @param args The arguments to the NNTP command.  If this parameter is
-     *             set to null, then the command is sent with no argument.
-     * @return The integer value of the NNTP reply code returned by the server
-     *         in response to the command.
-     *         in response to the command.
-     * @throws NNTPConnectionClosedException
-     *      If the NNTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send NNTP reply code 400.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int sendCommand(final int command, final String args) throws IOException
-    {
-        return sendCommand(NNTPCommand.getCommand(command), args);
-    }
-
-
-    /**
-     * Sends an NNTP command with no arguments to the server, waits for a
-     * reply and returns the numerical response code.  After invocation, for
-     * more detailed information, the actual reply text can be accessed by
-     * calling {@link #getReplyString  getReplyString }.
-     * <p>
-     * @param command  The text representation of the  NNTP command to send.
-     * @return The integer value of the NNTP reply code returned by the server
-     *         in response to the command.
-     *         in response to the command.
-     * @throws NNTPConnectionClosedException
-     *      If the NNTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send NNTP reply code 400.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int sendCommand(final String command) throws IOException
-    {
-        return sendCommand(command, null);
-    }
-
-
-    /**
-     * Sends an NNTP command with no arguments to the server, waits for a
-     * reply and returns the numerical response code.  After invocation, for
-     * more detailed information, the actual reply text can be accessed by
-     * calling {@link #getReplyString  getReplyString }.
-     * <p>
-     * @param command  The NNTPCommand constant corresponding to the NNTP command
-     *                 to send.
-     * @return The integer value of the NNTP reply code returned by the server
-     *         in response to the command.
-     *         in response to the command.
-     * @throws NNTPConnectionClosedException
-     *      If the NNTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send NNTP reply code 400.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int sendCommand(final int command) throws IOException
-    {
-        return sendCommand(command, null);
-    }
-
-
-    /**
-     * Returns the integer value of the reply code of the last NNTP reply.
-     * You will usually only use this method after you connect to the
-     * NNTP server to check that the connection was successful since
-     * <code> connect </code> is of type void.
-     * <p>
-     * @return The integer value of the reply code of the last NNTP reply.
-     */
-    public int getReplyCode()
-    {
-        return replyCode;
-    }
 
     /**
      * Fetches a reply from the NNTP server and returns the integer reply
@@ -363,6 +419,18 @@ public class NNTP extends SocketClient
         return replyCode;
     }
 
+    /**
+     * Returns the integer value of the reply code of the last NNTP reply.
+     * You will usually only use this method after you connect to the
+     * NNTP server to check that the connection was successful since
+     * <code> connect </code> is of type void.
+     * <p>
+     * @return The integer value of the reply code of the last NNTP reply.
+     */
+    public int getReplyCode()
+    {
+        return replyCode;
+    }
 
     /**
      * Returns the entire text of the last NNTP server response exactly
@@ -376,12 +444,12 @@ public class NNTP extends SocketClient
     }
 
 
+
     /**
-     * A convenience method to send the NNTP ARTICLE command to the server,
-     * receive the initial reply, and return the reply code.
+     * A convenience method to send the NNTP GROUP command to the server,
+     * receive the reply, and return the reply code.
      * <p>
-     * @param messageId  The message identifier of the requested article,
-     *                   including the encapsulating &lt; and &gt; characters.
+     * @param newsgroup  The name of the newsgroup to select.
      * @return The reply code received from the server.
      * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
@@ -391,117 +459,15 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
-    public int article(final String messageId) throws IOException
+    public int group(final String newsgroup) throws IOException
     {
-        return sendCommand(NNTPCommand.ARTICLE, messageId);
+        return sendCommand(NNTPCommand.GROUP, newsgroup);
     }
-
-    /**
-     * A convenience method to send the NNTP ARTICLE command to the server,
-     * receive the initial reply, and return the reply code.
-     * <p>
-     * @param articleNumber The number of the article to request from the
-     *                      currently selected newsgroup.
-     * @return The reply code received from the server.
-     * @throws NNTPConnectionClosedException
-     *      If the NNTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send NNTP reply code 400.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int article(final long articleNumber) throws IOException
-    {
-        return sendCommand(NNTPCommand.ARTICLE, Long.toString(articleNumber));
-    }
-
-    /**
-     * A convenience method to send the NNTP ARTICLE command to the server,
-     * receive the initial reply, and return the reply code.
-     * <p>
-     * @return The reply code received from the server.
-     * @throws NNTPConnectionClosedException
-     *      If the NNTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send NNTP reply code 400.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int article() throws IOException
-    {
-        return sendCommand(NNTPCommand.ARTICLE);
-    }
-
-
-
-    /**
-     * A convenience method to send the NNTP BODY command to the server,
-     * receive the initial reply, and return the reply code.
-     * <p>
-     * @param messageId  The message identifier of the requested article,
-     *                   including the encapsulating &lt; and &gt; characters.
-     * @return The reply code received from the server.
-     * @throws NNTPConnectionClosedException
-     *      If the NNTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send NNTP reply code 400.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int body(final String messageId) throws IOException
-    {
-        return sendCommand(NNTPCommand.BODY, messageId);
-    }
-
-    /**
-     * A convenience method to send the NNTP BODY command to the server,
-     * receive the initial reply, and return the reply code.
-     * <p>
-     * @param articleNumber The number of the article to request from the
-     *                      currently selected newsgroup.
-     * @return The reply code received from the server.
-     * @throws NNTPConnectionClosedException
-     *      If the NNTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send NNTP reply code 400.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int body(final long articleNumber) throws IOException
-    {
-        return sendCommand(NNTPCommand.BODY, Long.toString(articleNumber));
-    }
-
-    /**
-     * A convenience method to send the NNTP BODY command to the server,
-     * receive the initial reply, and return the reply code.
-     * <p>
-     * @return The reply code received from the server.
-     * @throws NNTPConnectionClosedException
-     *      If the NNTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send NNTP reply code 400.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int body() throws IOException
-    {
-        return sendCommand(NNTPCommand.BODY);
-    }
-
-
 
     /**
      * A convenience method to send the NNTP HEAD command to the server,
      * receive the initial reply, and return the reply code.
      * <p>
-     * @param messageId  The message identifier of the requested article,
-     *                   including the encapsulating &lt; and &gt; characters.
      * @return The reply code received from the server.
      * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
@@ -511,10 +477,24 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
-    public int head(final String messageId) throws IOException
+    public int head() throws IOException
     {
-        return sendCommand(NNTPCommand.HEAD, messageId);
+        return sendCommand(NNTPCommand.HEAD);
     }
+
+    /**
+     * @param a article number
+     * @return number
+     * @throws IOException on error
+     * @deprecated - for API compatibility only - DO NOT USE
+     */
+    @Deprecated
+    public int head(final int a) throws IOException
+    {
+        return head((long) a);
+    }
+
+
 
     /**
      * A convenience method to send the NNTP HEAD command to the server,
@@ -540,26 +520,6 @@ public class NNTP extends SocketClient
      * A convenience method to send the NNTP HEAD command to the server,
      * receive the initial reply, and return the reply code.
      * <p>
-     * @return The reply code received from the server.
-     * @throws NNTPConnectionClosedException
-     *      If the NNTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send NNTP reply code 400.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int head() throws IOException
-    {
-        return sendCommand(NNTPCommand.HEAD);
-    }
-
-
-
-    /**
-     * A convenience method to send the NNTP STAT command to the server,
-     * receive the initial reply, and return the reply code.
-     * <p>
      * @param messageId  The message identifier of the requested article,
      *                   including the encapsulating &lt; and &gt; characters.
      * @return The reply code received from the server.
@@ -571,69 +531,10 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
-    public int stat(final String messageId) throws IOException
+    public int head(final String messageId) throws IOException
     {
-        return sendCommand(NNTPCommand.STAT, messageId);
+        return sendCommand(NNTPCommand.HEAD, messageId);
     }
-
-    /**
-     * A convenience method to send the NNTP STAT command to the server,
-     * receive the initial reply, and return the reply code.
-     * <p>
-     * @param articleNumber The number of the article to request from the
-     *                      currently selected newsgroup.
-     * @return The reply code received from the server.
-     * @throws NNTPConnectionClosedException
-     *      If the NNTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send NNTP reply code 400.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int stat(final long articleNumber) throws IOException
-    {
-        return sendCommand(NNTPCommand.STAT, Long.toString(articleNumber));
-    }
-
-    /**
-     * A convenience method to send the NNTP STAT command to the server,
-     * receive the initial reply, and return the reply code.
-     * <p>
-     * @return The reply code received from the server.
-     * @throws NNTPConnectionClosedException
-     *      If the NNTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send NNTP reply code 400.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int stat() throws IOException
-    {
-        return sendCommand(NNTPCommand.STAT);
-    }
-
-
-    /**
-     * A convenience method to send the NNTP GROUP command to the server,
-     * receive the reply, and return the reply code.
-     * <p>
-     * @param newsgroup  The name of the newsgroup to select.
-     * @return The reply code received from the server.
-     * @throws NNTPConnectionClosedException
-     *      If the NNTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send NNTP reply code 400.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int group(final String newsgroup) throws IOException
-    {
-        return sendCommand(NNTPCommand.GROUP, newsgroup);
-    }
-
 
     /**
      * A convenience method to send the NNTP HELP command to the server,
@@ -676,6 +577,19 @@ public class NNTP extends SocketClient
 
 
     /**
+     * Indicates whether or not the client is allowed to post articles to
+     * the server it is currently connected to.
+     * <p>
+     * @return True if the client can post articles to the server, false
+     *         otherwise.
+     */
+    public boolean isAllowedToPost()
+    {
+        return _isAllowedToPost;
+    }
+
+
+    /**
      * A convenience method to send the NNTP LAST command to the server,
      * receive the reply, and return the reply code.
      * <p>
@@ -692,7 +606,6 @@ public class NNTP extends SocketClient
     {
         return sendCommand(NNTPCommand.LAST);
     }
-
 
 
     /**
@@ -716,22 +629,20 @@ public class NNTP extends SocketClient
 
 
     /**
-     * A convenience method to send the NNTP NEXT command to the server,
-     * receive the reply, and return the reply code.
+     * A convenience wrapper for the extended LIST command that takes
+     * an argument, allowing us to selectively list multiple groups.
      * <p>
-     * @return The reply code received from the server.
-     * @throws NNTPConnectionClosedException
-     *      If the NNTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send NNTP reply code 400.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
+     * @param wildmat A wildmat (pseudo-regex) pattern. See RFC 2980 for
+     *                details.
+     * @return the reply code received from the server.
+     * @throws IOException if the command fails
      */
-    public int next() throws IOException
-    {
-        return sendCommand(NNTPCommand.NEXT);
+    public int listActive(final String wildmat) throws IOException {
+        final StringBuilder command = new StringBuilder("ACTIVE ");
+        command.append(wildmat);
+        return sendCommand(NNTPCommand.LIST, command.toString());
     }
+
 
 
     /**
@@ -830,6 +741,25 @@ public class NNTP extends SocketClient
     }
 
 
+    /**
+     * A convenience method to send the NNTP NEXT command to the server,
+     * receive the reply, and return the reply code.
+     * <p>
+     * @return The reply code received from the server.
+     * @throws NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int next() throws IOException
+    {
+        return sendCommand(NNTPCommand.NEXT);
+    }
+
+
 
     /**
      * A convenience method to send the NNTP POST command to the server,
@@ -870,12 +800,16 @@ public class NNTP extends SocketClient
     }
 
     /**
-     * A convenience method to send the AUTHINFO USER command to the server,
-     *  receive the reply, and return the reply code. (See RFC 2980)
+     * Sends an NNTP command with no arguments to the server, waits for a
+     * reply and returns the numerical response code.  After invocation, for
+     * more detailed information, the actual reply text can be accessed by
+     * calling {@link #getReplyString  getReplyString }.
      * <p>
-     * @param username A valid username.
-     * @return The reply code received from the server. The server should
-     *          return a 381 or 281 for this command.
+     * @param command  The NNTPCommand constant corresponding to the NNTP command
+     *                 to send.
+     * @return The integer value of the NNTP reply code returned by the server
+     *         in response to the command.
+     *         in response to the command.
      * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
@@ -884,20 +818,24 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
-    public int authinfoUser(final String username) throws IOException {
-        final String userParameter = "USER " + username;
-        return sendCommand(NNTPCommand.AUTHINFO, userParameter);
+    public int sendCommand(final int command) throws IOException
+    {
+        return sendCommand(command, null);
     }
 
     /**
-     * A convenience method to send the AUTHINFO PASS command to the server,
-     * receive the reply, and return the reply code.  If this step is
-     * required, it should immediately follow the AUTHINFO USER command
-     * (See RFC 2980)
+     * Sends an NNTP command to the server, waits for a reply and returns the
+     * numerical response code.  After invocation, for more detailed
+     * information, the actual reply text can be accessed by calling
+     * {@link #getReplyString  getReplyString }.
      * <p>
-     * @param password a valid password.
-     * @return The reply code received from the server. The server should
-     *         return a 281 or 502 for this command.
+     * @param command  The NNTPCommand constant corresponding to the NNTP command
+     *                 to send.
+     * @param args The arguments to the NNTP command.  If this parameter is
+     *             set to null, then the command is sent with no argument.
+     * @return The integer value of the NNTP reply code returned by the server
+     *         in response to the command.
+     *         in response to the command.
      * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
@@ -906,22 +844,78 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
-    public int authinfoPass(final String password) throws IOException {
-        final String passParameter = "PASS " + password;
-        return sendCommand(NNTPCommand.AUTHINFO, passParameter);
+    public int sendCommand(final int command, final String args) throws IOException
+    {
+        return sendCommand(NNTPCommand.getCommand(command), args);
     }
 
     /**
-     * A convenience method to send the NNTP XOVER command to the server,
-     * receive the reply, and return the reply code.
+     * Sends an NNTP command with no arguments to the server, waits for a
+     * reply and returns the numerical response code.  After invocation, for
+     * more detailed information, the actual reply text can be accessed by
+     * calling {@link #getReplyString  getReplyString }.
      * <p>
-     * @param selectedArticles a String representation of the range of
-     * article headers required. This may be an article number, or a
-     * range of article numbers in the form "XXXX-YYYY", where XXXX
-     * and YYYY are valid article numbers in the current group.  It
-     * also may be of the form "XXX-", meaning "return XXX and all
-     * following articles" In this revision, the last format is not
-     * possible (yet).
+     * @param command  The text representation of the  NNTP command to send.
+     * @return The integer value of the NNTP reply code returned by the server
+     *         in response to the command.
+     *         in response to the command.
+     * @throws NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int sendCommand(final String command) throws IOException
+    {
+        return sendCommand(command, null);
+    }
+
+    /**
+     * Sends an NNTP command to the server, waits for a reply and returns the
+     * numerical response code.  After invocation, for more detailed
+     * information, the actual reply text can be accessed by calling
+     * {@link #getReplyString  getReplyString }.
+     * <p>
+     * @param command  The text representation of the  NNTP command to send.
+     * @param args The arguments to the NNTP command.  If this parameter is
+     *             set to null, then the command is sent with no argument.
+     * @return The integer value of the NNTP reply code returned by the server
+     *         in response to the command.
+     * @throws NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int sendCommand(final String command, final String args) throws IOException
+    {
+        final StringBuilder __commandBuffer = new StringBuilder();
+        __commandBuffer.append(command);
+
+        if (args != null)
+        {
+            __commandBuffer.append(' ');
+            __commandBuffer.append(args);
+        }
+        __commandBuffer.append(SocketClient.NETASCII_EOL);
+
+        final String message;
+        _writer_.write(message = __commandBuffer.toString());
+        _writer_.flush();
+
+        fireCommandSent(command, message);
+
+        return getReply();
+    }
+
+    /**
+     * A convenience method to send the NNTP STAT command to the server,
+     * receive the initial reply, and return the reply code.
+     * <p>
      * @return The reply code received from the server.
      * @throws NNTPConnectionClosedException
      *      If the NNTP server prematurely closes the connection as a result
@@ -931,8 +925,63 @@ public class NNTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
-    public int xover(final String selectedArticles) throws IOException {
-        return sendCommand(NNTPCommand.XOVER, selectedArticles);
+    public int stat() throws IOException
+    {
+        return sendCommand(NNTPCommand.STAT);
+    }
+
+    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
+
+    /**
+     * @param a article number
+     * @return number
+     * @throws IOException on error
+     * @deprecated - for API compatibility only - DO NOT USE
+     */
+    @Deprecated
+    public int stat(final int a) throws IOException
+    {
+        return stat((long) a);
+    }
+
+    /**
+     * A convenience method to send the NNTP STAT command to the server,
+     * receive the initial reply, and return the reply code.
+     * <p>
+     * @param articleNumber The number of the article to request from the
+     *                      currently selected newsgroup.
+     * @return The reply code received from the server.
+     * @throws NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int stat(final long articleNumber) throws IOException
+    {
+        return sendCommand(NNTPCommand.STAT, Long.toString(articleNumber));
+    }
+
+    /**
+     * A convenience method to send the NNTP STAT command to the server,
+     * receive the initial reply, and return the reply code.
+     * <p>
+     * @param messageId  The message identifier of the requested article,
+     *                   including the encapsulating &lt; and &gt; characters.
+     * @return The reply code received from the server.
+     * @throws NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int stat(final String messageId) throws IOException
+    {
+        return sendCommand(NNTPCommand.STAT, messageId);
     }
 
     /**
@@ -965,75 +1014,26 @@ public class NNTP extends SocketClient
     }
 
     /**
-     * A convenience wrapper for the extended LIST command that takes
-     * an argument, allowing us to selectively list multiple groups.
+     * A convenience method to send the NNTP XOVER command to the server,
+     * receive the reply, and return the reply code.
      * <p>
-     * @param wildmat A wildmat (pseudo-regex) pattern. See RFC 2980 for
-     *                details.
-     * @return the reply code received from the server.
-     * @throws IOException if the command fails
+     * @param selectedArticles a String representation of the range of
+     * article headers required. This may be an article number, or a
+     * range of article numbers in the form "XXXX-YYYY", where XXXX
+     * and YYYY are valid article numbers in the current group.  It
+     * also may be of the form "XXX-", meaning "return XXX and all
+     * following articles" In this revision, the last format is not
+     * possible (yet).
+     * @return The reply code received from the server.
+     * @throws NNTPConnectionClosedException
+     *      If the NNTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send NNTP reply code 400.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
      */
-    public int listActive(final String wildmat) throws IOException {
-        final StringBuilder command = new StringBuilder("ACTIVE ");
-        command.append(wildmat);
-        return sendCommand(NNTPCommand.LIST, command.toString());
-    }
-
-    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
-
-    /**
-     * @param a article number
-     * @return number
-     * @throws IOException on error
-     * @deprecated - for API compatibility only - DO NOT USE
-     */
-    @Deprecated
-    public int article(final int a) throws IOException
-    {
-        return article((long) a);
-    }
-
-    /**
-     * @param a article number
-     * @return number
-     * @throws IOException on error
-     * @deprecated - for API compatibility only - DO NOT USE
-     */
-    @Deprecated
-    public int body(final int a) throws IOException
-    {
-        return body((long) a);
-    }
-
-    /**
-     * @param a article number
-     * @return number
-     * @throws IOException on error
-     * @deprecated - for API compatibility only - DO NOT USE
-     */
-    @Deprecated
-    public int head(final int a) throws IOException
-    {
-        return head((long) a);
-    }
-
-    /**
-     * @param a article number
-     * @return number
-     * @throws IOException on error
-     * @deprecated - for API compatibility only - DO NOT USE
-     */
-    @Deprecated
-    public int stat(final int a) throws IOException
-    {
-        return stat((long) a);
-    }
-
-    /**
-     * Provide command support to super-class
-     */
-    @Override
-    protected ProtocolCommandSupport getCommandSupport() {
-        return _commandSupport_;
+    public int xover(final String selectedArticles) throws IOException {
+        return sendCommand(NNTPCommand.XOVER, selectedArticles);
     }
 }

@@ -46,6 +46,35 @@ public class DefaultFTPFileEntryParserFactory
     private static final Pattern JAVA_QUALIFIED_NAME_PATTERN = Pattern.compile(JAVA_QUALIFIED_NAME);
 
     /**
+     * <p>Implementation extracts a key from the supplied
+     * {@link  FTPClientConfig FTPClientConfig}
+     * parameter and creates an object implementing the
+     * interface FTPFileEntryParser and uses the supplied configuration
+     * to configure it.
+     * </p><p>
+     * Note that this method will generally not be called in scenarios
+     * that call for autodetection of parser type but rather, for situations
+     * where the user knows that the server uses a non-default configuration
+     * and knows what that configuration is.
+     * </p>
+     * @param config  A {@link  FTPClientConfig FTPClientConfig}
+     * used to configure the parser created
+     *
+     * @return the @link  FTPFileEntryParser FTPFileEntryParser} so created.
+     * @throws ParserInitializationException
+     *                   Thrown on any exception in instantiation
+     * @throws NullPointerException if {@code config} is {@code null}
+     * @since 1.4
+     */
+    @Override
+    public FTPFileEntryParser createFileEntryParser(final FTPClientConfig config)
+    throws ParserInitializationException
+    {
+        final String key = config.getServerSystemKey();
+        return createFileEntryParser(key, config);
+    }
+
+    /**
      * This default implementation of the FTPFileEntryParserFactory
      * interface works according to the following logic:
      * First it attempts to interpret the supplied key as a fully
@@ -175,44 +204,10 @@ public class DefaultFTPFileEntryParserFactory
         return parser;
     }
 
-    /**
-     * <p>Implementation extracts a key from the supplied
-     * {@link  FTPClientConfig FTPClientConfig}
-     * parameter and creates an object implementing the
-     * interface FTPFileEntryParser and uses the supplied configuration
-     * to configure it.
-     * </p><p>
-     * Note that this method will generally not be called in scenarios
-     * that call for autodetection of parser type but rather, for situations
-     * where the user knows that the server uses a non-default configuration
-     * and knows what that configuration is.
-     * </p>
-     * @param config  A {@link  FTPClientConfig FTPClientConfig}
-     * used to configure the parser created
-     *
-     * @return the @link  FTPFileEntryParser FTPFileEntryParser} so created.
-     * @throws ParserInitializationException
-     *                   Thrown on any exception in instantiation
-     * @throws NullPointerException if {@code config} is {@code null}
-     * @since 1.4
-     */
-    @Override
-    public FTPFileEntryParser createFileEntryParser(final FTPClientConfig config)
-    throws ParserInitializationException
-    {
-        final String key = config.getServerSystemKey();
-        return createFileEntryParser(key, config);
-    }
 
-
-    public FTPFileEntryParser createUnixFTPEntryParser()
+    public FTPFileEntryParser createMVSEntryParser()
     {
-        return new UnixFTPEntryParser();
-    }
-
-    public FTPFileEntryParser createVMSVersioningFTPEntryParser()
-    {
-        return new VMSVersioningFTPEntryParser();
+        return new MVSFTPEntryParser();
     }
 
     public FTPFileEntryParser createNetwareFTPEntryParser() {
@@ -248,12 +243,12 @@ public class DefaultFTPFileEntryParserFactory
                });
     }
 
-     public FTPFileEntryParser createOS2FTPEntryParser()
+    public FTPFileEntryParser createOS2FTPEntryParser()
     {
         return new OS2FTPEntryParser();
     }
 
-    public FTPFileEntryParser createOS400FTPEntryParser()
+     public FTPFileEntryParser createOS400FTPEntryParser()
     {
         return createOS400FTPEntryParser(null);
     }
@@ -282,9 +277,14 @@ public class DefaultFTPFileEntryParserFactory
             });
     }
 
-    public FTPFileEntryParser createMVSEntryParser()
+    public FTPFileEntryParser createUnixFTPEntryParser()
     {
-        return new MVSFTPEntryParser();
+        return new UnixFTPEntryParser();
+    }
+
+    public FTPFileEntryParser createVMSVersioningFTPEntryParser()
+    {
+        return new VMSVersioningFTPEntryParser();
     }
 
 }

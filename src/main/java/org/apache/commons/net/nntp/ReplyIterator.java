@@ -39,6 +39,10 @@ class ReplyIterator implements Iterator<String>, Iterable<String> {
 
     private Exception savedException;
 
+    ReplyIterator(final BufferedReader _reader) throws IOException {
+        this(_reader, true);
+    }
+
     /**
      *
      * @param _reader the reader to wrap
@@ -53,16 +57,17 @@ class ReplyIterator implements Iterator<String>, Iterable<String> {
         }
     }
 
-    ReplyIterator(final BufferedReader _reader) throws IOException {
-        this(_reader, true);
-    }
-
     @Override
     public boolean hasNext() {
         if (savedException != null){
             throw new NoSuchElementException(savedException.toString());
         }
         return line != null;
+    }
+
+    @Override
+    public Iterator<String> iterator() {
+        return this;
     }
 
     @Override
@@ -89,10 +94,5 @@ class ReplyIterator implements Iterator<String>, Iterable<String> {
     @Override
     public void remove() {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Iterator<String> iterator() {
-        return this;
     }
 }

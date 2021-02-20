@@ -59,6 +59,27 @@ public final class TimeTCPClient extends SocketClient
     }
 
     /**
+     * Retrieves the time from the server and returns a Java Date
+     * containing the time converted to the local time zone.
+     * <p>
+     * The server will have closed the connection at this point, so you should
+     * call
+     * {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
+     * after calling this method.  To retrieve another time, you must
+     * initiate another connection with
+     * {@link org.apache.commons.net.SocketClient#connect  connect }
+     * before calling <code> getDate() </code> again.
+     *
+     * @return A Date value containing the time retrieved from the server
+     *     converted to the local time zone.
+     * @throws IOException  If an error occurs while fetching the time.
+     */
+    public Date getDate() throws IOException
+    {
+        return new Date((getTime() - SECONDS_1900_TO_1970)*1000L);
+    }
+
+    /**
      * Retrieves the time from the server and returns it.  The time
      * is the number of seconds since 00:00 (midnight) 1 January 1900 GMT,
      * as specified by RFC 868.  This method reads the raw 32-bit big-endian
@@ -81,27 +102,6 @@ public final class TimeTCPClient extends SocketClient
         final DataInputStream input;
         input = new DataInputStream(_input_);
         return input.readInt() & 0xffffffffL;
-    }
-
-    /**
-     * Retrieves the time from the server and returns a Java Date
-     * containing the time converted to the local time zone.
-     * <p>
-     * The server will have closed the connection at this point, so you should
-     * call
-     * {@link org.apache.commons.net.SocketClient#disconnect  disconnect }
-     * after calling this method.  To retrieve another time, you must
-     * initiate another connection with
-     * {@link org.apache.commons.net.SocketClient#connect  connect }
-     * before calling <code> getDate() </code> again.
-     *
-     * @return A Date value containing the time retrieved from the server
-     *     converted to the local time zone.
-     * @throws IOException  If an error occurs while fetching the time.
-     */
-    public Date getDate() throws IOException
-    {
-        return new Date((getTime() - SECONDS_1900_TO_1970)*1000L);
     }
 
 }

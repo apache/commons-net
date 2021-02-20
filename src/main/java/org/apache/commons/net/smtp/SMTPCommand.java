@@ -76,22 +76,18 @@ public final class SMTPCommand
     // public static final int QUIT = QUIT;
     public static final int LOGOUT = QUIT;
 
-    // Cannot be instantiated
-    private SMTPCommand()
-    {}
-
     private static final String[] commands = {
                                           "HELO", "MAIL FROM:", "RCPT TO:", "DATA", "SEND FROM:", "SOML FROM:",
                                           "SAML FROM:", "RSET", "VRFY", "EXPN", "HELP", "NOOP", "TURN", "QUIT",
                                           "AUTH", "EHLO"
                                       };
 
-
     static {
         if (commands.length != NEXT) {
             throw new RuntimeException("Error in array definition");
         }
     }
+
 
     /**
      * Retrieve the SMTP protocol command string corresponding to a specified
@@ -105,5 +101,9 @@ public final class SMTPCommand
     {
         return commands[command];
     }
+
+    // Cannot be instantiated
+    private SMTPCommand()
+    {}
 
 }

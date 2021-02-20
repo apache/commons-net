@@ -47,6 +47,16 @@ public final class DaytimeUDPClient extends DatagramSocketClient
     // Received dates should be less than 256 bytes
     private final byte[] timeData = new byte[256];
 
+    /** Same as <code>getTime(host, DaytimeUDPClient.DEFAULT_PORT);</code>
+     * @param host the host
+     * @return  the time
+     * @throws IOException on error
+     */
+    public String getTime(final InetAddress host) throws IOException
+    {
+        return getTime(host, DEFAULT_PORT);
+    }
+
     /**
      * Retrieves the time string from the specified server and port and
      * returns it.
@@ -69,16 +79,6 @@ public final class DaytimeUDPClient extends DatagramSocketClient
         _socket_.receive(receivePacket);
 
         return new String(receivePacket.getData(), 0, receivePacket.getLength(), getCharset()); // Java 1.6 can use getCharset()
-    }
-
-    /** Same as <code>getTime(host, DaytimeUDPClient.DEFAULT_PORT);</code>
-     * @param host the host
-     * @return  the time
-     * @throws IOException on error
-     */
-    public String getTime(final InetAddress host) throws IOException
-    {
-        return getTime(host, DEFAULT_PORT);
     }
 
 }

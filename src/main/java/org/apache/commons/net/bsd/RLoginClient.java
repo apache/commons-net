@@ -81,6 +81,20 @@ public class RLoginClient extends RCommandClient
 
 
     /**
+     * Same as the other rlogin method, but no terminal speed is defined.
+     * @param localUsername the local user
+     * @param remoteUsername the remote user
+     * @param terminalType the terminal type
+     * @throws IOException on error
+     */
+    public void rlogin(final String localUsername, final String remoteUsername,
+                       final String terminalType)
+    throws IOException
+    {
+        rexec(localUsername, remoteUsername, terminalType, false);
+    }
+
+    /**
      * Logins into a remote machine through the rlogind daemon on the server
      * to which the RLoginClient is connected.  After calling this method,
      * you may interact with the remote login shell through its standard input
@@ -114,20 +128,6 @@ public class RLoginClient extends RCommandClient
     {
         rexec(localUsername, remoteUsername, terminalType + "/" + terminalSpeed,
               false);
-    }
-
-    /**
-     * Same as the other rlogin method, but no terminal speed is defined.
-     * @param localUsername the local user
-     * @param remoteUsername the remote user
-     * @param terminalType the terminal type
-     * @throws IOException on error
-     */
-    public void rlogin(final String localUsername, final String remoteUsername,
-                       final String terminalType)
-    throws IOException
-    {
-        rexec(localUsername, remoteUsername, terminalType, false);
     }
 
 }

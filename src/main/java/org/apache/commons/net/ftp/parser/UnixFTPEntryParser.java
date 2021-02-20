@@ -200,18 +200,17 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     }
 
     /**
-     * Preparse the list to discard "total nnn" lines
+     * Defines a default configuration to be used when this class is
+     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
+     * parameter being specified.
+     * @return the default configuration for this parser.
      */
     @Override
-    public List<String> preParse(final List<String> original) {
-        final ListIterator<String> iter = original.listIterator();
-        while (iter.hasNext()) {
-            final String entry = iter.next();
-            if (entry.matches("^total \\d+$")) { // NET-389
-                iter.remove();
-            }
-        }
-        return original;
+    protected FTPClientConfig getDefaultConfiguration() {
+        return new FTPClientConfig(
+                FTPClientConfig.SYST_UNIX,
+                DEFAULT_DATE_FORMAT,
+                DEFAULT_RECENT_DATE_FORMAT);
     }
 
     /**
@@ -362,17 +361,18 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     }
 
     /**
-     * Defines a default configuration to be used when this class is
-     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
-     * parameter being specified.
-     * @return the default configuration for this parser.
+     * Preparse the list to discard "total nnn" lines
      */
     @Override
-    protected FTPClientConfig getDefaultConfiguration() {
-        return new FTPClientConfig(
-                FTPClientConfig.SYST_UNIX,
-                DEFAULT_DATE_FORMAT,
-                DEFAULT_RECENT_DATE_FORMAT);
+    public List<String> preParse(final List<String> original) {
+        final ListIterator<String> iter = original.listIterator();
+        while (iter.hasNext()) {
+            final String entry = iter.next();
+            if (entry.matches("^total \\d+$")) { // NET-389
+                iter.remove();
+            }
+        }
+        return original;
     }
 
 }

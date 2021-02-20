@@ -32,13 +32,26 @@ import org.apache.commons.net.nntp.NewsgroupInfo;
 public class ExtendedNNTPOps {
 
 
+    public static void main(final String[] args) {
+        final ExtendedNNTPOps ops;
+
+        final int argc = args.length;
+        if (argc < 1) {
+            System.err.println("usage: ExtendedNNTPOps nntpserver [username password]");
+            System.exit(1);
+        }
+
+        ops = new ExtendedNNTPOps();
+        ops.demo(args[0], argc >=3 ? args[1] : null, argc >=3 ? args[2] : null);
+    }
+
     private final NNTPClient client;
+
 
     public ExtendedNNTPOps() {
         client = new NNTPClient();
         client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
     }
-
 
     private void demo(final String host, final String user, final String password) {
         try {
@@ -79,19 +92,6 @@ public class ExtendedNNTPOps {
         } catch (final IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(final String[] args) {
-        final ExtendedNNTPOps ops;
-
-        final int argc = args.length;
-        if (argc < 1) {
-            System.err.println("usage: ExtendedNNTPOps nntpserver [username password]");
-            System.exit(1);
-        }
-
-        ops = new ExtendedNNTPOps();
-        ops.demo(args[0], argc >=3 ? args[1] : null, argc >=3 ? args[2] : null);
     }
 
 }

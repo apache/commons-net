@@ -31,10 +31,6 @@ import javax.net.ssl.TrustManager;
  */
 public class SSLContextUtils {
 
-    private SSLContextUtils() {
-        // Not instantiable
-    }
-
     /**
      * Create and initialize an SSLContext.
      * @param protocol the protocol used to instatiate the context
@@ -70,5 +66,9 @@ public class SSLContextUtils {
             throw ioe;
         }
         return ctx;
+    }
+
+    private SSLContextUtils() {
+        // Not instantiable
     }
 }

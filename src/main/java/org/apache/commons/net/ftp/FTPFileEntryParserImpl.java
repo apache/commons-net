@@ -37,22 +37,6 @@ public abstract class FTPFileEntryParserImpl
     }
 
     /**
-     * Reads the next entry using the supplied BufferedReader object up to
-     * whatever delimits one entry from the next.  This default implementation
-     * simply calls BufferedReader.readLine().
-     *
-     * @param reader The BufferedReader object from which entries are to be
-     * read.
-     *
-     * @return A string representing the next ftp entry or null if none found.
-     * @throws java.io.IOException thrown on any IO Error reading from the reader.
-     */
-    @Override
-    public String readNextEntry(final BufferedReader reader) throws IOException
-    {
-        return reader.readLine();
-    }
-    /**
      * This method is a hook for those implementors (such as
      * VMSVersioningFTPEntryParser, and possibly others) which need to
      * perform some action upon the FTPFileList after it has been created
@@ -68,4 +52,20 @@ public abstract class FTPFileEntryParserImpl
     public List<String> preParse(final List<String> original) {
          return original;
      }
+    /**
+     * Reads the next entry using the supplied BufferedReader object up to
+     * whatever delimits one entry from the next.  This default implementation
+     * simply calls BufferedReader.readLine().
+     *
+     * @param reader The BufferedReader object from which entries are to be
+     * read.
+     *
+     * @return A string representing the next ftp entry or null if none found.
+     * @throws java.io.IOException thrown on any IO Error reading from the reader.
+     */
+    @Override
+    public String readNextEntry(final BufferedReader reader) throws IOException
+    {
+        return reader.readLine();
+    }
 }

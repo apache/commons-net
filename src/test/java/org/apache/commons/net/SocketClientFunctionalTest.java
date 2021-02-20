@@ -30,12 +30,12 @@ import junit.framework.TestCase;
  */
 public class SocketClientFunctionalTest extends TestCase
 {
-    // any subclass will do, but it should be able to connect to the destination host
-    SocketClient sc = new FTPClient();
     private static final String PROXY_HOST = "127.0.0.1";
     private static final int PROXY_PORT = 9050;
     private static final String DEST_HOST = "ftp.gnu.org";
     private static final int DEST_PORT = 21;
+    // any subclass will do, but it should be able to connect to the destination host
+    SocketClient sc = new FTPClient();
 
     /**
      * The constructor for this test case.

@@ -133,6 +133,345 @@ public class Base64 {
     // some state be preserved between calls of encode() and decode().
 
     /**
+     * Tests a given byte array to see if it contains only valid characters within the Base64 alphabet.
+     *
+     * @param arrayOctet
+     *            byte array to test
+     * @return <code>true</code> if any byte is a valid character in the Base64 alphabet; false herwise
+     */
+    private static boolean containsBase64Byte(final byte[] arrayOctet) {
+        for (final byte element : arrayOctet)
+        {
+            if (isBase64(element)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Decodes Base64 data into octets.
+     *
+     * @param base64Data
+     *            Byte array containing Base64 data
+     * @return Array containing decoded data.
+     */
+    public static byte[] decodeBase64(final byte[] base64Data) {
+        return new Base64().decode(base64Data);
+    }
+
+    /**
+     * Decodes a Base64 String into octets.
+     *
+     * @param base64String
+     *            String containing Base64 data
+     * @return Array containing decoded data.
+     * @since 1.4
+     */
+    public static byte[] decodeBase64(final String base64String) {
+        return new Base64().decode(base64String);
+    }
+
+    // Implementation of integer encoding used for crypto
+    /**
+     * Decodes a byte64-encoded integer according to crypto standards such as W3C's XML-Signature
+     *
+     * @param pArray
+     *            a byte array containing base64 character data
+     * @return A BigInteger
+     * @since 1.4
+     */
+    public static BigInteger decodeInteger(final byte[] pArray) {
+        return new BigInteger(1, decodeBase64(pArray));
+    }
+
+    /**
+     * Encodes binary data using the base64 algorithm but does not chunk the output.
+     *
+     * @param binaryData
+     *            binary data to encode
+     * @return byte[] containing Base64 characters in their UTF-8 representation.
+     */
+    public static byte[] encodeBase64(final byte[] binaryData) {
+        return encodeBase64(binaryData, false);
+    }
+
+    /**
+     * Encodes binary data using the base64 algorithm, optionally chunking the output into 76 character blocks.
+     *
+     * @param binaryData
+     *            Array containing binary data to encode.
+     * @param isChunked
+     *            if <code>true</code> this encoder will chunk the base64 output into 76 character blocks
+     * @return Base64-encoded data.
+     * @throws IllegalArgumentException
+     *             Thrown when the input array needs an output array bigger than {@link Integer#MAX_VALUE}
+     */
+    public static byte[] encodeBase64(final byte[] binaryData, final boolean isChunked) {
+        return encodeBase64(binaryData, isChunked, false);
+    }
+
+    /**
+     * Encodes binary data using the base64 algorithm, optionally chunking the output into 76 character blocks.
+     *
+     * @param binaryData
+     *            Array containing binary data to encode.
+     * @param isChunked
+     *            if <code>true</code> this encoder will chunk the base64 output into 76 character blocks
+     * @param urlSafe
+     *            if <code>true</code> this encoder will emit - and _ instead of the usual + and / characters.
+     * @return Base64-encoded data.
+     * @throws IllegalArgumentException
+     *             Thrown when the input array needs an output array bigger than {@link Integer#MAX_VALUE}
+     * @since 1.4
+     */
+    public static byte[] encodeBase64(final byte[] binaryData, final boolean isChunked, final boolean urlSafe) {
+        return encodeBase64(binaryData, isChunked, urlSafe, Integer.MAX_VALUE);
+    }
+
+    /**
+     * Encodes binary data using the base64 algorithm, optionally chunking the output into 76 character blocks.
+     *
+     * @param binaryData
+     *            Array containing binary data to encode.
+     * @param isChunked
+     *            if <code>true</code> this encoder will chunk the base64 output into 76 character blocks
+     * @param urlSafe
+     *            if <code>true</code> this encoder will emit - and _ instead of the usual + and / characters.
+     * @param maxResultSize
+     *            The maximum result size to accept.
+     * @return Base64-encoded data.
+     * @throws IllegalArgumentException
+     *             Thrown when the input array needs an output array bigger than maxResultSize
+     * @since 1.4
+     */
+    public static byte[] encodeBase64(final byte[] binaryData, final boolean isChunked, final boolean urlSafe,
+            final int maxResultSize) {
+        if (binaryData == null || binaryData.length == 0) {
+            return binaryData;
+        }
+
+        final long len = getEncodeLength(binaryData, isChunked ? CHUNK_SIZE : 0,
+                isChunked ? CHUNK_SEPARATOR : NetConstants.EMPTY_BTYE_ARRAY);
+        if (len > maxResultSize) {
+            throw new IllegalArgumentException("Input array too big, the output array would be bigger (" + len
+                    + ") than the specified maxium size of " + maxResultSize);
+        }
+
+        final Base64 b64 = isChunked ? new Base64(urlSafe) : new Base64(0, CHUNK_SEPARATOR, urlSafe);
+        return b64.encode(binaryData);
+    }
+
+    /**
+     * Encodes binary data using the base64 algorithm and chunks the encoded output into 76 character blocks
+     *
+     * @param binaryData
+     *            binary data to encode
+     * @return Base64 characters chunked in 76 character blocks
+     */
+    public static byte[] encodeBase64Chunked(final byte[] binaryData) {
+        return encodeBase64(binaryData, true);
+    }
+
+    /**
+     * Encodes binary data using the base64 algorithm into 76 character blocks separated by CRLF.
+     * <p>
+     * For a non-chunking version, see {@link #encodeBase64StringUnChunked(byte[])}.
+     *
+     * @param binaryData
+     *            binary data to encode
+     * @return String containing Base64 characters.
+     * @since 1.4
+     */
+    public static String encodeBase64String(final byte[] binaryData) {
+        return newStringUtf8(encodeBase64(binaryData, true));
+    }
+
+    /**
+     * Encodes binary data using the base64 algorithm.
+     *
+     * @param binaryData
+     *            binary data to encode
+     * @param useChunking whether to split the output into chunks
+     * @return String containing Base64 characters.
+     * @since 3.2
+     */
+    public static String encodeBase64String(final byte[] binaryData, final boolean useChunking) {
+        return newStringUtf8(encodeBase64(binaryData, useChunking));
+    }
+
+    /**
+     * Encodes binary data using the base64 algorithm, without using chunking.
+     * <p>
+     * For a chunking version, see {@link #encodeBase64String(byte[])}.
+     *
+     * @param binaryData
+     *            binary data to encode
+     * @return String containing Base64 characters.
+     * @since 3.2
+     */
+    public static String encodeBase64StringUnChunked(final byte[] binaryData) {
+        return newStringUtf8(encodeBase64(binaryData, false));
+    }
+
+    /**
+     * Encodes binary data using a URL-safe variation of the base64 algorithm but does not chunk the output. The
+     * url-safe variation emits - and _ instead of + and / characters.
+     *
+     * @param binaryData
+     *            binary data to encode
+     * @return byte[] containing Base64 characters in their UTF-8 representation.
+     * @since 1.4
+     */
+    public static byte[] encodeBase64URLSafe(final byte[] binaryData) {
+        return encodeBase64(binaryData, false, true);
+    }
+
+    /**
+     * Encodes binary data using a URL-safe variation of the base64 algorithm but does not chunk the output. The
+     * url-safe variation emits - and _ instead of + and / characters.
+     *
+     * @param binaryData
+     *            binary data to encode
+     * @return String containing Base64 characters
+     * @since 1.4
+     */
+    public static String encodeBase64URLSafeString(final byte[] binaryData) {
+        return newStringUtf8(encodeBase64(binaryData, false, true));
+    }
+
+    /**
+     * Encodes to a byte64-encoded integer according to crypto standards such as W3C's XML-Signature
+     *
+     * @param bigInt
+     *            a BigInteger
+     * @return A byte array containing base64 character data
+     * @throws NullPointerException
+     *             if null is passed in
+     * @since 1.4
+     */
+    public static byte[] encodeInteger(final BigInteger bigInt) {
+        if (bigInt == null) {
+            throw new NullPointerException("encodeInteger called with null parameter");
+        }
+        return encodeBase64(toIntegerBytes(bigInt), false);
+    }
+
+    /**
+     * Pre-calculates the amount of space needed to base64-encode the supplied array.
+     *
+     * @param pArray byte[] array which will later be encoded
+     * @param chunkSize line-length of the output (<= 0 means no chunking) between each
+     *        chunkSeparator (e.g. CRLF).
+     * @param chunkSeparator the sequence of bytes used to separate chunks of output (e.g. CRLF).
+     *
+     * @return amount of space needed to encoded the supplied array.  Returns
+     *         a long since a max-len array will require Integer.MAX_VALUE + 33%.
+     */
+    private static long getEncodeLength(final byte[] pArray, int chunkSize, final byte[] chunkSeparator) {
+        // base64 always encodes to multiples of 4.
+        chunkSize = (chunkSize / 4) * 4;
+
+        long len = (pArray.length * 4) / 3;
+        final long mod = len % 4;
+        if (mod != 0) {
+            len += 4 - mod;
+        }
+        if (chunkSize > 0) {
+            final boolean lenChunksPerfectly = len % chunkSize == 0;
+            len += (len / chunkSize) * chunkSeparator.length;
+            if (!lenChunksPerfectly) {
+                len += chunkSeparator.length;
+            }
+        }
+        return len;
+    }
+
+    /**
+     * Tests a given byte array to see if it contains only valid characters within the Base64 alphabet. Currently the
+     * method treats whitespace as valid.
+     *
+     * @param arrayOctet
+     *            byte array to test
+     * @return <code>true</code> if all bytes are valid characters in the Base64 alphabet or if the byte array is empty;
+     *         false, otherwise
+     */
+    public static boolean isArrayByteBase64(final byte[] arrayOctet) {
+        for (final byte element : arrayOctet) {
+            if (!isBase64(element) && !isWhiteSpace(element)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns whether or not the <code>octet</code> is in the base 64 alphabet.
+     *
+     * @param octet
+     *            The value to test
+     * @return <code>true</code> if the value is defined in the the base 64 alphabet, <code>false</code> otherwise.
+     * @since 1.4
+     */
+    public static boolean isBase64(final byte octet) {
+        return octet == PAD || (octet >= 0 && octet < DECODE_TABLE.length && DECODE_TABLE[octet] != -1);
+    }
+
+    /**
+     * Checks if a byte value is whitespace or not.
+     *
+     * @param byteToCheck
+     *            the byte to check
+     * @return true if byte is whitespace, false otherwise
+     */
+    private static boolean isWhiteSpace(final byte byteToCheck) {
+        switch (byteToCheck) {
+            case ' ' :
+            case '\n' :
+            case '\r' :
+            case '\t' :
+                return true;
+            default :
+                return false;
+        }
+    }
+
+    private static String newStringUtf8(final byte[] encode) {
+        return new String(encode, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Returns a byte-array representation of a <code>BigInteger</code> without sign bit.
+     *
+     * @param bigInt
+     *            <code>BigInteger</code> to be converted
+     * @return a byte array representation of the BigInteger parameter
+     */
+    static byte[] toIntegerBytes(final BigInteger bigInt) {
+        int bitlen = bigInt.bitLength();
+        // round bitlen
+        bitlen = ((bitlen + 7) >> 3) << 3;
+        final byte[] bigBytes = bigInt.toByteArray();
+
+        if (((bigInt.bitLength() % 8) != 0) && (((bigInt.bitLength() / 8) + 1) == (bitlen / 8))) {
+            return bigBytes;
+        }
+        // set up params for copying everything but sign bit
+        int startSrc = 0;
+        int len = bigBytes.length;
+
+        // if bigInt is exactly byte-aligned, just skip signbit in copy
+        if ((bigInt.bitLength() % 8) == 0) {
+            startSrc = 1;
+            len--;
+        }
+        final int startDst = bitlen / 8 - len; // to pad w/ nulls as per spec
+        final byte[] resizedBytes = new byte[bitlen / 8];
+        System.arraycopy(bigBytes, startSrc, resizedBytes, startDst, len);
+        return resizedBytes;
+    }
+
+    /**
      * Encode table to use: either STANDARD or URL_SAFE. Note: the DECODE_TABLE above remains static because it is able
      * to decode both STANDARD and URL_SAFE streams, but the encodeTable must be a member variable so we can switch
      * between the two modes.
@@ -329,25 +668,6 @@ public class Base64 {
     }
 
     /**
-     * Returns our current encode mode. True if we're URL-SAFE, false otherwise.
-     *
-     * @return true if we're in URL-SAFE mode, false otherwise.
-     * @since 1.4
-     */
-    public boolean isUrlSafe() {
-        return this.encodeTable == URL_SAFE_ENCODE_TABLE;
-    }
-
-    /**
-     * Returns true if this Base64 object has buffered data for reading.
-     *
-     * @return true if there is Base64 object still available for reading.
-     */
-    boolean hasData() {
-        return this.buffer != null;
-    }
-
-    /**
      * Returns the amount of buffered data available for reading.
      *
      * @return The amount of buffered data available for reading.
@@ -356,69 +676,150 @@ public class Base64 {
         return buffer != null ? pos - readPos : 0;
     }
 
-    /** Doubles our buffer. */
-    private void resizeBuffer() {
-        if (buffer == null) {
-            buffer = new byte[DEFAULT_BUFFER_SIZE];
-            pos = 0;
-            readPos = 0;
-        } else {
-            final byte[] b = new byte[buffer.length * DEFAULT_BUFFER_RESIZE_FACTOR];
-            System.arraycopy(buffer, 0, b, 0, buffer.length);
-            buffer = b;
+    /**
+     * Decodes a byte[] containing containing characters in the Base64 alphabet.
+     *
+     * @param pArray
+     *            A byte array containing Base64 character data
+     * @return a byte array containing binary data
+     */
+    public byte[] decode(final byte[] pArray) {
+        reset();
+        if (pArray == null || pArray.length == 0) {
+            return pArray;
         }
+        final long len = (pArray.length * 3) / 4;
+        final byte[] buf = new byte[(int) len];
+        setInitialBuffer(buf, 0, buf.length);
+        decode(pArray, 0, pArray.length);
+        decode(pArray, 0, -1); // Notify decoder of EOF.
+
+        // Would be nice to just return buf (like we sometimes do in the encode
+        // logic), but we have no idea what the line-length was (could even be
+        // variable).  So we cannot determine ahead of time exactly how big an
+        // array is necessary.  Hence the need to construct a 2nd byte array to
+        // hold the final result:
+
+        final byte[] result = new byte[pos];
+        readResults(result, 0, result.length);
+        return result;
     }
 
     /**
-     * Extracts buffered data into the provided byte[] array, starting at position bPos, up to a maximum of bAvail
-     * bytes. Returns how many bytes were actually extracted.
+     * <p>
+     * Decodes all of the provided data, starting at inPos, for inAvail bytes. Should be called at least twice: once
+     * with the data to decode, and once with inAvail set to "-1" to alert decoder that EOF has been reached. The "-1"
+     * call is not necessary when decoding, but it doesn't hurt, either.
+     * </p>
+     * <p>
+     * Ignores all non-base64 characters. This is how chunked (e.g. 76 character) data is handled, since CR and LF are
+     * silently ignored, but has implications for other bytes, too. This method subscribes to the garbage-in,
+     * garbage-out philosophy: it will not check the provided data for validity.
+     * </p>
+     * <p>
+     * Thanks to "commons" project in ws.apache.org for the bitwise operations, and general approach.
+     * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
+     * </p>
      *
-     * @param b
-     *            byte[] array to extract the buffered data into.
-     * @param bPos
-     *            position in byte[] array to start extraction at.
-     * @param bAvail
-     *            amount of bytes we're allowed to extract. We may extract fewer (if fewer are available).
-     * @return The number of bytes successfully extracted into the provided byte[] array.
+     * @param in
+     *            byte[] array of ascii data to base64 decode.
+     * @param inPos
+     *            Position to start reading data from.
+     * @param inAvail
+     *            Amount of bytes available from input for encoding.
      */
-    int readResults(final byte[] b, final int bPos, final int bAvail) {
-        if (buffer != null) {
-            final int len = Math.min(avail(), bAvail);
-            if (buffer != b) {
-                System.arraycopy(buffer, readPos, b, bPos, len);
-                readPos += len;
-                if (readPos >= pos) {
-                    buffer = null;
-                }
-            } else {
-                // Re-using the original consumer's output array is only
-                // allowed for one round.
-                buffer = null;
+    void decode(final byte[] in, int inPos, final int inAvail) {
+        if (eof) {
+            return;
+        }
+        if (inAvail < 0) {
+            eof = true;
+        }
+        for (int i = 0; i < inAvail; i++) {
+            if (buffer == null || buffer.length - pos < decodeSize) {
+                resizeBuffer();
             }
-            return len;
+            final byte b = in[inPos++];
+            if (b == PAD) {
+                // We're done.
+                eof = true;
+                break;
+            }
+            if (b >= 0 && b < DECODE_TABLE.length) {
+                final int result = DECODE_TABLE[b];
+                if (result >= 0) {
+                    modulus = (++modulus) % 4;
+                    x = (x << 6) + result;
+                    if (modulus == 0) {
+                        buffer[pos++] = (byte) ((x >> 16) & MASK_8BITS);
+                        buffer[pos++] = (byte) ((x >> 8) & MASK_8BITS);
+                        buffer[pos++] = (byte) (x & MASK_8BITS);
+                    }
+                }
+            }
         }
-        return eof ? -1 : 0;
+
+        // Two forms of EOF as far as base64 decoder is concerned: actual
+        // EOF (-1) and first time '=' character is encountered in stream.
+        // This approach makes the '=' padding characters completely optional.
+        if (eof && modulus != 0) {
+            x = x << 6;
+            switch (modulus) {
+                case 2 :
+                    x = x << 6;
+                    buffer[pos++] = (byte) ((x >> 16) & MASK_8BITS);
+                    break;
+                case 3 :
+                    buffer[pos++] = (byte) ((x >> 16) & MASK_8BITS);
+                    buffer[pos++] = (byte) ((x >> 8) & MASK_8BITS);
+                    break;
+                default:
+                    break;  // other values ignored
+            }
+        }
     }
 
     /**
-     * Sets the streaming buffer. This is a small optimization where we try to buffer directly to the consumer's output
-     * array for one round (if the consumer calls this method first) instead of starting our own buffer.
+     * Decodes a String containing containing characters in the Base64 alphabet.
      *
-     * @param out
-     *            byte[] array to buffer directly to.
-     * @param outPos
-     *            Position to start buffering into.
-     * @param outAvail
-     *            Amount of bytes available for direct buffering.
+     * @param pArray
+     *            A String containing Base64 character data
+     * @return a byte array containing binary data
+     * @since 1.4
      */
-    void setInitialBuffer(final byte[] out, final int outPos, final int outAvail) {
-        // We can re-use consumer's original output array under
-        // special circumstances, saving on some System.arraycopy().
-        if (out != null && out.length == outAvail) {
-            buffer = out;
-            pos = outPos;
-            readPos = outPos;
+    public byte[] decode(final String pArray) {
+        return decode(getBytesUtf8(pArray));
+    }
+
+    /**
+     * Encodes a byte[] containing binary data, into a byte[] containing characters in the Base64 alphabet.
+     *
+     * @param pArray
+     *            a byte array containing binary data
+     * @return A byte array containing only Base64 character data
+     */
+    public byte[] encode(final byte[] pArray) {
+        reset();
+        if (pArray == null || pArray.length == 0) {
+            return pArray;
         }
+        final long len = getEncodeLength(pArray, lineLength, lineSeparator);
+        byte[] buf = new byte[(int) len];
+        setInitialBuffer(buf, 0, buf.length);
+        encode(pArray, 0, pArray.length);
+        encode(pArray, 0, -1); // Notify encoder of EOF.
+        // Encoder might have resized, even though it was unnecessary.
+        if (buffer != buf) {
+            readResults(buf, 0, buf.length);
+        }
+        // In URL-SAFE mode we skip the padding characters, so sometimes our
+        // final length is a bit smaller.
+        if (isUrlSafe() && pos < buf.length) {
+            final byte[] smallerBuf = new byte[pos];
+            System.arraycopy(buf, 0, smallerBuf, 0, pos);
+            buf = smallerBuf;
+        }
+        return buf;
     }
 
     /**
@@ -505,369 +906,6 @@ public class Base64 {
     }
 
     /**
-     * <p>
-     * Decodes all of the provided data, starting at inPos, for inAvail bytes. Should be called at least twice: once
-     * with the data to decode, and once with inAvail set to "-1" to alert decoder that EOF has been reached. The "-1"
-     * call is not necessary when decoding, but it doesn't hurt, either.
-     * </p>
-     * <p>
-     * Ignores all non-base64 characters. This is how chunked (e.g. 76 character) data is handled, since CR and LF are
-     * silently ignored, but has implications for other bytes, too. This method subscribes to the garbage-in,
-     * garbage-out philosophy: it will not check the provided data for validity.
-     * </p>
-     * <p>
-     * Thanks to "commons" project in ws.apache.org for the bitwise operations, and general approach.
-     * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
-     * </p>
-     *
-     * @param in
-     *            byte[] array of ascii data to base64 decode.
-     * @param inPos
-     *            Position to start reading data from.
-     * @param inAvail
-     *            Amount of bytes available from input for encoding.
-     */
-    void decode(final byte[] in, int inPos, final int inAvail) {
-        if (eof) {
-            return;
-        }
-        if (inAvail < 0) {
-            eof = true;
-        }
-        for (int i = 0; i < inAvail; i++) {
-            if (buffer == null || buffer.length - pos < decodeSize) {
-                resizeBuffer();
-            }
-            final byte b = in[inPos++];
-            if (b == PAD) {
-                // We're done.
-                eof = true;
-                break;
-            }
-            if (b >= 0 && b < DECODE_TABLE.length) {
-                final int result = DECODE_TABLE[b];
-                if (result >= 0) {
-                    modulus = (++modulus) % 4;
-                    x = (x << 6) + result;
-                    if (modulus == 0) {
-                        buffer[pos++] = (byte) ((x >> 16) & MASK_8BITS);
-                        buffer[pos++] = (byte) ((x >> 8) & MASK_8BITS);
-                        buffer[pos++] = (byte) (x & MASK_8BITS);
-                    }
-                }
-            }
-        }
-
-        // Two forms of EOF as far as base64 decoder is concerned: actual
-        // EOF (-1) and first time '=' character is encountered in stream.
-        // This approach makes the '=' padding characters completely optional.
-        if (eof && modulus != 0) {
-            x = x << 6;
-            switch (modulus) {
-                case 2 :
-                    x = x << 6;
-                    buffer[pos++] = (byte) ((x >> 16) & MASK_8BITS);
-                    break;
-                case 3 :
-                    buffer[pos++] = (byte) ((x >> 16) & MASK_8BITS);
-                    buffer[pos++] = (byte) ((x >> 8) & MASK_8BITS);
-                    break;
-                default:
-                    break;  // other values ignored
-            }
-        }
-    }
-
-    /**
-     * Returns whether or not the <code>octet</code> is in the base 64 alphabet.
-     *
-     * @param octet
-     *            The value to test
-     * @return <code>true</code> if the value is defined in the the base 64 alphabet, <code>false</code> otherwise.
-     * @since 1.4
-     */
-    public static boolean isBase64(final byte octet) {
-        return octet == PAD || (octet >= 0 && octet < DECODE_TABLE.length && DECODE_TABLE[octet] != -1);
-    }
-
-    /**
-     * Tests a given byte array to see if it contains only valid characters within the Base64 alphabet. Currently the
-     * method treats whitespace as valid.
-     *
-     * @param arrayOctet
-     *            byte array to test
-     * @return <code>true</code> if all bytes are valid characters in the Base64 alphabet or if the byte array is empty;
-     *         false, otherwise
-     */
-    public static boolean isArrayByteBase64(final byte[] arrayOctet) {
-        for (final byte element : arrayOctet) {
-            if (!isBase64(element) && !isWhiteSpace(element)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Tests a given byte array to see if it contains only valid characters within the Base64 alphabet.
-     *
-     * @param arrayOctet
-     *            byte array to test
-     * @return <code>true</code> if any byte is a valid character in the Base64 alphabet; false herwise
-     */
-    private static boolean containsBase64Byte(final byte[] arrayOctet) {
-        for (final byte element : arrayOctet)
-        {
-            if (isBase64(element)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Encodes binary data using the base64 algorithm but does not chunk the output.
-     *
-     * @param binaryData
-     *            binary data to encode
-     * @return byte[] containing Base64 characters in their UTF-8 representation.
-     */
-    public static byte[] encodeBase64(final byte[] binaryData) {
-        return encodeBase64(binaryData, false);
-    }
-
-    /**
-     * Encodes binary data using the base64 algorithm into 76 character blocks separated by CRLF.
-     * <p>
-     * For a non-chunking version, see {@link #encodeBase64StringUnChunked(byte[])}.
-     *
-     * @param binaryData
-     *            binary data to encode
-     * @return String containing Base64 characters.
-     * @since 1.4
-     */
-    public static String encodeBase64String(final byte[] binaryData) {
-        return newStringUtf8(encodeBase64(binaryData, true));
-    }
-
-    /**
-     * Encodes binary data using the base64 algorithm, without using chunking.
-     * <p>
-     * For a chunking version, see {@link #encodeBase64String(byte[])}.
-     *
-     * @param binaryData
-     *            binary data to encode
-     * @return String containing Base64 characters.
-     * @since 3.2
-     */
-    public static String encodeBase64StringUnChunked(final byte[] binaryData) {
-        return newStringUtf8(encodeBase64(binaryData, false));
-    }
-
-    /**
-     * Encodes binary data using the base64 algorithm.
-     *
-     * @param binaryData
-     *            binary data to encode
-     * @param useChunking whether to split the output into chunks
-     * @return String containing Base64 characters.
-     * @since 3.2
-     */
-    public static String encodeBase64String(final byte[] binaryData, final boolean useChunking) {
-        return newStringUtf8(encodeBase64(binaryData, useChunking));
-    }
-
-    /**
-     * Encodes binary data using a URL-safe variation of the base64 algorithm but does not chunk the output. The
-     * url-safe variation emits - and _ instead of + and / characters.
-     *
-     * @param binaryData
-     *            binary data to encode
-     * @return byte[] containing Base64 characters in their UTF-8 representation.
-     * @since 1.4
-     */
-    public static byte[] encodeBase64URLSafe(final byte[] binaryData) {
-        return encodeBase64(binaryData, false, true);
-    }
-
-    /**
-     * Encodes binary data using a URL-safe variation of the base64 algorithm but does not chunk the output. The
-     * url-safe variation emits - and _ instead of + and / characters.
-     *
-     * @param binaryData
-     *            binary data to encode
-     * @return String containing Base64 characters
-     * @since 1.4
-     */
-    public static String encodeBase64URLSafeString(final byte[] binaryData) {
-        return newStringUtf8(encodeBase64(binaryData, false, true));
-    }
-
-    /**
-     * Encodes binary data using the base64 algorithm and chunks the encoded output into 76 character blocks
-     *
-     * @param binaryData
-     *            binary data to encode
-     * @return Base64 characters chunked in 76 character blocks
-     */
-    public static byte[] encodeBase64Chunked(final byte[] binaryData) {
-        return encodeBase64(binaryData, true);
-    }
-
-    /**
-     * Decodes a String containing containing characters in the Base64 alphabet.
-     *
-     * @param pArray
-     *            A String containing Base64 character data
-     * @return a byte array containing binary data
-     * @since 1.4
-     */
-    public byte[] decode(final String pArray) {
-        return decode(getBytesUtf8(pArray));
-    }
-
-    private byte[] getBytesUtf8(final String pArray) {
-        return pArray.getBytes(StandardCharsets.UTF_8);
-    }
-
-    /**
-     * Decodes a byte[] containing containing characters in the Base64 alphabet.
-     *
-     * @param pArray
-     *            A byte array containing Base64 character data
-     * @return a byte array containing binary data
-     */
-    public byte[] decode(final byte[] pArray) {
-        reset();
-        if (pArray == null || pArray.length == 0) {
-            return pArray;
-        }
-        final long len = (pArray.length * 3) / 4;
-        final byte[] buf = new byte[(int) len];
-        setInitialBuffer(buf, 0, buf.length);
-        decode(pArray, 0, pArray.length);
-        decode(pArray, 0, -1); // Notify decoder of EOF.
-
-        // Would be nice to just return buf (like we sometimes do in the encode
-        // logic), but we have no idea what the line-length was (could even be
-        // variable).  So we cannot determine ahead of time exactly how big an
-        // array is necessary.  Hence the need to construct a 2nd byte array to
-        // hold the final result:
-
-        final byte[] result = new byte[pos];
-        readResults(result, 0, result.length);
-        return result;
-    }
-
-    /**
-     * Encodes binary data using the base64 algorithm, optionally chunking the output into 76 character blocks.
-     *
-     * @param binaryData
-     *            Array containing binary data to encode.
-     * @param isChunked
-     *            if <code>true</code> this encoder will chunk the base64 output into 76 character blocks
-     * @return Base64-encoded data.
-     * @throws IllegalArgumentException
-     *             Thrown when the input array needs an output array bigger than {@link Integer#MAX_VALUE}
-     */
-    public static byte[] encodeBase64(final byte[] binaryData, final boolean isChunked) {
-        return encodeBase64(binaryData, isChunked, false);
-    }
-
-    /**
-     * Encodes binary data using the base64 algorithm, optionally chunking the output into 76 character blocks.
-     *
-     * @param binaryData
-     *            Array containing binary data to encode.
-     * @param isChunked
-     *            if <code>true</code> this encoder will chunk the base64 output into 76 character blocks
-     * @param urlSafe
-     *            if <code>true</code> this encoder will emit - and _ instead of the usual + and / characters.
-     * @return Base64-encoded data.
-     * @throws IllegalArgumentException
-     *             Thrown when the input array needs an output array bigger than {@link Integer#MAX_VALUE}
-     * @since 1.4
-     */
-    public static byte[] encodeBase64(final byte[] binaryData, final boolean isChunked, final boolean urlSafe) {
-        return encodeBase64(binaryData, isChunked, urlSafe, Integer.MAX_VALUE);
-    }
-
-    /**
-     * Encodes binary data using the base64 algorithm, optionally chunking the output into 76 character blocks.
-     *
-     * @param binaryData
-     *            Array containing binary data to encode.
-     * @param isChunked
-     *            if <code>true</code> this encoder will chunk the base64 output into 76 character blocks
-     * @param urlSafe
-     *            if <code>true</code> this encoder will emit - and _ instead of the usual + and / characters.
-     * @param maxResultSize
-     *            The maximum result size to accept.
-     * @return Base64-encoded data.
-     * @throws IllegalArgumentException
-     *             Thrown when the input array needs an output array bigger than maxResultSize
-     * @since 1.4
-     */
-    public static byte[] encodeBase64(final byte[] binaryData, final boolean isChunked, final boolean urlSafe,
-            final int maxResultSize) {
-        if (binaryData == null || binaryData.length == 0) {
-            return binaryData;
-        }
-
-        final long len = getEncodeLength(binaryData, isChunked ? CHUNK_SIZE : 0,
-                isChunked ? CHUNK_SEPARATOR : NetConstants.EMPTY_BTYE_ARRAY);
-        if (len > maxResultSize) {
-            throw new IllegalArgumentException("Input array too big, the output array would be bigger (" + len
-                    + ") than the specified maxium size of " + maxResultSize);
-        }
-
-        final Base64 b64 = isChunked ? new Base64(urlSafe) : new Base64(0, CHUNK_SEPARATOR, urlSafe);
-        return b64.encode(binaryData);
-    }
-
-    /**
-     * Decodes a Base64 String into octets.
-     *
-     * @param base64String
-     *            String containing Base64 data
-     * @return Array containing decoded data.
-     * @since 1.4
-     */
-    public static byte[] decodeBase64(final String base64String) {
-        return new Base64().decode(base64String);
-    }
-
-    /**
-     * Decodes Base64 data into octets.
-     *
-     * @param base64Data
-     *            Byte array containing Base64 data
-     * @return Array containing decoded data.
-     */
-    public static byte[] decodeBase64(final byte[] base64Data) {
-        return new Base64().decode(base64Data);
-    }
-
-    /**
-     * Checks if a byte value is whitespace or not.
-     *
-     * @param byteToCheck
-     *            the byte to check
-     * @return true if byte is whitespace, false otherwise
-     */
-    private static boolean isWhiteSpace(final byte byteToCheck) {
-        switch (byteToCheck) {
-            case ' ' :
-            case '\n' :
-            case '\r' :
-            case '\t' :
-                return true;
-            default :
-                return false;
-        }
-    }
-
-    /**
      * Encodes a byte[] containing binary data, into a String containing characters in the Base64 alphabet.
      *
      * @param pArray
@@ -879,130 +917,66 @@ public class Base64 {
         return newStringUtf8(encode(pArray));
     }
 
-    private static String newStringUtf8(final byte[] encode) {
-        return new String(encode, StandardCharsets.UTF_8);
+    private byte[] getBytesUtf8(final String pArray) {
+        return pArray.getBytes(StandardCharsets.UTF_8);
+    }
+
+    int getLineLength() {
+        return lineLength;
+    }
+
+    byte[] getLineSeparator() {
+        return lineSeparator.clone();
     }
 
     /**
-     * Encodes a byte[] containing binary data, into a byte[] containing characters in the Base64 alphabet.
+     * Returns true if this Base64 object has buffered data for reading.
      *
-     * @param pArray
-     *            a byte array containing binary data
-     * @return A byte array containing only Base64 character data
+     * @return true if there is Base64 object still available for reading.
      */
-    public byte[] encode(final byte[] pArray) {
-        reset();
-        if (pArray == null || pArray.length == 0) {
-            return pArray;
-        }
-        final long len = getEncodeLength(pArray, lineLength, lineSeparator);
-        byte[] buf = new byte[(int) len];
-        setInitialBuffer(buf, 0, buf.length);
-        encode(pArray, 0, pArray.length);
-        encode(pArray, 0, -1); // Notify encoder of EOF.
-        // Encoder might have resized, even though it was unnecessary.
-        if (buffer != buf) {
-            readResults(buf, 0, buf.length);
-        }
-        // In URL-SAFE mode we skip the padding characters, so sometimes our
-        // final length is a bit smaller.
-        if (isUrlSafe() && pos < buf.length) {
-            final byte[] smallerBuf = new byte[pos];
-            System.arraycopy(buf, 0, smallerBuf, 0, pos);
-            buf = smallerBuf;
-        }
-        return buf;
+    boolean hasData() {
+        return this.buffer != null;
     }
 
     /**
-     * Pre-calculates the amount of space needed to base64-encode the supplied array.
+     * Returns our current encode mode. True if we're URL-SAFE, false otherwise.
      *
-     * @param pArray byte[] array which will later be encoded
-     * @param chunkSize line-length of the output (<= 0 means no chunking) between each
-     *        chunkSeparator (e.g. CRLF).
-     * @param chunkSeparator the sequence of bytes used to separate chunks of output (e.g. CRLF).
-     *
-     * @return amount of space needed to encoded the supplied array.  Returns
-     *         a long since a max-len array will require Integer.MAX_VALUE + 33%.
+     * @return true if we're in URL-SAFE mode, false otherwise.
+     * @since 1.4
      */
-    private static long getEncodeLength(final byte[] pArray, int chunkSize, final byte[] chunkSeparator) {
-        // base64 always encodes to multiples of 4.
-        chunkSize = (chunkSize / 4) * 4;
+    public boolean isUrlSafe() {
+        return this.encodeTable == URL_SAFE_ENCODE_TABLE;
+    }
 
-        long len = (pArray.length * 4) / 3;
-        final long mod = len % 4;
-        if (mod != 0) {
-            len += 4 - mod;
-        }
-        if (chunkSize > 0) {
-            final boolean lenChunksPerfectly = len % chunkSize == 0;
-            len += (len / chunkSize) * chunkSeparator.length;
-            if (!lenChunksPerfectly) {
-                len += chunkSeparator.length;
+    /**
+     * Extracts buffered data into the provided byte[] array, starting at position bPos, up to a maximum of bAvail
+     * bytes. Returns how many bytes were actually extracted.
+     *
+     * @param b
+     *            byte[] array to extract the buffered data into.
+     * @param bPos
+     *            position in byte[] array to start extraction at.
+     * @param bAvail
+     *            amount of bytes we're allowed to extract. We may extract fewer (if fewer are available).
+     * @return The number of bytes successfully extracted into the provided byte[] array.
+     */
+    int readResults(final byte[] b, final int bPos, final int bAvail) {
+        if (buffer != null) {
+            final int len = Math.min(avail(), bAvail);
+            if (buffer != b) {
+                System.arraycopy(buffer, readPos, b, bPos, len);
+                readPos += len;
+                if (readPos >= pos) {
+                    buffer = null;
+                }
+            } else {
+                // Re-using the original consumer's output array is only
+                // allowed for one round.
+                buffer = null;
             }
+            return len;
         }
-        return len;
-    }
-
-    // Implementation of integer encoding used for crypto
-    /**
-     * Decodes a byte64-encoded integer according to crypto standards such as W3C's XML-Signature
-     *
-     * @param pArray
-     *            a byte array containing base64 character data
-     * @return A BigInteger
-     * @since 1.4
-     */
-    public static BigInteger decodeInteger(final byte[] pArray) {
-        return new BigInteger(1, decodeBase64(pArray));
-    }
-
-    /**
-     * Encodes to a byte64-encoded integer according to crypto standards such as W3C's XML-Signature
-     *
-     * @param bigInt
-     *            a BigInteger
-     * @return A byte array containing base64 character data
-     * @throws NullPointerException
-     *             if null is passed in
-     * @since 1.4
-     */
-    public static byte[] encodeInteger(final BigInteger bigInt) {
-        if (bigInt == null) {
-            throw new NullPointerException("encodeInteger called with null parameter");
-        }
-        return encodeBase64(toIntegerBytes(bigInt), false);
-    }
-
-    /**
-     * Returns a byte-array representation of a <code>BigInteger</code> without sign bit.
-     *
-     * @param bigInt
-     *            <code>BigInteger</code> to be converted
-     * @return a byte array representation of the BigInteger parameter
-     */
-    static byte[] toIntegerBytes(final BigInteger bigInt) {
-        int bitlen = bigInt.bitLength();
-        // round bitlen
-        bitlen = ((bitlen + 7) >> 3) << 3;
-        final byte[] bigBytes = bigInt.toByteArray();
-
-        if (((bigInt.bitLength() % 8) != 0) && (((bigInt.bitLength() / 8) + 1) == (bitlen / 8))) {
-            return bigBytes;
-        }
-        // set up params for copying everything but sign bit
-        int startSrc = 0;
-        int len = bigBytes.length;
-
-        // if bigInt is exactly byte-aligned, just skip signbit in copy
-        if ((bigInt.bitLength() % 8) == 0) {
-            startSrc = 1;
-            len--;
-        }
-        final int startDst = bitlen / 8 - len; // to pad w/ nulls as per spec
-        final byte[] resizedBytes = new byte[bitlen / 8];
-        System.arraycopy(bigBytes, startSrc, resizedBytes, startDst, len);
-        return resizedBytes;
+        return eof ? -1 : 0;
     }
 
     /**
@@ -1019,11 +993,37 @@ public class Base64 {
 
     // Getters for use in testing
 
-    int getLineLength() {
-        return lineLength;
+    /** Doubles our buffer. */
+    private void resizeBuffer() {
+        if (buffer == null) {
+            buffer = new byte[DEFAULT_BUFFER_SIZE];
+            pos = 0;
+            readPos = 0;
+        } else {
+            final byte[] b = new byte[buffer.length * DEFAULT_BUFFER_RESIZE_FACTOR];
+            System.arraycopy(buffer, 0, b, 0, buffer.length);
+            buffer = b;
+        }
     }
 
-    byte[] getLineSeparator() {
-        return lineSeparator.clone();
+    /**
+     * Sets the streaming buffer. This is a small optimization where we try to buffer directly to the consumer's output
+     * array for one round (if the consumer calls this method first) instead of starting our own buffer.
+     *
+     * @param out
+     *            byte[] array to buffer directly to.
+     * @param outPos
+     *            Position to start buffering into.
+     * @param outAvail
+     *            Amount of bytes available for direct buffering.
+     */
+    void setInitialBuffer(final byte[] out, final int outPos, final int outAvail) {
+        // We can re-use consumer's original output array under
+        // special circumstances, saving on some System.arraycopy().
+        if (out != null && out.length == outAvail) {
+            buffer = out;
+            pos = outPos;
+            readPos = outPos;
+        }
     }
 }

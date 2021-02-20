@@ -88,6 +88,27 @@ public final class FTPClientExample
         "\t-PrP password - HTTP Proxy server password\n" +
         "\t-# - add hash display during transfers\n";
 
+    private static CopyStreamListener createListener(){
+        return new CopyStreamListener(){
+            private long megsTotal;
+
+            @Override
+            public void bytesTransferred(final CopyStreamEvent event) {
+                bytesTransferred(event.getTotalBytesTransferred(), event.getBytesTransferred(), event.getStreamSize());
+            }
+
+            @Override
+            public void bytesTransferred(final long totalBytesTransferred,
+                    final int bytesTransferred, final long streamSize) {
+                final long megs = totalBytesTransferred / 1000000;
+                for (long l = megsTotal; l < megs; l++) {
+                    System.err.print("#");
+                }
+                megsTotal = megs;
+            }
+        };
+    }
+
     public static void main(final String[] args) throws UnknownHostException
     {
         boolean storeFile = false, binaryTransfer = false, error = false, listFiles = false, listNames = false, hidden = false;
@@ -550,27 +571,6 @@ __main:
         int []stats = ftp.getCslDebug();
         System.out.println("CslDebug="+Arrays.toString(stats));
 
-    }
-
-    private static CopyStreamListener createListener(){
-        return new CopyStreamListener(){
-            private long megsTotal;
-
-            @Override
-            public void bytesTransferred(final CopyStreamEvent event) {
-                bytesTransferred(event.getTotalBytesTransferred(), event.getBytesTransferred(), event.getStreamSize());
-            }
-
-            @Override
-            public void bytesTransferred(final long totalBytesTransferred,
-                    final int bytesTransferred, final long streamSize) {
-                final long megs = totalBytesTransferred / 1000000;
-                for (long l = megsTotal; l < megs; l++) {
-                    System.err.print("#");
-                }
-                megsTotal = megs;
-            }
-        };
     }
 }
 

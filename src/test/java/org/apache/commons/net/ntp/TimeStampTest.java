@@ -61,12 +61,6 @@ public class TimeStampTest extends TestCase {
         assertTrue("time3 != ts4.time", time3 != ts4.getTime());
     }
 
-    public void testUTCString() {
-        final TimeStamp ts1 = new TimeStamp(TIME1); // Tue, Dec 17 2002 14:07:24.810 UTC
-        final String actual = ts1.toUTCString();
-        assertEquals("Tue, Dec 17 2002 14:07:24.810 UTC", actual);
-    }
-
     public void testDateConversion() {
         // convert current date to NtpTimeStamp then compare Java date
         // computed from NTP timestamp with original Java date.
@@ -88,6 +82,12 @@ public class TimeStampTest extends TestCase {
         if (time.equals(other)) {
             fail("TimeStamp cannot equal null");
         }
+    }
+
+    public void testUTCString() {
+        final TimeStamp ts1 = new TimeStamp(TIME1); // Tue, Dec 17 2002 14:07:24.810 UTC
+        final String actual = ts1.toUTCString();
+        assertEquals("Tue, Dec 17 2002 14:07:24.810 UTC", actual);
     }
 
 }

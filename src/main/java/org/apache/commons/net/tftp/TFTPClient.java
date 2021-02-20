@@ -83,25 +83,6 @@ public class TFTPClient extends TFTP
     }
 
     /**
-     * Sets the maximum number of times a receive attempt is allowed to
-     * timeout during a receiveFile() or sendFile() operation before ending
-     * attempts to retry the receive and failing.
-     * The default is DEFAULT_MAX_TIMEOUTS.
-     *
-     * @param numTimeouts  The maximum number of timeouts to allow.  Values
-     *        less than 1 should not be used, but if they are, they are
-     *        treated as 1.
-     */
-    public void setMaxTimeouts(final int numTimeouts)
-    {
-        if (numTimeouts < 1) {
-            maxTimeouts = 1;
-        } else {
-            maxTimeouts = numTimeouts;
-        }
-    }
-
-    /**
      * Returns the maximum number of times a receive attempt is allowed to
      * timeout before ending attempts to retry the receive and failing.
      *
@@ -112,7 +93,6 @@ public class TFTPClient extends TFTP
         return maxTimeouts;
     }
 
-
     /**
      * @return The number of bytes received in the ongoing download
      */
@@ -120,11 +100,30 @@ public class TFTPClient extends TFTP
         return totalBytesReceived;
     }
 
+
     /**
      * @return The number of bytes sent in the ongoing download
      */
     public long getTotalBytesSent() {
         return totalBytesSent;
+    }
+
+    /**
+     * Same as calling receiveFile(fileName, mode, output, host, TFTP.DEFAULT_PORT).
+     *
+     * @param fileName The name of the file to receive.
+     * @param mode     The TFTP mode of the transfer (one of the MODE constants).
+     * @param output   The OutputStream to which the file should be written.
+     * @param host     The remote host serving the file.
+     * @return number of bytes read
+     * @throws IOException If an I/O error occurs.  The nature of the
+     *            error will be reported in the message.
+     */
+    public int receiveFile(final String fileName, final int mode, final OutputStream output,
+                           final InetAddress host)
+    throws IOException
+    {
+        return receiveFile(fileName, mode, output, host, DEFAULT_PORT);
     }
 
     /**
@@ -265,6 +264,27 @@ public class TFTPClient extends TFTP
 
 
     /**
+     * Same as calling receiveFile(fileName, mode, output, hostname, TFTP.DEFAULT_PORT).
+     *
+     * @param fileName The name of the file to receive.
+     * @param mode     The TFTP mode of the transfer (one of the MODE constants).
+     * @param output   The OutputStream to which the file should be written.
+     * @param hostname The name of the remote host serving the file.
+     * @return number of bytes read
+     * @throws IOException If an I/O error occurs.  The nature of the
+     *            error will be reported in the message.
+     * @throws UnknownHostException  If the hostname cannot be resolved.
+     */
+    public int receiveFile(final String fileName, final int mode, final OutputStream output,
+                           final String hostname)
+    throws UnknownHostException, IOException
+    {
+        return receiveFile(fileName, mode, output, InetAddress.getByName(hostname),
+                           DEFAULT_PORT);
+    }
+
+
+    /**
      * Requests a named file from a remote host, writes the
      * file to an OutputStream, closes the connection, and returns the number
      * of bytes read.  A local UDP socket must first be created by
@@ -290,43 +310,23 @@ public class TFTPClient extends TFTP
                            port);
     }
 
-
     /**
-     * Same as calling receiveFile(fileName, mode, output, host, TFTP.DEFAULT_PORT).
+     * Same as calling sendFile(fileName, mode, input, host, TFTP.DEFAULT_PORT).
      *
-     * @param fileName The name of the file to receive.
+     * @param fileName The name the remote server should use when creating
+     *        the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
-     * @param output   The OutputStream to which the file should be written.
-     * @param host     The remote host serving the file.
-     * @return number of bytes read
-     * @throws IOException If an I/O error occurs.  The nature of the
-     *            error will be reported in the message.
-     */
-    public int receiveFile(final String fileName, final int mode, final OutputStream output,
-                           final InetAddress host)
-    throws IOException
-    {
-        return receiveFile(fileName, mode, output, host, DEFAULT_PORT);
-    }
-
-    /**
-     * Same as calling receiveFile(fileName, mode, output, hostname, TFTP.DEFAULT_PORT).
-     *
-     * @param fileName The name of the file to receive.
-     * @param mode     The TFTP mode of the transfer (one of the MODE constants).
-     * @param output   The OutputStream to which the file should be written.
-     * @param hostname The name of the remote host serving the file.
-     * @return number of bytes read
+     * @param input the input stream containing the data to be sent
+     * @param host     The name of the remote host receiving the file.
      * @throws IOException If an I/O error occurs.  The nature of the
      *            error will be reported in the message.
      * @throws UnknownHostException  If the hostname cannot be resolved.
      */
-    public int receiveFile(final String fileName, final int mode, final OutputStream output,
-                           final String hostname)
-    throws UnknownHostException, IOException
+    public void sendFile(final String fileName, final int mode, final InputStream input,
+                         final InetAddress host)
+    throws IOException
     {
-        return receiveFile(fileName, mode, output, InetAddress.getByName(hostname),
-                           DEFAULT_PORT);
+        sendFile(fileName, mode, input, host, DEFAULT_PORT);
     }
 
 
@@ -471,6 +471,27 @@ public class TFTPClient extends TFTP
 
 
     /**
+     * Same as calling sendFile(fileName, mode, input, hostname, TFTP.DEFAULT_PORT).
+     *
+     * @param fileName The name the remote server should use when creating
+     *        the file on its file system.
+     * @param mode     The TFTP mode of the transfer (one of the MODE constants).
+     * @param input the input stream containing the data to be sent
+     * @param hostname The name of the remote host receiving the file.
+     * @throws IOException If an I/O error occurs.  The nature of the
+     *            error will be reported in the message.
+     * @throws UnknownHostException  If the hostname cannot be resolved.
+     */
+    public void sendFile(final String fileName, final int mode, final InputStream input,
+                         final String hostname)
+    throws UnknownHostException, IOException
+    {
+        sendFile(fileName, mode, input, InetAddress.getByName(hostname),
+                 DEFAULT_PORT);
+    }
+
+
+    /**
      * Requests to send a file to a remote host, reads the file from an
      * InputStream, sends the file to the remote host, and closes the
      * connection.  A local UDP socket must first be created by
@@ -495,43 +516,22 @@ public class TFTPClient extends TFTP
         sendFile(fileName, mode, input, InetAddress.getByName(hostname), port);
     }
 
-
     /**
-     * Same as calling sendFile(fileName, mode, input, host, TFTP.DEFAULT_PORT).
+     * Sets the maximum number of times a receive attempt is allowed to
+     * timeout during a receiveFile() or sendFile() operation before ending
+     * attempts to retry the receive and failing.
+     * The default is DEFAULT_MAX_TIMEOUTS.
      *
-     * @param fileName The name the remote server should use when creating
-     *        the file on its file system.
-     * @param mode     The TFTP mode of the transfer (one of the MODE constants).
-     * @param input the input stream containing the data to be sent
-     * @param host     The name of the remote host receiving the file.
-     * @throws IOException If an I/O error occurs.  The nature of the
-     *            error will be reported in the message.
-     * @throws UnknownHostException  If the hostname cannot be resolved.
+     * @param numTimeouts  The maximum number of timeouts to allow.  Values
+     *        less than 1 should not be used, but if they are, they are
+     *        treated as 1.
      */
-    public void sendFile(final String fileName, final int mode, final InputStream input,
-                         final InetAddress host)
-    throws IOException
+    public void setMaxTimeouts(final int numTimeouts)
     {
-        sendFile(fileName, mode, input, host, DEFAULT_PORT);
-    }
-
-    /**
-     * Same as calling sendFile(fileName, mode, input, hostname, TFTP.DEFAULT_PORT).
-     *
-     * @param fileName The name the remote server should use when creating
-     *        the file on its file system.
-     * @param mode     The TFTP mode of the transfer (one of the MODE constants).
-     * @param input the input stream containing the data to be sent
-     * @param hostname The name of the remote host receiving the file.
-     * @throws IOException If an I/O error occurs.  The nature of the
-     *            error will be reported in the message.
-     * @throws UnknownHostException  If the hostname cannot be resolved.
-     */
-    public void sendFile(final String fileName, final int mode, final InputStream input,
-                         final String hostname)
-    throws UnknownHostException, IOException
-    {
-        sendFile(fileName, mode, input, InetAddress.getByName(hostname),
-                 DEFAULT_PORT);
+        if (numTimeouts < 1) {
+            maxTimeouts = 1;
+        } else {
+            maxTimeouts = numTimeouts;
+        }
     }
 }

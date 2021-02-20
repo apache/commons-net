@@ -57,39 +57,9 @@ public final class NewsgroupInfo
     private long lastArticle;
     private int postingPermission;
 
-    void setNewsgroup(final String newsgroup)
-    {
-        this.newsgroup = newsgroup;
-    }
-
-    void setArticleCount(final long count)
-    {
-        estimatedArticleCount = count;
-    }
-
-    void setFirstArticle(final long first)
-    {
-        firstArticle = first;
-    }
-
-    void setLastArticle(final long last)
-    {
-        lastArticle = last;
-    }
-
-    void setPostingPermission(final int permission)
-    {
-        postingPermission = permission;
-    }
-
-    /**
-     * Get the newsgroup name.
-     * <p>
-     * @return The name of the newsgroup.
-     */
-    public String getNewsgroup()
-    {
-        return newsgroup;
+    @Deprecated
+    public int getArticleCount() {
+        return (int) estimatedArticleCount;
     }
 
     /**
@@ -103,6 +73,11 @@ public final class NewsgroupInfo
         return estimatedArticleCount;
     }
 
+    @Deprecated
+    public int getFirstArticle() {
+        return (int) firstArticle;
+    }
+
     /**
      * Get the number of the first article in the newsgroup.
      * <p>
@@ -111,6 +86,11 @@ public final class NewsgroupInfo
     public long getFirstArticleLong()
     {
         return firstArticle;
+    }
+
+    @Deprecated
+    public int getLastArticle() {
+        return (int) lastArticle;
     }
 
     /**
@@ -124,6 +104,16 @@ public final class NewsgroupInfo
     }
 
     /**
+     * Get the newsgroup name.
+     * <p>
+     * @return The name of the newsgroup.
+     */
+    public String getNewsgroup()
+    {
+        return newsgroup;
+    }
+
+    /**
      * Get the posting permission of the newsgroup.  This will be one of
      * the <code> POSTING_PERMISSION </code> constants.
      * <p>
@@ -132,6 +122,16 @@ public final class NewsgroupInfo
     public int getPostingPermission()
     {
         return postingPermission;
+    }
+
+    void setArticleCount(final long count)
+    {
+        estimatedArticleCount = count;
+    }
+
+    void setFirstArticle(final long first)
+    {
+        firstArticle = first;
     }
 
     /*
@@ -154,18 +154,18 @@ public final class NewsgroupInfo
 
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE
 
-    @Deprecated
-    public int getArticleCount() {
-        return (int) estimatedArticleCount;
+    void setLastArticle(final long last)
+    {
+        lastArticle = last;
     }
 
-    @Deprecated
-    public int getFirstArticle() {
-        return (int) firstArticle;
+    void setNewsgroup(final String newsgroup)
+    {
+        this.newsgroup = newsgroup;
     }
 
-    @Deprecated
-    public int getLastArticle() {
-        return (int) lastArticle;
+    void setPostingPermission(final int permission)
+    {
+        postingPermission = permission;
     }
 }

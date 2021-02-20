@@ -85,6 +85,23 @@ public class SimpleSMTPHeader
     }
 
     /**
+     * Add an email address to the CC (carbon copy or courtesy copy) list.
+     * <p>
+     * @param address The email address to add to the CC list.
+     */
+    public void addCC(final String address)
+    {
+        if (cc == null) {
+            cc = new StringBuffer();
+        } else {
+            cc.append(", ");
+        }
+
+        cc.append(address);
+    }
+
+
+    /**
      * Adds an arbitrary header field with the given value to the article
      * header.  These headers will be written before the From, To, Subject, and
      * Cc fields when the SimpleSMTPHeader is convertered to a string.
@@ -105,23 +122,6 @@ public class SimpleSMTPHeader
         headerFields.append(": ");
         headerFields.append(value);
         headerFields.append('\n');
-    }
-
-
-    /**
-     * Add an email address to the CC (carbon copy or courtesy copy) list.
-     * <p>
-     * @param address The email address to add to the CC list.
-     */
-    public void addCC(final String address)
-    {
-        if (cc == null) {
-            cc = new StringBuffer();
-        } else {
-            cc.append(", ");
-        }
-
-        cc.append(address);
     }
 
 

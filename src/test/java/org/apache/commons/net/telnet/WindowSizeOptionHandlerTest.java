@@ -22,6 +22,18 @@ package org.apache.commons.net.telnet;
 public class WindowSizeOptionHandlerTest extends TelnetOptionHandlerTestAbstract
 {
     /**
+     * compares two arrays of int
+     */
+    private void equalInts(final int a1[], final int a2[])
+    {
+        assertEquals("Arrays should be the same length", a1.length, a2.length);
+        for(int ii=0; ii<a1.length; ii++)
+        {
+            assertEquals("Array entry "+ii+" should match",a1[ii], a2[ii]);
+        }
+    }
+
+    /**
      * setUp for the test.
      */
     @Override
@@ -33,6 +45,27 @@ public class WindowSizeOptionHandlerTest extends TelnetOptionHandlerTestAbstract
     }
 
     /**
+     * test of client-driven subnegotiation.
+     * Checks that nothing is sent
+     */
+    @Override
+    public void testAnswerSubnegotiation()
+    {
+        final int subn[] =
+        {
+            TelnetOption.WINDOW_SIZE, 24, 80
+        };
+
+        final int resp1[] = opthand1.answerSubnegotiation(subn, subn.length);
+        final int resp2[] = opthand2.answerSubnegotiation(subn, subn.length);
+        final int resp3[] = opthand3.answerSubnegotiation(subn, subn.length);
+
+        assertNull(resp1);
+        assertNull(resp2);
+        assertNull(resp3);
+    }
+
+    /**
      * test of the constructors.
      */
     @Override
@@ -41,6 +74,8 @@ public class WindowSizeOptionHandlerTest extends TelnetOptionHandlerTestAbstract
         assertEquals(TelnetOption.WINDOW_SIZE, opthand1.getOptionCode());
         super.testConstructors();
     }
+
+
 
     /**
      * test of client-driven subnegotiation.
@@ -72,40 +107,5 @@ public class WindowSizeOptionHandlerTest extends TelnetOptionHandlerTestAbstract
         final int[] exp3 = {31, 255, 255, 255, 255, 0, 255, 255};
         final int[] start3 = opthand3.startSubnegotiationLocal();
         equalInts(exp3, start3);
-    }
-
-
-
-    /**
-     * test of client-driven subnegotiation.
-     * Checks that nothing is sent
-     */
-    @Override
-    public void testAnswerSubnegotiation()
-    {
-        final int subn[] =
-        {
-            TelnetOption.WINDOW_SIZE, 24, 80
-        };
-
-        final int resp1[] = opthand1.answerSubnegotiation(subn, subn.length);
-        final int resp2[] = opthand2.answerSubnegotiation(subn, subn.length);
-        final int resp3[] = opthand3.answerSubnegotiation(subn, subn.length);
-
-        assertNull(resp1);
-        assertNull(resp2);
-        assertNull(resp3);
-    }
-
-    /**
-     * compares two arrays of int
-     */
-    private void equalInts(final int a1[], final int a2[])
-    {
-        assertEquals("Arrays should be the same length", a1.length, a2.length);
-        for(int ii=0; ii<a1.length; ii++)
-        {
-            assertEquals("Array entry "+ii+" should match",a1[ii], a2[ii]);
-        }
     }
 }

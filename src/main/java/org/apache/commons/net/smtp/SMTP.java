@@ -137,54 +137,6 @@ public class SMTP extends SocketClient
         this.encoding = encoding;
     }
 
-    /**
-     * Send a command to the server. May also be used to send text data.
-     *
-     * @param command the command to send (as a plain String)
-     * @param args the command arguments, may be {@code null}
-     * @param includeSpace if {@code true}, add a space between the command and its arguments
-     * @return the reply code
-     * @throws IOException
-     */
-    private int sendCommand(final String command, final String args, final boolean includeSpace)
-    throws IOException
-    {
-        final StringBuilder __commandBuffer = new StringBuilder();
-        __commandBuffer.append(command);
-
-        if (args != null)
-        {
-            if (includeSpace) {
-                __commandBuffer.append(' ');
-            }
-            __commandBuffer.append(args);
-        }
-
-        __commandBuffer.append(SocketClient.NETASCII_EOL);
-
-        final String message = __commandBuffer.toString();
-        writer.write(message);
-        writer.flush();
-
-        fireCommandSent(command, message);
-
-        return getReply();
-    }
-
-    /**
-     *
-     * @param command the command to send (as an int defined in {@link SMPTCommand})
-     * @param args the command arguments, may be {@code null}
-     * @param includeSpace if {@code true}, add a space between the command and its arguments
-     * @return the reply code
-     * @throws IOException
-     */
-    private int sendCommand(final int command, final String args, final boolean includeSpace)
-    throws IOException
-    {
-        return sendCommand(SMTPCommand.getCommand(command), args, includeSpace);
-    }
-
     /** Initiates control connections and gets initial reply. */
     @Override
     protected void _connectAction_() throws IOException
@@ -199,6 +151,23 @@ public class SMTP extends SocketClient
         getReply();
     }
 
+    /**
+     * A convenience method to send the SMTP DATA command to the server,
+     * receive the reply, and return the reply code.
+     * <p>
+     * @return The reply code received from the server.
+     * @throws SMTPConnectionClosedException
+     *      If the SMTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send SMTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int data() throws IOException
+    {
+        return sendCommand(SMTPCommand.DATA);
+    }
 
     /**
      * Closes the connection to the SMTP server and sets to null
@@ -221,17 +190,11 @@ public class SMTP extends SocketClient
 
 
     /**
-     * Sends an SMTP command to the server, waits for a reply and returns the
-     * numerical response code.  After invocation, for more detailed
-     * information, the actual reply text can be accessed by calling
-     * {@link #getReplyString  getReplyString } or
-     * {@link #getReplyStrings  getReplyStrings }.
+     * A convenience method to send the SMTP VRFY command to the server,
+     * receive the reply, and return the reply code.
      * <p>
-     * @param command  The text representation of the  SMTP command to send.
-     * @param args The arguments to the SMTP command.  If this parameter is
-     *             set to null, then the command is sent with no argument.
-     * @return The integer value of the SMTP reply code returned by the server
-     *         in response to the command.
+     * @param name The name to expand.
+     * @return The reply code received from the server.
      * @throws SMTPConnectionClosedException
      *      If the SMTP server prematurely closes the connection as a result
      *      of the client being idle or some other reason causing the server
@@ -240,100 +203,20 @@ public class SMTP extends SocketClient
      * @throws IOException  If an I/O error occurs while either sending the
      *      command or receiving the server reply.
      */
-    public int sendCommand(final String command, final String args) throws IOException
+    public int expn(final String name) throws IOException
     {
-        return sendCommand(command, args, true);
+        return sendCommand(SMTPCommand.EXPN, name);
     }
 
 
     /**
-     * Sends an SMTP command to the server, waits for a reply and returns the
-     * numerical response code.  After invocation, for more detailed
-     * information, the actual reply text can be accessed by calling
-     * {@link #getReplyString  getReplyString } or
-     * {@link #getReplyStrings  getReplyStrings }.
-     * <p>
-     * @param command  The SMTPCommand constant corresponding to the SMTP command
-     *                 to send.
-     * @param args The arguments to the SMTP command.  If this parameter is
-     *             set to null, then the command is sent with no argument.
-     * @return The integer value of the SMTP reply code returned by the server
-     *         in response to the command.
-     * @throws SMTPConnectionClosedException
-     *      If the SMTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send SMTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
+     * Provide command support to super-class
      */
-    public int sendCommand(final int command, final String args) throws IOException
-    {
-        return sendCommand(SMTPCommand.getCommand(command), args);
+    @Override
+    protected ProtocolCommandSupport getCommandSupport() {
+        return _commandSupport_;
     }
 
-
-    /**
-     * Sends an SMTP command with no arguments to the server, waits for a
-     * reply and returns the numerical response code.  After invocation, for
-     * more detailed information, the actual reply text can be accessed by
-     * calling {@link #getReplyString  getReplyString } or
-     * {@link #getReplyStrings  getReplyStrings }.
-     * <p>
-     * @param command  The text representation of the  SMTP command to send.
-     * @return The integer value of the SMTP reply code returned by the server
-     *         in response to the command.
-     * @throws SMTPConnectionClosedException
-     *      If the SMTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send SMTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int sendCommand(final String command) throws IOException
-    {
-        return sendCommand(command, null);
-    }
-
-
-    /**
-     * Sends an SMTP command with no arguments to the server, waits for a
-     * reply and returns the numerical response code.  After invocation, for
-     * more detailed information, the actual reply text can be accessed by
-     * calling {@link #getReplyString  getReplyString } or
-     * {@link #getReplyStrings  getReplyStrings }.
-     * <p>
-     * @param command  The SMTPCommand constant corresponding to the SMTP command
-     *                 to send.
-     * @return The integer value of the SMTP reply code returned by the server
-     *         in response to the command.
-     * @throws SMTPConnectionClosedException
-     *      If the SMTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send SMTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int sendCommand(final int command) throws IOException
-    {
-        return sendCommand(command, null);
-    }
-
-
-    /**
-     * Returns the integer value of the reply code of the last SMTP reply.
-     * You will usually only use this method after you connect to the
-     * SMTP server to check that the connection was successful since
-     * <code> connect </code> is of type void.
-     * <p>
-     * @return The integer value of the reply code of the last SMTP reply.
-     */
-    public int getReplyCode()
-    {
-        return replyCode;
-    }
 
     /**
      * Fetches a reply from the SMTP server and returns the integer reply
@@ -423,16 +306,18 @@ public class SMTP extends SocketClient
 
 
     /**
-     * Returns the lines of text from the last SMTP server response as an array
-     * of strings, one entry per line.  The end of line markers of each are
-     * stripped from each line.
+     * Returns the integer value of the reply code of the last SMTP reply.
+     * You will usually only use this method after you connect to the
+     * SMTP server to check that the connection was successful since
+     * <code> connect </code> is of type void.
      * <p>
-     * @return The lines of text from the last SMTP response as an array.
+     * @return The integer value of the reply code of the last SMTP reply.
      */
-    public String[] getReplyStrings()
+    public int getReplyCode()
     {
-        return replyLines.toArray(NetConstants.EMPTY_STRING_ARRAY);
+        return replyCode;
     }
+
 
     /**
      * Returns the entire text of the last SMTP server response exactly
@@ -465,6 +350,18 @@ public class SMTP extends SocketClient
 
 
     /**
+     * Returns the lines of text from the last SMTP server response as an array
+     * of strings, one entry per line.  The end of line markers of each are
+     * stripped from each line.
+     * <p>
+     * @return The lines of text from the last SMTP response as an array.
+     */
+    public String[] getReplyStrings()
+    {
+        return replyLines.toArray(NetConstants.EMPTY_STRING_ARRAY);
+    }
+
+    /**
      * A convenience method to send the SMTP HELO command to the server,
      * receive the reply, and return the reply code.
      * <p>
@@ -483,183 +380,6 @@ public class SMTP extends SocketClient
         return sendCommand(SMTPCommand.HELO, hostname);
     }
 
-
-    /**
-     * A convenience method to send the SMTP MAIL command to the server,
-     * receive the reply, and return the reply code.
-     * <p>
-     * @param reversePath The reverese path.
-     * @return The reply code received from the server.
-     * @throws SMTPConnectionClosedException
-     *      If the SMTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send SMTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int mail(final String reversePath) throws IOException
-    {
-        return sendCommand(SMTPCommand.MAIL, reversePath, false);
-    }
-
-
-    /**
-     * A convenience method to send the SMTP RCPT command to the server,
-     * receive the reply, and return the reply code.
-     * <p>
-     * @param forwardPath The forward path.
-     * @return The reply code received from the server.
-     * @throws SMTPConnectionClosedException
-     *      If the SMTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send SMTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int rcpt(final String forwardPath) throws IOException
-    {
-        return sendCommand(SMTPCommand.RCPT, forwardPath, false);
-    }
-
-
-    /**
-     * A convenience method to send the SMTP DATA command to the server,
-     * receive the reply, and return the reply code.
-     * <p>
-     * @return The reply code received from the server.
-     * @throws SMTPConnectionClosedException
-     *      If the SMTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send SMTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int data() throws IOException
-    {
-        return sendCommand(SMTPCommand.DATA);
-    }
-
-
-    /**
-     * A convenience method to send the SMTP SEND command to the server,
-     * receive the reply, and return the reply code.
-     * <p>
-     * @param reversePath The reverese path.
-     * @return The reply code received from the server.
-     * @throws SMTPConnectionClosedException
-     *      If the SMTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send SMTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int send(final String reversePath) throws IOException
-    {
-        return sendCommand(SMTPCommand.SEND, reversePath);
-    }
-
-
-    /**
-     * A convenience method to send the SMTP SOML command to the server,
-     * receive the reply, and return the reply code.
-     * <p>
-     * @param reversePath The reverese path.
-     * @return The reply code received from the server.
-     * @throws SMTPConnectionClosedException
-     *      If the SMTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send SMTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int soml(final String reversePath) throws IOException
-    {
-        return sendCommand(SMTPCommand.SOML, reversePath);
-    }
-
-
-    /**
-     * A convenience method to send the SMTP SAML command to the server,
-     * receive the reply, and return the reply code.
-     * <p>
-     * @param reversePath The reverese path.
-     * @return The reply code received from the server.
-     * @throws SMTPConnectionClosedException
-     *      If the SMTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send SMTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int saml(final String reversePath) throws IOException
-    {
-        return sendCommand(SMTPCommand.SAML, reversePath);
-    }
-
-
-    /**
-     * A convenience method to send the SMTP RSET command to the server,
-     * receive the reply, and return the reply code.
-     * <p>
-     * @return The reply code received from the server.
-     * @throws SMTPConnectionClosedException
-     *      If the SMTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send SMTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int rset() throws IOException
-    {
-        return sendCommand(SMTPCommand.RSET);
-    }
-
-
-    /**
-     * A convenience method to send the SMTP VRFY command to the server,
-     * receive the reply, and return the reply code.
-     * <p>
-     * @param user The user address to verify.
-     * @return The reply code received from the server.
-     * @throws SMTPConnectionClosedException
-     *      If the SMTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send SMTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int vrfy(final String user) throws IOException
-    {
-        return sendCommand(SMTPCommand.VRFY, user);
-    }
-
-
-    /**
-     * A convenience method to send the SMTP VRFY command to the server,
-     * receive the reply, and return the reply code.
-     * <p>
-     * @param name The name to expand.
-     * @return The reply code received from the server.
-     * @throws SMTPConnectionClosedException
-     *      If the SMTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send SMTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int expn(final String name) throws IOException
-    {
-        return sendCommand(SMTPCommand.EXPN, name);
-    }
 
     /**
      * A convenience method to send the SMTP HELP command to the server,
@@ -698,6 +418,27 @@ public class SMTP extends SocketClient
         return sendCommand(SMTPCommand.HELP, command);
     }
 
+
+    /**
+     * A convenience method to send the SMTP MAIL command to the server,
+     * receive the reply, and return the reply code.
+     * <p>
+     * @param reversePath The reverese path.
+     * @return The reply code received from the server.
+     * @throws SMTPConnectionClosedException
+     *      If the SMTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send SMTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int mail(final String reversePath) throws IOException
+    {
+        return sendCommand(SMTPCommand.MAIL, reversePath, false);
+    }
+
+
     /**
      * A convenience method to send the SMTP NOOP command to the server,
      * receive the reply, and return the reply code.
@@ -714,25 +455,6 @@ public class SMTP extends SocketClient
     public int noop() throws IOException
     {
         return sendCommand(SMTPCommand.NOOP);
-    }
-
-
-    /**
-     * A convenience method to send the SMTP TURN command to the server,
-     * receive the reply, and return the reply code.
-     * <p>
-     * @return The reply code received from the server.
-     * @throws SMTPConnectionClosedException
-     *      If the SMTP server prematurely closes the connection as a result
-     *      of the client being idle or some other reason causing the server
-     *      to send SMTP reply code 421.  This exception may be caught either
-     *      as an IOException or independently as itself.
-     * @throws IOException  If an I/O error occurs while either sending the
-     *      command or receiving the server reply.
-     */
-    public int turn() throws IOException
-    {
-        return sendCommand(SMTPCommand.TURN);
     }
 
 
@@ -754,6 +476,27 @@ public class SMTP extends SocketClient
         return sendCommand(SMTPCommand.QUIT);
     }
 
+
+    /**
+     * A convenience method to send the SMTP RCPT command to the server,
+     * receive the reply, and return the reply code.
+     * <p>
+     * @param forwardPath The forward path.
+     * @return The reply code received from the server.
+     * @throws SMTPConnectionClosedException
+     *      If the SMTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send SMTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int rcpt(final String forwardPath) throws IOException
+    {
+        return sendCommand(SMTPCommand.RCPT, forwardPath, false);
+    }
+
+
     /**
      * Removes a ProtocolCommandListener.
      *
@@ -765,11 +508,268 @@ public class SMTP extends SocketClient
         removeProtocolCommandListener(listener);
     }
 
+
     /**
-     * Provide command support to super-class
+     * A convenience method to send the SMTP RSET command to the server,
+     * receive the reply, and return the reply code.
+     * <p>
+     * @return The reply code received from the server.
+     * @throws SMTPConnectionClosedException
+     *      If the SMTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send SMTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
      */
-    @Override
-    protected ProtocolCommandSupport getCommandSupport() {
-        return _commandSupport_;
+    public int rset() throws IOException
+    {
+        return sendCommand(SMTPCommand.RSET);
+    }
+
+
+    /**
+     * A convenience method to send the SMTP SAML command to the server,
+     * receive the reply, and return the reply code.
+     * <p>
+     * @param reversePath The reverese path.
+     * @return The reply code received from the server.
+     * @throws SMTPConnectionClosedException
+     *      If the SMTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send SMTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int saml(final String reversePath) throws IOException
+    {
+        return sendCommand(SMTPCommand.SAML, reversePath);
+    }
+
+
+    /**
+     * A convenience method to send the SMTP SEND command to the server,
+     * receive the reply, and return the reply code.
+     * <p>
+     * @param reversePath The reverese path.
+     * @return The reply code received from the server.
+     * @throws SMTPConnectionClosedException
+     *      If the SMTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send SMTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int send(final String reversePath) throws IOException
+    {
+        return sendCommand(SMTPCommand.SEND, reversePath);
+    }
+
+
+    /**
+     * Sends an SMTP command with no arguments to the server, waits for a
+     * reply and returns the numerical response code.  After invocation, for
+     * more detailed information, the actual reply text can be accessed by
+     * calling {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.
+     * <p>
+     * @param command  The SMTPCommand constant corresponding to the SMTP command
+     *                 to send.
+     * @return The integer value of the SMTP reply code returned by the server
+     *         in response to the command.
+     * @throws SMTPConnectionClosedException
+     *      If the SMTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send SMTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int sendCommand(final int command) throws IOException
+    {
+        return sendCommand(command, null);
+    }
+
+
+    /**
+     * Sends an SMTP command to the server, waits for a reply and returns the
+     * numerical response code.  After invocation, for more detailed
+     * information, the actual reply text can be accessed by calling
+     * {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.
+     * <p>
+     * @param command  The SMTPCommand constant corresponding to the SMTP command
+     *                 to send.
+     * @param args The arguments to the SMTP command.  If this parameter is
+     *             set to null, then the command is sent with no argument.
+     * @return The integer value of the SMTP reply code returned by the server
+     *         in response to the command.
+     * @throws SMTPConnectionClosedException
+     *      If the SMTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send SMTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int sendCommand(final int command, final String args) throws IOException
+    {
+        return sendCommand(SMTPCommand.getCommand(command), args);
+    }
+
+    /**
+     *
+     * @param command the command to send (as an int defined in {@link SMPTCommand})
+     * @param args the command arguments, may be {@code null}
+     * @param includeSpace if {@code true}, add a space between the command and its arguments
+     * @return the reply code
+     * @throws IOException
+     */
+    private int sendCommand(final int command, final String args, final boolean includeSpace)
+    throws IOException
+    {
+        return sendCommand(SMTPCommand.getCommand(command), args, includeSpace);
+    }
+
+    /**
+     * Sends an SMTP command with no arguments to the server, waits for a
+     * reply and returns the numerical response code.  After invocation, for
+     * more detailed information, the actual reply text can be accessed by
+     * calling {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.
+     * <p>
+     * @param command  The text representation of the  SMTP command to send.
+     * @return The integer value of the SMTP reply code returned by the server
+     *         in response to the command.
+     * @throws SMTPConnectionClosedException
+     *      If the SMTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send SMTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int sendCommand(final String command) throws IOException
+    {
+        return sendCommand(command, null);
+    }
+
+    /**
+     * Sends an SMTP command to the server, waits for a reply and returns the
+     * numerical response code.  After invocation, for more detailed
+     * information, the actual reply text can be accessed by calling
+     * {@link #getReplyString  getReplyString } or
+     * {@link #getReplyStrings  getReplyStrings }.
+     * <p>
+     * @param command  The text representation of the  SMTP command to send.
+     * @param args The arguments to the SMTP command.  If this parameter is
+     *             set to null, then the command is sent with no argument.
+     * @return The integer value of the SMTP reply code returned by the server
+     *         in response to the command.
+     * @throws SMTPConnectionClosedException
+     *      If the SMTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send SMTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int sendCommand(final String command, final String args) throws IOException
+    {
+        return sendCommand(command, args, true);
+    }
+
+
+    /**
+     * Send a command to the server. May also be used to send text data.
+     *
+     * @param command the command to send (as a plain String)
+     * @param args the command arguments, may be {@code null}
+     * @param includeSpace if {@code true}, add a space between the command and its arguments
+     * @return the reply code
+     * @throws IOException
+     */
+    private int sendCommand(final String command, final String args, final boolean includeSpace)
+    throws IOException
+    {
+        final StringBuilder __commandBuffer = new StringBuilder();
+        __commandBuffer.append(command);
+
+        if (args != null)
+        {
+            if (includeSpace) {
+                __commandBuffer.append(' ');
+            }
+            __commandBuffer.append(args);
+        }
+
+        __commandBuffer.append(SocketClient.NETASCII_EOL);
+
+        final String message = __commandBuffer.toString();
+        writer.write(message);
+        writer.flush();
+
+        fireCommandSent(command, message);
+
+        return getReply();
+    }
+
+
+    /**
+     * A convenience method to send the SMTP SOML command to the server,
+     * receive the reply, and return the reply code.
+     * <p>
+     * @param reversePath The reverese path.
+     * @return The reply code received from the server.
+     * @throws SMTPConnectionClosedException
+     *      If the SMTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send SMTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int soml(final String reversePath) throws IOException
+    {
+        return sendCommand(SMTPCommand.SOML, reversePath);
+    }
+
+    /**
+     * A convenience method to send the SMTP TURN command to the server,
+     * receive the reply, and return the reply code.
+     * <p>
+     * @return The reply code received from the server.
+     * @throws SMTPConnectionClosedException
+     *      If the SMTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send SMTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int turn() throws IOException
+    {
+        return sendCommand(SMTPCommand.TURN);
+    }
+
+    /**
+     * A convenience method to send the SMTP VRFY command to the server,
+     * receive the reply, and return the reply code.
+     * <p>
+     * @param user The user address to verify.
+     * @return The reply code received from the server.
+     * @throws SMTPConnectionClosedException
+     *      If the SMTP server prematurely closes the connection as a result
+     *      of the client being idle or some other reason causing the server
+     *      to send SMTP reply code 421.  This exception may be caught either
+     *      as an IOException or independently as itself.
+     * @throws IOException  If an I/O error occurs while either sending the
+     *      command or receiving the server reply.
+     */
+    public int vrfy(final String user) throws IOException
+    {
+        return sendCommand(SMTPCommand.VRFY, user);
     }
 }

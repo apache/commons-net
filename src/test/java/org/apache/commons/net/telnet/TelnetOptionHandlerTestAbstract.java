@@ -43,6 +43,13 @@ public abstract class TelnetOptionHandlerTestAbstract extends TestCase
     protected abstract void setUp();
 
     /**
+     * test of server-driven subnegotiation. Abstract test:
+     * the derived class should implement it.
+     */
+    public abstract void testAnswerSubnegotiation();
+        // test subnegotiation
+
+    /**
      * test of the constructors. The derived class may add
      * test of the option code.
      */
@@ -66,19 +73,6 @@ public abstract class TelnetOptionHandlerTestAbstract extends TestCase
     }
 
     /**
-     * test of setWill/getWill
-     */
-    public void testWill()
-    {
-        opthand2.setWill(true);
-        opthand3.setWill(false);
-
-        assertTrue(!opthand1.getWill());
-        assertTrue(opthand2.getWill());
-        assertTrue(!opthand3.getWill());
-    }
-
-    /**
      * test of setDo/getDo
      */
     public void testDo()
@@ -98,9 +92,15 @@ public abstract class TelnetOptionHandlerTestAbstract extends TestCase
     public abstract void testStartSubnegotiation();
 
     /**
-     * test of server-driven subnegotiation. Abstract test:
-     * the derived class should implement it.
+     * test of setWill/getWill
      */
-    public abstract void testAnswerSubnegotiation();
-        // test subnegotiation
+    public void testWill()
+    {
+        opthand2.setWill(true);
+        opthand3.setWill(false);
+
+        assertTrue(!opthand1.getWill());
+        assertTrue(opthand2.getWill());
+        assertTrue(!opthand3.getWill());
+    }
 }

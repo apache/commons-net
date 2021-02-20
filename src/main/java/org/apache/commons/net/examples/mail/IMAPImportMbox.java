@@ -51,6 +51,34 @@ public final class IMAPImportMbox
     private static final String CRLF = "\r\n";
     private static final Pattern PATFROM = Pattern.compile(">+From "); // escaped From
 
+    private static String getDate(final String msg) {
+                                              // From SENDER Fri Sep 13 17:04:01 2019
+        final Pattern FROM_RE = Pattern.compile("From \\S+ +\\S+ (\\S+)  ?(\\S+) (\\S+) (\\S+)");
+        //                                                 [Fri]   Sep      13     HMS   2019
+        // output date: 13-Sep-2019 17:04:01 +0000
+        String date = null;
+        final Matcher m = FROM_RE.matcher(msg);
+        if (m.lookingAt()) {
+            date = m.group(2)+"-"+m.group(1)+"-"+m.group(4)+" "+m.group(3)+" +0000";
+        }
+        return date;
+    }
+
+    /**
+     * Is at least one entry in the list contained in the string?
+     * @param contains the list of strings to look for
+     * @param string the String to check against
+     * @return true if at least one entry in the contains list is contained in the string
+     */
+    private static boolean listContains(final List<String> contains, final String string) {
+        for(final String entry : contains) {
+            if (string.contains(entry)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void main(final String[] args) throws IOException
     {
         if (args.length < 2)
@@ -146,24 +174,6 @@ public final class IMAPImportMbox
         System.out.println("Processed " + total + " messages, loaded " + loaded);
     }
 
-    private static boolean startsWith(final String input, final Pattern pat) {
-        final Matcher m = pat.matcher(input);
-        return m.lookingAt();
-    }
-
-    private static String getDate(final String msg) {
-                                              // From SENDER Fri Sep 13 17:04:01 2019
-        final Pattern FROM_RE = Pattern.compile("From \\S+ +\\S+ (\\S+)  ?(\\S+) (\\S+) (\\S+)");
-        //                                                 [Fri]   Sep      13     HMS   2019
-        // output date: 13-Sep-2019 17:04:01 +0000
-        String date = null;
-        final Matcher m = FROM_RE.matcher(msg);
-        if (m.lookingAt()) {
-            date = m.group(2)+"-"+m.group(1)+"-"+m.group(4)+" "+m.group(3)+" +0000";
-        }
-        return date;
-    }
-
     private static boolean process(final StringBuilder sb, final IMAPClient imap, final String folder
             ,final int msgNum) throws IOException {
         final int length = sb.length();
@@ -179,6 +189,11 @@ public final class IMAPImportMbox
         return haveMessage;
     }
 
+    private static boolean startsWith(final String input, final Pattern pat) {
+        final Matcher m = pat.matcher(input);
+        return m.lookingAt();
+    }
+
     /**
      * Is the message wanted?
      *
@@ -192,21 +207,6 @@ public final class IMAPImportMbox
         return (msgNums.isEmpty() && contains.isEmpty()) // no selectors
              || msgNums.get(msgNum) // matches message number
              || listContains(contains, line); // contains string
-    }
-
-    /**
-     * Is at least one entry in the list contained in the string?
-     * @param contains the list of strings to look for
-     * @param string the String to check against
-     * @return true if at least one entry in the contains list is contained in the string
-     */
-    private static boolean listContains(final List<String> contains, final String string) {
-        for(final String entry : contains) {
-            if (string.contains(entry)) {
-                return true;
-            }
-        }
-        return false;
     }
 
 }

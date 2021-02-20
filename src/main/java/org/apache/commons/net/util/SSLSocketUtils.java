@@ -29,10 +29,6 @@ import javax.net.ssl.SSLSocket;
  * @since 3.4
  */
 public class SSLSocketUtils {
-    private SSLSocketUtils() {
-        // Not instantiable
-    }
-
     /**
      * Enable the HTTPS endpoint identification algorithm on an SSLSocket.
      *
@@ -58,5 +54,9 @@ public class SSLSocketUtils {
             IllegalAccessException | InvocationTargetException e) { // Ignored
         }
         return false;
+    }
+
+    private SSLSocketUtils() {
+        // Not instantiable
     }
 }

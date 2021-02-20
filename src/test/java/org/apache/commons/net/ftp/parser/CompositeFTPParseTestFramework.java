@@ -29,9 +29,9 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
     }
 
     @Override
-    protected String[] getGoodListing()
+    protected String[] getBadListing()
     {
-        return getGoodListings()[0];
+        return getBadListings()[0];
     }
 
     /**
@@ -43,6 +43,12 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
      */
     protected abstract String[][] getBadListings();
 
+    @Override
+    protected String[] getGoodListing()
+    {
+        return getGoodListings()[0];
+    }
+
     /**
      * Method getGoodListing.
      * Implementors must provide multiple listing that passes and
@@ -51,32 +57,6 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
      * @return String[]
      */
     protected abstract String[][] getGoodListings();
-
-    @Override
-    protected String[] getBadListing()
-    {
-        return getBadListings()[0];
-    }
-
-    /* (non-Javadoc)
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testGoodListing()
-     */
-    public void testConsistentListing()
-    {
-        final String goodsamples[][] = getGoodListings();
-
-        for (final String[] goodsample : goodsamples)
-        {
-            final FTPFileEntryParser parser = getParser();
-            for (final String test : goodsample) {
-                final FTPFile f = parser.parseFTPEntry(test);
-                assertNotNull("Failed to parse " + test,
-                        f);
-
-                doAdditionalGoodTests(test, f);
-            }
-        }
-    }
 
     /* (non-Javadoc)
      * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testGoodListing()
@@ -95,6 +75,26 @@ public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramewo
                         nullFileOrNullDate(f));
 
                 doAdditionalBadTests(test, f);
+            }
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#testGoodListing()
+     */
+    public void testConsistentListing()
+    {
+        final String goodsamples[][] = getGoodListings();
+
+        for (final String[] goodsample : goodsamples)
+        {
+            final FTPFileEntryParser parser = getParser();
+            for (final String test : goodsample) {
+                final FTPFile f = parser.parseFTPEntry(test);
+                assertNotNull("Failed to parse " + test,
+                        f);
+
+                doAdditionalGoodTests(test, f);
             }
         }
     }

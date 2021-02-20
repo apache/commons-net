@@ -157,6 +157,27 @@ public final class NewGroupsOrNewsQuery
 
 
     /**
+     * Add a distribution group to the query.  The distribution part of a
+     * newsgroup is the segment of the name preceding the first dot (e.g.,
+     * comp, alt, rec).  Only those newsgroups matching one of the
+     * distributions or, in the case of NEWNEWS, an article in a newsgroup
+     * matching one of the distributions, will be reported as a query result.
+     * Adding distributions is purely optional.
+     * <p>
+     * @param distribution A distribution to add to the query.
+     */
+    public void addDistribution(final String distribution)
+    {
+        if (distributions != null) {
+            distributions.append(',');
+        } else {
+            distributions = new StringBuffer();
+        }
+        distributions.append(distribution);
+    }
+
+
+    /**
      * Add a newsgroup to the list of newsgroups being queried.  Newsgroups
      * added this way are only meaningful to the NEWNEWS command.  Newsgroup
      * names may include the <code> * </code> wildcard, as in
@@ -178,50 +199,6 @@ public final class NewGroupsOrNewsQuery
 
 
     /**
-     * Add a newsgroup to the list of newsgroups being queried, but indicate
-     * that group should not be checked for new news.  Newsgroups
-     * added this way are only meaningful to the NEWNEWS command.
-     * Newsgroup names may include the <code> * </code> wildcard, as in
-     * <code>comp.lang.* </code> or <code> comp.lang.java.* </code>.
-     * <p>
-     * The following would create a query that searched for new news in
-     * all comp.lang.java newsgroups except for comp.lang.java.advocacy.
-     * <pre>
-     * query.addNewsgroup("comp.lang.java.*");
-     * query.omitNewsgroup("comp.lang.java.advocacy");
-     * </pre>
-     * <p>
-     * @param newsgroup  The newsgroup to add to the list of groups to be
-     *                   checked for new news, but which should be omitted from
-     *                   the search for new news..
-     */
-    public void omitNewsgroup(final String newsgroup)
-    {
-        addNewsgroup("!" + newsgroup);
-    }
-
-
-    /**
-     * Add a distribution group to the query.  The distribution part of a
-     * newsgroup is the segment of the name preceding the first dot (e.g.,
-     * comp, alt, rec).  Only those newsgroups matching one of the
-     * distributions or, in the case of NEWNEWS, an article in a newsgroup
-     * matching one of the distributions, will be reported as a query result.
-     * Adding distributions is purely optional.
-     * <p>
-     * @param distribution A distribution to add to the query.
-     */
-    public void addDistribution(final String distribution)
-    {
-        if (distributions != null) {
-            distributions.append(',');
-        } else {
-            distributions = new StringBuffer();
-        }
-        distributions.append(distribution);
-    }
-
-    /**
      * Return the NNTP query formatted date (year, month, day in the form
      * YYMMDD.
      * <p>
@@ -230,27 +207,6 @@ public final class NewGroupsOrNewsQuery
     public String getDate()
     {
         return date;
-    }
-
-    /**
-     * Return the NNTP query formatted time (hour, minutes, seconds in the form
-     * HHMMSS.
-     * <p>
-     * @return The NNTP query formatted time.
-     */
-    public String getTime()
-    {
-        return time;
-    }
-
-    /**
-     * Return whether or not the query date should be treated as GMT.
-     * <p>
-     * @return True if the query date is to be treated as GMT, false if not.
-     */
-    public boolean isGMT()
-    {
-        return isGMT;
     }
 
     /**
@@ -275,5 +231,49 @@ public final class NewGroupsOrNewsQuery
     public String getNewsgroups()
     {
         return newsgroups == null ? null : newsgroups.toString();
+    }
+
+    /**
+     * Return the NNTP query formatted time (hour, minutes, seconds in the form
+     * HHMMSS.
+     * <p>
+     * @return The NNTP query formatted time.
+     */
+    public String getTime()
+    {
+        return time;
+    }
+
+    /**
+     * Return whether or not the query date should be treated as GMT.
+     * <p>
+     * @return True if the query date is to be treated as GMT, false if not.
+     */
+    public boolean isGMT()
+    {
+        return isGMT;
+    }
+
+    /**
+     * Add a newsgroup to the list of newsgroups being queried, but indicate
+     * that group should not be checked for new news.  Newsgroups
+     * added this way are only meaningful to the NEWNEWS command.
+     * Newsgroup names may include the <code> * </code> wildcard, as in
+     * <code>comp.lang.* </code> or <code> comp.lang.java.* </code>.
+     * <p>
+     * The following would create a query that searched for new news in
+     * all comp.lang.java newsgroups except for comp.lang.java.advocacy.
+     * <pre>
+     * query.addNewsgroup("comp.lang.java.*");
+     * query.omitNewsgroup("comp.lang.java.advocacy");
+     * </pre>
+     * <p>
+     * @param newsgroup  The newsgroup to add to the list of groups to be
+     *                   checked for new news, but which should be omitted from
+     *                   the search for new news..
+     */
+    public void omitNewsgroup(final String newsgroup)
+    {
+        addNewsgroup("!" + newsgroup);
     }
 }

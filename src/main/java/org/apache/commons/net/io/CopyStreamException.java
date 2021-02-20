@@ -49,6 +49,15 @@ public class CopyStreamException extends IOException
     }
 
     /**
+     * Returns the IOException responsible for the failure of a copy operation.
+     * @return The IOException responsible for the failure of a copy operation.
+     */
+    public IOException getIOException()
+    {
+        return (IOException) getCause(); // cast is OK because it was initialized with an IOException
+    }
+
+    /**
      * Returns the total number of bytes confirmed to have
      * been transferred by a failed copy operation.
      * @return The total number of bytes confirmed to have
@@ -57,14 +66,5 @@ public class CopyStreamException extends IOException
     public long getTotalBytesTransferred()
     {
         return totalBytesTransferred;
-    }
-
-    /**
-     * Returns the IOException responsible for the failure of a copy operation.
-     * @return The IOException responsible for the failure of a copy operation.
-     */
-    public IOException getIOException()
-    {
-        return (IOException) getCause(); // cast is OK because it was initialized with an IOException
     }
 }

@@ -75,17 +75,17 @@ import org.apache.commons.net.util.Charsets;
  * uses this class transparently.
  */
 public class FTPListParseEngine {
-    private List<String> entries = new LinkedList<>();
-    private ListIterator<String> internalIterator = entries.listIterator();
-
-    private final FTPFileEntryParser parser;
-    // Should invalid files (parse failures) be allowed?
-    private final boolean saveUnparseableEntries;
-
     /**
      * An empty immutable {@code FTPFile} array.
      */
     private static final FTPFile[] EMPTY_FTP_FILE_ARRAY = new FTPFile[0];
+    private List<String> entries = new LinkedList<>();
+
+    private ListIterator<String> internalIterator = entries.listIterator();
+    private final FTPFileEntryParser parser;
+
+    // Should invalid files (parse failures) be allowed?
+    private final boolean saveUnparseableEntries;
 
     public FTPListParseEngine(final FTPFileEntryParser parser) {
         this(parser, null);
@@ -105,44 +105,55 @@ public class FTPListParseEngine {
     }
 
     /**
-     * Reads (and closes) the initial reading and preparsing of the list returned by the server. After this method has
-     * completed, this object will contain a list of unparsed entries (Strings) each referring to a unique file on the
-     * server.
+     * Returns an array of FTPFile objects containing the whole list of
+     * files returned by the server as read by this object's parser.
      *
-     * @param inputStream input stream provided by the server socket.
-     * @param charsetName the encoding to be used for reading the stream
-     *
-     * @throws IOException thrown on any failure to read from the sever.
+     * @return an array of FTPFile objects containing the whole list of
+     *         files returned by the server as read by this object's parser.
+     * None of the entries will be null
+     * @throws IOException - not ever thrown, may be removed in a later release
      */
-    public void readServerList(final InputStream inputStream, final String charsetName) throws IOException {
-        this.entries = new LinkedList<>();
-        read(inputStream, charsetName);
-        this.parser.preParse(this.entries);
-        resetIterator();
+    public FTPFile[] getFiles()
+    throws IOException // TODO remove; not actually thrown
+    {
+        return getFiles(FTPFileFilters.NON_NULL);
     }
 
     /**
-     * Internal method for reading (and closing) the input into the <code>entries</code> list. After this method has
-     * completed, <code>entries</code> will contain a collection of entries (as defined by
-     * <code>FTPFileEntryParser.readNextEntry()</code>), but this may contain various non-entry preliminary lines from
-     * the server output, duplicates, and other data that will not be part of the final listing.
+     * Returns an array of FTPFile objects containing the whole list of
+     * files returned by the server as read by this object's parser.
+     * The files are filtered before being added to the array.
      *
-     * @param inputStream The socket stream on which the input will be read.
-     * @param charsetName The encoding to use.
+     * @param filter FTPFileFilter, must not be <code>null</code>.
      *
-     * @throws IOException thrown on any failure to read the stream
+     * @return an array of FTPFile objects containing the whole list of
+     *         files returned by the server as read by this object's parser.
+     * <p><b>
+     * NOTE:</b> This array may contain null members if any of the
+     * individual file listings failed to parse.  The caller should
+     * check each entry for null before referencing it, or use the
+     * a filter such as {@link FTPFileFilters#NON_NULL} which does not
+     * allow null entries.
+     * @since 2.2
+     * @throws IOException - not ever thrown, may be removed in a later release
      */
-    private void read(final InputStream inputStream, final String charsetName) throws IOException {
-        try (final BufferedReader reader = new BufferedReader(
-            new InputStreamReader(inputStream, Charsets.toCharset(charsetName)))) {
-
-            String line = this.parser.readNextEntry(reader);
-
-            while (line != null) {
-                this.entries.add(line);
-                line = this.parser.readNextEntry(reader);
+    public FTPFile[] getFiles(final FTPFileFilter filter)
+    throws IOException // TODO remove; not actually thrown
+    {
+        final List<FTPFile> tmpResults = new ArrayList<>();
+        final Iterator<String> iter = this.entries.iterator();
+        while (iter.hasNext()) {
+            final String entry = iter.next();
+            FTPFile temp = this.parser.parseFTPEntry(entry);
+            if (temp == null && saveUnparseableEntries) {
+                temp = new FTPFile(entry);
+            }
+            if (filter.accept(temp)) {
+                tmpResults.add(temp);
             }
         }
+        return tmpResults.toArray(EMPTY_FTP_FILE_ARRAY);
+
     }
 
     /**
@@ -226,58 +237,6 @@ public class FTPListParseEngine {
     }
 
     /**
-     * Returns an array of FTPFile objects containing the whole list of
-     * files returned by the server as read by this object's parser.
-     *
-     * @return an array of FTPFile objects containing the whole list of
-     *         files returned by the server as read by this object's parser.
-     * None of the entries will be null
-     * @throws IOException - not ever thrown, may be removed in a later release
-     */
-    public FTPFile[] getFiles()
-    throws IOException // TODO remove; not actually thrown
-    {
-        return getFiles(FTPFileFilters.NON_NULL);
-    }
-
-    /**
-     * Returns an array of FTPFile objects containing the whole list of
-     * files returned by the server as read by this object's parser.
-     * The files are filtered before being added to the array.
-     *
-     * @param filter FTPFileFilter, must not be <code>null</code>.
-     *
-     * @return an array of FTPFile objects containing the whole list of
-     *         files returned by the server as read by this object's parser.
-     * <p><b>
-     * NOTE:</b> This array may contain null members if any of the
-     * individual file listings failed to parse.  The caller should
-     * check each entry for null before referencing it, or use the
-     * a filter such as {@link FTPFileFilters#NON_NULL} which does not
-     * allow null entries.
-     * @since 2.2
-     * @throws IOException - not ever thrown, may be removed in a later release
-     */
-    public FTPFile[] getFiles(final FTPFileFilter filter)
-    throws IOException // TODO remove; not actually thrown
-    {
-        final List<FTPFile> tmpResults = new ArrayList<>();
-        final Iterator<String> iter = this.entries.iterator();
-        while (iter.hasNext()) {
-            final String entry = iter.next();
-            FTPFile temp = this.parser.parseFTPEntry(entry);
-            if (temp == null && saveUnparseableEntries) {
-                temp = new FTPFile(entry);
-            }
-            if (filter.accept(temp)) {
-                tmpResults.add(temp);
-            }
-        }
-        return tmpResults.toArray(EMPTY_FTP_FILE_ARRAY);
-
-    }
-
-    /**
      * convenience method to allow clients to know whether this object's
      * internal iterator's current position is at the end of the list.
      *
@@ -300,13 +259,28 @@ public class FTPListParseEngine {
     }
 
     /**
-     * resets this object's internal iterator to the beginning of the list.
+     * Internal method for reading (and closing) the input into the <code>entries</code> list. After this method has
+     * completed, <code>entries</code> will contain a collection of entries (as defined by
+     * <code>FTPFileEntryParser.readNextEntry()</code>), but this may contain various non-entry preliminary lines from
+     * the server output, duplicates, and other data that will not be part of the final listing.
+     *
+     * @param inputStream The socket stream on which the input will be read.
+     * @param charsetName The encoding to use.
+     *
+     * @throws IOException thrown on any failure to read the stream
      */
-    public void resetIterator() {
-        this.internalIterator = this.entries.listIterator();
-    }
+    private void read(final InputStream inputStream, final String charsetName) throws IOException {
+        try (final BufferedReader reader = new BufferedReader(
+            new InputStreamReader(inputStream, Charsets.toCharset(charsetName)))) {
 
-    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
+            String line = this.parser.readNextEntry(reader);
+
+            while (line != null) {
+                this.entries.add(line);
+                line = this.parser.readNextEntry(reader);
+            }
+        }
+    }
 
     /**
      * Do not use.
@@ -317,6 +291,32 @@ public class FTPListParseEngine {
     @Deprecated
     public void readServerList(final InputStream inputStream) throws IOException {
         readServerList(inputStream, null);
+    }
+
+    /**
+     * Reads (and closes) the initial reading and preparsing of the list returned by the server. After this method has
+     * completed, this object will contain a list of unparsed entries (Strings) each referring to a unique file on the
+     * server.
+     *
+     * @param inputStream input stream provided by the server socket.
+     * @param charsetName the encoding to be used for reading the stream
+     *
+     * @throws IOException thrown on any failure to read from the sever.
+     */
+    public void readServerList(final InputStream inputStream, final String charsetName) throws IOException {
+        this.entries = new LinkedList<>();
+        read(inputStream, charsetName);
+        this.parser.preParse(this.entries);
+        resetIterator();
+    }
+
+    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
+
+    /**
+     * resets this object's internal iterator to the beginning of the list.
+     */
+    public void resetIterator() {
+        this.internalIterator = this.entries.listIterator();
     }
 
 }
