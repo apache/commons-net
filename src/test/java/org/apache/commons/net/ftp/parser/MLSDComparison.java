@@ -41,25 +41,16 @@ import org.junit.Test;
  */
 public class MLSDComparison {
 
-    private final Comparator<FTPFile> cmp = new Comparator<FTPFile>() {
-        @Override
-        public int compare(final FTPFile o1, final FTPFile o2) {
-                final String n1 = o1.getName();
-                final String n2 = o2.getName();
-                return n1.compareTo(n2);
-            }
-    };
+    private final Comparator<FTPFile> cmp = (o1, o2) -> {
+            final String n1 = o1.getName();
+            final String n2 = o2.getName();
+            return n1.compareTo(n2);
+        };
 
     @Test
     public void testFile() throws Exception {
         final File path = new File(DownloadListings.DOWNLOAD_DIR);
-        final FilenameFilter filter = new FilenameFilter() {
-            @Override
-            public boolean accept(final File dir, final String name) {
-                return name.endsWith("_mlsd.txt");
-            }
-
-        };
+        final FilenameFilter filter = (dir, name) -> name.endsWith("_mlsd.txt");
         final File[] files = path.listFiles(filter);
         if (files != null) {
             for (final File mlsd : files) {

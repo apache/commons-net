@@ -101,13 +101,7 @@ public class IMAP extends SocketClient
      * @see #setChunkListener(IMAPChunkListener)
      * @since 3.4
      */
-    public static final IMAPChunkListener TRUE_CHUNK_LISTENER = new IMAPChunkListener(){
-        @Override
-        public boolean chunkReceived(final IMAP imap) {
-            return true;
-        }
-
-    };
+    public static final IMAPChunkListener TRUE_CHUNK_LISTENER = imap -> true;
     private volatile IMAPChunkListener chunkListener;
 
     private final char[] initialID = { 'A', 'A', 'A', 'A' };

@@ -18,7 +18,6 @@ package org.apache.commons.net.ftp;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Comparator;
 import java.util.TreeSet;
 
 import junit.framework.TestCase;
@@ -93,15 +92,10 @@ public class FTPClientConfigFunctionalTest extends TestCase {
     private TreeSet<FTPFile> getSortedList(final FTPFile[] files) {
         // create a TreeSet which will sort each element
         // as it is added.
-        final TreeSet<FTPFile> sorted = new TreeSet<>(new Comparator<Object>() {
-
-            @Override
-            public int compare(final Object o1, final Object o2) {
-                final FTPFile f1 = (FTPFile) o1;
-                final FTPFile f2 = (FTPFile) o2;
-                return f1.getTimestamp().getTime().compareTo(f2.getTimestamp().getTime());
-            }
-
+        final TreeSet<FTPFile> sorted = new TreeSet<>((o1, o2) -> {
+            final FTPFile f1 = (FTPFile) o1;
+            final FTPFile f2 = (FTPFile) o2;
+            return f1.getTimestamp().getTime().compareTo(f2.getTimestamp().getTime());
         });
 
 

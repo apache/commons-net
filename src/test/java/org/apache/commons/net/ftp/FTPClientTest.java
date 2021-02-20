@@ -22,7 +22,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import org.apache.commons.net.ftp.parser.UnixFTPEntryParser;
 
@@ -193,13 +192,7 @@ public class FTPClientTest extends TestCase {
 
     public void testParsePassiveModeReplyForLocalAddressWithSimpleNatWorkaroundStrategy() throws Exception {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
-        client.setPassiveNatWorkaroundStrategy(new FTPClient.HostnameResolver() {
-            @Override
-            public String resolve(final String hostname) throws UnknownHostException {
-                return "4.4.4.4";
-            }
-
-        });
+        client.setPassiveNatWorkaroundStrategy(hostname -> "4.4.4.4");
         client._parsePassiveModeReply("227 Entering Passive Mode (172,16,204,138,192,22).");
         assertEquals("4.4.4.4", client.getPassiveHost());
     }

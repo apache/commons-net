@@ -27,31 +27,16 @@ public class FTPFileFilters {
     /**
      * Accepts all FTPFile entries, including null.
      */
-    public static final FTPFileFilter ALL = new FTPFileFilter() {
-        @Override
-        public boolean accept(final FTPFile file) {
-            return true;
-        }
-    };
+    public static final FTPFileFilter ALL = file -> true;
 
     /**
      * Accepts all non-null FTPFile entries.
      */
-    public static final FTPFileFilter NON_NULL = new FTPFileFilter() {
-        @Override
-        public boolean accept(final FTPFile file) {
-            return file != null;
-        }
-    };
+    public static final FTPFileFilter NON_NULL = file -> file != null;
 
     /**
      * Accepts all (non-null) FTPFile directory entries.
      */
-    public static final FTPFileFilter DIRECTORIES = new FTPFileFilter() {
-        @Override
-        public boolean accept(final FTPFile file) {
-            return file != null && file.isDirectory();
-        }
-    };
+    public static final FTPFileFilter DIRECTORIES = file -> file != null && file.isDirectory();
 
 }
