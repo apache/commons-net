@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <!--
 
    Licensed to the Apache Software Foundation (ASF) under one or more
@@ -41,10 +40,10 @@ The <action> type attribute can be add,update,fix,remove.
 -->
 
 <document>
-    <properties>
-        <title>Apache Commons Net Release Notes</title>
-        <author email="dev@commons.apache.org">Apache Commons developers</author>
-    </properties>
+  <properties>
+    <title>Apache Commons Net Release Notes</title>
+    <author email="dev@commons.apache.org">Apache Commons developers</author>
+  </properties>
 
     <!-- NOTE:
     The description below is specially formatted so as to improve the layout of the generated release notes:
@@ -62,97 +61,100 @@ The <action> type attribute can be add,update,fix,remove.
     Defining changes.version allows one to create the RN without first removing the SNAPSHOT suffix.
      -->
 
-    <body>
-        <release version="3.9.0" date="2021-MM-DD" description="Maintenance and bug fix release (Java 8).">
-            <!-- ADD -->
-           <action type="add" dev="ggregory" due-to="Gary Gregory">
-            [FTP] Add FTPClient.mdtmInstant(String).
-            </action>
-           <action type="add" dev="ggregory" due-to="Gary Gregory">
-            [FTP] Add MLSxEntryParser.parseGmtInstant(String).
-            </action>
-           <action type="add" dev="ggregory" due-to="Gary Gregory">
-            [FTP] Add FTPClient.getControlKeepAliveReplyTimeoutDuration().
-            </action>
-           <action type="add" dev="ggregory" due-to="Gary Gregory">
-            [FTP] Add FTPClient.setControlKeepAliveReplyTimeout(Duration).
-            </action>
-           <action type="add" dev="ggregory" due-to="Gary Gregory">
-            [FTP] Add FTPClient.getControlKeepAliveTimeoutDuration().
-            </action>
-           <action type="add" dev="ggregory" due-to="Gary Gregory">
-            [FTP] Add FTPClient.setControlKeepAliveTimeout(Duration).
-            </action>
-        </release>
-        <release version="3.8.0" date="2021-02-13" description="Maintenance and bug fix release (Java 7).">
-            <!-- ADD -->
-           <action type="add" dev="ggregory" due-to="Arturo Bernal, Gary Gregory">
-            Add and use NetConstants.
-            </action>
-           <action type="add" dev="ggregory" due-to="Gary Gregory">
-            Add and use SocketClient.applySocketAttributes().
-            </action>
-            <action type="add" dev="ggregory" due-to="Gary Gregory">
-            [FTP] Add FTPClient.hasFeature(FTPCmd).
-            </action>
-            <action type="add" dev="ggregory" due-to="Gary Gregory">
-            [FTP] Add FTPClient.mdtmCalendar(String).
-            </action>
-            <!--  FIX -->
-            <action type="fix" dev="ggregory" due-to="Gary Gregory">
-            [IMAP] Fix concurrent counting of chunks in IMAPExportMbox.
-            </action>
-            <action type="fix" dev="ggregory" due-to="Gary Gregory">
-            Fix possible if rare NPEs in tests.
-            </action>
-            <!-- UPDATE -->
-            <action type="update" dev="ggregory" due-to="Dependabot">
-            Bump actions/checkout from v2.3.3 to v2.3.4 #69.
-            </action>
-            <action issue="NET-685" type="update" dev="ggregory" due-to="Simo385">
-            Update SocketClient default connect timeout from ∞ to 60 seconds #51.
-            </action>
-            <action issue="NET-695" type="update" dev="ggregory" due-to="Gary Gregory, Possibly Cott">
-            Apply SocketClient timeout after connection but before SSL negotiation.
-            </action>
-           <action type="update" dev="ggregory" due-to="Arturo Bernal, Gary Gregory">
-            Minor Improvements #71, #72.
-            </action>
-           <action type="update" dev="ggregory" due-to="Dependabot">
-            Bump actions/cache from v2 to v2.1.4 #73.
-            </action>            
-        </release>
-        <release version="3.7.2" date="2020-10-14" description="Maintenance and bug fix release (Java 7).">
-            <action issue="NET-689" type="fix" dev="ggregory" due-to="Charlie, Gary Gregory">
-            Host name is not set on the SSLSocket causing isEndpointCheckingEnabled to fail.
-            </action>
-            <action type="fix" dev="ggregory" due-to="Dependabot">
-            Fix possible socket and input stream leak on socket exception in org.apache.commons.net.ftp.FTPClient._retrieveFile(String, String, OutputStream).
-            </action>
-            <action issue="NET-690" type="fix" dev="ggregory" due-to="payal-meh, Gary Gregory">
-            Performance issue when using the FTPClient to retrieve files #65.
-            </action>
-            <action issue="NET-691" type="update" dev="ggregory" due-to="Lewis John McGibbney">
-            Improve Javadoc for IMAPSClient #68.
-            </action>
-            <!--  UPDATES -->
-            <action type="update" dev="ggregory" due-to="Dependabot">
-            Bump actions/setup-java from v1.4.2 to v1.4.3 #62.
-            </action>
-            <action type="update" dev="ggregory" due-to="Dependabot">
-            Bump junit from 4.13 to 4.13.1 #67.
-            </action>
-        </release>
-        <release version="3.7.1" date="2020-09-30" description="Maintenance and bug fix release (Java 7).">
-            <action issue="NET-687" type="fix" dev="ggregory" due-to="Gary Gregory, Mikael, j-verse">
-            [FTPS] javax.net.ssl.SSLException: Unsupported or unrecognized SSL message, #59.
-            </action>
-            <!--  UPDATES -->
-            <action type="update" dev="ggregory" due-to="Dependabot">
-            Update actions/checkout from v2.3.1 to v2.3.3 #56, #61.
-            </action>
-        </release>
-        <release version="3.7" date="2020-08-05" description="
+  <body>
+    <release version="3.9.0" date="2021-MM-DD" description="Maintenance and bug fix release (Java 8).">
+      <!-- ADD -->
+      <action type="add" dev="ggregory" due-to="Gary Gregory">
+        [FTP] Add FTPClient.mdtmInstant(String).
+      </action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">
+        [FTP] Add MLSxEntryParser.parseGmtInstant(String).
+      </action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">
+        [FTP] Add FTPClient.getControlKeepAliveReplyTimeoutDuration().
+      </action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">
+        [FTP] Add FTPClient.setControlKeepAliveReplyTimeout(Duration).
+      </action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">
+        [FTP] Add FTPClient.getControlKeepAliveTimeoutDuration().
+      </action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">
+        [FTP] Add FTPClient.setControlKeepAliveTimeout(Duration).
+      </action>
+      <!-- UPDATE -->
+    </release>
+    <release version="3.8.0" date="2021-02-13" description="Maintenance and bug fix release (Java 7).">
+      <!-- ADD -->
+      <action type="add" dev="ggregory" due-to="Arturo Bernal, Gary Gregory">
+        Add and use NetConstants.
+      </action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">
+        Add and use SocketClient.applySocketAttributes().
+      </action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">
+        [FTP] Add FTPClient.hasFeature(FTPCmd).
+      </action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">
+        [FTP] Add FTPClient.mdtmCalendar(String).
+      </action>
+      <!-- FIX -->
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">
+        [IMAP] Fix concurrent counting of chunks in IMAPExportMbox.
+      </action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">
+        Fix possible if rare NPEs in tests.
+      </action>
+      <!-- UPDATE -->
+      <action type="update" dev="ggregory" due-to="Dependabot">
+        Bump actions/checkout from v2.3.3 to v2.3.4 #69.
+      </action>
+      <action issue="NET-685" type="update" dev="ggregory" due-to="Simo385">
+        Update SocketClient default connect timeout from ∞ to 60 seconds #51.
+      </action>
+      <action issue="NET-695" type="update" dev="ggregory" due-to="Gary Gregory, Possibly Cott">
+        Apply SocketClient timeout after connection but before SSL negotiation.
+      </action>
+      <action type="update" dev="ggregory" due-to="Arturo Bernal, Gary Gregory">
+        Minor Improvements #71, #72.
+      </action>
+      <action type="update" dev="ggregory" due-to="Dependabot">
+        Bump actions/cache from v2 to v2.1.4 #73.
+      </action>
+    </release>
+    <release version="3.7.2" date="2020-10-14" description="Maintenance and bug fix release (Java 7).">
+      <action issue="NET-689" type="fix" dev="ggregory" due-to="Charlie, Gary Gregory">
+        Host name is not set on the SSLSocket causing isEndpointCheckingEnabled to fail.
+      </action>
+      <action type="fix" dev="ggregory" due-to="Dependabot">
+        Fix possible socket and input stream leak on socket exception in
+        org.apache.commons.net.ftp.FTPClient._retrieveFile(String, String, OutputStream).
+      </action>
+      <action issue="NET-690" type="fix" dev="ggregory" due-to="payal-meh, Gary Gregory">
+        Performance issue when using the FTPClient to retrieve files #65.
+      </action>
+      <action issue="NET-691" type="update" dev="ggregory" due-to="Lewis John McGibbney">
+        Improve Javadoc for IMAPSClient #68.
+      </action>
+      <!-- UPDATES -->
+      <action type="update" dev="ggregory" due-to="Dependabot">
+        Bump actions/setup-java from v1.4.2 to v1.4.3 #62.
+      </action>
+      <action type="update" dev="ggregory" due-to="Dependabot">
+        Bump junit from 4.13 to 4.13.1 #67.
+      </action>
+    </release>
+    <release version="3.7.1" date="2020-09-30" description="Maintenance and bug fix release (Java 7).">
+      <action issue="NET-687" type="fix" dev="ggregory" due-to="Gary Gregory, Mikael, j-verse">
+        [FTPS] javax.net.ssl.SSLException: Unsupported or unrecognized SSL message, #59.
+      </action>
+      <!-- UPDATES -->
+      <action type="update" dev="ggregory" due-to="Dependabot">
+        Update actions/checkout from v2.3.1 to v2.3.3 #56, #61.
+      </action>
+    </release>
+    <release version="3.7" date="2020-08-05"
+      description="
 This is mainly a bug-fix release (Java 7). See further details below.
 
  This release requires a minimum of Java 7.
@@ -164,98 +166,99 @@ This is mainly a bug-fix release (Java 7). See further details below.
  The examples are not part of the public API, so this does not affect compatibility.
 
 ">
-            <action issue="NET-673" type="fix" dev="sebb">
-            IMAPClient.APPEND does not always calculate the correct length
-            </action>
-            <action issue="NET-646" type="add" dev="sebb">
-            ALLO FTP Command for files >2GB
-            </action>
-            <action issue="NET-615" type="add" dev="sebb">
-            IMAPClient could simplify using empty arguments
-            </action>
-            <action issue="NET-614" type="add" dev="sebb">
-            IMAP fails to quote/encode mailbox names
-            </action>
-            <action issue="NET-643" type="fix" dev="sebb" due-to="Vasily">
-            NPE when closing telnet stream
-            </action>
-            <action issue="NET-648" type="add" dev="pschumacher">
-            Add Automatic-Module-Name MANIFEST entry for Java 9 compatibility
-            </action>
-            <action issue="NET-641" type="fix" dev="sebb" due-to="pin_ptr">
-            SubnetUtils.SubnetInfo.isInRange("0.0.0.0") returns true for CIDR/31, 32
-            </action>
-            <action issue="NET-638" type="add" dev="sebb" due-to="Daniel Leong">
-            Telnet subnegotiations hard-limited to 512 bytes - allow override
-            </action>
-            <action issue="NET-639" type="fix" dev="sebb" due-to=" Alexander Eller">
-            MVSFTPEntryParser.preParse - MVS, z/OS - allow for merged Ext/Used fields
-            </action>
-            <action issue="NET-636" type="fix" dev="sebb">
-            examples should be in org.apache.commons.net subpackage
-            </action>
-            <action issue="NET-634" type="add" dev="sebb" due-to="Mauro Molinari">
-            Add SIZE command support
-            </action>
-            <action type="add" dev="sebb">
-            Add POP3ExportMbox example code
-            </action>
-            <action issue="NET-633" type="update" dev="sebb" due-to="n0rm1e">
-            Add XOAUTH2 to IMAP and SMTP
-            </action>
-            <action issue="NET-632" type="update" dev="sebb" due-to="prakapenka">
-            FTPHTTPClient - support for encoding other than UTF-8
-            </action>
-            <action issue="NET-631" type="fix" dev="sebb">
-            Bug in MVSFTPEntryParser.parseUnixList (FindBugs)
-            </action>
-            <action issue="NET-584" type="fix" dev="sebb" due-to="Kazantsev Andrey Sergeevich/Nick Manley">
-            Error when using org.apache.commons.net.ftp.FTPClient setControlKeepAliveTimeout
-            </action>
-            <action issue="NET-626" type="update" dev="sebb" due-to="Makoto Sakaguchi">
-            SubnetUtils#SubnetUtils - improved comment
-            </action>
-            <action issue="NET-625" type="update" dev="sebb">
-            SubnetUtils - improve construction
-            </action>
-            <action issue="NET-624" type="update" dev="sebb" due-to="Makoto Sakaguchi">
-            SubnetInfo#getCidrSignature - improve functions
-            </action>
-            <action issue="NET-624" type="fix" dev="sebb" due-to="Makoto Sakaguchi">
-            SubnetInfo#toCidrNotation: A wrong format subnet mask is allowed
-            </action>
-            <action issue="NET-623" type="fix" dev="sebb" due-to="Makoto Sakaguchi">
-            SubnetUtils - fixed spelling errors
-            </action>
-            <action issue="NET-621" type="update" dev="sebb" due-to="Makoto Sakaguchi">
-            SubnetUtils#SubnetInfo - remove unnecessary accessors
-            </action>
-            <action issue="NET-619" type="update" dev="sebb" due-to="Makoto Sakaguchi">
-            SubnetUtils - improve binary netmask algorithm
-            </action>
-            <action issue="NET-613" type="fix" dev="sebb" due-to="Donald Kwakkel">
-            System Information Leak in ftp parser
-            </action>
-            <action issue="NET-678" type="update" dev="sebb" due-to="Roman Grigoriadi">
-            VMS ftp LIST parsing results in empty file list
-            </action>
-            <action issue="NET-674" type="add" dev="sebb" due-to="Chris Steingen">
-            FTPListParseEngine should support listing via MLSD
-            </action>
-            <action issue="NET-663" type="fix" dev="sebb" due-to="Max Shenfield">
-            NullPointerException when FTPClient remote verification fails
-            </action>
-            <action issue="NET-649" type="fix" dev="sebb" due-to="Filipe Bojikian Rissi">
-            227 Entering Passive Mode
-            </action>
-            <action issue="NET-660" type="add" dev="sebb" due-to="Nagabhushan S N">
-            Next and Previous IP Address in SubnetUtils.SubnetInfo
-            </action>
-            <action issue="NET-682" type="fix" dev="sebb" due-to="richard">
-            MVSFTPEntryParser doesn't support Record Formats of U
-            </action>
-        </release>
-        <release version="3.6" date="2017-02-15" description="
+      <action issue="NET-673" type="fix" dev="sebb">
+        IMAPClient.APPEND does not always calculate the correct length
+      </action>
+      <action issue="NET-646" type="add" dev="sebb">
+        ALLO FTP Command for files >2GB
+      </action>
+      <action issue="NET-615" type="add" dev="sebb">
+        IMAPClient could simplify using empty arguments
+      </action>
+      <action issue="NET-614" type="add" dev="sebb">
+        IMAP fails to quote/encode mailbox names
+      </action>
+      <action issue="NET-643" type="fix" dev="sebb" due-to="Vasily">
+        NPE when closing telnet stream
+      </action>
+      <action issue="NET-648" type="add" dev="pschumacher">
+        Add Automatic-Module-Name MANIFEST entry for Java 9 compatibility
+      </action>
+      <action issue="NET-641" type="fix" dev="sebb" due-to="pin_ptr">
+        SubnetUtils.SubnetInfo.isInRange("0.0.0.0") returns true for CIDR/31, 32
+      </action>
+      <action issue="NET-638" type="add" dev="sebb" due-to="Daniel Leong">
+        Telnet subnegotiations hard-limited to 512 bytes - allow override
+      </action>
+      <action issue="NET-639" type="fix" dev="sebb" due-to=" Alexander Eller">
+        MVSFTPEntryParser.preParse - MVS, z/OS - allow for merged Ext/Used fields
+      </action>
+      <action issue="NET-636" type="fix" dev="sebb">
+        examples should be in org.apache.commons.net subpackage
+      </action>
+      <action issue="NET-634" type="add" dev="sebb" due-to="Mauro Molinari">
+        Add SIZE command support
+      </action>
+      <action type="add" dev="sebb">
+        Add POP3ExportMbox example code
+      </action>
+      <action issue="NET-633" type="update" dev="sebb" due-to="n0rm1e">
+        Add XOAUTH2 to IMAP and SMTP
+      </action>
+      <action issue="NET-632" type="update" dev="sebb" due-to="prakapenka">
+        FTPHTTPClient - support for encoding other than UTF-8
+      </action>
+      <action issue="NET-631" type="fix" dev="sebb">
+        Bug in MVSFTPEntryParser.parseUnixList (FindBugs)
+      </action>
+      <action issue="NET-584" type="fix" dev="sebb" due-to="Kazantsev Andrey Sergeevich/Nick Manley">
+        Error when using org.apache.commons.net.ftp.FTPClient setControlKeepAliveTimeout
+      </action>
+      <action issue="NET-626" type="update" dev="sebb" due-to="Makoto Sakaguchi">
+        SubnetUtils#SubnetUtils - improved comment
+      </action>
+      <action issue="NET-625" type="update" dev="sebb">
+        SubnetUtils - improve construction
+      </action>
+      <action issue="NET-624" type="update" dev="sebb" due-to="Makoto Sakaguchi">
+        SubnetInfo#getCidrSignature - improve functions
+      </action>
+      <action issue="NET-624" type="fix" dev="sebb" due-to="Makoto Sakaguchi">
+        SubnetInfo#toCidrNotation: A wrong format subnet mask is allowed
+      </action>
+      <action issue="NET-623" type="fix" dev="sebb" due-to="Makoto Sakaguchi">
+        SubnetUtils - fixed spelling errors
+      </action>
+      <action issue="NET-621" type="update" dev="sebb" due-to="Makoto Sakaguchi">
+        SubnetUtils#SubnetInfo - remove unnecessary accessors
+      </action>
+      <action issue="NET-619" type="update" dev="sebb" due-to="Makoto Sakaguchi">
+        SubnetUtils - improve binary netmask algorithm
+      </action>
+      <action issue="NET-613" type="fix" dev="sebb" due-to="Donald Kwakkel">
+        System Information Leak in ftp parser
+      </action>
+      <action issue="NET-678" type="update" dev="sebb" due-to="Roman Grigoriadi">
+        VMS ftp LIST parsing results in empty file list
+      </action>
+      <action issue="NET-674" type="add" dev="sebb" due-to="Chris Steingen">
+        FTPListParseEngine should support listing via MLSD
+      </action>
+      <action issue="NET-663" type="fix" dev="sebb" due-to="Max Shenfield">
+        NullPointerException when FTPClient remote verification fails
+      </action>
+      <action issue="NET-649" type="fix" dev="sebb" due-to="Filipe Bojikian Rissi">
+        227 Entering Passive Mode
+      </action>
+      <action issue="NET-660" type="add" dev="sebb" due-to="Nagabhushan S N">
+        Next and Previous IP Address in SubnetUtils.SubnetInfo
+      </action>
+      <action issue="NET-682" type="fix" dev="sebb" due-to="richard">
+        MVSFTPEntryParser doesn't support Record Formats of U
+      </action>
+    </release>
+    <release version="3.6" date="2017-02-15"
+      description="
 This is mainly a bug-fix release (Java 6). See further details below.
 
 
@@ -281,62 +284,63 @@ without checking it if is a space.
 * TFTPClient code has been rewritten to improve error handling and retries.
   
 ">
-            <action issue="NET-613" type="fix" dev="sebb">
-            TFTPClient assumes that lastBlock == 0 only once
-            </action>
-            <action issue="NET-320" type="fix" dev="sebb" due-to="Kevin Bulebush">
-            Allow TFTPServer.java to bind to a specific network adapter
-            </action>
-            <action issue="NET-414" type="fix" dev="sebb" due-to="Chuck Wolber">
-            Apache Commons TFTP does not reject request replies that originate from a control port.
-            </action>
-            <action issue="NET-477" type="fix" dev="sebb" due-to="John Walton">
-            TFTP sendFile retry broken
-            </action>
-            <action issue="NET-612" type="update" dev="sebb">
-            Allow TFTP socket IO tracing
-            </action>
-            <action issue="NET-596" type="fix" dev="sebb" due-to="Vincent Bories-Azeau">
-            NullPointerException when disconnecting TelnetClient twice with JDK 7
-            </action>
-            <action issue="NET-602" type="fix" dev="sebb" due-to="Ross Braithwaite">
-            Failure to parse times from SYST_L8 systems that report as "WINDOWS Type: L8"
-            </action>
-            <action issue="NET-604" type="fix" dev="sebb" due-to="Frank Delporte">
-            TFTP send and receive don't have progress indication
-            </action>
-            <action issue="NET-588" type="fix" dev="sebb" due-to="Dave Nice / Thai H">
-            FTPClient.setPassiveNatWorkaround assumes host is outside site local range
-            </action>
-            <action issue="NET-610" type="fix" dev="sebb" due-to="Sergey Yanzin">
-            FTPClient.mlistFile incorrectly handles MLST reply
-            </action>
-            <action issue="NET-611" type="fix" dev="sebb">
-            FTP does not validate command reply syntax fully
-            </action>
-            <action issue="NET-609" type="fix" dev="sebb" due-to="Tqup3">
-            DefaultUnixFTPFileEntryParserFactory Issue (leading spaces removal configuration)
-            </action>
-            <action type="update" dev="sebb">
-            POP3Mail example: support host port; allow reading password from Console/stdin/environment
-            </action>
-            <action issue="NET-597" type="fix" dev="sebb" due-to="Hiroki Taniura">
-            FTP fails to parse listings for Solaris 10 FTPd in Japanese
-            </action>
-            <action issue="NET-599" type="update" dev="sebb">
-            Add shorthand FTPClientConfig constructor
-            </action>
-            <action issue="NET-593" type="fix" dev="sebb" due-to="Joerg Weule">
-            HostnameVerifier is called with ip addess instead of the provided hostname
-            </action>
-            <action issue="NET-594" type="fix" dev="sebb" due-to="Brad Worrral">
-            TelnetClient._closeOutputStream unhandled exception from FilterOutputStream.close
-            </action>
-            <action issue="NET-592" type="fix" dev="sebb" due-to="Mark Ford">
-            plainSocket in FTPSClient is never closed
-            </action>
-        </release>
-        <release version="3.5" date="2016-05-05" description="
+      <action issue="NET-613" type="fix" dev="sebb">
+        TFTPClient assumes that lastBlock == 0 only once
+      </action>
+      <action issue="NET-320" type="fix" dev="sebb" due-to="Kevin Bulebush">
+        Allow TFTPServer.java to bind to a specific network adapter
+      </action>
+      <action issue="NET-414" type="fix" dev="sebb" due-to="Chuck Wolber">
+        Apache Commons TFTP does not reject request replies that originate from a control port.
+      </action>
+      <action issue="NET-477" type="fix" dev="sebb" due-to="John Walton">
+        TFTP sendFile retry broken
+      </action>
+      <action issue="NET-612" type="update" dev="sebb">
+        Allow TFTP socket IO tracing
+      </action>
+      <action issue="NET-596" type="fix" dev="sebb" due-to="Vincent Bories-Azeau">
+        NullPointerException when disconnecting TelnetClient twice with JDK 7
+      </action>
+      <action issue="NET-602" type="fix" dev="sebb" due-to="Ross Braithwaite">
+        Failure to parse times from SYST_L8 systems that report as "WINDOWS Type: L8"
+      </action>
+      <action issue="NET-604" type="fix" dev="sebb" due-to="Frank Delporte">
+        TFTP send and receive don't have progress indication
+      </action>
+      <action issue="NET-588" type="fix" dev="sebb" due-to="Dave Nice / Thai H">
+        FTPClient.setPassiveNatWorkaround assumes host is outside site local range
+      </action>
+      <action issue="NET-610" type="fix" dev="sebb" due-to="Sergey Yanzin">
+        FTPClient.mlistFile incorrectly handles MLST reply
+      </action>
+      <action issue="NET-611" type="fix" dev="sebb">
+        FTP does not validate command reply syntax fully
+      </action>
+      <action issue="NET-609" type="fix" dev="sebb" due-to="Tqup3">
+        DefaultUnixFTPFileEntryParserFactory Issue (leading spaces removal configuration)
+      </action>
+      <action type="update" dev="sebb">
+        POP3Mail example: support host port; allow reading password from Console/stdin/environment
+      </action>
+      <action issue="NET-597" type="fix" dev="sebb" due-to="Hiroki Taniura">
+        FTP fails to parse listings for Solaris 10 FTPd in Japanese
+      </action>
+      <action issue="NET-599" type="update" dev="sebb">
+        Add shorthand FTPClientConfig constructor
+      </action>
+      <action issue="NET-593" type="fix" dev="sebb" due-to="Joerg Weule">
+        HostnameVerifier is called with ip addess instead of the provided hostname
+      </action>
+      <action issue="NET-594" type="fix" dev="sebb" due-to="Brad Worrral">
+        TelnetClient._closeOutputStream unhandled exception from FilterOutputStream.close
+      </action>
+      <action issue="NET-592" type="fix" dev="sebb" due-to="Mark Ford">
+        plainSocket in FTPSClient is never closed
+      </action>
+    </release>
+    <release version="3.5" date="2016-05-05"
+      description="
 This is mainly a bug-fix release (Java 6). See further details below.
 
 
@@ -348,23 +352,24 @@ This is mainly a bug-fix release (Java 6). See further details below.
   Notable additions:
   The IMAP examples can now get password from console, stdin or an environment variable.
         ">
-            <action issue="NET-583" type="fix" dev="sebb" due-to="Holger Rehn">
-            FTPClient.getReplyString() returns wrong value after connect()
-            </action>
-            <action type="add" dev="sebb">
-            Alternative password input methods for IMAP examples
-            </action>
-            <action type="add" dev="sebb">
-            More tests for Feb 29 handling.
-            </action>
-            <action issue="NET-586" type="fix" dev="sebb">
-            Don't use Feb 29 for short future date tests
-            </action>
-            <action type="fix" dev="sebb">
-            Documentation tweaks
-            </action>
-        </release>
-        <release version="3.4" date="2015-11-26" description="
+      <action issue="NET-583" type="fix" dev="sebb" due-to="Holger Rehn">
+        FTPClient.getReplyString() returns wrong value after connect()
+      </action>
+      <action type="add" dev="sebb">
+        Alternative password input methods for IMAP examples
+      </action>
+      <action type="add" dev="sebb">
+        More tests for Feb 29 handling.
+      </action>
+      <action issue="NET-586" type="fix" dev="sebb">
+        Don't use Feb 29 for short future date tests
+      </action>
+      <action type="fix" dev="sebb">
+        Documentation tweaks
+      </action>
+    </release>
+    <release version="3.4" date="2015-11-26"
+      description="
 This is mainly a bug-fix release. See further details below.
 
   This release is binary compatible with previous releases.
@@ -374,344 +379,349 @@ This is mainly a bug-fix release. See further details below.
   IMAPExportMbox (example app) allows IMAP folders to be exported into an mbox file.
   This is the inverse of the IMAPImportMbox example added previously
         ">
-            <action issue="NET-581" type="fix" dev="sebb">
-            SimpleSMTPHeader fails to supply the required Date: header
-            </action>
-            <action issue="NET-582" type="fix" dev="sebb">
-            SimpleSMTPHeader does not allow for missing To: field
-            </action>
-            <action issue="NET-580" type="fix" dev="sebb" due-to="Simon Arlott">
-            SMTPClient.sendSimpleMessage() silently ignores failed recipients
-            Update Javadoc
-            </action>
-            <action issue="NET-579" type="fix" dev="sebb" due-to="Simon Arlott">
-            SSL/TLS SocketClients do not verify the hostname against the certificate
-            </action>
-            <action issue="NET-576" type="update" dev="sebb">
-            Allow FTPClient to use SYST response if system type is not specified in configuration
-            </action>
-            <action issue="NET-575" type="update" dev="sebb">
-            FTPClientExample should support setting the date format
-            </action>
-            <action issue="NET-538" type="fix" dev="sebb" due-to="Dzmitry">
-            FTPHTTPClient should use socket factory to create sockets
-            </action>
-            <action issue="NET-566" type="fix" dev="sebb" due-to="Gary Russell">
-            UnixFTPEntryParser Drops Leading Spaces from File Names
-            </action>
-            <action type="update" dev="sebb">
-            examples/Main now uses a property file to define aliases instead of scanning class files
-            </action>
-            <action issue="NET-552" type="fix" dev="sebb" due-to="Quentin Devriendt">
-            SocketTimeoutException connecting a FTP server via an HTTP Proxy
-            </action>
-            <action issue="NET-528" type="add" dev="sebb">
-            FTPListParseEngine does not provide access to raw responses
-            </action>
-            <action issue="NET-565" type="add" dev="sebb">
-            Add FTPClient method to return an FTPFile from an MDTM command
-            </action>
-            <action issue="NET-564" type="update" dev="sebb">
-            FTPFile.toFormattedString - allow specification of TimeZone for display
-            </action>
-            <action issue="NET-562" type="update" dev="sebb">
-            FTPFile.toFormattedString should print only signficant parts of the parsed date
-            </action>
-            <action issue="NET-563" type="fix" dev="sebb">
-            MLSxEntryParser needs test cases; parsing is too lax
-            </action>
-            <action issue="NET-561" type="fix" dev="sebb">
-            FTPFile.toFormattedString prints user and group in wrong order
-            </action>
-            <action issue="NET-544" type="fix" dev="sebb" due-to="Olivier Queyrut ">
-            FTPClient.initiateListParsing does not correctly check if parserKey was cached
-            </action>
-            <action issue="NET-554" type="update" dev="sebb">
-            Simplify TelnetOptionHandler class hierarchy
-            </action>
-            <action issue="NET-558" type="fix" dev="sebb" due-to="Ralph Becker">
-            FTPClient.getModificationTime(filename) returns complete received line including response code and EOL
-            Strip the response code and EOL
-            </action>
-            <action issue="NET-556" type="update" dev="sebb" due-to="Andy Rosa">
-            Make SubnetInfo.isInRange(int) public
-            </action>
-            <action issue="NET-550" type="fix" dev="sebb" due-to="Geoffrey Hardy">
-            Default FTPClient bufferSize results in very slow retrieve transfers
-            Fix code in Util#copyStream (also copyReader) that failed to use the proper default for buffer size 0
-            </action>
-            <action issue="NET-551" type="fix" dev="sebb">
-            Util copyReader calls CopyStreamListener.bytesTransferred with the incorrect value for bytesTransferred
-            </action>
-            <action type="update" dev="sebb">
-            Added control character processing to TelnetClientExample
-            </action>
-            <action issue="NET-547" type="update" dev="sebb" due-to="Fabio Scippacercola">
-            There is a lack of documentation regarding setControlKeepAliveTimeout
-            </action>
-            <action issue="NET-549" type="fix" dev="sebb" due-to="Pradeep Natarajan">
-            Telnet does not convert LF to CRLF in ASCII mode
-            </action>
-            <action issue="NET-543" type="fix" dev="sebb" due-to="Ferry Huberts">
-            telnet: spy read EOL is reversed
-            </action>
-            <action issue="NET-540" type="add" dev="sebb">
-            Article#printThread should have option to use any PrintStream
-            </action>
-            <action issue="NET-539" type="fix" dev="sebb">
-            NPE if Threader.thread invoked with empty list or with null array
-            </action>
-            <action issue="NET-536" type="add" dev="sebb">
-            IMAP FETCH example
-            IMAPExportMbox can export selected nessages from an IMAP folder
-            </action>
-            <action issue="NET-535" type="add" dev="sebb">
-            IMAP FETCH can overflow reply buffer; provide for partial responses
-            </action>
-            <action issue="NET-534" type="update" dev="sebb">
-            Unnecesssary call to getReplyString() if no listeners configured
-            </action>
-            <action issue="NET-530" type="fix" dev="sebb" due-to="fish ship">
-            input parameter of org.apache.commons.net.ftp.FTP.__getReply(boolean) is not used
-            </action>
-            <action issue="NET-529" type="fix" dev="sebb" due-to="Putinas Piliponis">
-            SubnetUtils throws exception on valid input
-            </action>
-            <action issue="NET-527" type="add" dev="sebb" due-to="jason mathews">
-            Add SimpleNTPServer as example and for testing
-            </action>
-            <action issue="NET-516" type="fix" dev="sebb" due-to="Asha K S &amp; pavan">
-            parser problem occurs if the filename contains one or more characters of which the second byte of Shift-JIS code is 0x85
-            Fix NT parser
-            </action>
-            <action type="update" dev="sebb">
-            Added control encoding option to FTPClientExample
-            </action>
-            <action issue="NET-526" type="update" dev="sebb" due-to="Jason Mathews, MITRE Corp">
-            Added missing set methods on NTP class and interface
-            </action>
-            <action issue="NET-526" type="update" dev="sebb">
-            Avoid greedy matches within a regex
-            </action>
-            <action issue="NET-520" type="fix" dev="sebb">
-            SubnetUtils("0.0.0.0/0") does not behave as expected
-            Fixed range checking so network and broadcast addresses are treated as unsigned ints
-            </action>
-            <action issue="NET-521" type="fix" dev="sebb">
-            SubnetUtils.SubnetInfo.getAddressCount() can overflow as it returns an int
-            </action>
-            <action issue="NET-515" type="fix" due-to="Sebastian Ritter">
-            FTPClient sample in class javadoc "bug"
-            </action>
-            <action issue="NET-519" type="fix">
-            Apache Commons Net 3.3 has a performance issue
-            </action>
-            <action issue="NET-517" dev="sebb" type="fix" due-to="David Kocher">
-            FTPClient#reinitialize is package protected
-            </action>
-            <action issue="NET-512" dev="sebb" type="add" due-to="Thomas Raddatz">
-            Downloading files or members from the AS400 QSYS file system is not supported
-            </action>
-            <action issue="NET-518" dev="sebb" type="fix" due-to="David Kocher">
-            FTPClient#initFeatureMap should not initialize empty map if reply code is 530
-            </action>
-            <action issue="NET-514" dev="sebb" type="fix">
-            IMAP APPEND multiple issues in IMapClient.
-            Deprecated unusable append methods.
-            Added new append method, as well as example IMapImportMbox class to make use of it.
-            </action>
-            <action issue="NET-511" dev="ggregory" type="fix" due-to="Kyriacos Elia, Daniel Scott">
-            Exception for new SubnetUtils("0.0.0.0/0").
-            </action>
-        </release>
-        <release version="3.3" date="2013-06-11" description="
+      <action issue="NET-581" type="fix" dev="sebb">
+        SimpleSMTPHeader fails to supply the required Date: header
+      </action>
+      <action issue="NET-582" type="fix" dev="sebb">
+        SimpleSMTPHeader does not allow for missing To: field
+      </action>
+      <action issue="NET-580" type="fix" dev="sebb" due-to="Simon Arlott">
+        SMTPClient.sendSimpleMessage() silently ignores failed recipients
+        Update Javadoc
+      </action>
+      <action issue="NET-579" type="fix" dev="sebb" due-to="Simon Arlott">
+        SSL/TLS SocketClients do not verify the hostname against the certificate
+      </action>
+      <action issue="NET-576" type="update" dev="sebb">
+        Allow FTPClient to use SYST response if system type is not specified in configuration
+      </action>
+      <action issue="NET-575" type="update" dev="sebb">
+        FTPClientExample should support setting the date format
+      </action>
+      <action issue="NET-538" type="fix" dev="sebb" due-to="Dzmitry">
+        FTPHTTPClient should use socket factory to create sockets
+      </action>
+      <action issue="NET-566" type="fix" dev="sebb" due-to="Gary Russell">
+        UnixFTPEntryParser Drops Leading Spaces from File Names
+      </action>
+      <action type="update" dev="sebb">
+        examples/Main now uses a property file to define aliases instead of scanning class files
+      </action>
+      <action issue="NET-552" type="fix" dev="sebb" due-to="Quentin Devriendt">
+        SocketTimeoutException connecting a FTP server via an HTTP Proxy
+      </action>
+      <action issue="NET-528" type="add" dev="sebb">
+        FTPListParseEngine does not provide access to raw responses
+      </action>
+      <action issue="NET-565" type="add" dev="sebb">
+        Add FTPClient method to return an FTPFile from an MDTM command
+      </action>
+      <action issue="NET-564" type="update" dev="sebb">
+        FTPFile.toFormattedString - allow specification of TimeZone for display
+      </action>
+      <action issue="NET-562" type="update" dev="sebb">
+        FTPFile.toFormattedString should print only signficant parts of the parsed date
+      </action>
+      <action issue="NET-563" type="fix" dev="sebb">
+        MLSxEntryParser needs test cases; parsing is too lax
+      </action>
+      <action issue="NET-561" type="fix" dev="sebb">
+        FTPFile.toFormattedString prints user and group in wrong order
+      </action>
+      <action issue="NET-544" type="fix" dev="sebb" due-to="Olivier Queyrut ">
+        FTPClient.initiateListParsing does not correctly check if parserKey was cached
+      </action>
+      <action issue="NET-554" type="update" dev="sebb">
+        Simplify TelnetOptionHandler class hierarchy
+      </action>
+      <action issue="NET-558" type="fix" dev="sebb" due-to="Ralph Becker">
+        FTPClient.getModificationTime(filename) returns complete received line including response code and EOL
+        Strip the response code and EOL
+      </action>
+      <action issue="NET-556" type="update" dev="sebb" due-to="Andy Rosa">
+        Make SubnetInfo.isInRange(int) public
+      </action>
+      <action issue="NET-550" type="fix" dev="sebb" due-to="Geoffrey Hardy">
+        Default FTPClient bufferSize results in very slow retrieve transfers
+        Fix code in Util#copyStream (also copyReader) that failed to use the proper default for buffer size 0
+      </action>
+      <action issue="NET-551" type="fix" dev="sebb">
+        Util copyReader calls CopyStreamListener.bytesTransferred with the incorrect value for bytesTransferred
+      </action>
+      <action type="update" dev="sebb">
+        Added control character processing to TelnetClientExample
+      </action>
+      <action issue="NET-547" type="update" dev="sebb" due-to="Fabio Scippacercola">
+        There is a lack of documentation regarding setControlKeepAliveTimeout
+      </action>
+      <action issue="NET-549" type="fix" dev="sebb" due-to="Pradeep Natarajan">
+        Telnet does not convert LF to CRLF in ASCII mode
+      </action>
+      <action issue="NET-543" type="fix" dev="sebb" due-to="Ferry Huberts">
+        telnet: spy read EOL is reversed
+      </action>
+      <action issue="NET-540" type="add" dev="sebb">
+        Article#printThread should have option to use any PrintStream
+      </action>
+      <action issue="NET-539" type="fix" dev="sebb">
+        NPE if Threader.thread invoked with empty list or with null array
+      </action>
+      <action issue="NET-536" type="add" dev="sebb">
+        IMAP FETCH example
+        IMAPExportMbox can export selected nessages from an IMAP folder
+      </action>
+      <action issue="NET-535" type="add" dev="sebb">
+        IMAP FETCH can overflow reply buffer; provide for partial responses
+      </action>
+      <action issue="NET-534" type="update" dev="sebb">
+        Unnecesssary call to getReplyString() if no listeners configured
+      </action>
+      <action issue="NET-530" type="fix" dev="sebb" due-to="fish ship">
+        input parameter of org.apache.commons.net.ftp.FTP.__getReply(boolean) is not used
+      </action>
+      <action issue="NET-529" type="fix" dev="sebb" due-to="Putinas Piliponis">
+        SubnetUtils throws exception on valid input
+      </action>
+      <action issue="NET-527" type="add" dev="sebb" due-to="jason mathews">
+        Add SimpleNTPServer as example and for testing
+      </action>
+      <action issue="NET-516" type="fix" dev="sebb" due-to="Asha K S &amp; pavan">
+        parser problem occurs if the filename contains one or more characters of which the second byte of Shift-JIS code is 0x85
+        Fix NT parser
+      </action>
+      <action type="update" dev="sebb">
+        Added control encoding option to FTPClientExample
+      </action>
+      <action issue="NET-526" type="update" dev="sebb" due-to="Jason Mathews, MITRE Corp">
+        Added missing set methods on NTP class and interface
+      </action>
+      <action issue="NET-526" type="update" dev="sebb">
+        Avoid greedy matches within a regex
+      </action>
+      <action issue="NET-520" type="fix" dev="sebb">
+        SubnetUtils("0.0.0.0/0") does not behave as expected
+        Fixed range checking so network and broadcast addresses are treated as unsigned ints
+      </action>
+      <action issue="NET-521" type="fix" dev="sebb">
+        SubnetUtils.SubnetInfo.getAddressCount() can overflow as it returns an int
+      </action>
+      <action issue="NET-515" type="fix" due-to="Sebastian Ritter">
+        FTPClient sample in class javadoc "bug"
+      </action>
+      <action issue="NET-519" type="fix">
+        Apache Commons Net 3.3 has a performance issue
+      </action>
+      <action issue="NET-517" dev="sebb" type="fix" due-to="David Kocher">
+        FTPClient#reinitialize is package protected
+      </action>
+      <action issue="NET-512" dev="sebb" type="add" due-to="Thomas Raddatz">
+        Downloading files or members from the AS400 QSYS file system is not supported
+      </action>
+      <action issue="NET-518" dev="sebb" type="fix" due-to="David Kocher">
+        FTPClient#initFeatureMap should not initialize empty map if reply code is 530
+      </action>
+      <action issue="NET-514" dev="sebb" type="fix">
+        IMAP APPEND multiple issues in IMapClient.
+        Deprecated unusable append methods.
+        Added new append method, as well as example IMapImportMbox class to make use of it.
+      </action>
+      <action issue="NET-511" dev="ggregory" type="fix" due-to="Kyriacos Elia, Daniel Scott">
+        Exception for new SubnetUtils("0.0.0.0/0").
+      </action>
+    </release>
+    <release version="3.3" date="2013-06-11"
+      description="
 This is mainly a bug-fix release. See further details below.
         ">
-            <action issue="NET-509" dev="sebb" due-to="Anthony Dahanne" type="update">
-            AuthenticatingSMTPClient needs a constructor with the isImplicit argument for SSL
-            </action>
-            <action issue="NET-501" dev="sebb"  due-to="Julián Lastiri" type="fix">
-            Race Condition on TelnetClient.disconnect() and TelnetInputStream.run()
-            java.lang.IllegalStateException: Queue is full! Cannot process another character.
-            </action>
-            <action issue="NET-505" dev="sebb" due-to="Sean Kelley" type="update">
-            User specified bufferSize reset to default when FTPClient is disconnected or reinitialized resulting in performance degradation.
-            </action>
-            <action issue="NET-507" dev="sebb" due-to="Jiri Netolicky" type="update">
-            Option to disable private IP replacement in FTP passive mode.
-            </action>
-            <action issue="NET-503" dev="sebb" due-to="Ofer Regev" type="add">
-            AuthenticatingSMTPClient does not support non-default encoding
-            </action>
-            <action issue="NET-500" dev="sebb" due-to="Michael Frick" type="fix">
-            Always call FTPClient#setFileType after connection.
-            Not all servers default to ASCII.
-            </action>
-            <action issue="NET-465" dev="sebb" due-to="Jim Kerwood" type="fix">
-            FTPClient setSendBufferSize and setReceiveBufferSize on data socket.
-            The previous fix caused performance problems.
-            Added new getters and setters for the SO_SNDBUF and SO_RCVBUF values to be used on the data socket.
-            </action>
-            <action issue="NET-496" dev="sebb" type="add">
-            Util copyReader/copyStream classes should use default buffer size for non-positive buffer size parameters.
-            </action>
-            <action issue="NET-310" dev="sebb" type="add">
-            FTPCommand conversion to use enum; added FTPCmd emum and deprecated FTPCommand.
-            </action>
-            <action issue="NET-480" dev="sebb" due-to="Peter Naber" type="fix">
-            Wrong passivHost when using FTPHTTPClient with EPSV
-            </action>
-            <action issue="NET-494" dev="sebb" type="fix">
-            FTPClient.CSL.cleanUp() fails to restore timeout value on exception
-            </action>
-            <action issue="NET-492" dev="sebb" due-to="Tomasz Jedrzejewski" type="fix">
-            FTPClient.printWorkingDirectory() incorrectly parses certain valid PWD command results
-            </action>
-        </release>
-        <release version="3.2" date="2012-12-03" description="
+      <action issue="NET-509" dev="sebb" due-to="Anthony Dahanne" type="update">
+        AuthenticatingSMTPClient needs a constructor with the isImplicit argument for SSL
+      </action>
+      <action issue="NET-501" dev="sebb" due-to="Julián Lastiri" type="fix">
+        Race Condition on TelnetClient.disconnect() and TelnetInputStream.run()
+        java.lang.IllegalStateException: Queue is full! Cannot process another character.
+      </action>
+      <action issue="NET-505" dev="sebb" due-to="Sean Kelley" type="update">
+        User specified bufferSize reset to default when FTPClient is disconnected or reinitialized resulting in performance
+        degradation.
+      </action>
+      <action issue="NET-507" dev="sebb" due-to="Jiri Netolicky" type="update">
+        Option to disable private IP replacement in FTP passive mode.
+      </action>
+      <action issue="NET-503" dev="sebb" due-to="Ofer Regev" type="add">
+        AuthenticatingSMTPClient does not support non-default encoding
+      </action>
+      <action issue="NET-500" dev="sebb" due-to="Michael Frick" type="fix">
+        Always call FTPClient#setFileType after connection.
+        Not all servers default to ASCII.
+      </action>
+      <action issue="NET-465" dev="sebb" due-to="Jim Kerwood" type="fix">
+        FTPClient setSendBufferSize and setReceiveBufferSize on data socket.
+        The previous fix caused performance problems.
+        Added new getters and setters for the SO_SNDBUF and SO_RCVBUF values to be used on the data socket.
+      </action>
+      <action issue="NET-496" dev="sebb" type="add">
+        Util copyReader/copyStream classes should use default buffer size for non-positive buffer size parameters.
+      </action>
+      <action issue="NET-310" dev="sebb" type="add">
+        FTPCommand conversion to use enum; added FTPCmd emum and deprecated FTPCommand.
+      </action>
+      <action issue="NET-480" dev="sebb" due-to="Peter Naber" type="fix">
+        Wrong passivHost when using FTPHTTPClient with EPSV
+      </action>
+      <action issue="NET-494" dev="sebb" type="fix">
+        FTPClient.CSL.cleanUp() fails to restore timeout value on exception
+      </action>
+      <action issue="NET-492" dev="sebb" due-to="Tomasz Jedrzejewski" type="fix">
+        FTPClient.printWorkingDirectory() incorrectly parses certain valid PWD command results
+      </action>
+    </release>
+    <release version="3.2" date="2012-12-03"
+      description="
 This release fixes bugs and adds some new functionality (see below).
  It is binary compatible with previous releases.
  Note that Clirr shows that two public methods have been removed (NET-485). These are not used within NET.
         ">
-            <action issue="NET-46" dev="sebb" type="fix">
-            retrieveFileStream fails randomly or hangs
-            </action>
-            <action issue="NET-485" dev="sebb" type="fix">
-            Remove unnecessary Base64 methods.
-            </action>
-            <action issue="NET-482" dev="sebb" type="update" due-to="Houman Atashbar">
-            Support XOAUTH.
-            </action>
-            <action issue="NET-484" dev="sebb" type="fix">
-            Base64.CHUNK_SEPARATOR should be private
-            </action>
-            <action issue="NET-483" dev="sebb" type="fix">
-            Base64.encodeBase64(byte[], boolean, boolean, int) does not calculate output size correctly for unchunked output.
-            </action>
-            <action issue="NET-466" dev="sebb" type="fix" due-to="Martin Oberhuber">
-            Regression: TelnetInputStream#available() blocks.
-            </action>
-            <action issue="NET-426" dev="sebb" type="fix" due-to="Ketan">
-            FTPS: Hook to customize _openDataConnection_ SSLSocket before startHandshake() is called.
-            Implement _openDataConnection(String, String) method to properly
-            interface with FTPClient.openDataConnection(String, String)
-            </action>
-            <action issue="NET-456" dev="sebb" type="fix">
-            TelnetClient hangs when reader-thread startup is delayed.
-            </action>
-            <action issue="NET-449" dev="sebb" type="fix">
-            listFiles bug with folder that begins with "-". Clarify Javadoc.
-            </action>
-            <action issue="NET-473" dev="sebb" type="fix">
-            FTPClient setSoTimeout (int time) will result in NullPointerException. Clarify Javadoc.
-            </action>
-            <action issue="NET-468" dev="sebb" type="add" due-to="Bogdan Drozdowski">
-            Request for native support for socks proxy routing with Commons net FTP.
-            </action>
-            <action issue="NET-475" dev="sebb" type="fix">
-            FtpClient sends REST when calling listFiles. Clarified Javadoc.
-            </action>
-            <action issue="NET-465" dev="sebb" type="add" due-to="Bogdan Drozdowski">
-            FTPClient setSendBufferSize and setReceiveBufferSize on data socket.
-            </action>
-            <action issue="NET-462" dev="sebb" type="add" due-to="Bogdan Drozdowski">
-            FTPClient in PASSIVE_LOCAL_DATA_CONNECTION_MODE cannot work when host have several different IP.
-            </action>
-            <action issue="NET-467" dev="sebb" type="fix">
-            IMAPClient#fetch() does not handle literal strings.
-            </action>
-            <action issue="NET-458" dev="sebb" type="fix" due-to="Denis Molony">
-            MVSFTPEntryParser.parseSimpleEntry - ArrayIndexOutOfBoundsException.
-            </action>
-            <action issue="NET-450" dev="sebb" type="fix" due-to="Roger Hardiman">
-            Bug in documentation for FTPClient.
-            </action>
-            <action dev="sebb" type="add">
-            The examples can now be run using "java -jar commons-net-examples-m.n.jar".
-            This will automatically include the main net jar in the classpath.
-            See documentation.
-            FTPClientExample now supports "-A" for anonymous login
-            </action>
-            <action issue="NET-442" dev="sebb" type="fix">
-            StringIndexOutOfBoundsException: String index out of range: -1 if server respond with root is current directory.
-            </action>
-            <action issue="NET-444" dev="sebb" type="fix">
-            FTPTimestampParserImpl fails to parse future dates correctly on Feb 28th in a leap year.
-            </action>
-        </release>
-        <release version="3.1" date="Feb 20, 2012" description="
+      <action issue="NET-46" dev="sebb" type="fix">
+        retrieveFileStream fails randomly or hangs
+      </action>
+      <action issue="NET-485" dev="sebb" type="fix">
+        Remove unnecessary Base64 methods.
+      </action>
+      <action issue="NET-482" dev="sebb" type="update" due-to="Houman Atashbar">
+        Support XOAUTH.
+      </action>
+      <action issue="NET-484" dev="sebb" type="fix">
+        Base64.CHUNK_SEPARATOR should be private
+      </action>
+      <action issue="NET-483" dev="sebb" type="fix">
+        Base64.encodeBase64(byte[], boolean, boolean, int) does not calculate output size correctly for unchunked output.
+      </action>
+      <action issue="NET-466" dev="sebb" type="fix" due-to="Martin Oberhuber">
+        Regression: TelnetInputStream#available() blocks.
+      </action>
+      <action issue="NET-426" dev="sebb" type="fix" due-to="Ketan">
+        FTPS: Hook to customize _openDataConnection_ SSLSocket before startHandshake() is called.
+        Implement _openDataConnection(String, String) method to properly
+        interface with FTPClient.openDataConnection(String, String)
+      </action>
+      <action issue="NET-456" dev="sebb" type="fix">
+        TelnetClient hangs when reader-thread startup is delayed.
+      </action>
+      <action issue="NET-449" dev="sebb" type="fix">
+        listFiles bug with folder that begins with "-". Clarify Javadoc.
+      </action>
+      <action issue="NET-473" dev="sebb" type="fix">
+        FTPClient setSoTimeout (int time) will result in NullPointerException. Clarify Javadoc.
+      </action>
+      <action issue="NET-468" dev="sebb" type="add" due-to="Bogdan Drozdowski">
+        Request for native support for socks proxy routing with Commons net FTP.
+      </action>
+      <action issue="NET-475" dev="sebb" type="fix">
+        FtpClient sends REST when calling listFiles. Clarified Javadoc.
+      </action>
+      <action issue="NET-465" dev="sebb" type="add" due-to="Bogdan Drozdowski">
+        FTPClient setSendBufferSize and setReceiveBufferSize on data socket.
+      </action>
+      <action issue="NET-462" dev="sebb" type="add" due-to="Bogdan Drozdowski">
+        FTPClient in PASSIVE_LOCAL_DATA_CONNECTION_MODE cannot work when host have several different IP.
+      </action>
+      <action issue="NET-467" dev="sebb" type="fix">
+        IMAPClient#fetch() does not handle literal strings.
+      </action>
+      <action issue="NET-458" dev="sebb" type="fix" due-to="Denis Molony">
+        MVSFTPEntryParser.parseSimpleEntry - ArrayIndexOutOfBoundsException.
+      </action>
+      <action issue="NET-450" dev="sebb" type="fix" due-to="Roger Hardiman">
+        Bug in documentation for FTPClient.
+      </action>
+      <action dev="sebb" type="add">
+        The examples can now be run using "java -jar commons-net-examples-m.n.jar".
+        This will automatically include the main net jar in the classpath.
+        See documentation.
+        FTPClientExample now supports "-A" for anonymous login
+      </action>
+      <action issue="NET-442" dev="sebb" type="fix">
+        StringIndexOutOfBoundsException: String index out of range: -1 if server respond with root is current directory.
+      </action>
+      <action issue="NET-444" dev="sebb" type="fix">
+        FTPTimestampParserImpl fails to parse future dates correctly on Feb 28th in a leap year.
+      </action>
+    </release>
+    <release version="3.1" date="Feb 20, 2012"
+      description="
 This release fixes a few bugs and adds some new functionality (see below).
   It is binary compatible with previous releases
         ">
-            <action issue="NET-441" dev="sebb" type="fix" due-to="consiliens">
-            [FTP] mlistDir doc should be "MLSD" not "MSLD".
-            </action>
-            <action issue="NET-440" dev="sebb" type="add">
-            [FTP] Allow user to provide default value in case SYST command fails.
-            </action>
-            <action issue="NET-438" dev="sebb" type="fix" due-to="Norman Maurer">
-            POP3Client.capa() should call POP3Client.getAdditionalReply()
-            </action>
-            <action issue="NET-412" dev="sebb" type="fix" due-to="Chuck Wolber">
-            TFTP implementation subject to Sorcerer's Apprentice Syndrome
-            </action>
-            <action issue="NET-410" dev="sebb" type="fix" due-to="Chuck Wolber">
-            TFTP does not handle RFC 783 retransmits
-            </action>
-            <action issue="NET-437" dev="sebb" type="fix" due-to="Gavin Camp">
-            TelnetInputStream doesn't support non-blocking IO when reader thread is not enabled
-            </action>
-            <action issue="NET-346" dev="sebb" type="add" due-to="Kevin Samuel">
-            FTP should support reporting NATed external IP address
-            </action>
-            <action issue="NET-433" dev="sebb" type="add">
-            Commons NET site should link to the examples
-            </action>
-            <action issue="NET-422" dev="sebb" type="fix" due-to="Tomas Mysik / Magnus Johansson">
-            FTP using HTTP proxy not working
-            </action>
-            <action issue="NET-423" dev="sebb" type="fix" due-to="Jens Koch">
-            FTPClient.storeFIle might fail when ControlKeepAliveTimeout is set (ditto for FTPCLient.retrieveFile)
-            </action>
-            <action issue="NET-426" dev="sebb" type="add" due-to="Ketan">
-            FTPS: Hook to customize _openDataConnection_ SSLSocket before startHandshake() is called
-            </action>
-            <action issue="NET-430" dev="sebb" type="fix" due-to="Thomas Mathis">
-            Can't login to POP3S Server using explicit mode
-            </action>
-            <action issue="NET-434" dev="sebb" type="fix" due-to="zhangyong">
-            FTPClient fails to close local listener socket when command socket channel encounter "ReadTimeoutException"
-            </action>
-            <action issue="NET-436" dev="sebb" type="add" due-to="Jürgen Jung">
-            [FTP] Support for SYST "Mac OS" listing - "MACOS Peter's Server"
-            </action>
-            <action issue="NET-425" dev="sebb" type="update" due-to="Steven Jardine">
-            [FTP] _openDataConnection_, __storeFile, and __storeFileStream should be protected and take String for FTP command.
-            Likewise for receiveFile and receiveFileStream.
-            </action>
-            <action issue="NET-416" dev="sebb" type="update" due-to="Abhijeet Gaikwad">
-            [Telnet] Increasing sub-negotiation message holder array size
-            </action>
-            <action issue="NET-428" dev="sebb" type="fix" due-to="sebb">
-            SubnetUtils throws ArrayIndexOutOfBoundsException for new SubnetUtils( "1.2.3.4/32" ).getInfo().getAllAddresses()
-            </action>
-            <action issue="NET-421" dev="sebb" type="fix" due-to="Oliver Saggau">
-            Problem connecting to TLS/SSL SMTP server using explicit mode.
-            </action>
-            <action issue="NET-415" dev="sebb" type="fix" due-to="george thomas">
-            [Site] typo in migration how-to.
-            </action>
-        </release>
+      <action issue="NET-441" dev="sebb" type="fix" due-to="consiliens">
+        [FTP] mlistDir doc should be "MLSD" not "MSLD".
+      </action>
+      <action issue="NET-440" dev="sebb" type="add">
+        [FTP] Allow user to provide default value in case SYST command fails.
+      </action>
+      <action issue="NET-438" dev="sebb" type="fix" due-to="Norman Maurer">
+        POP3Client.capa() should call POP3Client.getAdditionalReply()
+      </action>
+      <action issue="NET-412" dev="sebb" type="fix" due-to="Chuck Wolber">
+        TFTP implementation subject to Sorcerer's Apprentice Syndrome
+      </action>
+      <action issue="NET-410" dev="sebb" type="fix" due-to="Chuck Wolber">
+        TFTP does not handle RFC 783 retransmits
+      </action>
+      <action issue="NET-437" dev="sebb" type="fix" due-to="Gavin Camp">
+        TelnetInputStream doesn't support non-blocking IO when reader thread is not enabled
+      </action>
+      <action issue="NET-346" dev="sebb" type="add" due-to="Kevin Samuel">
+        FTP should support reporting NATed external IP address
+      </action>
+      <action issue="NET-433" dev="sebb" type="add">
+        Commons NET site should link to the examples
+      </action>
+      <action issue="NET-422" dev="sebb" type="fix" due-to="Tomas Mysik / Magnus Johansson">
+        FTP using HTTP proxy not working
+      </action>
+      <action issue="NET-423" dev="sebb" type="fix" due-to="Jens Koch">
+        FTPClient.storeFIle might fail when ControlKeepAliveTimeout is set (ditto for FTPCLient.retrieveFile)
+      </action>
+      <action issue="NET-426" dev="sebb" type="add" due-to="Ketan">
+        FTPS: Hook to customize _openDataConnection_ SSLSocket before startHandshake() is called
+      </action>
+      <action issue="NET-430" dev="sebb" type="fix" due-to="Thomas Mathis">
+        Can't login to POP3S Server using explicit mode
+      </action>
+      <action issue="NET-434" dev="sebb" type="fix" due-to="zhangyong">
+        FTPClient fails to close local listener socket when command socket channel encounter "ReadTimeoutException"
+      </action>
+      <action issue="NET-436" dev="sebb" type="add" due-to="Jürgen Jung">
+        [FTP] Support for SYST "Mac OS" listing - "MACOS Peter's Server"
+      </action>
+      <action issue="NET-425" dev="sebb" type="update" due-to="Steven Jardine">
+        [FTP] _openDataConnection_, __storeFile, and __storeFileStream should be protected and take String for FTP command.
+        Likewise for receiveFile and receiveFileStream.
+      </action>
+      <action issue="NET-416" dev="sebb" type="update" due-to="Abhijeet Gaikwad">
+        [Telnet] Increasing sub-negotiation message holder array size
+      </action>
+      <action issue="NET-428" dev="sebb" type="fix" due-to="sebb">
+        SubnetUtils throws ArrayIndexOutOfBoundsException for new SubnetUtils( "1.2.3.4/32" ).getInfo().getAllAddresses()
+      </action>
+      <action issue="NET-421" dev="sebb" type="fix" due-to="Oliver Saggau">
+        Problem connecting to TLS/SSL SMTP server using explicit mode.
+      </action>
+      <action issue="NET-415" dev="sebb" type="fix" due-to="george thomas">
+        [Site] typo in migration how-to.
+      </action>
+    </release>
 
-        <release version="3.0.1" date="June 6, 2011" description="
+    <release version="3.0.1" date="June 6, 2011" description="
 This is a bug-fix release.
         ">
-            <action issue="NET-409" dev="sebb" type="fix">
-            FTPClient truncates file (storeFile method).
-            Fix bug introduced in release 3.0.
-            </action>
-        </release>
-        <release version="3.0" date="May 16, 2011" description="
+      <action issue="NET-409" dev="sebb" type="fix">
+        FTPClient truncates file (storeFile method).
+        Fix bug introduced in release 3.0.
+      </action>
+    </release>
+    <release version="3.0" date="May 16, 2011"
+      description="
 This release fixes many bugs (see below), and adds new functionality:
   - basic support for IMAP and IMAPS
   - support for SMTPS and POP3S
@@ -741,252 +751,254 @@ KeyManagerUtils can be used to provide client certificates.
 
   All users are recommended to upgrade.
 ">
-            <action issue="NET-407" dev="sebb" type="update">
-            Change lenientFutureDates to default to true.
-            This means short dates will be parsed as the current year when the host clock is up to 1 day ahead of the client clock.
-            </action>
-            <action issue="NET-404" dev="sebb" type="fix">
-            FTPSSocketFactory does not override createSocket(); causes java.net.SocketException: Unconnected sockets not implemented.
-            </action>
-            <action issue="NET-399" dev="sebb" type="fix" due-to="Noah Levitt">
-            ftp data connection does not use connectTimeout.
-            </action>
-            <action issue="NET-400" dev="sebb" type="update" due-to="David Kocher">
-            Option to override SSL negotiation. Make FTPSClient#execAuth() and FTPSClient#sslNegotiation() protected
-            </action>
-            <action issue="NET-402" dev="sebb" type="fix">
-            IMAP, NNTP, POP3 and SMTP classes uses BufferedReader for control channel, which does not follow the standard.
-            Changed reader to CRLFLineReader.
-            </action>
-            <action issue="NET-401" dev="sebb" type="fix">
-            FTP class uses BufferedReader for control channel, which does not follow the standard.
-            Changed reader to CRLFLineReader.
-            </action>
-            <action issue="NET-331" dev="sebb" type="update">
-            AS400 file timestamp format is wrong. Workround exists.
-            </action>
-            <action issue="NET-269" dev="sebb" type="update">
-            Remove semi-redundant check in SubnetUtils.calculate().
-            </action>
-            <action issue="NET-219" dev="sebb" type="update">
-            Should Telnet class Exception blocks write to System.err?
-            Catch blocks removed, and throws clauses added to allow caller to more easily detect and recover.
-            </action>
-            <action issue="NET-397" dev="sebb" type="update" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
-            FTPSClient does not handle AUTH or ADAT and only partially handles PBSZ. FTPSCommand should be deprecated.
-            </action>
-            <action issue="NET-268" dev="sebb" type="fix">
-            Better handling of CIDR/31 and CIDR/32 where isInclusive = false.
-            Return 0 for address count, and 0.0.0.0 for each of the addresses
-            </action>
-            <action issue="NET-395" dev="sebb" type="update">
-            Move ProtocolCommandSupport to SocketClient.
-            </action>
-            <action issue="NET-393" dev="sebb" type="update">
-            Should the sendCommandWithID() methods be public?
-            Made methods private, and deleted currently unused ones.
-            </action>
-            <action issue="NET-394" dev="sebb" type="update">
-            Are the sendUntaggedCommand() methods needed?
-            Renamed the method as sendData(), as it's not a command.
-            </action>
-            <action issue="NET-392" dev="sebb" type="update">
-            Use enum for IMAPCommand.
-            </action>
-            <action issue="NET-333" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
-            Added basic IMAP/IMAPS implementation.
-            </action>
-            <action issue="NET-389" dev="sebb" type="fix">
-            Unix parser should ignore "total nnn" lines.
-            </action>
-            <action issue="NET-369" dev="sebb" type="remove">
-            Article.addHeaderField() is currently write-only - there is no way to retrieve the headers - is it needed?
-            Method was removed, along with the field.
-            </action>
-            <action issue="NET-367" dev="sebb" type="fix">
-            ntp.TimeStamp uses incorrect lazy initialisation of static fields simpleFormatter and utcFormatter.
-            </action>
-            <action issue="NET-381" dev="sebb" type="update">
-            Parsing is inefficient, as it parses everything twice.
-            </action>
-            <action issue="NET-388" dev="sebb" type="fix">
-            VMSVersioningFTPEntryParser#preParse should not call super.preParse().
-            </action>
-            <action issue="NET-362" dev="sebb" type="fix">
-            TelnetInputStream has various threading bugs.
-            </action>
-            <action issue="NET-89" dev="sebb" type="fix">
-            TelnetClient use of FromNetASCIIInputStream and ToNetASCIIOutputStream breaks binary mode.
-            See also NET-387.
-            </action>
-            <action issue="NET-385" dev="sebb" type="update">
-            FTP does not apply timeout to initial responses.
-            </action>
-            <action issue="NET-384" dev="sebb" type="update">
-            KeyManagerUtils - the KeyManager is not efficient.
-            </action>
-            <action issue="NET-383" dev="sebb" type="update">
-            KeyManagerUtils - allow alias to be omitted when there is only one private key in the store
-            </action>
-            <action issue="NET-326" dev="sebb" type="add">
-            A KeyManager is required when the protection level is set to 'P' with FTPSClient on active mode.
-            Added KeyManagerUtils class to simplify provision of client certificates.
-            </action>
-            <action issue="NET-273" dev="sebb" type="add">
-            FEAT response parsing. Added FTPClient methods: boolean hasFeature(feature [,option]),
-            String fetaureValue(feature), String[] featureValues(feature)
-            </action>
-            <action issue="NET-379" dev="sebb" type="add">
-            FTPClient - support for processing arbitrary commands that only use the control channel
-            </action>
-            <action issue="NET-378" dev="sebb" type="add">
-            FTP listing should support MLST and MLSD.
-            </action>
-            <action issue="NET-377" dev="sebb" type="update">
-            NLST does not take notice of HiddenFiles setting.
-            </action>
-            <action issue="NET-373" dev="sebb" type="update">
-            NNTP Listgroups not working - broken server implementation.
-            </action>
-            <action issue="NET-375" dev="sebb" type="update">
-            DotTerminatedMessageReader should extend BufferedReader, rather than Reader.
-            </action>
-            <action issue="NET-374" dev="sebb" type="update">
-            ParserInitializationException doesn't use standard JDK exception chaining
-            </action>
-            <action issue="NET-372" dev="sebb" type="add">
-            FTPSClient: java.security.cert.CertificateException: No X509TrustManager implementation available if trustManager == null
-            </action>
-            <action issue="NET-371" dev="sebb" type="add">
-            Create TrustManagerFactory to provide custom TrustManagers.
-            </action>
-            <action issue="NET-354" dev="sebb" type="fix" due-to="Leif John Korshavn">
-            FTPSClient not properly supporting CCC and PROT P.
-            </action>
-            <action issue="NET-368" dev="sebb" type="update">
-            Threader.thread should accept an Iterable rather than a List.
-            </action>
-            <action issue="NET-327" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
-            "Unconnected sockets not implemented" when using FTPSClient
-            Added disconnect() override which resets the socket factories to their defaults
-            </action>
-            <action issue="NET-350" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
-            "java.net.SocketException: Broken pipe" when calling "TelnetClient.sendAYT()"
-            Added SocketClient#isAvailable() method to perform additional checks on a socket.
-            </action>
-            <action issue="NET-237" dev="sebb" type="add">
-            Add streaming methods (corresponding to array methods) to NNTPClient.
-            </action>
-            <action issue="NET-365" dev="sebb" type="fix">
-            FTPClient.listFiles() does not work properly, if remote server speaks German.
-            Match non-space{3} instead of A-Za-z{3}
-            </action>
-            <action issue="NET-366" dev="sebb" type="fix">
-            FTPClientConfig: setServerLanguageCode and setShortMonthNames do not work.
-            Ensure that config is passed to all parsers that can use it.
-            </action>
-            <action issue="NET-276" dev="sebb" type="fix">
-            NNTPClient has problems with group listings for large groups.
-            </action>
-            <action issue="NET-185" dev="sebb" type="fix">
-            Possible NPE in Threader.java
-            </action>
-            <action issue="NET-364" dev="sebb" type="fix">
-            nntp.Article is very inefficient and incorrect.
-            </action>
-            <action issue="NET-314" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
-            The FTP client should autodetect the control encoding.
-            </action>
-            <action issue="NET-363" dev="sebb" type="fix" due-to="daniel damon">
-            Can't connect to a server behind firewall in passive mode.
-            </action>
-            <action issue="NET-348" dev="sebb" type="fix">
-            Queue is full TelnetInputStream.
-            </action>
-            <action issue="NET-361" dev="sebb" type="add">
-            Implement Telnet Command sender.
-            </action>
-            <action issue="NET-345" dev="sebb" type="fix" due-to="Archie Cobbs">
-            Telnet client: not properly handling IAC bytes within subnegotiation messages:
-            - failing to double IACs on output
-            - failing to de-double IACs in input
-            </action>
-            <action issue="NET-343" dev="sebb" type="add" due-to="Archie Cobbs">
-            Telnet client: Support Client-initiated Subnegotiation Messages.
-            </action>
-            <action issue="NET-344" dev="sebb" type="add" due-to="Archie Cobbs">
-            Telnet client: Support Listener Notification of Incoming Data.
-            </action>
-            <action issue="NET-270" dev="sebb" type="fix">
-            Incorrect error handling in method initiateListParsing of FTPClient.
-            </action>
-            <action issue="NET-352" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
-            SASL PLAIN and CRAM-MD5 authentication.
-            </action>
-            <action issue="NET-357" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
-            The POP3 client does not support SSL/TLS connections.
-            </action>
-            <action dev="sebb" type="remove">
-            Removed deprecated unused fields from FTPSClient:
-            - KEYSTORE_ALGORITHM, PROVIDER, STORE_TYPE, TRUSTSTORE_ALGORITHM
-            </action>
-            <action issue="NET-258" dev="sebb" type="fix">
-            Implement A Keepalive Mechanism. Control channel keepalive implemented for the following methods:
-            appendFile, storeFile, storeUniqueFile, retrieveFile.
-            </action>
-            <action issue="NET-289" dev="sebb" type="fix" due-to="Luc Claes">
-            StackOverflowError in Threader.
-            </action>
-            <action issue="NET-317" dev="sebb" type="fix">
-            POP3MessageInfo fields should be final.
-            </action>
-            <action issue="NET-252" dev="sebb" type="fix">
-            Get rid of using deprecated API in VMSFTPEntryParser.
-            </action>
-            <action issue="NET-330" dev="sebb" type="remove">
-            The method VMSFTPEntryParser.parseFileList(InputStream listStream) should not be present.
-            </action>
-            <action issue="NET-303" dev="sebb" type="fix">
-            FTPFileEntryParser API samples are wrong.
-            </action>
-            <action issue="NET-229" dev="sebb" type="add">
-            Use properties file (/systemType.properties) to handle new OS-type auto-detection.
-            </action>
-            <action issue="NET-332" dev="sebb" type="add">
-            Commons net ftp cannot handle unknown type parser and should allow override of parser through vm argument.
-            The system property "org.apache.commons.net.ftp.systemType" can be used to provide the system type.
-            </action>
-            <action issue="NET-286" dev="sebb" type="fix">
-            Unhandled SecurityException in DefaultFTPFileEntryParserFactory.createFileEntryParser when using applets.
-            </action>
-            <action issue="NET-360" dev="sebb" type="fix">
-            DefaultFTPFileEntryParserFactory.createFileEntryParser(String key) always tries to load a class.
-            </action>
-            <action issue="NET-156" dev="sebb" type="add">
-            New FTPClient method to retrieve all directory names in the current working directory.
-            Added methods listDirectories(), listDirectories(String path).
-            </action>
-            <action issue="NET-353" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
-            The SMTPClient does not support authentication.
-            </action>
-            <action issue="NET-356" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
-            The SMTP client does not support SSL/TLS connections.
-            </action>
-            <action issue="NET-358" dev="sebb" type="add">
-            Implement copy Listener in FTPClient file operations.
-            </action>
-            <action issue="NET-359" dev="sebb" type="fix">
-            CopyStreamAdapter unconditionally resets the CopyStreamEvent source and is inefficient.
-            </action>
-            <action issue="NET-355" dev="sebb" type="fix">
-            examples.nntp.NNTPUtils does not compile
-            </action>
-            <action issue="NET-351" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
-            APOP authentication fails most of the time.
-            Fix by adding leading 0 if necessary.
-            </action>
-        </release>
-        <release version="2.2" date="Nov 22, 2010" description="
+      <action issue="NET-407" dev="sebb" type="update">
+        Change lenientFutureDates to default to true.
+        This means short dates will be parsed as the current year when the host clock is up to 1 day ahead of the client clock.
+      </action>
+      <action issue="NET-404" dev="sebb" type="fix">
+        FTPSSocketFactory does not override createSocket(); causes java.net.SocketException: Unconnected sockets not implemented.
+      </action>
+      <action issue="NET-399" dev="sebb" type="fix" due-to="Noah Levitt">
+        ftp data connection does not use connectTimeout.
+      </action>
+      <action issue="NET-400" dev="sebb" type="update" due-to="David Kocher">
+        Option to override SSL negotiation. Make FTPSClient#execAuth() and FTPSClient#sslNegotiation() protected
+      </action>
+      <action issue="NET-402" dev="sebb" type="fix">
+        IMAP, NNTP, POP3 and SMTP classes uses BufferedReader for control channel, which does not follow the standard.
+        Changed reader to CRLFLineReader.
+      </action>
+      <action issue="NET-401" dev="sebb" type="fix">
+        FTP class uses BufferedReader for control channel, which does not follow the standard.
+        Changed reader to CRLFLineReader.
+      </action>
+      <action issue="NET-331" dev="sebb" type="update">
+        AS400 file timestamp format is wrong. Workround exists.
+      </action>
+      <action issue="NET-269" dev="sebb" type="update">
+        Remove semi-redundant check in SubnetUtils.calculate().
+      </action>
+      <action issue="NET-219" dev="sebb" type="update">
+        Should Telnet class Exception blocks write to System.err?
+        Catch blocks removed, and throws clauses added to allow caller to more easily detect and recover.
+      </action>
+      <action issue="NET-397" dev="sebb" type="update" due-to="Bogdan Drozdowski"
+        due-to-email="bogdandr # op . pl">
+        FTPSClient does not handle AUTH or ADAT and only partially handles PBSZ. FTPSCommand should be deprecated.
+      </action>
+      <action issue="NET-268" dev="sebb" type="fix">
+        Better handling of CIDR/31 and CIDR/32 where isInclusive = false.
+        Return 0 for address count, and 0.0.0.0 for each of the addresses
+      </action>
+      <action issue="NET-395" dev="sebb" type="update">
+        Move ProtocolCommandSupport to SocketClient.
+      </action>
+      <action issue="NET-393" dev="sebb" type="update">
+        Should the sendCommandWithID() methods be public?
+        Made methods private, and deleted currently unused ones.
+      </action>
+      <action issue="NET-394" dev="sebb" type="update">
+        Are the sendUntaggedCommand() methods needed?
+        Renamed the method as sendData(), as it's not a command.
+      </action>
+      <action issue="NET-392" dev="sebb" type="update">
+        Use enum for IMAPCommand.
+      </action>
+      <action issue="NET-333" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
+        Added basic IMAP/IMAPS implementation.
+      </action>
+      <action issue="NET-389" dev="sebb" type="fix">
+        Unix parser should ignore "total nnn" lines.
+      </action>
+      <action issue="NET-369" dev="sebb" type="remove">
+        Article.addHeaderField() is currently write-only - there is no way to retrieve the headers - is it needed?
+        Method was removed, along with the field.
+      </action>
+      <action issue="NET-367" dev="sebb" type="fix">
+        ntp.TimeStamp uses incorrect lazy initialisation of static fields simpleFormatter and utcFormatter.
+      </action>
+      <action issue="NET-381" dev="sebb" type="update">
+        Parsing is inefficient, as it parses everything twice.
+      </action>
+      <action issue="NET-388" dev="sebb" type="fix">
+        VMSVersioningFTPEntryParser#preParse should not call super.preParse().
+      </action>
+      <action issue="NET-362" dev="sebb" type="fix">
+        TelnetInputStream has various threading bugs.
+      </action>
+      <action issue="NET-89" dev="sebb" type="fix">
+        TelnetClient use of FromNetASCIIInputStream and ToNetASCIIOutputStream breaks binary mode.
+        See also NET-387.
+      </action>
+      <action issue="NET-385" dev="sebb" type="update">
+        FTP does not apply timeout to initial responses.
+      </action>
+      <action issue="NET-384" dev="sebb" type="update">
+        KeyManagerUtils - the KeyManager is not efficient.
+      </action>
+      <action issue="NET-383" dev="sebb" type="update">
+        KeyManagerUtils - allow alias to be omitted when there is only one private key in the store
+      </action>
+      <action issue="NET-326" dev="sebb" type="add">
+        A KeyManager is required when the protection level is set to 'P' with FTPSClient on active mode.
+        Added KeyManagerUtils class to simplify provision of client certificates.
+      </action>
+      <action issue="NET-273" dev="sebb" type="add">
+        FEAT response parsing. Added FTPClient methods: boolean hasFeature(feature [,option]),
+        String fetaureValue(feature), String[] featureValues(feature)
+      </action>
+      <action issue="NET-379" dev="sebb" type="add">
+        FTPClient - support for processing arbitrary commands that only use the control channel
+      </action>
+      <action issue="NET-378" dev="sebb" type="add">
+        FTP listing should support MLST and MLSD.
+      </action>
+      <action issue="NET-377" dev="sebb" type="update">
+        NLST does not take notice of HiddenFiles setting.
+      </action>
+      <action issue="NET-373" dev="sebb" type="update">
+        NNTP Listgroups not working - broken server implementation.
+      </action>
+      <action issue="NET-375" dev="sebb" type="update">
+        DotTerminatedMessageReader should extend BufferedReader, rather than Reader.
+      </action>
+      <action issue="NET-374" dev="sebb" type="update">
+        ParserInitializationException doesn't use standard JDK exception chaining
+      </action>
+      <action issue="NET-372" dev="sebb" type="add">
+        FTPSClient: java.security.cert.CertificateException: No X509TrustManager implementation available if trustManager == null
+      </action>
+      <action issue="NET-371" dev="sebb" type="add">
+        Create TrustManagerFactory to provide custom TrustManagers.
+      </action>
+      <action issue="NET-354" dev="sebb" type="fix" due-to="Leif John Korshavn">
+        FTPSClient not properly supporting CCC and PROT P.
+      </action>
+      <action issue="NET-368" dev="sebb" type="update">
+        Threader.thread should accept an Iterable rather than a List.
+      </action>
+      <action issue="NET-327" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
+        "Unconnected sockets not implemented" when using FTPSClient
+        Added disconnect() override which resets the socket factories to their defaults
+      </action>
+      <action issue="NET-350" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
+        "java.net.SocketException: Broken pipe" when calling "TelnetClient.sendAYT()"
+        Added SocketClient#isAvailable() method to perform additional checks on a socket.
+      </action>
+      <action issue="NET-237" dev="sebb" type="add">
+        Add streaming methods (corresponding to array methods) to NNTPClient.
+      </action>
+      <action issue="NET-365" dev="sebb" type="fix">
+        FTPClient.listFiles() does not work properly, if remote server speaks German.
+        Match non-space{3} instead of A-Za-z{3}
+      </action>
+      <action issue="NET-366" dev="sebb" type="fix">
+        FTPClientConfig: setServerLanguageCode and setShortMonthNames do not work.
+        Ensure that config is passed to all parsers that can use it.
+      </action>
+      <action issue="NET-276" dev="sebb" type="fix">
+        NNTPClient has problems with group listings for large groups.
+      </action>
+      <action issue="NET-185" dev="sebb" type="fix">
+        Possible NPE in Threader.java
+      </action>
+      <action issue="NET-364" dev="sebb" type="fix">
+        nntp.Article is very inefficient and incorrect.
+      </action>
+      <action issue="NET-314" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
+        The FTP client should autodetect the control encoding.
+      </action>
+      <action issue="NET-363" dev="sebb" type="fix" due-to="daniel damon">
+        Can't connect to a server behind firewall in passive mode.
+      </action>
+      <action issue="NET-348" dev="sebb" type="fix">
+        Queue is full TelnetInputStream.
+      </action>
+      <action issue="NET-361" dev="sebb" type="add">
+        Implement Telnet Command sender.
+      </action>
+      <action issue="NET-345" dev="sebb" type="fix" due-to="Archie Cobbs">
+        Telnet client: not properly handling IAC bytes within subnegotiation messages:
+        - failing to double IACs on output
+        - failing to de-double IACs in input
+      </action>
+      <action issue="NET-343" dev="sebb" type="add" due-to="Archie Cobbs">
+        Telnet client: Support Client-initiated Subnegotiation Messages.
+      </action>
+      <action issue="NET-344" dev="sebb" type="add" due-to="Archie Cobbs">
+        Telnet client: Support Listener Notification of Incoming Data.
+      </action>
+      <action issue="NET-270" dev="sebb" type="fix">
+        Incorrect error handling in method initiateListParsing of FTPClient.
+      </action>
+      <action issue="NET-352" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
+        SASL PLAIN and CRAM-MD5 authentication.
+      </action>
+      <action issue="NET-357" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
+        The POP3 client does not support SSL/TLS connections.
+      </action>
+      <action dev="sebb" type="remove">
+        Removed deprecated unused fields from FTPSClient:
+        - KEYSTORE_ALGORITHM, PROVIDER, STORE_TYPE, TRUSTSTORE_ALGORITHM
+      </action>
+      <action issue="NET-258" dev="sebb" type="fix">
+        Implement A Keepalive Mechanism. Control channel keepalive implemented for the following methods:
+        appendFile, storeFile, storeUniqueFile, retrieveFile.
+      </action>
+      <action issue="NET-289" dev="sebb" type="fix" due-to="Luc Claes">
+        StackOverflowError in Threader.
+      </action>
+      <action issue="NET-317" dev="sebb" type="fix">
+        POP3MessageInfo fields should be final.
+      </action>
+      <action issue="NET-252" dev="sebb" type="fix">
+        Get rid of using deprecated API in VMSFTPEntryParser.
+      </action>
+      <action issue="NET-330" dev="sebb" type="remove">
+        The method VMSFTPEntryParser.parseFileList(InputStream listStream) should not be present.
+      </action>
+      <action issue="NET-303" dev="sebb" type="fix">
+        FTPFileEntryParser API samples are wrong.
+      </action>
+      <action issue="NET-229" dev="sebb" type="add">
+        Use properties file (/systemType.properties) to handle new OS-type auto-detection.
+      </action>
+      <action issue="NET-332" dev="sebb" type="add">
+        Commons net ftp cannot handle unknown type parser and should allow override of parser through vm argument.
+        The system property "org.apache.commons.net.ftp.systemType" can be used to provide the system type.
+      </action>
+      <action issue="NET-286" dev="sebb" type="fix">
+        Unhandled SecurityException in DefaultFTPFileEntryParserFactory.createFileEntryParser when using applets.
+      </action>
+      <action issue="NET-360" dev="sebb" type="fix">
+        DefaultFTPFileEntryParserFactory.createFileEntryParser(String key) always tries to load a class.
+      </action>
+      <action issue="NET-156" dev="sebb" type="add">
+        New FTPClient method to retrieve all directory names in the current working directory.
+        Added methods listDirectories(), listDirectories(String path).
+      </action>
+      <action issue="NET-353" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
+        The SMTPClient does not support authentication.
+      </action>
+      <action issue="NET-356" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
+        The SMTP client does not support SSL/TLS connections.
+      </action>
+      <action issue="NET-358" dev="sebb" type="add">
+        Implement copy Listener in FTPClient file operations.
+      </action>
+      <action issue="NET-359" dev="sebb" type="fix">
+        CopyStreamAdapter unconditionally resets the CopyStreamEvent source and is inefficient.
+      </action>
+      <action issue="NET-355" dev="sebb" type="fix">
+        examples.nntp.NNTPUtils does not compile
+      </action>
+      <action issue="NET-351" dev="sebb" type="add" due-to="Bogdan Drozdowski" due-to-email="bogdandr # op . pl">
+        APOP authentication fails most of the time.
+        Fix by adding leading 0 if necessary.
+      </action>
+    </release>
+    <release version="2.2" date="Nov 22, 2010"
+      description="
 This is primarily a maintenance release, but it also includes new features and enhancements.
 
   Users of version 2.0 are encouraged to upgrade to 2.2, as this release includes some important bug fixes.
@@ -994,668 +1006,606 @@ This is primarily a maintenance release, but it also includes new features and e
   See the detailed list of changes below for full description of all bug fixes and enhancements.
 
 ">
-            <action issue="NET-334" dev="sebb" type="fix">
-            FromNetASCIIInputStream can throw a NullPointerException
-            </action>
-            <action issue="NET-341" dev="sebb" type="fix">
-            FTPClient.remoteAppend(String filename) uses STOR instead of APPE
-            </action>
-            <action issue="NET-339" dev="sebb" type="fix">
-            Incorrect parsing of timestamp on Windows CE
-            Fix parsing to allow for new-style DOS listing using 24hr clock rather than AM/PM
-            </action>
-            <action issue="NET-338" dev="sebb" type="add">
-            ftp.FTPClient.initiateListParsing(String parserKey, String pathname)
-            can call createFileEntryParser with null systemName.
-            Fix this by adding getSystemType() which does not return null, and deprecating getSystemName().
-            </action>
-            <action issue="NET-244" dev="sebb" type="add">
-            Add support for FTPFileFilter filters. New classes FTPFileFilter, FTPFileFilters, new methods:
-            FTPListParseEngine#getFiles(FTPFileFilter filter)
-            FTPClient.listFiles(String pathname, FTPFileFilter filter)
-            </action>
-            <action issue="NET-313" dev="sebb" type="fix">
-            Optionally enable EPSV with IPv4; Only send EPRT with IPv6.
-            Fix incorrect port used with EPRT. Allow activeMaxPort == activeMinPort in getActivePort() method.
-            </action>
-            <action issue="NET-328" dev="sebb" type="fix">
-            FromNetASCIIInputStream.read(byte[], int, int) may change length passed to superclass if not doing conversion
-            </action>
-            <action issue="NET-74" dev="sebb" type="add">
-            Testcase to show WindowSizeOptionHandler is working OK
-            </action>
-            <action issue="NET-330" dev="sebb" type="fix">
-            The method VMSFTPEntryParser.parseFileList(InputStream listStream) should not be present.
-            Partial fix - marked method as deprecated and to be removed
-            </action>
-            <action issue="NET-180" dev="sebb" type="fix">
-            Telnet EOR is "consumed" by TelnetInputStream when in BINARY transmission.
-            Send notification to TelnetNotificationHandler.
-            </action>
-            <action issue="NET-329" dev="sebb" type="fix">
-                TelnetInoutStream#__read() bug in the __receiveState handling for the _STATE_IAC state.
-            </action>
-            <action issue="NET-283" dev="sebb" type="fix">
-                SocketClient should ensure input and output streams are closed
-            </action>
-            <action issue="NET-302" dev="sebb" type="fix">
-                FTP: initiateListParsing should not cache entryParser
-            </action>
-            <action issue="NET-282" dev="rwinston" type="fix">
-                Improvement to isInRange method in SubnetUtil.SubnetInfo class
-            </action>
-            <action issue="NET-266" dev="rwinston" type="fix">
-                FTPClient.listFiles() corrupts file name in certain circumstances
-            </action>
-            <action issue="NET-264" dev="sebb" type="fix">
-                Telnet spyStream NullPointerException
-            </action>
-            <action dev="sebb" type="update">
-                Deprecated the following unused fields from org.apache.commons.net.ftp.FTPSClient:
-                KEYSTORE_ALGORITHM, PROVIDER, STORE_TYPE, TRUSTSTORE_ALGORITHM
-            </action>
-            <action dev="niallp" type="fix">
-                Fix site reports
-            </action>
-            <action issue="NET-285" dev="rwinston" type="fix">
-                Add support for setting external host ip/port range
-            </action>
-            <action issue="NET-290" dev="rwinston" type="fix">
-                Add fix and testcase for DotTerminatedMessageReader
-            </action>
-            <action issue="NET-288" dev="rwinston" type="fix">
-                Add support for IPv6 EPRT/EPSV
-            </action>
-            <action issue="NET-305" dev="rwinston" type="fix">
-                Fix SubnetUtils for /32 subnets and add inclusive host count flag
-            </action>
-            <action issue="NET-300" dev="rwinston" type="fix">
-                Fix NPE when listHiddenFiles was on
-            </action>
-            <action issue="NET-215" dev="rwinston" type="fix">
-                UNIXFTPEntryParser didn't preserve trailing whitespace in files
-            </action>
-            <action issue="NET-236" dev="rwinston" type="fix">
-                method SubnetUtils.SubnetInfo.isInRange(addr) returns incorrect result
-            </action>
-            <action issue="NET-242" dev="rwinston" type="fix">
-                Method createServerSocket of FTPSSocketFactory never called and thus UseClientMode is incorrect in a secured ftp transfer using active mode.
-            </action>
-            <action issue="NET-248" dev="rwinston" type="fix">
-                Fix inconsistent command list in FTPCommand
-            </action>
-            <action issue="NET-250" dev="rwinston" type="fix">
-                DefaultFTPFileEntryParserFactory did not work with Netware FTP server returning "NETWARE TYPE: L8"
-            </action>
-            <action issue="NET-257" dev="rwinston" type="fix">
-                FTP.getReplyStrings() returned array of null Strings
-            </action>
-            <action issue="NET-259" dev="rwinston" type="fix">
-                UnixFTPEntryParser regex did not match some directory entries
-            </action>
-            <action issue="NET-260" dev="rwinston" type="fix">
-                SubnetUtils.SubnetInfo.isInRange(...) returned incorrect values
-            </action>
-            <action issue="NET-261" dev="rwinston" type="update">
-                SubnetUtils.SubnetInfo.isInRange(...) behavior not documented
-            </action>
-            <action issue="NET-262" dev="rwinston" type="fix">
-                SubnetUtils did not handle /31 and /32 CIDRs well
-            </action>
-            <action issue="NET-265" dev="rwinston" type="fix">
-                UnixFTPEntryParser failed to parse entry in certain conditions
-            </action>
-            <action issue="NET-266" dev="rwinston" type="fix">
-                FTPClient.listFiles() corrupted file name in certain circumstances
-            </action>
-            <action issue="NET-251" dev="rwinston" type="update">
-                Moved class "ThreadContainer" from Threader.java into its own source file
-            </action>
-            <action issue="NET-256" dev="rwinston" type="fix">
-                FTPSClient should accept a pre-configured SSLContext
-            </action>
-            <action issue="NET-263" dev="rwinston" type="add">
-                SubnetUtils / SubNetInfo toString() implementations
-            </action>
-            <action dev="rwinston" type="fix">
-                Improve NNTPClient handling of invalid articles
-            </action>
-            <action dev="rwinston" type="update">
-                Refactor examples package.
-            </action>
-            <action dev="sebb" type="add">
-                Javadoc fixes, improvements, and refactoring.
-            </action>
-            <action issue="NET-245" dev="rwinston" type="fix">
-                Apply MFMT patch
-            </action>
-            <action issue="NET-279" dev="rwinston" type="fix">
-                Fix copying of reply lines collection
-            </action>
-            <action issue="NET-277" dev="rwinston" type="fix">
-                Fix incorrect NNTP constant
-            </action>
-            <action issue="NET-274" dev="rwinston" type="fix">
-                Restore socket state after CCC command
-            </action>
-            <action issue="NET-275" dev="rwinston" type="fix">
-                Example code in FTPClient doesn't compile
-            </action>
-            <action dev="rwinston" type="fix">
-                Fix inconsistent handling of socket read/write buffer size
-            </action>
-            <action issue="NET-294" dev="sebb" type="fix">
-                UnixFTPEntryParser fails to parse some entries
-            </action>
-        </release>
+      <action issue="NET-334" dev="sebb" type="fix">
+        FromNetASCIIInputStream can throw a NullPointerException
+      </action>
+      <action issue="NET-341" dev="sebb" type="fix">
+        FTPClient.remoteAppend(String filename) uses STOR instead of APPE
+      </action>
+      <action issue="NET-339" dev="sebb" type="fix">
+        Incorrect parsing of timestamp on Windows CE
+        Fix parsing to allow for new-style DOS listing using 24hr clock rather than AM/PM
+      </action>
+      <action issue="NET-338" dev="sebb" type="add">
+        ftp.FTPClient.initiateListParsing(String parserKey, String pathname)
+        can call createFileEntryParser with null systemName.
+        Fix this by adding getSystemType() which does not return null, and deprecating getSystemName().
+      </action>
+      <action issue="NET-244" dev="sebb" type="add">
+        Add support for FTPFileFilter filters. New classes FTPFileFilter, FTPFileFilters, new methods:
+        FTPListParseEngine#getFiles(FTPFileFilter filter)
+        FTPClient.listFiles(String pathname, FTPFileFilter filter)
+      </action>
+      <action issue="NET-313" dev="sebb" type="fix">
+        Optionally enable EPSV with IPv4; Only send EPRT with IPv6.
+        Fix incorrect port used with EPRT. Allow activeMaxPort == activeMinPort in getActivePort() method.
+      </action>
+      <action issue="NET-328" dev="sebb" type="fix">
+        FromNetASCIIInputStream.read(byte[], int, int) may change length passed to superclass if not doing conversion
+      </action>
+      <action issue="NET-74" dev="sebb" type="add">
+        Testcase to show WindowSizeOptionHandler is working OK
+      </action>
+      <action issue="NET-330" dev="sebb" type="fix">
+        The method VMSFTPEntryParser.parseFileList(InputStream listStream) should not be present.
+        Partial fix - marked method as deprecated and to be removed
+      </action>
+      <action issue="NET-180" dev="sebb" type="fix">
+        Telnet EOR is "consumed" by TelnetInputStream when in BINARY transmission.
+        Send notification to TelnetNotificationHandler.
+      </action>
+      <action issue="NET-329" dev="sebb" type="fix">
+        TelnetInoutStream#__read() bug in the __receiveState handling for the _STATE_IAC state.
+      </action>
+      <action issue="NET-283" dev="sebb" type="fix">
+        SocketClient should ensure input and output streams are closed
+      </action>
+      <action issue="NET-302" dev="sebb" type="fix">
+        FTP: initiateListParsing should not cache entryParser
+      </action>
+      <action issue="NET-282" dev="rwinston" type="fix">
+        Improvement to isInRange method in SubnetUtil.SubnetInfo class
+      </action>
+      <action issue="NET-266" dev="rwinston" type="fix">
+        FTPClient.listFiles() corrupts file name in certain circumstances
+      </action>
+      <action issue="NET-264" dev="sebb" type="fix">
+        Telnet spyStream NullPointerException
+      </action>
+      <action dev="sebb" type="update">
+        Deprecated the following unused fields from org.apache.commons.net.ftp.FTPSClient:
+        KEYSTORE_ALGORITHM, PROVIDER, STORE_TYPE, TRUSTSTORE_ALGORITHM
+      </action>
+      <action dev="niallp" type="fix">
+        Fix site reports
+      </action>
+      <action issue="NET-285" dev="rwinston" type="fix">
+        Add support for setting external host ip/port range
+      </action>
+      <action issue="NET-290" dev="rwinston" type="fix">
+        Add fix and testcase for DotTerminatedMessageReader
+      </action>
+      <action issue="NET-288" dev="rwinston" type="fix">
+        Add support for IPv6 EPRT/EPSV
+      </action>
+      <action issue="NET-305" dev="rwinston" type="fix">
+        Fix SubnetUtils for /32 subnets and add inclusive host count flag
+      </action>
+      <action issue="NET-300" dev="rwinston" type="fix">
+        Fix NPE when listHiddenFiles was on
+      </action>
+      <action issue="NET-215" dev="rwinston" type="fix">
+        UNIXFTPEntryParser didn't preserve trailing whitespace in files
+      </action>
+      <action issue="NET-236" dev="rwinston" type="fix">
+        method SubnetUtils.SubnetInfo.isInRange(addr) returns incorrect result
+      </action>
+      <action issue="NET-242" dev="rwinston" type="fix">
+        Method createServerSocket of FTPSSocketFactory never called and thus UseClientMode is incorrect in a secured ftp transfer
+        using active mode.
+      </action>
+      <action issue="NET-248" dev="rwinston" type="fix">
+        Fix inconsistent command list in FTPCommand
+      </action>
+      <action issue="NET-250" dev="rwinston" type="fix">
+        DefaultFTPFileEntryParserFactory did not work with Netware FTP server returning "NETWARE TYPE: L8"
+      </action>
+      <action issue="NET-257" dev="rwinston" type="fix">
+        FTP.getReplyStrings() returned array of null Strings
+      </action>
+      <action issue="NET-259" dev="rwinston" type="fix">
+        UnixFTPEntryParser regex did not match some directory entries
+      </action>
+      <action issue="NET-260" dev="rwinston" type="fix">
+        SubnetUtils.SubnetInfo.isInRange(...) returned incorrect values
+      </action>
+      <action issue="NET-261" dev="rwinston" type="update">
+        SubnetUtils.SubnetInfo.isInRange(...) behavior not documented
+      </action>
+      <action issue="NET-262" dev="rwinston" type="fix">
+        SubnetUtils did not handle /31 and /32 CIDRs well
+      </action>
+      <action issue="NET-265" dev="rwinston" type="fix">
+        UnixFTPEntryParser failed to parse entry in certain conditions
+      </action>
+      <action issue="NET-266" dev="rwinston" type="fix">
+        FTPClient.listFiles() corrupted file name in certain circumstances
+      </action>
+      <action issue="NET-251" dev="rwinston" type="update">
+        Moved class "ThreadContainer" from Threader.java into its own source file
+      </action>
+      <action issue="NET-256" dev="rwinston" type="fix">
+        FTPSClient should accept a pre-configured SSLContext
+      </action>
+      <action issue="NET-263" dev="rwinston" type="add">
+        SubnetUtils / SubNetInfo toString() implementations
+      </action>
+      <action dev="rwinston" type="fix">
+        Improve NNTPClient handling of invalid articles
+      </action>
+      <action dev="rwinston" type="update">
+        Refactor examples package.
+      </action>
+      <action dev="sebb" type="add">
+        Javadoc fixes, improvements, and refactoring.
+      </action>
+      <action issue="NET-245" dev="rwinston" type="fix">
+        Apply MFMT patch
+      </action>
+      <action issue="NET-279" dev="rwinston" type="fix">
+        Fix copying of reply lines collection
+      </action>
+      <action issue="NET-277" dev="rwinston" type="fix">
+        Fix incorrect NNTP constant
+      </action>
+      <action issue="NET-274" dev="rwinston" type="fix">
+        Restore socket state after CCC command
+      </action>
+      <action issue="NET-275" dev="rwinston" type="fix">
+        Example code in FTPClient doesn't compile
+      </action>
+      <action dev="rwinston" type="fix">
+        Fix inconsistent handling of socket read/write buffer size
+      </action>
+      <action issue="NET-294" dev="sebb" type="fix">
+        UnixFTPEntryParser fails to parse some entries
+      </action>
+    </release>
 
-        <release version="2.1" description="Not released"/>
+    <release version="2.1" description="Not released" />
 
-        <release version="2.0" date="October 20, 2008" description="Java 5.0 release">
-            <action dev="rwinston" type="fix" issue="NET-307">
-                One of the "connect" method in class org.apache.commons.net.SocketClient doesn't handle connection timeout properly
-            </action>
-            <action dev="rwinston" type="update">
-                Add null check in TelnetClient::disconnect().
-            </action>
-            <action dev="rwinston" type="remove">
-                Remove deprecated FTPFileIterator and FTPFileList classes.
-            </action>
-            <action dev="rwinston" type="add">
-                Add connection timeout functionality to SocketClient.
-            </action>
-            <action dev="rwinston" type="update">
-                Make the KeyManager and TrustManager settable (niklas@protocol7.com).
-            </action>
-            <action dev="rwinston" type="update">
-                Patch FTPSClient to set default SSLServerSocketFactory. Thanks niklas@protocol7.com
-            </action>
-            <action dev="rwinston" type="fix" issue="NET-68">
-                Patch to prevent TFTPClient dropping last packet. Thanks palm@poplarware.com
-            </action>
-            <action dev="rwinston" type="update">
-                Change isConnected() method to delegate to underlying socket connection.
-            </action>
-            <action dev="rwinston" type="add">
-                FTPS (TLS and SSL) is now supported. Thanks to Jose Juan Montiel, Paul Ferraro, and Satoshi Ishigami.
-            </action>
-            <action dev="rwinston" type="update">
-                Commons::Net now uses Maven 2. The project.xml has been replaced with a pom.xml, and the source tree layout
-                has been changed accordingly.
-            </action>
-            <action dev="rwinston" type="remove">
-                Removed old ftp2 proposal directories.
-            </action>
-            <action dev="rwinston" type="update">
-                Commons::Net now uses JDK regex functionality, saving on an extra [oro] dependency. There are now
-                no external dependencies required.
-            </action>
-            <action dev="rwinston" type="fix">
-                Various syntactic issues (FindBugs issues, JDK 5.0 generics support)
-            </action>
-            <action dev="dfs" type="fix">
-                Applied Rob Hasselbaum's
-                rhasselbaum -> alumni.ithaca.edu
-                patch for PR 38688 fixing a
-                TelnetInputStream hang.
-            </action>
-            <action dev="dfs" type="update">
-                Exposed control connection of FTP
-                class via _controlInput_ and _controlOutput_
-                protected member variables in response
-                to PR 38309 reported by
-                josejuan.montiel@gmail.com.
-            </action>
-            <action dev="dfs" type="fix">
-                Reverted PR 32859 patch to TFTPClient
-                because it caused final packets to not
-                be sent.
-            </action>
-            <action dev="rwinston" type="update" issue="NET-36">
-                Make FTPClient extend SocketClient instead of TelnetClient. From jhindsley@providerlink.com
-            </action>
-            <action dev="rwinston" type="fix" issue="NET-39">
-                Adds an "e" symbolic link flag to the Unix FTP parser. From denisgaebler@netscape.net
-            </action>
-            <action dev="rwinston" type="fix" issue="NET-119">
-                Allow hidden files to be listed. Thanks to mario@ops.co.at
-            </action>
-            <action dev="rwinston" type="update">
-                Remove reflective check for Socket::isConnected() (no longer needed)
-            </action>
-            <action dev="rwinston" type="add" issue="NET-136">
-                Added WindowSizeOptionHandler for TelnetClient. Thanks to yuvalkashtan@gmail.com
-            </action>
-            <action dev="rwinston" type="update">
-                Refactored *Client classes under net/ package into separate subpackages, and move PrintCommandListener
-                out of the examples/ package.
-            </action>
-            <action dev="rwinston" type="add">
-                Added an ant target to the Maven build to generate an FTP-only jar file, for clients who
-                wish to use only FTP-based functionality.
-            </action>
-            <action dev="rwinston" type="update">
-                Custom SocketFactory interface has been replaced with the JDK SocketFactory implementation. Added
-                ServerSocketFactory instance to SocketClient.
-            </action>
-            <action dev="rwinston" type="update">
-                Removed redundant FTP.IMAGE_FILE_TYPE flag.
-            </action>
-            <action dev="rwinston" type="update">
-                Added heavily updated MVSFTPEntryParser from henrik.sorensen@balcab.ch
-            </action>
-            <action dev="rwinston" type="remove">
-                Removed deprecated classes FTPFileListParser, FTPFileListParserImpl, and DefaultFTPFileListParser. Also
-                removed associated deprecated methods from FTPClient.
-            </action>
-            <action dev="rwinston" type="fix" issue="NET-164">
-                Added encoding to FingerClient. From Ulrich Mayring.
-            </action>
-            <action dev="rwinston" type="fix" issue="NET-24">
-                Catch BindException in RCommandClient::connect().
-            </action>
-            <action dev="rwinston" type="fix" issue="NET-178">
-                Add encoding specifier to SMTPClient.
-            </action>
-            <action dev="rwinston" type="add">
-                Add setters for socket send/receive buffer size to SocketClient.
-            </action>
-            <action dev="rwinston" type="fix" issue="NET-177">
-                Fix PASV specifiers that broke previously. From Chris Eagle.
-            </action>
-            <action dev="rwinston" type="fix" issue="NET-182">
-                Catch NPE in FTP parser factory method.
-            </action>
-            <action dev="rwinston" type="fix" issue="NET-172">
-                Don't bind a UDP socket to NTP protocol port.
-            </action>
-            <action dev="rwinston" type="fix">
-                Better handling of user and group names with embedded spaces in FTP listings.
-            </action>
-            <action dev="rwinston" type="fix" issue="NET-173">
-                Add configurable multiline parsing.
-            </action>
-            <action dev="rwinston" type="fix" issue="NET-188">
-                Add fix for broken leap year date parsing.
-            </action>
-            <action dev="rwinston" type="add">
-                Add SubnetUtils class (suggested by Kenny McLeod)
-            </action>
-            <action dev="rwinston" type="fix" issue="NET-169">
-                Add Unix-type handling for UNKNOWN Type: L8 syst() message systems.
-            </action>
-            <action dev="rwinston" type="fix" issue="NET-198">
-                Allow FTPTimestampParserImpl to take a predefined Calendar instance representing current time.
-            </action>
-            <action dev="sebb" type="fix" issue="NET-194">
-                Replace Exception with IOException
-            </action>
-            <action dev="sebb" type="update" issue="NET-214">
-                VMS file permission parsing
-            </action>
-            <action dev="sebb" type="fix" issue="NET-208">
-                TelnetInputStream swallows interruptedexception as IOException
-            </action>
-            <action dev="sebb" type="fix" issue="NET-223">
-                the data connection socket is not closed when an IOException occurred
-            </action>
-            <action dev="sebb" type="fix" issue="NET-230">
-                ParserInitializationException when connecting to a Unix FTP server: comparison string must be upper case
-            </action>
-            <action dev="sebb" type="fix" issue="NET-225">
-                FTPFileEntryParserImpl.preParse() doesn't remove unparsable entries at the end of the file list
-            </action>
-        </release>
-
-
-<!-- 1.5.0 has not yet been released, so comment out the section until it is ready for release -->
-<!--
-        <release version="1.5.0" date="" description="">
-            <action dev="dfs" type="fix" issue="NET-3">
-                TelnetInputStream.java: Applied Rob
-                Hasselbaum's
-                rhasselbaum@alumni.ithaca.edu
-                patch for PR 38688 fixing a
-                TelnetInputStream hang.
-            </action>
-            <action dev="rwinston" type="fix"
-                issue="NET-73">
-                TelnetInputStream.java: Fixing another
-                potential deadlock for
-                telnet and FTP (patch courtesy Rob Hasselbaum).
-            </action>
-            <action dev="dfs" type="update" issue="NET-57">
-                FTP.java: Exposed control connection of
-                FTP
-                class via _controlInput_ and
-                _controlOutput_
-                protected member variables in response
-                to PR 38309 reported by
-                josejuan.montiel@gmail.com.
-            </action>
-            <action dev="rwinston" type="fix"
-                issue="NET-68">
-                TFTPClient.java: Fix bug causing final
-                packets
-                to not be sent.
-            </action>
-            <action dev="rwinston" type="fix"
-                issue="NET-161">
-                TFTPClient.java: Fix sendFile() (related
-                to NET-68).
-            </action>
-            <action dev="rwinston" type="fix"
-                issue="NET-181">
-                TFTPClient.java: block number
-                wraparound.
-            </action>
-            <action dev="scohen" type="fix" issue="NET-16">
-                UNIXFTPEntryParser.java: support for
-                group names with
-                spaces (patch courtesy D. Kilzer).
-            </action>
-            <action dev="scohen" type="fix" issue="NET-62">
-                DefaultFTPFileEntryParserFactory.java:
-                Wrap
-                NoClassDefFoundError in FTP parser exception
-                when ORO is not available.
-            </action>
-            <action dev="rwinston" type="add"
-                issue="NET-33">
-                FTPClient.java: Fix closing FTP
-                ServerSocket after timeout
-            </action>
-            <action dev="rwinston" type="add">
-                FTPClientConfig.java: Added an FTP
-                parser for Netware FTP servers.
-                Tested on Novell Netware 6.5.
-            </action>
-            <action dev="rwinston" type="fix"
-                issue="NET-188">
-                FTPTimestampParserImpl.java: Fix leap
-                year date parsing bug.
-            </action>
-            <action dev="rwinston" type="fix">
-                Article.java: Fix minor issues with NNTP
-                parsing.
-            </action>
-        </release>
--->
+    <release version="2.0" date="October 20, 2008" description="Java 5.0 release">
+      <action dev="rwinston" type="fix" issue="NET-307">
+        One of the "connect" method in class org.apache.commons.net.SocketClient doesn't handle connection timeout properly
+      </action>
+      <action dev="rwinston" type="update">
+        Add null check in TelnetClient::disconnect().
+      </action>
+      <action dev="rwinston" type="remove">
+        Remove deprecated FTPFileIterator and FTPFileList classes.
+      </action>
+      <action dev="rwinston" type="add">
+        Add connection timeout functionality to SocketClient.
+      </action>
+      <action dev="rwinston" type="update">
+        Make the KeyManager and TrustManager settable (niklas@protocol7.com).
+      </action>
+      <action dev="rwinston" type="update">
+        Patch FTPSClient to set default SSLServerSocketFactory. Thanks niklas@protocol7.com
+      </action>
+      <action dev="rwinston" type="fix" issue="NET-68">
+        Patch to prevent TFTPClient dropping last packet. Thanks palm@poplarware.com
+      </action>
+      <action dev="rwinston" type="update">
+        Change isConnected() method to delegate to underlying socket connection.
+      </action>
+      <action dev="rwinston" type="add">
+        FTPS (TLS and SSL) is now supported. Thanks to Jose Juan Montiel, Paul Ferraro, and Satoshi Ishigami.
+      </action>
+      <action dev="rwinston" type="update">
+        Commons::Net now uses Maven 2. The project.xml has been replaced with a pom.xml, and the source tree layout
+        has been changed accordingly.
+      </action>
+      <action dev="rwinston" type="remove">
+        Removed old ftp2 proposal directories.
+      </action>
+      <action dev="rwinston" type="update">
+        Commons::Net now uses JDK regex functionality, saving on an extra [oro] dependency. There are now
+        no external dependencies required.
+      </action>
+      <action dev="rwinston" type="fix">
+        Various syntactic issues (FindBugs issues, JDK 5.0 generics support)
+      </action>
+      <action dev="dfs" type="fix">
+        Applied Rob Hasselbaum's
+        rhasselbaum -> alumni.ithaca.edu
+        patch for PR 38688 fixing a
+        TelnetInputStream hang.
+      </action>
+      <action dev="dfs" type="update">
+        Exposed control connection of FTP
+        class via _controlInput_ and _controlOutput_
+        protected member variables in response
+        to PR 38309 reported by
+        josejuan.montiel@gmail.com.
+      </action>
+      <action dev="dfs" type="fix">
+        Reverted PR 32859 patch to TFTPClient
+        because it caused final packets to not
+        be sent.
+      </action>
+      <action dev="rwinston" type="update" issue="NET-36">
+        Make FTPClient extend SocketClient instead of TelnetClient. From jhindsley@providerlink.com
+      </action>
+      <action dev="rwinston" type="fix" issue="NET-39">
+        Adds an "e" symbolic link flag to the Unix FTP parser. From denisgaebler@netscape.net
+      </action>
+      <action dev="rwinston" type="fix" issue="NET-119">
+        Allow hidden files to be listed. Thanks to mario@ops.co.at
+      </action>
+      <action dev="rwinston" type="update">
+        Remove reflective check for Socket::isConnected() (no longer needed)
+      </action>
+      <action dev="rwinston" type="add" issue="NET-136">
+        Added WindowSizeOptionHandler for TelnetClient. Thanks to yuvalkashtan@gmail.com
+      </action>
+      <action dev="rwinston" type="update">
+        Refactored *Client classes under net/ package into separate subpackages, and move PrintCommandListener
+        out of the examples/ package.
+      </action>
+      <action dev="rwinston" type="add">
+        Added an ant target to the Maven build to generate an FTP-only jar file, for clients who
+        wish to use only FTP-based functionality.
+      </action>
+      <action dev="rwinston" type="update">
+        Custom SocketFactory interface has been replaced with the JDK SocketFactory implementation. Added
+        ServerSocketFactory instance to SocketClient.
+      </action>
+      <action dev="rwinston" type="update">
+        Removed redundant FTP.IMAGE_FILE_TYPE flag.
+      </action>
+      <action dev="rwinston" type="update">
+        Added heavily updated MVSFTPEntryParser from henrik.sorensen@balcab.ch
+      </action>
+      <action dev="rwinston" type="remove">
+        Removed deprecated classes FTPFileListParser, FTPFileListParserImpl, and DefaultFTPFileListParser. Also
+        removed associated deprecated methods from FTPClient.
+      </action>
+      <action dev="rwinston" type="fix" issue="NET-164">
+        Added encoding to FingerClient. From Ulrich Mayring.
+      </action>
+      <action dev="rwinston" type="fix" issue="NET-24">
+        Catch BindException in RCommandClient::connect().
+      </action>
+      <action dev="rwinston" type="fix" issue="NET-178">
+        Add encoding specifier to SMTPClient.
+      </action>
+      <action dev="rwinston" type="add">
+        Add setters for socket send/receive buffer size to SocketClient.
+      </action>
+      <action dev="rwinston" type="fix" issue="NET-177">
+        Fix PASV specifiers that broke previously. From Chris Eagle.
+      </action>
+      <action dev="rwinston" type="fix" issue="NET-182">
+        Catch NPE in FTP parser factory method.
+      </action>
+      <action dev="rwinston" type="fix" issue="NET-172">
+        Don't bind a UDP socket to NTP protocol port.
+      </action>
+      <action dev="rwinston" type="fix">
+        Better handling of user and group names with embedded spaces in FTP listings.
+      </action>
+      <action dev="rwinston" type="fix" issue="NET-173">
+        Add configurable multiline parsing.
+      </action>
+      <action dev="rwinston" type="fix" issue="NET-188">
+        Add fix for broken leap year date parsing.
+      </action>
+      <action dev="rwinston" type="add">
+        Add SubnetUtils class (suggested by Kenny McLeod)
+      </action>
+      <action dev="rwinston" type="fix" issue="NET-169">
+        Add Unix-type handling for UNKNOWN Type: L8 syst() message systems.
+      </action>
+      <action dev="rwinston" type="fix" issue="NET-198">
+        Allow FTPTimestampParserImpl to take a predefined Calendar instance representing current time.
+      </action>
+      <action dev="sebb" type="fix" issue="NET-194">
+        Replace Exception with IOException
+      </action>
+      <action dev="sebb" type="update" issue="NET-214">
+        VMS file permission parsing
+      </action>
+      <action dev="sebb" type="fix" issue="NET-208">
+        TelnetInputStream swallows interruptedexception as IOException
+      </action>
+      <action dev="sebb" type="fix" issue="NET-223">
+        the data connection socket is not closed when an IOException occurred
+      </action>
+      <action dev="sebb" type="fix" issue="NET-230">
+        ParserInitializationException when connecting to a Unix FTP server: comparison string must be upper case
+      </action>
+      <action dev="sebb" type="fix" issue="NET-225">
+        FTPFileEntryParserImpl.preParse() doesn't remove unparsable entries at the end of the file list
+      </action>
+    </release>
 
 
-        <release version="1.4.1" date="December 3, 2005" description="fix release to restore jdk 1.3 compatability">
-            <action dev="scohen" type="fix">
-                Applied patches for defect 37113. Code incompatible with jdk 1.3. Original patch submitted by Andrea Rombald
-            </action>
-            <action dev="scohen" type="fix">
-                Applied patches for defect 37522. updated project.xml to correct compatibility level.
-            </action>
-        </release>
-
-        <release version="1.4.0" date="May 7, 2005" description="Some additions and enhancements">
-            <action dev="dfs" type="fix">
-                Fixed typo in method name.
-                FTP.removeCommandListener() was missing
-                the L.  Problem reported by
-                Per.Lindberger@linkon.se.
-            </action>
-            <action dev="rwinston" type="fix">
-                Applied fix for PR 33942 and PR 31793. Original patch submitted by mario@ops.co.at
-            </action>
-            <action dev="rwinston" type="fix">
-                TFTPClient was ignoring final ACK (PR 32859). Thanks to perttu.auramo@ekahau.com
-            </action>
-            <action dev="rwinston" type="fix">
-                Applied fix for ACL parsing in the FTP client (PR 33972). Submitted by robertalasch@yahoo.com
-            </action>
-            <action dev="rwinston" type="fix">
-                Added missing NTP/SNTP unit tests to the codebase.
-            </action>
-            <action dev="dfs" type="fix">
-                Applied fix for POP3Client returning empty reply strings (PR 34133). Thanks to sammy_c@lineone.net
-            </action>
-            <action dev="rwinston" type="fix">
-                NTP port parameter was being ignored (PR 34219). Fixed by felix.eichhorn@3soft.de
-            </action>
-            <action dev="scohen" type="add">
-                An FTP parser for MVS was added. Submitted by wnoto@openfinance.com
-            </action>
-            <action dev="scohen" type="add">
-                Added functionality for extensible parsing of FTP responses, using a configurable format string. This should enable the FTP client to operate across many different locales and date formats.
-            </action>
-        </release>
-
-        <release version="1.3.0" date="December 15, 2004" description="many fixes and enhancements">
-            <action dev="rwinston" type="fix">
-                Applied patch for PR 31793. Thanks to mario@ops.co.at
-            </action>
-            <action dev="rwinston" type="add">
-                Added message threading functionality to the NNTP client.
-            </action>
-            <action dev="rwinston" type="update">
-                Added return code 521 to FTPReply.java - this should obviate the need for the Ant FTP task to manually declare it.
-            </action>
-            <action dev="rwinston" type="fix">
-                Add explicit notify() in TelnetInputStream::read(), so available() returns an accurate value. Thanks to tpalkot@gmail.com.
-            </action>
-            <action dev="rwinston" type="add">
-                Added SNTP/NTP components into the Commons-Net codebase, courtesy of
-                Jason Matthews.
-            </action>
-            <action dev="rwinston" type="add">
-                Added POP3 test suite, courtesy of Mike George mike.george@comcast.net.
-            </action>
-            <action dev="scohen" type="fix">
-                Applied fix for FTPClient returning null for certain timestamp formats (BUG #30737)
-            </action>
-            <action dev="rwinston" type="fix">
-                Build.xml fixes - dont include example classes in redistributable
-                .jar, remove test dependency from javadoc target, and exclude private members from generated javadoc.
-            </action>
-            <action dev="rwinston" type="fix">
-                Fixed bug in TFTPClient::setMaxTimeout(), spotted by steve@widge.net
-            </action>
-            <action dev="dfs" type="fix">
-                Some changes to facilitate compilation under JDK 5.0
-            </action>
-            <action dev="rwinston" type="fix">
-                Return correct NNTP article count when high and low watermarks are 0.
-                Spotted by jmordax@terra.es
-            </action>
-            <action dev="rwinston" type="fix">
-                Remove trailing null byte in TFTP packets. Thanks to gerard.dens@alcatel.be
-            </action>
-            <action dev="dfs" type="fix">
-                Many javadoc fixes.
-            </action>
-            <action dev="rwinston" type="update">
-                Allow FTPClient to set transfer buffer size.
-            </action>
-            <action dev="rwinston" type="update">
-                Ensure consistent handling of encoding throughout FTPClient
-                operations. Patch submitted by leif@tanukisoftware.com.
-            </action>
-            <action dev="dfs" type="fix">
-                Fix TelnetClient zombie thread issue
-            </action>
+    <!-- 1.5.0 has not yet been released, so comment out the section until it is ready for release -->
+    <!-- <release version="1.5.0" date="" description=""> <action dev="dfs" type="fix" issue="NET-3"> TelnetInputStream.java: 
+      Applied Rob Hasselbaum's rhasselbaum@alumni.ithaca.edu patch for PR 38688 fixing a TelnetInputStream hang. </action> <action 
+      dev="rwinston" type="fix" issue="NET-73"> TelnetInputStream.java: Fixing another potential deadlock for telnet and FTP (patch 
+      courtesy Rob Hasselbaum). </action> <action dev="dfs" type="update" issue="NET-57"> FTP.java: Exposed control connection 
+      of FTP class via _controlInput_ and _controlOutput_ protected member variables in response to PR 38309 reported by josejuan.montiel@gmail.com. 
+      </action> <action dev="rwinston" type="fix" issue="NET-68"> TFTPClient.java: Fix bug causing final packets to not be sent. 
+      </action> <action dev="rwinston" type="fix" issue="NET-161"> TFTPClient.java: Fix sendFile() (related to NET-68). </action> 
+      <action dev="rwinston" type="fix" issue="NET-181"> TFTPClient.java: block number wraparound. </action> <action dev="scohen" 
+      type="fix" issue="NET-16"> UNIXFTPEntryParser.java: support for group names with spaces (patch courtesy D. Kilzer). </action> 
+      <action dev="scohen" type="fix" issue="NET-62"> DefaultFTPFileEntryParserFactory.java: Wrap NoClassDefFoundError in FTP parser 
+      exception when ORO is not available. </action> <action dev="rwinston" type="add" issue="NET-33"> FTPClient.java: Fix closing 
+      FTP ServerSocket after timeout </action> <action dev="rwinston" type="add"> FTPClientConfig.java: Added an FTP parser for 
+      Netware FTP servers. Tested on Novell Netware 6.5. </action> <action dev="rwinston" type="fix" issue="NET-188"> FTPTimestampParserImpl.java: 
+      Fix leap year date parsing bug. </action> <action dev="rwinston" type="fix"> Article.java: Fix minor issues with NNTP parsing. 
+      </action> </release> -->
 
 
-        </release>
-        <release version="1.3.0-dev" date="July 28, 2004"
-            description="regression fix">
-            <action dev="dfs" type="fix">
-                Fixed regression from migration to new parsers.  Most of the
-                new parsers parsed the file size as an integer instead of a
-                long.  Changed all of them to set the size to long.  This
-                problem was detected by the reporter of:
-                https://issues.apache.org/bugzilla/show_bug.cgi?id=30345
-            </action>
-        </release>
-        <release version="1.2.2" date="June 25, 2004" description="fix release">
-            <action dev="scohen" type="fix">
-                fixed bug in the way FTPClient.listFiles worked when a directory was not
-                specified.  Current directory was not being 'remembered'.  This was most
-                problematic in the dependent ftp task of Ant.
-            </action>
-            <action dev="scohen" type="fix">
-                fixed handling of certain unusual "special" file types in the Unix parser.
-            </action>
-        </release>
+    <release version="1.4.1" date="December 3, 2005" description="fix release to restore jdk 1.3 compatability">
+      <action dev="scohen" type="fix">
+        Applied patches for defect 37113. Code incompatible with jdk 1.3. Original patch submitted by Andrea Rombald
+      </action>
+      <action dev="scohen" type="fix">
+        Applied patches for defect 37522. updated project.xml to correct compatibility level.
+      </action>
+    </release>
 
-        <release version="1.2.1" date="May 6, 2004" description="fix release">
-            <action dev="scohen" type="fix">
-                changed code that rendered package uncompilable under JDK 1.2
-            </action>
-        </release>
+    <release version="1.4.0" date="May 7, 2005" description="Some additions and enhancements">
+      <action dev="dfs" type="fix">
+        Fixed typo in method name.
+        FTP.removeCommandListener() was missing
+        the L. Problem reported by
+        Per.Lindberger@linkon.se.
+      </action>
+      <action dev="rwinston" type="fix">
+        Applied fix for PR 33942 and PR 31793. Original patch submitted by mario@ops.co.at
+      </action>
+      <action dev="rwinston" type="fix">
+        TFTPClient was ignoring final ACK (PR 32859). Thanks to perttu.auramo@ekahau.com
+      </action>
+      <action dev="rwinston" type="fix">
+        Applied fix for ACL parsing in the FTP client (PR 33972). Submitted by robertalasch@yahoo.com
+      </action>
+      <action dev="rwinston" type="fix">
+        Added missing NTP/SNTP unit tests to the codebase.
+      </action>
+      <action dev="dfs" type="fix">
+        Applied fix for POP3Client returning empty reply strings (PR 34133). Thanks to sammy_c@lineone.net
+      </action>
+      <action dev="rwinston" type="fix">
+        NTP port parameter was being ignored (PR 34219). Fixed by felix.eichhorn@3soft.de
+      </action>
+      <action dev="scohen" type="add">
+        An FTP parser for MVS was added. Submitted by wnoto@openfinance.com
+      </action>
+      <action dev="scohen" type="add">
+        Added functionality for extensible parsing of FTP responses, using a configurable format string. This should enable the
+        FTP client to operate across many different locales and date formats.
+      </action>
+    </release>
 
-        <release version="1.2.0" date="April 30, 2004" description="autodetection of system for listings">
-            <action dev="scohen" type="fix">
-                Mario Ivankovits mario@ops.co.at added
-                functionality supporting correct handling of the &quot;dirstyle&quot;
-                attribute of NT and OS400 servers that allows them to mimic Unix ftp servers.
-                and a bug fix affecting handling of sticky and suid bits on Unix FTP servers.
-            </action>
-            <action dev="scohen" type="add">
-                Mario Ivankovits mario@ops.co.at added parser for OS400.
-            </action>
-            <action dev="jbrekke,scohen" type="fix">
-                Added a functional junit test testing list parsing against real servers
-                and fix several    bugs found through this test.
-            </action>
-            <action dev="dfs" type="add">
-                Ted Wise ctwise@bellsouth.net provided a
-                patch to add the XHDR extended NNTP command.
-            </action>
-            <action dev="scohen,dfs" type="update">
-                Deprecated FTPFileListParser interface, DefaultFTPFileListParser
-                class, and the FTPClient.listFiles methods that accepted an
-                FTPFileListParser parameter.  These deprecated classes and methods
-                will be removed in version 2.0.
-            </action>
-            <action dev="scohen" type="add">
-                Added org.apache.commons.net.parser.FTPFileEntryParserFactory
-                interface and a default implementation:
-                DefaultFTPFileEntryParserFactory.  This addition facilitates the
-                autodetection of which FTPFileEntryParser to use to generate
-                listings.  FTPClient.listFiles methods were added that implement
-                autodetection.
-            </action>
-        </release>
+    <release version="1.3.0" date="December 15, 2004" description="many fixes and enhancements">
+      <action dev="rwinston" type="fix">
+        Applied patch for PR 31793. Thanks to mario@ops.co.at
+      </action>
+      <action dev="rwinston" type="add">
+        Added message threading functionality to the NNTP client.
+      </action>
+      <action dev="rwinston" type="update">
+        Added return code 521 to FTPReply.java - this should obviate the need for the Ant FTP task to manually declare it.
+      </action>
+      <action dev="rwinston" type="fix">
+        Add explicit notify() in TelnetInputStream::read(), so available() returns an accurate value. Thanks to
+        tpalkot@gmail.com.
+      </action>
+      <action dev="rwinston" type="add">
+        Added SNTP/NTP components into the Commons-Net codebase, courtesy of
+        Jason Matthews.
+      </action>
+      <action dev="rwinston" type="add">
+        Added POP3 test suite, courtesy of Mike George mike.george@comcast.net.
+      </action>
+      <action dev="scohen" type="fix">
+        Applied fix for FTPClient returning null for certain timestamp formats (BUG #30737)
+      </action>
+      <action dev="rwinston" type="fix">
+        Build.xml fixes - dont include example classes in redistributable
+        .jar, remove test dependency from javadoc target, and exclude private members from generated javadoc.
+      </action>
+      <action dev="rwinston" type="fix">
+        Fixed bug in TFTPClient::setMaxTimeout(), spotted by steve@widge.net
+      </action>
+      <action dev="dfs" type="fix">
+        Some changes to facilitate compilation under JDK 5.0
+      </action>
+      <action dev="rwinston" type="fix">
+        Return correct NNTP article count when high and low watermarks are 0.
+        Spotted by jmordax@terra.es
+      </action>
+      <action dev="rwinston" type="fix">
+        Remove trailing null byte in TFTP packets. Thanks to gerard.dens@alcatel.be
+      </action>
+      <action dev="dfs" type="fix">
+        Many javadoc fixes.
+      </action>
+      <action dev="rwinston" type="update">
+        Allow FTPClient to set transfer buffer size.
+      </action>
+      <action dev="rwinston" type="update">
+        Ensure consistent handling of encoding throughout FTPClient
+        operations. Patch submitted by leif@tanukisoftware.com.
+      </action>
+      <action dev="dfs" type="fix">
+        Fix TelnetClient zombie thread issue
+      </action>
 
-<!-- Not yet released; probably never will be
-        <release version="1.1.1" date="TBD" description="last jdk1.1 compatible release">
-            <action dev="scohen" type="fix">
-                Removed all JDK 1.1 incompatibilities that had been introduced
-                unintentionally in previous versions.  Release 1.1.1 is the last
-                JDK 1.1 compatible release.  Any future 1.1.x maintenance releases
-                will remain JDK !.1 compatible, but version 1.2 may break
-                compatibility and will be guaranteed to work with only J2SE 1.2
-                and later.
-            </action>
-        </release>
- -->
-        <release version="1.1.0" date="October 23, 2003" description="many enhancements and bug fixes">
-            <action dev="dfs" type="add">
-                Rory Winston Rory.Winston@telewest.co.uk provided
-                patches to add the following extended NNTP commands to
-                NNTPClient: XOVER, AUTHINFO USER, AUTHINFO PASS, and
-                LIST ACTIVE.
-            </action>
-            <action dev="dfs" type="fix">
-                Changed connection hooks for FTP, SMTP, POP3, and NNTP classes
-                to force use of an 8-bit US-ASCII superset (ISO-8859-1) for
-                protocol communication.  This was necessary because
-                InputStreamReader and OutputStreamWriter use the default
-                client-side character set encoding.  fasselin@ca.ibm.com
-                reported failure of SMTP on OS/390 which has EBCDIC as the
-                native character set.
-            </action>
 
-            <action dev="dfs" type="fix">
-                Applied variation of fix suggested by Matthieu Recouly
-                matthieu.recouly@laposte.net so that
-                UnixFTPEntryParser may handle listings of the form:
-                    "drwxr-xr-x 1 usernameftp 512 Jan 29 23:32 prog"
-                where the space between user name and group is omitted.
-            </action>
-            <action dev="dfs" type="fix">
-                Applied patch from Stephane Este-Gracias
-                sestegra@free.fr that fixes the parsing of
-                VMS listings by VMSFTPEntryParser..
-            </action>
-            <action dev="brekke" type="fix">
-                If the buffer queue run full, the run() method sometimes hangs forever.
-                Changed wait() to wait(100) as with other changes in TelnetInputStream.
-                Fix submitted From: J. Matysiak ( j.matysiak@cenit.de ).
-            </action>
-            <action dev="brekke" type="fix">
-                FTP.smnt(String dir) was not passing on the dir to the SMNT command as an argument.
-            </action>
-            <action dev="brekke" type="add">
-                Added a link to the FAQ currently hosted on the Apache Wiki.
-            </action>
-            <action dev="dfs" type="update">
-                Changed package private NNTP._reader and NNTP._writer member
-                variables to protected NNTP._reader_ and NNTP._writer_
-                variables as suggested by issue report 16995 to facilitate
-                extending NNTPClient functionality in subclasses.
-            </action>
-            <action dev="dfs" type="update">
-                Changed name of FTPClient.__openDataConnection() to
-                FTPClient._openDataConnection_() to remain consistent
-                with the convention in the code that protected members
-                are of the form _foo_.  At some point __openDataConnection()
-                had been changed from private to protected.
-            </action>
-            <action dev="brekke" type="add">
-                Added terminal option support to the telnet client with tests.
-                From Bruno D'Avanzo ( b.davanzo@inwind.it ).
-            </action>
-            <action dev="scohen" type="add">
-                New parsers merged with mainline with support for old list parsers.
-            </action>
-        </release>
+    </release>
+    <release version="1.3.0-dev" date="July 28, 2004" description="regression fix">
+      <action dev="dfs" type="fix">
+        Fixed regression from migration to new parsers. Most of the
+        new parsers parsed the file size as an integer instead of a
+        long. Changed all of them to set the size to long. This
+        problem was detected by the reporter of:
+        https://issues.apache.org/bugzilla/show_bug.cgi?id=30345
+      </action>
+    </release>
+    <release version="1.2.2" date="June 25, 2004" description="fix release">
+      <action dev="scohen" type="fix">
+        fixed bug in the way FTPClient.listFiles worked when a directory was not
+        specified. Current directory was not being 'remembered'. This was most
+        problematic in the dependent ftp task of Ant.
+      </action>
+      <action dev="scohen" type="fix">
+        fixed handling of certain unusual "special" file types in the Unix parser.
+      </action>
+    </release>
 
-        <release version="1.0.0" date="February 23, 2003" description="first jakarta-commons release">
-            <action dev="brekke" type="add">
-                Added a migration document for moving from NetComponents to Commons/Net.
-            </action>
-            <action dev="brekke" type="fix">
-                Moved the ftp2 tree with tests to a proposal directory and setup
-                a build for that code.  This can grow in this area so users don't
-                think it is production ready.
-            </action>
-            <action dev="dfs" type="fix">
-                Cleaned up license header on some source.
-            </action>
-            <action dev="dfs" type="fix">
-                Moved .io and .util to .net.io and .net.util in preparation for
-                1.0 release.
-            </action>
-            <action dev="dfs" type="fix">
-                Fixed typo in NNTP.removeProtocolCommandListener() method name.  It
-                was missing an L.  From: joev@atg.com.
-            </action>
-            <action dev="brekke" type="add">
-                Various site updates including this changes doc and publish
-                date information.
-            </action>
-            <action dev="dfs" type="fix">
-                Patch for restarting FTP file transfers.  The offset was not
-                being sent immediately before the data transfer command on
-                account.  The bug was apparently introduced in NetComponents
-                when it was decided to always send a PORT command before each data
-                transfer to avoid socket reuse problems on Windows.
-                From: Tapan Karecha ( tapan@india.hp.com ).
-            </action>
-            <action dev="dfs" type="fix">
-                Applied a fix for potential deadlock in TelnetInputStream by
-                changing a wait() to a wait(100).
-                From: Tapan Karecha ( tapan@india.hp.com ).
-            </action>
-            <action dev="dfs" type="update">
-                FTP examples now use passive ftp connections.
-            </action>
-        </release>
-    </body>
+    <release version="1.2.1" date="May 6, 2004" description="fix release">
+      <action dev="scohen" type="fix">
+        changed code that rendered package uncompilable under JDK 1.2
+      </action>
+    </release>
+
+    <release version="1.2.0" date="April 30, 2004" description="autodetection of system for listings">
+      <action dev="scohen" type="fix">
+        Mario Ivankovits mario@ops.co.at added
+        functionality supporting correct handling of the &quot;dirstyle&quot;
+        attribute of NT and OS400 servers that allows them to mimic Unix ftp servers.
+        and a bug fix affecting handling of sticky and suid bits on Unix FTP servers.
+      </action>
+      <action dev="scohen" type="add">
+        Mario Ivankovits mario@ops.co.at added parser for OS400.
+      </action>
+      <action dev="jbrekke,scohen" type="fix">
+        Added a functional junit test testing list parsing against real servers
+        and fix several bugs found through this test.
+      </action>
+      <action dev="dfs" type="add">
+        Ted Wise ctwise@bellsouth.net provided a
+        patch to add the XHDR extended NNTP command.
+      </action>
+      <action dev="scohen,dfs" type="update">
+        Deprecated FTPFileListParser interface, DefaultFTPFileListParser
+        class, and the FTPClient.listFiles methods that accepted an
+        FTPFileListParser parameter. These deprecated classes and methods
+        will be removed in version 2.0.
+      </action>
+      <action dev="scohen" type="add">
+        Added org.apache.commons.net.parser.FTPFileEntryParserFactory
+        interface and a default implementation:
+        DefaultFTPFileEntryParserFactory. This addition facilitates the
+        autodetection of which FTPFileEntryParser to use to generate
+        listings. FTPClient.listFiles methods were added that implement
+        autodetection.
+      </action>
+    </release>
+
+    <!-- Not yet released; probably never will be <release version="1.1.1" date="TBD" description="last jdk1.1 compatible 
+      release"> <action dev="scohen" type="fix"> Removed all JDK 1.1 incompatibilities that had been introduced unintentionally 
+      in previous versions. Release 1.1.1 is the last JDK 1.1 compatible release. Any future 1.1.x maintenance releases will remain 
+      JDK !.1 compatible, but version 1.2 may break compatibility and will be guaranteed to work with only J2SE 1.2 and later. 
+      </action> </release> -->
+    <release version="1.1.0" date="October 23, 2003" description="many enhancements and bug fixes">
+      <action dev="dfs" type="add">
+        Rory Winston Rory.Winston@telewest.co.uk provided
+        patches to add the following extended NNTP commands to
+        NNTPClient: XOVER, AUTHINFO USER, AUTHINFO PASS, and
+        LIST ACTIVE.
+      </action>
+      <action dev="dfs" type="fix">
+        Changed connection hooks for FTP, SMTP, POP3, and NNTP classes
+        to force use of an 8-bit US-ASCII superset (ISO-8859-1) for
+        protocol communication. This was necessary because
+        InputStreamReader and OutputStreamWriter use the default
+        client-side character set encoding. fasselin@ca.ibm.com
+        reported failure of SMTP on OS/390 which has EBCDIC as the
+        native character set.
+      </action>
+
+      <action dev="dfs" type="fix">
+        Applied variation of fix suggested by Matthieu Recouly
+        matthieu.recouly@laposte.net so that
+        UnixFTPEntryParser may handle listings of the form:
+        "drwxr-xr-x 1 usernameftp 512 Jan 29 23:32 prog"
+        where the space between user name and group is omitted.
+      </action>
+      <action dev="dfs" type="fix">
+        Applied patch from Stephane Este-Gracias
+        sestegra@free.fr that fixes the parsing of
+        VMS listings by VMSFTPEntryParser..
+      </action>
+      <action dev="brekke" type="fix">
+        If the buffer queue run full, the run() method sometimes hangs forever.
+        Changed wait() to wait(100) as with other changes in TelnetInputStream.
+        Fix submitted From: J. Matysiak ( j.matysiak@cenit.de ).
+      </action>
+      <action dev="brekke" type="fix">
+        FTP.smnt(String dir) was not passing on the dir to the SMNT command as an argument.
+      </action>
+      <action dev="brekke" type="add">
+        Added a link to the FAQ currently hosted on the Apache Wiki.
+      </action>
+      <action dev="dfs" type="update">
+        Changed package private NNTP._reader and NNTP._writer member
+        variables to protected NNTP._reader_ and NNTP._writer_
+        variables as suggested by issue report 16995 to facilitate
+        extending NNTPClient functionality in subclasses.
+      </action>
+      <action dev="dfs" type="update">
+        Changed name of FTPClient.__openDataConnection() to
+        FTPClient._openDataConnection_() to remain consistent
+        with the convention in the code that protected members
+        are of the form _foo_. At some point __openDataConnection()
+        had been changed from private to protected.
+      </action>
+      <action dev="brekke" type="add">
+        Added terminal option support to the telnet client with tests.
+        From Bruno D'Avanzo ( b.davanzo@inwind.it ).
+      </action>
+      <action dev="scohen" type="add">
+        New parsers merged with mainline with support for old list parsers.
+      </action>
+    </release>
+
+    <release version="1.0.0" date="February 23, 2003" description="first jakarta-commons release">
+      <action dev="brekke" type="add">
+        Added a migration document for moving from NetComponents to Commons/Net.
+      </action>
+      <action dev="brekke" type="fix">
+        Moved the ftp2 tree with tests to a proposal directory and setup
+        a build for that code. This can grow in this area so users don't
+        think it is production ready.
+      </action>
+      <action dev="dfs" type="fix">
+        Cleaned up license header on some source.
+      </action>
+      <action dev="dfs" type="fix">
+        Moved .io and .util to .net.io and .net.util in preparation for
+        1.0 release.
+      </action>
+      <action dev="dfs" type="fix">
+        Fixed typo in NNTP.removeProtocolCommandListener() method name. It
+        was missing an L. From: joev@atg.com.
+      </action>
+      <action dev="brekke" type="add">
+        Various site updates including this changes doc and publish
+        date information.
+      </action>
+      <action dev="dfs" type="fix">
+        Patch for restarting FTP file transfers. The offset was not
+        being sent immediately before the data transfer command on
+        account. The bug was apparently introduced in NetComponents
+        when it was decided to always send a PORT command before each data
+        transfer to avoid socket reuse problems on Windows.
+        From: Tapan Karecha ( tapan@india.hp.com ).
+      </action>
+      <action dev="dfs" type="fix">
+        Applied a fix for potential deadlock in TelnetInputStream by
+        changing a wait() to a wait(100).
+        From: Tapan Karecha ( tapan@india.hp.com ).
+      </action>
+      <action dev="dfs" type="update">
+        FTP examples now use passive ftp connections.
+      </action>
+    </release>
+  </body>
 </document>
