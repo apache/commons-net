@@ -134,7 +134,7 @@ public final class FTPCommand
     /** @since 2.2 */
     public static final int SET_MOD_TIME = MFMT;
 
-    private static final String[] _commands = {
+    private static final String[] COMMANDS = {
                                           "USER", "PASS", "ACCT", "CWD", "CDUP", "SMNT", "REIN", "QUIT", "PORT",
                                           "PASV", "TYPE", "STRU", "MODE", "RETR", "STOR", "STOU", "APPE", "ALLO",
                                           "REST", "RNFR", "RNTO", "ABOR", "DELE", "RMD", "MKD", "PWD", "LIST",
@@ -144,13 +144,11 @@ public final class FTPCommand
     // default access needed for Unit test
     static void checkArray() {
         final int expectedLength = LAST + 1;
-        if (_commands.length != expectedLength) {
+        if (COMMANDS.length != expectedLength) {
             throw new RuntimeException(
-                "Incorrect _commands array. Should have length " + expectedLength + " found " + _commands.length);
+                "Incorrect _commands array. Should have length " + expectedLength + " found " + COMMANDS.length);
         }
     }
-
-
 
     /**
      * Retrieve the FTP protocol command string corresponding to a specified
@@ -162,7 +160,7 @@ public final class FTPCommand
      */
     public static String getCommand(final int command)
     {
-        return _commands[command];
+        return COMMANDS[command];
     }
 
     // Cannot be instantiated
