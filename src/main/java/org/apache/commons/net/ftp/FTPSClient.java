@@ -250,7 +250,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Returns a socket of the data connection. Wrapped as an {@link SSLSocket}, which carries out handshake processing.
-     * 
+     *
      * @param command The textual representation of the FTP command to send.
      * @param arg The arguments to the FTP command. If this parameter is set to null, then the command is sent with no
      *        arguments.
@@ -291,7 +291,7 @@ public class FTPSClient extends FTPClient {
          * Performs any custom initialization for a newly created SSLSocket (before the SSL handshake happens). Called
          * by {@link #_openDataConnection_(int, String)} immediately after creating the socket. The default
          * implementation is a no-op
-         * 
+         *
          * @param socket the socket to set up
          * @throws IOException on error
          * @since 3.1
