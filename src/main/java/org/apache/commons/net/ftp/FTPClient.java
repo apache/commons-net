@@ -34,6 +34,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -2935,6 +2936,26 @@ public class FTPClient extends FTP implements Configurable {
             file.setRawListing(modificationTime);
             file.setTimestamp(MLSxEntryParser.parseGMTdateTime(modificationTime));
             return file;
+        }
+        return null;
+    }
+
+    /**
+     * Issue the FTP MDTM command (not supported by all servers) to retrieve the last
+     * modification time of a file. The modification string should be in the
+     * ISO 3077 form "YYYYMMDDhhmmss(.xxx)?". The timestamp represented should also be in
+     * GMT, but not all FTP servers honor this.
+     *
+     * @param pathname The file path to query.
+     * @return An Instant representing the last file modification time, may be {@code null}.
+     * The Instant timestamp will be null if a parse error occurs.
+     * @throws IOException if an I/O error occurs.
+     * @since 3.9.0
+     */
+    public Instant mdtmInstant(final String pathname) throws IOException {
+        final String modificationTime = getModificationTime(pathname);
+        if (modificationTime != null) {
+            return MLSxEntryParser.parseGmtInstant(modificationTime);
         }
         return null;
     }

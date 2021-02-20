@@ -18,6 +18,7 @@
 package org.apache.commons.net.ftp.parser;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -211,6 +212,17 @@ public class MLSxEntryParser extends FTPFileEntryParserImpl
             gc.clear(Calendar.MILLISECOND); // flag up missing ms units
         }
         return gc;
+    }
+
+    /**
+     * Parse a GMT time stamp of the form YYYYMMDDHHMMSS[.sss]
+     *
+     * @param timestamp the date-time to parse
+     * @return a Calendar entry, may be {@code null}
+     * @since 3.9.0
+     */
+    public static Instant parseGmtInstant(final String timestamp) {
+        return parseGMTdateTime(timestamp).toInstant();
     }
 
     //              perm-fact    = "Perm" "=" *pvals
