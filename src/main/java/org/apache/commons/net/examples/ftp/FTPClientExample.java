@@ -25,6 +25,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.time.Duration;
 import java.util.Arrays;
 
 import org.apache.commons.net.PrintCommandListener;
@@ -298,10 +299,10 @@ public final class FTPClientExample
             ftp.setCopyStreamListener(createListener());
         }
         if (keepAliveTimeoutSeconds >= 0) {
-            ftp.setControlKeepAliveTimeout(keepAliveTimeoutSeconds);
+            ftp.setControlKeepAliveTimeout(Duration.ofSeconds(keepAliveTimeoutSeconds));
         }
         if (controlKeepAliveReplyTimeoutMillis >= 0) {
-            ftp.setControlKeepAliveReplyTimeout(controlKeepAliveReplyTimeoutMillis);
+            ftp.setControlKeepAliveReplyTimeout(Duration.ofMillis(controlKeepAliveReplyTimeoutMillis));
         }
         if (encoding != null) {
             ftp.setControlEncoding(encoding);

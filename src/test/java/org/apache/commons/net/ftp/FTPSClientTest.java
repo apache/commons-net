@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.SocketException;
 import java.net.URL;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Calendar;
 
@@ -74,7 +75,7 @@ public class FTPSClientTest {
 
     private static final String SERVER_JKS_RES = "org/apache/commons/net/ftpsserver/ftpserver.jks";
 
-    private static final boolean implicit = false;
+    private static final boolean IMPLICIT = false;
 
     private static String TlsProtocols;
 
@@ -100,13 +101,13 @@ public class FTPSClientTest {
     public static void setUpClass() throws Exception {
         TlsProtocols = System.getProperty(JDK_TLS_CLIENT_PROTOCOLS);
         System.setProperty(JDK_TLS_CLIENT_PROTOCOLS, "TLSv1");
-        setUpClass(implicit);
+        setUpClass(IMPLICIT);
     }
 
     /**
      * Creates and starts an embedded Apache MINA FTP Server.
      *
-     * @param implicit FTPS connection mode
+     * @param IMPLICIT FTPS connection mode
      * @throws FtpException
      */
     private synchronized static void setUpClass(final boolean implicit) throws FtpException {
@@ -173,9 +174,21 @@ public class FTPSClientTest {
     }
 
     private FTPSClient loginClient() throws SocketException, IOException {
-        final FTPSClient client = new FTPSClient(implicit);
+        final FTPSClient client = new FTPSClient(IMPLICIT);
+        //
+        client.setControlKeepAliveReplyTimeout(null);
+        assertEquals(0, client.getControlKeepAliveReplyTimeoutDuration().getSeconds());
+        client.setControlKeepAliveReplyTimeout(Duration.ofSeconds(30));
+        assertEquals(30, client.getControlKeepAliveReplyTimeoutDuration().getSeconds());
+        //
+        client.setControlKeepAliveTimeout(null);
+        assertEquals(0, client.getControlKeepAliveTimeoutDuration().getSeconds());
+        client.setControlKeepAliveTimeout(Duration.ofSeconds(40));
+        assertEquals(40, client.getControlKeepAliveTimeoutDuration().getSeconds());
+        //
         client.setEndpointCheckingEnabled(endpointCheckingEnabled);
         client.connect("localhost", SocketPort);
+        //
         assertClientCode(client);
         assertEquals(SocketPort, client.getRemotePort());
         //

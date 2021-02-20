@@ -34,6 +34,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -304,16 +305,16 @@ public class FTPClient extends FTP implements Configurable {
         private final long idleMillis;
         private final int currentSoTimeoutMillis;
 
-        private long timeMillis = System.currentTimeMillis();
+        private long lastIdleTimeMillis = System.currentTimeMillis();
         private int notAcked;
         private int acksAcked;
         private int ioErrors;
 
-        CSL(final FTPClient parent, final long idleTimeMillis, final int maxWaitMillis) throws SocketException {
-            this.idleMillis = idleTimeMillis;
+        CSL(final FTPClient parent, final Duration idleDuration, final Duration maxWaitDuration) throws SocketException {
+            this.idleMillis = idleDuration.toMillis();
             this.parent = parent;
             this.currentSoTimeoutMillis = parent.getSoTimeout();
-            parent.setSoTimeout(maxWaitMillis);
+            parent.setSoTimeout(DurationUtils.toMillisInt(maxWaitDuration));
         }
 
         @Override
@@ -325,7 +326,7 @@ public class FTPClient extends FTP implements Configurable {
         public void bytesTransferred(final long totalBytesTransferred,
                 final int bytesTransferred, final long streamSize) {
             final long nowMillis = System.currentTimeMillis();
-            if (nowMillis - timeMillis > idleMillis) {
+            if (nowMillis - lastIdleTimeMillis > idleMillis) {
                 try {
                     parent.__noop();
                     acksAcked++;
@@ -335,7 +336,7 @@ public class FTPClient extends FTP implements Configurable {
                     ioErrors++;
                     // Ignored
                 }
-                timeMillis = nowMillis;
+                lastIdleTimeMillis = nowMillis;
             }
         }
 
@@ -602,14 +603,14 @@ public class FTPClient extends FTP implements Configurable {
     private CopyStreamListener copyStreamListener;
 
     // How long to wait before sending another control keep-alive message
-    private long controlKeepAliveTimeoutMillis;
-    // How long to wait (millis) for keepalive message replies before continuing
+    private Duration controlKeepAliveTimeout = Duration.ZERO;
+
+    // How long to wait for keepalive message replies before continuing
     // Most FTP servers don't seem to support concurrent control and data connection usage
-    private int controlKeepAliveReplyTimeoutMillis = 1000;
+    private Duration controlKeepAliveReplyTimeout = Duration.ofSeconds(1);
 
     // Debug counts for NOOP acks
     private int[] cslDebug;
-
 
     /**
      * Enable or disable replacement of internal IP in passive mode. Default enabled
@@ -618,7 +619,7 @@ public class FTPClient extends FTP implements Configurable {
     private HostnameResolver passiveNatWorkaroundStrategy = new NatServerResolverImpl(this);
 
     /** Controls the automatic server encoding detection (only UTF-8 supported). */
-    private boolean autodetectEncoding = false;
+    private boolean autodetectEncoding;
 
     /** Map of FEAT responses. If null, has not been initialized. */
     private HashMap<String, Set<String>> featuresMap;
@@ -720,6 +721,7 @@ public class FTPClient extends FTP implements Configurable {
      * an argument before establishing the data connection.  Active
      * mode connections also cause a local PORT command to be issued.
      *
+     * @deprecated (3.3) Use {@link #_openDataConnection_(FTPCmd, String)} instead
      * @param command  The int representation of the FTP command to send.
      * @param arg The arguments to the FTP command.  If this parameter is
      *             set to null, then the command is sent with no argument.
@@ -729,7 +731,6 @@ public class FTPClient extends FTP implements Configurable {
      *         the connection.
      * @throws IOException  If an I/O error occurs while either sending a
      *      command to the server or receiving a reply from the server.
-     * @deprecated (3.3) Use {@link #_openDataConnection_(FTPCmd, String)} instead
      */
     @Deprecated
     protected Socket _openDataConnection_(final int command, final String arg) throws IOException {
@@ -985,8 +986,8 @@ public class FTPClient extends FTP implements Configurable {
                     input = getBufferedInputStream(socket.getInputStream());
                 }
 
-                if (controlKeepAliveTimeoutMillis > 0) {
-                    csl = new CSL(this, controlKeepAliveTimeoutMillis, controlKeepAliveReplyTimeoutMillis);
+                if (DurationUtils.isPositive(controlKeepAliveTimeout)) {
+                    csl = new CSL(this, controlKeepAliveTimeout, controlKeepAliveReplyTimeout);
                 }
 
                 // Treat everything else as binary for now
@@ -1066,8 +1067,8 @@ public class FTPClient extends FTP implements Configurable {
         }
 
         CSL csl = null;
-        if (controlKeepAliveTimeoutMillis > 0) {
-            csl = new CSL(this, controlKeepAliveTimeoutMillis, controlKeepAliveReplyTimeoutMillis);
+        if (DurationUtils.isPositive(controlKeepAliveTimeout)) {
+            csl = new CSL(this, controlKeepAliveTimeout, controlKeepAliveReplyTimeout);
         }
 
         // Treat everything else as binary for now
@@ -1730,24 +1731,54 @@ public class FTPClient extends FTP implements Configurable {
 
     /**
      * Gets how long to wait for control keep-alive message replies.
+     *
+     * @deprecated Use {@link #getControlKeepAliveReplyTimeoutDuration()}.
      * @return wait time in milliseconds.
      * @since 3.0
      */
+    @Deprecated
     public int getControlKeepAliveReplyTimeout() {
-        return controlKeepAliveReplyTimeoutMillis;
+        return DurationUtils.toMillisInt(controlKeepAliveReplyTimeout);
+    }
+
+    /**
+     * Gets how long to wait for control keep-alive message replies.
+     *
+     * @return wait time.
+     * @since 3.9.0
+     */
+    public Duration getControlKeepAliveReplyTimeoutDuration() {
+        return controlKeepAliveReplyTimeout;
     }
 
     /**
      * Gets the time to wait between sending control connection keepalive messages
      * when processing file upload or download.
      * <p>
-     * See the class Javadoc section "Control channel keep-alive feature:"
+     * See the class Javadoc section "Control channel keep-alive feature"
+     * </p>
      *
+     * @deprecated Use {@link #getControlKeepAliveTimeoutDuration()}.
      * @return the number of seconds between keepalive messages.
      * @since 3.0
      */
+    @Deprecated
     public long getControlKeepAliveTimeout() {
-        return controlKeepAliveTimeoutMillis / 1000;
+        return controlKeepAliveTimeout.getSeconds();
+    }
+
+    /**
+     * Gets the time to wait between sending control connection keepalive messages
+     * when processing file upload or download.
+     * <p>
+     * See the class Javadoc section "Control channel keep-alive feature"
+     * </p>
+     *
+     * @return the duration between keepalive messages.
+     * @since 3.9.0
+     */
+    public Duration getControlKeepAliveTimeoutDuration() {
+        return controlKeepAliveTimeout;
     }
 
     /**
@@ -1772,8 +1803,8 @@ public class FTPClient extends FTP implements Configurable {
      * <li>unanswered NOOPs after fetching additional replies</li>
      * <li>Number of IOErrors ignored</li>
      * </ul>
-     * @return the debug array
      * @deprecated 3.7 For testing only; may be dropped or changed at any time
+     * @return the debug array
      */
     @Deprecated // only for use in testing
     public int[] getCslDebug() {
@@ -2018,9 +2049,9 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
+     * @deprecated use {@link #getSystemType()} instead
      * @return the name
      * @throws IOException on error
-     * @deprecated use {@link #getSystemType()} instead
      */
     @Deprecated
     public String getSystemName() throws IOException
@@ -3449,26 +3480,57 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Sets how long to wait for control keep-alive message replies.
      *
+     * @deprecated Use {@link #setControlKeepAliveReplyTimeout(Duration)}.
      * @param timeoutMillis number of milliseconds to wait (defaults to 1000)
      * @since 3.0
      * @see #setControlKeepAliveTimeout(long)
      */
+    @Deprecated
     public void setControlKeepAliveReplyTimeout(final int timeoutMillis) {
-        controlKeepAliveReplyTimeoutMillis = timeoutMillis;
+        controlKeepAliveReplyTimeout = Duration.ofMillis(timeoutMillis);
     }
 
     /**
-     * Set the time to wait between sending control connection keepalive messages
+     * Sets how long to wait for control keep-alive message replies.
+     *
+     * @param timeoutMillis number of milliseconds to wait (defaults to 1000)
+     * @since 3.0
+     * @see #setControlKeepAliveTimeout(Duration)
+     */
+    public void setControlKeepAliveReplyTimeout(final Duration timeoutMillis) {
+        controlKeepAliveReplyTimeout = DurationUtils.zeroIfNull(timeoutMillis);
+    }
+
+    /**
+     * Sets the time to wait between sending control connection keepalive messages
      * when processing file upload or download.
      * <p>
-     * See the class Javadoc section "Control channel keep-alive feature:"
+     * See the class Javadoc section "Control channel keep-alive feature"
+     * </p>
      *
+     * @param controlIdle the wait between keepalive messages. Zero (or less) disables.
+     * @since 3.9.0
+     * @see #setControlKeepAliveReplyTimeout(Duration)
+     */
+    public void setControlKeepAliveTimeout(final Duration controlIdle){
+        controlKeepAliveTimeout = DurationUtils.zeroIfNull(controlIdle);
+    }
+
+    /**
+     * Sets the time to wait between sending control connection keepalive messages
+     * when processing file upload or download.
+     * <p>
+     * See the class Javadoc section "Control channel keep-alive feature"
+     * </p>
+     *
+     * @deprecated Use {@link #setControlKeepAliveTimeout(Duration)}.
      * @param controlIdleSeconds the wait (in seconds) between keepalive messages. Zero (or less) disables.
      * @since 3.0
      * @see #setControlKeepAliveReplyTimeout(int)
      */
+    @Deprecated
     public void setControlKeepAliveTimeout(final long controlIdleSeconds){
-        controlKeepAliveTimeoutMillis = controlIdleSeconds * 1000;
+        controlKeepAliveTimeout = Duration.ofSeconds(controlIdleSeconds);
     }
 
     /**
@@ -3711,23 +3773,20 @@ public class FTPClient extends FTP implements Configurable {
      * (unless that is also a site local address).
      * This gets around the problem that some NAT boxes may change the
      * reply.
-     *
+     * <p>
      * The default is true, i.e. site-local replies are replaced.
+     * </p>
+     * @deprecated (3.6) use {@link #setPassiveNatWorkaroundStrategy(HostnameResolver)} instead
      * @param enabled true to enable replacing internal IP's in passive
      * mode.
-     * @deprecated (3.6) use {@link #setPassiveNatWorkaroundStrategy(HostnameResolver)} instead
      */
     @Deprecated
     public void setPassiveNatWorkaround(final boolean enabled) {
-        if (enabled) {
-            this.passiveNatWorkaroundStrategy = new NatServerResolverImpl(this);
-        } else {
-            this.passiveNatWorkaroundStrategy = null;
-        }
+        this.passiveNatWorkaroundStrategy = enabled ? new NatServerResolverImpl(this) : null;
     }
 
     /**
-     * Set the workaround strategy to replace the PASV mode reply addresses.
+     * Sets the workaround strategy to replace the PASV mode reply addresses.
      * This gets around the problem that some NAT boxes may change the reply.
      *
      * The default implementation is {@code NatServerResolverImpl}, i.e. site-local
@@ -3766,7 +3825,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Set the external IP address to report in EPRT/PORT commands in active mode.
+     * Sets the external IP address to report in EPRT/PORT commands in active mode.
      * Useful when there are multiple network cards.
      *
      * @param ipAddress The external IP address of this machine.

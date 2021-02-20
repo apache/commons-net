@@ -66,10 +66,22 @@ The <action> type attribute can be add,update,fix,remove.
         <release version="3.9.0" date="2021-MM-DD" description="Maintenance and bug fix release (Java 8).">
             <!-- ADD -->
            <action type="add" dev="ggregory" due-to="Gary Gregory">
-            Add FTPClient.mdtmInstant(String).
+            [FTP] Add FTPClient.mdtmInstant(String).
             </action>
            <action type="add" dev="ggregory" due-to="Gary Gregory">
-            Add MLSxEntryParser.parseGmtInstant(String).
+            [FTP] Add MLSxEntryParser.parseGmtInstant(String).
+            </action>
+           <action type="add" dev="ggregory" due-to="Gary Gregory">
+            [FTP] Add FTPClient.getControlKeepAliveReplyTimeoutDuration().
+            </action>
+           <action type="add" dev="ggregory" due-to="Gary Gregory">
+            [FTP] Add FTPClient.setControlKeepAliveReplyTimeout(Duration).
+            </action>
+           <action type="add" dev="ggregory" due-to="Gary Gregory">
+            [FTP] Add FTPClient.getControlKeepAliveTimeoutDuration().
+            </action>
+           <action type="add" dev="ggregory" due-to="Gary Gregory">
+            [FTP] Add FTPClient.setControlKeepAliveTimeout(Duration).
             </action>
         </release>
         <release version="3.8.0" date="2021-02-13" description="Maintenance and bug fix release (Java 7).">
@@ -81,14 +93,14 @@ The <action> type attribute can be add,update,fix,remove.
             Add and use SocketClient.applySocketAttributes().
             </action>
             <action type="add" dev="ggregory" due-to="Gary Gregory">
-            Add FTPClient.hasFeature(FTPCmd).
+            [FTP] Add FTPClient.hasFeature(FTPCmd).
             </action>
             <action type="add" dev="ggregory" due-to="Gary Gregory">
-            Add FTPClient.mdtmCalendar(String).
+            [FTP] Add FTPClient.mdtmCalendar(String).
             </action>
             <!--  FIX -->
             <action type="fix" dev="ggregory" due-to="Gary Gregory">
-            Fix concurrent counting of chunks in IMAPExportMbox.
+            [IMAP] Fix concurrent counting of chunks in IMAPExportMbox.
             </action>
             <action type="fix" dev="ggregory" due-to="Gary Gregory">
             Fix possible if rare NPEs in tests.
