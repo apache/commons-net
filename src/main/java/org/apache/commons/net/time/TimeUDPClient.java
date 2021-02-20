@@ -65,8 +65,7 @@ public final class TimeUDPClient extends DatagramSocketClient
      */
     public Date getDate(final InetAddress host) throws IOException
     {
-        return new Date((getTime(host, DEFAULT_PORT) -
-                         SECONDS_1900_TO_1970)*1000L);
+        return new Date((getTime(host, DEFAULT_PORT) - SECONDS_1900_TO_1970) * 1000L);
     }
 
     /**
@@ -81,7 +80,7 @@ public final class TimeUDPClient extends DatagramSocketClient
      */
     public Date getDate(final InetAddress host, final int port) throws IOException
     {
-        return new Date((getTime(host, port) - SECONDS_1900_TO_1970)*1000L);
+        return new Date((getTime(host, port) - SECONDS_1900_TO_1970) * 1000L);
     }
 
 
@@ -115,8 +114,7 @@ public final class TimeUDPClient extends DatagramSocketClient
         final DatagramPacket sendPacket;
         final DatagramPacket receivePacket;
 
-        sendPacket =
-            new DatagramPacket(dummyData, dummyData.length, host, port);
+        sendPacket = new DatagramPacket(dummyData, dummyData.length, host, port);
         receivePacket = new DatagramPacket(timeData, timeData.length);
 
         _socket_.send(sendPacket);
