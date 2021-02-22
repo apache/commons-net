@@ -189,15 +189,11 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
             }
             //set FTPFile name
             //Check also for versions to be returned or not
-            if (isVersioning())
-            {
-                f.setName(name);
-            }
-            else
+            if (!isVersioning())
             {
                 name = name.substring(0, name.lastIndexOf(';'));
-                f.setName(name);
             }
+            f.setName(name);
             //size is retreived in blocks and needs to be put in bytes
             //for us humans and added to the FTPFile array
             final long sizeInBytes = Long.parseLong(size) * longBlock;
