@@ -786,10 +786,8 @@ public class FTPClient extends FTP implements Configurable {
                     if (!FTPReply.isPositiveCompletion(eprt(getReportHostAddress(), server.getLocalPort()))) {
                         return null;
                     }
-                } else {
-                    if (!FTPReply.isPositiveCompletion(port(getReportHostAddress(), server.getLocalPort()))) {
-                        return null;
-                    }
+                } else if (!FTPReply.isPositiveCompletion(port(getReportHostAddress(), server.getLocalPort()))) {
+                    return null;
                 }
 
                 if ((restartOffset > 0) && !restart(restartOffset)) {
@@ -1396,36 +1394,34 @@ public class FTPClient extends FTP implements Configurable {
                     parserFactory.createFileEntryParser(parserKey);
                 entryParserKey = parserKey;
 
+            } else // if no parserKey was supplied, check for a configuration
+            // in the params, and if it has a non-empty system type, use that.
+            if (null != configuration && configuration.getServerSystemKey().length() > 0) {
+                entryParser =
+                    parserFactory.createFileEntryParser(configuration);
+                entryParserKey = configuration.getServerSystemKey();
             } else {
-                // if no parserKey was supplied, check for a configuration
-                // in the params, and if it has a non-empty system type, use that.
-                if (null != configuration && configuration.getServerSystemKey().length() > 0) {
-                    entryParser =
-                        parserFactory.createFileEntryParser(configuration);
-                    entryParserKey = configuration.getServerSystemKey();
-                } else {
-                    // if a parserKey hasn't been supplied, and a configuration
-                    // hasn't been supplied, and the override property is not set
-                    // then autodetect by calling
-                    // the SYST command and use that to choose the parser.
-                    String systemType = System.getProperty(FTP_SYSTEM_TYPE);
-                    if (systemType == null) {
-                        systemType = getSystemType(); // cannot be null
-                        final Properties override = getOverrideProperties();
-                        if (override != null) {
-                            final String newType = override.getProperty(systemType);
-                            if (newType != null) {
-                                systemType = newType;
-                            }
+                // if a parserKey hasn't been supplied, and a configuration
+                // hasn't been supplied, and the override property is not set
+                // then autodetect by calling
+                // the SYST command and use that to choose the parser.
+                String systemType = System.getProperty(FTP_SYSTEM_TYPE);
+                if (systemType == null) {
+                    systemType = getSystemType(); // cannot be null
+                    final Properties override = getOverrideProperties();
+                    if (override != null) {
+                        final String newType = override.getProperty(systemType);
+                        if (newType != null) {
+                            systemType = newType;
                         }
                     }
-                    if (null != configuration) { // system type must have been empty above
-                        entryParser = parserFactory.createFileEntryParser(new FTPClientConfig(systemType, configuration));
-                    } else {
-                        entryParser = parserFactory.createFileEntryParser(systemType);
-                    }
-                    entryParserKey = systemType;
                 }
+                if (null != configuration) { // system type must have been empty above
+                    entryParser = parserFactory.createFileEntryParser(new FTPClientConfig(systemType, configuration));
+                } else {
+                    entryParser = parserFactory.createFileEntryParser(systemType);
+                }
+                entryParserKey = systemType;
             }
         }
     }

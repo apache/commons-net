@@ -831,12 +831,8 @@ public class NNTPClient extends NNTP
             if (!NNTPReply.isPositiveCompletion(sendCommand(command, articleId))) {
                 return null;
             }
-        }
-        else
-        {
-            if (!NNTPReply.isPositiveCompletion(sendCommand(command))) {
-                return null;
-            }
+        } else if (!NNTPReply.isPositiveCompletion(sendCommand(command))) {
+            return null;
         }
 
 
@@ -1675,10 +1671,8 @@ public class NNTPClient extends NNTP
             if (!NNTPReply.isPositiveCompletion(stat(articleId))) {
                 return false;
             }
-        } else {
-            if (!NNTPReply.isPositiveCompletion(stat())) {
-                return false;
-            }
+        } else if (!NNTPReply.isPositiveCompletion(stat())) {
+            return false;
         }
 
         if (pointer != null) {

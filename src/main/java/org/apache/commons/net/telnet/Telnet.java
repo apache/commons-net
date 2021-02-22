@@ -465,22 +465,17 @@ class Telnet extends SocketClient
         if (optionHandlers[option] != null)
         {
             acceptNewState = optionHandlers[option].getAcceptLocal();
-        }
-        else
+        } else /* open TelnetOptionHandler functionality (end)*/
+        /* TERMINAL-TYPE option (start)*/
+        if (option == TERMINAL_TYPE)
         {
-        /* open TelnetOptionHandler functionality (end)*/
-            /* TERMINAL-TYPE option (start)*/
-            if (option == TERMINAL_TYPE)
+            if (terminalType != null && !terminalType.isEmpty())
             {
-                if (terminalType != null && !terminalType.isEmpty())
-                {
-                    acceptNewState = true;
-                }
+                acceptNewState = true;
             }
-            /* TERMINAL-TYPE option (end)*/
-        /* open TelnetOptionHandler functionality (start)*/
         }
-        /* open TelnetOptionHandler functionality (end)*/
+        /* TERMINAL-TYPE option (end)*/
+      /* open TelnetOptionHandler functionality (start)*/
 
         if (willResponse[option] > 0)
         {
@@ -611,24 +606,20 @@ class Telnet extends SocketClient
                   optionHandlers[suboption[0]].answerSubnegotiation(suboption,
                   suboptionLength);
                 _sendSubnegotiation(responseSuboption);
-            }
-            else
+            } else if (suboptionLength > 1)
             {
-                if (suboptionLength > 1)
+                if (debug)
                 {
-                    if (debug)
+                    for (int ii = 0; ii < suboptionLength; ii++)
                     {
-                        for (int ii = 0; ii < suboptionLength; ii++)
-                        {
-                            System.err.println("SUB[" + ii + "]: "
-                                + suboption[ii]);
-                        }
+                        System.err.println("SUB[" + ii + "]: "
+                            + suboption[ii]);
                     }
-                    if (suboption[0] == TERMINAL_TYPE
-                        && suboption[1] == TERMINAL_TYPE_SEND)
-                    {
-                        sendTerminalType();
-                    }
+                }
+                if (suboption[0] == TERMINAL_TYPE
+                    && suboption[1] == TERMINAL_TYPE_SEND)
+                {
+                    sendTerminalType();
                 }
             }
         }

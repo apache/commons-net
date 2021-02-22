@@ -63,14 +63,12 @@ public class Main {
                                     " exampleClass>,<exampleClass parameters> (comma-separated, no spaces)");
                 System.out.println("Or   : mvn -q exec:java  -Dexec.args=\"<alias" +
                                     " or exampleClass> <exampleClass parameters>\" (space separated)");
+            } else if (fromJar()) {
+                System.out.println(
+                    "Usage: java -jar commons-net-examples-m.n.jar <alias or exampleClass> <exampleClass parameters>");
             } else {
-                if (fromJar()) {
-                    System.out.println(
-                        "Usage: java -jar commons-net-examples-m.n.jar <alias or exampleClass> <exampleClass parameters>");
-                } else {
-                    System.out.println(
-                        "Usage: java -cp target/classes examples/Main <alias or exampleClass> <exampleClass parameters>");
-                }
+                System.out.println(
+                    "Usage: java -cp target/classes examples/Main <alias or exampleClass> <exampleClass parameters>");
             }
             @SuppressWarnings("unchecked") // property names are Strings
             final

@@ -481,12 +481,10 @@ __main:
                 if (remote != null) { // See if the command is present
                     if (ftp.hasFeature(remote)) {
                         System.out.println("Has feature: "+remote);
+                    } else if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
+                        System.out.println("FEAT "+remote+" was not detected");
                     } else {
-                        if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
-                            System.out.println("FEAT "+remote+" was not detected");
-                        } else {
-                            System.out.println("Command failed: "+ftp.getReplyString());
-                        }
+                        System.out.println("Command failed: "+ftp.getReplyString());
                     }
 
                     // Strings feature check
@@ -495,19 +493,15 @@ __main:
                         for(final String f : features) {
                             System.out.println("FEAT "+remote+"="+f+".");
                         }
+                    } else if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
+                        System.out.println("FEAT "+remote+" is not present");
                     } else {
-                        if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
-                            System.out.println("FEAT "+remote+" is not present");
-                        } else {
-                            System.out.println("Command failed: "+ftp.getReplyString());
-                        }
+                        System.out.println("Command failed: "+ftp.getReplyString());
                     }
-                } else {
-                    if (ftp.features()) {
+                } else if (ftp.features()) {
 //                        Command listener has already printed the output
-                    } else {
-                        System.out.println("Failed: "+ftp.getReplyString());
-                    }
+                } else {
+                    System.out.println("Failed: "+ftp.getReplyString());
                 }
             }
             else if (doCommand != null)

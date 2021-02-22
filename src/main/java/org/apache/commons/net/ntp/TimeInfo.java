@@ -216,22 +216,19 @@ public class TimeInfo {
                  if (deltaMillis <= delayValueMillis)
                  {
                      delayValueMillis -= deltaMillis; // delay = (t4 - t1) - (t3 - t2)
-                 } else
+                 } else // if delta - delayValue == 1 ms then it's a round-off error
+                 // e.g. delay=3ms, processing=4ms
+                 if (deltaMillis - delayValueMillis == 1)
                  {
-                     // if delta - delayValue == 1 ms then it's a round-off error
-                     // e.g. delay=3ms, processing=4ms
-                     if (deltaMillis - delayValueMillis == 1)
+                     // delayValue == 0 -> local clock saw no tick change but destination clock did
+                     if (delayValueMillis != 0)
                      {
-                         // delayValue == 0 -> local clock saw no tick change but destination clock did
-                         if (delayValueMillis != 0)
-                         {
-                             comments.add("Info: processing time > total network time by 1 ms -> assume zero delay");
-                             delayValueMillis = 0;
-                         }
-                     } else {
-                        comments.add("Warning: processing time > total network time");
-                    }
-                 }
+                         comments.add("Info: processing time > total network time by 1 ms -> assume zero delay");
+                         delayValueMillis = 0;
+                     }
+                 } else {
+                    comments.add("Warning: processing time > total network time");
+                }
              }
              delayMillis = Long.valueOf(delayValueMillis);
             if (origTimeMillis > returnTimeMillis) {
