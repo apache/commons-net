@@ -673,11 +673,8 @@ public class TFTPServer implements Runnable
         if (localiface != null)
         {
             final Enumeration<InetAddress> ifaddrs = localiface.getInetAddresses();
-            if (ifaddrs != null)
-            {
-                if (ifaddrs.hasMoreElements()) {
-                    iaddr = ifaddrs.nextElement();
-                }
+            if ((ifaddrs != null) && ifaddrs.hasMoreElements()) {
+                iaddr = ifaddrs.nextElement();
             }
         }
         log_ = log == null ? nullStream: log;

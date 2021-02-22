@@ -904,11 +904,9 @@ private KeyManager getKeyManager() {
         _controlOutput_ = new BufferedWriter(new OutputStreamWriter(
                 socket.getOutputStream(), getControlEncoding()));
 
-        if (isClientMode) {
-            if (hostnameVerifier != null &&
-                !hostnameVerifier.verify(_hostname_, socket.getSession())) {
-                throw new SSLHandshakeException("Hostname doesn't match certificate");
-            }
+        if (isClientMode && (hostnameVerifier != null &&
+            !hostnameVerifier.verify(_hostname_, socket.getSession()))) {
+            throw new SSLHandshakeException("Hostname doesn't match certificate");
         }
     }
 
