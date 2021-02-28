@@ -465,14 +465,9 @@ class Telnet extends SocketClient
         if (optionHandlers[option] != null)
         {
             acceptNewState = optionHandlers[option].getAcceptLocal();
-        } else /* open TelnetOptionHandler functionality (end)*/
-        /* TERMINAL-TYPE option (start)*/
-        if (option == TERMINAL_TYPE)
+        } else if (option == TERMINAL_TYPE && terminalType != null && !terminalType.isEmpty())
         {
-            if (terminalType != null && !terminalType.isEmpty())
-            {
-                acceptNewState = true;
-            }
+            acceptNewState = true;
         }
         /* TERMINAL-TYPE option (end)*/
       /* open TelnetOptionHandler functionality (start)*/
@@ -1018,19 +1013,16 @@ class Telnet extends SocketClient
         options[option] |= DO_MASK;
 
         /* open TelnetOptionHandler functionality (start)*/
-        if (requestedDo(option))
+        if (requestedDo(option) && (optionHandlers[option] != null))
         {
-            if (optionHandlers[option] != null)
+            optionHandlers[option].setDo(true);
+
+            final int[] subneg =
+                optionHandlers[option].startSubnegotiationRemote();
+
+            if (subneg != null)
             {
-                optionHandlers[option].setDo(true);
-
-                final int[] subneg =
-                    optionHandlers[option].startSubnegotiationRemote();
-
-                if (subneg != null)
-                {
-                    _sendSubnegotiation(subneg);
-                }
+                _sendSubnegotiation(subneg);
             }
         }
         /* open TelnetOptionHandler functionality (end)*/
@@ -1105,19 +1097,16 @@ class Telnet extends SocketClient
         options[option] |= WILL_MASK;
 
         /* open TelnetOptionHandler functionality (start)*/
-        if (requestedWill(option))
+        if (requestedWill(option) && (optionHandlers[option] != null))
         {
-            if (optionHandlers[option] != null)
+            optionHandlers[option].setWill(true);
+
+            final int[] subneg =
+                optionHandlers[option].startSubnegotiationLocal();
+
+            if (subneg != null)
             {
-                optionHandlers[option].setWill(true);
-
-                final int[] subneg =
-                    optionHandlers[option].startSubnegotiationLocal();
-
-                if (subneg != null)
-                {
-                    _sendSubnegotiation(subneg);
-                }
+                _sendSubnegotiation(subneg);
             }
         }
         /* open TelnetOptionHandler functionality (end)*/
