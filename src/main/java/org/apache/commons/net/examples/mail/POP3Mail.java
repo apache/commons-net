@@ -124,7 +124,7 @@ public final class POP3Mail
                 pop3.disconnect();
                 return;
             }
-            else if (messages.length == 0)
+            if (messages.length == 0)
             {
                 System.out.println("No messages");
                 pop3.logout();

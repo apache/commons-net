@@ -294,7 +294,8 @@ public class FTPClientConfig
         if (lang != null) {
             if (lang instanceof Locale) {
                 return new DateFormatSymbols((Locale) lang);
-            } else if (lang instanceof String){
+            }
+            if (lang instanceof String){
                 return getDateFormatSymbols((String) lang);
             }
         }

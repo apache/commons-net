@@ -99,26 +99,25 @@ public final class TFTPExample
         for (argc = 0; argc < args.length; argc++)
         {
             arg = args[argc];
-            if (arg.startsWith("-")) {
-                if (arg.equals("-r")) {
-                    receiveFile = true;
-                } else if (arg.equals("-s")) {
-                    receiveFile = false;
-                } else if (arg.equals("-a")) {
-                    transferMode = TFTP.ASCII_MODE;
-                } else if (arg.equals("-b")) {
-                    transferMode = TFTP.BINARY_MODE;
-                } else if (arg.equals("-t")) {
-                    timeout = 1000 * Integer.parseInt(args[++argc]);
-                } else if (arg.equals("-v")) {
-                    verbose = true;
-                } else {
-                    System.err.println("Error: unrecognized option.");
-                    System.err.print(USAGE);
-                    System.exit(1);
-                }
-            } else {
+            if (!arg.startsWith("-")) {
                 break;
+            }
+            if (arg.equals("-r")) {
+                receiveFile = true;
+            } else if (arg.equals("-s")) {
+                receiveFile = false;
+            } else if (arg.equals("-a")) {
+                transferMode = TFTP.ASCII_MODE;
+            } else if (arg.equals("-b")) {
+                transferMode = TFTP.BINARY_MODE;
+            } else if (arg.equals("-t")) {
+                timeout = 1000 * Integer.parseInt(args[++argc]);
+            } else if (arg.equals("-v")) {
+                verbose = true;
+            } else {
+                System.err.println("Error: unrecognized option.");
+                System.err.print(USAGE);
+                System.exit(1);
             }
         }
 

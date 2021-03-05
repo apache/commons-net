@@ -140,22 +140,18 @@ public class TFTPServer implements Runnable
                 createDirectory(parent);
             }
 
-            if (parent.isDirectory())
-            {
-                if (file.isDirectory())
-                {
-                    return;
-                }
-                final boolean result = file.mkdir();
-                if (!result)
-                {
-                    throw new IOException("Couldn't create requested directory");
-                }
-            }
-            else
-            {
+            if (!parent.isDirectory()) {
                 throw new IOException(
                         "Invalid directory path - file in the way of requested folder");
+            }
+            if (file.isDirectory())
+            {
+                return;
+            }
+            final boolean result = file.mkdir();
+            if (!result)
+            {
+                throw new IOException("Couldn't create requested directory");
             }
         }
 

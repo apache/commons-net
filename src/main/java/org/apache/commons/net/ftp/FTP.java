@@ -775,7 +775,8 @@ public class FTP extends SocketClient
             } else if (isStrictReplyParsing()) {
                 if (length == REPLY_CODE_LEN + 1) { // expecting some text
                     throw new MalformedServerReplyException("Truncated server reply: '" + line +"'");
-                } else if (sep != ' ') {
+                }
+                if (sep != ' ') {
                     throw new MalformedServerReplyException("Invalid server reply: '" + line +"'");
                 }
             }

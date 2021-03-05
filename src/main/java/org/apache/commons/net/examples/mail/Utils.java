@@ -48,12 +48,11 @@ class Utils {
             password = in.readLine();
         } else if ("*".equals(password)) { // console
             final Console con = System.console(); // Java 1.6
-            if (con != null) {
-                final char[] pwd = con.readPassword("Password for " + username + ": ");
-                password = new String(pwd);
-            } else {
+            if (con == null) {
                 throw new IOException("Cannot access Console");
             }
+            final char[] pwd = con.readPassword("Password for " + username + ": ");
+            password = new String(pwd);
         } else if (password.equals(password.toUpperCase(Locale.ROOT))) { // environment variable name
             final String tmp = System.getenv(password);
             if (tmp != null) { // don't overwrite if variable does not exist (just in case password is all uppers)

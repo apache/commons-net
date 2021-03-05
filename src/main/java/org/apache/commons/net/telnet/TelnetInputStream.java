@@ -143,23 +143,19 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
             {
                 // The queue is full. We need to wait before adding any more data to it. Hopefully the stream owner
                 // will consume some data soon!
-                if(threaded)
-                {
-                    queue.notify();
-                    try
-                    {
-                        queue.wait();
-                    }
-                    catch (final InterruptedException e)
-                    {
-                        throw e;
-                    }
-                }
-                else
-                {
+                if(!threaded) {
                     // We've been asked to add another character to the queue, but it is already full and there's
                     // no other thread to drain it. This should not have happened!
                     throw new IllegalStateException("Queue is full! Cannot process another character.");
+                }
+                queue.notify();
+                try
+                {
+                    queue.wait();
+                }
+                catch (final InterruptedException e)
+                {
+                    throw e;
                 }
             }
 

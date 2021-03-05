@@ -276,7 +276,8 @@ public class RExecClient extends SocketClient
             }
 
             throw new IOException(buffer.toString());
-        } else if (ch < 0) {
+        }
+        if (ch < 0) {
             throw new IOException("Server closed connection.");
         }
     }

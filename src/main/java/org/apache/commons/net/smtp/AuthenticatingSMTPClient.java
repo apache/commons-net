@@ -63,17 +63,20 @@ public class AuthenticatingSMTPClient extends SMTPSClient
         {
             if (method.equals(AUTH_METHOD.PLAIN)) {
                 return "PLAIN";
-            } else if (method.equals(AUTH_METHOD.CRAM_MD5)) {
-                return "CRAM-MD5";
-            } else if (method.equals(AUTH_METHOD.LOGIN)) {
-                return "LOGIN";
-            } else if (method.equals(AUTH_METHOD.XOAUTH)) {
-                return "XOAUTH";
-            } else if (method.equals(AUTH_METHOD.XOAUTH2)) {
-                return "XOAUTH2";
-            } else {
-                return null;
             }
+            if (method.equals(AUTH_METHOD.CRAM_MD5)) {
+                return "CRAM-MD5";
+            }
+            if (method.equals(AUTH_METHOD.LOGIN)) {
+                return "LOGIN";
+            }
+            if (method.equals(AUTH_METHOD.XOAUTH)) {
+                return "XOAUTH";
+            }
+            if (method.equals(AUTH_METHOD.XOAUTH2)) {
+                return "XOAUTH2";
+            }
+            return null;
         }
     }
 
@@ -180,7 +183,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
                     Base64.encodeBase64StringUnChunked(("\000" + username + "\000" + password).getBytes(getCharset()))
                 ));
         }
-        else if (method.equals(AUTH_METHOD.CRAM_MD5))
+        if (method.equals(AUTH_METHOD.CRAM_MD5))
         {
             // get the CRAM challenge
             final byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(4).trim());
@@ -199,7 +202,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
             return SMTPReply.isPositiveCompletion(sendCommand(
                 Base64.encodeBase64StringUnChunked(toEncode)));
         }
-        else if (method.equals(AUTH_METHOD.LOGIN))
+        if (method.equals(AUTH_METHOD.LOGIN))
         {
             // the server sends fixed responses (base64("Username") and
             // base64("Password")), so we don't have to read them.
@@ -210,14 +213,13 @@ public class AuthenticatingSMTPClient extends SMTPSClient
             return SMTPReply.isPositiveCompletion(sendCommand(
                 Base64.encodeBase64StringUnChunked(password.getBytes(getCharset()))));
         }
-        else if (method.equals(AUTH_METHOD.XOAUTH) || method.equals(AUTH_METHOD.XOAUTH2))
+        if (method.equals(AUTH_METHOD.XOAUTH) || method.equals(AUTH_METHOD.XOAUTH2))
         {
             return SMTPReply.isPositiveIntermediate(sendCommand(
                     Base64.encodeBase64StringUnChunked(username.getBytes(getCharset()))
             ));
-        } else {
-            return false; // safety check
         }
+        return false; // safety check
     }
 
 

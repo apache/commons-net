@@ -54,11 +54,10 @@ public final class POP3ExportMbox
         int argIdx;
         String file = null;
         for(argIdx = 0; argIdx < args.length; argIdx++) {
-            if (args[argIdx].equals("-F")) {
-                file = args[++argIdx];
-            } else {
+            if (!args[argIdx].equals("-F")) {
                 break;
             }
+            file = args[++argIdx];
         }
 
         final int argCount = args.length - argIdx;

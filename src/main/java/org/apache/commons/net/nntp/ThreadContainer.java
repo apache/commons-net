@@ -39,11 +39,11 @@ class ThreadContainer {
     boolean findChild(final ThreadContainer target) {
         if (child == null) {
             return false;
-        } else if (child == target) {
-            return true;
-        } else {
-            return child.findChild(target);
         }
+        if (child == target) {
+            return true;
+        }
+        return child.findChild(target);
     }
 
     // Copy the ThreadContainer tree structure down into the underlying Threadable objects

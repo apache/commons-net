@@ -47,19 +47,17 @@ public class TFTPServerMain {
         for (argc = 0; argc < args.length; argc++)
         {
             final String arg = args[argc];
-            if (arg.startsWith("-"))
-            {
-                if (arg.equals("-v") || arg.equals("-r")) {
-                    opts.put(arg, arg);
-                } else if (arg.equals("-p")) {
-                    opts.put(arg, args[++argc]);
-                } else {
-                    System.err.println("Error: unrecognized option.");
-                    System.err.print(USAGE);
-                    System.exit(1);
-                }
-            } else {
+            if (!arg.startsWith("-")) {
                 break;
+            }
+            if (arg.equals("-v") || arg.equals("-r")) {
+                opts.put(arg, arg);
+            } else if (arg.equals("-p")) {
+                opts.put(arg, args[++argc]);
+            } else {
+                System.err.println("Error: unrecognized option.");
+                System.err.print(USAGE);
+                System.exit(1);
             }
         }
 

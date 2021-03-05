@@ -335,14 +335,13 @@ public class FTPTimestampParserImpl implements
         // a valid year (e.g. 22:04 will parse as 22 A.D.)
         // so could mistakenly confuse an hour with a year,
         // if we don't insist on full length parsing.
-        if (parsed != null && pp.getIndex() == timestampStr.length()) {
-            working.setTime(parsed);
-        } else {
+        if ((parsed == null) || (pp.getIndex() != timestampStr.length())) {
             throw new ParseException(
                     "Timestamp '"+timestampStr+"' could not be parsed using a server time of "
                         +serverTime.getTime().toString(),
                     pp.getErrorIndex());
         }
+        working.setTime(parsed);
         setPrecision(defaultDateSmallestUnitIndex, working);
         return working;
     }

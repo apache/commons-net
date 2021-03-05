@@ -196,20 +196,16 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
         if (ch == '\r')
         {
             ch = super.read();
-            if (ch == '\n')
-            {
-                unread(_lineSeparatorBytes);
-                ch = super.read();
-                // This is a kluge for read(byte[], ...) to read the right amount
-                --length;
-            }
-            else
-            {
+            if (ch != '\n') {
                 if (ch != -1) {
                     unread(ch);
                 }
                 return '\r';
             }
+            unread(_lineSeparatorBytes);
+            ch = super.read();
+            // This is a kluge for read(byte[], ...) to read the right amount
+            --length;
         }
 
         return ch;

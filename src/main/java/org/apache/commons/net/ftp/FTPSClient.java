@@ -741,18 +741,17 @@ private KeyManager getKeyManager() {
         final int repCode = super.sendCommand(command, args);
         /* If CCC is issued, restore socket i/o streams to unsecured versions */
         if (CMD_CCC.equals(command)) {
-            if (FTPReply.COMMAND_OK == repCode) {
-                _socket_.close();
-                _socket_ = plainSocket;
-                _controlInput_ = new BufferedReader(
-                    new InputStreamReader(
-                        _socket_ .getInputStream(), getControlEncoding()));
-                _controlOutput_ = new BufferedWriter(
-                    new OutputStreamWriter(
-                        _socket_.getOutputStream(), getControlEncoding()));
-            } else {
+            if (FTPReply.COMMAND_OK != repCode) {
                 throw new SSLException(getReplyString());
             }
+            _socket_.close();
+            _socket_ = plainSocket;
+            _controlInput_ = new BufferedReader(
+                new InputStreamReader(
+                    _socket_ .getInputStream(), getControlEncoding()));
+            _controlOutput_ = new BufferedWriter(
+                new OutputStreamWriter(
+                    _socket_.getOutputStream(), getControlEncoding()));
         }
         return repCode;
     }

@@ -287,12 +287,11 @@ public final class IMAPExportMbox
             uri = URI.create(uriString);
         } catch(final IllegalArgumentException e) { // cannot parse the path as is; let's pull it apart and try again
             final Matcher m = Pattern.compile("(imaps?://[^/]+)(/.*)").matcher(uriString);
-            if (m.matches()) {
-                uri = URI.create(m.group(1)); // Just the scheme and auth parts
-                uri = new URI(uri.getScheme(), uri.getAuthority(), m.group(2), null, null);
-            } else {
+            if (!m.matches()) {
                 throw e;
             }
+            uri = URI.create(m.group(1)); // Just the scheme and auth parts
+            uri = new URI(uri.getScheme(), uri.getAuthority(), m.group(2), null, null);
         }
         final String file  = args[argIdx++];
         String sequenceSet = argCount > 2 ? args[argIdx++] : "1:*";
@@ -385,21 +384,19 @@ public final class IMAPExportMbox
             while (true) {
                 final boolean ok = imap.fetch(sequenceSet, itemNames);
                 // If the fetch failed, can we retry?
-                if (!ok && retryWaitSecs > 0 && mboxListener != null && checkSequence) {
-                    final String replyString = imap.getReplyString(); //includes EOL
-                    if (startsWith(replyString, PATTEMPFAIL)) {
-                        System.err.println("Temporary error detected, will retry in " + retryWaitSecs + "seconds");
-                        sequenceSet = mboxListener.lastSeq+1+":*";
-                        try {
-                            Thread.sleep(retryWaitSecs * 1000);
-                        } catch (final InterruptedException e) {
-                            // ignored
-                        }
-                    } else {
-                        throw new IOException("FETCH " + sequenceSet + " " + itemNames+ " failed with " + replyString);
-                    }
-                } else {
+                if (ok || (retryWaitSecs <= 0) || (mboxListener == null) || !checkSequence) {
                     break;
+                }
+                final String replyString = imap.getReplyString(); //includes EOL
+                if (!startsWith(replyString, PATTEMPFAIL)) {
+                    throw new IOException("FETCH " + sequenceSet + " " + itemNames+ " failed with " + replyString);
+                }
+                System.err.println("Temporary error detected, will retry in " + retryWaitSecs + "seconds");
+                sequenceSet = mboxListener.lastSeq+1+":*";
+                try {
+                    Thread.sleep(retryWaitSecs * 1000);
+                } catch (final InterruptedException e) {
+                    // ignored
                 }
             }
 

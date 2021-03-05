@@ -2110,11 +2110,10 @@ public class FTPClient extends FTP implements Configurable {
             } else {
                 // Check if the user has provided a default for when the SYST command fails
                 final String systDefault = System.getProperty(FTP_SYSTEM_TYPE_DEFAULT);
-                if (systDefault != null) {
-                    systemName = systDefault;
-                } else {
+                if (systDefault == null) {
                     throw new IOException("Unable to determine system type - response: " + getReplyString());
                 }
+                systemName = systDefault;
             }
         }
         return systemName;

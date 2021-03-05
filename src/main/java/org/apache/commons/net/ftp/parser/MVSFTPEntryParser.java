@@ -325,13 +325,17 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     public FTPFile parseFTPEntry(final String entry) {
         if (isType == FILE_LIST_TYPE) {
             return parseFileList(entry);
-        } else if (isType == MEMBER_LIST_TYPE) {
+        }
+        if (isType == MEMBER_LIST_TYPE) {
             return parseMemberList(entry);
-        } else if (isType == UNIX_LIST_TYPE) {
+        }
+        if (isType == UNIX_LIST_TYPE) {
              return unixFTPEntryParser.parseFTPEntry(entry);
-        } else if (isType == JES_LEVEL_1_LIST_TYPE) {
+        }
+        if (isType == JES_LEVEL_1_LIST_TYPE) {
             return parseJeslevel1List(entry);
-        } else if (isType == JES_LEVEL_2_LIST_TYPE) {
+        }
+        if (isType == JES_LEVEL_2_LIST_TYPE) {
             return parseJeslevel2List(entry);
         }
 

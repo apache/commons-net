@@ -790,11 +790,10 @@ public class NNTPClient extends NNTP
         try (final BufferedReader reader = new DotTerminatedMessageReader(_reader_)) {
             while ((line = reader.readLine()) != null) {
                 final NewsgroupInfo tmp = parseNewsgroupListEntry(line);
-                if (tmp != null) {
-                    list.addElement(tmp);
-                } else {
+                if (tmp == null) {
                     throw new MalformedServerReplyException(line);
                 }
+                list.addElement(tmp);
             }
         }
         final int size;

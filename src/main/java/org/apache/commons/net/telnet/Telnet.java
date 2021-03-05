@@ -332,34 +332,26 @@ class Telnet extends SocketClient
     throws InvalidTelnetOptionException, IOException
     {
         final int optcode = opthand.getOptionCode();
-        if (TelnetOption.isValidOption(optcode))
-        {
-            if (optionHandlers[optcode] == null)
-            {
-                optionHandlers[optcode] = opthand;
-                if (isConnected())
-                {
-                    if (opthand.getInitLocal())
-                    {
-                        requestWill(optcode);
-                    }
-
-                    if (opthand.getInitRemote())
-                    {
-                        requestDo(optcode);
-                    }
-                }
-            }
-            else
-            {
-                throw new InvalidTelnetOptionException(
-                    "Already registered option", optcode);
-            }
-        }
-        else
-        {
+        if (!TelnetOption.isValidOption(optcode)) {
             throw new InvalidTelnetOptionException(
                 "Invalid Option Code", optcode);
+        }
+        if (optionHandlers[optcode] != null) {
+            throw new InvalidTelnetOptionException(
+                "Already registered option", optcode);
+        }
+        optionHandlers[optcode] = opthand;
+        if (isConnected())
+        {
+            if (opthand.getInitLocal())
+            {
+                requestWill(optcode);
+            }
+
+            if (opthand.getInitRemote())
+            {
+                requestDo(optcode);
+            }
         }
     }
 
@@ -373,30 +365,26 @@ class Telnet extends SocketClient
     void deleteOptionHandler(final int optcode)
     throws InvalidTelnetOptionException, IOException
     {
-        if (TelnetOption.isValidOption(optcode))
-        {
-            if (optionHandlers[optcode] == null)
-            {
-                throw new InvalidTelnetOptionException(
-                    "Unregistered option", optcode);
-            }
-            final TelnetOptionHandler opthand = optionHandlers[optcode];
-            optionHandlers[optcode] = null;
-
-            if (opthand.getWill())
-            {
-                requestWont(optcode);
-            }
-
-            if (opthand.getDo())
-            {
-                requestDont(optcode);
-            }
-        }
-        else
-        {
+        if (!TelnetOption.isValidOption(optcode)) {
             throw new InvalidTelnetOptionException(
                 "Invalid Option Code", optcode);
+        }
+        if (optionHandlers[optcode] == null)
+        {
+            throw new InvalidTelnetOptionException(
+                "Unregistered option", optcode);
+        }
+        final TelnetOptionHandler opthand = optionHandlers[optcode];
+        optionHandlers[optcode] = null;
+
+        if (opthand.getWill())
+        {
+            requestWont(optcode);
+        }
+
+        if (opthand.getDo())
+        {
+            requestDont(optcode);
         }
     }
     /* open TelnetOptionHandler functionality (end)*/

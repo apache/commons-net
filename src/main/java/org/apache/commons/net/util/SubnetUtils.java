@@ -284,30 +284,29 @@ public class SubnetUtils {
     public SubnetUtils(final String cidrNotation) {
       final Matcher matcher = cidrPattern.matcher(cidrNotation);
 
-      if (matcher.matches()) {
-          this.address = matchAddress(matcher);
-
-          /* Create a binary netmask from the number of bits specification /x */
-
-          final int trailingZeroes = NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
-          /*
-           * An IPv4 netmask consists of 32 bits, a contiguous sequence
-           * of the specified number of ones followed by all zeros.
-           * So, it can be obtained by shifting an unsigned integer (32 bits) to the left by
-           * the number of trailing zeros which is (32 - the # bits specification).
-           * Note that there is no unsigned left shift operator, so we have to use
-           * a long to ensure that the left-most bit is shifted out correctly.
-           */
-          this.netmask = (int) (0x0FFFFFFFFL << trailingZeroes );
-
-          /* Calculate base network address */
-          this.network = address & netmask;
-
-          /* Calculate broadcast address */
-          this.broadcast = network | ~netmask;
-      } else {
+      if (!matcher.matches()) {
           throw new IllegalArgumentException(String.format(PARSE_FAIL, cidrNotation));
       }
+    this.address = matchAddress(matcher);
+
+      /* Create a binary netmask from the number of bits specification /x */
+
+      final int trailingZeroes = NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
+      /*
+       * An IPv4 netmask consists of 32 bits, a contiguous sequence
+       * of the specified number of ones followed by all zeros.
+       * So, it can be obtained by shifting an unsigned integer (32 bits) to the left by
+       * the number of trailing zeros which is (32 - the # bits specification).
+       * Note that there is no unsigned left shift operator, so we have to use
+       * a long to ensure that the left-most bit is shifted out correctly.
+       */
+      this.netmask = (int) (0x0FFFFFFFFL << trailingZeroes );
+
+      /* Calculate base network address */
+      this.network = address & netmask;
+
+      /* Calculate broadcast address */
+      this.broadcast = network | ~netmask;
     }
 
     /**
