@@ -81,7 +81,7 @@ public final class POP3ExportMbox
         }
 
         final String proto = argCount > 3 ? args[argIdx++] : null;
-        final boolean implicit = argCount > 4 ? Boolean.parseBoolean(args[argIdx++]) : false;
+        final boolean implicit = argCount > 4 && Boolean.parseBoolean(args[argIdx++]);
 
         final POP3Client pop3;
 
