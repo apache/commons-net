@@ -332,6 +332,33 @@ public class SubnetUtils {
     }
 
     /**
+     * Constructor that takes a CIDR-notation string, e.g. "192.168.0.1/16", a dotted decimal mask and and flag to
+     * return value of {@link SubnetInfo#getAddressCount()}
+     * @param cidrNotation A CIDR-notation string, e.g. "192.168.0.1/16"
+     * @param inclusiveHostCount A boolean value e.g. true
+     * @throws IllegalArgumentException if the parameter is invalid,
+     * i.e. does not match n.n.n.n/m where n=1-3 decimal digits, m = 1-2 decimal digits in range 0-32
+     */
+    public SubnetUtils(final String cidrNotation, final boolean inclusiveHostCount) {
+        this(cidrNotation);
+        this.inclusiveHostCount = inclusiveHostCount;
+    }
+
+    /**
+     * Constructor that takes a dotted decimal address, a dotted decimal mask and and flag to
+     * return value of {@link SubnetInfo#getAddressCount()}
+     * @param address An IP address, e.g. "192.168.0.1"
+     * @param mask A dotted decimal netmask e.g. "255.255.0.0"
+     * @param inclusiveHostCount A boolean value e.g. true
+     * @throws IllegalArgumentException if the address or mask is invalid,
+     * i.e. does not match n.n.n.n where n=1-3 decimal digits and the mask is not all zeros
+     */
+    public SubnetUtils(final String address, final String mask, final boolean inclusiveHostCount) {
+        this(address, mask);
+        this.inclusiveHostCount = inclusiveHostCount;
+    }
+
+    /**
      * Return a {@link SubnetInfo} instance that contains subnet-specific statistics
      * @return new instance
      */
