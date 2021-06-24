@@ -400,4 +400,18 @@ public class SubnetUtilsTest extends TestCase {
         final SubnetUtils snu = new SubnetUtils("0.0.0.0/0");
         assertNotNull(snu);
     }
+
+    public void testInclusiveHostCountConstructors() {
+        final SubnetUtils snu = new SubnetUtils("172.16.32.200/32", true);
+        assertEquals(true, snu.isInclusiveHostCount());
+
+        final SubnetUtils subnetUtilsWithMaskParam = new SubnetUtils("172.16.32.200", "255.255.0.0", true);
+        assertEquals(true, subnetUtilsWithMaskParam.isInclusiveHostCount());
+
+        final SubnetUtils snuWithFalseInclusiveCount = new SubnetUtils("172.16.32.200/32", false);
+        assertEquals(false, snuWithFalseInclusiveCount.isInclusiveHostCount());
+
+        final SubnetUtils subnetUtilsWithMaskParamWithFalseInclusiveCount = new SubnetUtils("172.16.32.200", "255.255.0.0", false);
+        assertEquals(false, subnetUtilsWithMaskParamWithFalseInclusiveCount.isInclusiveHostCount());
+    }
 }
