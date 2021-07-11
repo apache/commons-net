@@ -2228,11 +2228,7 @@ public class FTPClient extends FTP implements Configurable {
                         key = line.substring(1);
                     }
                     key = key.toUpperCase(Locale.ENGLISH);
-                    Set<String> entries = featuresMap.get(key);
-                    if (entries == null) {
-                        entries = new HashSet<>();
-                        featuresMap.put(key, entries);
-                    }
+                    Set<String> entries = featuresMap.computeIfAbsent(key, k -> new HashSet<>());
                     entries.add(value);
                 }
             }
