@@ -126,8 +126,8 @@ public class FTPClientConfigFunctionalTest extends TestCase {
             if (firstFile == null) {
                 firstFile = thisFile;
             }
-            //System.out.println(sdf.format(thisfile.getTimestamp().getTime())
-            //        + " " +thisfile.getName());
+            //System.out.println(sdf.format(thisFile.getTimestamp().getTime())
+            //        + " " +thisFile.getName());
             if (lastFile != null) {
                 // verify that the list is sorted earliest to latest.
                 assertTrue(lastFile.getTimestamp().before(thisFile.getTimestamp()));
