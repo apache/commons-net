@@ -205,14 +205,8 @@ public class MacOsPeterFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
                                    (!group(g + 1).equals("-")));
 
                 final String execPerm = group(g + 2);
-                if (!execPerm.equals("-") && !Character.isUpperCase(execPerm.charAt(0)))
-                {
-                    file.setPermission(access, FTPFile.EXECUTE_PERMISSION, true);
-                }
-                else
-                {
-                    file.setPermission(access, FTPFile.EXECUTE_PERMISSION, false);
-                }
+                file.setPermission(access, FTPFile.EXECUTE_PERMISSION, !execPerm.equals("-")
+                        && !Character.isUpperCase(execPerm.charAt(0)));
             }
 
             if (!isDevice)

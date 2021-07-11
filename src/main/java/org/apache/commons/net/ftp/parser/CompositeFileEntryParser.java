@@ -45,10 +45,7 @@ public class CompositeFileEntryParser extends FTPFileEntryParserImpl
         if (cachedFtpFileEntryParser != null)
         {
             final FTPFile matched = cachedFtpFileEntryParser.parseFTPEntry(listEntry);
-            if (matched != null)
-            {
-                return matched;
-            }
+            return matched;
         }
         else
         {
