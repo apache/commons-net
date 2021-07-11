@@ -17,6 +17,8 @@
 
 package org.apache.commons.net.io;
 
+import org.apache.commons.net.util.NetConstants;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -55,7 +57,7 @@ public final class CRLFLineReader extends BufferedReader
         int intch;
         boolean prevWasCR = false;
         synchronized(lock) { // make thread-safe (hopefully!)
-            while((intch = read()) != -1)
+            while((intch = read()) != NetConstants.EOS)
             {
                 if (prevWasCR && intch == LF) {
                     return sb.substring(0, sb.length()-1);

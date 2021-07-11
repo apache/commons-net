@@ -17,6 +17,8 @@
 
 package org.apache.commons.net.io;
 
+import org.apache.commons.net.util.NetConstants;
+
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -169,8 +171,8 @@ public final class ToNetASCIIInputStream extends FilterInputStream
             length = 1;
         }
 
-        if ((ch = read()) == -1) {
-            return -1;
+        if ((ch = read()) == NetConstants.EOS) {
+            return NetConstants.EOS;
         }
 
         off = offset;
@@ -179,7 +181,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
         {
             buffer[offset++] = (byte)ch;
         }
-        while (--length > 0 && (ch = read()) != -1);
+        while (--length > 0 && (ch = read()) != NetConstants.EOS);
 
         return offset - off;
     }

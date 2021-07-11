@@ -17,6 +17,8 @@
 
 package org.apache.commons.net.io;
 
+import org.apache.commons.net.util.NetConstants;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PushbackInputStream;
@@ -171,7 +173,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
 
 
         if ((ch = readInt()) == -1) {
-            return -1;
+            return NetConstants.EOS;
         }
 
         off = offset;

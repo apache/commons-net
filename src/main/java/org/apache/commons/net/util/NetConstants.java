@@ -41,6 +41,13 @@ public class NetConstants {
     public static final X509Certificate[] EMPTY_X509_CERTIFICATE_ARRAY = new X509Certificate[0];
 
     /**
+     * The index value when the end of the stream has been reached {@code -1}.
+     *
+     * @since 3.9.0
+     */
+    public static final int EOS = -1;
+
+    /**
      * Prevents instantiation.
      */
     private NetConstants() {

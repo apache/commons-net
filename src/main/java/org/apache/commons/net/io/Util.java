@@ -17,6 +17,8 @@
 
 package org.apache.commons.net.io;
 
+import org.apache.commons.net.util.NetConstants;
+
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
@@ -168,7 +170,7 @@ public final class Util
 
         try
         {
-            while ((numChars = source.read(buffer)) != -1)
+            while ((numChars = source.read(buffer)) != NetConstants.EOS)
             {
                 // Technically, some read(char[]) methods may return 0 and we cannot
                 // accept that as an indication of EOF.
@@ -343,7 +345,7 @@ public final class Util
 
         try
         {
-            while ((numBytes = source.read(buffer)) != -1)
+            while ((numBytes = source.read(buffer)) != NetConstants.EOS)
             {
                 // Technically, some read(byte[]) methods may return 0 and we cannot
                 // accept that as an indication of EOF.
