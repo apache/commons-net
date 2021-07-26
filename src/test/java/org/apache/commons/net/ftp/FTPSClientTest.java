@@ -100,7 +100,7 @@ public class FTPSClientTest {
     @BeforeClass
     public static void setUpClass() throws Exception {
         TlsProtocols = System.getProperty(JDK_TLS_CLIENT_PROTOCOLS);
-        System.setProperty(JDK_TLS_CLIENT_PROTOCOLS, "TLSv1");
+        //System.setProperty(JDK_TLS_CLIENT_PROTOCOLS, "TLSv1");
         setUpClass(IMPLICIT);
     }
 
