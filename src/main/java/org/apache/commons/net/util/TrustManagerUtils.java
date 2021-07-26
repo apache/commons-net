@@ -70,9 +70,9 @@ public final class TrustManagerUtils
         }
     }
 
-    private static final X509TrustManager ACCEPT_ALL=new TrustManager(false);
+    private static final X509TrustManager ACCEPT_ALL = new TrustManager(false);
 
-    private static final X509TrustManager CHECK_SERVER_VALIDITY=new TrustManager(true);
+    private static final X509TrustManager CHECK_SERVER_VALIDITY = new TrustManager(true);
 
     /**
      * Generate a TrustManager that performs no checks.
