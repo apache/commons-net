@@ -77,17 +77,6 @@ public class FTPSClientTest {
 
     private static final boolean IMPLICIT = false;
 
-    private static String TlsProtocols;
-
-    @AfterClass
-    public static void afterClass() {
-        if (TlsProtocols == null) {
-            System.getProperties().remove(JDK_TLS_CLIENT_PROTOCOLS);
-        } else {
-            System.setProperty(JDK_TLS_CLIENT_PROTOCOLS, TlsProtocols);
-        }
-    }
-
     /**
      * Returns the test directory as a String.
      *
@@ -99,8 +88,6 @@ public class FTPSClientTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        TlsProtocols = System.getProperty(JDK_TLS_CLIENT_PROTOCOLS);
-        //System.setProperty(JDK_TLS_CLIENT_PROTOCOLS, "TLSv1");
         setUpClass(IMPLICIT);
     }
 
@@ -140,7 +127,6 @@ public class FTPSClientTest {
         Assert.assertTrue(keyStoreFile.toString(), keyStoreFile.exists());
         sllConfigFactory.setKeystoreFile(keyStoreFile);
         sllConfigFactory.setKeystorePassword("password");
-        sllConfigFactory.setSslProtocol("TLSv1.2");
 
         // set the SSL configuration for the listener
         factory.setSslConfiguration(sllConfigFactory.createSslConfiguration());
