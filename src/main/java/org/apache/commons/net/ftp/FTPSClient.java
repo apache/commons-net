@@ -605,13 +605,14 @@ public class FTPSClient extends FTPClient {
         return hostnameVerifier;
     }
 
-   /**
- * Get the {@link KeyManager} instance.
- * @return The {@link KeyManager} instance
- */
-private KeyManager getKeyManager() {
-    return keyManager;
-}
+    /**
+     * Gets the {@link KeyManager} instance.
+     * 
+     * @return The {@link KeyManager} instance
+     */
+    private KeyManager getKeyManager() {
+        return keyManager;
+    }
 
     /**
      * Returns true if the socket will require client authentication.
