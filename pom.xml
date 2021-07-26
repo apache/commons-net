@@ -67,6 +67,9 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <!-- Local version defines -->
         <commons.changes.onlyCurrentVersion>true</commons.changes.onlyCurrentVersion>
         <clirr.skip>true</clirr.skip>
+        <commons.jacoco.version>0.8.7</commons.jacoco.version>
+        <commons.japicmp.version>0.15.3</commons.japicmp.version>
+        <commons.surefire.version>3.0.0-M5</commons.surefire.version>
     </properties>
 
     <scm>
