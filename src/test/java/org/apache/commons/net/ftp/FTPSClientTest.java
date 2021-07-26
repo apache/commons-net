@@ -31,6 +31,8 @@ import java.util.Calendar;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.output.NullOutputStream;
+import org.apache.commons.lang3.JavaVersion;
+import org.apache.commons.lang3.SystemUtils;
 import org.apache.ftpserver.FtpServer;
 import org.apache.ftpserver.FtpServerFactory;
 import org.apache.ftpserver.ftplet.FtpException;
@@ -73,7 +75,9 @@ public class FTPSClientTest {
 
     private static final String USER_PROPS_RES = "org/apache/commons/net/ftpsserver/users.properties";
 
-    private static final String SERVER_JKS_RES = "org/apache/commons/net/ftpsserver/ftpserver.jks";
+    private static final String SERVER_JKS_RES_JRE_8 = "org/apache/commons/net/ftpsserver/ftpserver-jre8.jks";
+
+    private static final String SERVER_JKS_RES_JRE_16 = "org/apache/commons/net/ftpsserver/ftpserver-jre16.jks";
 
     private static final boolean IMPLICIT = false;
 
@@ -99,8 +103,6 @@ public class FTPSClientTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        TlsProtocols = System.getProperty(JDK_TLS_CLIENT_PROTOCOLS);
-        //System.setProperty(JDK_TLS_CLIENT_PROTOCOLS, "TLSv1");
         setUpClass(IMPLICIT);
     }
 
@@ -133,8 +135,11 @@ public class FTPSClientTest {
         factory.setPort(SocketPort);
 
         // define SSL configuration
-        final URL serverJksResource = ClassLoader.getSystemClassLoader().getResource(SERVER_JKS_RES);
-        Assert.assertNotNull(SERVER_JKS_RES, serverJksResource);
+        final URL serverJksResource = SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_16)
+            ? ClassLoader.getSystemClassLoader().getResource(SERVER_JKS_RES_JRE_16)
+            : ClassLoader.getSystemClassLoader().getResource(SERVER_JKS_RES_JRE_8);
+        System.out.println("Loading " + serverJksResource);
+        Assert.assertNotNull(SERVER_JKS_RES_JRE_8, serverJksResource);
         final SslConfigurationFactory sllConfigFactory = new SslConfigurationFactory();
         final File keyStoreFile = FileUtils.toFile(serverJksResource);
         Assert.assertTrue(keyStoreFile.toString(), keyStoreFile.exists());
