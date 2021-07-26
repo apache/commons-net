@@ -140,7 +140,7 @@ public class FTPSClientTest {
         Assert.assertTrue(keyStoreFile.toString(), keyStoreFile.exists());
         sllConfigFactory.setKeystoreFile(keyStoreFile);
         sllConfigFactory.setKeystorePassword("password");
-        sllConfigFactory.setSslProtocol("TLSv1.1");
+        sllConfigFactory.setSslProtocol("TLSv1.2");
 
         // set the SSL configuration for the listener
         factory.setSslConfiguration(sllConfigFactory.createSslConfiguration());
