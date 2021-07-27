@@ -91,8 +91,9 @@ public class FTPSClientTest {
         return System.getProperty("test.basedir", "target/test-classes/org/apache/commons/net/test-data");
     }
 
-    public static void trace(String msg) {
-        System.err.println(msg + " " + System.nanoTime());
+    private static final long startTime = System.nanoTime();
+    private static void trace(String msg) {
+        System.err.println(msg + " " + (System.nanoTime() - startTime));
     }
 
     @BeforeClass
