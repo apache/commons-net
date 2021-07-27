@@ -607,7 +607,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Gets the {@link KeyManager} instance.
-     * 
+     *
      * @return The {@link KeyManager} instance
      */
     private KeyManager getKeyManager() {
