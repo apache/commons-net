@@ -91,9 +91,15 @@ public class FTPSClientTest {
         return System.getProperty("test.basedir", "target/test-classes/org/apache/commons/net/test-data");
     }
 
+    public static void trace(String msg) {
+        System.err.println(msg + " " + System.nanoTime());
+    }
+
     @BeforeClass
     public static void setUpClass() throws Exception {
+        trace(">>setUpClass");
         setUpClass(IMPLICIT);
+        trace("<<setUpClass");
     }
 
     /**
@@ -104,10 +110,10 @@ public class FTPSClientTest {
      */
     private synchronized static void setUpClass(final boolean implicit) throws FtpException {
         if (EmbeddedFtpServer != null) {
-            System.err.println("Server already active");
+            trace("Server already active");
             return;
         }
-        System.err.println("Server startup");
+        trace("Server startup");
         // Use an ephemeral port.
         SocketPort = 0;
         final FtpServerFactory serverFactory = new FtpServerFactory();
@@ -146,13 +152,13 @@ public class FTPSClientTest {
         serverFactory.addListener("default", factory.createListener());
 
         // start the server
-        System.err.println("Server starting");
+        trace("Server starting");
         EmbeddedFtpServer = serverFactory.createServer();
         EmbeddedFtpServer.start();
         SocketPort = ((org.apache.ftpserver.impl.DefaultFtpServer) EmbeddedFtpServer).getListener("default").getPort();
         ConnectionUri = "ftps://test:test@localhost:" + SocketPort;
         // System.out.printf("jdk.tls.disabledAlgorithms = %s%n", System.getProperty("jdk.tls.disabledAlgorithms"));
-        System.err.println("Server started");
+        trace("Server started");
     }
 
     @Parameters(name = "endpointCheckingEnabled={0}")
@@ -172,7 +178,7 @@ public class FTPSClientTest {
     }
 
     private FTPSClient loginClient() throws SocketException, IOException {
-        System.err.println(">>loginClient");
+        trace(">>loginClient");
         final FTPSClient client = new FTPSClient(IMPLICIT);
         //
         client.setControlKeepAliveReplyTimeout(null);
@@ -207,7 +213,7 @@ public class FTPSClientTest {
         //
         client.execPROT("P");
         assertClientCode(client);
-        System.err.println("<<loginClient");
+        trace("<<loginClient");
         return client;
     }
 
@@ -225,7 +231,7 @@ public class FTPSClientTest {
 
     @Test
     public void testHasFeature() throws SocketException, IOException {
-        System.err.println(">>testHasFeature");
+        trace(">>testHasFeature");
         loginClient().disconnect();
     }
 
@@ -242,31 +248,31 @@ public class FTPSClientTest {
 
     @Test
     public void testListFilesPathNameEmpty() throws SocketException, IOException {
-        System.err.println(">>testListFilesPathNameEmpty");
+        trace(">>testListFilesPathNameEmpty");
         testListFiles("");
     }
 
     @Test
     public void testListFilesPathNameJunk() throws SocketException, IOException {
-        System.err.println(">>testListFilesPathNameJunk");
+        trace(">>testListFilesPathNameJunk");
         testListFiles("   Junk   ");
     }
 
     @Test
     public void testListFilesPathNameNull() throws SocketException, IOException {
-        System.err.println(">>testListFilesPathNameNull");
+        trace(">>testListFilesPathNameNull");
         testListFiles(null);
     }
 
     @Test
     public void testListFilesPathNameRoot() throws SocketException, IOException {
-        System.err.println(">>testListFilesPathNameRoot");
+        trace(">>testListFilesPathNameRoot");
         testListFiles("/");
     }
 
     @Test
     public void testMdtmCalendar() throws SocketException, IOException {
-        System.err.println(">>testMdtmCalendar");
+        trace(">>testMdtmCalendar");
         testMdtmCalendar("/file.txt");
     }
 
@@ -304,7 +310,7 @@ public class FTPSClientTest {
 
     @Test
     public void testMdtmInstant() throws SocketException, IOException {
-        System.err.println(">>testMdtmInstant");
+        trace(">>testMdtmInstant");
         testMdtmInstant("/file.txt");
     }
 
@@ -324,19 +330,22 @@ public class FTPSClientTest {
 
     @Test
     public void testOpenClose() throws SocketException, IOException {
-        System.err.println(">>testOpenClose");
+        trace(">>testOpenClose");
         final FTPSClient ftpsClient = loginClient();
         try {
             assertTrue(ftpsClient.hasFeature("MODE"));
             assertTrue(ftpsClient.hasFeature(FTPCmd.MODE));
         } finally {
+            trace(">>disconnect");
             ftpsClient.disconnect();
+            trace("<<disconnect");
         }
+        trace("<<testOpenClose");
     }
 
     @Test
     public void testRetrieveFilePathNameRoot() throws SocketException, IOException {
-        System.err.println(">>testRetrieveFilePathNameRoot");
+        trace(">>testRetrieveFilePathNameRoot");
         retrieveFile("/file.txt");
     }
 }
