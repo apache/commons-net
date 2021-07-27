@@ -211,9 +211,11 @@ public class FTPSClientTest {
         client.setFileType(FTP.BINARY_FILE_TYPE);
         assertClientCode(client);
         //
+        trace(">>loginClientPBSZ");
         client.execPBSZ(0);
         assertClientCode(client);
         //
+        trace(">>loginClientPROT");
         client.execPROT("P");
         assertClientCode(client);
         trace("<<loginClient");
@@ -279,6 +281,7 @@ public class FTPSClientTest {
     public void testListFilesPathNameRoot() throws SocketException, IOException {
         trace(">>testListFilesPathNameRoot");
         testListFiles("/");
+        trace("<<testListFilesPathNameRoot");
     }
 
     @Test(timeout = TEST_TIMEOUT)
