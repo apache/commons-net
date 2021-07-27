@@ -33,6 +33,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.output.NullOutputStream;
 import org.apache.commons.lang3.JavaVersion;
 import org.apache.commons.lang3.SystemUtils;
+import org.apache.commons.net.PrintCommandListener;
 import org.apache.ftpserver.FtpServer;
 import org.apache.ftpserver.FtpServerFactory;
 import org.apache.ftpserver.ftplet.FtpException;
@@ -41,7 +42,6 @@ import org.apache.ftpserver.listener.ListenerFactory;
 import org.apache.ftpserver.ssl.SslConfigurationFactory;
 import org.apache.ftpserver.usermanager.PropertiesUserManagerFactory;
 import org.apache.ftpserver.usermanager.impl.BaseUser;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -65,11 +65,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class FTPSClientTest {
 
-    private static final String JDK_TLS_CLIENT_PROTOCOLS = "jdk.tls.client.protocols";
-
     private static int SocketPort;
-
-    private static String ConnectionUri;
 
     private static FtpServer EmbeddedFtpServer;
 
@@ -159,7 +155,6 @@ public class FTPSClientTest {
         EmbeddedFtpServer = serverFactory.createServer();
         EmbeddedFtpServer.start();
         SocketPort = ((org.apache.ftpserver.impl.DefaultFtpServer) EmbeddedFtpServer).getListener("default").getPort();
-        ConnectionUri = "ftps://test:test@localhost:" + SocketPort;
         // System.out.printf("jdk.tls.disabledAlgorithms = %s%n", System.getProperty("jdk.tls.disabledAlgorithms"));
         trace("Server started");
     }
@@ -183,6 +178,7 @@ public class FTPSClientTest {
     private FTPSClient loginClient() throws SocketException, IOException {
         trace(">>loginClient");
         final FTPSClient client = new FTPSClient(IMPLICIT);
+        client.addProtocolCommandListener(new PrintCommandListener(System.err));
         //
         client.setControlKeepAliveReplyTimeout(null);
         assertEquals(0, client.getControlKeepAliveReplyTimeoutDuration().getSeconds());
@@ -200,14 +196,17 @@ public class FTPSClientTest {
         assertEquals(62, client.getDataTimeout().getSeconds());
         //
         client.setEndpointCheckingEnabled(endpointCheckingEnabled);
+        trace(">>loginClient-connect");
         client.connect("localhost", SocketPort);
         //
         assertClientCode(client);
         assertEquals(SocketPort, client.getRemotePort());
         //
+        trace(">>loginClient-login");
         assertTrue(client.login("test", "test"));
         assertClientCode(client);
         //
+        trace(">>loginClient-binary");
         client.setFileType(FTP.BINARY_FILE_TYPE);
         assertClientCode(client);
         //
