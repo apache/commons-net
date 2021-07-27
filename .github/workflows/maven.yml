@@ -21,6 +21,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
