@@ -91,6 +91,8 @@ public class FTPSClientTest {
         return System.getProperty("test.basedir", "target/test-classes/org/apache/commons/net/test-data");
     }
 
+    private static final long TEST_TIMEOUT = 5000; // individual test timeout
+
     private static final long startTime = System.nanoTime();
     private static void trace(String msg) {
         System.err.println(msg + " " + (System.nanoTime() - startTime));
@@ -232,7 +234,7 @@ public class FTPSClientTest {
         }
     }
 
-    @Test
+    @Test(timeout = TEST_TIMEOUT)
     public void testHasFeature() throws SocketException, IOException {
         trace(">>testHasFeature");
         loginClient().disconnect();
@@ -252,34 +254,34 @@ public class FTPSClientTest {
         }
     }
 
-    @Test
+    @Test(timeout = TEST_TIMEOUT)
     public void testListFilesPathNameEmpty() throws SocketException, IOException {
         trace(">>testListFilesPathNameEmpty");
         testListFiles("");
         trace("<<testListFilesPathNameEmpty");
     }
 
-    @Test
+    @Test(timeout = TEST_TIMEOUT)
     public void testListFilesPathNameJunk() throws SocketException, IOException {
         trace(">>testListFilesPathNameJunk");
         testListFiles("   Junk   ");
         trace("<<testListFilesPathNameJunk");
     }
 
-    @Test
+    @Test(timeout = TEST_TIMEOUT)
     public void testListFilesPathNameNull() throws SocketException, IOException {
         trace(">>testListFilesPathNameNull");
         testListFiles(null);
         trace("<<testListFilesPathNameNull");
     }
 
-    @Test
+    @Test(timeout = TEST_TIMEOUT)
     public void testListFilesPathNameRoot() throws SocketException, IOException {
         trace(">>testListFilesPathNameRoot");
         testListFiles("/");
     }
 
-    @Test
+    @Test(timeout = TEST_TIMEOUT)
     public void testMdtmCalendar() throws SocketException, IOException {
         trace(">>testMdtmCalendar");
         testMdtmCalendar("/file.txt");
@@ -322,7 +324,7 @@ public class FTPSClientTest {
         }
     }
 
-    @Test
+    @Test(timeout = TEST_TIMEOUT)
     public void testMdtmInstant() throws SocketException, IOException {
         trace(">>testMdtmInstant");
         testMdtmInstant("/file.txt");
@@ -345,7 +347,7 @@ public class FTPSClientTest {
         }
     }
 
-    @Test
+    @Test(timeout = TEST_TIMEOUT)
     public void testOpenClose() throws SocketException, IOException {
         trace(">>testOpenClose");
         final FTPSClient ftpsClient = loginClient();
@@ -360,7 +362,7 @@ public class FTPSClientTest {
         trace("<<testOpenClose");
     }
 
-    // @Test looks like this may be the hang?
+    @Test(timeout = TEST_TIMEOUT)
     public void testRetrieveFilePathNameRoot() throws SocketException, IOException {
         trace(">>testRetrieveFilePathNameRoot");
         retrieveFile("/file.txt");
