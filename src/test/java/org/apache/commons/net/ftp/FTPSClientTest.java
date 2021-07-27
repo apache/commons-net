@@ -75,9 +75,10 @@ public class FTPSClientTest {
 
     private static final String USER_PROPS_RES = "org/apache/commons/net/ftpsserver/users.properties";
 
-    private static final String SERVER_JKS_RES_JRE_8 = "org/apache/commons/net/ftpsserver/ftpserver-jre8.jks";
+    // TEMPORARY hack to see if old JKS works
+    private static final String SERVER_JKS_RES_JRE_8 = "org/apache/commons/net/ftpsserver/ftpserver.jks.old";
 
-    private static final String SERVER_JKS_RES_JRE_16 = "org/apache/commons/net/ftpsserver/ftpserver-jre16.jks";
+    private static final String SERVER_JKS_RES_JRE_16 = "org/apache/commons/net/ftpsserver/ftpserver.jks.old";
 
     private static final boolean IMPLICIT = false;
 
