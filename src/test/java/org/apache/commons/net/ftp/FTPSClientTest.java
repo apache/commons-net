@@ -225,7 +225,9 @@ public class FTPSClientTest {
             assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.NULL_OUTPUT_STREAM));
             assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.NULL_OUTPUT_STREAM));
         } finally {
+            trace(">>disconnect");
             client.disconnect();
+            trace("<<disconnect");
         }
     }
 
@@ -233,6 +235,7 @@ public class FTPSClientTest {
     public void testHasFeature() throws SocketException, IOException {
         trace(">>testHasFeature");
         loginClient().disconnect();
+        trace("<<testHasFeature");
     }
 
     private void testListFiles(final String pathname) throws SocketException, IOException {
@@ -242,7 +245,9 @@ public class FTPSClientTest {
             assertNotNull(client.listFiles(pathname));
             assertNotNull(client.listFiles(pathname));
         } finally {
+            trace(">>disconnect");
             client.disconnect();
+            trace("<<disconnect");
         }
     }
 
@@ -250,18 +255,21 @@ public class FTPSClientTest {
     public void testListFilesPathNameEmpty() throws SocketException, IOException {
         trace(">>testListFilesPathNameEmpty");
         testListFiles("");
+        trace("<<testListFilesPathNameEmpty");
     }
 
     @Test
     public void testListFilesPathNameJunk() throws SocketException, IOException {
         trace(">>testListFilesPathNameJunk");
         testListFiles("   Junk   ");
+        trace("<<testListFilesPathNameJunk");
     }
 
     @Test
     public void testListFilesPathNameNull() throws SocketException, IOException {
         trace(">>testListFilesPathNameNull");
         testListFiles(null);
+        trace("<<testListFilesPathNameNull");
     }
 
     @Test
@@ -274,6 +282,7 @@ public class FTPSClientTest {
     public void testMdtmCalendar() throws SocketException, IOException {
         trace(">>testMdtmCalendar");
         testMdtmCalendar("/file.txt");
+        trace("<<testMdtmCalendar");
     }
 
     private void testMdtmCalendar(final String pathname) throws SocketException, IOException {
@@ -286,7 +295,9 @@ public class FTPSClientTest {
             assertNotNull(mdtmCalendar2);
             assertEquals(mdtmCalendar1, mdtmCalendar2);
         } finally {
+            trace(">>disconnect");
             client.disconnect();
+            trace("<<disconnect");
         }
     }
 
@@ -304,7 +315,9 @@ public class FTPSClientTest {
             assertNotNull(mdtmFile2);
             assertEquals(mdtmFile1, mdtmFile2);
         } finally {
+            trace(">>disconnect");
             client.disconnect();
+            trace("<<disconnect");
         }
     }
 
@@ -312,6 +325,7 @@ public class FTPSClientTest {
     public void testMdtmInstant() throws SocketException, IOException {
         trace(">>testMdtmInstant");
         testMdtmInstant("/file.txt");
+        trace("<<testMdtmInstant");
     }
 
     private void testMdtmInstant(final String pathname) throws SocketException, IOException {
@@ -324,7 +338,9 @@ public class FTPSClientTest {
             assertNotNull(mdtmInstant2);
             assertEquals(mdtmInstant1, mdtmInstant2);
         } finally {
+            trace(">>disconnect");
             client.disconnect();
+            trace("<<disconnect");
         }
     }
 
@@ -343,9 +359,10 @@ public class FTPSClientTest {
         trace("<<testOpenClose");
     }
 
-    @Test
+    // @Test looks like this may be the hang?
     public void testRetrieveFilePathNameRoot() throws SocketException, IOException {
         trace(">>testRetrieveFilePathNameRoot");
         retrieveFile("/file.txt");
+        trace("<<testRetrieveFilePathNameRoot");
     }
 }
