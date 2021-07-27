@@ -1,1 +1,0 @@
-keytool -genkeypair -dname "cn=localhost, ou=ApacheCommons, o=ApacheSoftwareFoundation, c=US" -alias ftpserver -keypass password -keystore ftpserver.jks -storepass password -validity 1000 -deststoretype pkcs12 -keyalg "DSA"
