@@ -103,13 +103,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
             <version>1.1.1</version>
             <scope>test</scope>
         </dependency>
-        <!-- temporary debug for FTPSClientTest -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.7.21</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -430,6 +423,21 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
 
         </plugins>
     </reporting>
+
+    <profiles>
+        <profile>
+            <id>slf4j-simple</id>
+            <dependencies>
+                <!-- adds logging for MINA ftpserver as used by FTPSClientTest -->
+                <dependency>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-simple</artifactId>
+                    <version>1.7.21</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
     <developers>
         <developer>
