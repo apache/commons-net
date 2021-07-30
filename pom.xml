@@ -432,7 +432,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 <dependency>
                     <groupId>org.slf4j</groupId>
                     <artifactId>slf4j-simple</artifactId>
-                    <version>1.7.21</version>
+                    <version>1.7.32</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
