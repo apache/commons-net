@@ -19,6 +19,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    ignore:
+      - dependency-name: "org.slf4j:slf4j-simple"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
