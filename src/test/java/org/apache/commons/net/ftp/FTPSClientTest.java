@@ -91,7 +91,7 @@ public class FTPSClientTest {
 
     private static final long startTime = System.nanoTime();
     private static void trace(String msg) {
-        System.err.println(msg + " " + (System.nanoTime() - startTime));
+        // System.err.println(msg + " " + (System.nanoTime() - startTime));
     }
 
     @BeforeClass
