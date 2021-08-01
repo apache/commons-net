@@ -87,7 +87,7 @@ public class FTPSClientTest {
         return System.getProperty("test.basedir", "target/test-classes/org/apache/commons/net/test-data");
     }
 
-    private static final long TEST_TIMEOUT = 5000; // individual test timeout
+    private static final long TEST_TIMEOUT = 10000; // individual test timeout
 
     private static final long startTime = System.nanoTime();
     private static void trace(String msg) {
