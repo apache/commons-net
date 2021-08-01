@@ -197,7 +197,7 @@ public class FTPSClientTest {
         assertEquals(SocketPort, client.getRemotePort());
         //
         try {
-            Thread.sleep(100); // See if a short sleep before USER command helps
+            Thread.sleep(200); // See if a short sleep before USER command helps
         } catch (InterruptedException e) {};
         assertTrue(client.login("test", "test"));
         assertClientCode(client);
