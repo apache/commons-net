@@ -308,7 +308,7 @@ public class FTPSClientTest {
             final FTPFile mdtmFile2 = client.mdtmFile(pathname);
             assertNotNull(mdtmFile1);
             assertNotNull(mdtmFile2);
-            assertEquals(mdtmFile1, mdtmFile2);
+            assertEquals(mdtmFile1.toString(), mdtmFile2.toString());
         } finally {
             client.disconnect();
         }
