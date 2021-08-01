@@ -91,14 +91,12 @@ public class FTPSClientTest {
 
     private static final long startTime = System.nanoTime();
     private static void trace(String msg) {
-        // System.err.println(msg + " " + (System.nanoTime() - startTime));
+        System.err.println(msg + " " + (System.nanoTime() - startTime));
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        trace(">>setUpClass");
         setUpClass(IMPLICIT);
-        trace("<<setUpClass");
     }
 
     /**
@@ -109,10 +107,8 @@ public class FTPSClientTest {
      */
     private synchronized static void setUpClass(final boolean implicit) throws FtpException {
         if (EmbeddedFtpServer != null) {
-            trace("Server already active");
             return;
         }
-        trace("Server startup");
         // Use an ephemeral port.
         SocketPort = 0;
         final FtpServerFactory serverFactory = new FtpServerFactory();
@@ -151,7 +147,6 @@ public class FTPSClientTest {
         serverFactory.addListener("default", factory.createListener());
 
         // start the server
-        trace("Server starting");
         EmbeddedFtpServer = serverFactory.createServer();
         EmbeddedFtpServer.start();
         SocketPort = ((org.apache.ftpserver.impl.DefaultFtpServer) EmbeddedFtpServer).getListener("default").getPort();
@@ -196,28 +191,23 @@ public class FTPSClientTest {
         assertEquals(62, client.getDataTimeout().getSeconds());
         //
         client.setEndpointCheckingEnabled(endpointCheckingEnabled);
-        trace(">>loginClient-connect");
         client.connect("localhost", SocketPort);
         //
         assertClientCode(client);
         assertEquals(SocketPort, client.getRemotePort());
         //
-        trace(">>loginClient-login");
         try {
             Thread.sleep(100); // See if a short sleep before USER command helps
         } catch (InterruptedException e) {};
         assertTrue(client.login("test", "test"));
         assertClientCode(client);
         //
-        trace(">>loginClient-binary");
         client.setFileType(FTP.BINARY_FILE_TYPE);
         assertClientCode(client);
         //
-        trace(">>loginClientPBSZ");
         client.execPBSZ(0);
         assertClientCode(client);
         //
-        trace(">>loginClientPROT");
         client.execPROT("P");
         assertClientCode(client);
         trace("<<loginClient");
@@ -232,9 +222,7 @@ public class FTPSClientTest {
             assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.NULL_OUTPUT_STREAM));
             assertTrue(pathname, client.retrieveFile(pathname, NullOutputStream.NULL_OUTPUT_STREAM));
         } finally {
-            trace(">>disconnect");
             client.disconnect();
-            trace("<<disconnect");
         }
     }
 
@@ -252,9 +240,7 @@ public class FTPSClientTest {
             assertNotNull(client.listFiles(pathname));
             assertNotNull(client.listFiles(pathname));
         } finally {
-            trace(">>disconnect");
             client.disconnect();
-            trace("<<disconnect");
         }
     }
 
@@ -303,14 +289,15 @@ public class FTPSClientTest {
             assertNotNull(mdtmCalendar2);
             assertEquals(mdtmCalendar1, mdtmCalendar2);
         } finally {
-            trace(">>disconnect");
             client.disconnect();
-            trace("<<disconnect");
         }
     }
 
+    @Test(timeout = TEST_TIMEOUT)
     public void testMdtmFile() throws SocketException, IOException {
+        trace(">>testMdtmFile");
         testMdtmFile("/file.txt");
+        trace("<<testMdtmFile");
     }
 
     private void testMdtmFile(final String pathname) throws SocketException, IOException {
@@ -323,9 +310,7 @@ public class FTPSClientTest {
             assertNotNull(mdtmFile2);
             assertEquals(mdtmFile1, mdtmFile2);
         } finally {
-            trace(">>disconnect");
             client.disconnect();
-            trace("<<disconnect");
         }
     }
 
@@ -346,9 +331,7 @@ public class FTPSClientTest {
             assertNotNull(mdtmInstant2);
             assertEquals(mdtmInstant1, mdtmInstant2);
         } finally {
-            trace(">>disconnect");
             client.disconnect();
-            trace("<<disconnect");
         }
     }
 
@@ -360,9 +343,7 @@ public class FTPSClientTest {
             assertTrue(ftpsClient.hasFeature("MODE"));
             assertTrue(ftpsClient.hasFeature(FTPCmd.MODE));
         } finally {
-            trace(">>disconnect");
             ftpsClient.disconnect();
-            trace("<<disconnect");
         }
         trace("<<testOpenClose");
     }
