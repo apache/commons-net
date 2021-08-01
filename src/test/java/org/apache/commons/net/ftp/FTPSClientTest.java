@@ -204,7 +204,7 @@ public class FTPSClientTest {
         //
         trace(">>loginClient-login");
         try {
-            Thread.sleep(200); // See if a short sleep before USER command helps
+            Thread.sleep(100); // See if a short sleep before USER command helps
         } catch (InterruptedException e) {};
         assertTrue(client.login("test", "test"));
         assertClientCode(client);
