@@ -177,9 +177,9 @@ public class FTPSClientTest {
 
     private FTPSClient loginClient() throws SocketException, IOException {
         trace(">>loginClient");
-        try {
-            Thread.sleep(5000); // See if a short sleep between logins helps
-        } catch (InterruptedException e) {};
+        // try {
+        //     Thread.sleep(5000); // See if a short sleep between logins helps
+        // } catch (InterruptedException e) {};
         final FTPSClient client = new FTPSClient(IMPLICIT);
         client.addProtocolCommandListener(new PrintCommandListener(System.err));
         //
