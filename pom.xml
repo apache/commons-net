@@ -70,6 +70,9 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <commons.jacoco.version>0.8.7</commons.jacoco.version>
         <commons.japicmp.version>0.15.3</commons.japicmp.version>
         <commons.surefire.version>3.0.0-M5</commons.surefire.version>
+        <!-- for debugging FTPSClientTest -->
+        <commons.net.trace_calls>false</commons.net.trace_calls>
+        <commons.net.add_listener>false</commons.net.add_listener>
     </properties>
 
     <scm>
@@ -185,6 +188,10 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                         <exclude>**/*FunctionalTest.java</exclude>
                         <exclude>**/POP3*Test.java</exclude>
                     </excludes>
+                    <environmentVariables>
+                    <TRACE_CALLS>${commons.net.trace_calls}</TRACE_CALLS>
+                    <ADD_LISTENER>${commons.net.add_listener}</ADD_LISTENER>
+                    </environmentVariables>
                 </configuration>
             </plugin>
 
@@ -427,6 +434,10 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
     <profiles>
         <profile>
             <id>slf4j-simple</id>
+            <properties>
+                <commons.net.trace_calls>true</commons.net.trace_calls>
+                <commons.net.add_listener>true</commons.net.add_listener>
+            </properties>
             <dependencies>
                 <!-- adds logging for MINA ftpserver as used by FTPSClientTest -->
                 <dependency>

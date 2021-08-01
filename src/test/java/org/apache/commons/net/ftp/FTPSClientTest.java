@@ -31,8 +31,6 @@ import java.util.Calendar;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.output.NullOutputStream;
-import org.apache.commons.lang3.JavaVersion;
-import org.apache.commons.lang3.SystemUtils;
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.ftpserver.FtpServer;
 import org.apache.ftpserver.FtpServerFactory;
@@ -71,10 +69,7 @@ public class FTPSClientTest {
 
     private static final String USER_PROPS_RES = "org/apache/commons/net/ftpsserver/users.properties";
 
-    // TEMPORARY hack to see if old JKS works
-    private static final String SERVER_JKS_RES_JRE_8 = "org/apache/commons/net/ftpsserver/ftpserver-old.jks";
-
-    private static final String SERVER_JKS_RES_JRE_16 = "org/apache/commons/net/ftpsserver/ftpserver-old.jks";
+    private static final String SERVER_JKS_RES = "org/apache/commons/net/ftpsserver/ftpserver.jks";
 
     private static final boolean IMPLICIT = false;
 
@@ -88,10 +83,12 @@ public class FTPSClientTest {
     }
 
     private static final long TEST_TIMEOUT = 10000; // individual test timeout
+    private static final boolean TRACE_CALLS = Boolean.parseBoolean(System.getenv("TRACE_CALLS"));
+    private static final boolean ADD_LISTENER = Boolean.parseBoolean(System.getenv("ADD_LISTENER"));
 
     private static final long startTime = System.nanoTime();
     private static void trace(String msg) {
-        System.err.println(msg + " " + (System.nanoTime() - startTime));
+        if (TRACE_CALLS) System.err.println(msg + " " + (System.nanoTime() - startTime));
     }
 
     @BeforeClass
@@ -128,11 +125,9 @@ public class FTPSClientTest {
         factory.setPort(SocketPort);
 
         // define SSL configuration
-        final URL serverJksResource = SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_16)
-            ? ClassLoader.getSystemClassLoader().getResource(SERVER_JKS_RES_JRE_16)
-            : ClassLoader.getSystemClassLoader().getResource(SERVER_JKS_RES_JRE_8);
+        final URL serverJksResource = ClassLoader.getSystemClassLoader().getResource(SERVER_JKS_RES);
+        Assert.assertNotNull(SERVER_JKS_RES, serverJksResource);
         System.out.println("Loading " + serverJksResource);
-        Assert.assertNotNull(SERVER_JKS_RES_JRE_8, serverJksResource);
         final SslConfigurationFactory sllConfigFactory = new SslConfigurationFactory();
         final File keyStoreFile = FileUtils.toFile(serverJksResource);
         Assert.assertTrue(keyStoreFile.toString(), keyStoreFile.exists());
@@ -173,7 +168,7 @@ public class FTPSClientTest {
     private FTPSClient loginClient() throws SocketException, IOException {
         trace(">>loginClient");
         final FTPSClient client = new FTPSClient(IMPLICIT);
-        client.addProtocolCommandListener(new PrintCommandListener(System.err));
+        if (ADD_LISTENER) client.addProtocolCommandListener(new PrintCommandListener(System.err));
         //
         client.setControlKeepAliveReplyTimeout(null);
         assertEquals(0, client.getControlKeepAliveReplyTimeoutDuration().getSeconds());
