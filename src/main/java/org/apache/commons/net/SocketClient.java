@@ -225,7 +225,7 @@ public abstract class SocketClient
      * and originating from the current host at a system assigned port.
      * Before returning, {@link #_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
-     * <p>
+     *
      * @param host  The remote host.
      * @throws SocketException If the socket timeout could not be set.
      * @throws IOException If the socket could not be opened.  In most
@@ -244,7 +244,7 @@ public abstract class SocketClient
      * originating from the current host at a system assigned port.
      * Before returning, {@link #_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
-     * <p>
+     *
      * @param host  The remote host.
      * @param port  The port to connect to on the remote host.
      * @throws SocketException If the socket timeout could not be set.
@@ -265,7 +265,7 @@ public abstract class SocketClient
      * originating from the specified local address and port.
      * Before returning, {@link #_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
-     * <p>
+     *
      * @param host  The remote host.
      * @param port  The port to connect to on the remote host.
      * @param localAddr  The local address to use.
@@ -289,7 +289,7 @@ public abstract class SocketClient
      * port and originating from the current host at a system assigned port.
      * Before returning, {@link #_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
-     * <p>
+     *
      * @param hostname  The name of the remote host.
      * @throws SocketException If the socket timeout could not be set.
      * @throws IOException If the socket could not be opened.  In most
@@ -307,7 +307,7 @@ public abstract class SocketClient
      * originating from the current host at a system assigned port.
      * Before returning, {@link #_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
-     * <p>
+     *
      * @param hostname  The name of the remote host.
      * @param port  The port to connect to on the remote host.
      * @throws SocketException If the socket timeout could not be set.
@@ -328,7 +328,7 @@ public abstract class SocketClient
      * originating from the specified local address and port.
      * Before returning, {@link #_connectAction_  _connectAction_() }
      * is called to perform connection initialization actions.
-     * <p>
+     *
      * @param hostname  The name of the remote host.
      * @param port  The port to connect to on the remote host.
      * @param localAddr  The local address to use.
@@ -360,7 +360,7 @@ public abstract class SocketClient
      * {@link #connect connect() }
      * again.  _isConnected_ is set to false, _socket_ is set to null,
      * _input_ is set to null, and _output_ is set to null.
-     * <p>
+     *
      * @throws IOException  If there is an error closing the socket.
      */
     public void disconnect() throws IOException
@@ -449,7 +449,7 @@ public abstract class SocketClient
     /**
      * Returns the current value of the default port (stored in
      * {@link #_defaultPort_  _defaultPort_ }).
-     * <p>
+     *
      * @return The current value of the default port.
      */
     public int getDefaultPort()
@@ -460,7 +460,7 @@ public abstract class SocketClient
     /**
      * Returns the default timeout in milliseconds that is used when
      * opening a socket.
-     * <p>
+     *
      * @return The default timeout in milliseconds that is used when
      *         opening a socket.
      */
@@ -484,7 +484,7 @@ public abstract class SocketClient
     /**
      * Returns the local address  to which the client's socket is bound.
      * Delegates to {@link Socket#getLocalAddress()}
-     * <p>
+     *
      * @return The local address to which the client's socket is bound.
      * @throws NullPointerException if the socket is not currently open
      */
@@ -497,7 +497,7 @@ public abstract class SocketClient
      * Returns the port number of the open socket on the local host used
      * for the connection.
      * Delegates to {@link Socket#getLocalPort()}
-     * <p>
+     *
      * @return The port number of the open socket on the local host used
      *         for the connection.
      * @throws NullPointerException if the socket is not currently open
@@ -539,7 +539,7 @@ public abstract class SocketClient
      * Returns the port number of the remote host to which the client is
      * connected.
      * Delegates to {@link Socket#getPort()}
-     * <p>
+     *
      * @return The port number of the remote host to which the client is
      *         connected.
      * @throws NullPointerException if the socket is not currently open
@@ -572,7 +572,7 @@ public abstract class SocketClient
 
     /**
      * Returns the current SO_LINGER timeout of the currently opened socket.
-     * <p>
+     *
      * @return The current SO_LINGER timeout.  If SO_LINGER is disabled returns
      *         -1.
      * @throws SocketException If the operation fails.
@@ -585,7 +585,7 @@ public abstract class SocketClient
 
     /**
      * Returns the timeout in milliseconds of the currently opened socket.
-     * <p>
+     *
      * @return The timeout in milliseconds of the currently opened socket.
      * @throws SocketException If the operation fails.
      * @throws NullPointerException if the socket is not currently open
@@ -599,7 +599,7 @@ public abstract class SocketClient
     /**
      * Returns true if Nagle's algorithm is enabled on the currently opened
      * socket.
-     * <p>
+     *
      * @return True if Nagle's algorithm is enabled on the currently opened
      *        socket, false otherwise.
      * @throws SocketException If the operation fails.
@@ -663,7 +663,7 @@ public abstract class SocketClient
 
     /**
      * Returns true if the client is currently connected to a server.
-     * <p>
+     *
      * Delegates to {@link Socket#isConnected()}
      * @return True if the client is currently connected to a server,
      *         false otherwise.
@@ -712,7 +712,7 @@ public abstract class SocketClient
      * is not specified.  The {@link #_defaultPort_  _defaultPort_ }
      * variable stores this value.  If never set, the default port is equal
      * to zero.
-     * <p>
+     *
      * @param port  The default port to set.
      */
     public void setDefaultPort(final int port)
@@ -728,7 +728,7 @@ public abstract class SocketClient
      * and should not be confused with {@link #setSoTimeout setSoTimeout()}
      * which operates on an the currently opened socket.  _timeout_ contains
      * the new timeout value.
-     * <p>
+     *
      * @param timeout  The timeout in milliseconds to use for the socket
      *                 connection.
      */
@@ -768,7 +768,7 @@ public abstract class SocketClient
 
     /**
      * Sets the underlying socket receive buffer size.
-     * <p>
+     *
      * @param size The size of the buffer in bytes.
      * @throws SocketException never (but subclasses may wish to do so)
      * @since 2.0
@@ -779,7 +779,7 @@ public abstract class SocketClient
 
     /**
      * Set the underlying socket send buffer size.
-     * <p>
+     *
      * @param size The size of the buffer in bytes.
      * @throws SocketException never thrown, but subclasses might want to do so
      * @since 2.0
@@ -793,7 +793,7 @@ public abstract class SocketClient
      * connections.  If the factory value is null, then a default
      * factory is used (only do this to reset the factory after having
      * previously altered it).
-     * <p>
+     *
      * @param factory  The new ServerSocketFactory the SocketClient should use.
      * @since 2.0
      */
@@ -811,7 +811,7 @@ public abstract class SocketClient
      * factory is used (only do this to reset the factory after having
      * previously altered it).
      * Any proxy setting is discarded.
-     * <p>
+     *
      * @param factory  The new SocketFactory the SocketClient should use.
      */
     public void setSocketFactory(final SocketFactory factory)
@@ -829,7 +829,7 @@ public abstract class SocketClient
 
     /**
      * Sets the SO_LINGER timeout on the currently opened socket.
-     * <p>
+     *
      * @param on  True if linger is to be enabled, false if not.
      * @param val The linger timeout (in hundredths of a second?)
      * @throws SocketException If the operation fails.
@@ -860,7 +860,7 @@ public abstract class SocketClient
     /**
      * Enables or disables the Nagle's algorithm (TCP_NODELAY) on the
      * currently opened socket.
-     * <p>
+     *
      * @param on  True if Nagle's algorithm is to be enabled, false if not.
      * @throws SocketException If the operation fails.
      * @throws NullPointerException if the socket is not currently open
@@ -876,7 +876,7 @@ public abstract class SocketClient
      * is useful for doing a quick security check when a client needs to
      * accept a connection from a server, such as an FTP data connection or
      * a BSD R command standard error stream.
-     * <p>
+     *
      * @param socket the item to check against
      * @return True if the remote hosts are the same, false if not.
      */
