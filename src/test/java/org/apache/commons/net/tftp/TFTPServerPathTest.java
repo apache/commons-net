@@ -55,7 +55,7 @@ public class TFTPServerPathTest extends TestCase
 
         // cleanup old failed runs
         out.delete();
-        assertTrue("Couldn't clear output location", !out.exists());
+        assertFalse("Couldn't clear output location", out.exists());
 
         try (final FileOutputStream output = new FileOutputStream(out)) {
             tftp.receiveFile(file.getName(), TFTP.BINARY_MODE, output, "localhost", SERVER_PORT);
@@ -94,7 +94,7 @@ public class TFTPServerPathTest extends TestCase
 
         // cleanup old failed runs
         out.delete();
-        assertTrue("Couldn't clear output location", !out.exists());
+        assertFalse("Couldn't clear output location", out.exists());
 
         try (final FileOutputStream output = new FileOutputStream(out)) {
             tftp.receiveFile(file.getName(), TFTP.BINARY_MODE, output, "localhost", SERVER_PORT);

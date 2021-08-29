@@ -165,7 +165,7 @@ public class TFTPTest extends TestCase
 
         // cleanup old failed runs
         out.delete();
-        assertTrue("Couldn't clear output location", !out.exists());
+        assertFalse("Couldn't clear output location", out.exists());
 
         try (final FileOutputStream output = new FileOutputStream(out)) {
             tftp.receiveFile(file.getName(), mode, output, "localhost", SERVER_PORT);
@@ -223,7 +223,7 @@ public class TFTPTest extends TestCase
         final File in = new File(serverDirectory, filePrefix + "upload");
         // cleanup old failed runs
         in.delete();
-        assertTrue("Couldn't clear output location", !in.exists());
+        assertFalse("Couldn't clear output location", in.exists());
 
         try (final FileInputStream fis = new FileInputStream(file)) {
             tftp.sendFile(in.getName(), mode, fis, "localhost", SERVER_PORT);
