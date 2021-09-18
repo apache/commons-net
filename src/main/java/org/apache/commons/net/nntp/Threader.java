@@ -348,10 +348,7 @@ public class Threader {
 
             // Else if empty, with kids, and (not at root or only one kid)
             else if (
-                container.threadable == null
-                    && container.child != null
-                    && (container.parent != null
-                        || container.child.next == null)) {
+                    container.threadable == null && (container.parent != null || container.child.next == null)) {
                 // We have an invalid/expired message with kids. Promote the kids to this level.
                 ThreadContainer tail;
                 final ThreadContainer kids = container.child;

@@ -227,8 +227,8 @@ public class MacOsPeterFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
                 }
             }
 
-            file.setUser(usr);
-            file.setGroup(grp);
+            file.setUser(null);
+            file.setGroup(null);
 
             try
             {

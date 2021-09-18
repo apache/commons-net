@@ -246,7 +246,6 @@ class Telnet extends SocketClient
             aytMonitor.wait(timeout);
             if (aytFlag == false)
             {
-                retValue = false;
                 aytFlag = true;
             }
             else

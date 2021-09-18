@@ -253,8 +253,6 @@ public final class TFTPDataPacket extends TFTPPacket
 
         if (length > MAX_DATA_LENGTH) {
             this.length = MAX_DATA_LENGTH;
-        } else {
-            this.length = length;
         }
     }
 
