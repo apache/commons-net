@@ -70,7 +70,8 @@ public final class NTPUDPClient extends DatagramSocketClient
      * @param host The address of the server.
      * @param port The port of the service.
      * @return The time value retrieved from the server.
-     * @throws IOException If an error occurs while retrieving the time.
+     * @throws IOException If an error occurs while retrieving the time or if
+     *                     received packet does not match the request.
      */
     public TimeInfo getTime(final InetAddress host, final int port) throws IOException
     {
@@ -106,6 +107,13 @@ public final class NTPUDPClient extends DatagramSocketClient
         _socket_.receive(receivePacket);
 
         final long returnTimeMillis = System.currentTimeMillis();
+
+        // Prevent invalid time information if response does not match request
+        if (!now.equals(recMessage.getOriginateTimeStamp()))
+        {
+            throw new IOException("Originate time does not match the request");
+        }
+
         // create TimeInfo message container but don't pre-compute the details yet
         return new TimeInfo(recMessage, returnTimeMillis, false);
     }
