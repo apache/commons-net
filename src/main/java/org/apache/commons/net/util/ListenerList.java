@@ -63,4 +63,19 @@ public class ListenerList implements Serializable, Iterable<EventListener>
             listeners.remove(listener);
     }
 
+    /*
+        Serialization is unnecessary for this class.
+        Reject attempts to do so until such time as the Serializable attribute can be dropped.
+     */
+
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException
+    {
+        throw new UnsupportedOperationException("Serialization is not supported");
+    }
+    
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException
+    {
+        throw new UnsupportedOperationException("Serialization is not supported");
+    }
+ 
 }

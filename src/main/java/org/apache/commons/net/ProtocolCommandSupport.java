@@ -17,6 +17,8 @@
 
 package org.apache.commons.net;
 
+import java.io.IOException;
+import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.EventListener;
 
@@ -131,5 +133,19 @@ public class ProtocolCommandSupport implements Serializable
         listeners.removeListener(listener);
     }
 
-}
+    /*
+        Serialization is unnecessary for this class.
+        Reject attempts to do so until such time as the Serializable attribute can be dropped.
+     */
 
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException
+    {
+        throw new UnsupportedOperationException("Serialization is not supported");
+    }
+    
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException
+    {
+        throw new UnsupportedOperationException("Serialization is not supported");
+    }
+ 
+}

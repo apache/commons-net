@@ -92,6 +92,10 @@ The <action> type attribute can be add,update,fix,remove.
         [FTP] Add FTPFile.getTimestampInstant().
       </action>
       <!-- UPDATE -->
+      <action type="update" dev="sebb">
+        Prevent serialization of the 4 classes that implement Serializable.
+        It is not useful and is unlikely to work properly.
+      </action>
       <action type="update" dev="ggregory" due-to="Dependabot">
         Bump junit from 4.13.1 to 4.13.2 #74.
       </action>
