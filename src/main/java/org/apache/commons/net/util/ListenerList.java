@@ -17,6 +17,7 @@
 
 package org.apache.commons.net.util;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.EventListener;
 import java.util.Iterator;
