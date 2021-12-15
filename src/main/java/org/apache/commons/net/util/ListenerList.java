@@ -18,6 +18,8 @@
 package org.apache.commons.net.util;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.EventListener;
 import java.util.Iterator;
@@ -69,12 +71,12 @@ public class ListenerList implements Serializable, Iterable<EventListener>
         Reject attempts to do so until such time as the Serializable attribute can be dropped.
      */
 
-    private void writeObject(java.io.ObjectOutputStream out) throws IOException
+    private void writeObject(ObjectOutputStream out) throws IOException
     {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
     
-    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
     {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
