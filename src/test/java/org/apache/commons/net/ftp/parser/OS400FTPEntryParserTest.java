@@ -203,6 +203,20 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework
                      df.format(f.getTimestamp().getTime()));
     }
 
+    /**
+     * Method testParseFileNameWithSpaces.
+     * Provide a test to show that file which name contains spaces is parsed correctly.
+     * @throws Exception on error
+     */
+
+    public void testParseFileNameWithSpaces() throws Exception
+    {
+        final FTPFile f = getParser().parseFTPEntry("MYUSER              3 06/12/21 12:00:00 *STMF      file with space.txt");
+        assertNotNull("Could not parse entry.", f);
+        assertTrue("Should have been a file.", f.isFile());
+        assertEquals("file with space.txt", f.getName());
+    }
+
     @Override
     public void testRecentPrecision() {
         testPrecision("----rwxr-x   1 PEP      0           4019 Mar 18 18:58 einladung.zip", CalendarUnit.MINUTE);
