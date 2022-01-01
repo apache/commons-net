@@ -1891,11 +1891,11 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Issue the FTP MDTM command (not supported by all servers) to retrieve the last
      * modification time of a file. The modification string should be in the
-     * ISO 3077 form "YYYYMMDDhhmmss(.xxx)?". The timestamp represented should also be in
+     * ISO 3077 form "yyyyMMDDhhmmss(.xxx)?". The timestamp represented should also be in
      * GMT, but not all FTP servers honor this.
      *
      * @param pathname The file path to query.
-     * @return A string representing the last file modification time in <code>YYYYMMDDhhmmss</code> format.
+     * @return A string representing the last file modification time in <code>yyyyMMDDhhmmss</code> format.
      * @throws IOException if an I/O error occurs.
      * @since 2.0
      */
@@ -2943,7 +2943,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Issue the FTP MDTM command (not supported by all servers) to retrieve the last
      * modification time of a file. The modification string should be in the
-     * ISO 3077 form "YYYYMMDDhhmmss(.xxx)?". The timestamp represented should also be in
+     * ISO 3077 form "yyyyMMDDhhmmss(.xxx)?". The timestamp represented should also be in
      * GMT, but not all FTP servers honor this.
      *
      * @param pathname The file path to query.
@@ -2963,7 +2963,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Issue the FTP MDTM command (not supported by all servers) to retrieve the last
      * modification time of a file. The modification string should be in the
-     * ISO 3077 form "YYYYMMDDhhmmss(.xxx)?". The timestamp represented should also be in
+     * ISO 3077 form "yyyyMMDDhhmmss(.xxx)?". The timestamp represented should also be in
      * GMT, but not all FTP servers honor this.
      *
      * @param pathname The file path to query.
@@ -2987,7 +2987,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Issue the FTP MDTM command (not supported by all servers) to retrieve the last
      * modification time of a file. The modification string should be in the
-     * ISO 3077 form "YYYYMMDDhhmmss(.xxx)?". The timestamp represented should also be in
+     * ISO 3077 form "yyyyMMDDhhmmss(.xxx)?". The timestamp represented should also be in
      * GMT, but not all FTP servers honor this.
      *
      * @param pathname The file path to query.
@@ -3746,14 +3746,14 @@ public class FTPClient extends FTP implements Configurable {
      * Issue the FTP MFMT command (not supported by all servers) which sets the last
      * modified time of a file.
      *
-     * The timestamp should be in the form <code>YYYYMMDDhhmmss</code>. It should also
+     * The timestamp should be in the form <code>yyyyMMDDhhmmss</code>. It should also
      * be in GMT, but not all servers honor this.
      *
      * An FTP server would indicate its support of this feature by including "MFMT"
      * in its response to the FEAT command, which may be retrieved by FTPClient.features()
      *
      * @param pathname The file path for which last modified time is to be changed.
-     * @param timeval The timestamp to set to, in <code>YYYYMMDDhhmmss</code> format.
+     * @param timeval The timestamp to set to, in <code>yyyyMMDDhhmmss</code> format.
      * @return true if successfully set, false if not
      * @throws IOException if an I/O error occurs.
      * @since 2.2
