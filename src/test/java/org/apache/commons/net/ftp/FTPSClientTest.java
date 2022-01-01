@@ -37,6 +37,7 @@ import org.apache.ftpserver.FtpServerFactory;
 import org.apache.ftpserver.ftplet.FtpException;
 import org.apache.ftpserver.ftplet.UserManager;
 import org.apache.ftpserver.listener.ListenerFactory;
+import org.apache.ftpserver.ssl.SslConfiguration;
 import org.apache.ftpserver.ssl.SslConfigurationFactory;
 import org.apache.ftpserver.usermanager.PropertiesUserManagerFactory;
 import org.apache.ftpserver.usermanager.impl.BaseUser;
@@ -99,7 +100,7 @@ public class FTPSClientTest {
     /**
      * Creates and starts an embedded Apache MINA FTP Server.
      *
-     * @param IMPLICIT FTPS connection mode
+     * @param implicit FTPS connection mode
      * @throws FtpException
      */
     private synchronized static void setUpClass(final boolean implicit) throws FtpException {
@@ -135,7 +136,9 @@ public class FTPSClientTest {
         sllConfigFactory.setKeystorePassword("password");
 
         // set the SSL configuration for the listener
-        factory.setSslConfiguration(sllConfigFactory.createSslConfiguration());
+        SslConfiguration sslConfiguration = sllConfigFactory.createSslConfiguration();
+        NoProtocolSslConfigurationProxy noProtocolSslConfigurationProxy = new NoProtocolSslConfigurationProxy(sslConfiguration);
+        factory.setSslConfiguration(noProtocolSslConfigurationProxy);
         factory.setImplicitSsl(implicit);
 
         // replace the default listener

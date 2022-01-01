@@ -103,7 +103,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <dependency>
             <groupId>org.apache.ftpserver</groupId>
             <artifactId>ftpserver-core</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
