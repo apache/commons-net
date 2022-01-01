@@ -18,7 +18,6 @@
 package org.apache.commons.net;
 
 import java.io.IOException;
-import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.EventListener;
 
@@ -138,14 +137,14 @@ public class ProtocolCommandSupport implements Serializable
         Reject attempts to do so until such time as the Serializable attribute can be dropped.
      */
 
-    private void writeObject(java.io.ObjectOutputStream out) throws IOException
+    private void writeObject(final java.io.ObjectOutputStream out) throws IOException
     {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
-    
-    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException
+
+    private void readObject(final java.io.ObjectInputStream in) throws IOException, ClassNotFoundException
     {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
- 
+
 }

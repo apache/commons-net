@@ -71,14 +71,14 @@ public class ListenerList implements Serializable, Iterable<EventListener>
         Reject attempts to do so until such time as the Serializable attribute can be dropped.
      */
 
-    private void writeObject(ObjectOutputStream out) throws IOException
+    private void writeObject(final ObjectOutputStream out) throws IOException
     {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
-    
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
+
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException
     {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
- 
+
 }
