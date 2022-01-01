@@ -993,7 +993,7 @@ public class FTP extends SocketClient
      * receive the reply, and return the reply code.
      *
      * @param pathname The pathname for which mtime is to be changed
-     * @param timeval Timestamp in <code>YYYYMMDDhhmmss</code> format
+     * @param timeval Timestamp in <code>yyyyMMDDhhmmss</code> format
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException
      *      If the FTP server prematurely closes the connection as a result
