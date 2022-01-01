@@ -117,6 +117,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="update" dev="ggregory" due-to="Dependabot">
         Bump actions/checkout from 2.3.4 to 2.3.5 #89.
       </action>
+      <action type="update" dev="ggregory" due-to="Dependabot">
+        Bump actions/cache from 2.1.6 to 2.1.7 #93.
+      </action>
     </release>
     <release version="3.8.0" date="2021-02-13" description="Maintenance and bug fix release (Java 7).">
       <!-- ADD -->
