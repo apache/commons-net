@@ -73,6 +73,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <!-- for debugging FTPSClientTest -->
         <commons.net.trace_calls>false</commons.net.trace_calls>
         <commons.net.add_listener>false</commons.net.add_listener>
+    	<closeTestReports>true</closeTestReports>
     </properties>
 
     <scm>
@@ -192,6 +193,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                     <TRACE_CALLS>${commons.net.trace_calls}</TRACE_CALLS>
                     <ADD_LISTENER>${commons.net.add_listener}</ADD_LISTENER>
                     </environmentVariables>
+                	<disableXmlReport>${closeTestReports}</disableXmlReport>
                 </configuration>
             </plugin>
 
