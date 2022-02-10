@@ -43,7 +43,6 @@
 Apache Commons Net
 ===================
 
-[![Travis-CI Status](https://travis-ci.org/apache/commons-net.svg)](https://travis-ci.org/apache/commons-net)
 [![GitHub Actions Status](https://github.com/apache/commons-net/workflows/Java%20CI/badge.svg)](https://github.com/apache/commons-net/actions)
 [![Coverage Status](https://coveralls.io/repos/apache/commons-net/badge.svg)](https://coveralls.io/r/apache/commons-net)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/)
