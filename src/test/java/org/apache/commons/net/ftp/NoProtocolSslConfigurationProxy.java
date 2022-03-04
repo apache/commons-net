@@ -30,7 +30,7 @@ import org.apache.ftpserver.ssl.SslConfiguration;
 public class NoProtocolSslConfigurationProxy implements SslConfiguration {
 
     @Override
-    public String getEnabledProtocol() {
+    public String[] getEnabledProtocols() {
         return null;
     }
 
