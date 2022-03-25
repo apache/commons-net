@@ -122,7 +122,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump actions/checkout from 2.3.4 to 3 #89, #91, #100.
       </action>
       <action type="update" dev="ggregory" due-to="Dependabot">
-        Bump actions/cache from 2.1.6 to 2.1.7 #93.
+        Bump actions/cache from 2.1.6 to 3 #93, #102.
       </action>
       <action type="update" dev="ggregory" due-to="XenoAmess, Gary Gregory">
         Upgrade ftpserver-core from 1.1.1 to 1.2.0 #96.
