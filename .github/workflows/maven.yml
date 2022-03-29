@@ -15,22 +15,22 @@
 
 name: Java CI
 
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
     timeout-minutes: 5
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
         java: [ 8, 11, 17 ]
+        os: [ubuntu-latest, macos-latest]
         experimental: [false]
 #        include:
 #          - java: 18-ea
 #            experimental: true        
 
+    runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
     - uses: actions/cache@v3
