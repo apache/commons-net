@@ -221,7 +221,7 @@ extends TestCase implements TelnetNotificationHandler
     }
 
     /*
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     @Override
     protected void tearDown() throws Exception {

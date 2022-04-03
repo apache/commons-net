@@ -87,7 +87,7 @@ public class FTPClientConfigFunctionalTest extends TestCase {
     }
 
     /**
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     @Override
     protected void setUp() throws Exception {
@@ -106,7 +106,7 @@ public class FTPClientConfigFunctionalTest extends TestCase {
     }
 
     /**
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     @Override
     protected void tearDown() throws Exception {
