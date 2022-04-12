@@ -13,6 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+github:
+  description: "Apache Commons Net"
+  homepage: https://commons.apache.org/net/
+
 notifications:
     commits:      commits@commons.apache.org
     issues:       issues@commons.apache.org
