@@ -528,10 +528,6 @@ public class TFTPClient extends TFTP
      */
     public void setMaxTimeouts(final int numTimeouts)
     {
-        if (numTimeouts < 1) {
-            maxTimeouts = 1;
-        } else {
-            maxTimeouts = numTimeouts;
-        }
+        maxTimeouts = Math.max(numTimeouts, 1);
     }
 }
