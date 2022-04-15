@@ -51,7 +51,7 @@ public final class IOUtil
 
             try
             {
-                while (!Thread.interrupted() && (ch = localInput.read()) != -1)
+                while (!Thread.interrupted() && (ch = localInput.read()) != NetConstants.EOS)
                 {
                     remoteOutput.write(ch);
                     remoteOutput.flush();
