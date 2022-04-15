@@ -18,6 +18,8 @@
 
 package org.apache.commons.net.ftp;
 
+import java.util.Objects;
+
 /**
  * Implements some simple FTPFileFilter classes.
  * @since 2.2
@@ -32,7 +34,7 @@ public class FTPFileFilters {
     /**
      * Accepts all non-null FTPFile entries.
      */
-    public static final FTPFileFilter NON_NULL = file -> file != null;
+    public static final FTPFileFilter NON_NULL = Objects::nonNull;
 
     /**
      * Accepts all (non-null) FTPFile directory entries.

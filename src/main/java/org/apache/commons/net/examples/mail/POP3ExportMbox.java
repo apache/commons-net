@@ -184,7 +184,7 @@ public final class POP3ExportMbox
 
     private static void writeMbox(final POP3Client pop3, final OutputStreamWriter fw, final int i) throws IOException {
         final SimpleDateFormat DATE_FORMAT // for mbox From_ lines
-                = new SimpleDateFormat("EEE MMM dd HH:mm:ss YYYY");
+                = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy");
         final String replyTo = "MAILER-DAEMON"; // default
         final Date received = new Date();
         try (final BufferedReader r = (BufferedReader) pop3.retrieveMessage(i)) {

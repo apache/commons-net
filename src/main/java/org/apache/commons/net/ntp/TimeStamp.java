@@ -18,6 +18,7 @@ package org.apache.commons.net.ntp;
 
 
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -447,6 +448,21 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
         }
         final Date ntpDate = getDate();
         return utcFormatter.format(ntpDate);
+    }
+
+    /*
+        Serialization is unnecessary for this class.
+        Reject attempts to do so until such time as the Serializable attribute can be dropped.
+     */
+
+    private void writeObject(final java.io.ObjectOutputStream out) throws IOException
+    {
+        throw new UnsupportedOperationException("Serialization is not supported");
+    }
+
+    private void readObject(final java.io.ObjectInputStream in) throws IOException, ClassNotFoundException
+    {
+        throw new UnsupportedOperationException("Serialization is not supported");
     }
 
 }

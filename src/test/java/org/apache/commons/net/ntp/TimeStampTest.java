@@ -47,7 +47,7 @@ public class TimeStampTest extends TestCase {
         // timestamps in ts1 (TIME1) and ts3 (TIME2) are only off by the smallest
         // fraction of a second (~200 picoseconds) so the times are not equal but
         // when converted to Java dates (in milliseconds) they will be equal.
-        assertTrue("ts1 != ts3", !ts1.equals(ts3));
+        assertFalse("ts1 != ts3", ts1.equals(ts3));
         assertEquals("compareTo(1,3)", -1, ts1.compareTo(ts3));
         assertEquals("seconds", ts1.getSeconds(), ts3.getSeconds());
         assertTrue("fraction", ts1.getFraction() != ts3.getFraction());
@@ -57,7 +57,7 @@ public class TimeStampTest extends TestCase {
         final long time3 = ts3.getTime();
         assertEquals("equals(time1,3)", time1, time3); // ntpTime1 != ntpTime3 but JavaTime(t1) == JavaTime(t3)...
 
-        assertTrue("ts3 != ts4", !ts3.equals(ts4));
+        assertFalse("ts3 != ts4", ts3.equals(ts4));
         assertTrue("time3 != ts4.time", time3 != ts4.getTime());
     }
 

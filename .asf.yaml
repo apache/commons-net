@@ -13,17 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-version: 2
-updates:
-  - package-ecosystem: "maven"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "friday"
-    ignore:
-      - dependency-name: "org.slf4j:slf4j-simple"
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "friday"
+github:
+  description: "Apache Commons Net"
+  homepage: https://commons.apache.org/net/
+
+notifications:
+    commits:      commits@commons.apache.org
+    issues:       issues@commons.apache.org
+    pullrequests: issues@commons.apache.org
+    jira_options: link label
+    jobs:         notifications@commons.apache.org

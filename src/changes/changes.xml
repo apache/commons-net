@@ -63,6 +63,14 @@ The <action> type attribute can be add,update,fix,remove.
 
   <body>
     <release version="3.9.0" date="2021-MM-DD" description="Maintenance and bug fix release (Java 8).">
+      <!-- FIX -->
+      <action type="fix" issue="NET-708" dev="ggregory" due-to="XenoAmess">
+        Use yyyy instead of YYYY in SimpleDateFormat #97.
+      </action>
+      <action type="update" dev="sebb">
+        Prevent serialization of the 4 classes that implement Serializable.
+        It is not useful and is unlikely to work properly.
+      </action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">
         [FTP] Add FTPClient.mdtmInstant(String).
@@ -92,6 +100,15 @@ The <action> type attribute can be add,update,fix,remove.
         [FTP] Add FTPFile.getTimestampInstant().
       </action>
       <!-- UPDATE -->
+      <action dev="ggregory" type="update" due-to="Gary Gregory">
+        Bump actions/setup-java from 1.4.3 to 3.
+      </action>
+      <action type="update" dev="ggregory" due-to="Dependabot">
+        Bump actions/checkout from 2.3.4 to 3 #89, #91, #100.
+      </action>
+      <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">
+        Bump actions/cache from 2.1.6 to 3.0.2 #93, #102.
+      </action>
       <action type="update" dev="ggregory" due-to="Dependabot">
         Bump junit from 4.13.1 to 4.13.2 #74.
       </action>
@@ -99,16 +116,16 @@ The <action> type attribute can be add,update,fix,remove.
         Bump commons-io from 2.6 to 2.11.0 #60.
       </action>
       <action dev="ggregory" type="update" due-to="Gary Gregory">
-        Bump actions/setup-java from v1.4.3 to v2.
-      </action>
-      <action dev="ggregory" type="update" due-to="Gary Gregory">
         Bump commons.jacoco.version from 0.8.6 to 0.8.7.
       </action>
       <action dev="ggregory" type="update" due-to="Gary Gregory">
-        Bump commons.japicmp.version from 0.14.3 to 0.15.3.
+        Bump commons.japicmp.version from 0.14.3 to 0.15.7.
       </action>
       <action dev="ggregory" type="update" due-to="Gary Gregory">
         Bump commons.surefire.version from 2.22.2 to 3.0.0-M5.
+      </action>
+      <action type="update" dev="ggregory" due-to="XenoAmess, Gary Gregory">
+        Bump ftpserver-core from 1.1.1 to 1.2.0 #96.
       </action>
     </release>
     <release version="3.8.0" date="2021-02-13" description="Maintenance and bug fix release (Java 7).">

@@ -48,7 +48,7 @@ public class SuppressGAOptionHandlerTest extends TelnetOptionHandlerTestAbstract
 
         final int resp1[] = opthand1.answerSubnegotiation(subn, subn.length);
 
-        assertEquals(resp1, null);
+        assertNull(resp1);
     }
 
     /**
@@ -72,7 +72,7 @@ public class SuppressGAOptionHandlerTest extends TelnetOptionHandlerTestAbstract
         final int resp1[] = opthand1.startSubnegotiationLocal();
         final int resp2[] = opthand1.startSubnegotiationRemote();
 
-        assertEquals(resp1, null);
-        assertEquals(resp2, null);
+        assertNull(resp1);
+        assertNull(resp2);
     }
 }

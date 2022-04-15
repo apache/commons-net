@@ -41,6 +41,6 @@ public class TelnetOptionTest extends TestCase
         assertTrue(TelnetOption.isValidOption(0));
         assertTrue(TelnetOption.isValidOption(91));
         assertTrue(TelnetOption.isValidOption(255));
-        assertTrue(!TelnetOption.isValidOption(256));
+        assertFalse(TelnetOption.isValidOption(256));
     }
 }

@@ -86,32 +86,32 @@ public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework
      */
     private void checkPermisions(final FTPFile dir)
     {
-        assertTrue("Owner should not have read permission.",
-                   !dir.hasPermission(FTPFile.USER_ACCESS,
+        assertFalse("Owner should not have read permission.",
+                   dir.hasPermission(FTPFile.USER_ACCESS,
                                       FTPFile.READ_PERMISSION));
-        assertTrue("Owner should not have write permission.",
-                   !dir.hasPermission(FTPFile.USER_ACCESS,
+        assertFalse("Owner should not have write permission.",
+                   dir.hasPermission(FTPFile.USER_ACCESS,
                                       FTPFile.WRITE_PERMISSION));
-        assertTrue("Owner should not have execute permission.",
-                   !dir.hasPermission(FTPFile.USER_ACCESS,
+        assertFalse("Owner should not have execute permission.",
+                   dir.hasPermission(FTPFile.USER_ACCESS,
                                       FTPFile.EXECUTE_PERMISSION));
-        assertTrue("Group should not have read permission.",
-                   !dir.hasPermission(FTPFile.GROUP_ACCESS,
+        assertFalse("Group should not have read permission.",
+                   dir.hasPermission(FTPFile.GROUP_ACCESS,
                                       FTPFile.READ_PERMISSION));
-        assertTrue("Group should not have write permission.",
-                   !dir.hasPermission(FTPFile.GROUP_ACCESS,
+        assertFalse("Group should not have write permission.",
+                   dir.hasPermission(FTPFile.GROUP_ACCESS,
                                       FTPFile.WRITE_PERMISSION));
-        assertTrue("Group should not have execute permission.",
-                   !dir.hasPermission(FTPFile.GROUP_ACCESS,
+        assertFalse("Group should not have execute permission.",
+                   dir.hasPermission(FTPFile.GROUP_ACCESS,
                                       FTPFile.EXECUTE_PERMISSION));
-        assertTrue("World should not have read permission.",
-                   !dir.hasPermission(FTPFile.WORLD_ACCESS,
+        assertFalse("World should not have read permission.",
+                   dir.hasPermission(FTPFile.WORLD_ACCESS,
                                       FTPFile.READ_PERMISSION));
-        assertTrue("World should not have write permission.",
-                   !dir.hasPermission(FTPFile.WORLD_ACCESS,
+        assertFalse("World should not have write permission.",
+                   dir.hasPermission(FTPFile.WORLD_ACCESS,
                                       FTPFile.WRITE_PERMISSION));
-        assertTrue("World should not have execute permission.",
-                   !dir.hasPermission(FTPFile.WORLD_ACCESS,
+        assertFalse("World should not have execute permission.",
+                   dir.hasPermission(FTPFile.WORLD_ACCESS,
                                       FTPFile.EXECUTE_PERMISSION));
     }
 
