@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.apache.commons.net.io.Util;
+import org.apache.commons.net.util.NetConstants;
 
 /**
  * This is a utility class providing a reader/writer capability required
@@ -50,7 +51,7 @@ public final class IOUtil
 
             try
             {
-                while (!Thread.interrupted() && (ch = localInput.read()) != -1)
+                while (!Thread.interrupted() && (ch = localInput.read()) != NetConstants.EOS)
                 {
                     remoteOutput.write(ch);
                     remoteOutput.flush();
@@ -60,8 +61,7 @@ public final class IOUtil
             {
                 //e.printStackTrace();
             }
-        })
-                 ;
+        });
 
 
         writer = new Thread(() -> {

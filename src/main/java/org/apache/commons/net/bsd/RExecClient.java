@@ -26,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.net.SocketClient;
 import org.apache.commons.net.io.SocketInputStream;
+import org.apache.commons.net.util.NetConstants;
 
 /**
  * RExecClient implements the rexec() facility that first appeared in
@@ -271,7 +272,7 @@ public class RExecClient extends SocketClient
         if (ch > 0) {
             final StringBuilder buffer = new StringBuilder();
 
-            while ((ch = _input_.read()) != -1 && ch != '\n') {
+            while ((ch = _input_.read()) != NetConstants.EOS && ch != '\n') {
                 buffer.append((char)ch);
             }
 
