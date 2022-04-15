@@ -110,40 +110,40 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
     private void checkPermisions(final FTPFile dir, final int octalPerm)
     {
         int permMask = 1<<8;
-        assertTrue("Owner should not have read permission.",
-                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.USER_ACCESS,
+        assertEquals("Owner should not have read permission.",
+                (permMask & octalPerm) != 0, dir.hasPermission(FTPFile.USER_ACCESS,
                                       FTPFile.READ_PERMISSION));
         permMask >>= 1;
-        assertTrue("Owner should not have write permission.",
-                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.USER_ACCESS,
+        assertEquals("Owner should not have write permission.",
+                (permMask & octalPerm) != 0, dir.hasPermission(FTPFile.USER_ACCESS,
                                       FTPFile.WRITE_PERMISSION));
         permMask >>= 1;
-        assertTrue("Owner should not have execute permission.",
-                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.USER_ACCESS,
+        assertEquals("Owner should not have execute permission.",
+                (permMask & octalPerm) != 0, dir.hasPermission(FTPFile.USER_ACCESS,
                                       FTPFile.EXECUTE_PERMISSION));
         permMask >>= 1;
-        assertTrue("Group should not have read permission.",
-                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.GROUP_ACCESS,
+        assertEquals("Group should not have read permission.",
+                (permMask & octalPerm) != 0, dir.hasPermission(FTPFile.GROUP_ACCESS,
                                       FTPFile.READ_PERMISSION));
         permMask >>= 1;
-        assertTrue("Group should not have write permission.",
-                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.GROUP_ACCESS,
+        assertEquals("Group should not have write permission.",
+                (permMask & octalPerm) != 0, dir.hasPermission(FTPFile.GROUP_ACCESS,
                                       FTPFile.WRITE_PERMISSION));
         permMask >>= 1;
-        assertTrue("Group should not have execute permission.",
-                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.GROUP_ACCESS,
+        assertEquals("Group should not have execute permission.",
+                (permMask & octalPerm) != 0, dir.hasPermission(FTPFile.GROUP_ACCESS,
                                       FTPFile.EXECUTE_PERMISSION));
         permMask >>= 1;
-        assertTrue("World should not have read permission.",
-                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.WORLD_ACCESS,
+        assertEquals("World should not have read permission.",
+                (permMask & octalPerm) != 0, dir.hasPermission(FTPFile.WORLD_ACCESS,
                                       FTPFile.READ_PERMISSION));
         permMask >>= 1;
-        assertTrue("World should not have write permission.",
-                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.WORLD_ACCESS,
+        assertEquals("World should not have write permission.",
+                (permMask & octalPerm) != 0, dir.hasPermission(FTPFile.WORLD_ACCESS,
                                       FTPFile.WRITE_PERMISSION));
         permMask >>= 1;
-        assertTrue("World should not have execute permission.",
-                (permMask & octalPerm) != 0 == dir.hasPermission(FTPFile.WORLD_ACCESS,
+        assertEquals("World should not have execute permission.",
+                (permMask & octalPerm) != 0, dir.hasPermission(FTPFile.WORLD_ACCESS,
                                       FTPFile.EXECUTE_PERMISSION));
     }
     @Override
@@ -214,8 +214,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
                              dir.getSize());
         assertEquals("Tue Jun 02 07:32:04 1998",
                              df.format(dir.getTimestamp().getTime()));
-        assertEquals(null,
-                     dir.getGroup());
+        assertNull(dir.getGroup());
         assertEquals("TRANSLATED",
                      dir.getUser());
         checkPermisions(dir, 0705);
@@ -250,8 +249,7 @@ public class VMSFTPEntryParserTest extends FTPParseTestFramework
                      file.getSize());
         assertEquals("Tue Jun 02 07:32:04 1998",
                      df.format(file.getTimestamp().getTime()));
-        assertEquals(null,
-                     file.getGroup());
+        assertNull(file.getGroup());
         assertEquals("TRANSLATED",
                      file.getUser());
         checkPermisions(file, 0400);

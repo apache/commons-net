@@ -25,6 +25,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import static org.junit.Assert.assertArrayEquals;
+
 /**
  * A functional test suite for checking that site listings work.
  */
@@ -280,7 +282,7 @@ public class ListingFunctionalTest extends TestCase
         assertNotNull(files);
 
         // This may well fail, e.g. window parser for VMS listing
-        assertTrue("Expected empty array: "+Arrays.toString(files), Arrays.equals(new FTPFile[]{}, files));
+        assertArrayEquals("Expected empty array: " + Arrays.toString(files), new FTPFile[]{}, files);
     }
 
     /*

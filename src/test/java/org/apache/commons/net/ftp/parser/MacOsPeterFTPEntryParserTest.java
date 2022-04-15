@@ -60,13 +60,13 @@ public class MacOsPeterFTPEntryParserTest extends FTPParseTestFramework {
                 FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION));
         assertTrue("Should have group read permission.", f.hasPermission(
                 FTPFile.GROUP_ACCESS, FTPFile.READ_PERMISSION));
-        assertTrue("Should NOT have group write permission.", !f.hasPermission(
+        assertFalse("Should NOT have group write permission.", f.hasPermission(
                 FTPFile.GROUP_ACCESS, FTPFile.WRITE_PERMISSION));
         assertTrue("Should have group execute permission.", f.hasPermission(
                 FTPFile.GROUP_ACCESS, FTPFile.EXECUTE_PERMISSION));
         assertTrue("Should have world read permission.", f.hasPermission(
                 FTPFile.WORLD_ACCESS, FTPFile.READ_PERMISSION));
-        assertTrue("Should NOT have world write permission.", !f.hasPermission(
+        assertFalse("Should NOT have world write permission.", f.hasPermission(
                 FTPFile.WORLD_ACCESS, FTPFile.WRITE_PERMISSION));
         assertTrue("Should have world execute permission.", f.hasPermission(
                 FTPFile.WORLD_ACCESS, FTPFile.EXECUTE_PERMISSION));

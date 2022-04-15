@@ -18,13 +18,13 @@
 
 package org.apache.commons.net.util;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.Arrays;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -41,7 +41,7 @@ public class Base64Test {
     public void testBase64Boolean() {
         final Base64 b64 = new Base64(true);
         assertTrue(b64.isUrlSafe());
-        assertTrue(Arrays.equals(new byte[]{'\r','\n'}, b64.getLineSeparator()));
+        assertArrayEquals(new byte[]{'\r', '\n'}, b64.getLineSeparator());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class Base64Test {
         final Base64 b64;
         b64 = new Base64(8, new byte[]{});
         assertFalse(b64.isUrlSafe());
-        assertTrue(Arrays.equals(new byte[]{}, b64.getLineSeparator()));
+        assertArrayEquals(new byte[]{}, b64.getLineSeparator());
     }
 
     @Test
@@ -104,7 +104,7 @@ public class Base64Test {
     @Test
     public void testEncodeBase64ByteArray() {
         final byte[] binaryData=null;
-        assertTrue(Arrays.equals(binaryData, Base64.encodeBase64(binaryData)));
+        assertArrayEquals(binaryData, Base64.encodeBase64(binaryData));
     }
 
     @Test @Ignore
