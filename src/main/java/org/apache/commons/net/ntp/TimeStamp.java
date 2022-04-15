@@ -306,7 +306,7 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
     {
         final long thisVal = this.ntpTime;
         final long anotherVal = anotherTimeStamp.ntpTime;
-        return (thisVal < anotherVal ? -1 : (thisVal == anotherVal ? 0 : 1));
+        return (Long.compare(thisVal, anotherVal));
     }
 
     /**
