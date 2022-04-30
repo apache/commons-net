@@ -164,7 +164,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
 
         ch = available();
 
-        this.length = length > ch ? ch : length;
+        this.length = Math.min(length, ch);
 
         // If nothing is available, block to read only one character
         if (this.length < 1) {
