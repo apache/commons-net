@@ -99,9 +99,12 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="add" dev="ggregory" due-to="Gary Gregory">
         [FTP] Add FTPFile.getTimestampInstant().
       </action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">
+        Add github/codeql-action.
+      </action>
       <!-- UPDATE -->
       <action dev="ggregory" type="update" due-to="Gary Gregory">
-        Bump actions/setup-java from 1.4.3 to 3.
+        A actions/setup-java from 1.4.3 to 3.
       </action>
       <action type="update" dev="ggregory" due-to="Dependabot">
         Bump actions/checkout from 2.3.4 to 3 #89, #91, #100.
