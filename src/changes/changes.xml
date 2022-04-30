@@ -71,6 +71,9 @@ The <action> type attribute can be add,update,fix,remove.
         Prevent serialization of the 4 classes that implement Serializable.
         It is not useful and is unlikely to work properly.
       </action>
+      <action type="fix" dev="ggregory" due-to="Arturo Bernal">
+        Use Math.min and Math.max method instead of manual calculations. #104.
+      </action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">
         [FTP] Add FTPClient.mdtmInstant(String).
