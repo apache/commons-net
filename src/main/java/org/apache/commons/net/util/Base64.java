@@ -19,6 +19,7 @@ package org.apache.commons.net.util;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 
 /**
@@ -351,9 +352,6 @@ public class Base64 {
      * @since 1.4
      */
     public static byte[] encodeInteger(final BigInteger bigInt) {
-        if (bigInt == null) {
-            throw new NullPointerException("encodeInteger called with null parameter");
-        }
         return encodeBase64(toIntegerBytes(bigInt), false);
     }
 
@@ -448,6 +446,7 @@ public class Base64 {
      * @return a byte array representation of the BigInteger parameter
      */
     static byte[] toIntegerBytes(final BigInteger bigInt) {
+        Objects.requireNonNull(bigInt, "bigInt");
         int bitlen = bigInt.bitLength();
         // round bitlen
         bitlen = ((bitlen + 7) >> 3) << 3;
