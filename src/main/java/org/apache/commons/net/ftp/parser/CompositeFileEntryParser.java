@@ -23,9 +23,9 @@ import org.apache.commons.net.ftp.FTPFileEntryParserImpl;
 
 /**
  * This implementation allows to pack some FileEntryParsers together
- * and handle the case where to returned dirstyle isnt clearly defined.
+ * and handle the case where to returned dir style isn't clearly defined.
  * The matching parser will be cached.
- * If the cached parser wont match due to the server changed the dirstyle,
+ * If the cached parser wont match due to the server changed the dir style,
  * a new matching parser will be searched.
  */
 public class CompositeFileEntryParser extends FTPFileEntryParserImpl
@@ -46,16 +46,13 @@ public class CompositeFileEntryParser extends FTPFileEntryParserImpl
         {
             return cachedFtpFileEntryParser.parseFTPEntry(listEntry);
         }
-        else
+        for (final FTPFileEntryParser ftpFileEntryParser : ftpFileEntryParsers)
         {
-            for (final FTPFileEntryParser ftpFileEntryParser : ftpFileEntryParsers)
+            final FTPFile matched = ftpFileEntryParser.parseFTPEntry(listEntry);
+            if (matched != null)
             {
-                final FTPFile matched = ftpFileEntryParser.parseFTPEntry(listEntry);
-                if (matched != null)
-                {
-                    cachedFtpFileEntryParser = ftpFileEntryParser;
-                    return matched;
-                }
+                cachedFtpFileEntryParser = ftpFileEntryParser;
+                return matched;
             }
         }
         return null;
