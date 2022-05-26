@@ -198,7 +198,7 @@ public class FTPSClientTest {
             // HACK: Without this sleep, the user command sometimes does not reach the ftpserver
             // This only seems to affect GitHub builds, and only Java 11+
             Thread.sleep(200); // 100 seems to be not always enough
-        } catch (InterruptedException e) {};
+        } catch (InterruptedException e) {}
         assertTrue(client.login("test", "test"));
         assertClientCode(client);
         //
