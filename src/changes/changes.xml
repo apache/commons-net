@@ -106,14 +106,14 @@ The <action> type attribute can be add,update,fix,remove.
         Add github/codeql-action.
       </action>
       <!-- UPDATE -->
-      <action dev="ggregory" type="update" due-to="Gary Gregory">
-        A actions/setup-java from 1.4.3 to 3.
+      <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">
+        Bump actions/cache from 2.1.6 to 3.0.3 #93, #102.
       </action>
       <action type="update" dev="ggregory" due-to="Dependabot">
         Bump actions/checkout from 2.3.4 to 3 #89, #91, #100.
       </action>
-      <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">
-        Bump actions/cache from 2.1.6 to 3.0.3 #93, #102.
+      <action dev="ggregory" type="update" due-to="Gary Gregory">
+        A actions/setup-java from 1.4.3 to 3.
       </action>
       <action type="update" dev="ggregory" due-to="Dependabot">
         Bump junit from 4.13.1 to 4.13.2 #74.
