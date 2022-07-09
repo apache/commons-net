@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -141,9 +140,7 @@ public class FTPListParseEngine {
     throws IOException // TODO remove; not actually thrown
     {
         final List<FTPFile> tmpResults = new ArrayList<>();
-        final Iterator<String> iter = this.entries.iterator();
-        while (iter.hasNext()) {
-            final String entry = iter.next();
+        for (final String entry : entries) {
             FTPFile temp = this.parser.parseFTPEntry(entry);
             if (temp == null && saveUnparseableEntries) {
                 temp = new FTPFile(entry);

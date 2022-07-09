@@ -32,7 +32,6 @@ import java.net.NetworkInterface;
 import java.net.SocketTimeoutException;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.Iterator;
 
 import org.apache.commons.net.io.FromNetASCIIOutputStream;
 import org.apache.commons.net.io.ToNetASCIIInputStream;
@@ -927,11 +926,7 @@ public class TFTPServer implements Runnable
 
         synchronized(transfers_)
         {
-            final Iterator<TFTPTransfer> it = transfers_.iterator();
-            while (it.hasNext())
-            {
-                it.next().shutdown();
-            }
+            transfers_.forEach(TFTPTransfer::shutdown);
         }
 
         try
