@@ -19,7 +19,7 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
-    timeout-minutes: 5
+    timeout-minutes: 7
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
