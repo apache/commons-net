@@ -34,8 +34,10 @@ import org.junit.Test;
 public class MainTest {
 
     private static boolean hasMainMethod(String name) {
+        System.out.println("Initial name " + name);
         name = name.replace(".class", "");
         name = name.replace("/", ".");
+        System.out.println("Updated name " + name);
         try {
             final Class<?> clazz = Class.forName(name, false, MainTest.class.getClassLoader());
             clazz.getMethod("main", String[].class);
@@ -70,6 +72,7 @@ public class MainTest {
     }
 
     private static void scanForClasses(final int rootLength, final File current, final Properties p) {
+        System.out.println("len=" + rootLength + " " + current);
         final File[] files = current.listFiles();
         if (files != null) {
             for (final File file : files) {
@@ -120,6 +123,7 @@ public class MainTest {
         } else {
             final File examples = new File(sourceFile, "org/apache/commons/net/examples"); // must match top level examples package name
             if (examples.exists()) {
+                System.out.println(sourceFile);
                 scanForClasses(sourceFile.length(), examples, p);
             } else {
                 fail("Could not find examples classes: " + examples.getCanonicalPath());
