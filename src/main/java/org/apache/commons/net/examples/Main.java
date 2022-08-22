@@ -68,7 +68,7 @@ public class Main {
                     "Usage: java -jar commons-net-examples-m.n.jar <alias or exampleClass> <exampleClass parameters>");
             } else {
                 System.out.println(
-                    "Usage: java -cp target/classes examples/Main <alias or exampleClass> <exampleClass parameters>");
+                    "Usage: java -cp target/classes org.apache.commons.net.examples.Main <alias or exampleClass> <exampleClass parameters>");
             }
             @SuppressWarnings("unchecked") // property names are Strings
             final
