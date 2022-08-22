@@ -53,4 +53,5 @@ jobs:
         distribution: 'temurin'
         java-version: ${{ matrix.java }}
     - name: Build with Maven
-      run: mvn -V --batch-mode -Ddoclint=all --file pom.xml --no-transfer-progress -Pslf4j-simple
+      run: mvn -V --batch-mode -Ddoclint=all --file pom.xml --no-transfer-progress
+# N.B. Add  -Pslf4j-simple to enable logging above
