@@ -251,7 +251,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                                             value="${maven.compiler.target}" />
                                         <!-- Helper application -->
                                         <attribute name="Main-Class"
-                                            value="org/apache/commons/net/examples/Main" />
+                                            value="org.apache.commons.net.examples.Main" />
                                         <!-- Allow java -jar examples.jar to work -->
                                         <attribute name="Class-Path"
                                             value="commons-net-${project.version}.jar" />
