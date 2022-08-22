@@ -37,7 +37,7 @@ public class MainTest {
         System.out.println("Initial name " + name);
         name = name.replace(".class", "");
         name = name.replace("/", ".");
-        System.out.println("Updated name " + name);
+        name = name.replace("\\", "."); // Allow for Windows
         try {
             final Class<?> clazz = Class.forName(name, false, MainTest.class.getClassLoader());
             clazz.getMethod("main", String[].class);
@@ -109,7 +109,7 @@ public class MainTest {
     private Properties scanClasses() throws IOException {
         final CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
         // ensure special characters are decoded OK by uing the charset
-        final String sourceFile = URLDecoder.decode(codeSource.getLocation().getFile(),"UTF-8");
+        final String sourceFile = new File(URLDecoder.decode(codeSource.getLocation().getFile(),"UTF-8")).getCanonicalPath();
         final Properties p = new Properties();
         if (sourceFile.endsWith(".jar")) {
             try (final JarFile jf = new JarFile(sourceFile)) {
@@ -124,8 +124,7 @@ public class MainTest {
             final File examples = new File(sourceFile, "org/apache/commons/net/examples"); // must match top level examples package name
             if (examples.exists()) {
                 System.out.println("sf="+sourceFile);
-                System.out.println("cp="+new File(sourceFile).getCanonicalPath());
-                scanForClasses(sourceFile.length(), examples, p);
+                scanForClasses(sourceFile.length() + 1, examples, p);
             } else {
                 fail("Could not find examples classes: " + examples.getCanonicalPath());
             }
