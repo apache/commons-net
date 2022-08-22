@@ -123,7 +123,8 @@ public class MainTest {
         } else {
             final File examples = new File(sourceFile, "org/apache/commons/net/examples"); // must match top level examples package name
             if (examples.exists()) {
-                System.out.println(sourceFile);
+                System.out.println("sf="+sourceFile);
+                System.out.println("cp="+new File(sourceFile).getCanonicalPath());
                 scanForClasses(sourceFile.length(), examples, p);
             } else {
                 fail("Could not find examples classes: " + examples.getCanonicalPath());
