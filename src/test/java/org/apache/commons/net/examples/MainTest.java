@@ -34,10 +34,8 @@ import org.junit.Test;
 public class MainTest {
 
     private static boolean hasMainMethod(String name) {
-        System.out.println("Initial name " + name);
         name = name.replace(".class", "");
-        name = name.replace("/", ".");
-        name = name.replace("\\", "."); // Allow for Windows
+        name = name.replace(File.separatorChar, '.');
         try {
             final Class<?> clazz = Class.forName(name, false, MainTest.class.getClassLoader());
             clazz.getMethod("main", String[].class);
@@ -56,7 +54,7 @@ public class MainTest {
     private static void processFileName(String name, final Properties p) {
         if (!name.endsWith(".class")
                 || name.contains("$") // subclasses
-                || name.endsWith("examples/Main.class")  // the initial class, don't want to add that
+                || name.endsWith("examples"+ File.separator + "Main.class")  // the initial class, don't want to add that
                 || !hasMainMethod(name)
                 ) {
             return;
@@ -72,7 +70,6 @@ public class MainTest {
     }
 
     private static void scanForClasses(final int rootLength, final File current, final Properties p) {
-        System.out.println("len=" + rootLength + " " + current);
         final File[] files = current.listFiles();
         if (files != null) {
             for (final File file : files) {
@@ -109,6 +106,7 @@ public class MainTest {
     private Properties scanClasses() throws IOException {
         final CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
         // ensure special characters are decoded OK by uing the charset
+        // Use canonical path to ensure consistency with Windows
         final String sourceFile = new File(URLDecoder.decode(codeSource.getLocation().getFile(),"UTF-8")).getCanonicalPath();
         final Properties p = new Properties();
         if (sourceFile.endsWith(".jar")) {
@@ -123,7 +121,7 @@ public class MainTest {
         } else {
             final File examples = new File(sourceFile, "org/apache/commons/net/examples"); // must match top level examples package name
             if (examples.exists()) {
-                System.out.println("sf="+sourceFile);
+                // need to add 1 to allow for path separator between root and file
                 scanForClasses(sourceFile.length() + 1, examples, p);
             } else {
                 fail("Could not find examples classes: " + examples.getCanonicalPath());
