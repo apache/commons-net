@@ -89,7 +89,6 @@ public class Main {
         if (fullName == null) {
             fullName = shortName;
         }
-        fullName = fullName.replace('/', '.');
         try {
             final Class<?> clazz = Class.forName(fullName);
             final Method m = clazz.getDeclaredMethod("main", args.getClass());

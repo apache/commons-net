@@ -35,7 +35,6 @@ public class MainTest {
 
     private static boolean hasMainMethod(String name) {
         name = name.replace(".class", "");
-        name = name.replace(File.separatorChar, '.');
         try {
             final Class<?> clazz = Class.forName(name, false, MainTest.class.getClassLoader());
             clazz.getMethod("main", String[].class);
@@ -52,15 +51,16 @@ public class MainTest {
     }
 
     private static void processFileName(String name, final Properties p) {
+        name = name.replace(File.separatorChar, '.');
         if (!name.endsWith(".class")
                 || name.contains("$") // subclasses
-                || name.endsWith("examples"+ File.separator + "Main.class")  // the initial class, don't want to add that
+                || name.endsWith("examples.Main.class")  // the initial class, don't want to add that
                 || !hasMainMethod(name)
                 ) {
             return;
         }
         name = name.replace(".class", "");
-        final int lastSep = name.lastIndexOf('/');
+        final int lastSep = name.lastIndexOf('.');
         final String alias = name.substring(lastSep+1);
         if (p.containsKey(alias)) {
             System.out.printf("Duplicate alias: %-25s %s %s %n",alias,name,p.getProperty(alias));
