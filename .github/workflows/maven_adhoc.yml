@@ -33,4 +33,4 @@ jobs:
     - name: Test exec function
       run: |
         mvn -q exec:java
-        mvn -q exec:java -Dexec.arguments=FTPClientExample
+        mvn -q exec:java -D"exec.arguments=FTPClientExample"
