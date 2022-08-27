@@ -47,6 +47,7 @@ Apache Commons Net
 [![Coverage Status](https://coveralls.io/repos/apache/commons-net/badge.svg)](https://coveralls.io/r/apache/commons-net)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/)
 [![Javadocs](https://javadoc.io/badge/commons-net/commons-net/3.8.0.svg)](https://javadoc.io/doc/commons-net/commons-net/3.8.0)
+[![CodeQL](https://github.com/apache/commons-net/workflows/CodeQL/badge.svg)](https://github.com/apache/commons-net/actions/workflows/codeql-analysis.yml?query=workflow%3ACodeQL)
 
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
 Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
