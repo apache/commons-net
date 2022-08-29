@@ -734,7 +734,7 @@ public class FTPSClient extends FTPClient {
      * @return server reply.
      * @throws IOException If an I/O error occurs while sending the command.
      * @throws SSLException if a CCC command fails
-     * @see org.apache.commons.net.ftp.FTP#sendCommand(java.lang.String)
+     * @see org.apache.commons.net.ftp.FTP#sendCommand(String)
      */
     // Would like to remove this method, but that will break any existing clients that are using CCC
     @Override

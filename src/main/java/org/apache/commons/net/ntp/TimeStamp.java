@@ -106,7 +106,7 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
      * it represents the time at which it was allocated, measured to the
      * nearest millisecond.
      * @return NTP timestamp object set to the current time.
-     * @see     java.lang.System#currentTimeMillis()
+     * @see     System#currentTimeMillis()
      */
     public static TimeStamp getCurrentTime()
     {
