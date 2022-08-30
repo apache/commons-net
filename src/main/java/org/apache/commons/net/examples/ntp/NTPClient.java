@@ -1,4 +1,3 @@
-package org.apache.commons.net.examples.ntp;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -16,6 +15,7 @@ package org.apache.commons.net.examples.ntp;
  * limitations under the License.
  */
 
+package org.apache.commons.net.examples.ntp;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -40,9 +40,10 @@ import org.apache.commons.net.ntp.TimeStamp;
  * for details.
  * <p>
  * Usage: NTPClient <hostname-or-address-list>
- * <br>
+ * </p>
+ * <p>
  * Example: NTPClient clock.psu.edu
- *
+ * </p>
  */
 public final class NTPClient
 {
