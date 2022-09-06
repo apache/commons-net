@@ -22,7 +22,7 @@ jobs:
     timeout-minutes: 7
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v3.0.2
     - name: Set up JDK 
       uses: actions/setup-java@v3
       with:
