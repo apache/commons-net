@@ -68,7 +68,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <commons.changes.onlyCurrentVersion>true</commons.changes.onlyCurrentVersion>
         <commons.jacoco.version>0.8.8</commons.jacoco.version>
         <commons.japicmp.version>0.16.0</commons.japicmp.version>
-        <commons.surefire.version>3.0.0-M5</commons.surefire.version>
+        <commons.surefire.version>3.0.0-M7</commons.surefire.version>
         <!-- for debugging FTPSClientTest -->
         <commons.net.trace_calls>false</commons.net.trace_calls>
         <commons.net.add_listener>false</commons.net.add_listener>
