@@ -116,7 +116,7 @@ The <action> type attribute can be add,update,fix,remove.
         A actions/setup-java from 1.4.3 to 3.
       </action>
       <action type="update" dev="ggregory" due-to="Dependabot">
-        Bump junit from 4.13.1 to 4.13.2 #74.
+        Bump junit from 4.13.1 to 5.9.1 Vintage #74.
       </action>
       <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">
         Bump commons-io from 2.6 to 2.11.0 #60.
@@ -128,7 +128,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump commons.japicmp.version from 0.14.3 to 0.16.0.
       </action>
       <action dev="ggregory" type="update" due-to="Gary Gregory">
-        Bump commons.surefire.version from 2.22.2 to 3.0.0-M5.
+        Bump commons.surefire.version from 2.22.2 to 3.0.0-M7.
       </action>
       <action type="update" dev="ggregory" due-to="XenoAmess, Gary Gregory">
         Bump ftpserver-core from 1.1.1 to 1.2.0 #96.
