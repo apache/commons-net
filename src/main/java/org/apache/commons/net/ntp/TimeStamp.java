@@ -18,6 +18,7 @@
 package org.apache.commons.net.ntp;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,7 +41,7 @@ import java.util.TimeZone;
  *
  * @see java.util.Date
  */
-public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
+public class TimeStamp implements Serializable, Comparable<TimeStamp>
 {
     private static final long serialVersionUID = 8139806907588338737L;
 
