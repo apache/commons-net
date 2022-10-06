@@ -17,6 +17,9 @@ name: Java CI adhoc testing
 
 on: workflow_dispatch
 
+permissions:
+  contents: read
+
 jobs:
   build:
     timeout-minutes: 7
