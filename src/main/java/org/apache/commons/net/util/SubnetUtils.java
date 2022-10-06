@@ -95,7 +95,7 @@ public class SubnetUtils {
             if (ct == 0) {
                 return addresses;
             }
-            for (int add = low(), j=0; add <= high(); ++add, ++j) {
+            for (int add = low(), j = 0; add <= high(); ++add, ++j) {
                 addresses[j] = format(toArray(add));
             }
             return addresses;

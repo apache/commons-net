@@ -22,6 +22,7 @@ import java.net.InetAddress;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -321,10 +322,7 @@ public class AuthenticatingSMTPClient extends SMTPSClient
         final String reply = getReplyString().substring(4);
         final String[] parts = reply.substring(0, reply.indexOf(' ')).split ("\\.");
         final int[] res = new int[parts.length];
-        for (int i = 0; i < parts.length; i++)
-        {
-            res[i] = Integer.parseInt (parts[i]);
-        }
+        Arrays.setAll(res, i -> Integer.parseInt(parts[i]));
         return res;
     }
 }
