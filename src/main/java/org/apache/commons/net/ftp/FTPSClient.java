@@ -429,13 +429,15 @@ public class FTPSClient extends FTPClient {
 
             if ((getRestartOffset() > 0) && !restart(getRestartOffset()))
             {
-                closeSockets(socket, sslSocket);
+                closeSockets(socket);
+                closeSockets(sslSocket);
                 return null;
             }
 
             if (!FTPReply.isPositivePreliminary(sendCommand(command, arg)))
             {
-                closeSockets(socket, sslSocket);
+                closeSockets(socket);
+                closeSockets(sslSocket);
                 return null;
             }
         }
@@ -445,7 +447,8 @@ public class FTPSClient extends FTPClient {
             // Grab the host before we close the socket to avoid NET-663
             final InetAddress socketHost = socket.getInetAddress();
 
-            closeSockets(socket, sslSocket);
+            closeSockets(socket);
+            closeSockets(sslSocket);
 
             throw new IOException(
                     "Host attempting data connection " + socketHost.getHostAddress() +
@@ -1081,15 +1084,11 @@ public class FTPSClient extends FTPClient {
     /**
      * Close open sockets.
      * @param socket main socket for proxy if enabled
-     * @param sslSocket ssl socket
      * @throws IOException closing sockets is not successful
      */
-    private void closeSockets(Socket socket, Socket sslSocket) throws IOException {
+    private void closeSockets(Socket socket) throws IOException {
         if (socket != null) {
             socket.close();
-        }
-        if (sslSocket != null) {
-            sslSocket.close();
         }
     }
 
