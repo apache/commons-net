@@ -20,6 +20,9 @@ import java.net.DatagramPacket;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.function.Executable;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestNtpPacket {
 
@@ -139,7 +142,9 @@ public class TestNtpPacket {
     public void testCreateFromBadPacket() {
         final NtpV3Packet message = new NtpV3Impl();
         final DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length-4); // drop 4-bytes from packet
-        message.setDatagramPacket(dp);
+
+        final Executable testMethod = () -> message.setDatagramPacket(dp);
+        assertThrows(IllegalArgumentException.class, testMethod);
     }
 
     @Test
@@ -150,10 +155,12 @@ public class TestNtpPacket {
         Assert.assertEquals(4, message.getMode());
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testCreateFromNullPacket() {
         final NtpV3Packet message = new NtpV3Impl();
-        message.setDatagramPacket(null);
+
+        final Executable testMethod = () -> message.setDatagramPacket(null);
+        assertThrows(IllegalArgumentException.class, testMethod);
     }
 
     @Test
