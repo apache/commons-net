@@ -207,7 +207,7 @@ public class SubnetUtils {
         @Override
         public String toString() {
             final StringBuilder buf = new StringBuilder();
-            buf.append("CIDR Signature:\t[").append(getCidrSignature()).append("]")
+            buf.append("CIDR Signature:\t[").append(getCidrSignature()).append("]\n")
                 .append(" Netmask: [").append(getNetmask()).append("]\n")
                 .append("Network:\t[").append(getNetworkAddress()).append("]\n")
                 .append("Broadcast:\t[").append(getBroadcastAddress()).append("]\n")
