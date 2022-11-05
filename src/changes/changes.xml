@@ -112,8 +112,8 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">
         Bump actions/checkout from 2.3.4 to 3.1.0 #89, #91, #100, #114.
       </action>
-      <action dev="ggregory" type="update" due-to="Gary Gregory">
-        A actions/setup-java from 1.4.3 to 3.6.0 #123.
+      <action dev="ggregory" type="update" due-to="Dependabot">
+        Bump actions/upload-artifact from 3.1.0 to 3.1.1 #124.
       </action>
       <action type="update" dev="ggregory" due-to="Dependabot">
         Bump junit from 4.13.1 to 5.9.1 Vintage #74.
