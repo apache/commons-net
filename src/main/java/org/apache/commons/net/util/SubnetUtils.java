@@ -75,7 +75,7 @@ public class SubnetUtils {
                 throw new RuntimeException("Count is larger than an integer: " + countLong);
             }
             // N.B. cannot be negative
-            return (int)countLong;
+            return (int) countLong;
         }
 
         /**
@@ -194,13 +194,13 @@ public class SubnetUtils {
        /**
         * Converts a packed integer address into a 4-element array
         */
-        private int[] toArray(final int val) {
-            final int ret[] = new int[4];
-            for (int j = 3; j >= 0; --j) {
-                ret[j] |= val >>> 8*(3-j) & 0xff;
-            }
-            return ret;
-        }
+       private int[] toArray(final int val) {
+           final int ret[] = new int[4];
+           for (int j = 3; j >= 0; --j) {
+               ret[j] |= val >>> 8 * (3 - j) & 0xff;
+           }
+           return ret;
+       }
 
         /**
          * {@inheritDoc}
@@ -223,8 +223,8 @@ public class SubnetUtils {
     }
     private static final String IP_ADDRESS = "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})";
     private static final String SLASH_FORMAT = IP_ADDRESS + "/(\\d{1,2})"; // 0 -> 32
-    private static final Pattern addressPattern = Pattern.compile(IP_ADDRESS);
-    private static final Pattern cidrPattern = Pattern.compile(SLASH_FORMAT);
+    private static final Pattern ADDRESS_PATTERN = Pattern.compile(IP_ADDRESS);
+    private static final Pattern CIDR_PATTERN = Pattern.compile(SLASH_FORMAT);
 
     private static final int NBITS = 32;
 
@@ -238,7 +238,7 @@ public class SubnetUtils {
         int addr = 0;
         for (int i = 1; i <= 4; ++i) {
             final int n = rangeCheck(Integer.parseInt(matcher.group(i)), 0, 255);
-            addr |= (n & 0xff) << 8*(4-i);
+            addr |= (n & 0xff) << 8 * (4 - i);
         }
         return addr;
     }
@@ -252,14 +252,14 @@ public class SubnetUtils {
             return value;
         }
 
-        throw new IllegalArgumentException("Value [" + value + "] not in range ["+begin+","+end+"]");
+        throw new IllegalArgumentException("Value [" + value + "] not in range [" + begin + "," + end + "]");
     }
 
     /*
      * Converts a dotted decimal format address to a packed integer format
      */
     private static int toInteger(final String address) {
-        final Matcher matcher = addressPattern.matcher(address);
+        final Matcher matcher = ADDRESS_PATTERN.matcher(address);
         if (matcher.matches()) {
             return matchAddress(matcher);
         }
@@ -284,32 +284,32 @@ public class SubnetUtils {
      * i.e. does not match n.n.n.n/m where n=1-3 decimal digits, m = 1-2 decimal digits in range 0-32
      */
     public SubnetUtils(final String cidrNotation) {
-      final Matcher matcher = cidrPattern.matcher(cidrNotation);
+        final Matcher matcher = CIDR_PATTERN.matcher(cidrNotation);
 
-      if (!matcher.matches()) {
-          throw new IllegalArgumentException(String.format(PARSE_FAIL, cidrNotation));
-      }
-      this.address = matchAddress(matcher);
+        if (!matcher.matches()) {
+            throw new IllegalArgumentException(String.format(PARSE_FAIL, cidrNotation));
+        }
+        this.address = matchAddress(matcher);
 
-      // Create a binary netmask from the number of bits specification /x
+        // Create a binary netmask from the number of bits specification /x
 
-      final int trailingZeroes = NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
+        final int trailingZeroes = NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
 
-      //
-      // An IPv4 netmask consists of 32 bits, a contiguous sequence
-      // of the specified number of ones followed by all zeros.
-      // So, it can be obtained by shifting an unsigned integer (32 bits) to the left by
-      // the number of trailing zeros which is (32 - the # bits specification).
-      // Note that there is no unsigned left shift operator, so we have to use
-      // a long to ensure that the left-most bit is shifted out correctly.
-      //
-      this.netmask = (int) (0x0FFFFFFFFL << trailingZeroes );
+        //
+        // An IPv4 netmask consists of 32 bits, a contiguous sequence
+        // of the specified number of ones followed by all zeros.
+        // So, it can be obtained by shifting an unsigned integer (32 bits) to the left by
+        // the number of trailing zeros which is (32 - the # bits specification).
+        // Note that there is no unsigned left shift operator, so we have to use
+        // a long to ensure that the left-most bit is shifted out correctly.
+        //
+        this.netmask = (int) (0x0FFFFFFFFL << trailingZeroes);
 
-      // Calculate base network address
-      this.network = address & netmask;
+        // Calculate base network address
+        this.network = address & netmask;
 
-      // Calculate broadcast address
-      this.broadcast = network | ~netmask;
+        // Calculate broadcast address
+        this.broadcast = network | ~netmask;
     }
 
     /**
