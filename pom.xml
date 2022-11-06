@@ -52,12 +52,13 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
 
         <commons.scmPubCheckoutDirectory>site-content</commons.scmPubCheckoutDirectory>
         <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-net</commons.scmPubUrl>
+        <japicmp.skip>false</japicmp.skip>
+        <jacoco.skip>false</jacoco.skip>
 
         <!-- Current release -->
         <commons.release.version>3.9.0</commons.release.version>
         <commons.rc.version>RC1</commons.rc.version>
-        <commons.release.desc>(Requires Java ${maven.compiler.target} or
-            later)</commons.release.desc>
+        <commons.release.desc>(Requires Java ${maven.compiler.target} or later)</commons.release.desc>
 
         <!-- Release plugin defines -->
         <commons.bc.version>3.8.0</commons.bc.version>
@@ -338,17 +339,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 </configuration>
             </plugin>
 
-            <!-- drop examples from CLI invocations -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>clirr-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>**/examples/**</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-
             <!-- Allow exec:java to launch examples from the classpath For example: mvn -q exec:java -Dexec.arguments=FTPClientExample,-A,-l,hostname -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -391,16 +381,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 <artifactId>spotbugs-maven-plugin</artifactId>
                 <configuration>
                     <excludeFilterFile>findbugs-exclude-filter.xml</excludeFilterFile>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>clirr-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>**/examples/**</exclude>
-                    </excludes>
                 </configuration>
             </plugin>
 
