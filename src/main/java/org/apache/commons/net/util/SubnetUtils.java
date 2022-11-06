@@ -207,6 +207,7 @@ public class SubnetUtils {
         @Override
         public String toString() {
             final StringBuilder buf = new StringBuilder();
+            // @formatter:off
             buf.append("CIDR Signature:\t[").append(getCidrSignature()).append("]\n")
                 .append("  Netmask: [").append(getNetmask()).append("]\n")
                 .append("  Network: [").append(getNetworkAddress()).append("]\n")
@@ -214,6 +215,7 @@ public class SubnetUtils {
                 .append("  First address: [").append(getLowAddress()).append("]\n")
                 .append("  Last address: [").append(getHighAddress()).append("]\n")
                 .append("  Address Count: [").append(getAddressCountLong()).append("]\n");
+            // @formatter:on
             return buf.toString();
         }
     }
@@ -286,10 +288,10 @@ public class SubnetUtils {
       }
       this.address = matchAddress(matcher);
 
-      // Create a binary netmask from the number of bits specification /x 
+      // Create a binary netmask from the number of bits specification /x
 
       final int trailingZeroes = NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
-      
+
       //
       // An IPv4 netmask consists of 32 bits, a contiguous sequence
       // of the specified number of ones followed by all zeros.
