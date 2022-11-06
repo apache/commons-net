@@ -207,13 +207,13 @@ public class SubnetUtils {
         @Override
         public String toString() {
             final StringBuilder buf = new StringBuilder();
-            buf.append("CIDR Signature:\t[").append(getCidrSignature()).append("]")
-                .append(" Netmask: [").append(getNetmask()).append("]\n")
-                .append("Network:\t[").append(getNetworkAddress()).append("]\n")
-                .append("Broadcast:\t[").append(getBroadcastAddress()).append("]\n")
-                 .append("First Address:\t[").append(getLowAddress()).append("]\n")
-                 .append("Last Address:\t[").append(getHighAddress()).append("]\n")
-                 .append("# Addresses:\t[").append(getAddressCount()).append("]\n");
+            buf.append("CIDR Signature:\t[").append(getCidrSignature()).append("]\n")
+                .append("  Netmask: [").append(getNetmask()).append("]\n")
+                .append("  Network: [").append(getNetworkAddress()).append("]\n")
+                .append("  Broadcast: [").append(getBroadcastAddress()).append("]\n")
+                .append("  First address: [").append(getLowAddress()).append("]\n")
+                .append("  Last address: [").append(getHighAddress()).append("]\n")
+                .append("  Address Count: [").append(getAddressCountLong()).append("]\n");
             return buf.toString();
         }
     }
@@ -249,6 +249,7 @@ public class SubnetUtils {
 
         throw new IllegalArgumentException("Value [" + value + "] not in range ["+begin+","+end+"]");
     }
+
     /*
      * Convert a dotted decimal format address to a packed integer format
      */
@@ -262,18 +263,14 @@ public class SubnetUtils {
 
     private final int netmask;
 
-
     private final int address;
 
     private final int network;
-
 
     private final int broadcast;
 
     /** Whether the broadcast/network address are included in host count */
     private boolean inclusiveHostCount;
-
-
 
     /**
      * Constructor that takes a CIDR-notation string, e.g. "192.168.0.1/16"
@@ -287,25 +284,26 @@ public class SubnetUtils {
       if (!matcher.matches()) {
           throw new IllegalArgumentException(String.format(PARSE_FAIL, cidrNotation));
       }
-    this.address = matchAddress(matcher);
+      this.address = matchAddress(matcher);
 
-      /* Create a binary netmask from the number of bits specification /x */
+      // Create a binary netmask from the number of bits specification /x 
 
       final int trailingZeroes = NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
-      /*
-       * An IPv4 netmask consists of 32 bits, a contiguous sequence
-       * of the specified number of ones followed by all zeros.
-       * So, it can be obtained by shifting an unsigned integer (32 bits) to the left by
-       * the number of trailing zeros which is (32 - the # bits specification).
-       * Note that there is no unsigned left shift operator, so we have to use
-       * a long to ensure that the left-most bit is shifted out correctly.
-       */
+      
+      //
+      // An IPv4 netmask consists of 32 bits, a contiguous sequence
+      // of the specified number of ones followed by all zeros.
+      // So, it can be obtained by shifting an unsigned integer (32 bits) to the left by
+      // the number of trailing zeros which is (32 - the # bits specification).
+      // Note that there is no unsigned left shift operator, so we have to use
+      // a long to ensure that the left-most bit is shifted out correctly.
+      //
       this.netmask = (int) (0x0FFFFFFFFL << trailingZeroes );
 
-      /* Calculate base network address */
+      // Calculate base network address
       this.network = address & netmask;
 
-      /* Calculate broadcast address */
+      // Calculate broadcast address
       this.broadcast = network | ~netmask;
     }
 
@@ -324,10 +322,10 @@ public class SubnetUtils {
             throw new IllegalArgumentException(String.format(PARSE_FAIL, mask));
         }
 
-        /* Calculate base network address */
+        // Calculate base network address
         this.network = this.address & this.netmask;
 
-        /* Calculate broadcast address */
+        // Calculate broadcast address
         this.broadcast = this.network | ~this.netmask;
     }
 
