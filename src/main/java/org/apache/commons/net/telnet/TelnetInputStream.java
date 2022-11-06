@@ -35,7 +35,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                      STATE_WONT = 3, STATE_DO = 4, STATE_DONT = 5,
                      STATE_SB = 6, STATE_SE = 7, STATE_CR = 8, STATE_IAC_SB = 9;
 
-    private boolean hasReachedEOF; // @GuardedBy("__queue")
+    private boolean hasReachedEOF; // @GuardedBy("queue")
     private volatile boolean isClosed;
     private boolean readIsWaiting;
     private int receiveState, queueHead, queueTail, bytesAvailable;
@@ -83,7 +83,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     @Override
     public int available() throws IOException
     {
-        // Critical section because run() may change __bytesAvailable
+        // Critical section because run() may change bytesAvailable
         synchronized (queue)
         {
             if (threaded) { // Must not call super.available when running threaded: NET-466
@@ -127,14 +127,14 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         return false;
     }
 
-    // synchronized(__client) critical sections are to protect against
+    // synchronized(client) critical sections are to protect against
     // TelnetOutputStream writing through the telnet client at same time
     // as a processDo/Will/etc. command invoked from TelnetInputStream
     // tries to write. Returns true if buffer was previously empty.
     private boolean processChar(final int ch) throws InterruptedException
     {
-        // Critical section because we're altering __bytesAvailable,
-        // __queueTail, and the contents of _queue.
+        // Critical section because we're altering bytesAvailable,
+        // queueTail, and the contents of _queue.
         final boolean bufferWasEmpty;
         synchronized (queue)
         {
@@ -179,9 +179,9 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     @Override
     public int read() throws IOException
     {
-        // Critical section because we're altering __bytesAvailable,
-        // __queueHead, and the contents of _queue in addition to
-        // testing value of __hasReachedEOF.
+        // Critical section because we're altering bytesAvailable,
+        // queueHead, and the contents of _queue in addition to
+        // testing value of hasReachedEOF.
         synchronized (queue)
         {
 
@@ -219,7 +219,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
                     }
                     else
                     {
-                        //__alreadyread = false;
+                        //alreadyread = false;
                         readIsWaiting = true;
                         int ch;
                         boolean mayBlock = true;    // block on the first read only
@@ -300,7 +300,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     }
 
 
-    // synchronized(__client) critical sections are to protect against
+    // synchronized(client) critical sections are to protect against
     // TelnetOutputStream writing through the telnet client at same time
     // as a processDo/Will/etc. command invoked from TelnetInputStream
     // tries to write.
@@ -535,7 +535,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
             return 0;
         }
 
-        // Critical section because run() may change __bytesAvailable
+        // Critical section because run() may change bytesAvailable
         synchronized (queue)
         {
             if (length > bytesAvailable) {
@@ -555,7 +555,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
         }
         while (--length > 0 && (ch = read()) != EOF);
 
-        //__client._spyRead(buffer, off, offset - off);
+        // client._spyRead(buffer, off, offset - off);
         return offset - off;
     }
 
