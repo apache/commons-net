@@ -45,14 +45,15 @@ public class SubnetUtils {
         * Convert a 4-element array into dotted decimal format
         */
         private String format(final int[] octets) {
-            final StringBuilder str = new StringBuilder();
-            for (int i =0; i < octets.length; ++i){
-                str.append(octets[i]);
-                if (i != octets.length - 1) {
-                    str.append(".");
+            final int last = octets.length - 1;
+            final StringBuilder builder = new StringBuilder();
+            for (int i = 0;; i++) {
+                builder.append(octets[i]);
+                if (i == last) {
+                    return builder.toString();
                 }
+                builder.append('.');
             }
-            return str.toString();
         }
 
         public String getAddress() {
