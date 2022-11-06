@@ -28,11 +28,10 @@ public class SubnetUtils {
 
     /**
      * Convenience container for subnet summary information.
-     *
      */
     public final class SubnetInfo {
 
-        /* Mask to convert unsigned int to a long (i.e. keep 32 bits) */
+        /** Mask to convert unsigned int to a long (i.e. keep 32 bits). */
         private static final long UNSIGNED_INT_MASK = 0x0FFFFFFFFL;
 
         private SubnetInfo() {}
@@ -42,8 +41,8 @@ public class SubnetUtils {
         }
         private long broadcastLong(){ return broadcast &  UNSIGNED_INT_MASK; }
 
-        /*
-        * Converts a 4-element array into dotted decimal format
+       /**
+        * Converts a 4-element array into dotted decimal format.
         */
         private String format(final int[] octets) {
             final int last = octets.length - 1;
@@ -74,7 +73,7 @@ public class SubnetUtils {
             if (countLong > Integer.MAX_VALUE) {
                 throw new RuntimeException("Count is larger than an integer: " + countLong);
             }
-            // N.B. cannot be negative
+            // Cannot be negative here
             return (int) countLong;
         }
 
@@ -108,7 +107,7 @@ public class SubnetUtils {
         }
 
         public String getCidrSignature() {
-            return format(toArray(address)) + "/" + pop(netmask);
+            return format(toArray(address)) + "/" + Integer.bitCount(netmask);
         }
 
         /**
@@ -188,8 +187,10 @@ public class SubnetUtils {
                 broadcastLong() - networkLong() > 1 ? network + 1 : 0;
         }
 
-        // long versions of the values (as unsigned int) which are more suitable for range checking
-        private long networkLong()  { return network &  UNSIGNED_INT_MASK; }
+        /** long versions of the values (as unsigned int) which are more suitable for range checking. */
+        private long networkLong() {
+            return network & UNSIGNED_INT_MASK;
+        }
 
        /**
         * Converts a packed integer address into a 4-element array
@@ -251,7 +252,6 @@ public class SubnetUtils {
         if (value >= begin && value <= end) { // (begin,end]
             return value;
         }
-
         throw new IllegalArgumentException("Value [" + value + "] not in range [" + begin + "," + end + "]");
     }
 
@@ -338,7 +338,9 @@ public class SubnetUtils {
      * Gets a {@link SubnetInfo} instance that contains subnet-specific statistics
      * @return new instance
      */
-    public final SubnetInfo getInfo() { return new SubnetInfo(); }
+    public final SubnetInfo getInfo() {
+        return new SubnetInfo();
+    }
 
     public SubnetUtils getNext() {
         return new SubnetUtils(getInfo().getNextAddress(), getInfo().getNetmask());
@@ -356,19 +358,6 @@ public class SubnetUtils {
      */
     public boolean isInclusiveHostCount() {
         return inclusiveHostCount;
-    }
-
-    /*
-     * Counts the number of 1-bits in a 32-bit integer using a divide-and-conquer strategy
-     * see Hacker's Delight section 5.1
-     */
-    int pop(int x) {
-        x = x - (x >>> 1 & 0x55555555);
-        x = (x & 0x33333333) + (x >>> 2 & 0x33333333);
-        x = x + (x >>> 4) & 0x0F0F0F0F;
-        x = x + (x >>> 8);
-        x = x + (x >>> 16);
-        return x & 0x0000003F;
     }
 
     /**
