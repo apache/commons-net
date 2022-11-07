@@ -851,13 +851,10 @@ public class FTPClient extends FTP implements Configurable {
                     throw new MalformedServerReplyException("Could not parse passive host information.\nServer Reply: " + reply);
                 }
             }
+        } else if (_socket_ == null) {
+            pasvHost = null; // For unit testing.
         } else {
-            // Post-3.8 behavior
-            if (_socket_ == null) {
-                pasvHost = null; // For unit testing.
-            } else {
-                pasvHost = _socket_.getInetAddress().getHostAddress();
-            }
+            pasvHost = _socket_.getInetAddress().getHostAddress();
         }
         this.passiveHost = pasvHost;
         this.passivePort = pasvPort;
