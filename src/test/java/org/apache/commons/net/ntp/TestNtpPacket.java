@@ -16,10 +16,13 @@
  */
 package org.apache.commons.net.ntp;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.net.DatagramPacket;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.function.Executable;
 
 public class TestNtpPacket {
 
@@ -150,10 +153,9 @@ public class TestNtpPacket {
         Assert.assertEquals(4, message.getMode());
     }
 
-    @Test(expected=IllegalArgumentException.class)
     public void testCreateFromNullPacket() {
         final NtpV3Packet message = new NtpV3Impl();
-        message.setDatagramPacket(null);
+        assertThrows(IllegalArgumentException.class, () -> message.setDatagramPacket(null));
     }
 
     @Test
