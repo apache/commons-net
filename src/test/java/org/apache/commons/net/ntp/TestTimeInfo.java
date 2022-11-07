@@ -16,6 +16,8 @@
  */
 package org.apache.commons.net.ntp;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -23,9 +25,6 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.jupiter.api.function.Executable;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestTimeInfo {
 

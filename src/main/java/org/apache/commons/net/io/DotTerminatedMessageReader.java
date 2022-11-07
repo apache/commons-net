@@ -17,11 +17,11 @@
 
 package org.apache.commons.net.io;
 
-import org.apache.commons.net.util.NetConstants;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+
+import org.apache.commons.net.util.NetConstants;
 
 /**
  * DotTerminatedMessageReader is a class used to read messages from a

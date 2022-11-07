@@ -17,8 +17,6 @@
 
 package org.apache.commons.net.io;
 
-import org.apache.commons.net.util.NetConstants;
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,6 +24,8 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.Socket;
+
+import org.apache.commons.net.util.NetConstants;
 
 /**
  * The Util class cannot be instantiated and stores short static convenience

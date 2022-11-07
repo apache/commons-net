@@ -18,6 +18,7 @@
 package org.apache.commons.net.ftp;
 
 import java.security.GeneralSecurityException;
+
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 

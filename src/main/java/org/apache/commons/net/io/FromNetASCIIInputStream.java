@@ -17,12 +17,12 @@
 
 package org.apache.commons.net.io;
 
-import org.apache.commons.net.util.NetConstants;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PushbackInputStream;
 import java.nio.charset.StandardCharsets;
+
+import org.apache.commons.net.util.NetConstants;
 
 /**
  * This class wraps an input stream, replacing all occurrences

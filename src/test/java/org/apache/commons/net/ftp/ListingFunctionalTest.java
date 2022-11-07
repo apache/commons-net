@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp;
+import static org.junit.Assert.assertArrayEquals;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -24,8 +26,6 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import static org.junit.Assert.assertArrayEquals;
 
 /**
  * A functional test suite for checking that site listings work.
