@@ -23,6 +23,9 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.function.Executable;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestTimeInfo {
 
@@ -86,10 +89,11 @@ public class TestTimeInfo {
         Assert.assertEquals(info, another);
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testException() {
         final NtpV3Packet packet = null;
-        new TimeInfo(packet, 1L);
+        final Executable testMethod = () -> new TimeInfo(packet, 1L);
+        assertThrows(IllegalArgumentException.class, testMethod);
     }
 
     @Test
