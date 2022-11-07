@@ -28,17 +28,17 @@ public class NetConstants {
     /**
      * An empty immutable {@code String} array.
      */
-    public static final String[] EMPTY_STRING_ARRAY = new String[0];
+    public static final String[] EMPTY_STRING_ARRAY = {};
 
     /**
      * An empty immutable {@code byte} array.
      */
-    public static final byte[] EMPTY_BTYE_ARRAY = new byte[0];
+    public static final byte[] EMPTY_BTYE_ARRAY = {};
 
     /**
      * An empty immutable {link X509Certificate} array.
      */
-    public static final X509Certificate[] EMPTY_X509_CERTIFICATE_ARRAY = new X509Certificate[0];
+    public static final X509Certificate[] EMPTY_X509_CERTIFICATE_ARRAY = {};
 
     /**
      * The index value when the end of the stream has been reached {@code -1}.

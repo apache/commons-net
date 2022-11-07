@@ -66,7 +66,7 @@ public class FTPListParseEngine {
     /**
      * An empty immutable {@code FTPFile} array.
      */
-    private static final FTPFile[] EMPTY_FTP_FILE_ARRAY = new FTPFile[0];
+    private static final FTPFile[] EMPTY_FTP_FILE_ARRAY = {};
     private List<String> entries = new LinkedList<>();
 
     private ListIterator<String> internalIterator = entries.listIterator();

@@ -126,7 +126,7 @@ public class Base64Test {
 
     @Test
     public void testEncodeBase64ByteArrayBooleanBooleanInt() {
-        final byte[] binaryData = new byte[] { '1', '2', '3' };
+        final byte[] binaryData = { '1', '2', '3' };
         byte[] encoded;
         encoded = Base64.encodeBase64(binaryData, false, false);
         assertNotNull(encoded);

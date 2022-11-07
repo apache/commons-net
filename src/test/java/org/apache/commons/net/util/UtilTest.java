@@ -108,7 +108,7 @@ public class UtilTest {
 
     @Test
     public void testNET550_Reader() throws Exception {
-        final char[] buff = new char[] { 'a', 'b', 'c', 'd' }; // must be multiple of 2
+        final char[] buff = { 'a', 'b', 'c', 'd' }; // must be multiple of 2
         final int bufflen = buff.length;
         { // Check buffer size 1 processes in chunks of 1
             final Reader rdr = new CharArrayReader(buff);
@@ -144,7 +144,7 @@ public class UtilTest {
 
     @Test
     public void testNET550_Stream() throws Exception {
-        final byte[] buff = new byte[] { 'a', 'b', 'c', 'd' }; // must be multiple of 2
+        final byte[] buff = { 'a', 'b', 'c', 'd' }; // must be multiple of 2
         final int bufflen = buff.length;
         { // Check buffer size 1 processes in chunks of 1
             final InputStream is = new ByteArrayInputStream(buff);

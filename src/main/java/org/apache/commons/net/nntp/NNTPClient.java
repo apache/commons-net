@@ -60,7 +60,7 @@ import org.apache.commons.net.util.NetConstants;
 
 public class NNTPClient extends NNTP {
 
-    private static final NewsgroupInfo[] EMPTY_NEWSGROUP_INFO_ARRAY = new NewsgroupInfo[0];
+    private static final NewsgroupInfo[] EMPTY_NEWSGROUP_INFO_ARRAY = {};
 
     /**
      * Parse a response line from {@link #retrieveArticleInfo(long, long)}.

@@ -28,7 +28,7 @@ import org.junit.Test;
  */
 public class TestThreader {
 
-    private static final Threadable[] EMPTY_THREADABLE_ARRAY = new Threadable[0];
+    private static final Threadable[] EMPTY_THREADABLE_ARRAY = {};
 
     @SuppressWarnings("deprecation") // test of deprecated method
     @Test
