@@ -295,10 +295,10 @@ import org.apache.commons.net.util.NetConstants;
  * @see FTPFileEntryParserFactory
  * @see DefaultFTPFileEntryParserFactory
  * @see FTPClientConfig
- *
  * @see org.apache.commons.net.MalformedServerReplyException
  */
 public class FTPClient extends FTP implements Configurable {
+
     // @since 3.0
     private static class CSL implements CopyStreamListener {
 
@@ -436,6 +436,18 @@ public class FTPClient extends FTP implements Configurable {
      * @since 3.1
      */
     public static final String FTP_SYSTEM_TYPE_DEFAULT = "org.apache.commons.net.ftp.systemType.default";
+
+    /**
+     * The system property that defines the default for {@link #isIpAddressFromPasvResponse()}. This property, if present, configures the default for the
+     * following: If the client receives the servers response for a PASV request, then that response will contain an IP address. If this property is true, then
+     * the client will use that IP address, as requested by the server. This is compatible to version {@code 3.8.0}, and before. If this property is false, or
+     * absent, then the client will ignore that IP address, and instead use the remote address of the control connection.
+     *
+     * @see #isIpAddressFromPasvResponse()
+     * @see #setIpAddressFromPasvResponse(boolean)
+     * @since 3.9.0
+     */
+    public static final String FTP_IP_ADDRESS_FROM_PASV_RESPONSE = "org.apache.commons.net.ftp.ipAddressFromPasvResponse";
 
     /**
      * The name of an optional systemType properties file ({@value}), which is loaded
@@ -624,6 +636,8 @@ public class FTPClient extends FTP implements Configurable {
 
     /** Map of FEAT responses. If null, has not been initialized. */
     private HashMap<String, Set<String>> featuresMap;
+
+    private boolean ipAddressFromPasvResponse = Boolean.parseBoolean(System.getProperty(FTPClient.FTP_IP_ADDRESS_FROM_PASV_RESPONSE));
 
     /**
      * Default FTPClient constructor.  Creates a new FTPClient instance
@@ -928,35 +942,44 @@ public class FTPClient extends FTP implements Configurable {
     protected void _parsePassiveModeReply(final String reply) throws MalformedServerReplyException {
         final Matcher m = PARMS_PAT.matcher(reply);
         if (!m.find()) {
-            throw new MalformedServerReplyException(
-                "Could not parse passive host information.\nServer Reply: " + reply);
+            throw new MalformedServerReplyException("Could not parse passive host information.\nServer Reply: " + reply);
         }
 
-        this.passiveHost = "0,0,0,0".equals(m.group(1)) ? _socket_.getInetAddress().getHostAddress()
-            : m.group(1).replace(',', '.'); // Fix up to look like IP address
+        int pasvPort;
+        // Fix up to look like IP address
+        String pasvHost = "0,0,0,0".equals(m.group(1)) ? _socket_.getInetAddress().getHostAddress() : m.group(1).replace(',', '.');
 
         try {
             final int oct1 = Integer.parseInt(m.group(2));
             final int oct2 = Integer.parseInt(m.group(3));
-            passivePort = (oct1 << 8) | oct2;
+            pasvPort = (oct1 << 8) | oct2;
         } catch (final NumberFormatException e) {
-            throw new MalformedServerReplyException(
-                "Could not parse passive port information.\nServer Reply: " + reply);
+            throw new MalformedServerReplyException("Could not parse passive port information.\nServer Reply: " + reply);
         }
 
-        if (passiveNatWorkaroundStrategy != null) {
-            try {
-                final String newPassiveHost = passiveNatWorkaroundStrategy.resolve(this.passiveHost);
-                if (!this.passiveHost.equals(newPassiveHost)) {
-                    fireReplyReceived(0,
-                        "[Replacing PASV mode reply address " + this.passiveHost + " with " + newPassiveHost + "]\n");
-                    this.passiveHost = newPassiveHost;
+        if (isIpAddressFromPasvResponse()) {
+            // Pre-3.9.0 behavior
+            if (passiveNatWorkaroundStrategy != null) {
+                try {
+                    final String newPassiveHost = passiveNatWorkaroundStrategy.resolve(pasvHost);
+                    if (!pasvHost.equals(newPassiveHost)) {
+                        fireReplyReceived(0, "[Replacing PASV mode reply address " + this.passiveHost + " with " + newPassiveHost + "]\n");
+                        pasvHost = newPassiveHost;
+                    }
+                } catch (final UnknownHostException e) { // Should not happen as we are passing in an IP address
+                    throw new MalformedServerReplyException("Could not parse passive host information.\nServer Reply: " + reply);
                 }
-            } catch (final UnknownHostException e) { // Should not happen as we are passing in an IP address
-                throw new MalformedServerReplyException(
-                    "Could not parse passive host information.\nServer Reply: " + reply);
+            }
+        } else {
+            // Post-3.8 behavior
+            if (_socket_ == null) {
+                pasvHost = null; // For unit testing.
+            } else {
+                pasvHost = _socket_.getInetAddress().getHostAddress();
             }
         }
+        this.passiveHost = pasvHost;
+        this.passivePort = pasvPort;
     }
 
     /**
@@ -1682,7 +1705,7 @@ public class FTPClient extends FTP implements Configurable {
      *
      * @return The client port for active mode.
      */
-    private int getActivePort()
+    int getActivePort()
     {
         if (activeMinPort > 0 && activeMaxPort >= activeMinPort)
         {
@@ -1848,7 +1871,7 @@ public class FTPClient extends FTP implements Configurable {
      * @return __activeExternalHost if non-null, else getLocalAddress()
      * @see #setActiveExternalIPAddress(String)
      */
-    private InetAddress getHostAddress()
+    InetAddress getHostAddress()
     {
         if (activeExternalHost != null)
         {
@@ -1891,11 +1914,11 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Issue the FTP MDTM command (not supported by all servers) to retrieve the last
      * modification time of a file. The modification string should be in the
-     * ISO 3077 form "YYYYMMDDhhmmss(.xxx)?". The timestamp represented should also be in
+     * ISO 3077 form "yyyyMMDDhhmmss(.xxx)?". The timestamp represented should also be in
      * GMT, but not all FTP servers honor this.
      *
      * @param pathname The file path to query.
-     * @return A string representing the last file modification time in <code>YYYYMMDDhhmmss</code> format.
+     * @return A string representing the last file modification time in <code>yyyyMMDDhhmmss</code> format.
      * @throws IOException if an I/O error occurs.
      * @since 2.0
      */
@@ -1969,7 +1992,7 @@ public class FTPClient extends FTP implements Configurable {
      *
      * @return __reportActiveExternalHost if non-null, else getHostAddress();
      */
-    private InetAddress getReportHostAddress() {
+    InetAddress getReportHostAddress() {
         if (reportActiveExternalHost != null) {
             return reportActiveExternalHost ;
         }
@@ -2228,11 +2251,7 @@ public class FTPClient extends FTP implements Configurable {
                         key = line.substring(1);
                     }
                     key = key.toUpperCase(Locale.ENGLISH);
-                    Set<String> entries = featuresMap.get(key);
-                    if (entries == null) {
-                        entries = new HashSet<>();
-                        featuresMap.put(key, entries);
-                    }
+                    Set<String> entries = featuresMap.computeIfAbsent(key, k -> new HashSet<>());
                     entries.add(value);
                 }
             }
@@ -2943,7 +2962,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Issue the FTP MDTM command (not supported by all servers) to retrieve the last
      * modification time of a file. The modification string should be in the
-     * ISO 3077 form "YYYYMMDDhhmmss(.xxx)?". The timestamp represented should also be in
+     * ISO 3077 form "yyyyMMDDhhmmss(.xxx)?". The timestamp represented should also be in
      * GMT, but not all FTP servers honor this.
      *
      * @param pathname The file path to query.
@@ -2963,7 +2982,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Issue the FTP MDTM command (not supported by all servers) to retrieve the last
      * modification time of a file. The modification string should be in the
-     * ISO 3077 form "YYYYMMDDhhmmss(.xxx)?". The timestamp represented should also be in
+     * ISO 3077 form "yyyyMMDDhhmmss(.xxx)?". The timestamp represented should also be in
      * GMT, but not all FTP servers honor this.
      *
      * @param pathname The file path to query.
@@ -2987,7 +3006,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Issue the FTP MDTM command (not supported by all servers) to retrieve the last
      * modification time of a file. The modification string should be in the
-     * ISO 3077 form "YYYYMMDDhhmmss(.xxx)?". The timestamp represented should also be in
+     * ISO 3077 form "yyyyMMDDhhmmss(.xxx)?". The timestamp represented should also be in
      * GMT, but not all FTP servers honor this.
      *
      * @param pathname The file path to query.
@@ -3746,14 +3765,14 @@ public class FTPClient extends FTP implements Configurable {
      * Issue the FTP MFMT command (not supported by all servers) which sets the last
      * modified time of a file.
      *
-     * The timestamp should be in the form <code>YYYYMMDDhhmmss</code>. It should also
+     * The timestamp should be in the form <code>yyyyMMDDhhmmss</code>. It should also
      * be in GMT, but not all servers honor this.
      *
      * An FTP server would indicate its support of this feature by including "MFMT"
      * in its response to the FEAT command, which may be retrieved by FTPClient.features()
      *
      * @param pathname The file path for which last modified time is to be changed.
-     * @param timeval The timestamp to set to, in <code>YYYYMMDDhhmmss</code> format.
+     * @param timeval The timestamp to set to, in <code>yyyyMMDDhhmmss</code> format.
      * @return true if successfully set, false if not
      * @throws IOException if an I/O error occurs.
      * @since 2.2
@@ -4143,5 +4162,42 @@ public class FTPClient extends FTP implements Configurable {
     public boolean structureMount(final String pathname) throws IOException
     {
         return FTPReply.isPositiveCompletion(smnt(pathname));
+    }
+
+    /**
+     * Returns, whether the IP address from the server's response should be used.
+     * Until 3.9.0, this has always been the case. Beginning with 3.9.0,
+     * that IP address will be silently ignored, and replaced with the remote
+     * IP address of the control connection, unless this configuration option is
+     * given, which restores the old behavior. To enable this by default, use
+     * the system property {@link FTPClient#FTP_IP_ADDRESS_FROM_PASV_RESPONSE}.
+     * @return True, if the IP address from the server's response will be used
+     *  (pre-3.9 compatible behavior), or false (ignore that IP address).
+     *
+     * @see FTPClient#FTP_IP_ADDRESS_FROM_PASV_RESPONSE
+     * @see #setIpAddressFromPasvResponse(boolean)
+     * @since 3.9.0
+     */
+    public boolean isIpAddressFromPasvResponse() {
+        return ipAddressFromPasvResponse;
+    }
+
+    /**
+     * Sets whether the IP address from the server's response should be used.
+     * Until 3.9.0, this has always been the case. Beginning with 3.9.0,
+     * that IP address will be silently ignored, and replaced with the remote
+     * IP address of the control connection, unless this configuration option is
+     * given, which restores the old behavior. To enable this by default, use
+     * the system property {@link FTPClient#FTP_IP_ADDRESS_FROM_PASV_RESPONSE}.
+     *
+     * @param usingIpAddressFromPasvResponse True, if the IP address from the
+     *   server's response should be used (pre-3.9.0 compatible behavior), or
+     *   false (ignore that IP address).
+     * @see FTPClient#FTP_IP_ADDRESS_FROM_PASV_RESPONSE
+     * @see #isIpAddressFromPasvResponse
+     * @since 3.9.0
+     */
+    public void setIpAddressFromPasvResponse(boolean usingIpAddressFromPasvResponse) {
+        this.ipAddressFromPasvResponse = usingIpAddressFromPasvResponse;
     }
 }

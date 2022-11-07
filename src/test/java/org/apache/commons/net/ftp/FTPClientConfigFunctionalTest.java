@@ -66,15 +66,9 @@ public class FTPClientConfigFunctionalTest extends TestCase {
     private TreeSet<FTPFile> getSortedSet(final FTPFile[] files) {
         // create a TreeSet which will sort each element
         // as it is added.
-        final TreeSet<FTPFile> sorted = new TreeSet<>((o1, o2) -> {
-            final FTPFile f1 = (FTPFile) o1;
-            final FTPFile f2 = (FTPFile) o2;
-            return f1.getTimestamp().getTime().compareTo(f2.getTimestamp().getTime());
-        });
+        final TreeSet<FTPFile> sorted = new TreeSet<>((o1, o2) -> o1.getTimestamp().getTime().compareTo(o2.getTimestamp().getTime()));
 
-
-        for (final FTPFile file : files)
-        {
+        for (final FTPFile file : files) {
             // The directory contains a few additional files at the beginning
             // which aren't in the series we want. The series we want consists
             // of files named sn.dddd. This adjusts the file list to get rid
@@ -87,7 +81,7 @@ public class FTPClientConfigFunctionalTest extends TestCase {
     }
 
     /**
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     @Override
     protected void setUp() throws Exception {
@@ -106,7 +100,7 @@ public class FTPClientConfigFunctionalTest extends TestCase {
     }
 
     /**
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     @Override
     protected void tearDown() throws Exception {

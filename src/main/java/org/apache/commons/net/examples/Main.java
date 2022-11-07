@@ -67,8 +67,8 @@ public class Main {
                 System.out.println(
                     "Usage: java -jar commons-net-examples-m.n.jar <alias or exampleClass> <exampleClass parameters>");
             } else {
-                System.out.println(
-                    "Usage: java -cp target/classes examples/Main <alias or exampleClass> <exampleClass parameters>");
+                System.out.println("Usage: java -cp target/classes org.apache.commons.net.examples.Main" +
+                                   " <alias or exampleClass> <exampleClass parameters>");
             }
             @SuppressWarnings("unchecked") // property names are Strings
             final
@@ -76,7 +76,7 @@ public class Main {
             if (l.isEmpty()) {
                 return;
             }
-            Collections.sort(l);
+            l.sort(null);
             System.out.println("\nAliases and their classes:");
             for(final String s : l) {
                 System.out.printf("%-25s %s%n",s,fp.getProperty(s));
@@ -89,7 +89,6 @@ public class Main {
         if (fullName == null) {
             fullName = shortName;
         }
-        fullName = fullName.replace('/', '.');
         try {
             final Class<?> clazz = Class.forName(fullName);
             final Method m = clazz.getDeclaredMethod("main", args.getClass());

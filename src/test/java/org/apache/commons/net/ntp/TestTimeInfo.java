@@ -16,6 +16,8 @@
  */
 package org.apache.commons.net.ntp;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -86,10 +88,10 @@ public class TestTimeInfo {
         Assert.assertEquals(info, another);
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testException() {
         final NtpV3Packet packet = null;
-        new TimeInfo(packet, 1L);
+        assertThrows(IllegalArgumentException.class, () -> new TimeInfo(packet, 1L));
     }
 
     @Test
@@ -102,21 +104,21 @@ public class TestTimeInfo {
         final NtpV3Packet packet2 = new NtpV3Impl();
         Assert.assertEquals(packet, packet2);
         final TimeInfo info2 = new TimeInfo(packet2, returnTime + 1);
-        Assert.assertFalse(info.equals(info2));
+        Assert.assertNotEquals(info, info2);
 
         // 2. different message / same time
         packet2.setStratum(3);
         packet2.setRootDelay(25);
         final TimeInfo info3 = new TimeInfo(packet2, returnTime);
-        Assert.assertFalse(info.equals(info3));
+        Assert.assertNotEquals(info, info3);
 
         // 3. different class
         Object  other = this;
-        Assert.assertFalse(info.equals(other));
+        Assert.assertNotEquals(info, other);
 
         // 4. null comparison
         other = null;
-        Assert.assertFalse(info.equals(other));
+        Assert.assertNotEquals(info, other);
     }
 
     @Test

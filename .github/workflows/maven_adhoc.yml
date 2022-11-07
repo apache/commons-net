@@ -13,17 +13,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-version: 2
-updates:
-  - package-ecosystem: "maven"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "friday"
-    ignore:
-      - dependency-name: "org.slf4j:slf4j-simple"
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "friday"
+name: Java CI adhoc testing
+
+on: workflow_dispatch
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    timeout-minutes: 7
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3.1.0
+      with:
+        persist-credentials: false
+    - name: Set up JDK
+      uses: actions/setup-java@v3.6.0
+      with:
+        distribution: 'temurin'
+        java-version: 8
+    - name: Build with Maven
+      run: mvn -V --batch-mode --file pom.xml --no-transfer-progress -Dtest=MainTest
+    - name: Test exec function
+      run: |
+        mvn -q exec:java
+        mvn -q exec:java -D"exec.arguments=FTPClientExample"

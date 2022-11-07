@@ -18,7 +18,6 @@
 package org.apache.commons.net.ftp.parser;
 import java.text.ParseException;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
@@ -299,14 +298,8 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
                                    !group(g + 1).equals("-"));
 
                 final String execPerm = group(g + 2);
-                if (!execPerm.equals("-") && !Character.isUpperCase(execPerm.charAt(0)))
-                {
-                    file.setPermission(access, FTPFile.EXECUTE_PERMISSION, true);
-                }
-                else
-                {
-                    file.setPermission(access, FTPFile.EXECUTE_PERMISSION, false);
-                }
+                file.setPermission(access, FTPFile.EXECUTE_PERMISSION, !execPerm.equals("-")
+                        && !Character.isUpperCase(execPerm.charAt(0)));
             }
 
             if (!isDevice)
@@ -365,13 +358,8 @@ public class UnixFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      */
     @Override
     public List<String> preParse(final List<String> original) {
-        final ListIterator<String> iter = original.listIterator();
-        while (iter.hasNext()) {
-            final String entry = iter.next();
-            if (entry.matches("^total \\d+$")) { // NET-389
-                iter.remove();
-            }
-        }
+        // NET-389
+        original.removeIf(entry -> entry.matches("^total \\d+$"));
         return original;
     }
 

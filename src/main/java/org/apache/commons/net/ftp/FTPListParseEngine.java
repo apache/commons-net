@@ -21,11 +21,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.stream.Collectors;
 
 import org.apache.commons.net.util.Charsets;
 
@@ -140,20 +139,32 @@ public class FTPListParseEngine {
     public FTPFile[] getFiles(final FTPFileFilter filter)
     throws IOException // TODO remove; not actually thrown
     {
-        final List<FTPFile> tmpResults = new ArrayList<>();
-        final Iterator<String> iter = this.entries.iterator();
-        while (iter.hasNext()) {
-            final String entry = iter.next();
-            FTPFile temp = this.parser.parseFTPEntry(entry);
-            if (temp == null && saveUnparseableEntries) {
-                temp = new FTPFile(entry);
-            }
-            if (filter.accept(temp)) {
-                tmpResults.add(temp);
-            }
-        }
-        return tmpResults.toArray(EMPTY_FTP_FILE_ARRAY);
+        return getFileList(filter).toArray(EMPTY_FTP_FILE_ARRAY);
+    }
 
+    /**
+     * Returns a list of FTPFile objects containing the whole list of
+     * files returned by the server as read by this object's parser.
+     * The files are filtered before being added to the array.
+     *
+     * @param filter FTPFileFilter, must not be <code>null</code>.
+     *
+     * @return a list of FTPFile objects containing the whole list of
+     *         files returned by the server as read by this object's parser.
+     * <p><b>
+     * NOTE:</b> This array may contain null members if any of the
+     * individual file listings failed to parse.  The caller should
+     * check each entry for null before referencing it, or use the
+     * a filter such as {@link FTPFileFilters#NON_NULL} which does not
+     * allow null entries.
+     * @since 3.9.0
+     */
+    public List<FTPFile> getFileList(final FTPFileFilter filter)
+    {
+        return entries.stream().map(e -> {
+            final FTPFile file = parser.parseFTPEntry(e);
+            return file == null && saveUnparseableEntries ? new FTPFile(e) : file;
+        }).filter(file -> filter.accept(file)).collect(Collectors.toList());
     }
 
     /**

@@ -90,7 +90,7 @@ public final class IMAPExportMbox
         volatile long lastSeq = -1;
         private final String lineSeparator;
         private final SimpleDateFormat DATE_FORMAT // for mbox From_ lines
-            = new SimpleDateFormat("EEE MMM dd HH:mm:ss YYYY");
+            = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy");
 
         // e.g. INTERNALDATE "27-Oct-2013 07:43:24 +0000"
         // for parsing INTERNALDATE

@@ -43,11 +43,11 @@
 Apache Commons Net
 ===================
 
-[![Travis-CI Status](https://travis-ci.org/apache/commons-net.svg)](https://travis-ci.org/apache/commons-net)
 [![GitHub Actions Status](https://github.com/apache/commons-net/workflows/Java%20CI/badge.svg)](https://github.com/apache/commons-net/actions)
-[![Coverage Status](https://coveralls.io/repos/apache/commons-net/badge.svg)](https://coveralls.io/r/apache/commons-net)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/badge.svg)](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/)
+[![Coverage Status](https://codecov.io/gh/apache/commons-net/branch/master/graph/badge.svg)](https://app.codecov.io/gh/apache/commons-net/branch/master)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/?gav=true)
 [![Javadocs](https://javadoc.io/badge/commons-net/commons-net/3.8.0.svg)](https://javadoc.io/doc/commons-net/commons-net/3.8.0)
+[![CodeQL](https://github.com/apache/commons-net/workflows/CodeQL/badge.svg)](https://github.com/apache/commons-net/actions/workflows/codeql-analysis.yml?query=workflow%3ACodeQL)
 
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
 Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
@@ -81,7 +81,7 @@ There are some guidelines which will make applying PRs easier for us:
 + No tabs! Please use spaces for indentation.
 + Respect the code style.
 + Create minimal diffs - disable on save actions like reformat source code or organize imports. If you feel the source code should be reformatted create a separate PR for this change.
-+ Provide JUnit tests for your changes and make sure your changes don't break any existing tests by running ```mvn clean test```.
++ Provide JUnit tests for your changes and make sure your changes don't break any existing tests by running ```mvn```.
 
 If you plan to contribute on a regular basis, please consider filing a [contributor license agreement](https://www.apache.org/licenses/#clas).
 You can learn more about contributing via GitHub in our [contribution guidelines](CONTRIBUTING.md).

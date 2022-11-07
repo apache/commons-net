@@ -25,6 +25,8 @@ import java.io.Reader;
 import java.io.Writer;
 import java.net.Socket;
 
+import org.apache.commons.net.util.NetConstants;
+
 /**
  * The Util class cannot be instantiated and stores short static convenience
  * methods that are often quite useful.
@@ -168,7 +170,7 @@ public final class Util
 
         try
         {
-            while ((numChars = source.read(buffer)) != -1)
+            while ((numChars = source.read(buffer)) != NetConstants.EOS)
             {
                 // Technically, some read(char[]) methods may return 0 and we cannot
                 // accept that as an indication of EOF.
@@ -343,7 +345,7 @@ public final class Util
 
         try
         {
-            while ((numBytes = source.read(buffer)) != -1)
+            while ((numBytes = source.read(buffer)) != NetConstants.EOS)
             {
                 // Technically, some read(byte[]) methods may return 0 and we cannot
                 // accept that as an indication of EOF.

@@ -63,6 +63,29 @@ The <action> type attribute can be add,update,fix,remove.
 
   <body>
     <release version="3.9.0" date="2021-MM-DD" description="Maintenance and bug fix release (Java 8).">
+      <!-- FIX -->
+      <action type="fix" issue="NET-708" dev="ggregory" due-to="XenoAmess">
+        Use yyyy instead of YYYY in SimpleDateFormat #97.
+      </action>
+      <action type="update" dev="sebb">
+        Prevent serialization of the 4 classes that implement Serializable.
+        It is not useful and is unlikely to work properly.
+      </action>
+      <action type="fix" dev="ggregory" due-to="Arturo Bernal">
+        Use Math.min and Math.max method instead of manual calculations. #104.
+      </action>
+      <action issue="NET-711" type="fix" dev="ggregory" due-to="Jochen Wiedmann, Gary Gregory">
+        Add FTP option to toggle use of return host like CURL.
+      </action>
+      <action issue="NET-642" type="fix" dev="ggregory" due-to="Yani Mihaylov, Gary Gregory">
+        FTPSClient execPROT removes proxy settings #90.
+      </action>
+      <action type="fix" dev="ggregory" due-to="John Patrick, Gary Gregory">
+        JUnit5 assertThrows SimpleSMTPHeaderTestCase #121.
+      </action>
+      <action type="fix" dev="ggregory" due-to="John Patrick, Gary Gregory">
+        JUnit5 assertThrows TestTimeInfo #120.
+      </action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">
         [FTP] Add FTPClient.mdtmInstant(String).
@@ -91,24 +114,42 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="add" dev="ggregory" due-to="Gary Gregory">
         [FTP] Add FTPFile.getTimestampInstant().
       </action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">
+        Add github/codeql-action.
+      </action>
       <!-- UPDATE -->
+      <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">
+        Bump actions/cache from 2.1.6 to 3.0.11 #93, #102, #115, #116.
+      </action>
+      <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">
+        Bump actions/checkout from 2.3.4 to 3.1.0 #89, #91, #100, #114.
+      </action>
+      <action dev="ggregory" type="update" due-to="Dependabot">
+        Bump actions/upload-artifact from 3.1.0 to 3.1.1 #124.
+      </action>
       <action type="update" dev="ggregory" due-to="Dependabot">
-        Bump junit from 4.13.1 to 4.13.2 #74.
+        Bump junit from 4.13.1 to 5.9.1 Vintage #74.
       </action>
       <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">
         Bump commons-io from 2.6 to 2.11.0 #60.
       </action>
       <action dev="ggregory" type="update" due-to="Gary Gregory">
-        Bump actions/setup-java from v1.4.3 to v2.
+        Bump commons.jacoco.version from 0.8.6 to 0.8.8.
       </action>
       <action dev="ggregory" type="update" due-to="Gary Gregory">
-        Bump commons.jacoco.version from 0.8.6 to 0.8.7.
+        Bump commons.japicmp.version from 0.14.3 to 0.16.0.
       </action>
       <action dev="ggregory" type="update" due-to="Gary Gregory">
-        Bump commons.japicmp.version from 0.14.3 to 0.15.3.
+        Bump commons.surefire.version from 2.22.2 to 3.0.0-M7.
       </action>
-      <action dev="ggregory" type="update" due-to="Gary Gregory">
-        Bump commons.surefire.version from 2.22.2 to 3.0.0-M5.
+      <action type="update" dev="ggregory" due-to="XenoAmess, Gary Gregory">
+        Bump ftpserver-core from 1.1.1 to 1.2.0 #96.
+      </action>
+      <action type="update" dev="ggregory" due-to="Dependabot">
+        Bump exec-maven-plugin from 3.0.0 to 3.1.0 #109.
+      </action>
+      <action type="update" dev="ggregory" due-to="Dependabot">
+        Bump commons-parent from 53 to 54 #112
       </action>
     </release>
     <release version="3.8.0" date="2021-02-13" description="Maintenance and bug fix release (Java 7).">

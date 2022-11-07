@@ -19,6 +19,7 @@ package org.apache.commons.net.smtp;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -103,9 +104,9 @@ public class SimpleSMTPHeaderTestCase {
         assertEquals("Date: dummy date\nFrom: from@here.invalid\n\n", hdr.toString());
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testToStringNoFrom() {
-        new SimpleSMTPHeader(null, null, null);
+        assertThrows(IllegalArgumentException.class, () -> new SimpleSMTPHeader(null, null, null));
     }
 
     @Test

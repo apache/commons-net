@@ -30,8 +30,8 @@ import javax.net.ssl.X509TrustManager;
  *
  * @since 3.0
  */
-public final class TrustManagerUtils
-{
+public final class TrustManagerUtils {
+
     private static class TrustManager implements X509TrustManager {
 
         private final boolean checkServerValidity;
@@ -44,17 +44,13 @@ public final class TrustManagerUtils
          * Never generates a CertificateException.
          */
         @Override
-        public void checkClientTrusted(final X509Certificate[] certificates, final String authType)
-        {
+        public void checkClientTrusted(final X509Certificate[] certificates, final String authType) {
         }
 
         @Override
-        public void checkServerTrusted(final X509Certificate[] certificates, final String authType)
-            throws CertificateException
-        {
+        public void checkServerTrusted(final X509Certificate[] certificates, final String authType) throws CertificateException {
             if (checkServerValidity) {
-                for (final X509Certificate certificate : certificates)
-                {
+                for (final X509Certificate certificate : certificates) {
                     certificate.checkValidity();
                 }
             }
@@ -64,8 +60,7 @@ public final class TrustManagerUtils
          * @return an empty array of certificates
          */
         @Override
-        public X509Certificate[] getAcceptedIssuers()
-        {
+        public X509Certificate[] getAcceptedIssuers() {
             return NetConstants.EMPTY_X509_CERTIFICATE_ARRAY;
         }
     }
@@ -79,7 +74,7 @@ public final class TrustManagerUtils
      *
      * @return the TrustManager
      */
-    public static X509TrustManager getAcceptAllTrustManager(){
+    public static X509TrustManager getAcceptAllTrustManager() {
         return ACCEPT_ALL;
     }
 

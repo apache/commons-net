@@ -121,11 +121,7 @@ public final class TFTPDataPacket extends TFTPPacket
         this.data = data;
         this.offset = offset;
 
-        if (length > MAX_DATA_LENGTH) {
-            this.length = MAX_DATA_LENGTH;
-        } else {
-            this.length = length;
-        }
+        this.length = Math.min(length, MAX_DATA_LENGTH);
     }
 
     /**
@@ -251,9 +247,7 @@ public final class TFTPDataPacket extends TFTPPacket
         this.offset = offset;
         this.length = length;
 
-        if (length > MAX_DATA_LENGTH) {
-            this.length = MAX_DATA_LENGTH;
-        }
+        this.length = Math.min(length, MAX_DATA_LENGTH);
     }
 
     /**

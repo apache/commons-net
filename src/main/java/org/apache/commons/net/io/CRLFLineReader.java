@@ -21,6 +21,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 
+import org.apache.commons.net.util.NetConstants;
+
 /**
  * CRLFLineReader implements a readLine() method that requires
  * exactly CRLF to terminate an input line.
@@ -55,16 +57,12 @@ public final class CRLFLineReader extends BufferedReader
         int intch;
         boolean prevWasCR = false;
         synchronized(lock) { // make thread-safe (hopefully!)
-            while((intch = read()) != -1)
+            while((intch = read()) != NetConstants.EOS)
             {
                 if (prevWasCR && intch == LF) {
                     return sb.substring(0, sb.length()-1);
                 }
-                if (intch == CR) {
-                    prevWasCR = true;
-                } else {
-                    prevWasCR = false;
-                }
+                prevWasCR = intch == CR;
                 sb.append((char) intch);
             }
         }

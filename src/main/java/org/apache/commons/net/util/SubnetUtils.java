@@ -20,7 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * A class that performs some subnet calculations given a network address and a subnet mask.
+ * Performs some subnet calculations given a network address and a subnet mask.
  * @see "http://www.faqs.org/rfcs/rfc1519.html"
  * @since 2.0
  */
@@ -28,10 +28,10 @@ public class SubnetUtils {
 
     /**
      * Convenience container for subnet summary information.
-     *
      */
     public final class SubnetInfo {
-        /* Mask to convert unsigned int to a long (i.e. keep 32 bits) */
+
+        /** Mask to convert unsigned int to a long (i.e. keep 32 bits). */
         private static final long UNSIGNED_INT_MASK = 0x0FFFFFFFFL;
 
         private SubnetInfo() {}
@@ -41,18 +41,19 @@ public class SubnetUtils {
         }
         private long broadcastLong(){ return broadcast &  UNSIGNED_INT_MASK; }
 
-        /*
-        * Convert a 4-element array into dotted decimal format
+       /**
+        * Converts a 4-element array into dotted decimal format.
         */
         private String format(final int[] octets) {
-            final StringBuilder str = new StringBuilder();
-            for (int i =0; i < octets.length; ++i){
-                str.append(octets[i]);
-                if (i != octets.length - 1) {
-                    str.append(".");
+            final int last = octets.length - 1;
+            final StringBuilder builder = new StringBuilder();
+            for (int i = 0;; i++) {
+                builder.append(octets[i]);
+                if (i == last) {
+                    return builder.toString();
                 }
+                builder.append('.');
             }
-            return str.toString();
         }
 
         public String getAddress() {
@@ -60,7 +61,7 @@ public class SubnetUtils {
         }
 
         /**
-         * Get the count of available addresses.
+         * Gets the count of available addresses.
          * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
          * @return the count of addresses, may be zero.
          * @throws RuntimeException if the correct count is greater than {@code Integer.MAX_VALUE}
@@ -72,12 +73,12 @@ public class SubnetUtils {
             if (countLong > Integer.MAX_VALUE) {
                 throw new RuntimeException("Count is larger than an integer: " + countLong);
             }
-            // N.B. cannot be negative
-            return (int)countLong;
+            // Cannot be negative here
+            return (int) countLong;
         }
 
         /**
-         * Get the count of available addresses.
+         * Gets the count of available addresses.
          * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
          * @return the count of addresses, may be zero.
          * @since 3.4
@@ -95,7 +96,7 @@ public class SubnetUtils {
             if (ct == 0) {
                 return addresses;
             }
-            for (int add = low(), j=0; add <= high(); ++add, ++j) {
+            for (int add = low(), j = 0; add <= high(); ++add, ++j) {
                 addresses[j] = format(toArray(add));
             }
             return addresses;
@@ -106,11 +107,11 @@ public class SubnetUtils {
         }
 
         public String getCidrSignature() {
-            return format(toArray(address)) + "/" + pop(netmask);
+            return format(toArray(address)) + "/" + Integer.bitCount(netmask);
         }
 
         /**
-         * Return the high address as a dotted IP address.
+         * Gets the high address as a dotted IP address.
          * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
          *
          * @return the IP address in dotted format, may be "0.0.0.0" if there is no valid address
@@ -120,7 +121,7 @@ public class SubnetUtils {
         }
 
         /**
-         * Return the low address as a dotted IP address.
+         * Gets the low address as a dotted IP address.
          * Will be zero for CIDR/31 and CIDR/32 if the inclusive flag is false.
          *
          * @return the IP address in dotted format, may be "0.0.0.0" if there is no valid address
@@ -151,7 +152,7 @@ public class SubnetUtils {
         }
 
         /**
-         * Returns true if the parameter <code>address</code> is in the
+         * Tests if the parameter <code>address</code> is in the
          * range of usable endpoint addresses for this subnet. This excludes the
          * network and broadcast addresses by default. Use {@link SubnetUtils#setInclusiveHostCount(boolean)}
          * to change this.
@@ -170,7 +171,7 @@ public class SubnetUtils {
         }
 
         /**
-         * Returns true if the parameter <code>address</code> is in the
+         * Tests if the parameter <code>address</code> is in the
          * range of usable endpoint addresses for this subnet. This excludes the
          * network and broadcast addresses. Use {@link SubnetUtils#setInclusiveHostCount(boolean)}
          * to change this.
@@ -186,19 +187,21 @@ public class SubnetUtils {
                 broadcastLong() - networkLong() > 1 ? network + 1 : 0;
         }
 
-        // long versions of the values (as unsigned int) which are more suitable for range checking
-        private long networkLong()  { return network &  UNSIGNED_INT_MASK; }
-
-        /*
-        * Convert a packed integer address into a 4-element array
-        */
-        private int[] toArray(final int val) {
-            final int ret[] = new int[4];
-            for (int j = 3; j >= 0; --j) {
-                ret[j] |= val >>> 8*(3-j) & 0xff;
-            }
-            return ret;
+        /** long versions of the values (as unsigned int) which are more suitable for range checking. */
+        private long networkLong() {
+            return network & UNSIGNED_INT_MASK;
         }
+
+       /**
+        * Converts a packed integer address into a 4-element array
+        */
+       private int[] toArray(final int val) {
+           final int ret[] = new int[4];
+           for (int j = 3; j >= 0; --j) {
+               ret[j] |= val >>> 8 * (3 - j) & 0xff;
+           }
+           return ret;
+       }
 
         /**
          * {@inheritDoc}
@@ -207,38 +210,41 @@ public class SubnetUtils {
         @Override
         public String toString() {
             final StringBuilder buf = new StringBuilder();
-            buf.append("CIDR Signature:\t[").append(getCidrSignature()).append("]")
-                .append(" Netmask: [").append(getNetmask()).append("]\n")
-                .append("Network:\t[").append(getNetworkAddress()).append("]\n")
-                .append("Broadcast:\t[").append(getBroadcastAddress()).append("]\n")
-                 .append("First Address:\t[").append(getLowAddress()).append("]\n")
-                 .append("Last Address:\t[").append(getHighAddress()).append("]\n")
-                 .append("# Addresses:\t[").append(getAddressCount()).append("]\n");
+            // @formatter:off
+            buf.append("CIDR Signature:\t[").append(getCidrSignature()).append("]\n")
+                .append("  Netmask: [").append(getNetmask()).append("]\n")
+                .append("  Network: [").append(getNetworkAddress()).append("]\n")
+                .append("  Broadcast: [").append(getBroadcastAddress()).append("]\n")
+                .append("  First address: [").append(getLowAddress()).append("]\n")
+                .append("  Last address: [").append(getHighAddress()).append("]\n")
+                .append("  Address Count: [").append(getAddressCountLong()).append("]\n");
+            // @formatter:on
             return buf.toString();
         }
     }
     private static final String IP_ADDRESS = "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})";
     private static final String SLASH_FORMAT = IP_ADDRESS + "/(\\d{1,2})"; // 0 -> 32
-    private static final Pattern addressPattern = Pattern.compile(IP_ADDRESS);
-    private static final Pattern cidrPattern = Pattern.compile(SLASH_FORMAT);
+    private static final Pattern ADDRESS_PATTERN = Pattern.compile(IP_ADDRESS);
+    private static final Pattern CIDR_PATTERN = Pattern.compile(SLASH_FORMAT);
 
     private static final int NBITS = 32;
 
     private static final String PARSE_FAIL = "Could not parse [%s]";
+
     /*
-     * Convenience method to extract the components of a dotted decimal address and
+     * Extracts the components of a dotted decimal address and
      * pack into an integer using a regex match
      */
     private static int matchAddress(final Matcher matcher) {
         int addr = 0;
         for (int i = 1; i <= 4; ++i) {
             final int n = rangeCheck(Integer.parseInt(matcher.group(i)), 0, 255);
-            addr |= (n & 0xff) << 8*(4-i);
+            addr |= (n & 0xff) << 8 * (4 - i);
         }
         return addr;
     }
     /*
-     * Convenience function to check integer boundaries.
+     * Checks integer boundaries.
      * Checks if a value x is in the range [begin,end].
      * Returns x if it is in range, throws an exception otherwise.
      */
@@ -246,14 +252,14 @@ public class SubnetUtils {
         if (value >= begin && value <= end) { // (begin,end]
             return value;
         }
-
-        throw new IllegalArgumentException("Value [" + value + "] not in range ["+begin+","+end+"]");
+        throw new IllegalArgumentException("Value [" + value + "] not in range [" + begin + "," + end + "]");
     }
+
     /*
-     * Convert a dotted decimal format address to a packed integer format
+     * Converts a dotted decimal format address to a packed integer format
      */
     private static int toInteger(final String address) {
-        final Matcher matcher = addressPattern.matcher(address);
+        final Matcher matcher = ADDRESS_PATTERN.matcher(address);
         if (matcher.matches()) {
             return matchAddress(matcher);
         }
@@ -262,55 +268,52 @@ public class SubnetUtils {
 
     private final int netmask;
 
-
     private final int address;
 
     private final int network;
-
 
     private final int broadcast;
 
     /** Whether the broadcast/network address are included in host count */
     private boolean inclusiveHostCount;
 
-
-
     /**
-     * Constructor that takes a CIDR-notation string, e.g. "192.168.0.1/16"
+     * Constructs an instance from a CIDR-notation string, e.g. "192.168.0.1/16"
      * @param cidrNotation A CIDR-notation string, e.g. "192.168.0.1/16"
      * @throws IllegalArgumentException if the parameter is invalid,
      * i.e. does not match n.n.n.n/m where n=1-3 decimal digits, m = 1-2 decimal digits in range 0-32
      */
     public SubnetUtils(final String cidrNotation) {
-      final Matcher matcher = cidrPattern.matcher(cidrNotation);
+        final Matcher matcher = CIDR_PATTERN.matcher(cidrNotation);
 
-      if (!matcher.matches()) {
-          throw new IllegalArgumentException(String.format(PARSE_FAIL, cidrNotation));
-      }
-    this.address = matchAddress(matcher);
+        if (!matcher.matches()) {
+            throw new IllegalArgumentException(String.format(PARSE_FAIL, cidrNotation));
+        }
+        this.address = matchAddress(matcher);
 
-      /* Create a binary netmask from the number of bits specification /x */
+        // Create a binary netmask from the number of bits specification /x
 
-      final int trailingZeroes = NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
-      /*
-       * An IPv4 netmask consists of 32 bits, a contiguous sequence
-       * of the specified number of ones followed by all zeros.
-       * So, it can be obtained by shifting an unsigned integer (32 bits) to the left by
-       * the number of trailing zeros which is (32 - the # bits specification).
-       * Note that there is no unsigned left shift operator, so we have to use
-       * a long to ensure that the left-most bit is shifted out correctly.
-       */
-      this.netmask = (int) (0x0FFFFFFFFL << trailingZeroes );
+        final int trailingZeroes = NBITS - rangeCheck(Integer.parseInt(matcher.group(5)), 0, NBITS);
 
-      /* Calculate base network address */
-      this.network = address & netmask;
+        //
+        // An IPv4 netmask consists of 32 bits, a contiguous sequence
+        // of the specified number of ones followed by all zeros.
+        // So, it can be obtained by shifting an unsigned integer (32 bits) to the left by
+        // the number of trailing zeros which is (32 - the # bits specification).
+        // Note that there is no unsigned left shift operator, so we have to use
+        // a long to ensure that the left-most bit is shifted out correctly.
+        //
+        this.netmask = (int) (0x0FFFFFFFFL << trailingZeroes);
 
-      /* Calculate broadcast address */
-      this.broadcast = network | ~netmask;
+        // Calculate base network address
+        this.network = address & netmask;
+
+        // Calculate broadcast address
+        this.broadcast = network | ~netmask;
     }
 
     /**
-     * Constructor that takes a dotted decimal address and a dotted decimal mask.
+     * Constructs an instance from a dotted decimal address and a dotted decimal mask.
      * @param address An IP address, e.g. "192.168.0.1"
      * @param mask A dotted decimal netmask e.g. "255.255.0.0"
      * @throws IllegalArgumentException if the address or mask is invalid,
@@ -324,18 +327,20 @@ public class SubnetUtils {
             throw new IllegalArgumentException(String.format(PARSE_FAIL, mask));
         }
 
-        /* Calculate base network address */
+        // Calculate base network address
         this.network = this.address & this.netmask;
 
-        /* Calculate broadcast address */
+        // Calculate broadcast address
         this.broadcast = this.network | ~this.netmask;
     }
 
     /**
-     * Return a {@link SubnetInfo} instance that contains subnet-specific statistics
+     * Gets a {@link SubnetInfo} instance that contains subnet-specific statistics
      * @return new instance
      */
-    public final SubnetInfo getInfo() { return new SubnetInfo(); }
+    public final SubnetInfo getInfo() {
+        return new SubnetInfo();
+    }
 
     public SubnetUtils getNext() {
         return new SubnetUtils(getInfo().getNextAddress(), getInfo().getNetmask());
@@ -346,7 +351,7 @@ public class SubnetUtils {
     }
 
     /**
-     * Returns <code>true</code> if the return value of {@link SubnetInfo#getAddressCount()}
+     * Tests if the return value of {@link SubnetInfo#getAddressCount()}
      * includes the network and broadcast addresses.
      * @since 2.2
      * @return true if the host count includes the network and broadcast addresses
@@ -355,21 +360,8 @@ public class SubnetUtils {
         return inclusiveHostCount;
     }
 
-    /*
-     * Count the number of 1-bits in a 32-bit integer using a divide-and-conquer strategy
-     * see Hacker's Delight section 5.1
-     */
-    int pop(int x) {
-        x = x - (x >>> 1 & 0x55555555);
-        x = (x & 0x33333333) + (x >>> 2 & 0x33333333);
-        x = x + (x >>> 4) & 0x0F0F0F0F;
-        x = x + (x >>> 8);
-        x = x + (x >>> 16);
-        return x & 0x0000003F;
-    }
-
     /**
-     * Set to <code>true</code> if you want the return value of {@link SubnetInfo#getAddressCount()}
+     * Sets to <code>true</code> if you want the return value of {@link SubnetInfo#getAddressCount()}
      * to include the network and broadcast addresses.
      * This also applies to {@link SubnetInfo#isInRange(int)}
      * @param inclusiveHostCount true if network and broadcast addresses are to be included

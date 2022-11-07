@@ -49,7 +49,7 @@ limitations under the License.
   </module>
 
   <module name="LineLength">
-    <property name="max" value="132"/>
+    <property name="max" value="160"/>
   </module>
 
   <module name="TreeWalker">
@@ -75,7 +75,7 @@ limitations under the License.
     <module name="EmptyCatchBlock"></module>
 
     <module name="JavadocMethod">
-      <property name="scope" value="public"/>
+      <property name="accessModifiers" value="public"/>
       <property name="allowMissingParamTags" value="true"/>
     </module>
 

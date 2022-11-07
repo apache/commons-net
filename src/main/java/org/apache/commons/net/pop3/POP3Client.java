@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.ListIterator;
 import java.util.StringTokenizer;
 
@@ -218,9 +219,7 @@ public class POP3Client extends POP3
         final ListIterator<String> en = replyLines.listIterator(1); // Skip first line
 
         // Fetch lines.
-        for (int line = 0; line < messages.length; line++) {
-            messages[line] = parseStatus(en.next());
-        }
+        Arrays.setAll(messages, i -> parseStatus(en.next()));
 
         return messages;
     }
@@ -290,9 +289,7 @@ public class POP3Client extends POP3
         final ListIterator<String> en = replyLines.listIterator(1); // skip first line
 
         // Fetch lines.
-        for (int line = 0; line < messages.length; line++) {
-            messages[line] = parseUID(en.next());
-        }
+        Arrays.setAll(messages, i -> parseUID(en.next()));
 
         return messages;
     }

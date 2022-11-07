@@ -22,6 +22,8 @@ import java.io.InputStream;
 import java.io.PushbackInputStream;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.commons.net.util.NetConstants;
+
 /**
  * This class wraps an input stream, replacing all occurrences
  * of &lt;CR&gt;&lt;LF&gt; (carriage return followed by a linefeed),
@@ -162,7 +164,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
 
         ch = available();
 
-        this.length = length > ch ? ch : length;
+        this.length = Math.min(length, ch);
 
         // If nothing is available, block to read only one character
         if (this.length < 1) {
@@ -171,7 +173,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
 
 
         if ((ch = readInt()) == -1) {
-            return -1;
+            return NetConstants.EOS;
         }
 
         off = offset;

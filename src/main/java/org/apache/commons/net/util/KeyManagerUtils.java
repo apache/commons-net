@@ -29,6 +29,7 @@ import java.security.Principal;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
+import java.util.Arrays;
 import java.util.Enumeration;
 
 import javax.net.ssl.KeyManager;
@@ -75,11 +76,9 @@ public final class KeyManagerUtils {
             this.keyAlias = keyAlias;
             this.key = (PrivateKey) ks.getKey(this.keyAlias, keyPass.toCharArray());
             final Certificate[] certs = ks.getCertificateChain(this.keyAlias);
-            final X509Certificate[] X509certs = new X509Certificate[certs.length];
-            for (int i=0; i < certs.length; i++) {
-                X509certs[i] = (X509Certificate) certs[i];
-            }
-            this.certChain = X509certs;
+            final X509Certificate[] x509certs = new X509Certificate[certs.length];
+            Arrays.setAll(x509certs, i -> (X509Certificate) certs[i]);
+            this.certChain = x509certs;
         }
 
         final String getAlias() {

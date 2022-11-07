@@ -17,6 +17,7 @@
 
 package org.apache.commons.net.ftp;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Calendar;
@@ -82,7 +83,7 @@ public class FTPFile implements Serializable {
     private Calendar calendar;
 
     /** If this is null, then list entry parsing failed. */
-    private final boolean[] permissions[]; // e.g. _permissions[USER_ACCESS][READ_PERMISSION]
+    private final boolean[][] permissions; // e.g. _permissions[USER_ACCESS][READ_PERMISSION]
 
     /** Creates an empty FTPFile. */
     public FTPFile() {
@@ -475,4 +476,21 @@ public class FTPFile implements Serializable {
     public String toString() {
         return getRawListing();
     }
+
+    /*
+        Serialization is unnecessary for this class.
+        Reject attempts to do so until such time as the Serializable attribute can be dropped.
+     */
+
+    private void writeObject(final java.io.ObjectOutputStream out) throws IOException
+    {
+        throw new UnsupportedOperationException("Serialization is not supported");
+    }
+
+    private void readObject(final java.io.ObjectInputStream in) throws IOException, ClassNotFoundException
+    {
+        throw new UnsupportedOperationException("Serialization is not supported");
+    }
+
+
 }

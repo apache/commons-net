@@ -16,6 +16,8 @@
  */
 package org.apache.commons.net.ntp;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.net.DatagramPacket;
 
 import org.junit.Assert;
@@ -135,11 +137,11 @@ public class TestNtpPacket {
         Assert.assertEquals(2, message.getLeapIndicator());
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testCreateFromBadPacket() {
         final NtpV3Packet message = new NtpV3Impl();
         final DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length-4); // drop 4-bytes from packet
-        message.setDatagramPacket(dp);
+        assertThrows(IllegalArgumentException.class, () -> message.setDatagramPacket(dp));
     }
 
     @Test
@@ -150,10 +152,10 @@ public class TestNtpPacket {
         Assert.assertEquals(4, message.getMode());
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testCreateFromNullPacket() {
         final NtpV3Packet message = new NtpV3Impl();
-        message.setDatagramPacket(null);
+        assertThrows(IllegalArgumentException.class, () -> message.setDatagramPacket(null));
     }
 
     @Test
@@ -188,10 +190,10 @@ public class TestNtpPacket {
         // now change the packet to force equals() => false
         message2.setMode(2);
         Assert.assertTrue(message1.getMode() != message2.getMode());
-        Assert.assertFalse(message1.equals(message2));
+        Assert.assertNotEquals(message1, message2);
 
         final NtpV3Packet message3 = null;
-        Assert.assertFalse(message1.equals(message3));
+        Assert.assertNotEquals(message3, message1);
     }
 
 }

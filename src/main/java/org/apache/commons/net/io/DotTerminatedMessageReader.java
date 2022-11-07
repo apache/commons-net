@@ -21,6 +21,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 
+import org.apache.commons.net.util.NetConstants;
+
 /**
  * DotTerminatedMessageReader is a class used to read messages from a
  * server that are terminated by a single dot followed by a
@@ -107,19 +109,19 @@ public final class DotTerminatedMessageReader extends BufferedReader
     public int read() throws IOException {
         synchronized (lock) {
             if (eof) {
-                return -1; // Don't allow read past EOF
+                return NetConstants.EOS; // Don't allow read past EOF
             }
             int chint = super.read();
-            if (chint == -1) { // True EOF
+            if (chint == NetConstants.EOS) { // True EOF
                 eof = true;
-                return -1;
+                return NetConstants.EOS;
             }
             if (atBeginning) {
                 atBeginning = false;
                 if (chint == DOT) { // Have DOT
                     mark(2); // need to check for CR LF or DOT
                     chint = super.read();
-                    if (chint == -1) { // Should not happen
+                    if (chint == NetConstants.EOS) { // Should not happen
                         // new Throwable("Trailing DOT").printStackTrace();
                         eof = true;
                         return DOT; // return the trailing DOT
@@ -130,7 +132,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
                     }
                     if (chint == CR) { // Have DOT CR
                         chint = super.read();
-                        if (chint == -1) { // Still only DOT CR - should not happen
+                        if (chint == NetConstants.EOS) { // Still only DOT CR - should not happen
                             //new Throwable("Trailing DOT CR").printStackTrace();
                             reset(); // So CR is picked up next time
                             return DOT; // return the trailing DOT
@@ -139,7 +141,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
                             atBeginning = true;
                             eof = true;
                             // Do we need to clear the mark somehow?
-                            return -1;
+                            return NetConstants.EOS;
                         }
                     }
                     // Should not happen - lone DOT at beginning
@@ -205,7 +207,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
         {
             if ((ch = read()) == -1)
             {
-                return -1;
+                return NetConstants.EOS;
             }
 
             final int off = offset;
@@ -231,7 +233,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
         final StringBuilder sb = new StringBuilder();
         int intch;
         synchronized(lock) { // make thread-safe (hopefully!)
-            while((intch = read()) != -1)
+            while((intch = read()) != NetConstants.EOS)
             {
                 if (intch == LF && atBeginning) {
                     return sb.substring(0, sb.length()-1);

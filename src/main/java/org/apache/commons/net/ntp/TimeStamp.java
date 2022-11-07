@@ -1,4 +1,3 @@
-package org.apache.commons.net.ntp;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -16,8 +15,10 @@ package org.apache.commons.net.ntp;
  * limitations under the License.
  */
 
+package org.apache.commons.net.ntp;
 
-
+import java.io.IOException;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,7 +41,7 @@ import java.util.TimeZone;
  *
  * @see java.util.Date
  */
-public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
+public class TimeStamp implements Serializable, Comparable<TimeStamp>
 {
     private static final long serialVersionUID = 8139806907588338737L;
 
@@ -105,7 +106,7 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
      * it represents the time at which it was allocated, measured to the
      * nearest millisecond.
      * @return NTP timestamp object set to the current time.
-     * @see     java.lang.System#currentTimeMillis()
+     * @see     System#currentTimeMillis()
      */
     public static TimeStamp getCurrentTime()
     {
@@ -305,7 +306,7 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
     {
         final long thisVal = this.ntpTime;
         final long anotherVal = anotherTimeStamp.ntpTime;
-        return (thisVal < anotherVal ? -1 : (thisVal == anotherVal ? 0 : 1));
+        return (Long.compare(thisVal, anotherVal));
     }
 
     /**
@@ -447,6 +448,21 @@ public class TimeStamp implements java.io.Serializable, Comparable<TimeStamp>
         }
         final Date ntpDate = getDate();
         return utcFormatter.format(ntpDate);
+    }
+
+    /*
+        Serialization is unnecessary for this class.
+        Reject attempts to do so until such time as the Serializable attribute can be dropped.
+     */
+
+    private void writeObject(final java.io.ObjectOutputStream out) throws IOException
+    {
+        throw new UnsupportedOperationException("Serialization is not supported");
+    }
+
+    private void readObject(final java.io.ObjectInputStream in) throws IOException, ClassNotFoundException
+    {
+        throw new UnsupportedOperationException("Serialization is not supported");
     }
 
 }

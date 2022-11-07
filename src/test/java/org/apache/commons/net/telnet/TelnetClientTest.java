@@ -221,7 +221,7 @@ extends TestCase implements TelnetNotificationHandler
     }
 
     /*
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     @Override
     protected void tearDown() throws Exception {
@@ -352,8 +352,8 @@ extends TestCase implements TelnetNotificationHandler
         assertTrue(remove_invalid_ok1);
         assertTrue(remove_invalid_ok2);
         assertTrue(OPTIONS.client.getLocalOptionState(TelnetOption.ECHO));
-        assertTrue(!OPTIONS.client.getLocalOptionState(TelnetOption.SUPPRESS_GO_AHEAD));
-        assertTrue(!OPTIONS.client.getLocalOptionState(TelnetOption.SUPPRESS_GO_AHEAD));
+        assertFalse(OPTIONS.client.getLocalOptionState(TelnetOption.SUPPRESS_GO_AHEAD));
+        assertFalse(OPTIONS.client.getLocalOptionState(TelnetOption.SUPPRESS_GO_AHEAD));
     }
 
 
@@ -428,12 +428,12 @@ extends TestCase implements TelnetNotificationHandler
         assertTrue(connect1_ok);
         assertTrue(connect2_ok);
         assertTrue(connect3_ok);
-        assertTrue(!STANDARD.client.getLocalOptionState(TelnetOption.ECHO));
-        assertTrue(!STANDARD.client.getRemoteOptionState(TelnetOption.ECHO));
-        assertTrue(!OPTIONS.client.getLocalOptionState(TelnetOption.ECHO));
-        assertTrue(!OPTIONS.client.getRemoteOptionState(TelnetOption.ECHO));
-        assertTrue(!ANSI.client.getLocalOptionState(TelnetOption.TERMINAL_TYPE));
-        assertTrue(!ANSI.client.getRemoteOptionState(TelnetOption.TERMINAL_TYPE));
+        assertFalse(STANDARD.client.getLocalOptionState(TelnetOption.ECHO));
+        assertFalse(STANDARD.client.getRemoteOptionState(TelnetOption.ECHO));
+        assertFalse(OPTIONS.client.getLocalOptionState(TelnetOption.ECHO));
+        assertFalse(OPTIONS.client.getRemoteOptionState(TelnetOption.ECHO));
+        assertFalse(ANSI.client.getLocalOptionState(TelnetOption.TERMINAL_TYPE));
+        assertFalse(ANSI.client.getRemoteOptionState(TelnetOption.TERMINAL_TYPE));
         assertTrue(init2_ok);
         assertTrue(add_invalid_ok1);
         assertTrue(add_invalid_ok2);
@@ -730,16 +730,16 @@ extends TestCase implements TelnetNotificationHandler
         assertTrue(negotiation1_ok);
         assertTrue(negotiation2_ok);
         assertTrue(negotiation3_ok);
-        assertTrue(!STANDARD.client.getLocalOptionState(15));
-        assertTrue(!STANDARD.client.getRemoteOptionState(15));
-        assertTrue(!STANDARD.client.getLocalOptionState(TelnetOption.TERMINAL_TYPE));
-        assertTrue(!OPTIONS.client.getLocalOptionState(TelnetOption.ECHO));
-        assertTrue(!OPTIONS.client.getRemoteOptionState(TelnetOption.ECHO));
+        assertFalse(STANDARD.client.getLocalOptionState(15));
+        assertFalse(STANDARD.client.getRemoteOptionState(15));
+        assertFalse(STANDARD.client.getLocalOptionState(TelnetOption.TERMINAL_TYPE));
+        assertFalse(OPTIONS.client.getLocalOptionState(TelnetOption.ECHO));
+        assertFalse(OPTIONS.client.getRemoteOptionState(TelnetOption.ECHO));
         assertTrue(OPTIONS.client.getLocalOptionState(TelnetOption.SUPPRESS_GO_AHEAD));
-        assertTrue(!OPTIONS.client.getRemoteOptionState(TelnetOption.SUPPRESS_GO_AHEAD));
+        assertFalse(OPTIONS.client.getRemoteOptionState(TelnetOption.SUPPRESS_GO_AHEAD));
         assertTrue(OPTIONS.client.getLocalOptionState(TelnetOption.TERMINAL_TYPE));
         assertTrue(ANSI.client.getLocalOptionState(TelnetOption.TERMINAL_TYPE));
-        assertTrue(!OPTIONS.client.getLocalOptionState(TelnetOption.ECHO));
+        assertFalse(OPTIONS.client.getLocalOptionState(TelnetOption.ECHO));
     }
 
     /*
@@ -812,7 +812,7 @@ extends TestCase implements TelnetNotificationHandler
         }
 
         assertTrue(negotiation1_ok);
-        assertTrue(!OPTIONS.client.getLocalOptionState(TelnetOption.ECHO));
+        assertFalse(OPTIONS.client.getLocalOptionState(TelnetOption.ECHO));
     }
 
 
@@ -895,7 +895,7 @@ extends TestCase implements TelnetNotificationHandler
         //}
             }
 
-        assertTrue(!NOREAD.client.getReaderThread());
+        assertFalse(NOREAD.client.getReaderThread());
         assertTrue(STANDARD.client.getReaderThread());
         assertTrue("Expected read_ok to be true, got " + read_ok, read_ok);
         assertTrue("Expected negotiation1_ok to be true, got " + negotiation1_ok, negotiation1_ok);

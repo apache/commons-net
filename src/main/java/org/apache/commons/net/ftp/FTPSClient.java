@@ -22,6 +22,10 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 import javax.net.ssl.HostnameVerifier;
@@ -262,7 +266,7 @@ public class FTPSClient extends FTPClient {
      */
     @Override
     protected Socket _openDataConnection_(final String command, final String arg) throws IOException {
-        final Socket socket = super._openDataConnection_(command, arg);
+        final Socket socket = openDataSecureConnection(command, arg);
         _prepareDataSocket_(socket);
         if (socket instanceof SSLSocket) {
             final SSLSocket sslSocket = (SSLSocket) socket;
@@ -285,6 +289,170 @@ public class FTPSClient extends FTPClient {
         }
 
         return socket;
+    }
+
+    /**
+     * Establishes a data connection with the FTP server, returning
+     * a Socket for the connection if successful.  If a restart
+     * offset has been set with {@link #setRestartOffset(long)},
+     * a REST command is issued to the server with the offset as
+     * an argument before establishing the data connection.  Active
+     * mode connections also cause a local PORT command to be issued.
+     *
+     * @param command  The text representation of the FTP command to send.
+     * @param arg The arguments to the FTP command.  If this parameter is
+     *             set to null, then the command is sent with no argument.
+     * @return A Socket corresponding to the established data connection.
+     *         Null is returned if an FTP protocol error is reported at
+     *         any point during the establishment and initialization of
+     *         the connection.
+     * @throws IOException  If an I/O error occurs while either sending a
+     *      command to the server or receiving a reply from the server.
+     * @since 3.1
+     */
+    private Socket openDataSecureConnection(String command, String arg) throws IOException {
+        if (getDataConnectionMode() != ACTIVE_LOCAL_DATA_CONNECTION_MODE &&
+                getDataConnectionMode() != PASSIVE_LOCAL_DATA_CONNECTION_MODE) {
+            return null;
+        }
+
+        final boolean isInet6Address = getRemoteAddress() instanceof Inet6Address;
+
+        final Socket socket;
+        Socket sslSocket = null;
+        final int soTimeoutMillis = DurationUtils.toMillisInt(getDataTimeout());
+        if (getDataConnectionMode() == ACTIVE_LOCAL_DATA_CONNECTION_MODE)
+        {
+            // if no activePortRange was set (correctly) -> getActivePort() = 0
+            // -> new ServerSocket(0) -> bind to any free local port
+            try (final ServerSocket server = _serverSocketFactory_.createServerSocket(getActivePort(), 1, getHostAddress())) {
+                // Try EPRT only if remote server is over IPv6, if not use PORT,
+                // because EPRT has no advantage over PORT on IPv4.
+                // It could even have the disadvantage,
+                // that EPRT will make the data connection fail, because
+                // today's intelligent NAT Firewalls are able to
+                // substitute IP addresses in the PORT command,
+                // but might not be able to recognize the EPRT command.
+                if (isInet6Address) {
+                    if (!FTPReply.isPositiveCompletion(eprt(getReportHostAddress(), server.getLocalPort()))) {
+                        return null;
+                    }
+                } else if (!FTPReply.isPositiveCompletion(port(getReportHostAddress(), server.getLocalPort()))) {
+                    return null;
+                }
+
+                if ((getRestartOffset() > 0) && !restart(getRestartOffset())) {
+                    return null;
+                }
+
+                if (!FTPReply.isPositivePreliminary(sendCommand(command, arg))) {
+                    return null;
+                }
+
+                // For now, let's just use the data timeout value for waiting for
+                // the data connection.  It may be desirable to let this be a
+                // separately configurable value.  In any case, we really want
+                // to allow preventing the accept from blocking indefinitely.
+                if (soTimeoutMillis >= 0) {
+                    server.setSoTimeout(soTimeoutMillis);
+                }
+                socket = server.accept();
+
+                // Ensure the timeout is set before any commands are issued on the new socket
+                if (soTimeoutMillis >= 0) {
+                    socket.setSoTimeout(soTimeoutMillis);
+                }
+                if (getReceiveDataSocketBufferSize() > 0) {
+                    socket.setReceiveBufferSize(getReceiveDataSocketBufferSize());
+                }
+                if (getSendDataSocketBufferSize() > 0) {
+                    socket.setSendBufferSize(getSendDataSocketBufferSize());
+                }
+            }
+        }
+        else
+        { // We must be in PASSIVE_LOCAL_DATA_CONNECTION_MODE
+
+            // Try EPSV command first on IPv6 - and IPv4 if enabled.
+            // When using IPv4 with NAT it has the advantage
+            // to work with more rare configurations.
+            // E.g. if FTP server has a static PASV address (external network)
+            // and the client is coming from another internal network.
+            // In that case the data connection after PASV command would fail,
+            // while EPSV would make the client succeed by taking just the port.
+            final boolean attemptEPSV = isUseEPSVwithIPv4() || isInet6Address;
+            if (attemptEPSV && epsv() == FTPReply.ENTERING_EPSV_MODE)
+            {
+                _parseExtendedPassiveModeReply(_replyLines.get(0));
+            }
+            else
+            {
+                if (isInet6Address) {
+                    return null; // Must use EPSV for IPV6
+                }
+                // If EPSV failed on IPV4, revert to PASV
+                if (pasv() != FTPReply.ENTERING_PASSIVE_MODE) {
+                    return null;
+                }
+                _parsePassiveModeReply(_replyLines.get(0));
+            }
+
+            if (getProxy() != null) {
+                socket = new Socket(getProxy());
+            } else {
+                socket = _socketFactory_.createSocket();
+            }
+
+            if (getReceiveDataSocketBufferSize() > 0) {
+                socket.setReceiveBufferSize(getReceiveDataSocketBufferSize());
+            }
+            if (getSendDataSocketBufferSize() > 0) {
+                socket.setSendBufferSize(getSendDataSocketBufferSize());
+            }
+            if (getPassiveLocalIPAddress() != null) {
+                socket.bind(new InetSocketAddress(getPassiveLocalIPAddress(), 0));
+            }
+
+            // For now, let's just use the data timeout value for waiting for
+            // the data connection.  It may be desirable to let this be a
+            // separately configurable value.  In any case, we really want
+            // to allow preventing the accept from blocking indefinitely.
+            if (soTimeoutMillis >= 0) {
+                socket.setSoTimeout(soTimeoutMillis);
+            }
+
+            socket.connect(new InetSocketAddress(getPassiveHost(), getPassivePort()), connectTimeout);
+
+            if (getProxy() != null) {
+                sslSocket = context.getSocketFactory().createSocket(socket, getPassiveHost(), getPassivePort(), true);
+            }
+
+            if ((getRestartOffset() > 0) && !restart(getRestartOffset()))
+            {
+                closeSockets(socket, sslSocket);
+                return null;
+            }
+
+            if (!FTPReply.isPositivePreliminary(sendCommand(command, arg)))
+            {
+                closeSockets(socket, sslSocket);
+                return null;
+            }
+        }
+
+        if (isRemoteVerificationEnabled() && !verifyRemote(socket))
+        {
+            // Grab the host before we close the socket to avoid NET-663
+            final InetAddress socketHost = socket.getInetAddress();
+
+            closeSockets(socket, sslSocket);
+
+            throw new IOException(
+                    "Host attempting data connection " + socketHost.getHostAddress() +
+                            " is not same as server " + getRemoteAddress().getHostAddress());
+        }
+
+        return getProxy() != null ? sslSocket : socket;
     }
 
         /**
@@ -734,7 +902,7 @@ public class FTPSClient extends FTPClient {
      * @return server reply.
      * @throws IOException If an I/O error occurs while sending the command.
      * @throws SSLException if a CCC command fails
-     * @see org.apache.commons.net.ftp.FTP#sendCommand(java.lang.String)
+     * @see org.apache.commons.net.ftp.FTP#sendCommand(String)
      */
     // Would like to remove this method, but that will break any existing clients that are using CCC
     @Override
@@ -907,6 +1075,21 @@ public class FTPSClient extends FTPClient {
         if (isClientMode && (hostnameVerifier != null &&
             !hostnameVerifier.verify(_hostname_, socket.getSession()))) {
             throw new SSLHandshakeException("Hostname doesn't match certificate");
+        }
+    }
+
+    /**
+     * Close open sockets.
+     * @param socket main socket for proxy if enabled
+     * @param sslSocket ssl socket
+     * @throws IOException closing sockets is not successful
+     */
+    private void closeSockets(Socket socket, Socket sslSocket) throws IOException {
+        if (socket != null) {
+            socket.close();
+        }
+        if (sslSocket != null) {
+            sslSocket.close();
         }
     }
 

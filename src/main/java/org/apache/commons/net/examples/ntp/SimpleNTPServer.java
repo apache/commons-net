@@ -199,7 +199,7 @@ public class SimpleNTPServer implements Runnable {
     /**
      * Starts time service and provide time to client connections.
      *
-     * @throws java.io.IOException if an I/O error occurs when creating the socket.
+     * @throws IOException if an I/O error occurs when creating the socket.
      */
     public void start() throws IOException
     {

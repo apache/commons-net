@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.apache.commons.net.io.Util;
+import org.apache.commons.net.util.NetConstants;
 
 /**
  * This is a utility class providing a reader/writer capability required
@@ -45,46 +46,35 @@ public final class IOUtil
         final Thread reader;
         final Thread writer;
 
-        reader = new Thread()
-                 {
-                     @Override
-                     public void run()
-                     {
-                         int ch;
+        reader = new Thread(() -> {
+            int ch;
 
-                         try
-                         {
-                             while (!interrupted() && (ch = localInput.read()) != -1)
-                             {
-                                 remoteOutput.write(ch);
-                                 remoteOutput.flush();
-                             }
-                         }
-                         catch (final IOException e)
-                         {
-                             //e.printStackTrace();
-                         }
-                     }
-                 }
-                 ;
+            try
+            {
+                while (!Thread.interrupted() && (ch = localInput.read()) != NetConstants.EOS)
+                {
+                    remoteOutput.write(ch);
+                    remoteOutput.flush();
+                }
+            }
+            catch (final IOException e)
+            {
+                //e.printStackTrace();
+            }
+        });
 
 
-        writer = new Thread()
-                 {
-                     @Override
-                     public void run()
-                     {
-                         try
-                         {
-                             Util.copyStream(remoteInput, localOutput);
-                         }
-                         catch (final IOException e)
-                         {
-                             e.printStackTrace();
-                             System.exit(1);
-                         }
-                     }
-                 };
+        writer = new Thread(() -> {
+            try
+            {
+                Util.copyStream(remoteInput, localOutput);
+            }
+            catch (final IOException e)
+            {
+                e.printStackTrace();
+                System.exit(1);
+            }
+        });
 
 
         writer.setPriority(Thread.currentThread().getPriority() + 1);

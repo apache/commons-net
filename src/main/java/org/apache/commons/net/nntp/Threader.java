@@ -28,7 +28,6 @@ package org.apache.commons.net.nntp;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -152,15 +151,11 @@ public class Threader {
      */
     private ThreadContainer findRootSet(final HashMap<String, ThreadContainer> idTable) {
         final ThreadContainer root = new ThreadContainer();
-        final Iterator<Map.Entry<String, ThreadContainer>> iter = idTable.entrySet().iterator();
-
-        while (iter.hasNext()) {
-            final Map.Entry<String, ThreadContainer> entry = iter.next();
+        for (final Map.Entry<String, ThreadContainer> entry : idTable.entrySet()) {
             final ThreadContainer c = entry.getValue();
             if (c.parent == null) {
                 if (c.next != null) {
-                    throw new RuntimeException(
-                            "c.next is " + c.next.toString());
+                    throw new RuntimeException("c.next is " + c.next.toString());
                 }
                 c.next = root.child;
                 root.child = c;
