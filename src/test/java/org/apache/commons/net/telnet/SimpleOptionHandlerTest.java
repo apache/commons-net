@@ -19,31 +19,23 @@ package org.apache.commons.net.telnet;
 /**
  * JUnit test class for SimpleOptionHandler
  */
-public class SimpleOptionHandlerTest extends TelnetOptionHandlerTestAbstract
-{
+public class SimpleOptionHandlerTest extends TelnetOptionHandlerTestAbstract {
     /**
      * setUp for the test.
      */
     @Override
-    protected void setUp()
-    {
+    protected void setUp() {
         opthand1 = new SimpleOptionHandler(4);
         opthand2 = new SimpleOptionHandler(8, true, true, true, true);
         opthand3 = new SimpleOptionHandler(91, false, false, false, false);
     }
 
     /**
-     * test of server-driven subnegotiation.
-     * Checks that no subnegotiation is made.
+     * test of server-driven subnegotiation. Checks that no subnegotiation is made.
      */
     @Override
-    public void testAnswerSubnegotiation()
-    {
-        final int subn[] =
-        {
-            TelnetCommand.IAC, TelnetCommand.SB, 4,
-            1, TelnetCommand.IAC, TelnetCommand.SE,
-        };
+    public void testAnswerSubnegotiation() {
+        final int subn[] = { TelnetCommand.IAC, TelnetCommand.SB, 4, 1, TelnetCommand.IAC, TelnetCommand.SE, };
 
         final int resp1[] = opthand1.answerSubnegotiation(subn, subn.length);
 
@@ -54,8 +46,7 @@ public class SimpleOptionHandlerTest extends TelnetOptionHandlerTestAbstract
      * test of the constructors.
      */
     @Override
-    public void testConstructors()
-    {
+    public void testConstructors() {
         assertEquals(opthand1.getOptionCode(), 4);
         assertEquals(opthand2.getOptionCode(), 8);
         assertEquals(opthand3.getOptionCode(), 91);
@@ -63,12 +54,10 @@ public class SimpleOptionHandlerTest extends TelnetOptionHandlerTestAbstract
     }
 
     /**
-     * test of client-driven subnegotiation.
-     * Checks that no subnegotiation is made.
+     * test of client-driven subnegotiation. Checks that no subnegotiation is made.
      */
     @Override
-    public void testStartSubnegotiation()
-    {
+    public void testStartSubnegotiation() {
 
         final int resp1[] = opthand1.startSubnegotiationLocal();
         final int resp2[] = opthand1.startSubnegotiationRemote();

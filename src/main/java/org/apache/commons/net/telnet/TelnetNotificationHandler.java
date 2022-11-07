@@ -18,21 +18,17 @@
 package org.apache.commons.net.telnet;
 
 /**
- * The TelnetNotificationHandler interface can be used to handle
- * notification of options negotiation commands received on a telnet
- * session.
+ * The TelnetNotificationHandler interface can be used to handle notification of options negotiation commands received on a telnet session.
  * <p>
- * The user can implement this interface and register a
- * TelnetNotificationHandler by using the registerNotificationHandler()
- * of TelnetClient to be notified of option negotiation commands.
+ * The user can implement this interface and register a TelnetNotificationHandler by using the registerNotificationHandler() of TelnetClient to be notified of
+ * option negotiation commands.
  */
 
-public interface TelnetNotificationHandler
-{
+public interface TelnetNotificationHandler {
     /**
      * The remote party sent a DO command.
      */
-    int RECEIVED_DO =   1;
+    int RECEIVED_DO = 1;
 
     /**
      * The remote party sent a DONT command.
@@ -51,18 +47,17 @@ public interface TelnetNotificationHandler
 
     /**
      * The remote party sent a COMMAND.
+     *
      * @since 2.2
      */
     int RECEIVED_COMMAND = 5;
 
     /**
-     * Callback method called when TelnetClient receives an
-     * command or option negotiation command
+     * Callback method called when TelnetClient receives an command or option negotiation command
      *
-     * @param negotiation_code - type of (negotiation) command received
-     * (RECEIVED_DO, RECEIVED_DONT, RECEIVED_WILL, RECEIVED_WONT, RECEIVED_COMMAND)
+     * @param negotiation_code - type of (negotiation) command received (RECEIVED_DO, RECEIVED_DONT, RECEIVED_WILL, RECEIVED_WONT, RECEIVED_COMMAND)
      *
-     * @param option_code - code of the option negotiated, or the command code itself (e.g. NOP).
+     * @param option_code      - code of the option negotiated, or the command code itself (e.g. NOP).
      */
     void receivedNegotiation(int negotiation_code, int option_code);
 }

@@ -22,15 +22,12 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * This class is used to construct a bare minimum
- * acceptable header for an email message.  To construct more
- * complicated headers you should refer to RFC 5322.  When the
- * Java Mail API is finalized, you will be
- * able to use it to compose fully compliant Internet text messages.
+ * This class is used to construct a bare minimum acceptable header for an email message. To construct more complicated headers you should refer to RFC 5322.
+ * When the Java Mail API is finalized, you will be able to use it to compose fully compliant Internet text messages.
  * <p>
- * The main purpose of the class is to faciliatate the mail sending
- * process, by relieving the programmer from having to explicitly format
- * a simple message header.  For example:
+ * The main purpose of the class is to faciliatate the mail sending process, by relieving the programmer from having to explicitly format a simple message
+ * header. For example:
+ *
  * <pre>
  * writer = client.sendMessageData();
  * if(writer == null) // failure
@@ -49,8 +46,7 @@ import java.util.Locale;
  * @see SMTPClient
  */
 
-public class SimpleSMTPHeader
-{
+public class SimpleSMTPHeader {
     private final String subject;
     private final String from;
     private final String to;
@@ -59,21 +55,14 @@ public class SimpleSMTPHeader
     private StringBuffer cc;
 
     /**
-     * Creates a new SimpleSMTPHeader instance initialized with the given
-     * from, to, and subject header field values.
+     * Creates a new SimpleSMTPHeader instance initialized with the given from, to, and subject header field values.
      * <p>
-     * @param from  The value of the <code>From:</code> header field.  This
-     *              should be the sender's email address.
-     *              Must not be null.
-     * @param to    The value of the <code>To:</code> header field.  This
-     *              should be the recipient's email address.
-     *              May be null
-     * @param subject  The value of the <code>Subject:</code> header field.
-     *              This should be the subject of the message.
-     *              May be null
+     *
+     * @param from    The value of the <code>From:</code> header field. This should be the sender's email address. Must not be null.
+     * @param to      The value of the <code>To:</code> header field. This should be the recipient's email address. May be null
+     * @param subject The value of the <code>Subject:</code> header field. This should be the subject of the message. May be null
      */
-    public SimpleSMTPHeader(final String from, final String to, final String subject)
-    {
+    public SimpleSMTPHeader(final String from, final String to, final String subject) {
         if (from == null) {
             throw new IllegalArgumentException("From cannot be null");
         }
@@ -87,10 +76,10 @@ public class SimpleSMTPHeader
     /**
      * Add an email address to the CC (carbon copy or courtesy copy) list.
      * <p>
+     *
      * @param address The email address to add to the CC list.
      */
-    public void addCC(final String address)
-    {
+    public void addCC(final String address) {
         if (cc == null) {
             cc = new StringBuffer();
         } else {
@@ -100,21 +89,19 @@ public class SimpleSMTPHeader
         cc.append(address);
     }
 
-
     /**
-     * Adds an arbitrary header field with the given value to the article
-     * header.  These headers will be written before the From, To, Subject, and
-     * Cc fields when the SimpleSMTPHeader is convertered to a string.
-     * An example use would be:
+     * Adds an arbitrary header field with the given value to the article header. These headers will be written before the From, To, Subject, and Cc fields when
+     * the SimpleSMTPHeader is convertered to a string. An example use would be:
+     *
      * <pre>
      * header.addHeaderField("Organization", "Foobar, Inc.");
      * </pre>
      * <p>
-     * @param headerField  The header field to add, not including the colon.
-     * @param value  The value of the added header field.
+     *
+     * @param headerField The header field to add, not including the colon.
+     * @param value       The value of the added header field.
      */
-    public void addHeaderField(final String headerField, final String value)
-    {
+    public void addHeaderField(final String headerField, final String value) {
         if (!hasHeaderDate && "Date".equals(headerField)) {
             hasHeaderDate = true;
         }
@@ -124,18 +111,15 @@ public class SimpleSMTPHeader
         headerFields.append('\n');
     }
 
-
     /**
-     * Converts the SimpleSMTPHeader to a properly formatted header in
-     * the form of a String, including the blank line used to separate
-     * the header from the article body.  The header fields CC and Subject
-     * are only included when they are non-null.
+     * Converts the SimpleSMTPHeader to a properly formatted header in the form of a String, including the blank line used to separate the header from the
+     * article body. The header fields CC and Subject are only included when they are non-null.
      * <p>
+     *
      * @return The message header in the form of a String.
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         final StringBuilder header = new StringBuilder();
 
         final String pattern = "EEE, dd MMM yyyy HH:mm:ss Z"; // Fri, 21 Nov 1997 09:55:06 -0600
@@ -154,13 +138,11 @@ public class SimpleSMTPHeader
             header.append("To: ").append(to).append("\n");
         }
 
-        if (cc != null)
-        {
+        if (cc != null) {
             header.append("Cc: ").append(cc.toString()).append("\n");
         }
 
-        if (subject != null)
-        {
+        if (subject != null) {
             header.append("Subject: ").append(subject).append("\n");
         }
 
@@ -169,6 +151,3 @@ public class SimpleSMTPHeader
         return header.toString();
     }
 }
-
-
-

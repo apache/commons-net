@@ -18,17 +18,23 @@
 package org.apache.commons.net.nntp;
 
 /**
- * A placeholder interface for threadable message objects
- * Author: Rory Winston (rwinston@checkfree.com)
+ * A placeholder interface for threadable message objects Author: Rory Winston (rwinston@checkfree.com)
  *
  */
 public interface Threadable {
     boolean isDummy();
+
     Threadable makeDummy();
+
     String messageThreadId();
+
     String[] messageThreadReferences();
+
     void setChild(Threadable child);
+
     void setNext(Threadable next);
+
     String simplifiedSubject();
+
     boolean subjectIsReply();
 }

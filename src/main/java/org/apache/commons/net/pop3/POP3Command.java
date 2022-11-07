@@ -23,8 +23,7 @@ package org.apache.commons.net.pop3;
  *
  */
 
-public final class POP3Command
-{
+public final class POP3Command {
     /** Send user name. */
     public static final int USER = 0;
     /** Send password. */
@@ -39,7 +38,7 @@ public final class POP3Command
     public static final int RETR = 5;
     /** Delete message(s). */
     public static final int DELE = 6;
-    /** No operation.  Used as a session keepalive. */
+    /** No operation. Used as a session keepalive. */
     public static final int NOOP = 7;
     /** Reset session. */
     public static final int RSET = 8;
@@ -51,21 +50,20 @@ public final class POP3Command
     public static final int UIDL = 11;
     /**
      * The capabilities command.
+     *
      * @since 3.0
      */
     public static final int CAPA = 12;
     /**
      * Authentication
+     *
      * @since 3.0
      */
     public static final int AUTH = 13;
 
     private static final int NEXT = AUTH + 1; // update as necessary when adding new entries
 
-    static final String[] commands = {
-                                          "USER", "PASS", "QUIT", "STAT", "LIST", "RETR", "DELE", "NOOP", "RSET",
-                                          "APOP", "TOP", "UIDL", "CAPA", "AUTH",
-                                      };
+    static final String[] commands = { "USER", "PASS", "QUIT", "STAT", "LIST", "RETR", "DELE", "NOOP", "RSET", "APOP", "TOP", "UIDL", "CAPA", "AUTH", };
 
     static {
         if (commands.length != NEXT) {
@@ -75,16 +73,16 @@ public final class POP3Command
 
     /**
      * Get the POP3 protocol string command corresponding to a command code.
+     *
      * @param command the command code
      *
      * @return The POP3 protocol string command corresponding to a command code.
      */
-    public static String getCommand(final int command)
-    {
+    public static String getCommand(final int command) {
         return commands[command];
     }
 
     // Cannot be instantiated.
-    private POP3Command()
-    {}
+    private POP3Command() {
+    }
 }

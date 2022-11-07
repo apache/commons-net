@@ -42,11 +42,13 @@ public class UtilTest {
         final long expectedTotal;
         final int expectedBytes;
         final long expectedSize;
+
         CSL(final long totalBytesTransferred, final int bytesTransferred, final long streamSize) {
             this.expectedTotal = totalBytesTransferred;
             this.expectedBytes = bytesTransferred;
             this.expectedSize = streamSize;
         }
+
         @Override
         public void bytesTransferred(final CopyStreamEvent event) {
         }
@@ -59,6 +61,7 @@ public class UtilTest {
         }
 
     }
+
     // Class to check overall counts as well as batch size
     static class CSLtotal implements CopyStreamListener {
 
@@ -71,6 +74,7 @@ public class UtilTest {
             this.expectedTotal = totalBytesTransferred;
             this.expectedBytes = bytesTransferred;
         }
+
         @Override
         public void bytesTransferred(final CopyStreamEvent event) {
         }
@@ -88,10 +92,11 @@ public class UtilTest {
         }
 
     }
-    private final Writer dest = new CharArrayWriter();
-    private final Reader source = new CharArrayReader(new char[]{'a'});
 
-    private final InputStream src = new ByteArrayInputStream(new byte[]{'z'});
+    private final Writer dest = new CharArrayWriter();
+    private final Reader source = new CharArrayReader(new char[] { 'a' });
+
+    private final InputStream src = new ByteArrayInputStream(new byte[] { 'z' });
 
     private final OutputStream dst = new ByteArrayOutputStream();
 
@@ -103,33 +108,33 @@ public class UtilTest {
 
     @Test
     public void testNET550_Reader() throws Exception {
-        final char[] buff = new char[]{'a', 'b', 'c', 'd'}; // must be multiple of 2
+        final char[] buff = new char[] { 'a', 'b', 'c', 'd' }; // must be multiple of 2
         final int bufflen = buff.length;
-        {   // Check buffer size 1 processes in chunks of 1
+        { // Check buffer size 1 processes in chunks of 1
             final Reader rdr = new CharArrayReader(buff);
             final CSLtotal listener = new CSLtotal(bufflen, 1);
             Util.copyReader(rdr, dest, 1, 0, listener); // buffer size 1
             listener.checkExpected();
         }
-        {   // Check bufsize 2 uses chunks of 2
+        { // Check bufsize 2 uses chunks of 2
             final Reader rdr = new CharArrayReader(buff);
             final CSLtotal listener = new CSLtotal(bufflen, 2);
             Util.copyReader(rdr, dest, 2, 0, listener); // buffer size 2
             listener.checkExpected();
         }
-        {   // Check bigger size reads the lot
+        { // Check bigger size reads the lot
             final Reader rdr = new CharArrayReader(buff);
             final CSLtotal listener = new CSLtotal(bufflen, bufflen);
             Util.copyReader(rdr, dest, 20, 0, listener); // buffer size 20
             listener.checkExpected();
         }
-        {   // Check negative size reads reads full amount
+        { // Check negative size reads reads full amount
             final Reader rdr = new CharArrayReader(buff);
             final CSLtotal listener = new CSLtotal(bufflen, bufflen);
             Util.copyReader(rdr, dest, -1, 0, listener); // buffer size -1
             listener.checkExpected();
         }
-        {   // Check zero size reads reads full amount
+        { // Check zero size reads reads full amount
             final Reader rdr = new CharArrayReader(buff);
             final CSLtotal listener = new CSLtotal(bufflen, bufflen);
             Util.copyReader(rdr, dest, 0, 0, listener); // buffer size -1
@@ -139,33 +144,33 @@ public class UtilTest {
 
     @Test
     public void testNET550_Stream() throws Exception {
-        final byte[] buff = new byte[]{'a', 'b', 'c', 'd'}; // must be multiple of 2
+        final byte[] buff = new byte[] { 'a', 'b', 'c', 'd' }; // must be multiple of 2
         final int bufflen = buff.length;
-        {   // Check buffer size 1 processes in chunks of 1
+        { // Check buffer size 1 processes in chunks of 1
             final InputStream is = new ByteArrayInputStream(buff);
             final CSLtotal listener = new CSLtotal(bufflen, 1);
             Util.copyStream(is, dst, 1, 0, listener); // buffer size 1
             listener.checkExpected();
         }
-        {   // Check bufsize 2 uses chunks of 2
+        { // Check bufsize 2 uses chunks of 2
             final InputStream is = new ByteArrayInputStream(buff);
             final CSLtotal listener = new CSLtotal(bufflen, 2);
             Util.copyStream(is, dst, 2, 0, listener); // buffer size 2
             listener.checkExpected();
         }
-        {   // Check bigger size reads the lot
+        { // Check bigger size reads the lot
             final InputStream is = new ByteArrayInputStream(buff);
             final CSLtotal listener = new CSLtotal(bufflen, bufflen);
             Util.copyStream(is, dst, 20, 0, listener); // buffer size 20
             listener.checkExpected();
         }
-        {   // Check negative size reads reads full amount
+        { // Check negative size reads reads full amount
             final InputStream is = new ByteArrayInputStream(buff);
             final CSLtotal listener = new CSLtotal(bufflen, bufflen);
             Util.copyStream(is, dst, -1, 0, listener); // buffer size -1
             listener.checkExpected();
         }
-        {   // Check zero size reads reads full amount
+        { // Check zero size reads reads full amount
             final InputStream is = new ByteArrayInputStream(buff);
             final CSLtotal listener = new CSLtotal(bufflen, bufflen);
             Util.copyStream(is, dst, 0, 0, listener); // buffer size -1
@@ -175,43 +180,43 @@ public class UtilTest {
 
     @Test
     public void testReader_1() throws Exception {
-        final long streamSize=0;
-        final int bufferSize=-1;
-        Util.copyReader(source, dest, bufferSize, streamSize, new CSL(1,1,streamSize));
+        final long streamSize = 0;
+        final int bufferSize = -1;
+        Util.copyReader(source, dest, bufferSize, streamSize, new CSL(1, 1, streamSize));
     }
 
     @Test
     public void testReader0() throws Exception {
-        final long streamSize=0;
-        final int bufferSize=0;
-        Util.copyReader(source, dest, bufferSize, streamSize, new CSL(1,1,streamSize));
+        final long streamSize = 0;
+        final int bufferSize = 0;
+        Util.copyReader(source, dest, bufferSize, streamSize, new CSL(1, 1, streamSize));
     }
 
     @Test
     public void testReader1() throws Exception {
-        final long streamSize=0;
-        final int bufferSize=1;
-        Util.copyReader(source, dest, bufferSize, streamSize, new CSL(1,1,streamSize));
+        final long streamSize = 0;
+        final int bufferSize = 1;
+        Util.copyReader(source, dest, bufferSize, streamSize, new CSL(1, 1, streamSize));
     }
 
     @Test
     public void testStream_1() throws Exception {
-        final long streamSize=0;
-        final int bufferSize=-1;
-        Util.copyStream(src, dst, bufferSize, streamSize, new CSL(1,1,streamSize));
+        final long streamSize = 0;
+        final int bufferSize = -1;
+        Util.copyStream(src, dst, bufferSize, streamSize, new CSL(1, 1, streamSize));
     }
 
     @Test
     public void testStream0() throws Exception {
-        final long streamSize=0;
-        final int bufferSize=0;
-        Util.copyStream(src, dst, bufferSize, streamSize, new CSL(1,1,streamSize));
+        final long streamSize = 0;
+        final int bufferSize = 0;
+        Util.copyStream(src, dst, bufferSize, streamSize, new CSL(1, 1, streamSize));
     }
 
     @Test
     public void testStream1() throws Exception {
-        final long streamSize=0;
-        final int bufferSize=1;
-        Util.copyStream(src, dst, bufferSize, streamSize, new CSL(1,1,streamSize));
+        final long streamSize = 0;
+        final int bufferSize = 1;
+        Util.copyStream(src, dst, bufferSize, streamSize, new CSL(1, 1, streamSize));
     }
 }

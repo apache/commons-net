@@ -19,14 +19,15 @@
 package org.apache.commons.net.nntp;
 
 import java.util.Iterator;
+
 /**
- * Class which wraps an {@code Iterable<String>} of raw article information
- * to generate an {@code Iterable<Article>} of the parsed information.
+ * Class which wraps an {@code Iterable<String>} of raw article information to generate an {@code Iterable<Article>} of the parsed information.
+ *
  * @since 3.0
  */
 class ArticleIterator implements Iterator<Article>, Iterable<Article> {
 
-    private  final Iterator<String> stringIterator;
+    private final Iterator<String> stringIterator;
 
     public ArticleIterator(final Iterable<String> iterableString) {
         stringIterator = iterableString.iterator();
@@ -44,8 +45,8 @@ class ArticleIterator implements Iterator<Article>, Iterable<Article> {
 
     /**
      * Get the next Article
-     * @return the next {@link Article}, never {@code null}, if unparseable then isDummy()
-     * will be true, and the subject will contain the raw info.
+     *
+     * @return the next {@link Article}, never {@code null}, if unparseable then isDummy() will be true, and the subject will contain the raw info.
      */
     @Override
     public Article next() {

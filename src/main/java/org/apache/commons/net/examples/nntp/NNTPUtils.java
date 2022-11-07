@@ -29,19 +29,18 @@ import org.apache.commons.net.nntp.NNTPClient;
 public class NNTPUtils {
 
     /**
-     * Given an {@link NNTPClient} instance, and an integer range of messages, return
-     * an array of {@link Article} instances.
-     * @param client the client to use
-     * @param lowArticleNumber low number
+     * Given an {@link NNTPClient} instance, and an integer range of messages, return an array of {@link Article} instances.
+     *
+     * @param client            the client to use
+     * @param lowArticleNumber  low number
      * @param highArticleNumber high number
      * @return Article[] An array of Article
      * @throws IOException on error
      */
-    public  static List<Article> getArticleInfo(final NNTPClient client, final long lowArticleNumber, final long highArticleNumber)
-    throws IOException {
+    public static List<Article> getArticleInfo(final NNTPClient client, final long lowArticleNumber, final long highArticleNumber) throws IOException {
         final List<Article> articles = new ArrayList<>();
         final Iterable<Article> arts = client.iterateArticleInfo(lowArticleNumber, highArticleNumber);
-        for(final Article article : arts){
+        for (final Article article : arts) {
             articles.add(article);
         }
         return articles;

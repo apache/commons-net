@@ -20,12 +20,10 @@ package org.apache.commons.net.ntp;
 import java.net.DatagramPacket;
 
 /**
- * Implementation of NtpV3Packet with methods converting Java objects to/from
- * the Network Time Protocol (NTP) data message header format described in RFC-1305.
+ * Implementation of NtpV3Packet with methods converting Java objects to/from the Network Time Protocol (NTP) data message header format described in RFC-1305.
  *
  */
-public class NtpV3Impl implements NtpV3Packet
-{
+public class NtpV3Impl implements NtpV3Packet {
 
     private static final int MODE_INDEX = 0;
     private static final int MODE_SHIFT = 0;
@@ -53,29 +51,23 @@ public class NtpV3Impl implements NtpV3Packet
 //    private static final int MESSAGE_DIGEST = 54; /* len 16 bytes */
 
     /**
-     * Convert byte to unsigned integer.
-     * Java only has signed types so we have to do
-     * more work to get unsigned ops.
+     * Convert byte to unsigned integer. Java only has signed types so we have to do more work to get unsigned ops.
      *
      * @param b input byte
      * @return unsigned int value of byte
      */
-    protected static final int ui(final byte b)
-    {
+    protected static final int ui(final byte b) {
         final int i = b & 0xFF;
         return i;
     }
 
     /**
-     * Convert byte to unsigned long.
-     * Java only has signed types so we have to do
-     * more work to get unsigned ops
+     * Convert byte to unsigned long. Java only has signed types so we have to do more work to get unsigned ops
      *
      * @param b input byte
      * @return unsigned long value of byte
      */
-    protected static final long ul(final byte b)
-    {
+    protected static final long ul(final byte b) {
         final long i = b & 0xFF;
         return i;
     }
@@ -85,24 +77,19 @@ public class NtpV3Impl implements NtpV3Packet
     private volatile DatagramPacket dp;
 
     /** Creates a new instance of NtpV3Impl */
-    public NtpV3Impl()
-    {
+    public NtpV3Impl() {
     }
 
     /**
-     * Compares this object against the specified object.
-     * The result is <code>true</code> if and only if the argument is
-     * not <code>null</code> and is a <code>NtpV3Impl</code> object that
-     * contains the same values as this object.
+     * Compares this object against the specified object. The result is <code>true</code> if and only if the argument is not <code>null</code> and is a
+     * <code>NtpV3Impl</code> object that contains the same values as this object.
      *
-     * @param   obj   the object to compare with.
-     * @return  <code>true</code> if the objects are the same;
-     *          <code>false</code> otherwise.
+     * @param obj the object to compare with.
+     * @return <code>true</code> if the objects are the same; <code>false</code> otherwise.
      * @since 3.4
      */
     @Override
-    public boolean equals(final Object obj)
-    {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -119,8 +106,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @return a datagram packet.
      */
     @Override
-    public synchronized DatagramPacket getDatagramPacket()
-    {
+    public synchronized DatagramPacket getDatagramPacket() {
         if (dp == null) {
             dp = new DatagramPacket(buf, buf.length);
             dp.setPort(NTP_PORT);
@@ -131,28 +117,20 @@ public class NtpV3Impl implements NtpV3Packet
     /**
      * @return 4 bytes as 32-bit int
      */
-    private int getInt(final int index)
-    {
-        final int i = ui(buf[index]) << 24 |
-                ui(buf[index + 1]) << 16 |
-                ui(buf[index + 2]) << 8 |
-                ui(buf[index + 3]);
+    private int getInt(final int index) {
+        final int i = ui(buf[index]) << 24 | ui(buf[index + 1]) << 16 | ui(buf[index + 2]) << 8 | ui(buf[index + 3]);
 
         return i;
     }
 
     /**
-     * Returns leap indicator as defined in RFC-1305 which is a two-bit code:
-     *  0=no warning
-     *  1=last minute has 61 seconds
-     *  2=last minute has 59 seconds
-     *  3=alarm condition (clock not synchronized)
+     * Returns leap indicator as defined in RFC-1305 which is a two-bit code: 0=no warning 1=last minute has 61 seconds 2=last minute has 59 seconds 3=alarm
+     * condition (clock not synchronized)
      *
      * @return leap indicator as defined in RFC-1305.
      */
     @Override
-    public int getLeapIndicator()
-    {
+    public int getLeapIndicator() {
         return (ui(buf[LI_INDEX]) >> LI_SHIFT) & 0x3;
     }
 
@@ -161,117 +139,92 @@ public class NtpV3Impl implements NtpV3Packet
      *
      * @return 8 bytes as 64-bit long
      */
-    private long getLong(final int index)
-    {
-        final long i = ul(buf[index]) << 56 |
-                ul(buf[index + 1]) << 48 |
-                ul(buf[index + 2]) << 40 |
-                ul(buf[index + 3]) << 32 |
-                ul(buf[index + 4]) << 24 |
-                ul(buf[index + 5]) << 16 |
-                ul(buf[index + 6]) << 8 |
-                ul(buf[index + 7]);
+    private long getLong(final int index) {
+        final long i = ul(buf[index]) << 56 | ul(buf[index + 1]) << 48 | ul(buf[index + 2]) << 40 | ul(buf[index + 3]) << 32 | ul(buf[index + 4]) << 24
+                | ul(buf[index + 5]) << 16 | ul(buf[index + 6]) << 8 | ul(buf[index + 7]);
         return i;
     }
 
     /**
-     * Returns mode as defined in RFC-1305 which is a 3-bit integer
-     * whose value is indicated by the MODE_xxx parameters.
+     * Returns mode as defined in RFC-1305 which is a 3-bit integer whose value is indicated by the MODE_xxx parameters.
      *
      * @return mode as defined in RFC-1305.
      */
     @Override
-    public int getMode()
-    {
+    public int getMode() {
         return (ui(buf[MODE_INDEX]) >> MODE_SHIFT) & 0x7;
     }
 
     /**
-     * Return human-readable name of message mode type as described in
-     * RFC 1305.
+     * Return human-readable name of message mode type as described in RFC 1305.
+     *
      * @return mode name as string.
      */
     @Override
-    public String getModeName()
-    {
+    public String getModeName() {
         return NtpUtils.getModeName(getMode());
     }
 
     /**
      * Returns the originate time as defined in RFC-1305.
      *
-     * @return the originate time.
-     * Never returns null.
+     * @return the originate time. Never returns null.
      */
     @Override
-    public TimeStamp getOriginateTimeStamp()
-    {
+    public TimeStamp getOriginateTimeStamp() {
         return getTimestamp(ORIGINATE_TIMESTAMP_INDEX);
     }
 
     /**
-     * Returns poll interval as defined in RFC-1305, which is an eight-bit
-     * signed integer indicating the maximum interval between successive
-     * messages, in seconds to the nearest power of two (e.g. value of six
-     * indicates an interval of 64 seconds. The values that can appear in
-     * this field range from NTP_MINPOLL to NTP_MAXPOLL inclusive.
+     * Returns poll interval as defined in RFC-1305, which is an eight-bit signed integer indicating the maximum interval between successive messages, in
+     * seconds to the nearest power of two (e.g. value of six indicates an interval of 64 seconds. The values that can appear in this field range from
+     * NTP_MINPOLL to NTP_MAXPOLL inclusive.
      *
      * @return poll interval as defined in RFC-1305.
      */
     @Override
-    public int getPoll()
-    {
+    public int getPoll() {
         return buf[POLL_INDEX];
     }
 
     /**
-     * Returns precision as defined in RFC-1305 encoded as an 8-bit signed
-     * integer (seconds to nearest power of two).
-     * Values normally range from -6 to -20.
+     * Returns precision as defined in RFC-1305 encoded as an 8-bit signed integer (seconds to nearest power of two). Values normally range from -6 to -20.
      *
      * @return precision as defined in RFC-1305.
      */
     @Override
-    public int getPrecision()
-    {
+    public int getPrecision() {
         return buf[PRECISION_INDEX];
     }
 
     /**
      * Returns receive timestamp as defined in RFC-1305.
      *
-     * @return the receive time.
-     * Never returns null.
+     * @return the receive time. Never returns null.
      */
     @Override
-    public TimeStamp getReceiveTimeStamp()
-    {
+    public TimeStamp getReceiveTimeStamp() {
         return getTimestamp(RECEIVE_TIMESTAMP_INDEX);
     }
 
     /**
-     * Returns the reference id as defined in RFC-1305, which is
-     * a 32-bit integer whose value is dependent on several criteria.
+     * Returns the reference id as defined in RFC-1305, which is a 32-bit integer whose value is dependent on several criteria.
      *
      * @return the reference id as defined in RFC-1305.
      */
     @Override
-    public int getReferenceId()
-    {
+    public int getReferenceId() {
         return getInt(REFERENCE_ID_INDEX);
     }
 
     /**
-     * Returns the reference id string. String cannot be null but
-     * value is dependent on the version of the NTP spec supported
-     * and stratum level. Value can be an empty string, clock type string,
-     * IP address, or a hex string.
+     * Returns the reference id string. String cannot be null but value is dependent on the version of the NTP spec supported and stratum level. Value can be an
+     * empty string, clock type string, IP address, or a hex string.
      *
      * @return the reference id string.
      */
     @Override
-    public String getReferenceIdString()
-    {
+    public String getReferenceIdString() {
         final int version = getVersion();
         final int stratum = getStratum();
         if (version == VERSION_3 || version == VERSION_4) {
@@ -295,50 +248,43 @@ public class NtpV3Impl implements NtpV3Packet
     /**
      * Returns the reference time as defined in RFC-1305.
      *
-     * @return the reference time as <code>TimeStamp</code> object.
-     * Never returns null.
+     * @return the reference time as <code>TimeStamp</code> object. Never returns null.
      */
     @Override
-    public TimeStamp getReferenceTimeStamp()
-    {
+    public TimeStamp getReferenceTimeStamp() {
         return getTimestamp(REFERENCE_TIMESTAMP_INDEX);
     }
 
     /**
-     * Return root delay as defined in RFC-1305, which is the total roundtrip delay
-     * to the primary reference source, in seconds. Values can take positive and
+     * Return root delay as defined in RFC-1305, which is the total roundtrip delay to the primary reference source, in seconds. Values can take positive and
      * negative values, depending on clock precision and skew.
      *
      * @return root delay as defined in RFC-1305.
      */
     @Override
-    public int getRootDelay()
-    {
+    public int getRootDelay() {
         return getInt(ROOT_DELAY_INDEX);
     }
 
     /**
-     * Return root delay as defined in RFC-1305 in milliseconds, which is
-     * the total roundtrip delay to the primary reference source, in
-     * seconds. Values can take positive and negative values, depending
-     * on clock precision and skew.
+     * Return root delay as defined in RFC-1305 in milliseconds, which is the total roundtrip delay to the primary reference source, in seconds. Values can take
+     * positive and negative values, depending on clock precision and skew.
      *
      * @return root delay in milliseconds
      */
     @Override
-    public double getRootDelayInMillisDouble()
-    {
+    public double getRootDelayInMillisDouble() {
         final double l = getRootDelay();
         return l / 65.536;
     }
 
     /**
      * Returns root dispersion as defined in RFC-1305.
+     *
      * @return root dispersion.
      */
     @Override
-    public int getRootDispersion()
-    {
+    public int getRootDispersion() {
         return getInt(ROOT_DISPERSION_INDEX);
     }
 
@@ -348,35 +294,30 @@ public class NtpV3Impl implements NtpV3Packet
      * @return root dispersion in milliseconds
      */
     @Override
-    public long getRootDispersionInMillis()
-    {
+    public long getRootDispersionInMillis() {
         final long l = getRootDispersion();
         return (l * 1000) / 65536L;
     }
 
     /**
-     * Returns root dispersion (as defined in RFC-1305) in milliseconds
-     * as double precision value.
+     * Returns root dispersion (as defined in RFC-1305) in milliseconds as double precision value.
      *
      * @return root dispersion in milliseconds
      */
     @Override
-    public double getRootDispersionInMillisDouble()
-    {
+    public double getRootDispersionInMillisDouble() {
         final double l = getRootDispersion();
         return l / 65.536;
     }
 
     /**
-     * Returns Stratum as defined in RFC-1305, which indicates the stratum level
-     * of the local clock, with values defined as follows: 0=unspecified,
-     * 1=primary ref clock, and all others a secondary reference (via NTP).
+     * Returns Stratum as defined in RFC-1305, which indicates the stratum level of the local clock, with values defined as follows: 0=unspecified, 1=primary
+     * ref clock, and all others a secondary reference (via NTP).
      *
      * @return Stratum level as defined in RFC-1305.
      */
     @Override
-    public int getStratum()
-    {
+    public int getStratum() {
         return ui(buf[STRATUM_INDEX]);
     }
 
@@ -386,32 +327,27 @@ public class NtpV3Impl implements NtpV3Packet
      * @param index index into data array
      * @return TimeStamp object for 64 bits starting at index
      */
-    private TimeStamp getTimestamp(final int index)
-    {
+    private TimeStamp getTimestamp(final int index) {
         return new TimeStamp(getLong(index));
     }
 
     /**
      * Returns the transmit timestamp as defined in RFC-1305.
      *
-     * @return the transmit timestamp as defined in RFC-1305.
-     * Never returns a null object.
+     * @return the transmit timestamp as defined in RFC-1305. Never returns a null object.
      */
     @Override
-    public TimeStamp getTransmitTimeStamp()
-    {
+    public TimeStamp getTransmitTimeStamp() {
         return getTimestamp(TRANSMIT_TIMESTAMP_INDEX);
     }
 
     /**
-     * Return type of time packet. The values (e.g. NTP, TIME, ICMP, ...)
-     * correspond to the protocol used to obtain the timing information.
+     * Return type of time packet. The values (e.g. NTP, TIME, ICMP, ...) correspond to the protocol used to obtain the timing information.
      *
      * @return packet type string identifier which in this case is "NTP".
      */
     @Override
-    public String getType()
-    {
+    public String getType() {
         return "NTP";
     }
 
@@ -421,47 +357,40 @@ public class NtpV3Impl implements NtpV3Packet
      * @return NTP version number.
      */
     @Override
-    public int getVersion()
-    {
+    public int getVersion() {
         return (ui(buf[VERSION_INDEX]) >> VERSION_SHIFT) & 0x7;
     }
 
     /**
-     * Computes a hashcode for this object. The result is the exclusive
-     * OR of the values of this object stored as a byte array.
+     * Computes a hashcode for this object. The result is the exclusive OR of the values of this object stored as a byte array.
      *
-     * @return  a hash code value for this object.
+     * @return a hash code value for this object.
      * @since 3.4
      */
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return java.util.Arrays.hashCode(buf);
     }
 
-    private String idAsHex()
-    {
+    private String idAsHex() {
         return Integer.toHexString(getReferenceId());
     }
 
     /**
      * Returns Reference id as dotted IP address.
+     *
      * @return refId as IP address string.
      */
-    private String idAsIPAddress()
-    {
-        return ui(buf[REFERENCE_ID_INDEX]) + "." +
-                ui(buf[REFERENCE_ID_INDEX + 1]) + "." +
-                ui(buf[REFERENCE_ID_INDEX + 2]) + "." +
-                ui(buf[REFERENCE_ID_INDEX + 3]);
+    private String idAsIPAddress() {
+        return ui(buf[REFERENCE_ID_INDEX]) + "." + ui(buf[REFERENCE_ID_INDEX + 1]) + "." + ui(buf[REFERENCE_ID_INDEX + 2]) + "."
+                + ui(buf[REFERENCE_ID_INDEX + 3]);
     }
 
-    private String idAsString()
-    {
+    private String idAsString() {
         final StringBuilder id = new StringBuilder();
         for (int i = 0; i <= 3; i++) {
             final char c = (char) buf[REFERENCE_ID_INDEX + i];
-            if (c == 0) {  // 0-terminated string
+            if (c == 0) { // 0-terminated string
                 break;
             }
             id.append(c);
@@ -476,8 +405,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @throws IllegalArgumentException if srcDp is null or byte length is less than minimum length of 48 bytes
      */
     @Override
-    public void setDatagramPacket(final DatagramPacket srcDp)
-    {
+    public void setDatagramPacket(final DatagramPacket srcDp) {
         if (srcDp == null || srcDp.getLength() < buf.length) {
             throw new IllegalArgumentException();
         }
@@ -497,12 +425,11 @@ public class NtpV3Impl implements NtpV3Packet
     /**
      * Set integer value at index position.
      *
-     * @param idx index position
+     * @param idx   index position
      * @param value 32-bit int value
      */
-    private void setInt(final int idx, int value)
-    {
-        for (int i=3; i >= 0; i--) {
+    private void setInt(final int idx, int value) {
+        for (int i = 3; i >= 0; i--) {
             buf[idx + i] = (byte) (value & 0xff);
             value >>>= 8; // shift right one-byte
         }
@@ -514,8 +441,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param li leap indicator.
      */
     @Override
-    public void setLeapIndicator(final int li)
-    {
+    public void setLeapIndicator(final int li) {
         buf[LI_INDEX] = (byte) (buf[LI_INDEX] & 0x3F | ((li & 0x3) << LI_SHIFT));
     }
 
@@ -525,20 +451,17 @@ public class NtpV3Impl implements NtpV3Packet
      * @param mode the mode to set
      */
     @Override
-    public void setMode(final int mode)
-    {
+    public void setMode(final int mode) {
         buf[MODE_INDEX] = (byte) (buf[MODE_INDEX] & 0xF8 | mode & 0x7);
     }
 
     /**
-     * Set originate timestamp given NTP TimeStamp object.
-     * If <code>ts</code> is null then zero time is used.
+     * Set originate timestamp given NTP TimeStamp object. If <code>ts</code> is null then zero time is used.
      *
      * @param ts NTP timestamp
      */
     @Override
-    public void setOriginateTimeStamp(final TimeStamp ts)
-    {
+    public void setOriginateTimeStamp(final TimeStamp ts) {
         setTimestamp(ORIGINATE_TIMESTAMP_INDEX, ts);
     }
 
@@ -548,55 +471,48 @@ public class NtpV3Impl implements NtpV3Packet
      * @param poll poll interval.
      */
     @Override
-    public void setPoll(final int poll)
-    {
+    public void setPoll(final int poll) {
         buf[POLL_INDEX] = (byte) (poll & 0xFF);
     }
 
     /**
      * Set precision as defined in RFC-1305.
+     *
      * @param precision the precision to set
      * @since 3.4
      */
     @Override
-    public void setPrecision(final int precision)
-    {
+    public void setPrecision(final int precision) {
         buf[PRECISION_INDEX] = (byte) (precision & 0xFF);
     }
 
     /**
-     * Set receive timestamp given NTP TimeStamp object.
-     * If <code>ts</code> is null then zero time is used.
+     * Set receive timestamp given NTP TimeStamp object. If <code>ts</code> is null then zero time is used.
      *
      * @param ts timestamp
      */
     @Override
-    public void setReceiveTimeStamp(final TimeStamp ts)
-    {
+    public void setReceiveTimeStamp(final TimeStamp ts) {
         setTimestamp(RECEIVE_TIMESTAMP_INDEX, ts);
     }
 
     /**
-     * Set reference clock identifier field with 32-bit unsigned integer value.
-     * See RFC-1305 for description.
+     * Set reference clock identifier field with 32-bit unsigned integer value. See RFC-1305 for description.
      *
      * @param refId reference clock identifier.
      */
     @Override
-    public void setReferenceId(final int refId)
-    {
+    public void setReferenceId(final int refId) {
         setInt(REFERENCE_ID_INDEX, refId);
     }
 
     /**
-     * Set Reference time with NTP timestamp. If <code>ts</code> is null
-     * then zero time is used.
+     * Set Reference time with NTP timestamp. If <code>ts</code> is null then zero time is used.
      *
      * @param ts NTP timestamp
      */
     @Override
-    public void setReferenceTime(final TimeStamp ts)
-    {
+    public void setReferenceTime(final TimeStamp ts) {
         setTimestamp(REFERENCE_TIMESTAMP_INDEX, ts);
     }
 
@@ -607,8 +523,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @since 3.4
      */
     @Override
-    public void setRootDelay(final int delay)
-    {
+    public void setRootDelay(final int delay) {
         setInt(ROOT_DELAY_INDEX, delay);
     }
 
@@ -619,8 +534,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @since 3.4
      */
     @Override
-    public void setRootDispersion(final int dispersion)
-    {
+    public void setRootDispersion(final int dispersion) {
         setInt(ROOT_DISPERSION_INDEX, dispersion);
     }
 
@@ -630,8 +544,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param stratum stratum level.
      */
     @Override
-    public void setStratum(final int stratum)
-    {
+    public void setStratum(final int stratum) {
         buf[STRATUM_INDEX] = (byte) (stratum & 0xFF);
     }
 
@@ -639,10 +552,9 @@ public class NtpV3Impl implements NtpV3Packet
      * Sets the NTP timestamp at the given array index.
      *
      * @param index index into the byte array.
-     * @param t TimeStamp.
+     * @param t     TimeStamp.
      */
-    private void setTimestamp(final int index, final TimeStamp t)
-    {
+    private void setTimestamp(final int index, final TimeStamp t) {
         long ntpTime = (t == null) ? 0 : t.ntpValue();
         // copy 64-bits from Long value into 8 x 8-bit bytes of array
         // one byte at a time shifting 8-bits for each position.
@@ -650,18 +562,16 @@ public class NtpV3Impl implements NtpV3Packet
             buf[index + i] = (byte) (ntpTime & 0xFF);
             ntpTime >>>= 8; // shift to next byte
         }
-        // buf[index] |= 0x80;  // only set if 1900 baseline....
+        // buf[index] |= 0x80; // only set if 1900 baseline....
     }
 
     /**
-     * Set transmit time with NTP timestamp.
-     * If <code>ts</code> is null then zero time is used.
+     * Set transmit time with NTP timestamp. If <code>ts</code> is null then zero time is used.
      *
      * @param ts NTP timestamp
      */
     @Override
-    public void setTransmitTime(final TimeStamp ts)
-    {
+    public void setTransmitTime(final TimeStamp ts) {
         setTimestamp(TRANSMIT_TIMESTAMP_INDEX, ts);
     }
 
@@ -671,8 +581,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param version NTP version.
      */
     @Override
-    public void setVersion(final int version)
-    {
+    public void setVersion(final int version) {
         buf[VERSION_INDEX] = (byte) (buf[VERSION_INDEX] & 0xC7 | ((version & 0x7) << VERSION_SHIFT));
     }
 
@@ -682,18 +591,10 @@ public class NtpV3Impl implements NtpV3Packet
      * @return details of NTP packet as a string.
      */
     @Override
-    public String toString()
-    {
-        return "[" +
-                "version:" + getVersion() +
-                ", mode:" + getMode() +
-                ", poll:" + getPoll() +
-                ", precision:" + getPrecision() +
-                ", delay:" + getRootDelay() +
-                ", dispersion(ms):" + getRootDispersionInMillisDouble() +
-                ", id:" + getReferenceIdString() +
-                ", xmitTime:" + getTransmitTimeStamp().toDateString() +
-                " ]";
+    public String toString() {
+        return "[" + "version:" + getVersion() + ", mode:" + getMode() + ", poll:" + getPoll() + ", precision:" + getPrecision() + ", delay:" + getRootDelay()
+                + ", dispersion(ms):" + getRootDispersionInMillisDouble() + ", id:" + getReferenceIdString() + ", xmitTime:"
+                + getTransmitTimeStamp().toDateString() + " ]";
     }
 
 }

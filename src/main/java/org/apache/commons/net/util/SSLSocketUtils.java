@@ -38,8 +38,7 @@ public class SSLSocketUtils {
     public static boolean enableEndpointNameVerification(final SSLSocket socket) {
         try {
             final Class<?> cls = Class.forName("javax.net.ssl.SSLParameters");
-            final Method setEndpointIdentificationAlgorithm = cls
-                .getDeclaredMethod("setEndpointIdentificationAlgorithm", String.class);
+            final Method setEndpointIdentificationAlgorithm = cls.getDeclaredMethod("setEndpointIdentificationAlgorithm", String.class);
             final Method getSSLParameters = SSLSocket.class.getDeclaredMethod("getSSLParameters");
             final Method setSSLParameters = SSLSocket.class.getDeclaredMethod("setSSLParameters", cls);
             final Object sslParams = getSSLParameters.invoke(socket);
@@ -48,8 +47,8 @@ public class SSLSocketUtils {
                 setSSLParameters.invoke(socket, sslParams);
                 return true;
             }
-        } catch (final SecurityException | ClassNotFoundException | NoSuchMethodException | IllegalArgumentException |
-            IllegalAccessException | InvocationTargetException e) { // Ignored
+        } catch (final SecurityException | ClassNotFoundException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException
+                | InvocationTargetException e) { // Ignored
         }
         return false;
     }

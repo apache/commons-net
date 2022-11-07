@@ -34,16 +34,13 @@ import org.apache.commons.net.smtp.SMTPReply;
 import org.apache.commons.net.smtp.SimpleSMTPHeader;
 
 /**
- * This is an example program using the SMTP package to send a message
- * to the specified recipients.  It prompts you for header information and
- * a file name containing the message.
+ * This is an example program using the SMTP package to send a message to the specified recipients. It prompts you for header information and a file name
+ * containing the message.
  */
 
-public final class SMTPMail
-{
+public final class SMTPMail {
 
-    public static void main(final String[] args)
-    {
+    public static void main(final String[] args) {
         final String sender;
         final String recipient;
         final String subject;
@@ -57,8 +54,7 @@ public final class SMTPMail
         final SimpleSMTPHeader header;
         final SMTPClient client;
 
-        if (args.length < 1)
-        {
+        if (args.length < 1) {
             System.err.println("Usage: SMTPMail <smtpserver>");
             System.exit(1);
         }
@@ -67,8 +63,7 @@ public final class SMTPMail
 
         stdin = new BufferedReader(new InputStreamReader(System.in));
 
-        try
-        {
+        try {
             System.out.print("From: ");
             System.out.flush();
 
@@ -86,15 +81,13 @@ public final class SMTPMail
 
             header = new SimpleSMTPHeader(sender, recipient, subject);
 
-
-            while (true)
-            {
+            while (true) {
                 System.out.print("CC <enter one address per line, hit enter to end>: ");
                 System.out.flush();
 
                 cc = stdin.readLine();
 
-                if (cc== null || cc.isEmpty()) {
+                if (cc == null || cc.isEmpty()) {
                     break;
                 }
 
@@ -107,23 +100,18 @@ public final class SMTPMail
 
             fileName = stdin.readLine();
 
-            try
-            {
+            try {
                 fileReader = new FileReader(fileName);
-            }
-            catch (final FileNotFoundException e)
-            {
+            } catch (final FileNotFoundException e) {
                 System.err.println("File not found. " + e.getMessage());
             }
 
             client = new SMTPClient();
-            client.addProtocolCommandListener(new PrintCommandListener(
-                                                  new PrintWriter(System.out), true));
+            client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
 
             client.connect(server);
 
-            if (!SMTPReply.isPositiveCompletion(client.getReplyCode()))
-            {
+            if (!SMTPReply.isPositiveCompletion(client.getReplyCode())) {
                 client.disconnect();
                 System.err.println("SMTP server refused connection.");
                 System.exit(1);
@@ -134,36 +122,29 @@ public final class SMTPMail
             client.setSender(sender);
             client.addRecipient(recipient);
 
-
-
             for (final String recpt : ccList) {
                 client.addRecipient(recpt);
             }
 
             writer = client.sendMessageData();
 
-            if (writer != null)
-            {
+            if (writer != null) {
                 writer.write(header.toString());
                 Util.copyReader(fileReader, writer);
                 writer.close();
                 client.completePendingCommand();
             }
 
-            if (fileReader != null ) {
+            if (fileReader != null) {
                 fileReader.close();
             }
 
             client.logout();
 
             client.disconnect();
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             e.printStackTrace();
             System.exit(1);
         }
     }
 }
-
-

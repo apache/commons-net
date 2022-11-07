@@ -23,20 +23,15 @@ import org.apache.commons.net.nntp.NNTPClient;
 import org.apache.commons.net.nntp.NewsgroupInfo;
 
 /**
- * This is a trivial example using the NNTP package to approximate the
- * Unix newsgroups command.  It merely connects to the specified news
- * server and issues fetches the list of newsgroups stored by the server.
- * On servers that store a lot of newsgroups, this command can take a very
- * long time (listing upwards of 30,000 groups).
+ * This is a trivial example using the NNTP package to approximate the Unix newsgroups command. It merely connects to the specified news server and issues
+ * fetches the list of newsgroups stored by the server. On servers that store a lot of newsgroups, this command can take a very long time (listing upwards of
+ * 30,000 groups).
  */
 
-public final class ListNewsgroups
-{
+public final class ListNewsgroups {
 
-    public static void main(final String[] args)
-    {
-        if (args.length < 1)
-        {
+    public static void main(final String[] args) {
+        if (args.length < 1) {
             System.err.println("Usage: newsgroups newsserver [pattern]");
             return;
         }
@@ -44,13 +39,12 @@ public final class ListNewsgroups
         final NNTPClient client = new NNTPClient();
         final String pattern = args.length >= 2 ? args[1] : "";
 
-        try
-        {
+        try {
             client.connect(args[0]);
 
             int j = 0;
             try {
-                for(final String s : client.iterateNewsgroupListing(pattern)) {
+                for (final String s : client.iterateNewsgroupListing(pattern)) {
                     j++;
                     System.out.println(s);
                 }
@@ -60,26 +54,19 @@ public final class ListNewsgroups
             System.out.println(j);
 
             j = 0;
-            for(final NewsgroupInfo n : client.iterateNewsgroups(pattern)) {
+            for (final NewsgroupInfo n : client.iterateNewsgroups(pattern)) {
                 j++;
                 System.out.println(n.getNewsgroup());
             }
             System.out.println(j);
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             e.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
+        } finally {
+            try {
                 if (client.isConnected()) {
                     client.disconnect();
                 }
-            }
-            catch (final IOException e)
-            {
+            } catch (final IOException e) {
                 System.err.println("Error disconnecting from server.");
                 e.printStackTrace();
                 System.exit(1);
@@ -89,5 +76,3 @@ public final class ListNewsgroups
     }
 
 }
-
-

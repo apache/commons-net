@@ -18,15 +18,11 @@
 package org.apache.commons.net.telnet;
 
 /**
- * The TelnetOptionHandler class is the base class to be used
- * for implementing handlers for telnet options.
+ * The TelnetOptionHandler class is the base class to be used for implementing handlers for telnet options.
  * <p>
- * TelnetOptionHandler implements basic option handling
- * functionality and defines abstract methods that must be
- * implemented to define subnegotiation behavior.
+ * TelnetOptionHandler implements basic option handling functionality and defines abstract methods that must be implemented to define subnegotiation behavior.
  */
-public abstract class TelnetOptionHandler
-{
+public abstract class TelnetOptionHandler {
     /**
      * Option code
      */
@@ -63,23 +59,17 @@ public abstract class TelnetOptionHandler
     private boolean willFlag;
 
     /**
-     * Constructor for the TelnetOptionHandler. Allows defining desired
-     * initial setting for local/remote activation of this option and
-     * behavior in case a local/remote activation request for this
-     * option is received.
+     * Constructor for the TelnetOptionHandler. Allows defining desired initial setting for local/remote activation of this option and behavior in case a
+     * local/remote activation request for this option is received.
      * <p>
-     * @param optcode - Option code.
-     * @param initlocal - if set to true, a WILL is sent upon connection.
-     * @param initremote - if set to true, a DO is sent upon connection.
-     * @param acceptlocal - if set to true, any DO request is accepted.
+     *
+     * @param optcode      - Option code.
+     * @param initlocal    - if set to true, a WILL is sent upon connection.
+     * @param initremote   - if set to true, a DO is sent upon connection.
+     * @param acceptlocal  - if set to true, any DO request is accepted.
      * @param acceptremote - if set to true, any WILL request is accepted.
      */
-    public TelnetOptionHandler(final int optcode,
-                                final boolean initlocal,
-                                final boolean initremote,
-                                final boolean acceptlocal,
-                                final boolean acceptremote)
-    {
+    public TelnetOptionHandler(final int optcode, final boolean initlocal, final boolean initremote, final boolean acceptlocal, final boolean acceptremote) {
         optionCode = optcode;
         initialLocal = initlocal;
         initialRemote = initremote;
@@ -87,195 +77,173 @@ public abstract class TelnetOptionHandler
         acceptRemote = acceptremote;
     }
 
-
     /**
-     * Method called upon reception of a subnegotiation for this option
-     * coming from the other end.
+     * Method called upon reception of a subnegotiation for this option coming from the other end.
      * <p>
-     * This implementation returns null, and
-     * must be overridden by the actual TelnetOptionHandler to specify
-     * which response must be sent for the subnegotiation request.
+     * This implementation returns null, and must be overridden by the actual TelnetOptionHandler to specify which response must be sent for the subnegotiation
+     * request.
      * <p>
-     * @param suboptionData - the sequence received, without IAC SB &amp; IAC SE
+     *
+     * @param suboptionData   - the sequence received, without IAC SB &amp; IAC SE
      * @param suboptionLength - the length of data in suboption_data
-     * <p>
-     * @return response to be sent to the subnegotiation sequence. TelnetClient
-     * will add IAC SB &amp; IAC SE. null means no response
+     *                        <p>
+     * @return response to be sent to the subnegotiation sequence. TelnetClient will add IAC SB &amp; IAC SE. null means no response
      */
     public int[] answerSubnegotiation(final int suboptionData[], final int suboptionLength) {
         return null;
     }
 
     /**
-     * Returns a boolean indicating whether to accept a DO
-     * request coming from the other end.
+     * Returns a boolean indicating whether to accept a DO request coming from the other end.
      * <p>
+     *
      * @return true if a DO request shall be accepted.
      */
-    public boolean getAcceptLocal()
-    {
+    public boolean getAcceptLocal() {
         return acceptLocal;
     }
 
     /**
-     * Returns a boolean indicating whether to accept a WILL
-     * request coming from the other end.
+     * Returns a boolean indicating whether to accept a WILL request coming from the other end.
      * <p>
+     *
      * @return true if a WILL request shall be accepted.
      */
-    public boolean getAcceptRemote()
-    {
+    public boolean getAcceptRemote() {
         return acceptRemote;
     }
 
     /**
-     * Returns a boolean indicating whether a DO request sent to the other
-     * side has been acknowledged.
+     * Returns a boolean indicating whether a DO request sent to the other side has been acknowledged.
      * <p>
+     *
      * @return true if a DO sent to the other side has been acknowledged.
      */
-    boolean getDo()
-    {
+    boolean getDo() {
         return doFlag;
     }
 
     /**
-     * Returns a boolean indicating whether to send a WILL request
-     * to the other end upon connection.
+     * Returns a boolean indicating whether to send a WILL request to the other end upon connection.
      * <p>
+     *
      * @return true if a WILL request shall be sent upon connection.
      */
-    public boolean getInitLocal()
-    {
+    public boolean getInitLocal() {
         return initialLocal;
     }
 
     /**
-     * Returns a boolean indicating whether to send a DO request
-     * to the other end upon connection.
+     * Returns a boolean indicating whether to send a DO request to the other end upon connection.
      * <p>
+     *
      * @return true if a DO request shall be sent upon connection.
      */
-    public boolean getInitRemote()
-    {
+    public boolean getInitRemote() {
         return initialRemote;
     }
 
     /**
      * Returns the option code for this option.
      * <p>
+     *
      * @return Option code.
      */
-    public int getOptionCode()
-    {
+    public int getOptionCode() {
         return optionCode;
     }
 
     /**
-     * Returns a boolean indicating whether a WILL request sent to the other
-     * side has been acknowledged.
+     * Returns a boolean indicating whether a WILL request sent to the other side has been acknowledged.
      * <p>
+     *
      * @return true if a WILL sent to the other side has been acknowledged.
      */
-    boolean getWill()
-    {
+    boolean getWill() {
         return willFlag;
     }
 
     /**
-     * Set behavior of the option for DO requests coming from
-     * the other end.
+     * Set behavior of the option for DO requests coming from the other end.
      * <p>
+     *
      * @param accept - if true, subsequent DO requests will be accepted.
      */
-    public void setAcceptLocal(final boolean accept)
-    {
+    public void setAcceptLocal(final boolean accept) {
         acceptLocal = accept;
     }
 
     /**
-     * Set behavior of the option for WILL requests coming from
-     * the other end.
+     * Set behavior of the option for WILL requests coming from the other end.
      * <p>
+     *
      * @param accept - if true, subsequent WILL requests will be accepted.
      */
-    public void setAcceptRemote(final boolean accept)
-    {
+    public void setAcceptRemote(final boolean accept) {
         acceptRemote = accept;
     }
 
     /**
-     * Tells this option whether a DO request sent to the other
-     * side has been acknowledged (invoked by TelnetClient).
+     * Tells this option whether a DO request sent to the other side has been acknowledged (invoked by TelnetClient).
      * <p>
+     *
      * @param state - if true, a DO request has been acknowledged.
      */
-    void setDo(final boolean state)
-    {
+    void setDo(final boolean state) {
         doFlag = state;
     }
 
     /**
      * Tells this option whether to send a WILL request upon connection.
      * <p>
-     * @param init - if true, a WILL request will be sent upon subsequent
-     * connections.
+     *
+     * @param init - if true, a WILL request will be sent upon subsequent connections.
      */
-    public void setInitLocal(final boolean init)
-    {
+    public void setInitLocal(final boolean init) {
         initialLocal = init;
     }
 
     /**
      * Tells this option whether to send a DO request upon connection.
      * <p>
-     * @param init - if true, a DO request will be sent upon subsequent
-     * connections.
+     *
+     * @param init - if true, a DO request will be sent upon subsequent connections.
      */
-    public void setInitRemote(final boolean init)
-    {
+    public void setInitRemote(final boolean init) {
         initialRemote = init;
     }
 
     /**
-     * Tells this option whether a WILL request sent to the other
-     * side has been acknowledged (invoked by TelnetClient).
+     * Tells this option whether a WILL request sent to the other side has been acknowledged (invoked by TelnetClient).
      * <p>
+     *
      * @param state - if true, a WILL request has been acknowledged.
      */
-    void setWill(final boolean state)
-    {
+    void setWill(final boolean state) {
         willFlag = state;
     }
 
     /**
-     * This method is invoked whenever this option is acknowledged active on
-     * the local end (TelnetClient sent a WILL, remote side sent a DO).
-     * The method is used to specify a subnegotiation sequence that will be
-     * sent by TelnetClient when the option is activated.
+     * This method is invoked whenever this option is acknowledged active on the local end (TelnetClient sent a WILL, remote side sent a DO). The method is used
+     * to specify a subnegotiation sequence that will be sent by TelnetClient when the option is activated.
      * <p>
-     * This implementation returns null, and must be overriden by
-     * the actual TelnetOptionHandler to specify
-     * which response must be sent for the subnegotiation request.
-     * @return subnegotiation sequence to be sent by TelnetClient. TelnetClient
-     * will add IAC SB &amp; IAC SE. null means no subnegotiation.
+     * This implementation returns null, and must be overriden by the actual TelnetOptionHandler to specify which response must be sent for the subnegotiation
+     * request.
+     *
+     * @return subnegotiation sequence to be sent by TelnetClient. TelnetClient will add IAC SB &amp; IAC SE. null means no subnegotiation.
      */
     public int[] startSubnegotiationLocal() {
         return null;
     }
 
-
     /**
-     * This method is invoked whenever this option is acknowledged active on
-     * the remote end (TelnetClient sent a DO, remote side sent a WILL).
-     * The method is used to specify a subnegotiation sequence that will be
-     * sent by TelnetClient when the option is activated.
+     * This method is invoked whenever this option is acknowledged active on the remote end (TelnetClient sent a DO, remote side sent a WILL). The method is
+     * used to specify a subnegotiation sequence that will be sent by TelnetClient when the option is activated.
      * <p>
-     * This implementation returns null, and must be overriden by
-     * the actual TelnetOptionHandler to specify
-     * which response must be sent for the subnegotiation request.
-     * @return subnegotiation sequence to be sent by TelnetClient. TelnetClient
-     * will add IAC SB &amp; IAC SE. null means no subnegotiation.
+     * This implementation returns null, and must be overriden by the actual TelnetOptionHandler to specify which response must be sent for the subnegotiation
+     * request.
+     *
+     * @return subnegotiation sequence to be sent by TelnetClient. TelnetClient will add IAC SB &amp; IAC SE. null means no subnegotiation.
      */
     public int[] startSubnegotiationRemote() {
         return null;

@@ -52,18 +52,16 @@ public class MainTest {
 
     private static void processFileName(String name, final Properties p) {
         name = name.replace(File.separatorChar, '.');
-        if (!name.endsWith(".class")
-                || name.contains("$") // subclasses
-                || name.endsWith("examples.Main.class")  // the initial class, don't want to add that
-                || !hasMainMethod(name)
-                ) {
+        if (!name.endsWith(".class") || name.contains("$") // subclasses
+                || name.endsWith("examples.Main.class") // the initial class, don't want to add that
+                || !hasMainMethod(name)) {
             return;
         }
         name = name.replace(".class", "");
         final int lastSep = name.lastIndexOf('.');
-        final String alias = name.substring(lastSep+1);
+        final String alias = name.substring(lastSep + 1);
         if (p.containsKey(alias)) {
-            System.out.printf("Duplicate alias: %-25s %s %s %n",alias,name,p.getProperty(alias));
+            System.out.printf("Duplicate alias: %-25s %s %s %n", alias, name, p.getProperty(alias));
         } else {
             p.setProperty(alias, name);
         }
@@ -91,14 +89,14 @@ public class MainTest {
         }
         @SuppressWarnings("unchecked") // OK
         final Enumeration<String> propertyNames = (Enumeration<String>) cp.propertyNames();
-        while(propertyNames.hasMoreElements()){
+        while (propertyNames.hasMoreElements()) {
             final String c = propertyNames.nextElement();
             final String fv = fp.getProperty(c);
             final String cv = cp.getProperty(c);
             if (fv == null) {
-                System.out.printf("%-25s %s - missing from examples.properties%n",c,cv);
+                System.out.printf("%-25s %s - missing from examples.properties%n", c, cv);
             } else if (!fv.equals(cv)) {
-                System.out.printf("%-25s %s - expected value %s %n",c,fv,cv);
+                System.out.printf("%-25s %s - expected value %s %n", c, fv, cv);
             }
         }
     }
@@ -107,7 +105,7 @@ public class MainTest {
         final CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
         // ensure special characters are decoded OK by uing the charset
         // Use canonical path to ensure consistency with Windows
-        final String sourceFile = new File(URLDecoder.decode(codeSource.getLocation().getFile(),"UTF-8")).getCanonicalPath();
+        final String sourceFile = new File(URLDecoder.decode(codeSource.getLocation().getFile(), "UTF-8")).getCanonicalPath();
         final Properties p = new Properties();
         if (sourceFile.endsWith(".jar")) {
             try (final JarFile jf = new JarFile(sourceFile)) {

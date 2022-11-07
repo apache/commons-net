@@ -20,12 +20,10 @@ package org.apache.commons.net.ntp;
 import java.net.DatagramPacket;
 
 /**
- * Interface for a NtpV3Packet with get/set methods corresponding to the fields
- * in the NTP Data Message Header described in RFC 1305.
+ * Interface for a NtpV3Packet with get/set methods corresponding to the fields in the NTP Data Message Header described in RFC 1305.
  *
  */
-public interface NtpV3Packet
-{
+public interface NtpV3Packet {
 
     /**
      * Standard NTP UDP port
@@ -47,7 +45,7 @@ public interface NtpV3Packet
     int MODE_CONTROL_MESSAGE = 6;
     int MODE_PRIVATE = 7;
 
-    int NTP_MINPOLL = 4;  // 16 seconds
+    int NTP_MINPOLL = 4; // 16 seconds
     int NTP_MAXPOLL = 14; // 16284 seconds
 
     int NTP_MINCLOCK = 1;
@@ -56,12 +54,12 @@ public interface NtpV3Packet
     int VERSION_3 = 3;
     int VERSION_4 = 4;
 
-    /* possible getType values such that other time-related protocols can
-     * have its information represented as NTP packets
+    /*
+     * possible getType values such that other time-related protocols can have its information represented as NTP packets
      */
-    String TYPE_NTP = "NTP";         // RFC-1305/2030
-    String TYPE_ICMP = "ICMP";       // RFC-792
-    String TYPE_TIME = "TIME";       // RFC-868
+    String TYPE_NTP = "NTP"; // RFC-1305/2030
+    String TYPE_ICMP = "ICMP"; // RFC-792
+    String TYPE_TIME = "TIME"; // RFC-868
     String TYPE_DAYTIME = "DAYTIME"; // RFC-867
 
     /**
@@ -90,8 +88,7 @@ public interface NtpV3Packet
     TimeStamp getOriginateTimeStamp();
 
     /**
-     * @return poll interval as defined in RFC-1305.
-     * Field range between NTP_MINPOLL and NTP_MAXPOLL.
+     * @return poll interval as defined in RFC-1305. Field range between NTP_MINPOLL and NTP_MAXPOLL.
      */
     int getPoll();
 
@@ -156,8 +153,7 @@ public interface NtpV3Packet
     TimeStamp getTransmitTimeStamp();
 
     /**
-     * Return type of time packet. The values (e.g. NTP, TIME, ICMP, ...)
-     * correspond to the protocol used to obtain the timing information.
+     * Return type of time packet. The values (e.g. NTP, TIME, ICMP, ...) correspond to the protocol used to obtain the timing information.
      *
      * @return packet type string identifier
      */
@@ -170,37 +166,42 @@ public interface NtpV3Packet
 
     /**
      * Set the contents of this object from the datagram packet
+     *
      * @param dp the packet
      */
     void setDatagramPacket(DatagramPacket dp);
 
     /**
      * Set leap indicator.
+     *
      * @param li - leap indicator code
      */
     void setLeapIndicator(int li);
 
     /**
      * Set mode as defined in RFC-1305
+     *
      * @param mode the mode to set
      */
     void setMode(int mode);
 
     /**
      * Set originate timestamp given NTP TimeStamp object.
+     *
      * @param ts - timestamp
      */
     void setOriginateTimeStamp(TimeStamp ts);
 
     /**
-     * Set poll interval as defined in RFC-1305.
-     * Field range between NTP_MINPOLL and NTP_MAXPOLL.
+     * Set poll interval as defined in RFC-1305. Field range between NTP_MINPOLL and NTP_MAXPOLL.
+     *
      * @param poll the interval to set
      */
     void setPoll(int poll);
 
     /**
      * Set precision as defined in RFC-1305
+     *
      * @param precision Precision
      * @since 3.4
      */
@@ -208,27 +209,31 @@ public interface NtpV3Packet
 
     /**
      * Set receive timestamp given NTP TimeStamp object.
+     *
      * @param ts - timestamp
      */
     void setReceiveTimeStamp(TimeStamp ts);
 
     /**
      * Set reference clock identifier field.
+     *
      * @param refId the clock id field to set
      */
     void setReferenceId(int refId);
 
     /**
      * Set the reference timestamp given NTP TimeStamp object.
+     *
      * @param ts - timestamp
      */
     void setReferenceTime(TimeStamp ts);
 
     /**
      * Set root delay as defined in RFC-1305
+     *
      * @param delay the delay to set
      * @since 3.4
-    */
+     */
     void setRootDelay(int delay);
 
     /**
@@ -240,18 +245,21 @@ public interface NtpV3Packet
 
     /**
      * Set stratum as defined in RFC-1305
+     *
      * @param stratum the stratum to set
      */
     void setStratum(int stratum);
 
     /**
      * Set the transmit timestamp given NTP TimeStamp object.
+     *
      * @param ts - timestamp
      */
     void setTransmitTime(TimeStamp ts);
 
     /**
      * Set version as defined in RFC-1305
+     *
      * @param version the version to set
      */
     void setVersion(int version);

@@ -42,36 +42,34 @@ import org.junit.Test;
 public class MLSDComparison {
 
     private final Comparator<FTPFile> cmp = (o1, o2) -> {
-            final String n1 = o1.getName();
-            final String n2 = o2.getName();
-            return n1.compareTo(n2);
-        };
+        final String n1 = o1.getName();
+        final String n2 = o2.getName();
+        return n1.compareTo(n2);
+    };
 
     /**
-     * Compare two instances to see if they are the same,
-     * ignoring any uninitialized fields.
+     * Compare two instances to see if they are the same, ignoring any uninitialized fields.
+     *
      * @param a first instance
      * @param b second instance
      * @return true if the initialized fields are the same
      * @since 3.0
      */
     public boolean areEquivalent(final FTPFile a, final FTPFile b) {
-        return
-            a.getName().equals(b.getName()) &&
-            areSame(a.getSize(), b.getSize(), -1L) &&
+        return a.getName().equals(b.getName()) && areSame(a.getSize(), b.getSize(), -1L) &&
 //            areSame(a.getUser(), b.getUser()) &&
 //            areSame(a.getGroup(), b.getGroup()) &&
-            areSame(a.getTimestamp(), b.getTimestamp()) &&
+                areSame(a.getTimestamp(), b.getTimestamp()) &&
 //            areSame(a.getType(), b.getType(), UNKNOWN_TYPE) &&
 //            areSame(a.getHardLinkCount(), b.getHardLinkCount(), 0) &&
 //            areSame(a._permissions, b._permissions)
-            true
-            ;
+                true;
     }
 
     private boolean areSame(final Calendar a, final Calendar b) {
         return a == null || b == null || areSameDateTime(a, b);
     }
+
     private boolean areSame(final long a, final long b, final long d) {
         return a == d || b == d || a == b;
     }
@@ -94,7 +92,6 @@ public class MLSDComparison {
 //        return true;
 //    }
 
-
     private boolean areSameDateTime(final Calendar a, final Calendar b) {
         final TimeZone UTC = TimeZone.getTimeZone("UTC");
         final Calendar ac = Calendar.getInstance(UTC);
@@ -104,13 +101,13 @@ public class MLSDComparison {
         return isSameDay(ac, bc) && isSameTime(ac, bc);
     }
 
-    private void compareSortedLists(final FTPFile[] lst, final FTPFile[] mlst){
-        Arrays.sort(lst, cmp );
-        Arrays.sort(mlst, cmp );
+    private void compareSortedLists(final FTPFile[] lst, final FTPFile[] mlst) {
+        Arrays.sort(lst, cmp);
+        Arrays.sort(mlst, cmp);
         FTPFile first, second;
-        final int firstl=lst.length;
-        final int secondl=mlst.length;
-        int one=0, two=0;
+        final int firstl = lst.length;
+        final int secondl = mlst.length;
+        int one = 0, two = 0;
         first = lst[one++];
         second = mlst[two++];
         int cmp;
@@ -121,14 +118,14 @@ public class MLSDComparison {
             final String rl2 = second.getRawListing();
             cmp = first.getName().compareTo(second.getName());
             if (cmp == 0) {
-                if (first.getName().endsWith("HEADER.html")){
+                if (first.getName().endsWith("HEADER.html")) {
                     cmp = 0;
                 }
-                if (!areEquivalent(first, second)){
+                if (!areEquivalent(first, second)) {
 //                    System.out.println(rl1);
 //                    System.out.println(fs1);
-                    final long tdiff = first.getTimestamp().getTimeInMillis()-second.getTimestamp().getTimeInMillis();
-                    System.out.println("Minutes diff "+tdiff/(1000*60));
+                    final long tdiff = first.getTimestamp().getTimeInMillis() - second.getTimestamp().getTimeInMillis();
+                    System.out.println("Minutes diff " + tdiff / (1000 * 60));
 //                    System.out.println(fs2);
 //                    System.out.println(rl2);
 //                    System.out.println();
@@ -142,13 +139,13 @@ public class MLSDComparison {
                 }
             } else if (cmp < 0) {
                 if (!first.getName().startsWith(".")) { // skip hidden files
-                    System.out.println("1: "+rl1);
+                    System.out.println("1: " + rl1);
                 }
                 if (one < firstl) {
                     first = lst[one++];
                 }
             } else {
-                System.out.println("2: "+rl2);
+                System.out.println("2: " + rl2);
                 if (two < secondl) {
                     second = mlst[two++];
                 }
@@ -159,12 +156,9 @@ public class MLSDComparison {
     private boolean isSameDay(final Calendar a, final Calendar b) {
         final int ad = a.get(Calendar.DAY_OF_MONTH);
         final int bd = b.get(Calendar.DAY_OF_MONTH);
-        return
-            a.get(Calendar.YEAR) == b.get(Calendar.YEAR) &&
-            a.get(Calendar.MONTH) == b.get(Calendar.MONTH) &&
-            ad == bd
-            ;
+        return a.get(Calendar.YEAR) == b.get(Calendar.YEAR) && a.get(Calendar.MONTH) == b.get(Calendar.MONTH) && ad == bd;
     }
+
     private boolean isSameTime(final Calendar a, final Calendar b) {
         final int ah = a.get(Calendar.HOUR_OF_DAY);
         final int bh = b.get(Calendar.HOUR_OF_DAY);
@@ -172,13 +166,9 @@ public class MLSDComparison {
         final int bm = b.get(Calendar.MINUTE);
         final int as = a.get(Calendar.SECOND);
         final int bs = b.get(Calendar.SECOND);
-        return
-            (ah == 0 && am == 0 && as ==0) ||
-            (bh == 0 && bm == 0 && bs ==0) ||
-            (ah == bh && am == bm) // ignore seconds
-            ;
+        return (ah == 0 && am == 0 && as == 0) || (bh == 0 && bm == 0 && bs == 0) || (ah == bh && am == bm) // ignore seconds
+        ;
     }
-
 
     @Test
     public void testFile() throws Exception {

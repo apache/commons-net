@@ -83,6 +83,7 @@ public class DownloadListings extends FTPClient {
         os.close();
         rdr.close();
     }
+
     private PrintCommandListener listener;
 
     private PrintWriter out;
@@ -95,13 +96,12 @@ public class DownloadListings extends FTPClient {
         }
         final InputStream inputStream = socket.getInputStream();
         final OutputStream outputStream = new FileOutputStream(fileName);
-        Util.copyStream(inputStream, outputStream );
+        Util.copyStream(inputStream, outputStream);
         inputStream.close();
         socket.close();
         outputStream.close();
 
-        if (!completePendingCommand())
-        {
+        if (!completePendingCommand()) {
             System.out.println(getReplyString());
         }
     }
@@ -113,9 +113,9 @@ public class DownloadListings extends FTPClient {
         removeProtocolCommandListener(listener);
     }
 
-    private boolean open(final String host, final int port) throws Exception{
-        System.out.println("Connecting to "+host);
-        out = new PrintWriter(new FileWriter(new File(DOWNLOAD_DIR, host+"_info.txt")));
+    private boolean open(final String host, final int port) throws Exception {
+        System.out.println("Connecting to " + host);
+        out = new PrintWriter(new FileWriter(new File(DOWNLOAD_DIR, host + "_info.txt")));
         listener = new PrintCommandListener(out);
         addProtocolCommandListener(listener);
         setConnectTimeout(30000);
@@ -126,7 +126,7 @@ public class DownloadListings extends FTPClient {
             return false;
         }
         enterLocalPassiveMode(); // this is reset by connect
-        System.out.println("Logging in to "+host);
+        System.out.println("Logging in to " + host);
         return login("anonymous", "user@localhost");
     }
 }

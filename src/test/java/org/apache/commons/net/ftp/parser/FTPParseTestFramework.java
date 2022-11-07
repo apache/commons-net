@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp.parser;
+
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Calendar;
@@ -27,19 +28,13 @@ import junit.framework.TestCase;
 
 /**
  */
-public abstract class FTPParseTestFramework extends TestCase
-{
+public abstract class FTPParseTestFramework extends TestCase {
     // associate Calendar unit ints with a readable string
     // MUST be listed least significant first, as the routine needs to
     // find the previous - less significant - entry
     protected enum CalendarUnit {
-        MILLISECOND(Calendar.MILLISECOND),
-        SECOND(Calendar.SECOND),
-        MINUTE(Calendar.MINUTE),
-        HOUR_OF_DAY(Calendar.HOUR_OF_DAY),
-        DAY_OF_MONTH(Calendar.DAY_OF_MONTH),
-        MONTH(Calendar.MONTH),
-        YEAR(Calendar.YEAR);
+        MILLISECOND(Calendar.MILLISECOND), SECOND(Calendar.SECOND), MINUTE(Calendar.MINUTE), HOUR_OF_DAY(Calendar.HOUR_OF_DAY),
+        DAY_OF_MONTH(Calendar.DAY_OF_MONTH), MONTH(Calendar.MONTH), YEAR(Calendar.YEAR);
 
         final int unit;
 
@@ -47,6 +42,7 @@ public abstract class FTPParseTestFramework extends TestCase
             unit = calUnit;
         }
     }
+
     private FTPFileEntryParser parser;
 
     protected SimpleDateFormat df;
@@ -54,8 +50,7 @@ public abstract class FTPParseTestFramework extends TestCase
     /**
      * @see junit.framework.TestCase#TestCase(String)
      */
-    public FTPParseTestFramework(final String name)
-    {
+    public FTPParseTestFramework(final String name) {
         super(name);
     }
 
@@ -65,8 +60,7 @@ public abstract class FTPParseTestFramework extends TestCase
      * @param test raw entry
      * @param f    parsed entry
      */
-    protected void doAdditionalBadTests(final String test, final FTPFile f)
-    {
+    protected void doAdditionalBadTests(final String test, final FTPFile f) {
     }
 
     /**
@@ -75,27 +69,26 @@ public abstract class FTPParseTestFramework extends TestCase
      * @param test raw entry
      * @param f    parsed entry
      */
-    protected void doAdditionalGoodTests(final String test, final FTPFile f)
-    {
-        }
+    protected void doAdditionalGoodTests(final String test, final FTPFile f) {
+    }
 
     /**
-     * Method getBadListing.
-     * Implementors must provide a listing that contains failures.
+     * Method getBadListing. Implementors must provide a listing that contains failures.
+     *
      * @return String[]
      */
     protected abstract String[] getBadListing();
 
     /**
-     * Method getGoodListing.
-     * Implementors must provide a listing that passes.
+     * Method getGoodListing. Implementors must provide a listing that passes.
+     *
      * @return String[]
      */
     protected abstract String[] getGoodListing();
 
     /**
-     * Method getParser.
-     * Provide the parser to use for testing.
+     * Method getParser. Provide the parser to use for testing.
+     *
      * @return FTPFileEntryParser
      */
     protected abstract FTPFileEntryParser getParser();
@@ -117,23 +110,19 @@ public abstract class FTPParseTestFramework extends TestCase
     }
 
     @Override
-    protected void setUp() throws Exception
-    {
+    protected void setUp() throws Exception {
         super.setUp();
         parser = getParser();
         df = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy", Locale.US);
     }
 
-    public void testBadListing()
-    {
+    public void testBadListing() {
 
         final String[] badsamples = getBadListing();
-        for (final String test : badsamples)
-        {
+        for (final String test : badsamples) {
 
             final FTPFile f = parser.parseFTPEntry(test);
-            assertNull("Should have Failed to parse <" + test + ">",
-                       nullFileOrNullDate(f));
+            assertNull("Should have Failed to parse <" + test + ">", nullFileOrNullDate(f));
 
             doAdditionalBadTests(test, f);
         }
@@ -142,12 +131,10 @@ public abstract class FTPParseTestFramework extends TestCase
     // Force subclasses to test precision
     public abstract void testDefaultPrecision();
 
-    public void testGoodListing()
-    {
+    public void testGoodListing() {
 
         final String[] goodsamples = getGoodListing();
-        for (final String test : goodsamples)
-        {
+        for (final String test : goodsamples) {
 
             final FTPFile f = parser.parseFTPEntry(test);
             assertNotNull("Failed to parse " + test, f);
@@ -157,15 +144,15 @@ public abstract class FTPParseTestFramework extends TestCase
     }
 
     /**
-     * Method testParseFieldsOnDirectory.
-     * Provide a test to show that fields on a directory entry are parsed correctly.
+     * Method testParseFieldsOnDirectory. Provide a test to show that fields on a directory entry are parsed correctly.
+     *
      * @throws Exception on error
      */
     public abstract void testParseFieldsOnDirectory() throws Exception;
 
     /**
-     * Method testParseFieldsOnFile.
-     * Provide a test to show that fields on a file entry are parsed correctly.
+     * Method testParseFieldsOnFile. Provide a test to show that fields on a file entry are parsed correctly.
+     *
      * @throws Exception on error
      */
     public abstract void testParseFieldsOnFile() throws Exception;

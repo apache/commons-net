@@ -18,16 +18,13 @@
 package org.apache.commons.net.ftp;
 
 /**
- * FTPReply stores a set of constants for FTP reply codes.  To interpret
- * the meaning of the codes, familiarity with RFC 959 is assumed.
- * The mnemonic constant names are transcriptions from the code descriptions
- * of RFC 959.
+ * FTPReply stores a set of constants for FTP reply codes. To interpret the meaning of the codes, familiarity with RFC 959 is assumed. The mnemonic constant
+ * names are transcriptions from the code descriptions of RFC 959.
  * <p>
  * TODO replace with an enum
  */
 
-public final class FTPReply
-{
+public final class FTPReply {
 
     public static final int RESTART_MARKER = 110;
     public static final int SERVICE_NOT_READY = 120;
@@ -100,102 +97,77 @@ public final class FTPReply
     public static final int EXTENDED_PORT_FAILURE = 522;
 
     /**
-     * Determine if a reply code is a negative permanent response.  All
-     * codes beginning with a 5 are negative permanent responses.
-     * The FTP server will send a negative permanent response on the
-     * failure of a command that cannot be reattempted with success.
+     * Determine if a reply code is a negative permanent response. All codes beginning with a 5 are negative permanent responses. The FTP server will send a
+     * negative permanent response on the failure of a command that cannot be reattempted with success.
      *
-     * @param reply  The reply code to test.
-     * @return True if a reply code is a negative permanent response, false
-     *         if not.
+     * @param reply The reply code to test.
+     * @return True if a reply code is a negative permanent response, false if not.
      */
-    public static boolean isNegativePermanent(final int reply)
-    {
+    public static boolean isNegativePermanent(final int reply) {
         return reply >= 500 && reply < 600;
     }
 
     /**
-     * Determine if a reply code is a negative transient response.  All
-     * codes beginning with a 4 are negative transient responses.
-     * The FTP server will send a negative transient response on the
-     * failure of a command that can be reattempted with success.
+     * Determine if a reply code is a negative transient response. All codes beginning with a 4 are negative transient responses. The FTP server will send a
+     * negative transient response on the failure of a command that can be reattempted with success.
      *
-     * @param reply  The reply code to test.
-     * @return True if a reply code is a negative transient response, false
-     *         if not.
+     * @param reply The reply code to test.
+     * @return True if a reply code is a negative transient response, false if not.
      */
-    public static boolean isNegativeTransient(final int reply)
-    {
+    public static boolean isNegativeTransient(final int reply) {
         return reply >= 400 && reply < 500;
     }
 
     /**
-     * Determine if a reply code is a positive completion response.  All
-     * codes beginning with a 2 are positive completion responses.
-     * The FTP server will send a positive completion response on the final
-     * successful completion of a command.
+     * Determine if a reply code is a positive completion response. All codes beginning with a 2 are positive completion responses. The FTP server will send a
+     * positive completion response on the final successful completion of a command.
      *
-     * @param reply  The reply code to test.
-     * @return True if a reply code is a positive completion response, false
-     *         if not.
+     * @param reply The reply code to test.
+     * @return True if a reply code is a positive completion response, false if not.
      */
-    public static boolean isPositiveCompletion(final int reply)
-    {
+    public static boolean isPositiveCompletion(final int reply) {
         return reply >= 200 && reply < 300;
     }
 
     /**
-     * Determine if a reply code is a positive intermediate response.  All
-     * codes beginning with a 3 are positive intermediate responses.
-     * The FTP server will send a positive intermediate response on the
-     * successful completion of one part of a multi-part sequence of
-     * commands.  For example, after a successful USER command, a positive
-     * intermediate response will be sent to indicate that the server is
-     * ready for the PASS command.
+     * Determine if a reply code is a positive intermediate response. All codes beginning with a 3 are positive intermediate responses. The FTP server will send
+     * a positive intermediate response on the successful completion of one part of a multi-part sequence of commands. For example, after a successful USER
+     * command, a positive intermediate response will be sent to indicate that the server is ready for the PASS command.
      *
-     * @param reply  The reply code to test.
-     * @return True if a reply code is a positive intermediate response, false
-     *         if not.
+     * @param reply The reply code to test.
+     * @return True if a reply code is a positive intermediate response, false if not.
      */
-    public static boolean isPositiveIntermediate(final int reply)
-    {
+    public static boolean isPositiveIntermediate(final int reply) {
         return reply >= 300 && reply < 400;
     }
 
     /**
-     * Determine if a reply code is a positive preliminary response.  All
-     * codes beginning with a 1 are positive preliminary responses.
-     * Postitive preliminary responses are used to indicate tentative success.
-     * No further commands can be issued to the FTP server after a positive
-     * preliminary response until a follow up response is received from the
-     * server.
+     * Determine if a reply code is a positive preliminary response. All codes beginning with a 1 are positive preliminary responses. Postitive preliminary
+     * responses are used to indicate tentative success. No further commands can be issued to the FTP server after a positive preliminary response until a
+     * follow up response is received from the server.
      *
-     * @param reply  The reply code to test.
-     * @return True if a reply code is a positive preliminary response, false
-     *         if not.
+     * @param reply The reply code to test.
+     * @return True if a reply code is a positive preliminary response, false if not.
      */
-    public static boolean isPositivePreliminary(final int reply)
-    {
+    public static boolean isPositivePreliminary(final int reply) {
         return reply >= 100 && reply < 200;
     }
 
     /**
      * Determine if a reply code is a protected response.
-     * @param reply  The reply code to test.
-     * @return True if a reply code is a protected response, false
-     *         if not.
+     *
+     * @param reply The reply code to test.
+     * @return True if a reply code is a protected response, false if not.
      * @since 3.0
      */
-    public static boolean isProtectedReplyCode(final int reply)
-    {
+    public static boolean isProtectedReplyCode(final int reply) {
         // actually, only 3 protected reply codes are
         // defined in RFC 2228: 631, 632 and 633.
         return reply >= 600 && reply < 700;
     }
 
     // Cannot be instantiated
-    private FTPReply()
-    {}
-
+    private FTPReply() {
+    }
 
 }

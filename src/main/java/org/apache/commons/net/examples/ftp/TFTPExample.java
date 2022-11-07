@@ -30,52 +30,29 @@ import org.apache.commons.net.tftp.TFTPClient;
 import org.apache.commons.net.tftp.TFTPPacket;
 
 /**
- * This is an example of a simple Java tftp client.
- * Notice how all of the code is really just argument processing and
- * error handling.
+ * This is an example of a simple Java tftp client. Notice how all of the code is really just argument processing and error handling.
  * <p>
- * Usage: tftp [options] hostname localfile remotefile
- * hostname   - The name of the remote host, with optional :port
- * localfile  - The name of the local file to send or the name to use for
- *              the received file
- * remotefile - The name of the remote file to receive or the name for
- *              the remote server to use to name the local file being sent.
- * options: (The default is to assume -r -b)
- *        -s Send a local file
- *        -r Receive a remote file
- *        -a Use ASCII transfer mode
- *        -b Use binary transfer mode
+ * Usage: tftp [options] hostname localfile remotefile hostname - The name of the remote host, with optional :port localfile - The name of the local file to
+ * send or the name to use for the received file remotefile - The name of the remote file to receive or the name for the remote server to use to name the local
+ * file being sent. options: (The default is to assume -r -b) -s Send a local file -r Receive a remote file -a Use ASCII transfer mode -b Use binary transfer
+ * mode
  */
-public final class TFTPExample
-{
-    static final String USAGE =
-        "Usage: tftp [options] hostname localfile remotefile\n\n" +
-        "hostname   - The name of the remote host [:port]\n" +
-        "localfile  - The name of the local file to send or the name to use for\n" +
-        "\tthe received file\n" +
-        "remotefile - The name of the remote file to receive or the name for\n" +
-        "\tthe remote server to use to name the local file being sent.\n\n" +
-        "options: (The default is to assume -r -b)\n" +
-        "\t-t timeout in seconds (default 60s)\n" +
-        "\t-s Send a local file\n" +
-        "\t-r Receive a remote file\n" +
-        "\t-a Use ASCII transfer mode\n" +
-        "\t-b Use binary transfer mode\n" +
-        "\t-v Verbose (trace packets)\n"
-        ;
+public final class TFTPExample {
+    static final String USAGE = "Usage: tftp [options] hostname localfile remotefile\n\n" + "hostname   - The name of the remote host [:port]\n"
+            + "localfile  - The name of the local file to send or the name to use for\n" + "\tthe received file\n"
+            + "remotefile - The name of the remote file to receive or the name for\n" + "\tthe remote server to use to name the local file being sent.\n\n"
+            + "options: (The default is to assume -r -b)\n" + "\t-t timeout in seconds (default 60s)\n" + "\t-s Send a local file\n"
+            + "\t-r Receive a remote file\n" + "\t-a Use ASCII transfer mode\n" + "\t-b Use binary transfer mode\n" + "\t-v Verbose (trace packets)\n";
 
     private static boolean close(final TFTPClient tftp, final Closeable output) {
         boolean closed;
         tftp.close();
-        try
-        {
+        try {
             if (output != null) {
                 output.close();
             }
             closed = true;
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             closed = false;
             System.err.println("Error: error closing file.");
             System.err.println(e.getMessage());
@@ -83,8 +60,7 @@ public final class TFTPExample
         return closed;
     }
 
-    public static void main(final String[] args)
-    {
+    public static void main(final String[] args) {
         boolean receiveFile = true, closed;
         int transferMode = TFTP.BINARY_MODE, argc;
         String arg;
@@ -96,8 +72,7 @@ public final class TFTPExample
         boolean verbose = false;
 
         // Parse options
-        for (argc = 0; argc < args.length; argc++)
-        {
+        for (argc = 0; argc < args.length; argc++) {
             arg = args[argc];
             if (!arg.startsWith("-")) {
                 break;
@@ -122,8 +97,7 @@ public final class TFTPExample
         }
 
         // Make sure there are enough arguments
-        if (args.length - argc != 3)
-        {
+        if (args.length - argc != 3) {
             System.err.println("Error: invalid number of arguments.");
             System.err.print(USAGE);
             System.exit(1);
@@ -153,15 +127,14 @@ public final class TFTPExample
         closed = false;
 
         // If we're receiving a file, receive, otherwise send.
-        if (receiveFile)
-        {
+        if (receiveFile) {
             closed = receive(transferMode, hostname, localFilename, remoteFilename, tftp);
         } else {
             // We're sending a file
             closed = send(transferMode, hostname, localFilename, remoteFilename, tftp);
         }
 
-        System.out.println("Recd: "+tftp.getTotalBytesReceived()+" Sent: "+tftp.getTotalBytesSent());
+        System.out.println("Recd: " + tftp.getTotalBytesReceived() + " Sent: " + tftp.getTotalBytesSent());
 
         if (!closed) {
             System.out.println("Failed");
@@ -172,18 +145,15 @@ public final class TFTPExample
     }
 
     private static void open(final TFTPClient tftp) {
-        try
-        {
+        try {
             tftp.open();
-        }
-        catch (final SocketException e)
-        {
+        } catch (final SocketException e) {
             throw new RuntimeException("Error: could not open local UDP socket.", e);
         }
     }
 
-    private static boolean receive(final int transferMode, final String hostname, final String localFilename,
-            final String remoteFilename, final TFTPClient tftp) {
+    private static boolean receive(final int transferMode, final String hostname, final String localFilename, final String remoteFilename,
+            final TFTPClient tftp) {
         final boolean closed;
         FileOutputStream output = null;
         final File file;
@@ -191,19 +161,15 @@ public final class TFTPExample
         file = new File(localFilename);
 
         // If file exists, don't overwrite it.
-        if (file.exists())
-        {
+        if (file.exists()) {
             System.err.println("Error: " + localFilename + " already exists.");
             return false;
         }
 
         // Try to open local file for writing
-        try
-        {
+        try {
             output = new FileOutputStream(file);
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             tftp.close();
             throw new RuntimeException("Error: could not open local file for writing.", e);
         }
@@ -211,30 +177,22 @@ public final class TFTPExample
         open(tftp);
 
         // Try to receive remote file via TFTP
-        try
-        {
-            final String [] parts = hostname.split(":");
+        try {
+            final String[] parts = hostname.split(":");
             if (parts.length == 2) {
                 tftp.receiveFile(remoteFilename, transferMode, output, parts[0], Integer.parseInt(parts[1]));
             } else {
                 tftp.receiveFile(remoteFilename, transferMode, output, hostname);
             }
-        }
-        catch (final UnknownHostException e)
-        {
+        } catch (final UnknownHostException e) {
             System.err.println("Error: could not resolve hostname.");
             System.err.println(e.getMessage());
             System.exit(1);
-        }
-        catch (final IOException e)
-        {
-            System.err.println(
-                "Error: I/O exception occurred while receiving file.");
+        } catch (final IOException e) {
+            System.err.println("Error: I/O exception occurred while receiving file.");
             System.err.println(e.getMessage());
             System.exit(1);
-        }
-        finally
-        {
+        } finally {
             // Close local socket and output file
             closed = close(tftp, output);
         }
@@ -242,18 +200,14 @@ public final class TFTPExample
         return closed;
     }
 
-    private static boolean send(final int transferMode, final String hostname, final String localFilename,
-            final String remoteFilename, final TFTPClient tftp) {
+    private static boolean send(final int transferMode, final String hostname, final String localFilename, final String remoteFilename, final TFTPClient tftp) {
         final boolean closed;
         FileInputStream input = null;
 
         // Try to open local file for reading
-        try
-        {
+        try {
             input = new FileInputStream(localFilename);
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             tftp.close();
             throw new RuntimeException("Error: could not open local file for reading.", e);
         }
@@ -261,29 +215,22 @@ public final class TFTPExample
         open(tftp);
 
         // Try to send local file via TFTP
-        try
-        {
-            final String [] parts = hostname.split(":");
+        try {
+            final String[] parts = hostname.split(":");
             if (parts.length == 2) {
                 tftp.sendFile(remoteFilename, transferMode, input, parts[0], Integer.parseInt(parts[1]));
             } else {
                 tftp.sendFile(remoteFilename, transferMode, input, hostname);
             }
-        }
-        catch (final UnknownHostException e)
-        {
+        } catch (final UnknownHostException e) {
             System.err.println("Error: could not resolve hostname.");
             System.err.println(e.getMessage());
             System.exit(1);
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             System.err.println("Error: I/O exception occurred while sending file.");
             System.err.println(e.getMessage());
             System.exit(1);
-        }
-        finally
-        {
+        } finally {
             // Close local socket and input file
             closed = close(tftp, input);
         }
@@ -292,5 +239,3 @@ public final class TFTPExample
     }
 
 }
-
-

@@ -24,60 +24,48 @@ import java.net.InetAddress;
 import org.apache.commons.net.DatagramSocketClient;
 
 /**
- * The NTPUDPClient class is a UDP implementation of a client for the
- * Network Time Protocol (NTP) described in RFC 1305 as well as the
- * Simple Network Time Protocol (SNTP) in RFC-2030. To use the class,
- * merely open a local datagram socket with <a href="#open"> open </a>
- * and call <a href="#getTime"> getTime </a> to retrieve the time. Then call
- * <a href="org.apache.commons.net.DatagramSocketClient.html#close"> close </a>
- * to close the connection properly.
- * Successive calls to <a href="#getTime"> getTime </a> are permitted
- * without re-establishing a connection.  That is because UDP is a
- * connectionless protocol and the Network Time Protocol is stateless.
+ * The NTPUDPClient class is a UDP implementation of a client for the Network Time Protocol (NTP) described in RFC 1305 as well as the Simple Network Time
+ * Protocol (SNTP) in RFC-2030. To use the class, merely open a local datagram socket with <a href="#open"> open </a> and call <a href="#getTime"> getTime </a>
+ * to retrieve the time. Then call <a href="org.apache.commons.net.DatagramSocketClient.html#close"> close </a> to close the connection properly. Successive
+ * calls to <a href="#getTime"> getTime </a> are permitted without re-establishing a connection. That is because UDP is a connectionless protocol and the
+ * Network Time Protocol is stateless.
  *
  */
 
-public final class NTPUDPClient extends DatagramSocketClient
-{
-    /** The default NTP port.  It is set to 123 according to RFC 1305. */
+public final class NTPUDPClient extends DatagramSocketClient {
+    /** The default NTP port. It is set to 123 according to RFC 1305. */
     public static final int DEFAULT_PORT = 123;
 
     private int version = NtpV3Packet.VERSION_3;
 
     /**
-     * Retrieves the time information from the specified server on the
-     * default NTP port and returns it. The time is the number of miliiseconds
-     * since 00:00 (midnight) 1 January 1900 UTC, as specified by RFC 1305.
-     * This method reads the raw NTP packet and constructs a <i>TimeInfo</i>
-     * object that allows access to all the fields of the NTP message header.
+     * Retrieves the time information from the specified server on the default NTP port and returns it. The time is the number of miliiseconds since 00:00
+     * (midnight) 1 January 1900 UTC, as specified by RFC 1305. This method reads the raw NTP packet and constructs a <i>TimeInfo</i> object that allows access
+     * to all the fields of the NTP message header.
      * <p>
+     *
      * @param host The address of the server.
      * @return The time value retrieved from the server.
      * @throws IOException If an error occurs while retrieving the time.
      */
-    public TimeInfo getTime(final InetAddress host) throws IOException
-    {
+    public TimeInfo getTime(final InetAddress host) throws IOException {
         return getTime(host, NtpV3Packet.NTP_PORT);
     }
 
     /**
-     * Retrieves the time information from the specified server and port and
-     * returns it. The time is the number of miliiseconds since
-     * 00:00 (midnight) 1 January 1900 UTC, as specified by RFC 1305.
-     * This method reads the raw NTP packet and constructs a <i>TimeInfo</i>
-     * object that allows access to all the fields of the NTP message header.
+     * Retrieves the time information from the specified server and port and returns it. The time is the number of miliiseconds since 00:00 (midnight) 1 January
+     * 1900 UTC, as specified by RFC 1305. This method reads the raw NTP packet and constructs a <i>TimeInfo</i> object that allows access to all the fields of
+     * the NTP message header.
      * <p>
+     *
      * @param host The address of the server.
      * @param port The port of the service.
      * @return The time value retrieved from the server.
-     * @throws IOException If an error occurs while retrieving the time or if
-     *                     received packet does not match the request.
+     * @throws IOException If an error occurs while retrieving the time or if received packet does not match the request.
      */
-    public TimeInfo getTime(final InetAddress host, final int port) throws IOException
-    {
+    public TimeInfo getTime(final InetAddress host, final int port) throws IOException {
         // if not connected then open to next available UDP port
-        if (!isOpen())
-        {
+        if (!isOpen()) {
             open();
         }
 
@@ -92,10 +80,8 @@ public final class NTPUDPClient extends DatagramSocketClient
         final DatagramPacket receivePacket = recMessage.getDatagramPacket();
 
         /*
-         * Must minimize the time between getting the current time,
-         * timestamping the packet, and sending it out which
-         * introduces an error in the delay time.
-         * No extraneous logging and initializations here !!!
+         * Must minimize the time between getting the current time, timestamping the packet, and sending it out which introduces an error in the delay time. No
+         * extraneous logging and initializations here !!!
          */
         final TimeStamp now = TimeStamp.getCurrentTime();
 
@@ -109,8 +95,7 @@ public final class NTPUDPClient extends DatagramSocketClient
         final long returnTimeMillis = System.currentTimeMillis();
 
         // Prevent invalid time information if response does not match request
-        if (!now.equals(recMessage.getOriginateTimeStamp()))
-        {
+        if (!now.equals(recMessage.getOriginateTimeStamp())) {
             throw new IOException("Originate time does not match the request");
         }
 
@@ -119,25 +104,21 @@ public final class NTPUDPClient extends DatagramSocketClient
     }
 
     /**
-     * Returns the NTP protocol version number that client sets on request packet
-     * that is sent to remote host (e.g. 3=NTP v3, 4=NTP v4, etc.)
+     * Returns the NTP protocol version number that client sets on request packet that is sent to remote host (e.g. 3=NTP v3, 4=NTP v4, etc.)
      *
-     * @return  the NTP protocol version number that client sets on request packet.
+     * @return the NTP protocol version number that client sets on request packet.
      * @see #setVersion(int)
      */
-    public int getVersion()
-    {
+    public int getVersion() {
         return version;
     }
 
     /**
-     * Sets the NTP protocol version number that client sets on request packet
-     * communicate with remote host.
+     * Sets the NTP protocol version number that client sets on request packet communicate with remote host.
      *
      * @param version the NTP protocol version number
      */
-    public void setVersion(final int version)
-    {
+    public void setVersion(final int version) {
         this.version = version;
     }
 

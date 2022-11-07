@@ -21,25 +21,17 @@ import java.net.InetAddress;
 
 import junit.framework.TestCase;
 
-
 /**
  *
- * The POP3* tests all presume the existence of the following parameters:
- *   mailserver: localhost (running on the default port 110)
- *   account: username=test; password=password
- *   account: username=alwaysempty; password=password.
- *   mail: At least four emails in the test account and zero emails
- *         in the alwaysempty account
+ * The POP3* tests all presume the existence of the following parameters: mailserver: localhost (running on the default port 110) account: username=test;
+ * password=password account: username=alwaysempty; password=password. mail: At least four emails in the test account and zero emails in the alwaysempty account
  *
- * If this won't work for you, you can change these parameters in the
- * TestSetupParameters class.
+ * If this won't work for you, you can change these parameters in the TestSetupParameters class.
  *
- * The tests were originally run on a default installation of James.
- * Your mileage may vary based on the POP3 server you run the tests against.
- * Some servers are more standards-compliant than others.
+ * The tests were originally run on a default installation of James. Your mileage may vary based on the POP3 server you run the tests against. Some servers are
+ * more standards-compliant than others.
  */
-public class POP3ClientTest extends TestCase
-{
+public class POP3ClientTest extends TestCase {
     POP3Client p;
 
     String user = POP3Constants.user;
@@ -47,92 +39,80 @@ public class POP3ClientTest extends TestCase
     String password = POP3Constants.password;
     String mailhost = POP3Constants.mailhost;
 
-    public POP3ClientTest(final String name)
-    {
+    public POP3ClientTest(final String name) {
         super(name);
     }
 
-    private void connect() throws Exception
-    {
+    private void connect() throws Exception {
         p.connect(InetAddress.getByName(mailhost));
         assertTrue(p.isConnected());
         assertEquals(POP3.AUTHORIZATION_STATE, p.getState());
     }
 
-    private void login() throws Exception
-    {
+    private void login() throws Exception {
         assertTrue(p.login(user, password));
         assertEquals(POP3.TRANSACTION_STATE, p.getState());
     }
 
-    private void reset() throws IOException
-    {
-        //Case where this is the first time reset is called
-        if (p == null)
-        {
-            //Do nothing
-        }
-        else if (p.isConnected())
-        {
+    private void reset() throws IOException {
+        // Case where this is the first time reset is called
+        if (p == null) {
+            // Do nothing
+        } else if (p.isConnected()) {
             p.disconnect();
         }
         p = null;
         p = new POP3Client();
     }
 
-    public void testInvalidLoginWithBadName() throws Exception
-    {
+    public void testInvalidLoginWithBadName() throws Exception {
         reset();
         connect();
 
-        //Try with an invalid user that doesn't exist
+        // Try with an invalid user that doesn't exist
         assertFalse(p.login("badusername", password));
     }
 
-    public void testInvalidLoginWithBadPassword() throws Exception
-    {
+    public void testInvalidLoginWithBadPassword() throws Exception {
         reset();
         connect();
 
-        //Try with a bad password
+        // Try with a bad password
         assertFalse(p.login(user, "badpassword"));
     }
 
     /*
-     * Test to try to run the login method from the
-     * disconnected, transaction and update states
+     * Test to try to run the login method from the disconnected, transaction and update states
      */
-    public void testLoginFromWrongState() throws Exception
-    {
+    public void testLoginFromWrongState() throws Exception {
         reset();
 
-        //Not currently connected, not in authorization state
-        //Try to login with good name/password
+        // Not currently connected, not in authorization state
+        // Try to login with good name/password
         assertFalse(p.login(user, password));
 
-        //Now connect and set the state to 'transaction' and try again
+        // Now connect and set the state to 'transaction' and try again
         connect();
         p.setState(POP3.TRANSACTION_STATE);
         assertFalse(p.login(user, password));
         p.disconnect();
 
-        //Now connect and set the state to 'update' and try again
+        // Now connect and set the state to 'update' and try again
         connect();
         p.setState(POP3.UPDATE_STATE);
         assertFalse(p.login(user, password));
         p.disconnect();
     }
 
-    public void testLogoutFromAllStates() throws Exception
-    {
-        //From 'transaction' state
+    public void testLogoutFromAllStates() throws Exception {
+        // From 'transaction' state
         reset();
         connect();
         login();
         assertTrue(p.logout());
         assertEquals(POP3.UPDATE_STATE, p.getState());
 
-        //From 'update' state
+        // From 'update' state
         reset();
         connect();
         login();
@@ -141,15 +121,13 @@ public class POP3ClientTest extends TestCase
     }
 
     /*
-     * Simple test to logon to a valid server using a valid
-     * user name and password.
+     * Simple test to logon to a valid server using a valid user name and password.
      */
-    public void testValidLoginWithNameAndPassword() throws Exception
-    {
+    public void testValidLoginWithNameAndPassword() throws Exception {
         reset();
         connect();
 
-        //Try with a valid user
+        // Try with a valid user
         login();
     }
 }

@@ -33,7 +33,7 @@ public class TestTimeInfo {
         final NtpV3Packet packet = new NtpV3Impl();
         final TimeInfo info = new TimeInfo(packet, System.currentTimeMillis());
         Assert.assertNull(info.getAddress());
-        packet.getDatagramPacket().setAddress(InetAddress.getByAddress("loopback", new byte[]{127, 0, 0, 1}));
+        packet.getDatagramPacket().setAddress(InetAddress.getByAddress("loopback", new byte[] { 127, 0, 0, 1 }));
         Assert.assertNotNull(info.getAddress());
     }
 
@@ -45,7 +45,7 @@ public class TestTimeInfo {
 
         // example
         // returntime=1370571658178
-        // origTime=  1370571659178
+        // origTime= 1370571659178
 
         // originate time as defined in RFC-1305 (t1)
         packet.setOriginateTimeStamp(TimeStamp.getNtpTime(returnTimeMillis + 1000));
@@ -55,9 +55,9 @@ public class TestTimeInfo {
         packet.setTransmitTime(packet.getOriginateTimeStamp());
         packet.setReferenceTime(packet.getOriginateTimeStamp());
 
-        //long origTime = packet.getOriginateTimeStamp().getTime();
-        //System.out.println("returntime=" + returnTime);
-        //System.out.println("origTime=  " + origTime);
+        // long origTime = packet.getOriginateTimeStamp().getTime();
+        // System.out.println("returntime=" + returnTime);
+        // System.out.println("origTime= " + origTime);
 
         final TimeInfo info = new TimeInfo(packet, returnTimeMillis);
         info.computeDetails();
@@ -82,7 +82,7 @@ public class TestTimeInfo {
         Assert.assertEquals(info, other); // fails
         Assert.assertEquals(info.hashCode(), other.hashCode());
         other.addComment("another comment");
-        //Assert.assertFalse(info.equals(other)); // comments not used for equality
+        // Assert.assertFalse(info.equals(other)); // comments not used for equality
 
         final TimeInfo another = new TimeInfo(packet, returnTime, new ArrayList<String>());
         Assert.assertEquals(info, another);
@@ -113,7 +113,7 @@ public class TestTimeInfo {
         Assert.assertNotEquals(info, info3);
 
         // 3. different class
-        Object  other = this;
+        Object other = this;
         Assert.assertNotEquals(info, other);
 
         // 4. null comparison

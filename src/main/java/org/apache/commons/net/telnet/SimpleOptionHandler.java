@@ -18,42 +18,32 @@
 package org.apache.commons.net.telnet;
 
 /**
- * Simple option handler that can be used for options
- * that don't require subnegotiation.
+ * Simple option handler that can be used for options that don't require subnegotiation.
  */
-public class SimpleOptionHandler extends TelnetOptionHandler
-{
+public class SimpleOptionHandler extends TelnetOptionHandler {
     /**
-     * Constructor for the SimpleOptionHandler. Initial and accept
-     * behavior flags are set to false
+     * Constructor for the SimpleOptionHandler. Initial and accept behavior flags are set to false
      * <p>
+     *
      * @param optcode - option code.
      */
-    public SimpleOptionHandler(final int optcode)
-    {
+    public SimpleOptionHandler(final int optcode) {
         super(optcode, false, false, false, false);
     }
 
     /**
-     * Constructor for the SimpleOptionHandler. Allows defining desired
-     * initial setting for local/remote activation of this option and
-     * behavior in case a local/remote activation request for this
-     * option is received.
+     * Constructor for the SimpleOptionHandler. Allows defining desired initial setting for local/remote activation of this option and behavior in case a
+     * local/remote activation request for this option is received.
      * <p>
-     * @param optcode - option code.
-     * @param initlocal - if set to true, a WILL is sent upon connection.
-     * @param initremote - if set to true, a DO is sent upon connection.
-     * @param acceptlocal - if set to true, any DO request is accepted.
+     *
+     * @param optcode      - option code.
+     * @param initlocal    - if set to true, a WILL is sent upon connection.
+     * @param initremote   - if set to true, a DO is sent upon connection.
+     * @param acceptlocal  - if set to true, any DO request is accepted.
      * @param acceptremote - if set to true, any WILL request is accepted.
      */
-    public SimpleOptionHandler(final int optcode,
-                                final boolean initlocal,
-                                final boolean initremote,
-                                final boolean acceptlocal,
-                                final boolean acceptremote)
-    {
-        super(optcode, initlocal, initremote,
-                                      acceptlocal, acceptremote);
+    public SimpleOptionHandler(final int optcode, final boolean initlocal, final boolean initremote, final boolean acceptlocal, final boolean acceptremote) {
+        super(optcode, initlocal, initremote, acceptlocal, acceptremote);
     }
 
 }

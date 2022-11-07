@@ -40,7 +40,7 @@ import org.apache.commons.net.util.Base64;
  * @since 2.2
  */
 public class FTPHTTPClient extends FTPClient {
-    private static final byte[] CRLF={'\r', '\n'};
+    private static final byte[] CRLF = { '\r', '\n' };
     private final String proxyHost;
     private final int proxyPort;
     private final String proxyUsername;
@@ -66,7 +66,7 @@ public class FTPHTTPClient extends FTPClient {
      *
      * @param proxyHost the hostname to use
      * @param proxyPort the port to use
-     * @param encoding the encoding to use
+     * @param encoding  the encoding to use
      */
     public FTPHTTPClient(final String proxyHost, final int proxyPort, final Charset encoding) {
         this(proxyHost, proxyPort, null, null, encoding);
@@ -84,7 +84,6 @@ public class FTPHTTPClient extends FTPClient {
         this(proxyHost, proxyPort, proxyUser, proxyPass, StandardCharsets.UTF_8);
     }
 
-
     /**
      * Create an instance with the specified encoding
      *
@@ -92,10 +91,9 @@ public class FTPHTTPClient extends FTPClient {
      * @param proxyPort the port to use
      * @param proxyUser the user name for the proxy
      * @param proxyPass the password for the proxy
-     * @param encoding the encoding to use
+     * @param encoding  the encoding to use
      */
-    public FTPHTTPClient(final String proxyHost, final int proxyPort, final String proxyUser, final String proxyPass,
-            final Charset encoding) {
+    public FTPHTTPClient(final String proxyHost, final int proxyPort, final String proxyUser, final String proxyPass, final Charset encoding) {
         this.proxyHost = proxyHost;
         this.proxyPort = proxyPort;
         this.proxyUsername = proxyUser;
@@ -103,7 +101,6 @@ public class FTPHTTPClient extends FTPClient {
         this.tunnelHost = null;
         this.charset = encoding;
     }
-
 
     /**
      * {@inheritDoc}
@@ -115,8 +112,7 @@ public class FTPHTTPClient extends FTPClient {
     // Not strictly necessary, but Clirr complains even though there is a super-impl
     @Override
     @Deprecated
-    protected Socket _openDataConnection_(final int command, final String arg)
-    throws IOException {
+    protected Socket _openDataConnection_(final int command, final String arg) throws IOException {
         return super._openDataConnection_(command, arg);
     }
 
@@ -127,9 +123,8 @@ public class FTPHTTPClient extends FTPClient {
      * @since 3.1
      */
     @Override
-    protected Socket _openDataConnection_(final String command, final String arg)
-    throws IOException {
-        //Force local passive mode, active mode not supported by through proxy
+    protected Socket _openDataConnection_(final String command, final String arg) throws IOException {
+        // Force local passive mode, active mode not supported by through proxy
         if (getDataConnectionMode() != PASSIVE_LOCAL_DATA_CONNECTION_MODE) {
             throw new IllegalStateException("Only passive connection mode supported");
         }
@@ -179,8 +174,7 @@ public class FTPHTTPClient extends FTPClient {
         final Reader socketIsReader;
         try {
             socketIsReader = tunnelHandshake(host, port, _input_, _output_);
-        }
-        catch (final Exception e) {
+        } catch (final Exception e) {
             final IOException ioe = new IOException("Could not connect to " + host + " using port " + port);
             ioe.initCause(e);
             throw ioe;
@@ -188,8 +182,8 @@ public class FTPHTTPClient extends FTPClient {
         super._connectAction_(socketIsReader);
     }
 
-    private BufferedReader tunnelHandshake(final String host, final int port, final InputStream input,
-            final OutputStream output) throws IOException, UnsupportedEncodingException {
+    private BufferedReader tunnelHandshake(final String host, final int port, final InputStream input, final OutputStream output)
+            throws IOException, UnsupportedEncodingException {
         final String connectString = "CONNECT " + host + ":" + port + " HTTP/1.1";
         final String hostString = "Host: " + host + ":" + port;
 
@@ -238,5 +232,3 @@ public class FTPHTTPClient extends FTPClient {
         return reader;
     }
 }
-
-

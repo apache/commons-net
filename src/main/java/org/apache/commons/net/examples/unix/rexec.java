@@ -23,12 +23,9 @@ import org.apache.commons.net.bsd.RExecClient;
 import org.apache.commons.net.examples.util.IOUtil;
 
 /**
- * This is an example program demonstrating how to use the RExecClient class.
- * This program connects to an rexec server and requests that the
- * given command be executed on the server.  It then reads input from stdin
- * (this will be line buffered on most systems, so don't expect character
- * at a time interactivity), passing it to the remote process and writes
- * the process stdout and stderr to local stdout.
+ * This is an example program demonstrating how to use the RExecClient class. This program connects to an rexec server and requests that the given command be
+ * executed on the server. It then reads input from stdin (this will be line buffered on most systems, so don't expect character at a time interactivity),
+ * passing it to the remote process and writes the process stdout and stderr to local stdout.
  * <p>
  * Example: java rexec myhost myusername mypassword "ps -aux"
  * <p>
@@ -36,23 +33,19 @@ import org.apache.commons.net.examples.util.IOUtil;
  */
 
 // This class requires the IOUtil support class!
-public final class rexec
-{
+public final class rexec {
 
-    public static void main(final String[] args)
-    {
+    public static void main(final String[] args) {
         final String server;
         final String username;
         final String password;
         final String command;
         final RExecClient client;
 
-        if (args.length != 4)
-        {
-            System.err.println(
-                "Usage: rexec <hostname> <username> <password> <command>");
+        if (args.length != 4) {
+            System.err.println("Usage: rexec <hostname> <username> <password> <command>");
             System.exit(1);
-            return ; // so compiler can do proper flow control analysis
+            return; // so compiler can do proper flow control analysis
         }
 
         client = new RExecClient();
@@ -62,44 +55,31 @@ public final class rexec
         password = args[2];
         command = args[3];
 
-        try
-        {
+        try {
             client.connect(server);
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             System.err.println("Could not connect to server.");
             e.printStackTrace();
             System.exit(1);
         }
 
-        try
-        {
+        try {
             client.rexec(username, password, command);
-        }
-        catch (final IOException e)
-        {
-            try
-            {
+        } catch (final IOException e) {
+            try {
                 client.disconnect();
-            }
-            catch (final IOException f)
-            {/* ignored */}
+            } catch (final IOException f) {
+                /* ignored */}
             e.printStackTrace();
             System.err.println("Could not execute command.");
             System.exit(1);
         }
 
+        IOUtil.readWrite(client.getInputStream(), client.getOutputStream(), System.in, System.out);
 
-        IOUtil.readWrite(client.getInputStream(), client.getOutputStream(),
-                         System.in, System.out);
-
-        try
-        {
+        try {
             client.disconnect();
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             e.printStackTrace();
             System.exit(1);
         }
@@ -108,4 +88,3 @@ public final class rexec
     }
 
 }
-

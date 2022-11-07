@@ -21,19 +21,12 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 
 /**
- * A final class derived from TFTPPacket definiing the TFTP Error
- * packet type.
+ * A final class derived from TFTPPacket definiing the TFTP Error packet type.
  * <p>
- * Details regarding the TFTP protocol and the format of TFTP packets can
- * be found in RFC 783.  But the point of these classes is to keep you
- * from having to worry about the internals.  Additionally, only very
- * few people should have to care about any of the TFTPPacket classes
- * or derived classes.  Almost all users should only be concerned with the
- * {@link org.apache.commons.net.tftp.TFTPClient} class
- * {@link org.apache.commons.net.tftp.TFTPClient#receiveFile receiveFile()}
- * and
- * {@link org.apache.commons.net.tftp.TFTPClient#sendFile sendFile()}
- * methods.
+ * Details regarding the TFTP protocol and the format of TFTP packets can be found in RFC 783. But the point of these classes is to keep you from having to
+ * worry about the internals. Additionally, only very few people should have to care about any of the TFTPPacket classes or derived classes. Almost all users
+ * should only be concerned with the {@link org.apache.commons.net.tftp.TFTPClient} class {@link org.apache.commons.net.tftp.TFTPClient#receiveFile
+ * receiveFile()} and {@link org.apache.commons.net.tftp.TFTPClient#sendFile sendFile()} methods.
  *
  *
  * @see TFTPPacket
@@ -41,8 +34,7 @@ import java.net.InetAddress;
  * @see TFTP
  */
 
-public final class TFTPErrorPacket extends TFTPPacket
-{
+public final class TFTPErrorPacket extends TFTPPacket {
     /** The undefined error code according to RFC 783, value 0. */
     public static final int UNDEFINED = 0;
 
@@ -76,16 +68,12 @@ public final class TFTPErrorPacket extends TFTPPacket
     private final String message;
 
     /**
-     * Creates an error packet based from a received
-     * datagram.  Assumes the datagram is at least length 4, else an
-     * ArrayIndexOutOfBoundsException may be thrown.
+     * Creates an error packet based from a received datagram. Assumes the datagram is at least length 4, else an ArrayIndexOutOfBoundsException may be thrown.
      *
-     * @param datagram  The datagram containing the received error.
-     * @throws TFTPPacketException  If the datagram isn't a valid TFTP
-     *         error packet.
+     * @param datagram The datagram containing the received error.
+     * @throws TFTPPacketException If the datagram isn't a valid TFTP error packet.
      */
-    TFTPErrorPacket(final DatagramPacket datagram) throws TFTPPacketException
-    {
+    TFTPErrorPacket(final DatagramPacket datagram) throws TFTPPacketException {
         super(TFTPPacket.ERROR, datagram.getAddress(), datagram.getPort());
         int index;
         final int length;
@@ -108,9 +96,8 @@ public final class TFTPErrorPacket extends TFTPPacket
         index = 4;
         buffer = new StringBuilder();
 
-        while (index < length && data[index] != 0)
-        {
-            buffer.append((char)data[index]);
+        while (index < length && data[index] != 0) {
+            buffer.append((char) data[index]);
             ++index;
         }
 
@@ -118,17 +105,14 @@ public final class TFTPErrorPacket extends TFTPPacket
     }
 
     /**
-     * Creates an error packet to be sent to a host at a given port
-     * with an error code and error message.
+     * Creates an error packet to be sent to a host at a given port with an error code and error message.
      *
-     * @param destination  The host to which the packet is going to be sent.
-     * @param port  The port to which the packet is going to be sent.
-     * @param error The error code of the packet.
-     * @param message The error message of the packet.
+     * @param destination The host to which the packet is going to be sent.
+     * @param port        The port to which the packet is going to be sent.
+     * @param error       The error code of the packet.
+     * @param message     The error message of the packet.
      */
-    public TFTPErrorPacket(final InetAddress destination, final int port,
-                           final int error, final String message)
-    {
+    public TFTPErrorPacket(final InetAddress destination, final int port, final int error, final String message) {
         super(TFTPPacket.ERROR, destination, port);
 
         this.error = error;
@@ -140,38 +124,28 @@ public final class TFTPErrorPacket extends TFTPPacket
      *
      * @return The error code of the packet.
      */
-    public int getError()
-    {
+    public int getError() {
         return error;
     }
-
 
     /**
      * Returns the error message of the packet.
      *
      * @return The error message of the packet.
      */
-    public String getMessage()
-    {
+    public String getMessage() {
         return message;
     }
 
-
     /**
-     * Creates a UDP datagram containing all the TFTP
-     * error packet data in the proper format.
-     * This is a method exposed to the programmer in case he
-     * wants to implement his own TFTP client instead of using
-     * the {@link org.apache.commons.net.tftp.TFTPClient}
-     * class.
-     * Under normal circumstances, you should not have a need to call this
-     * method.
+     * Creates a UDP datagram containing all the TFTP error packet data in the proper format. This is a method exposed to the programmer in case he wants to
+     * implement his own TFTP client instead of using the {@link org.apache.commons.net.tftp.TFTPClient} class. Under normal circumstances, you should not have
+     * a need to call this method.
      *
      * @return A UDP datagram containing the TFTP error packet.
      */
     @Override
-    public DatagramPacket newDatagram()
-    {
+    public DatagramPacket newDatagram() {
         final byte[] data;
         final int length;
 
@@ -179,9 +153,9 @@ public final class TFTPErrorPacket extends TFTPPacket
 
         data = new byte[length + 5];
         data[0] = 0;
-        data[1] = (byte)type;
-        data[2] = (byte)((error & 0xffff) >> 8);
-        data[3] = (byte)(error & 0xff);
+        data[1] = (byte) type;
+        data[2] = (byte) ((error & 0xffff) >> 8);
+        data[3] = (byte) (error & 0xff);
 
         System.arraycopy(message.getBytes(), 0, data, 4, length);
 
@@ -190,29 +164,24 @@ public final class TFTPErrorPacket extends TFTPPacket
         return new DatagramPacket(data, data.length, address, port);
     }
 
-
     /**
-     * This is a method only available within the package for
-     * implementing efficient datagram transport by elminating buffering.
-     * It takes a datagram as an argument, and a byte buffer in which
-     * to store the raw datagram data.  Inside the method, the data
-     * is set as the datagram's data and the datagram returned.
+     * This is a method only available within the package for implementing efficient datagram transport by elminating buffering. It takes a datagram as an
+     * argument, and a byte buffer in which to store the raw datagram data. Inside the method, the data is set as the datagram's data and the datagram returned.
      *
-     * @param datagram  The datagram to create.
-     * @param data The buffer to store the packet and to use in the datagram.
+     * @param datagram The datagram to create.
+     * @param data     The buffer to store the packet and to use in the datagram.
      * @return The datagram argument.
      */
     @Override
-    DatagramPacket newDatagram(final DatagramPacket datagram, final byte[] data)
-    {
+    DatagramPacket newDatagram(final DatagramPacket datagram, final byte[] data) {
         final int length;
 
         length = message.length();
 
         data[0] = 0;
-        data[1] = (byte)type;
-        data[2] = (byte)((error & 0xffff) >> 8);
-        data[3] = (byte)(error & 0xff);
+        data[1] = (byte) type;
+        data[2] = (byte) ((error & 0xffff) >> 8);
+        data[3] = (byte) (error & 0xff);
 
         System.arraycopy(message.getBytes(), 0, data, 4, length);
 
@@ -228,6 +197,7 @@ public final class TFTPErrorPacket extends TFTPPacket
 
     /**
      * For debugging
+     *
      * @since 3.6
      */
     @Override

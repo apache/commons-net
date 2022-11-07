@@ -18,50 +18,43 @@
 package org.apache.commons.net.nntp;
 
 /**
- * This class is used to construct the bare minimum
- * acceptable header for most news readers.  To construct more
- * complicated headers you should refer to RFC 822.  When the
- * Java Mail API is finalized, you will be
- * able to use it to compose fully compliant Internet text messages.
+ * This class is used to construct the bare minimum acceptable header for most news readers. To construct more complicated headers you should refer to RFC 822.
+ * When the Java Mail API is finalized, you will be able to use it to compose fully compliant Internet text messages.
  * <p>
- * The main purpose of the class is to faciliatate the article posting
- * process, by relieving the programmer from having to explicitly format
- * an article header.  For example:
+ * The main purpose of the class is to faciliatate the article posting process, by relieving the programmer from having to explicitly format an article header.
+ * For example:
+ *
  * <pre>
  * writer = client.postArticle();
- * if(writer == null) // failure
- *   return false;
+ * if (writer == null) // failure
+ *     return false;
  * header = new SimpleNNTPHeader("foobar@foo.com", "Just testing");
  * header.addNewsgroup("alt.test");
  * header.addHeaderField("Organization", "Foobar, Inc.");
  * writer.write(header.toString());
  * writer.write("This is just a test");
  * writer.close();
- * if(!client.completePendingCommand()) // failure
- *   return false;
+ * if (!client.completePendingCommand()) // failure
+ *     return false;
  * </pre>
  *
  * @see NNTPClient
  */
 
-public class SimpleNNTPHeader
-{
+public class SimpleNNTPHeader {
     private final String subject, from;
     private final StringBuilder newsgroups;
     private final StringBuilder headerFields;
     private int newsgroupCount;
 
     /**
-     * Creates a new SimpleNNTPHeader instance initialized with the given
-     * from and subject header field values.
+     * Creates a new SimpleNNTPHeader instance initialized with the given from and subject header field values.
      * <p>
-     * @param from  The value of the <code>From:</code> header field.  This
-     *              should be the article poster's email address.
-     * @param subject  The value of the <code>Subject:</code> header field.
-     *              This should be the subject of the article.
+     *
+     * @param from    The value of the <code>From:</code> header field. This should be the article poster's email address.
+     * @param subject The value of the <code>Subject:</code> header field. This should be the subject of the article.
      */
-    public SimpleNNTPHeader(final String from, final String subject)
-    {
+    public SimpleNNTPHeader(final String from, final String subject) {
         this.from = from;
         this.subject = subject;
         this.newsgroups = new StringBuilder();
@@ -70,19 +63,18 @@ public class SimpleNNTPHeader
     }
 
     /**
-     * Adds an arbitrary header field with the given value to the article
-     * header.  These headers will be written after the From, Newsgroups,
-     * and Subject fields when the SimpleNNTPHeader is convertered to a string.
-     * An example use would be:
+     * Adds an arbitrary header field with the given value to the article header. These headers will be written after the From, Newsgroups, and Subject fields
+     * when the SimpleNNTPHeader is convertered to a string. An example use would be:
+     *
      * <pre>
      * header.addHeaderField("Organization", "Foobar, Inc.");
      * </pre>
      * <p>
-     * @param headerField  The header field to add, not including the colon.
-     * @param value  The value of the added header field.
+     *
+     * @param headerField The header field to add, not including the colon.
+     * @param value       The value of the added header field.
      */
-    public void addHeaderField(final String headerField, final String value)
-    {
+    public void addHeaderField(final String headerField, final String value) {
         headerFields.append(headerField);
         headerFields.append(": ");
         headerFields.append(value);
@@ -92,59 +84,55 @@ public class SimpleNNTPHeader
     /**
      * Adds a newsgroup to the article <code>Newsgroups:</code> field.
      * <p>
-     * @param newsgroup  The newsgroup to add to the article's newsgroup
-     *                   distribution list.
+     *
+     * @param newsgroup The newsgroup to add to the article's newsgroup distribution list.
      */
-    public void addNewsgroup(final String newsgroup)
-    {
+    public void addNewsgroup(final String newsgroup) {
         if (newsgroupCount++ > 0) {
             newsgroups.append(',');
         }
         newsgroups.append(newsgroup);
     }
 
-
     /**
      * Returns the address used in the <code> From: </code> header field.
      * <p>
+     *
      * @return The from address.
      */
-    public String getFromAddress()
-    {
+    public String getFromAddress() {
         return from;
     }
 
     /**
      * Returns the contents of the <code> Newsgroups: </code> header field.
      * <p>
-     * @return The comma-separated list of newsgroups to which the article
-     *         is being posted.
+     *
+     * @return The comma-separated list of newsgroups to which the article is being posted.
      */
-    public String getNewsgroups()
-    {
+    public String getNewsgroups() {
         return newsgroups.toString();
     }
 
     /**
      * Returns the subject used in the <code> Subject: </code> header field.
      * <p>
+     *
      * @return The subject.
      */
-    public String getSubject()
-    {
+    public String getSubject() {
         return subject;
     }
 
     /**
-     * Converts the SimpleNNTPHeader to a properly formatted header in
-     * the form of a String, including the blank line used to separate
-     * the header from the article body.
+     * Converts the SimpleNNTPHeader to a properly formatted header in the form of a String, including the blank line used to separate the header from the
+     * article body.
      * <p>
+     *
      * @return The article header in the form of a String.
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         final StringBuilder header = new StringBuilder();
 
         header.append("From: ");

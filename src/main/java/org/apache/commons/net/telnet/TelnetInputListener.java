@@ -18,18 +18,15 @@
 package org.apache.commons.net.telnet;
 
 /**
- * Listener interface used for notification that incoming data is
- * available to be read.
+ * Listener interface used for notification that incoming data is available to be read.
  *
  * @see TelnetClient
  * @since 3.0
  */
-public interface TelnetInputListener
-{
+public interface TelnetInputListener {
 
     /**
-     * Callback method invoked when new incoming data is available on a
-     * {@link TelnetClient}'s {@link TelnetClient#getInputStream input stream}.
+     * Callback method invoked when new incoming data is available on a {@link TelnetClient}'s {@link TelnetClient#getInputStream input stream}.
      *
      * @see TelnetClient#registerInputListener
      */

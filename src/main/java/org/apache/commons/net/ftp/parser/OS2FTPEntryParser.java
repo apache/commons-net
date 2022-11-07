@@ -16,6 +16,7 @@
  */
 
 package org.apache.commons.net.ftp.parser;
+
 import java.text.ParseException;
 
 import org.apache.commons.net.ftp.FTPClientConfig;
@@ -30,110 +31,81 @@ public class OS2FTPEntryParser extends ConfigurableFTPFileEntryParserImpl
 
 {
 
-    private static final String DEFAULT_DATE_FORMAT
-        = "MM-dd-yy HH:mm"; //11-09-01 12:30
+    private static final String DEFAULT_DATE_FORMAT = "MM-dd-yy HH:mm"; // 11-09-01 12:30
     /**
      * this is the regular expression used by this parser.
      */
-    private static final String REGEX =
-        "\\s*([0-9]+)\\s*"
-        + "(\\s+|[A-Z]+)\\s*"
-        + "(DIR|\\s+)\\s*"
-        + "(\\S+)\\s+(\\S+)\\s+" /* date stuff */
-        + "(\\S.*)";
+    private static final String REGEX = "\\s*([0-9]+)\\s*" + "(\\s+|[A-Z]+)\\s*" + "(DIR|\\s+)\\s*" + "(\\S+)\\s+(\\S+)\\s+" /* date stuff */
+            + "(\\S.*)";
 
     /**
      * The default constructor for a OS2FTPEntryParser object.
      *
-     * @throws IllegalArgumentException
-     * Thrown if the regular expression is unparseable.  Should not be seen
-     * under normal conditions.  It it is seen, this is a sign that
-     * <code>REGEX</code> is  not a valid regular expression.
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
+     *                                  sign that <code>REGEX</code> is not a valid regular expression.
      */
-    public OS2FTPEntryParser()
-    {
+    public OS2FTPEntryParser() {
         this(null);
     }
 
     /**
-     * This constructor allows the creation of an OS2FTPEntryParser object
-     * with something other than the default configuration.
+     * This constructor allows the creation of an OS2FTPEntryParser object with something other than the default configuration.
      *
-     * @param config The {@link FTPClientConfig configuration} object used to
-     * configure this parser.
-     * @throws IllegalArgumentException
-     * Thrown if the regular expression is unparseable.  Should not be seen
-     * under normal conditions.  It it is seen, this is a sign that
-     * <code>REGEX</code> is  not a valid regular expression.
+     * @param config The {@link FTPClientConfig configuration} object used to configure this parser.
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
+     *                                  sign that <code>REGEX</code> is not a valid regular expression.
      * @since 1.4
      */
-     public OS2FTPEntryParser(final FTPClientConfig config)
-    {
+    public OS2FTPEntryParser(final FTPClientConfig config) {
         super(REGEX);
         configure(config);
     }
 
     /**
-     * Defines a default configuration to be used when this class is
-     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
-     * parameter being specified.
+     * Defines a default configuration to be used when this class is instantiated without a {@link FTPClientConfig FTPClientConfig} parameter being specified.
+     *
      * @return the default configuration for this parser.
      */
     @Override
     protected FTPClientConfig getDefaultConfiguration() {
-        return new FTPClientConfig(
-                FTPClientConfig.SYST_OS2,
-                DEFAULT_DATE_FORMAT,
-                null);
+        return new FTPClientConfig(FTPClientConfig.SYST_OS2, DEFAULT_DATE_FORMAT, null);
     }
 
     /**
-     * Parses a line of an OS2 FTP server file listing and converts it into a
-     * usable format in the form of an <code> FTPFile </code> instance.  If the
-     * file listing line doesn't describe a file, <code> null </code> is
-     * returned, otherwise a <code> FTPFile </code> instance representing the
-     * files in the directory is returned.
+     * Parses a line of an OS2 FTP server file listing and converts it into a usable format in the form of an <code> FTPFile </code> instance. If the file
+     * listing line doesn't describe a file, <code> null </code> is returned, otherwise a <code> FTPFile </code> instance representing the files in the
+     * directory is returned.
      *
      * @param entry A line of text from the file listing
      * @return An FTPFile instance corresponding to the supplied entry
      */
     @Override
-    public FTPFile parseFTPEntry(final String entry)
-    {
+    public FTPFile parseFTPEntry(final String entry) {
 
         final FTPFile f = new FTPFile();
-        if (matches(entry))
-        {
+        if (matches(entry)) {
             final String size = group(1);
             final String attrib = group(2);
             final String dirString = group(3);
-            final String datestr = group(4)+" "+group(5);
+            final String datestr = group(4) + " " + group(5);
             final String name = group(6);
-            try
-            {
+            try {
                 f.setTimestamp(super.parseTimestamp(datestr));
-            }
-            catch (final ParseException e)
-            {
+            } catch (final ParseException e) {
                 // intentionally do nothing
             }
 
-
-            //is it a DIR or a file
-            if (dirString.trim().equals("DIR") || attrib.trim().equals("DIR"))
-            {
+            // is it a DIR or a file
+            if (dirString.trim().equals("DIR") || attrib.trim().equals("DIR")) {
                 f.setType(FTPFile.DIRECTORY_TYPE);
-            }
-            else
-            {
+            } else {
                 f.setType(FTPFile.FILE_TYPE);
             }
 
-
-            //set the name
+            // set the name
             f.setName(name.trim());
 
-            //set the size
+            // set the size
             f.setSize(Long.parseLong(size.trim()));
 
             return f;

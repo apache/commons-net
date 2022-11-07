@@ -28,12 +28,12 @@ import java.util.regex.PatternSyntaxException;
 import org.apache.commons.net.ftp.FTPClientConfig;
 
 /**
- * Special implementation VMSFTPEntryParser with versioning turned on.
- * This parser removes all duplicates and only leaves the version with the highest
- * version number for each file name.
+ * Special implementation VMSFTPEntryParser with versioning turned on. This parser removes all duplicates and only leaves the version with the highest version
+ * number for each file name.
  * <p>
  * This is a sample of VMS LIST output
  * </p>
+ *
  * <pre>
  *  "1-JUN.LIS;1              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
  *  "1-JUN.LIS;2              9/9           2-JUN-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,RE)",
@@ -42,64 +42,48 @@ import org.apache.commons.net.ftp.FTPClientConfig;
  *
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
-public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
-{
+public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
 
-    private static final String PRE_PARSE_REGEX =
-        "(.*?);([0-9]+)\\s*.*";
+    private static final String PRE_PARSE_REGEX = "(.*?);([0-9]+)\\s*.*";
     private final Pattern preparsePattern;
 
     /**
      * Constructor for a VMSFTPEntryParser object.
      *
-     * @throws IllegalArgumentException
-     * Thrown if the regular expression is unparseable.  Should not be seen
-     * under normal conditions.  It it is seen, this is a sign that
-     * <code>REGEX</code> is  not a valid regular expression.
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
+     *                                  sign that <code>REGEX</code> is not a valid regular expression.
      */
-    public VMSVersioningFTPEntryParser()
-    {
+    public VMSVersioningFTPEntryParser() {
         this(null);
     }
 
     /**
-     * This constructor allows the creation of a VMSVersioningFTPEntryParser
-     * object with something other than the default configuration.
+     * This constructor allows the creation of a VMSVersioningFTPEntryParser object with something other than the default configuration.
      *
-     * @param config The {@link FTPClientConfig configuration} object used to
-     * configure this parser.
-     * @throws IllegalArgumentException
-     * Thrown if the regular expression is unparseable.  Should not be seen
-     * under normal conditions.  It it is seen, this is a sign that
-     * <code>REGEX</code> is  not a valid regular expression.
+     * @param config The {@link FTPClientConfig configuration} object used to configure this parser.
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
+     *                                  sign that <code>REGEX</code> is not a valid regular expression.
      * @since 1.4
      */
-    public VMSVersioningFTPEntryParser(final FTPClientConfig config)
-    {
+    public VMSVersioningFTPEntryParser(final FTPClientConfig config) {
         configure(config);
-        try
-        {
-            //_preparse_matcher_ = new Perl5Matcher();
+        try {
+            // _preparse_matcher_ = new Perl5Matcher();
             preparsePattern = Pattern.compile(PRE_PARSE_REGEX);
-        }
-        catch (final PatternSyntaxException pse)
-        {
-            throw new IllegalArgumentException (
-                "Unparseable regex supplied:  " + PRE_PARSE_REGEX);
+        } catch (final PatternSyntaxException pse) {
+            throw new IllegalArgumentException("Unparseable regex supplied:  " + PRE_PARSE_REGEX);
         }
 
-   }
+    }
 
     @Override
     protected boolean isVersioning() {
         return true;
     }
 
-
     /**
-     * Implement hook provided for those implementers (such as
-     * VMSVersioningFTPEntryParser, and possibly others) which return
-     * multiple files with the same name to remove the duplicates ..
+     * Implement hook provided for those implementers (such as VMSVersioningFTPEntryParser, and possibly others) which return multiple files with the same name
+     * to remove the duplicates ..
      *
      * @param original Original list
      *
@@ -120,7 +104,7 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser
                 final Integer nv = Integer.valueOf(version);
                 final Integer existing = existingEntries.get(name);
                 if ((null != existing) && (nv.intValue() < existing.intValue())) {
-                    iter.remove();  // removes older version from original list.
+                    iter.remove(); // removes older version from original list.
                     continue;
                 }
                 existingEntries.put(name, nv);

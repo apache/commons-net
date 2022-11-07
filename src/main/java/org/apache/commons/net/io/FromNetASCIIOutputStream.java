@@ -22,50 +22,39 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * This class wraps an output stream, replacing all occurrences
- * of &lt;CR&gt;&lt;LF&gt; (carriage return followed by a linefeed),
- * which is the NETASCII standard for representing a newline, with the
- * local line separator representation.  You would use this class to
- * implement ASCII file transfers requiring conversion from NETASCII.
+ * This class wraps an output stream, replacing all occurrences of &lt;CR&gt;&lt;LF&gt; (carriage return followed by a linefeed), which is the NETASCII standard
+ * for representing a newline, with the local line separator representation. You would use this class to implement ASCII file transfers requiring conversion
+ * from NETASCII.
  * <p>
- * Because of the translation process, a call to <code>flush()</code> will
- * not flush the last byte written if that byte was a carriage
- * return.  A call to {@link #close  close() }, however, will
- * flush the carriage return.
+ * Because of the translation process, a call to <code>flush()</code> will not flush the last byte written if that byte was a carriage return. A call to
+ * {@link #close close() }, however, will flush the carriage return.
  *
  *
  */
 
-public final class FromNetASCIIOutputStream extends FilterOutputStream
-{
+public final class FromNetASCIIOutputStream extends FilterOutputStream {
     private boolean lastWasCR;
 
     /**
-     * Creates a FromNetASCIIOutputStream instance that wraps an existing
-     * OutputStream.
+     * Creates a FromNetASCIIOutputStream instance that wraps an existing OutputStream.
      *
-     * @param output  The OutputStream to wrap.
+     * @param output The OutputStream to wrap.
      */
-    public FromNetASCIIOutputStream(final OutputStream output)
-    {
+    public FromNetASCIIOutputStream(final OutputStream output) {
         super(output);
         lastWasCR = false;
     }
 
-
     /**
      * Closes the stream, writing all pending data.
      *
-     * @throws IOException  If an error occurs while closing the stream.
+     * @throws IOException If an error occurs while closing the stream.
      */
     @Override
-    public synchronized void close()
-    throws IOException
-    {
-        if (FromNetASCIIInputStream._noConversionRequired)
-        {
+    public synchronized void close() throws IOException {
+        if (FromNetASCIIInputStream._noConversionRequired) {
             super.close();
-            return ;
+            return;
         }
 
         if (lastWasCR) {
@@ -74,42 +63,32 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
         super.close();
     }
 
-
     /**
      * Writes a byte array to the stream.
      *
-     * @param buffer  The byte array to write.
-     * @throws IOException If an error occurs while writing to the underlying
-     *            stream.
+     * @param buffer The byte array to write.
+     * @throws IOException If an error occurs while writing to the underlying stream.
      */
     @Override
-    public synchronized void write(final byte buffer[])
-    throws IOException
-    {
+    public synchronized void write(final byte buffer[]) throws IOException {
         write(buffer, 0, buffer.length);
     }
 
-
     /**
-     * Writes a number of bytes from a byte array to the stream starting from
-     * a given offset.
+     * Writes a number of bytes from a byte array to the stream starting from a given offset.
      *
-     * @param buffer  The byte array to write.
-     * @param offset  The offset into the array at which to start copying data.
-     * @param length  The number of bytes to write.
-     * @throws IOException If an error occurs while writing to the underlying
-     *            stream.
+     * @param buffer The byte array to write.
+     * @param offset The offset into the array at which to start copying data.
+     * @param length The number of bytes to write.
+     * @throws IOException If an error occurs while writing to the underlying stream.
      */
     @Override
-    public synchronized void write(final byte buffer[], int offset, int length)
-    throws IOException
-    {
-        if (FromNetASCIIInputStream._noConversionRequired)
-        {
+    public synchronized void write(final byte buffer[], int offset, int length) throws IOException {
+        if (FromNetASCIIInputStream._noConversionRequired) {
             // FilterOutputStream method is very slow.
-            //super.write(buffer, offset, length);
+            // super.write(buffer, offset, length);
             out.write(buffer, offset, length);
-            return ;
+            return;
         }
 
         while (length-- > 0) {
@@ -117,44 +96,32 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
         }
     }
 
-
     /**
-     * Writes a byte to the stream.    Note that a call to this method
-     * might not actually write a byte to the underlying stream until a
-     * subsequent character is written, from which it can be determined if
-     * a NETASCII line separator was encountered.
-     * This is transparent to the programmer and is only mentioned for
+     * Writes a byte to the stream. Note that a call to this method might not actually write a byte to the underlying stream until a subsequent character is
+     * written, from which it can be determined if a NETASCII line separator was encountered. This is transparent to the programmer and is only mentioned for
      * completeness.
      *
      * @param ch The byte to write.
-     * @throws IOException If an error occurs while writing to the underlying
-     *            stream.
+     * @throws IOException If an error occurs while writing to the underlying stream.
      */
     @Override
-    public synchronized void write(final int ch)
-    throws IOException
-    {
-        if (FromNetASCIIInputStream._noConversionRequired)
-        {
+    public synchronized void write(final int ch) throws IOException {
+        if (FromNetASCIIInputStream._noConversionRequired) {
             out.write(ch);
-            return ;
+            return;
         }
 
         writeInt(ch);
     }
 
-
-    private void writeInt(final int ch) throws IOException
-    {
-        switch (ch)
-        {
+    private void writeInt(final int ch) throws IOException {
+        switch (ch) {
         case '\r':
             lastWasCR = true;
-            // Don't write anything.  We need to see if next one is linefeed
+            // Don't write anything. We need to see if next one is linefeed
             break;
         case '\n':
-            if (lastWasCR)
-            {
+            if (lastWasCR) {
                 out.write(FromNetASCIIInputStream._lineSeparatorBytes);
                 lastWasCR = false;
                 break;
@@ -162,8 +129,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
             out.write('\n');
             break;
         default:
-            if (lastWasCR)
-            {
+            if (lastWasCR) {
                 out.write('\r');
                 lastWasCR = false;
             }

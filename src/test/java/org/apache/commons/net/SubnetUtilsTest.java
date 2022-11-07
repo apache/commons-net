@@ -252,8 +252,8 @@ public class SubnetUtilsTest extends TestCase {
         final SubnetUtils utils = new SubnetUtils("0.0.0.0/0");
         utils.setInclusiveHostCount(true);
         final SubnetInfo info = utils.getInfo();
-        assertEquals("0.0.0.0",info.getNetworkAddress());
-        assertEquals("255.255.255.255",info.getBroadcastAddress());
+        assertEquals("0.0.0.0", info.getNetworkAddress());
+        assertEquals("255.255.255.255", info.getBroadcastAddress());
         assertTrue(info.isInRange("127.0.0.0"));
         utils.setInclusiveHostCount(false);
         assertTrue(info.isInRange("127.0.0.0"));
@@ -293,16 +293,16 @@ public class SubnetUtilsTest extends TestCase {
 
     public void testNET624() {
         new SubnetUtils("0.0.0.0/0");
-        new SubnetUtils("0.0.0.0","0.0.0.0");
-        new SubnetUtils("0.0.0.0","128.0.0.0");
+        new SubnetUtils("0.0.0.0", "0.0.0.0");
+        new SubnetUtils("0.0.0.0", "128.0.0.0");
         try {
-            new SubnetUtils("0.0.0.0","64.0.0.0");
+            new SubnetUtils("0.0.0.0", "64.0.0.0");
             fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // Ignored
         }
         try {
-            new SubnetUtils("0.0.0.0","0.0.0.1");
+            new SubnetUtils("0.0.0.0", "0.0.0.1");
             fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // Ignored
@@ -339,18 +339,13 @@ public class SubnetUtilsTest extends TestCase {
     public void testParseSimpleNetmask() {
         final String address = "192.168.0.1";
         final String masks[] = { "255.0.0.0", "255.255.0.0", "255.255.255.0", "255.255.255.248" };
-        final String bcastAddresses[] = { "192.255.255.255", "192.168.255.255", "192.168.0.255",
-                "192.168.0.7" };
+        final String bcastAddresses[] = { "192.255.255.255", "192.168.255.255", "192.168.0.255", "192.168.0.7" };
         final String lowAddresses[] = { "192.0.0.1", "192.168.0.1", "192.168.0.1", "192.168.0.1" };
-        final String highAddresses[] = { "192.255.255.254", "192.168.255.254", "192.168.0.254",
-                "192.168.0.6" };
-        final String nextAddresses[] = { "192.168.0.2", "192.168.0.2", "192.168.0.2",
-                "192.168.0.2" };
-        final String previousAddresses[] = { "192.168.0.0", "192.168.0.0", "192.168.0.0",
-                "192.168.0.0" };
+        final String highAddresses[] = { "192.255.255.254", "192.168.255.254", "192.168.0.254", "192.168.0.6" };
+        final String nextAddresses[] = { "192.168.0.2", "192.168.0.2", "192.168.0.2", "192.168.0.2" };
+        final String previousAddresses[] = { "192.168.0.0", "192.168.0.0", "192.168.0.0", "192.168.0.0" };
         final String networkAddresses[] = { "192.0.0.0", "192.168.0.0", "192.168.0.0", "192.168.0.0" };
-        final String cidrSignatures[] = { "192.168.0.1/8", "192.168.0.1/16", "192.168.0.1/24",
-                "192.168.0.1/29" };
+        final String cidrSignatures[] = { "192.168.0.1/8", "192.168.0.1/16", "192.168.0.1/24", "192.168.0.1/29" };
         final int usableAddresses[] = { 16777214, 65534, 254, 6 };
 
         for (int i = 0; i < masks.length; ++i) {

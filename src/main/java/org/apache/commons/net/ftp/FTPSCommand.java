@@ -19,6 +19,7 @@ package org.apache.commons.net.ftp;
 
 /**
  * FTPS-specific commands.
+ *
  * @since 2.0
  * @deprecated 3.0 DO NOT USE
  */
@@ -36,15 +37,13 @@ public final class FTPSCommand {
     public static final int DATA_CHANNEL_PROTECTION_LEVEL = PROT;
     public static final int CLEAR_COMMAND_CHANNEL = CCC;
 
-    private static final String[] commands = {"AUTH","ADAT","PBSZ","PROT","CCC"};
+    private static final String[] commands = { "AUTH", "ADAT", "PBSZ", "PROT", "CCC" };
 
     /**
-     * Retrieve the FTPS command string corresponding to a specified
-     * command code.
+     * Retrieve the FTPS command string corresponding to a specified command code.
      *
      * @param command The command code.
-     * @return The FTPS command string corresponding to a specified
-     *  command code.
+     * @return The FTPS command string corresponding to a specified command code.
      */
     public static String getCommand(final int command) {
         return commands[command];

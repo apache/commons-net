@@ -42,8 +42,8 @@ import org.apache.commons.net.imap.IMAPClient;
 import org.apache.commons.net.imap.IMAPReply;
 
 /**
- * This is an example program demonstrating how to use the IMAP[S]Client class.
- * This program connects to a IMAP[S] server and exports selected messages from a folder into an mbox file.
+ * This is an example program demonstrating how to use the IMAP[S]Client class. This program connects to a IMAP[S] server and exports selected messages from a
+ * folder into an mbox file.
  * <p>
  * Usage: IMAPExportMbox imap[s]://user:password@host[:port]/folder/path <mboxfile> [sequence-set] [item-names]
  * <p>
@@ -72,14 +72,12 @@ import org.apache.commons.net.imap.IMAPReply;
  * IMAPExportMbox imaps://username:password@imap.googlemail.com/messages_for_export exported.mbox 3 ENVELOPE X-GM-LABELS<br>
  * <p>
  * The sequence-set is passed unmodified to the FETCH command.<br>
- * The item names are wrapped in parentheses if more than one is provided.
- * Otherwise, the parameter is assumed to be wrapped if necessary.<br>
+ * The item names are wrapped in parentheses if more than one is provided. Otherwise, the parameter is assumed to be wrapped if necessary.<br>
  * Parameters with spaces must be quoted otherwise the OS shell will normally treat them as separate parameters.<br>
- * Also the listener that writes the mailbox only captures the multi-line responses (e.g. ones that include BODY references).
- * It does not capture the output from FETCH commands using item names such as ENVELOPE or FLAGS that return a single line response.
+ * Also the listener that writes the mailbox only captures the multi-line responses (e.g. ones that include BODY references). It does not capture the output
+ * from FETCH commands using item names such as ENVELOPE or FLAGS that return a single line response.
  */
-public final class IMAPExportMbox
-{
+public final class IMAPExportMbox {
 
     private static class MboxListener implements IMAPChunkListener {
 
@@ -90,7 +88,7 @@ public final class IMAPExportMbox
         volatile long lastSeq = -1;
         private final String lineSeparator;
         private final SimpleDateFormat DATE_FORMAT // for mbox From_ lines
-            = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy");
+                = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy");
 
         // e.g. INTERNALDATE "27-Oct-2013 07:43:24 +0000"
         // for parsing INTERNALDATE
@@ -99,8 +97,8 @@ public final class IMAPExportMbox
         private final boolean printMarker;
         private final boolean checkSequence;
 
-        MboxListener(final BufferedWriter bufferedWriter, final String lineSeparator, final boolean printHash,
-            final boolean printMarker, final boolean checkSequence) {
+        MboxListener(final BufferedWriter bufferedWriter, final String lineSeparator, final boolean printHash, final boolean printMarker,
+                final boolean checkSequence) {
             this.lineSeparator = lineSeparator;
             this.printHash = printHash;
             this.printMarker = printMarker;
@@ -118,7 +116,7 @@ public final class IMAPExportMbox
             if (m.lookingAt()) { // found a match
                 final String date = m.group(PATID_DATE_GROUP);
                 try {
-                    received=IDPARSE.parse(date);
+                    received = IDPARSE.parse(date);
                 } catch (final ParseException e) {
                     System.err.println(e);
                 }
@@ -126,7 +124,7 @@ public final class IMAPExportMbox
                 System.err.println("No timestamp found in: " + firstLine + "  - using current time");
             }
             String replyTo = "MAILER-DAEMON"; // default
-            for(int i=1; i< replyStrings.length - 1; i++) {
+            for (int i = 1; i < replyStrings.length - 1; i++) {
                 final String line = replyStrings[i];
                 if (line.startsWith("Return-Path: ")) {
                     final String[] parts = line.split(" ", 2);
@@ -134,9 +132,9 @@ public final class IMAPExportMbox
                         replyTo = parts[1];
                         if (replyTo.startsWith("<")) {
                             if (replyTo.endsWith(">")) {
-                                replyTo = replyTo.substring(1,replyTo.length()-1); // drop <> wrapper
+                                replyTo = replyTo.substring(1, replyTo.length() - 1); // drop <> wrapper
                             } else {
-                                System.err.println("Unexpected Return-path: '" + line+ "' in " + firstLine);
+                                System.err.println("Unexpected Return-path: '" + line + "' in " + firstLine);
                             }
                         }
                     }
@@ -156,19 +154,19 @@ public final class IMAPExportMbox
                     System.err.println("[" + total + "] " + firstLine);
                 }
                 // Skip first and last lines
-                for(int i=1; i< replyStrings.length - 1; i++) {
+                for (int i = 1; i < replyStrings.length - 1; i++) {
                     final String line = replyStrings[i];
-                        if (startsWith(line, PATFROM)) {
-                            bufferedWriter.append('>'); // Escape a From_ line
-                        }
-                        bufferedWriter.append(line);
-                        bufferedWriter.append(lineSeparator);
+                    if (startsWith(line, PATFROM)) {
+                        bufferedWriter.append('>'); // Escape a From_ line
+                    }
+                    bufferedWriter.append(line);
+                    bufferedWriter.append(lineSeparator);
                 }
                 // The last line ends with the trailing closing ")" which needs to be stripped
-                final String lastLine = replyStrings[replyStrings.length-1];
+                final String lastLine = replyStrings[replyStrings.length - 1];
                 final int lastLength = lastLine.length();
                 if (lastLength > 1) { // there's some content, we need to save it
-                    bufferedWriter.append(lastLine, 0, lastLength-1);
+                    bufferedWriter.append(lastLine, 0, lastLength - 1);
                     bufferedWriter.append(lineSeparator);
                 }
                 bufferedWriter.append(lineSeparator); // blank line between entries
@@ -185,11 +183,10 @@ public final class IMAPExportMbox
                     if (lastSeq != -1) {
                         final long missing = msgSeq - lastSeq - 1;
                         if (missing != 0) {
-                            for(long j = lastSeq + 1; j < msgSeq; j++) {
+                            for (long j = lastSeq + 1; j < msgSeq; j++) {
                                 missingIds.add(String.valueOf(j));
                             }
-                            System.err.println(
-                                "*** Sequence error: current=" + msgSeq + " previous=" + lastSeq + " Missing=" + missing);
+                            System.err.println("*** Sequence error: current=" + msgSeq + " previous=" + lastSeq + " Missing=" + missing);
                         }
                     }
                     lastSeq = msgSeq;
@@ -207,12 +204,13 @@ public final class IMAPExportMbox
             }
         }
     }
+
     private static final String CRLF = "\r\n";
     private static final String LF = "\n";
 
     private static final String EOL_DEFAULT = System.getProperty("line.separator");
     private static final Pattern PATFROM = Pattern.compile(">*From "); // unescaped From_
-    // e.g. * nnn (INTERNALDATE "27-Oct-2013 07:43:24 +0000"  BODY[] {nn} ...)
+    // e.g. * nnn (INTERNALDATE "27-Oct-2013 07:43:24 +0000" BODY[] {nn} ...)
     private static final Pattern PATID = // INTERNALDATE
             Pattern.compile(".*INTERNALDATE \"(\\d\\d-\\w{3}-\\d{4} \\d\\d:\\d\\d:\\d\\d [+-]\\d+)\"");
 
@@ -230,8 +228,7 @@ public final class IMAPExportMbox
 
     private static final int READ_TIMEOUT = 10;
 
-    public static void main(final String[] args) throws IOException, URISyntaxException
-    {
+    public static void main(final String[] args) throws IOException, URISyntaxException {
         int connect_timeout = CONNECT_TIMEOUT;
         int read_timeout = READ_TIMEOUT;
 
@@ -241,7 +238,7 @@ public final class IMAPExportMbox
         boolean printMarker = false;
         int retryWaitSecs = 0;
 
-        for(argIdx = 0; argIdx < args.length; argIdx++) {
+        for (argIdx = 0; argIdx < args.length; argIdx++) {
             if (args[argIdx].equals("-c")) {
                 connect_timeout = Integer.parseInt(args[++argIdx]);
             } else if (args[argIdx].equals("-r")) {
@@ -263,10 +260,9 @@ public final class IMAPExportMbox
 
         final int argCount = args.length - argIdx;
 
-        if (argCount < 2)
-        {
-            System.err.println("Usage: IMAPExportMbox [-LF|-CRLF] [-c n] [-r n] [-R n] [-.] [-X]" +
-                               " imap[s]://user:password@host[:port]/folder/path [+|-]<mboxfile> [sequence-set] [itemnames]");
+        if (argCount < 2) {
+            System.err.println("Usage: IMAPExportMbox [-LF|-CRLF] [-c n] [-r n] [-R n] [-.] [-X]"
+                    + " imap[s]://user:password@host[:port]/folder/path [+|-]<mboxfile> [sequence-set] [itemnames]");
             System.err.println("\t-LF | -CRLF set end-of-line to LF or CRLF (default is the line.separator system property)");
             System.err.println("\t-c connect timeout in seconds (default 10)");
             System.err.println("\t-r read timeout in seconds (default 10)");
@@ -276,8 +272,8 @@ public final class IMAPExportMbox
             System.err.println("\tthe mboxfile is where the messages are stored; use '-' to write to standard output.");
             System.err.println("\tPrefix file name with '+' to append to the file. Prefix with '-' to allow overwrite.");
             System.err.println("\ta sequence-set is a list of numbers/number ranges e.g. 1,2,3-10,20:* - default 1:*");
-            System.err.println("\titemnames are the message data item name(s) e.g. BODY.PEEK[HEADER.FIELDS (SUBJECT)]" +
-                               " or a macro e.g. ALL - default (INTERNALDATE BODY.PEEK[])");
+            System.err.println("\titemnames are the message data item name(s) e.g. BODY.PEEK[HEADER.FIELDS (SUBJECT)]"
+                    + " or a macro e.g. ALL - default (INTERNALDATE BODY.PEEK[])");
             System.exit(1);
         }
 
@@ -285,7 +281,7 @@ public final class IMAPExportMbox
         URI uri;
         try {
             uri = URI.create(uriString);
-        } catch(final IllegalArgumentException e) { // cannot parse the path as is; let's pull it apart and try again
+        } catch (final IllegalArgumentException e) { // cannot parse the path as is; let's pull it apart and try again
             final Matcher m = Pattern.compile("(imaps?://[^/]+)(/.*)").matcher(uriString);
             if (!m.matches()) {
                 throw e;
@@ -293,7 +289,7 @@ public final class IMAPExportMbox
             uri = URI.create(m.group(1)); // Just the scheme and auth parts
             uri = new URI(uri.getScheme(), uri.getAuthority(), m.group(2), null, null);
         }
-        final String file  = args[argIdx++];
+        final String file = args[argIdx++];
         String sequenceSet = argCount > 2 ? args[argIdx++] : "1:*";
         final String itemNames;
         // Handle 0, 1 or multiple item names
@@ -301,8 +297,8 @@ public final class IMAPExportMbox
             if (argCount > 4) {
                 final StringBuilder sb = new StringBuilder();
                 sb.append("(");
-                for(int i=4; i <= argCount; i++) {
-                    if (i>4) {
+                for (int i = 4; i <= argCount; i++) {
+                    if (i > 4) {
                         sb.append(" ");
                     }
                     sb.append(args[argIdx++]);
@@ -323,21 +319,18 @@ public final class IMAPExportMbox
         } else if (file.startsWith("+")) {
             final File mbox = new File(file.substring(1));
             System.out.println("Appending to file " + mbox);
-            mboxListener = new MboxListener(
-                new BufferedWriter(new FileWriter(mbox, true)), eol, printHash, printMarker, checkSequence);
+            mboxListener = new MboxListener(new BufferedWriter(new FileWriter(mbox, true)), eol, printHash, printMarker, checkSequence);
         } else if (file.startsWith("-")) {
             final File mbox = new File(file.substring(1));
             System.out.println("Writing to file " + mbox);
-            mboxListener = new MboxListener(
-                new BufferedWriter(new FileWriter(mbox, false)), eol, printHash, printMarker, checkSequence);
+            mboxListener = new MboxListener(new BufferedWriter(new FileWriter(mbox, false)), eol, printHash, printMarker, checkSequence);
         } else {
             final File mboxFile = new File(file);
             if (mboxFile.exists() && mboxFile.length() > 0) {
                 throw new IOException("mailbox file: " + mboxFile + " already exists and is non-empty!");
             }
             System.out.println("Creating file " + mboxFile);
-            mboxListener = new MboxListener(new BufferedWriter(new FileWriter(mboxFile)), eol, printHash, printMarker,
-                    checkSequence);
+            mboxListener = new MboxListener(new BufferedWriter(new FileWriter(mboxFile)), eol, printHash, printMarker, checkSequence);
         }
 
         final String path = uri.getPath();
@@ -350,7 +343,7 @@ public final class IMAPExportMbox
         final PrintCommandListener listener = new PrintCommandListener(System.out, true) {
             @Override
             public void protocolReplyReceived(final ProtocolCommandEvent event) {
-                if (event.getReplyCode() != IMAPReply.PARTIAL){ // This is dealt with by the chunk listener
+                if (event.getReplyCode() != IMAPReply.PARTIAL) { // This is dealt with by the chunk listener
                     super.protocolReplyReceived(event);
                 }
             }
@@ -365,11 +358,11 @@ public final class IMAPExportMbox
 
             imap.setSoTimeout(read_timeout * 1000);
 
-            if (!imap.select(folder)){
+            if (!imap.select(folder)) {
                 throw new IOException("Could not select folder: " + folder);
             }
 
-            for(final String line : imap.getReplyStrings()) {
+            for (final String line : imap.getReplyStrings()) {
                 maxIndexInFolder = matches(line, PATEXISTS, 1);
                 if (maxIndexInFolder != null) {
                     break;
@@ -380,19 +373,18 @@ public final class IMAPExportMbox
                 imap.setChunkListener(mboxListener);
             } // else the command listener displays the full output without processing
 
-
             while (true) {
                 final boolean ok = imap.fetch(sequenceSet, itemNames);
                 // If the fetch failed, can we retry?
                 if (ok || (retryWaitSecs <= 0) || (mboxListener == null) || !checkSequence) {
                     break;
                 }
-                final String replyString = imap.getReplyString(); //includes EOL
+                final String replyString = imap.getReplyString(); // includes EOL
                 if (!startsWith(replyString, PATTEMPFAIL)) {
-                    throw new IOException("FETCH " + sequenceSet + " " + itemNames+ " failed with " + replyString);
+                    throw new IOException("FETCH " + sequenceSet + " " + itemNames + " failed with " + replyString);
                 }
                 System.err.println("Temporary error detected, will retry in " + retryWaitSecs + "seconds");
-                sequenceSet = mboxListener.lastSeq+1+":*";
+                sequenceSet = mboxListener.lastSeq + 1 + ":*";
                 try {
                     Thread.sleep(retryWaitSecs * 1000);
                 } catch (final InterruptedException e) {
@@ -402,10 +394,9 @@ public final class IMAPExportMbox
 
         } catch (final IOException ioe) {
             final String count = mboxListener == null ? "?" : mboxListener.total.toString();
-            System.err.println(
-                    "FETCH " + sequenceSet + " " + itemNames + " failed after processing " + count + " complete messages ");
+            System.err.println("FETCH " + sequenceSet + " " + itemNames + " failed after processing " + count + " complete messages ");
             if (mboxListener != null) {
-                System.err.println("Last complete response seen: "+mboxListener.lastFetched);
+                System.err.println("Last complete response seen: " + mboxListener.lastFetched);
             }
             throw ioe;
         } finally {
@@ -419,7 +410,7 @@ public final class IMAPExportMbox
                 final Iterator<String> missingIds = mboxListener.missingIds.iterator();
                 if (missingIds.hasNext()) {
                     final StringBuilder sb = new StringBuilder();
-                    for(;;) {
+                    for (;;) {
                         sb.append(missingIds.next());
                         if (!missingIds.hasNext()) {
                             break;

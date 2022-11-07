@@ -33,23 +33,20 @@ public class Main {
 
     private static boolean fromJar() {
         final CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
-        if ( codeSource != null) {
+        if (codeSource != null) {
             return codeSource.getLocation().getFile().endsWith(".jar");
         }
         return false; // No idea if this can happen
     }
 
     /**
-     * Helper application for example classes.
-     * Lists available classes, and provides shorthand invocation.
-     * For example:<br>
+     * Helper application for example classes. Lists available classes, and provides shorthand invocation. For example:<br>
      * <code>java -jar commons-net-examples-m.n.jar FTPClientExample -l host user password</code>
      *
-     * @param args the first argument is used to name the class; remaining arguments
-     * are passed to the target class.
+     * @param args the first argument is used to name the class; remaining arguments are passed to the target class.
      * @throws Throwable if an error occurs
      */
-    public static void main(final String[] args) throws Throwable  {
+    public static void main(final String[] args) throws Throwable {
         final Properties fp = new Properties();
         final InputStream ras = Main.class.getResourceAsStream("examples.properties");
         if (ras != null) {
@@ -59,27 +56,24 @@ public class Main {
         }
         if (args.length == 0) {
             if (Thread.currentThread().getStackTrace().length > 2) { // called by Maven
-                System.out.println("Usage: mvn -q exec:java  -Dexec.arguments=<alias or" +
-                                    " exampleClass>,<exampleClass parameters> (comma-separated, no spaces)");
-                System.out.println("Or   : mvn -q exec:java  -Dexec.args=\"<alias" +
-                                    " or exampleClass> <exampleClass parameters>\" (space separated)");
-            } else if (fromJar()) {
                 System.out.println(
-                    "Usage: java -jar commons-net-examples-m.n.jar <alias or exampleClass> <exampleClass parameters>");
+                        "Usage: mvn -q exec:java  -Dexec.arguments=<alias or" + " exampleClass>,<exampleClass parameters> (comma-separated, no spaces)");
+                System.out.println("Or   : mvn -q exec:java  -Dexec.args=\"<alias" + " or exampleClass> <exampleClass parameters>\" (space separated)");
+            } else if (fromJar()) {
+                System.out.println("Usage: java -jar commons-net-examples-m.n.jar <alias or exampleClass> <exampleClass parameters>");
             } else {
-                System.out.println("Usage: java -cp target/classes org.apache.commons.net.examples.Main" +
-                                   " <alias or exampleClass> <exampleClass parameters>");
+                System.out
+                        .println("Usage: java -cp target/classes org.apache.commons.net.examples.Main" + " <alias or exampleClass> <exampleClass parameters>");
             }
             @SuppressWarnings("unchecked") // property names are Strings
-            final
-            List<String> l = (List<String>) Collections.list(fp.propertyNames());
+            final List<String> l = (List<String>) Collections.list(fp.propertyNames());
             if (l.isEmpty()) {
                 return;
             }
             l.sort(null);
             System.out.println("\nAliases and their classes:");
-            for(final String s : l) {
-                System.out.printf("%-25s %s%n",s,fp.getProperty(s));
+            for (final String s : l) {
+                System.out.printf("%-25s %s%n", s, fp.getProperty(s));
             }
             return;
         }
@@ -92,10 +86,10 @@ public class Main {
         try {
             final Class<?> clazz = Class.forName(fullName);
             final Method m = clazz.getDeclaredMethod("main", args.getClass());
-            final String[] args2 = new String[args.length-1];
+            final String[] args2 = new String[args.length - 1];
             System.arraycopy(args, 1, args2, 0, args2.length);
             try {
-                m.invoke(null, (Object)args2);
+                m.invoke(null, (Object) args2);
             } catch (final InvocationTargetException ite) {
                 final Throwable cause = ite.getCause();
                 if (cause != null) {

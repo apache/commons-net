@@ -28,15 +28,13 @@ public class TestNtpPacket {
     // pre-canned NTP packet
     // [version:3, mode:4, poll:4, refId=0x81531472, precision:-17, delay:100, dispersion(ms):51.605224609375,
     // id:129.83.20.114, xmitTime:Thu, May 30 2013 17:46:01.295, etc. ]
-    static final byte[] ntpPacket = hexStringToByteArray(
-            "1c0304ef0000006400000d3681531472d552447fec1d6000d5524718ac49ba5ed55247194b6d9000d55247194b797000");
+    static final byte[] ntpPacket = hexStringToByteArray("1c0304ef0000006400000d3681531472d552447fec1d6000d5524718ac49ba5ed55247194b6d9000d55247194b797000");
 
     private static byte[] hexStringToByteArray(final String s) {
         final int len = s.length();
         final byte[] data = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {
-            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-                    + Character.digit(s.charAt(i+1), 16));
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4) + Character.digit(s.charAt(i + 1), 16));
         }
         return data;
     }
@@ -44,15 +42,15 @@ public class TestNtpPacket {
     @Test
     public void testCreate() {
         final NtpV3Packet message = new NtpV3Impl();
-        message.setLeapIndicator(0);             // byte 0 [bit numbers 7-6]
+        message.setLeapIndicator(0); // byte 0 [bit numbers 7-6]
         message.setVersion(NtpV3Packet.VERSION_3); // byte 0 [bit numbers 5-4]
-        message.setMode(4);                         // byte 0 [bit numbers 3-0]
-        message.setStratum(3);                     // byte 1
-        message.setPoll(4);                          // byte 2
-        message.setPrecision(-17);                 // byte 3
-        message.setRootDelay(100);                 // bytes 4-7
-        message.setRootDispersion(3382);         // bytes 8-11
-        message.setReferenceId(0x81531472);         // byte 12-15
+        message.setMode(4); // byte 0 [bit numbers 3-0]
+        message.setStratum(3); // byte 1
+        message.setPoll(4); // byte 2
+        message.setPrecision(-17); // byte 3
+        message.setRootDelay(100); // bytes 4-7
+        message.setRootDispersion(3382); // bytes 8-11
+        message.setReferenceId(0x81531472); // byte 12-15
         message.setReferenceTime(new TimeStamp(0xd552447fec1d6000L));
         message.setOriginateTimeStamp(new TimeStamp(0xd5524718ac49ba5eL));
         message.setReceiveTimeStamp(new TimeStamp(0xd55247194b6d9000L));
@@ -140,7 +138,7 @@ public class TestNtpPacket {
     @Test
     public void testCreateFromBadPacket() {
         final NtpV3Packet message = new NtpV3Impl();
-        final DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length-4); // drop 4-bytes from packet
+        final DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length - 4); // drop 4-bytes from packet
         assertThrows(IllegalArgumentException.class, () -> message.setDatagramPacket(dp));
     }
 

@@ -21,47 +21,37 @@ import java.io.Reader;
 import junit.framework.TestCase;
 
 /**
- * The POP3* tests all presume the existence of the following parameters:
- *   mailserver: localhost (running on the default port 110)
- *   account: username=test; password=password
- *   account: username=alwaysempty; password=password.
- *   mail: At least four emails in the test account and zero emails
- *         in the alwaysempty account
+ * The POP3* tests all presume the existence of the following parameters: mailserver: localhost (running on the default port 110) account: username=test;
+ * password=password account: username=alwaysempty; password=password. mail: At least four emails in the test account and zero emails in the alwaysempty account
  *
- * If this won't work for you, you can change these parameters in the
- * TestSetupParameters class.
+ * If this won't work for you, you can change these parameters in the TestSetupParameters class.
  *
- * The tests were originally run on a default installation of James.
- * Your mileage may vary based on the POP3 server you run the tests against.
- * Some servers are more standards-compliant than others.
+ * The tests were originally run on a default installation of James. Your mileage may vary based on the POP3 server you run the tests against. Some servers are
+ * more standards-compliant than others.
  */
-public class POP3ConstructorTest extends TestCase
-{
+public class POP3ConstructorTest extends TestCase {
     String user = POP3Constants.user;
     String emptyUser = POP3Constants.emptyuser;
     String password = POP3Constants.password;
     String mailhost = POP3Constants.mailhost;
 
-    public POP3ConstructorTest(final String name)
-    {
+    public POP3ConstructorTest(final String name) {
         super(name);
     }
 
     /*
-     * This test will ensure that the constants are not inadvertently changed.
-     * If the constants are changed in org.apache.commons.net.pop3 for some
-     * reason, this test will have to be updated.
+     * This test will ensure that the constants are not inadvertently changed. If the constants are changed in org.apache.commons.net.pop3 for some reason, this
+     * test will have to be updated.
      */
-    public void testConstants()
-    {
-        //From POP3
+    public void testConstants() {
+        // From POP3
         assertEquals(110, POP3.DEFAULT_PORT);
         assertEquals(-1, POP3.DISCONNECTED_STATE);
         assertEquals(0, POP3.AUTHORIZATION_STATE);
         assertEquals(1, POP3.TRANSACTION_STATE);
         assertEquals(2, POP3.UPDATE_STATE);
 
-        //From POP3Command
+        // From POP3Command
         assertEquals(0, POP3Command.USER);
         assertEquals(1, POP3Command.PASS);
         assertEquals(2, POP3Command.QUIT);
@@ -76,35 +66,33 @@ public class POP3ConstructorTest extends TestCase
         assertEquals(11, POP3Command.UIDL);
     }
 
-    public void testPOP3ClientStateTransition() throws Exception
-    {
+    public void testPOP3ClientStateTransition() throws Exception {
         final POP3Client pop = new POP3Client();
 
-        //Initial state
+        // Initial state
         assertEquals(110, pop.getDefaultPort());
         assertEquals(POP3.DISCONNECTED_STATE, pop.getState());
         assertNull(pop.reader);
         assertNotNull(pop.replyLines);
 
-        //Now connect
+        // Now connect
         pop.connect(mailhost);
         assertEquals(POP3.AUTHORIZATION_STATE, pop.getState());
 
-        //Now authenticate
+        // Now authenticate
         pop.login(user, password);
         assertEquals(POP3.TRANSACTION_STATE, pop.getState());
 
-        //Now do a series of commands and make sure the state stays as it should
+        // Now do a series of commands and make sure the state stays as it should
         pop.noop();
         assertEquals(POP3.TRANSACTION_STATE, pop.getState());
         pop.status();
         assertEquals(POP3.TRANSACTION_STATE, pop.getState());
 
-        //Make sure we have at least one message to test
+        // Make sure we have at least one message to test
         final POP3MessageInfo[] msg = pop.listMessages();
 
-        if (msg.length > 0)
-        {
+        if (msg.length > 0) {
             pop.deleteMessage(1);
             assertEquals(POP3.TRANSACTION_STATE, pop.getState());
 
@@ -126,9 +114,8 @@ public class POP3ConstructorTest extends TestCase
             Reader r = pop.retrieveMessage(1);
             assertEquals(POP3.TRANSACTION_STATE, pop.getState());
 
-            //Add some sleep here to handle network latency
-            while(!r.ready())
-            {
+            // Add some sleep here to handle network latency
+            while (!r.ready()) {
                 Thread.sleep(10);
             }
             r.close();
@@ -137,9 +124,8 @@ public class POP3ConstructorTest extends TestCase
             r = pop.retrieveMessageTop(1, 10);
             assertEquals(POP3.TRANSACTION_STATE, pop.getState());
 
-            //Add some sleep here to handle network latency
-            while(!r.ready())
-            {
+            // Add some sleep here to handle network latency
+            while (!r.ready()) {
                 Thread.sleep(10);
             }
             r.close();
@@ -147,13 +133,12 @@ public class POP3ConstructorTest extends TestCase
 
         }
 
-        //Now logout
+        // Now logout
         pop.logout();
         assertEquals(POP3.UPDATE_STATE, pop.getState());
     }
 
-    public void testPOP3DefaultConstructor()
-    {
+    public void testPOP3DefaultConstructor() {
         final POP3 pop = new POP3();
 
         assertEquals(110, pop.getDefaultPort());

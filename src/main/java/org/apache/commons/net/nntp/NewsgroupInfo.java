@@ -18,25 +18,17 @@
 package org.apache.commons.net.nntp;
 
 /**
- * NewsgroupInfo stores information pertaining to a newsgroup returned by
- * the NNTP GROUP, LIST, and NEWGROUPS commands, implemented by
- * {@link org.apache.commons.net.nntp.NNTPClient#selectNewsgroup selectNewsgroup }
- * ,
- * {@link org.apache.commons.net.nntp.NNTPClient#listNewsgroups listNewsgroups }
- * , and
- * {@link org.apache.commons.net.nntp.NNTPClient#listNewNewsgroups listNewNewsgroups }
- *  respectively.
+ * NewsgroupInfo stores information pertaining to a newsgroup returned by the NNTP GROUP, LIST, and NEWGROUPS commands, implemented by
+ * {@link org.apache.commons.net.nntp.NNTPClient#selectNewsgroup selectNewsgroup } , {@link org.apache.commons.net.nntp.NNTPClient#listNewsgroups listNewsgroups
+ * } , and {@link org.apache.commons.net.nntp.NNTPClient#listNewNewsgroups listNewNewsgroups } respectively.
  *
  * @see NNTPClient
  */
 
-public final class NewsgroupInfo
-{
+public final class NewsgroupInfo {
     /**
-     * A constant indicating that the posting permission of a newsgroup is
-     * unknown.  For example, the NNTP GROUP command does not return posting
-     * information, so NewsgroupInfo instances obtained from that command
-     * willhave an UNKNOWN_POSTING_PERMISSION.
+     * A constant indicating that the posting permission of a newsgroup is unknown. For example, the NNTP GROUP command does not return posting information, so
+     * NewsgroupInfo instances obtained from that command willhave an UNKNOWN_POSTING_PERMISSION.
      */
     public static final int UNKNOWN_POSTING_PERMISSION = 0;
 
@@ -63,13 +55,12 @@ public final class NewsgroupInfo
     }
 
     /**
-     * Get the estimated number of articles in the newsgroup.  The
-     * accuracy of this value will depend on the server implementation.
+     * Get the estimated number of articles in the newsgroup. The accuracy of this value will depend on the server implementation.
      * <p>
+     *
      * @return The estimated number of articles in the newsgroup.
      */
-    public long getArticleCountLong()
-    {
+    public long getArticleCountLong() {
         return estimatedArticleCount;
     }
 
@@ -81,10 +72,10 @@ public final class NewsgroupInfo
     /**
      * Get the number of the first article in the newsgroup.
      * <p>
+     *
      * @return The number of the first article in the newsgroup.
      */
-    public long getFirstArticleLong()
-    {
+    public long getFirstArticleLong() {
         return firstArticle;
     }
 
@@ -96,76 +87,58 @@ public final class NewsgroupInfo
     /**
      * Get the number of the last article in the newsgroup.
      * <p>
+     *
      * @return The number of the last article in the newsgroup.
      */
-    public long getLastArticleLong()
-    {
+    public long getLastArticleLong() {
         return lastArticle;
     }
 
     /**
      * Get the newsgroup name.
      * <p>
+     *
      * @return The name of the newsgroup.
      */
-    public String getNewsgroup()
-    {
+    public String getNewsgroup() {
         return newsgroup;
     }
 
     /**
-     * Get the posting permission of the newsgroup.  This will be one of
-     * the <code> POSTING_PERMISSION </code> constants.
+     * Get the posting permission of the newsgroup. This will be one of the <code> POSTING_PERMISSION </code> constants.
      * <p>
+     *
      * @return The posting permission status of the newsgroup.
      */
-    public int getPostingPermission()
-    {
+    public int getPostingPermission() {
         return postingPermission;
     }
 
-    void setArticleCount(final long count)
-    {
+    void setArticleCount(final long count) {
         estimatedArticleCount = count;
     }
 
-    void setFirstArticle(final long first)
-    {
+    void setFirstArticle(final long first) {
         firstArticle = first;
     }
 
     /*
-    public String toString() {
-      StringBuilder buffer = new StringBuilder();
-      buffer.append(__newsgroup);
-      buffer.append(' ');
-      buffer.append(__lastArticle);
-      buffer.append(' ');
-      buffer.append(__firstArticle);
-      buffer.append(' ');
-      switch(__postingPermission) {
-        case 1: buffer.append('m'); break;
-        case 2: buffer.append('y'); break;
-        case 3: buffer.append('n'); break;
-      }
-      return buffer.toString();
-}
-    */
+     * public String toString() { StringBuilder buffer = new StringBuilder(); buffer.append(__newsgroup); buffer.append(' '); buffer.append(__lastArticle);
+     * buffer.append(' '); buffer.append(__firstArticle); buffer.append(' '); switch(__postingPermission) { case 1: buffer.append('m'); break; case 2:
+     * buffer.append('y'); break; case 3: buffer.append('n'); break; } return buffer.toString(); }
+     */
 
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE
 
-    void setLastArticle(final long last)
-    {
+    void setLastArticle(final long last) {
         lastArticle = last;
     }
 
-    void setNewsgroup(final String newsgroup)
-    {
+    void setNewsgroup(final String newsgroup) {
         this.newsgroup = newsgroup;
     }
 
-    void setPostingPermission(final int permission)
-    {
+    void setPostingPermission(final int permission) {
         postingPermission = permission;
     }
 }

@@ -40,7 +40,7 @@ public class Base64Test {
     public void testBase64Boolean() {
         final Base64 b64 = new Base64(true);
         assertTrue(b64.isUrlSafe());
-        assertArrayEquals(new byte[]{'\r', '\n'}, b64.getLineSeparator());
+        assertArrayEquals(new byte[] { '\r', '\n' }, b64.getLineSeparator());
     }
 
     @Test
@@ -56,69 +56,77 @@ public class Base64Test {
     @Test
     public void testBase64IntByteArray() {
         final Base64 b64;
-        b64 = new Base64(8, new byte[]{});
+        b64 = new Base64(8, new byte[] {});
         assertFalse(b64.isUrlSafe());
-        assertArrayEquals(new byte[]{}, b64.getLineSeparator());
+        assertArrayEquals(new byte[] {}, b64.getLineSeparator());
     }
 
     @Test
     public void testBase64IntByteArrayBoolean() {
         Base64 b64;
-        b64 = new Base64(8, new byte[]{}, false);
+        b64 = new Base64(8, new byte[] {}, false);
         assertFalse(b64.isUrlSafe());
-        b64 = new Base64(8, new byte[]{}, true);
+        b64 = new Base64(8, new byte[] {}, true);
         assertTrue(b64.isUrlSafe());
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testDecodeBase64ByteArray() {
         fail("Not yet implemented");
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testDecodeBase64String() {
         fail("Not yet implemented");
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testDecodeByteArray() {
         fail("Not yet implemented");
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testDecodeInteger() {
         fail("Not yet implemented");
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testDecodeObject() {
         fail("Not yet implemented");
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testDecodeString() {
         fail("Not yet implemented");
     }
 
     @Test
     public void testEncodeBase64ByteArray() {
-        final byte[] binaryData=null;
+        final byte[] binaryData = null;
         assertArrayEquals(binaryData, Base64.encodeBase64(binaryData));
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testEncodeBase64ByteArrayBoolean() {
         fail("Not yet implemented");
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testEncodeBase64ByteArrayBooleanBoolean() {
         fail("Not yet implemented");
     }
 
     @Test
     public void testEncodeBase64ByteArrayBooleanBooleanInt() {
-        final byte[] binaryData = new byte[]{'1','2','3'};
+        final byte[] binaryData = new byte[] { '1', '2', '3' };
         byte[] encoded;
         encoded = Base64.encodeBase64(binaryData, false, false);
         assertNotNull(encoded);
@@ -146,69 +154,80 @@ public class Base64Test {
         assertEquals(6, encoded.length);
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testEncodeBase64Chunked() {
         fail("Not yet implemented");
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testEncodeBase64StringByteArray() {
         fail("Not yet implemented");
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testEncodeBase64StringByteArrayBoolean() {
         fail("Not yet implemented");
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testEncodeBase64StringUnChunked() {
         fail("Not yet implemented");
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testEncodeBase64URLSafe() {
         fail("Not yet implemented");
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testEncodeBase64URLSafeString() {
         fail("Not yet implemented");
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testEncodeByteArray() {
         fail("Not yet implemented");
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testEncodeInteger() {
         fail("Not yet implemented");
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testEncodeObject() {
         fail("Not yet implemented");
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testEncodeToString() {
         fail("Not yet implemented");
     }
 
     @Test
     public void testIsArrayByteBase64() {
-        assertTrue(Base64.isArrayByteBase64(new byte[]{'b',' '}));
-        assertFalse(Base64.isArrayByteBase64(new byte[]{'?'}));
+        assertTrue(Base64.isArrayByteBase64(new byte[] { 'b', ' ' }));
+        assertFalse(Base64.isArrayByteBase64(new byte[] { '?' }));
     }
 
     @Test
     public void testIsBase64() {
-        assertTrue(Base64.isBase64((byte)'b'));
-        assertFalse(Base64.isBase64((byte)' '));
+        assertTrue(Base64.isBase64((byte) 'b'));
+        assertFalse(Base64.isBase64((byte) ' '));
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testToIntegerBytes() {
         fail("Not yet implemented");
     }

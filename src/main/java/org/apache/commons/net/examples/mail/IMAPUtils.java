@@ -33,21 +33,19 @@ class IMAPUtils {
     /**
      * Parse the URI and use the details to connect to the IMAP(S) server and login.
      *
-     * @param uri the URI to use, e.g. imaps://user:pass@imap.mail.yahoo.com/folder
-     * or imaps://user:pass@imap.googlemail.com/folder
+     * @param uri            the URI to use, e.g. imaps://user:pass@imap.mail.yahoo.com/folder or imaps://user:pass@imap.googlemail.com/folder
      * @param defaultTimeout initial timeout (in milliseconds)
-     * @param listener for tracing protocol IO (may be null)
+     * @param listener       for tracing protocol IO (may be null)
      * @return the IMAP client - connected and logged in
      * @throws IOException if any problems occur
      */
-    static IMAPClient imapLogin(final URI uri, final int defaultTimeout, final ProtocolCommandListener listener)
-            throws IOException {
+    static IMAPClient imapLogin(final URI uri, final int defaultTimeout, final ProtocolCommandListener listener) throws IOException {
         final String userInfo = uri.getUserInfo();
         if (userInfo == null) {
             throw new IllegalArgumentException("Missing userInfo details");
         }
 
-        final String []userpass = userInfo.split(":");
+        final String[] userpass = userInfo.split(":");
         if (userpass.length != 2) {
             throw new IllegalArgumentException("Invalid userInfo details: '" + userInfo + "'");
         }

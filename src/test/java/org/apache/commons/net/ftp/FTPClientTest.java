@@ -61,31 +61,24 @@ public class FTPClientTest extends TestCase {
 
     }
 
-    private static final String[] TESTS = {
-        "257 /path/without/quotes",
-            "/path/without/quotes",
+    private static final String[] TESTS = { "257 /path/without/quotes", "/path/without/quotes",
 
-        "257 \"/path/with/delimiting/quotes/without/commentary\"",
-              "/path/with/delimiting/quotes/without/commentary",
+            "257 \"/path/with/delimiting/quotes/without/commentary\"", "/path/with/delimiting/quotes/without/commentary",
 
-        "257 \"/path/with/quotes\"\" /inside/but/without/commentary\"",
-              "/path/with/quotes\" /inside/but/without/commentary",
+            "257 \"/path/with/quotes\"\" /inside/but/without/commentary\"", "/path/with/quotes\" /inside/but/without/commentary",
 
-        "257 \"/path/with/quotes\"\" /inside/string\" and with commentary",
-              "/path/with/quotes\" /inside/string",
+            "257 \"/path/with/quotes\"\" /inside/string\" and with commentary", "/path/with/quotes\" /inside/string",
 
-        "257 \"/path/with/quotes\"\" /inside/string\" and with commentary that also \"contains quotes\"",
-              "/path/with/quotes\" /inside/string",
+            "257 \"/path/with/quotes\"\" /inside/string\" and with commentary that also \"contains quotes\"", "/path/with/quotes\" /inside/string",
 
-        "257 \"/path/without/trailing/quote", // invalid syntax, return all after reply code prefix
+            "257 \"/path/without/trailing/quote", // invalid syntax, return all after reply code prefix
             "\"/path/without/trailing/quote",
 
-        "257 root is current directory.", // NET-442
+            "257 root is current directory.", // NET-442
             "root is current directory.",
 
-        "257 \"/\"", // NET-502
-              "/",
-    };
+            "257 \"/\"", // NET-502
+            "/", };
 
     public FTPClientTest(final String name) {
         super(name);
@@ -118,7 +111,6 @@ public class FTPClientTest extends TestCase {
         client._parsePassiveModeReply("227 Entering Passive Mode (172,16,204,138,192,22).");
         assertNull(client.getPassiveHost());
     }
-
 
     public void testParsePassiveModeReplyForLocalAddressWithoutNatWorkaroundStrategy() throws Exception {
         final FTPClient client = new PassiveNatWorkAroundLocalClient("8.8.8.8");
@@ -209,9 +201,9 @@ public class FTPClientTest extends TestCase {
     public void testUnparseableFiles() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write("-rwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox".getBytes());
-        baos.write(new byte[]{'\r','\n'});
+        baos.write(new byte[] { '\r', '\n' });
         baos.write("zrwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox".getBytes());
-        baos.write(new byte[]{'\r','\n'});
+        baos.write(new byte[] { '\r', '\n' });
         final FTPFileEntryParser parser = new UnixFTPEntryParser();
         final FTPClientConfig config = new FTPClientConfig();
         FTPListParseEngine engine = new FTPListParseEngine(parser, config);
@@ -220,9 +212,9 @@ public class FTPClientTest extends TestCase {
         FTPFile[] files = engine.getFiles();
         assertEquals(1, files.length);
         config.setUnparseableEntries(true);
-        engine = new FTPListParseEngine(parser, config );
+        engine = new FTPListParseEngine(parser, config);
         engine.readServerList(new ByteArrayInputStream(baos.toByteArray()), null); // use default encoding
         files = engine.getFiles();
         assertEquals(2, files.length);
     }
- }
+}

@@ -23,23 +23,16 @@ import org.apache.commons.net.bsd.RLoginClient;
 import org.apache.commons.net.examples.util.IOUtil;
 
 /**
- * This is an example program demonstrating how to use the RLoginClient
- * class. This program connects to an rlogin daemon and begins to
- * interactively read input from stdin (this will be line buffered on most
- * systems, so don't expect character at a time interactivity), passing it
- * to the remote login process and writing the remote stdout and stderr
- * to local stdout.  If you don't have .rhosts or hosts.equiv files set up,
- * the rlogin daemon will prompt you for a password.
+ * This is an example program demonstrating how to use the RLoginClient class. This program connects to an rlogin daemon and begins to interactively read input
+ * from stdin (this will be line buffered on most systems, so don't expect character at a time interactivity), passing it to the remote login process and
+ * writing the remote stdout and stderr to local stdout. If you don't have .rhosts or hosts.equiv files set up, the rlogin daemon will prompt you for a
+ * password.
  * <p>
- * On Unix systems you will not be able to use the rshell capability
- * unless the process runs as root since only root can bind port addresses
- * lower than 1024.
+ * On Unix systems you will not be able to use the rshell capability unless the process runs as root since only root can bind port addresses lower than 1024.
  * <p>
- * JVM's using green threads will likely have problems if the rlogin daemon
- * requests a password.  This program is merely a demonstration and is
- * not suitable for use as an application, especially given that it relies
- * on line buffered input from System.in.  The best way to run this example
- * is probably from a Win95 dos box into a Unix host.
+ * JVM's using green threads will likely have problems if the rlogin daemon requests a password. This program is merely a demonstration and is not suitable for
+ * use as an application, especially given that it relies on line buffered input from System.in. The best way to run this example is probably from a Win95 dos
+ * box into a Unix host.
  * <p>
  * Example: java rlogin myhost localusername remoteusername vt100
  * <p>
@@ -47,23 +40,19 @@ import org.apache.commons.net.examples.util.IOUtil;
  */
 
 // This class requires the IOUtil support class!
-public final class rlogin
-{
+public final class rlogin {
 
-    public static void main(final String[] args)
-    {
+    public static void main(final String[] args) {
         final String server;
         final String localuser;
         final String remoteuser;
         final String terminal;
         final RLoginClient client;
 
-        if (args.length != 4)
-        {
-            System.err.println(
-                "Usage: rlogin <hostname> <localuser> <remoteuser> <terminal>");
+        if (args.length != 4) {
+            System.err.println("Usage: rlogin <hostname> <localuser> <remoteuser> <terminal>");
             System.exit(1);
-            return ; // so compiler can do proper flow control analysis
+            return; // so compiler can do proper flow control analysis
         }
 
         client = new RLoginClient();
@@ -73,44 +62,31 @@ public final class rlogin
         remoteuser = args[2];
         terminal = args[3];
 
-        try
-        {
+        try {
             client.connect(server);
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             System.err.println("Could not connect to server.");
             e.printStackTrace();
             System.exit(1);
         }
 
-        try
-        {
+        try {
             client.rlogin(localuser, remoteuser, terminal);
-        }
-        catch (final IOException e)
-        {
-            try
-            {
+        } catch (final IOException e) {
+            try {
                 client.disconnect();
-            }
-            catch (final IOException f)
-            {/* ignored */}
+            } catch (final IOException f) {
+                /* ignored */}
             e.printStackTrace();
             System.err.println("rlogin authentication failed.");
             System.exit(1);
         }
 
+        IOUtil.readWrite(client.getInputStream(), client.getOutputStream(), System.in, System.out);
 
-        IOUtil.readWrite(client.getInputStream(), client.getOutputStream(),
-                         System.in, System.out);
-
-        try
-        {
+        try {
             client.disconnect();
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             e.printStackTrace();
             System.exit(1);
         }
@@ -119,4 +95,3 @@ public final class rlogin
     }
 
 }
-

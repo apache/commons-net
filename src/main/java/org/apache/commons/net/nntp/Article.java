@@ -24,58 +24,61 @@ import java.util.Collections;
 import org.apache.commons.net.util.NetConstants;
 
 /**
- * This is a class that contains the basic state needed for message retrieval and threading.
- * With thanks to Jamie  Zawinski (jwz@jwz.org)
+ * This is a class that contains the basic state needed for message retrieval and threading. With thanks to Jamie Zawinski (jwz@jwz.org)
  */
 public class Article implements Threadable {
     /**
-     * Recursive method that traverses a pre-threaded graph (or tree)
-     * of connected Article objects and prints them out.
+     * Recursive method that traverses a pre-threaded graph (or tree) of connected Article objects and prints them out.
+     *
      * @param article the root of the article 'tree'
      * @since 3.4
      */
     public static void printThread(final Article article) {
         printThread(article, 0, System.out);
     }
+
     /**
-     * Recursive method that traverses a pre-threaded graph (or tree)
-     * of connected Article objects and prints them out.
+     * Recursive method that traverses a pre-threaded graph (or tree) of connected Article objects and prints them out.
+     *
      * @param article the root of the article 'tree'
-     * @param depth the current tree depth
+     * @param depth   the current tree depth
      */
     public static void printThread(final Article article, final int depth) {
         printThread(article, depth, System.out);
     }
+
     /**
-     * Recursive method that traverses a pre-threaded graph (or tree)
-     * of connected Article objects and prints them out.
+     * Recursive method that traverses a pre-threaded graph (or tree) of connected Article objects and prints them out.
+     *
      * @param article the root of the article 'tree'
-     * @param depth the current tree depth
-     * @param ps the PrintStream to use
+     * @param depth   the current tree depth
+     * @param ps      the PrintStream to use
      * @since 3.4
      */
     public static void printThread(final Article article, final int depth, final PrintStream ps) {
-            for (int i = 0; i < depth; ++i) {
-                ps.print("==>");
-            }
-            ps.println(article.getSubject() + "\t" + article.getFrom()+"\t"+article.getArticleId());
-            if (article.kid != null) {
-                printThread(article.kid, depth + 1);
-            }
-            if (article.next != null) {
-                printThread(article.next, depth);
-            }
+        for (int i = 0; i < depth; ++i) {
+            ps.print("==>");
+        }
+        ps.println(article.getSubject() + "\t" + article.getFrom() + "\t" + article.getArticleId());
+        if (article.kid != null) {
+            printThread(article.kid, depth + 1);
+        }
+        if (article.next != null) {
+            printThread(article.next, depth);
+        }
     }
+
     /**
-     * Recursive method that traverses a pre-threaded graph (or tree)
-     * of connected Article objects and prints them out.
+     * Recursive method that traverses a pre-threaded graph (or tree) of connected Article objects and prints them out.
+     *
      * @param article the root of the article 'tree'
-     * @param ps the PrintStream to use
+     * @param ps      the PrintStream to use
      * @since 3.4
      */
     public static void printThread(final Article article, final PrintStream ps) {
         printThread(article, 0, ps);
     }
+
     private long articleNumber;
     private String subject;
     private String date;
@@ -101,6 +104,7 @@ public class Article implements Threadable {
 
     /**
      * Adds a message-id to the list of messages that this message references (i.e. replies to)
+     *
      * @param msgId the message id to add
      */
     public void addReference(final String msgId) {
@@ -141,6 +145,7 @@ public class Article implements Threadable {
 
     /**
      * Returns the MessageId references as an array of Strings
+     *
      * @return an array of message-ids
      */
     public String[] getReferences() {
@@ -169,7 +174,6 @@ public class Article implements Threadable {
         return articleId;
     }
 
-
     @Override
     public String[] messageThreadReferences() {
         return getReferences();
@@ -188,13 +192,11 @@ public class Article implements Threadable {
         articleNumber = l;
     }
 
-
     @Override
     public void setChild(final Threadable child) {
         this.kid = (Article) child;
         flushSubjectCache();
     }
-
 
     public void setDate(final String string) {
         date = string;
@@ -204,13 +206,11 @@ public class Article implements Threadable {
         from = string;
     }
 
-
     @Override
     public void setNext(final Threadable next) {
-        this.next = (Article)next;
+        this.next = (Article) next;
         flushSubjectCache();
     }
-
 
     public void setSubject(final String string) {
         subject = string;
@@ -218,7 +218,7 @@ public class Article implements Threadable {
 
     @Override
     public String simplifiedSubject() {
-        if(simplifiedSubject == null) {
+        if (simplifiedSubject == null) {
             simplifySubject();
         }
         return simplifiedSubject;
@@ -231,74 +231,68 @@ public class Article implements Threadable {
      *
      */
     private void simplifySubject() {
-            int start = 0;
-            final String subject = getSubject();
-            final int len = subject.length();
+        int start = 0;
+        final String subject = getSubject();
+        final int len = subject.length();
 
-            boolean done = false;
+        boolean done = false;
 
-            while (!done) {
-                done = true;
+        while (!done) {
+            done = true;
 
-                // skip whitespace
-                // "Re: " breaks this
-                while (start < len && subject.charAt(start) == ' ') {
-                    start++;
-                }
+            // skip whitespace
+            // "Re: " breaks this
+            while (start < len && subject.charAt(start) == ' ') {
+                start++;
+            }
 
-                if (start < (len - 2)
-                    && (subject.charAt(start) == 'r' || subject.charAt(start) == 'R')
+            if (start < (len - 2) && (subject.charAt(start) == 'r' || subject.charAt(start) == 'R')
                     && (subject.charAt(start + 1) == 'e' || subject.charAt(start + 1) == 'E')) {
 
-                    if (subject.charAt(start + 2) == ':') {
-                        start += 3; // Skip "Re:"
+                if (subject.charAt(start + 2) == ':') {
+                    start += 3; // Skip "Re:"
+                    done = false;
+                } else if (start < (len - 2) && (subject.charAt(start + 2) == '[' || subject.charAt(start + 2) == '(')) {
+
+                    int i = start + 3;
+
+                    while (i < len && subject.charAt(i) >= '0' && subject.charAt(i) <= '9') {
+                        i++;
+                    }
+
+                    if (i < (len - 1) && (subject.charAt(i) == ']' || subject.charAt(i) == ')') && subject.charAt(i + 1) == ':') {
+                        start = i + 2;
                         done = false;
-                    } else if (
-                        start < (len - 2)
-                        &&
-                        (subject.charAt(start + 2) == '[' || subject.charAt(start + 2) == '(')) {
-
-                        int i = start + 3;
-
-                        while (i < len && subject.charAt(i) >= '0' && subject.charAt(i) <= '9') {
-                            i++;
-                        }
-
-                        if (i < (len - 1)
-                            && (subject.charAt(i) == ']' || subject.charAt(i) == ')')
-                            && subject.charAt(i + 1) == ':')
-                        {
-                            start = i + 2;
-                            done = false;
-                        }
                     }
                 }
+            }
 
-                if ("(no subject)".equals(simplifiedSubject)) {
-                    simplifiedSubject = "";
-                }
+            if ("(no subject)".equals(simplifiedSubject)) {
+                simplifiedSubject = "";
+            }
 
-                int end = len;
+            int end = len;
 
-                while (end > start && subject.charAt(end - 1) < ' ') {
-                    end--;
-                }
+            while (end > start && subject.charAt(end - 1) < ' ') {
+                end--;
+            }
 
-                if (start == 0 && end == len) {
-                    simplifiedSubject = subject;
-                } else {
-                    simplifiedSubject = subject.substring(start, end);
-                }
+            if (start == 0 && end == len) {
+                simplifiedSubject = subject;
+            } else {
+                simplifiedSubject = subject.substring(start, end);
             }
         }
+    }
 
     @Override
     public boolean subjectIsReply() {
         return isReply;
     }
+
     @Override
-    public String toString(){ // Useful for Eclipse debugging
-        return articleNumber + " " +articleId + " " + subject;
+    public String toString() { // Useful for Eclipse debugging
+        return articleNumber + " " + articleId + " " + subject;
     }
 
 }

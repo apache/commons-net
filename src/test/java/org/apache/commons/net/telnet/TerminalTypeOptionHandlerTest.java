@@ -16,21 +16,17 @@
  */
 package org.apache.commons.net.telnet;
 
-public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstract
-{
+public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstract {
     /*
      * compares two arrays of int
      */
-    protected boolean equalInts(final int a1[], final int a2[])
-    {
-        if(a1.length != a2.length)
-        {
+    protected boolean equalInts(final int a1[], final int a2[]) {
+        if (a1.length != a2.length) {
             return false;
         }
         boolean result = true;
-        for(int ii=0; ii<a1.length; ii++)
-        {
-            if(a1[ii]!= a2[ii]) {
+        for (int ii = 0; ii < a1.length; ii++) {
+            if (a1[ii] != a2[ii]) {
                 result = false;
             }
         }
@@ -38,34 +34,22 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
     }
 
     @Override
-    protected void setUp()
-    {
+    protected void setUp() {
         opthand1 = new TerminalTypeOptionHandler("VT100");
         opthand2 = new TerminalTypeOptionHandler("ANSI", true, true, true, true);
         opthand3 = new TerminalTypeOptionHandler("ANSI", false, false, false, false);
     }
 
     /*
-     * test of client-driven subnegotiation.
-     * Checks that the terminal type is sent
+     * test of client-driven subnegotiation. Checks that the terminal type is sent
      */
     @Override
-    public void testAnswerSubnegotiation()
-    {
-        final int subn[] =
-        {
-            TelnetOption.TERMINAL_TYPE, 1
-        };
+    public void testAnswerSubnegotiation() {
+        final int subn[] = { TelnetOption.TERMINAL_TYPE, 1 };
 
-        final int expected1[] =
-        {
-            TelnetOption.TERMINAL_TYPE, 0, 'V', 'T', '1', '0', '0'
-        };
+        final int expected1[] = { TelnetOption.TERMINAL_TYPE, 0, 'V', 'T', '1', '0', '0' };
 
-        final int expected2[] =
-        {
-            TelnetOption.TERMINAL_TYPE, 0, 'A', 'N', 'S', 'I'
-        };
+        final int expected2[] = { TelnetOption.TERMINAL_TYPE, 0, 'A', 'N', 'S', 'I' };
 
         final int resp1[] = opthand1.answerSubnegotiation(subn, subn.length);
         final int resp2[] = opthand2.answerSubnegotiation(subn, subn.length);
@@ -74,22 +58,17 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
         assertTrue(equalInts(resp2, expected2));
     }
 
-
     @Override
-    public void testConstructors()
-    {
+    public void testConstructors() {
         assertEquals(opthand1.getOptionCode(), TelnetOption.TERMINAL_TYPE);
         super.testConstructors();
     }
 
-
     /*
-     * test of client-driven subnegotiation.
-     * Checks that no subnegotiation is made.
+     * test of client-driven subnegotiation. Checks that no subnegotiation is made.
      */
     @Override
-    public void testStartSubnegotiation()
-    {
+    public void testStartSubnegotiation() {
 
         final int resp1[] = opthand1.startSubnegotiationLocal();
         final int resp2[] = opthand1.startSubnegotiationRemote();

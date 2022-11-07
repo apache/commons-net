@@ -28,27 +28,21 @@ import org.apache.commons.net.pop3.POP3MessageInfo;
 import org.apache.commons.net.pop3.POP3SClient;
 
 /**
- * This is an example program demonstrating how to use the POP3[S]Client class.
- * This program connects to a POP3[S] server and retrieves the message
- * headers of all the messages, printing the From: and Subject: header
- * entries for each message.
+ * This is an example program demonstrating how to use the POP3[S]Client class. This program connects to a POP3[S] server and retrieves the message headers of
+ * all the messages, printing the From: and Subject: header entries for each message.
  * <p>
  * See main() method for usage details
  */
-public final class POP3Mail
-{
+public final class POP3Mail {
 
-    public static void main(final String[] args)
-    {
-        if (args.length < 3)
-        {
-            System.err.println(
-                "Usage: POP3Mail <server[:port]> <username> <password|-|*|VARNAME> [TLS [true=implicit]]");
+    public static void main(final String[] args) {
+        if (args.length < 3) {
+            System.err.println("Usage: POP3Mail <server[:port]> <username> <password|-|*|VARNAME> [TLS [true=implicit]]");
             System.exit(1);
         }
 
         final String arg0[] = args[0].split(":");
-        final String server=arg0[0];
+        final String server = arg0[0];
         final String username = args[1];
         String password = args[2];
         // prompt for the password if necessary
@@ -65,7 +59,7 @@ public final class POP3Mail
         final POP3Client pop3;
 
         if (proto != null) {
-            System.out.println("Using secure protocol: "+proto);
+            System.out.println("Using secure protocol: " + proto);
             pop3 = new POP3SClient(proto, implicit);
         } else {
             pop3 = new POP3Client();
@@ -77,7 +71,7 @@ public final class POP3Mail
         } else {
             port = pop3.getDefaultPort();
         }
-        System.out.println("Connecting to server "+server+" on "+port);
+        System.out.println("Connecting to server " + server + " on " + port);
 
         // We want to timeout if a response takes longer than 60 seconds
         pop3.setDefaultTimeout(60000);
@@ -85,21 +79,16 @@ public final class POP3Mail
         // suppress login details
         pop3.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
 
-        try
-        {
+        try {
             pop3.connect(server);
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             System.err.println("Could not connect to server.");
             e.printStackTrace();
             return;
         }
 
-        try
-        {
-            if (!pop3.login(username, password))
-            {
+        try {
+            if (!pop3.login(username, password)) {
                 System.err.println("Could not login to server.  Check password.");
                 pop3.disconnect();
                 return;
@@ -117,15 +106,13 @@ public final class POP3Mail
 
             final POP3MessageInfo[] messages = pop3.listMessages();
 
-            if (messages == null)
-            {
+            if (messages == null) {
                 System.err.println("Could not retrieve message list.");
                 pop3.logout();
                 pop3.disconnect();
                 return;
             }
-            if (messages.length == 0)
-            {
+            if (messages.length == 0) {
                 System.out.println("No messages");
                 pop3.logout();
                 pop3.disconnect();
@@ -148,24 +135,21 @@ public final class POP3Mail
 
             pop3.logout();
             pop3.disconnect();
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             e.printStackTrace();
             return;
         }
     }
 
-    public static void printMessageInfo(final BufferedReader reader, final int id) throws IOException  {
+    public static void printMessageInfo(final BufferedReader reader, final int id) throws IOException {
         String from = "";
         String subject = "";
         String line;
-        while ((line = reader.readLine()) != null)
-        {
+        while ((line = reader.readLine()) != null) {
             final String lower = line.toLowerCase(Locale.ENGLISH);
             if (lower.startsWith("from: ")) {
                 from = line.substring(6).trim();
-            }  else if (lower.startsWith("subject: ")) {
+            } else if (lower.startsWith("subject: ")) {
                 subject = line.substring(9).trim();
             }
         }
@@ -173,4 +157,3 @@ public final class POP3Mail
         System.out.println(Integer.toString(id) + " From: " + from + "  Subject: " + subject);
     }
 }
-

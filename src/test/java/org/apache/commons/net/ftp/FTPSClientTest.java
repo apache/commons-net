@@ -88,8 +88,11 @@ public class FTPSClientTest {
     private static final boolean ADD_LISTENER = Boolean.parseBoolean(System.getenv("ADD_LISTENER"));
 
     private static final long startTime = System.nanoTime();
+
     private static void trace(String msg) {
-        if (TRACE_CALLS) System.err.println(msg + " " + (System.nanoTime() - startTime));
+        if (TRACE_CALLS) {
+            System.err.println(msg + " " + (System.nanoTime() - startTime));
+        }
     }
 
     @BeforeClass
@@ -154,7 +157,7 @@ public class FTPSClientTest {
 
     @Parameters(name = "endpointCheckingEnabled={0}")
     public static Boolean[] testConstructurData() {
-        return new Boolean[] {Boolean.FALSE, Boolean.TRUE};
+        return new Boolean[] { Boolean.FALSE, Boolean.TRUE };
     }
 
     private final boolean endpointCheckingEnabled;
@@ -171,7 +174,9 @@ public class FTPSClientTest {
     private FTPSClient loginClient() throws SocketException, IOException {
         trace(">>loginClient");
         final FTPSClient client = new FTPSClient(IMPLICIT);
-        if (ADD_LISTENER) client.addProtocolCommandListener(new PrintCommandListener(System.err));
+        if (ADD_LISTENER) {
+            client.addProtocolCommandListener(new PrintCommandListener(System.err));
+        }
         //
         client.setControlKeepAliveReplyTimeout(null);
         assertEquals(0, client.getControlKeepAliveReplyTimeoutDuration().getSeconds());
@@ -198,7 +203,8 @@ public class FTPSClientTest {
             // HACK: Without this sleep, the user command sometimes does not reach the ftpserver
             // This only seems to affect GitHub builds, and only Java 11+
             Thread.sleep(200); // 100 seems to be not always enough
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+        }
         assertTrue(client.login("test", "test"));
         assertClientCode(client);
         //

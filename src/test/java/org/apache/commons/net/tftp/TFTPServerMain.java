@@ -24,28 +24,22 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * Main class for TFTPServer.
- * This allows CLI use of the server.
+ * Main class for TFTPServer. This allows CLI use of the server.
+ *
  * @since 3.6
  */
 public class TFTPServerMain {
 
-    private static final String USAGE =
-            "Usage: TFTPServerMain [options] [port]\n\n" +
-            "port   - the port to use (default 6901)\n" +
-            "\t-p path to server directory (default java.io.tempdir)\n" +
-            "\t-r randomly introduce errors\n" +
-            "\t-v verbose (trace packets)\n"
-            ;
+    private static final String USAGE = "Usage: TFTPServerMain [options] [port]\n\n" + "port   - the port to use (default 6901)\n"
+            + "\t-p path to server directory (default java.io.tempdir)\n" + "\t-r randomly introduce errors\n" + "\t-v verbose (trace packets)\n";
 
-    public static void main(final String [] args) throws Exception {
+    public static void main(final String[] args) throws Exception {
         int port = 6901;
         int argc;
-        final Map<String,String> opts = new HashMap<>();
+        final Map<String, String> opts = new HashMap<>();
         opts.put("-p", System.getProperty("java.io.tmpdir"));
         // Parse options
-        for (argc = 0; argc < args.length; argc++)
-        {
+        for (argc = 0; argc < args.length; argc++) {
             final String arg = args[argc];
             if (!arg.startsWith("-")) {
                 break;
@@ -71,16 +65,15 @@ public class TFTPServerMain {
 
         final File serverDirectory = new File(opts.get("-p"));
         System.out.println("Server directory: " + serverDirectory);
-        final TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, port,
-                TFTPServer.ServerMode.GET_AND_PUT, null, null){
+        final TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, port, TFTPServer.ServerMode.GET_AND_PUT, null, null) {
             @Override
-            TFTP newTFTP(){
+            TFTP newTFTP() {
                 if (verbose) {
                     return new TFTP() {
-                      @Override
-                      protected void trace(final String direction, final TFTPPacket packet) {
-                          System.out.println(direction + " " + packet.toString());
-                      }
+                        @Override
+                        protected void trace(final String direction, final TFTPPacket packet) {
+                            System.out.println(direction + " " + packet.toString());
+                        }
                     };
                 }
                 return new TFTP();
@@ -93,41 +86,41 @@ public class TFTPServerMain {
                     return;
                 }
                 final int rint = rand.nextInt(10);
-                switch(rint) {
-                    case 0:
-                        System.out.println("Bump port " + packet);
-                        final int port = packet.getPort();
-                        packet.setPort(port+5);
+                switch (rint) {
+                case 0:
+                    System.out.println("Bump port " + packet);
+                    final int port = packet.getPort();
+                    packet.setPort(port + 5);
+                    super.sendData(tftp, packet);
+                    packet.setPort(port);
+                    break;
+                case 1:
+                    if (packet instanceof TFTPDataPacket) {
+                        final TFTPDataPacket data = (TFTPDataPacket) packet;
+                        System.out.println("Change data block num");
+                        data.blockNumber--;
                         super.sendData(tftp, packet);
-                        packet.setPort(port);
-                        break;
-                    case 1:
-                        if (packet instanceof TFTPDataPacket) {
-                            final TFTPDataPacket data = (TFTPDataPacket) packet;
-                            System.out.println("Change data block num");
-                            data.blockNumber--;
-                            super.sendData(tftp, packet);
-                            data.blockNumber++;
-                        }
-                        if (packet instanceof TFTPAckPacket) {
-                            final TFTPAckPacket ack = (TFTPAckPacket) packet;
-                            System.out.println("Change ack block num");
-                            ack.blockNumber--;
-                            super.sendData(tftp, packet);
-                            ack.blockNumber++;
-                        }
-                        break;
-                    case 2:
-                        System.out.println("Drop packet: " + packet);
-                        break;
-                    case 3:
-                        System.out.println("Dupe packet: " + packet);
+                        data.blockNumber++;
+                    }
+                    if (packet instanceof TFTPAckPacket) {
+                        final TFTPAckPacket ack = (TFTPAckPacket) packet;
+                        System.out.println("Change ack block num");
+                        ack.blockNumber--;
                         super.sendData(tftp, packet);
-                        super.sendData(tftp, packet);
-                        break;
-                    default:
-                        super.sendData(tftp, packet);
-                        break;
+                        ack.blockNumber++;
+                    }
+                    break;
+                case 2:
+                    System.out.println("Drop packet: " + packet);
+                    break;
+                case 3:
+                    System.out.println("Dupe packet: " + packet);
+                    super.sendData(tftp, packet);
+                    super.sendData(tftp, packet);
+                    break;
+                default:
+                    super.sendData(tftp, packet);
+                    break;
                 }
             }
         };
@@ -138,9 +131,8 @@ public class TFTPServerMain {
                 System.out.println("Server shutting down");
                 tftpS.shutdown();
                 System.out.println("Server exit");
-                }
             }
-        );
+        });
         System.out.println("Started the server on " + port);
         Thread.sleep(99999999L);
     }

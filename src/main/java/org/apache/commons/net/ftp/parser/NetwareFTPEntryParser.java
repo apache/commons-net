@@ -23,11 +23,9 @@ import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 
 /**
- * Implementation of FTPFileEntryParser and FTPFileListParser for Netware Systems. Note that some of the proprietary
- * extensions for Novell-specific operations are not supported. See
- * <a href="http://www.novell.com/documentation/nw65/index.html?page=/documentation/nw65/ftp_enu/data/fbhbgcfa.html">
- * http://www.novell.com/documentation/nw65/index.html?page=/documentation/nw65/ftp_enu/data/fbhbgcfa.html</a>
- * for more details.
+ * Implementation of FTPFileEntryParser and FTPFileListParser for Netware Systems. Note that some of the proprietary extensions for Novell-specific operations
+ * are not supported. See <a href="http://www.novell.com/documentation/nw65/index.html?page=/documentation/nw65/ftp_enu/data/fbhbgcfa.html">
+ * http://www.novell.com/documentation/nw65/index.html?page=/documentation/nw65/ftp_enu/data/fbhbgcfa.html</a> for more details.
  *
  * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  * @since 1.5
@@ -45,37 +43,30 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     private static final String DEFAULT_RECENT_DATE_FORMAT = "MMM dd HH:mm";
 
     /**
-     * this is the regular expression used by this parser.
-     * Example: d [-W---F--] SCION_VOL2                        512 Apr 13 23:12 VOL2
+     * this is the regular expression used by this parser. Example: d [-W---F--] SCION_VOL2 512 Apr 13 23:12 VOL2
      */
-    private static final String REGEX = "(d|-){1}\\s+"      // Directory/file flag
-            + "\\[([-A-Z]+)\\]\\s+"                         // Attributes RWCEAFMS or -
-            + "(\\S+)\\s+" + "(\\d+)\\s+"                   // Owner and size
-            + "(\\S+\\s+\\S+\\s+((\\d+:\\d+)|(\\d{4})))"    // Long/short date format
-            + "\\s+(.*)";                                   // Filename (incl. spaces)
+    private static final String REGEX = "(d|-){1}\\s+" // Directory/file flag
+            + "\\[([-A-Z]+)\\]\\s+" // Attributes RWCEAFMS or -
+            + "(\\S+)\\s+" + "(\\d+)\\s+" // Owner and size
+            + "(\\S+\\s+\\S+\\s+((\\d+:\\d+)|(\\d{4})))" // Long/short date format
+            + "\\s+(.*)"; // Filename (incl. spaces)
 
     /**
      * The default constructor for a NetwareFTPEntryParser object.
      *
-     * @throws IllegalArgumentException
-     * Thrown if the regular expression is unparseable.  Should not be seen
-     * under normal conditions.  It it is seen, this is a sign that
-     * <code>REGEX</code> is  not a valid regular expression.
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
+     *                                  sign that <code>REGEX</code> is not a valid regular expression.
      */
     public NetwareFTPEntryParser() {
         this(null);
     }
 
     /**
-     * This constructor allows the creation of an NetwareFTPEntryParser object
-     * with something other than the default configuration.
+     * This constructor allows the creation of an NetwareFTPEntryParser object with something other than the default configuration.
      *
-     * @param config The {@link FTPClientConfig configuration} object used to
-     * configure this parser.
-     * @throws IllegalArgumentException
-     * Thrown if the regular expression is unparseable.  Should not be seen
-     * under normal conditions.  It it is seen, this is a sign that
-     * <code>REGEX</code> is  not a valid regular expression.
+     * @param config The {@link FTPClientConfig configuration} object used to configure this parser.
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
+     *                                  sign that <code>REGEX</code> is not a valid regular expression.
      * @since 1.4
      */
     public NetwareFTPEntryParser(final FTPClientConfig config) {
@@ -84,25 +75,21 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * Defines a default configuration to be used when this class is
-     * instantiated without a {@link  FTPClientConfig  FTPClientConfig}
-     * parameter being specified.
+     * Defines a default configuration to be used when this class is instantiated without a {@link FTPClientConfig FTPClientConfig} parameter being specified.
+     *
      * @return the default configuration for this parser.
      */
     @Override
     protected FTPClientConfig getDefaultConfiguration() {
-        return new FTPClientConfig(FTPClientConfig.SYST_NETWARE,
-                DEFAULT_DATE_FORMAT, DEFAULT_RECENT_DATE_FORMAT);
+        return new FTPClientConfig(FTPClientConfig.SYST_NETWARE, DEFAULT_DATE_FORMAT, DEFAULT_RECENT_DATE_FORMAT);
     }
 
     /**
-     * Parses a line of an NetwareFTP server file listing and converts it into a
-     * usable format in the form of an <code> FTPFile </code> instance.  If the
-     * file listing line doesn't describe a file, <code> null </code> is
-     * returned, otherwise a <code> FTPFile </code> instance representing the
-     * files in the directory is returned.
+     * Parses a line of an NetwareFTP server file listing and converts it into a usable format in the form of an <code> FTPFile </code> instance. If the file
+     * listing line doesn't describe a file, <code> null </code> is returned, otherwise a <code> FTPFile </code> instance representing the files in the
+     * directory is returned.
      * <p>
-     * Netware file permissions are in the following format:  RWCEAFMS, and are explained as follows:
+     * Netware file permissions are in the following format: RWCEAFMS, and are explained as follows:
      * <ul>
      * <li><b>S</b> - Supervisor; All rights.
      * <li><b>R</b> - Read; Right to open and read or execute.
@@ -114,10 +101,7 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * <li><b>A</b> - Access Control; Right to modify trustee assignments and the Inherited Rights Mask.
      * </ul>
      *
-     * See
-     * <a href="http://www.novell.com/documentation/nfap10/index.html?page=/documentation/nfap10/nfaubook/data/abxraws.html">
-     * here</a>
-     * for more details
+     * See <a href="http://www.novell.com/documentation/nfap10/index.html?page=/documentation/nfap10/nfaubook/data/abxraws.html"> here</a> for more details
      *
      * @param entry A line of text from the file listing
      * @return An FTPFile instance corresponding to the supplied entry
@@ -137,10 +121,10 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             try {
                 f.setTimestamp(super.parseTimestamp(datestr));
             } catch (final ParseException e) {
-                 // intentionally do nothing
+                // intentionally do nothing
             }
 
-            //is it a DIR or a file
+            // is it a DIR or a file
             if (dirString.trim().equals("d")) {
                 f.setType(FTPFile.DIRECTORY_TYPE);
             } else // Should be "-"
@@ -150,21 +134,19 @@ public class NetwareFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
             f.setUser(user);
 
-            //set the name
+            // set the name
             f.setName(name.trim());
 
-            //set the size
+            // set the size
             f.setSize(Long.parseLong(size.trim()));
 
             // Now set the permissions (or at least a subset thereof - full permissions would probably require
             // subclassing FTPFile and adding extra metainformation there)
             if (attrib.indexOf('R') != -1) {
-                f.setPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION,
-                        true);
+                f.setPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION, true);
             }
             if (attrib.indexOf('W') != -1) {
-                f.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION,
-                        true);
+                f.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, true);
             }
 
             return f;

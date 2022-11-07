@@ -26,34 +26,29 @@ import org.apache.commons.net.util.NetConstants;
 
 /**
  * Do not use.
+ *
  * @since 2.0
- * @deprecated 3.0 use
- * {@link org.apache.commons.net.util.TrustManagerUtils#getValidateServerCertificateTrustManager()
- *  TrustManagerUtils#getValidateServerCertificateTrustManager()} instead
+ * @deprecated 3.0 use {@link org.apache.commons.net.util.TrustManagerUtils#getValidateServerCertificateTrustManager()
+ *             TrustManagerUtils#getValidateServerCertificateTrustManager()} instead
  */
 @Deprecated
-public class FTPSTrustManager implements X509TrustManager
-{
+public class FTPSTrustManager implements X509TrustManager {
     /**
      * No-op
      */
     @Override
-    public void checkClientTrusted(final X509Certificate[] certificates, final String authType)
-    {
+    public void checkClientTrusted(final X509Certificate[] certificates, final String authType) {
     }
 
     @Override
-    public void checkServerTrusted(final X509Certificate[] certificates, final String authType) throws CertificateException
-    {
-        for (final X509Certificate certificate : certificates)
-        {
+    public void checkServerTrusted(final X509Certificate[] certificates, final String authType) throws CertificateException {
+        for (final X509Certificate certificate : certificates) {
             certificate.checkValidity();
         }
     }
 
     @Override
-    public X509Certificate[] getAcceptedIssuers()
-    {
+    public X509Certificate[] getAcceptedIssuers() {
         return NetConstants.EMPTY_X509_CERTIFICATE_ARRAY;
     }
 }

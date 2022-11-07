@@ -24,22 +24,16 @@ import java.io.Reader;
 import org.apache.commons.net.util.NetConstants;
 
 /**
- * DotTerminatedMessageReader is a class used to read messages from a
- * server that are terminated by a single dot followed by a
- * &lt;CR&gt;&lt;LF&gt;
- * sequence and with double dots appearing at the begining of lines which
- * do not signal end of message yet start with a dot.  Various Internet
- * protocols such as NNTP and POP3 produce messages of this type.
+ * DotTerminatedMessageReader is a class used to read messages from a server that are terminated by a single dot followed by a &lt;CR&gt;&lt;LF&gt; sequence and
+ * with double dots appearing at the begining of lines which do not signal end of message yet start with a dot. Various Internet protocols such as NNTP and POP3
+ * produce messages of this type.
  * <p>
- * This class handles stripping of the duplicate period at the beginning
- * of lines starting with a period, and ensures you cannot read past the end of the message.
+ * This class handles stripping of the duplicate period at the beginning of lines starting with a period, and ensures you cannot read past the end of the
+ * message.
  * <p>
- * Note: versions since 3.0 extend BufferedReader rather than Reader,
- * and no longer change the CRLF into the local EOL. Also only DOT CR LF
- * acts as EOF.
+ * Note: versions since 3.0 extend BufferedReader rather than Reader, and no longer change the CRLF into the local EOL. Also only DOT CR LF acts as EOF.
  */
-public final class DotTerminatedMessageReader extends BufferedReader
-{
+public final class DotTerminatedMessageReader extends BufferedReader {
     private static final char LF = '\n';
     private static final char CR = '\r';
     private static final int DOT = '.';
@@ -49,12 +43,11 @@ public final class DotTerminatedMessageReader extends BufferedReader
     private boolean seenCR; // was last character CR?
 
     /**
-     * Creates a DotTerminatedMessageReader that wraps an existing Reader
-     * input source.
-     * @param reader  The Reader input source containing the message.
+     * Creates a DotTerminatedMessageReader that wraps an existing Reader input source.
+     *
+     * @param reader The Reader input source containing the message.
      */
-    public DotTerminatedMessageReader(final Reader reader)
-    {
+    public DotTerminatedMessageReader(final Reader reader) {
         super(reader);
         // Assumes input is at start of message
         atBeginning = true;
@@ -62,28 +55,20 @@ public final class DotTerminatedMessageReader extends BufferedReader
     }
 
     /**
-     * Closes the message for reading.  This doesn't actually close the
-     * underlying stream.  The underlying stream may still be used for
-     * communicating with the server and therefore is not closed.
+     * Closes the message for reading. This doesn't actually close the underlying stream. The underlying stream may still be used for communicating with the
+     * server and therefore is not closed.
      * <p>
-     * If the end of the message has not yet been reached, this method
-     * will read the remainder of the message until it reaches the end,
-     * so that the underlying stream may continue to be used properly
-     * for communicating with the server.  If you do not fully read
-     * a message, you MUST close it, otherwise your program will likely
-     * hang or behave improperly.
-     * @throws IOException  If an error occurs while reading the
-     *            underlying stream.
+     * If the end of the message has not yet been reached, this method will read the remainder of the message until it reaches the end, so that the underlying
+     * stream may continue to be used properly for communicating with the server. If you do not fully read a message, you MUST close it, otherwise your program
+     * will likely hang or behave improperly.
+     *
+     * @throws IOException If an error occurs while reading the underlying stream.
      */
     @Override
-    public void close() throws IOException
-    {
-        synchronized (lock)
-        {
-            if (!eof)
-            {
-                while (read() != -1)
-                {
+    public void close() throws IOException {
+        synchronized (lock) {
+            if (!eof) {
+                while (read() != -1) {
                     // read to EOF
                 }
             }
@@ -92,18 +77,13 @@ public final class DotTerminatedMessageReader extends BufferedReader
         }
     }
 
-
     /**
-     * Reads and returns the next character in the message.  If the end of the
-     * message has been reached, returns -1.  Note that a call to this method
-     * may result in multiple reads from the underlying input stream to decode
-     * the message properly (removing doubled dots and so on).  All of
-     * this is transparent to the programmer and is only mentioned for
-     * completeness.
-     * @return The next character in the message. Returns -1 if the end of the
-     *          message has been reached.
-     * @throws IOException If an error occurs while reading the underlying
-     *            stream.
+     * Reads and returns the next character in the message. If the end of the message has been reached, returns -1. Note that a call to this method may result
+     * in multiple reads from the underlying input stream to decode the message properly (removing doubled dots and so on). All of this is transparent to the
+     * programmer and is only mentioned for completeness.
+     *
+     * @return The next character in the message. Returns -1 if the end of the message has been reached.
+     * @throws IOException If an error occurs while reading the underlying stream.
      */
     @Override
     public int read() throws IOException {
@@ -133,7 +113,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
                     if (chint == CR) { // Have DOT CR
                         chint = super.read();
                         if (chint == NetConstants.EOS) { // Still only DOT CR - should not happen
-                            //new Throwable("Trailing DOT CR").printStackTrace();
+                            // new Throwable("Trailing DOT CR").printStackTrace();
                             reset(); // So CR is picked up next time
                             return DOT; // return the trailing DOT
                         }
@@ -145,7 +125,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
                         }
                     }
                     // Should not happen - lone DOT at beginning
-                    //new Throwable("Lone DOT followed by "+(char)chint).printStackTrace();
+                    // new Throwable("Lone DOT followed by "+(char)chint).printStackTrace();
                     reset();
                     return DOT;
                 } // have DOT
@@ -166,77 +146,63 @@ public final class DotTerminatedMessageReader extends BufferedReader
     }
 
     /**
-     * Reads the next characters from the message into an array and
-     * returns the number of characters read.  Returns -1 if the end of the
-     * message has been reached.
-     * @param buffer  The character array in which to store the characters.
-     * @return The number of characters read. Returns -1 if the
-     *          end of the message has been reached.
-     * @throws IOException If an error occurs in reading the underlying
-     *            stream.
+     * Reads the next characters from the message into an array and returns the number of characters read. Returns -1 if the end of the message has been
+     * reached.
+     *
+     * @param buffer The character array in which to store the characters.
+     * @return The number of characters read. Returns -1 if the end of the message has been reached.
+     * @throws IOException If an error occurs in reading the underlying stream.
      */
     @Override
-    public int read(final char[] buffer) throws IOException
-    {
+    public int read(final char[] buffer) throws IOException {
         return read(buffer, 0, buffer.length);
     }
 
     /**
-     * Reads the next characters from the message into an array and
-     * returns the number of characters read.  Returns -1 if the end of the
-     * message has been reached.  The characters are stored in the array
-     * starting from the given offset and up to the length specified.
-     * @param buffer  The character array in which to store the characters.
-     * @param offset   The offset into the array at which to start storing
-     *              characters.
-     * @param length   The number of characters to read.
-     * @return The number of characters read. Returns -1 if the
-     *          end of the message has been reached.
-     * @throws IOException If an error occurs in reading the underlying
-     *            stream.
+     * Reads the next characters from the message into an array and returns the number of characters read. Returns -1 if the end of the message has been
+     * reached. The characters are stored in the array starting from the given offset and up to the length specified.
+     *
+     * @param buffer The character array in which to store the characters.
+     * @param offset The offset into the array at which to start storing characters.
+     * @param length The number of characters to read.
+     * @return The number of characters read. Returns -1 if the end of the message has been reached.
+     * @throws IOException If an error occurs in reading the underlying stream.
      */
     @Override
-    public int read(final char[] buffer, int offset, int length) throws IOException
-    {
-        if (length < 1)
-        {
+    public int read(final char[] buffer, int offset, int length) throws IOException {
+        if (length < 1) {
             return 0;
         }
         int ch;
-        synchronized (lock)
-        {
-            if ((ch = read()) == -1)
-            {
+        synchronized (lock) {
+            if ((ch = read()) == -1) {
                 return NetConstants.EOS;
             }
 
             final int off = offset;
 
-            do
-            {
+            do {
                 buffer[offset++] = (char) ch;
-            }
-            while (--length > 0 && (ch = read()) != -1);
+            } while (--length > 0 && (ch = read()) != -1);
 
             return offset - off;
         }
     }
 
     /**
-     * Read a line of text.
-     * A line is considered to be terminated by carriage return followed immediately by a linefeed.
-     * This contrasts with BufferedReader which also allows other combinations.
+     * Read a line of text. A line is considered to be terminated by carriage return followed immediately by a linefeed. This contrasts with BufferedReader
+     * which also allows other combinations.
+     *
      * @since 3.0
      */
     @Override
     public String readLine() throws IOException {
         final StringBuilder sb = new StringBuilder();
         int intch;
-        synchronized(lock) { // make thread-safe (hopefully!)
-            while((intch = read()) != NetConstants.EOS)
-            {
+        synchronized (lock) { // make thread-safe (hopefully!)
+            while ((intch = read()) != NetConstants.EOS) {
                 if (intch == LF && atBeginning) {
-                    return sb.substring(0, sb.length()-1);
+                    return sb.substring(0, sb.length() - 1);
                 }
                 sb.append((char) intch);
             }
@@ -246,7 +212,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
             return null;
         }
         // Should not happen - EOF without CRLF
-        //new Throwable(string).printStackTrace();
+        // new Throwable(string).printStackTrace();
         return string;
     }
 }

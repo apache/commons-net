@@ -21,8 +21,7 @@ package org.apache.commons.net.pop3;
  * POP3Reply stores POP3 reply code constants.
  */
 
-public final class POP3Reply
-{
+public final class POP3Reply {
     /** The reply code indicating success of an operation. */
     public static final int OK = 0;
 
@@ -31,11 +30,12 @@ public final class POP3Reply
 
     /**
      * The reply code indicating intermediate response to a command.
+     *
      * @since 3.0
      */
     public static final int OK_INT = 2;
 
     // Cannot be instantiated.
-    private POP3Reply()
-    {}
+    private POP3Reply() {
+    }
 }

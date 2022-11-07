@@ -24,9 +24,8 @@ import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.imap.IMAPClient;
 
 /**
- * This is an example program demonstrating how to use the IMAP[S]Client class.
- * This program connects to a IMAP[S] server, lists its capabilities and shows
- * the status of the Inbox.
+ * This is an example program demonstrating how to use the IMAP[S]Client class. This program connects to a IMAP[S] server, lists its capabilities and shows the
+ * status of the Inbox.
  * <p>
  * Usage: IMAPMail imap[s]://username:password@server/
  * <p>
@@ -35,14 +34,11 @@ import org.apache.commons.net.imap.IMAPClient;
  * or<br>
  * IMAPMail imaps://username:password@imap.googlemail.com/
  */
-public final class IMAPMail
-{
+public final class IMAPMail {
 
     public static void main(final String[] args) throws IOException {
-        if (args.length != 1)
-        {
-            System.err.println(
-                "Usage: IMAPMail imap[s]://username:password@server/");
+        if (args.length != 1) {
+            System.err.println("Usage: IMAPMail imap[s]://username:password@server/");
             System.err.println("Connects to server; lists capabilities and shows Inbox status");
             System.exit(1);
         }
@@ -64,7 +60,7 @@ public final class IMAPMail
 
             imap.examine("inbox");
 
-            imap.status("inbox", new String[]{"MESSAGES"});
+            imap.status("inbox", new String[] { "MESSAGES" });
 
             imap.list("", "*"); // Show the folders
 

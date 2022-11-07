@@ -29,24 +29,15 @@ import org.apache.commons.net.io.FromNetASCIIOutputStream;
 import org.apache.commons.net.io.ToNetASCIIInputStream;
 
 /**
- * The TFTPClient class encapsulates all the aspects of the TFTP protocol
- * necessary to receive and send files through TFTP.  It is derived from
- * the {@link org.apache.commons.net.tftp.TFTP} because
- * it is more convenient than using aggregation, and as a result exposes
- * the same set of methods to allow you to deal with the TFTP protocol
- * directly.  However, almost every user should only be concerend with the
- * the {@link org.apache.commons.net.DatagramSocketClient#open  open() },
- * {@link org.apache.commons.net.DatagramSocketClient#close  close() },
- * {@link #sendFile  sendFile() }, and
- * {@link #receiveFile  receiveFile() } methods.  Additionally, the
- * {@link #setMaxTimeouts  setMaxTimeouts() } and
- * {@link org.apache.commons.net.DatagramSocketClient#setDefaultTimeout setDefaultTimeout() }
- *  methods may be of importance for performance
- * tuning.
+ * The TFTPClient class encapsulates all the aspects of the TFTP protocol necessary to receive and send files through TFTP. It is derived from the
+ * {@link org.apache.commons.net.tftp.TFTP} because it is more convenient than using aggregation, and as a result exposes the same set of methods to allow you
+ * to deal with the TFTP protocol directly. However, almost every user should only be concerend with the the
+ * {@link org.apache.commons.net.DatagramSocketClient#open open() }, {@link org.apache.commons.net.DatagramSocketClient#close close() }, {@link #sendFile
+ * sendFile() }, and {@link #receiveFile receiveFile() } methods. Additionally, the {@link #setMaxTimeouts setMaxTimeouts() } and
+ * {@link org.apache.commons.net.DatagramSocketClient#setDefaultTimeout setDefaultTimeout() } methods may be of importance for performance tuning.
  * <p>
- * Details regarding the TFTP protocol and the format of TFTP packets can
- * be found in RFC 783.  But the point of these classes is to keep you
- * from having to worry about the internals.
+ * Details regarding the TFTP protocol and the format of TFTP packets can be found in RFC 783. But the point of these classes is to keep you from having to
+ * worry about the internals.
  *
  *
  * @see TFTP
@@ -54,12 +45,9 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
  * @see TFTPPacketException
  */
 
-public class TFTPClient extends TFTP
-{
+public class TFTPClient extends TFTP {
     /**
-     * The default number of times a receive attempt is allowed to timeout
-     * before ending attempts to retry the receive and failing.  The default
-     * is 5 timeouts.
+     * The default number of times a receive attempt is allowed to timeout before ending attempts to retry the receive and failing. The default is 5 timeouts.
      */
     public static final int DEFAULT_MAX_TIMEOUTS = 5;
 
@@ -73,23 +61,19 @@ public class TFTPClient extends TFTP
     private long totalBytesSent;
 
     /**
-     * Creates a TFTPClient instance with a default timeout of DEFAULT_TIMEOUT,
-     * maximum timeouts value of DEFAULT_MAX_TIMEOUTS, a null socket,
-     * and buffered operations disabled.
+     * Creates a TFTPClient instance with a default timeout of DEFAULT_TIMEOUT, maximum timeouts value of DEFAULT_MAX_TIMEOUTS, a null socket, and buffered
+     * operations disabled.
      */
-    public TFTPClient()
-    {
+    public TFTPClient() {
         maxTimeouts = DEFAULT_MAX_TIMEOUTS;
     }
 
     /**
-     * Returns the maximum number of times a receive attempt is allowed to
-     * timeout before ending attempts to retry the receive and failing.
+     * Returns the maximum number of times a receive attempt is allowed to timeout before ending attempts to retry the receive and failing.
      *
      * @return The maximum number of timeouts allowed.
      */
-    public int getMaxTimeouts()
-    {
+    public int getMaxTimeouts() {
         return maxTimeouts;
     }
 
@@ -99,7 +83,6 @@ public class TFTPClient extends TFTP
     public long getTotalBytesReceived() {
         return totalBytesReceived;
     }
-
 
     /**
      * @return The number of bytes sent in the ongoing download
@@ -116,36 +99,26 @@ public class TFTPClient extends TFTP
      * @param output   The OutputStream to which the file should be written.
      * @param host     The remote host serving the file.
      * @return number of bytes read
-     * @throws IOException If an I/O error occurs.  The nature of the
-     *            error will be reported in the message.
+     * @throws IOException If an I/O error occurs. The nature of the error will be reported in the message.
      */
-    public int receiveFile(final String fileName, final int mode, final OutputStream output,
-                           final InetAddress host)
-    throws IOException
-    {
+    public int receiveFile(final String fileName, final int mode, final OutputStream output, final InetAddress host) throws IOException {
         return receiveFile(fileName, mode, output, host, DEFAULT_PORT);
     }
 
     /**
-     * Requests a named file from a remote host, writes the
-     * file to an OutputStream, closes the connection, and returns the number
-     * of bytes read.  A local UDP socket must first be created by
-     * {@link org.apache.commons.net.DatagramSocketClient#open open()} before
-     * invoking this method.  This method will not close the OutputStream
-     * containing the file; you must close it after the method invocation.
+     * Requests a named file from a remote host, writes the file to an OutputStream, closes the connection, and returns the number of bytes read. A local UDP
+     * socket must first be created by {@link org.apache.commons.net.DatagramSocketClient#open open()} before invoking this method. This method will not close
+     * the OutputStream containing the file; you must close it after the method invocation.
      *
-     * @param fileName  The name of the file to receive.
-     * @param mode   The TFTP mode of the transfer (one of the MODE constants).
-     * @param output The OutputStream to which the file should be written.
-     * @param host   The remote host serving the file.
-     * @param port   The port number of the remote TFTP server.
+     * @param fileName The name of the file to receive.
+     * @param mode     The TFTP mode of the transfer (one of the MODE constants).
+     * @param output   The OutputStream to which the file should be written.
+     * @param host     The remote host serving the file.
+     * @param port     The port number of the remote TFTP server.
      * @return number of bytes read
-     * @throws IOException If an I/O error occurs.  The nature of the
-     *            error will be reported in the message.
+     * @throws IOException If an I/O error occurs. The nature of the error will be reported in the message.
      */
-    public int receiveFile(final String fileName, final int mode, OutputStream output,
-                           InetAddress host, final int port) throws IOException
-    {
+    public int receiveFile(final String fileName, final int mode, OutputStream output, InetAddress host, final int port) throws IOException {
         int bytesRead = 0;
         int lastBlock = 0;
         int block = 1;
@@ -179,16 +152,13 @@ public class TFTPClient extends TFTP
                         if (justStarted) {
                             justStarted = false;
                             if (recdPort == port) { // must not use the control port here
-                                final TFTPErrorPacket error = new TFTPErrorPacket(recdAddress,
-                                        recdPort, TFTPErrorPacket.UNKNOWN_TID,
-                                        "INCORRECT SOURCE PORT");
+                                final TFTPErrorPacket error = new TFTPErrorPacket(recdAddress, recdPort, TFTPErrorPacket.UNKNOWN_TID, "INCORRECT SOURCE PORT");
                                 bufferedSend(error);
-                                throw new IOException("Incorrect source port ("+recdPort+") in request reply.");
+                                throw new IOException("Incorrect source port (" + recdPort + ") in request reply.");
                             }
                             hostPort = recdPort;
                             ack.setPort(hostPort);
-                            if(!host.equals(recdAddress))
-                            {
+                            if (!host.equals(recdAddress)) {
                                 host = recdAddress;
                                 ack.setAddress(host);
                                 sent.setAddress(host);
@@ -200,11 +170,10 @@ public class TFTPClient extends TFTP
                             switch (received.getType()) {
 
                             case TFTPPacket.ERROR:
-                                TFTPErrorPacket error = (TFTPErrorPacket)received;
-                                throw new IOException("Error code " + error.getError() +
-                                                      " received: " + error.getMessage());
+                                TFTPErrorPacket error = (TFTPErrorPacket) received;
+                                throw new IOException("Error code " + error.getError() + " received: " + error.getMessage());
                             case TFTPPacket.DATA:
-                                final TFTPDataPacket data = (TFTPDataPacket)received;
+                                final TFTPDataPacket data = (TFTPDataPacket) received;
                                 dataLength = data.getDataLength();
                                 lastBlock = data.getBlockNumber();
 
@@ -212,9 +181,7 @@ public class TFTPClient extends TFTP
                                     try {
                                         output.write(data.getData(), data.getDataOffset(), dataLength);
                                     } catch (final IOException e) {
-                                        error = new TFTPErrorPacket(host, hostPort,
-                                                                    TFTPErrorPacket.OUT_OF_SPACE,
-                                                                    "File write failed.");
+                                        error = new TFTPErrorPacket(host, hostPort, TFTPErrorPacket.OUT_OF_SPACE, "File write failed.");
                                         bufferedSend(error);
                                         throw e;
                                     }
@@ -236,9 +203,7 @@ public class TFTPClient extends TFTP
                                 throw new IOException("Received unexpected packet type (" + received.getType() + ")");
                             }
                         } else { // incorrect host or TID
-                            final TFTPErrorPacket error = new TFTPErrorPacket(recdAddress, recdPort,
-                                    TFTPErrorPacket.UNKNOWN_TID,
-                                    "Unexpected host or port.");
+                            final TFTPErrorPacket error = new TFTPErrorPacket(recdAddress, recdPort, TFTPErrorPacket.UNKNOWN_TID, "Unexpected host or port.");
                             bufferedSend(error);
                         }
                     } catch (final SocketException | InterruptedIOException e) {
@@ -248,7 +213,7 @@ public class TFTPClient extends TFTP
                     } catch (final TFTPPacketException e) {
                         throw new IOException("Bad packet: " + e.getMessage());
                     }
-                } while(wantReply); // waiting for response
+                } while (wantReply); // waiting for response
 
                 ack.setBlockNumber(lastBlock);
                 sent = ack;
@@ -262,7 +227,6 @@ public class TFTPClient extends TFTP
         return bytesRead;
     }
 
-
     /**
      * Same as calling receiveFile(fileName, mode, output, hostname, TFTP.DEFAULT_PORT).
      *
@@ -271,26 +235,17 @@ public class TFTPClient extends TFTP
      * @param output   The OutputStream to which the file should be written.
      * @param hostname The name of the remote host serving the file.
      * @return number of bytes read
-     * @throws IOException If an I/O error occurs.  The nature of the
-     *            error will be reported in the message.
-     * @throws UnknownHostException  If the hostname cannot be resolved.
+     * @throws IOException          If an I/O error occurs. The nature of the error will be reported in the message.
+     * @throws UnknownHostException If the hostname cannot be resolved.
      */
-    public int receiveFile(final String fileName, final int mode, final OutputStream output,
-                           final String hostname)
-    throws UnknownHostException, IOException
-    {
-        return receiveFile(fileName, mode, output, InetAddress.getByName(hostname),
-                           DEFAULT_PORT);
+    public int receiveFile(final String fileName, final int mode, final OutputStream output, final String hostname) throws UnknownHostException, IOException {
+        return receiveFile(fileName, mode, output, InetAddress.getByName(hostname), DEFAULT_PORT);
     }
 
-
     /**
-     * Requests a named file from a remote host, writes the
-     * file to an OutputStream, closes the connection, and returns the number
-     * of bytes read.  A local UDP socket must first be created by
-     * {@link org.apache.commons.net.DatagramSocketClient#open open()} before
-     * invoking this method.  This method will not close the OutputStream
-     * containing the file; you must close it after the method invocation.
+     * Requests a named file from a remote host, writes the file to an OutputStream, closes the connection, and returns the number of bytes read. A local UDP
+     * socket must first be created by {@link org.apache.commons.net.DatagramSocketClient#open open()} before invoking this method. This method will not close
+     * the OutputStream containing the file; you must close it after the method invocation.
      *
      * @param fileName The name of the file to receive.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
@@ -298,58 +253,41 @@ public class TFTPClient extends TFTP
      * @param hostname The name of the remote host serving the file.
      * @param port     The port number of the remote TFTP server.
      * @return number of bytes read
-     * @throws IOException If an I/O error occurs.  The nature of the
-     *            error will be reported in the message.
-     * @throws UnknownHostException  If the hostname cannot be resolved.
+     * @throws IOException          If an I/O error occurs. The nature of the error will be reported in the message.
+     * @throws UnknownHostException If the hostname cannot be resolved.
      */
-    public int receiveFile(final String fileName, final int mode, final OutputStream output,
-                           final String hostname, final int port)
-    throws UnknownHostException, IOException
-    {
-        return receiveFile(fileName, mode, output, InetAddress.getByName(hostname),
-                           port);
+    public int receiveFile(final String fileName, final int mode, final OutputStream output, final String hostname, final int port)
+            throws UnknownHostException, IOException {
+        return receiveFile(fileName, mode, output, InetAddress.getByName(hostname), port);
     }
 
     /**
      * Same as calling sendFile(fileName, mode, input, host, TFTP.DEFAULT_PORT).
      *
-     * @param fileName The name the remote server should use when creating
-     *        the file on its file system.
+     * @param fileName The name the remote server should use when creating the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
-     * @param input the input stream containing the data to be sent
+     * @param input    the input stream containing the data to be sent
      * @param host     The name of the remote host receiving the file.
-     * @throws IOException If an I/O error occurs.  The nature of the
-     *            error will be reported in the message.
-     * @throws UnknownHostException  If the hostname cannot be resolved.
+     * @throws IOException          If an I/O error occurs. The nature of the error will be reported in the message.
+     * @throws UnknownHostException If the hostname cannot be resolved.
      */
-    public void sendFile(final String fileName, final int mode, final InputStream input,
-                         final InetAddress host)
-    throws IOException
-    {
+    public void sendFile(final String fileName, final int mode, final InputStream input, final InetAddress host) throws IOException {
         sendFile(fileName, mode, input, host, DEFAULT_PORT);
     }
 
-
     /**
-     * Requests to send a file to a remote host, reads the file from an
-     * InputStream, sends the file to the remote host, and closes the
-     * connection.  A local UDP socket must first be created by
-     * {@link org.apache.commons.net.DatagramSocketClient#open open()} before
-     * invoking this method.  This method will not close the InputStream
-     * containing the file; you must close it after the method invocation.
+     * Requests to send a file to a remote host, reads the file from an InputStream, sends the file to the remote host, and closes the connection. A local UDP
+     * socket must first be created by {@link org.apache.commons.net.DatagramSocketClient#open open()} before invoking this method. This method will not close
+     * the InputStream containing the file; you must close it after the method invocation.
      *
-     * @param fileName The name the remote server should use when creating
-     *        the file on its file system.
+     * @param fileName The name the remote server should use when creating the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
-     * @param input the input stream containing the data to be sent
+     * @param input    the input stream containing the data to be sent
      * @param host     The remote host receiving the file.
      * @param port     The port number of the remote TFTP server.
-     * @throws IOException If an I/O error occurs.  The nature of the
-     *            error will be reported in the message.
+     * @throws IOException If an I/O error occurs. The nature of the error will be reported in the message.
      */
-    public void sendFile(final String fileName, final int mode, InputStream input,
-                         InetAddress host, final int port) throws IOException
-    {
+    public void sendFile(final String fileName, final int mode, InputStream input, InetAddress host, final int port) throws IOException {
         int block = 0;
         int hostPort = 0;
         boolean justStarted = true;
@@ -368,8 +306,8 @@ public class TFTPClient extends TFTP
 
         try {
             do { // until eof
-                // first time: block is 0, lastBlock is 0, send a request packet.
-                // subsequent: block is integer starting at 1, send data packet.
+                 // first time: block is 0, lastBlock is 0, send a request packet.
+                 // subsequent: block is integer starting at 1, send data packet.
                 bufferedSend(sent);
                 boolean wantReply = true;
                 int timeouts = 0;
@@ -383,11 +321,9 @@ public class TFTPClient extends TFTP
                         if (justStarted) {
                             justStarted = false;
                             if (recdPort == port) { // must not use the control port here
-                                final TFTPErrorPacket error = new TFTPErrorPacket(recdAddress,
-                                        recdPort, TFTPErrorPacket.UNKNOWN_TID,
-                                        "INCORRECT SOURCE PORT");
+                                final TFTPErrorPacket error = new TFTPErrorPacket(recdAddress, recdPort, TFTPErrorPacket.UNKNOWN_TID, "INCORRECT SOURCE PORT");
                                 bufferedSend(error);
-                                throw new IOException("Incorrect source port ("+recdPort+") in request reply.");
+                                throw new IOException("Incorrect source port (" + recdPort + ") in request reply.");
                             }
                             hostPort = recdPort;
                             data.setPort(hostPort);
@@ -403,12 +339,11 @@ public class TFTPClient extends TFTP
 
                             switch (received.getType()) {
                             case TFTPPacket.ERROR:
-                                final TFTPErrorPacket error = (TFTPErrorPacket)received;
-                                throw new IOException("Error code " + error.getError() +
-                                                      " received: " + error.getMessage());
+                                final TFTPErrorPacket error = (TFTPErrorPacket) received;
+                                throw new IOException("Error code " + error.getError() + " received: " + error.getMessage());
                             case TFTPPacket.ACKNOWLEDGEMENT:
 
-                                final int lastBlock = ((TFTPAckPacket)received).getBlockNumber();
+                                final int lastBlock = ((TFTPAckPacket) received).getBlockNumber();
 
                                 if (lastBlock == block) {
                                     ++block;
@@ -425,10 +360,7 @@ public class TFTPClient extends TFTP
                                 throw new IOException("Received unexpected packet type.");
                             }
                         } else { // wrong host or TID; send error
-                            final TFTPErrorPacket error = new TFTPErrorPacket(recdAddress,
-                                                        recdPort,
-                                                        TFTPErrorPacket.UNKNOWN_TID,
-                                                        "Unexpected host or port.");
+                            final TFTPErrorPacket error = new TFTPErrorPacket(recdAddress, recdPort, TFTPErrorPacket.UNKNOWN_TID, "Unexpected host or port.");
                             bufferedSend(error);
                         }
                     } catch (final SocketException | InterruptedIOException e) {
@@ -439,7 +371,7 @@ public class TFTPClient extends TFTP
                         throw new IOException("Bad packet: " + e.getMessage());
                     }
                     // retry until a good ack
-                } while(wantReply);
+                } while (wantReply);
 
                 if (lastAckWait) {
                     break; // we were waiting for this; now all done
@@ -449,13 +381,12 @@ public class TFTPClient extends TFTP
                 int offset = 4;
                 int totalThisPacket = 0;
                 int bytesRead = 0;
-                while (dataLength > 0 &&
-                        (bytesRead = input.read(sendBuffer, offset, dataLength)) > 0) {
+                while (dataLength > 0 && (bytesRead = input.read(sendBuffer, offset, dataLength)) > 0) {
                     offset += bytesRead;
                     dataLength -= bytesRead;
                     totalThisPacket += bytesRead;
                 }
-                if( totalThisPacket < TFTPPacket.SEGMENT_SIZE ) {
+                if (totalThisPacket < TFTPPacket.SEGMENT_SIZE) {
                     /* this will be our last packet -- send, wait for ack, stop */
                     lastAckWait = true;
                 }
@@ -469,65 +400,45 @@ public class TFTPClient extends TFTP
         }
     }
 
-
     /**
      * Same as calling sendFile(fileName, mode, input, hostname, TFTP.DEFAULT_PORT).
      *
-     * @param fileName The name the remote server should use when creating
-     *        the file on its file system.
+     * @param fileName The name the remote server should use when creating the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
-     * @param input the input stream containing the data to be sent
+     * @param input    the input stream containing the data to be sent
      * @param hostname The name of the remote host receiving the file.
-     * @throws IOException If an I/O error occurs.  The nature of the
-     *            error will be reported in the message.
-     * @throws UnknownHostException  If the hostname cannot be resolved.
+     * @throws IOException          If an I/O error occurs. The nature of the error will be reported in the message.
+     * @throws UnknownHostException If the hostname cannot be resolved.
      */
-    public void sendFile(final String fileName, final int mode, final InputStream input,
-                         final String hostname)
-    throws UnknownHostException, IOException
-    {
-        sendFile(fileName, mode, input, InetAddress.getByName(hostname),
-                 DEFAULT_PORT);
+    public void sendFile(final String fileName, final int mode, final InputStream input, final String hostname) throws UnknownHostException, IOException {
+        sendFile(fileName, mode, input, InetAddress.getByName(hostname), DEFAULT_PORT);
     }
 
-
     /**
-     * Requests to send a file to a remote host, reads the file from an
-     * InputStream, sends the file to the remote host, and closes the
-     * connection.  A local UDP socket must first be created by
-     * {@link org.apache.commons.net.DatagramSocketClient#open open()} before
-     * invoking this method.  This method will not close the InputStream
-     * containing the file; you must close it after the method invocation.
+     * Requests to send a file to a remote host, reads the file from an InputStream, sends the file to the remote host, and closes the connection. A local UDP
+     * socket must first be created by {@link org.apache.commons.net.DatagramSocketClient#open open()} before invoking this method. This method will not close
+     * the InputStream containing the file; you must close it after the method invocation.
      *
-     * @param fileName The name the remote server should use when creating
-     *        the file on its file system.
+     * @param fileName The name the remote server should use when creating the file on its file system.
      * @param mode     The TFTP mode of the transfer (one of the MODE constants).
-     * @param input the input stream containing the data to be sent
+     * @param input    the input stream containing the data to be sent
      * @param hostname The name of the remote host receiving the file.
      * @param port     The port number of the remote TFTP server.
-     * @throws IOException If an I/O error occurs.  The nature of the
-     *            error will be reported in the message.
-     * @throws UnknownHostException  If the hostname cannot be resolved.
+     * @throws IOException          If an I/O error occurs. The nature of the error will be reported in the message.
+     * @throws UnknownHostException If the hostname cannot be resolved.
      */
-    public void sendFile(final String fileName, final int mode, final InputStream input,
-                         final String hostname, final int port)
-    throws UnknownHostException, IOException
-    {
+    public void sendFile(final String fileName, final int mode, final InputStream input, final String hostname, final int port)
+            throws UnknownHostException, IOException {
         sendFile(fileName, mode, input, InetAddress.getByName(hostname), port);
     }
 
     /**
-     * Sets the maximum number of times a receive attempt is allowed to
-     * timeout during a receiveFile() or sendFile() operation before ending
-     * attempts to retry the receive and failing.
-     * The default is DEFAULT_MAX_TIMEOUTS.
+     * Sets the maximum number of times a receive attempt is allowed to timeout during a receiveFile() or sendFile() operation before ending attempts to retry
+     * the receive and failing. The default is DEFAULT_MAX_TIMEOUTS.
      *
-     * @param numTimeouts  The maximum number of timeouts to allow.  Values
-     *        less than 1 should not be used, but if they are, they are
-     *        treated as 1.
+     * @param numTimeouts The maximum number of timeouts to allow. Values less than 1 should not be used, but if they are, they are treated as 1.
      */
-    public void setMaxTimeouts(final int numTimeouts)
-    {
+    public void setMaxTimeouts(final int numTimeouts) {
         maxTimeouts = Math.max(numTimeouts, 1);
     }
 }

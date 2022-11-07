@@ -33,8 +33,7 @@ public class TestNtpClient {
     private static SimpleNTPServer server;
 
     @BeforeClass
-    public static void oneTimeSetUp() throws IOException
-    {
+    public static void oneTimeSetUp() throws IOException {
         // one-time initialization code
         server = new SimpleNTPServer(0);
         server.connect();
@@ -45,9 +44,9 @@ public class TestNtpClient {
             Assert.fail("failed to start NTP server: " + e);
         }
         Assert.assertTrue(server.isStarted());
-        //System.out.println("XXX: time server started");
+        // System.out.println("XXX: time server started");
         boolean running = false;
-        for (int retries=0; retries < 5; retries++) {
+        for (int retries = 0; retries < 5; retries++) {
             running = server.isRunning();
             if (running) {
                 break;
@@ -79,7 +78,7 @@ public class TestNtpClient {
         client.setDefaultTimeout(2000);
         try {
             // Java 1.7: use InetAddress.getLoopbackAddress() instead
-            final InetAddress addr = InetAddress.getByAddress("loopback", new byte[]{127, 0, 0, 1});
+            final InetAddress addr = InetAddress.getByAddress("loopback", new byte[] { 127, 0, 0, 1 });
             final TimeInfo timeInfo = client.getTime(addr, server.getPort());
             Assert.assertNotNull(timeInfo);
             Assert.assertTrue(timeInfo.getReturnTime() >= currentTimeMillis);

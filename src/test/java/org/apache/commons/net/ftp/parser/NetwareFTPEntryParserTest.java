@@ -25,18 +25,13 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
  */
 public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
 
-    private static final String[] badsamples = {
-        "a [-----F--] SCION_SYS                         512 Apr 13 23:52 SYS",
-            "d [----AF--]          0                        512 10-04-2001 _ADMIN"
-    };
+    private static final String[] badsamples = { "a [-----F--] SCION_SYS                         512 Apr 13 23:52 SYS",
+            "d [----AF--]          0                        512 10-04-2001 _ADMIN" };
 
-    private static final String [] goodsamples = {
-        "d [-----F--] SCION_SYS                         512 Apr 13 23:52 SYS",
-        "d [----AF--]          0                        512 Feb 22 17:32 _ADMIN",
-        "d [-W---F--] SCION_VOL2                        512 Apr 13 23:12 VOL2",
-        "- [RWCEAFMS] rwinston                        19968 Mar 12 15:20 Executive Summary.doc",
-        "d [RWCEAFMS] rwinston                          512 Nov 24  2005 Favorites"
-    };
+    private static final String[] goodsamples = { "d [-----F--] SCION_SYS                         512 Apr 13 23:52 SYS",
+            "d [----AF--]          0                        512 Feb 22 17:32 _ADMIN", "d [-W---F--] SCION_VOL2                        512 Apr 13 23:12 VOL2",
+            "- [RWCEAFMS] rwinston                        19968 Mar 12 15:20 Executive Summary.doc",
+            "d [RWCEAFMS] rwinston                          512 Nov 24  2005 Favorites" };
 
     public NetwareFTPEntryParserTest(final String name) {
         super(name);
@@ -62,7 +57,6 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
         testPrecision("d [RWCEAFMS] rwinston                          512 Nov 24  2005 Favorites", CalendarUnit.DAY_OF_MONTH);
     }
 
-
     @Override
     public void testParseFieldsOnDirectory() throws Exception {
         final String reply = "d [-W---F--] testUser                        512 Apr 13 23:12 testFile";
@@ -83,8 +77,7 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
         cal.set(Calendar.MILLISECOND, 0);
         cal.set(Calendar.YEAR, f.getTimestamp().get(Calendar.YEAR));
 
-        assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp()
-                .getTime()));
+        assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp().getTime()));
 
     }
 
@@ -110,5 +103,3 @@ public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
     }
 
 }
-
-

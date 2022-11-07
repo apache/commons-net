@@ -25,32 +25,21 @@ import java.util.TreeSet;
 import junit.framework.TestCase;
 
 /**
- * This test was contributed in a different form by W. McDonald Buck
- * of Boulder, Colorado, to help fix some bugs with the FTPClientConfig
- * in a real world setting.  It is a perfect functional test for the
- * Time Zone functionality of FTPClientConfig.
+ * This test was contributed in a different form by W. McDonald Buck of Boulder, Colorado, to help fix some bugs with the FTPClientConfig in a real world
+ * setting. It is a perfect functional test for the Time Zone functionality of FTPClientConfig.
  *
- * A publicly accessible FTP server at the US National Oceanographic and
- * Atmospheric Adminstration houses a directory which contains
- * 300 files, named sn.0000 to sn.0300. Every ten minutes or so
- * the next file in sequence is rewritten with new data. Thus the directory
- * contains observations for more than 24 hours of data.  Since the server
- * has its clock set to GMT this is an excellent functional test for any
- * machine in a different time zone.
+ * A publicly accessible FTP server at the US National Oceanographic and Atmospheric Adminstration houses a directory which contains 300 files, named sn.0000 to
+ * sn.0300. Every ten minutes or so the next file in sequence is rewritten with new data. Thus the directory contains observations for more than 24 hours of
+ * data. Since the server has its clock set to GMT this is an excellent functional test for any machine in a different time zone.
  *
- * Noteworthy is the fact that the FTP routines in some web browsers don't
- * work as well as this.  They can't, since they have no way of knowing the
- * server's time zone.  Depending on the local machine's position relative
- * to GMT and the time of day, the browsers may decide that a timestamp
- * would be in the  future if given the current year, so they assume the
- * year to be  last year.  This illustrates the value of FTPClientConfig's
- * time zone functionality.
+ * Noteworthy is the fact that the FTP routines in some web browsers don't work as well as this. They can't, since they have no way of knowing the server's time
+ * zone. Depending on the local machine's position relative to GMT and the time of day, the browsers may decide that a timestamp would be in the future if given
+ * the current year, so they assume the year to be last year. This illustrates the value of FTPClientConfig's time zone functionality.
  */
 public class FTPClientConfigFunctionalTest extends TestCase {
 
     private final FTPClient ftpClient = new FTPClient();
     private FTPClientConfig ftpClientConfig;
-
 
     /**
      *
@@ -91,7 +80,7 @@ public class FTPClientConfigFunctionalTest extends TestCase {
         ftpClient.configure(ftpClientConfig);
         try {
             ftpClient.connect("tgftp.nws.noaa.gov");
-            ftpClient.login("anonymous","testing@apache.org");
+            ftpClient.login("anonymous", "testing@apache.org");
             ftpClient.changeWorkingDirectory("SL.us008001/DF.an/DC.sflnd/DS.metar");
             ftpClient.enterLocalPassiveMode();
         } catch (final IOException e) {
@@ -113,15 +102,15 @@ public class FTPClientConfigFunctionalTest extends TestCase {
         final Instant nowInstant = nowDate.toInstant();
         final FTPFile[] files = ftpClient.listFiles();
         final TreeSet<FTPFile> sortedSet = getSortedSet(files);
-        //SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm z" );
+        // SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm z" );
         FTPFile lastFile = null;
         FTPFile firstFile = null;
         for (final FTPFile thisFile : sortedSet) {
             if (firstFile == null) {
                 firstFile = thisFile;
             }
-            //System.out.println(sdf.format(thisFile.getTimestamp().getTime())
-            //        + " " +thisFile.getName());
+            // System.out.println(sdf.format(thisFile.getTimestamp().getTime())
+            // + " " +thisFile.getName());
             if (lastFile != null) {
                 // verify that the list is sorted earliest to latest.
                 assertTrue(lastFile.getTimestamp().before(thisFile.getTimestamp()));
@@ -130,7 +119,7 @@ public class FTPClientConfigFunctionalTest extends TestCase {
             lastFile = thisFile;
         }
 
-        if (firstFile == null || lastFile == null)  {
+        if (firstFile == null || lastFile == null) {
             fail("No files found");
         } else {
             // test that notwithstanding any time zone differences, the newest file
@@ -145,14 +134,8 @@ public class FTPClientConfigFunctionalTest extends TestCase {
             // by the parser and therefore been relegated to the same date a
             // year ago.
             firstCal.add(Calendar.DAY_OF_MONTH, 2);
-            assertTrue(lastFile.getTimestamp().getTime() + " before " + firstCal.getTime(),
-                lastFile.getTimestamp().before(firstCal));
-            assertTrue(lastFile.getTimestampInstant() + " before " + firstInstant,
-                lastFile.getTimestampInstant().isBefore(firstInstant));
+            assertTrue(lastFile.getTimestamp().getTime() + " before " + firstCal.getTime(), lastFile.getTimestamp().before(firstCal));
+            assertTrue(lastFile.getTimestampInstant() + " before " + firstInstant, lastFile.getTimestampInstant().isBefore(firstInstant));
         }
     }
 }
-
-
-
-

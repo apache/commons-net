@@ -31,18 +31,14 @@ import org.apache.commons.net.nntp.NNTPClient;
 import org.apache.commons.net.nntp.NNTPReply;
 import org.apache.commons.net.nntp.SimpleNNTPHeader;
 
-
 /**
- * This is an example program using the NNTP package to post an article
- * to the specified newsgroup(s).  It prompts you for header information and
- * a file name to post.
+ * This is an example program using the NNTP package to post an article to the specified newsgroup(s). It prompts you for header information and a file name to
+ * post.
  */
 
-public final class PostMessage
-{
+public final class PostMessage {
 
-    public static void main(final String[] args)
-    {
+    public static void main(final String[] args) {
         final String from;
         final String subject;
         String newsgroup;
@@ -55,8 +51,7 @@ public final class PostMessage
         final SimpleNNTPHeader header;
         final NNTPClient client;
 
-        if (args.length < 1)
-        {
+        if (args.length < 1) {
             System.err.println("Usage: post newsserver");
             System.exit(1);
         }
@@ -65,8 +60,7 @@ public final class PostMessage
 
         stdin = new BufferedReader(new InputStreamReader(System.in));
 
-        try
-        {
+        try {
             System.out.print("From: ");
             System.out.flush();
 
@@ -85,8 +79,7 @@ public final class PostMessage
             newsgroup = stdin.readLine();
             header.addNewsgroup(newsgroup);
 
-            while (true)
-            {
+            while (true) {
                 System.out.print("Additional Newsgroup <Hit enter to end>: ");
                 System.out.flush();
 
@@ -129,35 +122,28 @@ public final class PostMessage
 
             fileName = stdin.readLine();
 
-            try
-            {
+            try {
                 fileReader = new FileReader(fileName);
-            }
-            catch (final FileNotFoundException e)
-            {
+            } catch (final FileNotFoundException e) {
                 System.err.println("File not found. " + e.getMessage());
                 System.exit(1);
             }
 
             client = new NNTPClient();
-            client.addProtocolCommandListener(new PrintCommandListener(
-                                                  new PrintWriter(System.out), true));
+            client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
 
             client.connect(server);
 
-            if (!NNTPReply.isPositiveCompletion(client.getReplyCode()))
-            {
+            if (!NNTPReply.isPositiveCompletion(client.getReplyCode())) {
                 client.disconnect();
                 System.err.println("NNTP server refused connection.");
                 System.exit(1);
             }
 
-            if (client.isAllowedToPost())
-            {
+            if (client.isAllowedToPost()) {
                 final Writer writer = client.postArticle();
 
-                if (writer != null)
-                {
+                if (writer != null) {
                     writer.write(header.toString());
                     Util.copyReader(fileReader, writer);
                     writer.close();
@@ -170,13 +156,9 @@ public final class PostMessage
             client.logout();
 
             client.disconnect();
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             e.printStackTrace();
             System.exit(1);
         }
     }
 }
-
-

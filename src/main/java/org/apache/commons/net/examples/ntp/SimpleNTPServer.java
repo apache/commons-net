@@ -26,23 +26,17 @@ import org.apache.commons.net.ntp.NtpV3Packet;
 import org.apache.commons.net.ntp.TimeStamp;
 
 /**
- * The SimpleNTPServer class is a UDP implementation of a server for the
- * Network Time Protocol (NTP) version 3 as described in RFC 1305.
- * It is a minimal NTP server that doesn't actually adjust the time but
- * only responds to NTP datagram requests with response sent back to
- * originating host with info filled out using the current clock time.
- * To be used for debugging or testing.
+ * The SimpleNTPServer class is a UDP implementation of a server for the Network Time Protocol (NTP) version 3 as described in RFC 1305. It is a minimal NTP
+ * server that doesn't actually adjust the time but only responds to NTP datagram requests with response sent back to originating host with info filled out
+ * using the current clock time. To be used for debugging or testing.
  *
- * To prevent this from interfering with the actual NTP service it can be
- * run from any local port.
+ * To prevent this from interfering with the actual NTP service it can be run from any local port.
  */
 public class SimpleNTPServer implements Runnable {
 
-    public static void main(final String[] args)
-    {
+    public static void main(final String[] args) {
         int port = NtpV3Packet.NTP_PORT;
-        if (args.length != 0)
-        {
+        if (args.length != 0) {
             try {
                 port = Integer.parseInt(args[0]);
             } catch (final NumberFormatException nfe) {
@@ -56,6 +50,7 @@ public class SimpleNTPServer implements Runnable {
             e.printStackTrace();
         }
     }
+
     private int port;
     private volatile boolean running;
     private boolean started;
@@ -65,20 +60,17 @@ public class SimpleNTPServer implements Runnable {
     /**
      * Creates SimpleNTPServer listening on default NTP port.
      */
-    public SimpleNTPServer()
-    {
+    public SimpleNTPServer() {
         this(NtpV3Packet.NTP_PORT);
     }
 
     /**
      * Creates SimpleNTPServer.
      *
-     * @param port the local port the server socket is bound to, or
-     *             <code>zero</code> for a system selected free port.
+     * @param port the local port the server socket is bound to, or <code>zero</code> for a system selected free port.
      * @throws IllegalArgumentException if port number less than 0
      */
-    public SimpleNTPServer(final int port)
-    {
+    public SimpleNTPServer(final int port) {
         if (port < 0) {
             throw new IllegalArgumentException();
         }
@@ -90,10 +82,8 @@ public class SimpleNTPServer implements Runnable {
      *
      * @throws IOException if an I/O error occurs when creating the socket.
      */
-    public void connect() throws IOException
-    {
-        if (socket == null)
-        {
+    public void connect() throws IOException {
+        if (socket == null) {
             socket = new DatagramSocket(port);
             // port = 0 is bound to available free port
             if (port == 0) {
@@ -103,26 +93,22 @@ public class SimpleNTPServer implements Runnable {
         }
     }
 
-    public int getPort()
-    {
+    public int getPort() {
         return port;
     }
 
     /**
-     * Handles incoming packet. If NTP packet is client-mode then respond
-     * to that host with a NTP response packet otherwise ignore.
+     * Handles incoming packet. If NTP packet is client-mode then respond to that host with a NTP response packet otherwise ignore.
      *
      * @param request incoming DatagramPacket
      * @param rcvTime time packet received
      *
-     * @throws IOException  if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      */
-    protected void handlePacket(final DatagramPacket request, final long rcvTime) throws IOException
-    {
+    protected void handlePacket(final DatagramPacket request, final long rcvTime) throws IOException {
         final NtpV3Packet message = new NtpV3Impl();
         message.setDatagramPacket(request);
-        System.out.printf("NTP packet from %s mode=%s%n", request.getAddress().getHostAddress(),
-                NtpUtils.getModeName(message.getMode()));
+        System.out.printf("NTP packet from %s mode=%s%n", request.getAddress().getHostAddress(), NtpUtils.getModeName(message.getMode()));
         if (message.getMode() == NtpV3Packet.MODE_CLIENT) {
             final NtpV3Packet response = new NtpV3Impl();
 
@@ -157,8 +143,7 @@ public class SimpleNTPServer implements Runnable {
      *
      * @return true if time service is running
      */
-    public boolean isRunning()
-    {
+    public boolean isRunning() {
         return running;
     }
 
@@ -167,8 +152,7 @@ public class SimpleNTPServer implements Runnable {
      *
      * @return true if time service is running
      */
-    public boolean isStarted()
-    {
+    public boolean isStarted() {
         return started;
     }
 
@@ -176,8 +160,7 @@ public class SimpleNTPServer implements Runnable {
      * Main method to service client connections.
      */
     @Override
-    public void run()
-    {
+    public void run() {
         running = true;
         final byte buffer[] = new byte[48];
         final DatagramPacket request = new DatagramPacket(buffer, buffer.length);
@@ -187,8 +170,7 @@ public class SimpleNTPServer implements Runnable {
                 final long rcvTime = System.currentTimeMillis();
                 handlePacket(request, rcvTime);
             } catch (final IOException e) {
-                if (running)
-                {
+                if (running) {
                     e.printStackTrace();
                 }
                 // otherwise socket thrown exception during shutdown
@@ -201,14 +183,11 @@ public class SimpleNTPServer implements Runnable {
      *
      * @throws IOException if an I/O error occurs when creating the socket.
      */
-    public void start() throws IOException
-    {
-        if (socket == null)
-        {
+    public void start() throws IOException {
+        if (socket == null) {
             connect();
         }
-        if (!started)
-        {
+        if (!started) {
             started = true;
             new Thread(this).start();
         }
@@ -217,12 +196,10 @@ public class SimpleNTPServer implements Runnable {
     /**
      * Closes server socket and stop listening.
      */
-    public void stop()
-    {
+    public void stop() {
         running = false;
-        if (socket != null)
-        {
-            socket.close();  // force closing of the socket
+        if (socket != null) {
+            socket.close(); // force closing of the socket
             socket = null;
         }
         started = false;

@@ -21,56 +21,52 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 /**
- * A class used to represent forward and reverse relay paths.  The
- * SMTP MAIL command requires a reverse relay path while the SMTP RCPT
- * command requires a forward relay path.  See RFC 821 for more details.
- * In general, you will not have to deal with relay paths.
+ * A class used to represent forward and reverse relay paths. The SMTP MAIL command requires a reverse relay path while the SMTP RCPT command requires a forward
+ * relay path. See RFC 821 for more details. In general, you will not have to deal with relay paths.
  *
  * @see SMTPClient
  */
 
-public final class RelayPath
-{
+public final class RelayPath {
     private final Vector<String> path;
     private final String emailAddress;
 
     /**
-     * Create a relay path with the specified email address as the ultimate
-     * destination.
+     * Create a relay path with the specified email address as the ultimate destination.
      * <p>
+     *
      * @param emailAddress The destination email address.
      */
-    public RelayPath(final String emailAddress)
-    {
+    public RelayPath(final String emailAddress) {
         this.path = new Vector<>();
         this.emailAddress = emailAddress;
     }
 
     /**
-     * Add a mail relay host to the relay path.  Hosts are added left to
-     * right.  For example, the following will create the path
+     * Add a mail relay host to the relay path. Hosts are added left to right. For example, the following will create the path
      * <code><b> &lt; @bar.com,@foo.com:foobar@foo.com &gt; </b></code>
+     *
      * <pre>
      * path = new RelayPath("foobar@foo.com");
      * path.addRelay("bar.com");
      * path.addRelay("foo.com");
      * </pre>
      * <p>
+     *
      * @param hostname The host to add to the relay path.
      */
-    public void addRelay(final String hostname)
-    {
+    public void addRelay(final String hostname) {
         path.addElement(hostname);
     }
 
     /**
      * Return the properly formatted string representation of the relay path.
      * <p>
+     *
      * @return The properly formatted string representation of the relay path.
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         final StringBuilder buffer = new StringBuilder();
         final Enumeration<String> hosts;
 
@@ -78,13 +74,11 @@ public final class RelayPath
 
         hosts = path.elements();
 
-        if (hosts.hasMoreElements())
-        {
+        if (hosts.hasMoreElements()) {
             buffer.append('@');
             buffer.append(hosts.nextElement());
 
-            while (hosts.hasMoreElements())
-            {
+            while (hosts.hasMoreElements()) {
                 buffer.append(",@");
                 buffer.append(hosts.nextElement());
             }

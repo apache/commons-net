@@ -18,24 +18,20 @@
 package org.apache.commons.net.nntp;
 
 /**
- * This class is a structure used to return article number and unique
- * id information extracted from an NNTP server reply.  You will normally
- * want this information when issuing a STAT command, implemented by
- * {@link NNTPClient#selectArticle selectArticle}.
+ * This class is a structure used to return article number and unique id information extracted from an NNTP server reply. You will normally want this
+ * information when issuing a STAT command, implemented by {@link NNTPClient#selectArticle selectArticle}.
+ *
  * @see NNTPClient
  *
  * @deprecated 3.0 use {@link ArticleInfo} instead
  */
 @Deprecated
-public final class ArticlePointer
-{
+public final class ArticlePointer {
     /** The number of the referenced article. */
     public int articleNumber;
     /**
-     * The unique id of the referenced article, including the enclosing
-     * &lt; and &gt; symbols which are technically not part of the
-     * identifier, but are required by all NNTP commands taking an
-     * article id as an argument.
+     * The unique id of the referenced article, including the enclosing &lt; and &gt; symbols which are technically not part of the identifier, but are required
+     * by all NNTP commands taking an article id as an argument.
      */
     public String articleId;
 }

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 package org.apache.commons.net.examples.nntp;
 
 import java.io.IOException;
@@ -49,7 +48,7 @@ public class MessageThreading {
         if (args.length == 4) { // Optional auth
             final String user = args[2];
             final String password = args[3];
-            if(!client.authenticate(user, password)) {
+            if (!client.authenticate(user, password)) {
                 System.out.println("Authentication failed for user " + user + "!");
                 System.exit(1);
             }
@@ -58,7 +57,7 @@ public class MessageThreading {
         final String fmt[] = client.listOverviewFmt();
         if (fmt != null) {
             System.out.println("LIST OVERVIEW.FMT:");
-            for(final String s : fmt) {
+            for (final String s : fmt) {
                 System.out.println(s);
             }
         } else {
@@ -75,7 +74,7 @@ public class MessageThreading {
 
         System.out.println("Building message thread tree...");
         final Threader threader = new Threader();
-        final Article root = (Article)threader.thread(articles);
+        final Article root = (Article) threader.thread(articles);
 
         Article.printThread(root, 0);
     }

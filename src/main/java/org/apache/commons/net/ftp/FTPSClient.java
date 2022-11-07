@@ -43,12 +43,11 @@ import org.apache.commons.net.util.SSLSocketUtils;
 import org.apache.commons.net.util.TrustManagerUtils;
 
 /**
- * FTP over SSL processing. If desired, the JVM property -Djavax.net.debug=all can be used to
- * see wire-level SSL details.
+ * FTP over SSL processing. If desired, the JVM property -Djavax.net.debug=all can be used to see wire-level SSL details.
  *
- * Warning: the hostname is not verified against the certificate by default, use
- * {@link #setHostnameVerifier(HostnameVerifier)} or {@link #setEndpointCheckingEnabled(boolean)}
- * (on Java 1.7+) to enable verification. Verification is only performed on client mode connections.
+ * Warning: the hostname is not verified against the certificate by default, use {@link #setHostnameVerifier(HostnameVerifier)} or
+ * {@link #setEndpointCheckingEnabled(boolean)} (on Java 1.7+) to enable verification. Verification is only performed on client mode connections.
+ *
  * @since 2.0
  */
 public class FTPSClient extends FTPClient {
@@ -63,8 +62,8 @@ public class FTPSClient extends FTPClient {
     public static final int DEFAULT_FTPS_DATA_PORT = 989;
     public static final int DEFAULT_FTPS_PORT = 990;
 
-    /** The value that I can set in PROT command  (C = Clear, P = Protected) */
-    private static final String[] PROT_COMMAND_VALUE = {"C","E","S","P"};
+    /** The value that I can set in PROT command (C = Clear, P = Protected) */
+    private static final String[] PROT_COMMAND_VALUE = { "C", "E", "S", "P" };
     /** Default PROT Command */
     private static final String DEFAULT_PROT = "C";
     /** Default secure socket protocol name, i.e. TLS */
@@ -72,19 +71,19 @@ public class FTPSClient extends FTPClient {
 
     /** The AUTH (Authentication/Security Mechanism) command. */
     private static final String CMD_AUTH = "AUTH";
-    /**  The ADAT (Authentication/Security Data) command. */
+    /** The ADAT (Authentication/Security Data) command. */
     private static final String CMD_ADAT = "ADAT";
-    /**  The PROT (Data Channel Protection Level) command. */
+    /** The PROT (Data Channel Protection Level) command. */
     private static final String CMD_PROT = "PROT";
-    /**  The PBSZ (Protection Buffer Size) command. */
+    /** The PBSZ (Protection Buffer Size) command. */
     private static final String CMD_PBSZ = "PBSZ";
-    /**  The MIC (Integrity Protected Command) command. */
+    /** The MIC (Integrity Protected Command) command. */
     private static final String CMD_MIC = "MIC";
-    /**  The CONF (Confidentiality Protected Command) command. */
+    /** The CONF (Confidentiality Protected Command) command. */
     private static final String CMD_CONF = "CONF";
-    /**  The ENC (Privacy Protected Command) command. */
+    /** The ENC (Privacy Protected Command) command. */
     private static final String CMD_ENC = "ENC";
-    /**  The CCC (Clear Command Channel) command. */
+    /** The CCC (Clear Command Channel) command. */
     private static final String CMD_CCC = "CCC";
 
     /** @deprecated - not used - may be removed in a future release */
@@ -126,8 +125,8 @@ public class FTPSClient extends FTPClient {
     /** The protocol versions */
     private String[] protocols;
 
-    /** The FTPS {@link TrustManager} implementation, default validate only
-     * {@link TrustManagerUtils#getValidateServerCertificateTrustManager()}.
+    /**
+     * The FTPS {@link TrustManager} implementation, default validate only {@link TrustManagerUtils#getValidateServerCertificateTrustManager()}.
      */
     private TrustManager trustManager = TrustManagerUtils.getValidateServerCertificateTrustManager();
 
@@ -150,20 +149,20 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Constructor for FTPSClient, using {@link #DEFAULT_PROTOCOL} - i.e. TLS
-     * Calls {@link #FTPSClient(String, boolean)}
+     * Constructor for FTPSClient, using {@link #DEFAULT_PROTOCOL} - i.e. TLS Calls {@link #FTPSClient(String, boolean)}
+     *
      * @param isImplicit The security mode (Implicit/Explicit).
      */
     public FTPSClient(final boolean isImplicit) {
         this(DEFAULT_PROTOCOL, isImplicit);
     }
 
-
     /**
-     * Constructor for FTPSClient, using {@link #DEFAULT_PROTOCOL} - i.e. TLS
-     * The default TrustManager is set from {@link TrustManagerUtils#getValidateServerCertificateTrustManager()}
+     * Constructor for FTPSClient, using {@link #DEFAULT_PROTOCOL} - i.e. TLS The default TrustManager is set from
+     * {@link TrustManagerUtils#getValidateServerCertificateTrustManager()}
+     *
      * @param isImplicit The security mode(Implicit/Explicit).
-     * @param context A pre-configured SSL Context
+     * @param context    A pre-configured SSL Context
      */
     public FTPSClient(final boolean isImplicit, final SSLContext context) {
         this(DEFAULT_PROTOCOL, isImplicit);
@@ -171,15 +170,13 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Constructor for FTPSClient, using {@link #DEFAULT_PROTOCOL} - i.e. TLS
-     * and isImplicit {@code false}
-     * Calls {@link #FTPSClient(boolean, SSLContext)}
+     * Constructor for FTPSClient, using {@link #DEFAULT_PROTOCOL} - i.e. TLS and isImplicit {@code false} Calls {@link #FTPSClient(boolean, SSLContext)}
+     *
      * @param context A pre-configured SSL Context
      */
     public FTPSClient(final SSLContext context) {
         this(false, context);
     }
-
 
     /**
      * Constructor for FTPSClient, using explict mode, calls {@link #FTPSClient(String, boolean)}.
@@ -191,11 +188,10 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Constructor for FTPSClient allowing specification of protocol
-     * and security mode. If isImplicit is true, the port is set to
-     * {@link #DEFAULT_FTPS_PORT} i.e. 990.
-     * The default TrustManager is set from {@link TrustManagerUtils#getValidateServerCertificateTrustManager()}
-     * @param protocol the protocol
+     * Constructor for FTPSClient allowing specification of protocol and security mode. If isImplicit is true, the port is set to {@link #DEFAULT_FTPS_PORT}
+     * i.e. 990. The default TrustManager is set from {@link TrustManagerUtils#getValidateServerCertificateTrustManager()}
+     *
+     * @param protocol   the protocol
      * @param isImplicit The security mode(Implicit/Explicit).
      */
     public FTPSClient(final String protocol, final boolean isImplicit) {
@@ -207,10 +203,9 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Because there are so many connect() methods,
-     * the _connectAction_() method is provided as a means of performing
-     * some action immediately after establishing a connection,
-     * rather than reimplementing all of the connect() methods.
+     * Because there are so many connect() methods, the _connectAction_() method is provided as a means of performing some action immediately after establishing
+     * a connection, rather than reimplementing all of the connect() methods.
+     *
      * @throws IOException If it throw by _connectAction_.
      * @see org.apache.commons.net.SocketClient#_connectAction_()
      */
@@ -230,15 +225,12 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Returns a socket of the data connection.
-     * Wrapped as an {@link SSLSocket}, which carries out handshake processing.
+     * Returns a socket of the data connection. Wrapped as an {@link SSLSocket}, which carries out handshake processing.
+     *
      * @param command The int representation of the FTP command to send.
-     * @param arg The arguments to the FTP command.
-     * If this parameter is set to null, then the command is sent with
-     * no arguments.
-     * @return corresponding to the established data connection.
-     * Null is returned if an FTP protocol error is reported at any point
-     * during the establishment and initialization of the connection.
+     * @param arg     The arguments to the FTP command. If this parameter is set to null, then the command is sent with no arguments.
+     * @return corresponding to the established data connection. Null is returned if an FTP protocol error is reported at any point during the establishment and
+     *         initialization of the connection.
      * @throws IOException If there is any problem with the connection.
      * @see FTPClient#_openDataConnection_(int, String)
      * @deprecated (3.3) Use {@link FTPClient#_openDataConnection_(FTPCmd, String)} instead
@@ -247,8 +239,7 @@ public class FTPSClient extends FTPClient {
     // Strictly speaking this is not needed, but it works round a Clirr bug
     // So rather than invoke the parent code, we do it here
     @Deprecated
-    protected Socket _openDataConnection_(final int command, final String arg)
-            throws IOException {
+    protected Socket _openDataConnection_(final int command, final String arg) throws IOException {
         return _openDataConnection_(FTPCommand.getCommand(command), arg);
     }
 
@@ -256,10 +247,9 @@ public class FTPSClient extends FTPClient {
      * Returns a socket of the data connection. Wrapped as an {@link SSLSocket}, which carries out handshake processing.
      *
      * @param command The textual representation of the FTP command to send.
-     * @param arg The arguments to the FTP command. If this parameter is set to null, then the command is sent with no
-     *        arguments.
-     * @return corresponding to the established data connection. Null is returned if an FTP protocol error is reported
-     *         at any point during the establishment and initialization of the connection.
+     * @param arg     The arguments to the FTP command. If this parameter is set to null, then the command is sent with no arguments.
+     * @return corresponding to the established data connection. Null is returned if an FTP protocol error is reported at any point during the establishment and
+     *         initialization of the connection.
      * @throws IOException If there is any problem with the connection.
      * @see FTPClient#_openDataConnection_(int, String)
      * @since 3.2
@@ -292,27 +282,19 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Establishes a data connection with the FTP server, returning
-     * a Socket for the connection if successful.  If a restart
-     * offset has been set with {@link #setRestartOffset(long)},
-     * a REST command is issued to the server with the offset as
-     * an argument before establishing the data connection.  Active
+     * Establishes a data connection with the FTP server, returning a Socket for the connection if successful. If a restart offset has been set with
+     * {@link #setRestartOffset(long)}, a REST command is issued to the server with the offset as an argument before establishing the data connection. Active
      * mode connections also cause a local PORT command to be issued.
      *
-     * @param command  The text representation of the FTP command to send.
-     * @param arg The arguments to the FTP command.  If this parameter is
-     *             set to null, then the command is sent with no argument.
-     * @return A Socket corresponding to the established data connection.
-     *         Null is returned if an FTP protocol error is reported at
-     *         any point during the establishment and initialization of
-     *         the connection.
-     * @throws IOException  If an I/O error occurs while either sending a
-     *      command to the server or receiving a reply from the server.
+     * @param command The text representation of the FTP command to send.
+     * @param arg     The arguments to the FTP command. If this parameter is set to null, then the command is sent with no argument.
+     * @return A Socket corresponding to the established data connection. Null is returned if an FTP protocol error is reported at any point during the
+     *         establishment and initialization of the connection.
+     * @throws IOException If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      * @since 3.1
      */
     private Socket openDataSecureConnection(String command, String arg) throws IOException {
-        if (getDataConnectionMode() != ACTIVE_LOCAL_DATA_CONNECTION_MODE &&
-                getDataConnectionMode() != PASSIVE_LOCAL_DATA_CONNECTION_MODE) {
+        if (getDataConnectionMode() != ACTIVE_LOCAL_DATA_CONNECTION_MODE && getDataConnectionMode() != PASSIVE_LOCAL_DATA_CONNECTION_MODE) {
             return null;
         }
 
@@ -321,8 +303,7 @@ public class FTPSClient extends FTPClient {
         final Socket socket;
         Socket sslSocket = null;
         final int soTimeoutMillis = DurationUtils.toMillisInt(getDataTimeout());
-        if (getDataConnectionMode() == ACTIVE_LOCAL_DATA_CONNECTION_MODE)
-        {
+        if (getDataConnectionMode() == ACTIVE_LOCAL_DATA_CONNECTION_MODE) {
             // if no activePortRange was set (correctly) -> getActivePort() = 0
             // -> new ServerSocket(0) -> bind to any free local port
             try (final ServerSocket server = _serverSocketFactory_.createServerSocket(getActivePort(), 1, getHostAddress())) {
@@ -350,8 +331,8 @@ public class FTPSClient extends FTPClient {
                 }
 
                 // For now, let's just use the data timeout value for waiting for
-                // the data connection.  It may be desirable to let this be a
-                // separately configurable value.  In any case, we really want
+                // the data connection. It may be desirable to let this be a
+                // separately configurable value. In any case, we really want
                 // to allow preventing the accept from blocking indefinitely.
                 if (soTimeoutMillis >= 0) {
                     server.setSoTimeout(soTimeoutMillis);
@@ -369,9 +350,7 @@ public class FTPSClient extends FTPClient {
                     socket.setSendBufferSize(getSendDataSocketBufferSize());
                 }
             }
-        }
-        else
-        { // We must be in PASSIVE_LOCAL_DATA_CONNECTION_MODE
+        } else { // We must be in PASSIVE_LOCAL_DATA_CONNECTION_MODE
 
             // Try EPSV command first on IPv6 - and IPv4 if enabled.
             // When using IPv4 with NAT it has the advantage
@@ -381,12 +360,9 @@ public class FTPSClient extends FTPClient {
             // In that case the data connection after PASV command would fail,
             // while EPSV would make the client succeed by taking just the port.
             final boolean attemptEPSV = isUseEPSVwithIPv4() || isInet6Address;
-            if (attemptEPSV && epsv() == FTPReply.ENTERING_EPSV_MODE)
-            {
+            if (attemptEPSV && epsv() == FTPReply.ENTERING_EPSV_MODE) {
                 _parseExtendedPassiveModeReply(_replyLines.get(0));
-            }
-            else
-            {
+            } else {
                 if (isInet6Address) {
                     return null; // Must use EPSV for IPV6
                 }
@@ -414,8 +390,8 @@ public class FTPSClient extends FTPClient {
             }
 
             // For now, let's just use the data timeout value for waiting for
-            // the data connection.  It may be desirable to let this be a
-            // separately configurable value.  In any case, we really want
+            // the data connection. It may be desirable to let this be a
+            // separately configurable value. In any case, we really want
             // to allow preventing the accept from blocking indefinitely.
             if (soTimeoutMillis >= 0) {
                 socket.setSoTimeout(soTimeoutMillis);
@@ -427,55 +403,49 @@ public class FTPSClient extends FTPClient {
                 sslSocket = context.getSocketFactory().createSocket(socket, getPassiveHost(), getPassivePort(), true);
             }
 
-            if ((getRestartOffset() > 0) && !restart(getRestartOffset()))
-            {
+            if ((getRestartOffset() > 0) && !restart(getRestartOffset())) {
                 closeSockets(socket, sslSocket);
                 return null;
             }
 
-            if (!FTPReply.isPositivePreliminary(sendCommand(command, arg)))
-            {
+            if (!FTPReply.isPositivePreliminary(sendCommand(command, arg))) {
                 closeSockets(socket, sslSocket);
                 return null;
             }
         }
 
-        if (isRemoteVerificationEnabled() && !verifyRemote(socket))
-        {
+        if (isRemoteVerificationEnabled() && !verifyRemote(socket)) {
             // Grab the host before we close the socket to avoid NET-663
             final InetAddress socketHost = socket.getInetAddress();
 
             closeSockets(socket, sslSocket);
 
             throw new IOException(
-                    "Host attempting data connection " + socketHost.getHostAddress() +
-                            " is not same as server " + getRemoteAddress().getHostAddress());
+                    "Host attempting data connection " + socketHost.getHostAddress() + " is not same as server " + getRemoteAddress().getHostAddress());
         }
 
         return getProxy() != null ? sslSocket : socket;
     }
 
-        /**
-         * Performs any custom initialization for a newly created SSLSocket (before the SSL handshake happens). Called
-         * by {@link #_openDataConnection_(int, String)} immediately after creating the socket. The default
-         * implementation is a no-op
-         *
-         * @param socket the socket to set up
-         * @throws IOException on error
-         * @since 3.1
-         */
-        protected void _prepareDataSocket_(final Socket socket)
-            throws IOException {
+    /**
+     * Performs any custom initialization for a newly created SSLSocket (before the SSL handshake happens). Called by {@link #_openDataConnection_(int, String)}
+     * immediately after creating the socket. The default implementation is a no-op
+     *
+     * @param socket the socket to set up
+     * @throws IOException on error
+     * @since 3.1
+     */
+    protected void _prepareDataSocket_(final Socket socket) throws IOException {
     }
 
     /**
      * Check the value that can be set in PROT Command value.
+     *
      * @param prot Data Channel Protection Level.
      * @return True - A set point is right / False - A set point is not right
      */
     private boolean checkPROTValue(final String prot) {
-        for (final String element : PROT_COMMAND_VALUE)
-        {
+        for (final String element : PROT_COMMAND_VALUE) {
             if (element.equals(prot)) {
                 return true;
             }
@@ -499,18 +469,16 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Closes the connection to the FTP server and restores
-     * connection parameters to the default values.
+     * Closes the connection to the FTP server and restores connection parameters to the default values.
      * <p>
-     * Calls {@code setSocketFactory(null)} and {@code setServerSocketFactory(null)}
-     * to reset the factories that may have been changed during the session,
-     * e.g. by {@link #execPROT(String)}
+     * Calls {@code setSocketFactory(null)} and {@code setServerSocketFactory(null)} to reset the factories that may have been changed during the session, e.g.
+     * by {@link #execPROT(String)}
+     *
      * @throws IOException If an error occurs while disconnecting.
      * @since 3.0
      */
     @Override
-    public void disconnect() throws IOException
-    {
+    public void disconnect() throws IOException {
         super.disconnect();
         if (plainSocket != null) {
             plainSocket.close();
@@ -521,16 +489,14 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Send the ADAT command with the specified authentication data.
+     *
      * @param data The data to send with the command.
      * @return server reply.
-     * @throws IOException If an I/O error occurs while sending
-     * the command.
+     * @throws IOException If an I/O error occurs while sending the command.
      * @since 3.0
      */
-    public int execADAT(final byte[] data) throws IOException
-    {
-        if (data != null)
-        {
+    public int execADAT(final byte[] data) throws IOException {
+        if (data != null) {
             return sendCommand(CMD_ADAT, Base64.encodeBase64StringUnChunked(data));
         }
         return sendCommand(CMD_ADAT);
@@ -538,9 +504,9 @@ public class FTPSClient extends FTPClient {
 
     /**
      * AUTH command.
+     *
      * @throws SSLException If it server reply code not equal "234" and "334".
-     * @throws IOException If an I/O error occurs while either sending
-     * the command.
+     * @throws IOException  If an I/O error occurs while either sending the command.
      */
     protected void execAUTH() throws SSLException, IOException {
         final int replyCode = sendCommand(CMD_AUTH, auth);
@@ -554,28 +520,25 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Send the AUTH command with the specified mechanism.
+     *
      * @param mechanism The mechanism name to send with the command.
      * @return server reply.
-     * @throws IOException If an I/O error occurs while sending
-     * the command.
+     * @throws IOException If an I/O error occurs while sending the command.
      * @since 3.0
      */
-    public int execAUTH(final String mechanism) throws IOException
-    {
+    public int execAUTH(final String mechanism) throws IOException {
         return sendCommand(CMD_AUTH, mechanism);
     }
 
     /**
-     * Send the CCC command to the server.
-     * The CCC (Clear Command Channel) command causes the underlying {@link SSLSocket} instance  to be assigned
-     * to a plain {@link Socket} instances
+     * Send the CCC command to the server. The CCC (Clear Command Channel) command causes the underlying {@link SSLSocket} instance to be assigned to a plain
+     * {@link Socket} instances
+     *
      * @return server reply.
-     * @throws IOException If an I/O error occurs while sending
-     * the command.
+     * @throws IOException If an I/O error occurs while sending the command.
      * @since 3.0
      */
-    public int execCCC() throws IOException
-    {
+    public int execCCC() throws IOException {
         final int repCode = sendCommand(CMD_CCC);
 // This will be performed by sendCommand(String, String)
 //        if (FTPReply.isPositiveCompletion(repCode)) {
@@ -593,16 +556,14 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Send the CONF command with the specified data.
+     *
      * @param data The data to send with the command.
      * @return server reply.
-     * @throws IOException If an I/O error occurs while sending
-     * the command.
+     * @throws IOException If an I/O error occurs while sending the command.
      * @since 3.0
      */
-    public int execCONF(final byte[] data) throws IOException
-    {
-        if (data != null)
-        {
+    public int execCONF(final byte[] data) throws IOException {
+        if (data != null) {
             return sendCommand(CMD_CONF, Base64.encodeBase64StringUnChunked(data));
         }
         return sendCommand(CMD_CONF, ""); // perhaps "=" or just sendCommand(String)?
@@ -610,16 +571,14 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Send the ENC command with the specified data.
+     *
      * @param data The data to send with the command.
      * @return server reply.
-     * @throws IOException If an I/O error occurs while sending
-     * the command.
+     * @throws IOException If an I/O error occurs while sending the command.
      * @since 3.0
      */
-    public int execENC(final byte[] data) throws IOException
-    {
-        if (data != null)
-        {
+    public int execENC(final byte[] data) throws IOException {
+        if (data != null) {
             return sendCommand(CMD_ENC, Base64.encodeBase64StringUnChunked(data));
         }
         return sendCommand(CMD_ENC, ""); // perhaps "=" or just sendCommand(String)?
@@ -627,16 +586,14 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Send the MIC command with the specified data.
+     *
      * @param data The data to send with the command.
      * @return server reply.
-     * @throws IOException If an I/O error occurs while sending
-     * the command.
+     * @throws IOException If an I/O error occurs while sending the command.
      * @since 3.0
      */
-    public int execMIC(final byte[] data) throws IOException
-    {
-        if (data != null)
-        {
+    public int execMIC(final byte[] data) throws IOException {
+        if (data != null) {
             return sendCommand(CMD_MIC, Base64.encodeBase64StringUnChunked(data));
         }
         return sendCommand(CMD_MIC, ""); // perhaps "=" or just sendCommand(String)?
@@ -644,10 +601,10 @@ public class FTPSClient extends FTPClient {
 
     /**
      * PBSZ command. pbsz value: 0 to (2^32)-1 decimal integer.
+     *
      * @param pbsz Protection Buffer Size.
      * @throws SSLException If the server reply code does not equal "200".
-     * @throws IOException If an I/O error occurs while sending
-     * the command.
+     * @throws IOException  If an I/O error occurs while sending the command.
      * @see #parsePBSZ(long)
      */
     public void execPBSZ(final long pbsz) throws SSLException, IOException {
@@ -668,14 +625,11 @@ public class FTPSClient extends FTPClient {
      * <li>E - Confidential(SSL protocol only)</li>
      * <li>P - Private</li>
      * </ul>
-     * <b>N.B.</b> the method calls
-     *  {@link #setSocketFactory(javax.net.SocketFactory)} and
-     *  {@link #setServerSocketFactory(javax.net.ServerSocketFactory)}
+     * <b>N.B.</b> the method calls {@link #setSocketFactory(javax.net.SocketFactory)} and {@link #setServerSocketFactory(javax.net.ServerSocketFactory)}
      *
      * @param prot Data Channel Protection Level, if {@code null}, use {@link #DEFAULT_PROT}.
-     * @throws SSLException If the server reply code does not equal  {@code 200}.
-     * @throws IOException If an I/O error occurs while sending
-     * the command.
+     * @throws SSLException If the server reply code does not equal {@code 200}.
+     * @throws IOException  If an I/O error occurs while sending the command.
      */
     public void execPROT(String prot) throws SSLException, IOException {
         if (prot == null) {
@@ -699,8 +653,9 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Extract the data from a reply with a prefix, e.g. PBSZ=1234 => 1234
+     *
      * @param prefix the prefix to find
-     * @param reply where to find the prefix
+     * @param reply  where to find the prefix
      * @return the remainder of the string after the prefix, or null if the prefix was not present.
      */
     private String extractPrefixedData(final String prefix, final String reply) {
@@ -709,11 +664,12 @@ public class FTPSClient extends FTPClient {
             return null;
         }
         // N.B. Cannot use trim before substring as leading space would affect the offset.
-        return reply.substring(idx+prefix.length()).trim();
+        return reply.substring(idx + prefix.length()).trim();
     }
 
     /**
      * Return AUTH command use value.
+     *
      * @return AUTH command use value.
      */
     public String getAuthValue() {
@@ -721,55 +677,51 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Returns the names of the cipher suites which could be enabled
-     * for use on this connection.
-     * When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns null.
+     * Returns the names of the cipher suites which could be enabled for use on this connection. When the underlying {@link Socket} is not an {@link SSLSocket}
+     * instance, returns null.
+     *
      * @return An array of cipher suite names, or <code>null</code>
      */
     public String[] getEnabledCipherSuites() {
         if (_socket_ instanceof SSLSocket) {
-            return ((SSLSocket)_socket_).getEnabledCipherSuites();
+            return ((SSLSocket) _socket_).getEnabledCipherSuites();
         }
         return null;
     }
 
     /**
-     * Returns the names of the protocol versions which are currently
-     * enabled for use on this connection.
-     * When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns null.
+     * Returns the names of the protocol versions which are currently enabled for use on this connection. When the underlying {@link Socket} is not an
+     * {@link SSLSocket} instance, returns null.
+     *
      * @return An array of protocols, or <code>null</code>
      */
     public String[] getEnabledProtocols() {
         if (_socket_ instanceof SSLSocket) {
-            return ((SSLSocket)_socket_).getEnabledProtocols();
+            return ((SSLSocket) _socket_).getEnabledProtocols();
         }
         return null;
     }
 
     /**
-     * Returns true if new SSL sessions may be established by this socket.
-     * When the underlying {@link Socket} instance is not SSL-enabled (i.e. an
-     * instance of {@link SSLSocket} with {@link SSLSocket}{@link #getEnableSessionCreation()}) enabled,
-     * this returns False.
-     * @return true - Indicates that sessions may be created;
-     * this is the default.
-     * false - indicates that an existing session must be resumed.
+     * Returns true if new SSL sessions may be established by this socket. When the underlying {@link Socket} instance is not SSL-enabled (i.e. an instance of
+     * {@link SSLSocket} with {@link SSLSocket}{@link #getEnableSessionCreation()}) enabled, this returns False.
+     *
+     * @return true - Indicates that sessions may be created; this is the default. false - indicates that an existing session must be resumed.
      */
     public boolean getEnableSessionCreation() {
         if (_socket_ instanceof SSLSocket) {
-            return ((SSLSocket)_socket_).getEnableSessionCreation();
+            return ((SSLSocket) _socket_).getEnableSessionCreation();
         }
         return false;
     }
 
     /**
-     * Get the currently configured {@link HostnameVerifier}.
-     * The verifier is only used on client mode connections.
+     * Get the currently configured {@link HostnameVerifier}. The verifier is only used on client mode connections.
+     *
      * @return A HostnameVerifier instance.
      * @since 3.4
      */
-    public HostnameVerifier getHostnameVerifier()
-    {
+    public HostnameVerifier getHostnameVerifier() {
         return hostnameVerifier;
     }
 
@@ -783,14 +735,13 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Returns true if the socket will require client authentication.
-     * When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns false.
-     * @return true - If the server mode socket should request
-     * that the client authenticate itself.
+     * Returns true if the socket will require client authentication. When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns false.
+     *
+     * @return true - If the server mode socket should request that the client authenticate itself.
      */
     public boolean getNeedClientAuth() {
         if (_socket_ instanceof SSLSocket) {
-            return ((SSLSocket)_socket_).getNeedClientAuth();
+            return ((SSLSocket) _socket_).getNeedClientAuth();
         }
         return false;
     }
@@ -805,34 +756,33 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Returns true if the socket is set to use client mode
-     * in its first handshake.
-     * When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns false.
-     * @return true - If the socket should start its first handshake
-     * in "client" mode.
+     * Returns true if the socket is set to use client mode in its first handshake. When the underlying {@link Socket} is not an {@link SSLSocket} instance,
+     * returns false.
+     *
+     * @return true - If the socket should start its first handshake in "client" mode.
      */
     public boolean getUseClientMode() {
         if (_socket_ instanceof SSLSocket) {
-            return ((SSLSocket)_socket_).getUseClientMode();
+            return ((SSLSocket) _socket_).getUseClientMode();
         }
         return false;
     }
 
     /**
-     * Returns true if the socket will request client authentication.
-     * When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns false.
-     * @return true - If the server mode socket should request
-     * that the client authenticate itself.
+     * Returns true if the socket will request client authentication. When the underlying {@link Socket} is not an {@link SSLSocket} instance, returns false.
+     *
+     * @return true - If the server mode socket should request that the client authenticate itself.
      */
     public boolean getWantClientAuth() {
         if (_socket_ instanceof SSLSocket) {
-            return ((SSLSocket)_socket_).getWantClientAuth();
+            return ((SSLSocket) _socket_).getWantClientAuth();
         }
         return false;
     }
 
     /**
      * Performs a lazy init of the SSL context
+     *
      * @throws IOException
      */
     private void initSslContext() throws IOException {
@@ -842,27 +792,25 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Return whether or not endpoint identification using the HTTPS algorithm
-     * on Java 1.7+ is enabled. The default behavior is for this to be disabled.
+     * Return whether or not endpoint identification using the HTTPS algorithm on Java 1.7+ is enabled. The default behavior is for this to be disabled.
      *
      * This check is only performed on client mode connections.
      *
      * @return True if enabled, false if not.
      * @since 3.4
      */
-    public boolean isEndpointCheckingEnabled()
-    {
+    public boolean isEndpointCheckingEnabled() {
         return tlsEndpointChecking;
     }
 
     /**
      * Parses the given ADAT response line and base64-decodes the data.
+     *
      * @param reply The ADAT reply to parse.
      * @return the data in the reply, base64-decoded.
      * @since 3.0
      */
-    public byte[] parseADATReply(final String reply)
-    {
+    public byte[] parseADATReply(final String reply) {
         if (reply == null) {
             return null;
         }
@@ -870,13 +818,11 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * PBSZ command. pbsz value: 0 to (2^32)-1 decimal integer.
-     * Issues the command and parses the response to return the negotiated value.
+     * PBSZ command. pbsz value: 0 to (2^32)-1 decimal integer. Issues the command and parses the response to return the negotiated value.
      *
      * @param pbsz Protection Buffer Size.
      * @throws SSLException If the server reply code does not equal "200".
-     * @throws IOException If an I/O error occurs while sending
-     * the command.
+     * @throws IOException  If an I/O error occurs while sending the command.
      * @return the negotiated value.
      * @see #execPBSZ(long)
      * @since 3.0
@@ -895,12 +841,12 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Send an FTP command.
-     * A successful CCC (Clear Command Channel) command causes the underlying {@link SSLSocket}
-     * instance to be assigned to a plain {@link Socket}
+     * Send an FTP command. A successful CCC (Clear Command Channel) command causes the underlying {@link SSLSocket} instance to be assigned to a plain
+     * {@link Socket}
+     *
      * @param command The FTP command.
      * @return server reply.
-     * @throws IOException If an I/O error occurs while sending the command.
+     * @throws IOException  If an I/O error occurs while sending the command.
      * @throws SSLException if a CCC command fails
      * @see org.apache.commons.net.ftp.FTP#sendCommand(String)
      */
@@ -915,19 +861,15 @@ public class FTPSClient extends FTPClient {
             }
             _socket_.close();
             _socket_ = plainSocket;
-            _controlInput_ = new BufferedReader(
-                new InputStreamReader(
-                    _socket_ .getInputStream(), getControlEncoding()));
-            _controlOutput_ = new BufferedWriter(
-                new OutputStreamWriter(
-                    _socket_.getOutputStream(), getControlEncoding()));
+            _controlInput_ = new BufferedReader(new InputStreamReader(_socket_.getInputStream(), getControlEncoding()));
+            _controlOutput_ = new BufferedWriter(new OutputStreamWriter(_socket_.getOutputStream(), getControlEncoding()));
         }
         return repCode;
     }
 
     /**
-     * Set AUTH command use value.
-     * This processing is done before connected processing.
+     * Set AUTH command use value. This processing is done before connected processing.
+     *
      * @param auth AUTH command use value.
      */
     public void setAuthValue(final String auth) {
@@ -935,8 +877,8 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Controls which particular cipher suites are enabled for use on this
-     * connection. Called before server negotiation.
+     * Controls which particular cipher suites are enabled for use on this connection. Called before server negotiation.
+     *
      * @param cipherSuites The cipher suites.
      */
     public void setEnabledCipherSuites(final String[] cipherSuites) {
@@ -944,8 +886,8 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Controls which particular protocol versions are enabled for use on this
-     * connection. I perform setting before a server negotiation.
+     * Controls which particular protocol versions are enabled for use on this connection. I perform setting before a server negotiation.
+     *
      * @param protocolVersions The protocol versions.
      */
     public void setEnabledProtocols(final String[] protocolVersions) {
@@ -954,6 +896,7 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Controls whether a new SSL session may be established by this socket.
+     *
      * @param isCreation The established socket flag.
      */
     public void setEnabledSessionCreation(final boolean isCreation) {
@@ -961,42 +904,40 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Automatic endpoint identification checking using the HTTPS algorithm
-     * is supported on Java 1.7+. The default behavior is for this to be disabled.
+     * Automatic endpoint identification checking using the HTTPS algorithm is supported on Java 1.7+. The default behavior is for this to be disabled.
      *
      * This check is only performed on client mode connections.
      *
      * @param enable Enable automatic endpoint identification checking using the HTTPS algorithm on Java 1.7+.
      * @since 3.4
      */
-    public void setEndpointCheckingEnabled(final boolean enable)
-    {
+    public void setEndpointCheckingEnabled(final boolean enable) {
         tlsEndpointChecking = enable;
     }
 
     /**
-     * Override the default {@link HostnameVerifier} to use.
-     * The verifier is only used on client mode connections.
+     * Override the default {@link HostnameVerifier} to use. The verifier is only used on client mode connections.
+     *
      * @param newHostnameVerifier The HostnameVerifier implementation to set or <code>null</code> to disable.
      * @since 3.4
      */
-    public void setHostnameVerifier(final HostnameVerifier newHostnameVerifier)
-    {
+    public void setHostnameVerifier(final HostnameVerifier newHostnameVerifier) {
         hostnameVerifier = newHostnameVerifier;
     }
 
     /**
-    * Set a {@link KeyManager} to use
-    *
-    * @param keyManager The KeyManager implementation to set.
-    * @see org.apache.commons.net.util.KeyManagerUtils
-    */
+     * Set a {@link KeyManager} to use
+     *
+     * @param keyManager The KeyManager implementation to set.
+     * @see org.apache.commons.net.util.KeyManagerUtils
+     */
     public void setKeyManager(final KeyManager keyManager) {
         this.keyManager = keyManager;
     }
 
     /**
      * Configures the socket to require client authentication.
+     *
      * @param isNeedClientAuth The need client auth flag.
      */
     public void setNeedClientAuth(final boolean isNeedClientAuth) {
@@ -1006,8 +947,7 @@ public class FTPSClient extends FTPClient {
     // DEPRECATED - for API compatibility only - DO NOT USE
 
     /**
-     * Override the default {@link TrustManager} to use; if set to {@code null},
-     * the default TrustManager from the JVM will be used.
+     * Override the default {@link TrustManager} to use; if set to {@code null}, the default TrustManager from the JVM will be used.
      *
      * @param trustManager The TrustManager implementation to set, may be {@code null}
      * @see org.apache.commons.net.util.TrustManagerUtils
@@ -1017,8 +957,8 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Configures the socket to use client (or server) mode in its first
-     * handshake.
+     * Configures the socket to use client (or server) mode in its first handshake.
+     *
      * @param isClientMode The use client mode flag.
      */
     public void setUseClientMode(final boolean isClientMode) {
@@ -1026,9 +966,8 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Configures the socket to request client authentication,
-     * but only if such a request is appropriate to the cipher
-     * suite negotiated.
+     * Configures the socket to request client authentication, but only if such a request is appropriate to the cipher suite negotiated.
+     *
      * @param isWantClientAuth The want client auth flag.
      */
     public void setWantClientAuth(final boolean isWantClientAuth) {
@@ -1036,8 +975,8 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * SSL/TLS negotiation. Acquires an SSL socket of a control
-     * connection and carries out handshake processing.
+     * SSL/TLS negotiation. Acquires an SSL socket of a control connection and carries out handshake processing.
+     *
      * @throws IOException If server negotiation fails
      */
     protected void sslNegotiation() throws IOException {
@@ -1067,20 +1006,18 @@ public class FTPSClient extends FTPClient {
 
         // TODO the following setup appears to duplicate that in the super class methods
         _socket_ = socket;
-        _controlInput_ = new BufferedReader(new InputStreamReader(
-                socket .getInputStream(), getControlEncoding()));
-        _controlOutput_ = new BufferedWriter(new OutputStreamWriter(
-                socket.getOutputStream(), getControlEncoding()));
+        _controlInput_ = new BufferedReader(new InputStreamReader(socket.getInputStream(), getControlEncoding()));
+        _controlOutput_ = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), getControlEncoding()));
 
-        if (isClientMode && (hostnameVerifier != null &&
-            !hostnameVerifier.verify(_hostname_, socket.getSession()))) {
+        if (isClientMode && (hostnameVerifier != null && !hostnameVerifier.verify(_hostname_, socket.getSession()))) {
             throw new SSLHandshakeException("Hostname doesn't match certificate");
         }
     }
 
     /**
      * Close open sockets.
-     * @param socket main socket for proxy if enabled
+     *
+     * @param socket    main socket for proxy if enabled
      * @param sslSocket ssl socket
      * @throws IOException closing sockets is not successful
      */

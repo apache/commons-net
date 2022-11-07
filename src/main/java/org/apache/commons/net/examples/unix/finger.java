@@ -24,28 +24,22 @@ import java.net.UnknownHostException;
 import org.apache.commons.net.finger.FingerClient;
 
 /**
- * This is an example of how you would implement the finger command
- * in Java using NetComponents.  The Java version is much shorter.
- * But keep in mind that the Unix finger command reads all sorts of
- * local files to output local finger information.  This program only
- * queries the finger daemon.
+ * This is an example of how you would implement the finger command in Java using NetComponents. The Java version is much shorter. But keep in mind that the
+ * Unix finger command reads all sorts of local files to output local finger information. This program only queries the finger daemon.
  * <p>
  * The -l flag is used to request long output from the server.
  */
-public final class finger
-{
+public final class finger {
 
-    public static void main(final String[] args)
-    {
+    public static void main(final String[] args) {
         boolean longOutput = false;
         int arg = 0, index;
         String handle, host;
         final FingerClient finger;
         InetAddress address = null;
 
-        // Get flags.  If an invalid flag is present, exit with usage message.
-        while (arg < args.length && args[arg].startsWith("-"))
-        {
+        // Get flags. If an invalid flag is present, exit with usage message.
+        while (arg < args.length && args[arg].startsWith("-")) {
             if (args[arg].equals("-l")) {
                 longOutput = true;
             } else {
@@ -55,84 +49,63 @@ public final class finger
             ++arg;
         }
 
-
         finger = new FingerClient();
         // We want to timeout if a response takes longer than 60 seconds
         finger.setDefaultTimeout(60000);
 
-        if (arg >= args.length)
-        {
+        if (arg >= args.length) {
             // Finger local host
 
-            try
-            {
+            try {
                 address = InetAddress.getLocalHost();
-            }
-            catch (final UnknownHostException e)
-            {
+            } catch (final UnknownHostException e) {
                 System.err.println("Error unknown host: " + e.getMessage());
                 System.exit(1);
             }
 
-            try
-            {
+            try {
                 finger.connect(address);
                 System.out.print(finger.query(longOutput));
                 finger.disconnect();
-            }
-            catch (final IOException e)
-            {
+            } catch (final IOException e) {
                 System.err.println("Error I/O exception: " + e.getMessage());
                 System.exit(1);
             }
 
-            return ;
+            return;
         }
 
         // Finger each argument
-        while (arg < args.length)
-        {
+        while (arg < args.length) {
 
             index = args[arg].lastIndexOf('@');
 
-            if (index == -1)
-            {
+            if (index == -1) {
                 handle = args[arg];
-                try
-                {
+                try {
                     address = InetAddress.getLocalHost();
-                }
-                catch (final UnknownHostException e)
-                {
+                } catch (final UnknownHostException e) {
                     System.err.println("Error unknown host: " + e.getMessage());
                     System.exit(1);
                 }
-            }
-            else
-            {
+            } else {
                 handle = args[arg].substring(0, index);
                 host = args[arg].substring(index + 1);
 
-                try
-                {
+                try {
                     address = InetAddress.getByName(host);
                     System.out.println("[" + address.getHostName() + "]");
-                }
-                catch (final UnknownHostException e)
-                {
+                } catch (final UnknownHostException e) {
                     System.err.println("Error unknown host: " + e.getMessage());
                     System.exit(1);
                 }
             }
 
-            try
-            {
+            try {
                 finger.connect(address);
                 System.out.print(finger.query(longOutput, handle));
                 finger.disconnect();
-            }
-            catch (final IOException e)
-            {
+            } catch (final IOException e) {
                 System.err.println("Error I/O exception: " + e.getMessage());
                 System.exit(1);
             }
@@ -144,4 +117,3 @@ public final class finger
         }
     }
 }
-

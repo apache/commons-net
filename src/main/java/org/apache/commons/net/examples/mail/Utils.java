@@ -29,18 +29,14 @@ import java.util.Locale;
 class Utils {
 
     /**
-     * If the initial password is:
-     * '*' - replace it with a line read from the system console
-     * '-' - replace it with next line from STDIN
-     * 'ABCD' - if the input is all upper case, use the field as an environment variable name
+     * If the initial password is: '*' - replace it with a line read from the system console '-' - replace it with next line from STDIN 'ABCD' - if the input is
+     * all upper case, use the field as an environment variable name
      *
      * Note: there are no guarantees that the password cannot be snooped.
      *
-     * Even using the console may be subject to memory snooping,
-     * however it should be safer than the other methods.
+     * Even using the console may be subject to memory snooping, however it should be safer than the other methods.
      *
-     * STDIN may require creating a temporary file which could be read by others
-     * Environment variables may be visible by using PS
+     * STDIN may require creating a temporary file which could be read by others Environment variables may be visible by using PS
      */
     static String getPassword(final String username, String password) throws IOException {
         if ("-".equals(password)) { // stdin
@@ -56,7 +52,7 @@ class Utils {
         } else if (password.equals(password.toUpperCase(Locale.ROOT))) { // environment variable name
             final String tmp = System.getenv(password);
             if (tmp != null) { // don't overwrite if variable does not exist (just in case password is all uppers)
-                password=tmp;
+                password = tmp;
             }
         }
         return password;

@@ -20,47 +20,25 @@ package org.apache.commons.net.imap;
 /**
  * IMAPCommand stores IMAP command codes.
  */
-public enum IMAPCommand
-{
+public enum IMAPCommand {
     // These enums must either use the same name as the IMAP command
     // or must provide the correct string as the parameter.
 
     // Commands valid in any state:
 
-    CAPABILITY(0),
-    NOOP(0),
-    LOGOUT(0),
+    CAPABILITY(0), NOOP(0), LOGOUT(0),
 
     // Commands valid in Not Authenticated state
-    STARTTLS(0),
-    AUTHENTICATE(1),
-    LOGIN(2),
+    STARTTLS(0), AUTHENTICATE(1), LOGIN(2),
 
     XOAUTH(1),
 
     // commands valid in authenticated state
-    SELECT(1),
-    EXAMINE(1),
-    CREATE(1),
-    DELETE(1),
-    RENAME(2),
-    SUBSCRIBE(1),
-    UNSUBSCRIBE(1),
-    LIST(2),
-    LSUB(2),
-    STATUS(2), // P2 = list in ()
-    APPEND(2,4), // mbox [(flags)] [date-time] literal
+    SELECT(1), EXAMINE(1), CREATE(1), DELETE(1), RENAME(2), SUBSCRIBE(1), UNSUBSCRIBE(1), LIST(2), LSUB(2), STATUS(2), // P2 = list in ()
+    APPEND(2, 4), // mbox [(flags)] [date-time] literal
 
     // commands valid in selected state (substate of authenticated)
-    CHECK(0),
-    CLOSE(0),
-    EXPUNGE(0),
-    SEARCH(1, Integer.MAX_VALUE),
-    FETCH(2),
-    STORE(3),
-    COPY(2),
-    UID(2, Integer.MAX_VALUE),
-    ;
+    CHECK(0), CLOSE(0), EXPUNGE(0), SEARCH(1, Integer.MAX_VALUE), FETCH(2), STORE(3), COPY(2), UID(2, Integer.MAX_VALUE),;
 
     /**
      * Get the IMAP protocol string command corresponding to a command code.
@@ -79,27 +57,27 @@ public enum IMAPCommand
     @SuppressWarnings("unused") // not yet used
     private final int maxParamCount;
 
-    IMAPCommand(){
+    IMAPCommand() {
         this(null);
     }
 
-    IMAPCommand(final int paramCount){
+    IMAPCommand(final int paramCount) {
         this(null, paramCount, paramCount);
-   }
+    }
 
-    IMAPCommand(final int minCount, final int maxCount){
+    IMAPCommand(final int minCount, final int maxCount) {
         this(null, minCount, maxCount);
-   }
+    }
 
-    IMAPCommand(final String name){
+    IMAPCommand(final String name) {
         this(name, 0);
     }
 
-    IMAPCommand(final String name, final int paramCount){
+    IMAPCommand(final String name, final int paramCount) {
         this(name, paramCount, paramCount);
     }
 
-    IMAPCommand(final String name, final int minCount, final int maxCount){
+    IMAPCommand(final String name, final int minCount, final int maxCount) {
         this.imapCommand = name;
         this.minParamCount = minCount;
         this.maxParamCount = maxCount;

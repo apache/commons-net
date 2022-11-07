@@ -20,33 +20,26 @@ package org.apache.commons.net.telnet;
 /**
  * Implements the telnet suppress go ahead option RFC 858.
  */
-public class SuppressGAOptionHandler extends TelnetOptionHandler
-{
+public class SuppressGAOptionHandler extends TelnetOptionHandler {
     /**
-     * Constructor for the SuppressGAOptionHandler. Initial and accept
-     * behavior flags are set to false
+     * Constructor for the SuppressGAOptionHandler. Initial and accept behavior flags are set to false
      */
-    public SuppressGAOptionHandler()
-    {
+    public SuppressGAOptionHandler() {
         super(TelnetOption.SUPPRESS_GO_AHEAD, false, false, false, false);
     }
 
     /**
-     * Constructor for the SuppressGAOptionHandler. Allows defining desired
-     * initial setting for local/remote activation of this option and
-     * behavior in case a local/remote activation request for this
-     * option is received.
+     * Constructor for the SuppressGAOptionHandler. Allows defining desired initial setting for local/remote activation of this option and behavior in case a
+     * local/remote activation request for this option is received.
      * <p>
-     * @param initlocal - if set to true, a WILL is sent upon connection.
-     * @param initremote - if set to true, a DO is sent upon connection.
-     * @param acceptlocal - if set to true, any DO request is accepted.
+     *
+     * @param initlocal    - if set to true, a WILL is sent upon connection.
+     * @param initremote   - if set to true, a DO is sent upon connection.
+     * @param acceptlocal  - if set to true, any DO request is accepted.
      * @param acceptremote - if set to true, any WILL request is accepted.
      */
-    public SuppressGAOptionHandler(final boolean initlocal, final boolean initremote,
-                                final boolean acceptlocal, final boolean acceptremote)
-    {
-        super(TelnetOption.SUPPRESS_GO_AHEAD, initlocal, initremote,
-                                      acceptlocal, acceptremote);
+    public SuppressGAOptionHandler(final boolean initlocal, final boolean initremote, final boolean acceptlocal, final boolean acceptremote) {
+        super(TelnetOption.SUPPRESS_GO_AHEAD, initlocal, initremote, acceptlocal, acceptremote);
     }
 
 }

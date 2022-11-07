@@ -28,16 +28,14 @@ import junit.framework.TestCase;
  *
  * @since 3.2
  */
-public class SocketClientTest extends TestCase
-{
+public class SocketClientTest extends TestCase {
     private static final String PROXY_HOST = "127.0.0.1";
     private static final int PROXY_PORT = 1080;
 
     /**
      * A simple test to verify that the Proxy is being set.
      */
-    public void testProxySettings()
-    {
+    public void testProxySettings() {
         final SocketClient socketClient = new FTPClient();
         assertNull(socketClient.getProxy());
         final Proxy proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(PROXY_HOST, PROXY_PORT));

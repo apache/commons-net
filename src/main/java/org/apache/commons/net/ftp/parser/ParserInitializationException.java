@@ -18,9 +18,7 @@
 package org.apache.commons.net.ftp.parser;
 
 /**
- * This class encapsulates all errors that may be thrown by
- * the process of an FTPFileEntryParserFactory creating and
- * instantiating an FTPFileEntryParser.
+ * This class encapsulates all errors that may be thrown by the process of an FTPFileEntryParserFactory creating and instantiating an FTPFileEntryParser.
  */
 public class ParserInitializationException extends RuntimeException {
 
@@ -36,20 +34,17 @@ public class ParserInitializationException extends RuntimeException {
     }
 
     /**
-     * Constucts a ParserInitializationException with a message
-     * and a root cause.
+     * Constucts a ParserInitializationException with a message and a root cause.
      *
      * @param message   Exception message
-     * @param rootCause root cause throwable that caused
-     * this to be thrown
+     * @param rootCause root cause throwable that caused this to be thrown
      */
     public ParserInitializationException(final String message, final Throwable rootCause) {
         super(message, rootCause);
     }
 
     /**
-     * returns the root cause of this exception or null
-     * if no root cause was specified.
+     * returns the root cause of this exception or null if no root cause was specified.
      *
      * @return the root cause of this exception being thrown
      * @deprecated use {@link #getCause()} instead

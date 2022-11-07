@@ -33,27 +33,23 @@ import org.apache.commons.net.pop3.POP3MessageInfo;
 import org.apache.commons.net.pop3.POP3SClient;
 
 /**
- * This is an example program demonstrating how to use the POP3[S]Client class.
- * This program connects to a POP3[S] server and writes the messages
- * to an mbox file.
+ * This is an example program demonstrating how to use the POP3[S]Client class. This program connects to a POP3[S] server and writes the messages to an mbox
+ * file.
  * <p>
- * The code currently assumes that POP3Client decodes the POP3 data as iso-8859-1.
- * The POP3 standard only allows for ASCII so in theory iso-8859-1 should be OK.
- * However it appears that actual POP3 implementations may return 8bit data that is
- * outside the ASCII range; this may result in loss of data when the mailbox is created.
+ * The code currently assumes that POP3Client decodes the POP3 data as iso-8859-1. The POP3 standard only allows for ASCII so in theory iso-8859-1 should be OK.
+ * However it appears that actual POP3 implementations may return 8bit data that is outside the ASCII range; this may result in loss of data when the mailbox is
+ * created.
  * <p>
  * See main() method for usage details
  */
-public final class POP3ExportMbox
-{
+public final class POP3ExportMbox {
 
     private static final Pattern PATFROM = Pattern.compile(">*From "); // unescaped From_
 
-    public static void main(final String[] args)
-    {
+    public static void main(final String[] args) {
         int argIdx;
         String file = null;
-        for(argIdx = 0; argIdx < args.length; argIdx++) {
+        for (argIdx = 0; argIdx < args.length; argIdx++) {
             if (!args[argIdx].equals("-F")) {
                 break;
             }
@@ -61,15 +57,13 @@ public final class POP3ExportMbox
         }
 
         final int argCount = args.length - argIdx;
-        if (argCount < 3)
-        {
-            System.err.println(
-                "Usage: POP3Mail [-F file/directory] <server[:port]> <username> <password|-|*|VARNAME> [TLS [true=implicit]]");
+        if (argCount < 3) {
+            System.err.println("Usage: POP3Mail [-F file/directory] <server[:port]> <username> <password|-|*|VARNAME> [TLS [true=implicit]]");
             System.exit(1);
         }
 
         final String arg0[] = args[argIdx++].split(":");
-        final String server=arg0[0];
+        final String server = arg0[0];
         final String username = args[argIdx++];
         String password = args[argIdx++];
         // prompt for the password if necessary
@@ -86,7 +80,7 @@ public final class POP3ExportMbox
         final POP3Client pop3;
 
         if (proto != null) {
-            System.out.println("Using secure protocol: "+proto);
+            System.out.println("Using secure protocol: " + proto);
             pop3 = new POP3SClient(proto, implicit);
         } else {
             pop3 = new POP3Client();
@@ -98,26 +92,21 @@ public final class POP3ExportMbox
         } else {
             port = pop3.getDefaultPort();
         }
-        System.out.println("Connecting to server "+server+" on "+port);
+        System.out.println("Connecting to server " + server + " on " + port);
 
         // We want to timeout if a response takes longer than 60 seconds
         pop3.setDefaultTimeout(60000);
 
-        try
-        {
+        try {
             pop3.connect(server);
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             System.err.println("Could not connect to server.");
             e.printStackTrace();
             return;
         }
 
-        try
-        {
-            if (!pop3.login(username, password))
-            {
+        try {
+            if (!pop3.login(username, password)) {
                 System.err.println("Could not login to server.  Check password.");
                 pop3.disconnect();
                 return;
@@ -140,16 +129,15 @@ public final class POP3ExportMbox
                     System.out.println("Writing dir: " + mbox);
                     // Currently POP3Client uses iso-8859-1
                     for (int i = 1; i <= count; i++) {
-                        try (final OutputStreamWriter fw = new OutputStreamWriter(
-                                new FileOutputStream(new File(mbox, i + ".eml")), StandardCharsets.ISO_8859_1)) {
+                        try (final OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(new File(mbox, i + ".eml")),
+                                StandardCharsets.ISO_8859_1)) {
                             writeFile(pop3, fw, i);
                         }
                     }
                 } else {
                     System.out.println("Writing file: " + mbox);
                     // Currently POP3Client uses iso-8859-1
-                    try (final OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(mbox),
-                            StandardCharsets.ISO_8859_1)) {
+                    try (final OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(mbox), StandardCharsets.ISO_8859_1)) {
                         for (int i = 1; i <= count; i++) {
                             writeMbox(pop3, fw, i);
                         }
@@ -159,9 +147,7 @@ public final class POP3ExportMbox
 
             pop3.logout();
             pop3.disconnect();
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             e.printStackTrace();
             return;
         }
@@ -205,4 +191,3 @@ public final class POP3ExportMbox
         }
     }
 }
-

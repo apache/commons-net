@@ -21,7 +21,6 @@ package org.apache.commons.net.imap;
 import org.junit.Assert;
 import org.junit.Test;
 
-
 public class IMAPTest {
 
     @Test
@@ -32,12 +31,12 @@ public class IMAPTest {
         final IMAP imap = new IMAP();
         final String initial = imap.generateCommandID();
         int expected = 1;
-        for(int j=0; j < initial.length(); j++) {
+        for (int j = 0; j < initial.length(); j++) {
             expected *= 26; // letters in alphabet
         }
-        int i=0;
-        boolean matched=false;
-        while(i <= expected+10) { // don't loop forever, but allow it to pass go!
+        int i = 0;
+        boolean matched = false;
+        while (i <= expected + 10) { // don't loop forever, but allow it to pass go!
             i++;
             final String s = imap.generateCommandID();
             matched = initial.equals(s);

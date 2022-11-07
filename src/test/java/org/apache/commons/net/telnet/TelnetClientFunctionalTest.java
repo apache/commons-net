@@ -22,37 +22,27 @@ import java.io.OutputStream;
 import junit.framework.TestCase;
 
 /**
- * JUnit functional test for TelnetClient.
- * Connects to the weather forecast service
- * rainmaker.wunderground.com and asks for Los Angeles forecast.
+ * JUnit functional test for TelnetClient. Connects to the weather forecast service rainmaker.wunderground.com and asks for Los Angeles forecast.
  */
-public class TelnetClientFunctionalTest extends TestCase
-{
+public class TelnetClientFunctionalTest extends TestCase {
     protected TelnetClient tc1;
 
     /**
      * test setUp
      */
     @Override
-    protected void setUp()
-    {
+    protected void setUp() {
         tc1 = new TelnetClient();
     }
 
     /*
-     * Do the functional test:
-     * - connect to the weather service
-     * - press return on the first menu
-     * - send LAX on the second menu
-     * - send X to exit
+     * Do the functional test: - connect to the weather service - press return on the first menu - send LAX on the second menu - send X to exit
      */
-    public void testFunctionalTest() throws Exception
-    {
+    public void testFunctionalTest() throws Exception {
         boolean testresult = false;
         tc1.connect("rainmaker.wunderground.com", 3000);
 
-        try (final InputStream is = tc1.getInputStream();
-            final OutputStream os = tc1.getOutputStream()) {
+        try (final InputStream is = tc1.getInputStream(); final OutputStream os = tc1.getOutputStream()) {
 
             boolean cont = waitForString(is, "Return to continue:", 30000);
             if (cont) {
@@ -79,32 +69,24 @@ public class TelnetClientFunctionalTest extends TestCase
         }
     }
 
-
     /*
      * Helper method. waits for a string with timeout
      */
-    public boolean waitForString(final InputStream is, final String end, final long timeout) throws Exception
-    {
+    public boolean waitForString(final InputStream is, final String end, final long timeout) throws Exception {
         final byte buffer[] = new byte[32];
         final long starttime = System.currentTimeMillis();
 
         String readbytes = "";
-        while((readbytes.indexOf(end) < 0) &&
-              ((System.currentTimeMillis() - starttime) < timeout))
-        {
-            if(is.available() > 0)
-            {
+        while ((readbytes.indexOf(end) < 0) && ((System.currentTimeMillis() - starttime) < timeout)) {
+            if (is.available() > 0) {
                 final int ret_read = is.read(buffer);
                 readbytes = readbytes + new String(buffer, 0, ret_read);
-            }
-            else
-            {
+            } else {
                 Thread.sleep(500);
             }
         }
 
-        if(readbytes.indexOf(end) >= 0)
-        {
+        if (readbytes.indexOf(end) >= 0) {
             return (true);
         }
         return (false);

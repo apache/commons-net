@@ -35,11 +35,11 @@ public class FTPClientConfigTest extends TestCase {
     private static final String F = "F";
     private static final String badDelim = "jan,feb,mar,apr,may,jun,jul,aug.sep,oct,nov,dec";
 
-    private static final String tooLong =  "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|jan";
-
+    private static final String tooLong = "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|jan";
 
     private static final String tooShort = "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov";
     private static final String fakeLang = "abc|def|ghi|jkl|mno|pqr|stu|vwx|yza|bcd|efg|hij";
+
     /*
      * Class under test for void FTPClientConfig(String)
      */
@@ -52,11 +52,12 @@ public class FTPClientConfigTest extends TestCase {
         assertNull(config.getServerTimeZoneId());
         assertNull(config.getServerLanguageCode());
     }
+
     /*
      * Class under test for void FTPClientConfig(String, String, String, String, String, String)
      */
     public void testFTPClientConfigStringStringStringStringStringString() {
-        final FTPClientConfig conf = new FTPClientConfig(A,B,C,D,E,F);
+        final FTPClientConfig conf = new FTPClientConfig(A, B, C, D, E, F);
 
         assertEquals("A", conf.getServerSystemKey());
         assertEquals("B", conf.getDefaultDateFormatStr());
@@ -71,29 +72,28 @@ public class FTPClientConfigTest extends TestCase {
         try {
             FTPClientConfig.getDateFormatSymbols(badDelim);
             fail("bad delimiter");
-        } catch (final IllegalArgumentException e){
+        } catch (final IllegalArgumentException e) {
             // should have failed
         }
         try {
             FTPClientConfig.getDateFormatSymbols(tooLong);
             fail("more than 12 months");
-        } catch (final IllegalArgumentException e){
+        } catch (final IllegalArgumentException e) {
             // should have failed
         }
         try {
             FTPClientConfig.getDateFormatSymbols(tooShort);
             fail("fewer than 12 months");
-        } catch (final IllegalArgumentException e){
+        } catch (final IllegalArgumentException e) {
             // should have failed
         }
         DateFormatSymbols dfs2 = null;
         try {
             dfs2 = FTPClientConfig.getDateFormatSymbols(fakeLang);
-        } catch (final Exception e){
+        } catch (final Exception e) {
             fail("rejected valid short month string");
         }
-        final SimpleDateFormat sdf1 =
-            new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
+        final SimpleDateFormat sdf1 = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
         final SimpleDateFormat sdf2 = new SimpleDateFormat("MMM dd, yyyy", dfs2);
 
         Date d1 = null;
@@ -109,7 +109,7 @@ public class FTPClientConfigTest extends TestCase {
             fail("failed.to.parse.weird");
         }
 
-        assertEquals("different.parser.same.date",d1, d2);
+        assertEquals("different.parser.same.date", d1, d2);
 
         try {
             sdf1.parse("hij 31, 2004");
@@ -124,7 +124,6 @@ public class FTPClientConfigTest extends TestCase {
             // expected
         }
 
-
     }
 
     public void testGetServerLanguageCode() {
@@ -136,31 +135,30 @@ public class FTPClientConfigTest extends TestCase {
         DateFormatSymbols dfs3 = null;
         DateFormatSymbols dfs4 = null;
 
-
         try {
             dfs1 = FTPClientConfig.lookupDateFormatSymbols("fr");
-        } catch (final IllegalArgumentException e){
+        } catch (final IllegalArgumentException e) {
             fail("french");
         }
 
         try {
             dfs2 = FTPClientConfig.lookupDateFormatSymbols("sq");
-        } catch (final IllegalArgumentException e){
+        } catch (final IllegalArgumentException e) {
             fail("albanian");
         }
 
         try {
             dfs3 = FTPClientConfig.lookupDateFormatSymbols("ru");
-        } catch (final IllegalArgumentException e){
+        } catch (final IllegalArgumentException e) {
             fail("unusupported.default.to.en");
         }
         try {
             dfs4 = FTPClientConfig.lookupDateFormatSymbols(fakeLang);
-        } catch (final IllegalArgumentException e){
+        } catch (final IllegalArgumentException e) {
             fail("not.language.code.but.defaults");
         }
 
-        assertEquals(dfs3,dfs4);
+        assertEquals(dfs3, dfs4);
 
         final SimpleDateFormat sdf1 = new SimpleDateFormat("d MMM yyyy", dfs1);
         final SimpleDateFormat sdf2 = new SimpleDateFormat("MMM dd, yyyy", dfs2);

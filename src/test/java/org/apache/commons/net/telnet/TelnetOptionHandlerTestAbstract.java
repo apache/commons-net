@@ -19,42 +19,31 @@ package org.apache.commons.net.telnet;
 import junit.framework.TestCase;
 
 /**
- * The TelnetOptionHandlerTest is the abstract class for
- * testing TelnetOptionHandler. It can be used to derive
- * the actual test classes for TelnetOptionHadler derived
- * classes, by adding creation of three new option handlers
- * and testing of the specific subnegotiation behavior.
+ * The TelnetOptionHandlerTest is the abstract class for testing TelnetOptionHandler. It can be used to derive the actual test classes for TelnetOptionHadler
+ * derived classes, by adding creation of three new option handlers and testing of the specific subnegotiation behavior.
  */
-public abstract class TelnetOptionHandlerTestAbstract extends TestCase
-{
+public abstract class TelnetOptionHandlerTestAbstract extends TestCase {
     TelnetOptionHandler opthand1;
     TelnetOptionHandler opthand2;
     TelnetOptionHandler opthand3;
 
     /**
-     * setUp for the test. The derived test class must implement
-     * this method by creating opthand1, opthand2, opthand3
-     * like in the following:
-     *     opthand1 = new EchoOptionHandler();
-     *     opthand2 = new EchoOptionHandler(true, true, true, true);
-     *     opthand3 = new EchoOptionHandler(false, false, false, false);
+     * setUp for the test. The derived test class must implement this method by creating opthand1, opthand2, opthand3 like in the following: opthand1 = new
+     * EchoOptionHandler(); opthand2 = new EchoOptionHandler(true, true, true, true); opthand3 = new EchoOptionHandler(false, false, false, false);
      */
     @Override
     protected abstract void setUp();
 
     /**
-     * test of server-driven subnegotiation. Abstract test:
-     * the derived class should implement it.
+     * test of server-driven subnegotiation. Abstract test: the derived class should implement it.
      */
     public abstract void testAnswerSubnegotiation();
-        // test subnegotiation
+    // test subnegotiation
 
     /**
-     * test of the constructors. The derived class may add
-     * test of the option code.
+     * test of the constructors. The derived class may add test of the option code.
      */
-    public void testConstructors()
-    {
+    public void testConstructors() {
         // add test of the option code
         assertFalse(opthand1.getInitLocal());
         assertFalse(opthand1.getInitRemote());
@@ -75,8 +64,7 @@ public abstract class TelnetOptionHandlerTestAbstract extends TestCase
     /**
      * test of setDo/getDo
      */
-    public void testDo()
-    {
+    public void testDo() {
         opthand2.setDo(true);
         opthand3.setDo(false);
 
@@ -86,16 +74,14 @@ public abstract class TelnetOptionHandlerTestAbstract extends TestCase
     }
 
     /**
-     * test of client-driven subnegotiation. Abstract test:
-     * the derived class should implement it.
+     * test of client-driven subnegotiation. Abstract test: the derived class should implement it.
      */
     public abstract void testStartSubnegotiation();
 
     /**
      * test of setWill/getWill
      */
-    public void testWill()
-    {
+    public void testWill() {
         opthand2.setWill(true);
         opthand3.setWill(false);
 

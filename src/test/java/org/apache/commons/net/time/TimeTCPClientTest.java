@@ -23,31 +23,25 @@ import java.util.TimeZone;
 
 import junit.framework.TestCase;
 
-public class TimeTCPClientTest extends TestCase
-{
+public class TimeTCPClientTest extends TestCase {
     private TimeTestSimpleServer server1;
 
     private int _port = 3333; // default test port
 
-    protected void closeConnections()
-    {
-        try
-        {
+    protected void closeConnections() {
+        try {
             server1.stop();
             Thread.sleep(1000);
-        } catch (final Exception e)
-        {
+        } catch (final Exception e) {
             // ignored
         }
     }
 
-    protected void openConnections() throws Exception
-    {
+    protected void openConnections() throws Exception {
         try {
             server1 = new TimeTestSimpleServer(_port);
             server1.connect();
-        } catch (final IOException ioe)
-        {
+        } catch (final IOException ioe) {
             // try again on another port
             _port = 4000;
             server1 = new TimeTestSimpleServer(_port);
@@ -59,49 +53,42 @@ public class TimeTCPClientTest extends TestCase
     /*
      * tests the times retrieved via the Time protocol implementation.
      */
-    public void testCompareTimes() throws Exception
-    {
+    public void testCompareTimes() throws Exception {
         openConnections();
 
         long time, time2;
         long clientTime, clientTime2;
         final TimeTCPClient client = new TimeTCPClient();
-        try
-        {
+        try {
             // Not sure why code used to use getLocalHost.
             final InetAddress localHost = InetAddress.getByName("localhost"); // WAS InetAddress.getLocalHost();
-            try
-            {
+            try {
                 // We want to timeout if a response takes longer than 60 seconds
                 client.setDefaultTimeout(60000);
                 client.connect(localHost, _port);
                 clientTime = client.getDate().getTime();
                 time = System.currentTimeMillis();
             } catch (final IOException e) { // catch the first connect error; assume second will work if this does
-                fail("IOError <"+e+"> trying to connect to " + localHost + " " + _port );
+                fail("IOError <" + e + "> trying to connect to " + localHost + " " + _port);
                 throw e;
-            } finally
-            {
-              if(client.isConnected()) {
-                  client.disconnect();
-              }
+            } finally {
+                if (client.isConnected()) {
+                    client.disconnect();
+                }
             }
 
-            try
-            {
+            try {
                 // We want to timeout if a response takes longer than 60 seconds
                 client.setDefaultTimeout(60000);
                 client.connect(localHost, _port);
-                clientTime2 = (client.getTime() - TimeTCPClient.SECONDS_1900_TO_1970)*1000L;
+                clientTime2 = (client.getTime() - TimeTCPClient.SECONDS_1900_TO_1970) * 1000L;
                 time2 = System.currentTimeMillis();
-            } finally
-            {
-              if(client.isConnected()) {
-                  client.disconnect();
-              }
+            } finally {
+                if (client.isConnected()) {
+                    client.disconnect();
+                }
             }
-        } finally
-        {
+        } finally {
             closeConnections();
         }
 
@@ -111,8 +98,7 @@ public class TimeTCPClientTest extends TestCase
     }
 
     /*
-     *  tests the constant basetime used by TimeClient against tha
-     *  computed from Calendar class.
+     * tests the constant basetime used by TimeClient against tha computed from Calendar class.
      */
     public void testInitial() {
         final TimeZone utcZone = TimeZone.getTimeZone("UTC");
@@ -124,4 +110,3 @@ public class TimeTCPClientTest extends TestCase
         assertEquals(baseTime, -TimeTCPClient.SECONDS_1900_TO_1970);
     }
 }
-

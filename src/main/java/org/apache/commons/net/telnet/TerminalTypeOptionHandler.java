@@ -20,8 +20,7 @@ package org.apache.commons.net.telnet;
 /**
  * Implements the telnet terminal type option RFC 1091.
  */
-public class TerminalTypeOptionHandler extends TelnetOptionHandler
-{
+public class TerminalTypeOptionHandler extends TelnetOptionHandler {
     /**
      * Terminal type option
      */
@@ -30,12 +29,12 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler
     /**
      * Send (for subnegotiation)
      */
-    protected static final int TERMINAL_TYPE_SEND =  1;
+    protected static final int TERMINAL_TYPE_SEND = 1;
 
     /**
      * Is (for subnegotiation)
      */
-    protected static final int TERMINAL_TYPE_IS =  0;
+    protected static final int TERMINAL_TYPE_IS = 0;
 
     /**
      * Terminal type
@@ -43,64 +42,52 @@ public class TerminalTypeOptionHandler extends TelnetOptionHandler
     private final String termType;
 
     /**
-     * Constructor for the TerminalTypeOptionHandler. Initial and accept
-     * behavior flags are set to false
+     * Constructor for the TerminalTypeOptionHandler. Initial and accept behavior flags are set to false
      * <p>
+     *
      * @param termtype - terminal type that will be negotiated.
      */
-    public TerminalTypeOptionHandler(final String termtype)
-    {
+    public TerminalTypeOptionHandler(final String termtype) {
         super(TelnetOption.TERMINAL_TYPE, false, false, false, false);
         termType = termtype;
     }
 
     /**
-     * Constructor for the TerminalTypeOptionHandler. Allows defining desired
-     * initial setting for local/remote activation of this option and
-     * behavior in case a local/remote activation request for this
-     * option is received.
+     * Constructor for the TerminalTypeOptionHandler. Allows defining desired initial setting for local/remote activation of this option and behavior in case a
+     * local/remote activation request for this option is received.
      * <p>
-     * @param termtype - terminal type that will be negotiated.
-     * @param initlocal - if set to true, a WILL is sent upon connection.
-     * @param initremote - if set to true, a DO is sent upon connection.
-     * @param acceptlocal - if set to true, any DO request is accepted.
+     *
+     * @param termtype     - terminal type that will be negotiated.
+     * @param initlocal    - if set to true, a WILL is sent upon connection.
+     * @param initremote   - if set to true, a DO is sent upon connection.
+     * @param acceptlocal  - if set to true, any DO request is accepted.
      * @param acceptremote - if set to true, any WILL request is accepted.
      */
-    public TerminalTypeOptionHandler(final String termtype,
-                                final boolean initlocal,
-                                final boolean initremote,
-                                final boolean acceptlocal,
-                                final boolean acceptremote)
-    {
-        super(TelnetOption.TERMINAL_TYPE, initlocal, initremote,
-                                      acceptlocal, acceptremote);
+    public TerminalTypeOptionHandler(final String termtype, final boolean initlocal, final boolean initremote, final boolean acceptlocal,
+            final boolean acceptremote) {
+        super(TelnetOption.TERMINAL_TYPE, initlocal, initremote, acceptlocal, acceptremote);
         termType = termtype;
     }
 
     /**
      * Implements the abstract method of TelnetOptionHandler.
      * <p>
-     * @param suboptionData - the sequence received, without IAC SB &amp; IAC SE
+     *
+     * @param suboptionData   - the sequence received, without IAC SB &amp; IAC SE
      * @param suboptionLength - the length of data in suboption_data
-     * <p>
+     *                        <p>
      * @return terminal type information
      */
     @Override
-    public int[] answerSubnegotiation(final int suboptionData[], final int suboptionLength)
-    {
-        if ((suboptionData != null) && (suboptionLength > 1)
-            && (termType != null))
-        {
-            if ((suboptionData[0] == TERMINAL_TYPE)
-                && (suboptionData[1] == TERMINAL_TYPE_SEND))
-            {
+    public int[] answerSubnegotiation(final int suboptionData[], final int suboptionLength) {
+        if ((suboptionData != null) && (suboptionLength > 1) && (termType != null)) {
+            if ((suboptionData[0] == TERMINAL_TYPE) && (suboptionData[1] == TERMINAL_TYPE_SEND)) {
                 final int response[] = new int[termType.length() + 2];
 
                 response[0] = TERMINAL_TYPE;
                 response[1] = TERMINAL_TYPE_IS;
 
-                for (int ii = 0; ii < termType.length(); ii++)
-                {
+                for (int ii = 0; ii < termType.length(); ii++) {
                     response[ii + 2] = termType.charAt(ii);
                 }
 

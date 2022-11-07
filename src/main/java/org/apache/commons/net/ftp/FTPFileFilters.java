@@ -22,6 +22,7 @@ import java.util.Objects;
 
 /**
  * Implements some simple FTPFileFilter classes.
+ *
  * @since 2.2
  */
 public class FTPFileFilters {

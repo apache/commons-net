@@ -28,24 +28,20 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  */
 
-public class ListenerList implements Serializable, Iterable<EventListener>
-{
+public class ListenerList implements Serializable, Iterable<EventListener> {
     private static final long serialVersionUID = -1934227607974228213L;
 
     private final CopyOnWriteArrayList<EventListener> listeners;
 
-    public ListenerList()
-    {
+    public ListenerList() {
         listeners = new CopyOnWriteArrayList<>();
     }
 
-    public void addListener(final EventListener listener)
-    {
-            listeners.add(listener);
+    public void addListener(final EventListener listener) {
+        listeners.add(listener);
     }
 
-    public int getListenerCount()
-    {
+    public int getListenerCount() {
         return listeners.size();
     }
 
@@ -53,31 +49,26 @@ public class ListenerList implements Serializable, Iterable<EventListener>
      * Return an {@link Iterator} for the {@link EventListener} instances.
      *
      * @return an {@link Iterator} for the {@link EventListener} instances
-     * @since 2.0
-     * TODO Check that this is a good defensive strategy
+     * @since 2.0 TODO Check that this is a good defensive strategy
      */
     @Override
     public Iterator<EventListener> iterator() {
-            return listeners.iterator();
+        return listeners.iterator();
     }
 
-    public  void removeListener(final EventListener listener)
-    {
-            listeners.remove(listener);
+    public void removeListener(final EventListener listener) {
+        listeners.remove(listener);
     }
 
     /*
-        Serialization is unnecessary for this class.
-        Reject attempts to do so until such time as the Serializable attribute can be dropped.
+     * Serialization is unnecessary for this class. Reject attempts to do so until such time as the Serializable attribute can be dropped.
      */
 
-    private void writeObject(final ObjectOutputStream out) throws IOException
-    {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
 
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException
-    {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
 

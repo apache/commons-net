@@ -27,8 +27,7 @@ import org.apache.commons.net.MalformedServerReplyException;
  * IMAPReply stores IMAP reply code constants.
  */
 
-public final class IMAPReply
-{
+public final class IMAPReply {
     /** The reply code indicating success of an operation. */
     public static final int OK = 0;
 
@@ -42,9 +41,9 @@ public final class IMAPReply
     public static final int CONT = 3;
 
     /**
-     * The reply code indicating a partial response.
-     * This is used when a chunk listener is registered and the listener
-     * requests that the reply lines are cleared on return.
+     * The reply code indicating a partial response. This is used when a chunk listener is registered and the listener requests that the reply lines are cleared
+     * on return.
+     *
      * @since 3.4
      */
     public static final int PARTIAL = 3;
@@ -86,7 +85,7 @@ public final class IMAPReply
     }
 
     // Helper method to process both tagged and untagged replies.
-    private static int getReplyCode(final String line, final Pattern pattern) throws IOException{
+    private static int getReplyCode(final String line, final Pattern pattern) throws IOException {
         if (isContinuation(line)) {
             return CONT;
         }
@@ -103,9 +102,9 @@ public final class IMAPReply
                 return NO;
             }
         }
-        throw new MalformedServerReplyException(
-            "Received unexpected IMAP protocol response from server: '" + line + "'.");
+        throw new MalformedServerReplyException("Received unexpected IMAP protocol response from server: '" + line + "'.");
     }
+
     /**
      * Intepret the String reply code - OK, NO, BAD - in an untagged response as a integer.
      *
@@ -119,6 +118,7 @@ public final class IMAPReply
 
     /**
      * Checks if the reply line is a continuation, i.e. starts with "+"
+     *
      * @param replyCode the code to be checked
      * @return {@code true} if the response was a continuation
      */
@@ -128,6 +128,7 @@ public final class IMAPReply
 
     /**
      * Checks if the reply line is a continuation, i.e. starts with "+"
+     *
      * @param line the line to be checked
      * @return {@code true} if the line is untagged
      */
@@ -147,6 +148,7 @@ public final class IMAPReply
 
     /**
      * Checks if the reply line is untagged - e.g. "* OK ..."
+     *
      * @param line to be checked
      * @return {@code true} if the line is untagged
      */
@@ -156,6 +158,7 @@ public final class IMAPReply
 
     /**
      * Checks if the line introduces a literal, i.e. ends with {dd}
+     *
      * @param line the line to check
      *
      * @return the literal count, or -1 if there was no literal.
@@ -167,9 +170,10 @@ public final class IMAPReply
         }
         return -1;
     }
+
     // Cannot be instantiated.
-    private IMAPReply()
-    {}
+    private IMAPReply() {
+    }
 
 }
 

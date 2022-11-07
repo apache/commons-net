@@ -65,8 +65,7 @@ public class FTPSServerSocketFactory extends ServerSocketFactory {
 
     @SuppressWarnings("resource") // Factory method.
     @Override
-    public ServerSocket createServerSocket(final int port, final int backlog, final InetAddress ifAddress)
-        throws IOException {
+    public ServerSocket createServerSocket(final int port, final int backlog, final InetAddress ifAddress) throws IOException {
         return init(getServerSocketFactory().createServerSocket(port, backlog, ifAddress));
     }
 

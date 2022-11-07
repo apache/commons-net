@@ -19,52 +19,13 @@
 package org.apache.commons.net.ftp;
 
 /**
-* @since 3.3
+ * @since 3.3
  */
 public enum FTPCmd {
-    ABOR,
-    ACCT,
-    ALLO,
-    APPE,
-    CDUP,
-    CWD,
-    DELE,
-    EPRT,
-    EPSV,
-    FEAT,
-    HELP,
-    LIST,
-    MDTM,
-    MFMT,
-    MKD,
-    MLSD,
-    MLST,
-    MODE,
-    NLST,
-    NOOP,
-    PASS,
-    PASV,
-    PORT,
-    PWD,
-    QUIT,
-    REIN,
-    REST,
-    RETR,
-    RMD,
-    RNFR,
-    RNTO,
-    SITE,
+    ABOR, ACCT, ALLO, APPE, CDUP, CWD, DELE, EPRT, EPSV, FEAT, HELP, LIST, MDTM, MFMT, MKD, MLSD, MLST, MODE, NLST, NOOP, PASS, PASV, PORT, PWD, QUIT, REIN,
+    REST, RETR, RMD, RNFR, RNTO, SITE,
     /** @since 3.7 */
-    SIZE,
-    SMNT,
-    STAT,
-    STOR,
-    STOU,
-    STRU,
-    SYST,
-    TYPE,
-    USER,
-    ;
+    SIZE, SMNT, STAT, STOR, STOU, STRU, SYST, TYPE, USER,;
 
     // Aliases
 
@@ -104,14 +65,11 @@ public enum FTPCmd {
     public static final FTPCmd USERNAME = USER;
 
     /**
-     * Retrieve the FTP protocol command string corresponding to a specified
-     * command code.
+     * Retrieve the FTP protocol command string corresponding to a specified command code.
      *
-     * @return The FTP protcol command string corresponding to a specified
-     *         command code.
+     * @return The FTP protcol command string corresponding to a specified command code.
      */
-    public final String getCommand()
-    {
+    public final String getCommand() {
         return this.name();
     }
 

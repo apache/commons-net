@@ -115,8 +115,7 @@ public class FTPFile implements Serializable {
     }
 
     /**
-     * Gets the name of the group owning the file. Sometimes this will be a string representation of the group
-     * number.
+     * Gets the name of the group owning the file. Sometimes this will be a string representation of the group number.
      *
      * @return The name of the group owning the file.
      */
@@ -134,8 +133,7 @@ public class FTPFile implements Serializable {
     }
 
     /**
-     * If the FTPFile is a symbolic link, this method returns the name of the file being pointed to by the symbolic
-     * link. Otherwise it returns null.
+     * If the FTPFile is a symbolic link, this method returns the name of the file being pointed to by the symbolic link. Otherwise it returns null.
      *
      * @return The file pointed to by the symbolic link (null if the FTPFile is not a symbolic link).
      */
@@ -189,10 +187,8 @@ public class FTPFile implements Serializable {
         return calendar == null ? null : calendar.toInstant();
     }
 
-
     /**
-     * Gets the type of the file (one of the <code>_TYPE</code> constants), e.g., if it is a directory, a regular
-     * file, or a symbolic link.
+     * Gets the type of the file (one of the <code>_TYPE</code> constants), e.g., if it is a directory, a regular file, or a symbolic link.
      *
      * @return The type of the file.
      */
@@ -210,10 +206,10 @@ public class FTPFile implements Serializable {
     }
 
     /**
-     * Tests if the given access group (one of the <code> _ACCESS </code> constants) has the given access
-     * permission (one of the <code> _PERMISSION </code> constants) to the file.
+     * Tests if the given access group (one of the <code> _ACCESS </code> constants) has the given access permission (one of the <code> _PERMISSION </code>
+     * constants) to the file.
      *
-     * @param access The access group (one of the <code> _ACCESS </code> constants)
+     * @param access     The access group (one of the <code> _ACCESS </code> constants)
      * @param permission The access permission (one of the <code> _PERMISSION </code> constants)
      * @throws ArrayIndexOutOfBoundsException if either of the parameters is out of range
      * @return true if {@link #isValid()} is {@code true &&} the associated permission is set; {@code false} otherwise.
@@ -262,8 +258,7 @@ public class FTPFile implements Serializable {
     }
 
     /**
-     * Tests whether an entry is valid or not. If the entry is invalid, only the {@link #getRawListing()}
-     * method will be useful. Other methods may fail.
+     * Tests whether an entry is valid or not. If the entry is invalid, only the {@link #getRawListing()} method will be useful. Other methods may fail.
      *
      * Used in conjunction with list parsing that preseverves entries that failed to parse.
      *
@@ -314,8 +309,7 @@ public class FTPFile implements Serializable {
     }
 
     /**
-     * If the FTPFile is a symbolic link, use this method to set the name of the file being pointed to by the symbolic
-     * link.
+     * If the FTPFile is a symbolic link, use this method to set the name of the file being pointed to by the symbolic link.
      *
      * @param link The file pointed to by the symbolic link.
      */
@@ -333,12 +327,12 @@ public class FTPFile implements Serializable {
     }
 
     /**
-     * Sets if the given access group (one of the <code> _ACCESS </code> constants) has the given access permission (one
-     * of the <code> _PERMISSION </code> constants) to the file.
+     * Sets if the given access group (one of the <code> _ACCESS </code> constants) has the given access permission (one of the <code> _PERMISSION </code>
+     * constants) to the file.
      *
-     * @param access The access group (one of the <code> _ACCESS </code> constants)
+     * @param access     The access group (one of the <code> _ACCESS </code> constants)
      * @param permission The access permission (one of the <code> _PERMISSION </code> constants)
-     * @param value True if permission is allowed, false if not.
+     * @param value      True if permission is allowed, false if not.
      * @throws ArrayIndexOutOfBoundsException if either of the parameters is out of range
      */
     public void setPermission(final int access, final int permission, final boolean value) {
@@ -364,8 +358,7 @@ public class FTPFile implements Serializable {
     }
 
     /**
-     * Sets the file timestamp. This usually the last modification time. The parameter is not cloned, so do not alter its
-     * value after calling this method.
+     * Sets the file timestamp. This usually the last modification time. The parameter is not cloned, so do not alter its value after calling this method.
      *
      * @param date A Calendar instance representing the file timestamp.
      */
@@ -392,12 +385,10 @@ public class FTPFile implements Serializable {
     }
 
     /**
-     * Gets a string representation of the FTPFile information. This currently mimics the Unix listing format. This
-     * method uses the time zone of the Calendar entry, which is the server time zone (if one was provided) otherwise it
-     * is the local time zone.
+     * Gets a string representation of the FTPFile information. This currently mimics the Unix listing format. This method uses the time zone of the Calendar
+     * entry, which is the server time zone (if one was provided) otherwise it is the local time zone.
      * <p>
-     * Note: if the instance is not valid {@link #isValid()}, no useful information can be returned. In this case, use
-     * {@link #getRawListing()} instead.
+     * Note: if the instance is not valid {@link #isValid()}, no useful information can be returned. In this case, use {@link #getRawListing()} instead.
      * </p>
      *
      * @return A string representation of the FTPFile information.
@@ -408,11 +399,10 @@ public class FTPFile implements Serializable {
     }
 
     /**
-     * Gets a string representation of the FTPFile information. This currently mimics the Unix listing format. This
-     * method allows the Calendar time zone to be overridden.
+     * Gets a string representation of the FTPFile information. This currently mimics the Unix listing format. This method allows the Calendar time zone to be
+     * overridden.
      * <p>
-     * Note: if the instance is not valid {@link #isValid()}, no useful information can be returned. In this case, use
-     * {@link #getRawListing()} instead.
+     * Note: if the instance is not valid {@link #isValid()}, no useful information can be returned. In this case, use {@link #getRawListing()} instead.
      * </p>
      *
      * @param timezone the time zone to use for displaying the time stamp If {@code null}, then use the Calendar entry
@@ -478,19 +468,15 @@ public class FTPFile implements Serializable {
     }
 
     /*
-        Serialization is unnecessary for this class.
-        Reject attempts to do so until such time as the Serializable attribute can be dropped.
+     * Serialization is unnecessary for this class. Reject attempts to do so until such time as the Serializable attribute can be dropped.
      */
 
-    private void writeObject(final java.io.ObjectOutputStream out) throws IOException
-    {
+    private void writeObject(final java.io.ObjectOutputStream out) throws IOException {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
 
-    private void readObject(final java.io.ObjectInputStream in) throws IOException, ClassNotFoundException
-    {
+    private void readObject(final java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
-
 
 }

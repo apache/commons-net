@@ -44,33 +44,30 @@ public class ToNetASCIIInputStreamTest {
         }
     }
 
-    private int getBuffer(final ToNetASCIIInputStream toNetASCII, final byte[] output)
-            throws IOException {
-        int length=0;
-        int remain=output.length;
+    private int getBuffer(final ToNetASCIIInputStream toNetASCII, final byte[] output) throws IOException {
+        int length = 0;
+        int remain = output.length;
         int chunk;
-        int offset=0;
-        while(remain > 0 && (chunk=toNetASCII.read(output,offset,remain)) != -1){
-            length+=chunk;
-            offset+=chunk;
-            remain-=chunk;
+        int offset = 0;
+        while (remain > 0 && (chunk = toNetASCII.read(output, offset, remain)) != -1) {
+            length += chunk;
+            offset += chunk;
+            remain -= chunk;
         }
         return length;
     }
 
-    private int getSingleBytes(final ToNetASCIIInputStream toNetASCII, final byte[] output)
-            throws IOException {
+    private int getSingleBytes(final ToNetASCIIInputStream toNetASCII, final byte[] output) throws IOException {
         int b;
-        int length=0;
-        while((b=toNetASCII.read()) != -1) {
-            output[length++]=(byte)b;
+        int length = 0;
+        while ((b = toNetASCII.read()) != -1) {
+            output[length++] = (byte) b;
         }
         return length;
     }
 
     @Test
-    public void testToNetASCIIInputStream_single_bytes() throws Exception
-    {
+    public void testToNetASCIIInputStream_single_bytes() throws Exception {
         byteTest(true, "", "");
         byteTest(true, "\r", "\r");
         byteTest(true, "\n", "\r\n");
@@ -83,8 +80,7 @@ public class ToNetASCIIInputStreamTest {
     }
 
     @Test
-    public void testToNetASCIIInputStream1() throws Exception
-    {
+    public void testToNetASCIIInputStream1() throws Exception {
         byteTest(false, "", "");
         byteTest(false, "\r", "\r");
         byteTest(false, "a", "a");

@@ -18,18 +18,14 @@
 package org.apache.commons.net.ftp;
 
 /**
- * FTPCommand stores a set of constants for FTP command codes.  To interpret
- * the meaning of the codes, familiarity with RFC 959 is assumed.
- * The mnemonic constant names are transcriptions from the code descriptions
- * of RFC 959.  For those who think in terms of the actual FTP commands,
- * a set of constants such as {@link #USER  USER } are provided
- * where the constant name is the same as the FTP command.
+ * FTPCommand stores a set of constants for FTP command codes. To interpret the meaning of the codes, familiarity with RFC 959 is assumed. The mnemonic constant
+ * names are transcriptions from the code descriptions of RFC 959. For those who think in terms of the actual FTP commands, a set of constants such as
+ * {@link #USER USER } are provided where the constant name is the same as the FTP command.
  *
  * @deprecated use {@link FTPCmd} instead
  */
 @Deprecated
-public final class FTPCommand
-{
+public final class FTPCommand {
 
     public static final int USER = 0;
     public static final int PASS = 1;
@@ -76,13 +72,15 @@ public final class FTPCommand
     public static final int EPRT = 37;
 
     /**
-     *  Machine parseable list for a directory
+     * Machine parseable list for a directory
+     *
      * @since 3.0
      */
     public static final int MLSD = 38;
 
     /**
      * Machine parseable list for a single file
+     *
      * @since 3.0
      */
     public static final int MLST = 39;
@@ -116,13 +114,13 @@ public final class FTPCommand
     public static final int REMOVE_DIRECTORY = RMD;
     public static final int MAKE_DIRECTORY = MKD;
     public static final int PRINT_WORKING_DIRECTORY = PWD;
-    //  public static final int LIST = LIST;
+    // public static final int LIST = LIST;
     public static final int NAME_LIST = NLST;
     public static final int SITE_PARAMETERS = SITE;
     public static final int SYSTEM = SYST;
     public static final int STATUS = STAT;
-    //public static final int HELP = HELP;
-    //public static final int NOOP = NOOP;
+    // public static final int HELP = HELP;
+    // public static final int NOOP = NOOP;
 
     /** @since 2.0 */
     public static final int MOD_TIME = MDTM;
@@ -134,36 +132,29 @@ public final class FTPCommand
     /** @since 2.2 */
     public static final int SET_MOD_TIME = MFMT;
 
-    private static final String[] COMMANDS = {
-                                          "USER", "PASS", "ACCT", "CWD", "CDUP", "SMNT", "REIN", "QUIT", "PORT",
-                                          "PASV", "TYPE", "STRU", "MODE", "RETR", "STOR", "STOU", "APPE", "ALLO",
-                                          "REST", "RNFR", "RNTO", "ABOR", "DELE", "RMD", "MKD", "PWD", "LIST",
-                                          "NLST", "SITE", "SYST", "STAT", "HELP", "NOOP", "MDTM", "FEAT", "MFMT",
-                                          "EPSV", "EPRT", "MLSD", "MLST" };
+    private static final String[] COMMANDS = { "USER", "PASS", "ACCT", "CWD", "CDUP", "SMNT", "REIN", "QUIT", "PORT", "PASV", "TYPE", "STRU", "MODE", "RETR",
+            "STOR", "STOU", "APPE", "ALLO", "REST", "RNFR", "RNTO", "ABOR", "DELE", "RMD", "MKD", "PWD", "LIST", "NLST", "SITE", "SYST", "STAT", "HELP", "NOOP",
+            "MDTM", "FEAT", "MFMT", "EPSV", "EPRT", "MLSD", "MLST" };
 
     // default access needed for Unit test
     static void checkArray() {
         final int expectedLength = LAST + 1;
         if (COMMANDS.length != expectedLength) {
-            throw new RuntimeException(
-                "Incorrect _commands array. Should have length " + expectedLength + " found " + COMMANDS.length);
+            throw new RuntimeException("Incorrect _commands array. Should have length " + expectedLength + " found " + COMMANDS.length);
         }
     }
 
     /**
-     * Retrieve the FTP protocol command string corresponding to a specified
-     * command code.
+     * Retrieve the FTP protocol command string corresponding to a specified command code.
      *
      * @param command The command code.
-     * @return The FTP protcol command string corresponding to a specified
-     *         command code.
+     * @return The FTP protcol command string corresponding to a specified command code.
      */
-    public static String getCommand(final int command)
-    {
+    public static String getCommand(final int command) {
         return COMMANDS[command];
     }
 
     // Cannot be instantiated
-    private FTPCommand()
-    {}
+    private FTPCommand() {
+    }
 }

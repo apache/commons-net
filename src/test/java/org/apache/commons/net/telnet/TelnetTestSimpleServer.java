@@ -23,122 +23,91 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Simple TCP server.
- * Waits for connections on a TCP port in a separate thread.
+ * Simple TCP server. Waits for connections on a TCP port in a separate thread.
  */
-public class TelnetTestSimpleServer implements Runnable
-{
+public class TelnetTestSimpleServer implements Runnable {
     ServerSocket serverSocket;
     Socket clientSocket;
     Thread listener;
 
     /*
-     * test of client-driven subnegotiation.
-     * <p>
+     * test of client-driven subnegotiation. <p>
+     *
      * @param port - server port on which to listen.
+     *
      * @throws IOException on error
      */
-    public TelnetTestSimpleServer(final int port) throws IOException
-    {
+    public TelnetTestSimpleServer(final int port) throws IOException {
         serverSocket = new ServerSocket(port);
 
-        listener = new Thread (this);
+        listener = new Thread(this);
 
         listener.start();
     }
 
-    public void disconnect()
-    {
+    public void disconnect() {
         if (clientSocket == null) {
             return;
         }
-        synchronized (clientSocket)
-        {
-            try
-            {
+        synchronized (clientSocket) {
+            try {
                 clientSocket.notify();
-            }
-            catch (final Exception e)
-            {
-                System.err.println("Exception in notify, "+ e.getMessage());
+            } catch (final Exception e) {
+                System.err.println("Exception in notify, " + e.getMessage());
             }
         }
     }
 
-
-    public InputStream getInputStream() throws IOException
-    {
-        if(clientSocket != null)
-        {
+    public InputStream getInputStream() throws IOException {
+        if (clientSocket != null) {
             return clientSocket.getInputStream();
         }
         return null;
     }
 
-    public OutputStream getOutputStream() throws IOException
-    {
-        if(clientSocket != null)
-        {
+    public OutputStream getOutputStream() throws IOException {
+        if (clientSocket != null) {
             return clientSocket.getOutputStream();
         }
         return null;
     }
 
     @Override
-    public void run()
-    {
+    public void run() {
         boolean bError = false;
-        while(!bError)
-        {
-            try
-            {
+        while (!bError) {
+            try {
                 clientSocket = serverSocket.accept();
-                synchronized (clientSocket)
-                {
-                    try
-                    {
+                synchronized (clientSocket) {
+                    try {
                         clientSocket.wait();
+                    } catch (final Exception e) {
+                        System.err.println("Exception in wait, " + e.getMessage());
                     }
-                    catch (final Exception e)
-                    {
-                        System.err.println("Exception in wait, "+ e.getMessage());
-                    }
-                    try
-                    {
+                    try {
                         clientSocket.close();
-                    }
-                    catch (final Exception e)
-                    {
-                        System.err.println("Exception in close, "+ e.getMessage());
+                    } catch (final Exception e) {
+                        System.err.println("Exception in close, " + e.getMessage());
                     }
                 }
-            }
-            catch (final IOException e)
-            {
+            } catch (final IOException e) {
                 bError = true;
             }
         }
 
-        try
-        {
+        try {
             serverSocket.close();
-        }
-        catch (final Exception e)
-        {
-            System.err.println("Exception in close, "+ e.getMessage());
+        } catch (final Exception e) {
+            System.err.println("Exception in close, " + e.getMessage());
         }
     }
 
-    public void stop()
-    {
+    public void stop() {
         listener.interrupt();
-        try
-        {
+        try {
             serverSocket.close();
-        }
-        catch (final Exception e)
-        {
-            System.err.println("Exception in close, "+ e.getMessage());
+        } catch (final Exception e) {
+            System.err.println("Exception in close, " + e.getMessage());
         }
     }
 }

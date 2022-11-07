@@ -30,14 +30,9 @@ import org.apache.commons.net.ntp.TimeInfo;
 import org.apache.commons.net.ntp.TimeStamp;
 
 /**
- * This is an example program demonstrating how to use the NTPUDPClient
- * class. This program sends a Datagram client request packet to a
- * Network time Protocol (NTP) service port on a specified server,
- * retrieves the time, and prints it to standard output along with
- * the fields from the NTP message header (e.g. stratum level, reference id,
- * poll interval, root delay, mode, ...)
- * See <A HREF="ftp://ftp.rfc-editor.org/in-notes/rfc868.txt"> the spec </A>
- * for details.
+ * This is an example program demonstrating how to use the NTPUDPClient class. This program sends a Datagram client request packet to a Network time Protocol
+ * (NTP) service port on a specified server, retrieves the time, and prints it to standard output along with the fields from the NTP message header (e.g.
+ * stratum level, reference id, poll interval, root delay, mode, ...) See <A HREF="ftp://ftp.rfc-editor.org/in-notes/rfc868.txt"> the spec </A> for details.
  * <p>
  * Usage: NTPClient <hostname-or-address-list>
  * </p>
@@ -45,13 +40,11 @@ import org.apache.commons.net.ntp.TimeStamp;
  * Example: NTPClient clock.psu.edu
  * </p>
  */
-public final class NTPClient
-{
+public final class NTPClient {
 
     private static final NumberFormat numberFormat = new java.text.DecimalFormat("0.00");
 
-    public static void main(final String[] args)
-    {
+    public static void main(final String[] args) {
         if (args.length == 0) {
             System.err.println("Usage: NTPClient <hostname-or-address-list>");
             System.exit(1);
@@ -62,8 +55,7 @@ public final class NTPClient
         client.setDefaultTimeout(10000);
         try {
             client.open();
-            for (final String arg : args)
-            {
+            for (final String arg : args) {
                 System.out.println();
                 try {
                     final InetAddress hostAddr = InetAddress.getByName(arg);
@@ -83,10 +75,10 @@ public final class NTPClient
 
     /**
      * Process <code>TimeInfo</code> object and print its details.
+     *
      * @param info <code>TimeInfo</code> object.
      */
-    public static void processResponse(final TimeInfo info)
-    {
+    public static void processResponse(final TimeInfo info) {
         final NtpV3Packet message = info.getMessage();
         final int stratum = message.getStratum();
         final String refType;
@@ -101,17 +93,14 @@ public final class NTPClient
         System.out.println(" Stratum: " + stratum + " " + refType);
         final int version = message.getVersion();
         final int li = message.getLeapIndicator();
-        System.out.println(" leap=" + li + ", version="
-                + version + ", precision=" + message.getPrecision());
+        System.out.println(" leap=" + li + ", version=" + version + ", precision=" + message.getPrecision());
 
         System.out.println(" mode: " + message.getModeName() + " (" + message.getMode() + ")");
         final int poll = message.getPoll();
         // poll value typically btwn MINPOLL (4) and MAXPOLL (14)
-        System.out.println(" poll: " + (poll <= 0 ? 1 : (int) Math.pow(2, poll))
-                + " seconds" + " (2 ** " + poll + ")");
+        System.out.println(" poll: " + (poll <= 0 ? 1 : (int) Math.pow(2, poll)) + " seconds" + " (2 ** " + poll + ")");
         final double disp = message.getRootDispersionInMillisDouble();
-        System.out.println(" rootdelay=" + numberFormat.format(message.getRootDelayInMillisDouble())
-                + ", rootdispersion(ms): " + numberFormat.format(disp));
+        System.out.println(" rootdelay=" + numberFormat.format(message.getRootDelayInMillisDouble()) + ", rootdispersion(ms): " + numberFormat.format(disp));
 
         final int refId = message.getReferenceId();
         String refAddr = NtpUtils.getHostAddress(refId);
@@ -174,8 +163,7 @@ public final class NTPClient
         final String delay = delayMillis == null ? "N/A" : delayMillis.toString();
         final String offset = offsetMillis == null ? "N/A" : offsetMillis.toString();
 
-        System.out.println(" Roundtrip delay(ms)=" + delay
-                + ", clock offset(ms)=" + offset); // offset in ms
+        System.out.println(" Roundtrip delay(ms)=" + delay + ", clock offset(ms)=" + offset); // offset in ms
     }
 
 }

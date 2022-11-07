@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 package org.apache.commons.net.nntp;
 
 /**
@@ -38,7 +37,7 @@ public class Threader {
      * @param threadable
      * @param idTable
      */
-    private void buildContainer(final Threadable threadable, final HashMap<String,ThreadContainer> idTable) {
+    private void buildContainer(final Threadable threadable, final HashMap<String, ThreadContainer> idTable) {
         String id = threadable.messageThreadId();
         ThreadContainer container = idTable.get(id);
         int bogusIdCount = 0;
@@ -47,7 +46,7 @@ public class Threader {
         // be a duplicate id, in which case we will need to generate a bogus placeholder id
         if (container != null) {
             if (container.threadable != null) { // oops! duplicate ids...
-                bogusIdCount++ ; // Avoid dead local store warning
+                bogusIdCount++; // Avoid dead local store warning
                 id = "<Bogus-id:" + (bogusIdCount) + ">";
                 container = null;
             } else {
@@ -69,8 +68,7 @@ public class Threader {
         ThreadContainer parentRef = null;
         {
             final String[] references = threadable.messageThreadReferences();
-            for (final String refString : references)
-            {
+            for (final String refString : references) {
                 ThreadContainer ref = idTable.get(refString);
 
                 // if this id doesnt have a container, create one
@@ -82,10 +80,7 @@ public class Threader {
                 // Link references together in the order they appear in the References: header,
                 // IF they dont have a have a parent already &&
                 // IF it will not cause a circular reference
-                if ((parentRef != null)
-                    && (ref.parent == null)
-                    && (parentRef != ref)
-                    && !(ref.findChild(parentRef))) {
+                if ((parentRef != null) && (ref.parent == null) && (parentRef != ref) && !(ref.findChild(parentRef))) {
                     // Link ref into the parent's child list
                     ref.parent = parentRef;
                     ref.next = parentRef.child;
@@ -97,9 +92,7 @@ public class Threader {
 
         // parentRef is now set to the container of the last element in the references field. make that
         // be the parent of this container, unless doing so causes a circular reference
-        if (parentRef != null
-            && (parentRef == container || container.findChild(parentRef)))
-        {
+        if (parentRef != null && (parentRef == container || container.findChild(parentRef))) {
             parentRef = null;
         }
 
@@ -109,20 +102,14 @@ public class Threader {
         if (container.parent != null) {
             ThreadContainer rest, prev;
 
-            for (prev = null, rest = container.parent.child;
-                rest != null;
-                prev = rest, rest = rest.next) {
+            for (prev = null, rest = container.parent.child; rest != null; prev = rest, rest = rest.next) {
                 if (rest == container) {
                     break;
                 }
             }
 
             if (rest == null) {
-                throw new RuntimeException(
-                    "Didnt find "
-                        + container
-                        + " in parent"
-                        + container.parent);
+                throw new RuntimeException("Didnt find " + container + " in parent" + container.parent);
             }
 
             // Unlink this container from the parent's child list
@@ -146,6 +133,7 @@ public class Threader {
 
     /**
      * Find the root set of all existing ThreadContainers
+     *
      * @param idTable
      * @return root the ThreadContainer representing the root node
      */
@@ -165,8 +153,8 @@ public class Threader {
     }
 
     /**
-     *  If any two members of the root set have the same subject, merge them.
-     *  This is to attempt to accomodate messages without References: headers.
+     * If any two members of the root set have the same subject, merge them. This is to attempt to accomodate messages without References: headers.
+     *
      * @param root
      */
     private void gatherSubjects(final ThreadContainer root) {
@@ -206,12 +194,8 @@ public class Threader {
             // - The container in the table has a "Re:" version of this subject, and
             // this container has a non-"Re:" version of this subject. The non-"Re:" version
             // is the more interesting of the two.
-            if (old == null
-                || (c.threadable == null && old.threadable != null)
-                || (old.threadable != null
-                    && old.threadable.subjectIsReply()
-                    && c.threadable != null
-                    && !c.threadable.subjectIsReply())) {
+            if (old == null || (c.threadable == null && old.threadable != null)
+                    || (old.threadable != null && old.threadable.subjectIsReply() && c.threadable != null && !c.threadable.subjectIsReply())) {
                 subjectTable.put(subj, c);
                 count++;
             }
@@ -225,9 +209,7 @@ public class Threader {
         // subjectTable is now populated with one entry for each subject which occurs in the
         // root set. Iterate over the root set, and gather together the difference.
         ThreadContainer prev, c, rest;
-        for (prev = null, c = root.child, rest = c.next;
-            c != null;
-            prev = c, c = rest, rest = (rest == null ? null : rest.next)) {
+        for (prev = null, c = root.child, rest = c.next; c != null; prev = c, c = rest, rest = (rest == null ? null : rest.next)) {
             Threadable threadable = c.threadable;
 
             // is it a dummy node?
@@ -260,9 +242,7 @@ public class Threader {
             if (old.threadable == null && c.threadable == null) {
                 // both dummies - merge them
                 ThreadContainer tail;
-                for (tail = old.child;
-                    tail != null && tail.next != null;
-                    tail = tail.next) {
+                for (tail = old.child; tail != null && tail.next != null; tail = tail.next) {
                     // do nothing
                 }
 
@@ -275,12 +255,8 @@ public class Threader {
                 }
 
                 c.child = null;
-            } else if (
-                old.threadable == null
-                    || (c.threadable != null
-                        && c.threadable.subjectIsReply()
-                        && !old.threadable.subjectIsReply())) {
-                // Else if old is empty, or c has "Re:" and old does not  ==> make this message a child of old
+            } else if (old.threadable == null || (c.threadable != null && c.threadable.subjectIsReply() && !old.threadable.subjectIsReply())) {
+                // Else if old is empty, or c has "Re:" and old does not ==> make this message a child of old
                 c.parent = old;
                 c.next = old.child;
                 old.child = c;
@@ -291,10 +267,7 @@ public class Threader {
                 newc.threadable = old.threadable;
                 newc.child = old.child;
 
-                for (ThreadContainer tail = newc.child;
-                    tail != null;
-                    tail = tail.next)
-                {
+                for (ThreadContainer tail = newc.child; tail != null; tail = tail.next) {
                     tail.parent = newc;
                 }
 
@@ -319,15 +292,14 @@ public class Threader {
 
     /**
      * Delete any empty or dummy ThreadContainers
+     *
      * @param parent
      */
     private void pruneEmptyContainers(final ThreadContainer parent) {
         ThreadContainer container, prev, next;
-        for (prev = null, container = parent.child, next = container.next;
-            container != null;
-            prev = container,
-                container = next,
-                next = (container == null ? null : container.next)) {
+        for (prev = null, container = parent.child, next = container.next; container != null; prev = container, container = next, next = (container == null
+                ? null
+                : container.next)) {
 
             // Is it empty and without any children? If so,delete it
             if (container.threadable == null && container.child == null) {
@@ -342,8 +314,7 @@ public class Threader {
             }
 
             // Else if empty, with kids, and (not at root or only one kid)
-            else if (
-                    container.threadable == null && (container.parent != null || container.child.next == null)) {
+            else if (container.threadable == null && (container.parent != null || container.child.next == null)) {
                 // We have an invalid/expired message with kids. Promote the kids to this level.
                 ThreadContainer tail;
                 final ThreadContainer kids = container.child;
@@ -380,8 +351,8 @@ public class Threader {
     }
 
     /**
-     * The client passes in a list of Iterable objects, and
-     * the Threader constructs a connected 'graph' of messages
+     * The client passes in a list of Iterable objects, and the Threader constructs a connected 'graph' of messages
+     *
      * @param messages iterable of messages to thread, must not be empty
      * @return null if messages == null or root.child == null or messages list is empty
      * @since 3.0
@@ -391,7 +362,7 @@ public class Threader {
             return null;
         }
 
-        HashMap<String,ThreadContainer> idTable = new HashMap<>();
+        HashMap<String, ThreadContainer> idTable = new HashMap<>();
 
         // walk through each Threadable element
         for (final Threadable t : messages) {
@@ -430,22 +401,21 @@ public class Threader {
     }
 
     /**
-     * The client passes in a list of Threadable objects, and
-     * the Threader constructs a connected 'graph' of messages
+     * The client passes in a list of Threadable objects, and the Threader constructs a connected 'graph' of messages
+     *
      * @param messages list of messages to thread, must not be empty
      * @return null if messages == null or root.child == null or messages list is empty
      * @since 2.2
      */
     public Threadable thread(final List<? extends Threadable> messages) {
-        return thread((Iterable<? extends Threadable>)messages);
+        return thread((Iterable<? extends Threadable>) messages);
     }
-
 
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE
 
     /**
-     * The client passes in an array of Threadable objects, and
-     * the Threader constructs a connected 'graph' of messages
+     * The client passes in an array of Threadable objects, and the Threader constructs a connected 'graph' of messages
+     *
      * @param messages array of messages to thread, must not be empty
      * @return null if messages == null or root.child == null or messages array is empty
      * @deprecated (2.2) prefer {@link #thread(List)}

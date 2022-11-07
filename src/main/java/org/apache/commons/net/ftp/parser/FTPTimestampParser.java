@@ -21,8 +21,8 @@ import java.text.ParseException;
 import java.util.Calendar;
 
 /**
- * This interface specifies the concept of parsing an FTP server's
- * timestamp.
+ * This interface specifies the concept of parsing an FTP server's timestamp.
+ *
  * @since 1.4
  */
 public interface FTPTimestampParser {
@@ -37,15 +37,11 @@ public interface FTPTimestampParser {
     String DEFAULT_RECENT_SDF = UnixFTPEntryParser.DEFAULT_RECENT_DATE_FORMAT;
 
     /**
-     * Parses the supplied datestamp parameter.  This parameter typically would
-     * have been pulled from a longer FTP listing via the regular expression
-     * mechanism
-     * @param timestampStr - the timestamp portion of the FTP directory listing
-     * to be parsed
-     * @return a <code>java.util.Calendar</code> object initialized to the date
-     * parsed by the parser
-     * @throws ParseException if none of the parser mechanisms belonging to
-     * the implementor can parse the input.
+     * Parses the supplied datestamp parameter. This parameter typically would have been pulled from a longer FTP listing via the regular expression mechanism
+     *
+     * @param timestampStr - the timestamp portion of the FTP directory listing to be parsed
+     * @return a <code>java.util.Calendar</code> object initialized to the date parsed by the parser
+     * @throws ParseException if none of the parser mechanisms belonging to the implementor can parse the input.
      */
     Calendar parseTimestamp(String timestampStr) throws ParseException;
 

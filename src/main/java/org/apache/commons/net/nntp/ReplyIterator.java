@@ -27,8 +27,8 @@ import org.apache.commons.net.io.DotTerminatedMessageReader;
 import org.apache.commons.net.io.Util;
 
 /**
- * Wraps a {@link BufferedReader} and returns an {@code Iterable<String>}
- * which returns the individual lines from the reader.
+ * Wraps a {@link BufferedReader} and returns an {@code Iterable<String>} which returns the individual lines from the reader.
+ *
  * @since 3.0
  */
 class ReplyIterator implements Iterator<String>, Iterable<String> {
@@ -45,7 +45,7 @@ class ReplyIterator implements Iterator<String>, Iterable<String> {
 
     /**
      *
-     * @param _reader the reader to wrap
+     * @param _reader      the reader to wrap
      * @param addDotReader whether to additionally wrap the reader in a DotTerminatedMessageReader
      * @throws IOException
      */
@@ -59,7 +59,7 @@ class ReplyIterator implements Iterator<String>, Iterable<String> {
 
     @Override
     public boolean hasNext() {
-        if (savedException != null){
+        if (savedException != null) {
             throw new NoSuchElementException(savedException.toString());
         }
         return line != null;
@@ -72,7 +72,7 @@ class ReplyIterator implements Iterator<String>, Iterable<String> {
 
     @Override
     public String next() throws NoSuchElementException {
-        if (savedException != null){
+        if (savedException != null) {
             throw new NoSuchElementException(savedException.toString());
         }
         final String prev = line;

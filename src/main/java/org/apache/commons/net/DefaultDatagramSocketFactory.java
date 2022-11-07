@@ -22,11 +22,8 @@ import java.net.InetAddress;
 import java.net.SocketException;
 
 /**
- * DefaultDatagramSocketFactory implements the DatagramSocketFactory
- * interface by simply wrapping the java.net.DatagramSocket
- * constructors.  It is the default DatagramSocketFactory used by
- * {@link org.apache.commons.net.DatagramSocketClient}
- *  implementations.
+ * DefaultDatagramSocketFactory implements the DatagramSocketFactory interface by simply wrapping the java.net.DatagramSocket constructors. It is the default
+ * DatagramSocketFactory used by {@link org.apache.commons.net.DatagramSocketClient} implementations.
  *
  *
  * @see DatagramSocketFactory
@@ -34,17 +31,16 @@ import java.net.SocketException;
  * @see DatagramSocketClient#setDatagramSocketFactory
  */
 
-public class DefaultDatagramSocketFactory implements DatagramSocketFactory
-{
+public class DefaultDatagramSocketFactory implements DatagramSocketFactory {
 
     /**
      * Creates a DatagramSocket on the local host at the first available port.
+     *
      * @return a new DatagramSocket
      * @throws SocketException If the socket could not be created.
      */
     @Override
-    public DatagramSocket createDatagramSocket() throws SocketException
-    {
+    public DatagramSocket createDatagramSocket() throws SocketException {
         return new DatagramSocket();
     }
 
@@ -56,24 +52,20 @@ public class DefaultDatagramSocketFactory implements DatagramSocketFactory
      * @throws SocketException If the socket could not be created.
      */
     @Override
-    public DatagramSocket createDatagramSocket(final int port) throws SocketException
-    {
+    public DatagramSocket createDatagramSocket(final int port) throws SocketException {
         return new DatagramSocket(port);
     }
 
     /**
-     * Creates a DatagramSocket at the specified address on the local host
-     * at a specified port.
+     * Creates a DatagramSocket at the specified address on the local host at a specified port.
      *
-     * @param port The port to use for the socket.
-     * @param laddr  The local address to use.
+     * @param port  The port to use for the socket.
+     * @param laddr The local address to use.
      * @return a new DatagramSocket
      * @throws SocketException If the socket could not be created.
      */
     @Override
-    public DatagramSocket createDatagramSocket(final int port, final InetAddress laddr)
-    throws SocketException
-    {
+    public DatagramSocket createDatagramSocket(final int port, final InetAddress laddr) throws SocketException {
         return new DatagramSocket(port, laddr);
     }
 }

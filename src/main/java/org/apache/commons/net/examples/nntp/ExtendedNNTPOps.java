@@ -25,12 +25,10 @@ import org.apache.commons.net.nntp.Article;
 import org.apache.commons.net.nntp.NNTPClient;
 import org.apache.commons.net.nntp.NewsgroupInfo;
 
-
 /**
  * Simple class showing some of the extended commands (AUTH, XOVER, LIST ACTIVE)
  */
 public class ExtendedNNTPOps {
-
 
     public static void main(final String[] args) {
         final ExtendedNNTPOps ops;
@@ -42,11 +40,10 @@ public class ExtendedNNTPOps {
         }
 
         ops = new ExtendedNNTPOps();
-        ops.demo(args[0], argc >=3 ? args[1] : null, argc >=3 ? args[2] : null);
+        ops.demo(args[0], argc >= 3 ? args[1] : null, argc >= 3 ? args[2] : null);
     }
 
     private final NNTPClient client;
-
 
     public ExtendedNNTPOps() {
         client = new NNTPClient();
@@ -71,12 +68,12 @@ public class ExtendedNNTPOps {
             final NewsgroupInfo testGroup = new NewsgroupInfo();
             client.selectNewsgroup("alt.test", testGroup);
             final long lowArticleNumber = testGroup.getFirstArticleLong();
-            final long  highArticleNumber = lowArticleNumber + 100;
+            final long highArticleNumber = lowArticleNumber + 100;
             final Iterable<Article> articles = client.iterateArticleInfo(lowArticleNumber, highArticleNumber);
 
             for (final Article article : articles) {
                 if (article.isDummy()) { // Subject will contain raw response
-                    System.out.println("Could not parse: "+article.getSubject());
+                    System.out.println("Could not parse: " + article.getSubject());
                 } else {
                     System.out.println(article.getSubject());
                 }
@@ -84,8 +81,7 @@ public class ExtendedNNTPOps {
 
             // LIST ACTIVE
             final NewsgroupInfo[] fanGroups = client.listNewsgroups("alt.fan.*");
-            for (final NewsgroupInfo fanGroup : fanGroups)
-            {
+            for (final NewsgroupInfo fanGroup : fanGroups) {
                 System.out.println(fanGroup.getNewsgroup());
             }
 

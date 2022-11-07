@@ -26,20 +26,17 @@ import org.apache.commons.net.tftp.TFTPServer.ServerMode;
 import junit.framework.TestCase;
 
 /**
- * Some basic tests to ensure that the TFTP Server is honoring its read/write mode, and preventing
- * files from being read or written from outside of the assigned roots.
+ * Some basic tests to ensure that the TFTP Server is honoring its read/write mode, and preventing files from being read or written from outside of the assigned
+ * roots.
  */
-public class TFTPServerPathTest extends TestCase
-{
+public class TFTPServerPathTest extends TestCase {
     private static final int SERVER_PORT = 6901;
     String filePrefix = "tftp-";
     File serverDirectory = new File(System.getProperty("java.io.tmpdir"));
 
-    public void testReadOnly() throws IOException
-    {
+    public void testReadOnly() throws IOException {
         // Start a read-only server
-        final TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, SERVER_PORT,
-                ServerMode.GET_ONLY, null, null);
+        final TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, SERVER_PORT, ServerMode.GET_ONLY, null, null);
 
         // Create our TFTP instance to handle the file transfer.
         final TFTPClient tftp = new TFTPClient();
@@ -75,11 +72,9 @@ public class TFTPServerPathTest extends TestCase
         tftpS.shutdown();
     }
 
-    public void testWriteOnly() throws IOException
-    {
+    public void testWriteOnly() throws IOException {
         // Start a write-only server
-        final TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, SERVER_PORT,
-                ServerMode.PUT_ONLY, null, null);
+        final TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, SERVER_PORT, ServerMode.PUT_ONLY, null, null);
 
         // Create our TFTP instance to handle the file transfer.
         final TFTPClient tftp = new TFTPClient();
@@ -116,11 +111,9 @@ public class TFTPServerPathTest extends TestCase
         tftpS.shutdown();
     }
 
-    public void testWriteOutsideHome() throws IOException
-    {
+    public void testWriteOutsideHome() throws IOException {
         // Start a server
-        final TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, SERVER_PORT,
-                ServerMode.GET_AND_PUT, null, null);
+        final TFTPServer tftpS = new TFTPServer(serverDirectory, serverDirectory, SERVER_PORT, ServerMode.GET_AND_PUT, null, null);
 
         // Create our TFTP instance to handle the file transfer.
         final TFTPClient tftp = new TFTPClient();
@@ -138,14 +131,12 @@ public class TFTPServerPathTest extends TestCase
             // expected path
         }
 
-        assertFalse("file created when it should not have been",
-                new File(serverDirectory, "../foo").exists());
+        assertFalse("file created when it should not have been", new File(serverDirectory, "../foo").exists());
 
         // cleanup
         file.delete();
 
         tftpS.shutdown();
     }
-
 
 }

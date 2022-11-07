@@ -50,7 +50,7 @@ public class ArticleReader {
         if (args.length == 5) { // Optional auth
             final String user = args[3];
             final String password = args[4];
-            if(!client.authenticate(user, password)) {
+            if (!client.authenticate(user, password)) {
                 System.out.println("Authentication failed for user " + user + "!");
                 System.exit(1);
             }
@@ -68,7 +68,7 @@ public class ArticleReader {
             brHdr = client.retrieveArticleHeader(articleNum);
         }
         if (brHdr != null) {
-            while((line=brHdr.readLine()) != null) {
+            while ((line = brHdr.readLine()) != null) {
                 System.out.println(line);
             }
             brHdr.close();
@@ -81,7 +81,7 @@ public class ArticleReader {
             brBody = client.retrieveArticleBody(articleNum);
         }
         if (brBody != null) {
-            while((line=brBody.readLine()) != null) {
+            while ((line = brBody.readLine()) != null) {
                 System.out.println(line);
             }
             brBody.close();

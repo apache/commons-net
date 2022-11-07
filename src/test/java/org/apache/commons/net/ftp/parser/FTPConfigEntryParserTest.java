@@ -25,9 +25,8 @@ import org.apache.commons.net.ftp.FTPFile;
 import junit.framework.TestCase;
 
 /**
- * This is a simple TestCase that tests entry parsing using the new FTPClientConfig
- * mechanism. The normal FTPClient cannot handle the different date formats in these
- * entries, however using a configurable format, we can handle it easily.
+ * This is a simple TestCase that tests entry parsing using the new FTPClientConfig mechanism. The normal FTPClient cannot handle the different date formats in
+ * these entries, however using a configurable format, we can handle it easily.
  *
  * The original system presenting this issue was an AIX system - see bug #27437 for details.
  *
@@ -37,8 +36,7 @@ public class FTPConfigEntryParserTest extends TestCase {
     private final SimpleDateFormat df = new SimpleDateFormat();
 
     /**
-     * This is a new format reported on the mailing lists. Parsing this kind of
-     * entry necessitated changing the regex in the parser.
+     * This is a new format reported on the mailing lists. Parsing this kind of entry necessitated changing the regex in the parser.
      *
      */
     public void testParseEntryWithSymlink() {
@@ -56,22 +54,14 @@ public class FTPConfigEntryParserTest extends TestCase {
         assertTrue("Is a symbolic link", f.isSymbolicLink());
 
         assertTrue("Should have user read permission.", f.hasPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
-        assertTrue("Should have user write permission.",
-            f.hasPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertTrue("Should have user execute permission.",
-            f.hasPermission(FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION));
-        assertTrue("Should have group read permission.",
-            f.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.READ_PERMISSION));
-        assertTrue("Should have group write permission.",
-            f.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertTrue("Should have group execute permission.",
-            f.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.EXECUTE_PERMISSION));
-        assertTrue("Should have world read permission.",
-            f.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.READ_PERMISSION));
-        assertTrue("Should have world write permission.",
-            f.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertTrue("Should have world execute permission.",
-            f.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.EXECUTE_PERMISSION));
+        assertTrue("Should have user write permission.", f.hasPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION));
+        assertTrue("Should have user execute permission.", f.hasPermission(FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION));
+        assertTrue("Should have group read permission.", f.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.READ_PERMISSION));
+        assertTrue("Should have group write permission.", f.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.WRITE_PERMISSION));
+        assertTrue("Should have group execute permission.", f.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.EXECUTE_PERMISSION));
+        assertTrue("Should have world read permission.", f.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.READ_PERMISSION));
+        assertTrue("Should have world write permission.", f.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.WRITE_PERMISSION));
+        assertTrue("Should have world execute permission.", f.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.EXECUTE_PERMISSION));
 
         assertEquals(1, f.getHardLinkCount());
 
@@ -108,24 +98,15 @@ public class FTPConfigEntryParserTest extends TestCase {
         assertNotNull("Could not parse entry.", ftpFile);
         assertFalse("Is not a directory.", ftpFile.isDirectory());
 
-        assertTrue("Should have user read permission.",
-            ftpFile.hasPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
-        assertTrue("Should have user write permission.",
-            ftpFile.hasPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertFalse("Should NOT have user execute permission.",
-            ftpFile.hasPermission(FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION));
-        assertTrue("Should have group read permission.",
-            ftpFile.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.READ_PERMISSION));
-        assertFalse("Should NOT have group write permission.",
-            ftpFile.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertFalse("Should NOT have group execute permission.",
-            ftpFile.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.EXECUTE_PERMISSION));
-        assertFalse("Should NOT have world read permission.",
-            ftpFile.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.READ_PERMISSION));
-        assertFalse("Should NOT have world write permission.",
-            ftpFile.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.WRITE_PERMISSION));
-        assertFalse("Should NOT have world execute permission.",
-            ftpFile.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.EXECUTE_PERMISSION));
+        assertTrue("Should have user read permission.", ftpFile.hasPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
+        assertTrue("Should have user write permission.", ftpFile.hasPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION));
+        assertFalse("Should NOT have user execute permission.", ftpFile.hasPermission(FTPFile.USER_ACCESS, FTPFile.EXECUTE_PERMISSION));
+        assertTrue("Should have group read permission.", ftpFile.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.READ_PERMISSION));
+        assertFalse("Should NOT have group write permission.", ftpFile.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.WRITE_PERMISSION));
+        assertFalse("Should NOT have group execute permission.", ftpFile.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.EXECUTE_PERMISSION));
+        assertFalse("Should NOT have world read permission.", ftpFile.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.READ_PERMISSION));
+        assertFalse("Should NOT have world write permission.", ftpFile.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.WRITE_PERMISSION));
+        assertFalse("Should NOT have world execute permission.", ftpFile.hasPermission(FTPFile.WORLD_ACCESS, FTPFile.EXECUTE_PERMISSION));
 
         assertEquals(1, ftpFile.getHardLinkCount());
 

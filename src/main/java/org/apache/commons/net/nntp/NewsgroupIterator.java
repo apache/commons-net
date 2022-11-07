@@ -19,14 +19,15 @@
 package org.apache.commons.net.nntp;
 
 import java.util.Iterator;
+
 /**
- * Class which wraps an {@code Iterable<String>} of raw newgroup information
- * to generate an {@code Iterable<NewsgroupInfo>} of the parsed information.
+ * Class which wraps an {@code Iterable<String>} of raw newgroup information to generate an {@code Iterable<NewsgroupInfo>} of the parsed information.
+ *
  * @since 3.0
  */
 class NewsgroupIterator implements Iterator<NewsgroupInfo>, Iterable<NewsgroupInfo> {
 
-    private  final Iterator<String> stringIterator;
+    private final Iterator<String> stringIterator;
 
     public NewsgroupIterator(final Iterable<String> iterableString) {
         stringIterator = iterableString.iterator();

@@ -27,35 +27,35 @@ import javax.net.ssl.TrustManager;
 
 /**
  * General utilities for SSLContext.
+ *
  * @since 3.0
  */
 public class SSLContextUtils {
 
     /**
      * Create and initialize an SSLContext.
-     * @param protocol the protocol used to instatiate the context
-     * @param keyManager the key manager, may be {@code null}
+     *
+     * @param protocol     the protocol used to instatiate the context
+     * @param keyManager   the key manager, may be {@code null}
      * @param trustManager the trust manager, may be {@code null}
      * @return the initialized context.
      * @throws IOException this is used to wrap any {@link GeneralSecurityException} that occurs
      */
-    public static SSLContext createSSLContext(final String protocol, final KeyManager keyManager, final TrustManager trustManager)
-            throws IOException {
-        return createSSLContext(protocol,
-                keyManager == null ? null : new KeyManager[] { keyManager },
+    public static SSLContext createSSLContext(final String protocol, final KeyManager keyManager, final TrustManager trustManager) throws IOException {
+        return createSSLContext(protocol, keyManager == null ? null : new KeyManager[] { keyManager },
                 trustManager == null ? null : new TrustManager[] { trustManager });
     }
 
     /**
      * Create and initialize an SSLContext.
-     * @param protocol the protocol used to instatiate the context
-     * @param keyManagers the array of key managers, may be {@code null} but array entries must not be {@code null}
+     *
+     * @param protocol      the protocol used to instatiate the context
+     * @param keyManagers   the array of key managers, may be {@code null} but array entries must not be {@code null}
      * @param trustManagers the array of trust managers, may be {@code null} but array entries must not be {@code null}
      * @return the initialized context.
      * @throws IOException this is used to wrap any {@link GeneralSecurityException} that occurs
      */
-    public static SSLContext createSSLContext(final String protocol, final KeyManager[] keyManagers,
-            final TrustManager[] trustManagers) throws IOException {
+    public static SSLContext createSSLContext(final String protocol, final KeyManager[] keyManagers, final TrustManager[] trustManagers) throws IOException {
         final SSLContext ctx;
         try {
             ctx = SSLContext.getInstance(protocol);

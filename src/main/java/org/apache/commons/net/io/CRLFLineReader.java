@@ -24,31 +24,27 @@ import java.io.Reader;
 import org.apache.commons.net.util.NetConstants;
 
 /**
- * CRLFLineReader implements a readLine() method that requires
- * exactly CRLF to terminate an input line.
- * This is required for IMAP, which allows bare CR and LF.
+ * CRLFLineReader implements a readLine() method that requires exactly CRLF to terminate an input line. This is required for IMAP, which allows bare CR and LF.
  *
  * @since 3.0
  */
-public final class CRLFLineReader extends BufferedReader
-{
+public final class CRLFLineReader extends BufferedReader {
     private static final char LF = '\n';
     private static final char CR = '\r';
 
     /**
-     * Creates a CRLFLineReader that wraps an existing Reader
-     * input source.
-     * @param reader  The Reader input source.
+     * Creates a CRLFLineReader that wraps an existing Reader input source.
+     *
+     * @param reader The Reader input source.
      */
-    public CRLFLineReader(final Reader reader)
-    {
+    public CRLFLineReader(final Reader reader) {
         super(reader);
     }
 
     /**
-     * Read a line of text.
-     * A line is considered to be terminated by carriage return followed immediately by a linefeed.
-     * This contrasts with BufferedReader which also allows other combinations.
+     * Read a line of text. A line is considered to be terminated by carriage return followed immediately by a linefeed. This contrasts with BufferedReader
+     * which also allows other combinations.
+     *
      * @since 3.0
      */
     @Override
@@ -56,11 +52,10 @@ public final class CRLFLineReader extends BufferedReader
         final StringBuilder sb = new StringBuilder();
         int intch;
         boolean prevWasCR = false;
-        synchronized(lock) { // make thread-safe (hopefully!)
-            while((intch = read()) != NetConstants.EOS)
-            {
+        synchronized (lock) { // make thread-safe (hopefully!)
+            while ((intch = read()) != NetConstants.EOS) {
                 if (prevWasCR && intch == LF) {
-                    return sb.substring(0, sb.length()-1);
+                    return sb.substring(0, sb.length() - 1);
                 }
                 prevWasCR = intch == CR;
                 sb.append((char) intch);

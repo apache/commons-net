@@ -24,70 +24,51 @@ import org.apache.commons.net.time.TimeTCPClient;
 import org.apache.commons.net.time.TimeUDPClient;
 
 /**
- * This is an example program demonstrating how to use the TimeTCPClient
- * and TimeUDPClient classes.
- * This program connects to the default time service port of a
- * specified server, retrieves the time, and prints it to standard output.
- * See <A HREF="ftp://ftp.rfc-editor.org/in-notes/rfc868.txt"> the spec </A>
- * for details.  The default is to use the TCP port.  Use the -udp flag to
- * use the UDP port.
+ * This is an example program demonstrating how to use the TimeTCPClient and TimeUDPClient classes. This program connects to the default time service port of a
+ * specified server, retrieves the time, and prints it to standard output. See <A HREF="ftp://ftp.rfc-editor.org/in-notes/rfc868.txt"> the spec </A> for
+ * details. The default is to use the TCP port. Use the -udp flag to use the UDP port.
  * <p>
  * Usage: TimeClient [-udp] <hostname>
  * </p>
  */
-public final class TimeClient
-{
+public final class TimeClient {
 
-    public static void main(final String[] args)
-    {
+    public static void main(final String[] args) {
 
-        if (args.length == 1)
-        {
-            try
-            {
+        if (args.length == 1) {
+            try {
                 timeTCP(args[0]);
-            }
-            catch (final IOException e)
-            {
+            } catch (final IOException e) {
                 e.printStackTrace();
                 System.exit(1);
             }
-        }
-        else if (args.length == 2 && args[0].equals("-udp"))
-        {
-            try
-            {
+        } else if (args.length == 2 && args[0].equals("-udp")) {
+            try {
                 timeUDP(args[1]);
-            }
-            catch (final IOException e)
-            {
+            } catch (final IOException e) {
                 e.printStackTrace();
                 System.exit(1);
             }
-        }
-        else
-        {
+        } else {
             System.err.println("Usage: TimeClient [-udp] <hostname>");
             System.exit(1);
         }
 
     }
 
-    public static void timeTCP(final String host) throws IOException
-    {
+    public static void timeTCP(final String host) throws IOException {
         final TimeTCPClient client = new TimeTCPClient();
-    try {
-          // We want to timeout if a response takes longer than 60 seconds
-          client.setDefaultTimeout(60000);
-      client.connect(host);
-          System.out.println(client.getDate());
-    } finally {
-          client.disconnect();
-    }
+        try {
+            // We want to timeout if a response takes longer than 60 seconds
+            client.setDefaultTimeout(60000);
+            client.connect(host);
+            System.out.println(client.getDate());
+        } finally {
+            client.disconnect();
+        }
     }
 
-    public static void timeUDP(final String host) throws IOException
-    {
+    public static void timeUDP(final String host) throws IOException {
         final TimeUDPClient client = new TimeUDPClient();
 
         // We want to timeout if a response takes longer than 60 seconds
@@ -98,4 +79,3 @@ public final class TimeClient
     }
 
 }
-

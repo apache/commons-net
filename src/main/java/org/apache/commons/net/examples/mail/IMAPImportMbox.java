@@ -31,8 +31,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.net.imap.IMAPClient;
 
 /**
- * This is an example program demonstrating how to use the IMAP[S]Client class.
- * This program connects to a IMAP[S] server and imports messages into the folder from an mbox file.
+ * This is an example program demonstrating how to use the IMAP[S]Client class. This program connects to a IMAP[S] server and imports messages into the folder
+ * from an mbox file.
  * <p>
  * Usage: IMAPImportMbox imap[s]://user:password@host[:port]/folder/path <mboxfile> [selectors]
  * <p>
@@ -45,33 +45,33 @@ import org.apache.commons.net.imap.IMAPClient;
  * For example:<br>
  * IMAPImportMbox imaps://user:pass@imap.googlemail.com/imported_messages 201401.mbox 1-10,20 -142986-
  */
-public final class IMAPImportMbox
-{
+public final class IMAPImportMbox {
 
     private static final String CRLF = "\r\n";
     private static final Pattern PATFROM = Pattern.compile(">+From "); // escaped From
 
     private static String getDate(final String msg) {
-                                              // From SENDER Fri Sep 13 17:04:01 2019
+        // From SENDER Fri Sep 13 17:04:01 2019
         final Pattern FROM_RE = Pattern.compile("From \\S+ +\\S+ (\\S+)  ?(\\S+) (\\S+) (\\S+)");
-        //                                                 [Fri]   Sep      13     HMS   2019
+        // [Fri] Sep 13 HMS 2019
         // output date: 13-Sep-2019 17:04:01 +0000
         String date = null;
         final Matcher m = FROM_RE.matcher(msg);
         if (m.lookingAt()) {
-            date = m.group(2)+"-"+m.group(1)+"-"+m.group(4)+" "+m.group(3)+" +0000";
+            date = m.group(2) + "-" + m.group(1) + "-" + m.group(4) + " " + m.group(3) + " +0000";
         }
         return date;
     }
 
     /**
      * Is at least one entry in the list contained in the string?
+     *
      * @param contains the list of strings to look for
-     * @param string the String to check against
+     * @param string   the String to check against
      * @return true if at least one entry in the contains list is contained in the string
      */
     private static boolean listContains(final List<String> contains, final String string) {
-        for(final String entry : contains) {
+        for (final String entry : contains) {
             if (string.contains(entry)) {
                 return true;
             }
@@ -79,18 +79,16 @@ public final class IMAPImportMbox
         return false;
     }
 
-    public static void main(final String[] args) throws IOException
-    {
-        if (args.length < 2)
-        {
+    public static void main(final String[] args) throws IOException {
+        if (args.length < 2) {
             System.err.println("Usage: IMAPImportMbox imap[s]://user:password@host[:port]/folder/path <mboxfile> [selectors]");
-            System.err.println("\tWhere: a selector is a list of numbers/number ranges - 1,2,3-10" +
-                               " - or a list of strings to match in the initial From line");
+            System.err
+                    .println("\tWhere: a selector is a list of numbers/number ranges - 1,2,3-10" + " - or a list of strings to match in the initial From line");
             System.exit(1);
         }
 
-        final URI uri      = URI.create(args[0]);
-        final String file  = args[1];
+        final URI uri = URI.create(args[0]);
+        final String file = args[1];
 
         final File mbox = new File(file);
         if (!mbox.isFile() || !mbox.canRead()) {
@@ -106,15 +104,15 @@ public final class IMAPImportMbox
         final List<String> contains = new ArrayList<>(); // list of strings to find
         final BitSet msgNums = new BitSet(); // list of message numbers
 
-        for(int i = 2; i < args.length; i++) {
+        for (int i = 2; i < args.length; i++) {
             final String arg = args[i];
             if (arg.matches("\\d+(-\\d+)?(,\\d+(-\\d+)?)*")) { // number,m-n
-                for(final String entry : arg.split(",")) {
-                    final String []parts = entry.split("-");
+                for (final String entry : arg.split(",")) {
+                    final String[] parts = entry.split("-");
                     if (parts.length == 2) { // m-n
                         final int low = Integer.parseInt(parts[0]);
                         final int high = Integer.parseInt(parts[1]);
-                        for(int j=low; j <= high; j++) {
+                        for (int j = low; j <= high; j++) {
                             msgNums.set(j);
                         }
                     } else {
@@ -141,13 +139,13 @@ public final class IMAPImportMbox
             String line;
             final StringBuilder sb = new StringBuilder();
             boolean wanted = false; // Skip any leading rubbish
-            while((line=br.readLine())!=null) {
+            while ((line = br.readLine()) != null) {
                 if (line.startsWith("From ")) { // start of message; i.e. end of previous (if any)
                     if (process(sb, imap, folder, total)) { // process previous message (if any)
                         loaded++;
                     }
                     sb.setLength(0);
-                    total ++;
+                    total++;
                     wanted = wanted(total, line, msgNums, contains);
                 } else if (startsWith(line, PATFROM)) { // Unescape ">+From " in body text
                     line = line.substring(1);
@@ -174,13 +172,12 @@ public final class IMAPImportMbox
         System.out.println("Processed " + total + " messages, loaded " + loaded);
     }
 
-    private static boolean process(final StringBuilder sb, final IMAPClient imap, final String folder
-            ,final int msgNum) throws IOException {
+    private static boolean process(final StringBuilder sb, final IMAPClient imap, final String folder, final int msgNum) throws IOException {
         final int length = sb.length();
         final boolean haveMessage = length > 2;
         if (haveMessage) {
-            System.out.println("MsgNum: " + msgNum +" Length " + length);
-            sb.setLength(length-2); // drop trailing CRLF (mbox format has trailing blank line)
+            System.out.println("MsgNum: " + msgNum + " Length " + length);
+            sb.setLength(length - 2); // drop trailing CRLF (mbox format has trailing blank line)
             final String msg = sb.toString();
             if (!imap.append(folder, null, getDate(msg), msg)) {
                 throw new IOException("Failed to import message: " + msgNum + " " + imap.getReplyString());
@@ -197,16 +194,16 @@ public final class IMAPImportMbox
     /**
      * Is the message wanted?
      *
-     * @param msgNum the message number
-     * @param line the From line
-     * @param msgNums the list of wanted message numbers
+     * @param msgNum   the message number
+     * @param line     the From line
+     * @param msgNums  the list of wanted message numbers
      * @param contains the list of strings to be contained
      * @return true if the message is wanted
      */
     private static boolean wanted(final int msgNum, final String line, final BitSet msgNums, final List<String> contains) {
         return (msgNums.isEmpty() && contains.isEmpty()) // no selectors
-             || msgNums.get(msgNum) // matches message number
-             || listContains(contains, line); // contains string
+                || msgNums.get(msgNum) // matches message number
+                || listContains(contains, line); // contains string
     }
 
 }

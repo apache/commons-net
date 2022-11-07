@@ -24,11 +24,9 @@ import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 
 /**
- * Implementation of FTPFileEntryParser and FTPFileListParser for IBM zOS/MVS
- * Systems.
+ * Implementation of FTPFileEntryParser and FTPFileListParser for IBM zOS/MVS Systems.
  *
- * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for
- *      usage instructions)
+ * @see org.apache.commons.net.ftp.FTPFileEntryParser FTPFileEntryParser (for usage instructions)
  */
 public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
@@ -40,11 +38,10 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     static final int JES_LEVEL_2_LIST_TYPE = 4;
 
     /**
-     * Dates are ignored for file lists, but are used for member lists where
-     * possible
+     * Dates are ignored for file lists, but are used for member lists where possible
      */
     static final String DEFAULT_DATE_FORMAT = "yyyy/MM/dd HH:mm"; // 2001/09/18
-                                                                    // 13:52
+                                                                  // 13:52
 
     /**
      * Matches these entries:
@@ -54,12 +51,10 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      *  B10142 3390   2006/03/20  2   31  F       80    80  PS   MDI.OKL.WORK
      * </pre>
      *
-     * @see <a href=
-     *      "https://www.ibm.com/support/knowledgecenter/zosbasics/com.ibm.zos.zconcepts/zconcepts_159.htm">Data
-     *      set record formats</a>
+     * @see <a href= "https://www.ibm.com/support/knowledgecenter/zosbasics/com.ibm.zos.zconcepts/zconcepts_159.htm">Data set record formats</a>
      */
     static final String FILE_LIST_REGEX = "\\S+\\s+" + // volume
-                                                                // ignored
+                                                       // ignored
             "\\S+\\s+" + // unit - ignored
             "\\S+\\s+" + // access date - ignored
             "\\S+\\s+" + // extents -ignored
@@ -74,6 +69,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
     /**
      * Matches these entries:
+     *
      * <pre>
      *   Name      VV.MM   Created       Changed      Size  Init   Mod   Id
      *   TBSHELF   01.03 2002/09/12 2002/10/11 09:37    11    11     0 KIL001
@@ -91,14 +87,14 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
     /**
      * Matches these entries, note: no header:
+     *
      * <pre>
      *   IBMUSER1  JOB01906  OUTPUT    3 Spool Files
      *   012345678901234567890123456789012345678901234
      *             1         2         3         4
      * </pre>
      */
-    static final String JES_LEVEL_1_LIST_REGEX =
-            "(\\S+)\\s+" + // job name ignored
+    static final String JES_LEVEL_1_LIST_REGEX = "(\\S+)\\s+" + // job name ignored
             "(\\S+)\\s+" + // job number
             "(\\S+)\\s+" + // job status (OUTPUT,INPUT,ACTIVE)
             "(\\S+)\\s+" + // number of spool files
@@ -107,14 +103,16 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     ;
 
     /**
-     * JES INTERFACE LEVEL 2 parser
-     * Matches these entries:
+     * JES INTERFACE LEVEL 2 parser Matches these entries:
+     *
      * <pre>
      * JOBNAME  JOBID    OWNER    STATUS CLASS
      * IBMUSER1 JOB01906 IBMUSER  OUTPUT A        RC=0000 3 spool files
      * IBMUSER  TSU01830 IBMUSER  OUTPUT TSU      ABEND=522 3 spool files
      * </pre>
+     *
      * Sample output from FTP session:
+     *
      * <pre>
      * ftp> quote site filetype=jes
      * 200 SITE command was accepted
@@ -140,8 +138,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * </pre>
      */
 
-    static final String JES_LEVEL_2_LIST_REGEX =
-            "(\\S+)\\s+" + // job name ignored
+    static final String JES_LEVEL_2_LIST_REGEX = "(\\S+)\\s+" + // job name ignored
             "(\\S+)\\s+" + // job number
             "(\\S+)\\s+" + // owner ignored
             "(\\S+)\\s+" + // job status (OUTPUT,INPUT,ACTIVE) ignored
@@ -157,82 +154,63 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     private UnixFTPEntryParser unixFTPEntryParser;
 
     /*
-     * ---------------------------------------------------------------------
-     * Very brief and incomplete description of the zOS/MVS-file system. (Note:
-     * "zOS" is the operating system on the mainframe, and is the new name for
-     * MVS)
+     * --------------------------------------------------------------------- Very brief and incomplete description of the zOS/MVS-file system. (Note: "zOS" is
+     * the operating system on the mainframe, and is the new name for MVS)
      *
-     * The file system on the mainframe does not have hierarchal structure as for
-     * example the unix file system. For a more comprehensive description, please
+     * The file system on the mainframe does not have hierarchal structure as for example the unix file system. For a more comprehensive description, please
      * refer to the IBM manuals
      *
-     * @LINK:
-     * http://publibfp.boulder.ibm.com/cgi-bin/bookmgr/BOOKS/dgt2d440/CONTENTS
+     * @LINK: http://publibfp.boulder.ibm.com/cgi-bin/bookmgr/BOOKS/dgt2d440/CONTENTS
      *
      *
      * Dataset names =============
      *
-     * A dataset name consist of a number of qualifiers separated by '.', each
-     * qualifier can be at most 8 characters, and the total length of a dataset
-     * can be max 44 characters including the dots.
+     * A dataset name consist of a number of qualifiers separated by '.', each qualifier can be at most 8 characters, and the total length of a dataset can be
+     * max 44 characters including the dots.
      *
      *
      * Dataset organisation ====================
      *
-     * A dataset represents a piece of storage allocated on one or more disks.
-     * The structure of the storage is described with the field dataset
-     * organinsation (DSORG). There are a number of dataset organisations, but
-     * only two are usable for FTP transfer.
+     * A dataset represents a piece of storage allocated on one or more disks. The structure of the storage is described with the field dataset organinsation
+     * (DSORG). There are a number of dataset organisations, but only two are usable for FTP transfer.
      *
-     * DSORG: PS: sequential, or flat file PO: partitioned dataset PO-E:
-     * extended partitioned dataset
+     * DSORG: PS: sequential, or flat file PO: partitioned dataset PO-E: extended partitioned dataset
      *
-     * The PS file is just a flat file, as you would find it on the unix file
-     * system.
+     * The PS file is just a flat file, as you would find it on the unix file system.
      *
-     * The PO and PO-E files, can be compared to a single level directory
-     * structure. A PO file consist of a number of dataset members, or files if
-     * you will. It is possible to CD into the file, and to retrieve the
-     * individual members.
+     * The PO and PO-E files, can be compared to a single level directory structure. A PO file consist of a number of dataset members, or files if you will. It
+     * is possible to CD into the file, and to retrieve the individual members.
      *
      *
      * Dataset record format =====================
      *
-     * The physical layout of the dataset is described on the dataset itself.
-     * There are a number of record formats (RECFM), but just a few is relavant
-     * for the FTP transfer.
+     * The physical layout of the dataset is described on the dataset itself. There are a number of record formats (RECFM), but just a few is relavant for the
+     * FTP transfer.
      *
-     * Any one beginning with either F or V can safely used by FTP transfer. All
-     * others should only be used with great care.
-     * F means a fixed number of records per
-     * allocated storage, and V means a variable number of records.
+     * Any one beginning with either F or V can safely used by FTP transfer. All others should only be used with great care. F means a fixed number of records
+     * per allocated storage, and V means a variable number of records.
      *
      *
      * Other notes ===========
      *
-     * The file system supports automatically backup and retrieval of datasets.
-     * If a file is backed up, the ftp LIST command will return: ARCIVE Not
-     * Direct Access Device KJ.IOP998.ERROR.PL.UNITTEST
+     * The file system supports automatically backup and retrieval of datasets. If a file is backed up, the ftp LIST command will return: ARCIVE Not Direct
+     * Access Device KJ.IOP998.ERROR.PL.UNITTEST
      *
      *
      * Implementation notes ====================
      *
-     * Only datasets that have dsorg PS, PO or PO-E and have recfm beginning
-     * with F or V or U, is fully parsed.
+     * Only datasets that have dsorg PS, PO or PO-E and have recfm beginning with F or V or U, is fully parsed.
      *
-     * The following fields in FTPFile is used: FTPFile.Rawlisting: Always set.
-     * FTPFile.Type: DIRECTORY_TYPE or FILE_TYPE or UNKNOWN FTPFile.Name: name
+     * The following fields in FTPFile is used: FTPFile.Rawlisting: Always set. FTPFile.Type: DIRECTORY_TYPE or FILE_TYPE or UNKNOWN FTPFile.Name: name
      * FTPFile.Timestamp: change time or null
      *
      *
      *
      * Additional information ======================
      *
-     * The MVS ftp server supports a number of features via the FTP interface.
-     * The features are controlled with the FTP command quote site filetype=<SEQ|JES|DB2>
-     * SEQ is the default and used for normal file transfer JES is used to
-     * interact with the Job Entry Subsystem (JES) similar to a job scheduler
-     * DB2 is used to interact with a DB2 subsystem
+     * The MVS ftp server supports a number of features via the FTP interface. The features are controlled with the FTP command quote site
+     * filetype=<SEQ|JES|DB2> SEQ is the default and used for normal file transfer JES is used to interact with the Job Entry Subsystem (JES) similar to a job
+     * scheduler DB2 is used to interact with a DB2 subsystem
      *
      * This parser supports SEQ and JES.
      *
@@ -257,29 +235,21 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      */
     @Override
     protected FTPClientConfig getDefaultConfiguration() {
-        return new FTPClientConfig(FTPClientConfig.SYST_MVS,
-                DEFAULT_DATE_FORMAT, null);
+        return new FTPClientConfig(FTPClientConfig.SYST_MVS, DEFAULT_DATE_FORMAT, null);
     }
 
     /**
-     * Parse entries representing a dataset list. Only datasets with DSORG PS or
-     * PO or PO-E and with RECFM F[B], V[B], U will be parsed.
+     * Parse entries representing a dataset list. Only datasets with DSORG PS or PO or PO-E and with RECFM F[B], V[B], U will be parsed.
      *
-     * Format of ZOS/MVS file list: 1 2 3 4 5 6 7 8 9 10 Volume Unit Referred
-     * Ext Used Recfm Lrecl BlkSz Dsorg Dsname B10142 3390 2006/03/20 2 31 F 80
-     * 80 PS MDI.OKL.WORK ARCIVE Not Direct Access Device
-     * KJ.IOP998.ERROR.PL.UNITTEST B1N231 3390 2006/03/20 1 15 VB 256 27998 PO
-     * PLU B1N231 3390 2006/03/20 1 15 VB 256 27998 PO-E PLB
+     * Format of ZOS/MVS file list: 1 2 3 4 5 6 7 8 9 10 Volume Unit Referred Ext Used Recfm Lrecl BlkSz Dsorg Dsname B10142 3390 2006/03/20 2 31 F 80 80 PS
+     * MDI.OKL.WORK ARCIVE Not Direct Access Device KJ.IOP998.ERROR.PL.UNITTEST B1N231 3390 2006/03/20 1 15 VB 256 27998 PO PLU B1N231 3390 2006/03/20 1 15 VB
+     * 256 27998 PO-E PLB
      *
-     * ----------------------------------- Group within Regex [1] Volume [2]
-     * Unit [3] Referred [4] Ext: number of extents [5] Used [6] Recfm: Record
-     * format [7] Lrecl: Logical record length [8] BlkSz: Block size [9] Dsorg:
-     * Dataset organisation. Many exists but only support: PS, PO, PO-E [10]
-     * Dsname: Dataset name
+     * ----------------------------------- Group within Regex [1] Volume [2] Unit [3] Referred [4] Ext: number of extents [5] Used [6] Recfm: Record format [7]
+     * Lrecl: Logical record length [8] BlkSz: Block size [9] Dsorg: Dataset organisation. Many exists but only support: PS, PO, PO-E [10] Dsname: Dataset name
      *
-     * Note: When volume is ARCIVE, it means the dataset is stored somewhere in
-     * a tape archive. These entries is currently not supported by this parser.
-     * A null value is returned.
+     * Note: When volume is ARCIVE, it means the dataset is stored somewhere in a tape archive. These entries is currently not supported by this parser. A null
+     * value is returned.
      *
      * @param entry zosDirectoryEntry
      * @return null: entry was not parsed.
@@ -295,12 +265,10 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             // DSORG
             if ("PS".equals(dsorg)) {
                 file.setType(FTPFile.FILE_TYPE);
-            }
-            else if ("PO".equals(dsorg) || "PO-E".equals(dsorg)) {
+            } else if ("PO".equals(dsorg) || "PO-E".equals(dsorg)) {
                 // regex already ruled out anything other than PO or PO-E
                 file.setType(FTPFile.DIRECTORY_TYPE);
-            }
-            else {
+            } else {
                 return null;
             }
 
@@ -311,14 +279,11 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * Parses a line of an z/OS - MVS FTP server file listing and converts it
-     * into a usable format in the form of an <code> FTPFile </code> instance.
-     * If the file listing line doesn't describe a file, then
-     * <code> null </code> is returned. Otherwise a <code> FTPFile </code>
-     * instance representing the file is returned.
+     * Parses a line of an z/OS - MVS FTP server file listing and converts it into a usable format in the form of an <code> FTPFile </code> instance. If the
+     * file listing line doesn't describe a file, then <code> null </code> is returned. Otherwise a <code> FTPFile </code> instance representing the file is
+     * returned.
      *
-     * @param entry
-     *            A line of text from the file listing
+     * @param entry A line of text from the file listing
      * @return An FTPFile instance corresponding to the supplied entry
      */
     @Override
@@ -330,7 +295,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             return parseMemberList(entry);
         }
         if (isType == UNIX_LIST_TYPE) {
-             return unixFTPEntryParser.parseFTPEntry(entry);
+            return unixFTPEntryParser.parseFTPEntry(entry);
         }
         if (isType == JES_LEVEL_1_LIST_TYPE) {
             return parseJeslevel1List(entry);
@@ -344,6 +309,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
     /**
      * Matches these entries, note: no header:
+     *
      * <pre>
      * [1]      [2]      [3]   [4] [5]
      * IBMUSER1 JOB01906 OUTPUT 3 Spool Files
@@ -356,7 +322,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * [3] Job status (INPUT,ACTIVE,OUTPUT)
      * [4] Number of sysout files
      * [5] The string "Spool Files"
-     *</pre>
+     * </pre>
      *
      * @param entry zosDirectoryEntry
      * @return null: entry was not parsed.
@@ -378,6 +344,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
     /**
      * Matches these entries:
+     *
      * <pre>
      * [1]      [2]      [3]     [4]    [5]
      * JOBNAME  JOBID    OWNER   STATUS CLASS
@@ -417,6 +384,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * Parse entries within a partitioned dataset.
      *
      * Format of a memberlist within a PDS:
+     *
      * <pre>
      *    0         1        2          3        4     5     6      7    8
      *   Name      VV.MM   Created       Changed      Size  Init   Mod   Id
@@ -456,9 +424,8 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
         }
 
         /*
-         * Assigns the name to the first word of the entry. Only to be used from a
-         * safe context, for example from a memberlist, where the regex for some
-         * reason fails. Then just assign the name field of FTPFile.
+         * Assigns the name to the first word of the entry. Only to be used from a safe context, for example from a memberlist, where the regex for some reason
+         * fails. Then just assign the name field of FTPFile.
          */
         if (entry != null && !entry.trim().isEmpty()) {
             file.setRawListing(entry);
@@ -471,12 +438,9 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * preParse is called as part of the interface. Per definition is is called
-     * before the parsing takes place.
-     * Three kind of lists is recognize:
-     * z/OS-MVS File lists
-     * z/OS-MVS Member lists
-     * unix file lists
+     * preParse is called as part of the interface. Per definition is is called before the parsing takes place. Three kind of lists is recognize: z/OS-MVS File
+     * lists z/OS-MVS Member lists unix file lists
+     *
      * @since 2.0
      */
     @Override
@@ -498,8 +462,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             } else if (header.indexOf("Spool Files") >= 30) {
                 setType(JES_LEVEL_1_LIST_TYPE);
                 super.setRegex(JES_LEVEL_1_LIST_REGEX);
-            } else if (header.indexOf("JOBNAME") == 0
-                    && header.indexOf("JOBID") > 8) {// header contains JOBNAME JOBID OWNER // STATUS CLASS
+            } else if (header.indexOf("JOBNAME") == 0 && header.indexOf("JOBID") > 8) {// header contains JOBNAME JOBID OWNER // STATUS CLASS
                 setType(JES_LEVEL_2_LIST_TYPE);
                 super.setRegex(JES_LEVEL_2_LIST_REGEX);
             } else {
@@ -516,6 +479,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
     /**
      * Explicitly set the type of listing being processed.
+     *
      * @param type The listing type.
      */
     void setType(final int type) {

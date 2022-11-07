@@ -82,9 +82,9 @@ public final class TrustManagerUtils {
      * Return the default TrustManager provided by the JVM.
      * <p>
      * This should be the same as the default used by
-     *  {@link javax.net.ssl.SSLContext#init(javax.net.ssl.KeyManager[], javax.net.ssl.TrustManager[], java.security.SecureRandom)
-     * SSLContext#init(KeyManager[], TrustManager[], SecureRandom)}
-     * when the TrustManager parameter is set to {@code null}
+     * {@link javax.net.ssl.SSLContext#init(javax.net.ssl.KeyManager[], javax.net.ssl.TrustManager[], java.security.SecureRandom) SSLContext#init(KeyManager[],
+     * TrustManager[], SecureRandom)} when the TrustManager parameter is set to {@code null}
+     *
      * @param keyStore the KeyStore to use, may be {@code null}
      * @return the default TrustManager
      * @throws GeneralSecurityException if an error occurs
@@ -97,12 +97,11 @@ public final class TrustManagerUtils {
     }
 
     /**
-     * Generate a TrustManager that checks server certificates for validity,
-     * but otherwise performs no checks.
+     * Generate a TrustManager that checks server certificates for validity, but otherwise performs no checks.
      *
      * @return the validating TrustManager
      */
-    public static X509TrustManager getValidateServerCertificateTrustManager(){
+    public static X509TrustManager getValidateServerCertificateTrustManager() {
         return CHECK_SERVER_VALIDITY;
     }
 

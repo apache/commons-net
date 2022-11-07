@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.net.ftp;
+
 import static org.junit.Assert.assertArrayEquals;
 
 import java.io.IOException;
@@ -30,8 +31,7 @@ import junit.framework.TestSuite;
 /**
  * A functional test suite for checking that site listings work.
  */
-public class ListingFunctionalTest extends TestCase
-{
+public class ListingFunctionalTest extends TestCase {
     // Offsets within testData below
     static final int HOSTNAME = 0;
     static final int VALID_PARSERKEY = 1;
@@ -41,50 +41,30 @@ public class ListingFunctionalTest extends TestCase
     static final int VALID_PATH = 5;
     static final int PATH_PWD = 6; // response to PWD
 
-    public static final Test suite()
-    {
-        final String[][] testData =
-            {
-                {
-                    "ftp.ibiblio.org", "unix", "vms",
-                    "HA!", "javaio.jar",
-                    "pub/languages/java/javafaq",
-                    "/pub/languages/java/javafaq",
-                },
-                {
-                    "apache.cs.utah.edu", "unix", "vms",
-                    "HA!", "HEADER.html",
-                    "apache.org",
-                    "/apache.org",
-                },
+    public static final Test suite() {
+        final String[][] testData = { { "ftp.ibiblio.org", "unix", "vms", "HA!", "javaio.jar", "pub/languages/java/javafaq", "/pub/languages/java/javafaq", },
+                { "apache.cs.utah.edu", "unix", "vms", "HA!", "HEADER.html", "apache.org", "/apache.org", },
 //                { // not available
 //                    "ftp.wacom.com", "windows", "VMS", "HA!",
 //                    "wacom97.zip", "pub\\drivers"
 //                },
-                {
-                    "ftp.decuslib.com", "vms", "windows", // VMS OpenVMS V8.3
-                    "[.HA!]", "FREEWARE_SUBMISSION_INSTRUCTIONS.TXT;1",
-                    "[.FREEWAREV80.FREEWARE]",
-                    "DECUSLIB:[DECUS.FREEWAREV80.FREEWARE]"
-                },
+                { "ftp.decuslib.com", "vms", "windows", // VMS OpenVMS V8.3
+                        "[.HA!]", "FREEWARE_SUBMISSION_INSTRUCTIONS.TXT;1", "[.FREEWAREV80.FREEWARE]", "DECUSLIB:[DECUS.FREEWAREV80.FREEWARE]" },
 //                {  // VMS TCPware V5.7-2 does not return (RWED) permissions
 //                    "ftp.process.com", "vms", "windows",
 //                    "[.HA!]", "MESSAGE.;1",
 //                    "[.VMS-FREEWARE.FREE-VMS]" //
 //                },
-            };
+        };
         final Class<?> clasz = ListingFunctionalTest.class;
         final Method[] methods = clasz.getDeclaredMethods();
         final TestSuite allSuites = new TestSuite("FTP Listing Functional Test Suite");
 
-        for (final String[] element : testData)
-        {
-            final TestSuite suite = new TestSuite(element[VALID_PARSERKEY]+ " @ " +element[HOSTNAME]);
+        for (final String[] element : testData) {
+            final TestSuite suite = new TestSuite(element[VALID_PARSERKEY] + " @ " + element[HOSTNAME]);
 
-            for (final Method method : methods)
-            {
-                if (method.getName().startsWith("test"))
-                {
+            for (final Method method : methods) {
+                if (method.getName().startsWith("test")) {
                     suite.addTest(new ListingFunctionalTest(method.getName(), element));
                 }
             }
@@ -104,8 +84,7 @@ public class ListingFunctionalTest extends TestCase
     private final String validPath;
     private final String pwdPath;
 
-    public ListingFunctionalTest(final String arg0, final String[] settings)
-    {
+    public ListingFunctionalTest(final String arg0, final String[] settings) {
         super(arg0);
         invalidParserKey = settings[INVALID_PARSERKEY];
         validParserKey = settings[VALID_PARSERKEY];
@@ -116,23 +95,18 @@ public class ListingFunctionalTest extends TestCase
         hostName = settings[HOSTNAME];
     }
 
-    private boolean findByName(final List<?> fileList, final String string)
-    {
+    private boolean findByName(final List<?> fileList, final String string) {
         boolean found = false;
         final Iterator<?> iter = fileList.iterator();
 
-        while (iter.hasNext() && !found)
-        {
+        while (iter.hasNext() && !found) {
             final Object element = iter.next();
 
-            if (element instanceof FTPFile)
-            {
+            if (element instanceof FTPFile) {
                 final FTPFile file = (FTPFile) element;
 
                 found = file.getName().equals(string);
-            }
-            else
-            {
+            } else {
                 final String fileName = (String) element;
 
                 found = fileName.endsWith(string);
@@ -146,8 +120,7 @@ public class ListingFunctionalTest extends TestCase
      * @see TestCase#setUp()
      */
     @Override
-    protected void setUp() throws Exception
-    {
+    protected void setUp() throws Exception {
         super.setUp();
         client = new FTPClient();
         client.connect(hostName);
@@ -160,20 +133,14 @@ public class ListingFunctionalTest extends TestCase
      * @see TestCase#tearDown()
      */
     @Override
-    protected void tearDown()
-        throws Exception
-    {
-        try
-        {
+    protected void tearDown() throws Exception {
+        try {
             client.logout();
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
 
-        if (client.isConnected())
-        {
+        if (client.isConnected()) {
             client.disconnect();
         }
 
@@ -184,9 +151,7 @@ public class ListingFunctionalTest extends TestCase
     /*
      * Test for FTPListParseEngine initiateListParsing()
      */
-    public void testInitiateListParsing()
-        throws IOException
-    {
+    public void testInitiateListParsing() throws IOException {
         client.changeWorkingDirectory(validPath);
 
         final FTPListParseEngine engine = client.initiateListParsing();
@@ -198,11 +163,8 @@ public class ListingFunctionalTest extends TestCase
     /*
      * Test for FTPListParseEngine initiateListParsing(String, String)
      */
-    public void testInitiateListParsingWithPath()
-        throws IOException
-    {
-        final FTPListParseEngine engine = client.initiateListParsing(validParserKey,
-                                                               validPath);
+    public void testInitiateListParsingWithPath() throws IOException {
+        final FTPListParseEngine engine = client.initiateListParsing(validParserKey, validPath);
         final List<FTPFile> files = Arrays.asList(engine.getNext(25));
 
         assertTrue(files.toString(), findByName(files, validFilename));
@@ -211,9 +173,7 @@ public class ListingFunctionalTest extends TestCase
     /*
      * Test for FTPListParseEngine initiateListParsing(String)
      */
-    public void testInitiateListParsingWithPathAndAutodetection()
-        throws IOException
-    {
+    public void testInitiateListParsingWithPathAndAutodetection() throws IOException {
         final FTPListParseEngine engine = client.initiateListParsing(validPath);
         final List<FTPFile> files = Arrays.asList(engine.getNext(25));
 
@@ -223,9 +183,7 @@ public class ListingFunctionalTest extends TestCase
     /*
      * Test for FTPListParseEngine initiateListParsing(String)
      */
-    public void testInitiateListParsingWithPathAndAutodetectionButEmpty()
-        throws IOException
-    {
+    public void testInitiateListParsingWithPathAndAutodetectionButEmpty() throws IOException {
         final FTPListParseEngine engine = client.initiateListParsing(invalidPath);
 
         assertFalse(engine.hasNext());
@@ -234,11 +192,8 @@ public class ListingFunctionalTest extends TestCase
     /*
      * Test for FTPListParseEngine initiateListParsing(String, String)
      */
-    public void testInitiateListParsingWithPathAndIncorrectParser()
-        throws IOException
-    {
-        final FTPListParseEngine engine = client.initiateListParsing(invalidParserKey,
-                                                               invalidPath);
+    public void testInitiateListParsingWithPathAndIncorrectParser() throws IOException {
+        final FTPListParseEngine engine = client.initiateListParsing(invalidParserKey, invalidPath);
 
         assertFalse(engine.hasNext());
     }
@@ -246,34 +201,26 @@ public class ListingFunctionalTest extends TestCase
     /*
      * Test for FTPFile[] listFiles(String, String)
      */
-    public void testListFiles()
-        throws IOException
-    {
+    public void testListFiles() throws IOException {
         final FTPClientConfig config = new FTPClientConfig(validParserKey);
         client.configure(config);
         final List<FTPFile> files = Arrays.asList(client.listFiles(validPath));
 
-        assertTrue(files.toString(),
-                   findByName(files, validFilename));
+        assertTrue(files.toString(), findByName(files, validFilename));
     }
 
-    public void testListFilesWithAutodection()
-        throws IOException
-    {
+    public void testListFilesWithAutodection() throws IOException {
         client.changeWorkingDirectory(validPath);
 
         final List<FTPFile> files = Arrays.asList(client.listFiles());
 
-        assertTrue(files.toString(),
-                   findByName(files, validFilename));
+        assertTrue(files.toString(), findByName(files, validFilename));
     }
 
     /*
      * Test for FTPFile[] listFiles(String, String)
      */
-    public void testListFilesWithIncorrectParser()
-        throws IOException
-    {
+    public void testListFilesWithIncorrectParser() throws IOException {
         final FTPClientConfig config = new FTPClientConfig(invalidParserKey);
         client.configure(config);
 
@@ -282,15 +229,13 @@ public class ListingFunctionalTest extends TestCase
         assertNotNull(files);
 
         // This may well fail, e.g. window parser for VMS listing
-        assertArrayEquals("Expected empty array: " + Arrays.toString(files), new FTPFile[]{}, files);
+        assertArrayEquals("Expected empty array: " + Arrays.toString(files), new FTPFile[] {}, files);
     }
 
     /*
      * Test for FTPFile[] listFiles(String)
      */
-    public void testListFilesWithPathAndAutodectionButEmpty()
-        throws IOException
-    {
+    public void testListFilesWithPathAndAutodectionButEmpty() throws IOException {
         final FTPFile[] files = client.listFiles(invalidPath);
 
         assertEquals(0, files.length);
@@ -299,21 +244,16 @@ public class ListingFunctionalTest extends TestCase
     /*
      * Test for FTPFile[] listFiles(String)
      */
-    public void testListFilesWithPathAndAutodetection()
-        throws IOException
-    {
+    public void testListFilesWithPathAndAutodetection() throws IOException {
         final List<FTPFile> files = Arrays.asList(client.listFiles(validPath));
 
-        assertTrue(files.toString(),
-                   findByName(files, validFilename));
+        assertTrue(files.toString(), findByName(files, validFilename));
     }
 
     /*
      * Test for String[] listNames()
      */
-    public void testListNames()
-        throws IOException
-    {
+    public void testListNames() throws IOException {
         client.changeWorkingDirectory(validPath);
 
         final String[] names = client.listNames();
@@ -328,9 +268,7 @@ public class ListingFunctionalTest extends TestCase
     /*
      * Test for String[] listNames(String)
      */
-    public void testListNamesWithPath()
-        throws IOException
-    {
+    public void testListNamesWithPath() throws IOException {
         final String[] listNames = client.listNames(validPath);
         assertNotNull("listNames not null", listNames);
         final List<String> names = Arrays.asList(listNames);
@@ -338,17 +276,13 @@ public class ListingFunctionalTest extends TestCase
         assertTrue(names.toString(), findByName(names, validFilename));
     }
 
-    public void testListNamesWithPathButEmpty()
-        throws IOException
-    {
+    public void testListNamesWithPathButEmpty() throws IOException {
         final String[] names = client.listNames(invalidPath);
 
         assertNull(names);
     }
 
-    public void testPrintWorkingDirectory()
-            throws IOException
-    {
+    public void testPrintWorkingDirectory() throws IOException {
         client.changeWorkingDirectory(validPath);
         final String pwd = client.printWorkingDirectory();
         assertEquals(pwdPath, pwd);

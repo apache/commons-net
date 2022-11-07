@@ -52,23 +52,23 @@ public class SimpleSMTPHeaderTestCase {
                 final Date afterDate = new Date();
                 final long afterDateSecs = afterDate.getTime() / 1000;
                 if (sentSecs < beforeDateSecs) {
-                    fail(sentDate + " should be after "+beforeDate);
+                    fail(sentDate + " should be after " + beforeDate);
                 }
                 if (sentSecs > afterDateSecs) {
-                    fail(sentDate+" should be before "+afterDate);
+                    fail(sentDate + " should be before " + afterDate);
                 }
             } catch (final ParseException e) {
-                fail(""+e);
+                fail("" + e);
             }
 
             final int start = m.start(1);
             final int end = m.end(1);
             if (start == 0) {
-                return msg.substring(end+1);
+                return msg.substring(end + 1);
             }
-            return msg.substring(0, start)+msg.substring(end+1);
+            return msg.substring(0, start) + msg.substring(end + 1);
         }
-        fail("Expecting Date header in "+msg);
+        fail("Expecting Date header in " + msg);
         return null;
     }
 

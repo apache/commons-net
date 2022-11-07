@@ -18,17 +18,12 @@
 package org.apache.commons.net.smtp;
 
 /**
- * SMTPCommand stores a set of constants for SMTP command codes.  To interpret
- * the meaning of the codes, familiarity with RFC 821 is assumed.
- * The mnemonic constant names are transcriptions from the code descriptions
- * of RFC 821.  For those who think in terms of the actual SMTP commands,
- * a set of constants such as {@link #HELO  HELO } are provided
- * where the constant name is the same as the SMTP command.
+ * SMTPCommand stores a set of constants for SMTP command codes. To interpret the meaning of the codes, familiarity with RFC 821 is assumed. The mnemonic
+ * constant names are transcriptions from the code descriptions of RFC 821. For those who think in terms of the actual SMTP commands, a set of constants such as
+ * {@link #HELO HELO } are provided where the constant name is the same as the SMTP command.
  */
 
-public final class SMTPCommand
-{
-
+public final class SMTPCommand {
 
     public static final int HELO = 0;
     public static final int MAIL = 1;
@@ -47,15 +42,17 @@ public final class SMTPCommand
 
     /**
      * The authorization command
+     *
      * @since 3.0
      */
-    public static final int AUTH = 14 ;
+    public static final int AUTH = 14;
 
     /**
      * The extended hello command
+     *
      * @since 3.0
      */
-    public static final int EHLO = 15 ;
+    public static final int EHLO = 15;
 
     private static final int NEXT = EHLO + 1; // update as necessary when adding new entries
 
@@ -76,11 +73,8 @@ public final class SMTPCommand
     // public static final int QUIT = QUIT;
     public static final int LOGOUT = QUIT;
 
-    private static final String[] commands = {
-                                          "HELO", "MAIL FROM:", "RCPT TO:", "DATA", "SEND FROM:", "SOML FROM:",
-                                          "SAML FROM:", "RSET", "VRFY", "EXPN", "HELP", "NOOP", "TURN", "QUIT",
-                                          "AUTH", "EHLO"
-                                      };
+    private static final String[] commands = { "HELO", "MAIL FROM:", "RCPT TO:", "DATA", "SEND FROM:", "SOML FROM:", "SAML FROM:", "RSET", "VRFY", "EXPN",
+            "HELP", "NOOP", "TURN", "QUIT", "AUTH", "EHLO" };
 
     static {
         if (commands.length != NEXT) {
@@ -88,22 +82,19 @@ public final class SMTPCommand
         }
     }
 
-
     /**
-     * Retrieve the SMTP protocol command string corresponding to a specified
-     * command code.
+     * Retrieve the SMTP protocol command string corresponding to a specified command code.
      * <p>
+     *
      * @param command The command code.
-     * @return The SMTP protcol command string corresponding to a specified
-     *         command code.
+     * @return The SMTP protcol command string corresponding to a specified command code.
      */
-    public static String getCommand(final int command)
-    {
+    public static String getCommand(final int command) {
         return commands[command];
     }
 
     // Cannot be instantiated
-    private SMTPCommand()
-    {}
+    private SMTPCommand() {
+    }
 
 }

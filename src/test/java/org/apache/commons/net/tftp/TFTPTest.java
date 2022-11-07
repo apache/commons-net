@@ -30,11 +30,9 @@ import org.apache.commons.net.tftp.TFTPServer.ServerMode;
 import junit.framework.TestCase;
 
 /**
- * Test the TFTP Server and TFTP Client by creating some files in the system temp folder and then
- * uploading and downloading them.
+ * Test the TFTP Server and TFTP Client by creating some files in the system temp folder and then uploading and downloading them.
  */
-public class TFTPTest extends TestCase
-{
+public class TFTPTest extends TestCase {
     private static final int SERVER_PORT = 6902;
     private static TFTPServer tftpS;
     private static final File serverDirectory = new File(System.getProperty("java.io.tmpdir"));
@@ -44,10 +42,8 @@ public class TFTPTest extends TestCase
     static int testsLeftToRun = 6;
 
     // only want to do this once...
-    static
-    {
-        try
-        {
+    static {
+        try {
             files[0] = createFile(new File(serverDirectory, filePrefix + "empty.txt"), 0);
             files[1] = createFile(new File(serverDirectory, filePrefix + "small.txt"), 1);
             files[2] = createFile(new File(serverDirectory, filePrefix + "511.txt"), 511);
@@ -58,12 +54,9 @@ public class TFTPTest extends TestCase
             files[7] = createFile(new File(serverDirectory, filePrefix + "huge.txt"), 37000 * 1024);
 
             // Start the server
-            tftpS = new TFTPServer(serverDirectory, serverDirectory, SERVER_PORT, ServerMode.GET_AND_PUT,
-                    null, null);
+            tftpS = new TFTPServer(serverDirectory, serverDirectory, SERVER_PORT, ServerMode.GET_AND_PUT, null, null);
             tftpS.setSocketTimeout(2000);
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
 
@@ -72,8 +65,7 @@ public class TFTPTest extends TestCase
     /*
      * Create a file, size specified in bytes
      */
-    private static File createFile(final File file, final int size) throws IOException
-    {
+    private static File createFile(final File file, final int size) throws IOException {
         try (final OutputStream os = new BufferedOutputStream(new FileOutputStream(file))) {
             final byte[] temp = "0".getBytes();
             for (int i = 0; i < size; i++) {
@@ -83,8 +75,7 @@ public class TFTPTest extends TestCase
         return file;
     }
 
-    private boolean filesIdentical(final File a, final File b) throws IOException
-    {
+    private boolean filesIdentical(final File a, final File b) throws IOException {
         if (!a.exists() || !b.exists()) {
             return false;
         }
@@ -94,7 +85,7 @@ public class TFTPTest extends TestCase
         }
 
         try (final InputStream fisA = new BufferedInputStream(new FileInputStream(a));
-            final InputStream fisB = new BufferedInputStream(new FileInputStream(b))) {
+                final InputStream fisB = new BufferedInputStream(new FileInputStream(b))) {
 
             int aBit = fisA.read();
             int bBit = fisB.read();
@@ -114,48 +105,39 @@ public class TFTPTest extends TestCase
     }
 
     @Override
-    protected void tearDown() throws Exception
-    {
+    protected void tearDown() throws Exception {
         testsLeftToRun--;
-        if (testsLeftToRun <= 0)
-        {
-            if (tftpS != null)
-            {
+        if (testsLeftToRun <= 0) {
+            if (tftpS != null) {
                 tftpS.shutdown();
             }
-            for (final File file : files)
-            {
+            for (final File file : files) {
                 file.delete();
             }
         }
         super.tearDown();
     }
 
-    public void testASCIIDownloads()
-    {
+    public void testASCIIDownloads() {
         // test with the smaller files
-        for (int i = 0; i < 6; i++)
-        {
+        for (int i = 0; i < 6; i++) {
             try {
                 testDownload(TFTP.ASCII_MODE, files[i]);
             } catch (final IOException e) {
-                fail("Entry "+i+" Error "+e.toString());
+                fail("Entry " + i + " Error " + e.toString());
             }
 
         }
     }
 
-    public void testASCIIUploads() throws Exception
-    {
+    public void testASCIIUploads() throws Exception {
         // test with the smaller files
-        for (int i = 0; i < 6; i++)
-        {
+        for (int i = 0; i < 6; i++) {
             testUpload(TFTP.ASCII_MODE, files[i]);
         }
     }
 
-    private void testDownload(final int mode, final File file) throws IOException
-    {
+    private void testDownload(final int mode, final File file) throws IOException {
         // Create our TFTP instance to handle the file transfer.
         final TFTPClient tftp = new TFTPClient();
         tftp.open();
@@ -178,43 +160,34 @@ public class TFTPTest extends TestCase
         out.delete();
     }
 
-    public void testHugeDownloads() throws Exception
-    {
+    public void testHugeDownloads() throws Exception {
         // test with the smaller files
-        for (int i = 5; i < files.length; i++)
-        {
+        for (int i = 5; i < files.length; i++) {
             testDownload(TFTP.BINARY_MODE, files[i]);
         }
     }
 
-    public void testHugeUploads() throws Exception
-    {
-        for (int i = 5; i < files.length; i++)
-        {
+    public void testHugeUploads() throws Exception {
+        for (int i = 5; i < files.length; i++) {
             testUpload(TFTP.BINARY_MODE, files[i]);
         }
     }
 
-    public void testTFTPBinaryDownloads() throws Exception
-    {
+    public void testTFTPBinaryDownloads() throws Exception {
         // test with the smaller files
-        for (int i = 0; i < 6; i++)
-        {
+        for (int i = 0; i < 6; i++) {
             testDownload(TFTP.BINARY_MODE, files[i]);
         }
     }
 
-    public void testTFTPBinaryUploads() throws Exception
-    {
+    public void testTFTPBinaryUploads() throws Exception {
         // test with the smaller files
-        for (int i = 0; i < 6; i++)
-        {
+        for (int i = 0; i < 6; i++) {
             testUpload(TFTP.BINARY_MODE, files[i]);
         }
     }
 
-    private void testUpload(final int mode, final File file) throws Exception
-    {
+    private void testUpload(final int mode, final File file) throws Exception {
         // Create our TFTP instance to handle the file transfer.
         final TFTPClient tftp = new TFTPClient();
         tftp.open();

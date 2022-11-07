@@ -27,20 +27,17 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.net.util.Base64;
 
-
 /**
- * A POP3 Cilent class with protocol and authentication extensions support
- * (RFC2449 and RFC2195).
+ * A POP3 Cilent class with protocol and authentication extensions support (RFC2449 and RFC2195).
+ *
  * @see POP3Client
  * @since 3.0
  */
-public class ExtendedPOP3Client extends POP3SClient
-{
+public class ExtendedPOP3Client extends POP3SClient {
     /**
      * The enumeration of currently-supported authentication methods.
      */
-    public enum AUTH_METHOD
-    {
+    public enum AUTH_METHOD {
         /** The standarised (RFC4616) PLAIN method, which sends the password unencrypted (insecure). */
         PLAIN("PLAIN"),
 
@@ -49,97 +46,83 @@ public class ExtendedPOP3Client extends POP3SClient
 
         private final String methodName;
 
-        AUTH_METHOD(final String methodName){
+        AUTH_METHOD(final String methodName) {
             this.methodName = methodName;
         }
+
         /**
          * Gets the name of the given authentication method suitable for the server.
+         *
          * @return The name of the given authentication method suitable for the server.
          */
-        public final String getAuthName()
-        {
+        public final String getAuthName() {
             return this.methodName;
         }
     }
 
     /**
-     * The default ExtendedPOP3Client constructor.
-     * Creates a new Extended POP3 Client.
+     * The default ExtendedPOP3Client constructor. Creates a new Extended POP3 Client.
+     *
      * @throws NoSuchAlgorithmException on error
      */
-    public ExtendedPOP3Client() throws NoSuchAlgorithmException
-    {
+    public ExtendedPOP3Client() throws NoSuchAlgorithmException {
     }
 
     /**
-     * Authenticate to the POP3 server by sending the AUTH command with the
-     * selected mechanism, using the given username and the given password.
+     * Authenticate to the POP3 server by sending the AUTH command with the selected mechanism, using the given username and the given password.
      * <p>
-     * @param method the {@link AUTH_METHOD} to use
+     *
+     * @param method   the {@link AUTH_METHOD} to use
      * @param username the user name
      * @param password the password
      * @return True if successfully completed, false if not.
-     * @throws IOException  If an I/O error occurs while either sending a
-     *      command to the server or receiving a reply from the server.
-     * @throws NoSuchAlgorithmException If the CRAM hash algorithm
-     *      cannot be instantiated by the Java runtime system.
-     * @throws InvalidKeyException If the CRAM hash algorithm
-     *      failed to use the given password.
-     * @throws InvalidKeySpecException If the CRAM hash algorithm
-     *      failed to use the given password.
+     * @throws IOException              If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
+     * @throws NoSuchAlgorithmException If the CRAM hash algorithm cannot be instantiated by the Java runtime system.
+     * @throws InvalidKeyException      If the CRAM hash algorithm failed to use the given password.
+     * @throws InvalidKeySpecException  If the CRAM hash algorithm failed to use the given password.
      */
-    public boolean auth(final AUTH_METHOD method,
-                        final String username, final String password)
-                        throws IOException, NoSuchAlgorithmException,
-                        InvalidKeyException, InvalidKeySpecException
-    {
-        if (sendCommand(POP3Command.AUTH, method.getAuthName())
-        != POP3Reply.OK_INT) {
+    public boolean auth(final AUTH_METHOD method, final String username, final String password)
+            throws IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException {
+        if (sendCommand(POP3Command.AUTH, method.getAuthName()) != POP3Reply.OK_INT) {
             return false;
         }
 
-        switch(method) {
-            case PLAIN:
-                // the server sends an empty response ("+ "), so we don't have to read it.
-                return sendCommand(
-                    new String(
-                        Base64.encodeBase64(("\000" + username + "\000" + password).getBytes(getCharset())),
-                        getCharset())
-                    ) == POP3Reply.OK;
-            case CRAM_MD5:
-                // get the CRAM challenge
-                final byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(2).trim());
-                // get the Mac instance
-                final Mac hmac_md5 = Mac.getInstance("HmacMD5");
-                hmac_md5.init(new SecretKeySpec(password.getBytes(getCharset()), "HmacMD5"));
-                // compute the result:
-                final byte[] hmacResult = convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharset());
-                // join the byte arrays to form the reply
-                final byte[] usernameBytes = username.getBytes(getCharset());
-                final byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
-                System.arraycopy(usernameBytes, 0, toEncode, 0, usernameBytes.length);
-                toEncode[usernameBytes.length] = ' ';
-                System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
-                // send the reply and read the server code:
-                return sendCommand(Base64.encodeBase64StringUnChunked(toEncode)) == POP3Reply.OK;
-            default:
-                return false;
+        switch (method) {
+        case PLAIN:
+            // the server sends an empty response ("+ "), so we don't have to read it.
+            return sendCommand(new String(Base64.encodeBase64(("\000" + username + "\000" + password).getBytes(getCharset())), getCharset())) == POP3Reply.OK;
+        case CRAM_MD5:
+            // get the CRAM challenge
+            final byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(2).trim());
+            // get the Mac instance
+            final Mac hmac_md5 = Mac.getInstance("HmacMD5");
+            hmac_md5.init(new SecretKeySpec(password.getBytes(getCharset()), "HmacMD5"));
+            // compute the result:
+            final byte[] hmacResult = convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharset());
+            // join the byte arrays to form the reply
+            final byte[] usernameBytes = username.getBytes(getCharset());
+            final byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
+            System.arraycopy(usernameBytes, 0, toEncode, 0, usernameBytes.length);
+            toEncode[usernameBytes.length] = ' ';
+            System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
+            // send the reply and read the server code:
+            return sendCommand(Base64.encodeBase64StringUnChunked(toEncode)) == POP3Reply.OK;
+        default:
+            return false;
         }
     }
 
     /**
-     * Converts the given byte array to a String containing the hex values of the bytes.
-     * For example, the byte 'A' will be converted to '41', because this is the ASCII code
-     * (and the byte value) of the capital letter 'A'.
+     * Converts the given byte array to a String containing the hex values of the bytes. For example, the byte 'A' will be converted to '41', because this is
+     * the ASCII code (and the byte value) of the capital letter 'A'.
+     *
      * @param a The byte array to convert.
      * @return The resulting String of hex codes.
      */
-    private String convertToHexString(final byte[] a)
-    {
-        final StringBuilder result = new StringBuilder(a.length*2);
-        for (final byte element : a)
-        {
-            if ( (element & 0x0FF) <= 15 ) {
+    private String convertToHexString(final byte[] a) {
+        final StringBuilder result = new StringBuilder(a.length * 2);
+        for (final byte element : a) {
+            if ((element & 0x0FF) <= 15) {
                 result.append("0");
             }
             result.append(Integer.toHexString(element & 0x0FF));
