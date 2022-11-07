@@ -107,8 +107,7 @@ public class SimpleSMTPHeaderTestCase {
 
     @Test
     public void testToStringNoFrom() {
-        final Executable testMethod = () -> new SimpleSMTPHeader(null, null, null);
-        assertThrows(IllegalArgumentException.class, testMethod);
+        assertThrows(IllegalArgumentException.class, () -> new SimpleSMTPHeader(null, null, null));
     }
 
     @Test
