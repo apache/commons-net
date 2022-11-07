@@ -80,6 +80,12 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="NET-642" type="fix" dev="ggregory" due-to="Yani Mihaylov, Gary Gregory">
         FTPSClient execPROT removes proxy settings #90.
       </action>
+      <action type="fix" dev="ggregory" due-to="John Patrick, Gary Gregory">
+        JUnit5 assertThrows SimpleSMTPHeaderTestCase #121.
+      </action>
+      <action type="fix" dev="ggregory" due-to="John Patrick, Gary Gregory">
+        JUnit5 assertThrows TestTimeInfo #120.
+      </action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">
         [FTP] Add FTPClient.mdtmInstant(String).

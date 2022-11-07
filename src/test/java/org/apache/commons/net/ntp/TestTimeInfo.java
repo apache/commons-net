@@ -92,8 +92,7 @@ public class TestTimeInfo {
     @Test
     public void testException() {
         final NtpV3Packet packet = null;
-        final Executable testMethod = () -> new TimeInfo(packet, 1L);
-        assertThrows(IllegalArgumentException.class, testMethod);
+        assertThrows(IllegalArgumentException.class, () -> new TimeInfo(packet, 1L));
     }
 
     @Test
