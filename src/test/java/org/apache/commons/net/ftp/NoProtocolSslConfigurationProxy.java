@@ -32,7 +32,7 @@ public class NoProtocolSslConfigurationProxy implements SslConfiguration {
 
     private final SslConfiguration sslConfiguration;
 
-    public NoProtocolSslConfigurationProxy(SslConfiguration sslConfiguration) {
+    public NoProtocolSslConfigurationProxy(final SslConfiguration sslConfiguration) {
         this.sslConfiguration = sslConfiguration;
     }
 
@@ -62,7 +62,7 @@ public class NoProtocolSslConfigurationProxy implements SslConfiguration {
     }
 
     @Override
-    public SSLContext getSSLContext(String protocol) throws GeneralSecurityException {
+    public SSLContext getSSLContext(final String protocol) throws GeneralSecurityException {
         return this.sslConfiguration.getSSLContext(protocol);
     }
 

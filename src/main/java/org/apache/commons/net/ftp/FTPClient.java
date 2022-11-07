@@ -1945,7 +1945,7 @@ public class FTPClient extends FTP implements Configurable {
                         key = line.substring(1);
                     }
                     key = key.toUpperCase(Locale.ENGLISH);
-                    Set<String> entries = featuresMap.computeIfAbsent(key, k -> new HashSet<>());
+                    final Set<String> entries = featuresMap.computeIfAbsent(key, k -> new HashSet<>());
                     entries.add(value);
                 }
             }
@@ -3108,7 +3108,7 @@ public class FTPClient extends FTP implements Configurable {
      * @see #isIpAddressFromPasvResponse
      * @since 3.9.0
      */
-    public void setIpAddressFromPasvResponse(boolean usingIpAddressFromPasvResponse) {
+    public void setIpAddressFromPasvResponse(final boolean usingIpAddressFromPasvResponse) {
         this.ipAddressFromPasvResponse = usingIpAddressFromPasvResponse;
     }
 

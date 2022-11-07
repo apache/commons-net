@@ -314,7 +314,7 @@ public class FTPSClient extends FTPClient {
      * @param sslSocket ssl socket
      * @throws IOException closing sockets is not successful
      */
-    private void closeSockets(Socket socket, Socket sslSocket) throws IOException {
+    private void closeSockets(final Socket socket, final Socket sslSocket) throws IOException {
         if (socket != null) {
             socket.close();
         }
@@ -685,7 +685,7 @@ public class FTPSClient extends FTPClient {
      * @throws IOException If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      * @since 3.1
      */
-    private Socket openDataSecureConnection(String command, String arg) throws IOException {
+    private Socket openDataSecureConnection(final String command, final String arg) throws IOException {
         if (getDataConnectionMode() != ACTIVE_LOCAL_DATA_CONNECTION_MODE && getDataConnectionMode() != PASSIVE_LOCAL_DATA_CONNECTION_MODE) {
             return null;
         }

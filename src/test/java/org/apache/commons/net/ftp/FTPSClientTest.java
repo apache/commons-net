@@ -133,8 +133,8 @@ public class FTPSClientTest {
         sllConfigFactory.setKeystorePassword("password");
 
         // set the SSL configuration for the listener
-        SslConfiguration sslConfiguration = sllConfigFactory.createSslConfiguration();
-        NoProtocolSslConfigurationProxy noProtocolSslConfigurationProxy = new NoProtocolSslConfigurationProxy(sslConfiguration);
+        final SslConfiguration sslConfiguration = sllConfigFactory.createSslConfiguration();
+        final NoProtocolSslConfigurationProxy noProtocolSslConfigurationProxy = new NoProtocolSslConfigurationProxy(sslConfiguration);
         factory.setSslConfiguration(noProtocolSslConfigurationProxy);
         factory.setImplicitSsl(implicit);
 
@@ -154,7 +154,7 @@ public class FTPSClientTest {
         return new Boolean[] { Boolean.FALSE, Boolean.TRUE };
     }
 
-    private static void trace(String msg) {
+    private static void trace(final String msg) {
         if (TRACE_CALLS) {
             System.err.println(msg + " " + (System.nanoTime() - startTime));
         }
@@ -203,7 +203,7 @@ public class FTPSClientTest {
             // HACK: Without this sleep, the user command sometimes does not reach the ftpserver
             // This only seems to affect GitHub builds, and only Java 11+
             Thread.sleep(200); // 100 seems to be not always enough
-        } catch (InterruptedException e) {
+        } catch (final InterruptedException e) {
         }
         assertTrue(client.login("test", "test"));
         assertClientCode(client);
