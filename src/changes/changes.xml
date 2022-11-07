@@ -77,6 +77,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="NET-711" type="fix" dev="ggregory" due-to="Jochen Wiedmann, Gary Gregory">
         Add FTP option to toggle use of return host like CURL.
       </action>
+      <action issue="NET-642" type="fix" dev="ggregory" due-to="Yani Mihaylov, Gary Gregory">
+        FTPSClient execPROT removes proxy settings #90.
+      </action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">
         [FTP] Add FTPClient.mdtmInstant(String).

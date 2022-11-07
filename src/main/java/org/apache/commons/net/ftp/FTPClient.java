@@ -1705,7 +1705,7 @@ public class FTPClient extends FTP implements Configurable {
      *
      * @return The client port for active mode.
      */
-    protected int getActivePort()
+    int getActivePort()
     {
         if (activeMinPort > 0 && activeMaxPort >= activeMinPort)
         {
@@ -1871,7 +1871,7 @@ public class FTPClient extends FTP implements Configurable {
      * @return __activeExternalHost if non-null, else getLocalAddress()
      * @see #setActiveExternalIPAddress(String)
      */
-    protected InetAddress getHostAddress()
+    InetAddress getHostAddress()
     {
         if (activeExternalHost != null)
         {
@@ -1992,7 +1992,7 @@ public class FTPClient extends FTP implements Configurable {
      *
      * @return __reportActiveExternalHost if non-null, else getHostAddress();
      */
-    protected InetAddress getReportHostAddress() {
+    InetAddress getReportHostAddress() {
         if (reportActiveExternalHost != null) {
             return reportActiveExternalHost ;
         }
