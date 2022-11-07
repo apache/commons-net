@@ -165,9 +165,7 @@ public final class PostMessage
                 }
             }
 
-            if (fileReader != null) {
-                fileReader.close();
-            }
+            fileReader.close();
 
             client.logout();
 

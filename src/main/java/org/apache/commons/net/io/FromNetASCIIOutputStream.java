@@ -159,7 +159,6 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
                 lastWasCR = false;
                 break;
             }
-            lastWasCR = false;
             out.write('\n');
             break;
         default:

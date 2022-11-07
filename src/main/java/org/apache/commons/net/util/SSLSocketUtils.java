@@ -42,13 +42,11 @@ public class SSLSocketUtils {
                 .getDeclaredMethod("setEndpointIdentificationAlgorithm", String.class);
             final Method getSSLParameters = SSLSocket.class.getDeclaredMethod("getSSLParameters");
             final Method setSSLParameters = SSLSocket.class.getDeclaredMethod("setSSLParameters", cls);
-            if (setEndpointIdentificationAlgorithm != null && getSSLParameters != null && setSSLParameters != null) {
-                final Object sslParams = getSSLParameters.invoke(socket);
-                if (sslParams != null) {
-                    setEndpointIdentificationAlgorithm.invoke(sslParams, "HTTPS");
-                    setSSLParameters.invoke(socket, sslParams);
-                    return true;
-                }
+            final Object sslParams = getSSLParameters.invoke(socket);
+            if (sslParams != null) {
+                setEndpointIdentificationAlgorithm.invoke(sslParams, "HTTPS");
+                setSSLParameters.invoke(socket, sslParams);
+                return true;
             }
         } catch (final SecurityException | ClassNotFoundException | NoSuchMethodException | IllegalArgumentException |
             IllegalAccessException | InvocationTargetException e) { // Ignored
