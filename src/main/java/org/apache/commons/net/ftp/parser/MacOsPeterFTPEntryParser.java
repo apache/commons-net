@@ -109,8 +109,6 @@ public class MacOsPeterFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
         if (matches(entry)) {
             final String typeStr = group(1);
             final String hardLinkCount = "0";
-            final String usr = null;
-            final String grp = null;
             final String filesize = group(20);
             final String datestr = group(21) + " " + group(22);
             String name = group(23);
