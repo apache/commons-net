@@ -44,7 +44,7 @@ Apache Commons Net
 ===================
 
 [![GitHub Actions Status](https://github.com/apache/commons-net/workflows/Java%20CI/badge.svg)](https://github.com/apache/commons-net/actions)
-[![Coverage Status](https://codecov.io/gh/apache/commons-net/branch/master/graph/badge.svg)](https://app.codecov.io/gh/apache/commons-net/branch/master)
+[![Coverage Status](https://codecov.io/gh/apache/commons-net/branch/master/graph/badge.svg)](https://app.codecov.io/gh/apache/commons-net)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/commons-net/commons-net/?gav=true)
 [![Javadocs](https://javadoc.io/badge/commons-net/commons-net/3.8.0.svg)](https://javadoc.io/doc/commons-net/commons-net/3.8.0)
 [![CodeQL](https://github.com/apache/commons-net/workflows/CodeQL/badge.svg)](https://github.com/apache/commons-net/actions/workflows/codeql-analysis.yml?query=workflow%3ACodeQL)
