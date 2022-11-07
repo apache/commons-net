@@ -138,11 +138,11 @@ public class TestNtpPacket {
         Assert.assertEquals(2, message.getLeapIndicator());
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testCreateFromBadPacket() {
         final NtpV3Packet message = new NtpV3Impl();
         final DatagramPacket dp = new DatagramPacket(ntpPacket, ntpPacket.length-4); // drop 4-bytes from packet
-        message.setDatagramPacket(dp);
+        assertThrows(IllegalArgumentException.class, () -> message.setDatagramPacket(dp));
     }
 
     @Test
@@ -153,6 +153,7 @@ public class TestNtpPacket {
         Assert.assertEquals(4, message.getMode());
     }
 
+    @Test
     public void testCreateFromNullPacket() {
         final NtpV3Packet message = new NtpV3Impl();
         assertThrows(IllegalArgumentException.class, () -> message.setDatagramPacket(null));
