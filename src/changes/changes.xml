@@ -74,8 +74,8 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Arturo Bernal">
         Use Math.min and Math.max method instead of manual calculations. #104.
       </action>
-      <action type="fix" dev="ggregory" due-to="Jochen Wiedmann, Gary Gregory">
-        FTP client trusts the host from PASV response by default.
+      <action issue="NET-711" type="fix" dev="ggregory" due-to="Jochen Wiedmann, Gary Gregory">
+        Add FTP option to toggle use of return host like CURL.
       </action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">
