@@ -114,7 +114,7 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
     public String getGroupsAsString() {
         final StringBuilder b = new StringBuilder();
         for (int i = 1; i <= this.result.groupCount(); i++) {
-            b.append(i).append(") ").append(this.result.group(i)).append(System.getProperty("line.separator"));
+            b.append(i).append(") ").append(this.result.group(i)).append(System.lineSeparator());
         }
         return b.toString();
     }

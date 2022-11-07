@@ -208,7 +208,7 @@ public final class IMAPExportMbox {
     private static final String CRLF = "\r\n";
     private static final String LF = "\n";
 
-    private static final String EOL_DEFAULT = System.getProperty("line.separator");
+    private static final String EOL_DEFAULT = System.lineSeparator();
     private static final Pattern PATFROM = Pattern.compile(">*From "); // unescaped From_
     // e.g. * nnn (INTERNALDATE "27-Oct-2013 07:43:24 +0000" BODY[] {nn} ...)
     private static final Pattern PATID = // INTERNALDATE

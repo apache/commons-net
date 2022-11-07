@@ -38,7 +38,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream {
     static final byte[] _lineSeparatorBytes;
 
     static {
-        _lineSeparator = System.getProperty("line.separator");
+        _lineSeparator = System.lineSeparator();
         _noConversionRequired = _lineSeparator.equals("\r\n");
         _lineSeparatorBytes = _lineSeparator.getBytes(StandardCharsets.US_ASCII);
     }
