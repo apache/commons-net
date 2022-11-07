@@ -30,15 +30,25 @@ import org.apache.ftpserver.ssl.SslConfiguration;
  */
 public class NoProtocolSslConfigurationProxy implements SslConfiguration {
 
-    @Override
-    public String[] getEnabledProtocols() {
-        return null;
-    }
-
     private final SslConfiguration sslConfiguration;
 
     public NoProtocolSslConfigurationProxy(SslConfiguration sslConfiguration) {
         this.sslConfiguration = sslConfiguration;
+    }
+
+    @Override
+    public ClientAuth getClientAuth() {
+        return this.sslConfiguration.getClientAuth();
+    }
+
+    @Override
+    public String[] getEnabledCipherSuites() {
+        return this.sslConfiguration.getEnabledCipherSuites();
+    }
+
+    @Override
+    public String[] getEnabledProtocols() {
+        return null;
     }
 
     @Override
@@ -54,16 +64,6 @@ public class NoProtocolSslConfigurationProxy implements SslConfiguration {
     @Override
     public SSLContext getSSLContext(String protocol) throws GeneralSecurityException {
         return this.sslConfiguration.getSSLContext(protocol);
-    }
-
-    @Override
-    public String[] getEnabledCipherSuites() {
-        return this.sslConfiguration.getEnabledCipherSuites();
-    }
-
-    @Override
-    public ClientAuth getClientAuth() {
-        return this.sslConfiguration.getClientAuth();
     }
 
 }

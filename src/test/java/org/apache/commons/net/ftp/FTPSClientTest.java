@@ -74,6 +74,12 @@ public class FTPSClientTest {
 
     private static final boolean IMPLICIT = false;
 
+    private static final long TEST_TIMEOUT = 10000; // individual test timeout
+
+    private static final boolean TRACE_CALLS = Boolean.parseBoolean(System.getenv("TRACE_CALLS"));
+    private static final boolean ADD_LISTENER = Boolean.parseBoolean(System.getenv("ADD_LISTENER"));
+    private static final long startTime = System.nanoTime();
+
     /**
      * Returns the test directory as a String.
      *
@@ -81,18 +87,6 @@ public class FTPSClientTest {
      */
     private static String getTestHomeDirectory() {
         return System.getProperty("test.basedir", "target/test-classes/org/apache/commons/net/test-data");
-    }
-
-    private static final long TEST_TIMEOUT = 10000; // individual test timeout
-    private static final boolean TRACE_CALLS = Boolean.parseBoolean(System.getenv("TRACE_CALLS"));
-    private static final boolean ADD_LISTENER = Boolean.parseBoolean(System.getenv("ADD_LISTENER"));
-
-    private static final long startTime = System.nanoTime();
-
-    private static void trace(String msg) {
-        if (TRACE_CALLS) {
-            System.err.println(msg + " " + (System.nanoTime() - startTime));
-        }
     }
 
     @BeforeClass
@@ -158,6 +152,12 @@ public class FTPSClientTest {
     @Parameters(name = "endpointCheckingEnabled={0}")
     public static Boolean[] testConstructurData() {
         return new Boolean[] { Boolean.FALSE, Boolean.TRUE };
+    }
+
+    private static void trace(String msg) {
+        if (TRACE_CALLS) {
+            System.err.println(msg + " " + (System.nanoTime() - startTime));
+        }
     }
 
     private final boolean endpointCheckingEnabled;

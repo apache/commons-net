@@ -2121,6 +2121,21 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
+     * Returns, whether the IP address from the server's response should be used. Until 3.9.0, this has always been the case. Beginning with 3.9.0, that IP
+     * address will be silently ignored, and replaced with the remote IP address of the control connection, unless this configuration option is given, which
+     * restores the old behavior. To enable this by default, use the system property {@link FTPClient#FTP_IP_ADDRESS_FROM_PASV_RESPONSE}.
+     *
+     * @return True, if the IP address from the server's response will be used (pre-3.9 compatible behavior), or false (ignore that IP address).
+     *
+     * @see FTPClient#FTP_IP_ADDRESS_FROM_PASV_RESPONSE
+     * @see #setIpAddressFromPasvResponse(boolean)
+     * @since 3.9.0
+     */
+    public boolean isIpAddressFromPasvResponse() {
+        return ipAddressFromPasvResponse;
+    }
+
+    /**
      * Return whether or not verification of the remote host participating in data connections is enabled. The default behavior is for verification to be
      * enabled.
      *
@@ -3083,6 +3098,21 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
+     * Sets whether the IP address from the server's response should be used. Until 3.9.0, this has always been the case. Beginning with 3.9.0, that IP address
+     * will be silently ignored, and replaced with the remote IP address of the control connection, unless this configuration option is given, which restores
+     * the old behavior. To enable this by default, use the system property {@link FTPClient#FTP_IP_ADDRESS_FROM_PASV_RESPONSE}.
+     *
+     * @param usingIpAddressFromPasvResponse True, if the IP address from the server's response should be used (pre-3.9.0 compatible behavior), or false (ignore
+     *                                       that IP address).
+     * @see FTPClient#FTP_IP_ADDRESS_FROM_PASV_RESPONSE
+     * @see #isIpAddressFromPasvResponse
+     * @since 3.9.0
+     */
+    public void setIpAddressFromPasvResponse(boolean usingIpAddressFromPasvResponse) {
+        this.ipAddressFromPasvResponse = usingIpAddressFromPasvResponse;
+    }
+
+    /**
      * You can set this to true if you would like to get hidden files when {@link #listFiles} too. A <code>LIST -a</code> will be issued to the ftp server. It
      * depends on your ftp server if you need to call this method, also dont expect to get rid of hidden files if you call this method with "false".
      *
@@ -3387,35 +3417,5 @@ public class FTPClient extends FTP implements Configurable {
      */
     public boolean structureMount(final String pathname) throws IOException {
         return FTPReply.isPositiveCompletion(smnt(pathname));
-    }
-
-    /**
-     * Returns, whether the IP address from the server's response should be used. Until 3.9.0, this has always been the case. Beginning with 3.9.0, that IP
-     * address will be silently ignored, and replaced with the remote IP address of the control connection, unless this configuration option is given, which
-     * restores the old behavior. To enable this by default, use the system property {@link FTPClient#FTP_IP_ADDRESS_FROM_PASV_RESPONSE}.
-     *
-     * @return True, if the IP address from the server's response will be used (pre-3.9 compatible behavior), or false (ignore that IP address).
-     *
-     * @see FTPClient#FTP_IP_ADDRESS_FROM_PASV_RESPONSE
-     * @see #setIpAddressFromPasvResponse(boolean)
-     * @since 3.9.0
-     */
-    public boolean isIpAddressFromPasvResponse() {
-        return ipAddressFromPasvResponse;
-    }
-
-    /**
-     * Sets whether the IP address from the server's response should be used. Until 3.9.0, this has always been the case. Beginning with 3.9.0, that IP address
-     * will be silently ignored, and replaced with the remote IP address of the control connection, unless this configuration option is given, which restores
-     * the old behavior. To enable this by default, use the system property {@link FTPClient#FTP_IP_ADDRESS_FROM_PASV_RESPONSE}.
-     *
-     * @param usingIpAddressFromPasvResponse True, if the IP address from the server's response should be used (pre-3.9.0 compatible behavior), or false (ignore
-     *                                       that IP address).
-     * @see FTPClient#FTP_IP_ADDRESS_FROM_PASV_RESPONSE
-     * @see #isIpAddressFromPasvResponse
-     * @since 3.9.0
-     */
-    public void setIpAddressFromPasvResponse(boolean usingIpAddressFromPasvResponse) {
-        this.ipAddressFromPasvResponse = usingIpAddressFromPasvResponse;
     }
 }

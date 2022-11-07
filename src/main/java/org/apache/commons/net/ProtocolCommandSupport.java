@@ -101,6 +101,14 @@ public class ProtocolCommandSupport implements Serializable {
         return listeners.getListenerCount();
     }
 
+    private void readObject(final java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        throw new UnsupportedOperationException("Serialization is not supported");
+    }
+
+    /*
+     * Serialization is unnecessary for this class. Reject attempts to do so until such time as the Serializable attribute can be dropped.
+     */
+
     /**
      * Removes a ProtocolCommandListener.
      *
@@ -110,15 +118,7 @@ public class ProtocolCommandSupport implements Serializable {
         listeners.removeListener(listener);
     }
 
-    /*
-     * Serialization is unnecessary for this class. Reject attempts to do so until such time as the Serializable attribute can be dropped.
-     */
-
     private void writeObject(final java.io.ObjectOutputStream out) throws IOException {
-        throw new UnsupportedOperationException("Serialization is not supported");
-    }
-
-    private void readObject(final java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
 

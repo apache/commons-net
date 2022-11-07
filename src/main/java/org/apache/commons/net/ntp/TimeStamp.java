@@ -343,6 +343,10 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
         return ntpTime;
     }
 
+    private void readObject(final java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        throw new UnsupportedOperationException("Serialization is not supported");
+    }
+
     /**
      * Converts this <code>TimeStamp</code> object to a <code>String</code> of the form: <blockquote>
      *
@@ -374,6 +378,10 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
         return toString(ntpTime);
     }
 
+    /*
+     * Serialization is unnecessary for this class. Reject attempts to do so until such time as the Serializable attribute can be dropped.
+     */
+
     /**
      * Converts this <code>TimeStamp</code> object to a <code>String</code> of the form: <blockquote>
      *
@@ -394,15 +402,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
         return utcFormatter.format(ntpDate);
     }
 
-    /*
-     * Serialization is unnecessary for this class. Reject attempts to do so until such time as the Serializable attribute can be dropped.
-     */
-
     private void writeObject(final java.io.ObjectOutputStream out) throws IOException {
-        throw new UnsupportedOperationException("Serialization is not supported");
-    }
-
-    private void readObject(final java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
 
