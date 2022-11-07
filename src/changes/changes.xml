@@ -86,6 +86,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="John Patrick, Gary Gregory">
         JUnit5 assertThrows TestTimeInfo #120.
       </action>
+      <action type="fix" dev="ggregory" due-to="Arturo Bernal, Gary Gregory">
+        Simplify conditions avoiding extra operations #88.
+      </action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">
         [FTP] Add FTPClient.mdtmInstant(String).
