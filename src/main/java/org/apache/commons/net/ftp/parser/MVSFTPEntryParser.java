@@ -288,20 +288,19 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      */
     @Override
     public FTPFile parseFTPEntry(final String entry) {
-        if (isType == FILE_LIST_TYPE) {
+        switch (isType) {
+        case FILE_LIST_TYPE:
             return parseFileList(entry);
-        }
-        if (isType == MEMBER_LIST_TYPE) {
+        case MEMBER_LIST_TYPE:
             return parseMemberList(entry);
-        }
-        if (isType == UNIX_LIST_TYPE) {
+        case UNIX_LIST_TYPE:
             return unixFTPEntryParser.parseFTPEntry(entry);
-        }
-        if (isType == JES_LEVEL_1_LIST_TYPE) {
+        case JES_LEVEL_1_LIST_TYPE:
             return parseJeslevel1List(entry);
-        }
-        if (isType == JES_LEVEL_2_LIST_TYPE) {
+        case JES_LEVEL_2_LIST_TYPE:
             return parseJeslevel2List(entry);
+        default:
+            break;
         }
 
         return null;

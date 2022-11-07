@@ -107,14 +107,21 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
      */
     @Override
     public void receivedNegotiation(final int negotiation_code, final int option_code) {
-        if (negotiation_code == TelnetNotificationHandler.RECEIVED_DO) {
+        switch (negotiation_code) {
+        case TelnetNotificationHandler.RECEIVED_DO:
             numdo++;
-        } else if (negotiation_code == TelnetNotificationHandler.RECEIVED_DONT) {
+            break;
+        case TelnetNotificationHandler.RECEIVED_DONT:
             numdont++;
-        } else if (negotiation_code == TelnetNotificationHandler.RECEIVED_WILL) {
+            break;
+        case TelnetNotificationHandler.RECEIVED_WILL:
             numwill++;
-        } else if (negotiation_code == TelnetNotificationHandler.RECEIVED_WONT) {
+            break;
+        case TelnetNotificationHandler.RECEIVED_WONT:
             numwont++;
+            break;
+        default:
+            break;
         }
     }
 

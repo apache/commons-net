@@ -101,16 +101,15 @@ public final class DotTerminatedMessageReader extends BufferedReader {
                 if (chint == DOT) { // Have DOT
                     mark(2); // need to check for CR LF or DOT
                     chint = super.read();
-                    if (chint == NetConstants.EOS) { // Should not happen
+                    switch (chint) {
+                    case NetConstants.EOS:
                         // new Throwable("Trailing DOT").printStackTrace();
                         eof = true;
                         return DOT; // return the trailing DOT
-                    }
-                    if (chint == DOT) { // Have DOT DOT
+                    case DOT:
                         // no need to reset as we want to lose the first DOT
                         return chint; // i.e. DOT
-                    }
-                    if (chint == CR) { // Have DOT CR
+                    case CR:
                         chint = super.read();
                         if (chint == NetConstants.EOS) { // Still only DOT CR - should not happen
                             // new Throwable("Trailing DOT CR").printStackTrace();
@@ -123,6 +122,9 @@ public final class DotTerminatedMessageReader extends BufferedReader {
                             // Do we need to clear the mark somehow?
                             return NetConstants.EOS;
                         }
+                        break;
+                    default:
+                        break;
                     }
                     // Should not happen - lone DOT at beginning
                     // new Throwable("Lone DOT followed by "+(char)chint).printStackTrace();
