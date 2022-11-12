@@ -27,10 +27,8 @@ import java.net.Socket;
  * afterward. This class is useful for situations where you are dealing with a stream originating from a socket, but do not have a reference to the socket, and
  * want to make sure it closes when the stream closes.
  *
- *
  * @see SocketOutputStream
  */
-
 public class SocketInputStream extends FilterInputStream {
     private final Socket socket;
 

@@ -219,11 +219,10 @@ public class RCommandClient extends RExecClient {
     @Override
     InputStream createErrorStream() throws IOException {
         int localPort;
-        ServerSocket server;
         final Socket socket;
 
         localPort = MAX_CLIENT_PORT;
-        server = null;
+        ServerSocket server = null;
 
         for (localPort = MAX_CLIENT_PORT; localPort >= MIN_CLIENT_PORT; --localPort) {
             try {

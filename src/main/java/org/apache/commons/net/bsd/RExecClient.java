@@ -79,17 +79,14 @@ public class RExecClient extends SocketClient {
     // This can be overridden in local package to implement port range
     // limitations of rcmd and rlogin
     InputStream createErrorStream() throws IOException {
-        final ServerSocket server;
         final Socket socket;
 
-        server = _serverSocketFactory_.createServerSocket(0, 1, getLocalAddress());
-
-        _output_.write(Integer.toString(server.getLocalPort()).getBytes(StandardCharsets.UTF_8)); // $NON-NLS-1$
-        _output_.write(NULL_CHAR);
-        _output_.flush();
-
-        socket = server.accept();
-        server.close();
+        try (final ServerSocket server = _serverSocketFactory_.createServerSocket(0, 1, getLocalAddress())) {
+            _output_.write(Integer.toString(server.getLocalPort()).getBytes(StandardCharsets.UTF_8)); // $NON-NLS-1$
+            _output_.write(NULL_CHAR);
+            _output_.flush();
+            socket = server.accept();
+        }
 
         if (remoteVerificationEnabled && !verifyRemote(socket)) {
             socket.close();
