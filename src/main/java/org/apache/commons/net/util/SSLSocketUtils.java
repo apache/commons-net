@@ -18,9 +18,7 @@
 
 package org.apache.commons.net.util;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
+import javax.net.ssl.SSLParameters;
 import javax.net.ssl.SSLSocket;
 
 /**
@@ -29,26 +27,19 @@ import javax.net.ssl.SSLSocket;
  * @since 3.4
  */
 public class SSLSocketUtils {
+
     /**
      * Enable the HTTPS endpoint identification algorithm on an SSLSocket.
      *
      * @param socket the SSL socket
-     * @return {@code true} on success (this is only supported on Java 1.7+)
+     * @return {@code true} on success
      */
     public static boolean enableEndpointNameVerification(final SSLSocket socket) {
-        try {
-            final Class<?> cls = Class.forName("javax.net.ssl.SSLParameters");
-            final Method setEndpointIdentificationAlgorithm = cls.getDeclaredMethod("setEndpointIdentificationAlgorithm", String.class);
-            final Method getSSLParameters = SSLSocket.class.getDeclaredMethod("getSSLParameters");
-            final Method setSSLParameters = SSLSocket.class.getDeclaredMethod("setSSLParameters", cls);
-            final Object sslParams = getSSLParameters.invoke(socket);
-            if (sslParams != null) {
-                setEndpointIdentificationAlgorithm.invoke(sslParams, "HTTPS");
-                setSSLParameters.invoke(socket, sslParams);
-                return true;
-            }
-        } catch (final SecurityException | ClassNotFoundException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException
-                | InvocationTargetException e) { // Ignored
+        final SSLParameters sslParameters = socket.getSSLParameters();
+        if (sslParameters != null) {
+            sslParameters.setEndpointIdentificationAlgorithm("HTTPS");
+            socket.setSSLParameters(sslParameters);
+            return true;
         }
         return false;
     }
