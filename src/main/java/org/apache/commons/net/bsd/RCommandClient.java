@@ -223,7 +223,7 @@ public class RCommandClient extends RExecClient {
         final Socket socket;
 
         localPort = MAX_CLIENT_PORT;
-        server = null; // Keep compiler from barfing
+        server = null;
 
         for (localPort = MAX_CLIENT_PORT; localPort >= MIN_CLIENT_PORT; --localPort) {
             try {
