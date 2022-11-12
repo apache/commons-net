@@ -17,7 +17,6 @@
 
 package org.apache.commons.net.ntp;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -343,7 +342,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
         return ntpTime;
     }
 
-    private void readObject(final java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final java.io.ObjectInputStream in) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
 
@@ -402,7 +401,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
         return utcFormatter.format(ntpDate);
     }
 
-    private void writeObject(final java.io.ObjectOutputStream out) throws IOException {
+    private void writeObject(final java.io.ObjectOutputStream out) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
 

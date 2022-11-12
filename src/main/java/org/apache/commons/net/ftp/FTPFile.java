@@ -17,7 +17,6 @@
 
 package org.apache.commons.net.ftp;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Calendar;
@@ -290,7 +289,7 @@ public class FTPFile implements Serializable {
         return sb.toString();
     }
 
-    private void readObject(final java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final java.io.ObjectInputStream in) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
 
@@ -475,7 +474,7 @@ public class FTPFile implements Serializable {
         return getRawListing();
     }
 
-    private void writeObject(final java.io.ObjectOutputStream out) throws IOException {
+    private void writeObject(final java.io.ObjectOutputStream out) {
         throw new UnsupportedOperationException("Serialization is not supported");
     }
 
