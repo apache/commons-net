@@ -88,7 +88,7 @@ public interface FTPFileEntryParser {
     List<String> preParse(List<String> original);
 
     /**
-     * Reads the next entry using the supplied BufferedReader object up to whatever delemits one entry from the next. Implementors must define this for the
+     * Reads the next entry using the supplied BufferedReader object up to whatever delimits one entry from the next. Implementors must define this for the
      * particular ftp system being parsed. In many but not all cases, this can be defined simply by calling BufferedReader.readLine().
      *
      * @param reader The BufferedReader object from which entries are to be read.

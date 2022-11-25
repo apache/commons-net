@@ -194,7 +194,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     // DEPRECATED METHODS - for API compatibility only - DO NOT USE
 
     /**
-     * Reads the next entry using the supplied BufferedReader object up to whatever delemits one entry from the next. This parser cannot use the default
+     * Reads the next entry using the supplied BufferedReader object up to whatever delimits one entry from the next. This parser cannot use the default
      * implementation of simply calling BufferedReader.readLine(), because one entry may span multiple lines.
      *
      * @param reader The BufferedReader object from which entries are to be read.
