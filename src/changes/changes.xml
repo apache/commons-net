@@ -143,7 +143,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump commons.jacoco.version from 0.8.6 to 0.8.8.
       </action>
       <action dev="ggregory" type="update" due-to="Gary Gregory">
-        Bump commons.japicmp.version from 0.14.3 to 0.16.0.
+        Bump commons.japicmp.version from 0.14.3 to 0.17.1.
       </action>
       <action dev="ggregory" type="update" due-to="Gary Gregory">
         Bump commons.surefire.version from 2.22.2 to 3.0.0-M7.
