@@ -104,7 +104,7 @@ public class FTPSClientTest {
         if (EmbeddedFtpServer != null) {
             return;
         }
-        // Use an ephemeral port.
+        // Let the OS find use an ephemeral port by using 0.
         SocketPort = 0;
         final FtpServerFactory serverFactory = new FtpServerFactory();
         final PropertiesUserManagerFactory propertiesUserManagerFactory = new PropertiesUserManagerFactory();
@@ -113,13 +113,11 @@ public class FTPSClientTest {
         propertiesUserManagerFactory.setUrl(userPropsResource);
         final UserManager userManager = propertiesUserManagerFactory.createUserManager();
         final BaseUser user = (BaseUser) userManager.getUserByName("test");
-        // Pickup the home dir value at runtime even though we have it set in the user
-        // prop file
+        // Pickup the home dir value at runtime even though we have it set in the userprop file
         // The user prop file requires the "homedirectory" to be set
         user.setHomeDirectory(getTestHomeDirectory());
         serverFactory.setUserManager(userManager);
         final ListenerFactory factory = new ListenerFactory();
-        // set the port of the listener
         factory.setPort(SocketPort);
 
         // define SSL configuration
@@ -203,7 +201,8 @@ public class FTPSClientTest {
             // HACK: Without this sleep, the user command sometimes does not reach the ftpserver
             // This only seems to affect GitHub builds, and only Java 11+
             Thread.sleep(200); // 100 seems to be not always enough
-        } catch (final InterruptedException e) {
+        } catch (final InterruptedException ignore) {
+            // ignore
         }
         assertTrue(client.login("test", "test"));
         assertClientCode(client);
