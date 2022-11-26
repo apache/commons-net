@@ -67,7 +67,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" issue="NET-708" dev="ggregory" due-to="XenoAmess">
         Use yyyy instead of YYYY in SimpleDateFormat #97.
       </action>
-      <action type="update" dev="sebb">
+      <action type="fix" dev="sebb">
         Prevent serialization of the 4 classes that implement Serializable.
         It is not useful and is unlikely to work properly.
       </action>
