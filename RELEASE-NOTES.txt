@@ -1,3 +1,70 @@
+              Apache Commons Net 3.9.0
+                  RELEASE NOTES
+
+The Apache Commons Net team is pleased to announce the release of Apache Commons Net 3.9.0.
+
+Apache Commons Net library contains a collection of network utilities and protocol implementations.
+Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
+
+
+Maintenance and bug fix release (Java 8).
+
+For complete information on Apache Commons Net, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Apache Commons Net website:
+
+https://commons.apache.org/proper/commons-net/
+
+Download page: https://commons.apache.org/proper/commons-net/download_net.cgi
+
+Changes in this version include:
+===============================
+
+New features:
+o           [FTP] Add FTPClient.mdtmInstant(String). Thanks to Gary Gregory.
+o           [FTP] Add MLSxEntryParser.parseGmtInstant(String). Thanks to Gary Gregory.
+o           [FTP] Add FTPClient.getControlKeepAliveReplyTimeoutDuration(). Thanks to Gary Gregory.
+o           [FTP] Add FTPClient.setControlKeepAliveReplyTimeout(Duration). Thanks to Gary Gregory.
+o           [FTP] Add FTPClient.getControlKeepAliveTimeoutDuration(). Thanks to Gary Gregory.
+o           [FTP] Add FTPClient.setControlKeepAliveTimeout(Duration). Thanks to Gary Gregory.
+o           [FTP] Add FTPClient.getDataTimeout(). Thanks to Gary Gregory.
+o           [FTP] Add FTPClient.setDataTimeout(Duration). Thanks to Gary Gregory.
+o           [FTP] Add FTPFile.getTimestampInstant(). Thanks to Gary Gregory.
+o           Add github/codeql-action. Thanks to Gary Gregory.
+
+Fixed Bugs:
+o NET-708:  Use yyyy instead of YYYY in SimpleDateFormat #97. Thanks to XenoAmess.
+o           Prevent serialization of the 4 classes that implement Serializable.
+            It is not useful and is unlikely to work properly.
+o           Use Math.min and Math.max method instead of manual calculations. #104. Thanks to Arturo Bernal.
+o NET-711:  Add FTP option to toggle use of return host like CURL. Thanks to Jochen Wiedmann, Gary Gregory.
+o NET-642:  FTPSClient execPROT removes proxy settings #90. Thanks to Yani Mihaylov, Gary Gregory.
+o           JUnit5 assertThrows SimpleSMTPHeaderTestCase #121. Thanks to John Patrick, Gary Gregory.
+o           JUnit5 assertThrows TestTimeInfo #120. Thanks to John Patrick, Gary Gregory.
+o           Simplify conditions avoiding extra operations #88. Thanks to Arturo Bernal, Gary Gregory.
+o           Remove reflection from SSLSocketUtils. Thanks to Gary Gregory.
+o NET-707:  Process files with spaces in name for OS400 #95. Thanks to Dmytro Sylaiev, sebbASF, Gary Gregory.
+
+Changes:
+o           Bump actions/cache from 2.1.6 to 3.0.11 #93, #102, #115, #116. Thanks to Dependabot, Gary Gregory.
+o           Bump actions/checkout from 2.3.4 to 3.1.0 #89, #91, #100, #114. Thanks to Dependabot, Gary Gregory.
+o           Bump actions/upload-artifact from 3.1.0 to 3.1.1 #124. Thanks to Dependabot.
+o           Bump junit from 4.13.1 to 5.9.1 Vintage #74. Thanks to Dependabot.
+o           Bump commons-io from 2.6 to 2.11.0 #60. Thanks to Dependabot, Gary Gregory.
+o           Bump commons.jacoco.version from 0.8.6 to 0.8.8. Thanks to Gary Gregory.
+o           Bump commons.japicmp.version from 0.14.3 to 0.17.1. Thanks to Gary Gregory.
+o           Bump commons.surefire.version from 2.22.2 to 3.0.0-M7. Thanks to Gary Gregory.
+o           Bump ftpserver-core from 1.1.1 to 1.2.0 #96. Thanks to XenoAmess, Gary Gregory.
+o           Bump exec-maven-plugin from 3.0.0 to 3.1.0 #109. Thanks to Dependabot.
+o           Bump commons-parent from 53 to 54 #112. Thanks to Dependabot.
+
+
+Historical list of changes: https://commons.apache.org/proper/commons-net/changes-report.html
+
+Enjoy!
+-Apache Commons Net team
+
+-----------------------------------------------------------------------------
+
               Apache Commons Net 3.8.0
                   RELEASE NOTES
 
