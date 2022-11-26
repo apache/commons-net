@@ -132,7 +132,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
 
         assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp().getTime()));
     }
-
+    
     /**
      * @see FTPParseTestFramework#testParseFieldsOnFile()
      */
@@ -154,6 +154,16 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
         cal.set(Calendar.MINUTE, 6);
         cal.set(Calendar.SECOND, 29);
         assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp().getTime()));
+    }
+
+    /**
+     * Test file names with spaces.
+     */
+    public void testParseFileNameWithSpaces() {
+        final FTPFile f = getParser().parseFTPEntry("MYUSER              3 06/12/21 12:00:00 *STMF      file with space.txt");
+        assertNotNull("Could not parse entry.", f);
+        assertTrue("Should have been a file.", f.isFile());
+        assertEquals("file with space.txt", f.getName());
     }
 
     @Override
