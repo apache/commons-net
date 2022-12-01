@@ -1141,8 +1141,8 @@ public class FTPClient extends FTP implements Configurable {
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public OutputStream appendFileStreamUtterly(final String remote) throws IOException {
-        return storeFileStreamUtterly(FTPCmd.APPE, remote);
+    public OutputStream appendFileStreamWithCommandCompletion(final String remote) throws IOException {
+        return storeFileStreamWithCommandCompletion(FTPCmd.APPE, remote);
     }
 
     /**
@@ -2878,7 +2878,7 @@ public class FTPClient extends FTP implements Configurable {
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public InputStream retrieveFileStreamUtterly(final String remote) throws IOException {
+    public InputStream retrieveFileStreamWithCommandCompletion(final String remote) throws IOException {
         return new FTPInputStream(_retrieveFileStream(FTPCmd.RETR.getCommand(), remote), this);
     }
 
@@ -3340,7 +3340,7 @@ public class FTPClient extends FTP implements Configurable {
         return _storeFileStream(command.getCommand(), remote);
     }
 
-    private OutputStream storeFileStreamUtterly(final FTPCmd command, final String remote) throws IOException {
+    private OutputStream storeFileStreamWithCommandCompletion(final FTPCmd command, final String remote) throws IOException {
         return new FTPOutputStream(_storeFileStream(command.getCommand(), remote), this);
     }
 
@@ -3382,8 +3382,8 @@ public class FTPClient extends FTP implements Configurable {
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public OutputStream storeFileStreamUtterly(final String remote) throws IOException {
-        return storeFileStreamUtterly(FTPCmd.STOR, remote);
+    public OutputStream storeFileStreamWithCommandCompletion(final String remote) throws IOException {
+        return storeFileStreamWithCommandCompletion(FTPCmd.STOR, remote);
     }
 
     /**
@@ -3463,8 +3463,8 @@ public class FTPClient extends FTP implements Configurable {
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public OutputStream storeUniqueFileStreamUtterly() throws IOException {
-        return storeFileStreamUtterly(FTPCmd.STOU, null);
+    public OutputStream storeUniqueFileStreamWithCommandCompletion() throws IOException {
+        return storeFileStreamWithCommandCompletion(FTPCmd.STOU, null);
     }
 
     /**
@@ -3505,8 +3505,8 @@ public class FTPClient extends FTP implements Configurable {
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public OutputStream storeUniqueFileStreamUtterly(final String remote) throws IOException {
-        return storeFileStreamUtterly(FTPCmd.STOU, remote);
+    public OutputStream storeUniqueFileStreamWithCommandCompletion(final String remote) throws IOException {
+        return storeFileStreamWithCommandCompletion(FTPCmd.STOU, remote);
     }
 
     /**
