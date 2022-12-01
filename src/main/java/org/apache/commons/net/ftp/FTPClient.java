@@ -1125,6 +1125,27 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
+     * Returns an OutputStream through which data can be written to append to a file on the server with the given name,
+     * without having to call {@link #completePendingCommand()}. If the current file type is ASCII, the
+     * returned OutputStream will convert line separators in the file to the NETASCII format (i.e., you should not attempt to create a special OutputStream to
+     * do this). You must close the OutputStream when you finish writing to it. The OutputStream itself will take care of closing the parent data connection
+     * socket upon being closed.
+     * <p/>
+     * Unlike {@link #appendFileStream(String)}, the call to {@link #completePendingCommand()} is embedded.
+     *
+     * @param remote The name of the remote file.
+     * @return An OutputStream through which the remote file can be appended. If the data connection cannot be opened (e.g., the file does not exist), null is
+     *         returned (in which case you may check the reply code to determine the exact reason for failure).
+     * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
+     *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
+     *                                      independently as itself.
+     * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
+     */
+    public OutputStream appendFileStreamUtterly(final String remote) throws IOException {
+        return storeFileStreamUtterly(FTPCmd.APPE, remote);
+    }
+
+    /**
      * Change to the parent directory of the current working directory.
      *
      * @return True if successfully completed, false if not.
@@ -2842,6 +2863,26 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
+     * Returns an InputStream from which a named file from the server can be read, without having to call {@link #completePendingCommand()}.
+     * If the current file type is ASCII, the returned InputStream will convert line
+     * separators in the file to the local representation. You must close the InputStream when you finish reading from it. The InputStream itself will take care
+     * of closing the parent data connection socket upon being closed.
+     * <p/>
+     * Unlike {@link #retrieveFileStream(String)}, the call to {@link #completePendingCommand()} is embedded.
+     *
+     * @param remote The name of the remote file.
+     * @return An InputStream from which the remote file can be read. If the data connection cannot be opened (e.g., the file does not exist), null is returned
+     *         (in which case you may check the reply code to determine the exact reason for failure).
+     * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
+     *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
+     *                                      independently as itself.
+     * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
+     */
+    public InputStream retrieveFileStreamUtterly(final String remote) throws IOException {
+        return new FTPInputStream(_retrieveFileStream(FTPCmd.RETR.getCommand(), remote), this);
+    }
+
+    /**
      * Sends a NOOP command to the FTP server. This is useful for preventing server timeouts.
      *
      * @return True if successfully completed, false if not.
@@ -3299,6 +3340,10 @@ public class FTPClient extends FTP implements Configurable {
         return _storeFileStream(command.getCommand(), remote);
     }
 
+    private OutputStream storeFileStreamUtterly(final FTPCmd command, final String remote) throws IOException {
+        return new FTPOutputStream(_storeFileStream(command.getCommand(), remote), this);
+    }
+
     /**
      * Returns an OutputStream through which data can be written to store a file on the server using the given name. If the current file type is ASCII, the
      * returned OutputStream will convert line separators in the file to the NETASCII format (i.e., you should not attempt to create a special OutputStream to
@@ -3318,6 +3363,27 @@ public class FTPClient extends FTP implements Configurable {
      */
     public OutputStream storeFileStream(final String remote) throws IOException {
         return storeFileStream(FTPCmd.STOR, remote);
+    }
+
+    /**
+     * Returns an OutputStream through which data can be written to store a file on the server using the given name,
+     * without having to call to {@link #completePendingCommand()}. If the current file type is ASCII, the
+     * returned OutputStream will convert line separators in the file to the NETASCII format (i.e., you should not attempt to create a special OutputStream to
+     * do this). You must close the OutputStream when you finish writing to it. The OutputStream itself will take care of closing the parent data connection
+     * socket upon being closed.
+     * <p/>
+     * Unlike {@link #storeFileStream(String)}, the call to {@link #completePendingCommand()} is embedded.
+     *
+     * @param remote The name to give the remote file.
+     * @return An OutputStream through which the remote file can be written. If the data connection cannot be opened (e.g., the file does not exist), null is
+     *         returned (in which case you may check the reply code to determine the exact reason for failure).
+     * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
+     *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
+     *                                      independently as itself.
+     * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
+     */
+    public OutputStream storeFileStreamUtterly(final String remote) throws IOException {
+        return storeFileStreamUtterly(FTPCmd.STOR, remote);
     }
 
     /**
@@ -3382,6 +3448,26 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
+     * Returns an OutputStream through which data can be written to store a file on the server using a unique name assigned by the server,
+     * without having to call to {@link #completePendingCommand()}. If the current file
+     * type is ASCII, the returned OutputStream will convert line separators in the file to the NETASCII format (i.e., you should not attempt to create a
+     * special OutputStream to do this). You must close the OutputStream when you finish writing to it. The OutputStream itself will take care of closing the
+     * parent data connection socket upon being closed.
+     * <p/>
+     * Unlike {@link #storeUniqueFileStream()}, the call to {@link #completePendingCommand()} is embedded.
+     *
+     * @return An OutputStream through which the remote file can be written. If the data connection cannot be opened (e.g., the file does not exist), null is
+     *         returned (in which case you may check the reply code to determine the exact reason for failure).
+     * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
+     *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
+     *                                      independently as itself.
+     * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
+     */
+    public OutputStream storeUniqueFileStreamUtterly() throws IOException {
+        return storeFileStreamUtterly(FTPCmd.STOU, null);
+    }
+
+    /**
      * Returns an OutputStream through which data can be written to store a file on the server using a unique name derived from the given name. If the current
      * file type is ASCII, the returned OutputStream will convert line separators in the file to the NETASCII format (i.e., you should not attempt to create a
      * special OutputStream to do this). You must close the OutputStream when you finish writing to it. The OutputStream itself will take care of closing the
@@ -3400,6 +3486,27 @@ public class FTPClient extends FTP implements Configurable {
      */
     public OutputStream storeUniqueFileStream(final String remote) throws IOException {
         return storeFileStream(FTPCmd.STOU, remote);
+    }
+
+    /**
+     * Returns an OutputStream through which data can be written to store a file on the server using a unique name derived from the given name,
+     * without having to call to {@link #completePendingCommand()}. If the current
+     * file type is ASCII, the returned OutputStream will convert line separators in the file to the NETASCII format (i.e., you should not attempt to create a
+     * special OutputStream to do this). You must close the OutputStream when you finish writing to it. The OutputStream itself will take care of closing the
+     * parent data connection socket upon being closed.
+     * <p/>
+     * Unlike {@link #storeUniqueFileStream(String)}, the call to {@link #completePendingCommand()} is embedded.
+     *
+     * @param remote The name on which to base the unique name given to the remote file.
+     * @return An OutputStream through which the remote file can be written. If the data connection cannot be opened (e.g., the file does not exist), null is
+     *         returned (in which case you may check the reply code to determine the exact reason for failure).
+     * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
+     *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
+     *                                      independently as itself.
+     * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
+     */
+    public OutputStream storeUniqueFileStreamUtterly(final String remote) throws IOException {
+        return storeFileStreamUtterly(FTPCmd.STOU, remote);
     }
 
     /**

@@ -22,10 +22,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.SocketException;
 import java.time.Instant;
 import java.util.Calendar;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,6 +67,16 @@ public class FTPSClientTest extends AbstractFtpsTest {
 
     public FTPSClientTest(final boolean endpointCheckingEnabled) {
         super(endpointCheckingEnabled, null, null);
+    }
+
+    @Test
+    public void testStore() throws IOException {
+        FTPSClient ftpsClient = loginClient();
+        try(InputStream localSource = FTPSClientTest.class.getResourceAsStream("sample.txt");
+            OutputStream remoteDestination = ftpsClient.storeFileStream("sample.txt")) {
+            IOUtils.copy(localSource, remoteDestination);
+        }
+        ftpsClient.disconnect();
     }
 
     @Test(timeout = TEST_TIMEOUT)
