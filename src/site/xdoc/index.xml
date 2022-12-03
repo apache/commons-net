@@ -208,16 +208,6 @@
        </subsection>
 
    </section>
-   <section name="Further Information">
-       <p>
-           For more info, see the Javadoc, or look at some of the following articles:
-           <ul>
-               <li><a href="http://www.informit.com/guides/content.asp?g=java&amp;seqNum=40">http://www.informit.com/guides/content.asp?g=java&amp;seqNum=40</a>Jakarta Commons - Net Class Library</li>
-               <li><a href="http://www.onjava.com/pub/a/onjava/2003/06/25/commons.html?page=3">http://www.onjava.com/pub/a/onjava/2003/06/25/commons.html?page=3</a>Using the Jakarta Commons, Part 1</li>
-               <li><a href="http://safari.phptr.com/0131478303/ch04">http://safari.phptr.com/0131478303/ch04</a>Apache Jakarta Commons: Reusable Java Components</li>
-           </ul>
-       </p>
-   </section>
 </body>
 </document>
 
