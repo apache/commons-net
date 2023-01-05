@@ -25,11 +25,11 @@ jobs:
     timeout-minutes: 7
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v3.1.0
+    - uses: actions/checkout@v3.2.0
       with:
         persist-credentials: false
     - name: Set up JDK
-      uses: actions/setup-java@v3.7.0
+      uses: actions/setup-java@v3.9.0
       with:
         distribution: 'temurin'
         java-version: 8
