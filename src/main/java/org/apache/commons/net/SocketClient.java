@@ -71,6 +71,9 @@ public abstract class SocketClient {
     /** The hostname used for the connection (null = no hostname supplied). */
     protected String _hostname_;
 
+    /** The remote socket address used for the connection */
+    protected InetSocketAddress _remoteAddress_;
+
     /** The default port the client should connect to. */
     protected int _defaultPort_;
 
@@ -118,7 +121,8 @@ public abstract class SocketClient {
     }
 
     // helper method to allow code to be shared with connect(String,...) methods
-    private void _connect(final InetAddress host, final int port, final InetAddress localAddr, final int localPort) throws SocketException, IOException {
+    private void _connect(final InetSocketAddress remoteAddress, final InetAddress localAddr, final int localPort) throws IOException {
+        _remoteAddress_ = remoteAddress;
         _socket_ = _socketFactory_.createSocket();
         if (receiveBufferSize != -1) {
             _socket_.setReceiveBufferSize(receiveBufferSize);
@@ -129,7 +133,7 @@ public abstract class SocketClient {
         if (localAddr != null) {
             _socket_.bind(new InetSocketAddress(localAddr, localPort));
         }
-        _socket_.connect(new InetSocketAddress(host, port), connectTimeout);
+        _socket_.connect(remoteAddress, connectTimeout);
         _connectAction_();
     }
 
@@ -218,7 +222,7 @@ public abstract class SocketClient {
      */
     public void connect(final InetAddress host, final int port) throws SocketException, IOException {
         _hostname_ = null;
-        _connect(host, port, null, -1);
+        _connect(new InetSocketAddress(host, port), null, -1);
     }
 
     /**
@@ -235,7 +239,7 @@ public abstract class SocketClient {
      */
     public void connect(final InetAddress host, final int port, final InetAddress localAddr, final int localPort) throws SocketException, IOException {
         _hostname_ = null;
-        _connect(host, port, localAddr, localPort);
+        _connect(new InetSocketAddress(host, port), localAddr, localPort);
     }
 
     /**
@@ -264,8 +268,7 @@ public abstract class SocketClient {
      * @throws java.net.UnknownHostException If the hostname cannot be resolved.
      */
     public void connect(final String hostname, final int port) throws SocketException, IOException {
-        _hostname_ = hostname;
-        _connect(InetAddress.getByName(hostname), port, null, -1);
+        connect(hostname, port, null, -1);
     }
 
     /**
@@ -283,7 +286,7 @@ public abstract class SocketClient {
      */
     public void connect(final String hostname, final int port, final InetAddress localAddr, final int localPort) throws SocketException, IOException {
         _hostname_ = hostname;
-        _connect(InetAddress.getByName(hostname), port, localAddr, localPort);
+        _connect(new InetSocketAddress(hostname, port), localAddr, localPort);
     }
 
     /**
