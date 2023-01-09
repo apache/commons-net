@@ -459,8 +459,8 @@ public abstract class SocketClient {
 
     /**
      * Gets the remote socket address used for the connection.
-     * @return the remote socket address used for the connection
      *
+     * @return the remote socket address used for the connection
      * @since 3.10.0
      */
     protected InetSocketAddress getRemoteInetSocketAddress() {
