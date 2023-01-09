@@ -62,7 +62,11 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
   <body>
-    <release version="3.9.1" date="202Y-MM-DD" description="Maintenance and bug fix release (Java 8).">
+    <release version="3.10.0" date="202Y-MM-DD" description="Maintenance and bug fix release (Java 8).">
+      <!-- FIX -->
+      <action type="fix" issue="NET-650" dev="ggregory" due-to="Matthew McGillis, exceptionfactory, sebbASF">
+        Delegate host resolution to Socket.connect() #138.
+      </action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Dependabot">
         Bump commons-parent from 54 to 56 #132, #137.
@@ -100,9 +104,6 @@ The <action> type attribute can be add,update,fix,remove.
       </action>
       <action type="fix" issue="NET-707" dev="ggregory" due-to="Dmytro Sylaiev, sebbASF, Gary Gregory">
         Process files with spaces in name for OS400 #95.
-      </action>
-      <action type="fix" issue="NET-650" dev="ggregory" due-to="Matthew McGillis, exceptionfactory, sebbASF">
-        Delegate host resolution to Socket.connect() #138.
       </action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">

@@ -29,7 +29,7 @@
 
     <groupId>commons-net</groupId>
     <artifactId>commons-net</artifactId>
-    <version>3.9.0</version>
+    <version>3.10.0</version>
     <name>Apache Commons Net</name>
     <!-- N.B. the description content is deliberately not indented ! to improve the layout of the Release Notes generated 
         by mvn changes:announcement-generate -->
@@ -56,12 +56,12 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <jacoco.skip>false</jacoco.skip>
 
         <!-- Current release -->
-        <commons.release.version>3.9.0</commons.release.version>
+        <commons.release.version>3.10.0</commons.release.version>
         <commons.rc.version>RC1</commons.rc.version>
         <commons.release.desc>(Requires Java ${maven.compiler.target} or later)</commons.release.desc>
 
         <!-- Release plugin defines -->
-        <commons.bc.version>3.8.0</commons.bc.version>
+        <commons.bc.version>3.9.0</commons.bc.version>
         <commons.release.isDistModule>true</commons.release.isDistModule>
         <commons.releaseManagerName>Gary Gregory</commons.releaseManagerName>
         <commons.releaseManagerKey>86fdc7e2a11262cb</commons.releaseManagerKey>

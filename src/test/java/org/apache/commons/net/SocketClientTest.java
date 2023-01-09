@@ -43,6 +43,28 @@ public class SocketClientTest {
     private static final String UNRESOLVED_HOST = "unresolved";
     private static final int REMOTE_PORT = 21;
 
+    @Test
+    public void testConnectResolved() {
+        final SocketClient socketClient = new FTPClient();
+
+        assertThrows(IOException.class, () -> socketClient.connect(LOCALHOST_ADDRESS, REMOTE_PORT));
+        final InetSocketAddress remoteAddress = socketClient.getRemoteInetSocketAddress();
+        assertFalse(remoteAddress.isUnresolved());
+        assertEquals(LOCALHOST_ADDRESS, remoteAddress.getHostString());
+        assertEquals(REMOTE_PORT, remoteAddress.getPort());
+    }
+
+    @Test
+    public void testConnectUnresolved() {
+        final SocketClient socketClient = new FTPClient();
+
+        assertThrows(UnknownHostException.class, () -> socketClient.connect(UNRESOLVED_HOST, REMOTE_PORT, null, -1));
+        final InetSocketAddress remoteAddress = socketClient.getRemoteInetSocketAddress();
+        assertTrue(remoteAddress.isUnresolved());
+        assertEquals(UNRESOLVED_HOST, remoteAddress.getHostString());
+        assertEquals(REMOTE_PORT, remoteAddress.getPort());
+    }
+
     /**
      * A simple test to verify that the Proxy is being set.
      */
@@ -54,27 +76,5 @@ public class SocketClientTest {
         socketClient.setProxy(proxy);
         assertEquals(proxy, socketClient.getProxy());
         assertFalse(socketClient.isConnected());
-    }
-
-    @Test
-    public void testConnectResolved() {
-        final SocketClient socketClient = new FTPClient();
-
-        assertThrows(IOException.class, () -> socketClient.connect(LOCALHOST_ADDRESS, REMOTE_PORT));
-        final InetSocketAddress remoteAddress = socketClient._remoteAddress_;
-        assertFalse(remoteAddress.isUnresolved());
-        assertEquals(LOCALHOST_ADDRESS, remoteAddress.getHostString());
-        assertEquals(REMOTE_PORT, remoteAddress.getPort());
-    }
-
-    @Test
-    public void testConnectUnresolved() {
-        final SocketClient socketClient = new FTPClient();
-
-        assertThrows(UnknownHostException.class, () -> socketClient.connect(UNRESOLVED_HOST, REMOTE_PORT, null, -1));
-        final InetSocketAddress remoteAddress = socketClient._remoteAddress_;
-        assertTrue(remoteAddress.isUnresolved());
-        assertEquals(UNRESOLVED_HOST, remoteAddress.getHostString());
-        assertEquals(REMOTE_PORT, remoteAddress.getPort());
     }
 }
