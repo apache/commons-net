@@ -67,7 +67,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <commons.releaseManagerKey>86fdc7e2a11262cb</commons.releaseManagerKey>
         <!-- Local version defines -->
         <commons.changes.onlyCurrentVersion>true</commons.changes.onlyCurrentVersion>
-        <commons.surefire.version>3.0.0-M7</commons.surefire.version>
         <!-- for debugging FTPSClientTest -->
         <commons.net.trace_calls>false</commons.net.trace_calls>
         <commons.net.add_listener>false</commons.net.add_listener>
