@@ -17,6 +17,11 @@
 
 package org.apache.commons.net.nntp;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * This is an implementation of a message threading algorithm, as originally devised by Zamie Zawinski.
  * See <a href="http://www.jwz.org/doc/threading.html">http://www.jwz.org/doc/threading.html</a> for details.
@@ -24,12 +29,6 @@ package org.apache.commons.net.nntp;
  * <a href="http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java">
  * http://lxr.mozilla.org/mozilla/source/grendel/sources/grendel/view/Threader.java</a>
  */
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class Threader {
 
     /**
@@ -63,7 +62,7 @@ public class Threader {
             idTable.put(id, container);
         }
 
-        // Iterate through all of the references and create ThreadContainers for any references that
+        // Iterate through all the references and create ThreadContainers for any references that
         // don't have them.
         ThreadContainer parentRef = null;
         {
@@ -71,14 +70,14 @@ public class Threader {
             for (final String refString : references) {
                 ThreadContainer ref = idTable.get(refString);
 
-                // if this id doesnt have a container, create one
+                // if this id doesn't have a container, create one
                 if (ref == null) {
                     ref = new ThreadContainer();
                     idTable.put(refString, ref);
                 }
 
                 // Link references together in the order they appear in the References: header,
-                // IF they dont have a have a parent already &&
+                // IF they don't have a parent already &&
                 // IF it will not cause a circular reference
                 if ((parentRef != null) && (ref.parent == null) && (parentRef != ref) && !(ref.findChild(parentRef))) {
                     // Link ref into the parent's child list
@@ -96,7 +95,7 @@ public class Threader {
             parentRef = null;
         }
 
-        // if it has a parent already, its because we saw this message in a References: field, and presumed
+        // if it has a parent already, it's because we saw this message in a References: field, and presumed
         // a parent based on the other entries in that field. Now that we have the actual message, we can
         // throw away the old parent and use this new one
         if (container.parent != null) {
@@ -173,7 +172,7 @@ public class Threader {
             Threadable threadable = c.threadable;
 
             // No threadable? If so, it is a dummy node in the root set.
-            // Only root set members may be dummies, and they alway have at least 2 kids
+            // Only root set members may be dummies, and they always have at least 2 kids
             // Take the first kid as representative of the subject
             if (threadable == null) {
                 threadable = c.child.threadable;
@@ -219,7 +218,7 @@ public class Threader {
 
             final String subj = threadable.simplifiedSubject();
 
-            // Dont thread together all subjectless messages
+            // Don't thread together all subjectless messages
             if (subj == null || subj.isEmpty()) {
                 continue;
             }
@@ -336,7 +335,7 @@ public class Threader {
                 tail.parent = container.parent;
                 tail.next = container.next;
 
-                // next currently points to the item after the inserted items in the chain - reset that so we process the newly
+                // next currently points to the item after the inserted items in the chain - reset that, so we process the newly
                 // promoted items next time round
                 next = kids;
 

@@ -50,7 +50,7 @@ public final class TimeUDPClient extends DatagramSocketClient {
     /**
      * Same as <code> getTime(host, DEFAULT_PORT); </code>
      *
-     * @param host the time server
+     * @param host the time-server
      * @return the date
      * @throws IOException on error
      */
@@ -73,7 +73,7 @@ public final class TimeUDPClient extends DatagramSocketClient {
     /**
      * Same as <code> getTime(host, DEFAULT_PORT); </code>
      *
-     * @param host the time server
+     * @param host the time-server
      * @return the time returned from the server
      * @throws IOException on error
      */

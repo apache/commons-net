@@ -51,7 +51,7 @@ public class NtpV3Impl implements NtpV3Packet {
 //    private static final int MESSAGE_DIGEST = 54; /* len 16 bytes */
 
     /**
-     * Convert byte to unsigned integer. Java only has signed types so we have to do more work to get unsigned ops.
+     * Convert byte to unsigned integer. Java only has signed types, so we have to do more work to get unsigned ops.
      *
      * @param b input byte
      * @return unsigned int value of byte
@@ -62,7 +62,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Convert byte to unsigned long. Java only has signed types so we have to do more work to get unsigned ops
+     * Convert byte to unsigned long. Java only has signed types, so we have to do more work to get unsigned ops
      *
      * @param b input byte
      * @return unsigned long value of byte
@@ -166,9 +166,9 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns the originate time as defined in RFC-1305.
+     * Returns the {@code originate} time as defined in RFC-1305.
      *
-     * @return the originate time. Never returns null.
+     * @return the {@code originate} time. Never returns null.
      */
     @Override
     public TimeStamp getOriginateTimeStamp() {
@@ -177,7 +177,7 @@ public class NtpV3Impl implements NtpV3Packet {
 
     /**
      * Returns poll interval as defined in RFC-1305, which is an eight-bit signed integer indicating the maximum interval between successive messages, in
-     * seconds to the nearest power of two (e.g. value of six indicates an interval of 64 seconds. The values that can appear in this field range from
+     * seconds to the nearest power of two (e.g. value of six indicates an interval of 64 seconds). The values that can appear in this field range from
      * NTP_MINPOLL to NTP_MAXPOLL inclusive.
      *
      * @return poll interval as defined in RFC-1305.
@@ -188,7 +188,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns precision as defined in RFC-1305 encoded as an 8-bit signed integer (seconds to nearest power of two). Values normally range from -6 to -20.
+     * Returns precision as defined in RFC-1305 encoded as an 8-bit signed integer (seconds to the nearest power of two). Values normally range from -6 to -20.
      *
      * @return precision as defined in RFC-1305.
      */
@@ -198,9 +198,9 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns receive timestamp as defined in RFC-1305.
+     * Returns {@code receive} timestamp as defined in RFC-1305.
      *
-     * @return the receive time. Never returns null.
+     * @return the {@code receive} time. Never returns null.
      */
     @Override
     public TimeStamp getReceiveTimeStamp() {
@@ -332,9 +332,9 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Returns the transmit timestamp as defined in RFC-1305.
+     * Returns the {@code transmit} timestamp as defined in RFC-1305.
      *
-     * @return the transmit timestamp as defined in RFC-1305. Never returns a null object.
+     * @return the {@code transmit} timestamp as defined in RFC-1305. Never returns a null object.
      */
     @Override
     public TimeStamp getTransmitTimeStamp() {

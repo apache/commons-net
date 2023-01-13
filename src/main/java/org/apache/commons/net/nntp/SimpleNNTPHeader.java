@@ -18,7 +18,7 @@
 package org.apache.commons.net.nntp;
 
 /**
- * This class is used to construct the bare minimum acceptable header for most news readers. To construct more complicated headers you should refer to RFC 822.
+ * This class is used to construct the bare minimum acceptable header for most newsreaders. To construct more complicated headers you should refer to RFC 822.
  * When the Java Mail API is finalized, you will be able to use it to compose fully compliant Internet text messages.
  * <p>
  * The main purpose of the class is to faciliatate the article posting process, by relieving the programmer from having to explicitly format an article header.
@@ -63,8 +63,9 @@ public class SimpleNNTPHeader {
     }
 
     /**
-     * Adds an arbitrary header field with the given value to the article header. These headers will be written after the From, Newsgroups, and Subject fields
-     * when the SimpleNNTPHeader is convertered to a string. An example use would be:
+     * Adds an arbitrary header field with the given value to the article header.
+     * These headers will be written after the {@code From}, Newsgroups, and Subject fields
+     * when the SimpleNNTPHeader is converted to a string. An example use would be:
      *
      * <pre>
      * header.addHeaderField("Organization", "Foobar, Inc.");

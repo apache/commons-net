@@ -25,7 +25,7 @@ import java.io.OutputStream;
  * <p>
  * In binary mode, the only conversion is to double IAC.
  * <p>
- * In ASCII mode, if convertCRtoCRLF is true (currently always true), any CR is converted to CRLF. IACs are doubled. Also a bare LF is converted to CRLF and a
+ * In ASCII mode, if convertCRtoCRLF is true (currently always true), any CR is converted to CRLF. IACs are doubled. Also, a bare LF is converted to CRLF and a
  * bare CR is converted to CR\0
  * <p>
  */

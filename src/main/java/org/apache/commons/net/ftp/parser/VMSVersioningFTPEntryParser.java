@@ -50,8 +50,8 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
     /**
      * Constructor for a VMSFTPEntryParser object.
      *
-     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
-     *                                  sign that <code>REGEX</code> is not a valid regular expression.
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. If the exception is seen,
+     *                                  this is a sign that <code>REGEX</code> is not a valid regular expression.
      */
     public VMSVersioningFTPEntryParser() {
         this(null);
@@ -61,8 +61,8 @@ public class VMSVersioningFTPEntryParser extends VMSFTPEntryParser {
      * This constructor allows the creation of a VMSVersioningFTPEntryParser object with something other than the default configuration.
      *
      * @param config The {@link FTPClientConfig configuration} object used to configure this parser.
-     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
-     *                                  sign that <code>REGEX</code> is not a valid regular expression.
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. If the exception is seen,
+     *                                  this is a sign that <code>REGEX</code> is not a valid regular expression.
      * @since 1.4
      */
     public VMSVersioningFTPEntryParser(final FTPClientConfig config) {

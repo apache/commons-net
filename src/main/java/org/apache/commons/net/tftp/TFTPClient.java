@@ -47,7 +47,8 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
 
 public class TFTPClient extends TFTP {
     /**
-     * The default number of times a receive attempt is allowed to timeout before ending attempts to retry the receive and failing. The default is 5 timeouts.
+     * The default number of times a {@code receive} attempt is allowed to timeout before ending attempts to retry the {@code receive} and failing.
+     * The default is 5 timeouts.
      */
     public static final int DEFAULT_MAX_TIMEOUTS = 5;
 
@@ -69,7 +70,7 @@ public class TFTPClient extends TFTP {
     }
 
     /**
-     * Returns the maximum number of times a receive attempt is allowed to timeout before ending attempts to retry the receive and failing.
+     * Returns the maximum number of times a {@code receive} attempt is allowed to timeout before ending attempts to retry the {@code receive} and failing.
      *
      * @return The maximum number of timeouts allowed.
      */
@@ -433,8 +434,8 @@ public class TFTPClient extends TFTP {
     }
 
     /**
-     * Sets the maximum number of times a receive attempt is allowed to timeout during a receiveFile() or sendFile() operation before ending attempts to retry
-     * the receive and failing. The default is DEFAULT_MAX_TIMEOUTS.
+     * Sets the maximum number of times a {@code receive} attempt is allowed to timeout during a receiveFile() or sendFile() operation before ending
+     * attempts to retry the {@code receive} and failing. The default is DEFAULT_MAX_TIMEOUTS.
      *
      * @param numTimeouts The maximum number of timeouts to allow. Values less than 1 should not be used, but if they are, they are treated as 1.
      */

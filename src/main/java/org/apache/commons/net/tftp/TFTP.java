@@ -133,7 +133,7 @@ public class TFTP extends DatagramSocketClient {
      * receive. To use these buffers you must call the bufferedReceive() and bufferedSend() methods instead of send() and receive(). You must also be certain
      * that you don't manipulate the resulting packet in such a way that it interferes with future buffered operations. For example, a TFTPDataPacket received
      * with bufferedReceive() will have a reference to the internal byte buffer. You must finish using this data before calling bufferedReceive() again, or else
-     * the data will be overwritten by the the call.
+     * the data will be overwritten by the call.
      *
      * @return The TFTPPacket received.
      * @throws InterruptedIOException If a socket timeout occurs. The Java documentation claims an InterruptedIOException is thrown on a DatagramSocket timeout,
@@ -159,7 +159,7 @@ public class TFTP extends DatagramSocketClient {
      * receive. To use these buffers you must call the bufferedReceive() and bufferedSend() methods instead of send() and receive(). You must also be certain
      * that you don't manipulate the resulting packet in such a way that it interferes with future buffered operations. For example, a TFTPDataPacket received
      * with bufferedReceive() will have a reference to the internal byte buffer. You must finish using this data before calling bufferedReceive() again, or else
-     * the data will be overwritten by the the call.
+     * the data will be overwritten by the call.
      *
      * @param packet The TFTP packet to send.
      * @throws IOException If some I/O error occurs.
@@ -189,7 +189,7 @@ public class TFTP extends DatagramSocketClient {
                 _socket_.receive(datagram);
             }
         } catch (final SocketException | InterruptedIOException e) {
-            // Do nothing. We timed out so we hope we're caught up.
+            // Do nothing. We timed out, so we hope we're caught up.
         }
 
         setSoTimeout(to);

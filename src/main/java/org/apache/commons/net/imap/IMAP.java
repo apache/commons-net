@@ -193,7 +193,7 @@ public class IMAP extends SocketClient {
     }
 
     /**
-     * Overrides {@link SocketClient#fireReplyReceived(int, String)} so as to avoid creating the reply string if there are no listeners to invoke.
+     * Overrides {@link SocketClient#fireReplyReceived(int, String)} to avoid creating the reply string if there are no listeners to invoke.
      *
      * @param replyCode passed to the listeners
      * @param ignored   the string is only created if there are listeners defined.
@@ -374,7 +374,7 @@ public class IMAP extends SocketClient {
      * @param commandID The ID (tag) of the command.
      * @param command   The IMAP command to send.
      * @param args      The command arguments.
-     * @return The server reply code (either IMAPReply.OK, IMAPReply.NO or IMAPReply.BAD).
+     * @return The server reply code (either {@link IMAPReply#OK}, {@link IMAPReply#NO} or {@link IMAPReply#BAD}).
      */
     private int sendCommandWithID(final String commandID, final String command, final String args) throws IOException {
         final StringBuilder __commandBuffer = new StringBuilder();

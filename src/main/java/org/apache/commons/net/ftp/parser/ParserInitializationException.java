@@ -25,7 +25,7 @@ public class ParserInitializationException extends RuntimeException {
     private static final long serialVersionUID = 5563335279583210658L;
 
     /**
-     * Constucts a ParserInitializationException with just a message
+     * Constructs a ParserInitializationException with just a message
      *
      * @param message Exception message
      */

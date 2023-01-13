@@ -179,7 +179,7 @@ public class FTPSClient extends FTPClient {
     }
 
     /**
-     * Constructor for FTPSClient, using explict mode, calls {@link #FTPSClient(String, boolean)}.
+     * Constructor for FTPSClient, using explicit mode, calls {@link #FTPSClient(String, boolean)}.
      *
      * @param protocol the protocol to use
      */
@@ -204,9 +204,9 @@ public class FTPSClient extends FTPClient {
 
     /**
      * Because there are so many connect() methods, the _connectAction_() method is provided as a means of performing some action immediately after establishing
-     * a connection, rather than reimplementing all of the connect() methods.
+     * a connection, rather than reimplementing all the connect() methods.
      *
-     * @throws IOException If it throw by _connectAction_.
+     * @throws IOException If there is any problem with establishing the connection.
      * @see org.apache.commons.net.SocketClient#_connectAction_()
      */
     @Override
@@ -375,7 +375,7 @@ public class FTPSClient extends FTPClient {
     /**
      * AUTH command.
      *
-     * @throws SSLException If it server reply code not equal "234" and "334".
+     * @throws SSLException If the server reply code equals neither "234" nor "334".
      * @throws IOException  If an I/O error occurs while either sending the command.
      */
     protected void execAUTH() throws SSLException, IOException {

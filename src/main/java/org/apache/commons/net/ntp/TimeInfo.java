@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Wrapper class to network time packet messages (NTP, etc) that computes related timing info and stats.
+ * Wrapper class to network time packet messages (NTP, etc.) that computes related timing info and stats.
  */
 public class TimeInfo {
 
@@ -55,7 +55,7 @@ public class TimeInfo {
 
     /**
      * Create TimeInfo object with raw packet message and destination time received. Auto-computes details if computeDetails flag set otherwise this is delayed
-     * until computeDetails() is called. Delayed computation is for fast intialization when sub-millisecond timing is needed.
+     * until computeDetails() is called. Delayed computation is for fast initialization when sub-millisecond timing is needed.
      *
      * @param msgPacket        NTP message packet
      * @param returnTimeMillis destination receive time
@@ -80,7 +80,7 @@ public class TimeInfo {
 
     /**
      * Create TimeInfo object with raw packet message and destination time received. Auto-computes details if computeDetails flag set otherwise this is delayed
-     * until computeDetails() is called. Delayed computation is for fast intialization when sub-millisecond timing is needed.
+     * until computeDetails() is called. Delayed computation is for fast initialization when sub-millisecond timing is needed.
      *
      * @param message          NTP message packet
      * @param returnTimeMillis destination receive time

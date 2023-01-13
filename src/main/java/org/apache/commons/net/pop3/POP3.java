@@ -67,7 +67,7 @@ public class POP3 extends SocketClient {
     static final String OK_INT = "+ ";
     static final String ERROR = "-ERR";
 
-    // We have to ensure that the protocol communication is in ASCII
+    // We have to ensure that the protocol communication is in ASCII,
     // but we use ISO-8859-1 just in case 8-bit characters cross
     // the wire.
     static final Charset DEFAULT_ENCODING = StandardCharsets.ISO_8859_1;
@@ -233,7 +233,7 @@ public class POP3 extends SocketClient {
      * Sends a command with no arguments to the server and returns the reply code.
      *
      * @param command The POP3 command to send (one of the POP3Command constants).
-     * @return The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
+     * @return The server reply code (either {@code POP3Reply.OK}, {@code POP3Reply.ERROR} or {@code POP3Reply.OK_INT}).
      * @throws IOException on error
      */
     public int sendCommand(final int command) throws IOException {
@@ -245,7 +245,7 @@ public class POP3 extends SocketClient {
      *
      * @param command The POP3 command to send (one of the POP3Command constants).
      * @param args    The command arguments.
-     * @return The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
+     * @return The server reply code (either {@code POP3Reply.OK}, {@code POP3Reply.ERROR} or {@code POP3Reply.OK_INT}).
      * @throws IOException on error
      */
     public int sendCommand(final int command, final String args) throws IOException {
@@ -256,7 +256,7 @@ public class POP3 extends SocketClient {
      * Sends a command with no arguments to the server and returns the reply code.
      *
      * @param command The POP3 command to send.
-     * @return The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
+     * @return The server reply code (either {@code POP3Reply.OK}, {@code POP3Reply.ERROR} or {@code POP3Reply.OK_INT}).
      * @throws IOException on error
      */
     public int sendCommand(final String command) throws IOException {
@@ -268,7 +268,7 @@ public class POP3 extends SocketClient {
      *
      * @param command The POP3 command to send.
      * @param args    The command arguments.
-     * @return The server reply code (either POP3Reply.OK, POP3Reply.ERROR or POP3Reply.OK_INT).
+     * @return The server reply code (either {@code POP3Reply.OK}, {@code POP3Reply.ERROR} or {@code POP3Reply.OK_INT}).
      * @throws IOException on error
      */
     public int sendCommand(final String command, final String args) throws IOException {

@@ -83,7 +83,7 @@ public interface NtpV3Packet {
     String getModeName();
 
     /**
-     * @return the originate time as defined in RFC-1305
+     * @return the {@code originate} time as defined in RFC-1305
      */
     TimeStamp getOriginateTimeStamp();
 
@@ -98,7 +98,7 @@ public interface NtpV3Packet {
     int getPrecision();
 
     /**
-     * @return the receive time as defined in RFC-1305
+     * @return the {@code receive} time as defined in RFC-1305
      */
     TimeStamp getReceiveTimeStamp();
 
@@ -148,7 +148,7 @@ public interface NtpV3Packet {
     int getStratum();
 
     /**
-     * @return the transmit timestamp as defined in RFC-1305
+     * @return the {@code transmit} timestamp as defined in RFC-1305
      */
     TimeStamp getTransmitTimeStamp();
 
@@ -251,7 +251,7 @@ public interface NtpV3Packet {
     void setStratum(int stratum);
 
     /**
-     * Set the transmit timestamp given NTP TimeStamp object.
+     * Set the {@code transmit} timestamp given NTP TimeStamp object.
      *
      * @param ts - timestamp
      */

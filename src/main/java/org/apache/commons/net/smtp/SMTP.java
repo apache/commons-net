@@ -40,7 +40,7 @@ import org.apache.commons.net.util.NetConstants;
  * You should keep in mind that the SMTP server may choose to prematurely close a connection for various reasons. The SMTP class will detect a premature SMTP
  * server connection closing when it receives a {@link org.apache.commons.net.smtp.SMTPReply#SERVICE_NOT_AVAILABLE SMTPReply.SERVICE_NOT_AVAILABLE } response to
  * a command. When that occurs, the SMTP class method encountering that reply will throw an {@link org.apache.commons.net.smtp.SMTPConnectionClosedException} .
- * <code>SMTPConectionClosedException</code> is a subclass of <code> IOException </code> and therefore need not be caught separately, but if you are going to
+ * <code>SMTPConnectionClosedException</code> is a subclass of <code> IOException </code> and therefore need not be caught separately, but if you are going to
  * catch it separately, its catch block must appear before the more general <code> IOException </code> catch block. When you encounter an
  * {@link org.apache.commons.net.smtp.SMTPConnectionClosedException} , you must disconnect the connection with
  * {@link org.apache.commons.net.SocketClient#disconnect disconnect() } to properly clean up the system resources used by SMTP. Before disconnecting, you may
@@ -61,7 +61,7 @@ public class SMTP extends SocketClient {
     /** The default SMTP port (25). */
     public static final int DEFAULT_PORT = 25;
 
-    // We have to ensure that the protocol communication is in ASCII
+    // We have to ensure that the protocol communication is in ASCII,
     // but we use ISO-8859-1 just in case 8-bit characters cross
     // the wire.
     private static final String DEFAULT_ENCODING = "ISO-8859-1";
@@ -97,7 +97,7 @@ public class SMTP extends SocketClient {
     /**
      * Overloaded constructor where the user may specify a default encoding.
      *
-     * @param encoding the encoing to use
+     * @param encoding the encoding to use
      * @since 2.0
      */
     public SMTP(final String encoding) {
@@ -336,7 +336,7 @@ public class SMTP extends SocketClient {
      * A convenience method to send the SMTP MAIL command to the server, receive the reply, and return the reply code.
      * <p>
      *
-     * @param reversePath The reverese path.
+     * @param reversePath The reverse path.
      * @return The reply code received from the server.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                       causing the server to send SMTP reply code 421. This exception may be caught either as an IOException or
@@ -420,7 +420,7 @@ public class SMTP extends SocketClient {
      * A convenience method to send the SMTP SAML command to the server, receive the reply, and return the reply code.
      * <p>
      *
-     * @param reversePath The reverese path.
+     * @param reversePath The reverse path.
      * @return The reply code received from the server.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                       causing the server to send SMTP reply code 421. This exception may be caught either as an IOException or
@@ -435,7 +435,7 @@ public class SMTP extends SocketClient {
      * A convenience method to send the SMTP SEND command to the server, receive the reply, and return the reply code.
      * <p>
      *
-     * @param reversePath The reverese path.
+     * @param reversePath The reverse path.
      * @return The reply code received from the server.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                       causing the server to send SMTP reply code 421. This exception may be caught either as an IOException or
@@ -481,7 +481,7 @@ public class SMTP extends SocketClient {
 
     /**
      *
-     * @param command      the command to send (as an int defined in {@link SMPTCommand})
+     * @param command      the command to send (as an int defined in {@link SMTPCommand})
      * @param args         the command arguments, may be {@code null}
      * @param includeSpace if {@code true}, add a space between the command and its arguments
      * @return the reply code
@@ -559,7 +559,7 @@ public class SMTP extends SocketClient {
      * A convenience method to send the SMTP SOML command to the server, receive the reply, and return the reply code.
      * <p>
      *
-     * @param reversePath The reverese path.
+     * @param reversePath The reverse path.
      * @return The reply code received from the server.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                       causing the server to send SMTP reply code 421. This exception may be caught either as an IOException or

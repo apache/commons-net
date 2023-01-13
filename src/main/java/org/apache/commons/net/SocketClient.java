@@ -139,7 +139,7 @@ public abstract class SocketClient {
 
     /**
      * Because there are so many connect() methods, the _connectAction_() method is provided as a means of performing some action immediately after establishing
-     * a connection, rather than reimplementing all of the connect() methods. The last action performed by every connect() method after opening a socket is to
+     * a connection, rather than reimplementing all the connect() methods. The last action performed by every connect() method after opening a socket is to
      * call this method.
      * <p>
      * This method sets the timeout on the just opened socket to the default timeout set by {@link #setDefaultTimeout setDefaultTimeout() }, sets _input_ and
@@ -353,7 +353,7 @@ public abstract class SocketClient {
      *
      * @return the charset.
      * @since 3.3
-     * @deprecated Since the code now requires Java 1.6 as a mininmum
+     * @deprecated Since the code now requires Java 1.6 as a minimum
      */
     @Deprecated
     public String getCharsetName() {
@@ -361,7 +361,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Subclasses can override this if they need to provide their own instance field for backwards compatibilty.
+     * Subclasses can override this if they need to provide their own instance field for backwards compatibility.
      *
      * @return the CommandSupport instance, may be {@code null}
      * @since 3.0
@@ -632,7 +632,7 @@ public abstract class SocketClient {
 
     /**
      * Set the default timeout in milliseconds to use when opening a socket. This value is only used previous to a call to {@link #connect connect()} and should
-     * not be confused with {@link #setSoTimeout setSoTimeout()} which operates on an the currently opened socket. _timeout_ contains the new timeout value.
+     * not be confused with {@link #setSoTimeout setSoTimeout()} which operates on the currently opened socket. _timeout_ contains the new timeout value.
      *
      * @param timeout The timeout in milliseconds to use for the socket connection.
      */
@@ -721,7 +721,7 @@ public abstract class SocketClient {
      * Sets the SO_LINGER timeout on the currently opened socket.
      *
      * @param on  True if linger is to be enabled, false if not.
-     * @param val The linger timeout (in hundredths of a second?)
+     * @param val The {@code linger} timeout (in hundredths of a second?)
      * @throws SocketException      If the operation fails.
      * @throws NullPointerException if the socket is not currently open
      */
@@ -754,7 +754,7 @@ public abstract class SocketClient {
     }
 
     /**
-     * Verifies that the remote end of the given socket is connected to the the same host that the SocketClient is currently connected to. This is useful for
+     * Verifies that the remote end of the given socket is connected to the same host that the SocketClient is currently connected to. This is useful for
      * doing a quick security check when a client needs to accept a connection from a server, such as an FTP data connection or a BSD R command standard error
      * stream.
      *

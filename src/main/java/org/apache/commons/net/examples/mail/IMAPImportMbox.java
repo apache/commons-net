@@ -195,7 +195,7 @@ public final class IMAPImportMbox {
      * Is the message wanted?
      *
      * @param msgNum   the message number
-     * @param line     the From line
+     * @param line     the {@code From} line
      * @param msgNums  the list of wanted message numbers
      * @param contains the list of strings to be contained
      * @return true if the message is wanted

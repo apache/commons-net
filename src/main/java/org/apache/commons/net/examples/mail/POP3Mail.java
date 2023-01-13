@@ -29,7 +29,7 @@ import org.apache.commons.net.pop3.POP3SClient;
 
 /**
  * This is an example program demonstrating how to use the POP3[S]Client class. This program connects to a POP3[S] server and retrieves the message headers of
- * all the messages, printing the From: and Subject: header entries for each message.
+ * all the messages, printing the {@code From:} and {@code Subject:} header entries for each message.
  * <p>
  * See main() method for usage details
  */

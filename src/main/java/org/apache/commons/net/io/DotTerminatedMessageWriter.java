@@ -22,15 +22,12 @@ import java.io.Writer;
 
 /**
  * DotTerminatedMessageWriter is a class used to write messages to a server that are terminated by a single dot followed by a &lt;CR&gt;&lt;LF&gt; sequence and
- * with double dots appearing at the begining of lines which do not signal end of message yet start with a dot. Various Internet protocols such as NNTP and POP3
- * produce messages of this type.
+ * with double dots appearing at the beginning of lines which do not signal end of message yet start with a dot. Various Internet protocols such as
+ * NNTP and POP3 produce messages of this type.
  * <p>
  * This class handles the doubling of line-starting periods, converts single linefeeds to NETASCII newlines, and on closing will send the final message
  * terminator dot and NETASCII newline sequence.
- *
- *
  */
-
 public final class DotTerminatedMessageWriter extends Writer {
     private static final int NOTHING_SPECIAL_STATE = 0;
     private static final int LAST_WAS_CR_STATE = 1;

@@ -119,7 +119,7 @@ public class EnterpriseUnixFTPEntryParser extends RegexFTPFileEntryParserImpl {
                     cal.set(Calendar.YEAR, Integer.parseInt(yr));
                     missingUnit = Calendar.HOUR_OF_DAY;
                 } else {
-                    // it must be hour/minute or we wouldn't have matched
+                    // it must be hour/minute, or we wouldn't have matched
                     missingUnit = Calendar.SECOND;
                     int year = cal.get(Calendar.YEAR);
 

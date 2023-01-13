@@ -90,7 +90,7 @@ public class SMTPSClient extends SMTPClient {
     /** The {@link HostnameVerifier} to use post-TLS, default null (i.e. no verification). */
     private HostnameVerifier hostnameVerifier;
 
-    /** Use Java 1.7+ HTTPS Endpoint Identification Algorithim. */
+    /** Use Java 1.7+ HTTPS Endpoint Identification Algorithm. */
     private boolean tlsEndpointChecking;
 
     /**
@@ -167,7 +167,7 @@ public class SMTPSClient extends SMTPClient {
 
     /**
      * Because there are so many connect() methods, the _connectAction_() method is provided as a means of performing some action immediately after establishing
-     * a connection, rather than reimplementing all of the connect() methods.
+     * a connection, rather than reimplementing all the connect() methods.
      *
      * @throws IOException If it is thrown by _connectAction_().
      * @see org.apache.commons.net.SocketClient#_connectAction_()

@@ -68,7 +68,7 @@ public final class NNTPReply {
 
     /**
      * Determine if a reply code is an informational response. All codes beginning with a 1 are positive informational responses. Informational responses are
-     * used to provide human readable information such as help text.
+     * used to provide human-readable information such as help text.
      * <p>
      *
      * @param reply The reply code to test.
@@ -117,7 +117,7 @@ public final class NNTPReply {
 
     /**
      * Determine if a reply code is a positive intermediate response. All codes beginning with a 3 are positive intermediate responses. The NNTP server will
-     * send a positive intermediate response on the successful completion of one part of a multi-part command or sequence of commands. For example, after a
+     * send a positive intermediate response on the successful completion of one part of a multipart command or sequence of commands. For example, after a
      * successful POST command, a positive intermediate response will be sent to indicate that the server is ready to receive the article to be posted.
      * <p>
      *

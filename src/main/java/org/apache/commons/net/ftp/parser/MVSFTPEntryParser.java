@@ -157,8 +157,8 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * --------------------------------------------------------------------- Very brief and incomplete description of the zOS/MVS-file system. (Note: "zOS" is
      * the operating system on the mainframe, and is the new name for MVS)
      *
-     * The file system on the mainframe does not have hierarchal structure as for example the unix file system. For a more comprehensive description, please
-     * refer to the IBM manuals
+     * The file system on the mainframe does not have hierarchical structure as for example the unix file system. For a more comprehensive description,
+     * please refer to the IBM manuals
      *
      * @LINK: http://publibfp.boulder.ibm.com/cgi-bin/bookmgr/BOOKS/dgt2d440/CONTENTS
      *
@@ -171,7 +171,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      *
      * Dataset organisation ====================
      *
-     * A dataset represents a piece of storage allocated on one or more disks. The structure of the storage is described with the field dataset organinsation
+     * A dataset represents a piece of storage allocated on one or more disks. The structure of the storage is described with the field dataset organisation
      * (DSORG). There are a number of dataset organisations, but only two are usable for FTP transfer.
      *
      * DSORG: PS: sequential, or flat file PO: partitioned dataset PO-E: extended partitioned dataset
@@ -184,16 +184,16 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      *
      * Dataset record format =====================
      *
-     * The physical layout of the dataset is described on the dataset itself. There are a number of record formats (RECFM), but just a few is relavant for the
+     * The physical layout of the dataset is described on the dataset itself. There are a number of record formats (RECFM), but just a few is relevant for the
      * FTP transfer.
      *
-     * Any one beginning with either F or V can safely used by FTP transfer. All others should only be used with great care. F means a fixed number of records
-     * per allocated storage, and V means a variable number of records.
+     * Any one beginning with either F or V can safely be used by FTP transfer. All others should only be used with great care. F means a fixed number of
+     * records per allocated storage, and V means a variable number of records.
      *
      *
      * Other notes ===========
      *
-     * The file system supports automatically backup and retrieval of datasets. If a file is backed up, the ftp LIST command will return: ARCIVE Not Direct
+     * The file system supports automatically backup and retrieval of datasets. If a file is backed up, the ftp LIST command will return: ARCHIVE Not Direct
      * Access Device KJ.IOP998.ERROR.PL.UNITTEST
      *
      *
@@ -240,16 +240,16 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
     /**
      * Parse entries representing a dataset list. Only datasets with DSORG PS or PO or PO-E and with RECFM F[B], V[B], U will be parsed.
-     *
+     * <p>
      * Format of ZOS/MVS file list: 1 2 3 4 5 6 7 8 9 10 Volume Unit Referred Ext Used Recfm Lrecl BlkSz Dsorg Dsname B10142 3390 2006/03/20 2 31 F 80 80 PS
-     * MDI.OKL.WORK ARCIVE Not Direct Access Device KJ.IOP998.ERROR.PL.UNITTEST B1N231 3390 2006/03/20 1 15 VB 256 27998 PO PLU B1N231 3390 2006/03/20 1 15 VB
+     * MDI.OKL.WORK ARCHIVE Not Direct Access Device KJ.IOP998.ERROR.PL.UNITTEST B1N231 3390 2006/03/20 1 15 VB 256 27998 PO PLU B1N231 3390 2006/03/20 1 15 VB
      * 256 27998 PO-E PLB
-     *
+     * <p>
      * ----------------------------------- Group within Regex [1] Volume [2] Unit [3] Referred [4] Ext: number of extents [5] Used [6] Recfm: Record format [7]
      * Lrecl: Logical record length [8] BlkSz: Block size [9] Dsorg: Dataset organisation. Many exists but only support: PS, PO, PO-E [10] Dsname: Dataset name
-     *
-     * Note: When volume is ARCIVE, it means the dataset is stored somewhere in a tape archive. These entries is currently not supported by this parser. A null
-     * value is returned.
+     * <p>
+     * Note: When volume is ARCHIVE, it means the dataset is stored somewhere in a tape archive. These entries are currently not supported by this parser.
+     * A null value is returned.
      *
      * @param entry zosDirectoryEntry
      * @return null: entry was not parsed.
@@ -279,8 +279,8 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * Parses a line of an z/OS - MVS FTP server file listing and converts it into a usable format in the form of an <code> FTPFile </code> instance. If the
-     * file listing line doesn't describe a file, then <code> null </code> is returned. Otherwise a <code> FTPFile </code> instance representing the file is
+     * Parses a line of a z/OS - MVS FTP server file listing and converts it into a usable format in the form of an <code> FTPFile </code> instance. If the
+     * file listing line doesn't describe a file, then <code> null </code> is returned. Otherwise, a <code> FTPFile </code> instance representing the file is
      * returned.
      *
      * @param entry A line of text from the file listing
@@ -437,9 +437,12 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * preParse is called as part of the interface. Per definition is is called before the parsing takes place. Three kind of lists is recognize: z/OS-MVS File
-     * lists z/OS-MVS Member lists unix file lists
-     *
+     * preParse is called as part of the interface. Per definition, it is called before the parsing takes place. Three kinds of lists are recognized:
+     * <ul>
+     *     <li>z/OS-MVS File lists,</li>
+     *     <li>z/OS-MVS Member lists,</li>
+     *     <li>unix file lists.</li>
+     * </ul>
      * @since 2.0
      */
     @Override

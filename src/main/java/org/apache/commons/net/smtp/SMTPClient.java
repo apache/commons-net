@@ -71,7 +71,7 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  * You should keep in mind that the SMTP server may choose to prematurely close a connection for various reasons. The SMTPClient class will detect a premature
  * SMTP server connection closing when it receives a {@link org.apache.commons.net.smtp.SMTPReply#SERVICE_NOT_AVAILABLE SMTPReply.SERVICE_NOT_AVAILABLE }
  * response to a command. When that occurs, the method encountering that reply will throw an {@link org.apache.commons.net.smtp.SMTPConnectionClosedException} .
- * <code>SMTPConectionClosedException</code> is a subclass of <code> IOException </code> and therefore need not be caught separately, but if you are going to
+ * <code>SMTPConnectionClosedException</code> is a subclass of <code> IOException </code> and therefore need not be caught separately, but if you are going to
  * catch it separately, its catch block must appear before the more general <code> IOException </code> catch block. When you encounter an
  * {@link org.apache.commons.net.smtp.SMTPConnectionClosedException} , you must disconnect the connection with {@link #disconnect disconnect() } to properly
  * clean up the system resources used by SMTPClient. Before disconnecting, you may check the last reply code and text with
@@ -206,7 +206,8 @@ public class SMTPClient extends SMTP {
     }
 
     /**
-     * Login to the SMTP server by sending the HELO command with the client hostname as an argument. Before performing any mail commands, you must first login.
+     * Login to the SMTP server by sending the {@code HELO} command with the client hostname as an argument.
+     * Before performing any mail commands, you must first log in.
      * <p>
      *
      * @return True if successfully completed, false if not.
@@ -230,7 +231,8 @@ public class SMTPClient extends SMTP {
     }
 
     /**
-     * Login to the SMTP server by sending the HELO command with the given hostname as an argument. Before performing any mail commands, you must first login.
+     * Login to the SMTP server by sending the {@code HELO} command with the given hostname as an argument.
+     * Before performing any mail commands, you must first log in.
      * <p>
      *
      * @param hostname The hostname with which to greet the SMTP server.
@@ -259,7 +261,7 @@ public class SMTPClient extends SMTP {
     }
 
     /**
-     * Aborts the current mail transaction, resetting all server stored sender, recipient, and mail data, cleaing all buffers and tables.
+     * Aborts the current mail transaction, resetting all server stored sender, recipient, and mail data, cleaning all buffers and tables.
      * <p>
      *
      * @return True if successfully completed, false if not.
@@ -277,7 +279,7 @@ public class SMTPClient extends SMTP {
      * written. Null is returned if the DATA command fails.
      * <p>
      * You must not issue any commands to the SMTP server (i.e., call any (other methods) until you finish writing to the returned Writer instance and close it.
-     * The SMTP protocol uses the same stream for issuing commands as it does for returning results. Therefore the returned Writer actually writes directly to
+     * The SMTP protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned Writer actually writes directly to
      * the SMTP connection. After you close the writer, you can execute new commands. If you do not follow these requirements your program will not work
      * properly.
      * <p>

@@ -90,7 +90,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     }
 
     /*
-     * Sets the Calendar precision (used by FTPFile#toFormattedDate) by clearing the immediately preceeding unit (if any). Unfortunately the clear(int) method
+     * Sets the Calendar precision (used by FTPFile#toFormattedDate) by clearing the immediately preceding unit (if any). Unfortunately the clear(int) method
      * results in setting all other units.
      */
     private static void setPrecision(final int index, final Calendar working) {
@@ -361,7 +361,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
     }
 
     /**
-     * sets a TimeZone represented by the supplied ID string into all of the parsers used by this server.
+     * sets a TimeZone represented by the supplied ID string into all the parsers used by this server.
      *
      * @param serverTimeZoneId Time Id java.util.TimeZone id used by the ftp server. If null the client's local time zone is assumed.
      */

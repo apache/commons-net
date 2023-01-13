@@ -25,13 +25,13 @@ import org.apache.commons.net.util.NetConstants;
 
 /**
  * DotTerminatedMessageReader is a class used to read messages from a server that are terminated by a single dot followed by a &lt;CR&gt;&lt;LF&gt; sequence and
- * with double dots appearing at the begining of lines which do not signal end of message yet start with a dot. Various Internet protocols such as NNTP and POP3
- * produce messages of this type.
+ * with double dots appearing at the beginning of lines which do not signal end of message yet start with a dot. Various Internet protocols such as
+ * NNTP and POP3 produce messages of this type.
  * <p>
  * This class handles stripping of the duplicate period at the beginning of lines starting with a period, and ensures you cannot read past the end of the
  * message.
  * <p>
- * Note: versions since 3.0 extend BufferedReader rather than Reader, and no longer change the CRLF into the local EOL. Also only DOT CR LF acts as EOF.
+ * Note: versions since 3.0 extend BufferedReader rather than Reader, and no longer change the CRLF into the local EOL. Also, only DOT CR LF acts as EOF.
  */
 public final class DotTerminatedMessageReader extends BufferedReader {
     private static final char LF = '\n';

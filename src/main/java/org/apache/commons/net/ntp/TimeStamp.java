@@ -109,7 +109,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      */
 
     /**
-     * Helper method to convert Java time to NTP timestamp object. Note that Java time (milliseconds) by definition has less precision then NTP time
+     * Helper method to convert Java time to NTP timestamp object. Note that Java time (milliseconds) by definition has less precision than NTP time
      * (picoseconds) so converting Ntptime to Javatime and back to Ntptime loses precision. For example, Tue, Dec 17 2002 09:07:24.810 is represented by a
      * single Java-based time value of f22cd1fc8a, but its NTP equivalent are all values from c1a9ae1c.cf5c28f5 to c1a9ae1c.cf9db22c.
      *
@@ -123,7 +123,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     /**
      * Converts 64-bit NTP timestamp to Java standard time.
      *
-     * Note that java time (milliseconds) by definition has less precision then NTP time (picoseconds) so converting NTP timestamp to java time and back to NTP
+     * Note that java time (milliseconds) by definition has less precision than NTP time (picoseconds) so converting NTP timestamp to java time and back to NTP
      * timestamp loses precision. For example, Tue, Dec 17 2002 09:07:24.810 EST is represented by a single Java-based time value of f22cd1fc8a, but its NTP
      * equivalent are all values ranging from c1a9ae1c.cf5c28f5 to c1a9ae1c.cf9db22c.
      *
