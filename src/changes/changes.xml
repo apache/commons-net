@@ -67,6 +67,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" issue="NET-650" dev="ggregory" due-to="Matthew McGillis, exceptionfactory, sebbASF">
         Delegate host resolution to Socket.connect() #138.
       </action>
+      <action type="fix" dev="ggregory" due-to="Martin Wiesner, Gary Gregory, sebbASF">
+        Fixes many grammar issues and typos in JavaDoc and code comments #141.
+      </action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Dependabot">
         Bump commons-parent from 54 to 56 #132, #137.
