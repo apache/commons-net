@@ -73,7 +73,7 @@ public class ExtendedPOP3Client extends POP3SClient {
      * <p>
      *
      * @param method   the {@link AUTH_METHOD} to use
-     * @param username the user name
+     * @param username the username
      * @param password the password
      * @return True if successfully completed, false if not.
      * @throws IOException              If an I/O error occurs while either sending a command to the server or receiving a reply from the server.

@@ -37,8 +37,8 @@ import org.apache.commons.net.pop3.POP3SClient;
  * file.
  * <p>
  * The code currently assumes that POP3Client decodes the POP3 data as iso-8859-1. The POP3 standard only allows for ASCII so in theory iso-8859-1 should be OK.
- * However it appears that actual POP3 implementations may return 8bit data that is outside the ASCII range; this may result in loss of data when the mailbox is
- * created.
+ * However, it appears that actual POP3 implementations may return 8bit data that is outside the ASCII range; this may result in loss of data when the mailbox
+ * is created.
  * <p>
  * See main() method for usage details
  */

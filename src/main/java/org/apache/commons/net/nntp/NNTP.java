@@ -60,7 +60,7 @@ public class NNTP extends SocketClient {
     /** The default NNTP port. Its value is 119 according to RFC 977. */
     public static final int DEFAULT_PORT = 119;
 
-    // We have to ensure that the protocol communication is in ASCII
+    // We have to ensure that the protocol communication is in ASCII,
     // but we use ISO-8859-1 just in case 8-bit characters cross
     // the wire.
     private static final Charset DEFAULT_ENCODING = StandardCharsets.ISO_8859_1;

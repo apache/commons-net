@@ -70,7 +70,7 @@ public class Base64 {
      * This array is a lookup table that translates 6-bit positive integer index values into their "Base64 Alphabet" equivalents as specified in Table 1 of RFC
      * 2045.
      *
-     * Thanks to "commons" project in ws.apache.org for this code. http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
+     * Thanks to "commons" project in ws.apache.org for <a href="http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/">this code</a>.
      */
     private static final byte[] STANDARD_ENCODE_TABLE = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
             'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
@@ -96,7 +96,7 @@ public class Base64 {
      * Note: '+' and '-' both decode to 62. '/' and '_' both decode to 63. This means decoder seamlessly handles both URL_SAFE and STANDARD base64. (The
      * encoder, on the other hand, needs to know ahead of time what to emit).
      *
-     * Thanks to "commons" project in ws.apache.org for this code. http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
+     * Thanks to "commons" project in ws.apache.org for <a href="http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/">this code</a>
      */
     private static final byte[] DECODE_TABLE = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, 62, -1, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1, -1,
@@ -336,7 +336,7 @@ public class Base64 {
     }
 
     /**
-     * Tests a given byte array to see if it contains only valid characters within the Base64 alphabet. Currently the method treats whitespace as valid.
+     * Tests a given byte array to see if it contains only valid characters within the Base64 alphabet. Currently, the method treats whitespace as valid.
      *
      * @param arrayOctet byte array to test
      * @return <code>true</code> if all bytes are valid characters in the Base64 alphabet or if the byte array is empty; false, otherwise
@@ -354,7 +354,7 @@ public class Base64 {
      * Returns whether or not the <code>octet</code> is in the base 64 alphabet.
      *
      * @param octet The value to test
-     * @return <code>true</code> if the value is defined in the the base 64 alphabet, <code>false</code> otherwise.
+     * @return <code>true</code> if the value is defined in the base 64 alphabet, <code>false</code> otherwise.
      * @since 1.4
      */
     public static boolean isBase64(final byte octet) {
@@ -416,7 +416,7 @@ public class Base64 {
 
     /**
      * Encode table to use: either STANDARD or URL_SAFE. Note: the DECODE_TABLE above remains static because it is able to decode both STANDARD and URL_SAFE
-     * streams, but the encodeTable must be a member variable so we can switch between the two modes.
+     * streams, but the encodeTable must be a member variable, so we can switch between the two modes.
      */
     private final byte[] encodeTable;
 
@@ -474,7 +474,7 @@ public class Base64 {
     private boolean eof;
 
     /**
-     * Place holder for the 3 bytes we're dealing with for our base64 logic. Bitwise operations store and extract the base64 encoding or decoding from this
+     * Placeholder for the 3 bytes we're dealing with for our base64 logic. Bitwise operations store and extract the base64 encoding or decoding from this
      * variable.
      */
     private int x;
@@ -522,8 +522,8 @@ public class Base64 {
      * When decoding all variants are supported.
      * </p>
      *
-     * @param lineLength Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 4). If {@code lineLength <= 0}, then
-     *                   the output will not be divided into lines (chunks). Ignored when decoding.
+     * @param lineLength Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 4).
+     *                   If {@code lineLength <= 0}, then the output will not be divided into lines (chunks). Ignored when decoding.
      * @since 1.4
      */
     public Base64(final int lineLength) {
@@ -542,8 +542,8 @@ public class Base64 {
      * When decoding all variants are supported.
      * </p>
      *
-     * @param lineLength    Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 4). If {@code lineLength <= 0},
-     *                      then the output will not be divided into lines (chunks). Ignored when decoding.
+     * @param lineLength    Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 4).
+     *                      If {@code lineLength <= 0}, then the output will not be divided into lines (chunks). Ignored when decoding.
      * @param lineSeparator Each line of encoded data will end with this sequence of bytes.
      * @throws IllegalArgumentException Thrown when the provided lineSeparator included some base64 characters.
      * @since 1.4
@@ -564,8 +564,8 @@ public class Base64 {
      * When decoding all variants are supported.
      * </p>
      *
-     * @param lineLength    Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 4). If {@code lineLength <= 0},
-     *                      then the output will not be divided into lines (chunks). Ignored when decoding.
+     * @param lineLength    Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 4).
+     *                      If {@code lineLength <= 0}, then the output will not be divided into lines (chunks). Ignored when decoding.
      * @param lineSeparator Each line of encoded data will end with this sequence of bytes.
      * @param urlSafe       Instead of emitting '+' and '/' we emit '-' and '_' respectively. urlSafe is only applied to encode operations. Decoding seamlessly
      *                      handles both modes.
@@ -603,7 +603,7 @@ public class Base64 {
     }
 
     /**
-     * Decodes a byte[] containing containing characters in the Base64 alphabet.
+     * Decodes a byte[] containing characters in the Base64 alphabet.
      *
      * @param pArray A byte array containing Base64 character data
      * @return a byte array containing binary data
@@ -622,7 +622,7 @@ public class Base64 {
         // Would be nice to just return buf (like we sometimes do in the encode
         // logic), but we have no idea what the line-length was (could even be
         // variable). So we cannot determine ahead of time exactly how big an
-        // array is necessary. Hence the need to construct a 2nd byte array to
+        // array is necessary. Hence, the need to construct a 2nd byte array to
         // hold the final result:
 
         final byte[] result = new byte[pos];
@@ -641,7 +641,11 @@ public class Base64 {
      * </p>
      * <p>
      * Thanks to "commons" project in ws.apache.org for the bitwise operations, and general approach.
+     * <p>
+     * See: <a href="http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/">
      * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
+     * </a>
+     *
      * </p>
      *
      * @param in      byte[] array of ascii data to base64 decode.
@@ -700,7 +704,7 @@ public class Base64 {
     }
 
     /**
-     * Decodes a String containing containing characters in the Base64 alphabet.
+     * Decodes a String containing characters in the Base64 alphabet.
      *
      * @param pArray A String containing Base64 character data
      * @return a byte array containing binary data
@@ -747,7 +751,10 @@ public class Base64 {
      * </p>
      * <p>
      * Thanks to "commons" project in ws.apache.org for the bitwise operations, and general approach.
+     * <p>
+     * See: <a href="http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/">
      * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
+     * </a>
      * </p>
      *
      * @param in      byte[] array of binary data to base64 encode.

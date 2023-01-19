@@ -123,7 +123,7 @@ public abstract class TFTPPacket {
     InetAddress address;
 
     /**
-     * This constructor is not visible outside of the package. It is used by subclasses within the package to initialize base data.
+     * This constructor is not visible outside the package. It is used by subclasses within the package to initialize base data.
      *
      * @param type    The type of the packet.
      * @param address The host the packet came from or is going to be sent.
@@ -172,7 +172,7 @@ public abstract class TFTPPacket {
     public abstract DatagramPacket newDatagram();
 
     /**
-     * This is an abstract method only available within the package for implementing efficient datagram transport by elminating buffering. It takes a datagram
+     * This is an abstract method only available within the package for implementing efficient datagram transport by eliminating buffering. It takes a datagram
      * as an argument, and a byte buffer in which to store the raw datagram data. Inside the method, the data should be set as the datagram's data and the
      * datagram returned.
      *

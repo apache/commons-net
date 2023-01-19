@@ -131,7 +131,7 @@ public final class FTPReply {
 
     /**
      * Determine if a reply code is a positive intermediate response. All codes beginning with a 3 are positive intermediate responses. The FTP server will send
-     * a positive intermediate response on the successful completion of one part of a multi-part sequence of commands. For example, after a successful USER
+     * a positive intermediate response on the successful completion of one part of a multipart sequence of commands. For example, after a successful USER
      * command, a positive intermediate response will be sent to indicate that the server is ready for the PASS command.
      *
      * @param reply The reply code to test.
@@ -144,7 +144,7 @@ public final class FTPReply {
     /**
      * Determine if a reply code is a positive preliminary response. All codes beginning with a 1 are positive preliminary responses. Postitive preliminary
      * responses are used to indicate tentative success. No further commands can be issued to the FTP server after a positive preliminary response until a
-     * follow up response is received from the server.
+     * follow-up response is received from the server.
      *
      * @param reply The reply code to test.
      * @return True if a reply code is a positive preliminary response, false if not.

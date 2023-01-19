@@ -444,8 +444,9 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Parse the pathname from a CWD reply.
      * <p>
-     * According to RFC959 (http://www.ietf.org/rfc/rfc959.txt), it should be the same as for MKD i.e. {@code 257<space>"<directory-name>"[<space>commentary]}
-     * where any double-quotes in {@code <directory-name>} are doubled. Unlike MKD, the commentary is optional.
+     * According to <a href="http://www.ietf.org/rfc/rfc959.txt">RFC959</a>, it should be the same as for MKD i.e.
+     * {@code 257<space>"<directory-name>"[<space>commentary]} where any double-quotes in {@code <directory-name>} are doubled.
+     * Unlike MKD, the commentary is optional.
      * <p>
      * However, see NET-442 for an exception.
      *
@@ -1408,7 +1409,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Queries the server for a supported feature, and returns the its value (if any). Caches the parsed response to avoid resending the command repeatedly.
+     * Queries the server for a supported feature, and returns its value (if any). Caches the parsed response to avoid resending the command repeatedly.
      *
      * @param feature the feature to check
      *
@@ -1560,7 +1561,7 @@ public class FTPClient extends FTP implements Configurable {
      * <p>
      * <b>For debug use only</b>
      * <p>
-     * Currently contains:
+     * Currently, it contains:
      * <ul>
      * <li>successfully acked NOOPs at end of transfer</li>
      * <li>unanswered NOOPs at end of transfer</li>
@@ -1577,9 +1578,9 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Returns the current data connection mode (one of the <code> _DATA_CONNECTION_MODE </code> constants.
+     * Returns the current data connection mode (one of the <code> _DATA_CONNECTION_MODE </code> constants).
      *
-     * @return The current data connection mode (one of the <code> _DATA_CONNECTION_MODE </code> constants.
+     * @return The current data connection mode (one of the <code> _DATA_CONNECTION_MODE </code> constants).
      */
     public int getDataConnectionMode() {
         return dataConnectionMode;
@@ -1922,10 +1923,10 @@ public class FTPClient extends FTP implements Configurable {
             // Don't create map here, because next line may throw exception
             final int replyCode = feat();
             if (replyCode == FTPReply.NOT_LOGGED_IN) { // 503
-                return false; // NET-518; don't create empy map
+                return false; // NET-518; don't create empty map
             }
             final boolean success = FTPReply.isPositiveCompletion(replyCode);
-            // we init the map here, so we don't keep trying if we know the command will fail
+            // init the map here, so we don't keep trying if we know the command will fail
             featuresMap = new HashMap<>();
             if (!success) {
                 return false;
@@ -2143,9 +2144,9 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Whether should attempt to use EPSV with IPv4. Default (if not set) is <code>false</code>
+     * Whether to attempt using EPSV with IPv4. Default (if not set) is <code>false</code>
      *
-     * @return true if should attempt EPSV
+     * @return true if EPSV shall be attempted with IPv4.
      * @since 2.2
      */
     public boolean isUseEPSVwithIPv4() {
@@ -2287,7 +2288,7 @@ public class FTPClient extends FTP implements Configurable {
      *
      * @param pathname the initial path, may be null
      * @param filter   the filter, non-null
-     * @return the list of FTPFile entries.
+     * @return the array of FTPFile entries.
      * @throws IOException on error
      * @since 2.2
      */
@@ -2397,7 +2398,7 @@ public class FTPClient extends FTP implements Configurable {
             return true;
         }
 
-        // If we get here, we either have an error code, or an intermmediate
+        // If we get here, we either have an error code, or an intermediate
         // reply requesting password.
         if (!FTPReply.isPositiveIntermediate(_replyCode)) {
             return false;
@@ -2426,7 +2427,7 @@ public class FTPClient extends FTP implements Configurable {
             return true;
         }
 
-        // If we get here, we either have an error code, or an intermmediate
+        // If we get here, we either have an error code, or an intermediate
         // reply requesting password.
         if (!FTPReply.isPositiveIntermediate(_replyCode)) {
             return false;
@@ -3077,7 +3078,7 @@ public class FTPClient extends FTP implements Configurable {
      * <b>N.B.</b> currently calling any connect method will reset the type to FTP.ASCII_FILE_TYPE and the formatOrByteSize to FTP.NON_PRINT_TEXT_FORMAT.
      *
      * @param fileType         The <code> _FILE_TYPE </code> constant indicating the type of file.
-     * @param formatOrByteSize The format of the file (one of the <code>_FORMAT</code> constants. In the case of <code>LOCAL_FILE_TYPE</code>, the byte size.
+     * @param formatOrByteSize The format of the file (one of the <code>_FORMAT</code> constants). In the case of <code>LOCAL_FILE_TYPE</code>, the byte size.
      *
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -3111,7 +3112,7 @@ public class FTPClient extends FTP implements Configurable {
 
     /**
      * You can set this to true if you would like to get hidden files when {@link #listFiles} too. A <code>LIST -a</code> will be issued to the ftp server. It
-     * depends on your ftp server if you need to call this method, also dont expect to get rid of hidden files if you call this method with "false".
+     * depends on your ftp server if you need to call this method, also don't expect to get rid of hidden files if you call this method with "false".
      *
      * @param listHiddenFiles true if hidden files should be listed
      * @since 2.0

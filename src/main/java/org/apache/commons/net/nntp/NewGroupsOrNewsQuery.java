@@ -246,7 +246,7 @@ public final class NewGroupsOrNewsQuery {
      * </pre>
      * <p>
      *
-     * @param newsgroup The newsgroup to add to the list of groups to be checked for new news, but which should be omitted from the search for new news..
+     * @param newsgroup The newsgroup to add to the list of groups to be checked for new news, but which should be omitted from the search for new news.
      */
     public void omitNewsgroup(final String newsgroup) {
         addNewsgroup("!" + newsgroup);

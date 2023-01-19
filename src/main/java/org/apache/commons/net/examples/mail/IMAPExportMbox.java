@@ -74,7 +74,7 @@ import org.apache.commons.net.imap.IMAPReply;
  * The sequence-set is passed unmodified to the FETCH command.<br>
  * The item names are wrapped in parentheses if more than one is provided. Otherwise, the parameter is assumed to be wrapped if necessary.<br>
  * Parameters with spaces must be quoted otherwise the OS shell will normally treat them as separate parameters.<br>
- * Also the listener that writes the mailbox only captures the multi-line responses (e.g. ones that include BODY references). It does not capture the output
+ * Also, the listener that writes the mailbox only captures the multi-line responses (e.g. ones that include BODY references). It does not capture the output
  * from FETCH commands using item names such as ENVELOPE or FLAGS that return a single line response.
  */
 public final class IMAPExportMbox {

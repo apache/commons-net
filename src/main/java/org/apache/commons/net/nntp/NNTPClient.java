@@ -268,9 +268,9 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * List all new articles added to the NNTP server since a particular date subject to the conditions of the specified query. If no new new news is found, no
-     * entries will be returned. This uses the "NEWNEWS" command. You must add at least one newsgroup to the query, else the command will fail. Each String
-     * which is returned is a unique message identifier including the enclosing &lt; and &gt;.
+     * List all new articles added to the NNTP server since a particular date subject to the conditions of the specified query. If no new news is found,
+     * no entries will be returned. This uses the "NEWNEWS" command. You must add at least one newsgroup to the query, else the command will fail.
+     * Each String which is returned is a unique message identifier including the enclosing &lt; and &gt;.
      * <p>
      *
      * @param query The query restricting how to search for new news. You must add at least one newsgroup to the query.
@@ -416,7 +416,7 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * List all new articles added to the NNTP server since a particular date subject to the conditions of the specified query. If no new new news is found, a
+     * List all new articles added to the NNTP server since a particular date subject to the conditions of the specified query. If no new news is found, a
      * zero length array will be returned. If the command fails, null will be returned. You must add at least one newsgroup to the query, else the command will
      * fail. Each String in the returned array is a unique message identifier including the enclosing &lt; and &gt;. This uses the "NEWNEWS" command.
      * <p>
@@ -583,12 +583,12 @@ public class NNTPClient extends NNTP {
      * due to malformed headers.
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any (other methods) until you finish writing to the returned Writer instance and close it.
-     * The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore the returned Writer actually writes directly to
+     * The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned Writer actually writes directly to
      * the NNTP connection. After you close the writer, you can execute new commands. If you do not follow these requirements your program will not work
      * properly.
      * <p>
      * Different NNTP servers will require different header formats, but you can use the provided {@link org.apache.commons.net.nntp.SimpleNNTPHeader} class to
-     * construct the bare minimum acceptable header for most news readers. To construct more complicated headers you should refer to RFC 822. When the Java Mail
+     * construct the bare minimum acceptable header for most newsreaders. To construct more complicated headers you should refer to RFC 822. When the Java Mail
      * API is finalized, you will be able to use it to compose fully compliant Internet text messages. The DotTerminatedMessageWriter takes care of doubling
      * line-leading dots and ending the message with a single dot upon closing, so all you have to worry about is writing the header and the message.
      * <p>
@@ -674,7 +674,7 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * @param articleNumber The number of the the article to retrieve
+     * @param articleNumber The number of the article to retrieve
      * @return A DotTerminatedMessageReader instance from which the article can be read. null if the article does not exist.
      * @throws IOException on error
      * @deprecated 3.0 use {@link #retrieveArticle(long)} instead
@@ -685,7 +685,7 @@ public class NNTPClient extends NNTP {
     }
 
     /**
-     * @param articleNumber The number of the the article to retrieve.
+     * @param articleNumber The number of the article to retrieve.
      * @param pointer       A parameter through which to return the article's number and unique id
      * @return A DotTerminatedMessageReader instance from which the article can be read. null if the article does not exist.
      * @throws IOException on error
@@ -718,12 +718,12 @@ public class NNTPClient extends NNTP {
      * A DotTerminatedMessageReader is returned from which the article can be read. If the article does not exist, null is returned.
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any other methods) until you finish reading the message from the returned BufferedReader
-     * instance. The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore the returned BufferedReader actually
+     * instance. The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader actually
      * reads directly from the NNTP connection. After the end of message has been reached, new commands can be executed and their replies read. If you do not
      * follow these requirements, your program will not work properly.
      * <p>
      *
-     * @param articleNumber The number of the the article to retrieve.
+     * @param articleNumber The number of the article to retrieve.
      * @param pointer       A parameter through which to return the article's number and unique id. The articleId field cannot always be trusted because of
      *                      server deviations from RFC 977 reply formats. You may set this parameter to null if you do not desire to retrieve the returned
      *                      article information.
@@ -756,7 +756,7 @@ public class NNTPClient extends NNTP {
      * A DotTerminatedMessageReader is returned from which the article can be read. If the article does not exist, null is returned.
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any other methods) until you finish reading the message from the returned BufferedReader
-     * instance. The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore the returned BufferedReader actually
+     * instance. The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader actually
      * reads directly from the NNTP connection. After the end of message has been reached, new commands can be executed and their replies read. If you do not
      * follow these requirements, your program will not work properly.
      * <p>
@@ -846,12 +846,12 @@ public class NNTPClient extends NNTP {
      * A DotTerminatedMessageReader is returned from which the article can be read. If the article does not exist, null is returned.
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any other methods) until you finish reading the message from the returned BufferedReader
-     * instance. The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore the returned BufferedReader actually
+     * instance. The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader actually
      * reads directly from the NNTP connection. After the end of message has been reached, new commands can be executed and their replies read. If you do not
      * follow these requirements, your program will not work properly.
      * <p>
      *
-     * @param articleNumber The number of the the article whose body is being retrieved.
+     * @param articleNumber The number of the article whose body is being retrieved.
      * @param pointer       A parameter through which to return the article's number and unique id. The articleId field cannot always be trusted because of
      *                      server deviations from RFC 977 reply formats. You may set this parameter to null if you do not desire to retrieve the returned
      *                      article information.
@@ -884,7 +884,7 @@ public class NNTPClient extends NNTP {
      * A DotTerminatedMessageReader is returned from which the article can be read. If the article does not exist, null is returned.
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any other methods) until you finish reading the message from the returned BufferedReader
-     * instance. The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore the returned BufferedReader actually
+     * instance. The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader actually
      * reads directly from the NNTP connection. After the end of message has been reached, new commands can be executed and their replies read. If you do not
      * follow these requirements, your program will not work properly.
      * <p>
@@ -975,12 +975,12 @@ public class NNTPClient extends NNTP {
      * A DotTerminatedMessageReader is returned from which the article can be read. If the article does not exist, null is returned.
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any other methods) until you finish reading the message from the returned BufferedReader
-     * instance. The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore the returned BufferedReader actually
+     * instance. The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader actually
      * reads directly from the NNTP connection. After the end of message has been reached, new commands can be executed and their replies read. If you do not
      * follow these requirements, your program will not work properly.
      * <p>
      *
-     * @param articleNumber The number of the the article whose header is being retrieved.
+     * @param articleNumber The number of the article whose header is being retrieved.
      * @param pointer       A parameter through which to return the article's number and unique id. The articleId field cannot always be trusted because of
      *                      server deviations from RFC 977 reply formats. You may set this parameter to null if you do not desire to retrieve the returned
      *                      article information.
@@ -1013,7 +1013,7 @@ public class NNTPClient extends NNTP {
      * A DotTerminatedMessageReader is returned from which the article can be read. If the article does not exist, null is returned.
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any other methods) until you finish reading the message from the returned BufferedReader
-     * instance. The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore the returned BufferedReader actually
+     * instance. The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader actually
      * reads directly from the NNTP connection. After the end of message has been reached, new commands can be executed and their replies read. If you do not
      * follow these requirements, your program will not work properly.
      * <p>
@@ -1283,7 +1283,7 @@ public class NNTPClient extends NNTP {
     /**
      * Same as <code> selectArticle(articleId, (ArticleInfo) null) </code>
      *
-     * @param articleId the article Id
+     * @param articleId the article's Id
      * @return true if successful
      * @throws IOException on error
      */
@@ -1442,7 +1442,7 @@ public class NNTPClient extends NNTP {
     // Helper methods
 
     /**
-     * Select the article preceeding the currently selected article in the currently selected newsgroup and return its number and unique id through the pointer
+     * Select the article preceding the currently selected article in the currently selected newsgroup and return its number and unique id through the pointer
      * parameter. Because of deviating server implementations, the articleId information cannot be trusted. To obtain the article identifier, issue a
      * <code> selectArticle(pointer.articleNumber, pointer) </code> immediately afterward.
      * <p>

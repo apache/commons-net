@@ -54,7 +54,7 @@ import org.apache.commons.net.util.NetConstants;
  * before the more general <code> IOException </code> catch block. When you encounter an {@link org.apache.commons.net.ftp.FTPConnectionClosedException} , you
  * must disconnect the connection with {@link #disconnect disconnect() } to properly clean up the system resources used by FTP. Before disconnecting, you may
  * check the last reply code and text with {@link #getReplyCode getReplyCode }, {@link #getReplyString getReplyString }, and {@link #getReplyStrings
- * getReplyStrings}. You may avoid server disconnections while the client is idle by periodicaly sending NOOP commands to the server.
+ * getReplyStrings}. You may avoid server disconnections while the client is idle by periodically sending NOOP commands to the server.
  * <p>
  * Rather than list it separately for each method, we mention here that every method communicating with the server and throwing an IOException can also throw a
  * {@link org.apache.commons.net.MalformedServerReplyException} , which is a subclass of IOException. A MalformedServerReplyException will be thrown when the
@@ -79,7 +79,7 @@ public class FTP extends SocketClient {
     public static final int ASCII_FILE_TYPE = 0;
 
     /**
-     * A constant used to indicate the file(s) being transferred should be treated as EBCDIC. Note however that there are several different EBCDIC formats. All
+     * A constant used to indicate the file(s) being transferred should be treated as EBCDIC. Note however that there are several EBCDIC formats. All
      * constants ending in <code>FILE_TYPE</code> are used to indicate file types.
      */
     public static final int EBCDIC_FILE_TYPE = 1;
@@ -150,7 +150,7 @@ public class FTP extends SocketClient {
      */
     public static final int COMPRESSED_TRANSFER_MODE = 12;
 
-    // We have to ensure that the protocol communication is in ASCII
+    // We have to ensure that the protocol communication is in ASCII,
     // but we use ISO-8859-1 just in case 8-bit characters cross
     // the wire.
     /**
@@ -181,7 +181,7 @@ public class FTP extends SocketClient {
     protected boolean strictMultilineParsing;
 
     /**
-     * If this is true, then non-multiline replies must have the format: 3 digit code <space> <text> If false, then the 3 digit code does not have to be
+     * If this is true, then non-multiline replies must have the format: 3-digit code <space> <text> If false, then the 3-digit code does not have to be
      * followed by space See section 4.2 of RFC 959 for details.
      */
     private boolean strictReplyParsing = true;
@@ -230,7 +230,7 @@ public class FTP extends SocketClient {
     protected void __noop() throws IOException {
         final String msg = buildMessage(FTPCmd.NOOP.getCommand(), null);
         send(msg);
-        __getReplyNoReport(); // This may timeout
+        __getReplyNoReport(); // This may time out
     }
 
     /**
@@ -721,8 +721,8 @@ public class FTP extends SocketClient {
     /**
      * Return whether strict non-multiline parsing is enabled, as per RFC 959, section 4.2.
      * <p>
-     * The default is true, which requires the 3 digit code be followed by space and some text. <br>
-     * If false, only the 3 digit code is required (as was the case for versions up to 3.5) <br>
+     * The default is true, which requires the 3-digit code be followed by space and some text. <br>
+     * If false, only the 3-digit code is required (as was the case for versions up to 3.5) <br>
      *
      * @return True if strict (default), false if additional checks are not made
      * @since 3.6
@@ -1247,8 +1247,8 @@ public class FTP extends SocketClient {
     /**
      * Set strict non-multiline parsing.
      * <p>
-     * If true, it requires the 3 digit code be followed by space and some text. <br>
-     * If false, only the 3 digit code is required (as was the case for versions up to 3.5)
+     * If true, it requires the 3-digit code be followed by space and some text. <br>
+     * If false, only the 3-digit code is required (as was the case for versions up to 3.5)
      * <p>
      * <b>This should not be required by a well-behaved FTP server</b> <br>
      *
@@ -1426,7 +1426,7 @@ public class FTP extends SocketClient {
      * A convenience method to send the FTP TYPE command for text files to the server, receive the reply, and return the reply code.
      *
      * @param fileType         The type of the file (one of the <code>FILE_TYPE</code> constants).
-     * @param formatOrByteSize The format of the file (one of the <code>_FORMAT</code> constants. In the case of <code>LOCAL_FILE_TYPE</code>, the byte size.
+     * @param formatOrByteSize The format of the file (one of the <code>_FORMAT</code> constants). In the case of <code>LOCAL_FILE_TYPE</code>, the byte size.
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or

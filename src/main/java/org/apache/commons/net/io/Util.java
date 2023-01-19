@@ -89,7 +89,7 @@ public final class Util {
 
     /**
      * Copies the contents of a Reader to a Writer using a copy buffer of a given size. The contents of the Reader are read until its end is reached, but
-     * neither the source nor the destination are closed. You must do this yourself outside of the method call. The number of characters read/written is
+     * neither the source nor the destination are closed. You must do this yourself outside the method call. The number of characters read/written is
      * returned.
      *
      * @param source     The source Reader.
@@ -110,7 +110,7 @@ public final class Util {
      * operation by calling its bytesTransferred(long, int) method after each write to the destination. If you wish to notify more than one listener you should
      * use a CopyStreamAdapter as the listener and register the additional listeners with the CopyStreamAdapter.
      * <p>
-     * The contents of the Reader are read until its end is reached, but neither the source nor the destination are closed. You must do this yourself outside of
+     * The contents of the Reader are read until its end is reached, but neither the source nor the destination are closed. You must do this yourself outside
      * the method call. The number of characters read/written is returned.
      *
      * @param source     The source Reader.
@@ -133,7 +133,7 @@ public final class Util {
 
         try {
             while ((numChars = source.read(buffer)) != NetConstants.EOS) {
-                // Technically, some read(char[]) methods may return 0 and we cannot
+                // Technically, some read(char[]) methods may return 0, and we cannot
                 // accept that as an indication of EOF.
                 if (numChars == 0) {
                     final int singleChar = source.read();
@@ -177,7 +177,7 @@ public final class Util {
 
     /**
      * Copies the contents of an InputStream to an OutputStream using a copy buffer of a given size. The contents of the InputStream are read until the end of
-     * the stream is reached, but neither the source nor the destination are closed. You must do this yourself outside of the method call. The number of bytes
+     * the stream is reached, but neither the source nor the destination are closed. You must do this yourself outside the method call. The number of bytes
      * read/written is returned.
      *
      * @param source     The source InputStream.
@@ -199,7 +199,7 @@ public final class Util {
      * you should use a CopyStreamAdapter as the listener and register the additional listeners with the CopyStreamAdapter.
      * <p>
      * The contents of the InputStream are read until the end of the stream is reached, but neither the source nor the destination are closed. You must do this
-     * yourself outside of the method call. The number of bytes read/written is returned.
+     * yourself outside the method call. The number of bytes read/written is returned.
      *
      * @param source     The source InputStream.
      * @param dest       The destination OutputStream.
@@ -224,7 +224,7 @@ public final class Util {
      * you should use a CopyStreamAdapter as the listener and register the additional listeners with the CopyStreamAdapter.
      * <p>
      * The contents of the InputStream are read until the end of the stream is reached, but neither the source nor the destination are closed. You must do this
-     * yourself outside of the method call. The number of bytes read/written is returned.
+     * yourself outside the method call. The number of bytes read/written is returned.
      *
      * @param source     The source InputStream.
      * @param dest       The destination OutputStream.
@@ -248,7 +248,7 @@ public final class Util {
 
         try {
             while ((numBytes = source.read(buffer)) != NetConstants.EOS) {
-                // Technically, some read(byte[]) methods may return 0 and we cannot
+                // Technically, some read(byte[]) methods may return 0, and we cannot
                 // accept that as an indication of EOF.
 
                 if (numBytes == 0) {

@@ -25,14 +25,14 @@ import org.apache.commons.net.examples.util.IOUtil;
 /**
  * This is an example program demonstrating how to use the RLoginClient class. This program connects to an rlogin daemon and begins to interactively read input
  * from stdin (this will be line buffered on most systems, so don't expect character at a time interactivity), passing it to the remote login process and
- * writing the remote stdout and stderr to local stdout. If you don't have .rhosts or hosts.equiv files set up, the rlogin daemon will prompt you for a
- * password.
+ * writing the remote stdout and stderr to local stdout. If you don't have {@code .rhosts} or {@code hosts.equiv} files set up, the rlogin daemon will prompt
+ * you for a password.
  * <p>
  * On Unix systems you will not be able to use the rshell capability unless the process runs as root since only root can bind port addresses lower than 1024.
  * <p>
  * JVM's using green threads will likely have problems if the rlogin daemon requests a password. This program is merely a demonstration and is not suitable for
- * use as an application, especially given that it relies on line buffered input from System.in. The best way to run this example is probably from a Win95 dos
- * box into a Unix host.
+ * use as an application, especially given that it relies on line-buffered input from System.in. The best way to run this example is probably from a Windows
+ * DOS box into a Unix host.
  * <p>
  * Example: java rlogin myhost localusername remoteusername vt100
  * <p>

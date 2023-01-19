@@ -132,7 +132,7 @@ public class FTPFile implements Serializable {
     }
 
     /**
-     * If the FTPFile is a symbolic link, this method returns the name of the file being pointed to by the symbolic link. Otherwise it returns null.
+     * If the FTPFile is a symbolic link, this method returns the name of the file being pointed to by the symbolic link. Otherwise, it returns null.
      *
      * @return The file pointed to by the symbolic link (null if the FTPFile is not a symbolic link).
      */
@@ -259,7 +259,7 @@ public class FTPFile implements Serializable {
     /**
      * Tests whether an entry is valid or not. If the entry is invalid, only the {@link #getRawListing()} method will be useful. Other methods may fail.
      *
-     * Used in conjunction with list parsing that preseverves entries that failed to parse.
+     * Used in conjunction with list parsing that preserves entries that failed to parse.
      *
      * @see FTPClientConfig#setUnparseableEntries(boolean)
      * @return true if the entry is valid

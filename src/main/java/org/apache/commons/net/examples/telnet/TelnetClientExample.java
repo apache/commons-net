@@ -234,7 +234,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler 
     }
 
     /**
-     * Reader thread. Reads lines from the TelnetClient and echoes them on the screen.
+     * Reader thread: Reads lines from the TelnetClient and echoes them on the screen.
      */
     @Override
     public void run() {

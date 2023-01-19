@@ -20,7 +20,7 @@ package org.apache.commons.net.util;
 import java.nio.charset.Charset;
 
 /**
- * Helps dealing with Charsets.
+ * Helps to deal with Charsets.
  *
  * @since 3.3
  */

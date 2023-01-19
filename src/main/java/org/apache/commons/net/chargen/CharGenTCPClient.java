@@ -24,7 +24,7 @@ import org.apache.commons.net.SocketClient;
 /**
  * The CharGenTCPClient class is a TCP implementation of a client for the character generator protocol described in RFC 864. It can also be used for Systat (RFC
  * 866), Quote of the Day (RFC 865), and netstat (port 15). All of these protocols involve connecting to the appropriate port, and reading data from an input
- * stream. The chargen protocol actually sends data until the receiving end closes the connection. All of the others send only a fixed amount of data and then
+ * stream. The chargen protocol actually sends data until the receiving end closes the connection. All the others send only a fixed amount of data and then
  * close the connection.
  * <p>
  * To use the CharGenTCPClient class, just establish a connection with {@link org.apache.commons.net.SocketClient#connect connect } and call

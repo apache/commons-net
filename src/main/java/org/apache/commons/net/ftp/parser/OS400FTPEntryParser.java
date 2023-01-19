@@ -243,7 +243,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     /**
      * The default constructor for a OS400FTPEntryParser object.
      *
-     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. If it is seen, this is a
      *                                  sign that <code>REGEX</code> is not a valid regular expression.
      */
     public OS400FTPEntryParser() {
@@ -254,7 +254,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * This constructor allows the creation of an OS400FTPEntryParser object with something other than the default configuration.
      *
      * @param config The {@link FTPClientConfig configuration} object used to configure this parser.
-     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. If it is seen, this is a
      *                                  sign that <code>REGEX</code> is not a valid regular expression.
      * @since 1.4
      */
@@ -319,7 +319,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
                 }
             } else if (typeStr.equalsIgnoreCase("*FILE")) {
                 // File, defines the structure of the data (columns of a row)
-                // but the data is stored in one or more members. Typically a
+                // but the data is stored in one or more members. Typically, a
                 // source file contains multiple members whereas it is
                 // recommended (but not enforced) to use one member per data
                 // file.

@@ -21,11 +21,11 @@ import java.io.IOException;
 
 /**
  * RLoginClient is very similar to {@link org.apache.commons.net.bsd.RCommandClient}, from which it is derived, and uses the rcmd() facility implemented in
- * RCommandClient to implement the functionality of the rlogin command that first appeared in 4.2BSD Unix. rlogin is a command used to login to a remote machine
- * from a trusted host, sometimes without issuing a password. The trust relationship is the same as described in the documentation for
+ * RCommandClient to implement the functionality of the rlogin command that first appeared in 4.2BSD Unix. rlogin is a command used to log in to a
+ * remote machine from a trusted host, sometimes without issuing a password. The trust relationship is the same as described in the documentation for
  * {@link org.apache.commons.net.bsd.RCommandClient}.
  * <p>
- * As with virtually all of the client classes in org.apache.commons.net, this class derives from SocketClient. But it relies on the connection methods defined
+ * As with virtually all the client classes in org.apache.commons.net, this class derives from SocketClient. But it relies on the connection methods defined
  * in RcommandClient which ensure that the local Socket will originate from an acceptable rshell port. The way to use RLoginClient is to first connect to the
  * server, call the {@link #rlogin rlogin() } method, and then fetch the connection's input and output streams. Interaction with the remote command is
  * controlled entirely through the I/O streams. Once you have finished processing the streams, you should invoke
@@ -72,13 +72,13 @@ public class RLoginClient extends RCommandClient {
      * Logins into a remote machine through the rlogind daemon on the server to which the RLoginClient is connected. After calling this method, you may interact
      * with the remote login shell through its standard input and output streams. Standard error is sent over the same stream as standard output. You will
      * typically be able to detect the termination of the remote login shell after reaching end of file on its standard output (accessible through
-     * {@link #getInputStream getInputStream() }. Disconnecting from the server or closing the process streams before reaching end of file will terminate the
+     * {@link #getInputStream getInputStream()}). Disconnecting from the server or closing the process streams before reaching end of file will terminate the
      * remote login shell in most cases.
      * <p>
      * If user authentication fails, the rlogind daemon will request that a password be entered interactively. You will be able to read the prompt from the
      * output stream of the RLoginClient and write the password to the input stream of the RLoginClient.
      *
-     * @param localUsername  The user account on the local machine that is trying to login to the remote host.
+     * @param localUsername  The user account on the local machine that is trying to log in to the remote host.
      * @param remoteUsername The account name on the server that is being logged in to.
      * @param terminalType   The name of the user's terminal (e.g., "vt100", "network", etc.)
      * @param terminalSpeed  The speed of the user's terminal, expressed as a baud rate or bps (e.g., 9600 or 38400)

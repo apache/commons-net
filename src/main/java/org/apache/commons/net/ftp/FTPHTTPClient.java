@@ -77,7 +77,7 @@ public class FTPHTTPClient extends FTPClient {
      *
      * @param proxyHost the hostname to use
      * @param proxyPort the port to use
-     * @param proxyUser the user name for the proxy
+     * @param proxyUser the username for the proxy
      * @param proxyPass the password for the proxy
      */
     public FTPHTTPClient(final String proxyHost, final int proxyPort, final String proxyUser, final String proxyPass) {
@@ -89,7 +89,7 @@ public class FTPHTTPClient extends FTPClient {
      *
      * @param proxyHost the hostname to use
      * @param proxyPort the port to use
-     * @param proxyUser the user name for the proxy
+     * @param proxyUser the username for the proxy
      * @param proxyPass the password for the proxy
      * @param encoding  the encoding to use
      */

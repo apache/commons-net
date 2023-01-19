@@ -87,7 +87,7 @@ public final class SMTPCommand {
      * <p>
      *
      * @param command The command code.
-     * @return The SMTP protcol command string corresponding to a specified command code.
+     * @return The SMTP protocol command string corresponding to a specified command code.
      */
     public static String getCommand(final int command) {
         return commands[command];

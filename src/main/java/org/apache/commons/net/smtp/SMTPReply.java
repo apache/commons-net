@@ -84,7 +84,7 @@ public final class SMTPReply {
 
     /**
      * Determine if a reply code is a positive intermediate response. All codes beginning with a 3 are positive intermediate responses. The SMTP server will
-     * send a positive intermediate response on the successful completion of one part of a multi-part sequence of commands. For example, after a successful DATA
+     * send a positive intermediate response on the successful completion of one part of a multipart sequence of commands. For example, after a successful DATA
      * command, a positive intermediate response will be sent to indicate that the server is ready to receive the message data.
      * <p>
      *
@@ -96,9 +96,9 @@ public final class SMTPReply {
     }
 
     /**
-     * Determine if a reply code is a positive preliminary response. All codes beginning with a 1 are positive preliminary responses. Postitive preliminary
+     * Determine if a reply code is a positive preliminary response. All codes beginning with a 1 are positive preliminary responses. Positive preliminary
      * responses are used to indicate tentative success. No further commands can be issued to the SMTP server after a positive preliminary response until a
-     * follow up response is received from the server.
+     * follow-up response is received from the server.
      * <p>
      * <b> Note: </b> <em> No SMTP commands defined in RFC 822 provide this type of reply. </em>
      * <p>

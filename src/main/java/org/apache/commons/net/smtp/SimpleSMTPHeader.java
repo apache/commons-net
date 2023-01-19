@@ -25,7 +25,7 @@ import java.util.Locale;
  * This class is used to construct a bare minimum acceptable header for an email message. To construct more complicated headers you should refer to RFC 5322.
  * When the Java Mail API is finalized, you will be able to use it to compose fully compliant Internet text messages.
  * <p>
- * The main purpose of the class is to faciliatate the mail sending process, by relieving the programmer from having to explicitly format a simple message
+ * The main purpose of the class is to facilitate the mail sending process, by relieving the programmer from having to explicitly format a simple message
  * header. For example:
  *
  * <pre>
@@ -90,8 +90,9 @@ public class SimpleSMTPHeader {
     }
 
     /**
-     * Adds an arbitrary header field with the given value to the article header. These headers will be written before the From, To, Subject, and Cc fields when
-     * the SimpleSMTPHeader is convertered to a string. An example use would be:
+     * Adds an arbitrary header field with the given value to the article header. These headers will be written before the
+     * {@code From}, {@code To}, {@code Subject}, and {@code Cc} fields when the SimpleSMTPHeader is converted to a string.
+     * An example use would be:
      *
      * <pre>
      * header.addHeaderField("Organization", "Foobar, Inc.");

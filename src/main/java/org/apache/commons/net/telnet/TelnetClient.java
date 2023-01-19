@@ -281,7 +281,7 @@ public class TelnetClient extends Telnet {
     }
 
     /**
-     * Sends an Are You There sequence and waits for the result.
+     * Sends an {@code Are You There (AYT)} sequence and waits for the result.
      *
      * @param timeout - Time to wait for a response (millis.)
      *

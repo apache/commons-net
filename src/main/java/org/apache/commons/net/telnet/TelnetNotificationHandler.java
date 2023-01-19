@@ -31,29 +31,29 @@ public interface TelnetNotificationHandler {
     int RECEIVED_DO = 1;
 
     /**
-     * The remote party sent a DONT command.
+     * The remote party sent a {@code DONT} command.
      */
     int RECEIVED_DONT = 2;
 
     /**
-     * The remote party sent a WILL command.
+     * The remote party sent a {@code WILL} command.
      */
     int RECEIVED_WILL = 3;
 
     /**
-     * The remote party sent a WONT command.
+     * The remote party sent a {@code WONT} command.
      */
     int RECEIVED_WONT = 4;
 
     /**
-     * The remote party sent a COMMAND.
+     * The remote party sent a {@code COMMAND}.
      *
      * @since 2.2
      */
     int RECEIVED_COMMAND = 5;
 
     /**
-     * Callback method called when TelnetClient receives an command or option negotiation command
+     * Callback method called when TelnetClient receives a command or option negotiation command
      *
      * @param negotiation_code - type of (negotiation) command received (RECEIVED_DO, RECEIVED_DONT, RECEIVED_WILL, RECEIVED_WONT, RECEIVED_COMMAND)
      *

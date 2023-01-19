@@ -40,7 +40,7 @@ public class MacOsPeterFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * Permissions: r the file is readable w the file is writable x the file is executable - the indicated permission is not granted L mandatory locking occurs
      * during access (the set-group-ID bit is on and the group execution bit is off) s the set-user-ID or set-group-ID bit is on, and the corresponding user or
      * group execution bit is also on S undefined bit-state (the set-user-ID bit is on and the user execution bit is off) t the 1000 (octal) bit, or sticky bit,
-     * is on [see chmod(1)], and execution is on T the 1000 bit is turned on, and execution is off (undefined bit- state) e z/OS external link bit
+     * is on [see chmod(1)], and execution is on T the 1000 bit is turned on, and execution is off (undefined bit-state) e z/OS external link bit
      */
     private static final String REGEX = "([bcdelfmpSs-])" // type (1)
             + "(((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-]))((r|-)(w|-)([xsStTL-])))\\+?\\s+" // permission
@@ -61,7 +61,7 @@ public class MacOsPeterFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
     /**
      * The default constructor for a UnixFTPEntryParser object.
      *
-     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. If it is seen, this is a
      *                                  sign that <code>REGEX</code> is not a valid regular expression.
      */
     public MacOsPeterFTPEntryParser() {
@@ -72,7 +72,7 @@ public class MacOsPeterFTPEntryParser extends ConfigurableFTPFileEntryParserImpl
      * This constructor allows the creation of a UnixFTPEntryParser object with something other than the default configuration.
      *
      * @param config The {@link FTPClientConfig configuration} object used to configure this parser.
-     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. It it is seen, this is a
+     * @throws IllegalArgumentException Thrown if the regular expression is unparseable. Should not be seen under normal conditions. If it is seen, this is a
      *                                  sign that <code>REGEX</code> is not a valid regular expression.
      * @since 1.4
      */
