@@ -23,3 +23,5 @@ notifications:
     pullrequests: issues@commons.apache.org
     jira_options: link label
     jobs:         notifications@commons.apache.org
+    issues_bot_dependabot: notifications@commons.apache.org
+    pullrequests_bot_dependabot: notifications@commons.apache.org
