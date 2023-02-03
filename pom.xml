@@ -141,7 +141,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>${commons.checkstyle-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -355,7 +354,6 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${commons.checkstyle-plugin.version}</version>
                 <configuration>
                     <configLocation>${basedir}/checkstyle.xml</configLocation>
                     <!-- Needed to define config_loc for use by Eclipse -->
