@@ -1,0 +1,24 @@
+version: '2.2'
+services:
+  ftp:
+    image: stilliard/pure-ftpd:latest
+    ports:
+      - "21000:21"
+      - "30000-30009:30000-30009"
+    volumes:
+      - ./ftp/tmp/home:/home/username/
+      - ./src/test/resources/ftpd/:/etc/ssl/private/
+    environment:
+      PUBLICHOST: "localhost"
+      FTP_USER_NAME: username
+      FTP_USER_PASS: userpass
+      FTP_USER_HOME: /home/username
+      # https://docs.docker.com/compose/environment-variables/
+      FTP_USER_UID: ${FTP_USER_UID:-2000}
+      FTP_USER_GID: ${FTP_USER_GID:-2000}
+      ADDED_FLAGS: "--tls=1"
+  squid:
+    network_mode: host # required for route back to localhost
+    image: ubuntu/squid
+    volumes:
+      - ./src/test/resources/squid.conf:/etc/squid/squid.conf
