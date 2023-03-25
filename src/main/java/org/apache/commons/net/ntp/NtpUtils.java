@@ -19,7 +19,6 @@ package org.apache.commons.net.ntp;
 
 /**
  * Common NtpUtils Helper class.
- *
  */
 public final class NtpUtils {
 

@@ -21,7 +21,6 @@ import java.net.DatagramPacket;
 
 /**
  * Implementation of NtpV3Packet with methods converting Java objects to/from the Network Time Protocol (NTP) data message header format described in RFC-1305.
- *
  */
 public class NtpV3Impl implements NtpV3Packet {
 

@@ -42,8 +42,6 @@ import org.apache.commons.net.finger.FingerClient;
  * }
  * </pre>
  *
- *
- *
  */
 
 public final class WhoisClient extends FingerClient {

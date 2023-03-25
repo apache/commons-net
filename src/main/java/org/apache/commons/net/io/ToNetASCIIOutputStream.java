@@ -25,8 +25,6 @@ import java.io.OutputStream;
  * This class wraps an output stream, replacing all singly occurring &lt;LF&gt; (linefeed) characters with &lt;CR&gt;&lt;LF&gt; (carriage return followed by
  * linefeed), which is the NETASCII standard for representing a newline. You would use this class to implement ASCII file transfers requiring conversion to
  * NETASCII.
- *
- *
  */
 
 public final class ToNetASCIIOutputStream extends FilterOutputStream {

@@ -28,7 +28,6 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  * Tests the EnterpriseUnixFTPEntryParser
- *
  */
 public class EnterpriseUnixFTPEntryParserTest extends FTPParseTestFramework {
 

@@ -28,8 +28,6 @@ import java.io.OutputStream;
  * <p>
  * Because of the translation process, a call to <code>flush()</code> will not flush the last byte written if that byte was a carriage return. A call to
  * {@link #close close() }, however, will flush the carriage return.
- *
- *
  */
 
 public final class FromNetASCIIOutputStream extends FilterOutputStream {

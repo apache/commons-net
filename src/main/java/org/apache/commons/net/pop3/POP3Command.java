@@ -19,8 +19,6 @@ package org.apache.commons.net.pop3;
 
 /**
  * POP3Command stores POP3 command code constants.
- *
- *
  */
 
 public final class POP3Command {

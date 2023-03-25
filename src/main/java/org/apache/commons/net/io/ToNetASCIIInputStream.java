@@ -27,8 +27,6 @@ import org.apache.commons.net.util.NetConstants;
  * This class wraps an input stream, replacing all singly occurring &lt;LF&gt; (linefeed) characters with &lt;CR&gt;&lt;LF&gt; (carriage return followed by
  * linefeed), which is the NETASCII standard for representing a newline. You would use this class to implement ASCII file transfers requiring conversion to
  * NETASCII.
- *
- *
  */
 
 public final class ToNetASCIIInputStream extends FilterInputStream {

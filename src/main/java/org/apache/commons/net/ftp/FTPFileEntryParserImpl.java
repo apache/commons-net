@@ -24,7 +24,6 @@ import java.util.List;
 /**
  * This abstract class implements both the older FTPFileListParser and newer FTPFileEntryParser interfaces with default functionality. All the classes in the
  * parser subpackage inherit from this.
- *
  */
 public abstract class FTPFileEntryParserImpl implements FTPFileEntryParser {
     /**

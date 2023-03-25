@@ -29,7 +29,6 @@ import org.apache.commons.net.DatagramSocketClient;
  * to retrieve the time. Then call <a href="org.apache.commons.net.DatagramSocketClient.html#close"> close </a> to close the connection properly. Successive
  * calls to <a href="#getTime"> getTime </a> are permitted without re-establishing a connection. That is because UDP is a connectionless protocol and the
  * Network Time Protocol is stateless.
- *
  */
 
 public final class NTPUDPClient extends DatagramSocketClient {

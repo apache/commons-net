@@ -29,8 +29,6 @@ package org.apache.commons.net.pop3;
  * <p>
  * In response to unique identifier listings, <code> number </code> contains the message number, <code> size </code> is undefined, and <code> identifier </code>
  * contains the message's unique identifier.
- *
- *
  */
 
 public final class POP3MessageInfo {

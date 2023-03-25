@@ -28,8 +28,6 @@ import org.apache.commons.net.util.NetConstants;
  * This class wraps an input stream, replacing all occurrences of &lt;CR&gt;&lt;LF&gt; (carriage return followed by a linefeed), which is the NETASCII standard
  * for representing a newline, with the local line separator representation. You would use this class to implement ASCII file transfers requiring conversion
  * from NETASCII.
- *
- *
  */
 
 public final class FromNetASCIIInputStream extends PushbackInputStream {

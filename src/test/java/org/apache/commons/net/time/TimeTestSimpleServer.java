@@ -29,7 +29,6 @@ import java.net.Socket;
  * 1 January 1900 GMT. See <A HREF="ftp://ftp.rfc-editor.org/in-notes/rfc868.txt"> the spec </A> for details.
  * <p>
  * Note this is for <B>debugging purposes only</B> and not meant to be run as a realiable time service.
- *
  */
 public class TimeTestSimpleServer implements Runnable {
 

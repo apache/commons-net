@@ -45,7 +45,6 @@ import org.apache.commons.net.util.Charsets;
  *     return;
  * }
  * </pre>
- *
  */
 
 public class FingerClient extends SocketClient {

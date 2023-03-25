@@ -24,8 +24,6 @@ import java.io.IOException;
  * possible when receiving server replies. Many server implementations deviate from IETF protocol specifications, making it necessary to be as flexible as
  * possible. However, there will be certain situations where it is not possible to continue an operation because the server reply could not be interpreted in a
  * meaningful manner. In these cases, a MalformedServerReplyException should be thrown.
- *
- *
  */
 
 public class MalformedServerReplyException extends IOException {
