@@ -1,7 +1,7 @@
 version: '2.2'
 services:
   ftp:
-    image: stilliard/pure-ftpd:latest
+    image: stilliard/pure-ftpd@sha256:bfdfe0d725bee473b6c06ec0c39d6956dcaa2a504a1e33825ecf41242f05b436
     ports:
       - "21000:21"
       - "30000-30009:30000-30009"
