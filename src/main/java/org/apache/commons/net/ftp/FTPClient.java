@@ -92,14 +92,14 @@ import org.apache.commons.net.util.NetConstants;
  *      }
  *      ... // transfer files
  *      ftp.logout();
- *    } catch(IOException e) {
+ *    } catch (IOException e) {
  *      error = true;
  *      e.printStackTrace();
  *    } finally {
  *      if(ftp.isConnected()) {
  *        try {
  *          ftp.disconnect();
- *        } catch(IOException ioe) {
+ *        } catch (IOException ioe) {
  *          // do nothing
  *        }
  *      }

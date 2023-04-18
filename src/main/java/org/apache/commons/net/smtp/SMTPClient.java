@@ -48,11 +48,11 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  *
  *      // Do useful stuff here.
  *      ...
- *    } catch(IOException e) {
+ *    } catch (IOException e) {
  *      if(client.isConnected()) {
  *        try {
  *          client.disconnect();
- *        } catch(IOException f) {
+ *        } catch (IOException f) {
  *          // do nothing
  *        }
  *      }
