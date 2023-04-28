@@ -2144,7 +2144,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Whether to attempt using EPSV with IPv4. Default (if not set) is <code>false</code>
+     * Whether to attempt using EPSV with IPv4. Default (if not set) is {@code false}
      *
      * @return true if EPSV shall be attempted with IPv4.
      * @since 2.2

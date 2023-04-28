@@ -362,7 +362,7 @@ public class SubnetUtils {
     }
 
     /**
-     * Sets to <code>true</code> if you want the return value of {@link SubnetInfo#getAddressCount()} to include the network and broadcast addresses. This also
+     * Sets to {@code true} if you want the return value of {@link SubnetInfo#getAddressCount()} to include the network and broadcast addresses. This also
      * applies to {@link SubnetInfo#isInRange(int)}
      *
      * @param inclusiveHostCount true if network and broadcast addresses are to be included

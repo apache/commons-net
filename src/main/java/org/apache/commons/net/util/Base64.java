@@ -117,7 +117,7 @@ public class Base64 {
      * Tests a given byte array to see if it contains only valid characters within the Base64 alphabet.
      *
      * @param arrayOctet byte array to test
-     * @return <code>true</code> if any byte is a valid character in the Base64 alphabet; false herwise
+     * @return {@code true} if any byte is a valid character in the Base64 alphabet; false herwise
      */
     private static boolean containsBase64Byte(final byte[] arrayOctet) {
         for (final byte element : arrayOctet) {
@@ -175,7 +175,7 @@ public class Base64 {
      * Encodes binary data using the base64 algorithm, optionally chunking the output into 76 character blocks.
      *
      * @param binaryData Array containing binary data to encode.
-     * @param isChunked  if <code>true</code> this encoder will chunk the base64 output into 76 character blocks
+     * @param isChunked  if {@code true} this encoder will chunk the base64 output into 76 character blocks
      * @return Base64-encoded data.
      * @throws IllegalArgumentException Thrown when the input array needs an output array bigger than {@link Integer#MAX_VALUE}
      */
@@ -187,8 +187,8 @@ public class Base64 {
      * Encodes binary data using the base64 algorithm, optionally chunking the output into 76 character blocks.
      *
      * @param binaryData Array containing binary data to encode.
-     * @param isChunked  if <code>true</code> this encoder will chunk the base64 output into 76 character blocks
-     * @param urlSafe    if <code>true</code> this encoder will emit - and _ instead of the usual + and / characters.
+     * @param isChunked  if {@code true} this encoder will chunk the base64 output into 76 character blocks
+     * @param urlSafe    if {@code true} this encoder will emit - and _ instead of the usual + and / characters.
      * @return Base64-encoded data.
      * @throws IllegalArgumentException Thrown when the input array needs an output array bigger than {@link Integer#MAX_VALUE}
      * @since 1.4
@@ -201,8 +201,8 @@ public class Base64 {
      * Encodes binary data using the base64 algorithm, optionally chunking the output into 76 character blocks.
      *
      * @param binaryData    Array containing binary data to encode.
-     * @param isChunked     if <code>true</code> this encoder will chunk the base64 output into 76 character blocks
-     * @param urlSafe       if <code>true</code> this encoder will emit - and _ instead of the usual + and / characters.
+     * @param isChunked     if {@code true} this encoder will chunk the base64 output into 76 character blocks
+     * @param urlSafe       if {@code true} this encoder will emit - and _ instead of the usual + and / characters.
      * @param maxResultSize The maximum result size to accept.
      * @return Base64-encoded data.
      * @throws IllegalArgumentException Thrown when the input array needs an output array bigger than maxResultSize
@@ -339,7 +339,7 @@ public class Base64 {
      * Tests a given byte array to see if it contains only valid characters within the Base64 alphabet. Currently, the method treats whitespace as valid.
      *
      * @param arrayOctet byte array to test
-     * @return <code>true</code> if all bytes are valid characters in the Base64 alphabet or if the byte array is empty; false, otherwise
+     * @return {@code true} if all bytes are valid characters in the Base64 alphabet or if the byte array is empty; false, otherwise
      */
     public static boolean isArrayByteBase64(final byte[] arrayOctet) {
         for (final byte element : arrayOctet) {
@@ -354,7 +354,7 @@ public class Base64 {
      * Returns whether or not the <code>octet</code> is in the base 64 alphabet.
      *
      * @param octet The value to test
-     * @return <code>true</code> if the value is defined in the base 64 alphabet, <code>false</code> otherwise.
+     * @return {@code true} if the value is defined in the base 64 alphabet, {@code false} otherwise.
      * @since 1.4
      */
     public static boolean isBase64(final byte octet) {
@@ -503,7 +503,7 @@ public class Base64 {
      * When decoding all variants are supported.
      * </p>
      *
-     * @param urlSafe if <code>true</code>, URL-safe encoding is used. In most cases this should be set to <code>false</code>.
+     * @param urlSafe if {@code true}, URL-safe encoding is used. In most cases this should be set to {@code false}.
      * @since 1.4
      */
     public Base64(final boolean urlSafe) {
