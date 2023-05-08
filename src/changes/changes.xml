@@ -74,7 +74,7 @@ The <action> type attribute can be add,update,fix,remove.
       </action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Dependabot">
-        Bump commons-parent from 54 to 56 #132, #137.
+        Bump commons-parent from 54 to 57 #132, #137, #153.
       </action>
      </release>
     <release version="3.9.0" date="2022-11-26" description="Maintenance and bug fix release (Java 8).">
