@@ -315,8 +315,8 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     }
 
     /**
-     * Computes a hashcode for this Timestamp. The result is the exclusive OR of the two halves of the primitive <code>long</code> value represented by this
-     * <code>TimeStamp</code> object. That is, the hashcode is the value of the expression: <blockquote>
+     * Computes a hash code for this Timestamp. The result is the exclusive OR of the two halves of the primitive <code>long</code> value represented by this
+     * <code>TimeStamp</code> object. That is, the hash code is the value of the expression: <blockquote>
      *
      * <pre>
      * {@code

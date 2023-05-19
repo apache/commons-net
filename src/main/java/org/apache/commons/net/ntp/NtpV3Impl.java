@@ -361,7 +361,7 @@ public class NtpV3Impl implements NtpV3Packet {
     }
 
     /**
-     * Computes a hashcode for this object. The result is the exclusive OR of the values of this object stored as a byte array.
+     * Computes a hash code for this object. The result is the exclusive OR of the values of this object stored as a byte array.
      *
      * @return a hash code value for this object.
      * @since 3.4

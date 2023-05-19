@@ -287,7 +287,7 @@ public class TimeInfo {
     }
 
     /**
-     * Computes a hashcode for this object. The result is the exclusive OR of the return time and the message hash code.
+     * Computes a hash code for this object. The result is the exclusive OR of the return time and the message hash code.
      *
      * @return a hash code value for this object.
      * @since 3.4
