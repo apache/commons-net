@@ -74,7 +74,7 @@ The <action> type attribute can be add,update,fix,remove.
       </action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Dependabot">
-        Bump commons-parent from 54 to 57 #132, #137, #153.
+        Bump commons-parent from 54 to 58 #132, #137, #153.
       </action>
       <action type="update" dev="ggregory" due-to="Gary Gregory">
         Bump commons-io from 2.11.0 to 2.12.0.
