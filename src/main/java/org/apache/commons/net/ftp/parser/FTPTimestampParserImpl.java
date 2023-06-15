@@ -150,7 +150,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
      */
     @Override
     public void configure(final FTPClientConfig config) {
-        DateFormatSymbols dfs = null;
+        DateFormatSymbols dfs;
 
         final String languageCode = config.getServerLanguageCode();
         final String shortmonths = config.getShortMonthNames();
@@ -262,7 +262,7 @@ public class FTPTimestampParserImpl implements FTPTimestampParser, Configurable 
         final Calendar working = (Calendar) serverTime.clone();
         working.setTimeZone(getServerTimeZone()); // is this needed?
 
-        Date parsed = null;
+        Date parsed;
 
         if (recentDateFormat != null) {
             final Calendar now = (Calendar) serverTime.clone();// Copy this, because we may change it

@@ -137,7 +137,6 @@ public final class POP3Mail {
             pop3.disconnect();
         } catch (final IOException e) {
             e.printStackTrace();
-            return;
         }
     }
 

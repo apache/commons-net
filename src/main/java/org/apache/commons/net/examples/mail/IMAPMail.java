@@ -68,7 +68,6 @@ public final class IMAPMail {
             System.out.println(imap.getReplyString());
             e.printStackTrace();
             System.exit(10);
-            return;
         } finally {
             imap.logout();
             imap.disconnect();

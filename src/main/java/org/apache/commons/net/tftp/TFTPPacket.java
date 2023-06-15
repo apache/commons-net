@@ -82,7 +82,7 @@ public abstract class TFTPPacket {
      */
     public static final TFTPPacket newTFTPPacket(final DatagramPacket datagram) throws TFTPPacketException {
         final byte[] data;
-        TFTPPacket packet = null;
+        TFTPPacket packet;
 
         if (datagram.getLength() < MIN_PACKET_SIZE) {
             throw new TFTPPacketException("Bad packet. Datagram data length is too short.");

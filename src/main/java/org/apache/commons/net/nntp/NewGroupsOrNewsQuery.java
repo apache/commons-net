@@ -184,7 +184,7 @@ public final class NewGroupsOrNewsQuery {
     }
 
     /**
-     * Return the NNTP query formatted date (year, month, day in the form YYMMDD.
+     * Return the NNTP query formatted date (year, month, day in the form YYMMDD).
      * <p>
      *
      * @return The NNTP query formatted date.
@@ -214,7 +214,7 @@ public final class NewGroupsOrNewsQuery {
     }
 
     /**
-     * Return the NNTP query formatted time (hour, minutes, seconds in the form HHMMSS.
+     * Return the NNTP query formatted time (hour, minutes, seconds in the form HHMMSS).
      * <p>
      *
      * @return The NNTP query formatted time.

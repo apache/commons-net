@@ -209,7 +209,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler 
      */
     @Override
     public void receivedNegotiation(final int negotiation_code, final int option_code) {
-        String command = null;
+        String command;
         switch (negotiation_code) {
         case TelnetNotificationHandler.RECEIVED_DO:
             command = "DO";

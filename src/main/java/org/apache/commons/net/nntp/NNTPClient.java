@@ -1173,12 +1173,12 @@ public class NNTPClient extends NNTP {
     /**
      * Private implementation of XHDR functionality.
      *
-     * See {@link NNTP#xhdr} for legal agument formats. Alternatively, read RFC 1036.
+     * See {@link NNTP#xhdr} for legal argument formats. Alternatively, read RFC 1036.
      * <p>
      *
      * @param header
      * @param articleRange
-     * @return Returns a DotTerminatedMessageReader if successful, null otherwise
+     * @return Returns a {@link DotTerminatedMessageReader} if successful, {@code null} otherwise
      * @throws IOException
      */
     private BufferedReader retrieveHeader(final String header, final String articleRange) throws IOException {

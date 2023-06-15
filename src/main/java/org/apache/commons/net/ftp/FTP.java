@@ -575,7 +575,7 @@ public class FTP extends SocketClient {
             throw new MalformedServerReplyException("Truncated server reply: " + line);
         }
 
-        String code = null;
+        String code;
         try {
             code = line.substring(0, REPLY_CODE_LEN);
             _replyCode = Integer.parseInt(code);

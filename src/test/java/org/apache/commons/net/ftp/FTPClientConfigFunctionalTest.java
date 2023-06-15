@@ -29,7 +29,7 @@ import junit.framework.TestCase;
  * setting. It is a perfect functional test for the Time Zone functionality of FTPClientConfig.
  *
  * A publicly accessible FTP server at the US National Oceanographic and Atmospheric Adminstration houses a directory which contains 300 files, named sn.0000 to
- * sn.0300. Every ten minutes or so the next file in sequence is rewritten with new data. Thus the directory contains observations for more than 24 hours of
+ * sn.0300. Every ten minutes or so the next file in sequence is rewritten with new data. Thus, the directory contains observations for more than 24 hours of
  * data. Since the server has its clock set to GMT this is an excellent functional test for any machine in a different time zone.
  *
  * Noteworthy is the fact that the FTP routines in some web browsers don't work as well as this. They can't, since they have no way of knowing the server's time
