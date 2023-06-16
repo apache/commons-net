@@ -25,7 +25,7 @@ jobs:
     timeout-minutes: 7
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v3.5.2
+    - uses: actions/checkout@v3.5.3
       with:
         persist-credentials: false
     - name: Set up JDK
