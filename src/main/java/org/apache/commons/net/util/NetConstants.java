@@ -23,7 +23,7 @@ import java.security.cert.X509Certificate;
  *
  * @since 3.8.0
  */
-public class NetConstants {
+public final class NetConstants {
 
     /**
      * An empty immutable {@code String} array.
