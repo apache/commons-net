@@ -213,7 +213,7 @@ public class Base64 {
             return binaryData;
         }
 
-        final long len = getEncodeLength(binaryData, isChunked ? CHUNK_SIZE : 0, isChunked ? CHUNK_SEPARATOR : NetConstants.EMPTY_BTYE_ARRAY);
+        final long len = getEncodeLength(binaryData, isChunked ? CHUNK_SIZE : 0, isChunked ? CHUNK_SEPARATOR : NetConstants.EMPTY_BYTE_ARRAY);
         if (len > maxResultSize) {
             throw new IllegalArgumentException(
                     "Input array too big, the output array would be bigger (" + len + ") than the specified maxium size of " + maxResultSize);
@@ -575,7 +575,7 @@ public class Base64 {
     public Base64(int lineLength, byte[] lineSeparator, final boolean urlSafe) {
         if (lineSeparator == null) {
             lineLength = 0; // disable chunk-separating
-            lineSeparator = NetConstants.EMPTY_BTYE_ARRAY; // this just gets ignored
+            lineSeparator = NetConstants.EMPTY_BYTE_ARRAY; // this just gets ignored
         }
         this.lineLength = lineLength > 0 ? (lineLength / 4) * 4 : 0;
         this.lineSeparator = new byte[lineSeparator.length];

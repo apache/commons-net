@@ -62,7 +62,7 @@ public final class CharGenUDPClient extends DatagramSocketClient {
         // CharGen return packets have a maximum length of 512
         receiveData = new byte[512];
         receivePacket = new DatagramPacket(receiveData, receiveData.length);
-        sendPacket = new DatagramPacket(NetConstants.EMPTY_BTYE_ARRAY, 0);
+        sendPacket = new DatagramPacket(NetConstants.EMPTY_BYTE_ARRAY, 0);
     }
 
     /**

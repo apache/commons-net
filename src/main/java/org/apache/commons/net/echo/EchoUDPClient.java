@@ -37,7 +37,7 @@ public final class EchoUDPClient extends DiscardUDPClient {
     /** The default echo port. It is set to 7 according to RFC 862. */
     public static final int DEFAULT_PORT = 7;
 
-    private final DatagramPacket receivePacket = new DatagramPacket(NetConstants.EMPTY_BTYE_ARRAY, 0);
+    private final DatagramPacket receivePacket = new DatagramPacket(NetConstants.EMPTY_BYTE_ARRAY, 0);
 
     /**
      * Same as <code> receive(data, data.length)</code>
