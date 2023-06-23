@@ -141,11 +141,13 @@ public final class FTPCommand {
             "STOR", "STOU", "APPE", "ALLO", "REST", "RNFR", "RNTO", "ABOR", "DELE", "RMD", "MKD", "PWD", "LIST", "NLST", "SITE", "SYST", "STAT", "HELP", "NOOP",
             "MDTM", "FEAT", "MFMT", "EPSV", "EPRT", "MLSD", "MLST" };
 
-    // default access needed for Unit test
+    /**
+     * Default access needed for Unit test.
+     */
     static void checkArray() {
         final int expectedLength = LAST + 1;
         if (COMMANDS.length != expectedLength) {
-            throw new RuntimeException("Incorrect _commands array. Should have length " + expectedLength + " found " + COMMANDS.length);
+            throw new IllegalStateException("Incorrect COMMANDS array. Should have length " + expectedLength + " found " + COMMANDS.length);
         }
     }
 
