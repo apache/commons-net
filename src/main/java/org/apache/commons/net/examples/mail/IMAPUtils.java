@@ -27,7 +27,6 @@ import org.apache.commons.net.imap.IMAPSClient;
 /**
  * Utility class for shared IMAP utilities
  */
-
 class IMAPUtils {
 
     /**
