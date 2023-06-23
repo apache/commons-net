@@ -154,7 +154,7 @@ public class TFTPServer implements Runnable {
                 }
 
                 try {
-                    is = new BufferedInputStream(new FileInputStream(buildSafeFile(serverReadDirectory_, trrp.getFilename(), false)));
+                    is = new BufferedInputStream(new FileInputStream(buildSafeFile(serverReadDirectory, trrp.getFilename(), false)));
                 } catch (final FileNotFoundException e) {
                     transferTftp_.bufferedSend(new TFTPErrorPacket(trrp.getAddress(), trrp.getPort(), TFTPErrorPacket.FILE_NOT_FOUND, e.getMessage()));
                     return;
@@ -272,7 +272,7 @@ public class TFTPServer implements Runnable {
                 final String fileName = twrp.getFilename();
 
                 try {
-                    final File temp = buildSafeFile(serverWriteDirectory_, fileName, true);
+                    final File temp = buildSafeFile(serverWriteDirectory, fileName, true);
                     if (temp.exists()) {
                         transferTftp_.bufferedSend(new TFTPErrorPacket(twrp.getAddress(), twrp.getPort(), TFTPErrorPacket.FILE_EXISTS, "File already exists"));
                         return;
@@ -459,8 +459,8 @@ public class TFTPServer implements Runnable {
     private final HashSet<TFTPTransfer> transfers = new HashSet<>();
     private volatile boolean shutdownServer;
     private TFTP serverTftp;
-    private File serverReadDirectory_;
-    private File serverWriteDirectory_;
+    private File serverReadDirectory;
+    private File serverWriteDirectory;
     private final int port;
     private final InetAddress laddr;
 
@@ -624,18 +624,18 @@ public class TFTPServer implements Runnable {
     /*
      * start the server, throw an error if it can't start.
      */
-    private void launch(final File serverReadDirectory, final File serverWriteDirectory) throws IOException {
-        log.println("Starting TFTP Server on port " + port + ".  Read directory: " + serverReadDirectory + " Write directory: " + serverWriteDirectory
+    private void launch(final File newServerReadDirectory, final File newServerWriteDirectory) throws IOException {
+        log.println("Starting TFTP Server on port " + port + ".  Read directory: " + newServerReadDirectory + " Write directory: " + newServerWriteDirectory
                 + " Server Mode is " + mode);
 
-        serverReadDirectory_ = serverReadDirectory.getCanonicalFile();
-        if (!serverReadDirectory_.exists() || !serverReadDirectory.isDirectory()) {
-            throw new IOException("The server read directory " + serverReadDirectory_ + " does not exist");
+        this.serverReadDirectory = newServerReadDirectory.getCanonicalFile();
+        if (!serverReadDirectory.exists() || !newServerReadDirectory.isDirectory()) {
+            throw new IOException("The server read directory " + this.serverReadDirectory + " does not exist");
         }
 
-        serverWriteDirectory_ = serverWriteDirectory.getCanonicalFile();
-        if (!serverWriteDirectory_.exists() || !serverWriteDirectory.isDirectory()) {
-            throw new IOException("The server write directory " + serverWriteDirectory_ + " does not exist");
+        this.serverWriteDirectory = newServerWriteDirectory.getCanonicalFile();
+        if (!this.serverWriteDirectory.exists() || !newServerWriteDirectory.isDirectory()) {
+            throw new IOException("The server write directory " + this.serverWriteDirectory + " does not exist");
         }
 
         serverTftp = new TFTP();
