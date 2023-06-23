@@ -30,7 +30,7 @@ import org.apache.commons.net.imap.IMAPSClient;
 class IMAPUtils {
 
     /**
-     * Parse the URI and use the details to connect to the IMAP(S) server and login.
+     * Parses the URI and use the details to connect to the IMAP(S) server and login.
      *
      * @param uri            the URI to use, e.g. imaps://user:pass@imap.mail.yahoo.com/folder or imaps://user:pass@imap.googlemail.com/folder
      * @param defaultTimeout initial timeout (in milliseconds)
