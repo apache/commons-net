@@ -35,7 +35,7 @@
         by mvn changes:announcement-generate -->
     <description>
 Apache Commons Net library contains a collection of network utilities and protocol implementations.
-Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois
+Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Telnet, Whois.
     </description>
     <url>https://commons.apache.org/proper/commons-net/</url>
     <inceptionYear>2001</inceptionYear>
