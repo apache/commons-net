@@ -65,7 +65,7 @@ public final class POP3Command {
 
     static {
         if (commands.length != NEXT) {
-            throw new RuntimeException("Error in array definition");
+            throw new IllegalStateException("Error in array definition");
         }
     }
 
