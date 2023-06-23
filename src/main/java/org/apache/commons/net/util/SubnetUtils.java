@@ -76,7 +76,7 @@ public class SubnetUtils {
         public int getAddressCount() {
             final long countLong = getAddressCountLong();
             if (countLong > Integer.MAX_VALUE) {
-                throw new RuntimeException("Count is larger than an integer: " + countLong);
+                throw new IllegalStateException("Count is larger than an integer: " + countLong);
             }
             // Cannot be negative here
             return (int) countLong;
