@@ -22,7 +22,6 @@ package org.apache.commons.net.smtp;
  * constant names are transcriptions from the code descriptions of RFC 821. For those who think in terms of the actual SMTP commands, a set of constants such as
  * {@link #HELO HELO } are provided where the constant name is the same as the SMTP command.
  */
-
 public final class SMTPCommand {
 
     public static final int HELO = 0;
