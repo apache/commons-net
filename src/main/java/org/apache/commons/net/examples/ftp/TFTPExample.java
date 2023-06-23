@@ -24,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.time.Duration;
 
 import org.apache.commons.net.tftp.TFTP;
 import org.apache.commons.net.tftp.TFTPClient;
@@ -121,7 +122,7 @@ public final class TFTPExample {
         }
 
         // We want to timeout if a response takes longer than 60 seconds
-        tftp.setDefaultTimeout(timeout);
+        tftp.setDefaultTimeout(Duration.ofSeconds(timeout));
 
         // We haven't closed the local file yet.
         closed = false;

@@ -19,6 +19,7 @@ package org.apache.commons.net.examples.ntp;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.time.Duration;
 
 import org.apache.commons.net.time.TimeTCPClient;
 import org.apache.commons.net.time.TimeUDPClient;
@@ -72,7 +73,7 @@ public final class TimeClient {
         final TimeUDPClient client = new TimeUDPClient();
 
         // We want to timeout if a response takes longer than 60 seconds
-        client.setDefaultTimeout(60000);
+        client.setDefaultTimeout(Duration.ofSeconds(60));
         client.open();
         System.out.println(client.getDate(InetAddress.getByName(host)));
         client.close();

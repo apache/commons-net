@@ -22,6 +22,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.text.NumberFormat;
+import java.time.Duration;
 
 import org.apache.commons.net.ntp.NTPUDPClient;
 import org.apache.commons.net.ntp.NtpUtils;
@@ -52,7 +53,7 @@ public final class NTPClient {
 
         final NTPUDPClient client = new NTPUDPClient();
         // We want to timeout if a response takes longer than 10 seconds
-        client.setDefaultTimeout(10000);
+        client.setDefaultTimeout(Duration.ofSeconds(10));
         try {
             client.open();
             for (final String arg : args) {

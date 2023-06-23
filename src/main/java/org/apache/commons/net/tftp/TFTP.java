@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.net.DatagramPacket;
 import java.net.SocketException;
+import java.time.Duration;
 
 import org.apache.commons.net.DatagramSocketClient;
 
@@ -67,9 +68,19 @@ public class TFTP extends DatagramSocketClient {
     public static final int OCTET_MODE = 1;
 
     /**
-     * The default number of milliseconds to wait to receive a datagram before timing out. The default is 5000 milliseconds (5 seconds).
+     * The default number of milliseconds to wait to receive a datagram before timing out. The default is 5,000 milliseconds (5 seconds).
+     *
+     * @deprecated Use {@link #DEFAULT_TIMEOUT_DURATION}.
      */
+    @Deprecated
     public static final int DEFAULT_TIMEOUT = 5000;
+
+    /**
+     * The default duration to wait to receive a datagram before timing out. The default is 5 seconds.
+     *
+     * @since 3.10.0
+     */
+    public static final Duration DEFAULT_TIMEOUT_DURATION = Duration.ofSeconds(5);
 
     /**
      * The default TFTP port according to RFC 783 is 69.
@@ -107,10 +118,10 @@ public class TFTP extends DatagramSocketClient {
     byte[] sendBuffer;
 
     /**
-     * Creates a TFTP instance with a default timeout of DEFAULT_TIMEOUT, a null socket, and buffered operations disabled.
+     * Creates a TFTP instance with a default timeout of {@link #DEFAULT_TIMEOUT_DURATION}, a null socket, and buffered operations disabled.
      */
     public TFTP() {
-        setDefaultTimeout(DEFAULT_TIMEOUT);
+        setDefaultTimeout(DEFAULT_TIMEOUT_DURATION);
         receiveBuffer = null;
         receiveDatagram = null;
     }

@@ -19,6 +19,7 @@ package org.apache.commons.net.examples.unix;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.time.Duration;
 
 import org.apache.commons.net.daytime.DaytimeTCPClient;
 import org.apache.commons.net.daytime.DaytimeUDPClient;
@@ -45,7 +46,7 @@ public final class daytime {
         final DaytimeUDPClient client = new DaytimeUDPClient();
 
         // We want to timeout if a response takes longer than 60 seconds
-        client.setDefaultTimeout(60000);
+        client.setDefaultTimeout(Duration.ofSeconds(60));
         client.open();
         System.out.println(client.getTime(InetAddress.getByName(host)).trim());
         client.close();

@@ -30,6 +30,7 @@ import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketTimeoutException;
+import java.time.Duration;
 import java.util.Enumeration;
 import java.util.HashSet;
 
@@ -643,7 +644,7 @@ public class TFTPServer implements Runnable {
         socketTimeout = serverTftp.getDefaultTimeout();
 
         // we want the server thread to listen forever.
-        serverTftp.setDefaultTimeout(0);
+        serverTftp.setDefaultTimeout(Duration.ZERO);
 
         if (laddr != null) {
             serverTftp.open(port, laddr);

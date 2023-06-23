@@ -21,6 +21,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.nio.charset.Charset;
+import java.time.Duration;
 
 /**
  * The DatagramSocketClient provides the basic operations that are required of client objects accessing datagram sockets. It is meant to be subclassed to avoid
@@ -224,12 +225,25 @@ public abstract class DatagramSocketClient {
     }
 
     /**
-     * Set the default timeout in milliseconds to use when opening a socket. After a call to open, the timeout for the socket is set using this value. This
+     * Set the default timeout in to use when opening a socket. After a call to open, the timeout for the socket is set using this value. This
      * method should be used prior to a call to {@link #open open()} and should not be confused with {@link #setSoTimeout setSoTimeout()} which operates on the
      * currently open socket. _timeout_ contains the new timeout value.
      *
      * @param timeout The timeout in milliseconds to use for the datagram socket connection.
      */
+    public void setDefaultTimeout(final Duration timeout) {
+        _timeout_ = Math.toIntExact(timeout.toMillis());
+    }
+
+    /**
+     * Set the default timeout in milliseconds to use when opening a socket. After a call to open, the timeout for the socket is set using this value. This
+     * method should be used prior to a call to {@link #open open()} and should not be confused with {@link #setSoTimeout setSoTimeout()} which operates on the
+     * currently open socket. _timeout_ contains the new timeout value.
+     *
+     * @param timeout The timeout in milliseconds to use for the datagram socket connection.
+     * @deprecated Use {@link #setDefaultTimeout(Duration)}.
+     */
+    @Deprecated
     public void setDefaultTimeout(final int timeout) {
         _timeout_ = timeout;
     }
