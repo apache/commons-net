@@ -83,12 +83,12 @@ class IMAPUtils {
             imap.connect(server);
             System.out.println("Successfully connected");
         } catch (final IOException e) {
-            throw new RuntimeException("Could not connect to server.", e);
+            throw new IOException("Could not connect to server.", e);
         }
 
         if (!imap.login(username, password)) {
             imap.disconnect();
-            throw new RuntimeException("Could not login to server. Check login details.");
+            throw new IOException("Could not login to server. Check login details.");
         }
 
         return imap;
