@@ -103,6 +103,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">
         SubnetUtils.SubnetInfo.getPreviousAddress() now throws IllegalStateException instead of RuntimeException.
       </action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">
+        IMAPExportMbox.MboxListener.chunkReceived(IMAP) now throws UncheckedIOException instead of RuntimeException.
+      </action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Dependabot">
         Bump commons-parent from 54 to 58 #132, #137, #153.

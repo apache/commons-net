@@ -21,6 +21,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
@@ -172,7 +173,7 @@ public final class IMAPExportMbox {
                 bufferedWriter.append(lineSeparator); // blank line between entries
             } catch (final IOException e) {
                 e.printStackTrace();
-                throw new RuntimeException(e); // chunkReceived cannot throw a checked Exception
+                throw new UncheckedIOException(e); // chunkReceived cannot throw a checked Exception
             }
             lastFetched = firstLine;
             total.incrementAndGet();
