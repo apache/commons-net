@@ -65,6 +65,13 @@ The <action> type attribute can be add,update,fix,remove.
 
   <body>
     <release version="3.10.0" date="202Y-MM-DD" description="Maintenance and bug fix release (Java 8).">
+      <!--  ADD -->
+      <action type="add" dev="ggregory" due-to="Gary Gregory">
+        Add and use DatagramSocketClient.setDefaultTimeout(Duration) and deprecate DatagramSocketClient.setDefaultTimeout(int).
+      </action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">
+        Add and use TFTP.DEFAULT_TIMEOUT_DURATION and deprecate org.apache.commons.net.tftp.TFTP.DEFAULT_TIMEOUT.
+      </action>
       <!-- FIX -->
       <action type="fix" issue="NET-650" dev="ggregory" due-to="Matthew McGillis, exceptionfactory, sebbASF">
         Delegate host resolution to Socket.connect() #138.
