@@ -732,7 +732,7 @@ public class TFTPServer implements Runnable {
     /**
      * Set the socket timeout in milliseconds used in transfers.
      * <p>
-     * Defaults to the value {@link TFTP#DEFAULT_TIMEOUT} (5000 at the time I write this). Min value of 10.
+     * Defaults to the value {@link TFTP#DEFAULT_TIMEOUT}. Minimum value of 10.
      * </p>
      * @param timeout the timeout; must be equal to or larger than 10.
      */
