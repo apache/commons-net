@@ -77,8 +77,8 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
  *
  * @since 2.0
  */
-
 public class TFTPServer implements Runnable {
+
     public enum ServerMode {
         GET_ONLY, PUT_ONLY, GET_AND_PUT
     }
