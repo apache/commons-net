@@ -61,7 +61,7 @@ The <action> type attribute can be add,update,fix,remove.
     mvn changes:announcement-generate -Prelease-notes [-Dchanges.version=nnn]
 
     Defining changes.version allows one to create the RN without first removing the SNAPSHOT suffix.
-     -->
+    -->
 
   <body>
     <release version="3.10.0" date="202Y-MM-DD" description="Maintenance and bug fix release (Java 8).">
@@ -71,6 +71,9 @@ The <action> type attribute can be add,update,fix,remove.
       </action>
       <action type="fix" dev="ggregory" due-to="Martin Wiesner, Gary Gregory, sebbASF">
         Fixes many grammar issues and typos in JavaDoc and code comments #141.
+      </action>
+      <action type="fix" dev="ggregory" due-to="Martin Wiesner, Gary Gregory">
+        Remove redundant (null) initializations and other clean ups #155.
       </action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Dependabot">
