@@ -60,14 +60,19 @@ public final class FTPCommand {
     public static final int STAT = 30;
     public static final int HELP = 31;
     public static final int NOOP = 32;
+
     /** @since 2.0 */
     public static final int MDTM = 33;
+
     /** @since 2.2 */
     public static final int FEAT = 34;
+
     /** @since 2.2 */
     public static final int MFMT = 35;
+
     /** @since 2.2 */
     public static final int EPSV = 36;
+
     /** @since 2.2 */
     public static final int EPRT = 37;
 
