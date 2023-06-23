@@ -149,7 +149,6 @@ public final class POP3ExportMbox {
             pop3.disconnect();
         } catch (final IOException e) {
             e.printStackTrace();
-            return;
         }
     }
 

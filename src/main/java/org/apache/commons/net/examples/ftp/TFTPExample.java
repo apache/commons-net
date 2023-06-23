@@ -155,7 +155,7 @@ public final class TFTPExample {
     private static boolean receive(final int transferMode, final String hostname, final String localFilename, final String remoteFilename,
             final TFTPClient tftp) {
         final boolean closed;
-        FileOutputStream output = null;
+        FileOutputStream output;
         final File file;
 
         file = new File(localFilename);
@@ -202,7 +202,7 @@ public final class TFTPExample {
 
     private static boolean send(final int transferMode, final String hostname, final String localFilename, final String remoteFilename, final TFTPClient tftp) {
         final boolean closed;
-        FileInputStream input = null;
+        FileInputStream input;
 
         // Try to open local file for reading
         try {

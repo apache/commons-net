@@ -114,8 +114,6 @@ public class RCommandClient extends RExecClient {
     public void connect(final InetAddress host, final int port, final InetAddress localAddr) throws SocketException, BindException, IOException {
         int localPort;
 
-        localPort = MAX_CLIENT_PORT;
-
         for (localPort = MAX_CLIENT_PORT; localPort >= MIN_CLIENT_PORT; --localPort) {
             try {
                 _socket_ = _socketFactory_.createSocket(host, port, localAddr, localPort);
@@ -221,7 +219,6 @@ public class RCommandClient extends RExecClient {
         int localPort;
         final Socket socket;
 
-        localPort = MAX_CLIENT_PORT;
         ServerSocket server = null;
 
         for (localPort = MAX_CLIENT_PORT; localPort >= MIN_CLIENT_PORT; --localPort) {
