@@ -723,10 +723,11 @@ public class TFTPServer implements Runnable {
      * Set the max number of retries in response to a timeout. Default 3. Min 0.
      *
      * @param retries number of retries, must be &gt; 0
+     * @throws IllegalArgumentException if {@code retries} is less than 0.
      */
     public void setMaxTimeoutRetries(final int retries) {
         if (retries < 0) {
-            throw new RuntimeException("Invalid Value");
+            throw new IllegalArgumentException("Invalid Value");
         }
         maxTimeoutRetries = retries;
     }
@@ -737,10 +738,11 @@ public class TFTPServer implements Runnable {
      * Defaults to the value {@link TFTP#DEFAULT_TIMEOUT}. Minimum value of 10.
      * </p>
      * @param timeout the timeout; must be equal to or larger than 10.
+     * @throws IllegalArgumentException if {@code timeout} is less than 10.
      */
     public void setSocketTimeout(final int timeout) {
         if (timeout < 10) {
-            throw new RuntimeException("Invalid Value");
+            throw new IllegalArgumentException("Invalid Value");
         }
         socketTimeout = timeout;
     }
