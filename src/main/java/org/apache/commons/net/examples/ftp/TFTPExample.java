@@ -61,7 +61,7 @@ public final class TFTPExample {
         return closed;
     }
 
-    public static void main(final String[] args) {
+    public static void main(final String[] args) throws IOException {
         boolean receiveFile = true, closed;
         int transferMode = TFTP.BINARY_MODE, argc;
         String arg;
@@ -145,16 +145,16 @@ public final class TFTPExample {
         System.out.println("OK");
     }
 
-    private static void open(final TFTPClient tftp) {
+    private static void open(final TFTPClient tftp) throws IOException {
         try {
             tftp.open();
         } catch (final SocketException e) {
-            throw new RuntimeException("Error: could not open local UDP socket.", e);
+            throw new IOException("Error: could not open local UDP socket.", e);
         }
     }
 
     private static boolean receive(final int transferMode, final String hostname, final String localFilename, final String remoteFilename,
-            final TFTPClient tftp) {
+            final TFTPClient tftp) throws IOException {
         final boolean closed;
         FileOutputStream output;
         final File file;
@@ -172,7 +172,7 @@ public final class TFTPExample {
             output = new FileOutputStream(file);
         } catch (final IOException e) {
             tftp.close();
-            throw new RuntimeException("Error: could not open local file for writing.", e);
+            throw new IOException("Error: could not open local file for writing.", e);
         }
 
         open(tftp);
@@ -201,7 +201,8 @@ public final class TFTPExample {
         return closed;
     }
 
-    private static boolean send(final int transferMode, final String hostname, final String localFilename, final String remoteFilename, final TFTPClient tftp) {
+    private static boolean send(final int transferMode, final String hostname, final String localFilename, final String remoteFilename, final TFTPClient tftp)
+            throws IOException {
         final boolean closed;
         FileInputStream input;
 
