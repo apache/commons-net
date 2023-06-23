@@ -54,7 +54,7 @@ public class FTPClientTest extends TestCase {
             try {
                 return InetAddress.getByName(passiveModeServerIP);
             } catch (final Exception e) {
-                throw new RuntimeException(e);
+                throw new IllegalStateException(e);
             }
         }
 
