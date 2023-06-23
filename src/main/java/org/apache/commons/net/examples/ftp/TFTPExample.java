@@ -211,7 +211,7 @@ public final class TFTPExample {
             input = new FileInputStream(localFilename);
         } catch (final IOException e) {
             tftp.close();
-            throw new RuntimeException("Error: could not open local file for reading.", e);
+            throw new IOException("Error: could not open local file for reading.", e);
         }
 
         open(tftp);
