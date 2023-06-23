@@ -132,7 +132,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
 
         assertEquals(df.format(cal.getTime()), df.format(f.getTimestamp().getTime()));
     }
-    
+
     /**
      * @see FTPParseTestFramework#testParseFieldsOnFile()
      */
