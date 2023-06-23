@@ -108,7 +108,7 @@ public class Threader {
             }
 
             if (rest == null) {
-                throw new RuntimeException("Didnt find " + container + " in parent " + container.parent);
+                throw new IllegalStateException("Didnt find " + container + " in parent " + container.parent);
             }
 
             // Unlink this container from the parent's child list
@@ -142,7 +142,7 @@ public class Threader {
             final NntpThreadContainer c = entry.getValue();
             if (c.parent == null) {
                 if (c.next != null) {
-                    throw new RuntimeException("c.next is " + c.next.toString());
+                    throw new IllegalStateException("c.next is " + c.next.toString());
                 }
                 c.next = root.child;
                 root.child = c;
@@ -384,7 +384,7 @@ public class Threader {
         gatherSubjects(root);
 
         if (root.next != null) {
-            throw new RuntimeException("root node has a next:" + root);
+            throw new IllegalStateException("root node has a next:" + root);
         }
 
         for (NntpThreadContainer r = root.child; r != null; r = r.next) {
