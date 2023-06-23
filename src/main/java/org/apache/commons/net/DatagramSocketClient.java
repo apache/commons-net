@@ -229,7 +229,7 @@ public abstract class DatagramSocketClient {
      * method should be used prior to a call to {@link #open open()} and should not be confused with {@link #setSoTimeout setSoTimeout()} which operates on the
      * currently open socket. _timeout_ contains the new timeout value.
      *
-     * @param timeout The timeout in milliseconds to use for the datagram socket connection.
+     * @param timeout The timeout durations to use for the datagram socket connection.
      */
     public void setDefaultTimeout(final Duration timeout) {
         _timeout_ = Math.toIntExact(timeout.toMillis());
