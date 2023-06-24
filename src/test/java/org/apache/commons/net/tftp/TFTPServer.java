@@ -462,7 +462,7 @@ public class TFTPServer implements Runnable {
     private File serverReadDirectory;
     private File serverWriteDirectory;
     private final int port;
-    private final InetAddress laddr;
+    private final InetAddress localAddress;
 
     private Exception serverException;
 
@@ -489,17 +489,17 @@ public class TFTPServer implements Runnable {
      * @param serverReadDirectory  directory for GET requests
      * @param serverWriteDirectory directory for PUT requests
      * @param port                 The local port to bind to.
-     * @param localaddr            The local address to bind to.
+     * @param localAddress            The local address to bind to.
      * @param mode                 A value as specified above.
      * @param log                  Stream to write log message to. If not provided, uses System.out
      * @param errorLog             Stream to write error messages to. If not provided, uses System.err.
      * @throws IOException if the server directory is invalid or does not exist.
      */
-    public TFTPServer(final File serverReadDirectory, final File serverWriteDirectory, final int port, final InetAddress localaddr, final ServerMode mode,
+    public TFTPServer(final File serverReadDirectory, final File serverWriteDirectory, final int port, final InetAddress localAddress, final ServerMode mode,
             final PrintStream log, final PrintStream errorLog) throws IOException {
         this.port = port;
         this.mode = mode;
-        this.laddr = localaddr;
+        this.localAddress = localAddress;
         this.log = log == null ? nullStream : log;
         this.logError = errorLog == null ? nullStream : errorLog;
         launch(serverReadDirectory, serverWriteDirectory);
@@ -527,16 +527,16 @@ public class TFTPServer implements Runnable {
             final PrintStream log, final PrintStream errorLog) throws IOException {
         this.mode = mode;
         this.port = port;
-        InetAddress iaddr = null;
+        InetAddress inetAddress = null;
         if (localiface != null) {
             final Enumeration<InetAddress> ifaddrs = localiface.getInetAddresses();
             if ((ifaddrs != null) && ifaddrs.hasMoreElements()) {
-                iaddr = ifaddrs.nextElement();
+                inetAddress = ifaddrs.nextElement();
             }
         }
         this.log = log == null ? nullStream : log;
         this.logError = errorLog == null ? nullStream : errorLog;
-        this.laddr = iaddr;
+        this.localAddress = inetAddress;
         launch(serverReadDirectory, serverWriteDirectory);
     }
 
@@ -563,7 +563,7 @@ public class TFTPServer implements Runnable {
         this.mode = mode;
         this.log = log == null ? nullStream : log;
         this.logError = errorLog == null ? nullStream : errorLog;
-        this.laddr = null;
+        this.localAddress = null;
         launch(serverReadDirectory, serverWriteDirectory);
     }
 
@@ -646,8 +646,8 @@ public class TFTPServer implements Runnable {
         // we want the server thread to listen forever.
         serverTftp.setDefaultTimeout(Duration.ZERO);
 
-        if (laddr != null) {
-            serverTftp.open(port, laddr);
+        if (localAddress != null) {
+            serverTftp.open(port, localAddress);
         } else {
             serverTftp.open(port);
         }
