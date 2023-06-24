@@ -59,12 +59,12 @@ public class DefaultDatagramSocketFactory implements DatagramSocketFactory {
      * Creates a DatagramSocket at the specified address on the local host at a specified port.
      *
      * @param port  The port to use for the socket.
-     * @param laddr The local address to use.
+     * @param localAddress The local address to use.
      * @return a new DatagramSocket
      * @throws SocketException If the socket could not be created.
      */
     @Override
-    public DatagramSocket createDatagramSocket(final int port, final InetAddress laddr) throws SocketException {
-        return new DatagramSocket(port, laddr);
+    public DatagramSocket createDatagramSocket(final int port, final InetAddress localAddress) throws SocketException {
+        return new DatagramSocket(port, localAddress);
     }
 }
