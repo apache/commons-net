@@ -21,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.time.Duration;
 import java.util.StringTokenizer;
 
 import org.apache.commons.net.telnet.EchoOptionHandler;
@@ -116,7 +117,7 @@ public class TelnetClientExample implements Runnable, TelnetNotificationHandler 
                                 try {
                                     System.out.println("Sending AYT");
 
-                                    System.out.println("AYT response:" + tc.sendAYT(5000));
+                                    System.out.println("AYT response:" + tc.sendAYT(Duration.ofSeconds(5)));
                                 } catch (final IOException e) {
                                     System.err.println("Exception waiting AYT response: " + e.getMessage());
                                 }

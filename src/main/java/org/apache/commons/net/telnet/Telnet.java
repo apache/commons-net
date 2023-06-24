@@ -21,6 +21,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.time.Duration;
 import java.util.Arrays;
 
 import org.apache.commons.net.SocketClient;
@@ -195,13 +196,13 @@ class Telnet extends SocketClient {
     /**
      * Sends an {@code Are You There (AYT)} sequence and waits for the result.
      *
-     * @param timeout - Time to wait for a response (millis.)
+     * @param timeout - Time to wait for a response.
      * @throws IOException              - Exception in I/O.
      * @throws IllegalArgumentException - Illegal argument
      * @throws InterruptedException     - Interrupted during wait.
      * @return true if AYT received a response, false otherwise
      **/
-    final boolean _sendAYT(final long timeout) throws IOException, IllegalArgumentException, InterruptedException {
+    final boolean _sendAYT(final Duration timeout) throws IOException, IllegalArgumentException, InterruptedException {
         boolean retValue = false;
         synchronized (aytMonitor) {
             synchronized (this) {
@@ -209,7 +210,7 @@ class Telnet extends SocketClient {
                 _output_.write(COMMAND_AYT);
                 _output_.flush();
             }
-            aytMonitor.wait(timeout);
+            aytMonitor.wait(timeout.toMillis());
             if (!aytFlag) {
                 aytFlag = true;
             } else {

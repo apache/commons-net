@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.time.Duration;
 
 import junit.framework.TestCase;
 
@@ -233,7 +234,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         final InputStream is = ANSI.server.getInputStream();
         final TelnetTestResponder tr = new TelnetTestResponder(is, os, inputs, outputs, 30000);
         assertNotNull(tr);
-        final boolean res1 = ANSI.client.sendAYT(2000);
+        final boolean res1 = ANSI.client.sendAYT(Duration.ofSeconds(2));
 
         if (res1 == true) {
             ayt_true_ok = true;
@@ -242,7 +243,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         Thread.sleep(1000);
         is.skip(is.available());
 
-        final boolean res2 = ANSI.client.sendAYT(2000);
+        final boolean res2 = ANSI.client.sendAYT(Duration.ofSeconds(2));
 
         if (res2 == false) {
             ayt_false_ok = true;
