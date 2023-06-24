@@ -98,8 +98,8 @@ public final class TimeUDPClient extends DatagramSocketClient {
         sendPacket = new DatagramPacket(dummyData, dummyData.length, host, port);
         receivePacket = new DatagramPacket(timeData, timeData.length);
 
-        _socket_.send(sendPacket);
-        _socket_.receive(receivePacket);
+        checkOpen().send(sendPacket);
+        checkOpen().receive(receivePacket);
 
         time = 0L;
         time |= (((timeData[0] & 0xff) << 24) & 0xffffffffL);

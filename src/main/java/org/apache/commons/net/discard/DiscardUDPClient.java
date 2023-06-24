@@ -81,7 +81,7 @@ public class DiscardUDPClient extends DatagramSocketClient {
         sendPacket.setLength(length);
         sendPacket.setAddress(host);
         sendPacket.setPort(port);
-        _socket_.send(sendPacket);
+        checkOpen().send(sendPacket);
     }
 
 }

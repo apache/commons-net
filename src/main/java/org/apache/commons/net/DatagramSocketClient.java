@@ -22,6 +22,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.nio.charset.Charset;
 import java.time.Duration;
+import java.util.Objects;
 
 /**
  * The DatagramSocketClient provides the basic operations that are required of client objects accessing datagram sockets. It is meant to be subclassed to avoid
@@ -66,6 +67,16 @@ public abstract class DatagramSocketClient {
      * Default constructor for DatagramSocketClient. Initializes _socket_ to null, _timeout_ to 0, and _isOpen_ to false.
      */
     public DatagramSocketClient() {
+    }
+
+    /**
+     * Returns the non-null DatagramSocket or throwns {@link NullPointerException}.
+     *
+     * @return the non-null DatagramSocket.
+     * @since 3.10.0
+     */
+    protected DatagramSocket checkOpen() {
+        return Objects.requireNonNull(_socket_, "DatagramSocket");
     }
 
     /**
@@ -118,7 +129,7 @@ public abstract class DatagramSocketClient {
      * @return The local address to which the client's socket is bound.
      */
     public InetAddress getLocalAddress() {
-        return _socket_.getLocalAddress();
+        return checkOpen().getLocalAddress();
     }
 
     /**
@@ -128,7 +139,7 @@ public abstract class DatagramSocketClient {
      * @return The port number of the open socket on the local host used for the connection.
      */
     public int getLocalPort() {
-        return _socket_.getLocalPort();
+        return checkOpen().getLocalPort();
     }
 
     /**
@@ -141,7 +152,7 @@ public abstract class DatagramSocketClient {
      */
     @Deprecated
     public int getSoTimeout() throws SocketException {
-        return _socket_.getSoTimeout();
+        return checkOpen().getSoTimeout();
     }
 
     /**
@@ -152,7 +163,7 @@ public abstract class DatagramSocketClient {
      * @throws SocketException if an error getting the timeout.
      */
     public Duration getSoTimeoutDuration() throws SocketException {
-        return Duration.ofMillis(_socket_.getSoTimeout());
+        return Duration.ofMillis(checkOpen().getSoTimeout());
     }
 
     /**
@@ -265,7 +276,7 @@ public abstract class DatagramSocketClient {
      * @since 3.10.0
      */
     public void setSoTimeout(final Duration timeout) throws SocketException {
-        _socket_.setSoTimeout(Math.toIntExact(timeout.toMillis()));
+        checkOpen().setSoTimeout(Math.toIntExact(timeout.toMillis()));
     }
 
     /**
@@ -277,6 +288,6 @@ public abstract class DatagramSocketClient {
      */
     @Deprecated
     public void setSoTimeout(final int timeout) throws SocketException {
-        _socket_.setSoTimeout(timeout);
+        checkOpen().setSoTimeout(timeout);
     }
 }

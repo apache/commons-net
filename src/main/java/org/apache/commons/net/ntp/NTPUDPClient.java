@@ -88,8 +88,8 @@ public final class NTPUDPClient extends DatagramSocketClient {
         // in server response is all 0's which is "Thu Feb 07 01:28:16 EST 2036".
         message.setTransmitTime(now);
 
-        _socket_.send(sendPacket);
-        _socket_.receive(receivePacket);
+        checkOpen().send(sendPacket);
+        checkOpen().receive(receivePacket);
 
         final long returnTimeMillis = System.currentTimeMillis();
 

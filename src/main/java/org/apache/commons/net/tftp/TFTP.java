@@ -157,7 +157,7 @@ public class TFTP extends DatagramSocketClient {
     public final TFTPPacket bufferedReceive() throws IOException, InterruptedIOException, SocketException, TFTPPacketException {
         receiveDatagram.setData(receiveBuffer);
         receiveDatagram.setLength(receiveBuffer.length);
-        _socket_.receive(receiveDatagram);
+        checkOpen().receive(receiveDatagram);
 
         final TFTPPacket newTFTPPacket = TFTPPacket.newTFTPPacket(receiveDatagram);
         trace("<", newTFTPPacket);
@@ -177,7 +177,7 @@ public class TFTP extends DatagramSocketClient {
      */
     public final void bufferedSend(final TFTPPacket packet) throws IOException {
         trace(">", packet);
-        _socket_.send(packet.newDatagram(sendDatagram, sendBuffer));
+        checkOpen().send(packet.newDatagram(sendDatagram, sendBuffer));
     }
 
     /**
@@ -197,7 +197,7 @@ public class TFTP extends DatagramSocketClient {
 
         try {
             while (true) {
-                _socket_.receive(datagram);
+                checkOpen().receive(datagram);
             }
         } catch (final SocketException | InterruptedIOException e) {
             // Do nothing. We timed out, so we hope we're caught up.
@@ -232,7 +232,7 @@ public class TFTP extends DatagramSocketClient {
 
         packet = new DatagramPacket(new byte[PACKET_SIZE], PACKET_SIZE);
 
-        _socket_.receive(packet);
+        checkOpen().receive(packet);
 
         final TFTPPacket newTFTPPacket = TFTPPacket.newTFTPPacket(packet);
         trace("<", newTFTPPacket);
@@ -247,7 +247,7 @@ public class TFTP extends DatagramSocketClient {
      */
     public final void send(final TFTPPacket packet) throws IOException {
         trace(">", packet);
-        _socket_.send(packet.newDatagram());
+        checkOpen().send(packet.newDatagram());
     }
 
     /**

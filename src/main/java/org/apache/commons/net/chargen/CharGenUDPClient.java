@@ -76,7 +76,7 @@ public final class CharGenUDPClient extends DatagramSocketClient {
         final int length;
         final byte[] result;
 
-        _socket_.receive(receivePacket);
+        checkOpen().receive(receivePacket);
 
         result = new byte[length = receivePacket.getLength()];
         System.arraycopy(receiveData, 0, result, 0, length);
@@ -104,7 +104,7 @@ public final class CharGenUDPClient extends DatagramSocketClient {
     public void send(final InetAddress host, final int port) throws IOException {
         sendPacket.setAddress(host);
         sendPacket.setPort(port);
-        _socket_.send(sendPacket);
+        checkOpen().send(sendPacket);
     }
 
 }
