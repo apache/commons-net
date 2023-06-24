@@ -211,11 +211,11 @@ public abstract class DatagramSocketClient {
      * _isOpen_ is set to true after calling this method and _socket_ is set to the newly opened socket.
      *
      * @param port  The port to use for the socket.
-     * @param laddr The local address to use.
+     * @param localAddress The local address to use.
      * @throws SocketException If the socket could not be opened or the timeout could not be set.
      */
-    public void open(final int port, final InetAddress laddr) throws SocketException {
-        _socket_ = _socketFactory_.createDatagramSocket(port, laddr);
+    public void open(final int port, final InetAddress localAddress) throws SocketException {
+        _socket_ = _socketFactory_.createDatagramSocket(port, localAddress);
         _socket_.setSoTimeout(_timeout_);
         _isOpen_ = true;
     }
