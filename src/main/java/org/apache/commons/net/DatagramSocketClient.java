@@ -60,16 +60,12 @@ public abstract class DatagramSocketClient {
     protected boolean _isOpen_;
 
     /** The datagram socket's DatagramSocketFactory. */
-    protected DatagramSocketFactory _socketFactory_;
+    protected DatagramSocketFactory _socketFactory_ = DEFAULT_SOCKET_FACTORY;
 
     /**
      * Default constructor for DatagramSocketClient. Initializes _socket_ to null, _timeout_ to 0, and _isOpen_ to false.
      */
     public DatagramSocketClient() {
-        _socket_ = null;
-        _timeout_ = 0;
-        _isOpen_ = false;
-        _socketFactory_ = DEFAULT_SOCKET_FACTORY;
     }
 
     /**
