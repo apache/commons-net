@@ -118,6 +118,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">
         IMAPUtils.imapLogin(URI, int, ProtocolCommandListener) now throws IOException instead of RuntimeException while maintaining method signature source compatibility.
       </action>
+      <action type="fix" dev="ggregory" due-to="step-security-bot, Gary Gregory">
+        [StepSecurity] ci: Harden GitHub Actions #156.
+      </action>            
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Dependabot">
         Bump commons-parent from 54 to 58 #132, #137, #153.
