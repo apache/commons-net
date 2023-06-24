@@ -562,7 +562,7 @@ public class FTPClient extends FTP implements Configurable {
     /** Map of FEAT responses. If null, has not been initialized. */
     private HashMap<String, Set<String>> featuresMap;
 
-    private boolean ipAddressFromPasvResponse = Boolean.parseBoolean(System.getProperty(FTPClient.FTP_IP_ADDRESS_FROM_PASV_RESPONSE));
+    private boolean ipAddressFromPasvResponse = Boolean.getBoolean(FTPClient.FTP_IP_ADDRESS_FROM_PASV_RESPONSE);
 
     /**
      * Default FTPClient constructor. Creates a new FTPClient instance with the data connection mode set to <code> ACTIVE_LOCAL_DATA_CONNECTION_MODE </code>,
