@@ -140,10 +140,23 @@ public abstract class DatagramSocketClient {
      * thrown.
      *
      * @return The timeout in milliseconds of the currently opened socket.
-     * @throws SocketException if an error getting the timeout
+     * @throws SocketException if an error getting the timeout.
+     * @deprecated Use {@link #getSoTimeoutDuration()}.
      */
+    @Deprecated
     public int getSoTimeout() throws SocketException {
         return _socket_.getSoTimeout();
+    }
+
+    /**
+     * Returns the timeout duration of the currently opened socket. If you call this method when the client socket is not open, a NullPointerException is
+     * thrown.
+     *
+     * @return The timeout in milliseconds of the currently opened socket.
+     * @throws SocketException if an error getting the timeout.
+     */
+    public Duration getSoTimeoutDuration() throws SocketException {
+        return Duration.ofMillis(_socket_.getSoTimeout());
     }
 
     /**
@@ -249,11 +262,24 @@ public abstract class DatagramSocketClient {
     }
 
     /**
+     * Set the timeout duration of a currently open connection. Only call this method after a connection has been opened by {@link #open open()}.
+     *
+     * @param timeout The timeout in milliseconds to use for the currently open datagram socket connection.
+     * @throws SocketException if an error setting the timeout.
+     * @since 3.10.0
+     */
+    public void setSoTimeout(final Duration timeout) throws SocketException {
+        _socket_.setSoTimeout(Math.toIntExact(timeout.toMillis()));
+    }
+
+    /**
      * Set the timeout in milliseconds of a currently open connection. Only call this method after a connection has been opened by {@link #open open()}.
      *
      * @param timeout The timeout in milliseconds to use for the currently open datagram socket connection.
-     * @throws SocketException if an error setting the timeout
+     * @throws SocketException if an error setting the timeout.
+     * @deprecated Use {@link #setSoTimeout(Duration)}.
      */
+    @Deprecated
     public void setSoTimeout(final int timeout) throws SocketException {
         _socket_.setSoTimeout(timeout);
     }

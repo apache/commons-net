@@ -25,6 +25,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.time.Duration;
 
 import org.apache.commons.net.echo.EchoTCPClient;
 import org.apache.commons.net.echo.EchoUDPClient;
@@ -77,7 +78,7 @@ public final class echo {
 
         client.open();
         // If we don't receive an echo within 5 seconds, assume the packet is lost.
-        client.setSoTimeout(5000);
+        client.setSoTimeout(Duration.ofSeconds(5));
         System.out.println("Ready to echo to " + host + ".");
 
         // Remember, there are no guarantees about the ordering of returned

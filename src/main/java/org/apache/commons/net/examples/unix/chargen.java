@@ -23,6 +23,7 @@ import java.io.InputStreamReader;
 import java.io.InterruptedIOException;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.time.Duration;
 
 import org.apache.commons.net.chargen.CharGenTCPClient;
 import org.apache.commons.net.chargen.CharGenUDPClient;
@@ -71,7 +72,7 @@ public final class chargen {
         client.open();
         // If we don't receive a return packet within 5 seconds, assume
         // the packet is lost.
-        client.setSoTimeout(5000);
+        client.setSoTimeout(Duration.ofSeconds(5));
 
         while (packets-- > 0) {
             client.send(address);

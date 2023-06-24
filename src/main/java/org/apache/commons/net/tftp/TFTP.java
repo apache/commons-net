@@ -187,13 +187,13 @@ public class TFTP extends DatagramSocketClient {
      * @throws IOException if an I/O error occurs.
      */
     public final void discardPackets() throws IOException {
-        final int to;
+        final Duration to;
         final DatagramPacket datagram;
 
         datagram = new DatagramPacket(new byte[PACKET_SIZE], PACKET_SIZE);
 
-        to = getSoTimeout();
-        setSoTimeout(1);
+        to = getSoTimeoutDuration();
+        setSoTimeout(Duration.ofMillis(1));
 
         try {
             while (true) {
