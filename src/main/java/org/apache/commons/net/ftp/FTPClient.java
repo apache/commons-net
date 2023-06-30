@@ -2915,7 +2915,7 @@ public class FTPClient extends FTP implements Configurable {
     /**
      * Sets the duration to wait for control keep-alive message replies.
      *
-     * @param timeout duration to wait (defaults to 1000)
+     * @param timeout duration to wait (defaults to 1,000). Zero (or less) disables.
      * @since 3.0
      * @see #setControlKeepAliveTimeout(Duration)
      */
@@ -2927,7 +2927,7 @@ public class FTPClient extends FTP implements Configurable {
      * Sets the duration to wait for control keep-alive message replies.
      *
      * @deprecated Use {@link #setControlKeepAliveReplyTimeout(Duration)}.
-     * @param timeoutMillis number of milliseconds to wait (defaults to 1000)
+     * @param timeoutMillis number of milliseconds to wait (defaults to 1,000).
      * @since 3.0
      * @see #setControlKeepAliveTimeout(long)
      */
