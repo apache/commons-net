@@ -2913,9 +2913,9 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Sets how long to wait for control keep-alive message replies.
+     * Sets the duration to wait for control keep-alive message replies.
      *
-     * @param timeout number of milliseconds to wait (defaults to 1000)
+     * @param timeout duration to wait (defaults to 1000)
      * @since 3.0
      * @see #setControlKeepAliveTimeout(Duration)
      */
@@ -2924,7 +2924,7 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Sets how long to wait for control keep-alive message replies.
+     * Sets the duration to wait for control keep-alive message replies.
      *
      * @deprecated Use {@link #setControlKeepAliveReplyTimeout(Duration)}.
      * @param timeoutMillis number of milliseconds to wait (defaults to 1000)
@@ -2937,12 +2937,12 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Sets the time to wait between sending control connection keepalive messages when processing file upload or download.
+     * Sets the duration to wait between sending control connection keepalive messages when processing file upload or download.
      * <p>
      * See the class Javadoc section "Control channel keep-alive feature"
      * </p>
      *
-     * @param controlIdle the wait between keepalive messages. Zero (or less) disables.
+     * @param controlIdle the duration to wait between keepalive messages. Zero (or less) disables.
      * @since 3.9.0
      * @see #setControlKeepAliveReplyTimeout(Duration)
      */
@@ -2951,13 +2951,13 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Sets the time to wait between sending control connection keepalive messages when processing file upload or download.
+     * Sets the duration to wait between sending control connection keepalive messages when processing file upload or download.
      * <p>
      * See the class Javadoc section "Control channel keep-alive feature"
      * </p>
      *
      * @deprecated Use {@link #setControlKeepAliveTimeout(Duration)}.
-     * @param controlIdleSeconds the wait (in seconds) between keepalive messages. Zero (or less) disables.
+     * @param controlIdleSeconds the wait in seconds between keepalive messages. Zero (or less) disables.
      * @since 3.0
      * @see #setControlKeepAliveReplyTimeout(int)
      */

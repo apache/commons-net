@@ -123,7 +123,10 @@ The <action> type attribute can be add,update,fix,remove.
       </action>
       <action type="fix" dev="ggregory" due-to="step-security-bot, Gary Gregory">
         [StepSecurity] ci: Harden GitHub Actions #156.
-      </action>            
+      </action>
+      <action type="fix" dev="ggregory" due-to="David Costanzo, Gary Gregory" issue="NET-722">
+        Javadoc for FtpClient.setControlKeepAliveReplyTimeout(Duration) says timeout is in milliseconds.
+      </action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Dependabot">
         Bump commons-parent from 54 to 58 #132, #137, #153.
