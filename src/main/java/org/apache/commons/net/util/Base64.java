@@ -114,10 +114,10 @@ public class Base64 {
     // some state be preserved between calls of encode() and decode().
 
     /**
-     * Tests a given byte array to see if it contains only valid characters within the Base64 alphabet.
+     * Tests a given byte array to see if it contains any valid character within the Base64 alphabet.
      *
      * @param arrayOctet byte array to test
-     * @return {@code true} if any byte is a valid character in the Base64 alphabet; false herwise
+     * @return {@code true} if any byte is a valid character in the Base64 alphabet; {@code false} otherwise
      */
     private static boolean containsBase64Byte(final byte[] arrayOctet) {
         for (final byte element : arrayOctet) {
@@ -603,10 +603,10 @@ public class Base64 {
     }
 
     /**
-     * Decodes a byte[] containing characters in the Base64 alphabet.
+     * Decodes a byte array containing characters in the Base64 alphabet.
      *
      * @param pArray A byte array containing Base64 character data
-     * @return a byte array containing binary data
+     * @return a byte array containing binary data; will return {@code null} if provided byte array is null.
      */
     public byte[] decode(final byte[] pArray) {
         reset();
@@ -706,7 +706,7 @@ public class Base64 {
     /**
      * Decodes a String containing characters in the Base64 alphabet.
      *
-     * @param pArray A String containing Base64 character data
+     * @param pArray A String containing Base64 character data, must not be {@code null}
      * @return a byte array containing binary data
      * @since 1.4
      */
