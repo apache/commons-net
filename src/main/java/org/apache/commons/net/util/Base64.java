@@ -606,7 +606,7 @@ public class Base64 {
      * Decodes a byte array containing characters in the Base64 alphabet.
      *
      * @param pArray A byte array containing Base64 character data
-     * @return a byte array containing binary data; will return {@code null} if provided byte array is null.
+     * @return a byte array containing binary data; will return {@code null} if provided byte array is {@code null}.
      */
     public byte[] decode(final byte[] pArray) {
         reset();
