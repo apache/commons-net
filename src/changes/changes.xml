@@ -65,7 +65,7 @@ The <action> type attribute can be add,update,fix,remove.
 
   <body>
     <release version="3.10.0" date="202Y-MM-DD" description="Maintenance and bug fix release (Java 8).">
-      <!--  ADD -->
+      <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">
         Add and use DatagramSocketClient.setDefaultTimeout(Duration) and deprecate DatagramSocketClient.setDefaultTimeout(int).
       </action>
@@ -127,6 +127,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="David Costanzo, Gary Gregory" issue="NET-722">
         Javadoc for FtpClient.setControlKeepAliveReplyTimeout(Duration) says timeout is in milliseconds.
       </action>
+      <action type="fix" dev="ggregory" due-to="KuKa, Bruno P. Kinoshita">
+        Add Base64 missing tests and documentation fixes #161.
+      </action>      
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Dependabot">
         Bump commons-parent from 54 to 58 #132, #137, #153.
