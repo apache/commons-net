@@ -155,13 +155,13 @@ public class FTPFileTest {
     }
 
     @Test
-    void testToStringDefault() {
+    public void testToStringDefault() {
         final FTPFile file = new FTPFile();
         assertNull(file.toString());
     }
 
     @Test
-    void testToString() {
+    public void testToString() {
         final FTPFile file = new FTPFile();
         file.setRawListing("LIST");
         assertEquals(file.getRawListing(), file.toString());
