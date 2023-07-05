@@ -337,9 +337,9 @@ public class FTPFile implements Serializable {
      * @param permission The access permission (one of the {@code _PERMISSION} constants)
      * @param value      {@code true} if permission is allowed, {@code false} if not.
      * @throws ArrayIndexOutOfBoundsException if either of the parameters is out of range
-     * @throws NullPointerException if you're trying to set permission of an invalid file
      */
     public void setPermission(final int access, final int permission, final boolean value) {
+        // TODO: only allow permission setting if file is valid
         permissions[access][permission] = value;
     }
 
