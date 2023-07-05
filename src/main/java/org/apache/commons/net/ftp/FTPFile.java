@@ -470,7 +470,6 @@ public class FTPFile implements Serializable {
      * The returned output will be an FTP server raw listing.
      *
      * @see #getRawListing()
-     *
      * @return A string representation of the FTPFile information.
      */
     @Override
