@@ -289,6 +289,10 @@ public class FTPFile implements Serializable {
         return sb.toString();
     }
 
+    private void readObject(final java.io.ObjectInputStream in) {
+        throw new UnsupportedOperationException("Serialization is not supported");
+    }
+
     /**
      * Sets the name of the group owning the file. This may be a string representation of the group number.
      *
@@ -457,6 +461,10 @@ public class FTPFile implements Serializable {
         return sb.toString();
     }
 
+    /*
+     * Serialization is unnecessary for this class. Reject attempts to do so until such time as the Serializable attribute can be dropped.
+     */
+
     /**
      * Gets a string representation of the FTPFile information.
      * The returned output will be an FTP server raw listing.
@@ -468,14 +476,6 @@ public class FTPFile implements Serializable {
     @Override
     public String toString() {
         return getRawListing();
-    }
-
-    /*
-     * Serialization is unnecessary for this class. Reject attempts to do so until such time as the Serializable attribute can be dropped.
-     */
-
-    private void readObject(final java.io.ObjectInputStream in) {
-        throw new UnsupportedOperationException("Serialization is not supported");
     }
 
     private void writeObject(final java.io.ObjectOutputStream out) {
