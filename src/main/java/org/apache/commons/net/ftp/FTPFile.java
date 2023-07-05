@@ -410,7 +410,6 @@ public class FTPFile implements Serializable {
      * </p>
      *
      * @param timezone the time zone to use for displaying the time stamp If {@code null}, then use the Calendar ({@link #getTimestamp()}) entry
-     *
      * @return A string representation of the FTPFile information.
      * @since 3.4
      */
@@ -467,7 +466,7 @@ public class FTPFile implements Serializable {
 
     /**
      * Gets a string representation of the FTPFile information.
-     * The returned output will be an FTP server raw listing.
+     * Delegates to {@link #getRawListing()}
      *
      * @see #getRawListing()
      * @return A string representation of the FTPFile information.
