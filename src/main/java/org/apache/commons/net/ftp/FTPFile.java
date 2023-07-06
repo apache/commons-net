@@ -60,9 +60,8 @@ public class FTPFile implements Serializable {
 
     /** A constant indicating file/directory write permission. */
     public static final int WRITE_PERMISSION = 1;
-    /**
-     * A constant indicating file execute permission or directory listing permission.
-     */
+
+    /** A constant indicating file execute permission or directory listing permission. */
     public static final int EXECUTE_PERMISSION = 2;
 
     private int type = UNKNOWN_TYPE;
@@ -132,9 +131,10 @@ public class FTPFile implements Serializable {
     }
 
     /**
-     * If the FTPFile is a symbolic link, this method returns the name of the file being pointed to by the symbolic link. Otherwise, it returns null.
+     * If the FTPFile is a symbolic link, this method returns the name of the file being pointed to by the symbolic link.
+     * Otherwise, it returns {@code null}.
      *
-     * @return The file pointed to by the symbolic link (null if the FTPFile is not a symbolic link).
+     * @return The file pointed to by the symbolic link ({@code null} if the FTPFile is not a symbolic link).
      */
     public String getLink() {
         return link;
@@ -187,7 +187,7 @@ public class FTPFile implements Serializable {
     }
 
     /**
-     * Gets the type of the file (one of the <code>_TYPE</code> constants), e.g., if it is a directory, a regular file, or a symbolic link.
+     * Gets the type of the file (one of the {@code _TYPE} constants), e.g., if it is a directory, a regular file, or a symbolic link.
      *
      * @return The type of the file.
      */
@@ -205,13 +205,13 @@ public class FTPFile implements Serializable {
     }
 
     /**
-     * Tests if the given access group (one of the <code> _ACCESS </code> constants) has the given access permission (one of the <code> _PERMISSION </code>
+     * Tests if the given access group (one of the {@code _ACCESS} constants) has the given access permission (one of the {@code _PERMISSION}
      * constants) to the file.
      *
-     * @param access     The access group (one of the <code> _ACCESS </code> constants)
-     * @param permission The access permission (one of the <code> _PERMISSION </code> constants)
+     * @param access     The access group (one of the {@code _ACCESS} constants)
+     * @param permission The access permission (one of the {@code _PERMISSION} constants)
      * @throws ArrayIndexOutOfBoundsException if either of the parameters is out of range
-     * @return true if {@link #isValid()} is {@code true &&} the associated permission is set; {@code false} otherwise.
+     * @return {@code true} if {@link #isValid()} is {@code true} and the associated permission is set; {@code false} otherwise.
      */
     public boolean hasPermission(final int access, final int permission) {
         if (permissions == null) {
@@ -223,7 +223,7 @@ public class FTPFile implements Serializable {
     /**
      * Tests if the file is a directory.
      *
-     * @return True if the file is of type <code>DIRECTORY_TYPE</code>, false if not.
+     * @return {@code true} if the file is of type {@code DIRECTORY_TYPE}, {@code false} if not.
      */
     public boolean isDirectory() {
         return type == DIRECTORY_TYPE;
@@ -232,7 +232,7 @@ public class FTPFile implements Serializable {
     /**
      * Tests if the file is a regular file.
      *
-     * @return True if the file is of type <code>FILE_TYPE</code>, false if not.
+     * @return {@code true} if the file is of type {@code FILE_TYPE}, {@code false} if not.
      */
     public boolean isFile() {
         return type == FILE_TYPE;
@@ -241,7 +241,7 @@ public class FTPFile implements Serializable {
     /**
      * Tests if the file is a symbolic link.
      *
-     * @return True if the file is of type <code>UNKNOWN_TYPE</code>, false if not.
+     * @return {@code true} if the file is of type {@code SYMBOLIC_LINK_TYPE}, {@code false} if not.
      */
     public boolean isSymbolicLink() {
         return type == SYMBOLIC_LINK_TYPE;
@@ -250,7 +250,7 @@ public class FTPFile implements Serializable {
     /**
      * Tests if the type of the file is unknown.
      *
-     * @return True if the file is of type <code>UNKNOWN_TYPE</code>, false if not.
+     * @return {@code true} if the file is of type {@code UNKNOWN_TYPE}, {@code false} if not.
      */
     public boolean isUnknown() {
         return type == UNKNOWN_TYPE;
@@ -262,7 +262,7 @@ public class FTPFile implements Serializable {
      * Used in conjunction with list parsing that preserves entries that failed to parse.
      *
      * @see FTPClientConfig#setUnparseableEntries(boolean)
-     * @return true if the entry is valid
+     * @return {@code true} if the entry is valid; {@code false} otherwise
      * @since 3.4
      */
     public boolean isValid() {
@@ -330,15 +330,16 @@ public class FTPFile implements Serializable {
     }
 
     /**
-     * Sets if the given access group (one of the <code> _ACCESS </code> constants) has the given access permission (one of the <code> _PERMISSION </code>
+     * Sets if the given access group (one of the {@code _ACCESS} constants) has the given access permission (one of the {@code _PERMISSION}
      * constants) to the file.
      *
-     * @param access     The access group (one of the <code> _ACCESS </code> constants)
-     * @param permission The access permission (one of the <code> _PERMISSION </code> constants)
-     * @param value      True if permission is allowed, false if not.
+     * @param access     The access group (one of the {@code _ACCESS} constants)
+     * @param permission The access permission (one of the {@code _PERMISSION} constants)
+     * @param value      {@code true} if permission is allowed, {@code false} if not.
      * @throws ArrayIndexOutOfBoundsException if either of the parameters is out of range
      */
     public void setPermission(final int access, final int permission, final boolean value) {
+        // TODO: only allow permission setting if file is valid
         permissions[access][permission] = value;
     }
 
@@ -370,7 +371,7 @@ public class FTPFile implements Serializable {
     }
 
     /**
-     * Sets the type of the file (<code>DIRECTORY_TYPE</code>, <code>FILE_TYPE</code>, etc.).
+     * Sets the type of the file ({@code DIRECTORY_TYPE}, {@code FILE_TYPE}, etc.).
      *
      * @param type The integer code representing the type of the file.
      */
@@ -408,8 +409,7 @@ public class FTPFile implements Serializable {
      * Note: if the instance is not valid {@link #isValid()}, no useful information can be returned. In this case, use {@link #getRawListing()} instead.
      * </p>
      *
-     * @param timezone the time zone to use for displaying the time stamp If {@code null}, then use the Calendar entry
-     *
+     * @param timezone the time zone to use for displaying the time stamp If {@code null}, then use the Calendar ({@link #getTimestamp()}) entry
      * @return A string representation of the FTPFile information.
      * @since 3.4
      */
@@ -466,7 +466,9 @@ public class FTPFile implements Serializable {
 
     /**
      * Gets a string representation of the FTPFile information.
+     * Delegates to {@link #getRawListing()}
      *
+     * @see #getRawListing()
      * @return A string representation of the FTPFile information.
      */
     @Override
