@@ -129,7 +129,10 @@ The <action> type attribute can be add,update,fix,remove.
       </action>
       <action type="fix" dev="ggregory" due-to="KuKa, Bruno P. Kinoshita">
         Add Base64 missing tests and documentation fixes #161.
-      </action>      
+      </action>
+      <action type="fix" dev="ggregory" due-to="KuKa, Gary Gregory">
+        Add FTPFile tests and fix Javadoc typos #162.
+      </action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Dependabot">
         Bump commons-parent from 54 to 58 #132, #137, #153.
