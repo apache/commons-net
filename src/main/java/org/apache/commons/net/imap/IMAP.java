@@ -23,6 +23,7 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +67,8 @@ public class IMAP extends SocketClient {
     /**
      * The default control socket encoding.
      */
-    protected static final String __DEFAULT_ENCODING = "ISO-8859-1";
+    protected static final String __DEFAULT_ENCODING = StandardCharsets.ISO_8859_1.name();
+
     /**
      * <p>
      * Implementation of IMAPChunkListener that returns {@code true} but otherwise does nothing.
