@@ -26,7 +26,6 @@ import org.apache.commons.net.MalformedServerReplyException;
 /**
  * IMAPReply stores IMAP reply code constants.
  */
-
 public final class IMAPReply {
     /** The reply code indicating success of an operation. */
     public static final int OK = 0;
@@ -130,7 +129,7 @@ public final class IMAPReply {
      * Checks if the reply line is a continuation, i.e. starts with "+"
      *
      * @param line the line to be checked
-     * @return {@code true} if the line is untagged
+     * @return {@code true} if the line is a continuation
      */
     public static boolean isContinuation(final String line) {
         return line.startsWith(IMAP_CONTINUATION_PREFIX);
@@ -160,7 +159,6 @@ public final class IMAPReply {
      * Checks if the line introduces a literal, i.e. ends with {dd}
      *
      * @param line the line to check
-     *
      * @return the literal count, or -1 if there was no literal.
      */
     public static int literalCount(final String line) {
