@@ -38,7 +38,7 @@ import java.util.Objects;
  * @see DatagramSocketFactory
  */
 
-public abstract class DatagramSocketClient {
+public abstract class DatagramSocketClient implements AutoCloseable {
     /**
      * The default DatagramSocketFactory shared by all DatagramSocketClient instances.
      */

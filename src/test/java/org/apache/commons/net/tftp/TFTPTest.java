@@ -109,7 +109,7 @@ public class TFTPTest extends TestCase {
         testsLeftToRun--;
         if (testsLeftToRun <= 0) {
             if (tftpS != null) {
-                tftpS.shutdown();
+                tftpS.close();
             }
             for (final File file : files) {
                 file.delete();
@@ -139,25 +139,26 @@ public class TFTPTest extends TestCase {
 
     private void testDownload(final int mode, final File file) throws IOException {
         // Create our TFTP instance to handle the file transfer.
-        final TFTPClient tftp = new TFTPClient();
-        tftp.open();
-        tftp.setSoTimeout(2000);
+        try (TFTPClient tftp = new TFTPClient()) {
+            tftp.open();
+            tftp.setSoTimeout(2000);
 
-        final File out = new File(serverDirectory, filePrefix + "download");
+            final File out = new File(serverDirectory, filePrefix + "download");
 
-        // cleanup old failed runs
-        out.delete();
-        assertFalse("Couldn't clear output location", out.exists());
+            // cleanup old failed runs
+            out.delete();
+            assertFalse("Couldn't clear output location", out.exists());
 
-        try (final FileOutputStream output = new FileOutputStream(out)) {
-            tftp.receiveFile(file.getName(), mode, output, "localhost", SERVER_PORT);
+            try (final FileOutputStream output = new FileOutputStream(out)) {
+                tftp.receiveFile(file.getName(), mode, output, "localhost", SERVER_PORT);
+            }
+
+            assertTrue("file not created", out.exists());
+            assertTrue("files not identical on file " + file, filesIdentical(out, file));
+
+            // delete the downloaded file
+            out.delete();
         }
-
-        assertTrue("file not created", out.exists());
-        assertTrue("files not identical on file " + file, filesIdentical(out, file));
-
-        // delete the downloaded file
-        out.delete();
     }
 
     public void testHugeDownloads() throws Exception {
@@ -189,25 +190,26 @@ public class TFTPTest extends TestCase {
 
     private void testUpload(final int mode, final File file) throws Exception {
         // Create our TFTP instance to handle the file transfer.
-        final TFTPClient tftp = new TFTPClient();
-        tftp.open();
-        tftp.setSoTimeout(2000);
+        try (TFTPClient tftp = new TFTPClient()) {
+            tftp.open();
+            tftp.setSoTimeout(2000);
 
-        final File in = new File(serverDirectory, filePrefix + "upload");
-        // cleanup old failed runs
-        in.delete();
-        assertFalse("Couldn't clear output location", in.exists());
+            final File in = new File(serverDirectory, filePrefix + "upload");
+            // cleanup old failed runs
+            in.delete();
+            assertFalse("Couldn't clear output location", in.exists());
 
-        try (final FileInputStream fis = new FileInputStream(file)) {
-            tftp.sendFile(in.getName(), mode, fis, "localhost", SERVER_PORT);
+            try (final FileInputStream fis = new FileInputStream(file)) {
+                tftp.sendFile(in.getName(), mode, fis, "localhost", SERVER_PORT);
+            }
+
+            // need to give the server a bit of time to receive our last packet, and
+            // close out its file buffers, etc.
+            Thread.sleep(100);
+            assertTrue("file not created", in.exists());
+            assertTrue("files not identical on file " + file, filesIdentical(file, in));
+
+            in.delete();
         }
-
-        // need to give the server a bit of time to receive our last packet, and
-        // close out its file buffers, etc.
-        Thread.sleep(100);
-        assertTrue("file not created", in.exists());
-        assertTrue("files not identical on file " + file, filesIdentical(file, in));
-
-        in.delete();
     }
 }
