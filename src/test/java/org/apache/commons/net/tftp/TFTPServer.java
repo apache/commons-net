@@ -606,7 +606,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
 
     @Override
     protected void finalize() throws Throwable {
-        shutdown();
+        close();
     }
 
     /**
