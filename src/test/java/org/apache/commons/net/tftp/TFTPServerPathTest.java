@@ -25,6 +25,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.net.tftp.TFTPServer.ServerMode;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +39,7 @@ public class TFTPServerPathTest {
 
     private static final int SERVER_PORT = 6901;
     String filePrefix = "tftp-";
-    File serverDirectory = new File(System.getProperty("java.io.tmpdir"));
+    File serverDirectory = FileUtils.getTempDirectory();
 
     private File file;
     private File out;

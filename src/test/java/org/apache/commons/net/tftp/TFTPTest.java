@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.net.tftp.TFTPServer.ServerMode;
 
 import junit.framework.TestCase;
@@ -35,7 +36,7 @@ import junit.framework.TestCase;
 public class TFTPTest extends TestCase {
     private static final int SERVER_PORT = 6902;
     private static TFTPServer tftpS;
-    private static final File SERVER_DIR = new File(System.getProperty("java.io.tmpdir"));
+    private static final File SERVER_DIR = FileUtils.getTempDirectory();
     private static final String FILE_PREFIX = "tftp-";
     private static final File[] FILES = new File[8];
 
