@@ -52,7 +52,7 @@ public class TFTPServerPathTest {
                 final File file = new File(serverDirectory, filePrefix + "source.txt");
                 file.createNewFile();
 
-                // Read the file from the tftp server.
+                // Read the file from the TFTP server.
                 final File out = new File(serverDirectory, filePrefix + "out");
 
                 // cleanup old failed runs
@@ -92,6 +92,7 @@ public class TFTPServerPathTest {
                 final File file = new File(serverDirectory, filePrefix + "source.txt");
                 file.createNewFile();
 
+                // Read the file from the TFTP server.
                 final File out = new File(serverDirectory, filePrefix + "out");
 
                 // cleanup old failed runs
