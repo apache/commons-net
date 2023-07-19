@@ -74,6 +74,7 @@ public class TFTPServerPathTest {
                 // expected path
             }
             file.delete();
+            tftp.close();
         }
     }
 
@@ -114,6 +115,7 @@ public class TFTPServerPathTest {
             // cleanup
             file.delete();
             out.delete();
+            tftp.close();
         }
     }
 
@@ -142,6 +144,7 @@ public class TFTPServerPathTest {
 
             // cleanup
             file.delete();
+            tftp.close();
         }
     }
 
