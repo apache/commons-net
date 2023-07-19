@@ -161,10 +161,10 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
             // get the CRAM challenge (after "+ ")
             final byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(2).trim());
             // get the Mac instance
-            final Mac hmac_md5 = Mac.getInstance("HmacMD5");
-            hmac_md5.init(new SecretKeySpec(password.getBytes(getCharset()), "HmacMD5"));
+            final Mac hmacMd5 = Mac.getInstance("HmacMD5");
+            hmacMd5.init(new SecretKeySpec(password.getBytes(getCharset()), "HmacMD5"));
             // compute the result:
-            final byte[] hmacResult = convertToHexString(hmac_md5.doFinal(serverChallenge)).getBytes(getCharset());
+            final byte[] hmacResult = convertToHexString(hmacMd5.doFinal(serverChallenge)).getBytes(getCharset());
             // join the byte arrays to form the reply
             final byte[] usernameBytes = username.getBytes(getCharset());
             final byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];

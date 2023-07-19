@@ -25,36 +25,37 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.net.tftp.TFTPServer.ServerMode;
 
 import junit.framework.TestCase;
 
 /**
- * Test the TFTP Server and TFTP Client by creating some files in the system temp folder and then uploading and downloading them.
+ * Test the TFTP Server and TFTP Client by creating some FILES in the system temp folder and then uploading and downloading them.
  */
 public class TFTPTest extends TestCase {
     private static final int SERVER_PORT = 6902;
     private static TFTPServer tftpS;
-    private static final File serverDirectory = new File(System.getProperty("java.io.tmpdir"));
-    private static final String filePrefix = "tftp-";
-    private static final File[] files = new File[8];
+    private static final File SERVER_DIR = FileUtils.getTempDirectory();
+    private static final String FILE_PREFIX = "tftp-";
+    private static final File[] FILES = new File[8];
 
     static int testsLeftToRun = 6;
 
     // only want to do this once...
     static {
         try {
-            files[0] = createFile(new File(serverDirectory, filePrefix + "empty.txt"), 0);
-            files[1] = createFile(new File(serverDirectory, filePrefix + "small.txt"), 1);
-            files[2] = createFile(new File(serverDirectory, filePrefix + "511.txt"), 511);
-            files[3] = createFile(new File(serverDirectory, filePrefix + "512.txt"), 512);
-            files[4] = createFile(new File(serverDirectory, filePrefix + "513.txt"), 513);
-            files[5] = createFile(new File(serverDirectory, filePrefix + "med.txt"), 1000 * 1024);
-            files[6] = createFile(new File(serverDirectory, filePrefix + "big.txt"), 5000 * 1024);
-            files[7] = createFile(new File(serverDirectory, filePrefix + "huge.txt"), 37000 * 1024);
+            FILES[0] = createFile(new File(SERVER_DIR, FILE_PREFIX + "empty.txt"), 0);
+            FILES[1] = createFile(new File(SERVER_DIR, FILE_PREFIX + "small.txt"), 1);
+            FILES[2] = createFile(new File(SERVER_DIR, FILE_PREFIX + "511.txt"), 511);
+            FILES[3] = createFile(new File(SERVER_DIR, FILE_PREFIX + "512.txt"), 512);
+            FILES[4] = createFile(new File(SERVER_DIR, FILE_PREFIX + "513.txt"), 513);
+            FILES[5] = createFile(new File(SERVER_DIR, FILE_PREFIX + "med.txt"), 1000 * 1024);
+            FILES[6] = createFile(new File(SERVER_DIR, FILE_PREFIX + "big.txt"), 5000 * 1024);
+            FILES[7] = createFile(new File(SERVER_DIR, FILE_PREFIX + "huge.txt"), 37000 * 1024);
 
             // Start the server
-            tftpS = new TFTPServer(serverDirectory, serverDirectory, SERVER_PORT, ServerMode.GET_AND_PUT, null, null);
+            tftpS = new TFTPServer(SERVER_DIR, SERVER_DIR, SERVER_PORT, ServerMode.GET_AND_PUT, null, null);
             tftpS.setSocketTimeout(2000);
         } catch (final IOException e) {
             e.printStackTrace();
@@ -109,9 +110,9 @@ public class TFTPTest extends TestCase {
         testsLeftToRun--;
         if (testsLeftToRun <= 0) {
             if (tftpS != null) {
-                tftpS.shutdown();
+                tftpS.close();
             }
-            for (final File file : files) {
+            for (final File file : FILES) {
                 file.delete();
             }
         }
@@ -119,10 +120,10 @@ public class TFTPTest extends TestCase {
     }
 
     public void testASCIIDownloads() {
-        // test with the smaller files
+        // test with the smaller FILES
         for (int i = 0; i < 6; i++) {
             try {
-                testDownload(TFTP.ASCII_MODE, files[i]);
+                testDownload(TFTP.ASCII_MODE, FILES[i]);
             } catch (final IOException e) {
                 fail("Entry " + i + " Error " + e.toString());
             }
@@ -131,83 +132,85 @@ public class TFTPTest extends TestCase {
     }
 
     public void testASCIIUploads() throws Exception {
-        // test with the smaller files
+        // test with the smaller FILES
         for (int i = 0; i < 6; i++) {
-            testUpload(TFTP.ASCII_MODE, files[i]);
+            testUpload(TFTP.ASCII_MODE, FILES[i]);
         }
     }
 
     private void testDownload(final int mode, final File file) throws IOException {
         // Create our TFTP instance to handle the file transfer.
-        final TFTPClient tftp = new TFTPClient();
-        tftp.open();
-        tftp.setSoTimeout(2000);
+        try (TFTPClient tftp = new TFTPClient()) {
+            tftp.open();
+            tftp.setSoTimeout(2000);
 
-        final File out = new File(serverDirectory, filePrefix + "download");
+            final File out = new File(SERVER_DIR, FILE_PREFIX + "download");
 
-        // cleanup old failed runs
-        out.delete();
-        assertFalse("Couldn't clear output location", out.exists());
+            // cleanup old failed runs
+            out.delete();
+            assertFalse("Couldn't clear output location", out.exists());
 
-        try (final FileOutputStream output = new FileOutputStream(out)) {
-            tftp.receiveFile(file.getName(), mode, output, "localhost", SERVER_PORT);
+            try (final FileOutputStream output = new FileOutputStream(out)) {
+                tftp.receiveFile(file.getName(), mode, output, "localhost", SERVER_PORT);
+            }
+
+            assertTrue("file not created", out.exists());
+            assertTrue("FILES not identical on file " + file, filesIdentical(out, file));
+
+            // delete the downloaded file
+            out.delete();
         }
-
-        assertTrue("file not created", out.exists());
-        assertTrue("files not identical on file " + file, filesIdentical(out, file));
-
-        // delete the downloaded file
-        out.delete();
     }
 
     public void testHugeDownloads() throws Exception {
-        // test with the smaller files
-        for (int i = 5; i < files.length; i++) {
-            testDownload(TFTP.BINARY_MODE, files[i]);
+        // test with the smaller FILES
+        for (int i = 5; i < FILES.length; i++) {
+            testDownload(TFTP.BINARY_MODE, FILES[i]);
         }
     }
 
     public void testHugeUploads() throws Exception {
-        for (int i = 5; i < files.length; i++) {
-            testUpload(TFTP.BINARY_MODE, files[i]);
+        for (int i = 5; i < FILES.length; i++) {
+            testUpload(TFTP.BINARY_MODE, FILES[i]);
         }
     }
 
     public void testTFTPBinaryDownloads() throws Exception {
-        // test with the smaller files
+        // test with the smaller FILES
         for (int i = 0; i < 6; i++) {
-            testDownload(TFTP.BINARY_MODE, files[i]);
+            testDownload(TFTP.BINARY_MODE, FILES[i]);
         }
     }
 
     public void testTFTPBinaryUploads() throws Exception {
-        // test with the smaller files
+        // test with the smaller FILES
         for (int i = 0; i < 6; i++) {
-            testUpload(TFTP.BINARY_MODE, files[i]);
+            testUpload(TFTP.BINARY_MODE, FILES[i]);
         }
     }
 
     private void testUpload(final int mode, final File file) throws Exception {
         // Create our TFTP instance to handle the file transfer.
-        final TFTPClient tftp = new TFTPClient();
-        tftp.open();
-        tftp.setSoTimeout(2000);
+        try (TFTPClient tftp = new TFTPClient()) {
+            tftp.open();
+            tftp.setSoTimeout(2000);
 
-        final File in = new File(serverDirectory, filePrefix + "upload");
-        // cleanup old failed runs
-        in.delete();
-        assertFalse("Couldn't clear output location", in.exists());
+            final File in = new File(SERVER_DIR, FILE_PREFIX + "upload");
+            // cleanup old failed runs
+            in.delete();
+            assertFalse("Couldn't clear output location", in.exists());
 
-        try (final FileInputStream fis = new FileInputStream(file)) {
-            tftp.sendFile(in.getName(), mode, fis, "localhost", SERVER_PORT);
+            try (final FileInputStream fis = new FileInputStream(file)) {
+                tftp.sendFile(in.getName(), mode, fis, "localhost", SERVER_PORT);
+            }
+
+            // need to give the server a bit of time to receive our last packet, and
+            // close out its file buffers, etc.
+            Thread.sleep(100);
+            assertTrue("file not created", in.exists());
+            assertTrue("FILES not identical on file " + file, filesIdentical(file, in));
+
+            in.delete();
         }
-
-        // need to give the server a bit of time to receive our last packet, and
-        // close out its file buffers, etc.
-        Thread.sleep(100);
-        assertTrue("file not created", in.exists());
-        assertTrue("files not identical on file " + file, filesIdentical(file, in));
-
-        in.delete();
     }
 }

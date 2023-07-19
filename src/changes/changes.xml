@@ -84,6 +84,12 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="add" dev="ggregory" due-to="Gary Gregory">
         Add TelnetClient.sendAYT(Duration).
       </action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">
+        TFTPServer implements AutoCloseable.
+      </action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">
+        DatagramSocketClient implements AutoCloseable.
+      </action>
       <!-- FIX -->
       <action type="fix" issue="NET-650" dev="ggregory" due-to="Matthew McGillis, exceptionfactory, sebbASF">
         Delegate host resolution to Socket.connect() #138.

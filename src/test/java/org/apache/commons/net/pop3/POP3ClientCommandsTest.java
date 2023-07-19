@@ -384,10 +384,9 @@ public class POP3ClientCommandsTest extends TestCase {
         assertTrue(msg.length > 0);
 
         for (int i = 0; i < msg.length; i++) {
-            Reader r = pop3Client.retrieveMessageTop(i + 1, numLines);
-            assertNotNull(r);
-            r.close();
-            r = null;
+            try (Reader reader = pop3Client.retrieveMessageTop(i + 1, numLines)) {
+                assertNotNull(reader);
+            }
         }
     }
 

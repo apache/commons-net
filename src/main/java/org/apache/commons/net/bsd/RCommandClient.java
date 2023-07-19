@@ -216,30 +216,14 @@ public class RCommandClient extends RExecClient {
     // port number limitations.
     @Override
     InputStream createErrorStream() throws IOException {
-        int localPort;
         final Socket socket;
 
-        ServerSocket server = null;
-
-        for (localPort = MAX_CLIENT_PORT; localPort >= MIN_CLIENT_PORT; --localPort) {
-            try {
-                server = _serverSocketFactory_.createServerSocket(localPort, 1, getLocalAddress());
-                break; // got a socket
-            } catch (final SocketException e) {
-                continue;
-            }
+        try (ServerSocket server = createServer()) {
+            _output_.write(Integer.toString(server.getLocalPort()).getBytes(StandardCharsets.UTF_8));
+            _output_.write(NULL_CHAR);
+            _output_.flush();
+            socket = server.accept();
         }
-
-        if (server == null) {
-            throw new BindException("All ports in use.");
-        }
-
-        _output_.write(Integer.toString(server.getLocalPort()).getBytes(StandardCharsets.UTF_8)); // $NON-NLS
-        _output_.write(NULL_CHAR);
-        _output_.flush();
-
-        socket = server.accept();
-        server.close();
 
         if (isRemoteVerificationEnabled() && !verifyRemote(socket)) {
             socket.close();
@@ -247,6 +231,17 @@ public class RCommandClient extends RExecClient {
         }
 
         return new SocketInputStream(socket, socket.getInputStream());
+    }
+
+    private ServerSocket createServer() throws IOException {
+        for (int localPort = MAX_CLIENT_PORT; localPort >= MIN_CLIENT_PORT; --localPort) {
+            try {
+                return _serverSocketFactory_.createServerSocket(localPort, 1, getLocalAddress());
+            } catch (final SocketException e) {
+                continue;
+            }
+        }
+        throw new BindException("All ports in use.");
     }
 
     /**

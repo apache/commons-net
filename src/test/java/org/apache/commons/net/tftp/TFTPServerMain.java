@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.commons.io.FileUtils;
+
 /**
  * Main class for TFTPServer. This allows CLI use of the server.
  *
@@ -37,7 +39,7 @@ public class TFTPServerMain {
         int port = 6901;
         int argc;
         final Map<String, String> opts = new HashMap<>();
-        opts.put("-p", System.getProperty("java.io.tmpdir"));
+        opts.put("-p", FileUtils.getTempDirectoryPath());
         // Parse options
         for (argc = 0; argc < args.length; argc++) {
             final String arg = args[argc];
@@ -129,7 +131,7 @@ public class TFTPServerMain {
             @Override
             public void run() {
                 System.out.println("Server shutting down");
-                tftpS.shutdown();
+                tftpS.close();
                 System.out.println("Server exit");
             }
         });
