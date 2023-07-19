@@ -129,7 +129,7 @@ public class TFTPServerMain {
             @Override
             public void run() {
                 System.out.println("Server shutting down");
-                tftpS.shutdown();
+                tftpS.close();
                 System.out.println("Server exit");
             }
         });

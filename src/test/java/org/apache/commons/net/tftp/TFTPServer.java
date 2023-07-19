@@ -53,31 +53,26 @@ import org.apache.commons.net.io.ToNetASCIIInputStream;
  * Example usage is below:
  *
  * <code>
- * public static void main(String[] args) throws Exception
- *  {
- *      if (args.length != 1)
- *      {
- *          System.out
- *                  .println("You must provide 1 argument - the base path for the server to serve from.");
+ * public static void main(String[] args) throws Exception {
+ *      if (args.length != 1) {
+ *          System.out.println("You must provide 1 argument - the base path for the server to serve from.");
  *          System.exit(1);
  *      }
  *
- *      TFTPServer ts = new TFTPServer(new File(args[0]), new File(args[0]), GET_AND_PUT);
- *      ts.setSocketTimeout(2000);
+ *      try (TFTPServer ts = new TFTPServer(new File(args[0]), new File(args[0]), GET_AND_PUT)) {
+ *        ts.setSocketTimeout(2000);
+ *        System.out.println("TFTP Server running.  Press enter to stop.");
+ *        new InputStreamReader(System.in).read();
+ *      }
  *
- *      System.out.println("TFTP Server running.  Press enter to stop.");
- *      new InputStreamReader(System.in).read();
- *
- *      ts.shutdown();
  *      System.out.println("Server shut down.");
  *      System.exit(0);
- *  }
- *
+ * }
  * </code>
  *
  * @since 2.0
  */
-public class TFTPServer implements Runnable {
+public class TFTPServer implements Runnable, AutoCloseable {
 
     public enum ServerMode {
         GET_ONLY, PUT_ONLY, GET_AND_PUT
@@ -585,6 +580,30 @@ public class TFTPServer implements Runnable {
         this(serverReadDirectory, serverWriteDirectory, DEFAULT_TFTP_PORT, mode, null, null);
     }
 
+    /**
+     * Closes the tftp server (and any currently running transfers) and release all opened network resources.
+     */
+    @Override
+    public void close() {
+        shutdownServer = true;
+
+        synchronized (transfers) {
+            transfers.forEach(TFTPTransfer::shutdown);
+        }
+
+        try {
+            serverTftp.close();
+        } catch (final RuntimeException e) {
+            // noop
+        }
+
+        try {
+            serverThread.join();
+        } catch (final InterruptedException e) {
+            // we've done the best we could, return
+        }
+    }
+
     @Override
     protected void finalize() throws Throwable {
         shutdown();
@@ -748,25 +767,12 @@ public class TFTPServer implements Runnable {
     }
 
     /**
-     * Stop the tftp server (and any currently running transfers) and release all opened network resources.
+     * Closes the TFTP server (and any currently running transfers) and release all opened network resources.
+     *
+     * @deprecated Use {@link #close()}.
      */
+    @Deprecated
     public void shutdown() {
-        shutdownServer = true;
-
-        synchronized (transfers) {
-            transfers.forEach(TFTPTransfer::shutdown);
-        }
-
-        try {
-            serverTftp.close();
-        } catch (final RuntimeException e) {
-            // noop
-        }
-
-        try {
-            serverThread.join();
-        } catch (final InterruptedException e) {
-            // we've done the best we could, return
-        }
+        close();
     }
 }
