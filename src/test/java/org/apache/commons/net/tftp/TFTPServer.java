@@ -79,7 +79,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
     }
 
     /*
-     * An instance of an ongoing transfer.
+     * An ongoing transfer.
      */
     private class TFTPTransfer implements Runnable {
         private final TFTPPacket tftpPacket_;
@@ -111,7 +111,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
         }
 
         /*
-         * recursively create subdirectories
+         * Creates subdirectories recursively.
          */
         private void createDirectory(final File file) throws IOException {
             final File parent = file.getParentFile();
@@ -136,7 +136,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
         }
 
         /*
-         * Handle a tftp read request.
+         * Handles a tftp read request.
          */
         private void handleRead(final TFTPReadRequestPacket trrp) throws IOException, TFTPPacketException {
             if (mode == ServerMode.PUT_ONLY) {
