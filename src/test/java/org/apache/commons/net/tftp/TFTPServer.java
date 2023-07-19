@@ -579,7 +579,9 @@ public class TFTPServer implements Runnable, AutoCloseable {
     }
 
     /**
-     * Closes the tftp server (and any currently running transfers) and release all opened network resources.
+     * Closes the TFTP server (and any currently running transfers) and release all opened network resources.
+     *
+     * @since 3.10.0
      */
     @Override
     public void close() {
