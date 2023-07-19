@@ -70,7 +70,7 @@ public abstract class DatagramSocketClient {
     }
 
     /**
-     * Returns the non-null DatagramSocket or throwns {@link NullPointerException}.
+     * Gets the non-null DatagramSocket or throws {@link NullPointerException}.
      *
      * @return the non-null DatagramSocket.
      * @since 3.10.0
