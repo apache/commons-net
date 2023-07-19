@@ -114,7 +114,7 @@ public abstract class DatagramSocketClient {
     }
 
     /**
-     * Returns the default timeout in milliseconds that is used when opening a socket.
+     * Gets the default timeout in milliseconds that is used when opening a socket.
      *
      * @return The default timeout in milliseconds that is used when opening a socket.
      */
@@ -123,7 +123,7 @@ public abstract class DatagramSocketClient {
     }
 
     /**
-     * Returns the local address to which the client's socket is bound. If you call this method when the client socket is not open, a NullPointerException is
+     * Gets the local address to which the client's socket is bound. If you call this method when the client socket is not open, a NullPointerException is
      * thrown.
      *
      * @return The local address to which the client's socket is bound.
@@ -133,7 +133,7 @@ public abstract class DatagramSocketClient {
     }
 
     /**
-     * Returns the port number of the open socket on the local host used for the connection. If you call this method when the client socket is not open, a
+     * Gets the port number of the open socket on the local host used for the connection. If you call this method when the client socket is not open, a
      * NullPointerException is thrown.
      *
      * @return The port number of the open socket on the local host used for the connection.
@@ -143,7 +143,7 @@ public abstract class DatagramSocketClient {
     }
 
     /**
-     * Returns the timeout in milliseconds of the currently opened socket. If you call this method when the client socket is not open, a NullPointerException is
+     * Gets the timeout in milliseconds of the currently opened socket. If you call this method when the client socket is not open, a NullPointerException is
      * thrown.
      *
      * @return The timeout in milliseconds of the currently opened socket.
@@ -156,7 +156,7 @@ public abstract class DatagramSocketClient {
     }
 
     /**
-     * Returns the timeout duration of the currently opened socket. If you call this method when the client socket is not open, a NullPointerException is
+     * Gets the timeout duration of the currently opened socket. If you call this method when the client socket is not open, a NullPointerException is
      * thrown.
      *
      * @return The timeout in milliseconds of the currently opened socket.
@@ -167,7 +167,7 @@ public abstract class DatagramSocketClient {
     }
 
     /**
-     * Returns true if the client has a currently open socket.
+     * Gets true if the client has a currently open socket.
      *
      * @return True if the client has a currently open socket, false otherwise.
      */
