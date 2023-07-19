@@ -83,6 +83,7 @@ public abstract class DatagramSocketClient implements AutoCloseable {
      * Closes the DatagramSocket used for the connection. You should call this method after you've finished using the class instance and also before you call
      * {@link #open open() } again. _isOpen_ is set to false and _socket_ is set to null.
      */
+    @Override
     public void close() {
         if (_socket_ != null) {
             _socket_.close();
