@@ -77,9 +77,8 @@ public class TFTPServerPathTest {
                 tftp.setSoTimeout(2000);
 
                 try {
-                    // cleanup old failed runs
-                    final boolean deleted = out.delete();
-                    assertFalse(out.exists(), () -> "Couldn't clear output location, deleted=" + deleted);
+                    // check old failed runs
+                    assertFalse(out.exists(), () -> "Couldn't clear output location, deleted=");
 
                     try (final FileOutputStream output = new FileOutputStream(out)) {
                         tftp.receiveFile(file.getName(), TFTP.BINARY_MODE, output, "localhost", SERVER_PORT);
@@ -114,9 +113,8 @@ public class TFTPServerPathTest {
                 tftp.setSoTimeout(2000);
 
                 try {
-                    // cleanup old failed runs
-                    final boolean deleted = out.delete();
-                    assertFalse(out.exists(), () -> "Couldn't clear output location, deleted=" + deleted);
+                    // check old failed runs
+                    assertFalse(out.exists(), () -> "Couldn't clear output location, deleted=");
 
                     try (final FileOutputStream output = new FileOutputStream(out)) {
                         tftp.receiveFile(file.getName(), TFTP.BINARY_MODE, output, "localhost", SERVER_PORT);
