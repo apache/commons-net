@@ -48,20 +48,24 @@ public class TFTPServerPathTest {
         deleteFixture(file);
         deleteFixture(out);
     }
-    
+
     @BeforeEach
     public void beforeEach() throws IOException {
+        // Fixture 1
         file = new File(serverDirectory, filePrefix + "source.txt");
+        deleteFixture(file);
         file.createNewFile();
+        // Fixture 2
         out = new File(serverDirectory, filePrefix + "out");
+        deleteFixture(out);
     }
-    
+
     private void deleteFixture(final File file) {
-        if (!file.delete()) {
+        if (file != null && !file.delete()) {
             file.deleteOnExit();
         }
     }
-    
+
     @Test
     public void testReadOnly() throws IOException {
         // Start a read-only server
