@@ -17,8 +17,10 @@
 
 package org.apache.commons.net.imap;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class IMAPTest {
 
@@ -43,7 +45,7 @@ public class IMAPTest {
                 break;
             }
         }
-        Assert.assertEquals(expected, i);
-        Assert.assertTrue("Expected to see the original value again", matched);
+        assertEquals(expected, i);
+        assertTrue(matched, "Expected to see the original value again");
     }
 }
