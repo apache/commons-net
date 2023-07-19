@@ -38,7 +38,7 @@ import org.apache.commons.net.io.FromNetASCIIOutputStream;
 import org.apache.commons.net.io.ToNetASCIIInputStream;
 
 /**
- * A fully multi-threaded tftp server. Can handle multiple clients at the same time. Implements RFC 1350 and wrapping block numbers for large file support.
+ * A fully multi-threaded TFTP server. Can handle multiple clients at the same time. Implements RFC 1350 and wrapping block numbers for large file support.
  *
  * To launch, just create an instance of the class. An IOException will be thrown if the server fails to start for reasons such as port in use, port denied,
  * etc.
@@ -250,7 +250,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
         }
 
         /*
-         * handle a tftp write request.
+         * handle a TFTP write request.
          */
         private void handleWrite(final TFTPWriteRequestPacket twrp) throws IOException, TFTPPacketException {
             OutputStream bos = null;
