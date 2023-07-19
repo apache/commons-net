@@ -33,10 +33,11 @@ import org.apache.commons.net.tftp.TFTPPacket;
 /**
  * This is an example of a simple Java TFTP client. Notice how all the code is really just argument processing and error handling.
  * <p>
- * Usage: TFTPExample [options] hostname localfile remotefile hostname - The name of the remote host, with optional :port localfile - The name of the local file to
- * send or the name to use for the received file remotefile - The name of the remote file to receive or the name for the remote server to use to name the local
- * file being sent. options: (The default is to assume -r -b) -s Send a local file -r Receive a remote file -a Use ASCII transfer mode -b Use binary transfer
- * mode
+ * Usage: TFTPExample [options] hostname localfile remotefile hostname - The name of the remote host, with optional :port localfile - The name of the local file
+ * to send or the name to use for the received file remotefile - The name of the remote file to receive or the name for the remote server to use to name the
+ * local file being sent. options: (The default is to assume -r -b) -s Send a local file -r Receive a remote file -a Use ASCII transfer mode -b Use binary
+ * transfer mode.
+ * </p>
  */
 public final class TFTPExample {
     static final String USAGE = "Usage: TFTPExample [options] hostname localfile remotefile\n\n" + "hostname   - The name of the remote host [:port]\n"
