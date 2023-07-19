@@ -93,14 +93,14 @@ public class TFTPServer implements Runnable, AutoCloseable {
         }
 
         /*
-         * Utility method to make sure that paths provided by tftp clients do not get outside of the serverRoot directory.
+         * Utility method to make sure that paths provided by TFTP clients do not get outside of the serverRoot directory.
          */
         private File buildSafeFile(final File serverDirectory, final String fileName, final boolean createSubDirs) throws IOException {
             File temp = new File(serverDirectory, fileName);
             temp = temp.getCanonicalFile();
 
             if (!isSubdirectoryOf(serverDirectory, temp)) {
-                throw new IOException("Cannot access files outside of tftp server root.");
+                throw new IOException("Cannot access files outside of TFTP server root.");
             }
 
             // ensure directory exists (if requested)
