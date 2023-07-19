@@ -140,16 +140,15 @@ public class TFTPServer implements Runnable, AutoCloseable {
          * Handle a tftp read request.
          */
         private void handleRead(final TFTPReadRequestPacket trrp) throws IOException, TFTPPacketException {
-            InputStream is = null;
+            if (mode == ServerMode.PUT_ONLY) {
+                transferTftp_
+                        .bufferedSend(new TFTPErrorPacket(trrp.getAddress(), trrp.getPort(), TFTPErrorPacket.ILLEGAL_OPERATION, "Read not allowed by server."));
+                return;
+            }
+            InputStream inputStream = null;
             try {
-                if (mode == ServerMode.PUT_ONLY) {
-                    transferTftp_.bufferedSend(
-                            new TFTPErrorPacket(trrp.getAddress(), trrp.getPort(), TFTPErrorPacket.ILLEGAL_OPERATION, "Read not allowed by server."));
-                    return;
-                }
-
                 try {
-                    is = new BufferedInputStream(new FileInputStream(buildSafeFile(serverReadDirectory, trrp.getFilename(), false)));
+                    inputStream = new BufferedInputStream(new FileInputStream(buildSafeFile(serverReadDirectory, trrp.getFilename(), false)));
                 } catch (final FileNotFoundException e) {
                     transferTftp_.bufferedSend(new TFTPErrorPacket(trrp.getAddress(), trrp.getPort(), TFTPErrorPacket.FILE_NOT_FOUND, e.getMessage()));
                     return;
@@ -159,7 +158,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
                 }
 
                 if (trrp.getMode() == TFTP.NETASCII_MODE) {
-                    is = new ToNetASCIIInputStream(is);
+                    inputStream = new ToNetASCIIInputStream(inputStream);
                 }
 
                 final byte[] temp = new byte[TFTPDataPacket.MAX_DATA_LENGTH];
@@ -177,7 +176,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
                 // requested bytes, we know that we are at the end of the file.
                 while (readLength == TFTPDataPacket.MAX_DATA_LENGTH && !shutdownTransfer) {
                     if (sendNext) {
-                        readLength = is.read(temp);
+                        readLength = inputStream.read(temp);
                         if (readLength == -1) {
                             readLength = 0;
                         }
@@ -242,8 +241,8 @@ public class TFTPServer implements Runnable, AutoCloseable {
                 }
             } finally {
                 try {
-                    if (is != null) {
-                        is.close();
+                    if (inputStream != null) {
+                        inputStream.close();
                     }
                 } catch (final IOException e) {
                     // noop
