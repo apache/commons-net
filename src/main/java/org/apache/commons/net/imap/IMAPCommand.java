@@ -25,7 +25,6 @@ public enum IMAPCommand {
     // or must provide the correct string as the parameter.
 
     // Commands valid in any state:
-
     CAPABILITY(0), NOOP(0), LOGOUT(0),
 
     // Commands valid in Not Authenticated state
@@ -43,7 +42,7 @@ public enum IMAPCommand {
     /**
      * Get the IMAP protocol string command corresponding to a command code.
      *
-     * @param command the IMAPCommand whose command string is required.
+     * @param command the {@link IMAPCommand} whose command string is required. Must not be null.
      * @return The IMAP protocol string command corresponding to a command code.
      */
     public static final String getCommand(final IMAPCommand command) {
@@ -51,6 +50,7 @@ public enum IMAPCommand {
     }
 
     private final String imapCommand;
+
     @SuppressWarnings("unused") // not yet used
     private final int minParamCount;
 
@@ -84,7 +84,7 @@ public enum IMAPCommand {
     }
 
     /**
-     * Get the IMAP protocol string command for this command
+     * Returns the IMAP protocol string command for this command
      *
      * @return The IMAP protocol string command corresponding to this command
      */
