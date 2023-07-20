@@ -84,7 +84,7 @@ public enum IMAPCommand {
     }
 
     /**
-     * Returns the IMAP protocol string command for this command
+     * Gets the IMAP protocol string command for this command
      *
      * @return The IMAP protocol string command corresponding to this command
      */
