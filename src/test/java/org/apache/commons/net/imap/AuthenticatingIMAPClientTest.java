@@ -37,13 +37,13 @@ public class AuthenticatingIMAPClientTest {
     }
 
     @Test
-    @Disabled
+    @Disabled("TODO: implement")
     public void auth() {
         fail("Not yet implemented");
     }
 
     @Test
-    @Disabled
+    @Disabled("TODO: implement")
     public void authenticate() {
         fail("Not yet implemented");
     }

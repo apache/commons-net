@@ -17,12 +17,80 @@
 
 package org.apache.commons.net.imap;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class IMAPTest {
+
+    @Test
+    public void trueChunkListener() {
+        assertTrue(IMAP.TRUE_CHUNK_LISTENER.chunkReceived(new IMAP()));
+    }
+
+    @Test
+    public void quoteMailboxNameNullInput() {
+        assertNull(IMAP.quoteMailboxName(null));
+    }
+
+    @Test
+    public void quoteMailboxNoQuotingIfNoSpacePresent() {
+        final String stringToQuote = "Foobar\"";
+        assertEquals(stringToQuote, IMAP.quoteMailboxName(stringToQuote));
+    }
+
+    @ParameterizedTest(name = "String `{0}` should be quoted")
+    @MethodSource("mailboxNamesToBeQuoted")
+    public void quoteMailboxName(final String input) {
+        final String quotedMailboxName = IMAP.quoteMailboxName(input);
+        assertAll(
+                () -> assertTrue(quotedMailboxName.startsWith("\""), "quoted string should start with quotation mark"),
+                () -> assertTrue(quotedMailboxName.endsWith("\""), "quoted string should end with quotation mark")
+        );
+    }
+
+    @Test
+    public void constructDefaultIMAP() {
+        final IMAP imap = new IMAP();
+        assertAll(
+                () -> assertEquals(IMAP.DEFAULT_PORT, imap.getDefaultPort()),
+                () -> assertEquals(IMAP.IMAPState.DISCONNECTED_STATE, imap.getState()),
+                () -> assertEquals(0, imap.getReplyStrings().length)
+        );
+    }
+
+    @Test
+    @Disabled("TODO: implement")
+    public void _connectAction_() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    @Disabled("TODO: implement")
+    public void disconnect() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    @Disabled("TODO: implement")
+    public void doCommand() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    @Disabled("TODO: implement")
+    public void fireReplyReceived() {
+        fail("Not yet implemented");
+    }
 
     @Test
     public void checkGenerator() {
@@ -48,4 +116,30 @@ public class IMAPTest {
         assertEquals(expected, i);
         assertTrue(matched, "Expected to see the original value again");
     }
+
+    @Test
+    @Disabled("TODO: implement")
+    public void getReplyString() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    @Disabled("TODO: implement")
+    public void getReplyStrings() {
+        fail("Not yet implemented");
+    }
+
+    private static Stream<String> mailboxNamesToBeQuoted() {
+        return Stream.of(
+                "",
+                " ",
+                "\"",
+                "\"\"",
+                "\\/  ",
+                "Hello\", ",
+                "\" World!",
+                "Hello\",\" World!"
+        );
+    }
+
 }
