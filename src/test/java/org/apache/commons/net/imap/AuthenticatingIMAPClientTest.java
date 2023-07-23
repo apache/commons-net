@@ -36,18 +36,6 @@ public class AuthenticatingIMAPClientTest {
         assertEquals(expectedAuthMethodName, authMethod.getAuthName());
     }
 
-    @Test
-    @Disabled("TODO: implement")
-    public void auth() {
-        fail("Not yet implemented");
-    }
-
-    @Test
-    @Disabled("TODO: implement")
-    public void authenticate() {
-        fail("Not yet implemented");
-    }
-
     private static Stream<Arguments> authMethods() {
         return Stream.of(
             Arguments.of("PLAIN", AuthenticatingIMAPClient.AUTH_METHOD.PLAIN),
