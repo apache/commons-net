@@ -93,6 +93,15 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="add" dev="ggregory" due-to="KuKa, Gary Gregory">
         Add IMAP package tests, include junit-jupiter-params artifact #166.
       </action>
+      <action type="add" dev="ggregory" due-to="KuKa, Bruno P. Kinoshita">
+        Add Base64 missing tests and documentation fixes #161.
+      </action>
+      <action type="add" dev="ggregory" due-to="KuKa, Gary Gregory">
+        Add FTPFile tests and fix Javadoc typos #162.
+      </action>
+      <action type="add" dev="ggregory" due-to="KuKa, Gary Gregory, Bruno P. Kinoshita">
+        Add IMAPReply tests and documentation fixes #165.
+      </action>
       <!-- FIX -->
       <action type="fix" issue="NET-650" dev="ggregory" due-to="Matthew McGillis, exceptionfactory, sebbASF">
         Delegate host resolution to Socket.connect() #138.
@@ -135,15 +144,6 @@ The <action> type attribute can be add,update,fix,remove.
       </action>
       <action type="fix" dev="ggregory" due-to="David Costanzo, Gary Gregory" issue="NET-722">
         Javadoc for FtpClient.setControlKeepAliveReplyTimeout(Duration) says timeout is in milliseconds.
-      </action>
-      <action type="fix" dev="ggregory" due-to="KuKa, Bruno P. Kinoshita">
-        Add Base64 missing tests and documentation fixes #161.
-      </action>
-      <action type="fix" dev="ggregory" due-to="KuKa, Gary Gregory">
-        Add FTPFile tests and fix Javadoc typos #162.
-      </action>
-      <action type="fix" dev="ggregory" due-to="KuKa, Gary Gregory, Bruno P. Kinoshita">
-        Add IMAPReply tests and documentation fixes #165.
       </action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Dependabot">
