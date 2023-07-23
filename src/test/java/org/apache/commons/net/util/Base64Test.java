@@ -95,12 +95,6 @@ public class Base64Test {
     }
 
     @Test
-    public void testDecodeByteArrayNull() {
-        final byte[] decoded = new Base64().decode((byte[]) null);
-        assertNull(decoded);
-    }
-
-    @Test
     public void testDecodeByteArrayEmpty() {
         final byte[] base64Data = new byte[] {};
         final byte[] decoded = new Base64().decode(base64Data);
@@ -108,9 +102,21 @@ public class Base64Test {
     }
 
     @Test
+    public void testDecodeByteArrayNull() {
+        final byte[] decoded = new Base64().decode((byte[]) null);
+        assertNull(decoded);
+    }
+
+    @Test
     @Ignore
     public void testDecodeInteger() {
         fail("Not yet implemented");
+    }
+
+    @Test
+    public void testDecodeNullString() {
+        final Base64 base64 = new Base64();
+        assertThrows(NullPointerException.class, () -> base64.decode((String) null));
     }
 
     @Test
@@ -124,12 +130,6 @@ public class Base64Test {
         final String base64String = "SGVsbG8gV29ybGQh";
         final byte[] decoded = new Base64().decode(base64String);
         assertEquals("Hello World!", new String(decoded));
-    }
-
-    @Test
-    public void testDecodeNullString() {
-        final Base64 base64 = new Base64();
-        assertThrows(NullPointerException.class, () -> base64.decode((String) null));
     }
 
     @Test

@@ -33,23 +33,31 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class IMAPReplyTest {
 
-    @Test
-    public void getReplyCodeMalformedLine() {
-        final String malformedTaggedLine = "A064 FOO-BAR 0";
-        final MalformedServerReplyException replyException = assertThrows(MalformedServerReplyException.class, () -> IMAPReply.getReplyCode(malformedTaggedLine));
-        assertEquals("Received unexpected IMAP protocol response from server: 'A064 FOO-BAR 0'.", replyException.getMessage());
+    private static Stream<String> invalidLiteralCommands() {
+        return Stream.of(
+                "",
+                "{",
+                "}",
+                "{}",
+                "{foobar}",
+                "STORE +FLAGS.SILENT \\DELETED {",
+                "STORE +FLAGS.SILENT \\DELETED }",
+                "STORE +FLAGS.SILENT \\DELETED {-1}",
+                "STORE +FLAGS.SILENT \\DELETED {-10}",
+                "STORE +FLAGS.SILENT \\DELETED {-2147483648}"
+        );
     }
 
-    @Test
-    public void getReplyCodeContinuationLine() throws IOException {
-        final String continuationLine = "+ Ready for additional command text";
-        assertEquals(IMAPReply.CONT, IMAPReply.getReplyCode(continuationLine));
-    }
-
-    @Test
-    public void getReplyCodeOkLine() throws IOException {
-        final String okLine = "A001 OK LOGIN completed";
-        assertEquals(IMAPReply.OK, IMAPReply.getReplyCode(okLine));
+    private static Stream<Arguments> literalCommands() {
+        return Stream.of(
+                Arguments.of(310, "A003 APPEND saved-messages (\\Seen) {310}"),
+                Arguments.of(6, "A284 SEARCH CHARSET UTF-8 TEXT {6}"),
+                Arguments.of(7, "FRED FOOBAR {7}"),
+                Arguments.of(102856, "A044 BLURDYBLOOP {102856}"),
+                Arguments.of(342, "* 12 FETCH (BODY[HEADER] {342}"),
+                Arguments.of(0, "X999 LOGIN {0}"),
+                Arguments.of(Integer.MAX_VALUE, "X999 LOGIN {2147483647}")
+        );
     }
 
     @Test
@@ -59,9 +67,40 @@ public class IMAPReplyTest {
     }
 
     @Test
+    public void getReplyCodeContinuationLine() throws IOException {
+        final String continuationLine = "+ Ready for additional command text";
+        assertEquals(IMAPReply.CONT, IMAPReply.getReplyCode(continuationLine));
+    }
+
+    @Test
+    public void getReplyCodeMalformedLine() {
+        final String malformedTaggedLine = "A064 FOO-BAR 0";
+        final MalformedServerReplyException replyException = assertThrows(MalformedServerReplyException.class, () -> IMAPReply.getReplyCode(malformedTaggedLine));
+        assertEquals("Received unexpected IMAP protocol response from server: 'A064 FOO-BAR 0'.", replyException.getMessage());
+    }
+
+    @Test
     public void getReplyCodeNoLine() throws IOException {
         final String noLine = "A223 NO COPY failed: disk is full";
         assertEquals(IMAPReply.NO, IMAPReply.getReplyCode(noLine));
+    }
+
+    @Test
+    public void getReplyCodeOkLine() throws IOException {
+        final String okLine = "A001 OK LOGIN completed";
+        assertEquals(IMAPReply.OK, IMAPReply.getReplyCode(okLine));
+    }
+
+    @Test
+    public void getUntaggedReplyCodeBadLine() throws IOException {
+        final String badLine = "* BAD Empty command line";
+        assertEquals(IMAPReply.BAD, IMAPReply.getUntaggedReplyCode(badLine));
+    }
+
+    @Test
+    public void getUntaggedReplyCodeContinuationLine() throws IOException {
+        final String continuationLine = "+ Ready for additional command text";
+        assertEquals(IMAPReply.CONT, IMAPReply.getUntaggedReplyCode(continuationLine));
     }
 
     @Test
@@ -73,27 +112,15 @@ public class IMAPReplyTest {
     }
 
     @Test
-    public void getUntaggedReplyCodeContinuationLine() throws IOException {
-        final String continuationLine = "+ Ready for additional command text";
-        assertEquals(IMAPReply.CONT, IMAPReply.getUntaggedReplyCode(continuationLine));
+    public void getUntaggedReplyCodeNoLine() throws IOException {
+        final String noLine = "* NO Disk is 98% full, please delete unnecessary data";
+        assertEquals(IMAPReply.NO, IMAPReply.getUntaggedReplyCode(noLine));
     }
 
     @Test
     public void getUntaggedReplyCodeOkLine() throws IOException {
         final String okLine = "* OK Salvage successful, no data lost";
         assertEquals(IMAPReply.OK, IMAPReply.getUntaggedReplyCode(okLine));
-    }
-
-    @Test
-    public void getUntaggedReplyCodeBadLine() throws IOException {
-        final String badLine = "* BAD Empty command line";
-        assertEquals(IMAPReply.BAD, IMAPReply.getUntaggedReplyCode(badLine));
-    }
-
-    @Test
-    public void getUntaggedReplyCodeNoLine() throws IOException {
-        final String noLine = "* NO Disk is 98% full, please delete unnecessary data";
-        assertEquals(IMAPReply.NO, IMAPReply.getUntaggedReplyCode(noLine));
     }
 
     @Test
@@ -154,33 +181,6 @@ public class IMAPReplyTest {
     @MethodSource("invalidLiteralCommands")
     public void literalCountInvalid(final String replyLine) {
         assertEquals(-1, IMAPReply.literalCount(replyLine));
-    }
-
-    private static Stream<String> invalidLiteralCommands() {
-        return Stream.of(
-                "",
-                "{",
-                "}",
-                "{}",
-                "{foobar}",
-                "STORE +FLAGS.SILENT \\DELETED {",
-                "STORE +FLAGS.SILENT \\DELETED }",
-                "STORE +FLAGS.SILENT \\DELETED {-1}",
-                "STORE +FLAGS.SILENT \\DELETED {-10}",
-                "STORE +FLAGS.SILENT \\DELETED {-2147483648}"
-        );
-    }
-
-    private static Stream<Arguments> literalCommands() {
-        return Stream.of(
-                Arguments.of(310, "A003 APPEND saved-messages (\\Seen) {310}"),
-                Arguments.of(6, "A284 SEARCH CHARSET UTF-8 TEXT {6}"),
-                Arguments.of(7, "FRED FOOBAR {7}"),
-                Arguments.of(102856, "A044 BLURDYBLOOP {102856}"),
-                Arguments.of(342, "* 12 FETCH (BODY[HEADER] {342}"),
-                Arguments.of(0, "X999 LOGIN {0}"),
-                Arguments.of(Integer.MAX_VALUE, "X999 LOGIN {2147483647}")
-        );
     }
 
 }

@@ -63,13 +63,6 @@ public class FTPFileTest {
     }
 
     @Test
-    public void testHasPermissionTrue() {
-        final FTPFile file = new FTPFile();
-        file.setPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION, true);
-        assertTrue(file.hasPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
-    }
-
-    @Test
     public void testHasPermissionFalse() {
         final FTPFile file = new FTPFile();
         file.setPermission(FTPFile.USER_ACCESS, FTPFile.WRITE_PERMISSION, false);
@@ -80,6 +73,13 @@ public class FTPFileTest {
     public void testHasPermissionInvalidFile() {
         final FTPFile invalidFile = new FTPFile("LIST");
         assertFalse(invalidFile.hasPermission(FTPFile.GROUP_ACCESS, FTPFile.EXECUTE_PERMISSION));
+    }
+
+    @Test
+    public void testHasPermissionTrue() {
+        final FTPFile file = new FTPFile();
+        file.setPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION, true);
+        assertTrue(file.hasPermission(FTPFile.USER_ACCESS, FTPFile.READ_PERMISSION));
     }
 
     @Test
@@ -110,22 +110,16 @@ public class FTPFileTest {
     }
 
     @Test
-    public void toFormattedStringInvalidFile() {
-        final FTPFile invalidFile = new FTPFile("LIST");
-        assertEquals("[Invalid: could not parse file entry]", invalidFile.toFormattedString());
+    public void testToString() {
+        final FTPFile file = new FTPFile();
+        file.setRawListing("LIST");
+        assertEquals(file.getRawListing(), file.toString());
     }
 
     @Test
-    public void toFormattedStringUnknownType() {
+    public void testToStringDefault() {
         final FTPFile file = new FTPFile();
-        assertTrue(file.toFormattedString().startsWith("?"));
-    }
-
-    @Test
-    public void toFormattedStringFileType() {
-        final FTPFile file = new FTPFile();
-        file.setType(FTPFile.FILE_TYPE);
-        assertTrue(file.toFormattedString().startsWith("-"));
+        assertNull(file.toString());
     }
 
     @Test
@@ -136,10 +130,29 @@ public class FTPFileTest {
     }
 
     @Test
+    public void toFormattedStringFileType() {
+        final FTPFile file = new FTPFile();
+        file.setType(FTPFile.FILE_TYPE);
+        assertTrue(file.toFormattedString().startsWith("-"));
+    }
+
+    @Test
+    public void toFormattedStringInvalidFile() {
+        final FTPFile invalidFile = new FTPFile("LIST");
+        assertEquals("[Invalid: could not parse file entry]", invalidFile.toFormattedString());
+    }
+
+    @Test
     public void toFormattedStringSymbolicLinkType() {
         final FTPFile file = new FTPFile();
         file.setType(FTPFile.SYMBOLIC_LINK_TYPE);
         assertTrue(file.toFormattedString().startsWith("l"));
+    }
+
+    @Test
+    public void toFormattedStringUnknownType() {
+        final FTPFile file = new FTPFile();
+        assertTrue(file.toFormattedString().startsWith("?"));
     }
 
     @Test
@@ -169,19 +182,6 @@ public class FTPFileTest {
                 () -> assertTrue(formattedString.contains("GMT")),
                 () -> assertTrue(formattedString.contains(file.getName()))
         );
-    }
-
-    @Test
-    public void testToStringDefault() {
-        final FTPFile file = new FTPFile();
-        assertNull(file.toString());
-    }
-
-    @Test
-    public void testToString() {
-        final FTPFile file = new FTPFile();
-        file.setRawListing("LIST");
-        assertEquals(file.getRawListing(), file.toString());
     }
 
 }

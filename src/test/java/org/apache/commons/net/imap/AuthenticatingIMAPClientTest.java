@@ -27,12 +27,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class AuthenticatingIMAPClientTest {
 
-    @ParameterizedTest(name = "auth method for method {1} is `{0}`")
-    @MethodSource("authMethods")
-    public void getAuthName(final String expectedAuthMethodName, final AuthenticatingIMAPClient.AUTH_METHOD authMethod) {
-        assertEquals(expectedAuthMethodName, authMethod.getAuthName());
-    }
-
     private static Stream<Arguments> authMethods() {
         return Stream.of(
             Arguments.of("PLAIN", AuthenticatingIMAPClient.AUTH_METHOD.PLAIN),
@@ -41,6 +35,12 @@ public class AuthenticatingIMAPClientTest {
             Arguments.of("XOAUTH", AuthenticatingIMAPClient.AUTH_METHOD.XOAUTH),
             Arguments.of("XOAUTH2", AuthenticatingIMAPClient.AUTH_METHOD.XOAUTH2)
         );
+    }
+
+    @ParameterizedTest(name = "auth method for method {1} is `{0}`")
+    @MethodSource("authMethods")
+    public void getAuthName(final String expectedAuthMethodName, final AuthenticatingIMAPClient.AUTH_METHOD authMethod) {
+        assertEquals(expectedAuthMethodName, authMethod.getAuthName());
     }
 
 }

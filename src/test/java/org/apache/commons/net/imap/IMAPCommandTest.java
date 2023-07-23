@@ -27,12 +27,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class IMAPCommandTest {
 
-    @ParameterizedTest(name = "Command for IMAPCommand::{1} should be `{0}`")
-    @MethodSource("imapCommands")
-    public void getCommand(final String expectedCommand, final IMAPCommand command) {
-        assertEquals(expectedCommand, IMAPCommand.getCommand(command));
-    }
-
     private static Stream<Arguments> imapCommands() {
         return Stream.of(
                 Arguments.of("CAPABILITY", IMAPCommand.CAPABILITY),
@@ -62,6 +56,12 @@ public class IMAPCommandTest {
                 Arguments.of("COPY", IMAPCommand.COPY),
                 Arguments.of("UID", IMAPCommand.UID)
         );
+    }
+
+    @ParameterizedTest(name = "Command for IMAPCommand::{1} should be `{0}`")
+    @MethodSource("imapCommands")
+    public void getCommand(final String expectedCommand, final IMAPCommand command) {
+        assertEquals(expectedCommand, IMAPCommand.getCommand(command));
     }
 
 }
