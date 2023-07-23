@@ -236,7 +236,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
         assertNotNull(tr);
         final boolean res1 = ANSI.client.sendAYT(Duration.ofSeconds(2));
 
-        if (res1 == true) {
+        if (res1) {
             ayt_true_ok = true;
         }
 
@@ -245,7 +245,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
 
         final boolean res2 = ANSI.client.sendAYT(Duration.ofSeconds(2));
 
-        if (res2 == false) {
+        if (!res2) {
             ayt_false_ok = true;
         }
 

@@ -75,7 +75,7 @@ public class Base64Test {
 
     @Test
     public void testDecodeBase64ByteArray() {
-        final byte[] base64Data = new byte[] {'b', 'G', 'l', 'n', 'a', 'H', 'Q', 'g', 'd', 'w', '=', '='};
+        final byte[] base64Data = {'b', 'G', 'l', 'n', 'a', 'H', 'Q', 'g', 'd', 'w', '=', '='};
         final byte[] decoded = Base64.decodeBase64(base64Data);
         assertEquals("light w", new String(decoded, StandardCharsets.UTF_8));
     }
@@ -89,14 +89,14 @@ public class Base64Test {
 
     @Test
     public void testDecodeByteArray() {
-        final byte[] base64Data = new byte[] {'Z', 'm', '9', 'v', 'Y', 'm', 'F', 'y'};
+        final byte[] base64Data = {'Z', 'm', '9', 'v', 'Y', 'm', 'F', 'y'};
         final byte[] decoded = new Base64().decode(base64Data);
         assertEquals("foobar", new String(decoded, StandardCharsets.UTF_8));
     }
 
     @Test
     public void testDecodeByteArrayEmpty() {
-        final byte[] base64Data = new byte[] {};
+        final byte[] base64Data = {};
         final byte[] decoded = new Base64().decode(base64Data);
         assertArrayEquals(base64Data, decoded);
     }
@@ -182,7 +182,7 @@ public class Base64Test {
 
     @Test
     public void testEncodeBase64Chunked() {
-        final byte[] bytesToEncode = new byte[] {'f', 'o', 'o', 'b', 'a', 'r'};
+        final byte[] bytesToEncode = {'f', 'o', 'o', 'b', 'a', 'r'};
         final byte[] encodedData = Base64.encodeBase64Chunked(bytesToEncode);
         assertEquals("Zm9vYmFy\r\n", new String(encodedData, StandardCharsets.UTF_8));
     }
@@ -243,7 +243,7 @@ public class Base64Test {
     @Test
     public void testEncodeToString() {
         final Base64 base64 = new Base64();
-        final byte[] bytesToEncode = new byte[] {'l', 'i', 'g', 'h', 't', ' ', 'w', 'o', 'r'};
+        final byte[] bytesToEncode = {'l', 'i', 'g', 'h', 't', ' ', 'w', 'o', 'r'};
         assertEquals("bGlnaHQgd29y\r\n", base64.encodeToString(bytesToEncode));
     }
 
