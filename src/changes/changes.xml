@@ -90,6 +90,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="add" dev="ggregory" due-to="Gary Gregory">
         DatagramSocketClient implements AutoCloseable.
       </action>
+      <action type="add" dev="ggregory" due-to="KuKa, Gary Gregory">
+        Add IMAP package tests, include junit-jupiter-params artifact #166.
+      </action>
       <!-- FIX -->
       <action type="fix" issue="NET-650" dev="ggregory" due-to="Matthew McGillis, exceptionfactory, sebbASF">
         Delegate host resolution to Socket.connect() #138.
