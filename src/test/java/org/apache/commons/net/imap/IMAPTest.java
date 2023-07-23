@@ -69,30 +69,6 @@ public class IMAPTest {
     }
 
     @Test
-    @Disabled("TODO: implement")
-    public void _connectAction_() {
-        fail("Not yet implemented");
-    }
-
-    @Test
-    @Disabled("TODO: implement")
-    public void disconnect() {
-        fail("Not yet implemented");
-    }
-
-    @Test
-    @Disabled("TODO: implement")
-    public void doCommand() {
-        fail("Not yet implemented");
-    }
-
-    @Test
-    @Disabled("TODO: implement")
-    public void fireReplyReceived() {
-        fail("Not yet implemented");
-    }
-
-    @Test
     public void checkGenerator() {
         // This test assumes:
         // - 26 letters in the generator alphabet
@@ -115,18 +91,6 @@ public class IMAPTest {
         }
         assertEquals(expected, i);
         assertTrue(matched, "Expected to see the original value again");
-    }
-
-    @Test
-    @Disabled("TODO: implement")
-    public void getReplyString() {
-        fail("Not yet implemented");
-    }
-
-    @Test
-    @Disabled("TODO: implement")
-    public void getReplyStrings() {
-        fail("Not yet implemented");
     }
 
     private static Stream<String> mailboxNamesToBeQuoted() {
