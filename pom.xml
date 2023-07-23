@@ -107,6 +107,11 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.apache.ftpserver</groupId>
             <artifactId>ftpserver-core</artifactId>
             <version>1.2.0</version>

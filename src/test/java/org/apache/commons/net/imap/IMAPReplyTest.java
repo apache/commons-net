@@ -19,8 +19,12 @@ package org.apache.commons.net.imap;
 
 import org.apache.commons.net.MalformedServerReplyException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.IOException;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -140,17 +144,43 @@ public class IMAPReplyTest {
         assertFalse(IMAPReply.isUntagged(taggedLine));
     }
 
-    @Test
-    public void literalCount() {
-        final int literal = 342;
-        final String replyLine = String.format("* 12 FETCH (BODY[HEADER] {%s}", literal);
-        assertEquals(literal, IMAPReply.literalCount(replyLine));
+    @ParameterizedTest(name = "reply line `{1}` contains literal {0}")
+    @MethodSource("literalCommands")
+    public void literalCount(final int expectedLiteral, final String replyLine) {
+        assertEquals(expectedLiteral, IMAPReply.literalCount(replyLine));
     }
 
-    @Test
-    public void literalCountInvalid() {
-        final String replyLine = "STORE +FLAGS.SILENT \\DELETED {";
+    @ParameterizedTest(name = "reply line `{0}` does not contain any literal")
+    @MethodSource("invalidLiteralCommands")
+    public void literalCountInvalid(final String replyLine) {
         assertEquals(-1, IMAPReply.literalCount(replyLine));
+    }
+
+    private static Stream<String> invalidLiteralCommands() {
+        return Stream.of(
+                "",
+                "{",
+                "}",
+                "{}",
+                "{foobar}",
+                "STORE +FLAGS.SILENT \\DELETED {",
+                "STORE +FLAGS.SILENT \\DELETED }",
+                "STORE +FLAGS.SILENT \\DELETED {-1}",
+                "STORE +FLAGS.SILENT \\DELETED {-10}",
+                "STORE +FLAGS.SILENT \\DELETED {-2147483648}"
+        );
+    }
+
+    private static Stream<Arguments> literalCommands() {
+        return Stream.of(
+                Arguments.of(310, "A003 APPEND saved-messages (\\Seen) {310}"),
+                Arguments.of(6, "A284 SEARCH CHARSET UTF-8 TEXT {6}"),
+                Arguments.of(7, "FRED FOOBAR {7}"),
+                Arguments.of(102856, "A044 BLURDYBLOOP {102856}"),
+                Arguments.of(342, "* 12 FETCH (BODY[HEADER] {342}"),
+                Arguments.of(0, "X999 LOGIN {0}"),
+                Arguments.of(Integer.MAX_VALUE, "X999 LOGIN {2147483647}")
+        );
     }
 
 }
