@@ -25,11 +25,11 @@ import java.net.Socket;
 
 public abstract class MockTcpServer implements Runnable, Closeable {
 
-    private volatile boolean running;
-    private final int port;
-    private final InetAddress serverAddress;
-    private final ServerSocket serverSocket;
-    private final Thread serverThread;
+    protected volatile boolean running;
+    protected final InetAddress serverAddress;
+    protected final ServerSocket serverSocket;
+    protected final int port;
+    protected final Thread serverThread;
 
     protected MockTcpServer() throws IOException {
         this(0);

@@ -40,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DaytimeTCPClientTest {
 
-    private static DaytimeTCPMockServer daytimeTCPMockServer;
+    private static MockDaytimeTCPServer mockDaytimeTCPServer;
 
     private static Stream<Arguments> daytimeMockData() {
         return Stream.of(
@@ -51,33 +51,33 @@ class DaytimeTCPClientTest {
     }
 
     @BeforeAll
-    static void beforeAll() throws IOException {
-        daytimeTCPMockServer = new DaytimeTCPMockServer();
-        daytimeTCPMockServer.start();
+    public static void beforeAll() throws IOException {
+        mockDaytimeTCPServer = new MockDaytimeTCPServer();
+        mockDaytimeTCPServer.start();
     }
 
     @AfterAll
-    static void afterAll() throws IOException {
-        daytimeTCPMockServer.stop();
+    public static void afterAll() throws IOException {
+        mockDaytimeTCPServer.stop();
     }
 
     private DaytimeTCPClient daytimeTCPClient;
     private InetAddress localHost;
 
     @BeforeEach
-    void setUp() throws UnknownHostException {
+    public void setUp() throws UnknownHostException {
         localHost = InetAddress.getLocalHost();
     }
 
     @AfterEach
-    void tearDown() throws IOException {
+    public void tearDown() throws IOException {
         if (daytimeTCPClient != null && daytimeTCPClient.isConnected()) {
             daytimeTCPClient.disconnect();
         }
     }
 
     @Test
-    void constructDaytimeTcpClient() {
+    public void constructDaytimeTcpClient() {
         final DaytimeTCPClient daytimeTCPClient = new DaytimeTCPClient();
         assertEquals(13, daytimeTCPClient.getDefaultPort());
     }
@@ -85,13 +85,13 @@ class DaytimeTCPClientTest {
     @ParameterizedTest(name = "getTime() should return <{0}> for date <{2}> and zone <{1}>")
     @Timeout(5)
     @MethodSource("daytimeMockData")
-    void getTime(final String expectedDaytimeString, final ZoneId zoneId, final LocalDateTime localDateTime) throws IOException {
+    public void getTime(final String expectedDaytimeString, final ZoneId zoneId, final LocalDateTime localDateTime) throws IOException {
         final Clock mockClock = Clock.fixed(localDateTime.atZone(zoneId).toInstant(), zoneId);
-        daytimeTCPMockServer.enqueue(mockClock);
+        mockDaytimeTCPServer.enqueue(mockClock);
 
         daytimeTCPClient = new DaytimeTCPClient();
         daytimeTCPClient.setDefaultTimeout(60000);
-        daytimeTCPClient.connect(localHost, daytimeTCPMockServer.getPort());
+        daytimeTCPClient.connect(localHost, mockDaytimeTCPServer.getPort());
 
         final String time = daytimeTCPClient.getTime();
         assertEquals(expectedDaytimeString, time);

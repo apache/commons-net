@@ -21,6 +21,7 @@ import org.apache.commons.net.MockTcpServer;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.time.Clock;
 import java.time.ZonedDateTime;
@@ -31,15 +32,21 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-public class DaytimeTCPMockServer extends MockTcpServer {
+public final class MockDaytimeTCPServer extends MockTcpServer {
 
     private static final DateTimeFormatter DAYTIME_DATA_FORMAT = DateTimeFormatter.ofPattern("EEEE, MMMM d, uuuu, HH:mm:ss-z", Locale.ENGLISH);
 
-    private final BlockingQueue<Clock> responseQueue;
+    private final BlockingQueue<Clock> responseQueue = new LinkedBlockingQueue<>();
 
-    public DaytimeTCPMockServer() throws IOException {
-        super();
-        this.responseQueue = new LinkedBlockingQueue<>();
+    public MockDaytimeTCPServer() throws IOException {
+    }
+
+    public MockDaytimeTCPServer(int port) throws IOException {
+        super(port);
+    }
+
+    public MockDaytimeTCPServer(int port, InetAddress serverAddress) throws IOException {
+        super(port, serverAddress);
     }
 
     @Override
