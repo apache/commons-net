@@ -28,7 +28,6 @@ import java.net.Socket;
  * <p>
  * To use this class simply create a new class that will extend {@link MockTcpServer} and implement
  * {@link MockTcpServer#processClientSocket(Socket)} method.
- *
  * <p>
  * Example usage:
  * <code>
