@@ -610,7 +610,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
     }
 
     /**
-     * Get the current value for maxTimeoutRetries
+     * Gets the current value for maxTimeoutRetries
      *
      * @return the max allowed number of retries
      */
@@ -619,7 +619,16 @@ public class TFTPServer implements Runnable, AutoCloseable {
     }
 
     /**
-     * The current socket timeout used during transfers in milliseconds.
+     * Gets the server port number
+     *
+     * @return the server port number
+     */
+    public int getPort() {
+        return port;
+    }
+
+    /**
+     * Gets the current socket timeout used during transfers in milliseconds.
      *
      * @return the timeout value
      */
