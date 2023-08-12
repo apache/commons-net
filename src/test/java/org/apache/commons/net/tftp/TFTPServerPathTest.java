@@ -29,7 +29,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -127,7 +126,6 @@ public class TFTPServerPathTest {
         final String serverAddress = "localhost";
         final int serverPort = tftpServer.getPort();
 
-        // Create our TFTP instance to handle the file transfer.
         tftpClient = new TFTPClient();
         tftpClient.open();
         tftpClient.setSoTimeout(Duration.ofMillis(2000));
@@ -139,20 +137,42 @@ public class TFTPServerPathTest {
             assertEquals("Error code 4 received: Read not allowed by server.", exception.getMessage());
         }
 
-        // write some data to file
-        final String content = "TFTP write test!";
-        Files.write(fileToRead, content.getBytes(StandardCharsets.UTF_8));
-
         // but we can write to it
         try (final InputStream is = Files.newInputStream(fileToRead)) {
             deleteFile(fileToWrite);
             final String writeFileName = fileToWrite.getFileName().toString();
             tftpClient.sendFile(writeFileName, TFTP.BINARY_MODE, is, serverAddress, serverPort);
         }
+    }
 
-        final List<String> writeFileContents = Files.readAllLines(fileToWrite, StandardCharsets.UTF_8);
-        assertFalse(writeFileContents.isEmpty());
-        assertEquals(content, writeFileContents.get(0));
+    @Test
+    public void testWriteVerifyContents() throws IOException {
+        // Start a write-only server
+        tftpServer = startTftpServer(ServerMode.GET_AND_PUT);
+        final String serverAddress = "localhost";
+        final int serverPort = tftpServer.getPort();
+
+        tftpClient = new TFTPClient();
+        tftpClient.open();
+        tftpClient.setSoTimeout(Duration.ofMillis(2000));
+
+        // write some data to file
+        final byte[] content = "TFTP write test!".getBytes(StandardCharsets.UTF_8);
+        Files.write(fileToRead, content);
+
+        // send file
+        try (final InputStream is = Files.newInputStream(fileToRead)) {
+            deleteFile(fileToWrite);
+            final String writeFileName = fileToWrite.getFileName().toString();
+            tftpClient.sendFile(writeFileName, TFTP.BINARY_MODE, is, serverAddress, serverPort);
+        }
+
+        // then verify it contents
+        try (final OutputStream os = Files.newOutputStream(fileToWrite)) {
+            final String readFileName = fileToRead.getFileName().toString();
+            final int readBytes = tftpClient.receiveFile(readFileName, TFTP.BINARY_MODE, os, serverAddress, serverPort);
+            assertEquals(content.length, readBytes);
+        }
     }
 
     @Test
@@ -162,7 +182,6 @@ public class TFTPServerPathTest {
         final String serverAddress = "localhost";
         final int serverPort = tftpServer.getPort();
 
-        // Create our TFTP instance to handle the file transfer.
         tftpClient = new TFTPClient();
         tftpClient.open();
 
