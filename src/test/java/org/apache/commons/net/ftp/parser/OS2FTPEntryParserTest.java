@@ -19,7 +19,7 @@ package org.apache.commons.net.ftp.parser;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
-public class OS2FTPEntryParserTest extends FTPParseTestFramework {
+public class OS2FTPEntryParserTest extends AbstractFTPParseTest {
 
     private static final String[] badsamples = { "                 DIR   12-30-97   12:32  jbrekke", "     0    rsa    DIR   11-25-97   09:42  junk",
             "     0           dir   05-12-97   16:44  LANGUAGE", "     0           DIR   13-05-97   25:49  MPTN",

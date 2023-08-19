@@ -19,7 +19,7 @@ package org.apache.commons.net.telnet;
 /**
  * JUnit test class for TerminalTypeOptionHandler
  */
-public class WindowSizeOptionHandlerTest extends TelnetOptionHandlerTestAbstract {
+public class WindowSizeOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
     /**
      * compares two arrays of int
      */

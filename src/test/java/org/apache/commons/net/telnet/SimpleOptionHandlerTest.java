@@ -19,7 +19,7 @@ package org.apache.commons.net.telnet;
 /**
  * JUnit test class for SimpleOptionHandler
  */
-public class SimpleOptionHandlerTest extends TelnetOptionHandlerTestAbstract {
+public class SimpleOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
     /**
      * setUp for the test.
      */

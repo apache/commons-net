@@ -26,7 +26,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 /**
  * Test suite addapted to new MVSFTPEntryParser.java.
  */
-public class MVSFTPEntryParserTest extends FTPParseTestFramework {
+public class MVSFTPEntryParserTest extends AbstractFTPParseTest {
 
     private static final String[] goodsamplesDatasetList = {
             /* Note, if the string begins with SAVE, the parsed entry is stored in the List saveftpfiles */
@@ -110,7 +110,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
     }
 
     /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
+     * @see org.apache.commons.net.ftp.parser.AbstractFTPParseTest#getParser()
      */
     @Override
     protected FTPFileEntryParser getParser() {

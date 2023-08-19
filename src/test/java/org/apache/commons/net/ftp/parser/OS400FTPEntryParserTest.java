@@ -57,7 +57,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
     }
 
     /**
-     * @see FTPParseTestFramework#getBadListing()
+     * @see AbstractFTPParseTest#getBadListing()
      */
     @Override
     protected String[][] getBadListings() {
@@ -65,7 +65,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
     }
 
     /**
-     * @see FTPParseTestFramework#getGoodListing()
+     * @see AbstractFTPParseTest#getGoodListing()
      */
     @Override
     protected String[][] getGoodListings() {
@@ -73,7 +73,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
     }
 
     /**
-     * @see FTPParseTestFramework#getParser()
+     * @see AbstractFTPParseTest#getParser()
      */
     @Override
     protected FTPFileEntryParser getParser() {
@@ -110,7 +110,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
     }
 
     /**
-     * @see FTPParseTestFramework#testParseFieldsOnDirectory()
+     * @see AbstractFTPParseTest#testParseFieldsOnDirectory()
      */
     @Override
     public void testParseFieldsOnDirectory() throws Exception {
@@ -134,7 +134,7 @@ public class OS400FTPEntryParserTest extends CompositeFTPParseTestFramework {
     }
 
     /**
-     * @see FTPParseTestFramework#testParseFieldsOnFile()
+     * @see AbstractFTPParseTest#testParseFieldsOnFile()
      */
     @Override
     public void testParseFieldsOnFile() throws Exception {

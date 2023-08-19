@@ -22,7 +22,7 @@ import junit.framework.TestCase;
  * The TelnetOptionHandlerTest is the abstract class for testing TelnetOptionHandler. It can be used to derive the actual test classes for TelnetOptionHadler
  * derived classes, by adding creation of three new option handlers and testing of the specific subnegotiation behavior.
  */
-public abstract class TelnetOptionHandlerTestAbstract extends TestCase {
+public abstract class AbstractTelnetOptionHandlerTest extends TestCase {
     TelnetOptionHandler opthand1;
     TelnetOptionHandler opthand2;
     TelnetOptionHandler opthand3;

@@ -21,7 +21,7 @@ import java.util.Calendar;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
-public class MacOsPeterFTPEntryParserTest extends FTPParseTestFramework {
+public class MacOsPeterFTPEntryParserTest extends AbstractFTPParseTest {
 
     private static final String[] badsamples = { "drwxr-xr-x    123       folder        0 Jan  4 14:49 Steak", };
 

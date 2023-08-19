@@ -16,7 +16,7 @@
  */
 package org.apache.commons.net.telnet;
 
-public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstract {
+public class TerminalTypeOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
     /*
      * compares two arrays of int
      */

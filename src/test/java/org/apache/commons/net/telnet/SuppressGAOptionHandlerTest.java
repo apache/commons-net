@@ -19,7 +19,7 @@ package org.apache.commons.net.telnet;
 /**
  * JUnit test class for SuppressGAOptionHandler
  */
-public class SuppressGAOptionHandlerTest extends TelnetOptionHandlerTestAbstract {
+public class SuppressGAOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
 
     /**
      * setUp for the test.

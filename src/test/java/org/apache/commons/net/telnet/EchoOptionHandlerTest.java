@@ -19,7 +19,7 @@ package org.apache.commons.net.telnet;
 /**
  * JUnit test class for EchoOptionHandler
  */
-public class EchoOptionHandlerTest extends TelnetOptionHandlerTestAbstract {
+public class EchoOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
 
     /**
      * setUp for the test.
