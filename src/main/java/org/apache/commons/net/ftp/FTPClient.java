@@ -85,7 +85,7 @@ import org.apache.commons.net.util.NetConstants;
  *      // success.
  *      reply = ftp.getReplyCode();
  *
- *      if(!FTPReply.isPositiveCompletion(reply)) {
+ *      if (!FTPReply.isPositiveCompletion(reply)) {
  *        ftp.disconnect();
  *        System.err.println("FTP server refused connection.");
  *        System.exit(1);
@@ -96,7 +96,7 @@ import org.apache.commons.net.util.NetConstants;
  *      error = true;
  *      e.printStackTrace();
  *    } finally {
- *      if(ftp.isConnected()) {
+ *      if (ftp.isConnected()) {
  *        try {
  *          ftp.disconnect();
  *        } catch (IOException ioe) {
@@ -1164,7 +1164,7 @@ public class FTPClient extends FTP implements Configurable {
      * OutputStream output;
      * input  = new FileInputStream("foobaz.txt");
      * output = ftp.storeFileStream("foobar.txt")
-     * if(!FTPReply.isPositiveIntermediate(ftp.getReplyCode())) {
+     * if (!FTPReply.isPositiveIntermediate(ftp.getReplyCode())) {
      *     input.close();
      *     output.close();
      *     ftp.logout();
@@ -1176,7 +1176,7 @@ public class FTPClient extends FTP implements Configurable {
      * input.close();
      * output.close();
      * // Must call completePendingCommand() to finish command.
-     * if(!ftp.completePendingCommand()) {
+     * if (!ftp.completePendingCommand()) {
      *     ftp.logout();
      *     ftp.disconnect();
      *     System.err.println("File transfer failed.");

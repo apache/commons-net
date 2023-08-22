@@ -40,7 +40,7 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  *      // success.
  *      reply = client.getReplyCode();
  *
- *      if(!SMTPReply.isPositiveCompletion(reply)) {
+ *      if (!SMTPReply.isPositiveCompletion(reply)) {
  *        client.disconnect();
  *        System.err.println("SMTP server refused connection.");
  *        System.exit(1);
@@ -49,7 +49,7 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  *      // Do useful stuff here.
  *      ...
  *    } catch (IOException e) {
- *      if(client.isConnected()) {
+ *      if (client.isConnected()) {
  *        try {
  *          client.disconnect();
  *        } catch (IOException f) {

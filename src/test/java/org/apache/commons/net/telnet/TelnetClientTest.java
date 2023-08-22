@@ -664,7 +664,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
             read_ok = true;
         }
 
-        // if(is1.available() == 6)
+        // if (is1.available() == 6)
         // {
         int read = 0;
         int pos = 0;
@@ -695,7 +695,7 @@ public class TelnetClientTest extends TestCase implements TelnetNotificationHand
             System.arraycopy(tmp, 0, buffread1, pos, read);
             pos += read;
         }
-        // if(is2.available() == 6)
+        // if (is2.available() == 6)
         // {
         is2.read(buffread1);
 
