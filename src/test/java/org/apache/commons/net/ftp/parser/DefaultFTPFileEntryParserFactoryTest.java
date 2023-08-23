@@ -16,6 +16,8 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFileEntryParser;
 
@@ -118,12 +120,7 @@ public class DefaultFTPFileEntryParserFactoryTest extends TestCase {
     public void testDefaultParserFactoryConfig() throws Exception {
         final DefaultFTPFileEntryParserFactory factory = new DefaultFTPFileEntryParserFactory();
 
-        try {
-            factory.createFileEntryParser((FTPClientConfig) null);
-            fail("Expected NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        assertThrows(NullPointerException.class, () -> factory.createFileEntryParser((FTPClientConfig) null));
         checkParserClass(factory, null, UnixFTPEntryParser.class);
 
         checkParserClass(factory, FTPClientConfig.SYST_OS400, OS400FTPEntryParser.class);

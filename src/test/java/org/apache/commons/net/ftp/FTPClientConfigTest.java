@@ -16,6 +16,8 @@
  */
 package org.apache.commons.net.ftp;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -111,19 +113,8 @@ public class FTPClientConfigTest extends TestCase {
 
         assertEquals("different.parser.same.date", d1, d2);
 
-        try {
-            sdf1.parse("hij 31, 2004");
-            fail("should.have.failed.to.parse.weird");
-        } catch (final ParseException px) {
-            // expected
-        }
-        try {
-            sdf2.parse("dec 31, 2004");
-            fail("should.have.failed.to.parse.standard");
-        } catch (final ParseException px) {
-            // expected
-        }
-
+        assertThrows(ParseException.class, () -> sdf1.parse("hij 31, 2004"));
+        assertThrows(ParseException.class, () -> sdf2.parse("dec 31, 2004"));
     }
 
     public void testGetServerLanguageCode() {

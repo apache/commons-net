@@ -16,6 +16,8 @@
  */
 package org.apache.commons.net.ftp.parser;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -151,18 +153,8 @@ public class FTPTimestampParserImplTest extends TestCase {
         // Note: we use a known leap year for the target date to avoid rounding up
         final GregorianCalendar input = new GregorianCalendar(2000, Calendar.FEBRUARY, 29);
         final GregorianCalendar expected = new GregorianCalendar(1999, Calendar.FEBRUARY, 29);
-        try {
-            checkShortParse("Feb 29th 1999", server, input, expected, true);
-            fail("Should have failed to parse Feb 29th 1999");
-        } catch (final ParseException pe) {
-            // expected
-        }
-        try {
-            checkShortParse("Feb 29th 1999", server, input, expected, false);
-            fail("Should have failed to parse Feb 29th 1999");
-        } catch (final ParseException pe) {
-            // expected
-        }
+        assertThrows(ParseException.class, () -> checkShortParse("Feb 29th 1999", server, input, expected, true));
+        assertThrows(ParseException.class, () -> checkShortParse("Feb 29th 1999", server, input, expected, false));
     }
 
 //    Lenient mode allows for dates up to 1 day in the future
