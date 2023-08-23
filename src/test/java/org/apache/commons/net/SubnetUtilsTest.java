@@ -24,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import org.apache.commons.net.util.SubnetUtils;
 import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
@@ -275,23 +274,13 @@ public class SubnetUtilsTest {
         info = utils.getInfo();
         assertEquals("0.0.0.0", info.getNetmask());
         assertEquals(4294967296L, info.getAddressCountLong());
-        try {
-            info.getAddressCount();
-            fail("Expected RuntimeException");
-        } catch (final RuntimeException expected) {
-            // ignored
-        }
+        assertThrows(RuntimeException.class, info::getAddressCount);
         utils = new SubnetUtils("128.0.0.0/1");
         utils.setInclusiveHostCount(true);
         info = utils.getInfo();
         assertEquals("128.0.0.0", info.getNetmask());
         assertEquals(2147483648L, info.getAddressCountLong());
-        try {
-            info.getAddressCount();
-            fail("Expected RuntimeException");
-        } catch (final RuntimeException expected) {
-            // ignored
-        }
+        assertThrows(RuntimeException.class, info::getAddressCount);
         // if we exclude the broadcast and network addresses, the count is less than Integer.MAX_VALUE
         utils.setInclusiveHostCount(false);
         info = utils.getInfo();
