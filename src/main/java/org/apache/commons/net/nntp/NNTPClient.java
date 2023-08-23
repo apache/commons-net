@@ -76,7 +76,7 @@ public class NNTPClient extends NNTP {
 
         final Article article = new Article();
         article.setSubject(line); // in case parsing fails
-        final String parts[] = line.split("\t");
+        final String[] parts = line.split("\t");
         if (parts.length > 6) {
             int i = 0;
             try {
@@ -99,7 +99,7 @@ public class NNTPClient extends NNTP {
      */
 
     private static void parseGroupReply(final String reply, final NewsgroupInfo info) throws MalformedServerReplyException {
-        final String tokens[] = reply.split(" ");
+        final String[] tokens = reply.split(" ");
         if (tokens.length >= 5) {
             int i = 1; // Skip numeric response value
             try {
@@ -124,7 +124,7 @@ public class NNTPClient extends NNTP {
 
     // Format: group last first p
     static NewsgroupInfo parseNewsgroupListEntry(final String entry) {
-        final String tokens[] = entry.split(" ");
+        final String[] tokens = entry.split(" ");
         if (tokens.length < 4) {
             return null;
         }
@@ -561,7 +561,7 @@ public class NNTPClient extends NNTP {
      * @throws MalformedServerReplyException if response could not be parsed
      */
     private void parseArticlePointer(final String reply, final ArticleInfo pointer) throws MalformedServerReplyException {
-        final String tokens[] = reply.split(" ");
+        final String[] tokens = reply.split(" ");
         if (tokens.length >= 3) { // OK, we can parset the line
             int i = 1; // skip reply code
             try {

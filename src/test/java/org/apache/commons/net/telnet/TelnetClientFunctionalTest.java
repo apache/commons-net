@@ -73,7 +73,7 @@ public class TelnetClientFunctionalTest extends TestCase {
      * Helper method. waits for a string with timeout
      */
     public boolean waitForString(final InputStream is, final String end, final long timeout) throws Exception {
-        final byte buffer[] = new byte[32];
+        final byte[] buffer = new byte[32];
         final long starttime = System.currentTimeMillis();
 
         String readbytes = "";

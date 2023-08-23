@@ -182,7 +182,7 @@ public final class FTPClientExample {
                 displayTimeZoneId = args[++base];
             } else if (args[base].equals("-PrH")) {
                 proxyHost = args[++base];
-                final String parts[] = proxyHost.split(":");
+                final String[] parts = proxyHost.split(":");
                 if (parts.length == 2) {
                     proxyHost = parts[0];
                     proxyPort = Integer.parseInt(parts[1]);
@@ -213,7 +213,7 @@ public final class FTPClientExample {
 
         String server = args[base++];
         int port = 0;
-        final String parts[] = server.split(":");
+        final String[] parts = server.split(":");
         if (parts.length == 2) {
             server = parts[0];
             port = Integer.parseInt(parts[1]);
@@ -248,7 +248,7 @@ public final class FTPClientExample {
             } else if (protocol.equals("false")) {
                 ftps = new FTPSClient(false);
             } else {
-                final String prot[] = protocol.split(",");
+                final String[] prot = protocol.split(",");
                 if (prot.length == 1) { // Just protocol
                     ftps = new FTPSClient(protocol);
                 } else { // protocol,true|false

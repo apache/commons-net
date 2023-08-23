@@ -195,7 +195,7 @@ public class SubnetUtils {
          * Converts a packed integer address into a 4-element array
          */
         private int[] toArray(final int val) {
-            final int ret[] = new int[4];
+            final int[] ret = new int[4];
             for (int j = 3; j >= 0; --j) {
                 ret[j] |= val >>> 8 * (3 - j) & 0xff;
             }

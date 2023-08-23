@@ -341,15 +341,15 @@ public class SubnetUtilsTest {
     @Test
     public void testParseSimpleNetmask() {
         final String address = "192.168.0.1";
-        final String masks[] = { "255.0.0.0", "255.255.0.0", "255.255.255.0", "255.255.255.248" };
-        final String bcastAddresses[] = { "192.255.255.255", "192.168.255.255", "192.168.0.255", "192.168.0.7" };
-        final String lowAddresses[] = { "192.0.0.1", "192.168.0.1", "192.168.0.1", "192.168.0.1" };
-        final String highAddresses[] = { "192.255.255.254", "192.168.255.254", "192.168.0.254", "192.168.0.6" };
-        final String nextAddresses[] = { "192.168.0.2", "192.168.0.2", "192.168.0.2", "192.168.0.2" };
-        final String previousAddresses[] = { "192.168.0.0", "192.168.0.0", "192.168.0.0", "192.168.0.0" };
-        final String networkAddresses[] = { "192.0.0.0", "192.168.0.0", "192.168.0.0", "192.168.0.0" };
-        final String cidrSignatures[] = { "192.168.0.1/8", "192.168.0.1/16", "192.168.0.1/24", "192.168.0.1/29" };
-        final int usableAddresses[] = { 16777214, 65534, 254, 6 };
+        final String[] masks = { "255.0.0.0", "255.255.0.0", "255.255.255.0", "255.255.255.248" };
+        final String[] bcastAddresses = { "192.255.255.255", "192.168.255.255", "192.168.0.255", "192.168.0.7" };
+        final String[] lowAddresses = { "192.0.0.1", "192.168.0.1", "192.168.0.1", "192.168.0.1" };
+        final String[] highAddresses = { "192.255.255.254", "192.168.255.254", "192.168.0.254", "192.168.0.6" };
+        final String[] nextAddresses = { "192.168.0.2", "192.168.0.2", "192.168.0.2", "192.168.0.2" };
+        final String[] previousAddresses = { "192.168.0.0", "192.168.0.0", "192.168.0.0", "192.168.0.0" };
+        final String[] networkAddresses = { "192.0.0.0", "192.168.0.0", "192.168.0.0", "192.168.0.0" };
+        final String[] cidrSignatures = { "192.168.0.1/8", "192.168.0.1/16", "192.168.0.1/24", "192.168.0.1/29" };
+        final int[] usableAddresses = { 16777214, 65534, 254, 6 };
 
         for (int i = 0; i < masks.length; ++i) {
             final SubnetUtils utils = new SubnetUtils(address, masks[i]);
@@ -369,13 +369,13 @@ public class SubnetUtilsTest {
     @Test
     public void testParseSimpleNetmaskExclusive() {
         final String address = "192.168.15.7";
-        final String masks[] = { "255.255.255.252", "255.255.255.254", "255.255.255.255" };
-        final String bcast[] = { "192.168.15.7", "192.168.15.7", "192.168.15.7" };
-        final String netwk[] = { "192.168.15.4", "192.168.15.6", "192.168.15.7" };
-        final String lowAd[] = { "192.168.15.5", "0.0.0.0", "0.0.0.0" };
-        final String highA[] = { "192.168.15.6", "0.0.0.0", "0.0.0.0" };
-        final String cidrS[] = { "192.168.15.7/30", "192.168.15.7/31", "192.168.15.7/32" };
-        final int usableAd[] = { 2, 0, 0 };
+        final String[] masks = { "255.255.255.252", "255.255.255.254", "255.255.255.255" };
+        final String[] bcast = { "192.168.15.7", "192.168.15.7", "192.168.15.7" };
+        final String[] netwk = { "192.168.15.4", "192.168.15.6", "192.168.15.7" };
+        final String[] lowAd = { "192.168.15.5", "0.0.0.0", "0.0.0.0" };
+        final String[] highA = { "192.168.15.6", "0.0.0.0", "0.0.0.0" };
+        final String[] cidrS = { "192.168.15.7/30", "192.168.15.7/31", "192.168.15.7/32" };
+        final int[] usableAd = { 2, 0, 0 };
         // low and high addresses don't exist
 
         for (int i = 0; i < masks.length; ++i) {
@@ -394,13 +394,13 @@ public class SubnetUtilsTest {
     @Test
     public void testParseSimpleNetmaskInclusive() {
         final String address = "192.168.15.7";
-        final String masks[] = { "255.255.255.252", "255.255.255.254", "255.255.255.255" };
-        final String bcast[] = { "192.168.15.7", "192.168.15.7", "192.168.15.7" };
-        final String netwk[] = { "192.168.15.4", "192.168.15.6", "192.168.15.7" };
-        final String lowAd[] = { "192.168.15.4", "192.168.15.6", "192.168.15.7" };
-        final String highA[] = { "192.168.15.7", "192.168.15.7", "192.168.15.7" };
-        final String cidrS[] = { "192.168.15.7/30", "192.168.15.7/31", "192.168.15.7/32" };
-        final int usableAd[] = { 4, 2, 1 };
+        final String[] masks = { "255.255.255.252", "255.255.255.254", "255.255.255.255" };
+        final String[] bcast = { "192.168.15.7", "192.168.15.7", "192.168.15.7" };
+        final String[] netwk = { "192.168.15.4", "192.168.15.6", "192.168.15.7" };
+        final String[] lowAd = { "192.168.15.4", "192.168.15.6", "192.168.15.7" };
+        final String[] highA = { "192.168.15.7", "192.168.15.7", "192.168.15.7" };
+        final String[] cidrS = { "192.168.15.7/30", "192.168.15.7/31", "192.168.15.7/32" };
+        final int[] usableAd = { 4, 2, 1 };
 
         for (int i = 0; i < masks.length; ++i) {
             final SubnetUtils utils = new SubnetUtils(address, masks[i]);

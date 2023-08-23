@@ -45,11 +45,11 @@ public class WindowSizeOptionHandlerTest extends AbstractTelnetOptionHandlerTest
      */
     @Override
     public void testAnswerSubnegotiation() {
-        final int subn[] = { TelnetOption.WINDOW_SIZE, 24, 80 };
+        final int[] subn = { TelnetOption.WINDOW_SIZE, 24, 80 };
 
-        final int resp1[] = opthand1.answerSubnegotiation(subn, subn.length);
-        final int resp2[] = opthand2.answerSubnegotiation(subn, subn.length);
-        final int resp3[] = opthand3.answerSubnegotiation(subn, subn.length);
+        final int[] resp1 = opthand1.answerSubnegotiation(subn, subn.length);
+        final int[] resp2 = opthand2.answerSubnegotiation(subn, subn.length);
+        final int[] resp3 = opthand3.answerSubnegotiation(subn, subn.length);
 
         assertNull(resp1);
         assertNull(resp2);
