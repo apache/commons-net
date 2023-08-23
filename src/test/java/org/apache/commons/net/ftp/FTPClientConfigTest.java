@@ -71,24 +71,9 @@ public class FTPClientConfigTest extends TestCase {
 
     public void testGetDateFormatSymbols() {
 
-        try {
-            FTPClientConfig.getDateFormatSymbols(badDelim);
-            fail("bad delimiter");
-        } catch (final IllegalArgumentException e) {
-            // should have failed
-        }
-        try {
-            FTPClientConfig.getDateFormatSymbols(tooLong);
-            fail("more than 12 months");
-        } catch (final IllegalArgumentException e) {
-            // should have failed
-        }
-        try {
-            FTPClientConfig.getDateFormatSymbols(tooShort);
-            fail("fewer than 12 months");
-        } catch (final IllegalArgumentException e) {
-            // should have failed
-        }
+        assertThrows(IllegalArgumentException.class, () -> FTPClientConfig.getDateFormatSymbols(badDelim), "bad delimiter");
+        assertThrows(IllegalArgumentException.class, () -> FTPClientConfig.getDateFormatSymbols(tooLong), "more than 12 months");
+        assertThrows(IllegalArgumentException.class, () -> FTPClientConfig.getDateFormatSymbols(tooShort), "fewer than 12 months");
         DateFormatSymbols dfs2 = null;
         try {
             dfs2 = FTPClientConfig.getDateFormatSymbols(fakeLang);
