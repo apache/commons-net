@@ -60,7 +60,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             "\\S+\\s+" + // extents -ignored
             // If the values are too large, the fields may be merged (NET-639)
             "(?:\\S+\\s+)?" + // used - ignored
-            "(?:F|FB|V|VB|U)\\s+" + // recfm - F[B], V[B], U
+            "\\S+\\s+" + // recfm - ignored
             "\\S+\\s+" + // logical record length -ignored
             "\\S+\\s+" + // block size - ignored
             "(PS|PO|PO-E)\\s+" + // Dataset organisation. Many exist
@@ -239,18 +239,20 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * Parse entries representing a dataset list. Only datasets with DSORG PS or PO or PO-E and with RECFM F[B], V[B], U will be parsed.
+     * Parse entries representing a dataset list.
      * <p>
-     * Format of ZOS/MVS file list: 1 2 3 4 5 6 7 8 9 10 Volume Unit Referred Ext Used Recfm Lrecl BlkSz Dsorg Dsname B10142 3390 2006/03/20 2 31 F 80 80 PS
-     * MDI.OKL.WORK ARCHIVE Not Direct Access Device KJ.IOP998.ERROR.PL.UNITTEST B1N231 3390 2006/03/20 1 15 VB 256 27998 PO PLU B1N231 3390 2006/03/20 1 15 VB
-     * 256 27998 PO-E PLB
+     * Format of ZOS/MVS file list: 1 2 3 4 5 6 7 8 9 10
+     * Volume Unit Referred Ext Used Recfm Lrecl BlkSz Dsorg Dsname
+     * B10142 3390 2006/03/20 2 31 F 80 80 PS MDI.OKL.WORK
+     * ARCHIVE Not Direct Access Device KJ.IOP998.ERROR.PL.UNITTEST
+     * B1N231 3390 2006/03/20 1 15 VB 256 27998 PO PLU
+     * B1N231 3390 2006/03/20 1 15 VB 256 27998 PO-E PLB
+     * Migrated                                                HLQ.DATASET.NAME
      * <p>
      * ----------------------------------- Group within Regex [1] Volume [2] Unit [3] Referred [4] Ext: number of extents [5] Used [6] Recfm: Record format [7]
      * Lrecl: Logical record length [8] BlkSz: Block size [9] Dsorg: Dataset organisation. Many exists but only support: PS, PO, PO-E [10] Dsname: Dataset name
      * <p>
-     * Note: When volume is ARCHIVE, it means the dataset is stored somewhere in a tape archive. These entries are currently not supported by this parser.
-     * A null value is returned.
-     *
+     * 
      * @param entry zosDirectoryEntry
      * @return null: entry was not parsed.
      */
@@ -274,6 +276,20 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
 
             return file;
         }
+
+    	if (entry.startsWith("Migrated") || entry.startsWith("ARCHIVE")) {
+    		// Type of file is unknown for migrated datasets
+            final FTPFile file = new FTPFile();
+            file.setRawListing(entry);
+            file.setType(FTPFile.UNKNOWN_TYPE);
+            
+            if (entry.startsWith("Migrated"))
+            	file.setName(entry.split("\\s+")[1]);
+            else 
+            	file.setName(entry.split("\\s+")[5]);
+
+            return file;
+    	} 
 
         return null;
     }
