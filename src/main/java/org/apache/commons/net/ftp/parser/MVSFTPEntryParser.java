@@ -193,7 +193,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      *
      * Other notes ===========
      *
-     * The file system supports automatically backup and retrieval of datasets. If a file is backed up, the ftp LIST command will return: ARCHIVE Not Direct
+     * The file system supports automatically backup and retrieval of datasets. If a file is backed up, the ftp LIST command will return: ARCIVE Not Direct
      * Access Device KJ.IOP998.ERROR.PL.UNITTEST
      *
      *
@@ -244,7 +244,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * Format of ZOS/MVS file list: 1 2 3 4 5 6 7 8 9 10
      * Volume Unit Referred Ext Used Recfm Lrecl BlkSz Dsorg Dsname
      * B10142 3390 2006/03/20 2 31 F 80 80 PS MDI.OKL.WORK
-     * ARCHIVE Not Direct Access Device KJ.IOP998.ERROR.PL.UNITTEST
+     * ARCIVE Not Direct Access Device KJ.IOP998.ERROR.PL.UNITTEST
      * B1N231 3390 2006/03/20 1 15 VB 256 27998 PO PLU
      * B1N231 3390 2006/03/20 1 15 VB 256 27998 PO-E PLB
      * Migrated                                                HLQ.DATASET.NAME
@@ -277,7 +277,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             return file;
         }
 
-    	if (entry.startsWith("Migrated") || entry.startsWith("ARCHIVE")) {
+    	if (entry.startsWith("Migrated") || entry.startsWith("ARCIVE")) {
     		// Type of file is unknown for migrated datasets
             final FTPFile file = new FTPFile();
             file.setRawListing(entry);
