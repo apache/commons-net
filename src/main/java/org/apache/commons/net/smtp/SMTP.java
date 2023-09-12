@@ -274,7 +274,6 @@ public class SMTP extends SocketClient {
     /**
      * Returns the lines of text from the last SMTP server response as an array of strings, one entry per line. The end of line markers of each are stripped
      * from each line.
-     * <p>
      *
      * @return The lines of text from the last SMTP response as an array.
      */
