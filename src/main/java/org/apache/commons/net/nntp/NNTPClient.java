@@ -1133,7 +1133,6 @@ public class NNTPClient extends NNTP {
 
     /**
      * Return an article header for a specified post.
-     * <p>
      *
      * @param header        the header to retrieve
      * @param articleNumber the article to retrieve the header for
@@ -1146,7 +1145,6 @@ public class NNTPClient extends NNTP {
 
     /**
      * Return an article header for all articles between lowArticleNumber and highArticleNumber, inclusively.
-     * <p>
      *
      * @param header            the header
      * @param lowArticleNumber  to fetch
