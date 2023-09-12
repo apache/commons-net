@@ -185,7 +185,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the AUTHINFO USER command to the server, receive the reply, and return the reply code. (See RFC 2980)
-     * <p>
      *
      * @param username A valid username.
      * @return The reply code received from the server. The server should return a 381 or 281 for this command.
