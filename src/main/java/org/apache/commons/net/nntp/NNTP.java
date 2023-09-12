@@ -45,11 +45,13 @@ import org.apache.commons.net.io.CRLFLineReader;
  * {@link org.apache.commons.net.nntp.NNTPConnectionClosedException} , you must disconnect the connection with {@link #disconnect disconnect() } to properly
  * clean up the system resources used by NNTP. Before disconnecting, you may check the last reply code and text with {@link #getReplyCode getReplyCode } and
  * {@link #getReplyString getReplyString }.
+ * </p>
  * <p>
  * Rather than list it separately for each method, we mention here that every method communicating with the server and throwing an IOException can also throw a
  * {@link org.apache.commons.net.MalformedServerReplyException} , which is a subclass of IOException. A MalformedServerReplyException will be thrown when the
  * reply received from the server deviates enough from the protocol specification that it cannot be interpreted in a useful manner despite attempts to be as
  * lenient as possible.
+ * </p>
  *
  * @see NNTPClient
  * @see NNTPConnectionClosedException
@@ -115,7 +117,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP ARTICLE command to the server, receive the initial reply, and return the reply code.
-     * <p>
      *
      * @return The reply code received from the server.
      * @throws NNTPConnectionClosedException If the NNTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -140,7 +141,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP ARTICLE command to the server, receive the initial reply, and return the reply code.
-     * <p>
      *
      * @param articleNumber The number of the article to request from the currently selected newsgroup.
      * @return The reply code received from the server.
@@ -155,7 +155,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP ARTICLE command to the server, receive the initial reply, and return the reply code.
-     * <p>
      *
      * @param messageId The message identifier of the requested article, including the encapsulating &lt; and &gt; characters.
      * @return The reply code received from the server.
@@ -171,7 +170,6 @@ public class NNTP extends SocketClient {
     /**
      * A convenience method to send the AUTHINFO PASS command to the server, receive the reply, and return the reply code. If this step is required, it should
      * immediately follow the AUTHINFO USER command (See RFC 2980)
-     * <p>
      *
      * @param password a valid password.
      * @return The reply code received from the server. The server should return a 281 or 502 for this command.
@@ -203,7 +201,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP BODY command to the server, receive the initial reply, and return the reply code.
-     * <p>
      *
      * @return The reply code received from the server.
      * @throws NNTPConnectionClosedException If the NNTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -228,7 +225,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP BODY command to the server, receive the initial reply, and return the reply code.
-     * <p>
      *
      * @param articleNumber The number of the article to request from the currently selected newsgroup.
      * @return The reply code received from the server.
@@ -243,7 +239,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP BODY command to the server, receive the initial reply, and return the reply code.
-     * <p>
      *
      * @param messageId The message identifier of the requested article, including the encapsulating &lt; and &gt; characters.
      * @return The reply code received from the server.
@@ -259,7 +254,6 @@ public class NNTP extends SocketClient {
     /**
      * Closes the connection to the NNTP server and sets to null some internal data so that the memory may be reclaimed by the garbage collector. The reply text
      * and code information from the last command is voided so that the memory it used may be reclaimed.
-     * <p>
      *
      * @throws IOException If an error occurs while disconnecting.
      */
@@ -284,7 +278,6 @@ public class NNTP extends SocketClient {
      * Fetches a reply from the NNTP server and returns the integer reply code. After calling this method, the actual reply text can be accessed from
      * {@link #getReplyString getReplyString }. Only use this method if you are implementing your own NNTP client or if you need to fetch a secondary response
      * from the NNTP server.
-     * <p>
      *
      * @return The integer value of the reply code of the fetched NNTP reply. in response to the command.
      * @throws NNTPConnectionClosedException If the NNTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -322,7 +315,6 @@ public class NNTP extends SocketClient {
     /**
      * Returns the integer value of the reply code of the last NNTP reply. You will usually only use this method after you connect to the NNTP server to check
      * that the connection was successful since <code> connect </code> is of type void.
-     * <p>
      *
      * @return The integer value of the reply code of the last NNTP reply.
      */
@@ -332,7 +324,6 @@ public class NNTP extends SocketClient {
 
     /**
      * Returns the entire text of the last NNTP server response exactly as it was received, not including the end of line marker.
-     * <p>
      *
      * @return The entire text from the last NNTP response as a String.
      */
@@ -342,7 +333,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP GROUP command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @param newsgroup The name of the newsgroup to select.
      * @return The reply code received from the server.
@@ -357,7 +347,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP HEAD command to the server, receive the initial reply, and return the reply code.
-     * <p>
      *
      * @return The reply code received from the server.
      * @throws NNTPConnectionClosedException If the NNTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -382,7 +371,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP HEAD command to the server, receive the initial reply, and return the reply code.
-     * <p>
      *
      * @param articleNumber The number of the article to request from the currently selected newsgroup.
      * @return The reply code received from the server.
@@ -397,7 +385,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP HEAD command to the server, receive the initial reply, and return the reply code.
-     * <p>
      *
      * @param messageId The message identifier of the requested article, including the encapsulating &lt; and &gt; characters.
      * @return The reply code received from the server.
@@ -412,7 +399,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP HELP command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @return The reply code received from the server.
      * @throws NNTPConnectionClosedException If the NNTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -426,7 +412,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP IHAVE command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @param messageId The article identifier, including the encapsulating &lt; and &gt; characters.
      * @return The reply code received from the server.
@@ -441,7 +426,6 @@ public class NNTP extends SocketClient {
 
     /**
      * Indicates whether or not the client is allowed to post articles to the server it is currently connected to.
-     * <p>
      *
      * @return True if the client can post articles to the server, false otherwise.
      */
@@ -451,7 +435,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP LAST command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @return The reply code received from the server.
      * @throws NNTPConnectionClosedException If the NNTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -465,7 +448,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP LIST command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @return The reply code received from the server.
      * @throws NNTPConnectionClosedException If the NNTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -479,7 +461,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience wrapper for the extended LIST command that takes an argument, allowing us to selectively list multiple groups.
-     * <p>
      *
      * @param wildmat A wildmat (pseudo-regex) pattern. See RFC 2980 for details.
      * @return the reply code received from the server.
@@ -493,7 +474,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the "NEWGROUPS" command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @param date          The date after which to check for new groups. Date format is YYMMDD
      * @param time          The time after which to check for new groups. Time format is HHMMSS using a 24-hour clock.
@@ -528,7 +508,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the "NEWNEWS" command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @param newsgroups    A comma-separated list of newsgroups to check for new news.
      * @param date          The date after which to check for new news. Date format is YYMMDD
@@ -566,7 +545,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP NEXT command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @return The reply code received from the server.
      * @throws NNTPConnectionClosedException If the NNTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -580,7 +558,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP POST command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @return The reply code received from the server.
      * @throws NNTPConnectionClosedException If the NNTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -594,7 +571,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP QUIT command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @return The reply code received from the server.
      * @throws NNTPConnectionClosedException If the NNTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -609,7 +585,6 @@ public class NNTP extends SocketClient {
     /**
      * Sends an NNTP command with no arguments to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed
      * information, the actual reply text can be accessed by calling {@link #getReplyString getReplyString }.
-     * <p>
      *
      * @param command The NNTPCommand constant corresponding to the NNTP command to send.
      * @return The integer value of the NNTP reply code returned by the server in response to the command. in response to the command.
@@ -625,7 +600,6 @@ public class NNTP extends SocketClient {
     /**
      * Sends an NNTP command to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed information, the
      * actual reply text can be accessed by calling {@link #getReplyString getReplyString }.
-     * <p>
      *
      * @param command The NNTPCommand constant corresponding to the NNTP command to send.
      * @param args    The arguments to the NNTP command. If this parameter is set to null, then the command is sent with no argument.
@@ -642,7 +616,6 @@ public class NNTP extends SocketClient {
     /**
      * Sends an NNTP command with no arguments to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed
      * information, the actual reply text can be accessed by calling {@link #getReplyString getReplyString }.
-     * <p>
      *
      * @param command The text representation of the NNTP command to send.
      * @return The integer value of the NNTP reply code returned by the server in response to the command. in response to the command.
@@ -658,7 +631,6 @@ public class NNTP extends SocketClient {
     /**
      * Sends an NNTP command to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed information, the
      * actual reply text can be accessed by calling {@link #getReplyString getReplyString }.
-     * <p>
      *
      * @param command The text representation of the NNTP command to send.
      * @param args    The arguments to the NNTP command. If this parameter is set to null, then the command is sent with no argument.
@@ -689,7 +661,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP STAT command to the server, receive the initial reply, and return the reply code.
-     * <p>
      *
      * @return The reply code received from the server.
      * @throws NNTPConnectionClosedException If the NNTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -700,8 +671,6 @@ public class NNTP extends SocketClient {
     public int stat() throws IOException {
         return sendCommand(NNTPCommand.STAT);
     }
-
-    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
 
     /**
      * @param a article number
@@ -716,7 +685,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP STAT command to the server, receive the initial reply, and return the reply code.
-     * <p>
      *
      * @param articleNumber The number of the article to request from the currently selected newsgroup.
      * @return The reply code received from the server.
@@ -731,7 +699,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP STAT command to the server, receive the initial reply, and return the reply code.
-     * <p>
      *
      * @param messageId The message identifier of the requested article, including the encapsulating &lt; and &gt; characters.
      * @return The reply code received from the server.
@@ -746,7 +713,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP XHDR command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @param header           a String naming a header line (e.g., "subject"). See RFC-1036 for a list of valid header lines.
      * @param selectedArticles a String representation of the range of article headers required. This may be an article number, or a range of article numbers in
@@ -767,7 +733,6 @@ public class NNTP extends SocketClient {
 
     /**
      * A convenience method to send the NNTP XOVER command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @param selectedArticles a String representation of the range of article headers required. This may be an article number, or a range of article numbers in
      *                         the form "XXXX-YYYY", where XXXX and YYYY are valid article numbers in the current group. It also may be of the form "XXX-",
