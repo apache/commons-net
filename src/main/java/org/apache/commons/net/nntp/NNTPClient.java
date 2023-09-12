@@ -47,11 +47,13 @@ import org.apache.commons.net.util.NetConstants;
  * {@link org.apache.commons.net.nntp.NNTP#disconnect disconnect() } to properly clean up the system resources used by NNTP. Before disconnecting, you may check
  * the last reply code and text with {@link org.apache.commons.net.nntp.NNTP#getReplyCode getReplyCode } and
  * {@link org.apache.commons.net.nntp.NNTP#getReplyString getReplyString }.
+ * </p>
  * <p>
  * Rather than list it separately for each method, we mention here that every method communicating with the server and throwing an IOException can also throw a
  * {@link org.apache.commons.net.MalformedServerReplyException} , which is a subclass of IOException. A MalformedServerReplyException will be thrown when the
  * reply received from the server deviates enough from the protocol specification that it cannot be interpreted in a useful manner despite attempts to be as
  * lenient as possible.
+ * </p>
  *
  * @see NNTP
  * @see NNTPConnectionClosedException
@@ -188,7 +190,6 @@ public class NNTPClient extends NNTP {
     /**
      * Log into a news server by sending the AUTHINFO USER/AUTHINFO PASS command sequence. This is usually sent in response to a 480 reply code from the NNTP
      * server.
-     * <p>
      *
      * @param username a valid username
      * @param password the corresponding password
@@ -215,7 +216,7 @@ public class NNTPClient extends NNTP {
      * method to receive the completion reply from the server and verify the success of the entire transaction.
      * <p>
      * For example
-     *
+     * </p>
      * <pre>
      * writer = client.postArticle();
      * if (writer == null) // failure
@@ -228,7 +229,6 @@ public class NNTPClient extends NNTP {
      * if (!client.completePendingCommand()) // failure
      *     return false;
      * </pre>
-     * <p>
      *
      * @return True if successfully completed, false if not.
      * @throws NNTPConnectionClosedException If the NNTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -250,7 +250,6 @@ public class NNTPClient extends NNTP {
 
     /**
      * Return article headers for all articles between lowArticleNumber and highArticleNumber, inclusively, using the XOVER command.
-     * <p>
      *
      * @param lowArticleNumber  low
      * @param highArticleNumber high
@@ -271,7 +270,6 @@ public class NNTPClient extends NNTP {
      * List all new articles added to the NNTP server since a particular date subject to the conditions of the specified query. If no new news is found,
      * no entries will be returned. This uses the "NEWNEWS" command. You must add at least one newsgroup to the query, else the command will fail.
      * Each String which is returned is a unique message identifier including the enclosing &lt; and &gt;.
-     * <p>
      *
      * @param query The query restricting how to search for new news. You must add at least one newsgroup to the query.
      * @return An iterator of String instances containing the unique message identifiers for each new article added to the NNTP server. If no new news is found,
@@ -292,7 +290,6 @@ public class NNTPClient extends NNTP {
     /**
      * List all new newsgroups added to the NNTP server since a particular date subject to the conditions of the specified query. If no new newsgroups were
      * added, no entries will be returned. This uses the "NEWGROUPS" command.
-     * <p>
      *
      * @param query The query restricting how to search for new newsgroups.
      * @return An iterable of Strings containing the raw information for each new newsgroup added to the NNTP server. If no newsgroups were added, no entries
@@ -313,7 +310,6 @@ public class NNTPClient extends NNTP {
     /**
      * List all new newsgroups added to the NNTP server since a particular date subject to the conditions of the specified query. If no new newsgroups were
      * added, no entries will be returned. This uses the "NEWGROUPS" command.
-     * <p>
      *
      * @param query The query restricting how to search for new newsgroups.
      * @return An iterable of NewsgroupInfo instances containing the information for each new newsgroup added to the NNTP server. If no newsgroups were added,
@@ -330,7 +326,6 @@ public class NNTPClient extends NNTP {
 
     /**
      * List all newsgroups served by the NNTP server. If no newsgroups are served, no entries will be returned. The method uses the "LIST" command.
-     * <p>
      *
      * @return An iterable of NewsgroupInfo instances containing the information for each newsgroup served by the NNTP server. If no newsgroups are served, no
      *         entries will be returned.
@@ -349,7 +344,6 @@ public class NNTPClient extends NNTP {
 
     /**
      * List the newsgroups that match a given pattern. Uses the "LIST ACTIVE" command.
-     * <p>
      *
      * @param wildmat a pseudo-regex pattern (cf. RFC 2980)
      * @return An iterable of Strings containing the raw information for each newsgroup served by the NNTP server corresponding to the supplied pattern. If no
@@ -366,7 +360,6 @@ public class NNTPClient extends NNTP {
 
     /**
      * List all newsgroups served by the NNTP server. If no newsgroups are served, no entries will be returned. The method uses the "LIST" command.
-     * <p>
      *
      * @return An iterable of Strings containing the raw information for each newsgroup served by the NNTP server. If no newsgroups are served, no entries will
      *         be returned.
@@ -382,7 +375,6 @@ public class NNTPClient extends NNTP {
 
     /**
      * List the newsgroups that match a given pattern. Uses the "LIST ACTIVE" command.
-     * <p>
      *
      * @param wildmat a pseudo-regex pattern (cf. RFC 2980)
      * @return An iterable NewsgroupInfo instances containing the information for each newsgroup served by the NNTP server corresponding to the supplied
@@ -396,7 +388,6 @@ public class NNTPClient extends NNTP {
 
     /**
      * List the command help from the server.
-     * <p>
      *
      * @return The sever help information.
      * @throws NNTPConnectionClosedException If the NNTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -419,7 +410,6 @@ public class NNTPClient extends NNTP {
      * List all new articles added to the NNTP server since a particular date subject to the conditions of the specified query. If no new news is found, a
      * zero length array will be returned. If the command fails, null will be returned. You must add at least one newsgroup to the query, else the command will
      * fail. Each String in the returned array is a unique message identifier including the enclosing &lt; and &gt;. This uses the "NEWNEWS" command.
-     * <p>
      *
      * @param query The query restricting how to search for new news. You must add at least one newsgroup to the query.
      * @return An array of String instances containing the unique message identifiers for each new article added to the NNTP server. If no new news is found, a
@@ -459,7 +449,6 @@ public class NNTPClient extends NNTP {
     /**
      * List all new newsgroups added to the NNTP server since a particular date subject to the conditions of the specified query. If no new newsgroups were
      * added, a zero length array will be returned. If the command fails, null will be returned. This uses the "NEWGROUPS" command.
-     * <p>
      *
      * @param query The query restricting how to search for new newsgroups.
      * @return An array of NewsgroupInfo instances containing the information for each new newsgroup added to the NNTP server. If no newsgroups were added, a
@@ -482,7 +471,6 @@ public class NNTPClient extends NNTP {
     /**
      * List all newsgroups served by the NNTP server. If no newsgroups are served, a zero length array will be returned. If the command fails, null will be
      * returned. The method uses the "LIST" command.
-     * <p>
      *
      * @return An array of NewsgroupInfo instances containing the information for each newsgroup served by the NNTP server. If no newsgroups are served, a zero
      *         length array will be returned. If the command fails, null will be returned.
@@ -503,7 +491,6 @@ public class NNTPClient extends NNTP {
 
     /**
      * List the newsgroups that match a given pattern. Uses the "LIST ACTIVE" command.
-     * <p>
      *
      * @param wildmat a pseudo-regex pattern (cf. RFC 2980)
      * @return An array of NewsgroupInfo instances containing the information for each newsgroup served by the NNTP server corresponding to the supplied
@@ -543,7 +530,6 @@ public class NNTPClient extends NNTP {
     /**
      * Logs out of the news server gracefully by sending the QUIT command. However, you must still disconnect from the server before you can open a new
      * connection.
-     * <p>
      *
      * @return True if successfully completed, false if not.
      * @throws IOException If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
@@ -586,15 +572,17 @@ public class NNTPClient extends NNTP {
      * The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned Writer actually writes directly to
      * the NNTP connection. After you close the writer, you can execute new commands. If you do not follow these requirements your program will not work
      * properly.
+     * </p>
      * <p>
      * Different NNTP servers will require different header formats, but you can use the provided {@link org.apache.commons.net.nntp.SimpleNNTPHeader} class to
      * construct the bare minimum acceptable header for most newsreaders. To construct more complicated headers you should refer to RFC 822. When the Java Mail
      * API is finalized, you will be able to use it to compose fully compliant Internet text messages. The DotTerminatedMessageWriter takes care of doubling
      * line-leading dots and ending the message with a single dot upon closing, so all you have to worry about is writing the header and the message.
+     * </p>
      * <p>
      * Upon closing the returned Writer, you need to call {@link #completePendingCommand completePendingCommand() } to finalize the posting and verify its
      * success or failure from the server reply.
-     * <p>
+     * </p>
      *
      * @return A DotTerminatedMessageWriter to which the article (including header) can be written. Returns null if the command fails.
      * @throws IOException If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
@@ -716,12 +704,13 @@ public class NNTPClient extends NNTP {
      * servers do not correctly follow the RFC 977 reply format.
      * <p>
      * A DotTerminatedMessageReader is returned from which the article can be read. If the article does not exist, null is returned.
+     * </p>
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any other methods) until you finish reading the message from the returned BufferedReader
      * instance. The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader actually
      * reads directly from the NNTP connection. After the end of message has been reached, new commands can be executed and their replies read. If you do not
      * follow these requirements, your program will not work properly.
-     * <p>
+     * </p>
      *
      * @param articleNumber The number of the article to retrieve.
      * @param pointer       A parameter through which to return the article's number and unique id. The articleId field cannot always be trusted because of
@@ -754,12 +743,13 @@ public class NNTPClient extends NNTP {
      * cannot always be trusted because some NNTP servers do not correctly follow the RFC 977 reply format.
      * <p>
      * A DotTerminatedMessageReader is returned from which the article can be read. If the article does not exist, null is returned.
+     * </p>
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any other methods) until you finish reading the message from the returned BufferedReader
      * instance. The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader actually
      * reads directly from the NNTP connection. After the end of message has been reached, new commands can be executed and their replies read. If you do not
      * follow these requirements, your program will not work properly.
-     * <p>
+     * </p>
      *
      * @param articleId The unique article identifier of the article to retrieve. If this parameter is null, the currently selected article is retrieved.
      * @param pointer   A parameter through which to return the article's number and unique id. The articleId field cannot always be trusted because of server
@@ -844,12 +834,13 @@ public class NNTPClient extends NNTP {
      * some NNTP servers do not correctly follow the RFC 977 reply format.
      * <p>
      * A DotTerminatedMessageReader is returned from which the article can be read. If the article does not exist, null is returned.
+     * </p>
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any other methods) until you finish reading the message from the returned BufferedReader
      * instance. The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader actually
      * reads directly from the NNTP connection. After the end of message has been reached, new commands can be executed and their replies read. If you do not
      * follow these requirements, your program will not work properly.
-     * <p>
+     * </p>
      *
      * @param articleNumber The number of the article whose body is being retrieved.
      * @param pointer       A parameter through which to return the article's number and unique id. The articleId field cannot always be trusted because of
@@ -882,12 +873,13 @@ public class NNTPClient extends NNTP {
      * cannot always be trusted because some NNTP servers do not correctly follow the RFC 977 reply format.
      * <p>
      * A DotTerminatedMessageReader is returned from which the article can be read. If the article does not exist, null is returned.
+     * </p>
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any other methods) until you finish reading the message from the returned BufferedReader
      * instance. The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader actually
      * reads directly from the NNTP connection. After the end of message has been reached, new commands can be executed and their replies read. If you do not
      * follow these requirements, your program will not work properly.
-     * <p>
+     * </p>
      *
      * @param articleId The unique article identifier of the article whose body is being retrieved. If this parameter is null, the body of the currently
      *                  selected article is retrieved.
@@ -973,12 +965,13 @@ public class NNTPClient extends NNTP {
      * some NNTP servers do not correctly follow the RFC 977 reply format.
      * <p>
      * A DotTerminatedMessageReader is returned from which the article can be read. If the article does not exist, null is returned.
+     * </p>
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any other methods) until you finish reading the message from the returned BufferedReader
      * instance. The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader actually
      * reads directly from the NNTP connection. After the end of message has been reached, new commands can be executed and their replies read. If you do not
      * follow these requirements, your program will not work properly.
-     * <p>
+     * </p>
      *
      * @param articleNumber The number of the article whose header is being retrieved.
      * @param pointer       A parameter through which to return the article's number and unique id. The articleId field cannot always be trusted because of
@@ -1011,12 +1004,13 @@ public class NNTPClient extends NNTP {
      * cannot always be trusted because some NNTP servers do not correctly follow the RFC 977 reply format.
      * <p>
      * A DotTerminatedMessageReader is returned from which the article can be read. If the article does not exist, null is returned.
+     * </p>
      * <p>
      * You must not issue any commands to the NNTP server (i.e., call any other methods) until you finish reading the message from the returned BufferedReader
      * instance. The NNTP protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned BufferedReader actually
      * reads directly from the NNTP connection. After the end of message has been reached, new commands can be executed and their replies read. If you do not
      * follow these requirements, your program will not work properly.
-     * <p>
+     * </p>
      *
      * @param articleId The unique article identifier of the article whose header is being retrieved. If this parameter is null, the header of the currently
      *                  selected article is retrieved.
@@ -1074,7 +1068,6 @@ public class NNTPClient extends NNTP {
 
     /**
      * Return article headers for a specified post.
-     * <p>
      *
      * @param articleNumber the article to retrieve headers for
      * @return a DotTerminatedReader if successful, null otherwise
@@ -1086,7 +1079,6 @@ public class NNTPClient extends NNTP {
 
     /**
      * Return article headers for all articles between lowArticleNumber and highArticleNumber, inclusively. Uses the XOVER command.
-     * <p>
      *
      * @param lowArticleNumber  low number
      * @param highArticleNumber high number
@@ -1101,7 +1093,6 @@ public class NNTPClient extends NNTP {
      * Private implementation of XOVER functionality.
      *
      * See {@link NNTP#xover} for legal agument formats. Alternatively, read RFC 2980 :-)
-     * <p>
      *
      * @param articleRange
      * @return Returns a DotTerminatedMessageReader if successful, null otherwise
@@ -1126,9 +1117,6 @@ public class NNTPClient extends NNTP {
     public Reader retrieveHeader(final String a, final int b) throws IOException {
         return retrieveHeader(a, (long) b);
     }
-
-    // DEPRECATED METHODS - for API compatibility only - DO NOT USE
-    // ============================================================
 
     /**
      * @param header            the header
@@ -1172,9 +1160,9 @@ public class NNTPClient extends NNTP {
 
     /**
      * Private implementation of XHDR functionality.
-     *
-     * See {@link NNTP#xhdr} for legal argument formats. Alternatively, read RFC 1036.
      * <p>
+     * See {@link NNTP#xhdr} for legal argument formats. Alternatively, read RFC 1036.
+     * </p>
      *
      * @param header
      * @param articleRange
@@ -1256,7 +1244,6 @@ public class NNTPClient extends NNTP {
      * Select an article in the currently selected newsgroup by its number. and return its article number and id through the pointer parameter. This is achieved
      * through the STAT command. According to RFC 977, this WILL set the current article pointer on the server. Use this command to select an article before
      * retrieving it, or to obtain an article's unique identifier given its number.
-     * <p>
      *
      * @param articleNumber The number of the article to select from the currently selected newsgroup.
      * @param pointer       A parameter through which to return the article's number and unique id. Although the articleId field cannot always be trusted
@@ -1295,7 +1282,6 @@ public class NNTPClient extends NNTP {
      * Select an article by its unique identifier (including enclosing &lt; and &gt;) and return its article number and id through the pointer parameter. This
      * is achieved through the STAT command. According to RFC 977, this will NOT set the current article pointer on the server. To do that, you must reference
      * the article by its number.
-     * <p>
      *
      * @param articleId The unique article identifier of the article that is being selectedd. If this parameter is null, the body of the current article is
      *                  selected
@@ -1354,7 +1340,6 @@ public class NNTPClient extends NNTP {
     /**
      * Select the specified newsgroup to be the target of for future article retrieval and posting operations. Also return the newsgroup information contained
      * in the server reply through the info parameter.
-     * <p>
      *
      * @param newsgroup The newsgroup to select.
      * @param info      A parameter through which the newsgroup information of the selected newsgroup contained in the server reply is returned. Set this to
@@ -1391,7 +1376,6 @@ public class NNTPClient extends NNTP {
      * Select the article following the currently selected article in the currently selected newsgroup and return its number and unique id through the pointer
      * parameter. Because of deviating server implementations, the articleId information cannot be trusted. To obtain the article identifier, issue a
      * <code> selectArticle(pointer.articleNumber, pointer) </code> immediately afterward.
-     * <p>
      *
      * @param pointer A parameter through which to return the article's number and unique id. The articleId field cannot always be trusted because of server
      *                deviations from RFC 977 reply formats. You may set this parameter to null if you do not desire to retrieve the returned article
@@ -1445,7 +1429,6 @@ public class NNTPClient extends NNTP {
      * Select the article preceding the currently selected article in the currently selected newsgroup and return its number and unique id through the pointer
      * parameter. Because of deviating server implementations, the articleId information cannot be trusted. To obtain the article identifier, issue a
      * <code> selectArticle(pointer.articleNumber, pointer) </code> immediately afterward.
-     * <p>
      *
      * @param pointer A parameter through which to return the article's number and unique id. The articleId field cannot always be trusted because of server
      *                deviations from RFC 977 reply formats. You may set this parameter to null if you do not desire to retrieve the returned article
