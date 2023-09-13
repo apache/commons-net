@@ -333,18 +333,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * @return null: entry was not parsed.
      */
     private FTPFile parseJeslevel1List(final String entry) {
-        if (matches(entry)) {
-            final FTPFile file = new FTPFile();
-            if (group(3).equalsIgnoreCase("OUTPUT")) {
-                file.setRawListing(entry);
-                final String name = group(2); /* Job Number, used by GET */
-                file.setName(name);
-                file.setType(FTPFile.FILE_TYPE);
-                return file;
-            }
-        }
-
-        return null;
+        return parseJeslevelList(entry, 3);
     }
 
     /**
@@ -371,9 +360,13 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * @return null: entry was not parsed.
      */
     private FTPFile parseJeslevel2List(final String entry) {
+        return parseJeslevelList(entry, 4);
+    }
+
+    private FTPFile parseJeslevelList(final String entry, final int matchNum) {
         if (matches(entry)) {
             final FTPFile file = new FTPFile();
-            if (group(4).equalsIgnoreCase("OUTPUT")) {
+            if (group(matchNum).equalsIgnoreCase("OUTPUT")) {
                 file.setRawListing(entry);
                 final String name = group(2); /* Job Number, used by GET */
                 file.setName(name);
@@ -381,7 +374,6 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
                 return file;
             }
         }
-
         return null;
     }
 
