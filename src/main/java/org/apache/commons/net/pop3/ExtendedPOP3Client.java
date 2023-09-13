@@ -70,7 +70,6 @@ public class ExtendedPOP3Client extends POP3SClient {
 
     /**
      * Authenticate to the POP3 server by sending the AUTH command with the selected mechanism, using the given username and the given password.
-     * <p>
      *
      * @param method   the {@link AUTH_METHOD} to use
      * @param username the username

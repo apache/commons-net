@@ -120,7 +120,6 @@ public class SMTP extends SocketClient {
 
     /**
      * A convenience method to send the SMTP DATA command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @return The reply code received from the server.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -135,7 +134,6 @@ public class SMTP extends SocketClient {
     /**
      * Closes the connection to the SMTP server and sets to null some internal data so that the memory may be reclaimed by the garbage collector. The reply text
      * and code information from the last command is voided so that the memory it used may be reclaimed.
-     * <p>
      *
      * @throws IOException If an error occurs while disconnecting.
      */
@@ -151,7 +149,6 @@ public class SMTP extends SocketClient {
 
     /**
      * A convenience method to send the SMTP VRFY command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @param name The name to expand.
      * @return The reply code received from the server.
@@ -176,7 +173,6 @@ public class SMTP extends SocketClient {
      * Fetches a reply from the SMTP server and returns the integer reply code. After calling this method, the actual reply text can be accessed from either
      * calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }. Only use this method if you are implementing your own SMTP
      * client or if you need to fetch a secondary response from the SMTP server.
-     * <p>
      *
      * @return The integer value of the reply code of the fetched SMTP reply.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -243,7 +239,6 @@ public class SMTP extends SocketClient {
     /**
      * Returns the integer value of the reply code of the last SMTP reply. You will usually only use this method after you connect to the SMTP server to check
      * that the connection was successful since <code> connect </code> is of type void.
-     * <p>
      *
      * @return The integer value of the reply code of the last SMTP reply.
      */
@@ -253,7 +248,6 @@ public class SMTP extends SocketClient {
 
     /**
      * Returns the entire text of the last SMTP server response exactly as it was received, including all end of line markers in NETASCII format.
-     * <p>
      *
      * @return The entire text from the last SMTP response as a String.
      */
@@ -280,7 +274,6 @@ public class SMTP extends SocketClient {
     /**
      * Returns the lines of text from the last SMTP server response as an array of strings, one entry per line. The end of line markers of each are stripped
      * from each line.
-     * <p>
      *
      * @return The lines of text from the last SMTP response as an array.
      */
@@ -290,7 +283,6 @@ public class SMTP extends SocketClient {
 
     /**
      * A convenience method to send the SMTP HELO command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @param hostname The hostname of the sender.
      * @return The reply code received from the server.
@@ -305,7 +297,6 @@ public class SMTP extends SocketClient {
 
     /**
      * A convenience method to send the SMTP HELP command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @return The reply code received from the server.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -319,7 +310,6 @@ public class SMTP extends SocketClient {
 
     /**
      * A convenience method to send the SMTP HELP command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @param command The command name on which to request help.
      * @return The reply code received from the server.
@@ -334,7 +324,6 @@ public class SMTP extends SocketClient {
 
     /**
      * A convenience method to send the SMTP MAIL command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @param reversePath The reverse path.
      * @return The reply code received from the server.
@@ -349,7 +338,6 @@ public class SMTP extends SocketClient {
 
     /**
      * A convenience method to send the SMTP NOOP command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @return The reply code received from the server.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -363,7 +351,6 @@ public class SMTP extends SocketClient {
 
     /**
      * A convenience method to send the SMTP QUIT command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @return The reply code received from the server.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -377,7 +364,6 @@ public class SMTP extends SocketClient {
 
     /**
      * A convenience method to send the SMTP RCPT command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @param forwardPath The forward path.
      * @return The reply code received from the server.
@@ -404,7 +390,6 @@ public class SMTP extends SocketClient {
 
     /**
      * A convenience method to send the SMTP RSET command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @return The reply code received from the server.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -418,7 +403,6 @@ public class SMTP extends SocketClient {
 
     /**
      * A convenience method to send the SMTP SAML command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @param reversePath The reverse path.
      * @return The reply code received from the server.
@@ -433,7 +417,6 @@ public class SMTP extends SocketClient {
 
     /**
      * A convenience method to send the SMTP SEND command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @param reversePath The reverse path.
      * @return The reply code received from the server.
@@ -449,7 +432,6 @@ public class SMTP extends SocketClient {
     /**
      * Sends an SMTP command with no arguments to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed
      * information, the actual reply text can be accessed by calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }.
-     * <p>
      *
      * @param command The SMTPCommand constant corresponding to the SMTP command to send.
      * @return The integer value of the SMTP reply code returned by the server in response to the command.
@@ -465,7 +447,6 @@ public class SMTP extends SocketClient {
     /**
      * Sends an SMTP command to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed information, the
      * actual reply text can be accessed by calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }.
-     * <p>
      *
      * @param command The SMTPCommand constant corresponding to the SMTP command to send.
      * @param args    The arguments to the SMTP command. If this parameter is set to null, then the command is sent with no argument.
@@ -494,7 +475,6 @@ public class SMTP extends SocketClient {
     /**
      * Sends an SMTP command with no arguments to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed
      * information, the actual reply text can be accessed by calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }.
-     * <p>
      *
      * @param command The text representation of the SMTP command to send.
      * @return The integer value of the SMTP reply code returned by the server in response to the command.
@@ -510,7 +490,6 @@ public class SMTP extends SocketClient {
     /**
      * Sends an SMTP command to the server, waits for a reply and returns the numerical response code. After invocation, for more detailed information, the
      * actual reply text can be accessed by calling {@link #getReplyString getReplyString } or {@link #getReplyStrings getReplyStrings }.
-     * <p>
      *
      * @param command The text representation of the SMTP command to send.
      * @param args    The arguments to the SMTP command. If this parameter is set to null, then the command is sent with no argument.
@@ -557,7 +536,6 @@ public class SMTP extends SocketClient {
 
     /**
      * A convenience method to send the SMTP SOML command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @param reversePath The reverse path.
      * @return The reply code received from the server.
@@ -572,7 +550,6 @@ public class SMTP extends SocketClient {
 
     /**
      * A convenience method to send the SMTP TURN command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @return The reply code received from the server.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -586,7 +563,6 @@ public class SMTP extends SocketClient {
 
     /**
      * A convenience method to send the SMTP VRFY command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @param user The user address to verify.
      * @return The reply code received from the server.
