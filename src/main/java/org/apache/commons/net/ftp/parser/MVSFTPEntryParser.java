@@ -213,17 +213,10 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * scheduler DB2 is used to interact with a DB2 subsystem
      *
      * This parser supports SEQ and JES.
-     *
-     *
-     *
-     *
-     *
-     *
      */
 
     /**
      * The sole constructor for a MVSFTPEntryParser object.
-     *
      */
     public MVSFTPEntryParser() {
         super(""); // note the regex is set in preParse.
@@ -239,8 +232,8 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * Parse entries representing a dataset list.
-     * <p>
+     * Parses entries representing a dataset list.
+     * <pre>
      * Format of ZOS/MVS file list: 1 2 3 4 5 6 7 8 9 10
      * Volume Unit Referred Ext Used Recfm Lrecl BlkSz Dsorg Dsname
      * B10142 3390 2006/03/20 2 31 F 80 80 PS MDI.OKL.WORK
@@ -248,10 +241,11 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * B1N231 3390 2006/03/20 1 15 VB 256 27998 PO PLU
      * B1N231 3390 2006/03/20 1 15 VB 256 27998 PO-E PLB
      * Migrated                                                HLQ.DATASET.NAME
-     * <p>
+     * </pre>
+     * <pre>
      * ----------------------------------- Group within Regex [1] Volume [2] Unit [3] Referred [4] Ext: number of extents [5] Used [6] Recfm: Record format [7]
      * Lrecl: Logical record length [8] BlkSz: Block size [9] Dsorg: Dataset organisation. Many exists but only support: PS, PO, PO-E [10] Dsname: Dataset name
-     * <p>
+     * </pre>
      *
      * @param entry zosDirectoryEntry
      * @return null: entry was not parsed.
@@ -277,18 +271,13 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             return file;
         }
 
-        if (entry.startsWith("Migrated") || entry.startsWith("ARCIVE")) {
+        final boolean migrated = entry.startsWith("Migrated");
+        if (migrated || entry.startsWith("ARCIVE")) {
             // Type of file is unknown for migrated datasets
             final FTPFile file = new FTPFile();
             file.setRawListing(entry);
             file.setType(FTPFile.UNKNOWN_TYPE);
-
-            if (entry.startsWith("Migrated")) {
-               file.setName(entry.split("\\s+")[1]);
-            } else {
-               file.setName(entry.split("\\s+")[5]);
-            }
-
+            file.setName(entry.split("\\s+")[migrated ? 1 : 5]);
             return file;
         }
 
@@ -397,7 +386,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * Parse entries within a partitioned dataset.
+     * Parses entries within a partitioned dataset.
      *
      * Format of a memberlist within a PDS:
      *
@@ -454,7 +443,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * preParse is called as part of the interface. Per definition, it is called before the parsing takes place. Three kinds of lists are recognized:
+     * Pre-parses is called as part of the interface. Per definition, it is called before the parsing takes place. Three kinds of lists are recognized:
      * <ul>
      *     <li>z/OS-MVS File lists,</li>
      *     <li>z/OS-MVS Member lists,</li>
@@ -497,7 +486,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
     }
 
     /**
-     * Explicitly set the type of listing being processed.
+     * Sets the type of listing being processed.
      *
      * @param type The listing type.
      */
