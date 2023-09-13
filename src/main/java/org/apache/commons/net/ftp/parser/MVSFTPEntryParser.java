@@ -252,7 +252,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      * ----------------------------------- Group within Regex [1] Volume [2] Unit [3] Referred [4] Ext: number of extents [5] Used [6] Recfm: Record format [7]
      * Lrecl: Logical record length [8] BlkSz: Block size [9] Dsorg: Dataset organisation. Many exists but only support: PS, PO, PO-E [10] Dsname: Dataset name
      * <p>
-     * 
+     *
      * @param entry zosDirectoryEntry
      * @return null: entry was not parsed.
      */
@@ -277,8 +277,8 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             return file;
         }
 
-    	if (entry.startsWith("Migrated") || entry.startsWith("ARCIVE")) {
-    		// Type of file is unknown for migrated datasets
+        if (entry.startsWith("Migrated") || entry.startsWith("ARCIVE")) {
+    	    // Type of file is unknown for migrated datasets
             final FTPFile file = new FTPFile();
             file.setRawListing(entry);
             file.setType(FTPFile.UNKNOWN_TYPE);
