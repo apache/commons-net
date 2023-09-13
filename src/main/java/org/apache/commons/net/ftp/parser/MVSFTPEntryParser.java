@@ -288,8 +288,9 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             } else {
                file.setName(entry.split("\\s+")[5]);
             }
+
             return file;
-            }
+        }
 
         return null;
     }
