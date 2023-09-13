@@ -86,9 +86,6 @@ public class TelnetClientFunctionalTest extends TestCase {
             }
         }
 
-        if (readbytes.indexOf(end) >= 0) {
-            return true;
-        }
-        return false;
+        return readbytes.indexOf(end) >= 0;
     }
 }
