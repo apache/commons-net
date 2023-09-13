@@ -94,7 +94,7 @@ public class TFTPServerPathTest {
                         try (final FileInputStream fis = new FileInputStream(file)) {
                             tftp.sendFile(out.getName(), TFTP.BINARY_MODE, fis, "localhost", SERVER_PORT);
                             fail("Server allowed write");
-                        }                        
+                        }
                     });
                 } finally {
                     deleteFixture(file);
@@ -122,7 +122,7 @@ public class TFTPServerPathTest {
                         try (final FileOutputStream output = new FileOutputStream(out)) {
                             tftp.receiveFile(file.getName(), TFTP.BINARY_MODE, output, "localhost", SERVER_PORT);
                             fail("Server allowed read");
-                        }   
+                        }
                     });
                     out.delete();
 

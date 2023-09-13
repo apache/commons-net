@@ -822,7 +822,7 @@ class Telnet extends SocketClient {
         options[option] |= DO_MASK;
 
         /* open TelnetOptionHandler functionality (start) */
-        if (requestedDo(option) && (optionHandlers[option] != null)) {
+        if (requestedDo(option) && optionHandlers[option] != null) {
             optionHandlers[option].setDo(true);
 
             final int[] subneg = optionHandlers[option].startSubnegotiationRemote();
@@ -895,7 +895,7 @@ class Telnet extends SocketClient {
         options[option] |= WILL_MASK;
 
         /* open TelnetOptionHandler functionality (start) */
-        if (requestedWill(option) && (optionHandlers[option] != null)) {
+        if (requestedWill(option) && optionHandlers[option] != null) {
             optionHandlers[option].setWill(true);
 
             final int[] subneg = optionHandlers[option].startSubnegotiationLocal();

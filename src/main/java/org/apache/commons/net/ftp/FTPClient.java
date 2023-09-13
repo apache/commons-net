@@ -697,7 +697,7 @@ public class FTPClient extends FTP implements Configurable {
                     return null;
                 }
 
-                if ((restartOffset > 0) && !restart(restartOffset)) {
+                if (restartOffset > 0 && !restart(restartOffset)) {
                     return null;
                 }
 
@@ -768,7 +768,7 @@ public class FTPClient extends FTP implements Configurable {
             }
 
             socket.connect(new InetSocketAddress(passiveHost, passivePort), connectTimeout);
-            if ((restartOffset > 0) && !restart(restartOffset)) {
+            if (restartOffset > 0 && !restart(restartOffset)) {
                 socket.close();
                 return null;
             }
@@ -800,7 +800,7 @@ public class FTPClient extends FTP implements Configurable {
         final char delim3 = reply.charAt(2);
         final char delim4 = reply.charAt(reply.length() - 1);
 
-        if ((delim1 != delim2) || (delim2 != delim3) || (delim3 != delim4)) {
+        if (delim1 != delim2 || delim2 != delim3 || delim3 != delim4) {
             throw new MalformedServerReplyException("Could not parse extended passive host information.\nServer Reply: " + reply);
         }
 
@@ -834,7 +834,7 @@ public class FTPClient extends FTP implements Configurable {
         try {
             final int oct1 = Integer.parseInt(m.group(2));
             final int oct2 = Integer.parseInt(m.group(3));
-            pasvPort = (oct1 << 8) | oct2;
+            pasvPort = oct1 << 8 | oct2;
         } catch (final NumberFormatException e) {
             throw new MalformedServerReplyException("Could not parse passive port information.\nServer Reply: " + reply);
         }
@@ -1211,7 +1211,7 @@ public class FTPClient extends FTP implements Configurable {
         // We cache the value to avoid creation of a new object every
         // time a file listing is generated.
         // Note: we don't check against a null parserKey (NET-544)
-        if (entryParser == null || (parserKey != null && !entryParserKey.equals(parserKey))) {
+        if (entryParser == null || parserKey != null && !entryParserKey.equals(parserKey)) {
             if (null != parserKey) {
                 // if a parser key was supplied in the parameters,
                 // use that to create the parser
@@ -2646,7 +2646,7 @@ public class FTPClient extends FTP implements Configurable {
     public boolean reinitialize() throws IOException {
         rein();
 
-        if (FTPReply.isPositiveCompletion(_replyCode) || (FTPReply.isPositivePreliminary(_replyCode) && FTPReply.isPositiveCompletion(getReply()))) {
+        if (FTPReply.isPositiveCompletion(_replyCode) || FTPReply.isPositivePreliminary(_replyCode) && FTPReply.isPositiveCompletion(getReply())) {
 
             initDefaults();
 
@@ -3137,7 +3137,7 @@ public class FTPClient extends FTP implements Configurable {
      * @see <a href="http://tools.ietf.org/html/draft-somers-ftp-mfxx-04">http://tools.ietf.org/html/draft-somers-ftp-mfxx-04</a>
      */
     public boolean setModificationTime(final String pathname, final String timeval) throws IOException {
-        return (FTPReply.isPositiveCompletion(mfmt(pathname, timeval)));
+        return FTPReply.isPositiveCompletion(mfmt(pathname, timeval));
     }
 
     /**

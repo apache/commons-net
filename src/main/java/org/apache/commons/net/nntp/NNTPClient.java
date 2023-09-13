@@ -141,7 +141,7 @@ public class NNTPClient extends NNTP {
             final long firstNum = Long.parseLong(tokens[i++]);
             result.setFirstArticle(firstNum);
             result.setLastArticle(lastNum);
-            if ((firstNum == 0) && (lastNum == 0)) {
+            if (firstNum == 0 && lastNum == 0) {
                 result.setArticleCount(0);
             } else {
                 result.setArticleCount(lastNum - firstNum + 1);
