@@ -278,18 +278,18 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
         }
 
         if (entry.startsWith("Migrated") || entry.startsWith("ARCIVE")) {
-    	    // Type of file is unknown for migrated datasets
+            // Type of file is unknown for migrated datasets
             final FTPFile file = new FTPFile();
             file.setRawListing(entry);
             file.setType(FTPFile.UNKNOWN_TYPE);
-            
-            if (entry.startsWith("Migrated"))
-            	file.setName(entry.split("\\s+")[1]);
-            else 
-            	file.setName(entry.split("\\s+")[5]);
 
+            if (entry.startsWith("Migrated")) {
+               file.setName(entry.split("\\s+")[1]);
+            } else {
+               file.setName(entry.split("\\s+")[5]);
+            }
             return file;
-    	} 
+            }
 
         return null;
     }
