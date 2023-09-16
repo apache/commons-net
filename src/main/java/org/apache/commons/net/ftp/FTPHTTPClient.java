@@ -214,7 +214,7 @@ public class FTPHTTPClient extends FTPClient {
 
         String code;
         final String resp = response.get(0);
-        if (!resp.startsWith("HTTP/") || (resp.length() < 12)) {
+        if (!resp.startsWith("HTTP/") || resp.length() < 12) {
             throw new IOException("Invalid response from proxy: " + resp);
         }
         code = resp.substring(9, 12);

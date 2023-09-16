@@ -523,7 +523,7 @@ public class TFTPServer implements Runnable, AutoCloseable {
         InetAddress inetAddress = null;
         if (localiface != null) {
             final Enumeration<InetAddress> ifaddrs = localiface.getInetAddresses();
-            if ((ifaddrs != null) && ifaddrs.hasMoreElements()) {
+            if (ifaddrs != null && ifaddrs.hasMoreElements()) {
                 inetAddress = ifaddrs.nextElement();
             }
         }

@@ -26,7 +26,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 /**
  * Test suite addapted to new MVSFTPEntryParser.java.
  */
-public class MVSFTPEntryParserTest extends FTPParseTestFramework {
+public class MVSFTPEntryParserTest extends AbstractFTPParseTest {
 
     private static final String[] goodsamplesDatasetList = {
             /* Note, if the string begins with SAVE, the parsed entry is stored in the List saveftpfiles */
@@ -34,14 +34,22 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
             "SAVE00 3390   2004/06/23  1    1  FB     128  6144  PS    INCOMING.RPTBM023.D061704",
             "SAVE01 3390   2004/06/23  1    1  FB     128  6144  PO    INCOMING.RPTBM024.D061704",
             "SAVE02 3390   2004/06/23  1    1  FB     128  6144  PO-E  INCOMING.RPTBM025.D061704",
-            "PSMLC1 3390   2005/04/04  1    1  VB   27994 27998  PS    file3.I", "PSMLB9 3390   2005/04/04  1    1  VB   27994 27998  PS    file4.I.BU",
-            "PSMLB6 3390   2005/04/05  1    1  VB   27994 27998  PS    file3.I.BU", "PSMLC6 3390   2005/04/05  1    1  VB   27994 27998  PS    file6.I",
-            "PSMLB7 3390   2005/04/04  1    1  VB   27994 27998  PS    file7.O", "PSMLC6 3390   2005/04/05  1    1  VB   27994 27998  PS    file7.O.BU",
+            "PSMLC1 3390   2005/04/04  1    1  VB   27994 27998  PS    file3.I",
+            "PSMLB9 3390   2005/04/04  1    1  VB   27994 27998  PS    file4.I.BU",
+            "PSMLB6 3390   2005/04/05  1    1  VB   27994 27998  PS    file3.I.BU",
+            "PSMLC6 3390   2005/04/05  1    1  VB   27994 27998  PS    file6.I",
+            "PSMLB7 3390   2005/04/04  1    1  VB   27994 27998  PS    file7.O",
+            "PSMLC6 3390   2005/04/05  1    1  VB   27994 27998  PS    file7.O.BU",
             "FPFS49 3390   2004/06/23  1    1  FB     128  6144  PO-E  INCOMING.RPTBM026.D061704",
             "FPFS41 3390   2004/06/23  1    1  FB     128  6144  PS    INCOMING.RPTBM056.D061704",
             "FPFS25 3390   2004/06/23  1    1  FB     128  6144  PS    INCOMING.WTM204.D061704",
             "PEX26F 3390   2017/07/03  115807  FB   29600 29600  PS    INCOMING.FIN.D170630.T160630",
-            "VVVVVV 3390   2020/04/18 1    60   U   32760 32760  PO    NAME" };
+            "VVVVVV 3390   2020/04/18  1   60   U   32760 32760  PO    NAME",
+            "TST017 3390   2023/09/08  2   59  FBA    133 32718  PO    NAME",
+            "TST063 3390   2023/09/11  1    1  VBA    133 27930  PS    NAME",
+            "Migrated                                                  NAME",
+            "ARCIVE Not Direct Access Device                           NAME"
+            };
 
     private static final String[] goodsamplesMemberList = {
             /* Note, if the string begins with SAVE, the parsed entry is stored in the List saveftpfiles */
@@ -110,7 +118,7 @@ public class MVSFTPEntryParserTest extends FTPParseTestFramework {
     }
 
     /**
-     * @see org.apache.commons.net.ftp.parser.FTPParseTestFramework#getParser()
+     * @see org.apache.commons.net.ftp.parser.AbstractFTPParseTest#getParser()
      */
     @Override
     protected FTPFileEntryParser getParser() {

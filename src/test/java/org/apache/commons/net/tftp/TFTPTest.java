@@ -76,33 +76,8 @@ public class TFTPTest extends TestCase {
         return file;
     }
 
-    private boolean filesIdentical(final File a, final File b) throws IOException {
-        if (!a.exists() || !b.exists()) {
-            return false;
-        }
-
-        if (a.length() != b.length()) {
-            return false;
-        }
-
-        try (final InputStream fisA = new BufferedInputStream(new FileInputStream(a));
-                final InputStream fisB = new BufferedInputStream(new FileInputStream(b))) {
-
-            int aBit = fisA.read();
-            int bBit = fisB.read();
-
-            while (aBit != -1) {
-                if (aBit != bBit) {
-                    fisA.close();
-                    fisB.close();
-                    return false;
-                }
-                aBit = fisA.read();
-                bBit = fisB.read();
-            }
-
-        }
-        return true;
+    private boolean contentEquals(final File a, final File b) throws IOException {
+        return FileUtils.contentEquals(a, b);
     }
 
     @Override
@@ -155,7 +130,7 @@ public class TFTPTest extends TestCase {
             }
 
             assertTrue("file not created", out.exists());
-            assertTrue("FILES not identical on file " + file, filesIdentical(out, file));
+            assertTrue("FILES not identical on file " + file, contentEquals(out, file));
 
             // delete the downloaded file
             out.delete();
@@ -208,7 +183,7 @@ public class TFTPTest extends TestCase {
             // close out its file buffers, etc.
             Thread.sleep(100);
             assertTrue("file not created", in.exists());
-            assertTrue("FILES not identical on file " + file, filesIdentical(file, in));
+            assertTrue("FILES not identical on file " + file, contentEquals(file, in));
 
             in.delete();
         }

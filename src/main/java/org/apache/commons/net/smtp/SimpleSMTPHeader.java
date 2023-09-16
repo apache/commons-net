@@ -30,7 +30,7 @@ import java.util.Locale;
  *
  * <pre>
  * writer = client.sendMessageData();
- * if(writer == null) // failure
+ * if (writer == null) // failure
  *   return false;
  * header =
  *    new SimpleSMTPHeader("foobar@foo.com", "foo@bar.com" "Just testing");
@@ -39,7 +39,7 @@ import java.util.Locale;
  * writer.write(header.toString());
  * writer.write("This is just a test");
  * writer.close();
- * if(!client.completePendingCommand()) // failure
+ * if (!client.completePendingCommand()) // failure
  *   return false;
  * </pre>
  *

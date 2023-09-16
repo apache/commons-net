@@ -62,7 +62,7 @@ public final class POP3ExportMbox {
             System.exit(1);
         }
 
-        final String arg0[] = args[argIdx++].split(":");
+        final String[] arg0 = args[argIdx++].split(":");
         final String server = arg0[0];
         final String username = args[argIdx++];
         String password = args[argIdx++];

@@ -714,7 +714,7 @@ public class FTPSClient extends FTPClient {
                     return null;
                 }
 
-                if ((getRestartOffset() > 0) && !restart(getRestartOffset())) {
+                if (getRestartOffset() > 0 && !restart(getRestartOffset())) {
                     return null;
                 }
 
@@ -795,7 +795,7 @@ public class FTPSClient extends FTPClient {
                 sslSocket = context.getSocketFactory().createSocket(socket, getPassiveHost(), getPassivePort(), true);
             }
 
-            if ((getRestartOffset() > 0) && !restart(getRestartOffset())) {
+            if (getRestartOffset() > 0 && !restart(getRestartOffset())) {
                 closeSockets(socket, sslSocket);
                 return null;
             }
@@ -1025,7 +1025,7 @@ public class FTPSClient extends FTPClient {
         _controlInput_ = new BufferedReader(new InputStreamReader(socket.getInputStream(), getControlEncoding()));
         _controlOutput_ = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), getControlEncoding()));
 
-        if (isClientMode && (hostnameVerifier != null && !hostnameVerifier.verify(_hostname_, socket.getSession()))) {
+        if (isClientMode && hostnameVerifier != null && !hostnameVerifier.verify(_hostname_, socket.getSession())) {
             throw new SSLHandshakeException("Hostname doesn't match certificate");
         }
     }

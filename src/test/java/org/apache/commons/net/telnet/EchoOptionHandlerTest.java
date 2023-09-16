@@ -19,7 +19,7 @@ package org.apache.commons.net.telnet;
 /**
  * JUnit test class for EchoOptionHandler
  */
-public class EchoOptionHandlerTest extends TelnetOptionHandlerTestAbstract {
+public class EchoOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
 
     /**
      * setUp for the test.
@@ -36,9 +36,9 @@ public class EchoOptionHandlerTest extends TelnetOptionHandlerTestAbstract {
      */
     @Override
     public void testAnswerSubnegotiation() {
-        final int subn[] = { TelnetCommand.IAC, TelnetCommand.SB, TelnetOption.ECHO, 1, TelnetCommand.IAC, TelnetCommand.SE, };
+        final int[] subn = { TelnetCommand.IAC, TelnetCommand.SB, TelnetOption.ECHO, 1, TelnetCommand.IAC, TelnetCommand.SE, };
 
-        final int resp1[] = opthand1.answerSubnegotiation(subn, subn.length);
+        final int[] resp1 = opthand1.answerSubnegotiation(subn, subn.length);
 
         assertNull(resp1);
     }
@@ -57,8 +57,8 @@ public class EchoOptionHandlerTest extends TelnetOptionHandlerTestAbstract {
      */
     @Override
     public void testStartSubnegotiation() {
-        final int resp1[] = opthand1.startSubnegotiationLocal();
-        final int resp2[] = opthand1.startSubnegotiationRemote();
+        final int[] resp1 = opthand1.startSubnegotiationLocal();
+        final int[] resp2 = opthand1.startSubnegotiationRemote();
 
         assertNull(resp1);
         assertNull(resp2);

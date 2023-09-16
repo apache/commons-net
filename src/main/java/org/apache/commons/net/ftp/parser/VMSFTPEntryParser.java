@@ -126,7 +126,7 @@ public class VMSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
             final String size = group(2);
             final String datestr = group(3) + " " + group(4);
             final String owner = group(5);
-            final String permissions[] = new String[3];
+            final String[] permissions = new String[3];
             permissions[0] = group(9);
             permissions[1] = group(10);
             permissions[2] = group(11);

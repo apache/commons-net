@@ -16,7 +16,7 @@
  */
 package org.apache.commons.net.telnet;
 
-public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstract {
+public class TerminalTypeOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
     /*
      * compares two arrays of int
      */
@@ -45,14 +45,14 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
      */
     @Override
     public void testAnswerSubnegotiation() {
-        final int subn[] = { TelnetOption.TERMINAL_TYPE, 1 };
+        final int[] subn = { TelnetOption.TERMINAL_TYPE, 1 };
 
-        final int expected1[] = { TelnetOption.TERMINAL_TYPE, 0, 'V', 'T', '1', '0', '0' };
+        final int[] expected1 = { TelnetOption.TERMINAL_TYPE, 0, 'V', 'T', '1', '0', '0' };
 
-        final int expected2[] = { TelnetOption.TERMINAL_TYPE, 0, 'A', 'N', 'S', 'I' };
+        final int[] expected2 = { TelnetOption.TERMINAL_TYPE, 0, 'A', 'N', 'S', 'I' };
 
-        final int resp1[] = opthand1.answerSubnegotiation(subn, subn.length);
-        final int resp2[] = opthand2.answerSubnegotiation(subn, subn.length);
+        final int[] resp1 = opthand1.answerSubnegotiation(subn, subn.length);
+        final int[] resp2 = opthand2.answerSubnegotiation(subn, subn.length);
 
         assertTrue(equalInts(resp1, expected1));
         assertTrue(equalInts(resp2, expected2));
@@ -70,8 +70,8 @@ public class TerminalTypeOptionHandlerTest extends TelnetOptionHandlerTestAbstra
     @Override
     public void testStartSubnegotiation() {
 
-        final int resp1[] = opthand1.startSubnegotiationLocal();
-        final int resp2[] = opthand1.startSubnegotiationRemote();
+        final int[] resp1 = opthand1.startSubnegotiationLocal();
+        final int[] resp2 = opthand1.startSubnegotiationRemote();
 
         assertNull(resp1);
         assertNull(resp2);

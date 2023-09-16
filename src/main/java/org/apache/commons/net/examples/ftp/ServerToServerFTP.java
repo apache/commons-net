@@ -165,7 +165,7 @@ public final class ServerToServerFTP {
                 System.err.println("Couldn't initiate transfer. Check that file names are valid.");
                 break __main;
             }
-            // if(ftp1.remoteRetrieve(file1) && ftp2.remoteStore(file2)) {
+            // if (ftp1.remoteRetrieve(file1) && ftp2.remoteStore(file2)) {
             // We have to fetch the positive completion reply.
             ftp1.completePendingCommand();
             ftp2.completePendingCommand();

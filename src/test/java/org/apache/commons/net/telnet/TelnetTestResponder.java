@@ -56,7 +56,7 @@ public class TelnetTestResponder implements Runnable {
     @Override
     public void run() {
         boolean result = false;
-        final byte buffer[] = new byte[32];
+        final byte[] buffer = new byte[32];
         final long starttime = System.currentTimeMillis();
 
         try {

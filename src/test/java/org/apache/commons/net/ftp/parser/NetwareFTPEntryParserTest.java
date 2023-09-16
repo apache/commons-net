@@ -23,7 +23,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  */
-public class NetwareFTPEntryParserTest extends FTPParseTestFramework {
+public class NetwareFTPEntryParserTest extends AbstractFTPParseTest {
 
     private static final String[] badsamples = { "a [-----F--] SCION_SYS                         512 Apr 13 23:52 SYS",
             "d [----AF--]          0                        512 10-04-2001 _ADMIN" };

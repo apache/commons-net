@@ -217,7 +217,6 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
 
     /**
      * A convenience method to send the ESMTP EHLO command to the server, receive the reply, and return the reply code.
-     * <p>
      *
      * @param hostname The hostname of the sender.
      * @return The reply code received from the server.
@@ -232,7 +231,6 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
 
     /**
      * Login to the ESMTP server by sending the EHLO command with the client hostname as an argument. Before performing any mail commands, you must first login.
-     * <p>
      *
      * @return True if successfully completed, false if not.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -256,7 +254,6 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
 
     /**
      * Login to the ESMTP server by sending the EHLO command with the given hostname as an argument. Before performing any mail commands, you must first login.
-     * <p>
      *
      * @param hostname The hostname with which to greet the SMTP server.
      * @return True if successfully completed, false if not.
@@ -282,5 +279,3 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
         return res;
     }
 }
-
-/* kate: indent-width 4; replace-tabs on; */

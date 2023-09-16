@@ -23,7 +23,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  */
-public class UnixFTPEntryParserTest extends FTPParseTestFramework {
+public class UnixFTPEntryParserTest extends AbstractFTPParseTest {
 
     private static final String[] badsamples = { "zrwxr-xr-x   2 root     root         4096 Mar  2 15:13 zxbox",
             "dxrwr-xr-x   2 root     root         4096 Aug 24  2001 zxjdbc", "drwxr-xr-x   2 root     root         4096 Jam  4 00:03 zziplib",

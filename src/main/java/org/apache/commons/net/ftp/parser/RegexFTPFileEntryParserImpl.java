@@ -122,15 +122,15 @@ public abstract class RegexFTPFileEntryParserImpl extends FTPFileEntryParserImpl
     /**
      * Convenience method delegates to the internal MatchResult's group() method.
      *
-     * @param matchnum match group number to be retrieved
+     * @param matchNum match group number to be retrieved
      *
      * @return the content of the <code>matchnum'th</code> group of the internal match or null if this method is called without a match having been made.
      */
-    public String group(final int matchnum) {
+    public String group(final int matchNum) {
         if (this.result == null) {
             return null;
         }
-        return this.result.group(matchnum);
+        return this.result.group(matchNum);
     }
 
     /**

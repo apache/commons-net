@@ -19,7 +19,7 @@ package org.apache.commons.net.telnet;
 /**
  * JUnit test class for SuppressGAOptionHandler
  */
-public class SuppressGAOptionHandlerTest extends TelnetOptionHandlerTestAbstract {
+public class SuppressGAOptionHandlerTest extends AbstractTelnetOptionHandlerTest {
 
     /**
      * setUp for the test.
@@ -36,9 +36,9 @@ public class SuppressGAOptionHandlerTest extends TelnetOptionHandlerTestAbstract
      */
     @Override
     public void testAnswerSubnegotiation() {
-        final int subn[] = { TelnetCommand.IAC, TelnetCommand.SB, TelnetOption.SUPPRESS_GO_AHEAD, 1, TelnetCommand.IAC, TelnetCommand.SE, };
+        final int[] subn = { TelnetCommand.IAC, TelnetCommand.SB, TelnetOption.SUPPRESS_GO_AHEAD, 1, TelnetCommand.IAC, TelnetCommand.SE, };
 
-        final int resp1[] = opthand1.answerSubnegotiation(subn, subn.length);
+        final int[] resp1 = opthand1.answerSubnegotiation(subn, subn.length);
 
         assertNull(resp1);
     }
@@ -58,8 +58,8 @@ public class SuppressGAOptionHandlerTest extends TelnetOptionHandlerTestAbstract
     @Override
     public void testStartSubnegotiation() {
 
-        final int resp1[] = opthand1.startSubnegotiationLocal();
-        final int resp2[] = opthand1.startSubnegotiationRemote();
+        final int[] resp1 = opthand1.startSubnegotiationLocal();
+        final int[] resp2 = opthand1.startSubnegotiationRemote();
 
         assertNull(resp1);
         assertNull(resp2);
