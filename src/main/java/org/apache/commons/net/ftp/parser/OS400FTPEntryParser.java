@@ -325,7 +325,7 @@ public class OS400FTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
                 // file.
                 // Save files are a special type of files which are used
                 // to save objects, e.g. for backups.
-                if ((name == null) || !name.toUpperCase(Locale.ROOT).endsWith(".SAVF")) {
+                if (name == null || !name.toUpperCase(Locale.ROOT).endsWith(".SAVF")) {
                     return null;
                 }
                 mustScanForPathSeparator = false;

@@ -25,7 +25,7 @@ import org.apache.commons.net.ftp.FTPListParseEngine;
 
 /**
  */
-public class VMSFTPEntryParserTest extends FTPParseTestFramework {
+public class VMSFTPEntryParserTest extends AbstractFTPParseTest {
     private static final String[] BAD_SAMPLES = {
 
             "1-JUN.LIS;2              9/9           JUN-2-1998 07:32:04  [GROUP,OWNER]    (RWED,RWED,RWED,)",

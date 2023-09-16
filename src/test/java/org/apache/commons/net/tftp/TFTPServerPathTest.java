@@ -17,6 +17,7 @@
 package org.apache.commons.net.tftp;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -89,12 +90,12 @@ public class TFTPServerPathTest {
 
                     out.delete();
 
-                    try (final FileInputStream fis = new FileInputStream(file)) {
-                        tftp.sendFile(out.getName(), TFTP.BINARY_MODE, fis, "localhost", SERVER_PORT);
-                        fail("Server allowed write");
-                    } catch (final IOException e) {
-                        // expected path
-                    }
+                    assertThrows(IOException.class, () -> {
+                        try (final FileInputStream fis = new FileInputStream(file)) {
+                            tftp.sendFile(out.getName(), TFTP.BINARY_MODE, fis, "localhost", SERVER_PORT);
+                            fail("Server allowed write");
+                        }
+                    });
                 } finally {
                     deleteFixture(file);
                     deleteFixture(out);
@@ -117,12 +118,12 @@ public class TFTPServerPathTest {
                     // check old failed runs
                     assertFalse(out.exists(), () -> "Couldn't clear output location, deleted=");
 
-                    try (final FileOutputStream output = new FileOutputStream(out)) {
-                        tftp.receiveFile(file.getName(), TFTP.BINARY_MODE, output, "localhost", SERVER_PORT);
-                        fail("Server allowed read");
-                    } catch (final IOException e) {
-                        // expected path
-                    }
+                    assertThrows(IOException.class, () -> {
+                        try (final FileOutputStream output = new FileOutputStream(out)) {
+                            tftp.receiveFile(file.getName(), TFTP.BINARY_MODE, output, "localhost", SERVER_PORT);
+                            fail("Server allowed read");
+                        }
+                    });
                     out.delete();
 
                     try (final FileInputStream fis = new FileInputStream(file)) {
@@ -152,12 +153,12 @@ public class TFTPServerPathTest {
                 try {
                     assertFalse(new File(serverDirectory, "../foo").exists(), "test construction error");
 
-                    try (final FileInputStream fis = new FileInputStream(file)) {
-                        tftp.sendFile("../foo", TFTP.BINARY_MODE, fis, "localhost", SERVER_PORT);
-                        fail("Server allowed write!");
-                    } catch (final IOException e) {
-                        // expected path
-                    }
+                    assertThrows(IOException.class, () -> {
+                        try (final FileInputStream fis = new FileInputStream(file)) {
+                            tftp.sendFile("../foo", TFTP.BINARY_MODE, fis, "localhost", SERVER_PORT);
+                            fail("Server allowed write!");
+                        }
+                    });
 
                     assertFalse(new File(serverDirectory, "../foo").exists(), "file created when it should not have been");
 

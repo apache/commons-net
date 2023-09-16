@@ -145,12 +145,18 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="David Costanzo, Gary Gregory" issue="NET-722">
         Javadoc for FtpClient.setControlKeepAliveReplyTimeout(Duration) says timeout is in milliseconds.
       </action>
+      <action type="fix" dev="ggregory" due-to="haegar9766, Gary Gregory">
+        Change class org.apache.commons.net.ftp.parser.MVSFTPEntryParser to support more datasets #182.
+      </action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Dependabot">
-        Bump commons-parent from 54 to 58 #132, #137, #153.
+        Bump commons-parent from 54 to 62 #132, #137, #153.
       </action>
       <action type="update" dev="ggregory" due-to="Gary Gregory">
         Bump commons-io from 2.11.0 to 2.13.0.
+      </action>
+      <action type="update" dev="ggregory" due-to="Gary Gregory">
+        Bump commons-lang3 from 3.12.0 to 3.13.0.
       </action>
     </release>
     <release version="3.9.0" date="2022-11-26" description="Maintenance and bug fix release (Java 8).">

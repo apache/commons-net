@@ -201,7 +201,7 @@ public final class IMAPImportMbox {
      * @return true if the message is wanted
      */
     private static boolean wanted(final int msgNum, final String line, final BitSet msgNums, final List<String> contains) {
-        return (msgNums.isEmpty() && contains.isEmpty()) // no selectors
+        return msgNums.isEmpty() && contains.isEmpty() // no selectors
                 || msgNums.get(msgNum) // matches message number
                 || listContains(contains, line); // contains string
     }

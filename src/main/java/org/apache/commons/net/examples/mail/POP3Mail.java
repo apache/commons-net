@@ -41,7 +41,7 @@ public final class POP3Mail {
             System.exit(1);
         }
 
-        final String arg0[] = args[0].split(":");
+        final String[] arg0 = args[0].split(":");
         final String server = arg0[0];
         final String username = args[1];
         String password = args[2];

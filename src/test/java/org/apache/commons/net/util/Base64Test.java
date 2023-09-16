@@ -157,24 +157,14 @@ public class Base64Test {
         encoded = Base64.encodeBase64(binaryData, false, false);
         assertNotNull(encoded);
         assertEquals(4, encoded.length);
-        try {
-            Base64.encodeBase64(binaryData, false, false, 3);
-            fail("Expected IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> Base64.encodeBase64(binaryData, false, false, 3));
         encoded = Base64.encodeBase64(binaryData, false, false, 4); // NET-483
         assertNotNull(encoded);
         assertEquals(4, encoded.length);
         encoded = Base64.encodeBase64(binaryData, true, false);
         assertNotNull(encoded);
         assertEquals(6, encoded.length); // always adds trailer
-        try {
-            Base64.encodeBase64(binaryData, true, false, 5);
-            fail("Expected IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> Base64.encodeBase64(binaryData, true, false, 5));
         encoded = Base64.encodeBase64(binaryData, true, false, 6);
         assertNotNull(encoded);
         assertEquals(6, encoded.length);

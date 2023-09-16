@@ -40,7 +40,7 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  *      // success.
  *      reply = client.getReplyCode();
  *
- *      if(!SMTPReply.isPositiveCompletion(reply)) {
+ *      if (!SMTPReply.isPositiveCompletion(reply)) {
  *        client.disconnect();
  *        System.err.println("SMTP server refused connection.");
  *        System.exit(1);
@@ -49,7 +49,7 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  *      // Do useful stuff here.
  *      ...
  *    } catch (IOException e) {
- *      if(client.isConnected()) {
+ *      if (client.isConnected()) {
  *        try {
  *          client.disconnect();
  *        } catch (IOException f) {
@@ -67,6 +67,7 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  * reply from the SMTP server and false on a reply resulting in an error condition or failure. The methods returning a value other than boolean return a value
  * containing the higher level data produced by the SMTP command, or null if a reply resulted in an error condition or failure. If you want to access the exact
  * SMTP reply code causing a success or failure, you must call {@link org.apache.commons.net.smtp.SMTP#getReplyCode getReplyCode } after a success or failure.
+ * </p>
  * <p>
  * You should keep in mind that the SMTP server may choose to prematurely close a connection for various reasons. The SMTPClient class will detect a premature
  * SMTP server connection closing when it receives a {@link org.apache.commons.net.smtp.SMTPReply#SERVICE_NOT_AVAILABLE SMTPReply.SERVICE_NOT_AVAILABLE }
@@ -77,11 +78,13 @@ import org.apache.commons.net.io.DotTerminatedMessageWriter;
  * clean up the system resources used by SMTPClient. Before disconnecting, you may check the last reply code and text with
  * {@link org.apache.commons.net.smtp.SMTP#getReplyCode getReplyCode }, {@link org.apache.commons.net.smtp.SMTP#getReplyString getReplyString }, and
  * {@link org.apache.commons.net.smtp.SMTP#getReplyStrings getReplyStrings}.
+ * </p>
  * <p>
  * Rather than list it separately for each method, we mention here that every method communicating with the server and throwing an IOException can also throw a
  * {@link org.apache.commons.net.MalformedServerReplyException} , which is a subclass of IOException. A MalformedServerReplyException will be thrown when the
  * reply received from the server deviates enough from the protocol specification that it cannot be interpreted in a useful manner despite attempts to be as
  * lenient as possible.
+ * </p>
  *
  * @see SMTP
  * @see SimpleSMTPHeader
@@ -111,7 +114,6 @@ public class SMTPClient extends SMTP {
     /**
      * Add a recipient for a message using the SMTP RCPT command, specifying a forward relay path. The sender must be set first before any recipients may be
      * specified, otherwise the mail server will reject your commands.
-     * <p>
      *
      * @param path The forward relay path pointing to the recipient.
      * @return True if successfully completed, false if not.
@@ -127,7 +129,6 @@ public class SMTPClient extends SMTP {
     /**
      * Add a recipient for a message using the SMTP RCPT command, the recipient's email address. The sender must be set first before any recipients may be
      * specified, otherwise the mail server will reject your commands.
-     * <p>
      *
      * @param address The recipient's email address.
      * @return True if successfully completed, false if not.
@@ -146,7 +147,7 @@ public class SMTPClient extends SMTP {
      * code completes its actions, it must call this method to receive the completion reply from the server and verify the success of the entire transaction.
      * <p>
      * For example,
-     *
+     * </p>
      * <pre>
      * writer = client.sendMessageData();
      * if (writer == null) // failure
@@ -158,7 +159,6 @@ public class SMTPClient extends SMTP {
      * if (!client.completePendingCommand()) // failure
      *     return false;
      * </pre>
-     * <p>
      *
      * @return True if successfully completed, false if not.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -172,7 +172,6 @@ public class SMTPClient extends SMTP {
 
     /**
      * Fetches the system help information from the server and returns the full string.
-     * <p>
      *
      * @return The system help string obtained from the server. null if the information could not be obtained.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -189,7 +188,6 @@ public class SMTPClient extends SMTP {
 
     /**
      * Fetches the help information for a given command from the server and returns the full string.
-     * <p>
      *
      * @param command The command on which to ask for help.
      * @return The command help string obtained from the server. null if the information could not be obtained.
@@ -208,7 +206,6 @@ public class SMTPClient extends SMTP {
     /**
      * Login to the SMTP server by sending the {@code HELO} command with the client hostname as an argument.
      * Before performing any mail commands, you must first log in.
-     * <p>
      *
      * @return True if successfully completed, false if not.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -233,7 +230,6 @@ public class SMTPClient extends SMTP {
     /**
      * Login to the SMTP server by sending the {@code HELO} command with the given hostname as an argument.
      * Before performing any mail commands, you must first log in.
-     * <p>
      *
      * @param hostname The hostname with which to greet the SMTP server.
      * @return True if successfully completed, false if not.
@@ -248,7 +244,6 @@ public class SMTPClient extends SMTP {
 
     /**
      * Logout of the SMTP server by sending the QUIT command.
-     * <p>
      *
      * @return True if successfully completed, false if not.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -262,7 +257,6 @@ public class SMTPClient extends SMTP {
 
     /**
      * Aborts the current mail transaction, resetting all server stored sender, recipient, and mail data, cleaning all buffers and tables.
-     * <p>
      *
      * @return True if successfully completed, false if not.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -282,15 +276,17 @@ public class SMTPClient extends SMTP {
      * The SMTP protocol uses the same stream for issuing commands as it does for returning results. Therefore, the returned Writer actually writes directly to
      * the SMTP connection. After you close the writer, you can execute new commands. If you do not follow these requirements your program will not work
      * properly.
+     * </p>
      * <p>
      * You can use the provided {@link org.apache.commons.net.smtp.SimpleSMTPHeader} class to construct a bare minimum header. To construct more complicated
      * headers you should refer to RFC 5322. When the Java Mail API is finalized, you will be able to use it to compose fully compliant Internet text messages.
      * The DotTerminatedMessageWriter takes care of doubling line-leading dots and ending the message with a single dot upon closing, so all you have to worry
      * about is writing the header and the message.
+     * </p>
      * <p>
      * Upon closing the returned Writer, you need to call {@link #completePendingCommand completePendingCommand() } to finalize the transaction and verify its
      * success or failure from the server reply.
-     * <p>
+     * </p>
      *
      * @return A DotTerminatedMessageWriter to which the message (including header) can be written. Returns null if the command fails.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -309,7 +305,6 @@ public class SMTPClient extends SMTP {
 
     /**
      * Sends a NOOP command to the SMTP server. This is useful for preventing server timeouts.
-     * <p>
      *
      * @return True if successfully completed, false if not.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -325,7 +320,6 @@ public class SMTPClient extends SMTP {
      * A convenience method for sending short messages. This method fetches the Writer returned by {@link #sendMessageData sendMessageData() } and writes the
      * specified String to it. After writing the message, this method calls {@link #completePendingCommand completePendingCommand() } to finalize the
      * transaction and returns its success or failure.
-     * <p>
      *
      * @param message The short email message to send. This must include the headers and the body, but not the trailing "."
      * @return True if successfully completed, false if not.
@@ -351,7 +345,6 @@ public class SMTPClient extends SMTP {
      * A convenience method for a sending short email without having to explicitly set the sender and recipient(s). This method sets the sender and recipient
      * using {@link #setSender setSender } and {@link #addRecipient addRecipient }, and then sends the message using {@link #sendShortMessageData
      * sendShortMessageData }.
-     * <p>
      *
      * @param sender    The email address of the sender.
      * @param recipient The email address of the recipient.
@@ -381,7 +374,7 @@ public class SMTPClient extends SMTP {
      * <p>
      * Note that the method ignores failures when calling {@link #addRecipient(String) addRecipient} so long as at least one call succeeds. If no recipients can
      * be successfully added then the method will fail (and does not attempt to send the message)
-     * <p>
+     * </p>
      *
      * @param sender     The email address of the sender.
      * @param recipients An array of recipient email addresses.
@@ -416,7 +409,6 @@ public class SMTPClient extends SMTP {
     /**
      * Set the sender of a message using the SMTP MAIL command, specifying a reverse relay path. The sender must be set first before any recipients may be
      * specified, otherwise the mail server will reject your commands.
-     * <p>
      *
      * @param path The reverse relay path pointing back to the sender.
      * @return True if successfully completed, false if not.
@@ -432,7 +424,6 @@ public class SMTPClient extends SMTP {
     /**
      * Set the sender of a message using the SMTP MAIL command, specifying the sender's email address. The sender must be set first before any recipients may be
      * specified, otherwise the mail server will reject your commands.
-     * <p>
      *
      * @param address The sender's email address.
      * @return True if successfully completed, false if not.
@@ -447,7 +438,6 @@ public class SMTPClient extends SMTP {
 
     /**
      * Verify that a username or email address is valid, i.e., that mail can be delivered to that mailbox on the server.
-     * <p>
      *
      * @param username The username or email address to validate.
      * @return True if the username is valid, false if not.

@@ -21,7 +21,7 @@ import org.apache.commons.net.ftp.FTPFileEntryParser;
 
 /**
  */
-public abstract class CompositeFTPParseTestFramework extends FTPParseTestFramework {
+public abstract class CompositeFTPParseTestFramework extends AbstractFTPParseTest {
     public CompositeFTPParseTestFramework(final String name) {
         super(name);
     }

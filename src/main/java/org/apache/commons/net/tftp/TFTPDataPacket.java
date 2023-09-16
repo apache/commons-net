@@ -69,7 +69,7 @@ public final class TFTPDataPacket extends TFTPPacket {
             throw new TFTPPacketException("TFTP operator code does not match type.");
         }
 
-        this.blockNumber = (((this.data[2] & 0xff) << 8) | (this.data[3] & 0xff));
+        this.blockNumber = (this.data[2] & 0xff) << 8 | this.data[3] & 0xff;
 
         this.length = datagram.getLength() - 4;
 

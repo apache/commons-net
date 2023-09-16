@@ -46,7 +46,7 @@ public class Threader {
         if (container != null) {
             if (container.threadable != null) { // oops! duplicate ids...
                 bogusIdCount++; // Avoid dead local store warning
-                id = "<Bogus-id:" + (bogusIdCount) + ">";
+                id = "<Bogus-id:" + bogusIdCount + ">";
                 container = null;
             } else {
                 // The container just contained a forward reference to this message, so let's
@@ -79,7 +79,7 @@ public class Threader {
                 // Link references together in the order they appear in the References: header,
                 // IF they don't have a parent already &&
                 // IF it will not cause a circular reference
-                if ((parentRef != null) && (ref.parent == null) && (parentRef != ref) && !(ref.findChild(parentRef))) {
+                if (parentRef != null && ref.parent == null && parentRef != ref && !ref.findChild(parentRef)) {
                     // Link ref into the parent's child list
                     ref.parent = parentRef;
                     ref.next = parentRef.child;
@@ -193,8 +193,8 @@ public class Threader {
             // - The container in the table has a "Re:" version of this subject, and
             // this container has a non-"Re:" version of this subject. The non-"Re:" version
             // is the more interesting of the two.
-            if (old == null || (c.threadable == null && old.threadable != null)
-                    || (old.threadable != null && old.threadable.subjectIsReply() && c.threadable != null && !c.threadable.subjectIsReply())) {
+            if (old == null || c.threadable == null && old.threadable != null
+                    || old.threadable != null && old.threadable.subjectIsReply() && c.threadable != null && !c.threadable.subjectIsReply()) {
                 subjectTable.put(subj, c);
                 count++;
             }
@@ -208,7 +208,7 @@ public class Threader {
         // subjectTable is now populated with one entry for each subject which occurs in the
         // root set. Iterate over the root set, and gather together the difference.
         NntpThreadContainer prev, c, rest;
-        for (prev = null, c = root.child, rest = c.next; c != null; prev = c, c = rest, rest = (rest == null ? null : rest.next)) {
+        for (prev = null, c = root.child, rest = c.next; c != null; prev = c, c = rest, rest = rest == null ? null : rest.next) {
             Threadable threadable = c.threadable;
 
             // is it a dummy node?
@@ -254,7 +254,7 @@ public class Threader {
                 }
 
                 c.child = null;
-            } else if (old.threadable == null || (c.threadable != null && c.threadable.subjectIsReply() && !old.threadable.subjectIsReply())) {
+            } else if (old.threadable == null || c.threadable != null && c.threadable.subjectIsReply() && !old.threadable.subjectIsReply()) {
                 // Else if old is empty, or c has "Re:" and old does not ==> make this message a child of old
                 c.parent = old;
                 c.next = old.child;
@@ -296,9 +296,9 @@ public class Threader {
      */
     private void pruneEmptyContainers(final NntpThreadContainer parent) {
         NntpThreadContainer container, prev, next;
-        for (prev = null, container = parent.child, next = container.next; container != null; prev = container, container = next, next = (container == null
+        for (prev = null, container = parent.child, next = container.next; container != null; prev = container, container = next, next = container == null
                 ? null
-                : container.next)) {
+                : container.next) {
 
             // Is it empty and without any children? If so,delete it
             if (container.threadable == null && container.child == null) {
@@ -393,7 +393,7 @@ public class Threader {
             }
         }
 
-        final Threadable result = (root.child == null ? null : root.child.threadable);
+        final Threadable result = root.child == null ? null : root.child.threadable;
         root.flush();
 
         return result;

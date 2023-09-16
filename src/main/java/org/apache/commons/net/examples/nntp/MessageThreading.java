@@ -54,7 +54,7 @@ public class MessageThreading {
             }
         }
 
-        final String fmt[] = client.listOverviewFmt();
+        final String[] fmt = client.listOverviewFmt();
         if (fmt != null) {
             System.out.println("LIST OVERVIEW.FMT:");
             for (final String s : fmt) {

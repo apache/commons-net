@@ -377,7 +377,7 @@ public final class IMAPExportMbox {
             while (true) {
                 final boolean ok = imap.fetch(sequenceSet, itemNames);
                 // If the fetch failed, can we retry?
-                if (ok || (retryWaitSecs <= 0) || (mboxListener == null) || !checkSequence) {
+                if (ok || retryWaitSecs <= 0 || mboxListener == null || !checkSequence) {
                     break;
                 }
                 final String replyString = imap.getReplyString(); // includes EOL

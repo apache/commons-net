@@ -161,7 +161,7 @@ public class Article implements Threadable {
 
     @Override
     public boolean isDummy() {
-        return (articleNumber == -1);
+        return articleNumber == -1;
     }
 
     @Override
@@ -246,13 +246,13 @@ public class Article implements Threadable {
                 start++;
             }
 
-            if (start < (len - 2) && (subject.charAt(start) == 'r' || subject.charAt(start) == 'R')
+            if (start < len - 2 && (subject.charAt(start) == 'r' || subject.charAt(start) == 'R')
                     && (subject.charAt(start + 1) == 'e' || subject.charAt(start + 1) == 'E')) {
 
                 if (subject.charAt(start + 2) == ':') {
                     start += 3; // Skip "Re:"
                     done = false;
-                } else if (start < (len - 2) && (subject.charAt(start + 2) == '[' || subject.charAt(start + 2) == '(')) {
+                } else if (start < len - 2 && (subject.charAt(start + 2) == '[' || subject.charAt(start + 2) == '(')) {
 
                     int i = start + 3;
 
@@ -260,7 +260,7 @@ public class Article implements Threadable {
                         i++;
                     }
 
-                    if (i < (len - 1) && (subject.charAt(i) == ']' || subject.charAt(i) == ')') && subject.charAt(i + 1) == ':') {
+                    if (i < len - 1 && (subject.charAt(i) == ']' || subject.charAt(i) == ')') && subject.charAt(i + 1) == ':') {
                         start = i + 2;
                         done = false;
                     }
