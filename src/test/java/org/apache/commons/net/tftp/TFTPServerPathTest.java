@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -42,8 +43,10 @@ public class TFTPServerPathTest {
 
     private static final int SERVER_PORT = 6901;
     private static final String FILE_PREFIX = "TFTPServerPathTest_";
-    private static final String FILE_TO_READ_NAME = FILE_PREFIX + "source.txt";
-    private static final String FILE_TO_WRITE_NAME = FILE_PREFIX + "out";
+
+    private static String getRandomFileName(final String suffix) {
+        return FILE_PREFIX + UUID.randomUUID() + suffix;
+    }
 
     private static Path createFileInDir(final Path directory, final String fileName) throws IOException {
         final Path filePath = directory.resolve(fileName);
@@ -69,8 +72,8 @@ public class TFTPServerPathTest {
     @BeforeEach
     public void beforeEach() throws IOException {
         serverDirectory = FileUtils.getTempDirectory().toPath();
-        fileToRead = createFileInDir(serverDirectory, FILE_TO_READ_NAME);
-        fileToWrite = createFileInDir(serverDirectory, FILE_TO_WRITE_NAME);
+        fileToRead = createFileInDir(serverDirectory, getRandomFileName(".source.txt"));
+        fileToWrite = createFileInDir(serverDirectory, getRandomFileName(".out"));
     }
 
     @AfterEach
