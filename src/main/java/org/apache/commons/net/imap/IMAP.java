@@ -435,4 +435,4 @@ public class IMAP extends SocketClient {
         this.state = state;
     }
 }
-/* kate: indent-width 4; replace-tabs on; */
+

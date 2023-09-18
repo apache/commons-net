@@ -25,19 +25,130 @@ public enum IMAPCommand {
     // or must provide the correct string as the parameter.
 
     // Commands valid in any state:
-    CAPABILITY(0), NOOP(0), LOGOUT(0),
+    /**
+     * Valid in any state.
+     */
+    CAPABILITY(0),
+
+    /**
+     * Valid in any state.
+     */
+    NOOP(0),
+
+    /**
+     * Valid in any state.
+     */
+    LOGOUT(0),
 
     // Commands valid in Not Authenticated state
-    STARTTLS(0), AUTHENTICATE(1), LOGIN(2),
+    /**
+     * Valid in Not Authenticated state
+     */
+    STARTTLS(0),
+
+    /**
+     * Valid in Not Authenticated state
+     */
+    AUTHENTICATE(1),
+
+    /**
+     * Valid in Not Authenticated state
+     */
+    LOGIN(2),
 
     XOAUTH(1),
 
     // commands valid in authenticated state
-    SELECT(1), EXAMINE(1), CREATE(1), DELETE(1), RENAME(2), SUBSCRIBE(1), UNSUBSCRIBE(1), LIST(2), LSUB(2), STATUS(2), // P2 = list in ()
+    /**
+     * Valid in authenticated state.
+     */
+    SELECT(1),
+
+    /**
+     * Valid in authenticated state.
+     */
+    EXAMINE(1),
+
+    /**
+     * Valid in authenticated state.
+     */
+    CREATE(1),
+
+    /**
+     * Valid in authenticated state.
+     */
+    DELETE(1),
+
+    /**
+     * Valid in authenticated state.
+     */
+    RENAME(2),
+    /**
+     * Valid in authenticated state.
+     */
+    SUBSCRIBE(1),
+    /**
+     * Valid in authenticated state.
+     */
+    UNSUBSCRIBE(1),
+    /**
+     * Valid in authenticated state.
+     */
+    LIST(2),
+    /**
+     * Valid in authenticated state.
+     */
+    LSUB(2),
+    /**
+     * Valid in authenticated state.
+     */
+    STATUS(2), // P2 = list in ()
+
+    /**
+     * Valid in authenticated state.
+     */
     APPEND(2, 4), // mbox [(flags)] [date-time] literal
 
     // commands valid in selected state (substate of authenticated)
-    CHECK(0), CLOSE(0), EXPUNGE(0), SEARCH(1, Integer.MAX_VALUE), FETCH(2), STORE(3), COPY(2), UID(2, Integer.MAX_VALUE),;
+    /**
+     * Valid in selected state (substate of authenticated).
+     */
+    CHECK(0),
+
+    /**
+     * Valid in selected state (substate of authenticated).
+     */
+    CLOSE(0),
+
+    /**
+     * Valid in selected state (substate of authenticated).
+     */
+    EXPUNGE(0),
+
+    /**
+     * Valid in selected state (substate of authenticated).
+     */
+    SEARCH(1, Integer.MAX_VALUE),
+
+    /**
+     * Valid in selected state (substate of authenticated).
+     */
+    FETCH(2),
+
+    /**
+     * Valid in selected state (substate of authenticated).
+     */
+    STORE(3),
+
+    /**
+     * Valid in selected state (substate of authenticated).
+     */
+    COPY(2),
+
+    /**
+     * Valid in selected state (substate of authenticated).
+     */
+    UID(2, Integer.MAX_VALUE);
 
     /**
      * Get the IMAP protocol string command corresponding to a command code.
@@ -94,4 +205,4 @@ public enum IMAPCommand {
 
 }
 
-/* kate: indent-width 4; replace-tabs on; */
+

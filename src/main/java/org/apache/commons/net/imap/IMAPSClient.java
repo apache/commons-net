@@ -365,4 +365,4 @@ public class IMAPSClient extends IMAPClient {
         trustManager = newTrustManager;
     }
 }
-/* kate: indent-width 4; replace-tabs on; */
+

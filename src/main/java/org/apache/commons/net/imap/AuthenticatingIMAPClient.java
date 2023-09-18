@@ -246,4 +246,4 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
         return result.toString();
     }
 }
-/* kate: indent-width 4; replace-tabs on; */
+

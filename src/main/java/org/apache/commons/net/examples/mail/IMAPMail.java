@@ -75,4 +75,4 @@ public final class IMAPMail {
     }
 }
 
-/* kate: indent-width 4; replace-tabs on; */
+
