@@ -166,8 +166,8 @@ public class MLSDComparison {
         final int as = a.get(Calendar.SECOND);
         final int bs = b.get(Calendar.SECOND);
         // @formatter:off
-        return ah == 0 && am == 0 && as == 0 
-                || bh == 0 && bm == 0 && bs == 0 
+        return ah == 0 && am == 0 && as == 0
+                || bh == 0 && bm == 0 && bs == 0
                 || ah == bh && am == bm; // ignore seconds
         // @formatter:om
     }
