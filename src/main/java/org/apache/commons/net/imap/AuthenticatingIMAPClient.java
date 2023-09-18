@@ -41,14 +41,20 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
      * The enumeration of currently-supported authentication methods.
      */
     public enum AUTH_METHOD {
-        /** The standardised (RFC4616) PLAIN method, which sends the password unencrypted (insecure). */
+
+        /** The standardized (RFC4616) PLAIN method, which sends the password unencrypted (insecure). */
+
         PLAIN("PLAIN"),
-        /** The standardised (RFC2195) CRAM-MD5 method, which doesn't send the password (secure). */
+        /** The standardized (RFC2195) CRAM-MD5 method, which doesn't send the password (secure). */
+
         CRAM_MD5("CRAM-MD5"),
-        /** The unstandardised Microsoft LOGIN method, which sends the password unencrypted (insecure). */
+
+        /** The standardized Microsoft LOGIN method, which sends the password unencrypted (insecure). */
         LOGIN("LOGIN"),
+
         /** XOAUTH */
         XOAUTH("XOAUTH"),
+
         /** XOAUTH 2 */
         XOAUTH2("XOAUTH2");
 
