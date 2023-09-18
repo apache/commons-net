@@ -55,6 +55,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <japicmp.skip>false</japicmp.skip>
         <jacoco.skip>false</jacoco.skip>
         <checkstyle.configdir>src/conf</checkstyle.configdir>
+        <spotbugs.configdir>src/conf</spotbugs.configdir>
 
         <!-- Current release -->
         <commons.release.version>3.10.0</commons.release.version>
@@ -141,7 +142,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
                     <configuration>
-                        <excludeFilterFile>findbugs-exclude-filter.xml</excludeFilterFile>
+                        <excludeFilterFile>${spotbugs.configdir}/findbugs-exclude-filter.xml</excludeFilterFile>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -379,7 +380,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
                 <configuration>
-                    <excludeFilterFile>findbugs-exclude-filter.xml</excludeFilterFile>
+                    <excludeFilterFile>${spotbugs.configdir}/findbugs-exclude-filter.xml</excludeFilterFile>
                 </configuration>
             </plugin>
 
