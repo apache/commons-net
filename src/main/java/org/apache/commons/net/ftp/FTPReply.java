@@ -22,82 +22,218 @@ package org.apache.commons.net.ftp;
  * names are transcriptions from the code descriptions of RFC 959.
  * <p>
  * TODO replace with an enum
+ * </p>
  */
-
 public final class FTPReply {
 
+    /** Reply code {@value}. */
     public static final int RESTART_MARKER = 110;
+
+    /** Reply code {@value}. */
     public static final int SERVICE_NOT_READY = 120;
+
+    /** Reply code {@value}. */
     public static final int DATA_CONNECTION_ALREADY_OPEN = 125;
+
+    /** Reply code {@value}. */
     public static final int FILE_STATUS_OK = 150;
+
+    /** Reply code {@value}. */
     public static final int COMMAND_OK = 200;
+
+    /** Reply code {@value}. */
     public static final int COMMAND_IS_SUPERFLUOUS = 202;
+
+    /** Reply code {@value}. */
     public static final int SYSTEM_STATUS = 211;
+
+    /** Reply code {@value}. */
     public static final int DIRECTORY_STATUS = 212;
+
+    /** Reply code {@value}. */
     public static final int FILE_STATUS = 213;
+
+    /** Reply code {@value}. */
     public static final int HELP_MESSAGE = 214;
+
+    /** Reply code {@value}. */
     public static final int NAME_SYSTEM_TYPE = 215;
+
+    /** Reply code {@value}. */
     public static final int SERVICE_READY = 220;
+
+    /** Reply code {@value}. */
     public static final int SERVICE_CLOSING_CONTROL_CONNECTION = 221;
+
+    /** Reply code {@value}. */
     public static final int DATA_CONNECTION_OPEN = 225;
+
+    /** Reply code {@value}. */
     public static final int CLOSING_DATA_CONNECTION = 226;
+
+    /** Reply code {@value}. */
     public static final int ENTERING_PASSIVE_MODE = 227;
-    /** @since 2.2 */
+
+    /**
+     * Reply code {@value}.
+     *
+     * @since 2.2
+     */
     public static final int ENTERING_EPSV_MODE = 229;
+
+    /** Reply code {@value}. */
     public static final int USER_LOGGED_IN = 230;
+
+    /** Reply code {@value}. */
     public static final int FILE_ACTION_OK = 250;
+
+    /** Reply code {@value}. */
     public static final int PATHNAME_CREATED = 257;
+
+    /** Reply code {@value}. */
     public static final int NEED_PASSWORD = 331;
+
+    /** Reply code {@value}. */
     public static final int NEED_ACCOUNT = 332;
+
+    /** Reply code {@value}. */
     public static final int FILE_ACTION_PENDING = 350;
+
+    /** Reply code {@value}. */
     public static final int SERVICE_NOT_AVAILABLE = 421;
+
+    /** Reply code {@value}. */
     public static final int CANNOT_OPEN_DATA_CONNECTION = 425;
+
+    /** Reply code {@value}. */
     public static final int TRANSFER_ABORTED = 426;
+
+    /** Reply code {@value}. */
     public static final int FILE_ACTION_NOT_TAKEN = 450;
+
+    /** Reply code {@value}. */
     public static final int ACTION_ABORTED = 451;
+
+    /** Reply code {@value}. */
     public static final int INSUFFICIENT_STORAGE = 452;
+
+    /** Reply code {@value}. */
     public static final int UNRECOGNIZED_COMMAND = 500;
+
+    /** Reply code {@value}. */
     public static final int SYNTAX_ERROR_IN_ARGUMENTS = 501;
+
+    /** Reply code {@value}. */
     public static final int COMMAND_NOT_IMPLEMENTED = 502;
+
+    /** Reply code {@value}. */
     public static final int BAD_COMMAND_SEQUENCE = 503;
+
+    /** Reply code {@value}. */
     public static final int COMMAND_NOT_IMPLEMENTED_FOR_PARAMETER = 504;
+
+    /** Reply code {@value}. */
     public static final int NOT_LOGGED_IN = 530;
+
+    /** Reply code {@value}. */
     public static final int NEED_ACCOUNT_FOR_STORING_FILES = 532;
+
+    /** Reply code {@value}. */
     public static final int FILE_UNAVAILABLE = 550;
+
+    /** Reply code {@value}. */
     public static final int PAGE_TYPE_UNKNOWN = 551;
+
+    /** Reply code {@value}. */
     public static final int STORAGE_ALLOCATION_EXCEEDED = 552;
+
+    /** Reply code {@value}. */
     public static final int FILE_NAME_NOT_ALLOWED = 553;
 
     // FTPS Reply Codes
 
-    /** @since 2.0 */
+    /**
+     * FTPS reply code {@value}
+     *
+     * @since 2.0
+     */
     public static final int SECURITY_DATA_EXCHANGE_COMPLETE = 234;
-    /** @since 2.0 */
+
+    /**
+     * FTPS reply code {@value}
+     *
+     * @since 2.0
+     */
     public static final int SECURITY_DATA_EXCHANGE_SUCCESSFULLY = 235;
-    /** @since 2.0 */
+
+    /**
+     * FTPS reply code {@value}
+     *
+     * @since 2.0
+     */
     public static final int SECURITY_MECHANISM_IS_OK = 334;
-    /** @since 2.0 */
+
+    /**
+     * FTPS reply code {@value}
+     *
+     * @since 2.0
+     */
     public static final int SECURITY_DATA_IS_ACCEPTABLE = 335;
-    /** @since 2.0 */
+
+    /**
+     * FTPS reply code {@value}
+     *
+     * @since 2.0
+     */
     public static final int UNAVAILABLE_RESOURCE = 431;
-    /** @since 2.2 */
+
+    /**
+     * FTPS reply code {@value}
+     *
+     * @since 2.0
+     */
     public static final int BAD_TLS_NEGOTIATION_OR_DATA_ENCRYPTION_REQUIRED = 522;
-    /** @since 2.0 */
+
+    /**
+     * FTPS reply code {@value}
+     *
+     * @since 2.0
+     */
     public static final int DENIED_FOR_POLICY_REASONS = 533;
-    /** @since 2.0 */
+
+    /**
+     * FTPS reply code {@value}
+     *
+     * @since 2.0
+     */
     public static final int REQUEST_DENIED = 534;
-    /** @since 2.0 */
+
+    /**
+     * FTPS reply code {@value}
+     *
+     * @since 2.0
+     */
     public static final int FAILED_SECURITY_CHECK = 535;
-    /** @since 2.0 */
+
+    /**
+     * FTPS reply code {@value}
+     *
+     * @since 2.0
+     */
     public static final int REQUESTED_PROT_LEVEL_NOT_SUPPORTED = 536;
 
-    // IPv6 error codes
-    // Note this is also used as an FTPS error code reply
-    /** @since 2.2 */
+    /**
+     * IPv6 error codes.
+     * <p>
+     * Note this is also used as an FTPS error code reply
+     * </p>
+     *
+     * @since 2.2
+     */
     public static final int EXTENDED_PORT_FAILURE = 522;
 
     /**
-     * Determine if a reply code is a negative permanent response. All codes beginning with a 5 are negative permanent responses. The FTP server will send a
+     * Tests if a reply code is a negative permanent response. All codes beginning with a 5 are negative permanent responses. The FTP server will send a
      * negative permanent response on the failure of a command that cannot be reattempted with success.
      *
      * @param reply The reply code to test.
@@ -108,7 +244,7 @@ public final class FTPReply {
     }
 
     /**
-     * Determine if a reply code is a negative transient response. All codes beginning with a 4 are negative transient responses. The FTP server will send a
+     * Tests if a reply code is a negative transient response. All codes beginning with a 4 are negative transient responses. The FTP server will send a
      * negative transient response on the failure of a command that can be reattempted with success.
      *
      * @param reply The reply code to test.
@@ -119,7 +255,7 @@ public final class FTPReply {
     }
 
     /**
-     * Determine if a reply code is a positive completion response. All codes beginning with a 2 are positive completion responses. The FTP server will send a
+     * Tests if a reply code is a positive completion response. All codes beginning with a 2 are positive completion responses. The FTP server will send a
      * positive completion response on the final successful completion of a command.
      *
      * @param reply The reply code to test.
@@ -130,7 +266,7 @@ public final class FTPReply {
     }
 
     /**
-     * Determine if a reply code is a positive intermediate response. All codes beginning with a 3 are positive intermediate responses. The FTP server will send
+     * Tests if a reply code is a positive intermediate response. All codes beginning with a 3 are positive intermediate responses. The FTP server will send
      * a positive intermediate response on the successful completion of one part of a multipart sequence of commands. For example, after a successful USER
      * command, a positive intermediate response will be sent to indicate that the server is ready for the PASS command.
      *
@@ -142,7 +278,7 @@ public final class FTPReply {
     }
 
     /**
-     * Determine if a reply code is a positive preliminary response. All codes beginning with a 1 are positive preliminary responses. Postitive preliminary
+     * Tests if a reply code is a positive preliminary response. All codes beginning with a 1 are positive preliminary responses. Postitive preliminary
      * responses are used to indicate tentative success. No further commands can be issued to the FTP server after a positive preliminary response until a
      * follow-up response is received from the server.
      *
@@ -154,7 +290,7 @@ public final class FTPReply {
     }
 
     /**
-     * Determine if a reply code is a protected response.
+     * Tests if a reply code is a protected response.
      *
      * @param reply The reply code to test.
      * @return True if a reply code is a protected response, false if not.
@@ -166,7 +302,7 @@ public final class FTPReply {
         return reply >= 600 && reply < 700;
     }
 
-    // Cannot be instantiated
+    /** Cannot be instantiated. */
     private FTPReply() {
     }
 
