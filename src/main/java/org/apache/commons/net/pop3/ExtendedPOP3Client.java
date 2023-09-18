@@ -21,11 +21,10 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Base64;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-
-import org.apache.commons.net.util.Base64;
 
 /**
  * A POP3 Cilent class with protocol and authentication extensions support (RFC2449 and RFC2195).
@@ -89,10 +88,11 @@ public class ExtendedPOP3Client extends POP3SClient {
         switch (method) {
         case PLAIN:
             // the server sends an empty response ("+ "), so we don't have to read it.
-            return sendCommand(new String(Base64.encodeBase64(("\000" + username + "\000" + password).getBytes(getCharset())), getCharset())) == POP3Reply.OK;
+            return sendCommand(
+                    new String(Base64.getEncoder().encode(("\000" + username + "\000" + password).getBytes(getCharset())), getCharset())) == POP3Reply.OK;
         case CRAM_MD5:
             // get the CRAM challenge
-            final byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(2).trim());
+            final byte[] serverChallenge = Base64.getDecoder().decode(getReplyString().substring(2).trim());
             // get the Mac instance
             final Mac hmacMd5 = Mac.getInstance("HmacMD5");
             hmacMd5.init(new SecretKeySpec(password.getBytes(getCharset()), "HmacMD5"));
@@ -105,7 +105,7 @@ public class ExtendedPOP3Client extends POP3SClient {
             toEncode[usernameBytes.length] = ' ';
             System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
             // send the reply and read the server code:
-            return sendCommand(Base64.encodeBase64StringUnChunked(toEncode)) == POP3Reply.OK;
+            return sendCommand(Base64.getEncoder().encodeToString(toEncode)) == POP3Reply.OK;
         default:
             return false;
         }
