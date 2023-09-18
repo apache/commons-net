@@ -53,7 +53,7 @@ public class TFTPServerPathTest {
         return Files.createFile(filePath);
     }
 
-    private static void deleteFile(final Path path, boolean retry) throws IOException {
+    private static void deleteFile(final Path path, final boolean retry) throws IOException {
         if (path != null) {
             try {
                 Files.deleteIfExists(path);
