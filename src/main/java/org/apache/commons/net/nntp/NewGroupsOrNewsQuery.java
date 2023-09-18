@@ -18,6 +18,7 @@
 package org.apache.commons.net.nntp;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 /**
  * The NewGroupsOrNewsQuery class. This is used to issue NNTP NEWGROUPS and NEWNEWS queries, implemented by
@@ -196,7 +197,7 @@ public final class NewGroupsOrNewsQuery {
      * @return The list of distributions, which may be null if no distributions have been specified.
      */
     public String getDistributions() {
-        return distributions == null ? null : distributions.toString();
+        return Objects.toString(distributions, null);
     }
 
     /**
@@ -205,7 +206,7 @@ public final class NewGroupsOrNewsQuery {
      * @return The list of newsgroups, which may be null if no newsgroups have been specified.
      */
     public String getNewsgroups() {
-        return newsgroups == null ? null : newsgroups.toString();
+        return Objects.toString(newsgroups, null);
     }
 
     /**
