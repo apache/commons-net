@@ -16,11 +16,10 @@
  */
 package org.apache.commons.net.tftp;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.net.tftp.TFTPServer.ServerMode;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,9 +30,11 @@ import java.nio.file.Path;
 import java.time.Duration;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.net.tftp.TFTPServer.ServerMode;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Basic tests to ensure that the TFTP Server is honoring its read/write mode, and preventing files from being read or written from outside of the assigned
@@ -52,9 +53,21 @@ public class TFTPServerPathTest {
         return Files.createFile(filePath);
     }
 
-    private static void deleteFile(final Path path) throws IOException {
+    private static void deleteFile(final Path path, boolean retry) throws IOException {
         if (path != null) {
-            Files.deleteIfExists(path);
+            try {
+                Files.deleteIfExists(path);
+            } catch (IOException e) {
+                if (retry) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e1) {
+                        fail(e);
+                    }
+                    Files.deleteIfExists(path);
+                }
+                throw e;
+            }
         }
     }
 
@@ -77,8 +90,8 @@ public class TFTPServerPathTest {
         if (tftpServer != null) {
             tftpServer.close();
         }
-        deleteFile(fileToRead);
-        deleteFile(fileToWrite);
+        deleteFile(fileToRead, true);
+        deleteFile(fileToWrite, true);
     }
 
     @BeforeEach
@@ -142,7 +155,7 @@ public class TFTPServerPathTest {
 
         // but we can write to it
         try (final InputStream is = Files.newInputStream(fileToRead)) {
-            deleteFile(fileToWrite);
+            deleteFile(fileToWrite, false);
             final String writeFileName = fileToWrite.getFileName().toString();
             tftpClient.sendFile(writeFileName, TFTP.BINARY_MODE, is, serverAddress, serverPort);
         }
@@ -182,7 +195,7 @@ public class TFTPServerPathTest {
 
         // send file
         try (final InputStream is = Files.newInputStream(fileToRead)) {
-            deleteFile(fileToWrite);
+            deleteFile(fileToWrite, false);
             final String writeFileName = fileToWrite.getFileName().toString();
             tftpClient.sendFile(writeFileName, TFTP.BINARY_MODE, is, serverAddress, serverPort);
         }
