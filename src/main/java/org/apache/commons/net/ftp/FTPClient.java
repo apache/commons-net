@@ -154,7 +154,7 @@ import org.apache.commons.net.util.NetConstants;
  * <pre>
  * FTPClient f = new FTPClient();
  * f.connect(server);
- * f.login(username, password);
+ * f.login(user, password);
  * FTPFile[] files = f.listFiles(directory);
  * </pre>
  * <p>
@@ -164,7 +164,7 @@ import org.apache.commons.net.util.NetConstants;
  * <pre>
  * FTPClient f = new FTPClient();
  * f.connect(server);
- * f.login(username, password);
+ * f.login(user, password);
  * FTPListParseEngine engine = f.initiateListParsing("com.whatever.YourOwnParser", directory);
  *
  * while (engine.hasNext()) {
@@ -179,7 +179,7 @@ import org.apache.commons.net.util.NetConstants;
  * <pre>
  * FTPClient f = new FTPClient();
  * f.connect(server);
- * f.login(username, password);
+ * f.login(user, password);
  * FTPListParseEngine engine = f.initiateListParsing(directory);
  *
  * while (engine.hasNext()) {
@@ -2380,9 +2380,9 @@ public class FTPClient extends FTP implements Configurable {
     }
 
     /**
-     * Login to the FTP server using the provided username and password.
+     * Login to the FTP server using the provided user and password.
      *
-     * @param username The username to login under.
+     * @param user The user name to login under.
      * @param password The password to use.
      * @return True if successfully completed, false if not.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
@@ -2390,9 +2390,9 @@ public class FTPClient extends FTP implements Configurable {
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public boolean login(final String username, final String password) throws IOException {
+    public boolean login(final String user, final String password) throws IOException {
 
-        user(username);
+        user(user);
 
         if (FTPReply.isPositiveCompletion(_replyCode)) {
             return true;
@@ -2411,7 +2411,7 @@ public class FTPClient extends FTP implements Configurable {
      * Login to the FTP server using the provided username, password, and account. If no account is required by the server, only the username and password, the
      * account information is not used.
      *
-     * @param username The username to login under.
+     * @param user The user name to login under.
      * @param password The password to use.
      * @param account  The account to use.
      * @return True if successfully completed, false if not.
@@ -2420,8 +2420,8 @@ public class FTPClient extends FTP implements Configurable {
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public boolean login(final String username, final String password, final String account) throws IOException {
-        user(username);
+    public boolean login(final String user, final String password, final String account) throws IOException {
+        user(user);
 
         if (FTPReply.isPositiveCompletion(_replyCode)) {
             return true;

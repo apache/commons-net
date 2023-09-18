@@ -53,7 +53,7 @@ import java.util.TreeMap;
  * conf.setServerLanguageCode("fr");
  * f.configure(conf);
  * f.connect(server);
- * f.login(username, password);
+ * f.login(user, password);
  * FTPFile[] files = listFiles(directory);
  * </pre>
  * <p>
@@ -68,7 +68,7 @@ import java.util.TreeMap;
  * conf.setTimeZoneId("Europe/Copenhagen");
  * f.configure(conf);
  * f.connect(server);
- * f.login(username, password);
+ * f.login(user, password);
  * FTPListParseEngine engine = f.initiateListParsing("com.whatever.YourOwnParser", directory);
  *
  * while (engine.hasNext()) {
@@ -87,7 +87,7 @@ import java.util.TreeMap;
  * conf.setShortMonthNames("jan|feb|mar|apr|ma\u00ED|j\u00FAn|j\u00FAl|\u00e1g\u00FA|sep|okt|n\u00F3v|des");
  * f.configure(conf);
  * f.connect(server);
- * f.login(username, password);
+ * f.login(user, password);
  * FTPFile[] files = listFiles(directory);
  * </pre>
  * <p>
@@ -100,7 +100,7 @@ import java.util.TreeMap;
  * conf.setTimeZoneId("America/Denver");
  * f.configure(conf);
  * f.connect(server);
- * f.login(username, password);
+ * f.login(user, password);
  * FTPFile[] files = listFiles(directory);
  * </pre>
  *
@@ -112,7 +112,7 @@ import java.util.TreeMap;
  * conf.setTimeZoneId("America/Denver");
  * f.configure(conf);
  * f.connect(server);
- * f.login(username, password);
+ * f.login(user, password);
  * FTPFile[] files = listFiles(directory);
  * </pre>
  *

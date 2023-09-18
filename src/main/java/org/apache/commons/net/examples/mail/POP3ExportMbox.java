@@ -58,17 +58,17 @@ public final class POP3ExportMbox {
 
         final int argCount = args.length - argIdx;
         if (argCount < 3) {
-            System.err.println("Usage: POP3Mail [-F file/directory] <server[:port]> <username> <password|-|*|VARNAME> [TLS [true=implicit]]");
+            System.err.println("Usage: POP3Mail [-F file/directory] <server[:port]> <user> <password|-|*|VARNAME> [TLS [true=implicit]]");
             System.exit(1);
         }
 
         final String[] arg0 = args[argIdx++].split(":");
         final String server = arg0[0];
-        final String username = args[argIdx++];
+        final String user = args[argIdx++];
         String password = args[argIdx++];
         // prompt for the password if necessary
         try {
-            password = Utils.getPassword(username, password);
+            password = Utils.getPassword(user, password);
         } catch (final IOException e1) {
             System.err.println("Could not retrieve password: " + e1.getMessage());
             return;
@@ -106,7 +106,7 @@ public final class POP3ExportMbox {
         }
 
         try {
-            if (!pop3.login(username, password)) {
+            if (!pop3.login(user, password)) {
                 System.err.println("Could not login to server.  Check password.");
                 pop3.disconnect();
                 return;

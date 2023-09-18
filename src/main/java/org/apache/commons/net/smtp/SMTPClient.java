@@ -437,19 +437,19 @@ public class SMTPClient extends SMTP {
     }
 
     /**
-     * Verify that a username or email address is valid, i.e., that mail can be delivered to that mailbox on the server.
+     * Verify that a user or email address is valid, i.e., that mail can be delivered to that mailbox on the server.
      *
-     * @param username The username or email address to validate.
-     * @return True if the username is valid, false if not.
+     * @param user The user name or email address to validate.
+     * @return True if the user name is valid, false if not.
      * @throws SMTPConnectionClosedException If the SMTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                       causing the server to send SMTP reply code 421. This exception may be caught either as an IOException or
      *                                       independently as itself.
      * @throws IOException                   If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
      */
-    public boolean verify(final String username) throws IOException {
+    public boolean verify(final String user) throws IOException {
         final int result;
 
-        result = vrfy(username);
+        result = vrfy(user);
 
         return result == SMTPReply.ACTION_OK || result == SMTPReply.USER_NOT_LOCAL_WILL_FORWARD;
     }

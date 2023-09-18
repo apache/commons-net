@@ -941,7 +941,7 @@ public class FTP extends SocketClient {
     /**
      * A convenience method to send the FTP PASS command to the server, receive the reply, and return the reply code.
      *
-     * @param password The plain text password of the username being logged into.
+     * @param password The plain text password of the user being logged into.
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
@@ -1450,14 +1450,14 @@ public class FTP extends SocketClient {
     /**
      * A convenience method to send the FTP USER command to the server, receive the reply, and return the reply code.
      *
-     * @param username The username to login under.
+     * @param user The user to login under.
      * @return The reply code received from the server.
      * @throws FTPConnectionClosedException If the FTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                      causing the server to send FTP reply code 421. This exception may be caught either as an IOException or
      *                                      independently as itself.
      * @throws IOException                  If an I/O error occurs while either sending the command or receiving the server reply.
      */
-    public int user(final String username) throws IOException {
-        return sendCommand(FTPCmd.USER, username);
+    public int user(final String user) throws IOException {
+        return sendCommand(FTPCmd.USER, user);
     }
 }

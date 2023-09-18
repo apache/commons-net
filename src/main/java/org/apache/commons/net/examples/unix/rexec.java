@@ -27,7 +27,7 @@ import org.apache.commons.net.examples.util.IOUtil;
  * executed on the server. It then reads input from stdin (this will be line buffered on most systems, so don't expect character at a time interactivity),
  * passing it to the remote process and writes the process stdout and stderr to local stdout.
  * <p>
- * Example: java rexec myhost myusername mypassword "ps -aux"
+ * Example: java rexec myhost myuser mypassword "ps -aux"
  * <p>
  * Usage: rexec <hostname> <username> <password> <command>
  */
@@ -36,24 +36,18 @@ import org.apache.commons.net.examples.util.IOUtil;
 public final class rexec {
 
     public static void main(final String[] args) {
-        final String server;
-        final String username;
-        final String password;
-        final String command;
-        final RExecClient client;
 
         if (args.length != 4) {
-            System.err.println("Usage: rexec <hostname> <username> <password> <command>");
+            System.err.println("Usage: rexec <hostname> <user> <password> <command>");
             System.exit(1);
             return; // so compiler can do proper flow control analysis
         }
 
-        client = new RExecClient();
-
-        server = args[0];
-        username = args[1];
-        password = args[2];
-        command = args[3];
+        final RExecClient client = new RExecClient();
+        final String server = args[0];
+        final String user = args[1];
+        final String password = args[2];
+        final String command = args[3];
 
         try {
             client.connect(server);
@@ -64,7 +58,7 @@ public final class rexec {
         }
 
         try {
-            client.rexec(username, password, command);
+            client.rexec(user, password, command);
         } catch (final IOException e) {
             try {
                 client.disconnect();

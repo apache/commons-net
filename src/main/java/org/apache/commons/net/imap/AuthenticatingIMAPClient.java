@@ -140,10 +140,10 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
     }
 
     /**
-     * Authenticate to the IMAP server by sending the AUTHENTICATE command with the selected mechanism, using the given username and the given password.
+     * Authenticate to the IMAP server by sending the AUTHENTICATE command with the selected mechanism, using the given user and the given password.
      *
      * @param method   the method name
-     * @param username user
+     * @param user user
      * @param password password
      * @return True if successfully completed, false if not.
      * @throws IOException              If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
@@ -151,7 +151,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
      * @throws InvalidKeyException      If the CRAM hash algorithm failed to use the given password.
      * @throws InvalidKeySpecException  If the CRAM hash algorithm failed to use the given password.
      */
-    public boolean auth(final AuthenticatingIMAPClient.AUTH_METHOD method, final String username, final String password)
+    public boolean auth(final AuthenticatingIMAPClient.AUTH_METHOD method, final String user, final String password)
             throws IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException {
         if (!IMAPReply.isContinuation(sendCommand(IMAPCommand.AUTHENTICATE, method.getAuthName()))) {
             return false;
@@ -160,7 +160,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
         switch (method) {
         case PLAIN: {
             // the server sends an empty response ("+ "), so we don't have to read it.
-            final int result = sendData(Base64.getEncoder().encodeToString(("\000" + username + "\000" + password).getBytes(getCharset())));
+            final int result = sendData(Base64.getEncoder().encodeToString(("\000" + user + "\000" + password).getBytes(getCharset())));
             if (result == IMAPReply.OK) {
                 setState(IMAP.IMAPState.AUTH_STATE);
             }
@@ -175,7 +175,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
             // compute the result:
             final byte[] hmacResult = convertToHexString(hmacMd5.doFinal(serverChallenge)).getBytes(getCharset());
             // join the byte arrays to form the reply
-            final byte[] usernameBytes = username.getBytes(getCharset());
+            final byte[] usernameBytes = user.getBytes(getCharset());
             final byte[] toEncode = new byte[usernameBytes.length + 1 /* the space */ + hmacResult.length];
             System.arraycopy(usernameBytes, 0, toEncode, 0, usernameBytes.length);
             toEncode[usernameBytes.length] = ' ';
@@ -190,7 +190,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
         case LOGIN: {
             // the server sends fixed responses (base64("Username") and
             // base64("Password")), so we don't have to read them.
-            if (sendData(Base64.getEncoder().encodeToString(username.getBytes(getCharset()))) != IMAPReply.CONT) {
+            if (sendData(Base64.getEncoder().encodeToString(user.getBytes(getCharset()))) != IMAPReply.CONT) {
                 return false;
             }
             final int result = sendData(Base64.getEncoder().encodeToString(password.getBytes(getCharset())));
@@ -201,7 +201,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
         }
         case XOAUTH:
         case XOAUTH2: {
-            final int result = sendData(username);
+            final int result = sendData(user);
             if (result == IMAPReply.OK) {
                 setState(IMAP.IMAPState.AUTH_STATE);
             }
@@ -212,10 +212,10 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
     }
 
     /**
-     * Authenticate to the IMAP server by sending the AUTHENTICATE command with the selected mechanism, using the given username and the given password.
+     * Authenticate to the IMAP server by sending the AUTHENTICATE command with the selected mechanism, using the given user and the given password.
      *
      * @param method   the method name
-     * @param username user
+     * @param user user
      * @param password password
      * @return True if successfully completed, false if not.
      * @throws IOException              If an I/O error occurs while either sending a command to the server or receiving a reply from the server.
@@ -223,9 +223,9 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
      * @throws InvalidKeyException      If the CRAM hash algorithm failed to use the given password.
      * @throws InvalidKeySpecException  If the CRAM hash algorithm failed to use the given password.
      */
-    public boolean authenticate(final AuthenticatingIMAPClient.AUTH_METHOD method, final String username, final String password)
+    public boolean authenticate(final AuthenticatingIMAPClient.AUTH_METHOD method, final String user, final String password)
             throws IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException {
-        return auth(method, username, password);
+        return auth(method, user, password);
     }
 
     /**

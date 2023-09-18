@@ -187,14 +187,9 @@ public class TFTP extends DatagramSocketClient {
      * @throws IOException if an I/O error occurs.
      */
     public final void discardPackets() throws IOException {
-        final Duration to;
-        final DatagramPacket datagram;
-
-        datagram = new DatagramPacket(new byte[PACKET_SIZE], PACKET_SIZE);
-
-        to = getSoTimeoutDuration();
+        final DatagramPacket datagram = new DatagramPacket(new byte[PACKET_SIZE], PACKET_SIZE);
+        final Duration to = getSoTimeoutDuration();
         setSoTimeout(Duration.ofMillis(1));
-
         try {
             while (true) {
                 checkOpen().receive(datagram);
@@ -202,7 +197,6 @@ public class TFTP extends DatagramSocketClient {
         } catch (final SocketException | InterruptedIOException e) {
             // Do nothing. We timed out, so we hope we're caught up.
         }
-
         setSoTimeout(to);
     }
 

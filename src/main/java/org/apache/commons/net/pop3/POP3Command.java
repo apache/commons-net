@@ -22,7 +22,7 @@ package org.apache.commons.net.pop3;
  */
 
 public final class POP3Command {
-    /** Send username. */
+    /** Send user name. */
     public static final int USER = 0;
     /** Send password. */
     public static final int PASS = 1;

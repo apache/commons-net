@@ -37,11 +37,11 @@ public final class ServerToServerFTP {
 
     public static void main(final String[] args) {
         String server1;
-        final String username1;
+        final String user1;
         final String password1;
         final String file1;
         String server2;
-        final String username2;
+        final String user2;
         final String password2;
         final String file2;
         String[] parts;
@@ -61,7 +61,7 @@ public final class ServerToServerFTP {
             server1 = parts[0];
             port1 = Integer.parseInt(parts[1]);
         }
-        username1 = args[1];
+        user1 = args[1];
         password1 = args[2];
         file1 = args[3];
         server2 = args[4];
@@ -70,7 +70,7 @@ public final class ServerToServerFTP {
             server2 = parts[0];
             port2 = Integer.parseInt(parts[1]);
         }
-        username2 = args[5];
+        user2 = args[5];
         password2 = args[6];
         file2 = args[7];
 
@@ -139,12 +139,12 @@ public final class ServerToServerFTP {
         }
 
         __main: try {
-            if (!ftp1.login(username1, password1)) {
+            if (!ftp1.login(user1, password1)) {
                 System.err.println("Could not login to " + server1);
                 break __main;
             }
 
-            if (!ftp2.login(username2, password2)) {
+            if (!ftp2.login(user2, password2)) {
                 System.err.println("Could not login to " + server2);
                 break __main;
             }

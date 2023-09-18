@@ -69,8 +69,8 @@ import org.apache.commons.net.imap.IMAPReply;
  * Note that using BODY will set the \Seen flag. This is why the default uses BODY.PEEK[].<br>
  * The item name X-GM-LABELS is a Google Mail extension; it shows the labels for a message.<br>
  * For example:<br>
- * IMAPExportMbox imaps://username:password@imap.googlemail.com/messages_for_export exported.mbox 1:10,20<br>
- * IMAPExportMbox imaps://username:password@imap.googlemail.com/messages_for_export exported.mbox 3 ENVELOPE X-GM-LABELS<br>
+ * IMAPExportMbox imaps://user:password@imap.googlemail.com/messages_for_export exported.mbox 1:10,20<br>
+ * IMAPExportMbox imaps://user:password@imap.googlemail.com/messages_for_export exported.mbox 3 ENVELOPE X-GM-LABELS<br>
  * <p>
  * The sequence-set is passed unmodified to the FETCH command.<br>
  * The item names are wrapped in parentheses if more than one is provided. Otherwise, the parameter is assumed to be wrapped if necessary.<br>

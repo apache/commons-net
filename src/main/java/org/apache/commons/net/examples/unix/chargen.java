@@ -64,40 +64,39 @@ public final class chargen {
         int packets = 50;
         byte[] data;
         final InetAddress address;
-        final CharGenUDPClient client;
 
         address = InetAddress.getByName(host);
-        client = new CharGenUDPClient();
+        try (CharGenUDPClient client = new CharGenUDPClient()) {
 
-        client.open();
-        // If we don't receive a return packet within 5 seconds, assume
-        // the packet is lost.
-        client.setSoTimeout(Duration.ofSeconds(5));
+            client.open();
+            // If we don't receive a return packet within 5 seconds, assume
+            // the packet is lost.
+            client.setSoTimeout(Duration.ofSeconds(5));
 
-        while (packets-- > 0) {
-            client.send(address);
+            while (packets-- > 0) {
+                client.send(address);
 
-            try {
-                data = client.receive();
+                try {
+                    data = client.receive();
+                }
+                // Here we catch both SocketException and InterruptedIOException,
+                // because even though the JDK 1.1 docs claim that
+                // InterruptedIOException is thrown on a timeout, it seems
+                // SocketException is also thrown.
+                catch (final SocketException e) {
+                    // We timed out and assume the packet is lost.
+                    System.err.println("SocketException: Timed out and dropped packet");
+                    continue;
+                } catch (final InterruptedIOException e) {
+                    // We timed out and assume the packet is lost.
+                    System.err.println("InterruptedIOException: Timed out and dropped packet");
+                    continue;
+                }
+                System.out.write(data);
+                System.out.flush();
             }
-            // Here we catch both SocketException and InterruptedIOException,
-            // because even though the JDK 1.1 docs claim that
-            // InterruptedIOException is thrown on a timeout, it seems
-            // SocketException is also thrown.
-            catch (final SocketException e) {
-                // We timed out and assume the packet is lost.
-                System.err.println("SocketException: Timed out and dropped packet");
-                continue;
-            } catch (final InterruptedIOException e) {
-                // We timed out and assume the packet is lost.
-                System.err.println("InterruptedIOException: Timed out and dropped packet");
-                continue;
-            }
-            System.out.write(data);
-            System.out.flush();
+
         }
-
-        client.close();
     }
 
     public static void main(final String[] args) {

@@ -152,15 +152,15 @@ public class RExecClient extends SocketClient {
     }
 
     /**
-     * Same as <code> rexec(username, password, command, false); </code>
+     * Same as <code> rexec(user, password, command, false); </code>
      *
-     * @param username the username
+     * @param user the user name
      * @param password the password
      * @param command  the command to run
      * @throws IOException if an error occurs
      */
-    public void rexec(final String username, final String password, final String command) throws IOException {
-        rexec(username, password, command, false);
+    public void rexec(final String user, final String password, final String command) throws IOException {
+        rexec(user, password, command, false);
     }
 
     /**
@@ -175,13 +175,13 @@ public class RExecClient extends SocketClient {
      * error stream by an attacker monitoring the rexec() negotiation. You may disable this behavior with {@link #setRemoteVerificationEnabled
      * setRemoteVerificationEnabled()} .
      *
-     * @param username            The account name on the server through which to execute the command.
+     * @param user            The account name on the server through which to execute the command.
      * @param password            The plain text password of the user account.
      * @param command             The command, including any arguments, to execute.
      * @param separateErrorStream True if you would like the standard error to be transmitted through a different stream than standard output. False if not.
      * @throws IOException If the rexec() attempt fails. The exception will contain a message indicating the nature of the failure.
      */
-    public void rexec(final String username, final String password, final String command, final boolean separateErrorStream) throws IOException {
+    public void rexec(final String user, final String password, final String command, final boolean separateErrorStream) throws IOException {
         int ch;
 
         if (separateErrorStream) {
@@ -190,7 +190,7 @@ public class RExecClient extends SocketClient {
             _output_.write(NULL_CHAR);
         }
 
-        _output_.write(username.getBytes(getCharset()));
+        _output_.write(user.getBytes(getCharset()));
         _output_.write(NULL_CHAR);
         _output_.write(password.getBytes(getCharset()));
         _output_.write(NULL_CHAR);

@@ -34,7 +34,7 @@ import org.apache.commons.net.examples.util.IOUtil;
  * use as an application, especially given that it relies on line-buffered input from System.in. The best way to run this example is probably from a Windows
  * DOS box into a Unix host.
  * <p>
- * Example: java rlogin myhost localusername remoteusername vt100
+ * Example: java rlogin myhost localuser remoteuser vt100
  * <p>
  * Usage: rlogin <hostname> <localuser> <remoteuser> <terminal>
  */
@@ -43,11 +43,6 @@ import org.apache.commons.net.examples.util.IOUtil;
 public final class rlogin {
 
     public static void main(final String[] args) {
-        final String server;
-        final String localuser;
-        final String remoteuser;
-        final String terminal;
-        final RLoginClient client;
 
         if (args.length != 4) {
             System.err.println("Usage: rlogin <hostname> <localuser> <remoteuser> <terminal>");
@@ -55,12 +50,11 @@ public final class rlogin {
             return; // so compiler can do proper flow control analysis
         }
 
-        client = new RLoginClient();
-
-        server = args[0];
-        localuser = args[1];
-        remoteuser = args[2];
-        terminal = args[3];
+        final RLoginClient client = new RLoginClient();
+        final String server = args[0];
+        final String localuser = args[1];
+        final String remoteuser = args[2];
+        final String terminal = args[3];
 
         try {
             client.connect(server);

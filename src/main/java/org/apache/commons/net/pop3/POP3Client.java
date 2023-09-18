@@ -229,22 +229,22 @@ public class POP3Client extends POP3 {
     }
 
     /**
-     * Login to the POP3 server with the given username and password. You must first connect to the server with
+     * Login to the POP3 server with the given user and password. You must first connect to the server with
      * {@link org.apache.commons.net.SocketClient#connect connect } before attempting to log in. A login attempt is only valid if the client is in the
      * {@link org.apache.commons.net.pop3.POP3#AUTHORIZATION_STATE AUTHORIZATION_STATE }. After logging in, the client enters the
      * {@link org.apache.commons.net.pop3.POP3#TRANSACTION_STATE TRANSACTION_STATE }.
      *
-     * @param username The account name being logged in to.
+     * @param user The account name being logged in to.
      * @param password The plain text password of the account.
      * @return True if the login attempt was successful, false if not.
      * @throws IOException If a network I/O error occurs in the process of logging in.
      */
-    public boolean login(final String username, final String password) throws IOException {
+    public boolean login(final String user, final String password) throws IOException {
         if (getState() != AUTHORIZATION_STATE) {
             return false;
         }
 
-        if (sendCommand(POP3Command.USER, username) != POP3Reply.OK) {
+        if (sendCommand(POP3Command.USER, user) != POP3Reply.OK) {
             return false;
         }
 
@@ -269,14 +269,14 @@ public class POP3Client extends POP3 {
      * information to use as a timestamp, and pass that information to this method. The secret is a shared secret known to you and the server. See RFC 1939 for
      * more details regarding the APOP command.
      *
-     * @param username  The account name being logged in to.
+     * @param user  The account name being logged in to.
      * @param timestamp The timestamp string to combine with the secret.
      * @param secret    The shared secret which produces the MD5 digest when combined with the timestamp.
      * @return True if the login attempt was successful, false if not.
      * @throws IOException              If a network I/O error occurs in the process of logging in.
      * @throws NoSuchAlgorithmException If the MD5 encryption algorithm cannot be instantiated by the Java runtime system.
      */
-    public boolean login(final String username, String timestamp, final String secret) throws IOException, NoSuchAlgorithmException {
+    public boolean login(final String user, String timestamp, final String secret) throws IOException, NoSuchAlgorithmException {
         int i;
         final byte[] digest;
         final StringBuilder buffer;
@@ -301,7 +301,7 @@ public class POP3Client extends POP3 {
         }
 
         buffer = new StringBuilder(256);
-        buffer.append(username);
+        buffer.append(user);
         buffer.append(' ');
         buffer.append(digestBuffer.toString());
 

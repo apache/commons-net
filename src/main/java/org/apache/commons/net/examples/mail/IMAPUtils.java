@@ -44,15 +44,15 @@ class IMAPUtils {
             throw new IllegalArgumentException("Missing userInfo details");
         }
 
-        final String[] userpass = userInfo.split(":");
-        if (userpass.length != 2) {
+        final String[] userPassword = userInfo.split(":");
+        if (userPassword.length != 2) {
             throw new IllegalArgumentException("Invalid userInfo details: '" + userInfo + "'");
         }
 
-        final String username = userpass[0];
-        String password = userpass[1];
+        final String user = userPassword[0];
+        String password = userPassword[1];
         // prompt for the password if necessary
-        password = Utils.getPassword(username, password);
+        password = Utils.getPassword(user, password);
 
         final IMAPClient imap;
 
@@ -86,7 +86,7 @@ class IMAPUtils {
             throw new IOException("Could not connect to server.", e);
         }
 
-        if (!imap.login(username, password)) {
+        if (!imap.login(user, password)) {
             imap.disconnect();
             throw new IOException("Could not login to server. Check login details.");
         }

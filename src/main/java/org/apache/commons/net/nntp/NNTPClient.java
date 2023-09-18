@@ -191,13 +191,13 @@ public class NNTPClient extends NNTP {
      * Log into a news server by sending the AUTHINFO USER/AUTHINFO PASS command sequence. This is usually sent in response to a 480 reply code from the NNTP
      * server.
      *
-     * @param username a valid username
+     * @param user a valid user name
      * @param password the corresponding password
      * @return True for successful login, false for a failure
      * @throws IOException on error
      */
-    public boolean authenticate(final String username, final String password) throws IOException {
-        int replyCode = authinfoUser(username);
+    public boolean authenticate(final String user, final String password) throws IOException {
+        int replyCode = authinfoUser(user);
 
         if (replyCode == NNTPReply.MORE_AUTH_INFO_REQUIRED) {
             replyCode = authinfoPass(password);

@@ -50,7 +50,7 @@ import org.apache.commons.net.util.Charsets;
  * <pre>
  * FTPClient f = FTPClient();
  * f.connect(server);
- * f.login(username, password);
+ * f.login(user, password);
  * FTPListParseEngine engine = f.initiateListParsing(directory);
  *
  * while (engine.hasNext()) {

@@ -49,7 +49,7 @@ public final class echo {
         client.connect(host);
         try {
             System.out.println("Connected to " + host + ".");
-            BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+            final BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
             try (PrintWriter echoOutput = new PrintWriter(new OutputStreamWriter(client.getOutputStream()), true);
                     BufferedReader echoInput = new BufferedReader(new InputStreamReader(client.getInputStream()))) {
                 while ((line = input.readLine()) != null) {
@@ -69,48 +69,47 @@ public final class echo {
         String line;
         final BufferedReader input;
         final InetAddress address;
-        final EchoUDPClient client;
 
         input = new BufferedReader(new InputStreamReader(System.in));
         address = InetAddress.getByName(host);
-        client = new EchoUDPClient();
+        try (EchoUDPClient client = new EchoUDPClient()) {
 
-        client.open();
-        // If we don't receive an echo within 5 seconds, assume the packet is lost.
-        client.setSoTimeout(Duration.ofSeconds(5));
-        System.out.println("Ready to echo to " + host + ".");
+            client.open();
+            // If we don't receive an echo within 5 seconds, assume the packet is lost.
+            client.setSoTimeout(Duration.ofSeconds(5));
+            System.out.println("Ready to echo to " + host + ".");
 
-        // Remember, there are no guarantees about the ordering of returned
-        // UDP packets, so there is a chance the output may be jumbled.
-        while ((line = input.readLine()) != null) {
-            data = line.getBytes();
-            client.send(data, address);
-            count = 0;
-            do {
-                try {
-                    length = client.receive(data);
-                }
-                // Here we catch both SocketException and InterruptedIOException,
-                // because even though the JDK 1.1 docs claim that
-                // InterruptedIOException is thrown on a timeout, it seems
-                // SocketException is also thrown.
-                catch (final SocketException e) {
-                    // We timed out and assume the packet is lost.
-                    System.err.println("SocketException: Timed out and dropped packet");
-                    break;
-                } catch (final InterruptedIOException e) {
-                    // We timed out and assume the packet is lost.
-                    System.err.println("InterruptedIOException: Timed out and dropped packet");
-                    break;
-                }
-                System.out.print(new String(data, 0, length));
-                count += length;
-            } while (count < data.length);
+            // Remember, there are no guarantees about the ordering of returned
+            // UDP packets, so there is a chance the output may be jumbled.
+            while ((line = input.readLine()) != null) {
+                data = line.getBytes();
+                client.send(data, address);
+                count = 0;
+                do {
+                    try {
+                        length = client.receive(data);
+                    }
+                    // Here we catch both SocketException and InterruptedIOException,
+                    // because even though the JDK 1.1 docs claim that
+                    // InterruptedIOException is thrown on a timeout, it seems
+                    // SocketException is also thrown.
+                    catch (final SocketException e) {
+                        // We timed out and assume the packet is lost.
+                        System.err.println("SocketException: Timed out and dropped packet");
+                        break;
+                    } catch (final InterruptedIOException e) {
+                        // We timed out and assume the packet is lost.
+                        System.err.println("InterruptedIOException: Timed out and dropped packet");
+                        break;
+                    }
+                    System.out.print(new String(data, 0, length));
+                    count += length;
+                } while (count < data.length);
 
-            System.out.println();
+                System.out.println();
+            }
+
         }
-
-        client.close();
     }
 
     public static void main(final String[] args) {

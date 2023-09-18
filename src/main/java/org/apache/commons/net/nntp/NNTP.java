@@ -186,15 +186,15 @@ public class NNTP extends SocketClient {
     /**
      * A convenience method to send the AUTHINFO USER command to the server, receive the reply, and return the reply code. (See RFC 2980)
      *
-     * @param username A valid username.
+     * @param user A valid user name.
      * @return The reply code received from the server. The server should return a 381 or 281 for this command.
      * @throws NNTPConnectionClosedException If the NNTP server prematurely closes the connection as a result of the client being idle or some other reason
      *                                       causing the server to send NNTP reply code 400. This exception may be caught either as an IOException or
      *                                       independently as itself.
      * @throws IOException                   If an I/O error occurs while either sending the command or receiving the server reply.
      */
-    public int authinfoUser(final String username) throws IOException {
-        final String userParameter = "USER " + username;
+    public int authinfoUser(final String user) throws IOException {
+        final String userParameter = "USER " + user;
         return sendCommand(NNTPCommand.AUTHINFO, userParameter);
     }
 
