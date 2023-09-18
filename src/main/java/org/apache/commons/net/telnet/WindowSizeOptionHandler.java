@@ -40,7 +40,6 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler {
 
     /**
      * Constructor for the WindowSizeOptionHandler. Initial and accept behavior flags are set to false
-     * <p>
      *
      * @param nWidth  - Window width.
      * @param nHeight - Window Height
@@ -74,7 +73,6 @@ public class WindowSizeOptionHandler extends TelnetOptionHandler {
 
     /**
      * Implements the abstract method of TelnetOptionHandler. This will send the client Height and Width to the server.
-     * <p>
      *
      * @return array to send to remote system
      */

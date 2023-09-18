@@ -31,8 +31,8 @@ import java.time.Duration;
  * InputStream and OutputStream for sending and receiving data over the Telnet connection can be obtained by using the {@link #getInputStream getInputStream() }
  * and {@link #getOutputStream getOutputStream() } methods. When you finish using the streams, you must call {@link #disconnect disconnect } rather than simply
  * closing the streams.
+ * </p>
  */
-
 public class TelnetClient extends Telnet {
     private static final int DEFAULT_MAX_SUBNEGOTIATION_LENGTH = 512;
 

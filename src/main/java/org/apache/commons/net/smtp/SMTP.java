@@ -46,11 +46,13 @@ import org.apache.commons.net.util.NetConstants;
  * {@link org.apache.commons.net.SocketClient#disconnect disconnect() } to properly clean up the system resources used by SMTP. Before disconnecting, you may
  * check the last reply code and text with {@link #getReplyCode getReplyCode }, {@link #getReplyString getReplyString }, and {@link #getReplyStrings
  * getReplyStrings}.
+ * </p>
  * <p>
  * Rather than list it separately for each method, we mention here that every method communicating with the server and throwing an IOException can also throw a
  * {@link org.apache.commons.net.MalformedServerReplyException} , which is a subclass of IOException. A MalformedServerReplyException will be thrown when the
  * reply received from the server deviates enough from the protocol specification that it cannot be interpreted in a useful manner despite attempts to be as
  * lenient as possible.
+ * </p>
  *
  * @see SMTPClient
  * @see SMTPConnectionClosedException

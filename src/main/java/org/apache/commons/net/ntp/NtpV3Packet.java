@@ -34,14 +34,29 @@ public interface NtpV3Packet {
     int LI_LAST_MINUTE_HAS_59_SECONDS = 2;
     int LI_ALARM_CONDITION = 3;
 
-    /* mode options */
+    // mode options
+    /** Mode option {@value}. */
     int MODE_RESERVED = 0;
+
+    /** Mode option {@value}. */
     int MODE_SYMMETRIC_ACTIVE = 1;
+
+    /** Mode option {@value}. */
     int MODE_SYMMETRIC_PASSIVE = 2;
+
+    /** Mode option {@value}. */
     int MODE_CLIENT = 3;
+
+    /** Mode option {@value}. */
     int MODE_SERVER = 4;
+
+    /** Mode option {@value}. */
     int MODE_BROADCAST = 5;
+
+    /** Mode option {@value}. */
     int MODE_CONTROL_MESSAGE = 6;
+
+    /** Mode option {@value}. */
     int MODE_PRIVATE = 7;
 
     int NTP_MINPOLL = 4; // 16 seconds

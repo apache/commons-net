@@ -23,6 +23,7 @@ package org.apache.commons.net.nntp;
  * <p>
  * The main purpose of the class is to faciliatate the article posting process, by relieving the programmer from having to explicitly format an article header.
  * For example:
+ * </p>
  *
  * <pre>
  * writer = client.postArticle();
@@ -49,7 +50,6 @@ public class SimpleNNTPHeader {
 
     /**
      * Creates a new SimpleNNTPHeader instance initialized with the given from and subject header field values.
-     * <p>
      *
      * @param from    The value of the <code>From:</code> header field. This should be the article poster's email address.
      * @param subject The value of the <code>Subject:</code> header field. This should be the subject of the article.
@@ -70,7 +70,6 @@ public class SimpleNNTPHeader {
      * <pre>
      * header.addHeaderField("Organization", "Foobar, Inc.");
      * </pre>
-     * <p>
      *
      * @param headerField The header field to add, not including the colon.
      * @param value       The value of the added header field.
@@ -84,7 +83,6 @@ public class SimpleNNTPHeader {
 
     /**
      * Adds a newsgroup to the article <code>Newsgroups:</code> field.
-     * <p>
      *
      * @param newsgroup The newsgroup to add to the article's newsgroup distribution list.
      */
@@ -97,7 +95,6 @@ public class SimpleNNTPHeader {
 
     /**
      * Returns the address used in the <code> From: </code> header field.
-     * <p>
      *
      * @return The from address.
      */
@@ -107,7 +104,6 @@ public class SimpleNNTPHeader {
 
     /**
      * Returns the contents of the <code> Newsgroups: </code> header field.
-     * <p>
      *
      * @return The comma-separated list of newsgroups to which the article is being posted.
      */
@@ -117,7 +113,6 @@ public class SimpleNNTPHeader {
 
     /**
      * Returns the subject used in the <code> Subject: </code> header field.
-     * <p>
      *
      * @return The subject.
      */
@@ -128,7 +123,6 @@ public class SimpleNNTPHeader {
     /**
      * Converts the SimpleNNTPHeader to a properly formatted header in the form of a String, including the blank line used to separate the header from the
      * article body.
-     * <p>
      *
      * @return The article header in the form of a String.
      */

@@ -100,7 +100,6 @@ public final class TelnetCommand {
 
     /**
      * Returns the string representation of the telnet protocol command corresponding to the given command code.
-     * <p>
      *
      * @param code The command code of the telnet protocol command.
      * @return The string representation of the telnet protocol command.
@@ -111,7 +110,6 @@ public final class TelnetCommand {
 
     /**
      * Determines if a given command code is valid. Returns true if valid, false if not.
-     * <p>
      *
      * @param code The command code to test.
      * @return True if the command code is valid, false if not.

@@ -21,12 +21,11 @@ package org.apache.commons.net.telnet;
  * The TelnetOption class cannot be instantiated and only serves as a storehouse for telnet option constants.
  * <p>
  * Details regarding Telnet option specification can be found in RFC 855.
- *
+ * </p>
  *
  * @see org.apache.commons.net.telnet.Telnet
  * @see org.apache.commons.net.telnet.TelnetClient
  */
-
 public class TelnetOption {
     /** The maximum value an option code can have. This value is 255. */
     public static final int MAX_OPTION_VALUE = 255;

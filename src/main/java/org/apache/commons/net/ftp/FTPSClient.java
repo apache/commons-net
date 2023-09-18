@@ -59,57 +59,79 @@ public class FTPSClient extends FTPClient {
 //    ftps        990/tcp    ftp protocol, control, over TLS/SSL
 //    ftps        990/udp    ftp protocol, control, over TLS/SSL
 
+    /** Default FTPS data port. */
     public static final int DEFAULT_FTPS_DATA_PORT = 989;
+
+    /** Default FTPS port. */
     public static final int DEFAULT_FTPS_PORT = 990;
 
     /** The value that I can set in PROT command (C = Clear, P = Protected) */
     private static final String[] PROT_COMMAND_VALUE = { "C", "E", "S", "P" };
+
     /** Default PROT Command */
     private static final String DEFAULT_PROT = "C";
+
     /** Default secure socket protocol name, i.e. TLS */
     private static final String DEFAULT_PROTOCOL = "TLS";
 
     /** The AUTH (Authentication/Security Mechanism) command. */
     private static final String CMD_AUTH = "AUTH";
+
     /** The ADAT (Authentication/Security Data) command. */
     private static final String CMD_ADAT = "ADAT";
+
     /** The PROT (Data Channel Protection Level) command. */
     private static final String CMD_PROT = "PROT";
+
     /** The PBSZ (Protection Buffer Size) command. */
     private static final String CMD_PBSZ = "PBSZ";
+
     /** The MIC (Integrity Protected Command) command. */
     private static final String CMD_MIC = "MIC";
+
     /** The CONF (Confidentiality Protected Command) command. */
     private static final String CMD_CONF = "CONF";
+
     /** The ENC (Privacy Protected Command) command. */
     private static final String CMD_ENC = "ENC";
+
     /** The CCC (Clear Command Channel) command. */
     private static final String CMD_CCC = "CCC";
 
     /** @deprecated - not used - may be removed in a future release */
     @Deprecated
     public static String KEYSTORE_ALGORITHM;
+
     /** @deprecated - not used - may be removed in a future release */
     @Deprecated
     public static String TRUSTSTORE_ALGORITHM;
+
     /** @deprecated - not used - may be removed in a future release */
     @Deprecated
     public static String PROVIDER;
+
     /** @deprecated - not used - may be removed in a future release */
     @Deprecated
     public static String STORE_TYPE;
+
     /** The security mode. (True - Implicit Mode / False - Explicit Mode) */
     private final boolean isImplicit;
+
     /** The secure socket protocol to be used, e.g. SSL/TLS. */
     private final String protocol;
+
     /** The AUTH Command value */
     private String auth = DEFAULT_PROTOCOL;
+
     /** The context object. */
     private SSLContext context;
+
     /** The socket object. */
     private Socket plainSocket;
+
     /** Controls whether a new SSL session may be established by this socket. Default true. */
     private boolean isCreation = true;
+
     /** The use client mode flag. */
     private boolean isClientMode = true;
 

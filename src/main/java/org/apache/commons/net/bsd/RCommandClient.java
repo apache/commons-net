@@ -45,6 +45,7 @@ import org.apache.commons.net.io.SocketInputStream;
  * {@link #rcommand rcommand() } method, and then fetch the connection's input, output, and optionally error streams. Interaction with the remote command is
  * controlled entirely through the I/O streams. Once you have finished processing the streams, you should invoke
  * {@link org.apache.commons.net.bsd.RExecClient#disconnect disconnect() } to clean up properly.
+ * </p>
  * <p>
  * By default, the standard output and standard error streams of the remote process are transmitted over the same connection, readable from the input stream
  * returned by {@link org.apache.commons.net.bsd.RExecClient#getInputStream getInputStream() } . However, it is possible to tell the rshd daemon to return the
@@ -52,12 +53,12 @@ import org.apache.commons.net.io.SocketInputStream;
  * getErrorStream() } . You can specify that a separate connection should be created for standard error by setting the boolean
  * <code> separateErrorStream </code> parameter of {@link #rcommand rcommand() } to <code> true </code>. The standard input of the remote process can be written
  * to through the output stream returned by {@link org.apache.commons.net.bsd.RExecClient#getOutputStream getOutputStream() } .
+ * </p>
  *
  * @see org.apache.commons.net.SocketClient
  * @see RExecClient
  * @see RLoginClient
  */
-
 public class RCommandClient extends RExecClient {
     /**
      * The default rshell port. Set to 514 in BSD Unix.
@@ -247,13 +248,13 @@ public class RCommandClient extends RExecClient {
     /**
      * Same as <code> rcommand(localUsername, remoteUsername, command, false); </code>
      *
-     * @param localUsername  the local user
-     * @param remoteUsername the remote user
+     * @param localUser  the local user
+     * @param remoteUser the remote user
      * @param command        the command
      * @throws IOException on error
      */
-    public void rcommand(final String localUsername, final String remoteUsername, final String command) throws IOException {
-        rcommand(localUsername, remoteUsername, command, false);
+    public void rcommand(final String localUser, final String remoteUser, final String command) throws IOException {
+        rcommand(localUser, remoteUser, command, false);
     }
 
     /**
@@ -268,16 +269,16 @@ public class RCommandClient extends RExecClient {
      * the remote server, an IOException will be thrown. This serves as a simple protection against possible hijacking of the error stream by an attacker
      * monitoring the rexec() negotiation. You may disable this behavior with {@link org.apache.commons.net.bsd.RExecClient#setRemoteVerificationEnabled
      * setRemoteVerificationEnabled()} .
-     * <p>
+     * </p>
      *
-     * @param localUsername       The user account on the local machine that is requesting the command execution.
-     * @param remoteUsername      The account name on the server through which to execute the command.
+     * @param localUser       The user account on the local machine that is requesting the command execution.
+     * @param remoteUser      The account name on the server through which to execute the command.
      * @param command             The command, including any arguments, to execute.
      * @param separateErrorStream True if you would like the standard error to be transmitted through a different stream than standard output. False if not.
      * @throws IOException If the rcommand() attempt fails. The exception will contain a message indicating the nature of the failure.
      */
-    public void rcommand(final String localUsername, final String remoteUsername, final String command, final boolean separateErrorStream) throws IOException {
-        rexec(localUsername, remoteUsername, command, separateErrorStream);
+    public void rcommand(final String localUser, final String remoteUser, final String command, final boolean separateErrorStream) throws IOException {
+        rexec(localUser, remoteUser, command, separateErrorStream);
     }
 
 }

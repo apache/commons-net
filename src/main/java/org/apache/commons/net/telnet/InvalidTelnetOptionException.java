@@ -37,7 +37,6 @@ public class InvalidTelnetOptionException extends Exception {
 
     /**
      * Constructor for the exception.
-     * <p>
      *
      * @param message - Error message.
      * @param optcode - Option code.
@@ -49,7 +48,6 @@ public class InvalidTelnetOptionException extends Exception {
 
     /**
      * Gets the error message of ths exception.
-     * <p>
      *
      * @return the error message.
      */

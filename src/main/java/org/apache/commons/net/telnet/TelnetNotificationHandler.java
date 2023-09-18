@@ -22,8 +22,8 @@ package org.apache.commons.net.telnet;
  * <p>
  * The user can implement this interface and register a TelnetNotificationHandler by using the registerNotificationHandler() of TelnetClient to be notified of
  * option negotiation commands.
+ * </p>
  */
-
 public interface TelnetNotificationHandler {
     /**
      * The remote party sent a DO command.
