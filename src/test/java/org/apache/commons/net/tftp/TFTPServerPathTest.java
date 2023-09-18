@@ -44,10 +44,6 @@ public class TFTPServerPathTest {
     private static final int SERVER_PORT = 6901;
     private static final String FILE_PREFIX = "TFTPServerPathTest_";
 
-    private static String getRandomFileName(final String suffix) {
-        return FILE_PREFIX + UUID.randomUUID() + suffix;
-    }
-
     private static Path createFileInDir(final Path directory, final String fileName) throws IOException {
         final Path filePath = directory.resolve(fileName);
         if (Files.exists(filePath)) {
@@ -62,19 +58,16 @@ public class TFTPServerPathTest {
         }
     }
 
+    private static String getRandomFileName(final String suffix) {
+        return FILE_PREFIX + UUID.randomUUID() + suffix;
+    }
+
     private TFTPServer tftpServer;
     private Path serverDirectory;
 
     private TFTPClient tftpClient;
     private Path fileToRead;
     private Path fileToWrite;
-
-    @BeforeEach
-    public void beforeEach() throws IOException {
-        serverDirectory = FileUtils.getTempDirectory().toPath();
-        fileToRead = createFileInDir(serverDirectory, getRandomFileName(".source.txt"));
-        fileToWrite = createFileInDir(serverDirectory, getRandomFileName(".out"));
-    }
 
     @AfterEach
     public void afterEach() throws IOException {
@@ -86,6 +79,13 @@ public class TFTPServerPathTest {
         }
         deleteFile(fileToRead);
         deleteFile(fileToWrite);
+    }
+
+    @BeforeEach
+    public void beforeEach() throws IOException {
+        serverDirectory = FileUtils.getTempDirectory().toPath();
+        fileToRead = createFileInDir(serverDirectory, getRandomFileName(".source.txt"));
+        fileToWrite = createFileInDir(serverDirectory, getRandomFileName(".out"));
     }
 
     private TFTPServer startTftpServer(final ServerMode serverMode) throws IOException {
@@ -149,6 +149,23 @@ public class TFTPServerPathTest {
     }
 
     @Test
+    public void testWriteOutsideHome() throws IOException {
+        // Start a read/write server
+        tftpServer = startTftpServer(ServerMode.GET_AND_PUT);
+        final String serverAddress = "localhost";
+        final int serverPort = tftpServer.getPort();
+
+        tftpClient = new TFTPClient();
+        tftpClient.open();
+
+        try (final InputStream is = Files.newInputStream(fileToRead)) {
+            final IOException exception = assertThrows(IOException.class, () -> tftpClient.sendFile("../foo", TFTP.BINARY_MODE, is, serverAddress, serverPort));
+            assertEquals("Error code 0 received: Cannot access files outside of TFTP server root.", exception.getMessage());
+            assertFalse(Files.exists(serverDirectory.resolve("foo")), "file created when it should not have been");
+        }
+    }
+
+    @Test
     public void testWriteVerifyContents() throws IOException {
         // Start a write-only server
         tftpServer = startTftpServer(ServerMode.GET_AND_PUT);
@@ -175,23 +192,6 @@ public class TFTPServerPathTest {
             final String readFileName = fileToRead.getFileName().toString();
             final int readBytes = tftpClient.receiveFile(readFileName, TFTP.BINARY_MODE, os, serverAddress, serverPort);
             assertEquals(content.length, readBytes);
-        }
-    }
-
-    @Test
-    public void testWriteOutsideHome() throws IOException {
-        // Start a read/write server
-        tftpServer = startTftpServer(ServerMode.GET_AND_PUT);
-        final String serverAddress = "localhost";
-        final int serverPort = tftpServer.getPort();
-
-        tftpClient = new TFTPClient();
-        tftpClient.open();
-
-        try (final InputStream is = Files.newInputStream(fileToRead)) {
-            final IOException exception = assertThrows(IOException.class, () -> tftpClient.sendFile("../foo", TFTP.BINARY_MODE, is, serverAddress, serverPort));
-            assertEquals("Error code 0 received: Cannot access files outside of TFTP server root.", exception.getMessage());
-            assertFalse(Files.exists(serverDirectory.resolve("foo")), "file created when it should not have been");
         }
     }
 
