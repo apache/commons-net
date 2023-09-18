@@ -33,7 +33,7 @@ public class POP3Constants {
 
     public static final String mailhost = "localhost";
 
-    // Cannot be instantiated
+    /** Cannot be instantiated. */
     private POP3Constants() {
     }
 }

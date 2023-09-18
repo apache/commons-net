@@ -64,8 +64,6 @@ public final class NNTPReply {
     public static final int PERMISSION_DENIED = 502;
     public static final int PROGRAM_FAULT = 503;
 
-    // Cannot be instantiated
-
     /**
      * Determine if a reply code is an informational response. All codes beginning with a 1 are positive informational responses. Informational responses are
      * used to provide human-readable information such as help text.

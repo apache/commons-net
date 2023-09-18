@@ -169,7 +169,7 @@ public final class IMAPReply {
         return -1;
     }
 
-    // Cannot be instantiated.
+    /** Cannot be instantiated. */
     private IMAPReply() {
     }
 

@@ -152,7 +152,7 @@ public class TelnetOption {
         return code <= LAST_OPTION;
     }
 
-    // Cannot be instantiated
+    /** Cannot be instantiated. */
     private TelnetOption() {
     }
 }

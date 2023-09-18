@@ -283,7 +283,7 @@ public final class Util {
         return total;
     }
 
-    // Cannot be instantiated
+    /** Cannot be instantiated. */
     private Util() {
     }
 }

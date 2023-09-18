@@ -89,7 +89,7 @@ public final class NNTPCommand {
         return commands[command];
     }
 
-    // Cannot be instantiated
+    /** Cannot be instantiated. */
     private NNTPCommand() {
     }
 

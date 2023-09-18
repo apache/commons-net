@@ -110,7 +110,7 @@ public final class SMTPReply {
         return reply >= 100 && reply < 200;
     }
 
-    // Cannot be instantiated
+    /** Cannot be instantiated. */
     private SMTPReply() {
     }
 

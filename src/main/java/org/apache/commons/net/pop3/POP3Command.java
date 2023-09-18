@@ -80,7 +80,7 @@ public final class POP3Command {
         return commands[command];
     }
 
-    // Cannot be instantiated.
+    /** Cannot be instantiated. */
     private POP3Command() {
     }
 }

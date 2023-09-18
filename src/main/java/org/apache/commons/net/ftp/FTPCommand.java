@@ -328,7 +328,7 @@ public final class FTPCommand {
         return COMMANDS[command];
     }
 
-    // Cannot be instantiated
+    /** Cannot be instantiated. */
     private FTPCommand() {
     }
 }

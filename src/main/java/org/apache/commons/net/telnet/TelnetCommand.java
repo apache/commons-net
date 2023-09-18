@@ -120,7 +120,7 @@ public final class TelnetCommand {
         return code <= FIRST_COMMAND && code >= LAST_COMMAND;
     }
 
-    // Cannot be instantiated
+    /** Cannot be instantiated. */
     private TelnetCommand() {
     }
 }

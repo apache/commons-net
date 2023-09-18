@@ -35,7 +35,7 @@ public final class POP3Reply {
      */
     public static final int OK_INT = 2;
 
-    // Cannot be instantiated.
+    /** Cannot be instantiated. */
     private POP3Reply() {
     }
 }

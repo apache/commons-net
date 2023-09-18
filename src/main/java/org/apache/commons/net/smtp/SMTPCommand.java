@@ -92,7 +92,7 @@ public final class SMTPCommand {
         return commands[command];
     }
 
-    // Cannot be instantiated
+    /** Cannot be instantiated. */
     private SMTPCommand() {
     }
 
