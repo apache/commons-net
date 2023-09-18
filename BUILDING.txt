@@ -1,33 +1,14 @@
-The code requires at least Java 1.6 to build.
-
-However, Maven 3.3.1+ require Java 7
-
-If you want to build and test the code using Java 1.6, use the profile -Pjava-1.6, e.g.
-
-$ mvn clean test -Pjava-1.6
+The code requires at least Java 8 to build.
 
 For setting up your Maven installation to enable the use of the profile, please see:
 
 https://commons.apache.org/commons-parent-pom.html#Testing_with_different_Java_versions
 
-The latest version of Maven that runs under Java 1.6 is 3.2.5 [1]
-
-Building the site will also generally require at least Java 7 to run Maven.
-In particular, the Checkstyle plugin requires Java 7.
+Building the site will also generally require at least Java 8 to run Maven.
 
 To build the site from scratch, you can use:
 
-$ mvn clean site [-Pjava-1.6]
-
-Also, ensure Maven has enough memory when using Java 7:
-
-$ export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=128m" # Unix
-C:> set MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=128m"    # Windows
-
-For Java 8+, the MaxPermSize option should be removed:
-
-$ export MAVEN_OPTS="-Xmx512m" # Unix
-C:> set MAVEN_OPTS="-Xmx512m"    # Windows
+$ mvn clean site
 
 To install the component locally:
 
@@ -35,7 +16,7 @@ $ mvn install
 
 To deploy:
 
-$ mvn deploy -Prelease -Duser.name=*ASF ID* -Pjava-1.6 [-Ptest-deploy]
+$ mvn deploy -Prelease -Duser.name=*ASF ID* [-Ptest-deploy]
 
 The test-deploy profile deploys to target/deploy rather than Nexus
 
