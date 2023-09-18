@@ -33,6 +33,10 @@ import javax.net.ssl.SSLContext;
  * @see IMAPSClient
  */
 public class AuthenticatingIMAPClient extends IMAPSClient {
+
+    /** {@link Mac} algorithm. */
+    private static final String MAC_ALGORITHM = "HmacMD5";
+
     /**
      * The enumeration of currently-supported authentication methods.
      */
@@ -160,8 +164,8 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
             // get the CRAM challenge (after "+ ")
             final byte[] serverChallenge = Base64.getDecoder().decode(getReplyString().substring(2).trim());
             // get the Mac instance
-            final Mac hmacMd5 = Mac.getInstance("HmacMD5");
-            hmacMd5.init(new SecretKeySpec(password.getBytes(getCharset()), "HmacMD5"));
+            final Mac hmacMd5 = Mac.getInstance(MAC_ALGORITHM);
+            hmacMd5.init(new SecretKeySpec(password.getBytes(getCharset()), MAC_ALGORITHM));
             // compute the result:
             final byte[] hmacResult = convertToHexString(hmacMd5.doFinal(serverChallenge)).getBytes(getCharset());
             // join the byte arrays to form the reply
