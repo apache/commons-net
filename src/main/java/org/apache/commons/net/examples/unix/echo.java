@@ -42,27 +42,25 @@ public final class echo {
 
     public static void echoTCP(final String host) throws IOException {
         final EchoTCPClient client = new EchoTCPClient();
-        final BufferedReader input;
-        final BufferedReader echoInput;
-        final PrintWriter echoOutput;
         String line;
 
         // We want to timeout if a response takes longer than 60 seconds
         client.setDefaultTimeout(60000);
         client.connect(host);
-        System.out.println("Connected to " + host + ".");
-        input = new BufferedReader(new InputStreamReader(System.in));
-        echoOutput = new PrintWriter(new OutputStreamWriter(client.getOutputStream()), true);
-        echoInput = new BufferedReader(new InputStreamReader(client.getInputStream()));
-
-        while ((line = input.readLine()) != null) {
-            echoOutput.println(line);
-            System.out.println(echoInput.readLine());
+        try {
+            System.out.println("Connected to " + host + ".");
+            BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+            try (PrintWriter echoOutput = new PrintWriter(new OutputStreamWriter(client.getOutputStream()), true);
+                    BufferedReader echoInput = new BufferedReader(new InputStreamReader(client.getInputStream()))) {
+                while ((line = input.readLine()) != null) {
+                    echoOutput.println(line);
+                    System.out.println(echoInput.readLine());
+                }
+            }
+            // Don't close System.in
+        } finally {
+            client.disconnect();
         }
-        echoOutput.close();
-        echoInput.close();
-        echoInput.close();
-        client.disconnect();
     }
 
     public static void echoUDP(final String host) throws IOException {
