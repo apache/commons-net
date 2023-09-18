@@ -21,12 +21,11 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Base64;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.SSLContext;
-
-import org.apache.commons.net.util.Base64;
 
 /**
  * An IMAP Client class with authentication support.
@@ -151,7 +150,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
         switch (method) {
         case PLAIN: {
             // the server sends an empty response ("+ "), so we don't have to read it.
-            final int result = sendData(Base64.encodeBase64StringUnChunked(("\000" + username + "\000" + password).getBytes(getCharset())));
+            final int result = sendData(Base64.getEncoder().encodeToString(("\000" + username + "\000" + password).getBytes(getCharset())));
             if (result == IMAPReply.OK) {
                 setState(IMAP.IMAPState.AUTH_STATE);
             }
@@ -159,7 +158,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
         }
         case CRAM_MD5: {
             // get the CRAM challenge (after "+ ")
-            final byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(2).trim());
+            final byte[] serverChallenge = Base64.getDecoder().decode(getReplyString().substring(2).trim());
             // get the Mac instance
             final Mac hmacMd5 = Mac.getInstance("HmacMD5");
             hmacMd5.init(new SecretKeySpec(password.getBytes(getCharset()), "HmacMD5"));
@@ -172,7 +171,7 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
             toEncode[usernameBytes.length] = ' ';
             System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
             // send the reply and read the server code:
-            final int result = sendData(Base64.encodeBase64StringUnChunked(toEncode));
+            final int result = sendData(Base64.getEncoder().encodeToString(toEncode));
             if (result == IMAPReply.OK) {
                 setState(IMAP.IMAPState.AUTH_STATE);
             }
@@ -181,10 +180,10 @@ public class AuthenticatingIMAPClient extends IMAPSClient {
         case LOGIN: {
             // the server sends fixed responses (base64("Username") and
             // base64("Password")), so we don't have to read them.
-            if (sendData(Base64.encodeBase64StringUnChunked(username.getBytes(getCharset()))) != IMAPReply.CONT) {
+            if (sendData(Base64.getEncoder().encodeToString(username.getBytes(getCharset()))) != IMAPReply.CONT) {
                 return false;
             }
-            final int result = sendData(Base64.encodeBase64StringUnChunked(password.getBytes(getCharset())));
+            final int result = sendData(Base64.getEncoder().encodeToString(password.getBytes(getCharset())));
             if (result == IMAPReply.OK) {
                 setState(IMAP.IMAPState.AUTH_STATE);
             }
