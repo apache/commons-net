@@ -36,6 +36,7 @@ import org.apache.commons.net.echo.EchoUDPClient;
  * the -udp flag to use the UDP port.
  * <p>
  * Usage: echo [-udp] <hostname>
+ * </p>
  */
 public final class echo {
 
