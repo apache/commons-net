@@ -154,6 +154,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">
         Deprecate org.apache.commons.net.util.Base64 in favor of java.util.Base64.
       </action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">
+        Replace use of org.apache.commons.net.util.Base64 with java.util.Base64 in org.apache.commons.net.ftp.
+      </action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Dependabot">
         Bump commons-parent from 54 to 62 #132, #137, #153.

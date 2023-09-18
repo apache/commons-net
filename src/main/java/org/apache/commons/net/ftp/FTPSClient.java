@@ -27,6 +27,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Base64;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManager;
@@ -37,7 +38,6 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
-import org.apache.commons.net.util.Base64;
 import org.apache.commons.net.util.SSLContextUtils;
 import org.apache.commons.net.util.SSLSocketUtils;
 import org.apache.commons.net.util.TrustManagerUtils;
@@ -367,7 +367,7 @@ public class FTPSClient extends FTPClient {
      */
     public int execADAT(final byte[] data) throws IOException {
         if (data != null) {
-            return sendCommand(CMD_ADAT, Base64.encodeBase64StringUnChunked(data));
+            return sendCommand(CMD_ADAT, Base64.getEncoder().encodeToString(data));
         }
         return sendCommand(CMD_ADAT);
     }
@@ -434,7 +434,7 @@ public class FTPSClient extends FTPClient {
      */
     public int execCONF(final byte[] data) throws IOException {
         if (data != null) {
-            return sendCommand(CMD_CONF, Base64.encodeBase64StringUnChunked(data));
+            return sendCommand(CMD_CONF, Base64.getEncoder().encodeToString(data));
         }
         return sendCommand(CMD_CONF, ""); // perhaps "=" or just sendCommand(String)?
     }
@@ -449,7 +449,7 @@ public class FTPSClient extends FTPClient {
      */
     public int execENC(final byte[] data) throws IOException {
         if (data != null) {
-            return sendCommand(CMD_ENC, Base64.encodeBase64StringUnChunked(data));
+            return sendCommand(CMD_ENC, Base64.getEncoder().encodeToString(data));
         }
         return sendCommand(CMD_ENC, ""); // perhaps "=" or just sendCommand(String)?
     }
@@ -464,7 +464,7 @@ public class FTPSClient extends FTPClient {
      */
     public int execMIC(final byte[] data) throws IOException {
         if (data != null) {
-            return sendCommand(CMD_MIC, Base64.encodeBase64StringUnChunked(data));
+            return sendCommand(CMD_MIC, Base64.getEncoder().encodeToString(data));
         }
         return sendCommand(CMD_MIC, ""); // perhaps "=" or just sendCommand(String)?
     }
@@ -830,7 +830,7 @@ public class FTPSClient extends FTPClient {
         if (reply == null) {
             return null;
         }
-        return Base64.decodeBase64(extractPrefixedData("ADAT=", reply));
+        return Base64.getDecoder().decode(extractPrefixedData("ADAT=", reply));
     }
 
     /**
