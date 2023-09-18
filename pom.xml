@@ -54,6 +54,7 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
         <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-net</commons.scmPubUrl>
         <japicmp.skip>false</japicmp.skip>
         <jacoco.skip>false</jacoco.skip>
+        <checkstyle.configdir>src/conf</checkstyle.configdir>
 
         <!-- Current release -->
         <commons.release.version>3.10.0</commons.release.version>
@@ -360,10 +361,10 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <configuration>
-                    <configLocation>${basedir}/checkstyle.xml</configLocation>
+                    <configLocation>${checkstyle.configdir}/checkstyle.xml</configLocation>
                     <!-- Needed to define config_loc for use by Eclipse -->
-                    <propertyExpansion>config_loc=${basedir}</propertyExpansion>
-                    <suppressionsLocation>${basedir}/checkstyle-suppressions.xml</suppressionsLocation>
+                    <propertyExpansion>config_loc=${checkstyle.configdir}</propertyExpansion>
+                    <suppressionsLocation>${checkstyle.configdir}/checkstyle-suppressions.xml</suppressionsLocation>
                     <enableRulesSummary>false</enableRulesSummary>
                 </configuration>
             </plugin>
@@ -395,10 +396,10 @@ Supported protocols include: Echo, Finger, FTP, NNTP, NTP, POP3(S), SMTP(S), Tel
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${commons.checkstyle-plugin.version}</version>
                 <configuration>
-                    <configLocation>${basedir}/checkstyle.xml</configLocation>
+                    <configLocation>${checkstyle.configdir}/checkstyle.xml</configLocation>
                     <!-- Needed to define config_loc for use by Eclipse -->
-                    <propertyExpansion>config_loc=${basedir}</propertyExpansion>
-                    <suppressionsLocation>${basedir}/checkstyle-suppressions.xml</suppressionsLocation>
+                    <propertyExpansion>config_loc=${checkstyle.configdir}</propertyExpansion>
+                    <suppressionsLocation>${checkstyle.configdir}/checkstyle-suppressions.xml</suppressionsLocation>
                     <enableRulesSummary>false</enableRulesSummary>
                 </configuration>
             </plugin>
