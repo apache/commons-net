@@ -206,7 +206,7 @@ public class TimeInfo {
                 comments.add("Error: OrigTime > DestRcvTime");
             }
 
-            offsetMillis = Long.valueOf(((rcvTimeMillis - origTimeMillis) + (xmitTimeMillis - returnTimeMillis)) / 2);
+            offsetMillis = Long.valueOf((rcvTimeMillis - origTimeMillis + xmitTimeMillis - returnTimeMillis) / 2);
         }
     }
 

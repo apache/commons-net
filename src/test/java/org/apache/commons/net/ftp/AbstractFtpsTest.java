@@ -106,7 +106,7 @@ public abstract class AbstractFtpsTest {
         // define SSL configuration
         final URL serverJksResource = ClassLoader.getSystemClassLoader().getResource(serverJksResourceResource);
         Assert.assertNotNull(serverJksResourceResource, serverJksResource);
-        System.out.println("Loading " + serverJksResource);
+        // System.out.println("Loading " + serverJksResource);
         final SslConfigurationFactory sllConfigFactory = new SslConfigurationFactory();
         final File keyStoreFile = FileUtils.toFile(serverJksResource);
         Assert.assertTrue(keyStoreFile.toString(), keyStoreFile.exists());

@@ -130,7 +130,7 @@ public class NtpV3Impl implements NtpV3Packet {
      */
     @Override
     public int getLeapIndicator() {
-        return (ui(buf[LI_INDEX]) >> LI_SHIFT) & 0x3;
+        return ui(buf[LI_INDEX]) >> LI_SHIFT & 0x3;
     }
 
     /**
@@ -151,7 +151,7 @@ public class NtpV3Impl implements NtpV3Packet {
      */
     @Override
     public int getMode() {
-        return (ui(buf[MODE_INDEX]) >> MODE_SHIFT) & 0x7;
+        return ui(buf[MODE_INDEX]) >> MODE_SHIFT & 0x7;
     }
 
     /**
@@ -295,7 +295,7 @@ public class NtpV3Impl implements NtpV3Packet {
     @Override
     public long getRootDispersionInMillis() {
         final long l = getRootDispersion();
-        return (l * 1000) / 65536L;
+        return l * 1000 / 65536L;
     }
 
     /**
@@ -357,7 +357,7 @@ public class NtpV3Impl implements NtpV3Packet {
      */
     @Override
     public int getVersion() {
-        return (ui(buf[VERSION_INDEX]) >> VERSION_SHIFT) & 0x7;
+        return ui(buf[VERSION_INDEX]) >> VERSION_SHIFT & 0x7;
     }
 
     /**
@@ -441,7 +441,7 @@ public class NtpV3Impl implements NtpV3Packet {
      */
     @Override
     public void setLeapIndicator(final int li) {
-        buf[LI_INDEX] = (byte) (buf[LI_INDEX] & 0x3F | ((li & 0x3) << LI_SHIFT));
+        buf[LI_INDEX] = (byte) (buf[LI_INDEX] & 0x3F | (li & 0x3) << LI_SHIFT);
     }
 
     /**
@@ -554,7 +554,7 @@ public class NtpV3Impl implements NtpV3Packet {
      * @param t     TimeStamp.
      */
     private void setTimestamp(final int index, final TimeStamp t) {
-        long ntpTime = (t == null) ? 0 : t.ntpValue();
+        long ntpTime = t == null ? 0 : t.ntpValue();
         // copy 64-bits from Long value into 8 x 8-bit bytes of array
         // one byte at a time shifting 8-bits for each position.
         for (int i = 7; i >= 0; i--) {
@@ -581,7 +581,7 @@ public class NtpV3Impl implements NtpV3Packet {
      */
     @Override
     public void setVersion(final int version) {
-        buf[VERSION_INDEX] = (byte) (buf[VERSION_INDEX] & 0xC7 | ((version & 0x7) << VERSION_SHIFT));
+        buf[VERSION_INDEX] = (byte) (buf[VERSION_INDEX] & 0xC7 | (version & 0x7) << VERSION_SHIFT);
     }
 
     /**

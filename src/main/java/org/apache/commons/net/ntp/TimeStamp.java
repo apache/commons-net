@@ -131,7 +131,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      * @return the number of milliseconds since January 1, 1970, 00:00:00 GMT represented by this NTP timestamp value.
      */
     public static long getTime(final long ntpTimeValue) {
-        final long seconds = (ntpTimeValue >>> 32) & 0xffffffffL; // high-order 32-bits
+        final long seconds = ntpTimeValue >>> 32 & 0xffffffffL; // high-order 32-bits
         long fraction = ntpTimeValue & 0xffffffffL; // low-order 32-bits
 
         // Use round-off on fractional part to preserve going to lower precision
@@ -146,10 +146,10 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
         final long msb = seconds & 0x80000000L;
         if (msb == 0) {
             // use base: 7-Feb-2036 @ 06:28:16 UTC
-            return msb0baseTime + (seconds * 1000) + fraction;
+            return msb0baseTime + seconds * 1000 + fraction;
         }
         // use base: 1-Jan-1900 @ 01:00:00 UTC
-        return msb1baseTime + (seconds * 1000) + fraction;
+        return msb1baseTime + seconds * 1000 + fraction;
     }
 
     /**
@@ -180,7 +180,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
         }
 
         long seconds = baseTimeMillis / 1000;
-        final long fraction = ((baseTimeMillis % 1000) * 0x100000000L) / 1000;
+        final long fraction = baseTimeMillis % 1000 * 0x100000000L / 1000;
 
         if (useBase1) {
             seconds |= 0x80000000L; // set high-order bit if msb1baseTime 1900 used
@@ -200,7 +200,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     public static String toString(final long ntpTime) {
         final StringBuilder buf = new StringBuilder();
         // high-order second bits (32..63) as hexstring
-        appendHexString(buf, (ntpTime >>> 32) & 0xffffffffL);
+        appendHexString(buf, ntpTime >>> 32 & 0xffffffffL);
 
         // low-order fractional seconds bits (0..31) as hexstring
         buf.append('.');
@@ -260,7 +260,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
     public int compareTo(final TimeStamp anotherTimeStamp) {
         final long thisVal = this.ntpTime;
         final long anotherVal = anotherTimeStamp.ntpTime;
-        return (Long.compare(thisVal, anotherVal));
+        return Long.compare(thisVal, anotherVal);
     }
 
     /**
@@ -302,7 +302,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      * @return seconds represented by this NTP timestamp.
      */
     public long getSeconds() {
-        return (ntpTime >>> 32) & 0xffffffffL;
+        return ntpTime >>> 32 & 0xffffffffL;
     }
 
     /**
@@ -330,7 +330,7 @@ public class TimeStamp implements Serializable, Comparable<TimeStamp> {
      */
     @Override
     public int hashCode() {
-        return (int) (ntpTime ^ (ntpTime >>> 32));
+        return (int) (ntpTime ^ ntpTime >>> 32);
     }
 
     /**

@@ -318,16 +318,16 @@ public class Base64 {
      */
     private static long getEncodeLength(final byte[] pArray, int chunkSize, final byte[] chunkSeparator) {
         // base64 always encodes to multiples of 4.
-        chunkSize = (chunkSize / 4) * 4;
+        chunkSize = chunkSize / 4 * 4;
 
-        long len = (pArray.length * 4) / 3;
+        long len = pArray.length * 4 / 3;
         final long mod = len % 4;
         if (mod != 0) {
             len += 4 - mod;
         }
         if (chunkSize > 0) {
             final boolean lenChunksPerfectly = len % chunkSize == 0;
-            len += (len / chunkSize) * chunkSeparator.length;
+            len += len / chunkSize * chunkSeparator.length;
             if (!lenChunksPerfectly) {
                 len += chunkSeparator.length;
             }
@@ -358,7 +358,7 @@ public class Base64 {
      * @since 1.4
      */
     public static boolean isBase64(final byte octet) {
-        return octet == PAD || (octet >= 0 && octet < DECODE_TABLE.length && DECODE_TABLE[octet] != -1);
+        return octet == PAD || octet >= 0 && octet < DECODE_TABLE.length && DECODE_TABLE[octet] != -1;
     }
 
     /**
@@ -393,10 +393,10 @@ public class Base64 {
         Objects.requireNonNull(bigInt, "bigInt");
         int bitlen = bigInt.bitLength();
         // round bitlen
-        bitlen = ((bitlen + 7) >> 3) << 3;
+        bitlen = bitlen + 7 >> 3 << 3;
         final byte[] bigBytes = bigInt.toByteArray();
 
-        if (((bigInt.bitLength() % 8) != 0) && (((bigInt.bitLength() / 8) + 1) == (bitlen / 8))) {
+        if (bigInt.bitLength() % 8 != 0 && bigInt.bitLength() / 8 + 1 == bitlen / 8) {
             return bigBytes;
         }
         // set up params for copying everything but sign bit
@@ -404,7 +404,7 @@ public class Base64 {
         int len = bigBytes.length;
 
         // if bigInt is exactly byte-aligned, just skip signbit in copy
-        if ((bigInt.bitLength() % 8) == 0) {
+        if (bigInt.bitLength() % 8 == 0) {
             startSrc = 1;
             len--;
         }
@@ -577,7 +577,7 @@ public class Base64 {
             lineLength = 0; // disable chunk-separating
             lineSeparator = NetConstants.EMPTY_BTYE_ARRAY; // this just gets ignored
         }
-        this.lineLength = lineLength > 0 ? (lineLength / 4) * 4 : 0;
+        this.lineLength = lineLength > 0 ? lineLength / 4 * 4 : 0;
         this.lineSeparator = new byte[lineSeparator.length];
         System.arraycopy(lineSeparator, 0, this.lineSeparator, 0, lineSeparator.length);
         if (lineLength > 0) {
@@ -613,7 +613,7 @@ public class Base64 {
         if (pArray == null || pArray.length == 0) {
             return pArray;
         }
-        final long len = (pArray.length * 3) / 4;
+        final long len = pArray.length * 3 / 4;
         final byte[] buf = new byte[(int) len];
         setInitialBuffer(buf, 0, buf.length);
         decode(pArray, 0, pArray.length);
@@ -672,11 +672,11 @@ public class Base64 {
             if (b >= 0 && b < DECODE_TABLE.length) {
                 final int result = DECODE_TABLE[b];
                 if (result >= 0) {
-                    modulus = (++modulus) % 4;
+                    modulus = ++modulus % 4;
                     x = (x << 6) + result;
                     if (modulus == 0) {
-                        buffer[pos++] = (byte) ((x >> 16) & MASK_8BITS);
-                        buffer[pos++] = (byte) ((x >> 8) & MASK_8BITS);
+                        buffer[pos++] = (byte) (x >> 16 & MASK_8BITS);
+                        buffer[pos++] = (byte) (x >> 8 & MASK_8BITS);
                         buffer[pos++] = (byte) (x & MASK_8BITS);
                     }
                 }
@@ -691,11 +691,11 @@ public class Base64 {
             switch (modulus) {
             case 2:
                 x = x << 6;
-                buffer[pos++] = (byte) ((x >> 16) & MASK_8BITS);
+                buffer[pos++] = (byte) (x >> 16 & MASK_8BITS);
                 break;
             case 3:
-                buffer[pos++] = (byte) ((x >> 16) & MASK_8BITS);
-                buffer[pos++] = (byte) ((x >> 8) & MASK_8BITS);
+                buffer[pos++] = (byte) (x >> 16 & MASK_8BITS);
+                buffer[pos++] = (byte) (x >> 8 & MASK_8BITS);
                 break;
             default:
                 break; // other values ignored
@@ -774,8 +774,8 @@ public class Base64 {
             }
             switch (modulus) {
             case 1:
-                buffer[pos++] = encodeTable[(x >> 2) & MASK_6BITS];
-                buffer[pos++] = encodeTable[(x << 4) & MASK_6BITS];
+                buffer[pos++] = encodeTable[x >> 2 & MASK_6BITS];
+                buffer[pos++] = encodeTable[x << 4 & MASK_6BITS];
                 // URL-SAFE skips the padding to further reduce size.
                 if (encodeTable == STANDARD_ENCODE_TABLE) {
                     buffer[pos++] = PAD;
@@ -784,9 +784,9 @@ public class Base64 {
                 break;
 
             case 2:
-                buffer[pos++] = encodeTable[(x >> 10) & MASK_6BITS];
-                buffer[pos++] = encodeTable[(x >> 4) & MASK_6BITS];
-                buffer[pos++] = encodeTable[(x << 2) & MASK_6BITS];
+                buffer[pos++] = encodeTable[x >> 10 & MASK_6BITS];
+                buffer[pos++] = encodeTable[x >> 4 & MASK_6BITS];
+                buffer[pos++] = encodeTable[x << 2 & MASK_6BITS];
                 // URL-SAFE skips the padding to further reduce size.
                 if (encodeTable == STANDARD_ENCODE_TABLE) {
                     buffer[pos++] = PAD;
@@ -804,16 +804,16 @@ public class Base64 {
                 if (buffer == null || buffer.length - pos < encodeSize) {
                     resizeBuffer();
                 }
-                modulus = (++modulus) % 3;
+                modulus = ++modulus % 3;
                 int b = in[inPos++];
                 if (b < 0) {
                     b += 256;
                 }
                 x = (x << 8) + b;
                 if (0 == modulus) {
-                    buffer[pos++] = encodeTable[(x >> 18) & MASK_6BITS];
-                    buffer[pos++] = encodeTable[(x >> 12) & MASK_6BITS];
-                    buffer[pos++] = encodeTable[(x >> 6) & MASK_6BITS];
+                    buffer[pos++] = encodeTable[x >> 18 & MASK_6BITS];
+                    buffer[pos++] = encodeTable[x >> 12 & MASK_6BITS];
+                    buffer[pos++] = encodeTable[x >> 6 & MASK_6BITS];
                     buffer[pos++] = encodeTable[x & MASK_6BITS];
                     currentLinePos += 4;
                     if (lineLength > 0 && lineLength <= currentLinePos) {

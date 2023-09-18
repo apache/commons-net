@@ -55,7 +55,7 @@ public final class TFTPAckPacket extends TFTPPacket {
             throw new TFTPPacketException("TFTP operator code does not match type.");
         }
 
-        this.blockNumber = (((data[2] & 0xff) << 8) | (data[3] & 0xff));
+        this.blockNumber = (data[2] & 0xff) << 8 | data[3] & 0xff;
     }
 
     /**
