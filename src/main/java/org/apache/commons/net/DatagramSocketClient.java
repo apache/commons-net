@@ -72,6 +72,10 @@ public abstract class DatagramSocketClient implements AutoCloseable {
     /**
      * Gets the non-null DatagramSocket or throws {@link NullPointerException}.
      *
+     * <p>
+     * This method does not allocate resources.
+     * </p>
+     *
      * @return the non-null DatagramSocket.
      * @since 3.10.0
      */
