@@ -23,12 +23,11 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
+import java.util.Base64;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.SSLContext;
-
-import org.apache.commons.net.util.Base64;
 
 /**
  * An SMTP Client class with authentication support (RFC4954).
@@ -164,11 +163,11 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
         if (method.equals(AUTH_METHOD.PLAIN)) {
             // the server sends an empty response ("334 "), so we don't have to read it.
             return SMTPReply
-                    .isPositiveCompletion(sendCommand(Base64.encodeBase64StringUnChunked(("\000" + username + "\000" + password).getBytes(getCharset()))));
+                    .isPositiveCompletion(sendCommand(Base64.getEncoder().encodeToString(("\000" + username + "\000" + password).getBytes(getCharset()))));
         }
         if (method.equals(AUTH_METHOD.CRAM_MD5)) {
             // get the CRAM challenge
-            final byte[] serverChallenge = Base64.decodeBase64(getReplyString().substring(4).trim());
+            final byte[] serverChallenge = Base64.getDecoder().decode(getReplyString().substring(4).trim());
             // get the Mac instance
             final Mac hmacMd5 = Mac.getInstance("HmacMD5");
             hmacMd5.init(new SecretKeySpec(password.getBytes(getCharset()), "HmacMD5"));
@@ -181,18 +180,18 @@ public class AuthenticatingSMTPClient extends SMTPSClient {
             toEncode[usernameBytes.length] = ' ';
             System.arraycopy(hmacResult, 0, toEncode, usernameBytes.length + 1, hmacResult.length);
             // send the reply and read the server code:
-            return SMTPReply.isPositiveCompletion(sendCommand(Base64.encodeBase64StringUnChunked(toEncode)));
+            return SMTPReply.isPositiveCompletion(sendCommand(Base64.getEncoder().encodeToString(toEncode)));
         }
         if (method.equals(AUTH_METHOD.LOGIN)) {
             // the server sends fixed responses (base64("Username") and
             // base64("Password")), so we don't have to read them.
-            if (!SMTPReply.isPositiveIntermediate(sendCommand(Base64.encodeBase64StringUnChunked(username.getBytes(getCharset()))))) {
+            if (!SMTPReply.isPositiveIntermediate(sendCommand(Base64.getEncoder().encodeToString(username.getBytes(getCharset()))))) {
                 return false;
             }
-            return SMTPReply.isPositiveCompletion(sendCommand(Base64.encodeBase64StringUnChunked(password.getBytes(getCharset()))));
+            return SMTPReply.isPositiveCompletion(sendCommand(Base64.getEncoder().encodeToString(password.getBytes(getCharset()))));
         }
         if (method.equals(AUTH_METHOD.XOAUTH) || method.equals(AUTH_METHOD.XOAUTH2)) {
-            return SMTPReply.isPositiveIntermediate(sendCommand(Base64.encodeBase64StringUnChunked(username.getBytes(getCharset()))));
+            return SMTPReply.isPositiveIntermediate(sendCommand(Base64.getEncoder().encodeToString(username.getBytes(getCharset()))));
         }
         return false; // safety check
     }
